@@ -6,6 +6,7 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.ActionBlocking;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
@@ -187,11 +188,11 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             {
                 if (CanStillInteract)
                 {
-                    status.ClearAlert("handcuffed");
+                    status.ClearAlert(AlertType.Handcuffed);
                 }
                 else
                 {
-                    status.ShowAlert("handcuffed");
+                    status.ShowAlert(AlertType.Handcuffed);
                 }
             }
         }

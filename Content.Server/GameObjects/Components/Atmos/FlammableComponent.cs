@@ -4,6 +4,7 @@ using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Temperature;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry;
 using Content.Shared.Damage;
@@ -97,11 +98,11 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             if (!OnFire)
             {
-                status?.ClearAlert("fire");
+                status?.ClearAlert(AlertType.Fire);
                 return;
             }
 
-            status.ShowAlert("fire", onClickAlert: OnClickAlert);
+            status.ShowAlert(AlertType.Fire, onClickAlert: OnClickAlert);
 
             if (FireStacks > 0)
             {

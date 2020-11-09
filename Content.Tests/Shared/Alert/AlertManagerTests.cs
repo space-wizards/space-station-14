@@ -16,11 +16,11 @@ namespace Content.Tests.Shared.Alert
     {
         const string PROTOTYPES = @"
 - type: alert
-  id: lowpressure
+  alertType: LowPressure
   icon: /Textures/Interface/StatusEffects/Pressure/lowpressure.png
 
 - type: alert
-  id: highpressure
+  alertType: HighPressure
   icon: /Textures/Interface/StatusEffects/Pressure/highpressure.png
 ";
 
@@ -34,14 +34,14 @@ namespace Content.Tests.Shared.Alert
             var alertManager = IoCManager.Resolve<AlertManager>();
             alertManager.Initialize();
 
-            Assert.That(alertManager.TryGet("lowpressure", out var lowPressure));
+            Assert.That(alertManager.TryGet(AlertType.LowPressure, out var lowPressure));
             Assert.That(lowPressure.IconPath, Is.EqualTo("/Textures/Interface/StatusEffects/Pressure/lowpressure.png"));
-            Assert.That(alertManager.TryGet("highpressure", out var highPressure));
+            Assert.That(alertManager.TryGet(AlertType.HighPressure, out var highPressure));
             Assert.That(highPressure.IconPath, Is.EqualTo("/Textures/Interface/StatusEffects/Pressure/highpressure.png"));
 
-            Assert.That(alertManager.TryGetWithEncoded("lowpressure", out lowPressure, out var encodedLowPressure));
+            Assert.That(alertManager.TryGetWithEncoded(AlertType.LowPressure, out lowPressure, out var encodedLowPressure));
             Assert.That(lowPressure.IconPath, Is.EqualTo("/Textures/Interface/StatusEffects/Pressure/lowpressure.png"));
-            Assert.That(alertManager.TryGetWithEncoded("highpressure", out highPressure, out var encodedHighPressure));
+            Assert.That(alertManager.TryGetWithEncoded(AlertType.HighPressure, out highPressure, out var encodedHighPressure));
             Assert.That(highPressure.IconPath, Is.EqualTo("/Textures/Interface/StatusEffects/Pressure/highpressure.png"));
 
             Assert.That(alertManager.TryEncode(lowPressure, out var encodedLowPressure2));
@@ -57,8 +57,8 @@ namespace Content.Tests.Shared.Alert
 
             Assert.False(alertManager.TryDecode(-1, out _));
             Assert.False(alertManager.TryDecode(999, out _));
-            Assert.False(alertManager.TryEncode("lowpressurenonexistent", out _));
-            Assert.False(alertManager.TryGetWithEncoded("lowpressurenonexistent", out _, out _));
+            Assert.False(alertManager.TryEncode(AlertType.Debug1, out _));
+            Assert.False(alertManager.TryGetWithEncoded(AlertType.Debug1, out _, out _));
 
         }
     }

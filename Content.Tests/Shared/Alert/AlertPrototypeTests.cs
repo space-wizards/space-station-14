@@ -14,8 +14,8 @@ namespace Content.Tests.Shared.Alert
     public class AlertPrototypeTests : RobustUnitTest
     {
         private const string PROTOTYPE = @"- type: alert
-  id: humanhealth
-  category: health
+  alertType: HumanHealth
+  category: Health
   icon: /Textures/Interface/StatusEffects/Human/human.rsi/human.png
   name: Health
   description: ""[color=green]Green[/color] good. [color=red]Red[/color] bad.""
@@ -26,9 +26,9 @@ namespace Content.Tests.Shared.Alert
         [Test]
         public void TestAlertKey()
         {
-            Assert.That(new AlertKey(null, "health"), Is.Not.EqualTo(AlertKey.ForCategory("health")));
-            Assert.That((new AlertKey("health", null)), Is.EqualTo(AlertKey.ForCategory("health")));
-            Assert.That((new AlertKey("health", "ignored")), Is.EqualTo(AlertKey.ForCategory("health")));
+            Assert.That(new AlertKey(AlertType.HumanHealth, null), Is.Not.EqualTo(AlertKey.ForCategory(AlertCategory.Health)));
+            Assert.That((new AlertKey(null, AlertCategory.Health)), Is.EqualTo(AlertKey.ForCategory(AlertCategory.Health)));
+            Assert.That((new AlertKey(AlertType.Buckled, AlertCategory.Health)), Is.EqualTo(AlertKey.ForCategory(AlertCategory.Health)));
         }
 
 

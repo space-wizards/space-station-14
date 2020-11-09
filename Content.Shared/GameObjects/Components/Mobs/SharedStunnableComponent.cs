@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -197,7 +198,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
                 return;
             }
 
-            status.ShowAlert("stun", cooldown:
+            status.ShowAlert(AlertType.Stun, cooldown:
                 (StunStart == null || StunEnd == null) ? default : (StunStart.Value, StunEnd.Value));
             StatusRemoveCancellation.Cancel();
             StatusRemoveCancellation = new CancellationTokenSource();

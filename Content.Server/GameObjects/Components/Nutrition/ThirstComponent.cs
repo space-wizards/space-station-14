@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
@@ -62,11 +63,11 @@ namespace Content.Server.GameObjects.Components.Nutrition
             {ThirstThreshold.Dead, 0.0f},
         };
 
-        public static readonly Dictionary<ThirstThreshold, string> ThirstThresholdAlertIds = new Dictionary<ThirstThreshold, string>
+        public static readonly Dictionary<ThirstThreshold, AlertType> ThirstThresholdAlertTypes = new Dictionary<ThirstThreshold, AlertType>
         {
-            {ThirstThreshold.OverHydrated, "overhydrated"},
-            {ThirstThreshold.Thirsty, "thirsty"},
-            {ThirstThreshold.Parched, "parched"},
+            {ThirstThreshold.OverHydrated, AlertType.Overhydrated},
+            {ThirstThreshold.Thirsty, AlertType.Thirsty},
+            {ThirstThreshold.Parched, AlertType.Parched},
         };
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -89,13 +90,13 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 // Update UI
                 Owner.TryGetComponent(out ServerAlertsComponent alertsComponent);
 
-                if (ThirstThresholdAlertIds.TryGetValue(_currentThirstThreshold, out var alertId))
+                if (ThirstThresholdAlertTypes.TryGetValue(_currentThirstThreshold, out var alertId))
                 {
                     alertsComponent?.ShowAlert(alertId);
                 }
                 else
                 {
-                    alertsComponent?.ClearAlertCategory("thirst");
+                    alertsComponent?.ClearAlertCategory(AlertCategory.Thirst);
                 }
 
                 switch (_currentThirstThreshold)

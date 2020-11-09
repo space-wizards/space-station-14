@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs.State;
@@ -53,7 +54,7 @@ namespace Content.Server.GameObjects.Components.Mobs.State
 
             if (Owner.TryGetComponent(out ServerAlertsComponent status))
             {
-                status.ClearAlert("health");
+                status.ClearAlert(AlertType.HumanHealth);
             }
 
             if (Owner.TryGetComponent(out ServerOverlayEffectsComponent overlay))

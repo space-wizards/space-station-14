@@ -15,45 +15,49 @@ namespace Content.Tests.Shared.Alert
         const string PROTOTYPES = @"
 - type: alertOrder
   order:
-    - cuffed
-    - extremepressure
-    - pressure
-    - stunned
-    - lowpressure
-    - temperature
+    - alertType: Handcuffed
+    - category: Pressure
+    - category: Hunger
+    - alertType: Hot
+    - alertType: Stun
+    - alertType: LowPressure
+    - category: Temperature
 
 - type: alert
-  category: pressure
-  id: lowpressure
+  category: Pressure
+  alertType: LowPressure
 
 - type: alert
-  category: pressure
-  id: medpressure
+  category: Hunger
+  alertType: Overfed
 
 - type: alert
-  category: pressure
-  id: highpressure
+  category: Pressure
+  alertType: HighPressure
 
 - type: alert
-  category: pressure
-  id: extremepressure
+  category: Hunger
+  alertType: Peckish
 
 - type: alert
-  id: stunned
+  alertType: Stun
 
 - type: alert
-  id: cuffed
+  alertType: Handcuffed
 
 - type: alert
-  category: temperature
-  id: hot
+  category: Temperature
+  alertType: Hot
 
 - type: alert
-  category: temperature
-  id: cold
+  category: Temperature
+  alertType: Cold
 
 - type: alert
-  id: oops
+  alertType: Weightless
+
+- type: alert
+  alertType: PilotingShuttle
 ";
 
         [Test]
@@ -69,22 +73,24 @@ namespace Content.Tests.Shared.Alert
             var alerts = prototypeManager.EnumeratePrototypes<AlertPrototype>();
 
             // ensure they sort according to our expected criteria
-            var expectedOrder = new List<string>();
-            expectedOrder.Add("cuffed");
-            expectedOrder.Add("extremepressure");
-            // order by id alpha within ties
-            expectedOrder.Add("highpressure");
-            expectedOrder.Add("medpressure");
-            expectedOrder.Add("stunned");
-            expectedOrder.Add("lowpressure");
-            expectedOrder.Add("cold");
-            expectedOrder.Add("hot");
-            expectedOrder.Add("oops");
+            var expectedOrder = new List<AlertType>();
+            expectedOrder.Add(AlertType.Handcuffed);
+            expectedOrder.Add(AlertType.HighPressure);
+            // stuff with only category + same category ordered by enum value
+            expectedOrder.Add(AlertType.Overfed);
+            expectedOrder.Add(AlertType.Peckish);
+            expectedOrder.Add(AlertType.Hot);
+            expectedOrder.Add(AlertType.Stun);
+            expectedOrder.Add(AlertType.LowPressure);
+            expectedOrder.Add(AlertType.Cold);
+            // stuff at end of list ordered by enum value
+            expectedOrder.Add(AlertType.Weightless);
+            expectedOrder.Add(AlertType.PilotingShuttle);
 
             var actual = alerts.ToList();
             actual.Sort(alertOrder);
 
-            Assert.That(actual.Select(a => a.ID).ToList(), Is.EqualTo(expectedOrder));
+            Assert.That(actual.Select(a => a.AlertType).ToList(), Is.EqualTo(expectedOrder));
         }
     }
 }

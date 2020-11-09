@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Buckle;
+using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
@@ -27,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Strap
         private StrapPosition _position;
         private string _buckleSound = null!;
         private string _unbuckleSound = null!;
-        private string _buckledAlertId = null!;
+        private AlertType _buckledAlertType;
 
         /// <summary>
         /// The angle in degrees to rotate the player by when they get strapped
@@ -68,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Strap
         /// ID of the alert to show when buckled
         /// </summary>
         [ViewVariables]
-        public string BuckledAlertId => _buckledAlertId;
+        public AlertType BuckledAlertType => _buckledAlertType;
 
         /// <summary>
         /// The sum of the sizes of all the buckled entities in this strap
@@ -137,7 +138,7 @@ namespace Content.Server.GameObjects.Components.Strap
             serializer.DataField(ref _position, "position", StrapPosition.None);
             serializer.DataField(ref _buckleSound, "buckleSound", "/Audio/Effects/buckle.ogg");
             serializer.DataField(ref _unbuckleSound, "unbuckleSound", "/Audio/Effects/unbuckle.ogg");
-            serializer.DataField(ref _buckledAlertId, "buckledAlertId", "buckled");
+            serializer.DataField(ref _buckledAlertType, "buckledAlertType", AlertType.Buckled);
             serializer.DataField(ref _rotation, "rotation", 0);
 
             var defaultSize = 100;

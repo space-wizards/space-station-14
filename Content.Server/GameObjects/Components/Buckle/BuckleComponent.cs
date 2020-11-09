@@ -7,6 +7,7 @@ using Content.Server.GameObjects.Components.Mobs.State;
 using Content.Server.GameObjects.Components.Pulling;
 using Content.Server.GameObjects.Components.Strap;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Buckle;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Strap;
@@ -107,12 +108,12 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             if (Buckled)
             {
-                _serverAlertsComponent.ShowAlert(BuckledTo?.BuckledAlertId,
+                _serverAlertsComponent.ShowAlert(BuckledTo != null ? BuckledTo.BuckledAlertType : AlertType.Buckled,
                     onClickAlert: OnClickAlert);
             }
             else
             {
-                _serverAlertsComponent.ClearAlertCategory("buckled");
+                _serverAlertsComponent.ClearAlertCategory(AlertCategory.Buckled);
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Gravity;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Gravity;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
@@ -68,7 +69,7 @@ namespace Content.IntegrationTests.Tests.Gravity
             await server.WaitAssertion(() =>
             {
                 // No gravity without a gravity generator
-                Assert.True(alerts.IsShowingAlert("weightless"));
+                Assert.True(alerts.IsShowingAlert(AlertType.Weightless));
 
                 gravityGenerator = human.EnsureComponent<GravityGeneratorComponent>();
             });
@@ -78,7 +79,7 @@ namespace Content.IntegrationTests.Tests.Gravity
 
             await server.WaitAssertion(() =>
             {
-                Assert.False(alerts.IsShowingAlert("weightless"));
+                Assert.False(alerts.IsShowingAlert(AlertType.Weightless));
 
                 // Disable the gravity generator
                 var args = new BreakageEventArgs {Owner = human};
@@ -89,7 +90,7 @@ namespace Content.IntegrationTests.Tests.Gravity
 
             await server.WaitAssertion(() =>
             {
-                Assert.False(alerts.IsShowingAlert("weightless"));
+                Assert.False(alerts.IsShowingAlert(AlertType.Weightless));
             });
         }
     }

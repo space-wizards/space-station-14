@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
@@ -80,37 +81,37 @@ namespace Content.Server.GameObjects.Components.Temperature
                 {
                     // Cold strong.
                     case var t when t <= 260:
-                        status.ShowAlert("cold", 3);
+                        status.ShowAlert(AlertType.Cold, 3);
                         break;
 
                     // Cold mild.
                     case var t when t <= 280 && t > 260:
-                        status.ShowAlert("cold", 2);
+                        status.ShowAlert(AlertType.Cold, 2);
                         break;
 
                     // Cold weak.
                     case var t when t <= 292 && t > 280:
-                        status.ShowAlert("cold", 1);
+                        status.ShowAlert(AlertType.Cold, 1);
                         break;
 
                     // Safe.
                     case var t when t <= 327 && t > 292:
-                        status.ClearAlertCategory("temperature");
+                        status.ClearAlertCategory(AlertCategory.Temperature);
                         break;
 
                     // Heat weak.
                     case var t when t <= 335 && t > 327:
-                        status.ShowAlert("hot", 1);
+                        status.ShowAlert(AlertType.Hot, 1);
                         break;
 
                     // Heat mild.
                     case var t when t <= 345 && t > 335:
-                        status.ShowAlert("hot", 2);
+                        status.ShowAlert(AlertType.Hot, 2);
                         break;
 
                     // Heat strong.
                     case var t when t > 345:
-                        status.ShowAlert("hot", 3);
+                        status.ShowAlert(AlertType.Hot, 3);
                         break;
                 }
             }

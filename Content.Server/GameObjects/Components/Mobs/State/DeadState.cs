@@ -1,4 +1,5 @@
 ﻿using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs.State;
@@ -20,7 +21,7 @@ namespace Content.Server.GameObjects.Components.Mobs.State
 
             if (entity.TryGetComponent(out ServerAlertsComponent status))
             {
-                status.ShowAlert("humandead");
+                status.ShowAlert(AlertType.HumanDead);
             }
 
             if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlayComponent))

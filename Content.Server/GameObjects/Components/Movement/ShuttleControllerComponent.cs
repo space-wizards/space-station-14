@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using Content.Server.GameObjects.Components.Buckle;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Strap;
@@ -33,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Movement
         /// <summary>
         ///     ID of the alert to show when piloting
         /// </summary>
-        private string _pilotingAlertId = default!;
+        private AlertType _pilotingAlertType;
 
         /// <summary>
         ///     The entity that's currently controlling this component.
@@ -145,7 +146,7 @@ namespace Content.Server.GameObjects.Components.Movement
             mind.Mind.Visit(Owner);
             _controller = entity;
 
-            status.ShowAlert(_pilotingAlertId, onClickAlert: OnClickAlert);
+            status.ShowAlert(_pilotingAlertType, onClickAlert: OnClickAlert);
         }
 
         private void OnClickAlert(ClickAlertEventArgs args)
@@ -187,7 +188,7 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             if (Owner.TryGetComponent(out ServerAlertsComponent? status))
             {
-                status.ClearAlert(_pilotingAlertId);
+                status.ClearAlert(_pilotingAlertType);
             }
 
             if (entity.TryGetComponent(out MindComponent? mind))
@@ -219,7 +220,7 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref _pilotingAlertId, "pilotingAlertId", "pilotingshuttle");
+            serializer.DataField(ref _pilotingAlertType, "pilotingAlertType", AlertType.PilotingShuttle);
         }
 
         public override void Initialize()

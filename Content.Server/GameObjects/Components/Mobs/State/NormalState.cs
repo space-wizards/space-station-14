@@ -1,5 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs.State;
@@ -34,7 +35,7 @@ namespace Content.Server.GameObjects.Components.Mobs.State
 
             if (!entity.TryGetComponent(out IDamageableComponent damageable))
             {
-                status.ShowAlert("humanhealth", 0);
+                status.ShowAlert(AlertType.HumanHealth, 0);
                 return;
             }
 
@@ -50,7 +51,7 @@ namespace Content.Server.GameObjects.Components.Mobs.State
 
                     var modifier = (short) (ruinable.TotalDamage / (threshold / 7f));
 
-                    status.ShowAlert("humanhealth", modifier);
+                    status.ShowAlert(AlertType.HumanHealth, modifier);
 
                     break;
                 }
@@ -63,7 +64,7 @@ namespace Content.Server.GameObjects.Components.Mobs.State
 
                     var modifier = (short) (damageable.TotalDamage / (threshold / 7f));
 
-                    status.ShowAlert("humanhealth", modifier);
+                    status.ShowAlert(AlertType.HumanHealth, modifier);
                     break;
                 }
             }

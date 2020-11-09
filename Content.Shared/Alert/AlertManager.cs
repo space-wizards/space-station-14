@@ -17,34 +17,34 @@ namespace Content.Shared.Alert
         private readonly IPrototypeManager _prototypeManager = default!;
 
         private AlertPrototype[] _orderedAlerts;
-        private Dictionary<string, int> _idToIndex;
+        private Dictionary<AlertType, int> _typeToIndex;
 
         public void Initialize()
         {
-            // order by id so we can map between the id and an integer index and use
+            // order by type value so we can map between the id and an integer index and use
             // the index for compact alert change messages
             _orderedAlerts =
                 _prototypeManager.EnumeratePrototypes<AlertPrototype>()
-                    .OrderBy(prototype => prototype.ID).ToArray();
-            _idToIndex = new Dictionary<string, int>();
+                    .OrderBy(prototype => prototype.AlertType).ToArray();
+            _typeToIndex = new Dictionary<AlertType, int>();
 
             for (var i = 0; i < _orderedAlerts.Length; i++)
             {
-                if (!_idToIndex.TryAdd(_orderedAlerts[i].ID, i))
+                if (!_typeToIndex.TryAdd(_orderedAlerts[i].AlertType, i))
                 {
                     Logger.ErrorS("alert",
-                        "Found alert with duplicate id {0}", _orderedAlerts[i].ID);
+                        "Found alert with duplicate id {0}", _orderedAlerts[i].AlertType);
                 }
             }
         }
 
         /// <summary>
-        /// Tries to get the alert with the indicated id
+        /// Tries to get the alert of the indicated type
         /// </summary>
         /// <returns>true if found</returns>
-        public bool TryGet(string alertId, out AlertPrototype alert)
+        public bool TryGet(AlertType alertType, out AlertPrototype alert)
         {
-            if (_idToIndex.TryGetValue(alertId, out var idx))
+            if (_typeToIndex.TryGetValue(alertType, out var idx))
             {
                 alert = _orderedAlerts[idx];
                 return true;
@@ -55,12 +55,12 @@ namespace Content.Shared.Alert
         }
 
         /// <summary>
-        /// Tries to get the alert with the indicated id along with its encoding
+        /// Tries to get the alert of the indicated type along with its encoding
         /// </summary>
         /// <returns>true if found</returns>
-        public bool TryGetWithEncoded(string alertId, out AlertPrototype alert, out int encoded)
+        public bool TryGetWithEncoded(AlertType alertType, out AlertPrototype alert, out int encoded)
         {
-            if (_idToIndex.TryGetValue(alertId, out var idx))
+            if (_typeToIndex.TryGetValue(alertType, out var idx))
             {
                 alert = _orderedAlerts[idx];
                 encoded = idx;
@@ -78,7 +78,7 @@ namespace Content.Shared.Alert
         /// <returns>true if successful</returns>
         public bool TryEncode(AlertPrototype alert, out int encoded)
         {
-            return TryEncode(alert.ID, out encoded);
+            return TryEncode(alert.AlertType, out encoded);
         }
 
         /// <summary>
@@ -86,9 +86,9 @@ namespace Content.Shared.Alert
         /// the indicated id
         /// </summary>
         /// <returns>true if successful</returns>
-        public bool TryEncode(string alertId, out int encoded)
+        public bool TryEncode(AlertType alertType, out int encoded)
         {
-            if (_idToIndex.TryGetValue(alertId, out var idx))
+            if (_typeToIndex.TryGetValue(alertType, out var idx))
             {
                 encoded = idx;
                 return true;

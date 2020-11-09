@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.Alert
@@ -12,41 +13,37 @@ namespace Content.Shared.Alert
     [Prototype("alertOrder")]
     public class AlertOrderPrototype : IPrototype, IComparer<AlertPrototype>
     {
-        private List<string> _order;
-        private Dictionary<string, int> _idCategoryToIdx = new Dictionary<string, int>();
-
-        /// <summary>
-        /// List of alert Ids and alert categories, determining the order
-        /// in which the corresponding alerts should be shown in the alert bar.
-        /// If an alert has both its id and category in this list, the id will
-        /// be used to determine the order (i.e. the id can be put in the list to "override"
-        /// the order for that alert's category).
-        ///
-        /// If an alert's id and category is not in the list, it will go at the end of the alert list,
-        /// ties broken alphabetically by alert id
-        /// </summary>
-        public List<string> Order => _order;
+        private Dictionary<AlertType, int> _typeToIdx = new Dictionary<AlertType, int>();
+        private Dictionary<AlertCategory, int> _categoryToIdx = new Dictionary<AlertCategory, int>();
 
         public void LoadFrom(YamlMappingNode mapping)
         {
-            var serializer = YamlObjectSerializer.NewReader(mapping);
-            serializer.DataField(ref _order, "order", new List<string>());
-            // build index mapping dict
-            int idx = 0;
-            foreach (var idCategory in _order)
+            if (!mapping.TryGetNode("order", out YamlSequenceNode orderMapping)) return;
+
+            int i = 0;
+            foreach (var entryYaml in orderMapping)
             {
-                _idCategoryToIdx[idCategory] = idx++;
+                var orderEntry = (YamlMappingNode) entryYaml;
+                var serializer = YamlObjectSerializer.NewReader(orderEntry);
+                if (serializer.TryReadDataField("category", out AlertCategory alertCategory))
+                {
+                    _categoryToIdx[alertCategory] = i++;
+                }
+                else if (serializer.TryReadDataField("alertType", out AlertType alertType))
+                {
+                    _typeToIdx[alertType] = i++;
+                }
             }
         }
 
         private int GetOrderIndex(AlertPrototype alert)
         {
-            if (_idCategoryToIdx.TryGetValue(alert.ID, out var idx))
+            if (_typeToIdx.TryGetValue(alert.AlertType, out var idx))
             {
                 return idx;
             }
             if (alert.Category != null &&
-                _idCategoryToIdx.TryGetValue(alert.Category, out idx))
+                _categoryToIdx.TryGetValue((AlertCategory) alert.Category, out idx))
             {
                 return idx;
             }
@@ -63,7 +60,8 @@ namespace Content.Shared.Alert
             var idy = GetOrderIndex(y);
             if (idx == -1 && idy == -1)
             {
-                return string.CompareOrdinal(x.ID, y.ID);
+                // break ties by type value
+                return x.AlertType - y.AlertType;
             }
 
             if (idx == -1) return 1;
@@ -73,12 +71,11 @@ namespace Content.Shared.Alert
             // but it makes the sort stable
             if (result == 0)
             {
-                return string.CompareOrdinal(x.ID, y.ID);
+                // break ties by type value
+                return x.AlertType - y.AlertType;
             }
-            else
-            {
-                return result;
-            }
+
+            return result;
         }
     }
 }

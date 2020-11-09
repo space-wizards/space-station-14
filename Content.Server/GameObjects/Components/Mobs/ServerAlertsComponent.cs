@@ -92,7 +92,7 @@ namespace Content.Server.GameObjects.Components.Mobs
     {
         public string Command => "showalert";
         public string Description => "Shows an alert for a player, defaulting to current player";
-        public string Help => "showalert <alertid> <severity, -1 if no severity> <name or userID, omit for current player>";
+        public string Help => "showalert <alertType> <severity, -1 if no severity> <name or userID, omit for current player>";
         public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
         {
             var attachedEntity = player.AttachedEntity;
@@ -111,12 +111,12 @@ namespace Content.Server.GameObjects.Components.Mobs
                 return;
             }
 
-            var alertId = args[0];
+            var alertType = args[0];
             var severity = args[1];
             var alertMgr = IoCManager.Resolve<AlertManager>();
-            if (!alertMgr.TryGet(alertId, out var alert))
+            if (!alertMgr.TryGet(Enum.Parse<AlertType>(alertType), out var alert))
             {
-                shell.SendText(player, "unrecognized alertid " + alertId);
+                shell.SendText(player, "unrecognized alertType " + alertType);
                 return;
             }
             if (!short.TryParse(severity, out var sevint))
@@ -124,7 +124,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                 shell.SendText(player, "invalid severity " + sevint);
                 return;
             }
-            alertsComponent.ShowAlert(alertId, sevint == -1 ? (short?) null : sevint);
+            alertsComponent.ShowAlert(alert.AlertType, sevint == -1 ? (short?) null : sevint);
 
         }
     }
@@ -133,7 +133,7 @@ namespace Content.Server.GameObjects.Components.Mobs
     {
         public string Command => "clearalert";
         public string Description => "Clears an alert for a player, defaulting to current player";
-        public string Help => "clearalert <alertid> <name or userID, omit for current player>";
+        public string Help => "clearalert <alertType> <name or userID, omit for current player>";
 
         public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
         {
@@ -152,15 +152,15 @@ namespace Content.Server.GameObjects.Components.Mobs
                 return;
             }
 
-            var alertId = args[0];
+            var alertType = args[0];
             var alertMgr = IoCManager.Resolve<AlertManager>();
-            if (!alertMgr.TryGet(alertId, out var alert))
+            if (!alertMgr.TryGet(Enum.Parse<AlertType>(alertType), out var alert))
             {
-                shell.SendText(player, "unrecognized alertid " + alertId);
+                shell.SendText(player, "unrecognized alertType " + alertType);
                 return;
             }
 
-            alertsComponent.ClearAlert(alertId);
+            alertsComponent.ClearAlert(alert.AlertType);
         }
     }
 }

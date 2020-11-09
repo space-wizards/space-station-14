@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System;
+using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Physics;
@@ -208,12 +209,12 @@ namespace Content.Shared.GameObjects.Components.Pulling
         {
             if (Owner.TryGetComponent(out SharedAlertsComponent? pulledStatus))
             {
-                pulledStatus.ShowAlert("pulled");
+                pulledStatus.ShowAlert(AlertType.Pulled);
             }
 
             if (puller.TryGetComponent(out SharedAlertsComponent? ownerStatus))
             {
-                ownerStatus.ShowAlert("pulling", onClickAlert: OnClickAlert);
+                ownerStatus.ShowAlert(AlertType.Pulling, onClickAlert: OnClickAlert);
             }
         }
 
@@ -230,12 +231,12 @@ namespace Content.Shared.GameObjects.Components.Pulling
         {
             if (Owner.TryGetComponent(out SharedAlertsComponent? pulledStatus))
             {
-                pulledStatus.ClearAlert("pulled");
+                pulledStatus.ClearAlert(AlertType.Pulled);
             }
 
             if (puller.TryGetComponent(out SharedAlertsComponent? ownerStatus))
             {
-                ownerStatus.ClearAlert("pulling");
+                ownerStatus.ClearAlert(AlertType.Pulling);
             }
         }
 

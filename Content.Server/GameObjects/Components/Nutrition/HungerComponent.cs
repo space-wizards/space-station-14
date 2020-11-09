@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
@@ -70,11 +71,11 @@ namespace Content.Server.GameObjects.Components.Nutrition
         }
 
 
-        public static readonly Dictionary<HungerThreshold, string> HungerThresholdAlertIds = new Dictionary<HungerThreshold, string>
+        public static readonly Dictionary<HungerThreshold, AlertType> HungerThresholdAlertTypes = new Dictionary<HungerThreshold, AlertType>
         {
-            { HungerThreshold.Overfed, "overfed" },
-            { HungerThreshold.Peckish, "peckish" },
-            { HungerThreshold.Starving, "starving" },
+            { HungerThreshold.Overfed, AlertType.Overfed },
+            { HungerThreshold.Peckish, AlertType.Peckish },
+            { HungerThreshold.Starving, AlertType.Starving },
         };
 
         public void HungerThresholdEffect(bool force = false)
@@ -91,13 +92,13 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 // Update UI
                 Owner.TryGetComponent(out ServerAlertsComponent alertsComponent);
 
-                if (HungerThresholdAlertIds.TryGetValue(_currentHungerThreshold, out var alertId))
+                if (HungerThresholdAlertTypes.TryGetValue(_currentHungerThreshold, out var alertId))
                 {
                     alertsComponent?.ShowAlert(alertId);
                 }
                 else
                 {
-                    alertsComponent?.ClearAlertCategory("hunger");
+                    alertsComponent?.ClearAlertCategory(AlertCategory.Hunger);
                 }
 
                 switch (_currentHungerThreshold)

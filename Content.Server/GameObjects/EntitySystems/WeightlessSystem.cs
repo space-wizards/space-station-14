@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystemMessages.Gravity;
 using Content.Shared.GameTicking;
@@ -90,12 +91,12 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private void AddWeightless(ServerAlertsComponent status)
         {
-            status.ShowAlert("weightless");
+            status.ShowAlert(AlertType.Weightless);
         }
 
         private void RemoveWeightless(ServerAlertsComponent status)
         {
-            status.ClearAlert("weightless");
+            status.ClearAlert(AlertType.Weightless);
         }
 
         private void EntParentChanged(EntParentChangedMessage ev)

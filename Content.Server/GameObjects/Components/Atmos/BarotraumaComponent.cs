@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Interfaces.GameObjects;
+using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
@@ -50,11 +51,11 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                     if (pressure <= Atmospherics.HazardLowPressure)
                     {
-                        status.ShowAlert("lowpressure", 2);
+                        status.ShowAlert(AlertType.LowPressure, 2);
                         break;
                     }
 
-                    status.ShowAlert("lowpressure", 1);
+                    status.ShowAlert(AlertType.LowPressure, 1);
                     break;
 
                 // High pressure.
@@ -72,16 +73,16 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                     if (pressure >= Atmospherics.HazardHighPressure)
                     {
-                        status.ShowAlert("highpressure", 2);
+                        status.ShowAlert(AlertType.HighPressure, 2);
                         break;
                     }
 
-                    status.ShowAlert("highpressure", 1);
+                    status.ShowAlert(AlertType.HighPressure, 1);
                     break;
 
                 // Normal pressure.
                 default:
-                    status?.ClearAlertCategory("pressure");
+                    status?.ClearAlertCategory(AlertCategory.Pressure);
                     break;
             }
 

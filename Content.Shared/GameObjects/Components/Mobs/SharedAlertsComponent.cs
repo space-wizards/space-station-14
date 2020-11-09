@@ -30,19 +30,19 @@ namespace Content.Shared.GameObjects.Components.Mobs
         private Dictionary<AlertKey, ClickableAlertState> _alerts = new Dictionary<AlertKey, ClickableAlertState>();
 
         /// <returns>true iff an alert of the indicated alert category is currently showing</returns>
-        public bool IsShowingAlertCategory(string alertCategory)
+        public bool IsShowingAlertCategory(AlertCategory alertCategory)
         {
             return IsShowingAlert(AlertKey.ForCategory(alertCategory));
         }
 
         /// <returns>true iff an alert of the indicated id is currently showing</returns>
-        public bool IsShowingAlert(string alertID)
+        public bool IsShowingAlert(AlertType alertType)
         {
-            if (AlertManager.TryGet(alertID, out var alert))
+            if (AlertManager.TryGet(alertType, out var alert))
             {
                 return IsShowingAlert(alert.AlertKey);
             }
-            Logger.DebugS("alert", "unknown alert id {0}", alertID);
+            Logger.DebugS("alert", "unknown alert type {0}", alertType);
             return false;
 
         }
@@ -72,7 +72,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
             {
                 Logger.DebugS("alert", "player {0} attempted to invoke" +
                                        " alert click for {1} but that alert is not currently" +
-                                       " showing", owner.Name, alert.ID);
+                                       " showing", owner.Name, alert.AlertType);
             }
         }
 
@@ -135,16 +135,16 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// Shows the alert. If the alert or another alert of the same category is already showing,
         /// it will be updated / replaced with the specified values.
         /// </summary>
-        /// <param name="alertId">id of the alert to set</param>
+        /// <param name="alertType">type of the alert to set</param>
         /// <param name="onClickAlert">callback to invoke when ClickAlertMessage is received by the server
         /// after being clicked by client. Has no effect when specified on the clientside.</param>
         /// <param name="severity">severity, if supported by the alert</param>
         /// <param name="cooldown">cooldown start and end, if null there will be no cooldown (and it will
         /// be erased if there is currently a cooldown for the alert)</param>
-        public void ShowAlert(string alertId, short? severity = null, OnClickAlert onClickAlert = null,
+        public void ShowAlert(AlertType alertType, short? severity = null, OnClickAlert onClickAlert = null,
             ValueTuple<TimeSpan, TimeSpan>? cooldown = null)
         {
-            if (AlertManager.TryGetWithEncoded(alertId, out var alert, out var encoded))
+            if (AlertManager.TryGetWithEncoded(alertType, out var alert, out var encoded))
             {
                 if (_alerts.TryGetValue(alert.AlertKey, out var alertStateCallback) &&
                     alertStateCallback.AlertState.AlertEncoded == encoded &&
@@ -166,15 +166,16 @@ namespace Content.Shared.GameObjects.Components.Mobs
             }
             else
             {
-                Logger.ErrorS("alert", "Unable to show alert {0}, please ensure this is a valid alertId",
-                    alertId);
+                Logger.ErrorS("alert", "Unable to show alert {0}, please ensure this alertType has" +
+                                       " a corresponding YML alert prototype",
+                    alertType);
             }
         }
 
         /// <summary>
         /// Clear the alert with the given category, if one is currently showing.
         /// </summary>
-        public void ClearAlertCategory(string category)
+        public void ClearAlertCategory(AlertCategory category)
         {
             var key = AlertKey.ForCategory(category);
             if (!_alerts.Remove(key))
@@ -188,12 +189,11 @@ namespace Content.Shared.GameObjects.Components.Mobs
         }
 
         /// <summary>
-        /// Clear the alert with the given id.
+        /// Clear the alert of the given type if it is currently showing.
         /// </summary>
-        /// <param name="alertId"></param>
-        public void ClearAlert(string alertId)
+        public void ClearAlert(AlertType alertType)
         {
-            if (AlertManager.TryGet(alertId, out var alert))
+            if (AlertManager.TryGet(alertType, out var alert))
             {
                 if (!_alerts.Remove(alert.AlertKey))
                 {
@@ -206,7 +206,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
             }
             else
             {
-                Logger.ErrorS("alert", "unable to clear alert, unknown alert id {0}", alertId);
+                Logger.ErrorS("alert", "unable to clear alert, unknown alertType {0}", alertType);
             }
 
         }

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.UserInterface;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Shared.Alert;
 using NUnit.Framework;
 using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
@@ -37,8 +38,8 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 Assert.NotNull(alertsComponent);
 
                 // show 2 alerts
-                alertsComponent.ShowAlert("debug1");
-                alertsComponent.ShowAlert("debug2");
+                alertsComponent.ShowAlert(AlertType.Debug1);
+                alertsComponent.ShowAlert(AlertType.Debug2);
             });
 
             await server.WaitRunTicks(5);
@@ -64,8 +65,8 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 // we should be seeing 3 alerts - our health, and the 2 debug alerts, in a specific order.
                 Assert.That(alertsUI.Grid.ChildCount, Is.EqualTo(3));
                 var alertControls = alertsUI.Grid.Children.Select(c => c as AlertControl);
-                var alertIDs = alertControls.Select(ac => ac.Alert.ID).ToArray();
-                var expectedIDs = new [] {"humanhealth", "debug1", "debug2"};
+                var alertIDs = alertControls.Select(ac => ac.Alert.AlertType).ToArray();
+                var expectedIDs = new [] {AlertType.HumanHealth, AlertType.Debug1, AlertType.Debug2};
                 Assert.That(alertIDs, Is.EqualTo(expectedIDs));
             });
 
@@ -77,7 +78,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 var alertsComponent = playerEnt.GetComponent<ServerAlertsComponent>();
                 Assert.NotNull(alertsComponent);
 
-                alertsComponent.ClearAlert("debug1");
+                alertsComponent.ClearAlert(AlertType.Debug1);
             });
             await server.WaitRunTicks(5);
             await client.WaitRunTicks(5);
@@ -100,8 +101,8 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 // we should be seeing only 2 alerts now because one was cleared
                 Assert.That(alertsUI.Grid.ChildCount, Is.EqualTo(2));
                 var alertControls = alertsUI.Grid.Children.Select(c => c as AlertControl);
-                var alertIDs = alertControls.Select(ac => ac.Alert.ID).ToArray();
-                var expectedIDs = new [] {"humanhealth", "debug2"};
+                var alertIDs = alertControls.Select(ac => ac.Alert.AlertType).ToArray();
+                var expectedIDs = new [] {AlertType.HumanHealth, AlertType.Debug2};
                 Assert.That(alertIDs, Is.EqualTo(expectedIDs));
             });
         }

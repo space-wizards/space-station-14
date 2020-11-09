@@ -1,4 +1,5 @@
 ﻿using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs.State;
@@ -19,7 +20,7 @@ namespace Content.Server.GameObjects.Components.Mobs.State
 
             if (entity.TryGetComponent(out ServerAlertsComponent status))
             {
-                status.ShowAlert("humancrit"); //Todo: combine humancrit-0 and humancrit-1 into a gif and display it
+                status.ShowAlert(AlertType.HumanCrit); //Todo: combine humancrit-0 and humancrit-1 into a gif and display it
             }
 
             if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlay))

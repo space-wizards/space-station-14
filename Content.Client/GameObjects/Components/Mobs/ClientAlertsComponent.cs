@@ -193,7 +193,7 @@ namespace Content.Client.GameObjects.Components.Mobs
                 }
 
                 if (_alertControls.TryGetValue(newAlert.AlertKey, out var existingAlertControl) &&
-                    existingAlertControl.Alert.ID == newAlert.ID)
+                    existingAlertControl.Alert.AlertType == newAlert.AlertType)
                 {
                     // id is the same, simply update the existing control severity
                     existingAlertControl.SetSeverity(alertStatus.Severity);
@@ -291,7 +291,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
             else
             {
-                Logger.ErrorS("alert", "unable to encode alert {0}", alert.Alert.ID);
+                Logger.ErrorS("alert", "unable to encode alert {0}", alert.Alert.AlertType);
             }
 
         }
@@ -314,7 +314,7 @@ namespace Content.Client.GameObjects.Components.Mobs
                 {
                     Logger.WarningS("alert", "coding error - no alert state for alert {0} " +
                                              "even though we had an AlertControl for it, this" +
-                                             " should never happen", alertControl.Alert.ID);
+                                             " should never happen", alertControl.Alert.AlertType);
                 }
 
             }
