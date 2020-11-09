@@ -32,6 +32,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
     public class PathfindingSystem : EntitySystem, IResettingEntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        
         public IReadOnlyDictionary<GridId, Dictionary<Vector2i, PathfindingChunk>> Graph => _graph;
         private readonly Dictionary<GridId, Dictionary<Vector2i, PathfindingChunk>> _graph = new Dictionary<GridId, Dictionary<Vector2i, PathfindingChunk>>();
 
