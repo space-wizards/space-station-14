@@ -82,7 +82,7 @@ namespace Content.Server.Eui
 
         public void CloseEui(BaseEui eui)
         {
-            eui.Closed();
+            eui.Shutdown();
             _playerData[eui.Player].OpenUIs.Remove(eui.Id);
 
             var msg = _net.CreateNetMessage<MsgEuiCtl>();
