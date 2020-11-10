@@ -22,7 +22,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
 
         private List<SignalTransmitterComponent> _transmitters;
 
-        private int? _transmittersCountLimit;
+        private int? _maxTransmitters = default;
 
         public override void Initialize()
         {
@@ -33,7 +33,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
 
         public override void ExposeData(ObjectSerializer serializer)
         {
-            serializer.DataField(this, x=> x._transmittersCountLimit, "maxTransmitters", null);
+            serializer.DataField(this, x=> x._maxTransmitters, "maxTransmitters", null);
         }
 
         public void DistributeSignal<T>(T state)
@@ -51,7 +51,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
                 return true;
             }
 
-            if (_transmitters.Count >= _transmittersCountLimit) return false;
+            if (_transmitters.Count >= _maxTransmitters) return false;
 
             transmitter.Subscribe(this);
             _transmitters.Add(transmitter);
@@ -126,8 +126,9 @@ namespace Content.Server.GameObjects.Components.MachineLinking
         {
             base.Shutdown();
 
-            foreach (var transmitter in _transmitters.ShallowClone())
+            for (var i = _transmitters.Count-1; i >= 0; i--)
             {
+                var transmitter = _transmitters[i];
                 if (transmitter.Deleted)
                 {
                     continue;
@@ -135,6 +136,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
 
                 transmitter.Unsubscribe(this);
             }
+
             _transmitters.Clear();
         }
     }

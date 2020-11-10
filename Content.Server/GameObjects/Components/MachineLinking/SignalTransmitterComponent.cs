@@ -150,8 +150,9 @@ namespace Content.Server.GameObjects.Components.MachineLinking
         {
             base.Shutdown();
 
-            foreach (var receiver in _receivers.ShallowClone())
+            for (var i = _receivers.Count-1; i <= 0; i++)
             {
+                var receiver = _receivers[i];
                 if (receiver.Deleted)
                 {
                     continue;
@@ -159,6 +160,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
 
                 receiver.Unsubscribe(this);
             }
+
             _receivers.Clear();
         }
     }

@@ -26,8 +26,6 @@ namespace Content.Server.GameObjects.Components.Conveyor
     [RegisterComponent]
     public class ConveyorComponent : Component, ISignalReceiver<TwoWayLeverSignal>, ISignalReceiver<bool>
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-
         public override string Name => "Conveyor";
 
         /// <summary>
@@ -138,7 +136,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
                 return;
             }
 
-            var intersecting = _entityManager.GetEntitiesIntersecting(Owner, true);
+            var intersecting = Owner.EntityManager.GetEntitiesIntersecting(Owner, true);
             var direction = GetAngle().ToVec();
 
             foreach (var entity in intersecting)
