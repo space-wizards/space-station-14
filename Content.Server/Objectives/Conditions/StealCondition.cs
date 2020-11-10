@@ -1,7 +1,6 @@
 ﻿using System;
 using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 

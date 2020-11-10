@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Mobs.Roles;
@@ -12,7 +11,6 @@ using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
-using Robust.Shared.Prototypes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Mobs
