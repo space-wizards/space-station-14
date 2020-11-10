@@ -20,12 +20,12 @@ namespace Content.Benchmarks
 {
     public class AtmosBenchmark : ContentBenchmark
     {
-        private string _tileName = "floor_steel";
-        private string _wallPrototype = "reinforced_wall";
-        private int _squareSize = 32;
-        private int _ticks = 30 * 60; // 1 minute in 30 TPS
+        private const string TileName = "floor_steel";
+        private const string WallPrototype = "reinforced_wall";
+        private const int SquareSize = 32;
+        private const int Ticks = 30 * 60; // 1 minute in 30 TPS
 
-        private Dictionary<Gas, float> _gases = new Dictionary<Gas, float>()
+        private readonly Dictionary<Gas, float> _gases = new Dictionary<Gas, float>()
         {
             { Gas.Oxygen, 10000f },
             { Gas.Phoron, 10000f }
@@ -34,7 +34,7 @@ namespace Content.Benchmarks
         private float _temperature = 10000f;
         private ServerIntegrationInstance _server;
 
-        private int HalfSquareSize => _squareSize / 2;
+        private int HalfSquareSize => SquareSize / 2;
 
         [GlobalSetup(Target = nameof(PhoronFireBenchmarkNaive))]
         public void SetupNaive()
@@ -76,19 +76,19 @@ namespace Content.Benchmarks
         [Benchmark(Baseline = true)]
         public void PhoronFireBenchmarkNaive()
         {
-            _server.Loop(AtmosFire, _ticks);
+            _server.Loop(AtmosFire, Ticks);
         }
 
         [Benchmark]
         public void PhoronFireBenchmarkSse()
         {
-            _server.Loop(AtmosFire, _ticks);
+            _server.Loop(AtmosFire, Ticks);
         }
 
         [Benchmark]
         public void PhoronFireBenchmarkAvx()
         {
-            _server.Loop(AtmosFire, _ticks);
+            _server.Loop(AtmosFire, Ticks);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Content.Benchmarks
             var map = mapManager.GetMapEntity(newMap);
             var gridEnt = entityManager.GetEntity(grid.GridEntityId);
 
-            var tile = new Tile(tileDefinitionManager[_tileName].TileId);
+            var tile = new Tile(tileDefinitionManager[TileName].TileId);
 
             var gridAtmos = gridEnt.AddComponent<GridAtmosphereComponent>();
 
@@ -133,7 +133,7 @@ namespace Content.Benchmarks
 
                     if (CoordinateWall(x) || CoordinateWall(y))
                     {
-                        entityManager.SpawnEntity(_wallPrototype, new EntityCoordinates(gridEnt.Uid, vector));
+                        entityManager.SpawnEntity(WallPrototype, new EntityCoordinates(gridEnt.Uid, vector));
                     }
                 }
             }
