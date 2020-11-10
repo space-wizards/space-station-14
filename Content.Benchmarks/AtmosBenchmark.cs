@@ -18,6 +18,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Benchmarks
 {
+    [SimpleJob(targetCount:50)]
     public class AtmosBenchmark : ContentBenchmark
     {
         private const string TileName = "floor_steel";
