@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.MachineLinking;
+using Content.Server.GameObjects.EntitySystems.Click;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
@@ -25,7 +26,7 @@ namespace Content.Server.GameObjects.EntitySystems
             _transmitters = new Dictionary<NetUserId, SignalTransmitterComponent>();
         }
 
-        public void SignalLinkerKeybind(NetUserId id, bool? enable)
+        public bool SignalLinkerKeybind(NetUserId id, bool? enable)
         {
             if (enable == null)
             {
@@ -36,13 +37,13 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 if (_transmitters.ContainsKey(id))
                 {
-                    return;
+                    return true;
                 }
 
                 if (_transmitters.Count == 0)
                 {
                     CommandBinds.Builder
-                        .Bind(EngineKeyFunctions.Use, new PointerInputCmdHandler(HandleUse))
+                        .BindBefore(EngineKeyFunctions.Use, new PointerInputCmdHandler(HandleUse), typeof(InteractionSystem))
                         .Register<SignalLinkerSystem>();
                 }
 
@@ -53,7 +54,7 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 if (!_transmitters.ContainsKey(id))
                 {
-                    return;
+                    return false;
                 }
 
                 _transmitters.Remove(id);
@@ -62,6 +63,7 @@ namespace Content.Server.GameObjects.EntitySystems
                     CommandBinds.Unregister<SignalLinkerSystem>();
                 }
             }
+            return enable == true;
         }
 
         private bool HandleUse(ICommonSession session, EntityCoordinates coords, EntityUid uid)
@@ -129,7 +131,8 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
             }
 
-            system.SignalLinkerKeybind(player.UserId, enable);
+            var ret = system.SignalLinkerKeybind(player.UserId, enable);
+            shell.SendText(player, ret ? "Enabled" : "Disabled");
         }
     }
 }

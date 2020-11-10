@@ -25,7 +25,7 @@ namespace Content.Server.GlobalVerbs
                 return;
             }
 
-            if (!EntitySystem.Get<PointingSystem>().InRange(user.Transform.Coordinates, target.Transform.Coordinates))
+            if (!EntitySystem.Get<PointingSystem>().InRange(user, target.Transform.Coordinates))
             {
                 return;
             }

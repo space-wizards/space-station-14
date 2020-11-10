@@ -41,8 +41,6 @@ namespace Content.Shared.GameObjects.EntitySystems
                 .Bind(EngineKeyFunctions.MoveDown, moveDownCmdHandler)
                 .Bind(EngineKeyFunctions.Walk, new WalkInputCmdHandler())
                 .Register<SharedMoverSystem>();
-
-            _configurationManager.RegisterCVar("game.diagonalmovement", true, CVar.ARCHIVE);
         }
 
         /// <inheritdoc />
