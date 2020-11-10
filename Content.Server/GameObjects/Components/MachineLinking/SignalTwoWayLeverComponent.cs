@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Content.Server.GameObjects.Components.MachineLinking.Signals;
 using Content.Shared.GameObjects.Components.Conveyor;
 using Content.Shared.GameObjects.Components.MachineLinking;
@@ -28,7 +29,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
             {
                 _state = value;
 
-                if (Owner.TryGetComponent(out AppearanceComponent appearance))
+                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
                 {
                     appearance.SetData(TwoWayLeverVisuals.State, value);
                 }
