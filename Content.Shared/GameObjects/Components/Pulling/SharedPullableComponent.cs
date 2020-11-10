@@ -1,21 +1,25 @@
 ﻿#nullable enable
 using System;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Pulling
 {
-    public abstract class SharedPullableComponent : Component
+    public abstract class SharedPullableComponent : Component, ICollideSpecial
     {
         public override string Name => "Pullable";
         public override uint? NetID => ContentNetIDs.PULLABLE;
+
+        [ComponentDependency] private readonly IPhysicsComponent? _physics = default!;
 
         private IEntity? _puller;
 
@@ -32,7 +36,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
                 _puller = value;
                 Dirty();
 
-                if (!Owner.TryGetComponent(out IPhysicsComponent? physics))
+                if (_physics == null)
                 {
                     return;
                 }
@@ -41,7 +45,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
 
                 if (value == null)
                 {
-                    if (physics.TryGetController(out controller))
+                    if (_physics.TryGetController(out controller))
                     {
                         controller.StopPull();
                     }
@@ -49,7 +53,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
                     return;
                 }
 
-                controller = physics.EnsureController<PullController>();
+                controller = _physics.EnsureController<PullController>();
                 controller.StartPull(value);
             }
         }
@@ -63,12 +67,12 @@ namespace Content.Shared.GameObjects.Components.Pulling
                 return false;
             }
 
-            if (!puller.TryGetComponent(out IPhysicsComponent? physics))
+            if (_physics == null)
             {
                 return false;
             }
 
-            if (physics.Anchored)
+            if (_physics.Anchored)
             {
                 return false;
             }
@@ -141,12 +145,12 @@ namespace Content.Shared.GameObjects.Components.Pulling
                 return false;
             }
 
-            if (!Owner.TryGetComponent(out IPhysicsComponent? physics))
+            if (_physics == null)
             {
                 return false;
             }
 
-            if (!physics.TryGetController(out PullController controller))
+            if (!_physics.TryGetController(out PullController controller))
             {
                 return false;
             }
@@ -231,6 +235,16 @@ namespace Content.Shared.GameObjects.Components.Pulling
             TryStopPull();
 
             base.OnRemove();
+        }
+
+        public bool PreventCollide(IPhysBody collidedWith)
+        {
+            if (_puller == null || _physics == null)
+            {
+                return false;
+            }
+
+            return (_physics.CollisionLayer & collidedWith.CollisionMask) == (int) CollisionGroup.MobImpassable;
         }
     }
 

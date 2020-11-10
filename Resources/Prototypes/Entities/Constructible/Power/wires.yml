@@ -6,8 +6,12 @@
     mode: SnapgridCenter
   components:
   - type: Clickable
-  - type: InteractionOutline
   - type: Physics
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.5, -0.5, 0.5, 0.5"
+        layer: [ Underplating ]
+  - type: InteractionOutline
   - type: SnapGrid
     offset: Center
   - type: Sprite
@@ -44,7 +48,10 @@
     wireType: HighVoltage
   - type: Destructible
     resistances: metallicResistances
-    spawnOnDestroy: HVWireStack1
+    spawnOnDestroy:
+      HVWireStack1:
+        Min: 1
+        Max: 1
 
 - type: entity
   parent: WireBase
@@ -73,7 +80,10 @@
     wireType: MediumVoltage
   - type: Destructible
     resistances: metallicResistances
-    spawnOnDestroy: MVWireStack1
+    spawnOnDestroy:
+      MVWireStack1:
+        Min: 1
+        Max: 1
 
 - type: entity
   parent: WireBase
@@ -104,4 +114,7 @@
     wireType: Apc
   - type: Destructible
     resistances: metallicResistances
-    spawnOnDestroy: ApcExtensionCableStack1
+    spawnOnDestroy:
+      ApcExtensionCableStack1:
+        Min: 1
+        Max: 1

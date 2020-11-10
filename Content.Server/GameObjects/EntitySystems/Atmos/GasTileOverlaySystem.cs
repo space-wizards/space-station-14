@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Content.Server.GameObjects.Components.Atmos;
+using Content.Shared;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
+using Robust.Shared;
 using Robust.Shared.Enums;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
@@ -65,7 +67,6 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
             _atmosphereSystem = Get<AtmosphereSystem>();
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             _mapManager.OnGridRemoved += OnGridRemoved;
-            _configManager.RegisterCVar("net.gasoverlaytickrate", 3.0f);
         }
 
         public override void Shutdown()
@@ -228,14 +229,14 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
         public override void Update(float frameTime)
         {
             AccumulatedFrameTime += frameTime;
-            _updateCooldown = 1 / _configManager.GetCVar<float>("net.gasoverlaytickrate");
+            _updateCooldown = 1 / _configManager.GetCVar(CCVars.NetGasOverlayTickRate);
 
             if (AccumulatedFrameTime < _updateCooldown)
             {
                 return;
             }
 
-            _updateRange = _configManager.GetCVar<float>("net.maxupdaterange") + RangeOffset;
+            _updateRange = _configManager.GetCVar(CVars.NetMaxUpdateRange) + RangeOffset;
 
             // TODO: So in the worst case scenario we still have to send a LOT of tile data per tick if there's a fire.
             // If we go with say 15 tile radius then we have up to 900 tiles to update per tick.

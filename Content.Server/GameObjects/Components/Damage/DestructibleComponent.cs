@@ -1,10 +1,13 @@
-﻿using Content.Shared.GameObjects.Components.Damage;
+﻿using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Stack;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.EntitySystems;
-using Robust.Server.GameObjects.EntitySystems;
+using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Damage
@@ -17,6 +20,8 @@ namespace Content.Server.GameObjects.Components.Damage
     public class DestructibleComponent : RuinableComponent, IDestroyAct
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         protected ActSystem ActSystem;
 
@@ -24,22 +29,51 @@ namespace Content.Server.GameObjects.Components.Damage
         public override string Name => "Destructible";
 
         /// <summary>
-        ///     Entity spawned upon destruction.
+        /// Entities spawned on destruction plus the min and max amount spawned.
         /// </summary>
-        public string SpawnOnDestroy { get; private set; }
+        public Dictionary<string, MinMax> SpawnOnDestroy { get; private set; }
 
         void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
         {
-            if (!string.IsNullOrWhiteSpace(SpawnOnDestroy) && eventArgs.IsSpawnWreck)
+            if (SpawnOnDestroy == null || !eventArgs.IsSpawnWreck) return;
+            foreach (var (key, value) in SpawnOnDestroy)
             {
-                Owner.EntityManager.SpawnEntity(SpawnOnDestroy, Owner.Transform.Coordinates);
+                int count;
+                if (value.Min >= value.Max)
+                {
+                    count = value.Min;
+                }
+                else
+                {
+                    count = _random.Next(value.Min, value.Max + 1);
+                }
+
+                if (count == 0) continue;
+
+                if (EntityPrototypeHelpers.HasComponent<StackComponent>(key))
+                {
+                    var spawned = Owner.EntityManager.SpawnEntity(key, Owner.Transform.Coordinates);
+                    var stack = spawned.GetComponent<StackComponent>();
+                    stack.Count = count;
+                    spawned.RandomOffset(0.5f);
+                }
+                else
+                {
+                    for (var i = 0; i < count; i++)
+                    {
+                        var spawned = Owner.EntityManager.SpawnEntity(key, Owner.Transform.Coordinates);
+                        spawned.RandomOffset(0.5f);
+                    }
+                }
             }
         }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(this, d => d.SpawnOnDestroy, "spawnOnDestroy", string.Empty);
+
+
+            serializer.DataField(this, d => d.SpawnOnDestroy, "spawnOnDestroy", null);
         }
 
         public override void Initialize()
@@ -56,11 +90,13 @@ namespace Content.Server.GameObjects.Components.Damage
                 var pos = Owner.Transform.Coordinates;
                 ActSystem.HandleDestruction(Owner,
                     true); //This will call IDestroyAct.OnDestroy on this component (and all other components on this entity)
-                if (DestroySound != string.Empty)
-                {
-                    EntitySystem.Get<AudioSystem>().PlayAtCoords(DestroySound, pos);
-                }
             }
+        }
+
+        public struct MinMax
+        {
+            public int Min;
+            public int Max;
         }
     }
 }

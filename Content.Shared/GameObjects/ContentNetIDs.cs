@@ -82,6 +82,8 @@
         public const uint PLACEABLE_SURFACE = 1076;
         public const uint STORABLE = 1077;
         public const uint PULLABLE = 1078;
+        public const uint GAS_TANK = 1079;
+        public const uint SINGULARITY = 1080;
 
         // Net IDs for integration tests.
         public const uint PREDICTION_TEST = 10001;

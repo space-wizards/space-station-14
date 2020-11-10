@@ -15,6 +15,7 @@ namespace Content.Server.Interfaces
         public bool Send(int frequency, string address, NetworkPayload payload);
         /// <see cref="Send(int, string, NetworkPayload)"/>
         public bool Send(string address, NetworkPayload payload);
+
         /// <summary>
         /// Sends a package to all devices
         /// </summary>

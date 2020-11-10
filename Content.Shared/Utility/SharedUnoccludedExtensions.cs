@@ -18,7 +18,7 @@ namespace Content.Shared.Utility
             IEntity other,
             float range = ExamineRange,
             Ignored? predicate = null,
-            bool ignoreInsideBlocker = false)
+            bool ignoreInsideBlocker = true)
         {
             return ExamineSystemShared.InRangeUnOccluded(origin, other, range, predicate, ignoreInsideBlocker);
         }
@@ -28,7 +28,7 @@ namespace Content.Shared.Utility
             IComponent other,
             float range = InteractionRange,
             Ignored? predicate = null,
-            bool ignoreInsideBlocker = false)
+            bool ignoreInsideBlocker = true)
         {
             return ExamineSystemShared.InRangeUnOccluded(origin, other, range, predicate, ignoreInsideBlocker);
         }
@@ -38,7 +38,7 @@ namespace Content.Shared.Utility
             IContainer other,
             float range = InteractionRange,
             Ignored? predicate = null,
-            bool ignoreInsideBlocker = false)
+            bool ignoreInsideBlocker = true)
         {
             var otherEntity = other.Owner;
 
@@ -50,7 +50,7 @@ namespace Content.Shared.Utility
             EntityCoordinates other,
             float range = InteractionRange,
             Ignored? predicate = null,
-            bool ignoreInsideBlocker = false)
+            bool ignoreInsideBlocker = true)
         {
             return ExamineSystemShared.InRangeUnOccluded(origin, other, range, predicate, ignoreInsideBlocker);
         }
@@ -60,7 +60,7 @@ namespace Content.Shared.Utility
             MapCoordinates other,
             float range = InteractionRange,
             Ignored? predicate = null,
-            bool ignoreInsideBlocker = false)
+            bool ignoreInsideBlocker = true)
         {
             return ExamineSystemShared.InRangeUnOccluded(origin, other, range, predicate, ignoreInsideBlocker);
         }
@@ -72,7 +72,7 @@ namespace Content.Shared.Utility
             IEntity other,
             float range = InteractionRange,
             Ignored? predicate = null,
-            bool ignoreInsideBlocker = false)
+            bool ignoreInsideBlocker = true)
         {
             var originEntity = origin.Owner;
 
@@ -84,7 +84,7 @@ namespace Content.Shared.Utility
             IComponent other,
             float range = InteractionRange,
             Ignored? predicate = null,
-            bool ignoreInsideBlocker = false)
+            bool ignoreInsideBlocker = true)
         {
             var originEntity = origin.Owner;
 
@@ -96,7 +96,7 @@ namespace Content.Shared.Utility
             IContainer other,
             float range = InteractionRange,
             Ignored? predicate = null,
-            bool ignoreInsideBlocker = false)
+            bool ignoreInsideBlocker = true)
         {
             var originEntity = origin.Owner;
             var otherEntity = other.Owner;
@@ -110,7 +110,7 @@ namespace Content.Shared.Utility
             EntityCoordinates other,
             float range = InteractionRange,
             Ignored? predicate = null,
-            bool ignoreInsideBlocker = false)
+            bool ignoreInsideBlocker = true)
         {
             var originEntity = origin.Owner;
 
@@ -122,7 +122,7 @@ namespace Content.Shared.Utility
             MapCoordinates other,
             float range = InteractionRange,
             Ignored? predicate = null,
-            bool ignoreInsideBlocker = false)
+            bool ignoreInsideBlocker = true)
         {
             var originEntity = origin.Owner;
 
@@ -137,7 +137,7 @@ namespace Content.Shared.Utility
             IEntity other,
             float range = InteractionRange,
             Ignored? predicate = null,
-            bool ignoreInsideBlocker = false)
+            bool ignoreInsideBlocker = true)
         {
             var originEntity = origin.Owner;
 
@@ -150,7 +150,7 @@ namespace Content.Shared.Utility
             IComponent other,
             float range = InteractionRange,
             Ignored? predicate = null,
-            bool ignoreInsideBlocker = false)
+            bool ignoreInsideBlocker = true)
         {
             var originEntity = origin.Owner;
 
@@ -162,7 +162,7 @@ namespace Content.Shared.Utility
             IContainer other,
             float range = InteractionRange,
             Ignored? predicate = null,
-            bool ignoreInsideBlocker = false)
+            bool ignoreInsideBlocker = true)
         {
             var originEntity = origin.Owner;
             var otherEntity = other.Owner;
@@ -176,7 +176,7 @@ namespace Content.Shared.Utility
             EntityCoordinates other,
             float range = InteractionRange,
             Ignored? predicate = null,
-            bool ignoreInsideBlocker = false)
+            bool ignoreInsideBlocker = true)
         {
             var originEntity = origin.Owner;
 
@@ -188,7 +188,7 @@ namespace Content.Shared.Utility
             MapCoordinates other,
             float range = InteractionRange,
             Ignored? predicate = null,
-            bool ignoreInsideBlocker = false)
+            bool ignoreInsideBlocker = true)
         {
             var originEntity = origin.Owner;
 
@@ -202,7 +202,7 @@ namespace Content.Shared.Utility
             IEntity other,
             float range = InteractionRange,
             Ignored? predicate = null,
-            bool ignoreInsideBlocker = false)
+            bool ignoreInsideBlocker = true)
         {
             var originPosition = origin.ToMap(other.EntityManager);
             var otherPosition = other.Transform.MapPosition;
@@ -216,7 +216,7 @@ namespace Content.Shared.Utility
             IComponent other,
             float range = InteractionRange,
             Ignored? predicate = null,
-            bool ignoreInsideBlocker = false)
+            bool ignoreInsideBlocker = true)
         {
             var originPosition = origin.ToMap(other.Owner.EntityManager);
             var otherPosition = other.Owner.Transform.MapPosition;
@@ -230,7 +230,7 @@ namespace Content.Shared.Utility
             IContainer other,
             float range = InteractionRange,
             Ignored? predicate = null,
-            bool ignoreInsideBlocker = false)
+            bool ignoreInsideBlocker = true)
         {
             var originPosition = origin.ToMap(other.Owner.EntityManager);
             var otherPosition = other.Owner.Transform.MapPosition;
@@ -244,7 +244,7 @@ namespace Content.Shared.Utility
             EntityCoordinates other,
             float range = InteractionRange,
             Ignored? predicate = null,
-            bool ignoreInsideBlocker = false,
+            bool ignoreInsideBlocker = true,
             IEntityManager? entityManager = null)
         {
             entityManager ??= IoCManager.Resolve<IEntityManager>();
@@ -261,7 +261,7 @@ namespace Content.Shared.Utility
             MapCoordinates other,
             float range = InteractionRange,
             Ignored? predicate = null,
-            bool ignoreInsideBlocker = false,
+            bool ignoreInsideBlocker = true,
             IEntityManager? entityManager = null)
         {
             entityManager ??= IoCManager.Resolve<IEntityManager>();
@@ -279,7 +279,7 @@ namespace Content.Shared.Utility
             IEntity other,
             float range = InteractionRange,
             Ignored? predicate = null,
-            bool ignoreInsideBlocker = false)
+            bool ignoreInsideBlocker = true)
         {
             var otherPosition = other.Transform.MapPosition;
 
@@ -292,7 +292,7 @@ namespace Content.Shared.Utility
             IComponent other,
             float range = InteractionRange,
             Ignored? predicate = null,
-            bool ignoreInsideBlocker = false)
+            bool ignoreInsideBlocker = true)
         {
             var otherPosition = other.Owner.Transform.MapPosition;
 
@@ -305,7 +305,7 @@ namespace Content.Shared.Utility
             IContainer other,
             float range = InteractionRange,
             Ignored? predicate = null,
-            bool ignoreInsideBlocker = false)
+            bool ignoreInsideBlocker = true)
         {
             var otherPosition = other.Owner.Transform.MapPosition;
 
@@ -318,7 +318,7 @@ namespace Content.Shared.Utility
             EntityCoordinates other,
             float range = InteractionRange,
             Ignored? predicate = null,
-            bool ignoreInsideBlocker = false,
+            bool ignoreInsideBlocker = true,
             IEntityManager? entityManager = null)
         {
             entityManager ??= IoCManager.Resolve<IEntityManager>();
@@ -334,7 +334,7 @@ namespace Content.Shared.Utility
             MapCoordinates other,
             float range = InteractionRange,
             Ignored? predicate = null,
-            bool ignoreInsideBlocker = false)
+            bool ignoreInsideBlocker = true)
         {
             return ExamineSystemShared.InRangeUnOccluded(origin, other, range, predicate,
                 ignoreInsideBlocker);
@@ -346,7 +346,7 @@ namespace Content.Shared.Utility
             this ITargetedInteractEventArgs args,
             float range = InteractionRange,
             Ignored? predicate = null,
-            bool ignoreInsideBlocker = false)
+            bool ignoreInsideBlocker = true)
         {
             return ExamineSystemShared.InRangeUnOccluded(args, range, predicate,
                 ignoreInsideBlocker);
@@ -356,7 +356,7 @@ namespace Content.Shared.Utility
             this DragDropEventArgs args,
             float range = InteractionRange,
             Ignored? predicate = null,
-            bool ignoreInsideBlocker = false)
+            bool ignoreInsideBlocker = true)
         {
             return ExamineSystemShared.InRangeUnOccluded(args, range, predicate,
                 ignoreInsideBlocker);
@@ -366,7 +366,7 @@ namespace Content.Shared.Utility
             this AfterInteractEventArgs args,
             float range = InteractionRange,
             Ignored? predicate = null,
-            bool ignoreInsideBlocker = false)
+            bool ignoreInsideBlocker = true)
         {
             return ExamineSystemShared.InRangeUnOccluded(args, range, predicate,
                 ignoreInsideBlocker);

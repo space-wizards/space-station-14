@@ -1,6 +1,7 @@
 ﻿using Content.Server.Interfaces;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
+using System;
 using System.Collections.Generic;
 
 namespace Content.Server.DeviceNetwork
@@ -13,7 +14,7 @@ namespace Content.Server.DeviceNetwork
         private const int MAX_PACKET_COUNT = 100;
         private const int MAX_DATA_COUNT = 100;
 
-        private readonly IRobustRandom _random = IoCManager.Resolve<IRobustRandom>();
+        [Dependency] private readonly IRobustRandom _random = default!;
         private readonly Dictionary<int, List<NetworkDevice>> _devices = new Dictionary<int, List<NetworkDevice>>();
         private readonly Queue<NetworkPacket> _packets = new Queue<NetworkPacket>();
 
@@ -42,20 +43,18 @@ namespace Content.Server.DeviceNetwork
 
         public void Update()
         {
-            var i = PACKAGES_PER_TICK;
-            while (_packets.Count > 0 && i > 0)
+            var count = Math.Min(PACKAGES_PER_TICK, _packets.Count);
+            for (var i = 0; i < count; i++)
             {
-                i--;
+                var package = _packets.Dequeue();
 
-                var packet = _packets.Dequeue();
-
-                if (packet.Broadcast)
+                if (package.Broadcast)
                 {
-                    BroadcastPackage(packet);
+                    BroadcastPackage(package);
                     continue;
                 }
 
-                SendPackage(packet);
+                SendPackage(package);
             }
         }
 
@@ -194,7 +193,6 @@ namespace Content.Server.DeviceNetwork
             public NetworkPayload Payload { get; set; }
             public Metadata Metadata;
             public string Sender;
-
         }
     }
 }

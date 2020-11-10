@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.Atmos;
+using Content.Shared;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
 using JetBrains.Annotations;
@@ -47,7 +48,6 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
 
             _atmosphereSystem = Get<AtmosphereSystem>();
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
-            _configManager.RegisterCVar("net.atmosdbgoverlaytickrate", 3.0f);
         }
 
         public override void Shutdown()
@@ -89,7 +89,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
         public override void Update(float frameTime)
         {
             AccumulatedFrameTime += frameTime;
-            _updateCooldown = 1 / _configManager.GetCVar<float>("net.atmosdbgoverlaytickrate");
+            _updateCooldown = 1 / _configManager.GetCVar(CCVars.NetAtmosDebugOverlayTickRate);
 
             if (AccumulatedFrameTime < _updateCooldown)
             {

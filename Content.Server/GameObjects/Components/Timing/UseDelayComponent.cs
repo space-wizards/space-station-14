@@ -2,6 +2,7 @@
 using System.Threading;
 using Content.Shared.GameObjects.Components.Items;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
@@ -46,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Timing
 
             cancellationTokenSource = new CancellationTokenSource();
 
-            Timer.Spawn(TimeSpan.FromSeconds(Delay), () => ActiveDelay = false, cancellationTokenSource.Token);
+            Owner.SpawnTimer(TimeSpan.FromSeconds(Delay), () => ActiveDelay = false, cancellationTokenSource.Token);
 
             _lastUseTime = IoCManager.Resolve<IGameTiming>().CurTime;
 

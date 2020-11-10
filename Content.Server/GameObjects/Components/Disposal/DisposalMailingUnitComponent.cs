@@ -14,6 +14,7 @@ using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
+using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Disposal;
 using Content.Shared.GameObjects.EntitySystems;
@@ -602,12 +603,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 UserInterface.OnReceiveMessage += OnUiReceiveMessage;
             }
 
-            var network = IoCManager.Resolve<IDeviceNetwork>();
             _connection = new WiredNetworkConnection(OnReceiveNetMessage, false, Owner);
-
-            if (Owner.TryGetComponent<ConfigurationComponent>(out var configuration))
-                configuration.OnConfigUpdate += OnConfigUpdate;
-
             UpdateInterface();
         }
 
@@ -672,6 +668,9 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             switch (message)
             {
+                case SharedConfigurationComponent.ConfigUpdatedComponentMessage msg:
+                    OnConfigUpdate(msg.Config);
+                    break;
                 case RelayMovementEntityMessage msg:
                     if (!msg.Entity.TryGetComponent(out HandsComponent? hands) ||
                         hands.Count == 0 ||
@@ -701,7 +700,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                     if (_tag == "" || !Powered)
                         return;
 
-                    var data = NetworkPayload.Create(
+                   var data = NetworkPayload.Create(
                         (NetworkUtils.COMMAND, NET_CMD_RESPONSE),
                         (NET_TAG, _tag)
                    );
@@ -743,8 +742,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-            // Duplicated code here, not sure how else to get actor inside to make UserInterface happy. 
-
+            // Duplicated code here, not sure how else to get actor inside to make UserInterface happy.
             if (IsValidInteraction(eventArgs))
             {
                 UpdateTargetList();

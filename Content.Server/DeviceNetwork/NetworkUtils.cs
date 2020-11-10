@@ -1,7 +1,7 @@
 ﻿using Content.Server.Interfaces;
 
 namespace Content.Server.DeviceNetwork
-{
+{ 
     /// <summary>
     /// A collection of utilities to help with using device networks
     /// </summary>
@@ -26,7 +26,6 @@ namespace Content.Server.DeviceNetwork
                     (COMMAND, "ping_response"),
                     (MESSAGE, message)
                 );
-
                 connection.Send(connection.Frequency, sender, response);
             }
         }
