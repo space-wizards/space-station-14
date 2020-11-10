@@ -44,11 +44,6 @@ namespace Content.Server.GameObjects.Components.Atmos
             AutoClose = false;
             Safety = false;
 
-            if (Occludes && Owner.TryGetComponent(out OccluderComponent occluder))
-            {
-                occluder.Enabled = false;
-            }
-
             State = DoorState.Open;
             SetAppearance(DoorVisualState.Open);
         }
