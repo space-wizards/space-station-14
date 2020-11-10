@@ -22,6 +22,8 @@ namespace Content.Shared.Physics
          * other controllers have a chance to do their thing).
          */
 
+        private float _maxImpulse = 20.0f;
+
         public void Push(Vector2 velocityDirection, float speed)
         {
             //Logger.Debug($"Push is {velocityDirection}");
@@ -32,12 +34,21 @@ namespace Content.Shared.Physics
              * we can apply to our existing velocity to get to that direction as well
              */
 
-            var difference = velocityDirection * speed * 4.0f - existingVelocity;
+            var difference = velocityDirection * speed * _maxImpulse - existingVelocity;
 
             // Close enough
             if (difference.EqualsApprox(Vector2.Zero, 0.001)) return;
 
-            var velocity = difference;
+            Vector2 velocity;
+
+            if (difference.Length > _maxImpulse)
+            {
+                velocity = difference.Normalized * _maxImpulse;
+            }
+            else
+            {
+                velocity = difference;
+            }
 
             // TODO here and below: It's possible to overshoot the difference.
 
