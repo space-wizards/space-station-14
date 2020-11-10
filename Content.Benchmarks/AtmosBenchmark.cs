@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Intrinsics.X86;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Disassemblers;
@@ -16,6 +17,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Benchmarks
 {
+    [SimpleJob(RunStrategy.Monitoring)]
     public class AtmosBenchmark : ContentBenchmark
     {
         private string _tileName = "floor_steel";
@@ -34,65 +36,100 @@ namespace Content.Benchmarks
 
         private int HalfSquareSize => _squareSize / 2;
 
+        [IterationSetup]
+        public void IterationSetup()
+        {
+            _server = StartServer();
+        }
+
+        [Benchmark(Baseline = true)]
+        public void PhoronFireBenchmarkNaive()
+        {
+            NumericsHelpers.Enabled = false;
+            NumericsHelpers.AvxEnabled = false;
+            _server.Loop(AtmosFire, _ticks);
+        }
+
         [Benchmark]
-        public void PhoronFireBenchmark()
+        public void PhoronFireBenchmarkSse()
+        {
+            if (!Sse.IsSupported)
+            {
+                throw new NotSupportedException("SSE is not supported!");
+            }
+
+            NumericsHelpers.Enabled = true;
+            NumericsHelpers.AvxEnabled = false;
+            _server.Loop(AtmosFire, _ticks);
+        }
+
+        [Benchmark]
+        public void PhoronFireBenchmarkAvx()
+        {
+            if (!Avx.IsSupported)
+            {
+                throw new NotSupportedException("AVX is not supported!");
+            }
+
+            NumericsHelpers.Enabled = true;
+            NumericsHelpers.AvxEnabled = true;
+            _server.Loop(AtmosFire, _ticks);
+        }
+
+        private void AtmosFire()
         {
             bool CoordinateWall(int x) => x == -HalfSquareSize || x == (HalfSquareSize - 1);
+            var mapManager = IoCManager.Resolve<IMapManager>();
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
+            var pauseManager = IoCManager.Resolve<IPauseManager>();
 
-            _server.Loop(() =>
+            foreach (var mapId in mapManager.GetAllMapIds())
             {
-                var mapManager = IoCManager.Resolve<IMapManager>();
-                var entityManager = IoCManager.Resolve<IEntityManager>();
-                var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
-                var pauseManager = IoCManager.Resolve<IPauseManager>();
+                   pauseManager.SetMapPaused(mapId, true);
+            }
 
-                foreach (var mapId in mapManager.GetAllMapIds())
+            var newMap = mapManager.CreateMap();
+            var grid = mapManager.CreateGrid(newMap);
+            var map = mapManager.GetMapEntity(newMap);
+            var gridEnt = entityManager.GetEntity(grid.GridEntityId);
+
+            var tile = new Tile(tileDefinitionManager[_tileName].TileId);
+
+            var gridAtmos = gridEnt.AddComponent<GridAtmosphereComponent>();
+
+            for (var x = -HalfSquareSize; x < HalfSquareSize; x++)
+            {
+                for (var y = -HalfSquareSize; y < HalfSquareSize; y++)
                 {
-                    pauseManager.SetMapPaused(mapId, true);
-                }
+                    var vector = new Vector2i(x, y);
+                    grid.SetTile(vector, tile);
 
-                var newMap = mapManager.CreateMap();
-                var grid = mapManager.CreateGrid(newMap);
-                var map = mapManager.GetMapEntity(newMap);
-                var gridEnt = entityManager.GetEntity(grid.GridEntityId);
-
-                var tile = new Tile(tileDefinitionManager[_tileName].TileId);
-
-                var gridAtmos = gridEnt.AddComponent<GridAtmosphereComponent>();
-
-                for (var x = -HalfSquareSize; x < HalfSquareSize; x++)
-                {
-                    for (var y = -HalfSquareSize; y < HalfSquareSize; y++)
+                    if (CoordinateWall(x) || CoordinateWall(y))
                     {
-                        var vector = new Vector2i(x, y);
-                        grid.SetTile(vector, tile);
-
-                        if (CoordinateWall(x) || CoordinateWall(y))
-                        {
-                            entityManager.SpawnEntity(_wallPrototype, new EntityCoordinates(gridEnt.Uid, vector));
-                        }
+                        entityManager.SpawnEntity(_wallPrototype, new EntityCoordinates(gridEnt.Uid, vector));
                     }
                 }
+            }
 
-                gridAtmos.RepopulateTiles();
-                gridAtmos.Update(0f);
+            gridAtmos.RepopulateTiles();
+            gridAtmos.Update(0f);
 
-                var zeroAtmos = gridAtmos.GetTile(Vector2i.Zero);
+            var zeroAtmos = gridAtmos.GetTile(Vector2i.Zero);
 
-                if (zeroAtmos == null)
-                    throw new NullReferenceException("Atmosphere at (0, 0) is null!");
+            if (zeroAtmos == null)
+                throw new NullReferenceException("Atmosphere at (0, 0) is null!");
 
-                foreach (var (gas, amount) in _gases)
-                {
-                    zeroAtmos.Air.AdjustMoles(gas, amount);
-                }
+            foreach (var (gas, amount) in _gases)
+            {
+                zeroAtmos.Air.AdjustMoles(gas, amount);
+            }
 
-                zeroAtmos.Air.Temperature = _temperature;
+            zeroAtmos.Air.Temperature = _temperature;
 
-                gridAtmos.AddActiveTile(zeroAtmos);
+            gridAtmos.AddActiveTile(zeroAtmos);
 
-                gridAtmos.Invalidate(Vector2i.Zero);
-            }, _ticks);
+            gridAtmos.Invalidate(Vector2i.Zero);
         }
     }
 }

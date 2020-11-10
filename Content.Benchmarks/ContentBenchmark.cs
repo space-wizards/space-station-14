@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Engines;
 using Content.IntegrationTests;
+using NUnit.Framework;
 
 namespace Content.Benchmarks
 {
