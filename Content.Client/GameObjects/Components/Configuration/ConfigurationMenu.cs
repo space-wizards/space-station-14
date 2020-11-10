@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Namotion.Reflection;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -142,7 +141,7 @@ namespace Content.Client.GameObjects.Components.Wires
 
         private void OnConfirm(ButtonEventArgs args)
         {
-            var config = GenerateDictionary<string, LineEdit>(_inputs, "Text");
+            var config = GenerateDictionary(_inputs, "Text");
 
             Owner.SendConfiguration(config);
             Close();
@@ -153,13 +152,13 @@ namespace Content.Client.GameObjects.Components.Wires
             return Owner.Validation == null || Owner.Validation.IsMatch(value);
         }
 
-        private Dictionary<string, TConfig> GenerateDictionary<TConfig, TInput>(List<(string name, TInput input)> inputs, string propertyName) where TInput : Control
+        private Dictionary<string, string> GenerateDictionary(IEnumerable<(string name, LineEdit input)> inputs, string propertyName)
         {
-            var dictionary = new Dictionary<string, TConfig>();
+            var dictionary = new Dictionary<string, string>();
+
             foreach (var input in inputs)
             {
-                var value = input.input.TryGetPropertyValue<TConfig>(propertyName);
-                dictionary.Add(input.name, value);
+                dictionary.Add(input.name, input.input.Text);
             }
 
             return dictionary;

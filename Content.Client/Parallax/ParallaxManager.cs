@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Content.Client.Interfaces.Parallax;
+using Content.Shared;
 using Nett;
 using Robust.Client.Graphics;
 using Robust.Client.Interfaces.ResourceManagement;
@@ -34,12 +35,12 @@ namespace Content.Client.Parallax
 
         public async void LoadParallax()
         {
-            if (!_configurationManager.GetCVar<bool>("parallax.enabled"))
+            if (!_configurationManager.GetCVar(CCVars.ParallaxEnabled))
             {
                 return;
             }
 
-            var debugParallax = _configurationManager.GetCVar<bool>("parallax.debug");
+            var debugParallax = _configurationManager.GetCVar(CCVars.ParallaxDebug);
             string contents;
             TomlTable table;
             // Load normal config into memory

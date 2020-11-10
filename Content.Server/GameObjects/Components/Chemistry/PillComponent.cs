@@ -84,7 +84,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             var trueTarget = target ?? user;
 
             if (!trueTarget.TryGetComponent(out IBody body) ||
-                !body.TryGetMechanismBehaviors<StomachBehaviorComponent>(out var stomachs))
+                !body.TryGetMechanismBehaviors<StomachBehavior>(out var stomachs))
             {
                 return false;
             }

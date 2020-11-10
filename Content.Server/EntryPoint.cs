@@ -11,6 +11,7 @@ using Content.Server.Interfaces.GameTicking;
 using Content.Server.Interfaces.PDA;
 using Content.Server.Sandbox;
 using Content.Shared.Kitchen;
+using Content.Shared.Alert;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Interfaces.GameObjects;
@@ -78,6 +79,7 @@ namespace Content.Server
 
             _gameTicker.Initialize();
             IoCManager.Resolve<RecipeManager>().Initialize();
+            IoCManager.Resolve<AlertManager>().Initialize();
             IoCManager.Resolve<BlackboardManager>().Initialize();
             IoCManager.Resolve<ConsiderationsManager>().Initialize();
             IoCManager.Resolve<IPDAUplinkManager>().Initialize();

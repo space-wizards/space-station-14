@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -41,7 +42,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         protected float KnockdownTimer;
         protected float SlowdownTimer;
 
-        private string _stunTexture;
+        private string _stunAlertId;
 
         protected CancellationTokenSource StatusRemoveCancellation = new CancellationTokenSource();
 
@@ -117,7 +118,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
             StunnedTimer = seconds;
             LastStun = _gameTiming.CurTime;
 
-            SetStatusEffect();
+            SetAlert();
             OnStun();
 
             Dirty();
@@ -144,7 +145,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
             KnockdownTimer = seconds;
             LastStun = _gameTiming.CurTime;
 
-            SetStatusEffect();
+            SetAlert();
             OnKnockdown();
 
             Dirty();
@@ -186,18 +187,18 @@ namespace Content.Shared.GameObjects.Components.Mobs
             if (Owner.TryGetComponent(out MovementSpeedModifierComponent movement))
                 movement.RefreshMovementSpeedModifiers();
 
-            SetStatusEffect();
+            SetAlert();
             Dirty();
         }
 
-        private void SetStatusEffect()
+        private void SetAlert()
         {
-            if (!Owner.TryGetComponent(out SharedStatusEffectsComponent status))
+            if (!Owner.TryGetComponent(out SharedAlertsComponent status))
             {
                 return;
             }
 
-            status.ChangeStatusEffect(StatusEffect.Stun, _stunTexture,
+            status.ShowAlert(AlertType.Stun, cooldown:
                 (StunStart == null || StunEnd == null) ? default : (StunStart.Value, StunEnd.Value));
             StatusRemoveCancellation.Cancel();
             StatusRemoveCancellation = new CancellationTokenSource();
@@ -212,8 +213,8 @@ namespace Content.Shared.GameObjects.Components.Mobs
             serializer.DataField(ref _slowdownCap, "slowdownCap", 20f);
             serializer.DataField(ref _helpInterval, "helpInterval", 1f);
             serializer.DataField(ref _helpKnockdownRemove, "helpKnockdownRemove", 1f);
-            serializer.DataField(ref _stunTexture, "stunTexture",
-                "/Textures/Objects/Weapons/Melee/stunbaton.rsi/stunbaton_off.png");
+            serializer.DataField(ref _stunAlertId, "stunAlertId",
+                "stun");
         }
 
         protected virtual void OnInteractHand() { }
@@ -230,7 +231,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
             KnockdownTimer -= _helpKnockdownRemove;
 
-            SetStatusEffect();
+            SetAlert();
             Dirty();
 
             return true;
