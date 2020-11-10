@@ -16,7 +16,7 @@ namespace Content.Tests.Shared.Alert
         private const string PROTOTYPE = @"- type: alert
   alertType: HumanHealth
   category: Health
-  icon: /Textures/Interface/StatusEffects/Human/human.rsi/human.png
+  icon: /Textures/Interface/Alerts/Human/human.rsi/human.png
   name: Health
   description: ""[color=green]Green[/color] good. [color=red]Red[/color] bad.""
   minSeverity: 0
@@ -32,11 +32,11 @@ namespace Content.Tests.Shared.Alert
         }
 
 
-        [TestCase(0, "/Textures/Interface/StatusEffects/Human/human.rsi/human0.png")]
-        [TestCase(null, "/Textures/Interface/StatusEffects/Human/human.rsi/human0.png")]
-        [TestCase(1, "/Textures/Interface/StatusEffects/Human/human.rsi/human1.png")]
-        [TestCase(6, "/Textures/Interface/StatusEffects/Human/human.rsi/human6.png")]
-        [TestCase(7, "/Textures/Interface/StatusEffects/Human/human.rsi/human6.png")]
+        [TestCase(0, "/Textures/Interface/Alerts/Human/human.rsi/human0.png")]
+        [TestCase(null, "/Textures/Interface/Alerts/Human/human.rsi/human0.png")]
+        [TestCase(1, "/Textures/Interface/Alerts/Human/human.rsi/human1.png")]
+        [TestCase(6, "/Textures/Interface/Alerts/Human/human.rsi/human6.png")]
+        [TestCase(7, "/Textures/Interface/Alerts/Human/human.rsi/human6.png")]
         public void GetsIconPath(short? severity, string expected)
         {
 

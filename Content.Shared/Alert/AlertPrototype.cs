@@ -140,7 +140,7 @@ namespace Content.Shared.Alert
     /// I.e., entirely defined by the category, if a category was specified, otherwise
     /// falls back to the id.
     /// </summary>
-    [Serializable]
+    [Serializable, NetSerializable]
     public struct AlertKey
     {
         private readonly AlertType? _alertType;

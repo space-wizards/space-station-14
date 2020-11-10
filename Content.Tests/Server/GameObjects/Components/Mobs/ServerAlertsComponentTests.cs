@@ -21,12 +21,12 @@ namespace Content.Tests.Server.GameObjects.Components.Mobs
 - type: alert
   alertType: LowPressure
   category: Pressure
-  icon: /Textures/Interface/StatusEffects/Pressure/lowpressure.png
+  icon: /Textures/Interface/Alerts/Pressure/lowpressure.png
 
 - type: alert
   alertType: HighPressure
   category: Pressure
-  icon: /Textures/Interface/StatusEffects/Pressure/highpressure.png
+  icon: /Textures/Interface/Alerts/Pressure/highpressure.png
 ";
 
         [Test]

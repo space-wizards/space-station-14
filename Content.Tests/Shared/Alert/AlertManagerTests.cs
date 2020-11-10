@@ -17,11 +17,11 @@ namespace Content.Tests.Shared.Alert
         const string PROTOTYPES = @"
 - type: alert
   alertType: LowPressure
-  icon: /Textures/Interface/StatusEffects/Pressure/lowpressure.png
+  icon: /Textures/Interface/Alerts/Pressure/lowpressure.png
 
 - type: alert
   alertType: HighPressure
-  icon: /Textures/Interface/StatusEffects/Pressure/highpressure.png
+  icon: /Textures/Interface/Alerts/Pressure/highpressure.png
 ";
 
         [Test]
@@ -35,14 +35,14 @@ namespace Content.Tests.Shared.Alert
             alertManager.Initialize();
 
             Assert.That(alertManager.TryGet(AlertType.LowPressure, out var lowPressure));
-            Assert.That(lowPressure.IconPath, Is.EqualTo("/Textures/Interface/StatusEffects/Pressure/lowpressure.png"));
+            Assert.That(lowPressure.IconPath, Is.EqualTo("/Textures/Interface/Alerts/Pressure/lowpressure.png"));
             Assert.That(alertManager.TryGet(AlertType.HighPressure, out var highPressure));
-            Assert.That(highPressure.IconPath, Is.EqualTo("/Textures/Interface/StatusEffects/Pressure/highpressure.png"));
+            Assert.That(highPressure.IconPath, Is.EqualTo("/Textures/Interface/Alerts/Pressure/highpressure.png"));
 
             Assert.That(alertManager.TryGetWithEncoded(AlertType.LowPressure, out lowPressure, out var encodedLowPressure));
-            Assert.That(lowPressure.IconPath, Is.EqualTo("/Textures/Interface/StatusEffects/Pressure/lowpressure.png"));
+            Assert.That(lowPressure.IconPath, Is.EqualTo("/Textures/Interface/Alerts/Pressure/lowpressure.png"));
             Assert.That(alertManager.TryGetWithEncoded(AlertType.HighPressure, out highPressure, out var encodedHighPressure));
-            Assert.That(highPressure.IconPath, Is.EqualTo("/Textures/Interface/StatusEffects/Pressure/highpressure.png"));
+            Assert.That(highPressure.IconPath, Is.EqualTo("/Textures/Interface/Alerts/Pressure/highpressure.png"));
 
             Assert.That(alertManager.TryEncode(lowPressure, out var encodedLowPressure2));
             Assert.That(encodedLowPressure2, Is.EqualTo(encodedLowPressure));
