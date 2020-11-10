@@ -55,8 +55,6 @@ namespace Content.Tests.Shared.Alert
             Assert.That(alertManager.TryDecode(encodedHighPressure, out var decodedHighPressure));
             Assert.That(decodedHighPressure, Is.EqualTo(highPressure));
 
-            Assert.False(alertManager.TryDecode(-1, out _));
-            Assert.False(alertManager.TryDecode(999, out _));
             Assert.False(alertManager.TryEncode(AlertType.Debug1, out _));
             Assert.False(alertManager.TryGetWithEncoded(AlertType.Debug1, out _, out _));
 

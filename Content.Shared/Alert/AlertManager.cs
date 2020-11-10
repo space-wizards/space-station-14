@@ -17,7 +17,7 @@ namespace Content.Shared.Alert
         private readonly IPrototypeManager _prototypeManager = default!;
 
         private AlertPrototype[] _orderedAlerts;
-        private Dictionary<AlertType, int> _typeToIndex;
+        private Dictionary<AlertType, byte> _typeToIndex;
 
         public void Initialize()
         {
@@ -26,16 +26,23 @@ namespace Content.Shared.Alert
             _orderedAlerts =
                 _prototypeManager.EnumeratePrototypes<AlertPrototype>()
                     .OrderBy(prototype => prototype.AlertType).ToArray();
-            _typeToIndex = new Dictionary<AlertType, int>();
+            _typeToIndex = new Dictionary<AlertType, byte>();
 
             for (var i = 0; i < _orderedAlerts.Length; i++)
             {
-                if (!_typeToIndex.TryAdd(_orderedAlerts[i].AlertType, i))
+                if (i > byte.MaxValue)
+                {
+                    Logger.ErrorS("alert", "too many alerts for byte encoding ({0})! encoding will need" +
+                                           " to be changed to use a ushort rather than byte", _typeToIndex.Count);
+                    break;
+                }
+                if (!_typeToIndex.TryAdd(_orderedAlerts[i].AlertType, (byte) i))
                 {
                     Logger.ErrorS("alert",
                         "Found alert with duplicate id {0}", _orderedAlerts[i].AlertType);
                 }
             }
+
         }
 
         /// <summary>
@@ -58,17 +65,17 @@ namespace Content.Shared.Alert
         /// Tries to get the alert of the indicated type along with its encoding
         /// </summary>
         /// <returns>true if found</returns>
-        public bool TryGetWithEncoded(AlertType alertType, out AlertPrototype alert, out int encoded)
+        public bool TryGetWithEncoded(AlertType alertType, out AlertPrototype alert, out byte encoded)
         {
             if (_typeToIndex.TryGetValue(alertType, out var idx))
             {
                 alert = _orderedAlerts[idx];
-                encoded = idx;
+                encoded = (byte) idx;
                 return true;
             }
 
             alert = null;
-            encoded = -1;
+            encoded = 0;
             return false;
         }
 
@@ -76,7 +83,7 @@ namespace Content.Shared.Alert
         /// Tries to get the compact encoded representation of this alert
         /// </summary>
         /// <returns>true if successful</returns>
-        public bool TryEncode(AlertPrototype alert, out int encoded)
+        public bool TryEncode(AlertPrototype alert, out byte encoded)
         {
             return TryEncode(alert.AlertType, out encoded);
         }
@@ -86,7 +93,7 @@ namespace Content.Shared.Alert
         /// the indicated id
         /// </summary>
         /// <returns>true if successful</returns>
-        public bool TryEncode(AlertType alertType, out int encoded)
+        public bool TryEncode(AlertType alertType, out byte encoded)
         {
             if (_typeToIndex.TryGetValue(alertType, out var idx))
             {
@@ -94,7 +101,7 @@ namespace Content.Shared.Alert
                 return true;
             }
 
-            encoded = -1;
+            encoded = 0;
             return false;
         }
 
@@ -102,10 +109,9 @@ namespace Content.Shared.Alert
         /// Tries to get the alert from the encoded representation
         /// </summary>
         /// <returns>true if successful</returns>
-        public bool TryDecode(int encodedAlert, out AlertPrototype alert)
+        public bool TryDecode(byte encodedAlert, out AlertPrototype alert)
         {
-            if (encodedAlert < 0 ||
-                encodedAlert >= _orderedAlerts.Length)
+            if (encodedAlert >= _orderedAlerts.Length)
             {
                 alert = null;
                 return false;

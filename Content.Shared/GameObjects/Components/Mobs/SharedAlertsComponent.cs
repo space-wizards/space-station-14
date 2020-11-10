@@ -234,9 +234,9 @@ namespace Content.Shared.GameObjects.Components.Mobs
     [Serializable, NetSerializable]
     public class ClickAlertMessage : ComponentMessage
     {
-        public readonly int EncodedAlert;
+        public readonly byte EncodedAlert;
 
-        public ClickAlertMessage(int encodedAlert)
+        public ClickAlertMessage(byte encodedAlert)
         {
             Directed = true;
             EncodedAlert = encodedAlert;
@@ -246,7 +246,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
     [Serializable, NetSerializable]
     public struct AlertState
     {
-        public int AlertEncoded;
+        public byte AlertEncoded;
         public short? Severity;
         public ValueTuple<TimeSpan, TimeSpan>? Cooldown;
     }
