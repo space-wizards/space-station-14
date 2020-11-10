@@ -31,7 +31,7 @@
               doAfter: 3
 
 - type: constructionGraph
-  id: leverDefinitelyNotCopiedFromGirderNoNoNo
+  id: leverGraph
   start: start
   graph:
     - node: start

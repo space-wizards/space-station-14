@@ -1,5 +1,5 @@
 ﻿- type: construction
-  name: Conveyorbelt
+  name: Conveyor Belt
   id: conveyorbelt
   graph: ConveyorGraph
   startNode: start
@@ -13,9 +13,9 @@
     state: conveyor_stopped_cw
 
 - type: construction
-  name: TwoWayLever
+  name: Two Way Lever
   id: twowaylever
-  graph: leverDefinitelyNotCopiedFromGirderNoNoNo
+  graph: leverGraph
   startNode: start
   targetNode: lever
   category: Structures
