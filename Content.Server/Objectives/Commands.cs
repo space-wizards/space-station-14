@@ -1,4 +1,6 @@
 ﻿#nullable enable
+using System;
+using System.Linq;
 using Content.Server.Objectives.Interfaces;
 using Content.Server.Players;
 using Robust.Server.Interfaces.Console;
@@ -50,14 +52,74 @@ namespace Content.Server.Objectives
         }
     }
 
+    public class ListObjectivesCommand : IClientCommand
+    {
+        public string Command => "lsobjectives";
+        public string Description => "Lists all objectives in a players mind";
+        public string Help => "lsobjectives <username>";
+        public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
+        {
+            var mgr = IoCManager.Resolve<IPlayerManager>();
+            if (mgr.TryGetPlayerDataByUsername(args[0], out var data))
+            {
+                var mind = data.ContentData()?.Mind;
+                if (mind == null)
+                {
+                    shell.SendText(player, "Can't find the mind.");
+                    return;
+                }
+
+                shell.SendText(player, $"Objectives for player {args[0]}:");
+                var objectives = mind.AllObjectives.ToList();
+                if (objectives.Count == 0)
+                {
+                    shell.SendText(player, "None.");
+                }
+                for (var i = 0; i < objectives.Count; i++)
+                {
+                    shell.SendText(player, $"- [{i}] {objectives[i]}");
+                }
+            }
+            else
+            {
+                shell.SendText(player, "Can't find the playerdata.");
+            }
+        }
+    }
+
     public class RemoveObjectiveCommand : IClientCommand
     {
         public string Command => "rmobjective";
         public string Description => "Removes an objective from the player's mind.";
-        public string Help => "rmobjective <username> TBD";
+        public string Help => "rmobjective <username> <index>";
         public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
         {
-            throw new System.NotImplementedException();
+            var mgr = IoCManager.Resolve<IPlayerManager>();
+            if (mgr.TryGetPlayerDataByUsername(args[0], out var data))
+            {
+                var mind = data.ContentData()?.Mind;
+                if (mind == null)
+                {
+                    shell.SendText(player, "Can't find the mind.");
+                    return;
+                }
+
+                if (int.TryParse(args[1], out var i))
+                {
+                    shell.SendText(player,
+                        mind.TryRemoveObjective(i)
+                            ? "Objective successfully removed!"
+                            : "Objective removing failed. Maybe the index is out of bounds? Check lsobjectives!");
+                }
+                else
+                {
+                    shell.SendText(player, $"Invalid index {args[1]}!");
+                }
+            }
+            else
+            {
+                shell.SendText(player, "Can't find the playerdata.");
+            }
         }
     }
 }

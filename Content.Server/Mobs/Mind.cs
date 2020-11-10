@@ -177,9 +177,13 @@ namespace Content.Server.Mobs
         /// Removes an objective to this mind.
         /// </summary>
         /// <returns>Returns true if the removal succeeded.</returns>
-        public bool RemoveObjective(Objective objective)
+        public bool TryRemoveObjective(int index)
         {
-            return _objectives.Remove(objective);
+            if (_objectives.Count >= index) return false;
+
+            _objectives.RemoveAt(index);
+            return true;
+
         }
 
         /// <summary>

@@ -82,6 +82,7 @@
   - addrole
   - rmrole
   - addobjective
+  - lsobjectives
   - rmobjective
   - addoverlay
   - rmoverlay
@@ -166,6 +167,7 @@
   - addrole
   - rmrole
   - addobjective
+  - lsobjectives
   - rmobjective
   - addoverlay
   - rmoverlay
