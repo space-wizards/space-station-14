@@ -29,7 +29,7 @@ namespace Content.Shared.Physics
 
             //gravitating item towards center
             //http://csharphelper.com/blog/2016/09/find-the-shortest-distance-between-a-point-and-a-line-segment-in-c/
-            var centerPoint = new Vector2();
+            Vector2 centerPoint;
             var t = (itemRelativeToConveyor.X * velocityDirection.X + itemRelativeToConveyor.Y * velocityDirection.Y) /
                     (velocityDirection.X * velocityDirection.X + velocityDirection.Y * velocityDirection.Y);
 

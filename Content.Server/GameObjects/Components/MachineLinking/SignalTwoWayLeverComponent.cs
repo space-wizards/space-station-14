@@ -12,6 +12,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.GameObjects.Components.MachineLinking
 {
     [RegisterComponent]
+    [ComponentReference(typeof(IActivate))]
     public class SignalTwoWayLeverComponent : SignalTransmitterComponent, IInteractHand, IActivate
     {
         public override string Name => "TwoWayLever";
