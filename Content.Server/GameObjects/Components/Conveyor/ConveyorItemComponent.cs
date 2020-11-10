@@ -6,8 +6,8 @@ namespace Content.Server.GameObjects.Components.Conveyor
     /// Dummy component for construction graph
     /// </summary>
     [RegisterComponent]
-    public class ConveyorItemComponent : Component
+    public class ConveyorAssemblyComponent : Component
     {
-        public override string Name => "ConveyorItem";
+        public override string Name => "ConveyorAssembly";
     }
 }

@@ -6,14 +6,14 @@
       edges:
         - to: entity
           steps:
-            - component: ConveyorItem
+            - component: ConveyorAssembly
               icon:
                 sprite: Constructible/Power/conveyor.rsi
                 state: conveyor_loose
               name: conveyor belt assembly
               doAfter: 2
     - node: item
-      entity: ConveyorBeltItem
+      entity: ConveyorBeltAssembly
       actions:
         - !type:SetAnchor
           value: false

@@ -3,7 +3,7 @@
   icon:
     sprite: Constructible/Power/conveyor.rsi
     state: conveyor_loose
-  result: ConveyorBeltItem
+  result: ConveyorBeltAssembly
   completetime: 1000
   materials:
     steel: 1000

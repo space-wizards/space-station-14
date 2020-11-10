@@ -210,7 +210,7 @@
             "CrematoriumEntityStorage",
             "RandomArcade",
             "RandomSpriteState",
-            "ConveyorItem",
+            "ConveyorAssembly",
             "TwoWayLever"
         };
     }
