@@ -31,44 +31,44 @@ namespace Content.Server.GameObjects.Components.Effects
         [Dependency] protected readonly IPlayerManager PlayerManager = default!;
         [Dependency] protected readonly IEntityManager EntityManager = default!;
 
-        protected List<IPlayerSession> ActivatedPlayers = new List<IPlayerSession>();
+        protected List<IEntity> ActivatedEntities = new List<IEntity>();
         protected virtual int Radius => 20;
 
         public override void OnRemove()
         {
             base.OnRemove();
-            foreach (var player in ActivatedPlayers)
+            foreach (var entity in ActivatedEntities)
             {
-                if (player.AttachedEntityUid != null && EntityManager.TryGetEntity((EntityUid) player.AttachedEntityUid, out IEntity playerEntity) && playerEntity.TryGetComponent<ServerOverlayEffectsComponent>(out ServerOverlayEffectsComponent overlayEffects))
+                if (entity.TryGetComponent<ServerOverlayEffectsComponent>(out ServerOverlayEffectsComponent overlayEffects))
                 {
-                    OnExitRange(player, overlayEffects);
+                    OnExitRange(entity, overlayEffects);
                 }
             }
         }
 
         public void OnTick()
         {
-            List<IPlayerSession> players = PlayerManager.GetPlayersInRange(Owner.Transform.MapPosition, Radius);
-            foreach (var player in players) {
-                if (!ActivatedPlayers.Contains(player))
+            List<IEntity> entities = EntityManager.GetEntitiesInRange(Owner.Transform.Coordinates, Radius).ToList();
+            foreach (var entity in entities) {
+                if (!ActivatedEntities.Contains(entity))
                 { 
-                    if (player.AttachedEntityUid != null && EntityManager.TryGetEntity((EntityUid)player.AttachedEntityUid, out IEntity playerEntity) && playerEntity.TryGetComponent<ServerOverlayEffectsComponent>(out ServerOverlayEffectsComponent overlayEffects))
+                    if (entity.TryGetComponent<ServerOverlayEffectsComponent>(out ServerOverlayEffectsComponent overlayEffects))
                     {
-                        ActivatedPlayers.Add(player);
-                        OnEnterRange(player, overlayEffects);
+                        ActivatedEntities.Add(entity);
+                        OnEnterRange(entity, overlayEffects);
                     }
                 }
             }
-            for (int i = 0; i < ActivatedPlayers.Count; i++)
+            for (int i = 0; i < ActivatedEntities.Count; i++)
             {
-                var player = ActivatedPlayers[i];
-                if (!players.Contains(player))
+                var entity = ActivatedEntities[i];
+                if (!entities.Contains(entity))
                 {
-                    ActivatedPlayers.Remove(player);
+                    ActivatedEntities.Remove(entity);
                     i--;
-                    if (player.AttachedEntityUid != null && EntityManager.TryGetEntity((EntityUid)player.AttachedEntityUid, out IEntity playerEntity) && playerEntity.TryGetComponent<ServerOverlayEffectsComponent>(out ServerOverlayEffectsComponent overlayEffects))
+                    if (entity.TryGetComponent<ServerOverlayEffectsComponent>(out ServerOverlayEffectsComponent overlayEffects))
                     {
-                        OnExitRange(player, overlayEffects);
+                        OnExitRange(entity, overlayEffects);
                     }
                 }
             }
@@ -77,8 +77,8 @@ namespace Content.Server.GameObjects.Components.Effects
 
         protected virtual void TickBehavior() { }
 
-        protected virtual void OnEnterRange(IPlayerSession session, ServerOverlayEffectsComponent overlayEffects){ }
+        protected virtual void OnEnterRange(IEntity entity, ServerOverlayEffectsComponent overlayEffects){ }
 
-        protected virtual void OnExitRange(IPlayerSession session, ServerOverlayEffectsComponent overlayEffects) { }
+        protected virtual void OnExitRange(IEntity entity, ServerOverlayEffectsComponent overlayEffects) { }
     }
 }

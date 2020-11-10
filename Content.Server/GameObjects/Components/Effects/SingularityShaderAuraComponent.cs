@@ -27,18 +27,18 @@ namespace Content.Server.GameObjects.Components.Effects
         protected float CurrentFalloff = 5.1f;
 
 
-        private Dictionary<IPlayerSession, IDContainer> _sessionToOverlays = new Dictionary<IPlayerSession, IDContainer>();
+        private Dictionary<IEntity, IDContainer> _entityToOverlays = new Dictionary<IEntity, IDContainer>();
 
 
         public void SetSingularityTexture(string newPath, string newState)
         {
             CurrentActiveTexturePath = newPath;
             CurrentActiveTextureState = newState;
-            foreach (var player in ActivatedPlayers)
+            foreach (var entity in ActivatedEntities)
             {
-                if (player.AttachedEntityUid != null && EntityManager.TryGetEntity((EntityUid) player.AttachedEntityUid, out IEntity playerEntity) && playerEntity.TryGetComponent<ServerOverlayEffectsComponent>(out ServerOverlayEffectsComponent overlayEffects))
+                if (entity.TryGetComponent<ServerOverlayEffectsComponent>(out ServerOverlayEffectsComponent overlayEffects))
                 {
-                    if (_sessionToOverlays.TryGetValue(player, out IDContainer ids))
+                    if (_entityToOverlays.TryGetValue(entity, out IDContainer ids))
                     {
                         overlayEffects.TryModifyOverlay(ids.TextureOverlayID, overlay => {
                             if (overlay.TryGetOverlayParameter<TextureOverlayParameter>(out var texture))
@@ -56,11 +56,11 @@ namespace Content.Server.GameObjects.Components.Effects
         {
             CurrentIntensity = newIntensity;
             CurrentFalloff = newFalloff;
-            foreach (var player in ActivatedPlayers)
+            foreach (var entity in ActivatedEntities)
             {
-                if (player.AttachedEntityUid != null && EntityManager.TryGetEntity((EntityUid) player.AttachedEntityUid, out IEntity playerEntity) && playerEntity.TryGetComponent<ServerOverlayEffectsComponent>(out ServerOverlayEffectsComponent overlayEffects))
+                if (entity.TryGetComponent<ServerOverlayEffectsComponent>(out ServerOverlayEffectsComponent overlayEffects))
                 {
-                    if (_sessionToOverlays.TryGetValue(player, out IDContainer ids))
+                    if (_entityToOverlays.TryGetValue(entity, out IDContainer ids))
                     {
                         overlayEffects.TryModifyOverlay(ids.SingularityOverlayID, overlay => {
                             if (overlay.TryGetOverlayParameter<KeyedFloatOverlayParameter>(out var floatParam))
@@ -74,7 +74,7 @@ namespace Content.Server.GameObjects.Components.Effects
         }
 
 
-        protected override void OnEnterRange(IPlayerSession session, ServerOverlayEffectsComponent overlayEffects)
+        protected override void OnEnterRange(IEntity entity, ServerOverlayEffectsComponent overlayEffects)
         {
             if (Owner.TryGetComponent<ITransformComponent>(out var transform)){
                 Guid lensingOverlay, textureOverlay;
@@ -91,26 +91,26 @@ namespace Content.Server.GameObjects.Components.Effects
                         new TextureOverlayParameter(CurrentActiveTexturePath, CurrentActiveTextureState),
                     }
                 );
-                _sessionToOverlays.Add(session, new IDContainer(lensingOverlay, textureOverlay));
+                _entityToOverlays.Add(entity, new IDContainer(lensingOverlay, textureOverlay));
             }
         }
 
-        protected override void OnExitRange(IPlayerSession session, ServerOverlayEffectsComponent overlayEffects)
+        protected override void OnExitRange(IEntity entity, ServerOverlayEffectsComponent overlayEffects)
         {
-            if (_sessionToOverlays.TryGetValue(session, out IDContainer ids))
+            if (_entityToOverlays.TryGetValue(entity, out IDContainer ids))
             {
                 overlayEffects.TryRemoveOverlay(ids.SingularityOverlayID);
                 overlayEffects.TryRemoveOverlay(ids.TextureOverlayID);
-                _sessionToOverlays.Remove(session);
+                _entityToOverlays.Remove(entity);
             }
         }
 
         protected override void TickBehavior()
         {
-            foreach (var player in ActivatedPlayers) {
-                if (player.AttachedEntityUid != null && EntityManager.TryGetEntity((EntityUid) player.AttachedEntityUid, out IEntity playerEntity) && playerEntity.TryGetComponent<ServerOverlayEffectsComponent>(out ServerOverlayEffectsComponent overlayEffects))
+            foreach (var entity in ActivatedEntities) {
+                if (entity.TryGetComponent<ServerOverlayEffectsComponent>(out ServerOverlayEffectsComponent overlayEffects))
                 {
-                    if (Owner.TryGetComponent<ITransformComponent>(out var transform) && _sessionToOverlays.TryGetValue(player, out IDContainer ids))
+                    if (Owner.TryGetComponent<ITransformComponent>(out var transform) && _entityToOverlays.TryGetValue(entity, out IDContainer ids))
                     {
                         overlayEffects.TryModifyOverlay(ids.SingularityOverlayID, overlay =>
                         {

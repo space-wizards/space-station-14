@@ -23,11 +23,9 @@ void fragment() {
 	float darkening = 0.9-(alph*0.9);
 		
 	//COLOR = mix(texture(SCREEN_TEXTURE, finalCoords*SCREEN_PIXEL_SIZE), vec4(0.0, 0.0, 0.0, 1.0), darkening);
-	
 	vec4 color = texture(SCREEN_TEXTURE, finalCoords*SCREEN_PIXEL_SIZE);
 	if(color.a > 0.01)
 		COLOR = color;
 	else
 		COLOR = vec4(0.0, 0.0, 0.0, 0.0);
-	
 }
