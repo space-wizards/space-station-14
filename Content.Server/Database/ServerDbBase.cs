@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Content.Shared.Preferences;
 using Microsoft.EntityFrameworkCore;
@@ -211,6 +212,8 @@ namespace Content.Server.Database
          * PLAYER RECORDS
          */
         public abstract Task UpdatePlayerRecord(NetUserId userId, string userName, IPAddress address);
+        public abstract Task<PlayerRecord?> GetPlayerRecordByUserName(string userName, CancellationToken cancel);
+        public abstract Task<PlayerRecord?> GetPlayerRecordByUserId(NetUserId userId, CancellationToken cancel);
 
         /*
          * CONNECTION LOG
@@ -220,7 +223,7 @@ namespace Content.Server.Database
         /*
          * ADMIN STUFF
          */
-        public async Task<Admin?> GetAdminDataForAsync(NetUserId userId)
+        public async Task<Admin?> GetAdminDataForAsync(NetUserId userId, CancellationToken cancel)
         {
             await using var db = await GetDb();
 
@@ -228,7 +231,75 @@ namespace Content.Server.Database
                 .Include(p => p.Flags)
                 .Include(p => p.AdminRank)
                 .ThenInclude(p => p!.Flags)
-                .SingleOrDefaultAsync(p => p.UserId == userId.UserId);
+                .SingleOrDefaultAsync(p => p.UserId == userId.UserId, cancel);
+        }
+
+        public abstract Task<((Admin, string? lastUserName)[] admins, AdminRank[])>
+            GetAllAdminAndRanksAsync(CancellationToken cancel);
+
+        public async Task<AdminRank?> GetAdminRankDataForAsync(int id, CancellationToken cancel = default)
+        {
+            await using var db = await GetDb();
+
+            return await db.DbContext.AdminRank
+                .Include(r => r.Flags)
+                .SingleOrDefaultAsync(r => r.Id == id, cancel);
+        }
+
+        public async Task RemoveAdminAsync(NetUserId userId, CancellationToken cancel)
+        {
+            await using var db = await GetDb();
+
+            var admin = await db.DbContext.Admin.SingleAsync(a => a.UserId == userId.UserId, cancel);
+            db.DbContext.Admin.Remove(admin);
+
+            await db.DbContext.SaveChangesAsync(cancel);
+        }
+
+        public async Task AddAdminAsync(Admin admin, CancellationToken cancel)
+        {
+            await using var db = await GetDb();
+
+            db.DbContext.Admin.Add(admin);
+
+            await db.DbContext.SaveChangesAsync(cancel);
+        }
+
+        public async Task UpdateAdminAsync(Admin admin, CancellationToken cancel)
+        {
+            await using var db = await GetDb();
+
+            db.DbContext.Admin.Update(admin);
+
+            await db.DbContext.SaveChangesAsync(cancel);
+        }
+
+        public async Task RemoveAdminRankAsync(int rankId, CancellationToken cancel)
+        {
+            await using var db = await GetDb();
+
+            var admin = await db.DbContext.AdminRank.SingleAsync(a => a.Id == rankId, cancel);
+            db.DbContext.AdminRank.Remove(admin);
+
+            await db.DbContext.SaveChangesAsync(cancel);
+        }
+
+        public async Task AddAdminRankAsync(AdminRank rank, CancellationToken cancel)
+        {
+            await using var db = await GetDb();
+
+            db.DbContext.AdminRank.Add(rank);
+
+            await db.DbContext.SaveChangesAsync(cancel);
+        }
+
+        public async Task UpdateAdminRankAsync(AdminRank rank, CancellationToken cancel)
+        {
+            await using var db = await GetDb();
+
+            db.DbContext.AdminRank.Update(rank);
+
+            await db.DbContext.SaveChangesAsync(cancel);
         }
 
         protected abstract Task<DbGuard> GetDb();

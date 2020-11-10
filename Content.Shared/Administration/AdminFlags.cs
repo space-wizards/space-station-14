@@ -58,7 +58,7 @@ namespace Content.Shared.Administration
         /// <summary>
         ///     Makes you british.
         /// </summary>
-        Piss = 1 << 9,
+        //Piss = 1 << 9,
 
         /// <summary>
         ///     Dangerous host permissions like scsi.

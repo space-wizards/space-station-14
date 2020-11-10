@@ -2,6 +2,7 @@
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.WorldState;
 using Content.Server.Database;
+using Content.Server.Eui;
 using Content.Server.GameObjects.Components.Mobs.Speech;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.Interfaces;
@@ -23,6 +24,7 @@ namespace Content.Server
     public class EntryPoint : GameServer
     {
         private IGameTicker _gameTicker;
+        private EuiManager _euiManager;
         private StatusShell _statusShell;
 
         /// <inheritdoc />
@@ -50,6 +52,7 @@ namespace Content.Server
             IoCManager.BuildGraph();
 
             _gameTicker = IoCManager.Resolve<IGameTicker>();
+            _euiManager = IoCManager.Resolve<EuiManager>();
 
             IoCManager.Resolve<IServerNotifyManager>().Initialize();
             IoCManager.Resolve<IChatManager>().Initialize();
@@ -79,6 +82,7 @@ namespace Content.Server
             IoCManager.Resolve<ConsiderationsManager>().Initialize();
             IoCManager.Resolve<IPDAUplinkManager>().Initialize();
             IoCManager.Resolve<IAdminManager>().Initialize();
+            _euiManager.Initialize();
         }
 
         public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)
@@ -90,6 +94,11 @@ namespace Content.Server
                 case ModUpdateLevel.PreEngine:
                 {
                     _gameTicker.Update(frameEventArgs);
+                    break;
+                }
+                case ModUpdateLevel.PostEngine:
+                {
+                    _euiManager.SendUpdates();
                     break;
                 }
             }

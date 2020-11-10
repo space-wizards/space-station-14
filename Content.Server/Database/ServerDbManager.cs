@@ -1,6 +1,7 @@
-﻿﻿using System;
+﻿using System;
 using System.IO;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Content.Shared;
 using Content.Shared.Preferences;
@@ -27,7 +28,9 @@ namespace Content.Server.Database
         // Preferences
         Task<PlayerPreferences> InitPrefsAsync(NetUserId userId, ICharacterProfile defaultProfile);
         Task SaveSelectedCharacterIndexAsync(NetUserId userId, int index);
+
         Task SaveCharacterSlotAsync(NetUserId userId, ICharacterProfile? profile, int slot);
+
         // Single method for two operations for transaction.
         Task DeleteSlotAndSetSelectedIndex(NetUserId userId, int deleteSlot, int newSlot);
         Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId);
@@ -42,12 +45,26 @@ namespace Content.Server.Database
 
         // Player records
         Task UpdatePlayerRecordAsync(NetUserId userId, string userName, IPAddress address);
+        Task<PlayerRecord?> GetPlayerRecordByUserName(string userName, CancellationToken cancel = default);
+        Task<PlayerRecord?> GetPlayerRecordByUserId(NetUserId userId, CancellationToken cancel = default);
 
         // Connection log
         Task AddConnectionLogAsync(NetUserId userId, string userName, IPAddress address);
 
         // Admins
-        Task<Admin?> GetAdminDataForAsync(NetUserId userId);
+        Task<Admin?> GetAdminDataForAsync(NetUserId userId, CancellationToken cancel = default);
+        Task<AdminRank?> GetAdminRankAsync(int id, CancellationToken cancel = default);
+
+        Task<((Admin, string? lastUserName)[] admins, AdminRank[])> GetAllAdminAndRanksAsync(
+            CancellationToken cancel = default);
+
+        Task RemoveAdminAsync(NetUserId userId, CancellationToken cancel = default);
+        Task AddAdminAsync(Admin admin, CancellationToken cancel = default);
+        Task UpdateAdminAsync(Admin admin, CancellationToken cancel = default);
+
+        Task RemoveAdminRankAsync(int rankId, CancellationToken cancel = default);
+        Task AddAdminRankAsync(AdminRank rank, CancellationToken cancel = default);
+        Task UpdateAdminRankAsync(AdminRank rank, CancellationToken cancel = default);
     }
 
     public sealed class ServerDbManager : IServerDbManager
@@ -135,14 +152,65 @@ namespace Content.Server.Database
             return _db.UpdatePlayerRecord(userId, userName, address);
         }
 
+        public Task<PlayerRecord?> GetPlayerRecordByUserName(string userName, CancellationToken cancel = default)
+        {
+            return _db.GetPlayerRecordByUserName(userName, cancel);
+        }
+
+        public Task<PlayerRecord?> GetPlayerRecordByUserId(NetUserId userId, CancellationToken cancel = default)
+        {
+            return _db.GetPlayerRecordByUserId(userId, cancel);
+        }
+
         public Task AddConnectionLogAsync(NetUserId userId, string userName, IPAddress address)
         {
             return _db.AddConnectionLogAsync(userId, userName, address);
         }
 
-        public Task<Admin?> GetAdminDataForAsync(NetUserId userId)
+        public Task<Admin?> GetAdminDataForAsync(NetUserId userId, CancellationToken cancel = default)
         {
-            return _db.GetAdminDataForAsync(userId);
+            return _db.GetAdminDataForAsync(userId, cancel);
+        }
+
+        public Task<AdminRank?> GetAdminRankAsync(int id, CancellationToken cancel = default)
+        {
+            return _db.GetAdminRankDataForAsync(id, cancel);
+        }
+
+        public Task<((Admin, string? lastUserName)[] admins, AdminRank[])> GetAllAdminAndRanksAsync(
+            CancellationToken cancel = default)
+        {
+            return _db.GetAllAdminAndRanksAsync(cancel);
+        }
+
+        public Task RemoveAdminAsync(NetUserId userId, CancellationToken cancel = default)
+        {
+            return _db.RemoveAdminAsync(userId, cancel);
+        }
+
+        public Task AddAdminAsync(Admin admin, CancellationToken cancel = default)
+        {
+            return _db.AddAdminAsync(admin, cancel);
+        }
+
+        public Task UpdateAdminAsync(Admin admin, CancellationToken cancel = default)
+        {
+            return _db.UpdateAdminAsync(admin, cancel);
+        }
+
+        public Task RemoveAdminRankAsync(int rankId, CancellationToken cancel = default)
+        {
+            return _db.RemoveAdminRankAsync(rankId, cancel);
+        }
+
+        public Task AddAdminRankAsync(AdminRank rank, CancellationToken cancel = default)
+        {
+            return _db.AddAdminRankAsync(rank, cancel);
+        }
+
+        public Task UpdateAdminRankAsync(AdminRank rank, CancellationToken cancel = default)
+        {
+            return _db.UpdateAdminRankAsync(rank, cancel);
         }
 
         private DbContextOptions<ServerDbContext> CreatePostgresOptions()

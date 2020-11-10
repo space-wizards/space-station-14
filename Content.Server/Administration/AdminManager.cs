@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Players;
@@ -39,6 +40,8 @@ namespace Content.Server.Administration
         [Dependency] private readonly IChatManager _chat = default!;
 
         private readonly Dictionary<IPlayerSession, AdminReg> _admins = new Dictionary<IPlayerSession, AdminReg>();
+
+        public event Action<AdminPermsChangedEventArgs>? OnPermsChanged;
 
         public IEnumerable<IPlayerSession> ActiveAdmins => _admins
             .Where(p => p.Value.Data.Active)
@@ -78,6 +81,7 @@ namespace Content.Server.Administration
             plyData.ExplicitlyDeadminned = true;
             reg.Data.Active = false;
 
+            SendPermsChangedEvent(session);
             UpdateAdminStatus(session);
         }
 
@@ -96,7 +100,68 @@ namespace Content.Server.Administration
 
             _chat.SendAdminAnnouncement(Loc.GetString("{0} re-adminned themselves.", session.Name));
 
+            SendPermsChangedEvent(session);
             UpdateAdminStatus(session);
+        }
+
+        public async void ReloadAdmin(IPlayerSession player)
+        {
+            var data = await LoadAdminData(player);
+            var curAdmin = _admins.GetValueOrDefault(player);
+
+            if (data == null && curAdmin == null)
+            {
+                // Wasn't admin before or after.
+                return;
+            }
+
+            if (data == null)
+            {
+                // No longer admin.
+                _admins.Remove(player);
+                _chat.DispatchServerMessage(player, Loc.GetString("You are no longer an admin."));
+            }
+            else
+            {
+                var (aData, rankId, special) = data.Value;
+
+                if (curAdmin == null)
+                {
+                    // Now an admin.
+                    var reg = new AdminReg(player, aData)
+                    {
+                        IsSpecialLogin = special,
+                        RankId = rankId
+                    };
+                    _admins.Add(player, reg);
+                    _chat.DispatchServerMessage(player, Loc.GetString("You are now an admin."));
+                }
+                else
+                {
+                    // Perms changed.
+                    curAdmin.IsSpecialLogin = special;
+                    curAdmin.RankId = rankId;
+                    curAdmin.Data = aData;
+                }
+
+                if (!player.ContentData()!.ExplicitlyDeadminned)
+                {
+                    aData.Active = true;
+
+                    _chat.DispatchServerMessage(player, Loc.GetString("Your admin permissions have been updated."));
+                }
+            }
+
+            SendPermsChangedEvent(player);
+            UpdateAdminStatus(player);
+        }
+
+        public void ReloadAdminsWithRank(int rankId)
+        {
+            foreach (var dat in _admins.Values.Where(p => p.RankId == rankId).ToArray())
+            {
+                ReloadAdmin(dat.Session);
+            }
         }
 
         public void Initialize()
@@ -143,7 +208,7 @@ namespace Content.Server.Administration
                         {
                             if (!_adminCommands.TryGetValue(cmd, out var exFlags))
                             {
-                                _adminCommands.Add(cmd, new []{flags});
+                                _adminCommands.Add(cmd, new[] {flags});
                             }
                             else
                             {
@@ -213,7 +278,39 @@ namespace Content.Server.Administration
 
         private async void LoginAdminMaybe(IPlayerSession session)
         {
-            AdminReg reg;
+            var adminDat = await LoadAdminData(session);
+            if (adminDat == null)
+            {
+                // Not an admin.
+                return;
+            }
+
+            var (dat, rankId, specialLogin) = adminDat.Value;
+            var reg = new AdminReg(session, dat)
+            {
+                IsSpecialLogin = specialLogin,
+                RankId = rankId
+            };
+
+            _admins.Add(session, reg);
+
+            if (!session.ContentData()!.ExplicitlyDeadminned)
+            {
+                reg.Data.Active = true;
+
+                if (_cfg.GetCVar(CCVars.AdminAnnounceLogin))
+                {
+                    _chat.SendAdminAnnouncement(Loc.GetString("Admin login: {0}", session.Name));
+                }
+
+                SendPermsChangedEvent(session);
+            }
+
+            UpdateAdminStatus(session);
+        }
+
+        private async Task<(AdminData dat, int? rankId, bool specialLogin)?> LoadAdminData(IPlayerSession session)
+        {
             if (IsLocal(session) && _cfg.GetCVar(CCVars.ConsoleLoginLocal))
             {
                 var data = new AdminData
@@ -222,10 +319,7 @@ namespace Content.Server.Administration
                     Flags = AdminFlagsExt.Everything,
                 };
 
-                reg = new AdminReg(session, data)
-                {
-                    IsSpecialLogin = true,
-                };
+                return (data, null, true);
             }
             else
             {
@@ -234,7 +328,7 @@ namespace Content.Server.Administration
                 if (dbData == null)
                 {
                     // Not an admin!
-                    return;
+                    return null;
                 }
 
                 var flags = AdminFlags.None;
@@ -271,22 +365,8 @@ namespace Content.Server.Administration
                     data.Title = dbData.AdminRank.Name;
                 }
 
-                reg = new AdminReg(session, data);
+                return (data, dbData.AdminRankId, false);
             }
-
-            _admins.Add(session, reg);
-
-            if (!session.ContentData()!.ExplicitlyDeadminned)
-            {
-                reg.Data.Active = true;
-
-                if (_cfg.GetCVar(CCVars.AdminAnnounceLogin))
-                {
-                    _chat.SendAdminAnnouncement(Loc.GetString("Admin login: {0}", session.Name));
-                }
-            }
-
-            UpdateAdminStatus(session);
         }
 
         private static bool IsLocal(IPlayerSession player)
@@ -372,14 +452,20 @@ namespace Content.Server.Administration
             return GetAdminData(session)?.CanAdminMenu() ?? false;
         }
 
+        private void SendPermsChangedEvent(IPlayerSession session)
+        {
+            var flags = GetAdminData(session)?.Flags;
+            OnPermsChanged?.Invoke(new AdminPermsChangedEventArgs(session, flags));
+        }
+
         private sealed class AdminReg
         {
             public IPlayerSession Session;
 
             public AdminData Data;
+            public int? RankId;
 
             // Such as console.loginlocal
-            // Means that stuff like permissions editing is blocked.
             public bool IsSpecialLogin;
 
             public AdminReg(IPlayerSession session, AdminData data)

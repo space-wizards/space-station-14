@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 
 namespace Content.Shared.Administration
@@ -11,10 +12,13 @@ namespace Content.Shared.Administration
 
         public static readonly AdminFlags Everything;
 
+        public static readonly IReadOnlyList<AdminFlags> AllFlags;
+
         static AdminFlagsExt()
         {
             var t = typeof(AdminFlags);
             var flags = (AdminFlags[]) Enum.GetValues(t);
+            var allFlags = new List<AdminFlags>();
 
             foreach (var value in flags)
             {
@@ -25,10 +29,13 @@ namespace Content.Shared.Administration
                     continue;
                 }
 
+                allFlags.Add(value);
                 Everything |= value;
                 NameFlagsMap.Add(name, value);
                 FlagsNameMap[BitOperations.Log2((uint) value)] = name;
             }
+
+            AllFlags = allFlags.ToArray();
         }
 
         public static AdminFlags NamesToFlags(IEnumerable<string> names)
@@ -68,6 +75,15 @@ namespace Content.Shared.Administration
             }
 
             return array;
+        }
+
+        public static string PosNegFlagsText(AdminFlags posFlags, AdminFlags negFlags)
+        {
+            var posFlagNames = FlagsToNames(posFlags).Select(f => (flag: f, fText: $"+{f}"));
+            var negFlagNames = FlagsToNames(negFlags).Select(f => (flag: f, fText: $"-{f}"));
+
+            var flagsText = string.Join(' ', posFlagNames.Concat(negFlagNames).OrderBy(f => f.flag).Select(p => p.fText));
+            return flagsText;
         }
     }
 }

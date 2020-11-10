@@ -62,6 +62,9 @@ namespace Content.Server.Database.Migrations.Sqlite
 
                     b.HasIndex("AdminId");
 
+                    b.HasIndex("Flag", "AdminId")
+                        .IsUnique();
+
                     b.ToTable("admin_flag");
                 });
 
@@ -101,6 +104,9 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.HasKey("Id");
 
                     b.HasIndex("AdminRankId");
+
+                    b.HasIndex("Flag", "AdminRankId")
+                        .IsUnique();
 
                     b.ToTable("admin_rank_flag");
                 });
@@ -339,6 +345,8 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LastSeenUserName");
 
                     b.ToTable("player");
                 });

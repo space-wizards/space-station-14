@@ -1,5 +1,6 @@
 ﻿using System;
 using Content.Client.Administration;
+using Content.Client.Eui;
 using Content.Client.GameObjects.Components.Actor;
 using Content.Client.Input;
 using Content.Client.Interfaces;
@@ -154,6 +155,7 @@ namespace Content.Client
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();
             IoCManager.Resolve<IStationEventManager>().Initialize();
             IoCManager.Resolve<IAdminMenuManager>().Initialize();
+            IoCManager.Resolve<EuiManager>().Initialize();
 
             _baseClient.RunLevelChanged += (sender, args) =>
             {

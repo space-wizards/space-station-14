@@ -57,6 +57,14 @@ namespace Content.Server.Database
                 .HasOne(p => p.AdminRank)
                 .WithMany(p => p!.Admins)
                 .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<AdminFlag>()
+                .HasIndex(f => new {f.Flag, f.AdminId})
+                .IsUnique();
+
+            modelBuilder.Entity<AdminRankFlag>()
+                .HasIndex(f => new {f.Flag, f.AdminRankId})
+                .IsUnique();
         }
     }
 

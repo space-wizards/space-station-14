@@ -21,6 +21,8 @@ namespace Content.Client.Administration
 
         public event Action? AdminStatusUpdated;
 
+        public AdminFlags? Flags => _adminData?.Flags;
+
         public bool HasFlag(AdminFlags flag)
         {
             return _adminData?.HasFlag(flag) ?? false;
@@ -74,6 +76,7 @@ namespace Content.Client.Administration
             }
 
             AdminStatusUpdated?.Invoke();
+            ConGroupUpdated?.Invoke();
         }
 
         public event Action? ConGroupUpdated;

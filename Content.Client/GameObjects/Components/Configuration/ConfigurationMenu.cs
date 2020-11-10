@@ -101,7 +101,7 @@ namespace Content.Client.GameObjects.Components.Wires
         {
             _column.Children.Clear();
             _inputs.Clear();
-            
+
             foreach (var field in state.Config)
             {
                 var margin = new MarginContainer
@@ -143,7 +143,7 @@ namespace Content.Client.GameObjects.Components.Wires
         private void OnConfirm(ButtonEventArgs args)
         {
             var config = GenerateDictionary<string, LineEdit>(_inputs, "Text");
-            
+
             Owner.SendConfiguration(config);
             Close();
         }

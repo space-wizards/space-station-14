@@ -7,6 +7,7 @@ namespace Content.Client.Administration
     {
         public event Action AdminStatusUpdated;
 
+        AdminFlags? Flags { get; }
         bool HasFlag(AdminFlags flag);
 
         bool CanCommand(string cmdName);
