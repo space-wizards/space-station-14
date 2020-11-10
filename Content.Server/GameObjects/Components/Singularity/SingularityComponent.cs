@@ -214,6 +214,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                 if (entity.Deleted) continue;
                 if (entity.HasComponent<GhostComponent>()) continue; //Temporary fix for ghosts
                 if (entity.HasComponent<SingularityComponent>()) continue;
+                if (!entity.Transform.ParentUid.IsValid()) continue; //Don't move root node of grid (root node has no parent)
                 if (!entity.TryGetComponent<PhysicsComponent>(out var collidableComponent)) continue;
                 var controller = collidableComponent.EnsureController<SingularityPullController>();
                 if(Owner.Transform.Coordinates.EntityId != entity.Transform.Coordinates.EntityId) continue;
@@ -231,6 +232,9 @@ namespace Content.Server.GameObjects.Components.Singularity
         void ICollideBehavior.CollideWith(IEntity entity)
         {
             if (entity.Deleted)
+                return;
+
+            if (!entity.Transform.ParentUid.IsValid())
                 return;
 
             if (_collidableComponent == null) return; //how did it even collide then? :D

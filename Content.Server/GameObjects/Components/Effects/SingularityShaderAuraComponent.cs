@@ -34,6 +34,7 @@ namespace Content.Server.GameObjects.Components.Effects
         {
             CurrentActiveTexturePath = newPath;
             CurrentActiveTextureState = newState;
+            DeletedEntitiesCheck(ActivatedEntities);
             foreach (var entity in ActivatedEntities)
             {
                 if (entity.TryGetComponent<ServerOverlayEffectsComponent>(out ServerOverlayEffectsComponent overlayEffects))
@@ -56,6 +57,7 @@ namespace Content.Server.GameObjects.Components.Effects
         {
             CurrentIntensity = newIntensity;
             CurrentFalloff = newFalloff;
+            DeletedEntitiesCheck(ActivatedEntities);
             foreach (var entity in ActivatedEntities)
             {
                 if (entity.TryGetComponent<ServerOverlayEffectsComponent>(out ServerOverlayEffectsComponent overlayEffects))

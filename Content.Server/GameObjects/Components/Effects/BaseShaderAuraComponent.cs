@@ -37,6 +37,7 @@ namespace Content.Server.GameObjects.Components.Effects
         public override void OnRemove()
         {
             base.OnRemove();
+            DeletedEntitiesCheck(ActivatedEntities);
             foreach (var entity in ActivatedEntities)
             {
                 if (entity.TryGetComponent<ServerOverlayEffectsComponent>(out ServerOverlayEffectsComponent overlayEffects))
@@ -49,6 +50,7 @@ namespace Content.Server.GameObjects.Components.Effects
         public void OnTick()
         {
             List<IEntity> entities = EntityManager.GetEntitiesInRange(Owner.Transform.Coordinates, Radius).ToList();
+            DeletedEntitiesCheck(ActivatedEntities);
             foreach (var entity in entities) {
                 if (!ActivatedEntities.Contains(entity))
                 { 
@@ -64,7 +66,7 @@ namespace Content.Server.GameObjects.Components.Effects
                 var entity = ActivatedEntities[i];
                 if (!entities.Contains(entity))
                 {
-                    ActivatedEntities.Remove(entity);
+                    ActivatedEntities.RemoveAt(i);
                     i--;
                     if (entity.TryGetComponent<ServerOverlayEffectsComponent>(out ServerOverlayEffectsComponent overlayEffects))
                     {
@@ -73,6 +75,18 @@ namespace Content.Server.GameObjects.Components.Effects
                 }
             }
             TickBehavior();
+        }
+
+        protected virtual void DeletedEntitiesCheck(List<IEntity> targetList)
+        {
+            for (int i = 0; i < targetList.Count; i++)
+            {
+                if (targetList[i].Deleted)
+                {
+                    targetList.RemoveAt(i);
+                    i--;
+                }
+            }
         }
 
         protected virtual void TickBehavior() { }
