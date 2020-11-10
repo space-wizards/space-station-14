@@ -1,9 +1,6 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Engines;
 using Content.IntegrationTests;
-using NUnit.Framework;
 
 namespace Content.Benchmarks
 {
@@ -14,7 +11,10 @@ namespace Content.Benchmarks
         private string _resourceDest = Path.Combine(Directory.GetCurrentDirectory(), "../../Resources/");
         private string _serverDest = Path.Combine(Directory.GetCurrentDirectory(), "../../bin/Content.Server/");
 
-        [GlobalSetup]
+        /// <summary>
+        ///     Copies all resources to the benchmark directory.
+        ///     Don't forget to call this in your GlobalSetup method!
+        /// </summary>
         public void Setup()
         {
             DirectoryCopy(Path.Combine(Directory.GetCurrentDirectory(), "../../../../../../RobustToolbox/Resources"),

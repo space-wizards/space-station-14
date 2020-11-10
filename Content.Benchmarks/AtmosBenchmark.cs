@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Runtime.Intrinsics.X86;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
@@ -36,6 +37,37 @@ namespace Content.Benchmarks
 
         private int HalfSquareSize => _squareSize / 2;
 
+        [GlobalSetup(Target = nameof(PhoronFireBenchmarkNaive))]
+        public void SetupNaive()
+        {
+            SetEnv(false);
+            Setup();
+        }
+
+        [GlobalSetup(Target = nameof(PhoronFireBenchmarkSse))]
+        public void SetupSse()
+        {
+            if (!Sse.IsSupported)
+            {
+                throw new NotSupportedException("SSE is not supported!");
+            }
+
+            SetEnv(true);
+            Setup();
+        }
+
+        [GlobalSetup(Target = nameof(PhoronFireBenchmarkAvx))]
+        public void SetupAvx()
+        {
+            if (!Avx.IsSupported)
+            {
+                throw new NotSupportedException("AVX is not supported!");
+            }
+
+            SetEnv(true, true);
+            Setup();
+        }
+
         [IterationSetup]
         public void IterationSetup()
         {
@@ -45,20 +77,30 @@ namespace Content.Benchmarks
         [Benchmark(Baseline = true)]
         public void PhoronFireBenchmarkNaive()
         {
-            NumericsHelpers.Enabled = false;
             _server.Loop(AtmosFire, _ticks);
         }
 
         [Benchmark]
         public void PhoronFireBenchmarkSse()
         {
-            if (!Sse.IsSupported)
-            {
-                throw new NotSupportedException("SSE is not supported!");
-            }
-
-            NumericsHelpers.Enabled = true;
             _server.Loop(AtmosFire, _ticks);
+        }
+
+        [Benchmark]
+        public void PhoronFireBenchmarkAvx()
+        {
+            _server.Loop(AtmosFire, _ticks);
+        }
+
+        /// <summary>
+        ///     Forces the NumericsHelpers static constructor to run again after setting AVX to enabled or disabled.
+        /// </summary>
+        private void SetEnv(bool enabled, bool avxEnabled = false)
+        {
+            Environment.SetEnvironmentVariable(NumericsHelpers.DisabledEnvironmentVariable, enabled ? null : "true");
+            Environment.SetEnvironmentVariable(NumericsHelpers.AvxEnvironmentVariable, avxEnabled ? "true" : null);
+            var numerics = typeof(NumericsHelpers);
+            numerics.TypeInitializer?.Invoke(null, null);
         }
 
         private void AtmosFire()
