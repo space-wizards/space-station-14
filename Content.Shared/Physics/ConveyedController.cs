@@ -41,7 +41,8 @@ namespace Content.Shared.Physics
             if (t < 0)
             {
                 centerPoint = new Vector2();
-            }else if(t > 1)
+            }
+            else if(t > 1)
             {
                 centerPoint = velocityDirection;
             }
