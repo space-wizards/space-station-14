@@ -46,7 +46,6 @@ namespace Content.Benchmarks
         public void PhoronFireBenchmarkNaive()
         {
             NumericsHelpers.Enabled = false;
-            NumericsHelpers.AvxEnabled = false;
             _server.Loop(AtmosFire, _ticks);
         }
 
@@ -59,20 +58,6 @@ namespace Content.Benchmarks
             }
 
             NumericsHelpers.Enabled = true;
-            NumericsHelpers.AvxEnabled = false;
-            _server.Loop(AtmosFire, _ticks);
-        }
-
-        [Benchmark]
-        public void PhoronFireBenchmarkAvx()
-        {
-            if (!Avx.IsSupported)
-            {
-                throw new NotSupportedException("AVX is not supported!");
-            }
-
-            NumericsHelpers.Enabled = true;
-            NumericsHelpers.AvxEnabled = true;
             _server.Loop(AtmosFire, _ticks);
         }
 
