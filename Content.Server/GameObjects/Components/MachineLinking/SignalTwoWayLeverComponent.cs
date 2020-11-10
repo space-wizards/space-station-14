@@ -18,7 +18,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
 
         private TwoWayLeverSignal _state = TwoWayLeverSignal.Middle;
 
-        private bool nextForward = true;
+        private bool _nextForward = true;
 
         public TwoWayLeverSignal State
         {
@@ -39,12 +39,12 @@ namespace Content.Server.GameObjects.Components.MachineLinking
             State = State switch
             {
                 TwoWayLeverSignal.Left => TwoWayLeverSignal.Middle,
-                TwoWayLeverSignal.Middle => nextForward ? TwoWayLeverSignal.Right : TwoWayLeverSignal.Left,
+                TwoWayLeverSignal.Middle => _nextForward ? TwoWayLeverSignal.Right : TwoWayLeverSignal.Left,
                 TwoWayLeverSignal.Right => TwoWayLeverSignal.Middle,
                 _ => TwoWayLeverSignal.Middle
             };
 
-            if (State == TwoWayLeverSignal.Left || State == TwoWayLeverSignal.Right) nextForward = !nextForward;
+            if (State == TwoWayLeverSignal.Left || State == TwoWayLeverSignal.Right) _nextForward = !_nextForward;
 
             if (!TransmitSignal(State))
             {
