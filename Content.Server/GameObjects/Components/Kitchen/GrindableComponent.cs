@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Robust.Shared.GameObjects;
+﻿using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Kitchen
 {
 
     /// <summary>
-    /// Simple tag component to whitelist what can be ground/juiced by the reagentgrinder.
+    /// Tag component that denotes an entity as Grindable by the reagentgrinder.
     /// </summary>
     [RegisterComponent]
 

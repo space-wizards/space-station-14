@@ -113,11 +113,11 @@ namespace Content.Server.GameObjects.Components.Kitchen
             switch(message.Message)
             {
                 case ReagentGrinderGrindStartMessage msg:
-                    Work(isJuiceMode:false);
+                    DoWork(isJuiceMode:false);
                     break;
 
                 case ReagentGrinderJuiceStartMessage msg:
-                    Work(isJuiceMode:true);
+                    DoWork(isJuiceMode:true);
                     break;
 
                 case ReagentGrinderEjectChamberAllMessage msg:
@@ -237,9 +237,11 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
             //Next, see if the user is trying to insert something they want to be ground/juiced.
 
-            if(!heldEnt!.TryGetComponent(out GrindableComponent? grind))
+            if(!heldEnt!.TryGetComponent(out GrindableComponent? grind) && !heldEnt!.TryGetComponent(out JuiceableComponent? juice))
             {
-                //Entity did NOT pass the whitelist for grindables. Wouldn't want the clown grinding up the Captain's ID card now would you? Why am I asking you, you're biased.
+                //Entity did NOT pass the whitelist for grindables.
+                //Wouldn't want the clown grinding up the Captain's ID card now would you?
+                //Why am I asking you, you're biased.
                 return false;
             }
 
@@ -261,9 +263,9 @@ namespace Content.Server.GameObjects.Components.Kitchen
         /// The wzhzhzh of the grinder.
         /// </summary>
         /// <param name="isJuiceMode">If user intends to juicce or grind the contents.</param>
-        private void Work(bool isJuiceMode)
+        private void DoWork(bool isJuiceMode)
         {
-            //No power, are  we busy, chamber has anything to grind, a beaker for the grounds to go?
+            //Have power, are  we busy, chamber has anything to grind, a beaker for the grounds to go?
             if(!Powered || _busy || ChamberEmpty || !HasBeaker)
             {
                 return;
