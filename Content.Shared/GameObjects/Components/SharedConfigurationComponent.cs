@@ -22,7 +22,7 @@ namespace Content.Shared.GameObjects.Components
         }
 
         /// <summary>
-        ///     Message sent to other components on this entity when DeviceNetwork configuration updated.
+        ///     Message sent to other components on this entity when configuration updated.
         /// </summary>
         public class ConfigUpdatedComponentMessage : ComponentMessage
         {

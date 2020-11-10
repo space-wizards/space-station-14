@@ -4,7 +4,7 @@ using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using System.Collections.Generic;
 
-namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
+namespace Content.Server.DeviceNetwork
 {
     public delegate void OnReceiveNetMessage(int frequency, string sender, IReadOnlyDictionary<string, string> payload, Metadata metadata, bool broadcast);
 

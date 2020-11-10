@@ -1,5 +1,5 @@
 ﻿using System;
-using Content.Server.GameObjects.EntitySystems.DeviceNetwork;
+using Content.Server.DeviceNetwork;
 
 namespace Content.Server.Interfaces
 {

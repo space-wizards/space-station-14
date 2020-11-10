@@ -1,31 +1,25 @@
-﻿using Content.Server.GameObjects.Components.NodeContainer;
+﻿using Content.Server.DeviceNetwork;
+using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Robust.Shared.Interfaces.GameObjects;
 using System.Collections.Generic;
 
-namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
+namespace Content.Server.GameObjects.Components.DeviceNetworkConnections
 {
-    public class WiredNetworkConnection : BaseNetworkConnection
+    public class WiredNetworkConnectionComponent : BaseNetworkConnectionComponent
     {
         public const string WIRENET = "powernet";
 
-        private readonly IEntity _owner;
+        public override string Name => "WiredNetworkConnection";
 
-        public WiredNetworkConnection(OnReceiveNetMessage onReceive, bool receiveAll, IEntity owner) : base(NetworkUtils.WIRED, 0, onReceive, receiveAll)
-        {
-            _owner = owner;
-        }
+        protected override int DeviceNetID => NetworkUtils.WIRED;
+        protected override int DeviceNetFrequency => 0;
 
         protected override bool CanReceive(int frequency, string sender, IReadOnlyDictionary<string, string> payload, Metadata metadata, bool broadcast)
         {
-            if (_owner.Deleted)
-            {
-                Connection.Close();
-                return false;
-            }
 
-            if (_owner.TryGetComponent<PowerReceiverComponent>(out var powerReceiver)
+            if (Owner.TryGetComponent<PowerReceiverComponent>(out var powerReceiver)
                 && TryGetWireNet(powerReceiver, out var ownNet)
                 && metadata.TryParseMetadata<INodeGroup>(WIRENET, out var senderNet))
             {
@@ -37,13 +31,8 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
 
         protected override Metadata GetMetadata()
         {
-            if (_owner.Deleted)
-            {
-                Connection.Close();
-                return new Metadata();
-            }
 
-            if (_owner.TryGetComponent<PowerReceiverComponent>(out var powerReceiver)
+            if (Owner.TryGetComponent<PowerReceiverComponent>(out var powerReceiver)
                 && TryGetWireNet(powerReceiver, out var net))
             {
                 var metadata = new Metadata

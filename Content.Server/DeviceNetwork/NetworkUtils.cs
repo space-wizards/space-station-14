@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
+namespace Content.Server.DeviceNetwork
 {
     /// <summary>
     /// A collection of utilities to help with using device networks

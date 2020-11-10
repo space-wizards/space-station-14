@@ -1,36 +1,38 @@
-﻿using Robust.Shared.Interfaces.GameObjects;
+﻿using Content.Server.DeviceNetwork;
 using Robust.Shared.Maths;
+using Robust.Shared.Serialization;
 using System;
 using System.Collections.Generic;
 
-namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
+namespace Content.Server.GameObjects.Components.DeviceNetworkConnections
 {
-    public class WirelessNetworkConnection : BaseNetworkConnection
+    public class WirelessNetworkConnection : BaseNetworkConnectionComponent
     {
         public const string WIRELESS_POSITION = "position";
 
-        private readonly IEntity _owner;
+        public override string Name => "WirelessNetworkConnection";
 
         private float _range;
         public float Range { get => _range; set => _range = Math.Abs(value); }
 
-        public WirelessNetworkConnection(int frequency, OnReceiveNetMessage onReceive, bool receiveAll, IEntity owner, float range) : base(NetworkUtils.WIRELESS, frequency, onReceive, receiveAll)
+        protected override int DeviceNetID => NetworkUtils.WIRELESS;
+
+        private int _frequency;
+        protected override int DeviceNetFrequency => _frequency;
+
+        public override void ExposeData(ObjectSerializer serializer)
         {
-            _owner = owner;
-            Range = range;
+            base.ExposeData(serializer);
+
+            serializer.DataField(ref _range, "Range", 100);
+            serializer.DataField(ref _frequency, "Frequency", 100);
         }
 
         protected override bool CanReceive(int frequency, string sender, IReadOnlyDictionary<string, string> payload, Metadata metadata, bool broadcast)
         {
-            if (_owner.Deleted)
-            {
-                Connection.Close();
-                return false;
-            }
-
             if (metadata.TryParseMetadata<Vector2>(WIRELESS_POSITION, out var position))
             {
-                var ownPosition = _owner.Transform.WorldPosition;
+                var ownPosition = Owner.Transform.WorldPosition;
                 var distance = (ownPosition - position).Length;
                 return distance <= Range;
             }
@@ -40,13 +42,8 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
 
         protected override Metadata GetMetadata()
         {
-            if (_owner.Deleted)
-            {
-                Connection.Close();
-                return new Metadata();
-            }
 
-            var position = _owner.Transform.WorldPosition;
+            var position = Owner.Transform.WorldPosition;
             var metadata = new Metadata
             {
                 {WIRELESS_POSITION, position}
