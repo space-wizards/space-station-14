@@ -18,7 +18,7 @@ namespace Content.Server.Objectives.Conditions
 
         public string GetTitle() => $"Steal prototype {PrototypeID}";
 
-        public string GetDescription() => $"We need you to steal prototype {PrototypeID}. Please dont get caught.";
+        public string GetDescription() => $"We need you to steal prototype {PrototypeID}. Dont get caught.";
 
         public SpriteSpecifier GetIcon()
         {

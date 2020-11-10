@@ -11,8 +11,6 @@ namespace Content.Server.Objectives
 {
     public class AddObjectiveCommand : IClientCommand
     {
-        [Dependency] private readonly IObjectivesManager _objectivesManager = default!;
-
         public string Command => "addobjective";
         public string Description => "Adds an objective to the player's mind.";
         public string Help => "addobjective <username> <objectiveID>";
@@ -37,7 +35,7 @@ namespace Content.Server.Objectives
                 if (!IoCManager.Resolve<IPrototypeManager>()
                     .TryIndex<ObjectivePrototype>(args[1], out var objectivePrototype))
                 {
-                    shell.SendText(player, $"Can't find matching ObjectivePrototype");
+                    shell.SendText(player, $"Can't find matching ObjectivePrototype {objectivePrototype}");
                     return;
                 }
 
