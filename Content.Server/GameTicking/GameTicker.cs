@@ -80,9 +80,9 @@ namespace Content.Server.GameTicking
 
         [ViewVariables] private Type _presetType;
 
-        [ViewVariables] private DateTime _pauseTime;
+        [ViewVariables] private IGameTiming _pauseTime;
         [ViewVariables] private bool _roundStartCountdownHasNotStartedYetDueToNoPlayers;
-        private DateTime _roundStartTimeUtc;
+        private IGameTiming _roundStartTimeUtc;
         [ViewVariables] private GameRunLevel _runLevel;
         [ViewVariables(VVAccess.ReadWrite)] private EntityCoordinates _spawnPoint;
 
@@ -166,7 +166,7 @@ namespace Content.Server.GameTicking
 
             if (RunLevel != GameRunLevel.PreRoundLobby ||
                 Paused ||
-                _roundStartTimeUtc > DateTime.UtcNow ||
+                _roundStartTimeUtc.RealTime > IoCManager.Resolve<IGameTiming>().RealTime ||
                 _roundStartCountdownHasNotStartedYetDueToNoPlayers)
             {
                 return;
@@ -203,7 +203,7 @@ namespace Content.Server.GameTicking
                 if (PlayerManager.PlayerCount == 0)
                     _roundStartCountdownHasNotStartedYetDueToNoPlayers = true;
                 else
-                    _roundStartTimeUtc = DateTime.UtcNow + LobbyDuration;
+                    _roundStartTimeUtc.RealTime = IoCManager.Resolve<IGameTiming>().RealTime + LobbyDuration;
 
                 _sendStatusToAll();
 
@@ -531,11 +531,11 @@ namespace Content.Server.GameTicking
 
             if (pause)
             {
-                _pauseTime = DateTime.UtcNow;
+                _pauseTime = IoCManager.Resolve<IGameTiming>();
             }
             else if (_pauseTime != default)
             {
-                _roundStartTimeUtc += DateTime.UtcNow - _pauseTime;
+                _roundStartTimeUtc.RealTime += IoCManager.Resolve<IGameTiming>().RealTime - _pauseTime.RealTime;
             }
 
             var lobbyCountdownMessage = _netManager.CreateNetMessage<MsgTickerLobbyCountdown>();
@@ -731,7 +731,7 @@ namespace Content.Server.GameTicking
                     if (LobbyEnabled && _roundStartCountdownHasNotStartedYetDueToNoPlayers)
                     {
                         _roundStartCountdownHasNotStartedYetDueToNoPlayers = false;
-                        _roundStartTimeUtc = DateTime.UtcNow + LobbyDuration;
+                        _roundStartTimeUtc.RealTime = IoCManager.Resolve<IGameTiming>().CurTime + LobbyDuration;
                     }
 
                     break;

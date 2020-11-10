@@ -9,6 +9,7 @@ using Robust.Client.Interfaces;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Interfaces.UserInterface;
+using Robust.Shared.Interfaces.Timing;
 using Robust.Client.Player;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input.Binding;
@@ -133,7 +134,7 @@ namespace Content.Client.State
             }
             else
             {
-                var difference = _clientGameTicker.StartTime - DateTime.UtcNow;
+                var difference = _clientGameTicker.StartTime.RealTime - IoCManager.Resolve<IGameTiming>().RealTime; 
                 if (difference.Ticks < 0)
                 {
                     if (difference.TotalSeconds < -5)
