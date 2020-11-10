@@ -2,7 +2,6 @@
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using System;
-using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.Components.DeviceNetworkConnections
 {
@@ -28,7 +27,7 @@ namespace Content.Server.GameObjects.Components.DeviceNetworkConnections
             serializer.DataField(ref _frequency, "Frequency", 100);
         }
 
-        protected override bool CanReceive(int frequency, string sender, IReadOnlyDictionary<string, string> payload, Metadata metadata, bool broadcast)
+        protected override bool CanReceive(int frequency, string sender, NetworkPayload payload, Metadata metadata, bool broadcast)
         {
             if (metadata.TryParseMetadata<Vector2>(WIRELESS_POSITION, out var position))
             {
@@ -52,7 +51,7 @@ namespace Content.Server.GameObjects.Components.DeviceNetworkConnections
             return metadata;
         }
 
-        protected override Dictionary<string, string> ManipulatePayload(Dictionary<string, string> payload)
+        protected override NetworkPayload ManipulatePayload(NetworkPayload payload)
         {
             return payload;
         }

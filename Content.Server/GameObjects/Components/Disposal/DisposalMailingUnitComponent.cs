@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server.DeviceNetwork;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
@@ -313,12 +314,11 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             if (_connection != null)
             {
-                var data = new Dictionary<string, string>
-                {
-                    { NetworkUtils.COMMAND, NET_CMD_SENT },
-                    { NET_SRC, _tag },
-                    { NET_TARGET, _target }
-                };
+                var data = NetworkPayload.Create(
+                    ( NetworkUtils.COMMAND, NET_CMD_SENT ),
+                    ( NET_SRC, _tag ),
+                    ( NET_TARGET, _target )
+                );
 
                 _connection.Broadcast(_connection.Frequency, data);
             }
@@ -345,10 +345,9 @@ namespace Content.Server.GameObjects.Components.Disposal
         private void UpdateTargetList()
         {
             _targetList.Clear();
-            var payload = new Dictionary<string, string>
-            {
-                { NetworkUtils.COMMAND, NET_CMD_REQUEST }
-            };
+            var payload = NetworkPayload.Create(
+                ( NetworkUtils.COMMAND, NET_CMD_REQUEST )
+            );
 
             _connection?.Broadcast(_connection.Frequency, payload);
         }
@@ -686,7 +685,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
         }
 
-        private void OnReceiveNetMessage(int frequency, string sender, IReadOnlyDictionary<string, string> payload, object _, bool broadcast)
+        private void OnReceiveNetMessage(int frequency, string sender, NetworkPayload payload, object _, bool broadcast)
         {
             if (payload.TryGetValue(NetworkUtils.COMMAND, out var command) && Powered)
             {
@@ -701,11 +700,10 @@ namespace Content.Server.GameObjects.Components.Disposal
                     if (_tag == "" || !Powered)
                         return;
 
-                    var data = new Dictionary<string, string>
-                    {
-                        {NetworkUtils.COMMAND, NET_CMD_RESPONSE},
-                        {NET_TAG, _tag}
-                    };
+                   var data = NetworkPayload.Create(
+                        (NetworkUtils.COMMAND, NET_CMD_RESPONSE),
+                        (NET_TAG, _tag)
+                   );
 
                     _connection?.Send(frequency, sender, data);
                 }
@@ -745,7 +743,6 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
 
             // Duplicated code here, not sure how else to get actor inside to make UserInterface happy.
-
             if (IsValidInteraction(eventArgs))
             {
                 UpdateTargetList();

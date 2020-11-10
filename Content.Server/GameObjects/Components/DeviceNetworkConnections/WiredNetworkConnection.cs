@@ -3,7 +3,6 @@ using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Robust.Shared.Interfaces.GameObjects;
-using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.Components.DeviceNetworkConnections
 {
@@ -16,7 +15,7 @@ namespace Content.Server.GameObjects.Components.DeviceNetworkConnections
         protected override int DeviceNetID => NetworkUtils.WIRED;
         protected override int DeviceNetFrequency => 0;
 
-        protected override bool CanReceive(int frequency, string sender, IReadOnlyDictionary<string, string> payload, Metadata metadata, bool broadcast)
+        protected override bool CanReceive(int frequency, string sender, NetworkPayload payload, Metadata metadata, bool broadcast)
         {
 
             if (Owner.TryGetComponent<PowerReceiverComponent>(out var powerReceiver)
@@ -46,7 +45,7 @@ namespace Content.Server.GameObjects.Components.DeviceNetworkConnections
             return new Metadata();
         }
 
-        protected override Dictionary<string, string> ManipulatePayload(Dictionary<string, string> payload)
+        protected override NetworkPayload ManipulatePayload(NetworkPayload payload)
         {
             return payload;
         }
