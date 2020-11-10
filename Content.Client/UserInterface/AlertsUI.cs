@@ -16,25 +16,24 @@ namespace Content.Client.UserInterface
     {
         public GridContainer Grid { get; }
 
-        private PanelContainer _panelContainer;
-        private IClyde _clyde;
+        private readonly IClyde _clyde;
 
         public AlertsUI(IClyde clyde)
         {
             _clyde = clyde;
-            _panelContainer = new PanelContainer
+            var panelContainer = new PanelContainer
             {
                 StyleClasses = {StyleNano.StyleClassTransparentBorderedWindowPanel},
                 SizeFlagsVertical = SizeFlags.FillExpand,
             };
-            AddChild(_panelContainer);
+            AddChild(panelContainer);
 
             Grid = new GridContainer
             {
                 MaxHeight = CalcMaxHeight(clyde.ScreenSize),
                 ExpandBackwards = true
             };
-            _panelContainer.AddChild(Grid);
+            panelContainer.AddChild(Grid);
             clyde.OnWindowResized += ClydeOnOnWindowResized;
 
             LayoutContainer.SetGrowHorizontal(this, LayoutContainer.GrowDirection.Begin);
@@ -59,6 +58,16 @@ namespace Content.Client.UserInterface
         private float CalcMaxHeight(Vector2i screenSize)
         {
             return Math.Max(((screenSize.Y) / UIScale) - 420, 1);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            if (disposing)
+            {
+                _clyde.OnWindowResized -= ClydeOnOnWindowResized;
+            }
         }
     }
 }

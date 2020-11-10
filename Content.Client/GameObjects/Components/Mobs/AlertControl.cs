@@ -66,7 +66,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         /// </summary>
         /// <param name="alertCooldown">cooldown start and end</param>
         /// <param name="curTime">current game time</param>
-        public void UpdateCooldown((TimeSpan, TimeSpan)? alertCooldown, in TimeSpan curTime)
+        public void UpdateCooldown((TimeSpan Start, TimeSpan End)? alertCooldown, in TimeSpan curTime)
         {
             if (!alertCooldown.HasValue)
             {
@@ -77,8 +77,8 @@ namespace Content.Client.GameObjects.Components.Mobs
             else
             {
 
-                var start = alertCooldown.Value.Item1;
-                var end = alertCooldown.Value.Item2;
+                var start = alertCooldown.Value.Start;
+                var end = alertCooldown.Value.End;
 
                 var length = (end - start).TotalSeconds;
                 var progress = (curTime - start).TotalSeconds / length;

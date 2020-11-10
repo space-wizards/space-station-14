@@ -36,10 +36,7 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IClyde _clyde = default!;
 
         private AlertsUI _ui;
         private PanelContainer _tooltip;
@@ -47,7 +44,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         private RichTextLabel _stateDescription;
         private RichTextLabel _stateCooldown;
         private AlertOrderPrototype _alertOrder;
-        private bool tooltipReady;
+        private bool _tooltipReady;
 
         [ViewVariables]
         private Dictionary<AlertKey, AlertControl> _alertControls
@@ -55,6 +52,7 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         /// <summary>
         /// Allows calculating if we need to act due to this component being controlled by the current mob
+        /// TODO: should be revisited after space-wizards/RobustToolbox#1255
         /// </summary>
         [ViewVariables]
         private bool CurrentlyControlled => _playerManager.LocalPlayer != null && _playerManager.LocalPlayer.ControlledEntity == Owner;
@@ -101,14 +99,15 @@ namespace Content.Client.GameObjects.Components.Mobs
                 return;
             }
 
-            _alertOrder = _prototypeManager.EnumeratePrototypes<AlertOrderPrototype>().FirstOrDefault();
+            _alertOrder = IoCManager.Resolve<IPrototypeManager>().EnumeratePrototypes<AlertOrderPrototype>().FirstOrDefault();
             if (_alertOrder == null)
             {
                 Logger.ErrorS("alert", "no alertOrder prototype found, alerts will be in random order");
             }
 
-            _ui = new AlertsUI(_clyde);
-            _userInterfaceManager.StateRoot.AddChild(_ui);
+            _ui = new AlertsUI(IoCManager.Resolve<IClyde>());
+            var uiManager = IoCManager.Resolve<IUserInterfaceManager>();
+            uiManager.StateRoot.AddChild(_ui);
 
             _tooltip = new PanelContainer
             {
@@ -139,7 +138,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             };
             tooltipVBox.AddChild(_stateCooldown);
 
-            _userInterfaceManager.PopupRoot.AddChild(_tooltip);
+            uiManager.PopupRoot.AddChild(_tooltip);
 
             UpdateAlertsControls();
         }
@@ -242,14 +241,20 @@ namespace Content.Client.GameObjects.Components.Mobs
             // show custom tooltip for the status control
             alertControl.OnShowTooltip += AlertOnOnShowTooltip;
             alertControl.OnHideTooltip += AlertOnOnHideTooltip;
-            alertControl.OnPressed += args => AlertPressed(args, alertControl);
+
+            alertControl.OnPressed += AlertControlOnPressed;
 
             return alertControl;
         }
 
+        private void AlertControlOnPressed(BaseButton.ButtonEventArgs args)
+        {
+            AlertPressed(args, args.Button as AlertControl);
+        }
+
         private void AlertOnOnHideTooltip(object sender, EventArgs e)
         {
-            tooltipReady = false;
+            _tooltipReady = false;
             _tooltip.Visible = false;
         }
 
@@ -274,7 +279,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             Tooltips.PositionTooltip(_tooltip);
             // if we set it visible here the size of the previous tooltip will flicker for a frame,
             // so instead we wait until FrameUpdate to make it visible
-            tooltipReady = true;
+            _tooltipReady = true;
         }
 
         private void AlertPressed(BaseButton.ButtonEventArgs args, AlertControl alert)
@@ -286,7 +291,6 @@ namespace Content.Client.GameObjects.Components.Mobs
 
             if (AlertManager.TryEncode(alert.Alert, out var encoded))
             {
-
                 SendNetworkMessage(new ClickAlertMessage(encoded));
             }
             else
@@ -298,9 +302,9 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         public void FrameUpdate(float frameTime)
         {
-            if (tooltipReady)
+            if (_tooltipReady)
             {
-                tooltipReady = false;
+                _tooltipReady = false;
                 _tooltip.Visible = true;
             }
             foreach (var (alertKey, alertControl) in _alertControls)
@@ -323,6 +327,19 @@ namespace Content.Client.GameObjects.Components.Mobs
         protected override void AfterClearAlert()
         {
             UpdateAlertsControls();
+        }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+
+            foreach (var alertControl in _alertControls.Values)
+            {
+                alertControl.OnShowTooltip -= AlertOnOnShowTooltip;
+                alertControl.OnHideTooltip -= AlertOnOnHideTooltip;
+                alertControl.OnPressed -= AlertControlOnPressed;
+            }
+
         }
     }
 }
