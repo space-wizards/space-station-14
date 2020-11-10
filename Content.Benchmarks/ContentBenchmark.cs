@@ -40,6 +40,13 @@ namespace Content.Benchmarks
             return base.StartServer(options);
         }
 
+        protected override ServerIntegrationInstance StartServerDummyTicker(ServerIntegrationOptions options = null)
+        {
+            options ??= new ServerContentIntegrationOption();
+            options.NotThreaded = true;
+            return base.StartServerDummyTicker(options);
+        }
+
         // I'm lazy and grabbed this method from here:
         // https://docs.microsoft.com/en-us/dotnet/standard/io/how-to-copy-directories
         private static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs = true)

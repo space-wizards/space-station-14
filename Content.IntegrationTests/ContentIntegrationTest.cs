@@ -60,7 +60,7 @@ namespace Content.IntegrationTests
             return base.StartServer(options);
         }
 
-        protected ServerIntegrationInstance StartServerDummyTicker(ServerIntegrationOptions options = null)
+        protected virtual ServerIntegrationInstance StartServerDummyTicker(ServerIntegrationOptions options = null)
         {
             options ??= new ServerIntegrationOptions();
             options.BeforeStart += () =>

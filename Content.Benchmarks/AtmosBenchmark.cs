@@ -18,7 +18,6 @@ using Robust.Shared.Maths;
 
 namespace Content.Benchmarks
 {
-    [SimpleJob(RunStrategy.Monitoring)]
     public class AtmosBenchmark : ContentBenchmark
     {
         private string _tileName = "floor_steel";
@@ -71,7 +70,7 @@ namespace Content.Benchmarks
         [IterationSetup]
         public void IterationSetup()
         {
-            _server = StartServer();
+            _server = StartServerDummyTicker();
         }
 
         [Benchmark(Baseline = true)]
