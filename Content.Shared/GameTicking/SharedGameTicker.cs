@@ -4,7 +4,6 @@ using System.IO;
 using Lidgren.Network;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Serialization;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 
@@ -92,7 +91,8 @@ namespace Content.Shared.GameTicking
 
             public bool IsRoundStarted { get; set; }
             public bool YouAreReady { get; set; }
-            public IGameTiming StartTime { get; set; }
+            // UTC.
+            public DateTime StartTime { get; set; }
             public bool Paused { get; set; }
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
@@ -105,7 +105,7 @@ namespace Content.Shared.GameTicking
                 }
 
                 YouAreReady = buffer.ReadBoolean();
-                StartTime = IoCManager.Resolve<IGameTiming>();
+                StartTime = new DateTime(buffer.ReadInt64(), DateTimeKind.Utc);
                 Paused = buffer.ReadBoolean();
             }
 
@@ -119,7 +119,7 @@ namespace Content.Shared.GameTicking
                 }
 
                 buffer.Write(YouAreReady);
-                buffer.Write(StartTime.CurTime.Ticks);  
+                buffer.Write(StartTime.Ticks);  
                 buffer.Write(Paused);
             }
         }
@@ -160,7 +160,7 @@ namespace Content.Shared.GameTicking
             /// <summary>
             /// The total amount of seconds to go until the countdown finishes
             /// </summary>
-            public IGameTiming StartTime { get; set; }
+            public DateTime StartTime { get; set; }
 
             /// <summary>
             /// Whether or not the countdown is paused
@@ -169,13 +169,13 @@ namespace Content.Shared.GameTicking
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
-                StartTime = IoCManager.Resolve<IGameTiming>();
+                StartTime = new DateTime(buffer.ReadInt64(), DateTimeKind.Utc);
                 Paused = buffer.ReadBoolean();
             }
 
             public override void WriteToBuffer(NetOutgoingMessage buffer)
             {
-                buffer.Write(StartTime.CurTime.Ticks);
+                buffer.Write(StartTime.Ticks);
                 buffer.Write(Paused);
             }
         }

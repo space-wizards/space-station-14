@@ -36,6 +36,7 @@ namespace Content.Client.State
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         [ViewVariables] private CharacterSetupGui _characterSetup;
         [ViewVariables] private LobbyGui _lobby;
@@ -134,7 +135,7 @@ namespace Content.Client.State
             }
             else
             {
-                var difference = _clientGameTicker.StartTime.RealTime - IoCManager.Resolve<IGameTiming>().RealTime; 
+                var difference = _gameTiming.CurTime; 
                 if (difference.Ticks < 0)
                 {
                     if (difference.TotalSeconds < -5)
