@@ -14,6 +14,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 
@@ -100,7 +101,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                 {
                     if (physics.TryGetController(out MoverController controller))
                     {
-                        controller.Move(total, 1f);
+                        controller.Push(total, 1f);
                     }
                 }
 

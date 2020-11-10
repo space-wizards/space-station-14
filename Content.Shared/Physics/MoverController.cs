@@ -21,26 +21,6 @@ namespace Content.Shared.Physics
          * Thus we'll apply an impulse for a few ticks to help us stop faster (but don't continuously apply it so
          * other controllers have a chance to do their thing).
          */
-        private byte _counterCounter = 0;
-
-        private Vector2? _stopVelocity;
-
-        private float _accumulatedStop;
-
-        public void Move(Vector2 velocityDirection, float speed)
-        {
-            if (_stopVelocity != null)
-                Logger.Debug($"StopVelocity was {_stopVelocity}");
-            _stopVelocity = null;
-            _counterCounter = 0;
-            _accumulatedStop = 0f;
-            if (ControlledComponent?.Owner.IsWeightless() ?? false)
-            {
-                return;
-            }
-
-            Push(velocityDirection, speed);
-        }
 
         public void Push(Vector2 velocityDirection, float speed)
         {
@@ -66,26 +46,7 @@ namespace Content.Shared.Physics
 
         public void StopMoving()
         {
-            return;
-            if (ControlledComponent == null || ControlledComponent.InvMass == 0.0f)
-                return;
 
-            if (_stopVelocity == null)
-            {
-                _stopVelocity = ControlledComponent.LinearVelocity;
-            }
-
-            if (ControlledComponent.LinearVelocity.Length < 0.1f || _counterCounter >= 30)
-            {
-                _counterCounter = 30;
-                return;
-            }
-
-            _counterCounter++;
-
-            var velocity = -_stopVelocity.Value / ControlledComponent.InvMass / 30;
-            Impulse = velocity;
-            _accumulatedStop += velocity.Length;
         }
     }
 }
