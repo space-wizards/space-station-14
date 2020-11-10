@@ -4,7 +4,7 @@ using Robust.Shared.IoC;
 
 #nullable enable
 
-namespace Content.Server.Administration
+namespace Content.Server.Administration.Commands
 {
     [AnyCommand]
     public class ReAdminCommand : IClientCommand

@@ -39,17 +39,17 @@ namespace Content.Server.Administration
 
             StateDirty();
             LoadFromDb();
-            _adminManager.OnPermsChanged += AdminManagerOnOnPermsChanged;
+            _adminManager.OnPermsChanged += AdminManagerOnPermsChanged;
         }
 
         public override void Closed()
         {
             base.Closed();
 
-            _adminManager.OnPermsChanged -= AdminManagerOnOnPermsChanged;
+            _adminManager.OnPermsChanged -= AdminManagerOnPermsChanged;
         }
 
-        private void AdminManagerOnOnPermsChanged(AdminPermsChangedEventArgs obj)
+        private void AdminManagerOnPermsChanged(AdminPermsChangedEventArgs obj)
         {
             // Close UI if user loses +PERMISSIONS.
             if (obj.Player == Player && !UserAdminFlagCheck(AdminFlags.Permissions))
@@ -72,8 +72,8 @@ namespace Content.Server.Administration
             {
                 Admins = _admins.Select(p => new PermissionsEuiState.AdminData
                 {
-                    PosFlags = AdminFlagsExt.NamesToFlags(p.a.Flags.Where(f => !f.Negative).Select(f => f.Flag)),
-                    NegFlags = AdminFlagsExt.NamesToFlags(p.a.Flags.Where(f => f.Negative).Select(f => f.Flag)),
+                    PosFlags = AdminFlagsHelper.NamesToFlags(p.a.Flags.Where(f => !f.Negative).Select(f => f.Flag)),
+                    NegFlags = AdminFlagsHelper.NamesToFlags(p.a.Flags.Where(f => f.Negative).Select(f => f.Flag)),
                     Title = p.a.Title,
                     RankId = p.a.AdminRankId,
                     UserId = new NetUserId(p.a.UserId),
@@ -82,7 +82,7 @@ namespace Content.Server.Administration
 
                 AdminRanks = _adminRanks.ToDictionary(a => a.Id, a => new PermissionsEuiState.AdminRankData
                 {
-                    Flags = AdminFlagsExt.NamesToFlags(a.Flags.Select(p => p.Flag)),
+                    Flags = AdminFlagsHelper.NamesToFlags(a.Flags.Select(p => p.Flag)),
                     Name = a.Name
                 })
             };
@@ -185,7 +185,7 @@ namespace Content.Server.Administration
 
             await _db.UpdateAdminRankAsync(rank);
 
-            var flagText = string.Join(' ', AdminFlagsExt.FlagsToNames(ur.Flags).Select(f => $"+{f}"));
+            var flagText = string.Join(' ', AdminFlagsHelper.FlagsToNames(ur.Flags).Select(f => $"+{f}"));
             Logger.InfoS("admin.perms", $"{Player} updated admin rank {rank.Name}/{flagText}.");
 
             _adminManager.ReloadAdminsWithRank(ur.Id);
@@ -207,7 +207,7 @@ namespace Content.Server.Administration
 
             await _db.AddAdminRankAsync(rank);
 
-            var flagText = string.Join(' ', AdminFlagsExt.FlagsToNames(ar.Flags).Select(f => $"+{f}"));
+            var flagText = string.Join(' ', AdminFlagsHelper.FlagsToNames(ar.Flags).Select(f => $"+{f}"));
             Logger.InfoS("admin.perms", $"{Player} added admin rank {rank.Name}/{flagText}.");
         }
 
@@ -272,7 +272,7 @@ namespace Content.Server.Administration
 
             var name = playerRecord?.LastSeenUserName ?? ua.UserId.ToString();
             var title = ua.Title ?? "<no title>";
-            var flags = AdminFlagsExt.PosNegFlagsText(ua.PosFlags, ua.NegFlags);
+            var flags = AdminFlagsHelper.PosNegFlagsText(ua.PosFlags, ua.NegFlags);
 
             Logger.InfoS("admin.perms", $"{Player} updated admin {name} to {title}/{rankName}/{flags}");
 
@@ -347,7 +347,7 @@ namespace Content.Server.Administration
             await _db.AddAdminAsync(admin);
 
             var title = ca.Title ?? "<no title>";
-            var flags = AdminFlagsExt.PosNegFlagsText(ca.PosFlags, ca.NegFlags);
+            var flags = AdminFlagsHelper.PosNegFlagsText(ca.PosFlags, ca.NegFlags);
 
             Logger.InfoS("admin.perms", $"{Player} added admin {name} as {title}/{rankName}/{flags}");
 
@@ -392,7 +392,7 @@ namespace Content.Server.Administration
 
                 ret = rank.Name;
 
-                var rankFlags = AdminFlagsExt.NamesToFlags(rank.Flags.Select(p => p.Flag));
+                var rankFlags = AdminFlagsHelper.NamesToFlags(rank.Flags.Select(p => p.Flag));
                 if (!UserAdminFlagCheck(rankFlags))
                 {
                     // Can't assign a rank with flags you don't have yourself.
@@ -421,8 +421,8 @@ namespace Content.Server.Administration
 
         private static List<AdminFlag> GenAdminFlagList(AdminFlags posFlags, AdminFlags negFlags)
         {
-            var posFlagList = AdminFlagsExt.FlagsToNames(posFlags);
-            var negFlagList = AdminFlagsExt.FlagsToNames(negFlags);
+            var posFlagList = AdminFlagsHelper.FlagsToNames(posFlags);
+            var negFlagList = AdminFlagsHelper.FlagsToNames(negFlags);
 
             return posFlagList
                 .Select(f => new AdminFlag {Negative = false, Flag = f})
@@ -432,7 +432,7 @@ namespace Content.Server.Administration
 
         private static List<AdminRankFlag> GenRankFlagList(AdminFlags flags)
         {
-            return AdminFlagsExt.FlagsToNames(flags).Select(f => new AdminRankFlag {Flag = f}).ToList();
+            return AdminFlagsHelper.FlagsToNames(flags).Select(f => new AdminRankFlag {Flag = f}).ToList();
         }
 
         private bool UserAdminFlagCheck(AdminFlags flags)
@@ -442,8 +442,8 @@ namespace Content.Server.Administration
 
         private bool CanTouchAdmin(Admin admin)
         {
-            var posFlags = AdminFlagsExt.NamesToFlags(admin.Flags.Where(f => !f.Negative).Select(f => f.Flag));
-            var rankFlags = AdminFlagsExt.NamesToFlags(
+            var posFlags = AdminFlagsHelper.NamesToFlags(admin.Flags.Where(f => !f.Negative).Select(f => f.Flag));
+            var rankFlags = AdminFlagsHelper.NamesToFlags(
                 admin.AdminRank?.Flags.Select(f => f.Flag) ?? Array.Empty<string>());
 
             var totalFlags = posFlags | rankFlags;
@@ -452,7 +452,7 @@ namespace Content.Server.Administration
 
         private bool CanTouchRank(DbAdminRank rank)
         {
-            var rankFlags = AdminFlagsExt.NamesToFlags(rank.Flags.Select(f => f.Flag));
+            var rankFlags = AdminFlagsHelper.NamesToFlags(rank.Flags.Select(f => f.Flag));
 
             return UserAdminFlagCheck(rankFlags);
         }

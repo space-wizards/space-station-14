@@ -6,7 +6,7 @@ using Robust.Shared.IoC;
 
 #nullable enable
 
-namespace Content.Server.Administration
+namespace Content.Server.Administration.Commands
 {
     [UsedImplicitly]
     [AdminCommand(AdminFlags.None)]

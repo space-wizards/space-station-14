@@ -17,7 +17,7 @@ namespace Content.Tests.Shared.Administration
         {
             var names = namesConcat.Split(",", StringSplitOptions.RemoveEmptyEntries);
 
-            Assert.That(AdminFlagsExt.NamesToFlags(names), Is.EqualTo(flags));
+            Assert.That(AdminFlagsHelper.NamesToFlags(names), Is.EqualTo(flags));
         }
 
         [Test]
@@ -29,7 +29,7 @@ namespace Content.Tests.Shared.Administration
         {
             var names = namesConcat.Split(",", StringSplitOptions.RemoveEmptyEntries);
 
-            Assert.That(AdminFlagsExt.FlagsToNames(flags), Is.EquivalentTo(names));
+            Assert.That(AdminFlagsHelper.FlagsToNames(flags), Is.EquivalentTo(names));
         }
     }
 }

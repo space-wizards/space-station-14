@@ -5,16 +5,28 @@ using System.Numerics;
 
 namespace Content.Shared.Administration
 {
-    public static class AdminFlagsExt
+    /// <summary>
+    ///     Contains various helper methods for working with admin flags.
+    /// </summary>
+    public static class AdminFlagsHelper
     {
+        // As you can tell from the boatload of bitwise ops,
+        // writing this class was genuinely fun.
+
         private static readonly Dictionary<string, AdminFlags> NameFlagsMap = new Dictionary<string, AdminFlags>();
         private static readonly string[] FlagsNameMap = new string[32];
 
+        /// <summary>
+        ///     Every admin flag in the game, at once!
+        /// </summary>
         public static readonly AdminFlags Everything;
 
+        /// <summary>
+        ///     A list of all individual admin flags.
+        /// </summary>
         public static readonly IReadOnlyList<AdminFlags> AllFlags;
 
-        static AdminFlagsExt()
+        static AdminFlagsHelper()
         {
             var t = typeof(AdminFlags);
             var flags = (AdminFlags[]) Enum.GetValues(t);
@@ -24,6 +36,8 @@ namespace Content.Shared.Administration
             {
                 var name = value.ToString().ToUpper();
 
+                // If, in the future, somebody adds a combined admin flag or something for convenience,
+                // ignore it.
                 if (BitOperations.PopCount((uint) value) != 1)
                 {
                     continue;
@@ -38,6 +52,15 @@ namespace Content.Shared.Administration
             AllFlags = allFlags.ToArray();
         }
 
+        /// <summary>
+        ///     Converts an enumerable of admin flag names to a bitfield.
+        /// </summary>
+        /// <remarks>
+        ///     The flags must all be uppercase.
+        /// </remarks>
+        /// <exception cref="ArgumentException">
+        ///     Thrown if a string that is not a valid admin flag is contained in <paramref name="names"/>.
+        /// </exception>
         public static AdminFlags NamesToFlags(IEnumerable<string> names)
         {
             var flags = AdminFlags.None;
@@ -54,11 +77,23 @@ namespace Content.Shared.Administration
             return flags;
         }
 
+        /// <summary>
+        ///     Gets the flag bit for an admin flag name.
+        /// </summary>
+        /// <remarks>
+        ///     The flag name must be all uppercase.
+        /// </remarks>
+        /// <exception cref="KeyNotFoundException">
+        ///     Thrown if <paramref name="name"/> is not a valid admin flag name.
+        /// </exception>
         public static AdminFlags NameToFlag(string name)
         {
             return NameFlagsMap[name];
         }
 
+        /// <summary>
+        ///     Converts a bitfield of admin flags to an array of all the flag names set.
+        /// </summary>
         public static string[] FlagsToNames(AdminFlags flags)
         {
             var array = new string[BitOperations.PopCount((uint) flags)];

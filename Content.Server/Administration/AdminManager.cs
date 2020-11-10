@@ -95,7 +95,7 @@ namespace Content.Server.Administration
             _chat.DispatchServerMessage(session, Loc.GetString("You are now an admin."));
 
             var plyData = session.ContentData()!;
-            plyData.ExplicitlyDeadminned = true;
+            plyData.ExplicitlyDeadminned = false;
             reg.Data.Active = true;
 
             _chat.SendAdminAnnouncement(Loc.GetString("{0} re-adminned themselves.", session.Name));
@@ -203,7 +203,7 @@ namespace Content.Server.Administration
                     if (map.TryGetNode("Flags", out var flagsNode))
                     {
                         var flagNames = flagsNode.AsString().Split(",", StringSplitOptions.RemoveEmptyEntries);
-                        var flags = AdminFlagsExt.NamesToFlags(flagNames);
+                        var flags = AdminFlagsHelper.NamesToFlags(flagNames);
                         foreach (var cmd in commands)
                         {
                             if (!_adminCommands.TryGetValue(cmd, out var exFlags))
@@ -316,7 +316,7 @@ namespace Content.Server.Administration
                 var data = new AdminData
                 {
                     Title = Loc.GetString("Host"),
-                    Flags = AdminFlagsExt.Everything,
+                    Flags = AdminFlagsHelper.Everything,
                 };
 
                 return (data, null, true);
@@ -335,12 +335,12 @@ namespace Content.Server.Administration
 
                 if (dbData.AdminRank != null)
                 {
-                    flags = AdminFlagsExt.NamesToFlags(dbData.AdminRank.Flags.Select(p => p.Flag));
+                    flags = AdminFlagsHelper.NamesToFlags(dbData.AdminRank.Flags.Select(p => p.Flag));
                 }
 
                 foreach (var dbFlag in dbData.Flags)
                 {
-                    var flag = AdminFlagsExt.NameToFlag(dbFlag.Flag);
+                    var flag = AdminFlagsHelper.NameToFlag(dbFlag.Flag);
                     if (dbFlag.Negative)
                     {
                         flags &= ~flag;

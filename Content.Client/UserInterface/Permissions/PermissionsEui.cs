@@ -241,7 +241,7 @@ namespace Content.Client.UserInterface.Permissions
 
                 al.AddChild(rankControl);
 
-                var flagsText = AdminFlagsExt.PosNegFlagsText(admin.PosFlags, admin.NegFlags);
+                var flagsText = AdminFlagsHelper.PosNegFlagsText(admin.PosFlags, admin.NegFlags);
 
                 al.AddChild(new Label
                 {
@@ -264,7 +264,7 @@ namespace Content.Client.UserInterface.Permissions
             foreach (var kv in s.AdminRanks)
             {
                 var rank = kv.Value;
-                var flagsText = string.Join(' ', AdminFlagsExt.FlagsToNames(rank.Flags).Select(f => $"+{f}"));
+                var flagsText = string.Join(' ', AdminFlagsHelper.FlagsToNames(rank.Flags).Select(f => $"+{f}"));
                 _menu.AdminRanksList.AddChild(new Label {Text = rank.Name});
                 _menu.AdminRanksList.AddChild(new Label
                 {
@@ -390,7 +390,7 @@ namespace Content.Client.UserInterface.Permissions
                     VSeparationOverride = 0
                 };
 
-                foreach (var flag in AdminFlagsExt.AllFlags)
+                foreach (var flag in AdminFlagsHelper.AllFlags)
                 {
                     // Can only grant out perms you also have yourself.
                     // Primarily intended to prevent people giving themselves +HOST with +PERMISSIONS but generalized.
@@ -527,7 +527,7 @@ namespace Content.Client.UserInterface.Permissions
 
                 NameEdit = new LineEdit
                 {
-                    PlaceHolder = "Rank name",
+                    PlaceHolder = Loc.GetString("Rank name"),
                 };
 
                 if (data != null)
@@ -538,7 +538,7 @@ namespace Content.Client.UserInterface.Permissions
                 SaveButton = new Button {Text = Loc.GetString("Save"), SizeFlagsHorizontal = SizeFlags.ShrinkEnd | SizeFlags.Expand};
                 var flagsBox = new VBoxContainer();
 
-                foreach (var flag in AdminFlagsExt.AllFlags)
+                foreach (var flag in AdminFlagsHelper.AllFlags)
                 {
                     // Can only grant out perms you also have yourself.
                     // Primarily intended to prevent people giving themselves +HOST with +PERMISSIONS but generalized.

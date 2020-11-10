@@ -21,8 +21,6 @@ namespace Content.Client.Administration
 
         public event Action? AdminStatusUpdated;
 
-        public AdminFlags? Flags => _adminData?.Flags;
-
         public bool HasFlag(AdminFlags flag)
         {
             return _adminData?.HasFlag(flag) ?? false;
@@ -67,12 +65,12 @@ namespace Content.Client.Administration
             _adminData = message.Admin;
             if (_adminData != null)
             {
-                var flagsText = string.Join("|", AdminFlagsExt.FlagsToNames(_adminData.Flags));
+                var flagsText = string.Join("|", AdminFlagsHelper.FlagsToNames(_adminData.Flags));
                 Logger.InfoS("admin", $"Updated admin status: {_adminData.Active}/{_adminData.Title}/{flagsText}");
             }
             else
             {
-                Logger.InfoS("admin", $"Updated admin status: Not admin");
+                Logger.InfoS("admin", "Updated admin status: Not admin");
             }
 
             AdminStatusUpdated?.Invoke();

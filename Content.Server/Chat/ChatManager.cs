@@ -214,7 +214,6 @@ namespace Content.Server.Chat
             var clients = _playerManager
                 .GetPlayersBy(x => x.AttachedEntity != null && x.AttachedEntity.HasComponent<GhostComponent>())
                 .Select(p => p.ConnectedClient);
-            ;
 
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Dead;
