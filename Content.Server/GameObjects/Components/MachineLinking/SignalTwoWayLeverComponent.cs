@@ -54,13 +54,13 @@ namespace Content.Server.GameObjects.Components.MachineLinking
             }
         }
 
-        public bool InteractHand(InteractHandEventArgs eventArgs)
+        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
             NextState(eventArgs.User);
             return true;
         }
 
-        public void Activate(ActivateEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             NextState(eventArgs.User);
         }
