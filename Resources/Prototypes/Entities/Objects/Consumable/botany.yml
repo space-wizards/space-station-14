@@ -27,6 +27,7 @@
             Quantity: 5
     - type: Produce
       seed: wheat
+    - type: Grindable
 
 - type: entity
   name: sugarcane
