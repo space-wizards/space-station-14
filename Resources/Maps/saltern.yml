@@ -1388,7 +1388,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 163
-  type: TwoWaySwitch
+  type: TwoWayLever
   components:
   - parent: 855
     pos: -23.467268,-14.347846

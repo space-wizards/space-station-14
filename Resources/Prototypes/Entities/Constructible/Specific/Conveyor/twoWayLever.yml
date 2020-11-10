@@ -1,5 +1,5 @@
 ﻿- type: entity
-  id: TwoWaySwitch
+  id: TwoWayLever
   name: two way switch
   description: A two way switch.
   components:
@@ -12,7 +12,7 @@
     - type: TwoWayLever
     - type: Appearance
       visuals:
-        - type: TwoWaySwitchVisualizer
+        - type: TwoWayLeverVisualizer
           state_forward: switch-fwd
           state_off: switch-off
           state_reversed: switch-rev

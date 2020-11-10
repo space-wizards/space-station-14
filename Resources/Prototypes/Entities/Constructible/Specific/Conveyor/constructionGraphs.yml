@@ -49,7 +49,7 @@
               amount: 2
               doAfter: 1
     - node: lever
-      entity: TwoWaySwitch
+      entity: TwoWayLever
       edges:
         - to: start
           steps:

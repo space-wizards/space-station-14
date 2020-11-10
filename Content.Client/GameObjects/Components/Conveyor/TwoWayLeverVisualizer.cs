@@ -12,7 +12,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Client.GameObjects.Components.Conveyor
 {
     [UsedImplicitly]
-    public class TwoWaySwitchVisualizer : AppearanceVisualizer
+    public class TwoWayLeverVisualizer : AppearanceVisualizer
     {
         private string _stateForward;
         private string _stateOff;
@@ -31,7 +31,8 @@ namespace Content.Client.GameObjects.Components.Conveyor
             {
                 TwoWayLeverSignal.Middle => _stateOff,
                 TwoWayLeverSignal.Right => _stateForward,
-                TwoWayLeverSignal.Left => _stateReversed
+                TwoWayLeverSignal.Left => _stateReversed,
+                _ => _stateOff
             };
 
             sprite.LayerSetState(0, texture);
