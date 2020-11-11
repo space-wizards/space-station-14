@@ -31,7 +31,6 @@ namespace Content.Server.GameObjects.Components.Singularity
     {
 
         [Dependency] private IEntityManager _entityManager = null!;
-
         [Dependency] private IRobustRandom _random = null!;
 
 
