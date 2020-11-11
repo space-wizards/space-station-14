@@ -337,7 +337,6 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 
             // The pathfinding graph is tile-based so first we'll check if they're on a different tile and if we need to update.
             // If you get entities bigger than 1 tile wide you'll need some other system so god help you.
-
             var newTile = _mapManager.GetGrid(newGridId).GetTileRef(moveEvent.NewPosition);
 
             if (oldNode == null || oldNode.TileRef == newTile)
