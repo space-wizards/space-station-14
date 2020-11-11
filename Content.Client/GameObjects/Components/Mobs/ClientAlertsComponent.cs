@@ -185,9 +185,9 @@ namespace Content.Client.GameObjects.Components.Mobs
             // further, we need to ensure they are ordered w.r.t their configured order
             foreach (var alertStatus in EnumerateAlertStates())
             {
-                if (!AlertManager.TryDecode(alertStatus.AlertEncoded, out var newAlert))
+                if (!AlertManager.TryGet(alertStatus.AlertType, out var newAlert))
                 {
-                    Logger.ErrorS("alert", "Unable to decode alert {0}", alertStatus.AlertEncoded);
+                    Logger.ErrorS("alert", "Unrecognized alertType {0}", alertStatus.AlertType);
                     continue;
                 }
 
@@ -289,15 +289,7 @@ namespace Content.Client.GameObjects.Components.Mobs
                 return;
             }
 
-            if (AlertManager.TryEncode(alert.Alert, out var encoded))
-            {
-                SendNetworkMessage(new ClickAlertMessage(encoded));
-            }
-            else
-            {
-                Logger.ErrorS("alert", "unable to encode alert {0}", alert.Alert.AlertType);
-            }
-
+            SendNetworkMessage(new ClickAlertMessage(alert.Alert.AlertType));
         }
 
         public void FrameUpdate(float frameTime)

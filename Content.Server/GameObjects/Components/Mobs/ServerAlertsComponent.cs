@@ -72,14 +72,13 @@ namespace Content.Server.GameObjects.Components.Mobs
                         break;
                     }
 
-                    // TODO: Implement clicking other status effects in the HUD
-                    if (AlertManager.TryDecode(msg.EncodedAlert, out var alert))
+                    if (AlertManager.TryGet(msg.AlertType, out var alert))
                     {
                         PerformAlertClickCallback(alert, player);
                     }
                     else
                     {
-                        Logger.WarningS("alert", "unrecognized encoded alert {0}", msg.EncodedAlert);
+                        Logger.WarningS("alert", "unrecognized encoded alert {0}", msg.AlertType);
                     }
 
                     break;

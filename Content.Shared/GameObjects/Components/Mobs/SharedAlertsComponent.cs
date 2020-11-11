@@ -115,7 +115,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
             var newAlerts = new Dictionary<AlertKey, ClickableAlertState>();
             foreach (var alertState in alerts)
             {
-                if (AlertManager.TryDecode(alertState.AlertEncoded, out var alert))
+                if (AlertManager.TryGet(alertState.AlertType, out var alert))
                 {
                     newAlerts[alert.AlertKey] = new ClickableAlertState
                     {
@@ -124,7 +124,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
                 }
                 else
                 {
-                    Logger.ErrorS("alert", "unrecognized encoded alert {0}", alertState.AlertEncoded);
+                    Logger.ErrorS("alert", "unrecognized alertType {0}", alertState.AlertType);
                 }
             }
 
@@ -144,10 +144,10 @@ namespace Content.Shared.GameObjects.Components.Mobs
         public void ShowAlert(AlertType alertType, short? severity = null, OnClickAlert onClickAlert = null,
             ValueTuple<TimeSpan, TimeSpan>? cooldown = null)
         {
-            if (AlertManager.TryGetWithEncoded(alertType, out var alert, out var encoded))
+            if (AlertManager.TryGet(alertType, out var alert))
             {
                 if (_alerts.TryGetValue(alert.AlertKey, out var alertStateCallback) &&
-                    alertStateCallback.AlertState.AlertEncoded == encoded &&
+                    alertStateCallback.AlertState.AlertType == alertType &&
                     alertStateCallback.AlertState.Severity == severity && alertStateCallback.AlertState.Cooldown == cooldown)
                 {
                     alertStateCallback.OnClickAlert = onClickAlert;
@@ -157,7 +157,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
                 _alerts[alert.AlertKey] = new ClickableAlertState
                 {
                     AlertState = new AlertState
-                        {Cooldown = cooldown, AlertEncoded = encoded, Severity = severity},
+                        {Cooldown = cooldown, AlertType = alertType, Severity = severity},
                     OnClickAlert = onClickAlert
                 };
 
@@ -234,19 +234,19 @@ namespace Content.Shared.GameObjects.Components.Mobs
     [Serializable, NetSerializable]
     public class ClickAlertMessage : ComponentMessage
     {
-        public readonly byte EncodedAlert;
+        public readonly AlertType AlertType;
 
-        public ClickAlertMessage(byte encodedAlert)
+        public ClickAlertMessage(AlertType alertType)
         {
             Directed = true;
-            EncodedAlert = encodedAlert;
+            AlertType = alertType;
         }
     }
 
     [Serializable, NetSerializable]
     public struct AlertState
     {
-        public byte AlertEncoded;
+        public AlertType AlertType;
         public short? Severity;
         public ValueTuple<TimeSpan, TimeSpan>? Cooldown;
     }

@@ -49,19 +49,19 @@ namespace Content.Tests.Server.GameObjects.Components.Mobs
             var alertsComponent = new ServerAlertsComponent();
             alertsComponent = IoCManager.InjectDependencies(alertsComponent);
 
-            Assert.That(alertManager.TryGetWithEncoded(AlertType.LowPressure, out var lowpressure, out var lpencoded));
-            Assert.That(alertManager.TryGetWithEncoded(AlertType.HighPressure, out var highpressure, out var hpencoded));
+            Assert.That(alertManager.TryGet(AlertType.LowPressure, out var lowpressure));
+            Assert.That(alertManager.TryGet(AlertType.HighPressure, out var highpressure));
 
             alertsComponent.ShowAlert(AlertType.LowPressure);
             var alertState = alertsComponent.GetComponentState() as AlertsComponentState;
             Assert.NotNull(alertState);
             Assert.That(alertState.Alerts.Length, Is.EqualTo(1));
-            Assert.That(alertState.Alerts[0], Is.EqualTo(new AlertState{AlertEncoded = lpencoded}));
+            Assert.That(alertState.Alerts[0], Is.EqualTo(new AlertState{AlertType = lowpressure.AlertType}));
 
             alertsComponent.ShowAlert(AlertType.HighPressure);
             alertState = alertsComponent.GetComponentState() as AlertsComponentState;
             Assert.That(alertState.Alerts.Length, Is.EqualTo(1));
-            Assert.That(alertState.Alerts[0], Is.EqualTo(new AlertState{AlertEncoded = hpencoded}));
+            Assert.That(alertState.Alerts[0], Is.EqualTo(new AlertState{AlertType = highpressure.AlertType}));
 
             alertsComponent.ClearAlertCategory(AlertCategory.Pressure);
             alertState = alertsComponent.GetComponentState() as AlertsComponentState;
