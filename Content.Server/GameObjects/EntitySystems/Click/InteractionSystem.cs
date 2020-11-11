@@ -152,7 +152,6 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         private bool HandleWideAttack(ICommonSession session, EntityCoordinates coords, EntityUid uid)
         {
             // client sanitization
-
             if (!coords.IsValid(_entityManager))
 
             {
