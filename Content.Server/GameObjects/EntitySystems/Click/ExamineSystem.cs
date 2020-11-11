@@ -19,7 +19,6 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             _entityNotFoundMessage.AddText(Loc.GetString("That entity doesn't exist"));
         }
 
-
         public override void Initialize()
         {
             base.Initialize();
