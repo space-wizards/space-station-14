@@ -21,7 +21,6 @@ namespace Content.Client.GameObjects.Components.Suspicion
     public class SuspicionRoleComponent : SharedSuspicionRoleComponent
     {
         [Dependency] private readonly IGameHud _gameHud = default!;
-
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
