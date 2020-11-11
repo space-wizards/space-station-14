@@ -24,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Stack
     [ComponentReference(typeof(SharedStackComponent))]
     public class StackComponent : SharedStackComponent, IInteractUsing, IExamine
     {
-         private bool _throwIndividually = false;
+        private bool _throwIndividually = false;
 
         public override int Count
         {
