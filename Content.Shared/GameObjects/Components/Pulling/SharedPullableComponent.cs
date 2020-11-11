@@ -214,17 +214,8 @@ namespace Content.Shared.GameObjects.Components.Pulling
 
             if (puller.TryGetComponent(out SharedAlertsComponent? ownerStatus))
             {
-                ownerStatus.ShowAlert(AlertType.Pulling, onClickAlert: OnClickAlert);
+                ownerStatus.ShowAlert(AlertType.Pulling);
             }
-        }
-
-        private void OnClickAlert(ClickAlertEventArgs args)
-        {
-            EntitySystem
-                .Get<SharedPullingSystem>()
-                .GetPulled(args.Player)?
-                .GetComponentOrNull<SharedPullableComponent>()?
-                .TryStopPull();
         }
 
         private void RemovePullingStatuses(IEntity puller)

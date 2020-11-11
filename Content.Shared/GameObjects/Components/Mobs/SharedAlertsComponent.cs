@@ -27,7 +27,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         public override uint? NetID => ContentNetIDs.ALERTS;
 
         [ViewVariables]
-        private Dictionary<AlertKey, ClickableAlertState> _alerts = new Dictionary<AlertKey, ClickableAlertState>();
+        private Dictionary<AlertKey, AlertState> _alerts = new Dictionary<AlertKey, AlertState>();
 
         /// <returns>true iff an alert of the indicated alert category is currently showing</returns>
         public bool IsShowingAlertCategory(AlertCategory alertCategory)
@@ -55,26 +55,9 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
         protected IEnumerable<AlertState> EnumerateAlertStates()
         {
-            return _alerts.Values.Select(alertData => alertData.AlertState);
+            return _alerts.Values;
         }
 
-        /// <summary>
-        /// Invokes the alert's specified callback if there is one.
-        /// Not intended to be used on clientside.
-        /// </summary>
-        protected void PerformAlertClickCallback(AlertPrototype alert, IEntity owner)
-        {
-            if (_alerts.TryGetValue(alert.AlertKey, out var alertStateCallback))
-            {
-                alertStateCallback.OnClickAlert?.Invoke(new ClickAlertEventArgs(owner, alert));
-            }
-            else
-            {
-                Logger.DebugS("alert", "player {0} attempted to invoke" +
-                                       " alert click for {1} but that alert is not currently" +
-                                       " showing", owner.Name, alert.AlertType);
-            }
-        }
 
         /// <summary>
         /// Creates a new array containing all of the current alert states.
@@ -88,7 +71,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
             var idx = 0;
             foreach (var alertData in _alerts.Values)
             {
-                states[idx++] = alertData.AlertState;
+                states[idx++] = alertData;
             }
 
             return states;
@@ -96,14 +79,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
         protected bool TryGetAlertState(AlertKey key, out AlertState alertState)
         {
-            if (_alerts.TryGetValue(key, out var alertData))
-            {
-                alertState = alertData.AlertState;
-                return true;
-            }
-
-            alertState = default;
-            return false;
+            return _alerts.TryGetValue(key, out alertState);
         }
 
         /// <summary>
@@ -112,15 +88,12 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// </summary>
         protected void SetAlerts(AlertState[] alerts)
         {
-            var newAlerts = new Dictionary<AlertKey, ClickableAlertState>();
+            var newAlerts = new Dictionary<AlertKey, AlertState>();
             foreach (var alertState in alerts)
             {
                 if (AlertManager.TryGet(alertState.AlertType, out var alert))
                 {
-                    newAlerts[alert.AlertKey] = new ClickableAlertState
-                    {
-                        AlertState = alertState
-                    };
+                    newAlerts[alert.AlertKey] = alertState;
                 }
                 else
                 {
@@ -136,30 +109,22 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// it will be updated / replaced with the specified values.
         /// </summary>
         /// <param name="alertType">type of the alert to set</param>
-        /// <param name="onClickAlert">callback to invoke when ClickAlertMessage is received by the server
-        /// after being clicked by client. Has no effect when specified on the clientside.</param>
         /// <param name="severity">severity, if supported by the alert</param>
         /// <param name="cooldown">cooldown start and end, if null there will be no cooldown (and it will
         /// be erased if there is currently a cooldown for the alert)</param>
-        public void ShowAlert(AlertType alertType, short? severity = null, OnClickAlert onClickAlert = null,
-            ValueTuple<TimeSpan, TimeSpan>? cooldown = null)
+        public void ShowAlert(AlertType alertType, short? severity = null, ValueTuple<TimeSpan, TimeSpan>? cooldown = null)
         {
             if (AlertManager.TryGet(alertType, out var alert))
             {
                 if (_alerts.TryGetValue(alert.AlertKey, out var alertStateCallback) &&
-                    alertStateCallback.AlertState.AlertType == alertType &&
-                    alertStateCallback.AlertState.Severity == severity && alertStateCallback.AlertState.Cooldown == cooldown)
+                    alertStateCallback.AlertType == alertType &&
+                    alertStateCallback.Severity == severity && alertStateCallback.Cooldown == cooldown)
                 {
-                    alertStateCallback.OnClickAlert = onClickAlert;
                     return;
                 }
 
-                _alerts[alert.AlertKey] = new ClickableAlertState
-                {
-                    AlertState = new AlertState
-                        {Cooldown = cooldown, AlertType = alertType, Severity = severity},
-                    OnClickAlert = onClickAlert
-                };
+                _alerts[alert.AlertKey] = new AlertState
+                    {Cooldown = cooldown, AlertType = alertType, Severity = severity};
 
                 Dirty();
 
@@ -249,31 +214,5 @@ namespace Content.Shared.GameObjects.Components.Mobs
         public AlertType AlertType;
         public short? Severity;
         public ValueTuple<TimeSpan, TimeSpan>? Cooldown;
-    }
-
-    public struct ClickableAlertState
-    {
-        public AlertState AlertState;
-        public OnClickAlert OnClickAlert;
-    }
-
-    public delegate void OnClickAlert(ClickAlertEventArgs args);
-
-    public class ClickAlertEventArgs : EventArgs
-    {
-        /// <summary>
-        /// Player clicking the alert
-        /// </summary>
-        public readonly IEntity Player;
-        /// <summary>
-        /// Alert that was clicked
-        /// </summary>
-        public readonly AlertPrototype Alert;
-
-        public ClickAlertEventArgs(IEntity player, AlertPrototype alert)
-        {
-            Player = player;
-            Alert = alert;
-        }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using Content.Shared.Interfaces;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -70,6 +72,11 @@ namespace Content.Shared.Alert
         /// </summary>
         public bool SupportsSeverity => MaxSeverity != -1;
 
+        /// <summary>
+        /// Defines what to do when the alert is clicked.
+        /// </summary>
+        public IAlertClick OnClick { get; private set; }
+
         public void LoadFrom(YamlMappingNode mapping)
         {
             var serializer = YamlObjectSerializer.NewReader(mapping);
@@ -94,6 +101,9 @@ namespace Content.Shared.Alert
                 Category = alertCategory;
             }
             AlertKey = new AlertKey(AlertType, Category);
+
+            if (IoCManager.Resolve<IModuleManager>().IsClientModule) return;
+            serializer.DataField(this, x => x.OnClick, "onClick", null);
         }
 
         /// <param name="severity">severity level, if supported by this alert</param>

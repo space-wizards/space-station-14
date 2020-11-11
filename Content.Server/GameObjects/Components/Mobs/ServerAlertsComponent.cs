@@ -72,9 +72,17 @@ namespace Content.Server.GameObjects.Components.Mobs
                         break;
                     }
 
+                    if (!IsShowingAlert(msg.AlertType))
+                    {
+                        Logger.DebugS("alert", "user {0} attempted to" +
+                                              " click alert {1} which is not currently showing for them",
+                            player.Name, msg.AlertType);
+                        break;
+                    }
+
                     if (AlertManager.TryGet(msg.AlertType, out var alert))
                     {
-                        PerformAlertClickCallback(alert, player);
+                        alert.OnClick.AlertClicked(new ClickAlertEventArgs(player, alert));
                     }
                     else
                     {
