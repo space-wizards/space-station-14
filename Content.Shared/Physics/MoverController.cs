@@ -35,21 +35,12 @@ namespace Content.Shared.Physics
              * we can apply to our existing velocity to get to that direction as well
              */
 
-            var difference = velocityDirection * speed * _maxImpulse * 12 - existingVelocity;
+            var difference = velocityDirection * speed - existingVelocity;
 
             // Close enough
             if (difference.EqualsApprox(Vector2.Zero, 0.001)) return;
 
-            Vector2 velocity;
-
-            if (difference.Length > _maxImpulse * 12)
-            {
-                velocity = difference.Normalized * _maxImpulse * 12;
-            }
-            else
-            {
-                velocity = difference;
-            }
+            var velocity = difference;
 
             // TODO here and below: It's possible to overshoot the difference.
 

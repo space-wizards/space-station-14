@@ -90,7 +90,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                 {
                     if (physics.TryGetController(out MoverController controller))
                     {
-                        controller.Push(combined, mover.CurrentPushSpeed);
+                        controller.Push(combined, mover.CurrentPushSpeed * 200f);
                     }
 
                     transform.LocalRotation = physics.LinearVelocity.GetDir().ToAngle();
@@ -101,7 +101,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                 {
                     if (physics.TryGetController(out MoverController controller))
                     {
-                        controller.Push(total, 1f);
+                        controller.Push(total, mover.CurrentSprintSpeed * 50f);
                     }
                 }
 
