@@ -22,6 +22,7 @@ using Content.Shared.GameObjects.Components.Power.AME;
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.GameObjects.Components.VendingMachines;
 using Content.Shared.Kitchen;
+using Content.Shared.Alert;
 using Robust.Client;
 using Robust.Client.Interfaces;
 using Robust.Client.Interfaces.Graphics.Overlays;
@@ -46,7 +47,6 @@ namespace Content.Client
         [Dependency] private readonly IEscapeMenuOwner _escapeMenuOwner = default!;
         [Dependency] private readonly IGameController _gameController = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
-        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
         public override void Init()
         {
@@ -150,6 +150,7 @@ namespace Content.Client
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();
             IoCManager.Resolve<IStationEventManager>().Initialize();
             IoCManager.Resolve<IAdminMenuManager>().Initialize();
+            IoCManager.Resolve<AlertManager>().Initialize();
 
             _baseClient.RunLevelChanged += (sender, args) =>
             {
