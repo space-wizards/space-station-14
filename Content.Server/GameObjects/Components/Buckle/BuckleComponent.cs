@@ -387,7 +387,6 @@ namespace Content.Server.GameObjects.Components.Buckle
             return TryBuckle(user, to);
         }
 
-
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
