@@ -38,7 +38,6 @@ namespace Content.Server.GameObjects.Components.PDA
     public class PDAComponent : SharedPDAComponent, IInteractUsing, IActivate, IUse, IAccess
     {
         [Dependency] private readonly IPDAUplinkManager _uplinkManager = default!;
-
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
         [ViewVariables] private ContainerSlot _idSlot = default!;
