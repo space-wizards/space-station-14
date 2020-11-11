@@ -20,7 +20,6 @@ namespace Content.Server.GameObjects.Components.Damage
     public class DestructibleComponent : RuinableComponent, IDestroyAct
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
         protected ActSystem ActSystem;
