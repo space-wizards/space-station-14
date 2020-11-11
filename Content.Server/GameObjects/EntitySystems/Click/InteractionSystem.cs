@@ -153,7 +153,6 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         {
             // client sanitization
             if (!coords.IsValid(_entityManager))
-
             {
                 Logger.InfoS("system.interaction", $"Invalid Coordinates: client={session}, coords={coords}");
                 return true;
