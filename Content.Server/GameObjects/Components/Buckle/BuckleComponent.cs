@@ -410,7 +410,6 @@ namespace Content.Server.GameObjects.Components.Buckle
         {
             base.OnRemove();
 
-
             BuckledTo?.Remove(this);
             TryUnbuckle(Owner, true);
 
