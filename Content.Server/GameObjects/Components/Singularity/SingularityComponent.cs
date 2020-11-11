@@ -29,7 +29,6 @@ namespace Content.Server.GameObjects.Components.Singularity
     [RegisterComponent]
     public class SingularityComponent : Component, ICollideBehavior
     {
-
         [Dependency] private IEntityManager _entityManager = null!;
         [Dependency] private IRobustRandom _random = null!;
 
