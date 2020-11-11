@@ -33,7 +33,6 @@ namespace Content.Client.GameObjects.Components.Suspicion
             IEyeManager eyeManager)
             : base(nameof(TraitorOverlay))
         {
-
             _entityManager = entityManager;
             _eyeManager = eyeManager;
 
