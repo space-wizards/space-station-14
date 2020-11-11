@@ -47,7 +47,6 @@ namespace Content.Client
         [Dependency] private readonly IEscapeMenuOwner _escapeMenuOwner = default!;
         [Dependency] private readonly IGameController _gameController = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
-        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
         public override void Init()
         {

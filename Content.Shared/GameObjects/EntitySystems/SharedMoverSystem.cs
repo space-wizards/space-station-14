@@ -23,7 +23,6 @@ namespace Content.Shared.GameObjects.EntitySystems
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] protected readonly IPhysicsManager PhysicsManager = default!;
-        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
         public override void Initialize()
         {
