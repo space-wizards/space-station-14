@@ -712,14 +712,14 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 82
-  type: Bling
+  type: ClothingNeckBling
   components:
   - parent: 855
     pos: -2.861164,18.612366
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 83
-  type: Bling
+  type: ClothingNeckBling
   components:
   - parent: 855
     pos: -2.564289,18.643616
@@ -47193,7 +47193,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4144
-  type: MaskJoy
+  type: ClothingMaskJoy
   components:
   - parent: 855
     pos: 13.418978,24.555822

@@ -43,9 +43,9 @@
     contents:
       - name: ToolboxEmergencyFilled
         prob: 0.4
-      - name: BreathMaskClothing
+      - name: ClothingMaskBreath
         prob: 0.4
-      - name: BreathMaskClothing
+      - name: ClothingMaskBreath
         prob: 0.25
       - name: EmergencyOxygenTankFilled
         prob: 0.4
@@ -81,7 +81,7 @@
     contents:
       - name: HelmetHardsuitCE
       - name: HardsuitCE
-      - name: BreathMaskClothing
+      - name: ClothingMaskBreath
       - name: OxygenTankFilled
 
 - type: entity
@@ -103,7 +103,7 @@
     contents:
       - name: HelmetHardsuitAtmos
       - name: HardsuitAtmos
-      - name: BreathMaskClothing
+      - name: ClothingMaskBreath
       - name: OxygenTankFilled
 
 - type: entity
@@ -115,7 +115,7 @@
     contents:
       - name: HelmetHardsuitEngineering
       - name: HardsuitEngineering
-      - name: BreathMaskClothing
+      - name: ClothingMaskBreath
       - name: OxygenTankFilled
 
 - type: entity

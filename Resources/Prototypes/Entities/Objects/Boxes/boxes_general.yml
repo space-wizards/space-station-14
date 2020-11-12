@@ -90,7 +90,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: BreathMaskClothing
+      - name: ClothingMaskBreath
       - name: EmergencyOxygenTankFilled
       #- name: Injector
   - type: Sprite
