@@ -606,7 +606,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             if (target.TryGetComponent(out IPhysicsComponent physics))
             {
                 var targetDistance = (targetPos.Position - entityPos.Position);
-                targetPos = targetPos.Offset(physics.LinearVelocity * targetDistance);
+                targetPos = targetPos.Offset(physics.TotalLinearVelocity * targetDistance);
             }
 
             return (targetPos.Position - entityPos.Position).Normalized;
@@ -663,7 +663,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                     // So if 2 entities are moving towards each other and both detect a collision they'll both move in the same direction
                     // i.e. towards the right
                     if (physicsEntity.TryGetComponent(out IPhysicsComponent otherPhysics) &&
-                        Vector2.Dot(otherPhysics.LinearVelocity, direction) > 0)
+                        Vector2.Dot(otherPhysics.TotalLinearVelocity, direction) > 0)
                     {
                         continue;
                     }

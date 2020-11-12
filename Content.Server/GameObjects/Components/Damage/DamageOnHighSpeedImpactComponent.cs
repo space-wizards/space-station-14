@@ -54,7 +54,7 @@ namespace Content.Server.GameObjects.Components.Damage
         {
             if (!Owner.TryGetComponent(out IPhysicsComponent physics) || !Owner.TryGetComponent(out IDamageableComponent damageable)) return;
 
-            var speed = physics.LinearVelocity.Length;
+            var speed = physics.TotalLinearVelocity.Length;
 
             if (speed < MinimumSpeed) return;
 

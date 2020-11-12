@@ -71,14 +71,14 @@ namespace Content.Shared.Physics.Pull
                 return false;
             }
 
-            if (_puller.LinearVelocity.EqualsApprox(Vector2.Zero))
+            if (_puller.TotalLinearVelocity.EqualsApprox(Vector2.Zero))
             {
                 return false;
             }
 
             var pullerTransform = _puller.Owner.Transform;
             var origin = pullerTransform.Coordinates.Position;
-            var velocity = _puller.LinearVelocity.Normalized;
+            var velocity = _puller.TotalLinearVelocity.Normalized;
             var mapId = pullerTransform.MapPosition.MapId;
             var ray = new CollisionRay(origin, velocity, (int) CollisionGroup.AllMask);
             bool Predicate(IEntity e) => e != ControlledComponent.Owner;
@@ -221,7 +221,7 @@ namespace Content.Shared.Physics.Pull
             }
             else if (distance.Length > DistanceBeforeStopPull() && !PullerMovingTowardsPulled())
             {
-                LinearVelocity = distance.Normalized * _puller.LinearVelocity.Length * 1.5f;
+                LinearVelocity = distance.Normalized * _puller.TotalLinearVelocity.Length * 1.5f;
             }
             else
             {

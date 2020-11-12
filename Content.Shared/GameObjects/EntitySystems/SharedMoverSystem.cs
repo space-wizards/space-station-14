@@ -95,19 +95,10 @@ namespace Content.Shared.GameObjects.EntitySystems
                 }
 
                 var total = walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed;
-                // var drag_coeff = 25f;
-                // var thrust = (mover.CurrentWalkSpeed + mover.CurrentSprintSpeed) * drag_coeff;
-                // var force = (walkDir + sprintDir) * thrust;
-                // var drag = -physics.LinearVelocity * drag_coeff;
-                // force += drag;
-                // var acceleration = thrust / physics.Mass;
-                // physics.LinearVelocity += acceleration;
-
 
                 {
                     if (physics.TryGetController(out MoverController controller))
                     {
-                        //controller.Move(total, 1);
                         controller.Move(total, frameTime);
                     }
                 }
