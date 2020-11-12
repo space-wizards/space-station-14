@@ -17,10 +17,10 @@
 - type: startingGear
   id: ResearchDirectorGear
   equipment:
-    innerclothing: UniformResearchDirector
+    innerclothing: ClothingUniformJumpsuitResearchDirector
     # Note to Swept add science backpacks
     backpack: BackpackClothingFilled
-    shoes: ShoesBrown
+    shoes: ClothingShoesBrown
     outerclothing: OuterclothingLabcoatopen
     idcard: RnDPDA
     ears: HeadsetScience

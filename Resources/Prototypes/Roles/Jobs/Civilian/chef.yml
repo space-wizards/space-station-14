@@ -14,8 +14,8 @@
 - type: startingGear
   id: ChefGear
   equipment:
-    innerclothing: UniformChef
+    innerclothing: ClothingUniformJumpsuitChef
     backpack: BackpackClothingFilled
-    shoes: ShoesBlack
+    shoes: ClothingShoesBlack
     idcard: ChefPDA
     ears: HeadsetService

@@ -14,8 +14,8 @@
 - type: startingGear
   id: CargoTechGear
   equipment:
-    innerclothing: UniformCargoTech
+    innerclothing: ClothingUniformJumpsuitCargoTech
     backpack: BackpackClothingFilled
-    shoes: ShoesBlack
+    shoes: ClothingShoesBlack
     idcard: CargoPDA
     ears: HeadsetCargo

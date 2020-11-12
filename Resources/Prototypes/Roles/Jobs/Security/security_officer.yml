@@ -15,9 +15,9 @@
 - type: startingGear
   id: SecurityOfficerGear
   equipment:
-    innerclothing: UniformSec
+    innerclothing: ClothingUniformJumpsuitSec
     backpack: SecPackFilled
-    shoes: ShoesJackboots
+    shoes: ClothingShoesJackboots
     eyes: SecGlasses
     outerclothing: OuterclothingArmorVest
     idcard: SecurityPDA

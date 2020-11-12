@@ -19,9 +19,9 @@
   id: ChiefEngineerGear
   equipment:
     head: HatHardhatWhite
-    innerclothing: UniformChiefEngineer
+    innerclothing: ClothingUniformJumpsuitChiefEngineer
     backpack: BackpackEngineeringFilled
-    shoes: ShoesBrown
+    shoes: ClothingShoesBrown
     idcard: CEPDA
     ears: HeadsetEngineering
     belt: ClothingBeltChiefEngineerFilled

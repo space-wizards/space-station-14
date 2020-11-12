@@ -15,8 +15,8 @@
 - type: startingGear
   id: QuartermasterGear
   equipment:
-    innerclothing: UniformQM
+    innerclothing: ClothingUniformJumpsuitQM
     backpack: BackpackClothingFilled
-    shoes: ShoesBrown
+    shoes: ClothingShoesBrown
     idcard: QuartermasterPDA
     ears: HeadsetCargo

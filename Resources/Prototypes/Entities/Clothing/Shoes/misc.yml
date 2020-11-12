@@ -1,0 +1,43 @@
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesFlippers
+  name: flippers
+  description: A pair of rubber flippers that improves swimming ability when worn.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Misc/flippers.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Misc/flippers.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesLeather
+  name: leather shoes
+  description: Very stylish pair of boots, made from fine leather.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Misc/leather.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Misc/leather.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesSlippers
+  name: slippers
+  description: Fluffy!
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Misc/slippers.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Misc/slippers.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesTourist
+  name: tourist shoes
+  description: These cheap sandals don't look very comfortable.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Misc/tourist.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Misc/tourist.rsi
