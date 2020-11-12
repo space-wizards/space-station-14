@@ -135,7 +135,7 @@ namespace Content.Client.State
             }
             else
             {
-                var difference = _gameTiming.CurTime; 
+                var difference = _clientGameTicker.StartTime - _gameTiming.RealTime; 
                 if (difference.Ticks < 0)
                 {
                     if (difference.TotalSeconds < -5)

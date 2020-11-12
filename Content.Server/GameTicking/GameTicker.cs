@@ -80,10 +80,9 @@ namespace Content.Server.GameTicking
 
         [ViewVariables] private Type _presetType;
 
-        [ViewVariables] private IGameTiming _pauseTime;
+        [ViewVariables] private TimeSpan _pauseTime;
         [ViewVariables] private bool _roundStartCountdownHasNotStartedYetDueToNoPlayers;
-        private long _roundStartTimeTicks;
-        private DateTime _roundInitializedTimeUtc;
+        private TimeSpan _roundStartTime;
         [ViewVariables] private GameRunLevel _runLevel;
         [ViewVariables(VVAccess.ReadWrite)] private EntityCoordinates _spawnPoint;
 
@@ -141,7 +140,7 @@ namespace Content.Server.GameTicking
 
             SetStartPreset(_configurationManager.GetCVar(CCVars.GameLobbyDefaultPreset));
 
-            _roundInitializedTimeUtc = DateTime.UtcNow;
+            _roundStartTime = _gameTiming.RealTime;
 
             RestartRound();
 
@@ -169,7 +168,7 @@ namespace Content.Server.GameTicking
 
             if (RunLevel != GameRunLevel.PreRoundLobby ||
                 Paused ||
-                _roundStartTimeTicks > IoCManager.Resolve<IGameTiming>().RealTime.Ticks ||
+                _roundStartTime > _gameTiming.RealTime ||
                 _roundStartCountdownHasNotStartedYetDueToNoPlayers)
             {
                 return;
@@ -206,7 +205,7 @@ namespace Content.Server.GameTicking
                 if (PlayerManager.PlayerCount == 0)
                     _roundStartCountdownHasNotStartedYetDueToNoPlayers = true;
                 else
-                    _roundStartTimeTicks = IoCManager.Resolve<IGameTiming>().RealTime.Ticks + LobbyDuration.Ticks;
+                    _roundStartTime = _gameTiming.RealTime + LobbyDuration;
 
                 _sendStatusToAll();
 
@@ -511,10 +510,10 @@ namespace Content.Server.GameTicking
                 return false;
             }
 
-            _roundStartTimeTicks += time.Ticks;
+            _roundStartTime += time;
 
             var lobbyCountdownMessage = _netManager.CreateNetMessage<MsgTickerLobbyCountdown>();
-            lobbyCountdownMessage.StartTime = new DateTime(_roundStartTimeTicks + _roundInitializedTimeUtc.Ticks, DateTimeKind.Utc);
+            lobbyCountdownMessage.StartTime = _roundStartTime;
             lobbyCountdownMessage.Paused = Paused;
             _netManager.ServerSendToAll(lobbyCountdownMessage);
 
@@ -534,15 +533,15 @@ namespace Content.Server.GameTicking
 
             if (pause)
             {
-                _pauseTime = IoCManager.Resolve<IGameTiming>();
+                _pauseTime = _gameTiming.RealTime;
             }
             else if (_pauseTime != default)
             {
-                _roundStartTimeTicks += IoCManager.Resolve<IGameTiming>().RealTime.Ticks - _pauseTime.RealTime.Ticks;
+                _roundStartTime += _gameTiming.RealTime - _pauseTime;
             }
 
             var lobbyCountdownMessage = _netManager.CreateNetMessage<MsgTickerLobbyCountdown>();
-            lobbyCountdownMessage.StartTime = new DateTime(_roundStartTimeTicks + _roundInitializedTimeUtc.Ticks, DateTimeKind.Utc);
+            lobbyCountdownMessage.StartTime = _roundStartTime;
             lobbyCountdownMessage.Paused = Paused;
             _netManager.ServerSendToAll(lobbyCountdownMessage);
 
@@ -734,7 +733,7 @@ namespace Content.Server.GameTicking
                     if (LobbyEnabled && _roundStartCountdownHasNotStartedYetDueToNoPlayers)
                     {
                         _roundStartCountdownHasNotStartedYetDueToNoPlayers = false;
-                        _roundStartTimeTicks = IoCManager.Resolve<IGameTiming>().RealTime.Ticks + LobbyDuration.Ticks;
+                        _roundStartTime = _gameTiming.RealTime + LobbyDuration;
                     }
 
                     break;
@@ -980,7 +979,7 @@ namespace Content.Server.GameTicking
             _playersInLobby.TryGetValue(session, out var status);
             var msg = _netManager.CreateNetMessage<MsgTickerLobbyStatus>();
             msg.IsRoundStarted = RunLevel != GameRunLevel.PreRoundLobby;
-            msg.StartTime = new DateTime(_roundStartTimeTicks + _roundInitializedTimeUtc.Ticks, DateTimeKind.Utc);
+            msg.StartTime = _roundStartTime;
             msg.YouAreReady = status == PlayerStatus.Ready;
             msg.Paused = Paused;
             return msg;
