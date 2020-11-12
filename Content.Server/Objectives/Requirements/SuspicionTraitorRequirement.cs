@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Server.Objectives.Requirements
 {
-    public class TraitorRequirement : IObjectiveRequirement
+    public class SuspicionTraitorRequirement : IObjectiveRequirement
     {
         public void ExposeData(ObjectSerializer serializer){}
 

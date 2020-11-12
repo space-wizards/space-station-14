@@ -96,7 +96,11 @@ namespace Content.Client.GameObjects.Components.Actor
                     PlaceholderText = Loc.GetString("Health & status effects")
                 });
 
-                AddChild(new Label{Text = Loc.GetString("Objectives")});
+                AddChild(new Label
+                {
+                    Text = Loc.GetString("Objectives"),
+                    SizeFlagsHorizontal = SizeFlags.ShrinkCenter
+                });
                 ObjectivesContainer = new VBoxContainer();
                 AddChild(ObjectivesContainer);
 

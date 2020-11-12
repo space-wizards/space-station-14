@@ -3,15 +3,7 @@
   prob: 0.3
   issuer: The Syndicate
   requirements:
-    - !type:TraitorRequirement {}
-  conditions:
-    - !type:StealCondition
-      prototype: SoapDeluxe
-
-- type: objective
-  id: SoapDeluxeStealObjectiveNoReq
-  prob: 0.3
-  issuer: The Syndicate
+    - !type:SuspicionTraitorRequirement {}
   conditions:
     - !type:StealCondition
       prototype: SoapDeluxe
