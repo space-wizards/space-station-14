@@ -1,6 +1,8 @@
 ﻿#nullable enable
 using System.Threading.Tasks;
+using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.Construction;
+using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -27,10 +29,23 @@ namespace Content.Server.Construction.Completions
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var coordinates = entity.Transform.Coordinates;
 
-            for (var i = 0; i < Amount; i++)
+            if (EntityPrototypeHelpers.HasComponent<StackComponent>(Prototype))
             {
-                entityManager.SpawnEntity(Prototype, coordinates);
+                var _entity = entityManager.SpawnEntity(Prototype, coordinates);
+                StackComponent stackComponent = _entity.GetComponent<StackComponent>();
+
+                if (Amount > stackComponent.MaxCount)
+                    stackComponent.Count = stackComponent.MaxCount;
+                else
+                    stackComponent.Count = Amount;
+            }else
+            {
+                for (var i = 0; i < Amount; i++)
+                {
+                    entityManager.SpawnEntity(Prototype, coordinates);
+                }
             }
+            
         }
     }
 }

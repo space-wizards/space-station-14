@@ -166,6 +166,10 @@
             "directions": 1
         },
         {
+        	"name": "rglass",
+        	"directions": 1
+        },
+        {
             "name": "researchicon",
             "directions": 1
         }

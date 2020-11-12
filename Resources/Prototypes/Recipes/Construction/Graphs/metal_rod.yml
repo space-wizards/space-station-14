@@ -1,13 +1,16 @@
 ﻿- type: constructionGraph
-  id: Table
+  id: metalRod
   start: start
   graph:
     - node: start
       edges:
-        - to: frame
+        - to: MetalRod
           completed:
-            - !type:SnapToGrid { }
+            - !type:SetStackCount
+              amount: 2
           steps:
             - material: Metal
               amount: 1
-              doAfter: 1
+
+    - node: MetalRod
+      entity: MetalRod

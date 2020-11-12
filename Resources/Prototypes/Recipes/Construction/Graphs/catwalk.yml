@@ -1,0 +1,13 @@
+﻿- type: constructionGraph
+  id: Catwalk
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: Catwalk
+          steps:
+            - material: MetalRod
+              amount: 1
+
+    - node: Catwalk
+      entity: Catwalk

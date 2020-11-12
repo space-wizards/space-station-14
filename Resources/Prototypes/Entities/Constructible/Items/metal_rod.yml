@@ -1,0 +1,23 @@
+﻿- type: entity
+  name: Metal Rod
+  parent: BaseItem
+  id: MetalRod
+  components:
+    - type: Sprite
+      sprite: Objects/Materials/materials.rsi
+      state: rods
+    - type: Item
+      size: 24
+      icon:
+        sprite: /Textures/Constructible/Structures/Walls/materials.rsi
+        state: rods
+      prefix: inhand
+    - type: Construction
+      graph: metalRod
+      node: MetalRod
+    - type: Stack
+      stacktype: enum.StackType.MetalRod
+      count: 1
+      max: 50
+    - type: FloorTile
+      output: lattice

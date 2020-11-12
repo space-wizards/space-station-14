@@ -57,7 +57,7 @@
           completed:
             - !type:SpawnPrototype
               prototype: ApcExtensionCableStack1
-              amount: 3
+              amount: 2
           conditions:
             - !type:EntityAnchored
               anchored: true
