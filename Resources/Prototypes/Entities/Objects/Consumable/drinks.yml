@@ -602,6 +602,24 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_orange.rsi
 
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkGlassYellow
+  name: lemon juice
+  description: Used to make lemonade, soft drinks, and cocktails.
+  components:
+  - type: Drink
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+        - ReagentId: chem.LemonJuice
+          Quantity: 20
+  components:
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/glass_yellow.rsi
+
 
 - type: entity
   parent: DrinkGlassBase
