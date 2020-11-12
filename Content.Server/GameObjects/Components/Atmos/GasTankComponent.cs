@@ -43,7 +43,6 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         private int _integrity = 3;
 
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [ViewVariables] private BoundUserInterface? _userInterface;
 
         [ViewVariables] public GasMixture? Air { get; set; }

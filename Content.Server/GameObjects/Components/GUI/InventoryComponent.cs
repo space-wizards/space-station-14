@@ -432,7 +432,7 @@ namespace Content.Server.GameObjects.Components.GUI
         /// Message that tells us to equip or unequip items from the inventory slots
         /// </summary>
         /// <param name="msg"></param>
-        private void HandleInventoryMessage(ClientInventoryMessage msg)
+        private async void HandleInventoryMessage(ClientInventoryMessage msg)
         {
             switch (msg.Updatetype)
             {
@@ -463,7 +463,7 @@ namespace Content.Server.GameObjects.Components.GUI
                     {
                         if (activeHand != null)
                         {
-                                _ = interactionSystem.Interaction(Owner, activeHand.Owner, itemContainedInSlot.Owner,
+                                await interactionSystem.Interaction(Owner, activeHand.Owner, itemContainedInSlot.Owner,
                                     new EntityCoordinates());
                         }
                         else if (Unequip(msg.Inventoryslot))

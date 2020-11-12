@@ -568,7 +568,7 @@ namespace Content.Server.GameObjects.Components.GUI
             }
         }
 
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
+        public override async void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, channel, session);
 
@@ -609,7 +609,7 @@ namespace Content.Server.GameObjects.Components.GUI
                         var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
                         if (used != null)
                         {
-                                _ = interactionSystem.Interaction(Owner, used, hand.Entity,
+                                await interactionSystem.Interaction(Owner, used, hand.Entity,
                                     EntityCoordinates.Invalid);
                         }
                         else
