@@ -270,7 +270,7 @@
   id: chem.BerryJuice
   name: berry juice
   desc: A delicious blend of several different kinds of berries.
-  physicalDesc: crisp
+  physicalDesc: sweet
   color: "#660099"
   metabolism:
     - !type:DefaultDrink
@@ -337,6 +337,15 @@
     - !type:DefaultDrink
       rate: 1
 
+
+# /datum/reagent/drink/orangejuice/on_mob_life(var/mob/living/M)
+
+# if(..())
+# return 1
+
+# if(M.getToxLoss() && prob(20))
+# M.adjustToxLoss(-REM)
+
 - type: reagent
   id: chem.OrangeJuice
   name: orange juice
@@ -353,6 +362,43 @@
   desc: Tomatoes made into juice. What a waste of good tomatoes, huh?
   physicalDesc: saucey
   color: "#731008"
+  metabolism:
+    - !type:DefaultDrink
+      rate: 1
+
+# /datum/reagent/drink/poisonberryjuice/on_mob_life(var/mob/living/M)
+
+# if(..())
+# return 1
+
+# M.adjustToxLoss(1)
+
+- type: reagent
+  id: chem.PoisonBerryJuice
+  name: poison berry juice
+  desc: A surprisingly tasty juice blended from various kinds of very deadly and toxic berries.
+  physicalDesc: aromatic #maybe should be 'sickly'?
+  color: "#6600CC"
+  metabolism:
+    - !type:DefaultDrink
+      rate: 1
+
+- type: reagent
+  id: chem.WatermelonJuice
+  name: water melon juice
+  desc: The delicious juice of a watermelon.
+  physicalDesc: sweet
+  color: "#EF3520"
+  metabolism:
+    - !type:DefaultDrink
+      rate: 1
+
+- type: reagent
+  id: chem.PotatoJuice
+  name: potato juice
+  desc: Juice of the potato. Bleh.
+  physicalDesc: starchy
+  color: "#302000"
   metabolism:
     - !type:DefaultDrink
       rate: 1
