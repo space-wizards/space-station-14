@@ -49,6 +49,6 @@ namespace Content.Server.GameObjects.Components.Projectiles
             }
         }
 
-        void ICollideBehavior.PostCollide(int collidedCount) {}
+        void ICollideBehavior.PostCollide(uint collidedCount) {}
     }
 }

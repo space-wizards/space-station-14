@@ -112,7 +112,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             }
         }
 
-        void ICollideBehavior.PostCollide(int collideCount)
+        void ICollideBehavior.PostCollide(uint collideCount)
         {
             if (collideCount > 0 && DeleteOnCollide && _internalDeleteOnCollide) Owner.Delete();
         }

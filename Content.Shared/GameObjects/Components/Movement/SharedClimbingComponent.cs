@@ -17,19 +17,7 @@ namespace Content.Shared.GameObjects.Components.Movement
         protected IPhysicsComponent Body;
         protected bool IsOnClimbableThisFrame = false;
 
-        protected bool OwnerIsTransitioning
-        {
-            get
-            {
-                if (Body.TryGetController<ClimbController>(out var controller))
-                {
-                    return controller.IsActive;
-                }
-
-                return false;
-            }
-        }
-
+        protected bool OwnerIsTransitioning { get; set; }
         public abstract bool IsClimbing { get; set; }
 
         bool IActionBlocker.CanMove() => !OwnerIsTransitioning;
@@ -37,7 +25,7 @@ namespace Content.Shared.GameObjects.Components.Movement
 
         bool ICollideSpecial.PreventCollide(IPhysBody collided)
         {
-            if (((CollisionGroup)collided.CollisionLayer).HasFlag(CollisionGroup.VaultImpassable) && collided.Entity.HasComponent<IClimbable>())
+            if ((collided.CollisionLayer & (int) CollisionGroup.VaultImpassable) != 0 && collided.Entity.HasComponent<SharedClimbableComponent>())
             {
                 IsOnClimbableThisFrame = true;
                 return IsClimbing;
@@ -48,7 +36,7 @@ namespace Content.Shared.GameObjects.Components.Movement
 
         bool IDraggable.CanDrop(CanDropEventArgs args)
         {
-            return args.Target.HasComponent<IClimbable>();
+            return args.Target.HasComponent<SharedClimbableComponent>();
         }
 
         bool IDraggable.Drop(DragDropEventArgs args)

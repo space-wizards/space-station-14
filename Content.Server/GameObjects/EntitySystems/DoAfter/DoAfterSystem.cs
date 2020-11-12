@@ -17,12 +17,10 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
         {
             base.Update(frameTime);
 
-            foreach (var comp in ComponentManager.EntityQuery<DoAfterComponent>())
+            foreach (var comp in ComponentManager.EntityQuery<DoAfterComponent>(false))
             {
-                if (comp.Owner.Paused) continue;
-
-                var cancelled = new List<DoAfter>(0);
-                var finished = new List<DoAfter>(0);
+                var cancelled = new List<DoAfter>();
+                var finished = new List<DoAfter>();
 
                 foreach (var doAfter in comp.DoAfters.ToArray())
                 {

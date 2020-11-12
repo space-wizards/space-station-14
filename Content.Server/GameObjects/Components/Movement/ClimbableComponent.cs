@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Body;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Utility;
@@ -25,23 +27,9 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Movement
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IClimbable))]
+    [ComponentReference(typeof(SharedClimbableComponent))]
     public class ClimbableComponent : SharedClimbableComponent, IDragDropOn
     {
-        /// <summary>
-        ///     The range from which this entity can be climbed.
-        /// </summary>
-        [ViewVariables]
-        private float _range;
-
-        /// <summary>
-        ///     The time it takes to climb onto the entity.
-        /// </summary>
-        [ViewVariables]
-        private float _climbDelay;
-
-        private DoAfterSystem _doAfterSystem;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -50,16 +38,6 @@ namespace Content.Server.GameObjects.Components.Movement
             {
                 Logger.Warning($"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(PhysicsComponent)}");
             }
-
-            _doAfterSystem = EntitySystem.Get<DoAfterSystem>();
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _range, "range", SharedInteractionSystem.InteractionRange / 1.4f);
-            serializer.DataField(ref _climbDelay, "delay", 0.8f);
         }
 
         bool IDragDropOn.CanDragDropOn(DragDropEventArgs eventArgs)
@@ -107,7 +85,7 @@ namespace Content.Server.GameObjects.Components.Movement
                 return false;
             }
 
-            if (!user.InRangeUnobstructed(target, _range))
+            if (!user.InRangeUnobstructed(target, Range))
             {
                 reason = Loc.GetString("You can't reach there!");
                 return false;
@@ -141,8 +119,8 @@ namespace Content.Server.GameObjects.Components.Movement
 
             bool Ignored(IEntity entity) => entity == target || entity == user || entity == dragged;
 
-            if (!user.InRangeUnobstructed(target, _range, predicate: Ignored) ||
-                !user.InRangeUnobstructed(dragged, _range, predicate: Ignored))
+            if (!user.InRangeUnobstructed(target, Range, predicate: Ignored) ||
+                !user.InRangeUnobstructed(dragged, Range, predicate: Ignored))
             {
                 reason = Loc.GetString("You can't reach there!");
                 return false;
@@ -168,44 +146,7 @@ namespace Content.Server.GameObjects.Components.Movement
 
         private async void TryMoveEntity(IEntity user, IEntity entityToMove)
         {
-            var doAfterEventArgs = new DoAfterEventArgs(user, _climbDelay, default, entityToMove)
-            {
-                BreakOnTargetMove = true,
-                BreakOnUserMove = true,
-                BreakOnDamage = true,
-                BreakOnStun = true
-            };
-
-            var result = await _doAfterSystem.DoAfter(doAfterEventArgs);
-
-            if (result != DoAfterStatus.Cancelled && entityToMove.TryGetComponent(out IPhysicsComponent body) && body.PhysicsShapes.Count >= 1)
-            {
-                var direction = (Owner.Transform.WorldPosition - entityToMove.Transform.WorldPosition).Normalized;
-                var endPoint = Owner.Transform.WorldPosition;
-
-                var climbMode = entityToMove.GetComponent<ClimbingComponent>();
-                climbMode.IsClimbing = true;
-
-                if (MathF.Abs(direction.X) < 0.6f) // user climbed mostly vertically so lets make it a clean straight line
-                {
-                    endPoint = new Vector2(entityToMove.Transform.WorldPosition.X, endPoint.Y);
-                }
-                else if (MathF.Abs(direction.Y) < 0.6f) // user climbed mostly horizontally so lets make it a clean straight line
-                {
-                    endPoint = new Vector2(endPoint.X, entityToMove.Transform.WorldPosition.Y);
-                }
-
-                climbMode.TryMoveTo(entityToMove.Transform.WorldPosition, endPoint);
-                // we may potentially need additional logic since we're forcing a player onto a climbable
-                // there's also the cases where the user might collide with the person they are forcing onto the climbable that i haven't accounted for
-
-                var othersMessage = Loc.GetString("{0:theName} forces {1:theName} onto {2:theName}!", user,
-                    entityToMove, Owner);
-                user.PopupMessageOtherClients(othersMessage);
-
-                var selfMessage = Loc.GetString("You force {0:theName} onto {1:theName}!", entityToMove, Owner);
-                user.PopupMessage(selfMessage);
-            }
+            TryClimb(entityToMove);
         }
 
         private async void TryClimb(IEntity user)
@@ -213,41 +154,7 @@ namespace Content.Server.GameObjects.Components.Movement
             if (!user.TryGetComponent(out ClimbingComponent climbingComponent) || climbingComponent.IsClimbing)
                 return;
 
-            var doAfterEventArgs = new DoAfterEventArgs(user, _climbDelay, default, Owner)
-            {
-                BreakOnTargetMove = true,
-                BreakOnUserMove = true,
-                BreakOnDamage = true,
-                BreakOnStun = true
-            };
-
-            var result = await _doAfterSystem.DoAfter(doAfterEventArgs);
-
-            if (result != DoAfterStatus.Cancelled && user.TryGetComponent(out IPhysicsComponent body) && body.PhysicsShapes.Count >= 1)
-            {
-                var direction = (Owner.Transform.WorldPosition - user.Transform.WorldPosition).Normalized;
-                var endPoint = Owner.Transform.WorldPosition;
-
-                var climbMode = user.GetComponent<ClimbingComponent>();
-                climbMode.IsClimbing = true;
-
-                if (MathF.Abs(direction.X) < 0.6f) // user climbed mostly vertically so lets make it a clean straight line
-                {
-                    endPoint = new Vector2(user.Transform.WorldPosition.X, endPoint.Y);
-                }
-                else if (MathF.Abs(direction.Y) < 0.6f) // user climbed mostly horizontally so lets make it a clean straight line
-                {
-                    endPoint = new Vector2(endPoint.X, user.Transform.WorldPosition.Y);
-                }
-
-                climbMode.TryMoveTo(user.Transform.WorldPosition, endPoint);
-
-                var othersMessage = Loc.GetString("{0:theName} jumps onto {1:theName}!", user, Owner);
-                user.PopupMessageOtherClients(othersMessage);
-
-                var selfMessage = Loc.GetString("You jump onto {0:theName}!", Owner);
-                user.PopupMessage(selfMessage);
-            }
+            await climbingComponent.TryClimb(this);
         }
 
         /// <summary>

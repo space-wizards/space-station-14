@@ -4,9 +4,9 @@ using Robust.Shared.GameObjects;
 namespace Content.Client.GameObjects.Components.Movement
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IClimbable))]
+    [ComponentReference(typeof(SharedClimbableComponent))]
     public class ClimbableComponent : SharedClimbableComponent
     {
-       
+        // TODO: Predict probably
     }
 }

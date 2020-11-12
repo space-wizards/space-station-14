@@ -82,7 +82,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             }
         }
 
-        void ICollideBehavior.PostCollide(int collideCount)
+        void ICollideBehavior.PostCollide(uint collideCount)
         {
             if (_shouldStop && collideCount > 0)
             {

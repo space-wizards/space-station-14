@@ -44,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
         }
 
         // Projectile should handle the deleting
-        void ICollideBehavior.PostCollide(int collisionCount)
+        void ICollideBehavior.PostCollide(uint collisionCount)
         {
             return;
         }

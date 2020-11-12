@@ -53,12 +53,18 @@ namespace Content.Shared.GameObjects.EntitySystems
 
         protected void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, IPhysicsComponent physics)
         {
+            // TODO: We need a separate thing for shuttlecontrollers as all mover components are funneled through this.
             physics.EnsureController<MoverController>();
 
             var weightless = transform.Owner.IsWeightless();
 
             if (weightless)
             {
+                if (physics.Owner.TryGetComponent(out SharedClimbingComponent? climbingComponent))
+                {
+                    climbingComponent.IsClimbing = true;
+                }
+
                 // No gravity: is our entity touching anything?
                 var touching = IsAroundCollider(transform, mover, physics);
 
@@ -90,7 +96,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                 {
                     if (physics.TryGetController(out MoverController controller))
                     {
-                        controller.Push(combined, mover.CurrentPushSpeed * 200f);
+                        controller.Push(combined, mover.CurrentPushSpeed * 350f);
                     }
 
                     transform.LocalRotation = physics.LinearVelocity.GetDir().ToAngle();
@@ -101,7 +107,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                 {
                     if (physics.TryGetController(out MoverController controller))
                     {
-                        controller.Push(total, mover.CurrentSprintSpeed * 40f);
+                        controller.Push(total, mover.CurrentSprintSpeed * 60f);
                     }
                 }
 

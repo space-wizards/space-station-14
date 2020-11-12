@@ -1,18 +1,26 @@
 ﻿#nullable enable
+using System.Threading;
+using System.Threading.Tasks;
+using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.GameObjects.Components.Buckle;
 using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Timers;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
 
 namespace Content.Server.GameObjects.Components.Movement
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedClimbingComponent))]
     public class ClimbingComponent : SharedClimbingComponent
     {
         private bool _isClimbing;
-        private ClimbController? _climbController;
+
+        private bool _startedClimb;
+
+        private CancellationTokenSource? _cancelToken;
 
         public override bool IsClimbing
         {
@@ -21,11 +29,6 @@ namespace Content.Server.GameObjects.Components.Movement
             {
                 if (_isClimbing == value)
                     return;
-
-                if (!value)
-                {
-                    Body?.TryRemoveController<ClimbController>();
-                }
 
                 _isClimbing = value;
                 Dirty();
@@ -48,32 +51,54 @@ namespace Content.Server.GameObjects.Components.Movement
         /// <summary>
         /// Make the owner climb from one point to another
         /// </summary>
-        public void TryMoveTo(Vector2 from, Vector2 to)
+        private void TryMoveTo(Vector2 to)
         {
             if (Body == null)
                 return;
 
-            _climbController = Body.EnsureController<ClimbController>();
-            _climbController.TryMoveTo(from, to);
+            Body.WakeBody();
+            Body.ApplyImpulse(to.Normalized * 500f);
+
+            _startedClimb = true;
+            Owner.SpawnTimer(500, () =>
+            {
+                if (Deleted) return;
+                _startedClimb = false;
+            });
+            // TODO: SpawnEvent here so the climbsystem only iterates this component rather than every single one.
+        }
+
+        public async Task TryClimb(SharedClimbableComponent climbableComponent)
+        {
+            _cancelToken?.Cancel();
+            _cancelToken = new CancellationTokenSource();
+
+            var doAfterEventArgs = new DoAfterEventArgs(Owner, climbableComponent.ClimbDelay, _cancelToken.Token, Owner)
+            {
+                BreakOnTargetMove = true,
+                BreakOnUserMove = true,
+                BreakOnDamage = true,
+                BreakOnStun = true
+            };
+
+            var result = await EntitySystem.Get<DoAfterSystem>().DoAfter(doAfterEventArgs);
+
+            if (result == DoAfterStatus.Cancelled) return;
+
+            var direction = climbableComponent.Owner.Transform.WorldPosition - Owner.Transform.WorldPosition;
+            IsClimbing = true;
+
+            TryMoveTo(direction);
         }
 
         public void Update()
         {
-            if (!IsClimbing || Body == null)
+            if (!IsClimbing || Body == null || _startedClimb)
                 return;
 
-            if (_climbController != null && (_climbController.IsBlocked || !_climbController.IsActive))
-            {
-                if (Body.TryRemoveController<ClimbController>())
-                {
-                    _climbController = null;
-                }
-            }
+            Body.WakeBody();
 
-            if (IsClimbing)
-                Body.WakeBody();
-
-            if (!IsOnClimbableThisFrame && IsClimbing && _climbController == null)
+            if (!IsOnClimbableThisFrame && IsClimbing)
                 IsClimbing = false;
 
             IsOnClimbableThisFrame = false;

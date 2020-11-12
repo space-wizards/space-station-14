@@ -219,13 +219,12 @@ namespace Content.Shared.Physics.Pull
             else if (MovingTo.HasValue)
             {
                 var diff = MovingTo.Value.Position - ControlledComponent.Owner.Transform.Coordinates.Position;
-                LinearVelocity = diff.Normalized * 5;
+                Impulse = diff.Normalized * 5 * 70;
             }
             else
             {
                 if (PullerMovingTowardsPulled())
                 {
-                    LinearVelocity = Vector2.Zero;
                     return;
                 }
 
@@ -233,11 +232,10 @@ namespace Content.Shared.Physics.Pull
                 var totalAabb = _puller.AABB.Size + ControlledComponent.AABB.Size / 2;
                 if (distanceAbs.X < totalAabb.X && distanceAbs.Y < totalAabb.Y)
                 {
-                    LinearVelocity = Vector2.Zero;
                     return;
                 }
 
-                LinearVelocity = distance.Normalized * _puller.LinearVelocity.Length * 1.5f;
+                Impulse = distance.Normalized * _puller.LinearVelocity.Length * 1.5f * 70;
             }
         }
 
