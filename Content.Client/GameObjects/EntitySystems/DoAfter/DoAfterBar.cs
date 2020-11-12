@@ -130,12 +130,9 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
             {
                 return new Color(0f, 1f, 0f);
             }
-            else
-            {
-                // lerp
-                var hue = (5f / 18f) * progress;
-                color = Color.FromHsv((hue, 1f, 0.75f, 1f));
-            }
+            // lerp
+            var hue = (5f / 18f) * progress;
+            return Color.FromHsv((hue, 1f, 0.75f, 1f));
         }
     }
 }

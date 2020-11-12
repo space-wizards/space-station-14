@@ -1,3 +1,4 @@
+#nullable enable
 using System.Drawing;
 using System.Net.Mime;
 using Content.Client.GameObjects.Components.Mobs;
@@ -24,9 +25,9 @@ namespace Content.Client.GameObjects.Components.Actor
     {
         [Dependency] private readonly IResourceCache _resourceCache = default!;
 
-        private CharacterInfoControl _control;
+        private CharacterInfoControl _control = default!;
 
-        public Control Scene { get; private set; }
+        public Control Scene { get; private set; } = default!;
         public UIPriority Priority => UIPriority.Info;
 
         public override void OnAdd()
@@ -47,7 +48,7 @@ namespace Content.Client.GameObjects.Components.Actor
             {
                 case CharacterInfoMessage characterInfoMessage:
                     _control.UpdateUI(characterInfoMessage);
-                    if (Owner.TryGetComponent(out ISpriteComponent spriteComponent))
+                    if (Owner.TryGetComponent(out ISpriteComponent? spriteComponent))
                     {
                         _control.SpriteView.Sprite = spriteComponent;
                     }
