@@ -1,7 +1,6 @@
 ﻿using Content.Server.Mobs;
 using Content.Server.Mobs.Roles.Suspicion;
 using Content.Server.Objectives.Interfaces;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Objectives.Requirements

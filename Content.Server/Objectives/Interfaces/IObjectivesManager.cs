@@ -1,8 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Content.Server.Mobs;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
+﻿using Content.Server.Mobs;
 
 namespace Content.Server.Objectives.Interfaces
 {

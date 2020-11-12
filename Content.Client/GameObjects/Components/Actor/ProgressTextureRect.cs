@@ -1,10 +1,8 @@
 ﻿using System;
 using Content.Client.GameObjects.EntitySystems.DoAfter;
 using Robust.Client.Graphics.Drawing;
-using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Maths;
-using Color = System.Drawing.Color;
 
 namespace Content.Client.GameObjects.Components.Actor
 {

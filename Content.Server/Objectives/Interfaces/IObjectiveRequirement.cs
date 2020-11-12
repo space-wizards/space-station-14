@@ -1,5 +1,4 @@
 ﻿using Content.Server.Mobs;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Server.Objectives.Interfaces
