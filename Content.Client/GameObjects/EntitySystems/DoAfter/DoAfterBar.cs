@@ -105,7 +105,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
                 }
 
                 color = new Color(1.0f, 0.0f, 0.0f, _flash ? 1.0f : 0.0f);
-            }
+			}
             else
             {
                 color = DoAfterHelpers.GetProgressColor(Ratio);
@@ -124,24 +124,17 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
     }
 
     public static class DoAfterHelpers{
-        private static readonly Color StartColor = new Color(0.8f, 0.0f, 0.2f); // red
-        private static readonly Color EndColor = new Color(0.92f, 0.77f, 0.34f); // yellow
-        private static readonly Color CompletedColor = new Color(0.0f, 0.8f, 0.27f); // green
-
         public static Color GetProgressColor(float progress)
         {
             if (progress >= 1.0f)
             {
-                return CompletedColor;
+                return new Color(0f, 1f, 0f);
             }
             else
             {
                 // lerp
-                return new Color(
-                    StartColor.R + (EndColor.R - StartColor.R) * progress,
-                    StartColor.G + (EndColor.G - StartColor.G) * progress,
-                    StartColor.B + (EndColor.B - StartColor.B) * progress,
-                    StartColor.A);
+                var hue = (5f / 18f) * progress;
+                color = Color.FromHsv((hue, 1f, 0.75f, 1f));
             }
         }
     }

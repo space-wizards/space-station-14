@@ -1,4 +1,7 @@
 ﻿#nullable enable
+using System;
+using System.Collections.Generic;
+using Content.Shared.GameObjects.Components.Body.Behavior;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Robust.Shared.Interfaces.GameObjects;
 
@@ -9,6 +12,8 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
         IBody? Body { get; }
 
         IBodyPart? Part { get; set; }
+
+        IReadOnlyDictionary<Type, IMechanismBehavior> Behaviors { get; }
 
         /// <summary>
         ///     Professional description of the <see cref="IMechanism"/>.
@@ -54,6 +59,21 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
         ///     <see cref="IMechanism"/> can be easily installed into.
         /// </summary>
         BodyPartCompatibility Compatibility { get; set; }
+
+        /// <summary>
+        ///    Adds a behavior if it does not exist already.
+        /// </summary>
+        /// <typeparam name="T">The behavior type to add.</typeparam>
+        /// <returns>
+        ///     True if the behavior already existed, false if it had to be created.
+        /// </returns>
+        bool EnsureBehavior<T>(out T behavior) where T : IMechanismBehavior, new();
+
+        bool HasBehavior<T>() where T : IMechanismBehavior;
+
+        bool TryRemoveBehavior<T>() where T : IMechanismBehavior;
+
+        void Update(float frameTime);
 
         // TODO BODY Turn these into event listeners so they dont need to be exposed
         /// <summary>

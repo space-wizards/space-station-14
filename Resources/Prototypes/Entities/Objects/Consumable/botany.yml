@@ -20,8 +20,11 @@
     - type: SolutionContainer
       caps: NoExamine
       contents:
-        chem.Nutrient: 5
-        chem.Flour: 5
+        reagents:
+          - ReagentId: chem.Nutriment
+            Quantity: 5
+          - ReagentId: chem.Flour
+            Quantity: 5
     - type: Produce
       seed: wheat
 
@@ -36,8 +39,11 @@
     - type: SolutionContainer
       caps: NoExamine
       contents:
-        chem.Nutrient: 5
-        chem.Flour: 5
+        reagents:
+          - ReagentId: chem.Nutriment
+            Quantity: 5
+          - ReagentId: chem.Glucose
+            Quantity: 5
     - type: Produce
       seed: sugarcane
 

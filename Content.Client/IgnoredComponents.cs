@@ -58,7 +58,6 @@
             "Drink",
             "Food",
             "FoodContainer",
-            "Stomach",
             "Rotatable",
             "MagicMirror",
             "FloorTile",
@@ -180,10 +179,8 @@
             "BreakableConstruction",
             "GasCanister",
             "GasCanisterPort",
-            "Lung",
             "Cleanable",
             "Configuration",
-            "Brain",
             "PlantHolder",
             "SeedExtractor",
             "Produce",
@@ -212,6 +209,8 @@
             "MorgueEntityStorage",
             "MorgueTray",
             "CrematoriumEntityStorage",
+            "RandomArcade",
+            "RandomSpriteState",
         };
     }
 }
