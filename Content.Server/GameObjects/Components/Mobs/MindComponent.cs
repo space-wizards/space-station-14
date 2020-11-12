@@ -105,7 +105,6 @@ namespace Content.Server.GameObjects.Components.Mobs
         /// </summary>
         public void InternalEjectMind()
         {
-            if (Mind != null) Mind.ObjectiveListChanged -= MindOnObjectiveListChanged;
             Mind = null;
         }
 
@@ -117,12 +116,6 @@ namespace Content.Server.GameObjects.Components.Mobs
         public void InternalAssignMind(Mind value)
         {
             Mind = value;
-            Mind.ObjectiveListChanged += MindOnObjectiveListChanged;
-        }
-
-        private void MindOnObjectiveListChanged(object? sender, EventArgs e)
-        {
-            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new ObjectivesChangedMessage());
         }
 
         protected override void Shutdown()
@@ -204,7 +197,5 @@ namespace Content.Server.GameObjects.Components.Mobs
                 message.AddMarkup(text);
             }
         }
-
-        public class ObjectivesChangedMessage : EntitySystemMessage {}
     }
 }

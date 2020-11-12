@@ -8,6 +8,7 @@ using Content.Server.Objectives.Interfaces;
 using Content.Server.Players;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
@@ -83,11 +84,6 @@ namespace Content.Server.Mobs
         /// </summary>
         [ViewVariables]
         public IEnumerable<ObjectivePrototype> AllObjectives => _objectives;
-
-        /// <summary>
-        /// Called when objectives get added/removed from the mind.
-        /// </summary>
-        public event EventHandler ObjectiveListChanged;
 
         /// <summary>
         ///     The session of the player owning this mind.
@@ -167,7 +163,6 @@ namespace Content.Server.Mobs
             if (!objective.CanBeAssigned(this))
                 return false;
             _objectives.Add(objective);
-            ObjectiveListChanged?.Invoke(this, EventArgs.Empty);
             return true;
         }
 
@@ -179,10 +174,12 @@ namespace Content.Server.Mobs
         {
             if (_objectives.Count >= index) return false;
 
-            _objectives.RemoveAt(index);
-            ObjectiveListChanged?.Invoke(this, EventArgs.Empty);
+            var objective = _objectives[index];
+            _objectives.Remove(objective);
             return true;
         }
+
+
 
         /// <summary>
         ///     Transfer this mind's control over to a new entity.

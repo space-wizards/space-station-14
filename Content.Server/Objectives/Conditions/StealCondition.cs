@@ -1,8 +1,11 @@
-﻿using System;
+﻿#nullable enable
 using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
-using Content.Shared.Objectives;
 using Robust.Server.GameObjects.Components.Container;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -10,36 +13,41 @@ namespace Content.Server.Objectives.Conditions
 {
     public class StealCondition : IObjectiveCondition
     {
-        public string PrototypeId { get; private set; }
+        public string PrototypeId { get; private set; } = default!;
+        public int Amount { get; private set; }
 
         public void ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.PrototypeId, "prototype", "");
+            serializer.DataField(this, x => x.Amount, "amount", 1);
+
+            if (Amount < 1)
+            {
+                Logger.Error("StealCondition has an amount less than 1 ({0})", Amount);
+            }
         }
 
-        public string GetTitle() => $"Steal prototype {PrototypeId}";
+        private string PrototypeName =>
+            IoCManager.Resolve<IPrototypeManager>().TryIndex<EntityPrototype>(PrototypeId, out var prototype)
+                ? prototype.Name
+                : "[CANNOT FIND NAME]";
 
-        public string GetDescription() => $"We need you to steal prototype {PrototypeId}. Dont get caught.";
+        public string GetTitle() => $"Steal {(Amount > 1 ? Amount+"x" : "")} {PrototypeName}";
+
+        public string GetDescription() => $"We need you to steal {PrototypeName}. Dont get caught.";
 
         public SpriteSpecifier GetIcon()
         {
-            return new PrototypeIcon(PrototypeId);
+            return new SpriteSpecifier.EntityPrototype(PrototypeId);
         }
 
-        public float GetProgress(Mind mind)
+        public float GetProgress(Mind? mind)
         {
-            if (mind.OwnedEntity == null) return 0f;
+            if (mind?.OwnedEntity == null) return 0f;
             if (!mind.OwnedEntity.TryGetComponent<ContainerManagerComponent>(out var containerManagerComponent)) return 0f;
 
-            foreach (var container in containerManagerComponent.GetAllContainers())
-            {
-                foreach (var entity in container.ContainedEntities)
-                {
-                    if (entity.Prototype?.ID == PrototypeId) return 1f;
-                }
-            }
-
-            return 0f;
+            float count = containerManagerComponent.CountPrototypeOccurencesRecursive(PrototypeId);
+            return count/Amount;
         }
 
         public float GetDifficulty() => 1f;

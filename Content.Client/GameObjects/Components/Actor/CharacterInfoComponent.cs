@@ -34,6 +34,10 @@ namespace Content.Client.GameObjects.Components.Actor
             base.OnAdd();
 
             Scene = _control = new CharacterInfoControl(_resourceCache);
+        }
+
+        public void Opened()
+        {
             SendNetworkMessage(new RequestCharacterInfoMessage());
         }
 
@@ -124,10 +128,17 @@ namespace Content.Client.GameObjects.Components.Actor
 
                     foreach (var objectiveCondition in objectiveConditions)
                     {
-                        var hbox = new HBoxContainer();
-                        hbox.AddChild(new TextureRect
+                        var txtrect = new TextureRect
                         {
                             Texture = objectiveCondition.SpriteSpecifier.Frame0()
+                        };
+
+                        var hbox = new HBoxContainer();
+                        hbox.AddChild(new ProgressTextureRect
+                        {
+                            Texture = objectiveCondition.SpriteSpecifier.Frame0(),
+                            Progress = objectiveCondition.Progress,
+                            SizeFlagsVertical = SizeFlags.ShrinkCenter
                         });
                         hbox.AddChild(new VBoxContainer
                             {
@@ -138,10 +149,6 @@ namespace Content.Client.GameObjects.Components.Actor
                                 }
                             }
                         );
-                        hbox.AddChild(new Label
-                        {
-                            Text = (objectiveCondition.Progress*100f)+"%"
-                        });
                         vbox.AddChild(hbox);
                     }
                     ObjectivesContainer.AddChild(vbox);

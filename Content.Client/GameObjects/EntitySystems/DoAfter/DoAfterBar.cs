@@ -14,7 +14,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
     public sealed class DoAfterBar : Control
     {
         private IGameTiming _gameTiming = default!;
-        
+
         private ShaderInstance _shader;
 
         /// <summary>
@@ -40,13 +40,13 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
                 {
                     return;
                 }
-                
+
                 _cancelled = value;
                 if (_cancelled)
                 {
                     _gameTiming = IoCManager.Resolve<IGameTiming>();
                     _lastFlash = _gameTiming.CurTime;
-                }   
+                }
             }
         }
 
@@ -56,23 +56,20 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
         ///     Is the cancellation bar red?
         /// </summary>
         private bool _flash = true;
-        
+
         /// <summary>
         ///     Last time we swapped the flash.
         /// </summary>
         private TimeSpan _lastFlash;
-        
+
         /// <summary>
         ///     How long each cancellation bar flash lasts in seconds.
         /// </summary>
         private const float FlashTime = 0.125f;
-        
+
         private const int XPixelDiff = 20 * DoAfterBarScale;
 
         public const byte DoAfterBarScale = 2;
-        private static readonly Color StartColor = new Color(0.8f, 0.0f, 0.2f); // red
-        private static readonly Color EndColor = new Color(0.92f, 0.77f, 0.34f); // yellow
-        private static readonly Color CompletedColor = new Color(0.0f, 0.8f, 0.27f); // green
 
         public DoAfterBar()
         {
@@ -90,7 +87,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
                     _lastFlash = _gameTiming.CurTime;
                     _flash = !_flash;
                 }
-            } 
+            }
         }
 
         protected override void Draw(DrawingHandleScreen handle)
@@ -108,30 +105,44 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
                 }
 
                 color = new Color(1.0f, 0.0f, 0.0f, _flash ? 1.0f : 0.0f);
-            } 
-            else if (Ratio >= 1.0f)
-            {
-                color = CompletedColor;
             }
             else
             {
-                // lerp
-                color = new Color(
-                    StartColor.R + (EndColor.R - StartColor.R) * Ratio,
-                    StartColor.G + (EndColor.G - StartColor.G) * Ratio,
-                    StartColor.B + (EndColor.B - StartColor.B) * Ratio,
-                    StartColor.A);
+                color = DoAfterHelpers.GetProgressColor(Ratio);
             }
-            
+
             handle.UseShader(_shader);
             // If you want to make this less hard-coded be my guest
             var leftOffset = 2 * DoAfterBarScale;
             var box = new UIBox2i(
-                leftOffset, 
+                leftOffset,
                 -2 + 2 * DoAfterBarScale,
-            leftOffset + (int) (XPixelDiff * Ratio), 
+            leftOffset + (int) (XPixelDiff * Ratio),
             -2);
             handle.DrawRect(box, color);
+        }
+    }
+
+    public static class DoAfterHelpers{
+        private static readonly Color StartColor = new Color(0.8f, 0.0f, 0.2f); // red
+        private static readonly Color EndColor = new Color(0.92f, 0.77f, 0.34f); // yellow
+        private static readonly Color CompletedColor = new Color(0.0f, 0.8f, 0.27f); // green
+
+        public static Color GetProgressColor(float progress)
+        {
+            if (progress >= 1.0f)
+            {
+                return CompletedColor;
+            }
+            else
+            {
+                // lerp
+                return new Color(
+                    StartColor.R + (EndColor.R - StartColor.R) * progress,
+                    StartColor.G + (EndColor.G - StartColor.G) * progress,
+                    StartColor.B + (EndColor.B - StartColor.B) * progress,
+                    StartColor.A);
+            }
         }
     }
 }
