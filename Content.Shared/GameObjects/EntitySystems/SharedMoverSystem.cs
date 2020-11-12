@@ -101,7 +101,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                 {
                     if (physics.TryGetController(out MoverController controller))
                     {
-                        controller.Push(total, mover.CurrentSprintSpeed * 50f);
+                        controller.Push(total, mover.CurrentSprintSpeed * 40f);
                     }
                 }
 

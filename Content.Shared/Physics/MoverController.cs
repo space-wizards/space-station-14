@@ -25,10 +25,24 @@ namespace Content.Shared.Physics
         // Values below just WIP as I fuck around with fixing other stuff
         private float _maxImpulse = 40.0f;
 
+        private bool _modified;
+
+        // TODO: Not currently in use just to make debugging easier
+        private const float FrictionModifier = 2f;
+
         public void Push(Vector2 velocityDirection, float speed)
         {
+            if (ControlledComponent == null)
+                return;
+
+            if (!_modified)
+            {
+                _modified = true;
+                ControlledComponent.Friction /= 2f;
+            }
+
             //Logger.Debug($"Push is {velocityDirection}");
-            var existingVelocity = ControlledComponent?.LinearVelocity ?? Vector2.Zero;
+            var existingVelocity = ControlledComponent.LinearVelocity;
 
             /*
              * So velocityDirection is the ideal of what our velocity "should" be. We also have a maximum vector
@@ -49,7 +63,17 @@ namespace Content.Shared.Physics
 
         public void StopMoving()
         {
+            if (ControlledComponent == null)
+                return;
 
+            if (!_gameTiming.InSimulation)
+                return;
+
+            if (_modified)
+            {
+                _modified = false;
+                ControlledComponent.Friction *= 2f;
+            }
         }
     }
 }
