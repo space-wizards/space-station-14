@@ -232,6 +232,8 @@
   - attachtogrid
   - attachtograndparent
   - inrangeunoccluded
+  - showalert
+  - clearalert
   - hungry
   CanViewVar: true
   CanAdminPlace: true

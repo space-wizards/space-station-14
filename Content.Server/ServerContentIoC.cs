@@ -18,6 +18,7 @@ using Content.Server.Sandbox;
 using Content.Server.Utility;
 using Content.Shared.Interfaces;
 using Content.Shared.Kitchen;
+using Content.Shared.Alert;
 using Robust.Shared.IoC;
 
 namespace Content.Server
@@ -37,6 +38,7 @@ namespace Content.Server
             IoCManager.Register<IServerPreferencesManager, ServerPreferencesManager>();
             IoCManager.Register<IServerDbManager, ServerDbManager>();
             IoCManager.Register<RecipeManager, RecipeManager>();
+            IoCManager.Register<AlertManager, AlertManager>();
             IoCManager.Register<IPDAUplinkManager,PDAUplinkManager>();
             IoCManager.Register<INodeGroupFactory, NodeGroupFactory>();
             IoCManager.Register<INodeGroupManager, NodeGroupManager>();
