@@ -21,7 +21,7 @@
     },
     {
       "name": "on-equipped-HELMET",
-      "directions": 1
+      "directions": 4,
       "delays": [
         [
           0.1,

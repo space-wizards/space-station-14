@@ -77,17 +77,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatHelmetSyndicate
-  name: syndicate
-  description: 'A stylish, robust syndicate helmet.'
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/syndicate.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Helmets/syndicate.rsi
-
-- type: entity
-  parent: HatBase
   id: HatHelmetScaf
   name: scaf
   description: A robust, strong helmet.

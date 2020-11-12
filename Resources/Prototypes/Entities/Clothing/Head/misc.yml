@@ -22,6 +22,17 @@
 
 - type: entity
   parent: HatBase
+  id: HatCake
+  name: cake hat
+  description: You put the cake on your head. Brilliant.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/cake.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/cake.rsi
+
+- type: entity
+  parent: HatBase
   id: HatChickenhead
   name: chicken head
   description: "It's a chicken head. Bok bok bok!"

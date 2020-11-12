@@ -9,7 +9,7 @@
   "states": [
     {
       "name": "holding",
-      "directions": 1
+      "directions": 1,
       "delays": [
         [
           0.1,
@@ -23,7 +23,7 @@
     },
     {
       "name": "holding-equipped-BACKPACK",
-      "directions": 1
+      "directions": 4,
       "delays": [
         [
           0.1,
@@ -65,7 +65,7 @@
     },
     {
       "name": "holding-unlit",
-      "directions": 1
+      "directions": 1,
       "delays": [
         [
           0.1,

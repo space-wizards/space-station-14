@@ -72,20 +72,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hats/bowler_hat.rsi
-
   - type: Clothing
     sprite: Clothing/Head/Hats/bowler_hat.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatCake
-  name: cake hat
-  description: You put the cake on your head. Brilliant.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hats/cake.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hats/cake.rsi
 
 - type: entity
   parent: HatBase
