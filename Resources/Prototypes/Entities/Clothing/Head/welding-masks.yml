@@ -5,91 +5,39 @@
   description: A head-mounted face cover designed to protect the wearer completely from space-arc eye.
   components:
   - type: Sprite
-    sprite: Clothing/Head/welding.rsi
-
+    sprite: Clothing/Head/Welding/welding.rsi
   - type: Clothing
-    sprite: Clothing/Head/welding.rsi
+    sprite: Clothing/Head/Welding/welding.rsi
 
 - type: entity
   parent: HatBase
-  id: HatWeldingup
-  name: welding mask (up)
-  description: A head-mounted face cover designed to protect the wearer completely from space-arc eye.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/weldingup.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/weldingup.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatFireWeldingMask
-  name: fire welding mask
+  id: HatWeldingMaskFlame
+  name: flame welding mask
   description: A painted welding helmet, this one has flames on it.
   components:
   - type: Sprite
-    sprite: Clothing/Head/fire_welding_mask_1.rsi
-
+    sprite: Clothing/Head/Welding/flame_welding_mask.rsi
   - type: Clothing
-    sprite: Clothing/Head/fire_welding_mask_1.rsi
+    sprite: Clothing/Head/Welding/flame_welding_mask.rsi
 
 - type: entity
   parent: HatBase
-  id: HatFireWeldingMaskup
-  name: fire welding mask (up)
-  description: A painted welding helmet, this one has flames on it.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/fire_welding_mask_1up.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/fire_welding_mask_1up.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatBlueFlameWeldingMask
-  name: blue flame welding mask
+  id: HatWeldingMaskFlameBlue
+  name: blue-flame welding mask
   description: A painted welding helmet, this one has blue flames on it.
   components:
   - type: Sprite
-    sprite: Clothing/Head/blue_flame_welding_mask_1.rsi
-
+    sprite: Clothing/Head/Welding/blue_flame_welding_mask.rsi
   - type: Clothing
-    sprite: Clothing/Head/blue_flame_welding_mask_1.rsi
+    sprite: Clothing/Head/Welding/blue_flame_welding_mask.rsi
 
 - type: entity
   parent: HatBase
-  id: HatBlueFlameWeldingMaskup
-  name: blue flame welding mask (up)
-  description: A painted welding helmet, this one has blue flames on it.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/blue_flame_welding_mask_1up.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/blue_flame_welding_mask_1up.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatPaintedwelding
+  id: HatWeldingMaskPainted
   name: painted welding mask
   description: A welding helmet, painted in crimson.
   components:
   - type: Sprite
-    sprite: Clothing/Head/paintedwelding.rsi
-
+    sprite: Clothing/Head/Welding/paintedwelding.rsi
   - type: Clothing
-    sprite: Clothing/Head/paintedwelding.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatPaintedweldingup
-  name: painted welding mask (up)
-  description: A welding helmet, painted in crimson.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/paintedweldingup.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/paintedweldingup.rsi
+    sprite: Clothing/Head/Welding/paintedwelding.rsi

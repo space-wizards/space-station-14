@@ -1,11 +1,109 @@
 - type: entity
   parent: HatBase
+  id: HatBearpelt
+  name: bear pelt
+  description: It's a cute bear pelt.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/bearpelt.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/bearpelt.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatBunny
+  name: bunny
+  description: Cute bunny ears.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/bunny.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/bunny.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatChickenhead
+  name: chicken head
+  description: "It's a chicken head. Bok bok bok!"
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/chickenhead.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/chickenhead.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatHairflower
+  name: hairflower
+  description: A red rose for beautiful ladies.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/hairflower.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/hairflower.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatPumpkin
+  name: pumpkin hat
+  description: A jack o' lantern! Believed to ward off evil spirits.
+  components:
+    - type: Sprite
+      sprite: Clothing/Head/Misc/pumpkin.rsi
+    - type: Clothing
+      sprite: Clothing/Head/Misc/pumpkin.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatPwig
+  name: pwig
+  description: To be honest, those look ridiculous.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/pwig.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/pwig.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatRichard
+  name: richard
+  description: 'Do you like hurting people?'
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/richard.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/richard.rsi
+
+- type: entity
+  parent: HatBase
   id: HatSkub
   name: Skub Hat
   description: 'Best paired with the Skub Suit.'
   components:
   - type: Sprite
-    sprite: Clothing/Head/skubhead.rsi
-
+    sprite: Clothing/Head/Misc/skubhead.rsi
   - type: Clothing
-    sprite: Clothing/Head/skubhead.rsi
+    sprite: Clothing/Head/Misc/skubhead.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatXenoMom
+  name: xeno matriarch
+  description: Hiss hiss hiss!
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/xenom.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/xenom.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatXeno
+  name: xenos
+  description: Hiss hiss hiss!
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/xenos.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/xenos.rsi
