@@ -1,7 +1,8 @@
 ﻿#nullable enable
-using System;
 using Content.Shared.GameObjects.Components.Movement;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.Interfaces.Timing;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
@@ -12,10 +13,15 @@ namespace Content.Shared.Physics
     {
         public override IPhysicsComponent? ControlledComponent { protected get; set; }
 
-        private float _timeToVmax = 0.2f;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+
+        private float _timeToVmax = 0.5f;
 
         public void Move(Vector2 velocityDirection, float frameTime)
         {
+            // if (!_gameTiming.InSimulation || !_gameTiming.IsFirstTimePredicted)
+            //     return;
+
             if (ControlledComponent == null || (ControlledComponent.Owner.IsWeightless()))
             {
                 return;
@@ -27,25 +33,32 @@ namespace Content.Shared.Physics
             float mass = ControlledComponent.Mass;
             float dragCoeff = 5 / _timeToVmax;
             Vector2 thrustForce = velocityDirection * dragCoeff * mass;
+            var linearVelocity = ControlledComponent.LinearVelocity;
+            //var linearVelocity = LinearVelocity;
 
-            Vector2 netForce = thrustForce - LinearVelocity * dragCoeff * mass;
+            Vector2 netForce = thrustForce - linearVelocity * dragCoeff * mass;
             Vector2 a = netForce / mass;
             Vector2 k1 = a * frameTime;
 
-            netForce = thrustForce - (LinearVelocity + k1/2) * dragCoeff * mass;
+            netForce = thrustForce - (linearVelocity + k1/2) * dragCoeff * mass;
             a = netForce / mass;
             Vector2 k2 = a * frameTime;
 
-            netForce = thrustForce - (LinearVelocity + k2/2) * dragCoeff * mass;
+            netForce = thrustForce - (linearVelocity + k2/2) * dragCoeff * mass;
             a = netForce / mass;
             Vector2 k3 = a * frameTime;
 
-            netForce = thrustForce - (LinearVelocity + k3) * dragCoeff * mass;
+            netForce = thrustForce - (linearVelocity + k3) * dragCoeff * mass;
             a = netForce / mass;
             Vector2 k4 = a * frameTime;
 
             Vector2 deltaV = (k1 + k2*2 + k3*2 + k4) / 6;
-            LinearVelocity += deltaV;
+            linearVelocity += deltaV;
+
+            ControlledComponent.LinearVelocity = linearVelocity;
+            //LinearVelocity = linearVelocity;
+
+            //Logger.Debug($"{IGameTiming.TickStampStatic} | DeltaV: {deltaV} | LV: {LinearVelocity}");
 
             //Overshoot check
             //Vector2 newV = (netForce * ControlledComponent.InvMass * frameTime);
@@ -61,7 +74,7 @@ namespace Content.Shared.Physics
             //     Force = netForce;
             // }
 
-            Logger.Debug($"MOVE v: {ControlledComponent.TotalLinearVelocity}");
+            //Logger.Debug($"MOVE v: {ControlledComponent.TotalLinearVelocity}");
 
         }
 
@@ -72,6 +85,9 @@ namespace Content.Shared.Physics
 
         public void StopMoving(float frameTime)
         {
+            // if (!_gameTiming.InSimulation || !_gameTiming.IsFirstTimePredicted)
+            //     return;
+
             if (ControlledComponent == null || (ControlledComponent.Owner.IsWeightless()))
             {
                 return;
@@ -82,25 +98,30 @@ namespace Content.Shared.Physics
 
             float mass = ControlledComponent.Mass;
             float dragCoeff = 5 / _timeToVmax;
+            var linearVelocity = ControlledComponent.LinearVelocity;
+            //var linearVelocity = LinearVelocity;
 
             Vector2 netForce = Vector2.Zero;
             Vector2 a = netForce / mass;
             Vector2 k1 = a * frameTime;
 
-            netForce = - (LinearVelocity + k1/2) * dragCoeff * mass;
+            netForce = - (linearVelocity + k1/2) * dragCoeff * mass;
             a = netForce / mass;
             Vector2 k2 = a * frameTime;
 
-            netForce = - (LinearVelocity + k2/2) * dragCoeff * mass;
+            netForce = - (linearVelocity + k2/2) * dragCoeff * mass;
             a = netForce / mass;
             Vector2 k3 = a * frameTime;
 
-            netForce = - (LinearVelocity + k3) * dragCoeff * mass;
+            netForce = - (linearVelocity + k3) * dragCoeff * mass;
             a = netForce / mass;
             Vector2 k4 = a * frameTime;
 
             Vector2 deltaV = (k1 + k2*2 + k3*2 + k4) / 6;
-            LinearVelocity += deltaV;
+            linearVelocity += deltaV;
+
+            //LinearVelocity = linearVelocity;
+            ControlledComponent.LinearVelocity = linearVelocity;
 
             //Overshoot check
             //Vector2 newV = (netForce * ControlledComponent.InvMass * frameTime);
@@ -116,7 +137,7 @@ namespace Content.Shared.Physics
             //     Force = netForce;
             // }
 
-            Logger.Debug($"STOP v: {ControlledComponent.TotalLinearVelocity}");
+            //Logger.Debug($"STOP v: {ControlledComponent.TotalLinearVelocity}");
 
             //Overshoot check
             // Vector2 deltaV = netForce * ControlledComponent.InvMass * frameTime;
