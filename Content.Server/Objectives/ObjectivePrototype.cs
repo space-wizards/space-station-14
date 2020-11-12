@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Mobs;
-using Content.Shared.Objectives;
-using Robust.Shared.Interfaces.GameObjects;
+using Content.Server.Objectives.Interfaces;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using YamlDotNet.RepresentationModel;
 
-namespace Content.Server.Objectives.Interfaces
+namespace Content.Server.Objectives
 {
     [Prototype("objective")]
     public class ObjectivePrototype : IPrototype, IIndexedPrototype
@@ -51,7 +50,7 @@ namespace Content.Server.Objectives.Interfaces
             var ser = YamlObjectSerializer.NewReader(mapping);
 
             ser.DataField(this, x => x.ID, "id", string.Empty);
-            ser.DataField(this, x => x.Issuer, "issuer", "Other");
+            ser.DataField(this, x => x.Issuer, "issuer", "Unknown");
             ser.DataField(this, x => x.Probability, "prob", 0.3f);
             ser.DataField(this, x => x._conditions, "conditions", new List<IObjectiveCondition>());
             ser.DataField(this, x => x._requirements, "requirements", new List<IObjectiveRequirement>());

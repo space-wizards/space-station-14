@@ -1,3 +1,5 @@
+using System.Drawing;
+using System.Net.Mime;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.Stylesheets;
@@ -7,6 +9,7 @@ using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Client.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
@@ -60,6 +63,8 @@ namespace Content.Client.GameObjects.Components.Actor
 
             public CharacterInfoControl(IResourceCache resourceCache)
             {
+                IoCManager.InjectDependencies(this);
+
                 AddChild(new HBoxContainer
                 {
                     Children =
@@ -87,11 +92,9 @@ namespace Content.Client.GameObjects.Components.Actor
                     PlaceholderText = Loc.GetString("Health & status effects")
                 });
 
-                var rootobjectivesBox = new VBoxContainer();
-                rootobjectivesBox.AddChild(new Label{Text = Loc.GetString("Objectives")});
+                AddChild(new Label{Text = Loc.GetString("Objectives")});
                 ObjectivesContainer = new VBoxContainer();
-                rootobjectivesBox.AddChild(ObjectivesContainer);
-                AddChild(rootobjectivesBox);
+                AddChild(ObjectivesContainer);
 
                 AddChild(new Placeholder(resourceCache)
                 {
@@ -103,12 +106,20 @@ namespace Content.Client.GameObjects.Components.Actor
             {
                 SubText.Text = characterInfoMessage.JobTitle;
 
+                ObjectivesContainer.RemoveAllChildren();
                 foreach (var (groupId, objectiveConditions) in characterInfoMessage.Objectives)
                 {
-                    var vbox = new VBoxContainer();
+                    var vbox = new VBoxContainer
+                    {
+                        Modulate = Color.Gray
+                    };
                     if (characterInfoMessage.Objectives.Count > 1 || groupId != "Others")
                     {
-                        vbox.AddChild(new Label{Text = groupId});
+                        vbox.AddChild(new Label
+                        {
+                            Text = groupId,
+                            Modulate = Color.LightSkyBlue
+                        });
                     }
 
                     foreach (var objectiveCondition in objectiveConditions)
@@ -116,7 +127,7 @@ namespace Content.Client.GameObjects.Components.Actor
                         var hbox = new HBoxContainer();
                         hbox.AddChild(new TextureRect
                         {
-                            //TODO Texture =
+                            Texture = objectiveCondition.SpriteSpecifier.Frame0()
                         });
                         hbox.AddChild(new VBoxContainer
                             {
@@ -127,6 +138,10 @@ namespace Content.Client.GameObjects.Components.Actor
                                 }
                             }
                         );
+                        hbox.AddChild(new Label
+                        {
+                            Text = (objectiveCondition.Progress*100f)+"%"
+                        });
                         vbox.AddChild(hbox);
                     }
                     ObjectivesContainer.AddChild(vbox);

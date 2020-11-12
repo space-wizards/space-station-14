@@ -50,12 +50,12 @@ namespace Content.Server.GameObjects.Components.Actor
                 {
                     foreach (var objective in mindComponent.Mind?.AllObjectives!)
                     {
-                        if (!conditions.ContainsKey(objective.Prototype.Issuer))
-                            conditions[objective.Prototype.Issuer] = new List<ConditionInfo>();
-                        foreach (var condition in objective.Prototype.Conditions)
+                        if (!conditions.ContainsKey(objective.Issuer))
+                            conditions[objective.Issuer] = new List<ConditionInfo>();
+                        foreach (var condition in objective.Conditions)
                         {
-                            conditions[objective.Prototype.Issuer].Add(new ConditionInfo(condition.GetTitle(),
-                                condition.GetDescription(), condition.GetIcon()));
+                            conditions[objective.Issuer].Add(new ConditionInfo(condition.GetTitle(),
+                                condition.GetDescription(), condition.GetIcon(), condition.GetProgress(mindComponent.Mind)));
                         }
                     }
                 }

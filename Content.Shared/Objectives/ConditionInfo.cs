@@ -10,12 +10,14 @@ namespace Content.Shared.Objectives
         public string Title { get; }
         public string Description { get; }
         public SpriteSpecifier SpriteSpecifier { get; }
+        public float Progress { get; }
 
-        public ConditionInfo(string title, string description, SpriteSpecifier spriteSpecifier)
+        public ConditionInfo(string title, string description, SpriteSpecifier spriteSpecifier, float progress)
         {
             Title = title;
             Description = description;
             SpriteSpecifier = spriteSpecifier;
+            Progress = progress;
         }
     }
 }
