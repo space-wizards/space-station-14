@@ -113,11 +113,11 @@ namespace Content.Server.GameObjects.Components.Kitchen
             switch(message.Message)
             {
                 case ReagentGrinderGrindStartMessage msg:
-                    DoWork(isJuiceMode:false);
+                    DoWork(isJuiceIntent:false);
                     break;
 
                 case ReagentGrinderJuiceStartMessage msg:
-                    DoWork(isJuiceMode:true);
+                    DoWork(isJuiceIntent:true);
                     break;
 
                 case ReagentGrinderEjectChamberAllMessage msg:
@@ -213,7 +213,6 @@ namespace Content.Server.GameObjects.Components.Kitchen
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
 
-            //look at this dude, got no hands.
             if (!eventArgs.User.TryGetComponent(out IHandsComponent? hands))
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("You have no hands."));
@@ -239,9 +238,9 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
             if(!heldEnt!.TryGetComponent(out GrindableComponent? grind) && !heldEnt!.TryGetComponent(out JuiceableComponent? juice))
             {
-                //Entity did NOT pass the whitelist for grindables.
+                //Entity did NOT pass the whitelist for grind/juice.
                 //Wouldn't want the clown grinding up the Captain's ID card now would you?
-                //Why am I asking you, you're biased.
+                //Why am I asking you? You're biased.
                 return false;
             }
 
@@ -258,12 +257,11 @@ namespace Content.Server.GameObjects.Components.Kitchen
         }
 
 
-        //Could maybe use an enum instead of the bool, but let's face it, we will only need a binary state.
         /// <summary>
         /// The wzhzhzh of the grinder.
         /// </summary>
-        /// <param name="isJuiceMode">If user intends to juicce or grind the contents.</param>
-        private void DoWork(bool isJuiceMode)
+        /// <param name="isJuiceIntent">true for wanting to juice, false for wanting to grind.</param>
+        private void DoWork(bool isJuiceIntent)
         {
             //Have power, are  we busy, chamber has anything to grind, a beaker for the grounds to go?
             if(!Powered || _busy || ChamberEmpty || !HasBeaker)
@@ -271,15 +269,15 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 return;
             }
 
-
+            var chamberContentsArray = _chamber.ContainedEntities.ToArray();
             //This block is for grinding behaviour only.
-            if(!isJuiceMode)
+            if (!isJuiceIntent)
             {
                 //Get each item inside the chamber and get the reagents it contains. Transfer those reagents to the beaker, given we have one in.
-                var items = _chamber.ContainedEntities.ToArray();
-                for (int i = 0; i < items.Length; i++)
+                
+                for (int i = 0; i < chamberContentsArray.Length; i++)
                 {
-                    var item = items[i];
+                    var item = chamberContentsArray[i];
                     if (item.TryGetComponent<SolutionContainerComponent>(out var solution))
                     {
                         _heldBeaker!.TryAddSolution(solution.Solution);
@@ -291,11 +289,15 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 _dirty = true;
             }
 
-           
+
             //K, so if we made it this far we want to juice instead.
-
-
+            if (chamberContentsArray.Length <= 0 && chamberContentsArray[0].TryGetComponent(out JuiceableComponent? juiceMe))
+            {
+                juiceMe.re
+            }
             
+
+
         }
 
     }
