@@ -1,8 +1,11 @@
 ﻿#nullable enable
+using System;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Objectives
 {
+    [Serializable, NetSerializable]
     public sealed class PrototypeIcon : SpriteSpecifier
     {
         public readonly string PrototypeId;

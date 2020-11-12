@@ -1,24 +1,27 @@
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.Stylesheets;
+using Content.Shared.GameObjects.Components.Actor;
+using Robust.Client.Graphics;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Players;
 
 namespace Content.Client.GameObjects.Components.Actor
 {
     [RegisterComponent]
-    public sealed class CharacterInfoComponent : Component, ICharacterUI
+    public sealed class CharacterInfoComponent : SharedCharacterInfoComponent, ICharacterUI
     {
         [Dependency] private readonly IResourceCache _resourceCache = default!;
 
         private CharacterInfoControl _control;
-
-        public override string Name => "CharacterInfo";
 
         public Control Scene { get; private set; }
         public UIPriority Priority => UIPriority.Info;
@@ -28,20 +31,23 @@ namespace Content.Client.GameObjects.Components.Actor
             base.OnAdd();
 
             Scene = _control = new CharacterInfoControl(_resourceCache);
+            SendNetworkMessage(new RequestCharacterInfoMessage());
         }
 
-        public override void Initialize()
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
         {
-            base.Initialize();
-
-            if (Owner.TryGetComponent(out ISpriteComponent spriteComponent))
+            switch (message)
             {
-                _control.SpriteView.Sprite = spriteComponent;
-            }
+                case CharacterInfoMessage characterInfoMessage:
+                    _control.UpdateUI(characterInfoMessage);
+                    if (Owner.TryGetComponent(out ISpriteComponent spriteComponent))
+                    {
+                        _control.SpriteView.Sprite = spriteComponent;
+                    }
 
-            _control.NameLabel.Text = Owner.Name;
-            // ReSharper disable once StringLiteralTypo
-            _control.SubText.Text = Loc.GetString("Professional Greyshirt");
+                    _control.NameLabel.Text = Owner.Name;
+                    break;
+            }
         }
 
         private sealed class CharacterInfoControl : VBoxContainer
@@ -49,6 +55,8 @@ namespace Content.Client.GameObjects.Components.Actor
             public SpriteView SpriteView { get; }
             public Label NameLabel { get; }
             public Label SubText { get; }
+
+            public VBoxContainer ObjectivesContainer { get; }
 
             public CharacterInfoControl(IResourceCache resourceCache)
             {
@@ -66,7 +74,8 @@ namespace Content.Client.GameObjects.Components.Actor
                                 (SubText = new Label
                                 {
                                     SizeFlagsVertical = SizeFlags.None,
-                                    StyleClasses = {StyleNano.StyleClassLabelSubText}
+                                    StyleClasses = {StyleNano.StyleClassLabelSubText},
+
                                 })
                             }
                         }
@@ -78,15 +87,50 @@ namespace Content.Client.GameObjects.Components.Actor
                     PlaceholderText = Loc.GetString("Health & status effects")
                 });
 
-                AddChild(new Placeholder(resourceCache)
-                {
-                    PlaceholderText = Loc.GetString("Objectives")
-                });
+                var rootobjectivesBox = new VBoxContainer();
+                rootobjectivesBox.AddChild(new Label{Text = Loc.GetString("Objectives")});
+                ObjectivesContainer = new VBoxContainer();
+                rootobjectivesBox.AddChild(ObjectivesContainer);
+                AddChild(rootobjectivesBox);
 
                 AddChild(new Placeholder(resourceCache)
                 {
                     PlaceholderText = Loc.GetString("Antagonist Roles")
                 });
+            }
+
+            public void UpdateUI(CharacterInfoMessage characterInfoMessage)
+            {
+                SubText.Text = characterInfoMessage.JobTitle;
+
+                foreach (var (groupId, objectiveConditions) in characterInfoMessage.Objectives)
+                {
+                    var vbox = new VBoxContainer();
+                    if (characterInfoMessage.Objectives.Count > 1 || groupId != "Others")
+                    {
+                        vbox.AddChild(new Label{Text = groupId});
+                    }
+
+                    foreach (var objectiveCondition in objectiveConditions)
+                    {
+                        var hbox = new HBoxContainer();
+                        hbox.AddChild(new TextureRect
+                        {
+                            //TODO Texture =
+                        });
+                        hbox.AddChild(new VBoxContainer
+                            {
+                                Children =
+                                {
+                                    new Label{Text = objectiveCondition.Title},
+                                    new Label{Text = objectiveCondition.Description}
+                                }
+                            }
+                        );
+                        vbox.AddChild(hbox);
+                    }
+                    ObjectivesContainer.AddChild(vbox);
+                }
             }
         }
     }

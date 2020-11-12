@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Mobs;
+using Content.Shared.Objectives;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;

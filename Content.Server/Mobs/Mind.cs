@@ -85,6 +85,11 @@ namespace Content.Server.Mobs
         public IEnumerable<Objective> AllObjectives => _objectives;
 
         /// <summary>
+        /// Called when objectives get added/removed from the mind.
+        /// </summary>
+        public event EventHandler ObjectiveListChanged;
+
+        /// <summary>
         ///     The session of the player owning this mind.
         ///     Can be null, in which case the player is currently not logged in.
         /// </summary>
@@ -170,6 +175,7 @@ namespace Content.Server.Mobs
             if (!objective.Prototype.CanBeAssigned(this))
                 return false;
             _objectives.Add(objective);
+            ObjectiveListChanged?.Invoke(this, EventArgs.Empty);
             return true;
         }
 
@@ -182,8 +188,8 @@ namespace Content.Server.Mobs
             if (_objectives.Count >= index) return false;
 
             _objectives.RemoveAt(index);
+            ObjectiveListChanged?.Invoke(this, EventArgs.Empty);
             return true;
-
         }
 
         /// <summary>
