@@ -140,6 +140,10 @@ namespace Content.Client.GameObjects.Components.Actor
                             Progress = objectiveCondition.Progress,
                             SizeFlagsVertical = SizeFlags.ShrinkCenter
                         });
+                        hbox.AddChild(new Control
+                        {
+                            CustomMinimumSize = (10,0)
+                        });
                         hbox.AddChild(new VBoxContainer
                             {
                                 Children =
