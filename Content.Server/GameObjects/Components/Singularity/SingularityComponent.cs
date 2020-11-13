@@ -1,10 +1,7 @@
 #nullable enable
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.StationEvents;
 using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
@@ -13,9 +10,9 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Map;
+using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -29,10 +26,7 @@ namespace Content.Server.GameObjects.Components.Singularity
     [RegisterComponent]
     public class SingularityComponent : Component, ICollideBehavior
     {
-        [Dependency] private IEntityManager _entityManager = null!;
-        [Dependency] private IMapManager _mapManager = null!;
-        [Dependency] private IRobustRandom _random = null!;
-
+        [Dependency] private IRobustRandom _random = default!;
 
         public override uint? NetID => ContentNetIDs.SINGULARITY;
 
@@ -48,7 +42,6 @@ namespace Content.Server.GameObjects.Components.Singularity
                 _energy = value;
                 if (_energy <= 0)
                 {
-                    if(_singularityController != null) _singularityController.LinearVelocity = Vector2.Zero;
                     _spriteComponent?.LayerSetVisible(0, false);
 
                     Owner.Delete();
@@ -109,20 +102,18 @@ namespace Content.Server.GameObjects.Components.Singularity
         private PhysicsComponent? _collidableComponent;
         private SpriteComponent? _spriteComponent;
         private RadiationPulseComponent? _radiationPulseComponent;
-        private AudioSystem _audioSystem = null!;
         private AudioSystem.AudioSourceServer? _playingSound;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            _audioSystem = EntitySystem.Get<AudioSystem>();
             var audioParams = AudioParams.Default;
             audioParams.Loop = true;
             audioParams.MaxDistance = 20f;
             audioParams.Volume = 5;
-            _audioSystem.PlayFromEntity("/Audio/Effects/singularity_form.ogg", Owner);
-            Timer.Spawn(5200,() => _playingSound = _audioSystem.PlayFromEntity("/Audio/Effects/singularity.ogg", Owner, audioParams));
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/singularity_form.ogg", Owner);
+            Owner.SpawnTimer(5200, () => _playingSound = EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/singularity.ogg", Owner, audioParams));
 
 
             if (!Owner.TryGetComponent(out _collidableComponent))
@@ -161,22 +152,12 @@ namespace Content.Server.GameObjects.Components.Singularity
             {
                 pushVector = new Vector2((_random.Next(-10, 10)), _random.Next(-10, 10));
             }
-            _singularityController?.Push(pushVector.Normalized, 2);
+            _singularityController?.Push(pushVector.Normalized, 200);
         }
 
-        List<IEntity> _previousPulledEntites = new List<IEntity>();
         public void PullUpdate()
         {
-            foreach (var previousPulledEntity in _previousPulledEntites)
-            {
-                if(previousPulledEntity.Deleted) continue;
-                if (!previousPulledEntity.TryGetComponent<PhysicsComponent>(out var collidableComponent)) continue;
-                var controller = collidableComponent.EnsureController<SingularityPullController>();
-                controller.StopPull();
-            }
-            _previousPulledEntites.Clear();
-
-            var entitiesToPull = _entityManager.GetEntitiesInRange(Owner.Transform.Coordinates, Level * 10);
+            var entitiesToPull = Owner.EntityManager.GetEntitiesInRange(Owner.Transform.Coordinates, Level * 10);
             foreach (var entity in entitiesToPull)
             {
                 if (!entity.TryGetComponent<PhysicsComponent>(out var collidableComponent)) continue;
@@ -185,10 +166,9 @@ namespace Content.Server.GameObjects.Components.Singularity
                 var vec = (Owner.Transform.Coordinates - entity.Transform.Coordinates).Position;
                 if (vec == Vector2.Zero) continue;
 
-                var speed = 10 / vec.Length * Level;
+                var speed = 100 / vec.Length * Level;
 
                 controller.Pull(vec.Normalized, speed);
-                _previousPulledEntites.Add(entity);
             }
         }
 
@@ -220,7 +200,7 @@ namespace Content.Server.GameObjects.Components.Singularity
         public override void OnRemove()
         {
             _playingSound?.Stop();
-            _audioSystem.PlayAtCoords("/Audio/Effects/singularity_collapse.ogg", Owner.Transform.Coordinates);
+            EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Effects/singularity_collapse.ogg", Owner.Transform.Coordinates);
             base.OnRemove();
         }
     }

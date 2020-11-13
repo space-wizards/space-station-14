@@ -9,14 +9,9 @@ namespace Content.Server.GameObjects.Components.Singularity
     {
         public override IPhysicsComponent? ControlledComponent { protected get; set; }
 
-        public void StopPull()
-        {
-            LinearVelocity = Vector2.Zero;
-        }
-
         public void Pull(Vector2 velocityDirection, float speed)
         {
-            LinearVelocity = velocityDirection * speed;
+            Impulse = velocityDirection * speed;
         }
     }
 }

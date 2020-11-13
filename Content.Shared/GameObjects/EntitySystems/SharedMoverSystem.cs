@@ -22,10 +22,6 @@ namespace Content.Shared.GameObjects.EntitySystems
 {
     public abstract class SharedMoverSystem : EntitySystem
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] protected readonly IPhysicsManager PhysicsManager = default!;
-        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -107,7 +103,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                 {
                     if (physics.TryGetController(out MoverController controller))
                     {
-                        controller.Push(total, mover.CurrentSprintSpeed * 60f);
+                        controller.Push(total, mover.CurrentSprintSpeed * 80f);
                     }
                 }
 
@@ -125,7 +121,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         private bool IsAroundCollider(ITransformComponent transform, IMoverComponent mover,
             IPhysicsComponent collider)
         {
-            foreach (var entity in _entityManager.GetEntitiesInRange(transform.Owner, mover.GrabRange, true))
+            foreach (var entity in EntityManager.GetEntitiesInRange(transform.Owner, mover.GrabRange, true))
             {
                 if (entity == transform.Owner)
                 {

@@ -123,7 +123,7 @@ namespace Content.Shared.Physics.Pull
             _puller.Owner.SendMessage(null, message);
             ControlledComponent.Owner.SendMessage(null, message);
 
-            _puller.Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
+            _entityManager.EventBus.RaiseEvent(EventSource.Local, message);
 
             ControlledComponent.WakeBody();
 
@@ -151,7 +151,7 @@ namespace Content.Shared.Physics.Pull
             oldPuller.Owner.SendMessage(null, message);
             ControlledComponent.Owner.SendMessage(null, message);
 
-            oldPuller.Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
+            _entityManager.EventBus.RaiseEvent(EventSource.Local, message);
 
             ControlledComponent.WakeBody();
             ControlledComponent.TryRemoveController<PullController>();
@@ -219,7 +219,7 @@ namespace Content.Shared.Physics.Pull
             else if (MovingTo.HasValue)
             {
                 var diff = MovingTo.Value.Position - ControlledComponent.Owner.Transform.Coordinates.Position;
-                Impulse = diff.Normalized * 5 * 70;
+                Impulse = diff.Normalized * 5 * 250;
             }
             else
             {
@@ -235,7 +235,7 @@ namespace Content.Shared.Physics.Pull
                     return;
                 }
 
-                Impulse = distance.Normalized * _puller.LinearVelocity.Length * 1.5f * 70;
+                Impulse = distance.Normalized * _puller.LinearVelocity.Length * 1.5f * 250;
             }
         }
 
@@ -255,6 +255,7 @@ namespace Content.Shared.Physics.Pull
                 MovingTo = null;
             }
 
+            // TODO
             if (LinearVelocity != Vector2.Zero)
             {
                 var angle = LinearVelocity.ToAngle();
