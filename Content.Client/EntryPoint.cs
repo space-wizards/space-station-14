@@ -1,4 +1,6 @@
 ﻿using System;
+using Content.Client.Administration;
+using Content.Client.Eui;
 using Content.Client.GameObjects.Components.Actor;
 using Content.Client.Input;
 using Content.Client.Interfaces;
@@ -22,6 +24,7 @@ using Content.Shared.GameObjects.Components.Power.AME;
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.GameObjects.Components.VendingMachines;
 using Content.Shared.Kitchen;
+using Content.Shared.Alert;
 using Robust.Client;
 using Robust.Client.Interfaces;
 using Robust.Client.Interfaces.Graphics.Overlays;
@@ -46,7 +49,6 @@ namespace Content.Client
         [Dependency] private readonly IEscapeMenuOwner _escapeMenuOwner = default!;
         [Dependency] private readonly IGameController _gameController = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
-        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
         public override void Init()
         {
@@ -80,14 +82,15 @@ namespace Content.Client
 
             ClientContentIoC.Register();
 
-            if (TestingCallbacks != null)
+            foreach (var callback in TestingCallbacks)
             {
-                var cast = (ClientModuleTestingCallbacks) TestingCallbacks;
+                var cast = (ClientModuleTestingCallbacks) callback;
                 cast.ClientBeforeIoC?.Invoke();
             }
 
             IoCManager.BuildGraph();
 
+            IoCManager.Resolve<IClientAdminManager>().Initialize();
             IoCManager.Resolve<IParallaxManager>().LoadParallax();
             IoCManager.Resolve<IBaseClient>().PlayerJoinedServer += SubscribePlayerAttachmentEvents;
             IoCManager.Resolve<IStylesheetManager>().Initialize();
@@ -150,6 +153,8 @@ namespace Content.Client
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();
             IoCManager.Resolve<IStationEventManager>().Initialize();
             IoCManager.Resolve<IAdminMenuManager>().Initialize();
+            IoCManager.Resolve<EuiManager>().Initialize();
+            IoCManager.Resolve<AlertManager>().Initialize();
 
             _baseClient.RunLevelChanged += (sender, args) =>
             {
