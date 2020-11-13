@@ -16,8 +16,8 @@ namespace Content.Server.GameObjects.Components.Paper
     [RegisterComponent]
     public class PaperComponent : SharedPaperComponent, IExamine, IInteractUsing, IUse
     {
-        private string _content = "";
         private PaperAction _mode;
+        public string Content { get; private set; } = "";
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(PaperUiKey.Key);
 
@@ -35,7 +35,7 @@ namespace Content.Server.GameObjects.Components.Paper
         }
         private void UpdateUserInterface()
         {
-            UserInterface?.SetState(new PaperBoundUserInterfaceState(_content, _mode));
+            UserInterface?.SetState(new PaperBoundUserInterfaceState(Content, _mode));
         }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
@@ -43,7 +43,7 @@ namespace Content.Server.GameObjects.Components.Paper
             if (!inDetailsRange)
                 return;
 
-            message.AddMarkup(_content);
+            message.AddMarkup(Content);
         }
 
         public bool UseEntity(UseEntityEventArgs eventArgs)
@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Paper
             if (string.IsNullOrEmpty(msg.Text))
                 return;
 
-            _content += msg.Text + '\n';
+            Content += msg.Text + '\n';
 
             if (Owner.TryGetComponent(out SpriteComponent? sprite))
             {

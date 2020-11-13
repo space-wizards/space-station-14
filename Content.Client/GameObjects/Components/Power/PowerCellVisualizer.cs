@@ -34,9 +34,10 @@ namespace Content.Client.GameObjects.Components.Power
             base.OnChangeData(component);
 
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
-            if (component.TryGetData(PowerCellVisuals.ChargeLevel, out float fraction))
+            if (component.TryGetData(PowerCellVisuals.ChargeLevel, out byte level))
             {
-                sprite.LayerSetState(Layers.Charge, $"{_prefix}_{ContentHelpers.RoundToLevels(fraction, 1, 5) * 25}");
+                var adjustedLevel = level * 25;
+                sprite.LayerSetState(Layers.Charge, $"{_prefix}_{adjustedLevel}");
             }
         }
 

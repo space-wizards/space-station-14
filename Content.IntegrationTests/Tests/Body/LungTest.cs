@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Atmos;
@@ -19,7 +20,7 @@ using Robust.Shared.Maths;
 namespace Content.IntegrationTests.Tests.Body
 {
     [TestFixture]
-    [TestOf(typeof(LungBehaviorComponent))]
+    [TestOf(typeof(LungBehavior))]
     public class LungTest : ContentIntegrationTest
     {
         [Test]
@@ -38,7 +39,7 @@ namespace Content.IntegrationTests.Tests.Body
                 var human = entityManager.SpawnEntity("HumanMob_Content", MapCoordinates.Nullspace);
 
                 Assert.That(human.TryGetComponent(out IBody body));
-                Assert.That(body.TryGetMechanismBehaviors(out List<LungBehaviorComponent> lungs));
+                Assert.That(body.TryGetMechanismBehaviors(out List<LungBehavior> lungs));
                 Assert.That(lungs.Count, Is.EqualTo(1));
                 Assert.That(human.TryGetComponent(out BloodstreamComponent bloodstream));
 
@@ -46,7 +47,7 @@ namespace Content.IntegrationTests.Tests.Body
 
                 var originalOxygen = 2;
                 var originalNitrogen = 8;
-                var breathedPercentage = Atmospherics.BreathPercentage;
+                var breathedPercentage = Atmospherics.BreathVolume / gas.Volume;
 
                 gas.AdjustMoles(Gas.Oxygen, originalOxygen);
                 gas.AdjustMoles(Gas.Nitrogen, originalNitrogen);
@@ -76,7 +77,7 @@ namespace Content.IntegrationTests.Tests.Body
                 lung.Exhale(1, gas);
 
                 var lungOxygenAfterExhale = lung.Air.GetMoles(Gas.Oxygen);
-                var exhaledOxygen = lungOxygenBeforeExhale - lungOxygenAfterExhale;
+                var exhaledOxygen = Math.Abs(lungOxygenBeforeExhale - lungOxygenAfterExhale);
 
                 // Not completely empty
                 Assert.Positive(lung.Air.Gases.Sum());
@@ -140,7 +141,7 @@ namespace Content.IntegrationTests.Tests.Body
                 human = entityManager.SpawnEntity("HumanMob_Content", coordinates);
 
                 Assert.True(human.TryGetComponent(out IBody body));
-                Assert.True(body.HasMechanismBehavior<LungBehaviorComponent>());
+                Assert.True(body.HasMechanismBehavior<LungBehavior>());
                 Assert.True(human.TryGetComponent(out metabolism));
                 Assert.False(metabolism.Suffocating);
             });

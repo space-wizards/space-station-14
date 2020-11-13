@@ -5,6 +5,10 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.45, -0.15, 0.45, 0.35"
+      layer: [ Passable ]
   - type: LoopingSound
   - type: Sprite
     sprite: Constructible/Lighting/light_tube.rsi
@@ -48,9 +52,30 @@
     energy: 1.0
     enabled: false
     offset: "-0.5, 0"
+  - type: Physics
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "0, 0.1, 0.25, 0.1"
+        layer: [ Passable ]
   - type: PoweredLight
     bulb: Bulb
   - type: PowerReceiver
   - type: Destructible
     deadThreshold: 25
     resistances: metallicResistances
+
+- type: entity
+  name: unpowered small light
+  id: SmallLight
+  parent: WallLight
+  components:
+    - type: Sprite
+      sprite: Constructible/Lighting/light_small.rsi
+      state: on
+    - type: PointLight
+      energy: 1.0
+      enabled: true
+      offset: "-0.5, 0"
+    - type: Destructible
+      deadThreshold: 25
+      resistances: metallicResistances

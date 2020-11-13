@@ -7,5 +7,17 @@
     visuals:
     - type: StorageVisualizer
       state: rd
-  - type: Icon
-    state: rd_icon
+  - type: AccessReader
+    access: [ [ "ResearchDirector" ] ]
+
+- type: entity
+  id: LockerScientist
+  parent: LockerSecureBase
+  name: "scientist's locker"
+  components:
+    - type: Appearance
+      visuals:
+        - type: StorageVisualizer
+          state: science
+    - type: AccessReader
+      access: [ [ "Research" ] ]

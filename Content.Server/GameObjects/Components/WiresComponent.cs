@@ -373,6 +373,14 @@ namespace Content.Server.GameObjects.Components
             UserInterface?.Open(session);
         }
 
+        /// <summary>
+        /// Closes all wire UIs.
+        /// </summary>
+        public void CloseAll()
+        {
+            UserInterface?.CloseAll();
+        }
+
         private void UserInterfaceOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
         {
             var message = serverMsg.Message;

@@ -1,10 +1,11 @@
-﻿using Content.Server.GameObjects.Components.Body;
-using Content.Server.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.Components.Body;
+﻿using Content.Server.GameObjects.Components.Damage;
+using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Mobs.State
@@ -13,6 +14,8 @@ namespace Content.Server.GameObjects.Components.Mobs.State
     {
         public override void EnterState(IEntity entity)
         {
+            EntitySystem.Get<StandingStateSystem>().Standing(entity);
+
             if (entity.TryGetComponent(out AppearanceComponent appearance))
             {
                 appearance.SetData(DamageStateVisuals.State, DamageState.Alive);
@@ -25,15 +28,14 @@ namespace Content.Server.GameObjects.Components.Mobs.State
 
         public override void UpdateState(IEntity entity)
         {
-            if (!entity.TryGetComponent(out ServerStatusEffectsComponent status))
+            if (!entity.TryGetComponent(out ServerAlertsComponent status))
             {
                 return;
             }
 
             if (!entity.TryGetComponent(out IDamageableComponent damageable))
             {
-                status.ChangeStatusEffectIcon(StatusEffect.Health,
-                    "/Textures/Interface/StatusEffects/Human/human0.png");
+                status.ShowAlert(AlertType.HumanHealth, 0);
                 return;
             }
 
@@ -47,10 +49,9 @@ namespace Content.Server.GameObjects.Components.Mobs.State
                         return;
                     }
 
-                    var modifier = (int) (ruinable.TotalDamage / (threshold / 7f));
+                    var modifier = (short) (ruinable.TotalDamage / (threshold / 7f));
 
-                    status.ChangeStatusEffectIcon(StatusEffect.Health,
-                        "/Textures/Interface/StatusEffects/Human/human" + modifier + ".png");
+                    status.ShowAlert(AlertType.HumanHealth, modifier);
 
                     break;
                 }
@@ -61,10 +62,9 @@ namespace Content.Server.GameObjects.Components.Mobs.State
                         return;
                     }
 
-                    var modifier = (int) (damageable.TotalDamage / (threshold / 7f));
+                    var modifier = (short) (damageable.TotalDamage / (threshold / 7f));
 
-                    status.ChangeStatusEffectIcon(StatusEffect.Health,
-                        "/Textures/Interface/StatusEffects/Human/human" + modifier + ".png");
+                    status.ShowAlert(AlertType.HumanHealth, modifier);
                     break;
                 }
             }
