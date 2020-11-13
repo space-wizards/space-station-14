@@ -7,6 +7,7 @@ using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
 using Content.Shared.Interfaces;
@@ -14,8 +15,11 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Kitchen;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Timers;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -78,11 +82,13 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         //YAML serialization vars
         private int _storageCap = 16;
+        private int _workTime = 3500; //3.5 seconds, completely arbitrary for now.
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);    
             serializer.DataField(ref _storageCap, "chamber_capacity", 16);
+            serializer.DataField(ref _workTime, "time", 3500);
         }
 
         public override void Initialize()
@@ -113,11 +119,11 @@ namespace Content.Server.GameObjects.Components.Kitchen
             switch(message.Message)
             {
                 case ReagentGrinderGrindStartMessage msg:
-                    DoWork(isJuiceIntent:false);
+                    DoWork(user:message.Session.AttachedEntity!,isJuiceIntent:false);
                     break;
 
                 case ReagentGrinderJuiceStartMessage msg:
-                    DoWork(isJuiceIntent:true);
+                    DoWork(user: message.Session.AttachedEntity!,isJuiceIntent:true);
                     break;
 
                 case ReagentGrinderEjectChamberAllMessage msg:
@@ -263,7 +269,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
         /// The wzhzhzh of the grinder.
         /// </summary>
         /// <param name="isJuiceIntent">true for wanting to juice, false for wanting to grind.</param>
-        private void DoWork(bool isJuiceIntent)
+        private async void DoWork(IEntity user, bool isJuiceIntent)
         {
             //Have power, are  we busy, chamber has anything to grind, a beaker for the grounds to go?
             if(!Powered || _busy || ChamberEmpty || !HasBeaker)
@@ -271,48 +277,53 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 return;
             }
 
-
-
             var chamberContentsArray = _chamber.ContainedEntities.ToArray();
             var chamberCount = chamberContentsArray.Length;
+
             //This block is for grinding behaviour only.
             if (!isJuiceIntent)
             {
                 //Get each item inside the chamber and get the reagents it contains. Transfer those reagents to the beaker, given we have one in.
-                
+                Owner.SpawnTimer(_workTime, (Action) (() =>
+                {
+                    for (int i = chamberCount - 1; i >= 0; i--)
+                    {
+                        var item = chamberContentsArray[i];
+                        if (item.TryGetComponent<SolutionContainerComponent>(out var solution))
+                        {
+                            if (_heldBeaker!.CurrentVolume + solution.CurrentVolume > _heldBeaker!.MaxVolume) continue;
+                            _heldBeaker!.TryAddSolution(solution.Solution);
+                            solution!.RemoveAllSolution();
+                            _chamber.ContainedEntities[i].Delete();
+                        }
+                    }
+
+                    _dirty = true;
+                }));
+
+            }
+
+            Owner.SpawnTimer(_workTime, (Action) (() =>
+            {
+                //OK, so if we made it this far we want to juice instead.
                 for (int i = chamberCount - 1; i >= 0; i--)
                 {
                     var item = chamberContentsArray[i];
-                    if (item.TryGetComponent<SolutionContainerComponent>(out var solution))
+                    if (item.TryGetComponent<JuiceableComponent>(out var juiceMe))
                     {
-                        if (_heldBeaker!.CurrentVolume + solution.CurrentVolume > _heldBeaker!.MaxVolume) continue;
-                        _heldBeaker!.TryAddSolution(solution.Solution);
-                        solution!.RemoveAllSolution();
+                        if (_heldBeaker!.CurrentVolume + juiceMe.JuiceResultSolution.TotalVolume > _heldBeaker!.MaxVolume) continue;
+                        _heldBeaker!.TryAddSolution(juiceMe.JuiceResultSolution);
                         _chamber.ContainedEntities[i].Delete();
                     }
                 }
 
                 _dirty = true;
-            }
-
-
-            //K, so if we made it this far we want to juice instead.
-            for (int i = chamberCount - 1; i >= 0; i--)
-            {
-                var item = chamberContentsArray[i];
-                if (item.TryGetComponent<JuiceableComponent>(out var juiceMe))
-                {
-                    if (_heldBeaker!.CurrentVolume + juiceMe.JuiceResultSolution.TotalVolume > _heldBeaker!.MaxVolume) continue;
-                    _heldBeaker!.TryAddSolution(juiceMe.JuiceResultSolution);
-                    _chamber.ContainedEntities[i].Delete();
-                }
-            }
-
-            _dirty = true;
-
+            }));
 
 
         }
+
+
 
     }
 }
