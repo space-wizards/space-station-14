@@ -82,9 +82,9 @@ namespace Content.Client
 
             ClientContentIoC.Register();
 
-            if (TestingCallbacks != null)
+            foreach (var callback in TestingCallbacks)
             {
-                var cast = (ClientModuleTestingCallbacks) TestingCallbacks;
+                var cast = (ClientModuleTestingCallbacks) callback;
                 cast.ClientBeforeIoC?.Invoke();
             }
 
