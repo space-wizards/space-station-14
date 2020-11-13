@@ -207,7 +207,7 @@ namespace Content.Server.Database
             var admins = await db.PgDbContext.Admin
                 .Include(a => a.Flags)
                 .GroupJoin(db.PgDbContext.Player, a => a.UserId, p => p.UserId, (a, grouping) => new {a, grouping})
-                .SelectMany(t => t.grouping.DefaultIfEmpty(), (t, p) => new {t.a, p.LastSeenUserName})
+                .SelectMany(t => t.grouping.DefaultIfEmpty(), (t, p) => new {t.a, p!.LastSeenUserName})
                 .ToArrayAsync(cancel);
 
             var adminRanks = await db.DbContext.AdminRank.Include(a => a.Flags).ToArrayAsync(cancel);
