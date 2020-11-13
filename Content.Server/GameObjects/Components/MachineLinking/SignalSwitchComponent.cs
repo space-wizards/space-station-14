@@ -52,7 +52,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
                 return;
             }
 
-            transmitter.TransmitSignal(user, _on ? SignalState.On : SignalState.Off);
+            transmitter.TransmitSignal(user, _on);
         }
 
         private void UpdateSprite()

@@ -1,8 +1,6 @@
 ﻿#nullable enable
 using Content.Shared.GameObjects.Components.Movement;
 using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Interfaces.Physics;
-using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 
@@ -24,7 +22,7 @@ namespace Content.Shared.Physics
                 return;
             }
 
-            LinearVelocity = velocityDirection * speed * 100;
+            LinearVelocity = velocityDirection * speed;
         }
 
         public override void UpdateAfterProcessing()

@@ -1,7 +1,8 @@
-using Content.Shared.GameObjects.Components.Storage;
+﻿using Content.Shared.GameObjects.Components.Storage;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Log;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -56,9 +57,9 @@ namespace Content.Client.GameObjects.Components.Storage
             }
 
             component.TryGetData(StorageVisuals.Open, out bool open);
-            sprite.LayerSetState(StorageVisualLayers.Door, open
-                ? _stateOpen ?? $"{_stateBase}_open"
-                : _stateClosed ?? $"{_stateBase}_door");
+            var state = open ? _stateOpen ?? $"{_stateBase}_open" : _stateClosed ?? $"{_stateBase}_door";
+
+            sprite.LayerSetState(StorageVisualLayers.Door, state);
 
             if (component.TryGetData(StorageVisuals.CanLock, out bool canLock) && canLock)
             {
@@ -74,9 +75,12 @@ namespace Content.Client.GameObjects.Components.Storage
                 }
             }
 
-            if (component.TryGetData(StorageVisuals.Welded, out bool weldedVal))
+            if (component.TryGetData(StorageVisuals.CanWeld, out bool canWeld) && canWeld)
             {
-                sprite.LayerSetVisible(StorageVisualLayers.Welded, weldedVal);
+                if (component.TryGetData(StorageVisuals.Welded, out bool weldedVal))
+                {
+                    sprite.LayerSetVisible(StorageVisualLayers.Welded, weldedVal);
+                }
             }
         }
     }

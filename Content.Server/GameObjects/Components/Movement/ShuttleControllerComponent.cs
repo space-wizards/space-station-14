@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using Content.Server.GameObjects.Components.Buckle;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Strap;
@@ -31,9 +32,9 @@ namespace Content.Server.GameObjects.Components.Movement
         private bool _movingRight;
 
         /// <summary>
-        ///     The icon to be displayed when piloting from this chair.
+        ///     ID of the alert to show when piloting
         /// </summary>
-        private string _pilotingIcon = default!;
+        private AlertType _pilotingAlertType;
 
         /// <summary>
         ///     The entity that's currently controlling this component.
@@ -137,7 +138,7 @@ namespace Content.Server.GameObjects.Components.Movement
             if (_controller != null ||
                 !entity.TryGetComponent(out MindComponent? mind) ||
                 mind.Mind == null ||
-                !Owner.TryGetComponent(out ServerStatusEffectsComponent? status))
+                !Owner.TryGetComponent(out ServerAlertsComponent? status))
             {
                 return;
             }
@@ -145,7 +146,15 @@ namespace Content.Server.GameObjects.Components.Movement
             mind.Mind.Visit(Owner);
             _controller = entity;
 
-            status.ChangeStatusEffectIcon(StatusEffect.Piloting, _pilotingIcon);
+            status.ShowAlert(_pilotingAlertType, onClickAlert: OnClickAlert);
+        }
+
+        private void OnClickAlert(ClickAlertEventArgs args)
+        {
+            if (args.Player.TryGetComponent(out ShuttleControllerComponent? controller))
+            {
+                controller.RemoveController();
+            }
         }
 
         /// <summary>
@@ -177,9 +186,9 @@ namespace Content.Server.GameObjects.Components.Movement
         /// <param name="entity">The entity to update</param>
         private void UpdateRemovedEntity(IEntity entity)
         {
-            if (Owner.TryGetComponent(out ServerStatusEffectsComponent? status))
+            if (Owner.TryGetComponent(out ServerAlertsComponent? status))
             {
-                status.RemoveStatusEffect(StatusEffect.Piloting);
+                status.ClearAlert(_pilotingAlertType);
             }
 
             if (entity.TryGetComponent(out MindComponent? mind))
@@ -211,13 +220,13 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref _pilotingIcon, "pilotingIcon", "/Textures/Interface/StatusEffects/Buckle/buckled.png");
+            serializer.DataField(ref _pilotingAlertType, "pilotingAlertType", AlertType.PilotingShuttle);
         }
 
         public override void Initialize()
         {
             base.Initialize();
-            Owner.EnsureComponent<ServerStatusEffectsComponent>();
+            Owner.EnsureComponent<ServerAlertsComponent>();
         }
 
         /// <inheritdoc />

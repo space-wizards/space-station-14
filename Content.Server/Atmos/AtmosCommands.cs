@@ -1,8 +1,10 @@
 ﻿#nullable enable
 using System;
+using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.Atmos;
+using Content.Shared.Administration;
 using Content.Shared.Atmos;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
@@ -15,6 +17,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Server.Atmos
 {
+    [AdminCommand(AdminFlags.Debug)]
     public class AddAtmos : IClientCommand
     {
         public string Command => "addatmos";
@@ -65,6 +68,7 @@ namespace Content.Server.Atmos
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class AddUnsimulatedAtmos : IClientCommand
     {
         public string Command => "addunsimulatedatmos";
@@ -115,6 +119,7 @@ namespace Content.Server.Atmos
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class ListGases : IClientCommand
     {
         public string Command => "listgases";
@@ -131,6 +136,7 @@ namespace Content.Server.Atmos
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class AddGas : IClientCommand
     {
         public string Command => "addgas";
@@ -204,6 +210,7 @@ namespace Content.Server.Atmos
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class FillGas : IClientCommand
     {
         public string Command => "fillgas";
@@ -262,6 +269,7 @@ namespace Content.Server.Atmos
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class RemoveGas : IClientCommand
     {
         public string Command => "removegas";
@@ -325,6 +333,7 @@ namespace Content.Server.Atmos
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class SetTemperature : IClientCommand
     {
         public string Command => "settemp";
@@ -389,6 +398,7 @@ namespace Content.Server.Atmos
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class SetAtmosTemperature : IClientCommand
     {
         public string Command => "setatmostemp";
@@ -448,6 +458,7 @@ namespace Content.Server.Atmos
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class DeleteGasCommand : IClientCommand
     {
         public string Command => "deletegas";
@@ -624,6 +635,7 @@ namespace Content.Server.Atmos
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class ShowAtmos : IClientCommand
     {
         public string Command => "showatmos";

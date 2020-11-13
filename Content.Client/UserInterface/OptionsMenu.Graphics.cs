@@ -1,7 +1,9 @@
-﻿using Robust.Client.Graphics;
+﻿using Content.Shared;
+using Robust.Client.Graphics;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -121,7 +123,7 @@ namespace Content.Client.UserInterface
                 });
                 ApplyButton.OnPressed += OnApplyButtonPressed;
 
-                VSyncCheckBox.Pressed = _cfg.GetCVar<bool>("display.vsync");
+                VSyncCheckBox.Pressed = _cfg.GetCVar(CVars.DisplayVSync);
                 FullscreenCheckBox.Pressed = ConfigIsFullscreen;
                 LightingPresetOption.SelectId(GetConfigLightingQuality());
                 _uiScaleOption.SelectId(GetConfigUIScalePreset(ConfigUIScale));
@@ -137,11 +139,11 @@ namespace Content.Client.UserInterface
 
             private void OnApplyButtonPressed(BaseButton.ButtonEventArgs args)
             {
-                _cfg.SetCVar("display.vsync", VSyncCheckBox.Pressed);
+                _cfg.SetCVar(CVars.DisplayVSync, VSyncCheckBox.Pressed);
                 SetConfigLightingQuality(LightingPresetOption.SelectedId);
-                _cfg.SetCVar("display.windowmode",
+                _cfg.SetCVar(CVars.DisplayWindowMode,
                     (int) (FullscreenCheckBox.Pressed ? WindowMode.Fullscreen : WindowMode.Windowed));
-                _cfg.SetCVar("display.uiScale", UIScaleOptions[_uiScaleOption.SelectedId]);
+                _cfg.SetCVar(CVars.DisplayUIScale, UIScaleOptions[_uiScaleOption.SelectedId]);
                 _cfg.SaveToFile();
                 UpdateApplyButton();
             }
@@ -159,7 +161,7 @@ namespace Content.Client.UserInterface
 
             private void UpdateApplyButton()
             {
-                var isVSyncSame = VSyncCheckBox.Pressed == _cfg.GetCVar<bool>("display.vsync");
+                var isVSyncSame = VSyncCheckBox.Pressed == _cfg.GetCVar(CVars.DisplayVSync);
                 var isFullscreenSame = FullscreenCheckBox.Pressed == ConfigIsFullscreen;
                 var isLightingQualitySame = LightingPresetOption.SelectedId == GetConfigLightingQuality();
                 var isUIScaleSame = MathHelper.CloseTo(UIScaleOptions[_uiScaleOption.SelectedId], ConfigUIScale);
@@ -167,14 +169,14 @@ namespace Content.Client.UserInterface
             }
 
             private bool ConfigIsFullscreen =>
-                _cfg.GetCVar<int>("display.windowmode") == (int) WindowMode.Fullscreen;
+                _cfg.GetCVar(CVars.DisplayWindowMode) == (int) WindowMode.Fullscreen;
 
-            private float ConfigUIScale => _cfg.GetCVar<float>("display.uiScale");
+            private float ConfigUIScale => _cfg.GetCVar(CVars.DisplayUIScale);
 
             private int GetConfigLightingQuality()
             {
-                var val = _cfg.GetCVar<int>("display.lightmapdivider");
-                var soft = _cfg.GetCVar<bool>("display.softshadows");
+                var val = _cfg.GetCVar(CVars.DisplayLightMapDivider);
+                var soft = _cfg.GetCVar(CVars.DisplaySoftShadows);
                 if (val >= 8)
                 {
                     return 0;
@@ -198,20 +200,20 @@ namespace Content.Client.UserInterface
                 switch (value)
                 {
                     case 0:
-                        _cfg.SetCVar("display.lightmapdivider", 8);
-                        _cfg.SetCVar("display.softshadows", false);
+                        _cfg.SetCVar(CVars.DisplayLightMapDivider, 8);
+                        _cfg.SetCVar(CVars.DisplaySoftShadows, false);
                         break;
                     case 1:
-                        _cfg.SetCVar("display.lightmapdivider", 2);
-                        _cfg.SetCVar("display.softshadows", false);
+                        _cfg.SetCVar(CVars.DisplayLightMapDivider, 2);
+                        _cfg.SetCVar(CVars.DisplaySoftShadows, false);
                         break;
                     case 2:
-                        _cfg.SetCVar("display.lightmapdivider", 2);
-                        _cfg.SetCVar("display.softshadows", true);
+                        _cfg.SetCVar(CVars.DisplayLightMapDivider, 2);
+                        _cfg.SetCVar(CVars.DisplaySoftShadows, true);
                         break;
                     case 3:
-                        _cfg.SetCVar("display.lightmapdivider", 1);
-                        _cfg.SetCVar("display.softshadows", true);
+                        _cfg.SetCVar(CVars.DisplayLightMapDivider, 1);
+                        _cfg.SetCVar(CVars.DisplaySoftShadows, true);
                         break;
                 }
             }

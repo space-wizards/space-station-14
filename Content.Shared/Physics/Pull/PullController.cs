@@ -256,6 +256,12 @@ namespace Content.Shared.Physics.Pull
             {
                 MovingTo = null;
             }
+
+            if (LinearVelocity != Vector2.Zero)
+            {
+                var angle = LinearVelocity.ToAngle();
+                ControlledComponent.Owner.Transform.LocalRotation = angle;
+            }
         }
     }
 }

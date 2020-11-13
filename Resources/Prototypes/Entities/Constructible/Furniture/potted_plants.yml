@@ -55,6 +55,11 @@
   components:
   - type: Sprite
     state: plant-25
+  - type: Physics
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.47,-0.25,0.05,0.25"
+        layer: [ Passable ]
 
 - type: entity
   id: PottedPlantBioluminscent
