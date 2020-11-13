@@ -269,7 +269,10 @@ namespace Content.Server.Database
         {
             await using var db = await GetDb();
 
-            db.DbContext.Admin.Update(admin);
+            var existing = await db.DbContext.Admin.Include(a => a.Flags).SingleAsync(a => a.UserId == admin.UserId, cancel);
+            existing.Flags = admin.Flags;
+            existing.Title = admin.Title;
+            existing.AdminRankId = admin.AdminRankId;
 
             await db.DbContext.SaveChangesAsync(cancel);
         }
@@ -297,7 +300,12 @@ namespace Content.Server.Database
         {
             await using var db = await GetDb();
 
-            db.DbContext.AdminRank.Update(rank);
+            var existing = await db.DbContext.AdminRank
+                .Include(r => r.Flags)
+                .SingleAsync(a => a.Id == rank.Id, cancel);
+
+            existing.Flags = rank.Flags;
+            existing.Name = rank.Name;
 
             await db.DbContext.SaveChangesAsync(cancel);
         }

@@ -173,9 +173,9 @@ namespace Content.Server.Database
 
             return new PlayerRecord(
                 new NetUserId(record.UserId),
-                new DateTimeOffset(record.FirstSeenTime, TimeSpan.Zero),
+                new DateTimeOffset(record.FirstSeenTime),
                 record.LastSeenUserName,
-                new DateTimeOffset(record.LastSeenTime, TimeSpan.Zero),
+                new DateTimeOffset(record.LastSeenTime),
                 record.LastSeenAddress);
         }
 
