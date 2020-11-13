@@ -12,15 +12,15 @@
       "directions": 1
     },
     {
-      "name": "equipped-OUTERCLOTHING",
+      "name": "icon-flash",
+      "directions": 1
+    },
+    {
+      "name": "equipped-HELMET",
       "directions": 4
     },
     {
-      "name": "inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "inhand-right",
+      "name": "flash-equipped-HELMET",
       "directions": 4
     }
   ]

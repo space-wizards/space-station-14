@@ -24,30 +24,6 @@
 
 - type: entity
   parent: OuterclothingBase
-  id: OuterclothingAssjacket
-  name: ass jacket
-  description: Very damaged orange jacket. Don't be silly, do not wear it.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/ass_jacket.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/ass_jacket.rsi
-
-- type: entity
-  parent: OuterclothingBase
-  id: OuterclothingBedsheet
-  name: ghost costume
-  description: This is obviously just a bedsheet, but maybe try it on?
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/bedsheet.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/bedsheet.rsi
-
-- type: entity
-  parent: OuterclothingBase
   id: OuterclothingBlackhoodie
   name: black hoodie
   description: Oh my God, it's a black hoodie!
@@ -60,15 +36,14 @@
 
 - type: entity
   parent: OuterclothingBase
-  id: OuterclothingBlackhoodieopen
-  name: black hoodie (open)
-  description: Oh my God, it's a black hoodie!
+  id: OuterclothingGreyhoodie
+  name: grey hoodie
+  description: A grey hoodie.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/black_hoodie_open.rsi
-
+    sprite: Clothing/OuterClothing/grey_hoodie.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/black_hoodie_open.rsi
+    sprite: Clothing/OuterClothing/grey_hoodie.rsi
 
 - type: entity
   parent: OuterclothingBase
@@ -287,3 +262,15 @@
 
   - type: Clothing
     sprite: Clothing/OuterClothing/xenos.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingRedwizard
+  name: red wizard
+  description: Strange-looking, red, hat-wear that most certainly belongs to a real magic user.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/redwizard.rsi
+
+  - type: Clothing
+    sprite: Clothing/OuterClothing/redwizard.rsi

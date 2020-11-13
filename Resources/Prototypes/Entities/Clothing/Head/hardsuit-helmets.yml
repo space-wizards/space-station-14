@@ -1,14 +1,4 @@
 - type: entity
-  parent: HatBase
-  id: HelmetHardsuitBase
-  name: base hardsuit helmet
-  abstract: true
-  components:
-    - type: PressureProtection
-      highPressureMultiplier: 0.75
-      lowPressureMultiplier: 100
-
-- type: entity
   parent: HelmetHardsuitBase
   id: HelmetHardsuitAtmos
   name: atmos hardsuit helmet
@@ -23,15 +13,18 @@
     lowPressureMultiplier: 100
 
 - type: entity
-  parent: HatBase
-  id: HatCapspace
-  name: cap space
-  description: A blue cap for patrolling the daily beat.
+  parent: HelmetHardsuitBase
+  id: HelmetHardsuitCap
+  name: captain's hardsuit helmet
+  description: Special hardsuit helmet, made for the captain of the station.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/capspace.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/capspace.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 100
 
 - type: entity
   parent: HelmetHardsuitBase
@@ -85,6 +78,20 @@
     sprite: Clothing/Head/Hardsuits/medical.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/medical.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.80
+    lowPressureMultiplier: 55
+
+- type: entity
+  parent: HelmetHardsuitBase
+  id: HelmetHardsuitRd
+  name: rd hardsuit helmet
+  description: Lightweight hardsuit helmet that doesn't restrict your head movements.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/rd.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/rd.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.80
     lowPressureMultiplier: 55
