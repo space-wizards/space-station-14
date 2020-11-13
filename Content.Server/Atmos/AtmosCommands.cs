@@ -68,6 +68,7 @@ namespace Content.Server.Atmos
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class AddUnsimulatedAtmos : IClientCommand
     {
         public string Command => "addunsimulatedatmos";
@@ -118,6 +119,7 @@ namespace Content.Server.Atmos
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class ListGases : IClientCommand
     {
         public string Command => "listgases";
@@ -134,6 +136,7 @@ namespace Content.Server.Atmos
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class AddGas : IClientCommand
     {
         public string Command => "addgas";
@@ -207,6 +210,7 @@ namespace Content.Server.Atmos
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class FillGas : IClientCommand
     {
         public string Command => "fillgas";
@@ -265,6 +269,7 @@ namespace Content.Server.Atmos
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class RemoveGas : IClientCommand
     {
         public string Command => "removegas";
@@ -328,6 +333,7 @@ namespace Content.Server.Atmos
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class SetTemperature : IClientCommand
     {
         public string Command => "settemp";
@@ -392,6 +398,7 @@ namespace Content.Server.Atmos
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class SetAtmosTemperature : IClientCommand
     {
         public string Command => "setatmostemp";
@@ -451,6 +458,7 @@ namespace Content.Server.Atmos
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class DeleteGasCommand : IClientCommand
     {
         public string Command => "deletegas";
@@ -627,6 +635,7 @@ namespace Content.Server.Atmos
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class ShowAtmos : IClientCommand
     {
         public string Command => "showatmos";
