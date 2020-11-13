@@ -17,7 +17,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
             base.OnChangeData(component);
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
 
-            component.Owner.TryGetComponent(out LoopingSoundComponent? loopingSoundComponent);
+            var loopingSoundComponent = component.Owner.GetComponentOrNull<LoopingSoundComponent>();
 
             if (!component.TryGetData(PowerDeviceVisuals.VisualState, out MicrowaveVisualState state))
             {
