@@ -10,13 +10,16 @@ using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
+using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Kitchen;
+using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.Systems;
@@ -49,6 +52,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
         [Dependency] private readonly IRobustRandom _random = default!;
 
 
+        private AudioSystem _audioSystem = default!;
 
         [ViewVariables] private ContainerSlot _beakerContainer = default!;
 
@@ -107,6 +111,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 UserInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
             }
 
+            _audioSystem = EntitySystem.Get<AudioSystem>();
         }
 
         private void UserInterfaceOnReceiveMessage(ServerBoundUserInterfaceMessage message)
@@ -119,16 +124,19 @@ namespace Content.Server.GameObjects.Components.Kitchen
             switch(message.Message)
             {
                 case ReagentGrinderGrindStartMessage msg:
+                    ClickSound();
                     DoWork(user:message.Session.AttachedEntity!,isJuiceIntent:false);
                     break;
 
                 case ReagentGrinderJuiceStartMessage msg:
+                    ClickSound();
                     DoWork(user: message.Session.AttachedEntity!,isJuiceIntent:true);
                     break;
 
                 case ReagentGrinderEjectChamberAllMessage msg:
                     if(!ChamberEmpty)
                     {
+                        ClickSound();
                         for (var i = _chamber.ContainedEntities.Count - 1; i >= 0; i--)
                         {
                             EjectSolid(_chamber.ContainedEntities.ElementAt(i).Uid);
@@ -140,15 +148,27 @@ namespace Content.Server.GameObjects.Components.Kitchen
                     if (!ChamberEmpty)
                     {
                         EjectSolid(msg.EntityID);
-                        //ClickSound();
+                        ClickSound();
                         _dirty = true;
                     }
                     break;
 
                 case ReagentGrinderEjectBeakerMessage msg:
+                    ClickSound();
                     EjectBeaker(message.Session.AttachedEntity!);
                     //EjectBeaker will dirty the UI for us, we don't have to do it explicitly here.
                     break;
+            }
+        }
+        private void ClickSound()
+        {
+            _audioSystem.PlayFromEntity("/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+        }
+        private void SetAppearance(ReagentGrinderVisualState state)
+        {
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(PowerDeviceVisuals.VisualState, state);
             }
         }
 
@@ -158,6 +178,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             {
                 UserInterface?.SetState(new ReagentGrinderInterfaceState
                 (
+                    _busy,
                     HasBeaker,
                     _chamber.ContainedEntities.Select(item => item.Uid).ToArray(),
                     //Remember the beaker can be null!
@@ -169,6 +190,9 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         private void EjectSolid(EntityUid entityID)
         {
+            if (_busy)
+                return;
+
             if (_entityManager.EntityExists(entityID))
             {
                 var entity = _entityManager.GetEntity(entityID);
@@ -188,7 +212,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
         /// </summary>
         private void EjectBeaker(IEntity user)
         {
-            if (!HasBeaker)
+            if (!HasBeaker || _busy)
                 return;
 
             //Eject the beaker into the hands of the user.
@@ -203,6 +227,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
             _heldBeaker = null;
             _dirty = true;
+            SetAppearance(ReagentGrinderVisualState.NoBeaker);
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
@@ -239,6 +264,8 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 _heldBeaker = beaker;
                 _dirty = true;
                 //We are done, return. Insert the beaker and exit!
+                SetAppearance(ReagentGrinderVisualState.BeakerAttached);
+                ClickSound();
                 return true;
             }
 
@@ -277,12 +304,15 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 return;
             }
 
+            _busy = true;
+
             var chamberContentsArray = _chamber.ContainedEntities.ToArray();
             var chamberCount = chamberContentsArray.Length;
 
             //This block is for grinding behaviour only.
             if (!isJuiceIntent)
             {
+                _audioSystem.PlayFromEntity("/Audio/Machines/blender.ogg", Owner, AudioParams.Default);
                 //Get each item inside the chamber and get the reagents it contains. Transfer those reagents to the beaker, given we have one in.
                 Owner.SpawnTimer(_workTime, (Action) (() =>
                 {
@@ -298,28 +328,33 @@ namespace Content.Server.GameObjects.Components.Kitchen
                         }
                     }
 
+                    _busy = false;
                     _dirty = true;
+                    return;
                 }));
 
             }
-
-            Owner.SpawnTimer(_workTime, (Action) (() =>
+            else
             {
-                //OK, so if we made it this far we want to juice instead.
-                for (int i = chamberCount - 1; i >= 0; i--)
+                _audioSystem.PlayFromEntity("/Audio/Machines/juicer.ogg", Owner, AudioParams.Default);
+                Owner.SpawnTimer(_workTime, (Action) (() =>
                 {
-                    var item = chamberContentsArray[i];
-                    if (item.TryGetComponent<JuiceableComponent>(out var juiceMe))
+                    //OK, so if we made it this far we want to juice instead.
+                    for (int i = chamberCount - 1; i >= 0; i--)
                     {
-                        if (_heldBeaker!.CurrentVolume + juiceMe.JuiceResultSolution.TotalVolume > _heldBeaker!.MaxVolume) continue;
-                        _heldBeaker!.TryAddSolution(juiceMe.JuiceResultSolution);
-                        _chamber.ContainedEntities[i].Delete();
+                        var item = chamberContentsArray[i];
+                        if (item.TryGetComponent<JuiceableComponent>(out var juiceMe))
+                        {
+                            if (_heldBeaker!.CurrentVolume + juiceMe.JuiceResultSolution.TotalVolume > _heldBeaker!.MaxVolume) continue;
+                            _heldBeaker!.TryAddSolution(juiceMe.JuiceResultSolution);
+                            _chamber.ContainedEntities[i].Delete();
+                        }
                     }
-                }
 
-                _dirty = true;
-            }));
-
+                    _busy = false;
+                    _dirty = true;
+                }));
+            }
 
         }
 

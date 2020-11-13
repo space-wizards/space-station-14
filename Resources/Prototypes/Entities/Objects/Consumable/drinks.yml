@@ -615,7 +615,6 @@
       reagents:
         - ReagentId: chem.LemonJuice
           Quantity: 20
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_yellow.rsi
 
