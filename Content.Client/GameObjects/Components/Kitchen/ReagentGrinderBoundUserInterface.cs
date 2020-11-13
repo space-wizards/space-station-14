@@ -80,6 +80,26 @@ namespace Content.Client.GameObjects.Components.Kitchen
         }
 
 
+        protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+        {
+            base.ReceiveMessage(message);
+            switch(message)
+            {
+                case SharedReagentGrinderComponent.ReagentGrinderWorkStartedMessage workStarted:
+                    _menu.GrindButton.Disabled = true;
+                    _menu.GrindButton.Modulate = workStarted.IsJuiceIntent ? Color.White : Color.Green;
+                    _menu.JuiceButton.Disabled = true;
+                    _menu.JuiceButton.Modulate = !workStarted.IsJuiceIntent ? Color.White : Color.Green;
+                    break;
+                case SharedReagentGrinderComponent.ReagentGrinderWorkCompleteMessage doneMessage:
+                    _menu.GrindButton.Disabled = false;
+                    _menu.JuiceButton.Disabled = false;
+                    _menu.GrindButton.Modulate = Color.White;
+                    _menu.JuiceButton.Modulate = Color.White;
+                    break;
+            }
+        }
+
         private void RefreshContentsDisplay(Solution.ReagentQuantity[] reagents, EntityUid[] containedSolids, bool isBeakerAttached)
         {
 

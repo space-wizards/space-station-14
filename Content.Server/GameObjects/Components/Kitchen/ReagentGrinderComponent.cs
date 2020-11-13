@@ -312,6 +312,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             //This block is for grinding behaviour only.
             if (!isJuiceIntent)
             {
+                UserInterface?.SendMessage(new ReagentGrinderWorkStartedMessage(isJuiceIntent));
                 _audioSystem.PlayFromEntity("/Audio/Machines/blender.ogg", Owner, AudioParams.Default);
                 //Get each item inside the chamber and get the reagents it contains. Transfer those reagents to the beaker, given we have one in.
                 Owner.SpawnTimer(_workTime, (Action) (() =>
@@ -330,12 +331,14 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
                     _busy = false;
                     _dirty = true;
+                    UserInterface?.SendMessage(new ReagentGrinderWorkCompleteMessage());
                     return;
                 }));
 
             }
             else
             {
+                UserInterface?.SendMessage(new ReagentGrinderWorkStartedMessage(isJuiceIntent));
                 _audioSystem.PlayFromEntity("/Audio/Machines/juicer.ogg", Owner, AudioParams.Default);
                 Owner.SpawnTimer(_workTime, (Action) (() =>
                 {
@@ -350,7 +353,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                             _chamber.ContainedEntities[i].Delete();
                         }
                     }
-
+                    UserInterface?.SendMessage(new ReagentGrinderWorkCompleteMessage());
                     _busy = false;
                     _dirty = true;
                 }));
