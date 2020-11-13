@@ -49,7 +49,6 @@ namespace Content.Shared.Physics
             Vector2 deltaV = (k1 + k2*2 + k3*2 + k4) / 6;
             a = deltaV / frameTime;
             netForce = a * mass;
-            Logger.Debug($"LV: {linearVelocity} resulting in net force of {netForce}");
             Force = netForce;
 
         }
@@ -78,17 +77,18 @@ namespace Content.Shared.Physics
             netForce += dragForce;
             netForce *= ControlledComponent.Mass;
 
-            //Overshoot check
-            Vector2 deltaV = netForce * ControlledComponent.InvMass * frameTime;
-            if (deltaV.LengthSquared > ControlledComponent.LinearVelocity.LengthSquared)
-            {
-                Logger.Debug("STOP: Clamping overshoot.");
-                Force = -(ControlledComponent.LinearVelocity * ControlledComponent.Mass) / frameTime;
-            }
-            else
-            {
-                Force = netForce;
-            }
+            // //Overshoot check
+            // Vector2 deltaV = netForce * ControlledComponent.InvMass * frameTime;
+            // if (deltaV.LengthSquared > ControlledComponent.LinearVelocity.LengthSquared)
+            // {
+            //     Logger.Debug("STOP: Clamping overshoot.");
+            //     Force = -(ControlledComponent.LinearVelocity * ControlledComponent.Mass) / frameTime;
+            // }
+            // else
+            // {
+            //     Force = netForce;
+            // }
+            Force = netForce;
         }
 
         public void StopMoving()
