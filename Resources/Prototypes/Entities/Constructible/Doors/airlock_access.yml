@@ -154,7 +154,7 @@
     access: [["Maintenance"]]
 
 - type: entity
-  parent: AirlockMaintCargo
+  parent: AirlockMaint
   id: AirlockMaintCargoLocked
   suffix: Cargo, Locked
   components:
@@ -162,7 +162,7 @@
     access: [["Cargo"]]
 
 - type: entity
-  parent: AirlockMaintCommand
+  parent: AirlockMaint
   id: AirlockMaintCommandLocked
   suffix: Command, Locked
   components:
@@ -170,7 +170,7 @@
     access: [["Command"]]
 
 - type: entity
-  parent: AirlockMaintCommon
+  parent: AirlockMaint
   id: AirlockMaintCommonLocked
   suffix: Common, Locked
   components:
@@ -178,7 +178,7 @@
     access: [["Maintenance"]]
 
 - type: entity
-  parent: AirlockMaintEngi
+  parent: AirlockMaint
   id: AirlockMaintEngiLocked
   suffix: Engineering, Locked
   components:
@@ -186,7 +186,7 @@
     access: [["Engineering"]]
 
 - type: entity
-  parent: AirlockMaintInt
+  parent: AirlockMaint
   id: AirlockMaintIntLocked
   suffix: Interior, Locked
   components:
@@ -194,7 +194,7 @@
     access: [["Maintenance"]]
 
 - type: entity
-  parent: AirlockMaintMed
+  parent: AirlockMaint
   id: AirlockMaintMedLocked
   suffix: Medical, Locked
   components:
@@ -202,7 +202,7 @@
     access: [["Medical"]]
 
 - type: entity
-  parent: AirlockMaintRnD
+  parent: AirlockMaint
   id: AirlockMaintRnDLocked
   suffix: RnD, Locked
   components:
@@ -210,7 +210,7 @@
     access: [["Research"]]
 
 - type: entity
-  parent: AirlockMaintSec
+  parent: AirlockMaint
   id: AirlockMaintSecLocked
   suffix: Security, Locked
   components:

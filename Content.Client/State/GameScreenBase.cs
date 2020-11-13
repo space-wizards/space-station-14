@@ -3,6 +3,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using Content.Client.GameObjects.Components;
 using Content.Client.Utility;
+using Content.Shared;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Interfaces.GameObjects;
 using Robust.Client.Interfaces.Graphics.ClientEye;
@@ -83,7 +84,7 @@ namespace Content.Client.State
             }
 
             InteractionOutlineComponent outline;
-            if(!_outlineEnabled || !ConfigurationManager.GetCVar<bool>("outline.enabled"))
+            if(!_outlineEnabled || !ConfigurationManager.GetCVar(CCVars.OutlineEnabled))
             {
                 if(entityToClick != null && entityToClick.TryGetComponent(out outline))
                 {

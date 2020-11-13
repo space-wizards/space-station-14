@@ -1,11 +1,14 @@
 ﻿#nullable enable
+using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Nutrition;
+using Content.Shared.Administration;
 using Content.Shared.GameObjects.Components.Nutrition;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 
 namespace Content.Server.Commands
 {
+    [AdminCommand(AdminFlags.Debug)]
     public class Hungry : IClientCommand
     {
         public string Command => "hungry";

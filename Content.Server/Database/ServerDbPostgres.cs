@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Data;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Network;
@@ -138,6 +140,45 @@ namespace Content.Server.Database
             await db.PgDbContext.SaveChangesAsync();
         }
 
+        public override async Task<PlayerRecord?> GetPlayerRecordByUserName(string userName, CancellationToken cancel)
+        {
+            await using var db = await GetDbImpl();
+
+            // Sort by descending last seen time.
+            // So if, due to account renames, we have two people with the same username in the DB,
+            // the most recent one is picked.
+            var record = await db.PgDbContext.Player
+                .OrderByDescending(p => p.LastSeenTime)
+                .FirstOrDefaultAsync(p => p.LastSeenUserName == userName, cancel);
+
+            return MakePlayerRecord(record);
+        }
+
+        public override async Task<PlayerRecord?> GetPlayerRecordByUserId(NetUserId userId, CancellationToken cancel)
+        {
+            await using var db = await GetDbImpl();
+
+            var record = await db.PgDbContext.Player
+                .SingleOrDefaultAsync(p => p.UserId == userId.UserId, cancel);
+
+            return MakePlayerRecord(record);
+        }
+
+        private static PlayerRecord? MakePlayerRecord(PostgresPlayer? record)
+        {
+            if (record == null)
+            {
+                return null;
+            }
+
+            return new PlayerRecord(
+                new NetUserId(record.UserId),
+                new DateTimeOffset(record.FirstSeenTime, TimeSpan.Zero),
+                record.LastSeenUserName,
+                new DateTimeOffset(record.LastSeenTime, TimeSpan.Zero),
+                record.LastSeenAddress);
+        }
+
         public override async Task AddConnectionLogAsync(NetUserId userId, string userName, IPAddress address)
         {
             await using var db = await GetDbImpl();
@@ -151,6 +192,27 @@ namespace Content.Server.Database
             });
 
             await db.PgDbContext.SaveChangesAsync();
+        }
+
+        public override async Task<((Admin, string? lastUserName)[] admins, AdminRank[])>
+            GetAllAdminAndRanksAsync(CancellationToken cancel)
+        {
+            await using var db = await GetDbImpl();
+
+            // Honestly this probably doesn't even matter but whatever.
+            await using var tx =
+                await db.DbContext.Database.BeginTransactionAsync(IsolationLevel.RepeatableRead, cancel);
+
+            // Join with the player table to find their last seen username, if they have one.
+            var admins = await db.PgDbContext.Admin
+                .Include(a => a.Flags)
+                .GroupJoin(db.PgDbContext.Player, a => a.UserId, p => p.UserId, (a, grouping) => new {a, grouping})
+                .SelectMany(t => t.grouping.DefaultIfEmpty(), (t, p) => new {t.a, p.LastSeenUserName})
+                .ToArrayAsync(cancel);
+
+            var adminRanks = await db.DbContext.AdminRank.Include(a => a.Flags).ToArrayAsync(cancel);
+
+            return (admins.Select(p => (p.a, p.LastSeenUserName)).ToArray(), adminRanks)!;
         }
 
         private async Task<DbGuardImpl> GetDbImpl()
