@@ -25,7 +25,7 @@ namespace Content.Server.AI.Operators.Inventory
 
         public override Outcome Execute(float frameTime)
         {
-            if (!ContainerHelpers.TryGetContainer(_target, out var container))
+            if (!_target.TryGetContainer(out var container))
             {
                 return Outcome.Success;
             }
