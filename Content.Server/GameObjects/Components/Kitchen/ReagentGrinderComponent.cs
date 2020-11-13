@@ -212,6 +212,8 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
+            if (!Powered)
+                return false;
 
             if (!eventArgs.User.TryGetComponent(out IHandsComponent? hands))
             {
@@ -269,17 +271,21 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 return;
             }
 
+
+
             var chamberContentsArray = _chamber.ContainedEntities.ToArray();
+            var chamberCount = chamberContentsArray.Length;
             //This block is for grinding behaviour only.
             if (!isJuiceIntent)
             {
                 //Get each item inside the chamber and get the reagents it contains. Transfer those reagents to the beaker, given we have one in.
                 
-                for (int i = 0; i < chamberContentsArray.Length; i++)
+                for (int i = chamberCount - 1; i >= 0; i--)
                 {
                     var item = chamberContentsArray[i];
                     if (item.TryGetComponent<SolutionContainerComponent>(out var solution))
                     {
+                        if (_heldBeaker!.CurrentVolume + solution.CurrentVolume > _heldBeaker!.MaxVolume) continue;
                         _heldBeaker!.TryAddSolution(solution.Solution);
                         solution!.RemoveAllSolution();
                         _chamber.ContainedEntities[i].Delete();
@@ -291,11 +297,19 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
 
             //K, so if we made it this far we want to juice instead.
-            if (chamberContentsArray.Length <= 0 && chamberContentsArray[0].TryGetComponent(out JuiceableComponent? juiceMe))
+            for (int i = chamberCount - 1; i >= 0; i--)
             {
-                juiceMe.re
+                var item = chamberContentsArray[i];
+                if (item.TryGetComponent<JuiceableComponent>(out var juiceMe))
+                {
+                    if (_heldBeaker!.CurrentVolume + juiceMe.JuiceResultSolution.TotalVolume > _heldBeaker!.MaxVolume) continue;
+                    _heldBeaker!.TryAddSolution(juiceMe.JuiceResultSolution);
+                    _chamber.ContainedEntities[i].Delete();
+                }
             }
-            
+
+            _dirty = true;
+
 
 
         }
