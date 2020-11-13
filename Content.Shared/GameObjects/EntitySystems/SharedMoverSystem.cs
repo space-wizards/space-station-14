@@ -65,7 +65,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
                 if (!touching)
                 {
-                    transform.LocalRotation = physics.TotalLinearVelocity.GetDir().ToAngle();
+                    transform.LocalRotation = physics.LinearVelocity.GetDir().ToAngle();
                     return;
                 }
             }
@@ -90,15 +90,24 @@ namespace Content.Shared.GameObjects.EntitySystems
                         //controller.Push(combined, mover.CurrentPushSpeed);
                     }
 
-                    transform.LocalRotation = physics.TotalLinearVelocity.GetDir().ToAngle();
+                    transform.LocalRotation = physics.LinearVelocity.GetDir().ToAngle();
                     return;
                 }
 
                 var total = walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed;
+                // var drag_coeff = 25f;
+                // var thrust = (mover.CurrentWalkSpeed + mover.CurrentSprintSpeed) * drag_coeff;
+                // var force = (walkDir + sprintDir) * thrust;
+                // var drag = -physics.LinearVelocity * drag_coeff;
+                // force += drag;
+                // var acceleration = thrust / physics.Mass;
+                // physics.LinearVelocity += acceleration;
+
 
                 {
                     if (physics.TryGetController(out MoverController controller))
                     {
+                        //controller.Move(total, 1);
                         controller.Move(total, frameTime);
                     }
                 }

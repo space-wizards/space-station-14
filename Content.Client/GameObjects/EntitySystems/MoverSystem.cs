@@ -37,15 +37,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         public override void Update(float frameTime)
         {
-            var playerEnt = _playerManager.LocalPlayer?.ControlledEntity;
-
-            if (playerEnt == null || !playerEnt.TryGetComponent(out IMoverComponent? mover) || !playerEnt.TryGetComponent(out IPhysicsComponent? physics))
-            {
-                return;
-            }
-
-
-            UpdateKinematics(playerEnt.Transform, mover, physics, frameTime);
+            FrameUpdate(frameTime);
         }
     }
 }

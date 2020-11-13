@@ -68,7 +68,7 @@ namespace Content.Shared.GameObjects.Components.Movement
                 return false;
             }
 
-            if (otherBody.TotalLinearVelocity.Length < RequiredSlipSpeed || stun.KnockedDown)
+            if (otherBody.LinearVelocity.Length < RequiredSlipSpeed || stun.KnockedDown)
             {
                 return false;
             }
@@ -88,7 +88,7 @@ namespace Content.Shared.GameObjects.Components.Movement
             if (entity.TryGetComponent(out IPhysicsComponent physics))
             {
                 var controller = physics.EnsureController<SlipController>();
-                controller.LinearVelocity = physics.TotalLinearVelocity * LaunchForwardsMultiplier;
+                controller.LinearVelocity = physics.LinearVelocity * LaunchForwardsMultiplier;
             }
 
             stun.Paralyze(5);
