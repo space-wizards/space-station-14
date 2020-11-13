@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Content.Shared.Alert;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Mobs
@@ -18,7 +15,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
     /// </summary>
     public abstract class SharedAlertsComponent : Component
     {
-        private static readonly AlertState[] NO_ALERTS = new AlertState[0];
+        private static readonly AlertState[] NoAlerts = new AlertState[0];
 
         [Dependency]
         protected readonly AlertManager AlertManager = default!;
@@ -28,6 +25,29 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
         [ViewVariables]
         private Dictionary<AlertKey, AlertState> _alerts = new Dictionary<AlertKey, AlertState>();
+
+        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        {
+            base.HandleComponentState(curState, nextState);
+
+            if (!(curState is AlertsComponentState state))
+            {
+                return;
+            }
+
+            _alerts.Clear();
+            foreach (var alertState in state.Alerts)
+            {
+                if (AlertManager.TryGet(alertState.AlertType, out var alert))
+                {
+                    _alerts[alert.AlertKey] = alertState;
+                }
+                else
+                {
+                    Logger.ErrorS("alert", "unrecognized alertType {0}", alertState.AlertType);
+                }
+            }
+        }
 
         /// <returns>true iff an alert of the indicated alert category is currently showing</returns>
         public bool IsShowingAlertCategory(AlertCategory alertCategory)
@@ -65,7 +85,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// <returns></returns>
         protected AlertState[] CreateAlertStatesArray()
         {
-            if (_alerts.Count == 0) return NO_ALERTS;
+            if (_alerts.Count == 0) return NoAlerts;
             var states = new AlertState[_alerts.Count];
             // because I don't trust LINQ
             var idx = 0;
@@ -80,28 +100,6 @@ namespace Content.Shared.GameObjects.Components.Mobs
         protected bool TryGetAlertState(AlertKey key, out AlertState alertState)
         {
             return _alerts.TryGetValue(key, out alertState);
-        }
-
-        /// <summary>
-        /// Replace the current active alerts with the specified alerts. Any
-        /// OnClickAlert callbacks on the active alerts will be erased.
-        /// </summary>
-        protected void SetAlerts(AlertState[] alerts)
-        {
-            var newAlerts = new Dictionary<AlertKey, AlertState>();
-            foreach (var alertState in alerts)
-            {
-                if (AlertManager.TryGet(alertState.AlertType, out var alert))
-                {
-                    newAlerts[alert.AlertKey] = alertState;
-                }
-                else
-                {
-                    Logger.ErrorS("alert", "unrecognized alertType {0}", alertState.AlertType);
-                }
-            }
-
-            _alerts = newAlerts;
         }
 
         /// <summary>
@@ -125,6 +123,8 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
                 _alerts[alert.AlertKey] = new AlertState
                     {Cooldown = cooldown, AlertType = alertType, Severity = severity};
+
+                AfterShowAlert();
 
                 Dirty();
 
@@ -177,7 +177,12 @@ namespace Content.Shared.GameObjects.Components.Mobs
         }
 
         /// <summary>
-        /// Invoked after clearing an alert prior to dirtying the control
+        /// Invoked after showing an alert prior to dirtying the component
+        /// </summary>
+        protected virtual void AfterShowAlert() { }
+
+        /// <summary>
+        /// Invoked after clearing an alert prior to dirtying the component
         /// </summary>
         protected virtual void AfterClearAlert() { }
     }

@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Stylesheets;
+using Content.Shared.Actions;
 using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Client.GameObjects;
@@ -27,8 +28,8 @@ namespace Content.Client.GameObjects.Components.Mobs
 {
     /// <inheritdoc/>
     [RegisterComponent]
-    [ComponentReference(typeof(SharedAlertsComponent))]
-    public sealed class ClientAlertsComponent : SharedAlertsComponent
+    [ComponentReference(typeof(SharedActionsComponent))]
+    public sealed class ClientActionsComponent : SharedAlertsComponent
     {
         private static readonly float TooltipTextMaxWidth = 265;
 
@@ -36,12 +37,12 @@ namespace Content.Client.GameObjects.Components.Mobs
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        private AlertsUI _ui;
+        private ActionsUI _ui;
         private PanelContainer _tooltip;
-        private RichTextLabel _alertName;
-        private RichTextLabel _alertDescription;
-        private RichTextLabel _alertCooldown;
-        private AlertOrderPrototype _alertOrder;
+        private RichTextLabel _actionName;
+        private RichTextLabel _actionDescription;
+        private RichTextLabel _actionCooldown;
+        private RichTextLabel _actionRequirements;
         private bool _tooltipReady;
 
         [ViewVariables]
@@ -54,6 +55,21 @@ namespace Content.Client.GameObjects.Components.Mobs
         /// </summary>
         [ViewVariables]
         private bool CurrentlyControlled => _playerManager.LocalPlayer != null && _playerManager.LocalPlayer.ControlledEntity == Owner;
+
+
+        /// <summary>
+        /// x = hotbar number, y = slot of that hotbar (index 0 corresponds to the one labeled "1",
+        /// index 9 corresponds to the one labeled "0"). Essentially the inverse of _assignments.
+        /// </summary>
+        private ActionSlot[,] _slots = new ActionSlot[10, 10];
+
+        /// <summary>
+        /// Hotbar and slot assignment for each action type (slot index 0 corresponds to the one labeled "1",
+        /// slot index 9 corresponds to the one labeled "0"). The key corresponds to an index in the _slots array.
+        /// The value is a list because actions can be assigned to multiple slots. Even if an action type has not been granted,
+        /// it can still be assigned to a slot. Essentially the inverse of _slots.
+        /// </summary>
+        private Dictionary<ActionType, List<(byte Hotbar, byte Slot)>> _assignments = new Dictionary<ActionType, List<(byte Hotbar, byte Slot)>>();
 
         protected override void Shutdown()
         {
@@ -109,24 +125,24 @@ namespace Content.Client.GameObjects.Components.Mobs
                 RectClipContent = true
             };
             _tooltip.AddChild(tooltipVBox);
-            _alertName = new RichTextLabel
+            _actionName = new RichTextLabel
             {
                 MaxWidth = TooltipTextMaxWidth,
                 StyleClasses = { StyleNano.StyleClassTooltipAlertTitle }
             };
-            tooltipVBox.AddChild(_alertName);
-            _alertDescription = new RichTextLabel
+            tooltipVBox.AddChild(_actionName);
+            _actionDescription = new RichTextLabel
             {
                 MaxWidth = TooltipTextMaxWidth,
                 StyleClasses = { StyleNano.StyleClassTooltipAlertDescription }
             };
-            tooltipVBox.AddChild(_alertDescription);
-            _alertCooldown = new RichTextLabel
+            tooltipVBox.AddChild(_actionDescription);
+            _actionCooldown = new RichTextLabel
             {
                 MaxWidth = TooltipTextMaxWidth,
                 StyleClasses = { StyleNano.StyleClassTooltipAlertCooldown }
             };
-            tooltipVBox.AddChild(_alertCooldown);
+            tooltipVBox.AddChild(_actionCooldown);
 
             uiManager.PopupRoot.AddChild(_tooltip);
 
@@ -251,19 +267,19 @@ namespace Content.Client.GameObjects.Components.Mobs
         private void AlertOnOnShowTooltip(object sender, EventArgs e)
         {
             var alertControl = (AlertControl) sender;
-            _alertName.SetMessage(alertControl.Alert.Name);
-            _alertDescription.SetMessage(alertControl.Alert.Description);
+            _actionName.SetMessage(alertControl.Alert.Name);
+            _actionDescription.SetMessage(alertControl.Alert.Description);
             // check for a cooldown
             if (alertControl.TotalDuration != null && alertControl.TotalDuration > 0)
             {
-                _alertCooldown.SetMessage(FormattedMessage.FromMarkup("[color=#776a6a]" +
+                _actionCooldown.SetMessage(FormattedMessage.FromMarkup("[color=#776a6a]" +
                                                                       alertControl.TotalDuration +
                                                                       " sec cooldown[/color]"));
-                _alertCooldown.Visible = true;
+                _actionCooldown.Visible = true;
             }
             else
             {
-                _alertCooldown.Visible = false;
+                _actionCooldown.Visible = false;
             }
             // TODO: Text display of cooldown
             Tooltips.PositionTooltip(_tooltip);

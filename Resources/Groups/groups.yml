@@ -235,6 +235,8 @@
   - showalert
   - clearalert
   - hungry
+  - grantaction
+  - revokeaction
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true

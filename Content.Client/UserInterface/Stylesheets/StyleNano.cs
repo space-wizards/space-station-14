@@ -15,6 +15,7 @@ namespace Content.Client.UserInterface.Stylesheets
     {
         public const string StyleClassBorderedWindowPanel = "BorderedWindowPanel";
         public const string StyleClassTransparentBorderedWindowPanel = "TransparentBorderedWindowPanel";
+        public const string StyleClassLightBorderedPanel = "LightBorderedPanel";
         public const string StyleClassTooltipPanel = "tooltipBox";
         public const string StyleClassTooltipAlertTitle = "tooltipAlertTitle";
         public const string StyleClassTooltipAlertDescription = "tooltipAlertDesc";
@@ -94,6 +95,13 @@ namespace Content.Client.UserInterface.Stylesheets
                 Texture = borderedTransparentWindowBackgroundTex,
             };
             borderedTransparentWindowBackground.SetPatchMargin(StyleBox.Margin.All, 2);
+
+            var lightBorderedPanelTex = resCache.GetTexture("/Textures/Interface/Nano/light_panel_background_bordered.png");
+            var lightBorderedPanelBackground = new StyleBoxTexture
+            {
+                Texture = lightBorderedPanelTex,
+            };
+            lightBorderedPanelBackground.SetPatchMargin(StyleBox.Margin.All, 2);
 
             var textureInvertedTriangle = resCache.GetTexture("/Textures/Interface/Nano/inverted_triangle.svg.png");
 
@@ -279,6 +287,13 @@ namespace Content.Client.UserInterface.Stylesheets
                     new[]
                     {
                         new StyleProperty(PanelContainer.StylePropertyPanel, borderedTransparentWindowBackground),
+                    }),
+                // light panel background
+                new StyleRule(
+                    new SelectorElement(null, new[] {StyleClassLightBorderedPanel}, null, null),
+                    new[]
+                    {
+                        new StyleProperty(PanelContainer.StylePropertyPanel, lightBorderedPanelBackground),
                     }),
                 // Window header.
                 new StyleRule(
