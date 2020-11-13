@@ -1,6 +1,6 @@
 - type: entity
   parent: HelmetHardsuitBase
-  id: HelmetHardsuitAtmos
+  id: ClothingHeadHardsuitAtmos
   name: atmos hardsuit helmet
   description: A special hardsuit helmet designed for working in low-pressure, high thermal environments.
   components:
@@ -28,7 +28,7 @@
 
 - type: entity
   parent: HelmetHardsuitBase
-  id: HelmetHardsuitEngineering
+  id: ClothingHeadHardsuitEngineering
   name: engineering hardsuit helmet
   description: An engineering hardsuit helmet designed for working in low-pressure, high radioactive environments.
   components:
@@ -42,7 +42,7 @@
 
 - type: entity
   parent: HelmetHardsuitBase
-  id: HelmetHardsuitCE
+  id: ClothingHeadHardsuitEngineeringWhite
   name: CE hardsuit helmet
   description: Special hardsuit helmet, made for the chief engineer of the station.
   components:

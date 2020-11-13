@@ -1,76 +1,76 @@
 - type: entity
-  parent: OuterclothingBase
+  parent: ClothingOuterBase
   id: OuterclothingBio
   name: bio suit
   description: A suit that protects against biological contamination.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/generic.rsi
+    sprite: Clothing/OuterClothing/Bio/generic.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/generic.rsi
+    sprite: Clothing/OuterClothing/Bio/generic.rsi
 
 - type: entity
-  parent: OuterclothingBase
+  parent: ClothingOuterBase
   id: OuterclothingBiocmo
   name: bio suit (CMO)
   description: An advanced suit that protects against biological contamination, in CMO colors.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/cmo.rsi
+    sprite: Clothing/OuterClothing/Bio/cmo.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/cmo.rsi
+    sprite: Clothing/OuterClothing/Bio/cmo.rsi
 
 - type: entity
-  parent: OuterclothingBase
+  parent: ClothingOuterBase
   id: OuterclothingBiogeneral
   name: bio suit
   description: A suit that protects against biological contamination.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/general.rsi
+    sprite: Clothing/OuterClothing/Bio/general.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/general.rsi
+    sprite: Clothing/OuterClothing/Bio/general.rsi
 
 - type: entity
-  parent: OuterclothingBase
+  parent: ClothingOuterBase
   id: OuterclothingBiojanitor
   name: bio suit (janitor)
   description: A suit that protects against biological contamination, in Janitor colors.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/janitor.rsi
+    sprite: Clothing/OuterClothing/Bio/janitor.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/janitor.rsi
+    sprite: Clothing/OuterClothing/Bio/janitor.rsi
 
 - type: entity
-  parent: OuterclothingBase
+  parent: ClothingOuterBase
   id: OuterclothingBioscientist
   name: bio suit (scientist)
   description: A suit that protects against biological contamination, in Scientist colors.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/scientist.rsi
+    sprite: Clothing/OuterClothing/Bio/scientist.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/scientist.rsi
+    sprite: Clothing/OuterClothing/Bio/scientist.rsi
 
 - type: entity
-  parent: OuterclothingBase
+  parent: ClothingOuterBase
   id: OuterclothingBiosecurity
   name: bio suit (security)
   description: A suit that protects against biological contamination, in Security colors.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/security.rsi
+    sprite: Clothing/OuterClothing/Bio/security.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/security.rsi
+    sprite: Clothing/OuterClothing/Bio/security.rsi
 
 - type: entity
-  parent: OuterclothingBase
+  parent: ClothingOuterBase
   id: OuterclothingBiovirology
   name: bio suit (virology)
   description: A suit that protects against biological contamination, in Virology colors.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/virology.rsi
+    sprite: Clothing/OuterClothing/Bio/virology.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/virology.rsi
+    sprite: Clothing/OuterClothing/Bio/virology.rsi

@@ -1,5 +1,5 @@
 - type: entity
-  parent: OuterclothingBase
+  parent: ClothingOuterBase
   id: OuterclothingBomber
   name: bomber
   description: A thick, well-worn WW2 leather bomber jacket.
@@ -10,7 +10,7 @@
     sprite: Clothing/OuterClothing/Coats/bomber.rsi
 
 - type: entity
-  parent: OuterclothingBase
+  parent: ClothingOuterBase
   id: OuterclothingDetective
   name: detective
   description: A rugged canvas trenchcoat, designed and created by TX Fabrication Corp. The coat is externally impact resistant - perfect for your next act of autodefenestration!
@@ -21,7 +21,7 @@
     sprite: Clothing/OuterClothing/Coats/detective.rsi
 
 - type: entity
-  parent: OuterclothingBase
+  parent: ClothingOuterBase
   id: OuterclothingGentlecoat
   name: gentle coat
   description: A gentle coat for a gentle man, or woman.
@@ -32,7 +32,7 @@
     sprite: Clothing/OuterClothing/Coats/gentlecoat.rsi
 
 - type: entity
-  parent: OuterclothingBase
+  parent: ClothingOuterBase
   id: OuterclothingHoSTrenchcoat
   name: head of security trenchcoat
   description: This trenchcoat was specifically designed for asserting superior authority.
@@ -43,7 +43,7 @@
     sprite: Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
 
 - type: entity
-  parent: OuterclothingBase
+  parent: ClothingOuterBase
   id: OuterclothingInspcoat
   name: inspector coat
   description: A strict inspector coat for being intimidating during inspections.
@@ -54,7 +54,7 @@
     sprite: Clothing/OuterClothing/Coats/insp_coat.rsi
 
 - type: entity
-  parent: OuterclothingBase
+  parent: ClothingOuterBase
   id: OuterclothingJensencoat
   name: jensen coat
   description: A jensen coat.
@@ -65,7 +65,7 @@
     sprite: Clothing/OuterClothing/Coats/jensencoat.rsi
 
 - type: entity
-  parent: OuterclothingBase
+  parent: ClothingOuterBase
   id: OuterclothingLabcoat
   name: lab coat
   description: A suit that protects against minor chemical spills.
@@ -76,7 +76,7 @@
     sprite: Clothing/OuterClothing/Coats/labcoat.rsi
 
 - type: entity
-  parent: OuterclothingBase
+  parent: ClothingOuterBase
   id: OuterclothingLabcoatchem
   name: lab coat (chem)
   description: A suit that protects against minor chemical spills. Has an orange stripe on the shoulder.
@@ -87,7 +87,7 @@
     sprite: Clothing/OuterClothing/Coats/labcoat_chem.rsi
 
 - type: entity
-  parent: OuterclothingBase
+  parent: ClothingOuterBase
   id: OuterclothingLabcoatcmo
   name: lab coat (CMO)
   description: Bluer than the standard model.
@@ -98,7 +98,7 @@
     sprite: Clothing/OuterClothing/Coats/labcoat_cmo.rsi
 
 - type: entity
-  parent: OuterclothingBase
+  parent: ClothingOuterBase
   id: OuterclothingPirate
   name: pirate
   description: Yarr.

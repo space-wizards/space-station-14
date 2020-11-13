@@ -79,8 +79,8 @@
   components:
   - type: StorageFill
     contents:
-      - name: HelmetHardsuitCE
-      - name: HardsuitCE
+      - name: ClothingHeadHardsuitEngineeringWhite
+      - name: ClothingOuterHardsuitEngineeringWhite
       - name: ClothingMaskBreath
       - name: OxygenTankFilled
 
@@ -101,8 +101,8 @@
   components:
   - type: StorageFill
     contents:
-      - name: HelmetHardsuitAtmos
-      - name: HardsuitAtmos
+      - name: ClothingHeadHardsuitAtmos
+      - name: ClothingOuterHardsuitAtmos
       - name: ClothingMaskBreath
       - name: OxygenTankFilled
 
@@ -113,8 +113,8 @@
   components:
   - type: StorageFill
     contents:
-      - name: HelmetHardsuitEngineering
-      - name: HardsuitEngineering
+      - name: ClothingHeadHardsuitEngineering
+      - name: ClothingOuterHardsuitEngineering
       - name: ClothingMaskBreath
       - name: OxygenTankFilled
 

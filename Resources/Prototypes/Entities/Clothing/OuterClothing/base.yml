@@ -10,8 +10,8 @@
     state: icon
 
 - type: entity
-  parent: OuterclothingBase
-  id: HardsuitBase
+  parent: ClothingOuterBase
+  id: ClothingOuterHardsuitBase
   name: base hardsuit
   abstract: true
   components:
