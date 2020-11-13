@@ -1,4 +1,4 @@
-﻿#nullable enable
+﻿#nullable disable
 using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;

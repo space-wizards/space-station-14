@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable disable
+using System;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Atmos.Piping;
 using Content.Server.Interfaces;
