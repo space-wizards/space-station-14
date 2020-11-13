@@ -393,7 +393,7 @@ namespace Content.Client.Chat
             _maxMessageLength = msg.MaxMessageLength;
         }
 
-        private void RequestMaxLength(object sender, NetChannelArgs args)
+        private void RequestMaxLength(object? sender, NetChannelArgs args)
         {
             ChatMaxMsgLengthMessage msg = _netManager.CreateNetMessage<ChatMaxMsgLengthMessage>();
             _netManager.ClientSendMessage(msg);
