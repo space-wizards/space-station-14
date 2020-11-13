@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using System.Threading.Tasks;
 using Content.Client;
 using Content.Client.Interfaces.Parallax;
@@ -13,7 +12,6 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 using Robust.UnitTesting;
 using EntryPoint = Content.Client.EntryPoint;
 

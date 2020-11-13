@@ -1,4 +1,6 @@
 ﻿using System;
+using Content.Client.Administration;
+using Content.Client.Eui;
 using Content.Client.GameObjects.Components.Actor;
 using Content.Client.Input;
 using Content.Client.Interfaces;
@@ -88,6 +90,7 @@ namespace Content.Client
 
             IoCManager.BuildGraph();
 
+            IoCManager.Resolve<IClientAdminManager>().Initialize();
             IoCManager.Resolve<IParallaxManager>().LoadParallax();
             IoCManager.Resolve<IBaseClient>().PlayerJoinedServer += SubscribePlayerAttachmentEvents;
             IoCManager.Resolve<IStylesheetManager>().Initialize();
@@ -150,6 +153,7 @@ namespace Content.Client
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();
             IoCManager.Resolve<IStationEventManager>().Initialize();
             IoCManager.Resolve<IAdminMenuManager>().Initialize();
+            IoCManager.Resolve<EuiManager>().Initialize();
             IoCManager.Resolve<AlertManager>().Initialize();
 
             _baseClient.RunLevelChanged += (sender, args) =>
