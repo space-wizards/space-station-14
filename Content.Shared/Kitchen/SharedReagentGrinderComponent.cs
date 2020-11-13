@@ -66,6 +66,14 @@ namespace Content.Shared.Kitchen
                 ReagentQuantity = reagentQuantity;
             }
         }
+
+        [Serializable, NetSerializable]
+        public enum ReagentGrinderVisualState
+        {
+            NoBeaker,
+            BeakerAttached
+        }
+
         [NetSerializable, Serializable]
         public enum ReagentGrinderUiKey
         {
@@ -76,13 +84,16 @@ namespace Content.Shared.Kitchen
     [NetSerializable, Serializable]
     public sealed class ReagentGrinderInterfaceState : BoundUserInterfaceState
     {
+        public bool IsBusy;
         public bool HasBeakerIn;
         public EntityUid[] ChamberContents;
         public Solution.ReagentQuantity[] ReagentQuantities;
+        
 
 
-        public ReagentGrinderInterfaceState(bool hasBeaker, EntityUid[] chamberContents, Solution.ReagentQuantity[] heldBeakerContents)
+        public ReagentGrinderInterfaceState(bool isBusy, bool hasBeaker, EntityUid[] chamberContents, Solution.ReagentQuantity[] heldBeakerContents)
         {
+            IsBusy = IsBusy;
             HasBeakerIn = hasBeaker;
             ChamberContents = chamberContents;
             ReagentQuantities = heldBeakerContents;

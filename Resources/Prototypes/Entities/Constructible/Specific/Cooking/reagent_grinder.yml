@@ -12,6 +12,9 @@
     interfaces:
     - key: enum.ReagentGrinderUiKey.Key
       type: ReagentGrinderBoundUserInterface
+  - type: Appearance
+    visuals:
+    - type: ReagentGrinderVisualizer
   - type: Clickable
   - type: InteractionOutline
   - type: PowerReceiver
