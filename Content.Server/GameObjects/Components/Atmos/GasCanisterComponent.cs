@@ -1,4 +1,4 @@
-﻿#nullable disable
+﻿#nullable enable annotations
 using System;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Atmos.Piping;
@@ -44,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// What <see cref="GasMixture"/> the canister contains.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public GasMixture Air { get; set; }
+        public GasMixture? Air { get; set; }
 
         [ViewVariables]
         public bool Anchored => !Owner.TryGetComponent<IPhysicsComponent>(out var physics) || physics.Anchored;
@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// The floor connector port that the canister is attached to.
         /// </summary>
         [ViewVariables]
-        public GasCanisterPortComponent ConnectedPort { get; private set; }
+        public GasCanisterPortComponent? ConnectedPort { get; private set; }
 
         [ViewVariables]
         public bool ConnectedToPort => ConnectedPort != null;
@@ -72,7 +72,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// </summary>
         private GasCanisterBoundUserInterfaceState? _lastUiState;
 
-        private IGridAtmosphereComponent _gridAtmosphere;
+        private IGridAtmosphereComponent? _gridAtmosphere;
 
         private AppearanceComponent? _appearance;
 
