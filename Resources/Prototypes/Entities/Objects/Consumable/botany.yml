@@ -80,6 +80,11 @@
       sprite: Objects/Specific/Hydroponics/banana.rsi
     - type: Produce
       seed: banana
+    - type: Juiceable
+      result:
+        reagents:
+          - ReagentId: chem.BananaJuice
+            Quantity: 10
 
 - type: entity
   name: carrot
@@ -97,6 +102,11 @@
       sprite: Objects/Specific/Hydroponics/carrot.rsi
     - type: Produce
       seed: carrots
+    - type: Juiceable
+      result:
+        reagents:
+          - ReagentId: chem.CarrotJuice
+            Quantity: 10
 
 - type: entity
   name: lemon
@@ -114,6 +124,11 @@
       sprite: Objects/Specific/Hydroponics/lemon.rsi
     - type: Produce
       seed: lemon
+    - type: Juiceable
+      result:
+        reagents:
+          - ReagentId: chem.LimeJuice
+            Quantity: 10
 
 - type: entity
   name: potato
@@ -131,6 +146,11 @@
       sprite: Objects/Specific/Hydroponics/potato.rsi
     - type: Produce
       seed: potato
+    - type: Juiceable
+      result:
+        reagents:
+          - ReagentId: chem.PotatoJuice
+            Quantity: 10
 
 - type: entity
   name: tomato
@@ -148,6 +168,11 @@
       sprite: Objects/Specific/Hydroponics/tomato.rsi
     - type: Produce
       seed: tomato
+    - type: Juiceable
+      result:
+        reagents:
+          - ReagentId: chem.TomatoJuice
+            Quantity: 10
 
 - type: entity
   name: eggplant
@@ -182,6 +207,11 @@
       sprite: Objects/Specific/Hydroponics/apple.rsi
     - type: Produce
       seed: apple
+    - type: Juiceable
+      result:
+        reagents:
+          - ReagentId: chem.AppleJuice
+            Quantity: 10
 
 - type: entity
   name: ear of corn
