@@ -223,7 +223,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             if (_chamberContainer.ContainedEntity == null && manual)
             {
                 BoltOpen = true;
-                if (ContainerHelpers.TryGetContainer(Owner, out var container))
+                if (Owner.TryGetContainer(out var container))
                 {
                     Owner.PopupMessage(container.Owner, Loc.GetString("Bolt opened"));
                 }

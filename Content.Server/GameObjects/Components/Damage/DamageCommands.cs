@@ -1,7 +1,9 @@
 ﻿#nullable enable
 using System;
 using System.Diagnostics.CodeAnalysis;
+using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Atmos;
+using Content.Shared.Administration;
 using Content.Shared.GameObjects.Components.Damage;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
@@ -115,6 +117,7 @@ namespace Content.Server.GameObjects.Components.Damage
         }
     }
 
+    [AdminCommand(AdminFlags.Fun)]
     public class AddDamageFlagCommand : DamageFlagCommand
     {
         public override string Command => "adddamageflag";
@@ -133,6 +136,7 @@ namespace Content.Server.GameObjects.Components.Damage
         }
     }
 
+    [AdminCommand(AdminFlags.Fun)]
     public class RemoveDamageFlagCommand : DamageFlagCommand
     {
         public override string Command => "removedamageflag";
@@ -151,6 +155,7 @@ namespace Content.Server.GameObjects.Components.Damage
         }
     }
 
+    [AdminCommand(AdminFlags.Admin)]
     public class GodModeCommand : IClientCommand
     {
         public string Command => "godmode";

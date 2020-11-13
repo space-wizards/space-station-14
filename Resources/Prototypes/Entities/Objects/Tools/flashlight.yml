@@ -5,6 +5,7 @@
   description: They light the way to freedom.
   components:
     - type: HandheldLight
+    - type: PowerCellSlot
     - type: Sprite
       sprite: Objects/Tools/flashlight.rsi
       layers:

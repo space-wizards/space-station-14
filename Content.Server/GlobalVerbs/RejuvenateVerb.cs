@@ -15,7 +15,7 @@ namespace Content.Server.GlobalVerbs
     ///     Completely removes all damage from the DamageableComponent (heals the mob).
     /// </summary>
     [GlobalVerb]
-    class RejuvenateVerb : GlobalVerb
+    public class RejuvenateVerb : GlobalVerb
     {
         public override bool RequireInteractionRange => false;
         public override bool BlockedByContainers => false;
