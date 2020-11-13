@@ -10,6 +10,7 @@ using Content.Client.UserInterface;
 using Content.Client.UserInterface.AdminMenu;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
+using Content.Shared.Actions;
 using Content.Shared.Interfaces;
 using Content.Shared.Alert;
 using Robust.Shared.IoC;
@@ -37,6 +38,7 @@ namespace Content.Client
             IoCManager.Register<IStationEventManager, StationEventManager>();
             IoCManager.Register<IAdminMenuManager, AdminMenuManager>();
             IoCManager.Register<AlertManager, AlertManager>();
+            IoCManager.Register<ActionManager, ActionManager>();
         }
     }
 }

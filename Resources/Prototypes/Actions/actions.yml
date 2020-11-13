@@ -1,0 +1,8 @@
+﻿- type: action
+  actionType: DebugInstant
+  icon: /Textures/Interface/Alerts/Pressure/lowpressure.png
+  name: "[color=red]Debug Instant[/color]"
+  description: "This is a [color=red]debug message[/color]."
+  behavior: !type:DebugInstant
+    message: Instant action was used!
+
