@@ -18,6 +18,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels.Visualize
 
         public override void OnChangeData(AppearanceComponent component)
         {
+            base.OnChangeData(component);
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
 
             if (!component.TryGetData(BarrelBoltVisuals.BoltOpen, out bool boltOpen))
