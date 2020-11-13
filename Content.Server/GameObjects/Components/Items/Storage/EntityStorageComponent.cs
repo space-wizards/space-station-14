@@ -47,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         [ViewVariables]
         private bool _isCollidableWhenOpen;
         [ViewVariables]
-        private IEntityQuery? _entityQuery;
+        protected IEntityQuery? EntityQuery;
         private bool _showContents;
         private bool _occludesLight;
         private bool _open;
@@ -113,8 +113,11 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             get => _canWeldShut;
             set
             {
+                if (_canWeldShut == value)
+                    return;
+
                 _canWeldShut = value;
-                if (Owner.TryGetComponent(out AppearanceComponent appearance))
+                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
                 {
                     appearance.SetData(StorageVisuals.CanWeld, value);
                 }
@@ -188,8 +191,8 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         protected virtual void CloseStorage()
         {
             Open = false;
-            _entityQuery ??= new IntersectingEntityQuery(Owner);
-            var entities = Owner.EntityManager.GetEntities(_entityQuery);
+            EntityQuery ??= new IntersectingEntityQuery(Owner);
+            var entities = Owner.EntityManager.GetEntities(EntityQuery);
             var count = 0;
             foreach (var entity in entities)
             {
@@ -369,6 +372,9 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
+            if (_beingWelded)
+                return false;
+
             if (Open)
             {
                 _beingWelded = false;
