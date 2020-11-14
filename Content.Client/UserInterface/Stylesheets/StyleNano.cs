@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Client.GameObjects.EntitySystems;
+using Content.Client.UserInterface.Controls;
 using Content.Client.Utility;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.ResourceManagement;
@@ -15,7 +16,6 @@ namespace Content.Client.UserInterface.Stylesheets
     {
         public const string StyleClassBorderedWindowPanel = "BorderedWindowPanel";
         public const string StyleClassTransparentBorderedWindowPanel = "TransparentBorderedWindowPanel";
-        public const string StyleClassLightBorderedPanel = "LightBorderedPanel";
         public const string StyleClassTooltipPanel = "tooltipBox";
         public const string StyleClassTooltipAlertTitle = "tooltipAlertTitle";
         public const string StyleClassTooltipAlertDescription = "tooltipAlertDesc";
@@ -104,12 +104,37 @@ namespace Content.Client.UserInterface.Stylesheets
             };
             borderedTransparentWindowBackground.SetPatchMargin(StyleBox.Margin.All, 2);
 
-            var lightBorderedPanelTex = resCache.GetTexture("/Textures/Interface/Nano/light_panel_background_bordered.png");
-            var lightBorderedPanelBackground = new StyleBoxTexture
+            var hotbarBackground = new StyleBoxTexture
             {
-                Texture = lightBorderedPanelTex,
+                Texture = borderedWindowBackgroundTex,
             };
-            lightBorderedPanelBackground.SetPatchMargin(StyleBox.Margin.All, 2);
+            hotbarBackground.SetPatchMargin(StyleBox.Margin.All, 2);
+            hotbarBackground.SetExpandMargin(StyleBox.Margin.All, 4);
+
+            var buttonRectTex = resCache.GetTexture("/Textures/Interface/Nano/light_panel_background_bordered.png");
+            var buttonRect = new StyleBoxTexture(BaseButton)
+            {
+                Texture = buttonRectTex
+            };
+            buttonRect.SetPatchMargin(StyleBox.Margin.All, 2);
+            buttonRect.SetPadding(StyleBox.Margin.All, 2);
+            buttonRect.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
+            buttonRect.SetContentMarginOverride(StyleBox.Margin.Horizontal, 2);
+
+            var buttonRectHover = new StyleBoxTexture(buttonRect)
+            {
+                Modulate = ButtonColorHovered
+            };
+
+            var buttonRectPressed = new StyleBoxTexture(buttonRect)
+            {
+                Modulate = ButtonColorPressed
+            };
+
+            var buttonRectDisabled = new StyleBoxTexture(buttonRect)
+            {
+                Modulate = ButtonColorDisabled
+            };
 
             var textureInvertedTriangle = resCache.GetTexture("/Textures/Interface/Nano/inverted_triangle.svg.png");
 
@@ -296,12 +321,11 @@ namespace Content.Client.UserInterface.Stylesheets
                     {
                         new StyleProperty(PanelContainer.StylePropertyPanel, borderedTransparentWindowBackground),
                     }),
-                // light panel background
-                new StyleRule(
-                    new SelectorElement(null, new[] {StyleClassLightBorderedPanel}, null, null),
+                // Hotbar background
+                new StyleRule(new SelectorElement(typeof(ActionsUI), null, null, null),
                     new[]
                     {
-                        new StyleProperty(PanelContainer.StylePropertyPanel, lightBorderedPanelBackground),
+                        new StyleProperty(PanelContainer.StylePropertyPanel, hotbarBackground),
                     }),
                 // Window header.
                 new StyleRule(
@@ -398,6 +422,24 @@ namespace Content.Client.UserInterface.Stylesheets
                     {
                         new StyleProperty("font-color", Color.FromHex("#E5E5E581")),
                     }),
+
+                // action slot hotbar buttons
+                new StyleRule(new SelectorElement(typeof(ActionSlot), null, null, new[] {ContainerButton.StylePseudoClassNormal}), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonRect),
+                }),
+                new StyleRule(new SelectorElement(typeof(ActionSlot), null, null, new[] {ContainerButton.StylePseudoClassHover}), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonRectHover),
+                }),
+                new StyleRule(new SelectorElement(typeof(ActionSlot), null, null, new[] {ContainerButton.StylePseudoClassPressed}), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonRectPressed),
+                }),
+                new StyleRule(new SelectorElement(typeof(ActionSlot), null, null, new[] {ContainerButton.StylePseudoClassDisabled}), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonRectDisabled),
+                }),
 
                 // Main menu: Make those buttons bigger.
                 new StyleRule(new SelectorChild(

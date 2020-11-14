@@ -3,11 +3,12 @@ using System;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.Actions;
-using Content.Shared.Alert;
 using OpenToolkit.Mathematics;
-using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Client.Utility;
+using Robust.Shared.IoC;
 using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Controls
@@ -15,7 +16,7 @@ namespace Content.Client.UserInterface.Controls
     /// <summary>
     /// A slot in the action hotbar
     /// </summary>
-    public class ActionSlot : BaseButton
+    public class ActionSlot : ContainerButton
     {
         private static readonly string GrantedColor = "#7b7e9e";
         private static readonly string RevokedColor = "#950000";
@@ -52,33 +53,51 @@ namespace Content.Client.UserInterface.Controls
         /// </summary>
         /// <param name="slotNumber">slot this corresponds to, 1-10 (10 is labeled as 0). Any value
         /// greater than 10 will have a blank number</param>
-        /// <param name="resourceCache">resource cache to use to load textures</param>
-        public ActionSlot(byte slotNumber, IResourceCache resourceCache)
+        public ActionSlot(byte slotNumber)
         {
-            _resourceCache = resourceCache;
+            _resourceCache = IoCManager.Resolve<IResourceCache>();
             SlotNumber = slotNumber;
             Granted = true;
+            ToggleMode = true;
 
-            // create the background and number in the corner.
-            var panel = new PanelContainer
-            {
-                StyleClasses = {StyleNano.StyleClassLightBorderedPanel},
-                CustomMinimumSize = (64, 64)
-            };
-            Children.Add(panel);
+            CustomMinimumSize = (64, 64);
 
+            SizeFlagsVertical = SizeFlags.None;
 
             _number = new RichTextLabel
             {
                 StyleClasses = {StyleNano.StyleClassHotbarSlotNumber}
             };
-            // TODO: Position in corner (use a sub-parent layoutcontainer??)
-            _number.SetMessage(SlotNumberLabel());
-            _icon = new TextureRect {TextureScale = (2, 2), Visible = false};
-            panel.AddChild(_icon);
-            _cooldownGraphic = new CooldownGraphic();
-            panel.AddChild(_cooldownGraphic);
 
+            _number.SetMessage(SlotNumberLabel());
+            _icon = new TextureRect
+            {
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                SizeFlagsVertical = SizeFlags.FillExpand,
+                Stretch = TextureRect.StretchMode.Scale,
+                Visible = false
+            };
+            _cooldownGraphic = new CooldownGraphic();
+
+            // padding to the left of the number to shift it right
+            var paddingBox = new HBoxContainer()
+            {
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                SizeFlagsVertical = SizeFlags.FillExpand,
+                CustomMinimumSize = (64, 64)
+            };
+            paddingBox.AddChild(new Control()
+            {
+                CustomMinimumSize = (4, 4),
+                SizeFlagsVertical = SizeFlags.Fill
+            });
+            paddingBox.AddChild(_number);
+            AddChild(paddingBox);
+            //AddChild(_number);
+            AddChild(_icon);
+            AddChild(_cooldownGraphic);
+
+            UpdateCooldown(null, TimeSpan.Zero);
         }
 
         /// <summary>
@@ -117,6 +136,8 @@ namespace Content.Client.UserInterface.Controls
         public void Assign(ActionPrototype action)
         {
             Action = action;
+            _icon.Texture = Action.Icon.Frame0();
+            _icon.Visible = true;
             Grant();
 
         }
@@ -132,12 +153,12 @@ namespace Content.Client.UserInterface.Controls
             Granted = true;
         }
 
-        private string SlotNumberLabel()
+        private FormattedMessage SlotNumberLabel()
         {
-            if (SlotNumber > 10) return "";
+            if (SlotNumber > 10) return FormattedMessage.FromMarkup("");
             var number = SlotNumber == 10 ? "0" : SlotNumber.ToString();
             var color = Granted ? GrantedColor : RevokedColor;
-            return "[color=" + color + "]" + number + "[/color]";
+            return FormattedMessage.FromMarkup("[color=" + color + "]" + number + "[/color]");
         }
 
         /// <summary>

@@ -1,26 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Actions;
-using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.Graphics;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -100,6 +95,11 @@ namespace Content.Client.GameObjects.Components.Mobs
         {
             base.HandleComponentState(curState, nextState);
 
+            if (!(curState is ActionComponentState))
+            {
+                return;
+            }
+
             UpdateHotbar();
         }
 
@@ -110,7 +110,11 @@ namespace Content.Client.GameObjects.Components.Mobs
                 return;
             }
 
-            _ui = new ActionsUI(ActionOnOnShowTooltip, ActionOnOnHideTooltip, ActionSlotOnPressed, _resourceCache);
+            _ui = new ActionsUI(ActionOnOnShowTooltip, ActionOnOnHideTooltip, ActionSlotOnToggled);
+            LayoutContainer.SetGrowHorizontal(_ui, LayoutContainer.GrowDirection.End);
+            LayoutContainer.SetAnchorAndMarginPreset(_ui, LayoutContainer.LayoutPreset.TopLeft, margin: 10);
+            LayoutContainer.SetMarginTop(_ui, 100);
+
             var uiManager = IoCManager.Resolve<IUserInterfaceManager>();
             uiManager.StateRoot.AddChild(_ui);
 
@@ -245,9 +249,9 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         }
 
-        private void ActionSlotOnPressed(BaseButton.ButtonEventArgs args)
+        private void ActionSlotOnToggled(BaseButton.ButtonToggledEventArgs args)
         {
-            ActionPressed(args, args.Button as AlertControl);
+            ActionToggled(args, args.Button as ActionSlot);
         }
 
         private void ActionOnOnHideTooltip(object sender, EventArgs e)
@@ -294,7 +298,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             _tooltipReady = true;
         }
 
-        private void ActionPressed(BaseButton.ButtonEventArgs args, AlertControl alert)
+        private void ActionToggled(BaseButton.ButtonToggledEventArgs args, ActionSlot action)
         {
             // TODO: Action logic
             // if (args.Event.Function != EngineKeyFunctions.UIClick)

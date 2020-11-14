@@ -79,6 +79,11 @@ namespace Content.Client.GameObjects.Components.Mobs
         {
             base.HandleComponentState(curState, nextState);
 
+            if (!(curState is AlertsComponentState))
+            {
+                return;
+            }
+
             UpdateAlertsControls();
         }
 

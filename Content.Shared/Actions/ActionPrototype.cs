@@ -85,6 +85,7 @@ namespace Content.Shared.Actions
                 s => Description = FormattedMessage.FromMarkup(s));
 
             serializer.DataField(this, x => x.Requires,"requires", null);
+            serializer.DataField(this, x => x.Icon,"icon", SpriteSpecifier.Invalid);
 
             serializer.DataField(this, x => x.ActionType, "actionType", ActionType.Error);
             if (ActionType == ActionType.Error)

@@ -1,6 +1,6 @@
 ﻿- type: action
   actionType: DebugInstant
-  icon: /Textures/Interface/Alerts/Pressure/lowpressure.png
+  icon: Interface/Alerts/Human/human1.png
   name: "[color=red]Debug Instant[/color]"
   description: "This is a [color=red]debug message[/color]."
   behavior: !type:DebugInstant

@@ -1,16 +1,12 @@
 ﻿using System;
 using Content.Server.Commands;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Actions;
-using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Players;
 
 namespace Content.Server.GameObjects.Components.Mobs
@@ -85,7 +81,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             if (!CommandUtils.ValidateAttachedEntity(shell, player, attachedEntity)) return;
 
 
-            if (!attachedEntity.TryGetComponent(out ServerActionsComponent alertsComponent))
+            if (!attachedEntity.TryGetComponent(out ServerActionsComponent actionsComponent))
             {
                 shell.SendText(player, "user has no actions component");
                 return;
@@ -98,7 +94,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                 shell.SendText(player, "unrecognized actionType " + actionType);
                 return;
             }
-            alertsComponent.GrantAction(action.ActionType);
+            actionsComponent.GrantAction(action.ActionType);
         }
     }
 

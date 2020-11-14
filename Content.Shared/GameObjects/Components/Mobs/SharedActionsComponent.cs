@@ -68,9 +68,9 @@ namespace Content.Shared.GameObjects.Components.Mobs
             var states = new ActionState[_actions.Count];
             // because I don't trust LINQ
             var idx = 0;
-            foreach (var alertData in _actions.Values)
+            foreach (var actionState in _actions.Values)
             {
-                states[idx++] = alertData;
+                states[idx++] = actionState;
             }
 
             return states;
@@ -131,7 +131,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
     {
         public ActionState[] Actions;
 
-        public ActionComponentState(ActionState[] actions) : base(ContentNetIDs.ALERTS)
+        public ActionComponentState(ActionState[] actions) : base(ContentNetIDs.ACTIONS)
         {
             Actions = actions;
         }
