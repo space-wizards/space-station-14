@@ -45,6 +45,8 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels.Visualize
 
         public override void OnChangeData(AppearanceComponent component)
         {
+            base.OnChangeData(component);
+
             // tl;dr
             // 1.If no mag then hide it OR
             // 2. If step 0 isn't visible then hide it (mag or unshaded)

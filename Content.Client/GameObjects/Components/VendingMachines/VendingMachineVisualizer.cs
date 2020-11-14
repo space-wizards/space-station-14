@@ -16,8 +16,8 @@ namespace Content.Client.GameObjects.Components.VendingMachines
     public sealed class VendingMachineVisualizer : AppearanceVisualizer
     {
         // TODO: Should default to off or broken if damaged
-        // 
-        
+        //
+
         // TODO: The length of these animations is supposed to be dictated
         // by the vending machine's pack prototype's `AnimationDuration`
         // but we have no good way of passing that data from the server
@@ -38,7 +38,7 @@ namespace Content.Client.GameObjects.Components.VendingMachines
                 {"deny-unshaded", VendingMachineVisualLayers.BaseUnshaded},
                 {"broken", VendingMachineVisualLayers.Unlit},
             };
-        
+
         private Dictionary<string, Animation> _animations = new Dictionary<string, Animation>();
 
         public override void LoadData(YamlMappingNode node)
@@ -71,7 +71,7 @@ namespace Content.Client.GameObjects.Components.VendingMachines
                     _baseStates[textureState] = false;
                     continue;
                 }
-                
+
                 _baseStates.Add(textureState, yamlNode.AsBool());
             }
 
@@ -99,7 +99,7 @@ namespace Content.Client.GameObjects.Components.VendingMachines
         private void InitializeAnimation(string key, bool unshaded = false)
         {
             _animations.Add(key, new Animation {Length = TimeSpan.FromSeconds(1.2f)});
-                
+
             var flick = new AnimationTrackSpriteFlick();
             _animations[key].AnimationTracks.Add(flick);
             flick.LayerKey = unshaded ? VendingMachineVisualLayers.BaseUnshaded : VendingMachineVisualLayers.Base;
@@ -128,13 +128,15 @@ namespace Content.Client.GameObjects.Components.VendingMachines
 
         public override void OnChangeData(AppearanceComponent component)
         {
+            base.OnChangeData(component);
+
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
             var animPlayer = component.Owner.GetComponent<AnimationPlayerComponent>();
             if (!component.TryGetData(VendingMachineVisuals.VisualState, out VendingMachineVisualState state))
             {
                 state = VendingMachineVisualState.Normal;
             }
-            
+
             // Hide last state
             HideLayers(sprite);
             ActivateState(sprite, "off");
@@ -146,10 +148,10 @@ namespace Content.Client.GameObjects.Components.VendingMachines
                     ActivateState(sprite, "normal-unshaded");
                     ActivateState(sprite, "normal");
                     break;
-                
+
                 case VendingMachineVisualState.Off:
                     break;
-                
+
                 case VendingMachineVisualState.Broken:
                     ActivateState(sprite, "broken-unshaded");
                     ActivateState(sprite, "broken");
@@ -171,7 +173,7 @@ namespace Content.Client.GameObjects.Components.VendingMachines
                     throw new ArgumentOutOfRangeException();
             }
         }
-        
+
         // Helper methods just to avoid all of that hard-to-read-indented code
         private void ActivateState(ISpriteComponent spriteComponent, string stateId)
         {
@@ -192,14 +194,14 @@ namespace Content.Client.GameObjects.Components.VendingMachines
             {
                 return;
             }
-            
+
             if (!animationPlayer.HasRunningAnimation(key))
             {
                 spriteComponent.LayerSetVisible(LayerMap[key], true);
                 animationPlayer.Play(animation, key);
             }
         }
-        
+
         public enum VendingMachineVisualLayers
         {
             // Off / Broken. The other layers will overlay this if the machine is on.

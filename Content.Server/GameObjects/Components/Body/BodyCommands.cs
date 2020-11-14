@@ -1,6 +1,8 @@
 ﻿#nullable enable
 using System;
 using System.Linq;
+using Content.Server.Administration;
+using Content.Shared.Administration;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
@@ -16,6 +18,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.GameObjects.Components.Body
 {
+    [AdminCommand(AdminFlags.Fun)]
     class AddHandCommand : IClientCommand
     {
         public const string DefaultHandPrototype = "LeftHandHuman";
@@ -149,6 +152,7 @@ namespace Content.Server.GameObjects.Components.Body
         }
     }
 
+    [AdminCommand(AdminFlags.Fun)]
     class RemoveHandCommand : IClientCommand
     {
         public string Command => "removehand";
@@ -190,6 +194,7 @@ namespace Content.Server.GameObjects.Components.Body
         }
     }
 
+    [AdminCommand(AdminFlags.Fun)]
     class DestroyMechanismCommand : IClientCommand
     {
         public string Command => "destroymechanism";
@@ -242,6 +247,7 @@ namespace Content.Server.GameObjects.Components.Body
         }
     }
 
+    [AdminCommand(AdminFlags.Fun)]
     class HurtCommand : IClientCommand
     {
         public string Command => "hurt";

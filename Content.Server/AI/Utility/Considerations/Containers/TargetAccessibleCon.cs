@@ -22,7 +22,7 @@ namespace Content.Server.AI.Utility.Considerations.Containers
                 return 0.0f;
             }
 
-            if (ContainerHelpers.TryGetContainer(target, out var container))
+            if (target.TryGetContainer(out var container))
             {
                 if (container.Owner.TryGetComponent(out EntityStorageComponent storageComponent))
                 {
