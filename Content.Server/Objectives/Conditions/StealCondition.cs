@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using Content.Server.GameObjects.Components.ContainerExt;
 using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
 using Robust.Server.GameObjects.Components.Container;
