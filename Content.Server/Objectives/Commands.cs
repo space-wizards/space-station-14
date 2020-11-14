@@ -80,7 +80,7 @@ namespace Content.Server.Objectives
                 return;
             }
 
-            shell.SendText(player, $"Objectives for player {args[0]}:");
+            shell.SendText(player, $"Objectives for player {data.UserId}:");
             var objectives = mind.AllObjectives.ToList();
             if (objectives.Count == 0)
             {
