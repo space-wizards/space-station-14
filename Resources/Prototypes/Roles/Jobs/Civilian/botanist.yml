@@ -16,7 +16,7 @@
   id: BotanistGear
   equipment:
     innerclothing: ClothingUniformJumpsuitHydroponics
-    backpack: BackpackClothingFilled
+    backpack: ClothingBackpackFilled
     shoes: ClothingShoesBrown
     idcard: BotanistPDA
-    ears: HeadsetService
+    ears: ClothingHeadsetService

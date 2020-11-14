@@ -61,9 +61,9 @@
   description: A robust, tactical IHS helmet.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/ihsvoidhelm.rsi
+    sprite: Clothing/Head/Hardsuits/ihsvoid.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/ihsvoidhelm.rsi
+    sprite: Clothing/Head/Hardsuits/ihsvoid.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.60
     lowPressureMultiplier: 100

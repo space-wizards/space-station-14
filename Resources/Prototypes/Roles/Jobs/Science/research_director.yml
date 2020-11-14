@@ -19,8 +19,8 @@
   equipment:
     innerclothing: ClothingUniformJumpsuitResearchDirector
     # Note to Swept add science backpacks
-    backpack: BackpackClothingFilled
+    backpack: ClothingBackpackFilled
     shoes: ClothingShoesBrown
     outerclothing: OuterclothingLabcoatopen
     idcard: RnDPDA
-    ears: HeadsetScience
+    ears: ClothingHeadsetScience

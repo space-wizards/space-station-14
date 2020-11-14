@@ -1,6 +1,6 @@
 - type: entity
-  id: UtilityBeltClothingFilled #Change to ClothingBeltUtilityFilled
-  parent: UtilityBeltClothing #Change to ClothingBeltUtility
+  id: ClothingBeltUtilityFilled
+  parent: ClothingBeltUtility
   description: "Holds tools."
   suffix: Filled
   components:
@@ -11,17 +11,6 @@
       - name: Screwdriver
       - name: Wirecutter
       - name: Welder
-      - name: Multitool
-
-- type: entity
-  id: UtilityBeltClothingFilledEvent
-  parent: UtilityBeltClothing
-  suffix: Filled
-  components:
-  - type: StorageFill
-    contents:
-      - name: Crowbar
-      - name: Screwdriver
       - name: Multitool
 
 - type: entity

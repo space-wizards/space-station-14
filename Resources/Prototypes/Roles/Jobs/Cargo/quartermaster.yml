@@ -16,7 +16,7 @@
   id: QuartermasterGear
   equipment:
     innerclothing: ClothingUniformJumpsuitQM
-    backpack: BackpackClothingFilled
+    backpack: ClothingBackpackFilled
     shoes: ClothingShoesBrown
     idcard: QuartermasterPDA
-    ears: HeadsetCargo
+    ears: ClothingHeadsetCargo

@@ -16,9 +16,9 @@
   id: StationEngineerGear
   equipment:
     innerclothing: ClothingUniformJumpsuitEngineering
-    backpack: BackpackEngineeringFilled
+    backpack: ClothingBackpackEngineeringFilled
     shoes: ClothingShoesWorkboots
     outerclothing: OuterclothingHazard
     idcard: EngineerPDA
-    belt: UtilityBeltClothingFilled
-    ears: HeadsetEngineering
+    belt: ClothingBeltUtilityFilled
+    ears: ClothingHeadsetEngineering

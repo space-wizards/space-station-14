@@ -14,9 +14,9 @@
   id: JanitorGear
   equipment:
     innerclothing: ClothingUniformJumpsuitJanitor
-    backpack: BackpackClothingFilled
+    backpack: ClothingBackpackFilled
     shoes: ClothingShoesGaloshes
     head: HatPurplesoft
     idcard: JanitorPDA
-    ears: HeadsetService
+    ears: ClothingHeadsetService
     belt: ClothingBeltJanitorFilled

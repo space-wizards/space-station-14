@@ -15,9 +15,9 @@
   id: ClownGear
   equipment:
     innerclothing: ClothingUniformJumpsuitClown
-    backpack: ClownPackFilled
+    backpack: ClothingBackpackClownFilled
     shoes: ClothingShoesClown
     mask: MaskClown
     pocket1: BikeHorn
     idcard: ClownPDA
-    ears: HeadsetService
+    ears: ClothingHeadsetService

@@ -69,3 +69,25 @@
     sprite: Clothing/OuterClothing/Suits/spaceninja.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/spaceninja.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: OuterclothingChickensuit
+  name: chicken suit
+  description: Bok bok bok!
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/chicken.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Suits/chicken.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: OuterclothingMonkeysuit
+  name: monkey suit
+  description: A suit that looks like a primate.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/monkey.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Suits/monkey.rsi

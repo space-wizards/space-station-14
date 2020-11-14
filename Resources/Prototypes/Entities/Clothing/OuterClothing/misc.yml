@@ -83,18 +83,6 @@
 
 - type: entity
   parent: ClothingOuterBase
-  id: OuterclothingChickensuit
-  name: chicken suit
-  description: Bok bok bok!
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Misc/chickensuit.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Misc/chickensuit.rsi
-
-- type: entity
-  parent: ClothingOuterBase
   id: OuterclothingClassicponcho
   name: classic poncho
   description: A warm and comfy classic poncho.
@@ -119,30 +107,6 @@
 
 - type: entity
   parent: ClothingOuterBase
-  id: OuterclothingDetvest
-  name: detective's vest
-  description: A hard-boiled private investigator's grey trenchcoat.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Misc/detvest.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Misc/detvest.rsi
-
-- type: entity
-  parent: ClothingOuterBase
-  id: OuterclothingHazard
-  name: hazard
-  description: A high-visibility vest used in work zones.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Misc/hazard.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Misc/hazard.rsi
-
-- type: entity
-  parent: ClothingOuterBase
   id: OuterclothingJudge
   name: judge
   description: This robe commands authority.
@@ -152,18 +116,6 @@
 
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/judge.rsi
-
-- type: entity
-  parent: ClothingOuterBase
-  id: OuterclothingMonkeysuit
-  name: monkey suit
-  description: A suit that looks like a primate.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Misc/monkeysuit.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Misc/monkeysuit.rsi
 
 - type: entity
   parent: ClothingOuterBase
@@ -200,31 +152,6 @@
 
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/straight_jacket.rsi
-
-# This sprite looks like shit too but whatever...
-- type: entity
-  parent: ClothingOuterBase
-  id: OuterclothingSurgeon
-  name: surgeon
-  description: A sterile blue surgical apron.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Misc/surgeon.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Misc/surgeon.rsi
-
-- type: entity
-  parent: ClothingOuterBase
-  id: OuterclothingVest
-  name: vest
-  description: A thick vest with a rubbery, water-resistant shell.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Misc/vest.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Misc/vest.rsi
 
 # Is this wizard wearing a fanny pack???
 - type: entity
@@ -282,6 +209,6 @@
   description: 'Skub is crudely written on the outside of this cylindrical suit.'
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Suits/skubbody.rsi
+    sprite: Clothing/OuterClothing/Misc/skubbody.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Suits/skubbody.rsi
+    sprite: Clothing/OuterClothing/Misc/skubbody.rsi

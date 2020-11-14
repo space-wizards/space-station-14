@@ -22,17 +22,6 @@
 
 - type: entity
   parent: ClothingOuterBase
-  id: OuterclothingCaparmor
-  name: captain's armor
-  description: A suit of protective formal armor made for the station's captain.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Armor/caparmor.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Armor/caparmor.rsi
-
-- type: entity
-  parent: ClothingOuterBase
   id: OuterclothingCultarmour
   name: cult armor
   description: An evil-looking cult armor, made of bones.

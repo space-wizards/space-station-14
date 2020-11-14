@@ -121,17 +121,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatHelmetVoid
-  name: void
-  description: Robust red helmet for high-speed races.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Helmets/void.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Helmets/void.rsi
-
-- type: entity
-  parent: HatBase
   id: HatHelmetWizardHelm
   name: wizard helm
   description: "Strange-looking helmet that most certainly belongs to a real magic user."

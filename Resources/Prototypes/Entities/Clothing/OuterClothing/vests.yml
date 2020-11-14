@@ -30,3 +30,36 @@
     sprite: Clothing/OuterClothing/Vests/kevlar.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Vests/kevlar.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: OuterclothingDetvest
+  name: detective's vest
+  description: A hard-boiled private investigator's grey trenchcoat.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Vests/detvest.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Vests/detvest.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: OuterclothingHazard
+  name: hazard
+  description: A high-visibility vest used in work zones.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Vests/hazard.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Vests/hazard.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: OuterclothingVest
+  name: vest
+  description: A thick vest with a rubbery, water-resistant shell.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Vests/vest.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Vests/vest.rsi

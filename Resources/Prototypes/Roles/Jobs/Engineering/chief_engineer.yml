@@ -20,8 +20,8 @@
   equipment:
     head: HatHardhatWhite
     innerclothing: ClothingUniformJumpsuitChiefEngineer
-    backpack: BackpackEngineeringFilled
+    backpack: ClothingBackpackEngineeringFilled
     shoes: ClothingShoesBrown
     idcard: CEPDA
-    ears: HeadsetEngineering
+    ears: ClothingHeadsetEngineering
     belt: ClothingBeltChiefEngineerFilled

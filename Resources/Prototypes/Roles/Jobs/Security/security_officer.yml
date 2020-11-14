@@ -16,10 +16,10 @@
   id: SecurityOfficerGear
   equipment:
     innerclothing: ClothingUniformJumpsuitSec
-    backpack: SecPackFilled
+    backpack: ClothingBackpackSecurityFilled
     shoes: ClothingShoesJackboots
     eyes: SecGlasses
     outerclothing: OuterclothingArmorVest
     idcard: SecurityPDA
-    ears: HeadsetSecurity
+    ears: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled

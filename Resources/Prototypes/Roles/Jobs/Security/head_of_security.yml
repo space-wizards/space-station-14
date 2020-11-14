@@ -21,11 +21,11 @@
   id: HoSGear
   equipment:
     innerclothing: ClothingUniformJumpsuitHoS
-    backpack: SecPackFilled
+    backpack: ClothingBackpackSecurityFilled
     shoes: ClothingShoesJackboots
     outerclothing: OuterclothingHoSTrenchcoat
     eyes: SecGlasses
     head: HatBeretHoS
     idcard: HoSPDA
-    ears: HeadsetSecurityAlt
+    ears: ClothingHeadsetAltSecurity
     belt: ClothingBeltSecurityFilled
