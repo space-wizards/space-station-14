@@ -22,7 +22,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public bool EnableGodmode(IEntity entity)
         {
-            if (!_entities.ContainsKey(entity))
+            if (_entities.ContainsKey(entity))
             {
                 return false;
             }
