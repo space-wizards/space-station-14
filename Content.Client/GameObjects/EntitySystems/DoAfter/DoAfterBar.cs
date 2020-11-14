@@ -123,7 +123,8 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
         }
     }
 
-    public static class DoAfterHelpers{
+    public static class DoAfterHelpers
+    {
         public static Color GetProgressColor(float progress)
         {
             if (progress >= 1.0f)
