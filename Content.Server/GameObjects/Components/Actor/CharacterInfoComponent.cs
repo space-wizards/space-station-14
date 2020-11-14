@@ -18,7 +18,7 @@ namespace Content.Server.GameObjects.Components.Actor
         {
             switch (message)
             {
-                case RequestCharacterInfoMessage msg:
+                case RequestCharacterInfoMessage _:
                     var conditions = new Dictionary<string, List<ConditionInfo>>();
                     var jobTitle = "No Profession";
                     if (Owner.TryGetComponent(out MindComponent? mindComponent))

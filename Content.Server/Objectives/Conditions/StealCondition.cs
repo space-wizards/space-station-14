@@ -4,6 +4,7 @@ using Content.Server.Objectives.Interfaces;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -32,9 +33,9 @@ namespace Content.Server.Objectives.Conditions
                 ? prototype.Name
                 : "[CANNOT FIND NAME]";
 
-        public string GetTitle() => $"Steal {(Amount > 1 ? Amount+"x" : "")} {PrototypeName}";
+        public string GetTitle() => Loc.GetString("Steal {0} {1}", Amount > 1 ? Amount+"x" : "", PrototypeName);
 
-        public string GetDescription() => $"We need you to steal {PrototypeName}. Dont get caught.";
+        public string GetDescription() => Loc.GetString("We need you to steal {0}. Dont get caught.", PrototypeName);
 
         public SpriteSpecifier GetIcon()
         {
