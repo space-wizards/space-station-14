@@ -56,6 +56,8 @@ namespace Content.Server.GameObjects.Components.Suspicion
             }
         }
 
+        [ViewVariables] public IReadOnlyCollection<SuspicionRoleComponent> Allies => _allies;
+
         [ViewVariables] public bool KnowsAllies => IsTraitor();
 
         public bool IsDead()

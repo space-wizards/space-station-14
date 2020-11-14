@@ -42,8 +42,8 @@ namespace Content.Server.GameTicking.GamePresets
 
         public override bool DisallowLateJoin => true;
 
-        private static string TraitorID = "SuspicionTraitor";
-        private static string InnocentID = "SuspicionInnocent";
+        public const string TraitorID = "SuspicionTraitor";
+        public const string InnocentID = "SuspicionInnocent";
 
         public override bool Start(IReadOnlyList<IPlayerSession> readyPlayers, bool force = false)
         {
