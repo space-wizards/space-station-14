@@ -1,20 +1,13 @@
 ﻿#nullable enable
-using System;
 using System.Collections.Generic;
 using Content.Client.Atmos;
-using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
 using JetBrains.Annotations;
-using Robust.Client.Graphics;
 using Robust.Client.Interfaces.Graphics.Overlays;
-using Robust.Client.Interfaces.ResourceManagement;
-using Robust.Client.ResourceManagement;
-using Robust.Client.Utility;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Utility;
 
 namespace Content.Client.GameObjects.EntitySystems
 {
@@ -23,18 +16,17 @@ namespace Content.Client.GameObjects.EntitySystems
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
 
-        private Dictionary<GridId, AtmosDebugOverlayMessage> _tileData =
+        private readonly Dictionary<GridId, AtmosDebugOverlayMessage> _tileData =
             new Dictionary<GridId, AtmosDebugOverlayMessage>();
-
-        private AtmosphereSystem _atmosphereSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeNetworkEvent<AtmosDebugOverlayMessage>(HandleAtmosDebugOverlayMessage);
-            _mapManager.OnGridRemoved += OnGridRemoved;
 
-            _atmosphereSystem = Get<AtmosphereSystem>();
+            SubscribeNetworkEvent<AtmosDebugOverlayMessage>(HandleAtmosDebugOverlayMessage);
+            SubscribeNetworkEvent<AtmosDebugOverlayDisableMessage>(HandleAtmosDebugOverlayDisableMessage);
+
+            _mapManager.OnGridRemoved += OnGridRemoved;
 
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
             if(!overlayManager.HasOverlay(nameof(AtmosDebugOverlay)))
@@ -44,6 +36,11 @@ namespace Content.Client.GameObjects.EntitySystems
         private void HandleAtmosDebugOverlayMessage(AtmosDebugOverlayMessage message)
         {
             _tileData[message.GridId] = message;
+        }
+
+        private void HandleAtmosDebugOverlayDisableMessage(AtmosDebugOverlayDisableMessage ev)
+        {
+            _tileData.Clear();
         }
 
         public override void Shutdown()
