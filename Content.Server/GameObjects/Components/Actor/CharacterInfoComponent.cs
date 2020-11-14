@@ -38,11 +38,16 @@ namespace Content.Server.GameObjects.Components.Actor
                             }
                         }
                         //getting jobtitle
-                        var jobRole =
-                            mindComponent.Mind?.AllRoles.FirstOrDefault(role => role.GetType() == typeof(Job));
-                        if(jobRole != null)
+                        if (mindComponent.Mind != null)
                         {
-                            jobTitle = jobRole.Name;
+                            foreach (var role in mindComponent.Mind.AllRoles)
+                            {
+                                if (role.GetType() == typeof(Job))
+                                {
+                                    jobTitle = role.Name;
+                                    break;
+                                }
+                            }
                         }
                     }
                     SendNetworkMessage(new CharacterInfoMessage(jobTitle, conditions));
