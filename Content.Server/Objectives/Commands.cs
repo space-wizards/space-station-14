@@ -1,6 +1,8 @@
 ﻿#nullable enable
 using System.Linq;
+using Content.Server.Administration;
 using Content.Server.Players;
+using Content.Shared.Administration;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.IoC;
@@ -8,6 +10,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Objectives
 {
+    [AdminCommand(AdminFlags.Admin)]
     public class AddObjectiveCommand : IClientCommand
     {
         public string Command => "addobjective";
@@ -51,6 +54,7 @@ namespace Content.Server.Objectives
         }
     }
 
+    [AdminCommand(AdminFlags.Admin)]
     public class ListObjectivesCommand : IClientCommand
     {
         public string Command => "lsobjectives";
@@ -89,6 +93,7 @@ namespace Content.Server.Objectives
         }
     }
 
+    [AdminCommand(AdminFlags.Admin)]
     public class RemoveObjectiveCommand : IClientCommand
     {
         public string Command => "rmobjective";
