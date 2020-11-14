@@ -169,6 +169,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
                 TwoWayLeverSignal.Left => ConveyorState.Reversed,
                 TwoWayLeverSignal.Middle => ConveyorState.Off,
                 TwoWayLeverSignal.Right => ConveyorState.Forward,
+                _ => ConveyorState.Off
             };
         }
 

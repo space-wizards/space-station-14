@@ -4,13 +4,13 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.GameObjects.Components.MachineLinking
 {
     [Serializable, NetSerializable]
-    public enum TwoWayLeverVisuals
+    public enum TwoWayLeverVisuals : byte
     {
         State
     }
 
     [Serializable, NetSerializable]
-    public enum TwoWayLeverSignal
+    public enum TwoWayLeverSignal : byte
     {
         Middle,
         Left,

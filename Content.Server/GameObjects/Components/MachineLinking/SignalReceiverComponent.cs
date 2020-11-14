@@ -66,9 +66,15 @@ namespace Content.Server.GameObjects.Components.MachineLinking
 
         public void UnsubscribeAll()
         {
-            foreach (var transmitterComponent in _transmitters.ShallowClone())
+            for (var i = _transmitters.Count-1; i >= 0; i--)
             {
-                Unsubscribe(transmitterComponent);
+                var transmitter = _transmitters[i];
+                if (transmitter.Deleted)
+                {
+                    continue;
+                }
+
+                transmitter.Unsubscribe(this);
             }
         }
 
@@ -126,16 +132,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
         {
             base.Shutdown();
 
-            for (var i = _transmitters.Count-1; i >= 0; i--)
-            {
-                var transmitter = _transmitters[i];
-                if (transmitter.Deleted)
-                {
-                    continue;
-                }
-
-                transmitter.Unsubscribe(this);
-            }
+            UnsubscribeAll();
 
             _transmitters.Clear();
         }

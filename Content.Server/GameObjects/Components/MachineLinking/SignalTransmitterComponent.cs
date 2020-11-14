@@ -150,7 +150,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
         {
             base.Shutdown();
 
-            for (var i = _receivers.Count-1; i <= 0; i++)
+            for (var i = _receivers.Count-1; i >= 0; i++)
             {
                 var receiver = _receivers[i];
                 if (receiver.Deleted)
