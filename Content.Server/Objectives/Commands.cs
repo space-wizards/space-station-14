@@ -66,7 +66,8 @@ namespace Content.Server.Objectives
             if (args.Length == 0 && player != null)
             {
                 data = player.Data;
-            }else if (!IoCManager.Resolve<IPlayerManager>().TryGetPlayerDataByUsername(args[0], out data))
+            }
+            else if (player == null || !IoCManager.Resolve<IPlayerManager>().TryGetPlayerDataByUsername(args[0], out data))
             {
                 shell.SendText(player, "Can't find the playerdata.");
                 return;
