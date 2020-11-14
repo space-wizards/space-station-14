@@ -119,14 +119,12 @@ namespace Content.Client.GameObjects.Components.Actor
                     {
                         Modulate = Color.Gray
                     };
-                    if (characterInfoMessage.Objectives.Count > 1 || groupId != "Others")
+
+                    vbox.AddChild(new Label
                     {
-                        vbox.AddChild(new Label
-                        {
-                            Text = groupId,
-                            Modulate = Color.LightSkyBlue
-                        });
-                    }
+                        Text = groupId,
+                        Modulate = Color.LightSkyBlue
+                    });
 
                     foreach (var objectiveCondition in objectiveConditions)
                     {
