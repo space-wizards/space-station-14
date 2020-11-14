@@ -33,7 +33,7 @@ namespace Content.Server.Objectives.Conditions
                 ? prototype.Name
                 : "[CANNOT FIND NAME]";
 
-        public string GetTitle() => Loc.GetString("Steal {0} {1}", Amount > 1 ? Amount+"x" : "", PrototypeName);
+        public string GetTitle() => Loc.GetString("Steal {0} {1}", Amount > 1 ? $"{Amount}x" : "", PrototypeName);
 
         public string GetDescription() => Loc.GetString("We need you to steal {0}. Dont get caught.", PrototypeName);
 
