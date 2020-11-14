@@ -22,5 +22,12 @@ namespace Content.Server.GameObjects.Components.Atmos
             serializer.DataField(this, x => PressureResistance, "pressureResistance", 1f);
             serializer.DataField(this, x => MoveResist, "moveResist", 100f);
         }
+
+        public void CopyValues(MovedByPressureComponent other)
+        {
+            PressureResistance = other.PressureResistance;
+            MoveResist = other.MoveResist;
+            LastHighPressureMovementAirCycle = other.LastHighPressureMovementAirCycle;
+        }
     }
 }
