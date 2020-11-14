@@ -45,9 +45,6 @@ namespace Content.Client.UserInterface.Controls
         private readonly TextureRect _icon;
         private readonly CooldownGraphic _cooldownGraphic;
 
-        private readonly IResourceCache _resourceCache;
-
-
         /// <summary>
         /// Creates an action slot for the specified number
         /// </summary>
@@ -55,9 +52,7 @@ namespace Content.Client.UserInterface.Controls
         /// greater than 10 will have a blank number</param>
         public ActionSlot(byte slotNumber)
         {
-            _resourceCache = IoCManager.Resolve<IResourceCache>();
             SlotNumber = slotNumber;
-            Granted = true;
             ToggleMode = true;
 
             CustomMinimumSize = (64, 64);
@@ -68,8 +63,8 @@ namespace Content.Client.UserInterface.Controls
             {
                 StyleClasses = {StyleNano.StyleClassHotbarSlotNumber}
             };
-
             _number.SetMessage(SlotNumberLabel());
+
             _icon = new TextureRect
             {
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
@@ -93,11 +88,13 @@ namespace Content.Client.UserInterface.Controls
             });
             paddingBox.AddChild(_number);
             AddChild(paddingBox);
-            //AddChild(_number);
             AddChild(_icon);
             AddChild(_cooldownGraphic);
 
+            // initially has no action, should not be interactable
+            Disabled = true;
             UpdateCooldown(null, TimeSpan.Zero);
+
         }
 
         /// <summary>
@@ -139,7 +136,6 @@ namespace Content.Client.UserInterface.Controls
             _icon.Texture = Action.Icon.Frame0();
             _icon.Visible = true;
             Grant();
-
         }
 
         /// <summary>
@@ -149,16 +145,9 @@ namespace Content.Client.UserInterface.Controls
         {
             if (Action == null || Granted) return;
 
-            _number.SetMessage(SlotNumberLabel());
+            Disabled = false;
             Granted = true;
-        }
-
-        private FormattedMessage SlotNumberLabel()
-        {
-            if (SlotNumber > 10) return FormattedMessage.FromMarkup("");
-            var number = SlotNumber == 10 ? "0" : SlotNumber.ToString();
-            var color = Granted ? GrantedColor : RevokedColor;
-            return FormattedMessage.FromMarkup("[color=" + color + "]" + number + "[/color]");
+            _number.SetMessage(SlotNumberLabel());
         }
 
         /// <summary>
@@ -168,9 +157,29 @@ namespace Content.Client.UserInterface.Controls
         {
             if (Action == null || !Granted) return;
 
-            _number.SetMessage(SlotNumberLabel());
             Granted = false;
+            Disabled = true;
+            _number.SetMessage(SlotNumberLabel());
             UpdateCooldown(null, TimeSpan.Zero);
+        }
+
+        private FormattedMessage SlotNumberLabel()
+        {
+            if (SlotNumber > 10) return FormattedMessage.FromMarkup("");
+            var number = SlotNumber == 10 ? "0" : SlotNumber.ToString();
+            var color = (Granted || Action == null) ? GrantedColor : RevokedColor;
+            return FormattedMessage.FromMarkup("[color=" + color + "]" + number + "[/color]");
+        }
+
+        protected override void DrawModeChanged()
+        {
+            base.DrawModeChanged();
+            // when there's no action, it should not be interactable but it should show
+            // the normal style, not the "disabled" style
+            if (DrawMode == DrawModeEnum.Disabled && Action == null)
+            {
+                SetOnlyStylePseudoClass(StylePseudoClassNormal);
+            }
         }
     }
 }
