@@ -27,7 +27,6 @@ namespace Content.Server.GameObjects.Components.Singularity
     public class ContainmentFieldGeneratorComponent : Component, ICollideBehavior
     {
         [Dependency] private IPhysicsManager _physicsManager = null!;
-        [Dependency] private IEntityManager _entityManager = null!;
 
         public override string Name => "ContainmentFieldGenerator";
 

@@ -43,7 +43,6 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         private int _integrity = 3;
 
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [ViewVariables] private BoundUserInterface? _userInterface;
 
         [ViewVariables] public GasMixture? Air { get; set; }
@@ -235,7 +234,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         private InternalsComponent? GetInternalsComponent(IEntity? owner = null)
         {
             if (owner != null) return owner.GetComponentOrNull<InternalsComponent>();
-            return ContainerHelpers.TryGetContainer(Owner, out var container)
+            return Owner.TryGetContainer(out var container)
                 ? container.Owner.GetComponentOrNull<InternalsComponent>()
                 : null;
         }

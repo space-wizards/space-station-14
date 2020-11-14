@@ -1,4 +1,4 @@
-using Robust.Client.GameObjects;
+﻿using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
@@ -37,15 +37,6 @@ namespace Content.Client.GameObjects.Components.Mobs
             {
                 offset = _angle.RotateVec((BaseOffset, 0));
                 offset *= (ResetTime - _time) / ResetTime;
-            }
-
-            if (Owner.TryGetComponent(out CameraRecoilComponent recoilComponent))
-            {
-                recoilComponent.BaseOffset = offset;
-            }
-            else if (Owner.TryGetComponent(out EyeComponent eyeComponent))
-            {
-                eyeComponent.Offset = offset;
             }
 
             if (Owner.TryGetComponent(out ISpriteComponent spriteComponent))

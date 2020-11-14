@@ -38,8 +38,8 @@ namespace Content.Server.GameObjects.Components.Singularity
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
-        [ComponentDependency] private AppearanceComponent? _appearance;
-        [ComponentDependency] private AccessReader? _accessReader;
+        [ComponentDependency] private AppearanceComponent? _appearance = default;
+        [ComponentDependency] private AccessReader? _accessReader = default;
 
         public override string Name => "Emitter";
 
