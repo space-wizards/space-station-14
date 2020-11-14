@@ -2,6 +2,8 @@
   id: VendingMachine
   name: vending machine
   abstract: true
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -66,6 +68,8 @@
       normalUnshaded: true
       broken: true
     - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Bar"]]
 
 - type: entity
   parent: VendingMachine
@@ -225,6 +229,8 @@
       ejectUnshaded: true
       broken: true
     - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Kitchen"]]
 
 - type: entity
   parent: VendingMachine
@@ -275,6 +281,8 @@
       denyUnshaded: true
       broken: true
     - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Engineering"]]
 
 - type: entity
   parent: VendingMachine
@@ -350,6 +358,8 @@
       denyUnshaded: true
       broken: true
     - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Medical"]]
 
 - type: entity
   parent: VendingMachine
@@ -401,6 +411,8 @@
       denyUnshaded: true
       broken: true
     - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Hydroponics"]]
 
 - type: entity
   parent: VendingMachine
@@ -426,6 +438,8 @@
       denyUnshaded: true
       broken: true
     - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Research"]]
 
 - type: entity
   parent: VendingMachine
@@ -477,6 +491,8 @@
       denyUnshaded: true
       broken: true
     - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Security"]]
 
 - type: entity
   parent: VendingMachine
@@ -503,6 +519,8 @@
       ejectUnshaded: true
       broken: true
     - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Hydroponics"]]
 
 - type: entity
   parent: VendingMachine
@@ -747,6 +765,8 @@
       denyUnshaded: true
       broken: true
     - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Medical"]]
 
 - type: entity
   parent: VendingMachine

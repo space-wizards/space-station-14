@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -88,7 +89,7 @@ namespace Content.Server.GameTicking
 
         [ViewVariables] private bool DisallowLateJoin { get; set; } = false;
 
-        [ViewVariables] private bool LobbyEnabled => _configurationManager.GetCVar<bool>("game.lobbyenabled");
+        [ViewVariables] private bool LobbyEnabled => _configurationManager.GetCVar(CCVars.GameLobbyEnabled);
 
         [ViewVariables] private bool _updateOnRoundEnd;
         private CancellationTokenSource _updateShutdownCts;
@@ -119,15 +120,13 @@ namespace Content.Server.GameTicking
         public event Action<GameRuleAddedEventArgs> OnRuleAdded;
 
         private TimeSpan LobbyDuration =>
-            TimeSpan.FromSeconds(_configurationManager.GetCVar<int>("game.lobbyduration"));
+            TimeSpan.FromSeconds(_configurationManager.GetCVar(CCVars.GameLobbyDuration));
 
         public override void Initialize()
         {
             base.Initialize();
 
             DebugTools.Assert(!_initialized);
-
-            PresetSuspicion.RegisterCVars(_configurationManager);
 
             _netManager.RegisterNetMessage<MsgTickerJoinLobby>(nameof(MsgTickerJoinLobby));
             _netManager.RegisterNetMessage<MsgTickerJoinGame>(nameof(MsgTickerJoinGame));
@@ -286,9 +285,9 @@ namespace Content.Server.GameTicking
 
             if (!preset.Start(assignedJobs.Keys.ToList(), force))
             {
-                if (_configurationManager.GetCVar<bool>("game.fallbackenabled"))
+                if (_configurationManager.GetCVar(CCVars.GameLobbyFallbackEnabled))
                 {
-                    SetStartPreset(_configurationManager.GetCVar<string>("game.fallbackpreset"));
+                    SetStartPreset(_configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset));
                     var newPreset = MakeGamePreset(profiles);
                     _chatManager.DispatchServerAnnouncement(
                         $"Failed to start {preset.ModeTitle} mode! Defaulting to {newPreset.ModeTitle}...");

@@ -23,7 +23,6 @@ namespace Content.Shared.GameObjects.EntitySystems
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] protected readonly IPhysicsManager PhysicsManager = default!;
-        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
         public override void Initialize()
         {
@@ -41,8 +40,6 @@ namespace Content.Shared.GameObjects.EntitySystems
                 .Bind(EngineKeyFunctions.MoveDown, moveDownCmdHandler)
                 .Bind(EngineKeyFunctions.Walk, new WalkInputCmdHandler())
                 .Register<SharedMoverSystem>();
-
-            _configurationManager.RegisterCVar("game.diagonalmovement", true, CVar.ARCHIVE);
         }
 
         /// <inheritdoc />

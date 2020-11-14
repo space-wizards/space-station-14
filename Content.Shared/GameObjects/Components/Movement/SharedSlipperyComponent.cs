@@ -59,7 +59,7 @@ namespace Content.Shared.GameObjects.Components.Movement
         private bool TrySlip(IEntity entity)
         {
             if (!Slippery
-                || ContainerHelpers.IsInContainer(Owner)
+                || Owner.IsInContainer()
                 ||  _slipped.Contains(entity.Uid)
                 ||  !entity.TryGetComponent(out SharedStunnableComponent stun)
                 ||  !entity.TryGetComponent(out IPhysicsComponent otherBody)

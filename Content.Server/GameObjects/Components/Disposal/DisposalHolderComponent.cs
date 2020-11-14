@@ -114,7 +114,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
                 if (entity.Transform.Parent == Owner.Transform)
                 {
-                    ContainerHelpers.AttachParentToContainerOrGrid(entity.Transform);
+                    entity.Transform.AttachParentToContainerOrGrid();
                 }
             }
 

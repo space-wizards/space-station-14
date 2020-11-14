@@ -206,3 +206,20 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/Instruments/bike_horn.rsi
+
+- type: entity
+  name: super synthesizer
+  description: Blasting the ghetto with Touhou MIDIs since 2020.
+  parent: BaseHandheldInstrument
+  id: SuperSynthesizerInstrument
+  components:
+    - type: Instrument
+      allowPercussion: true
+      allowProgramChange: true
+    - type: Sprite
+      sprite: Objects/Fun/Instruments/h_synthesizer.rsi
+      state: icon
+
+    - type: Item
+      size: 24
+      sprite: Objects/Fun/Instruments/h_synthesizer.rsi

@@ -150,12 +150,6 @@ namespace Content.Client.GameObjects.Components.Disposal
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
-
-            if (component.Owner.Deleted)
-            {
-                return;
-            }
-
             ChangeState(component);
         }
     }

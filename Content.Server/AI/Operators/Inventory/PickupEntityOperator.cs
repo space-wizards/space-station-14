@@ -25,7 +25,7 @@ namespace Content.Server.AI.Operators.Inventory
         {
             if (_target.Deleted ||
                 !_target.HasComponent<ItemComponent>() ||
-                ContainerHelpers.IsInContainer(_target) ||
+                _target.IsInContainer() ||
                 !_owner.InRangeUnobstructed(_target, popup: true))
             {
                 return Outcome.Failed;

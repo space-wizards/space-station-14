@@ -1,4 +1,5 @@
-﻿using Content.Server.GlobalVerbs;
+﻿using System.Threading.Tasks;
+using Content.Server.GlobalVerbs;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using NUnit.Framework;
@@ -14,14 +15,11 @@ namespace Content.IntegrationTests.Tests.Commands
     public class RejuvenateTest : ContentIntegrationTest
     {
         [Test]
-        public void RejuvenateDeadTest()
+        public async Task RejuvenateDeadTest()
         {
             var server = StartServerDummyTicker();
 
-            IEntity human = null;
-            IDamageableComponent damageable = null;
-
-            server.Assert(() =>
+            await server.WaitAssertion(() =>
             {
                 var mapManager = IoCManager.Resolve<IMapManager>();
 
@@ -29,10 +27,10 @@ namespace Content.IntegrationTests.Tests.Commands
 
                 var entityManager = IoCManager.Resolve<IEntityManager>();
 
-                human = entityManager.SpawnEntity("HumanMob_Content", MapCoordinates.Nullspace);
+                var human = entityManager.SpawnEntity("HumanMob_Content", MapCoordinates.Nullspace);
 
                 // Sanity check
-                Assert.True(human.TryGetComponent(out damageable));
+                Assert.True(human.TryGetComponent(out IDamageableComponent damageable));
                 Assert.That(damageable.CurrentState, Is.EqualTo(DamageState.Alive));
 
                 // Kill the entity

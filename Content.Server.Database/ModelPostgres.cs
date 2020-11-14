@@ -65,6 +65,9 @@ namespace Content.Server.Database
                 .HasCheckConstraint("LastSeenAddressNotIPv6MappedIPv4",
                     "NOT inet '::ffff:0.0.0.0/96' >>= last_seen_address");
 
+            modelBuilder.Entity<PostgresPlayer>()
+                .HasIndex(p => p.LastSeenUserName);
+
             modelBuilder.Entity<PostgresConnectionLog>()
                 .HasIndex(p => p.UserId);
 

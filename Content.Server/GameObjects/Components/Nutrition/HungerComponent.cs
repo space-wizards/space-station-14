@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
@@ -70,11 +71,11 @@ namespace Content.Server.GameObjects.Components.Nutrition
         }
 
 
-        public static readonly Dictionary<HungerThreshold, string> HungerThresholdImages = new Dictionary<HungerThreshold, string>
+        public static readonly Dictionary<HungerThreshold, AlertType> HungerThresholdAlertTypes = new Dictionary<HungerThreshold, AlertType>
         {
-            { HungerThreshold.Overfed, "/Textures/Interface/StatusEffects/Hunger/Overfed.png" },
-            { HungerThreshold.Peckish, "/Textures/Interface/StatusEffects/Hunger/Peckish.png" },
-            { HungerThreshold.Starving, "/Textures/Interface/StatusEffects/Hunger/Starving.png" },
+            { HungerThreshold.Overfed, AlertType.Overfed },
+            { HungerThreshold.Peckish, AlertType.Peckish },
+            { HungerThreshold.Starving, AlertType.Starving },
         };
 
         public void HungerThresholdEffect(bool force = false)
@@ -89,15 +90,15 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 }
 
                 // Update UI
-                Owner.TryGetComponent(out ServerStatusEffectsComponent statusEffectsComponent);
+                Owner.TryGetComponent(out ServerAlertsComponent alertsComponent);
 
-                if (HungerThresholdImages.TryGetValue(_currentHungerThreshold, out var statusTexture))
+                if (HungerThresholdAlertTypes.TryGetValue(_currentHungerThreshold, out var alertId))
                 {
-                    statusEffectsComponent?.ChangeStatusEffectIcon(StatusEffect.Hunger, statusTexture);
+                    alertsComponent?.ShowAlert(alertId);
                 }
                 else
                 {
-                    statusEffectsComponent?.RemoveStatusEffect(StatusEffect.Hunger);
+                    alertsComponent?.ClearAlertCategory(AlertCategory.Hunger);
                 }
 
                 switch (_currentHungerThreshold)
