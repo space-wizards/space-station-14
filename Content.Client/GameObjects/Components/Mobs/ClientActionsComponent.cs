@@ -29,9 +29,11 @@ namespace Content.Client.GameObjects.Components.Mobs
     /// <inheritdoc/>
     [RegisterComponent]
     [ComponentReference(typeof(SharedActionsComponent))]
-    public sealed class ClientActionsComponent : SharedAlertsComponent
+    public sealed class ClientActionsComponent : SharedActionsComponent
     {
-        private static readonly float TooltipTextMaxWidth = 265;
+        private static readonly float TooltipTextMaxWidth = 280;
+        public static readonly byte Hotbars = 10;
+        public static readonly byte Slots = 10;
 
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
@@ -45,10 +47,6 @@ namespace Content.Client.GameObjects.Components.Mobs
         private RichTextLabel _actionRequirements;
         private bool _tooltipReady;
 
-        [ViewVariables]
-        private Dictionary<AlertKey, AlertControl> _alertControls
-            = new Dictionary<AlertKey, AlertControl>();
-
         /// <summary>
         /// Allows calculating if we need to act due to this component being controlled by the current mob
         /// TODO: should be revisited after space-wizards/RobustToolbox#1255
@@ -57,19 +55,26 @@ namespace Content.Client.GameObjects.Components.Mobs
         private bool CurrentlyControlled => _playerManager.LocalPlayer != null && _playerManager.LocalPlayer.ControlledEntity == Owner;
 
 
+        // the slots and assignments fields hold client's assignments (what action goes in what slot),
+        // which are completely client side and independent of what actions they've actually been granted.
+
         /// <summary>
         /// x = hotbar number, y = slot of that hotbar (index 0 corresponds to the one labeled "1",
         /// index 9 corresponds to the one labeled "0"). Essentially the inverse of _assignments.
         /// </summary>
-        private ActionSlot[,] _slots = new ActionSlot[10, 10];
+        private ActionType?[,] _slots = new ActionType?[Hotbars, Slots];
 
         /// <summary>
         /// Hotbar and slot assignment for each action type (slot index 0 corresponds to the one labeled "1",
         /// slot index 9 corresponds to the one labeled "0"). The key corresponds to an index in the _slots array.
         /// The value is a list because actions can be assigned to multiple slots. Even if an action type has not been granted,
         /// it can still be assigned to a slot. Essentially the inverse of _slots.
+        /// There will be no entry if there is no assignment (no empty lists in this dict)
         /// </summary>
         private Dictionary<ActionType, List<(byte Hotbar, byte Slot)>> _assignments = new Dictionary<ActionType, List<(byte Hotbar, byte Slot)>>();
+
+        // index of currently displayed hotbar
+        private byte _selectedHotbar = 0;
 
         protected override void Shutdown()
         {
@@ -95,7 +100,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         {
             base.HandleComponentState(curState, nextState);
 
-            UpdateAlertsControls();
+            UpdateHotbar();
         }
 
         private void PlayerAttached()
@@ -105,13 +110,7 @@ namespace Content.Client.GameObjects.Components.Mobs
                 return;
             }
 
-            _alertOrder = IoCManager.Resolve<IPrototypeManager>().EnumeratePrototypes<AlertOrderPrototype>().FirstOrDefault();
-            if (_alertOrder == null)
-            {
-                Logger.ErrorS("alert", "no alertOrder prototype found, alerts will be in random order");
-            }
-
-            _ui = new AlertsUI(IoCManager.Resolve<IClyde>());
+            _ui = new ActionsUI(ActionOnOnShowTooltip, ActionOnOnHideTooltip, ActionSlotOnPressed, _resourceCache);
             var uiManager = IoCManager.Resolve<IUserInterfaceManager>();
             uiManager.StateRoot.AddChild(_ui);
 
@@ -128,152 +127,147 @@ namespace Content.Client.GameObjects.Components.Mobs
             _actionName = new RichTextLabel
             {
                 MaxWidth = TooltipTextMaxWidth,
-                StyleClasses = { StyleNano.StyleClassTooltipAlertTitle }
+                StyleClasses = { StyleNano.StyleClassTooltipActionTitle }
             };
             tooltipVBox.AddChild(_actionName);
             _actionDescription = new RichTextLabel
             {
                 MaxWidth = TooltipTextMaxWidth,
-                StyleClasses = { StyleNano.StyleClassTooltipAlertDescription }
+                StyleClasses = { StyleNano.StyleClassTooltipActionDescription }
             };
             tooltipVBox.AddChild(_actionDescription);
             _actionCooldown = new RichTextLabel
             {
                 MaxWidth = TooltipTextMaxWidth,
-                StyleClasses = { StyleNano.StyleClassTooltipAlertCooldown }
+                StyleClasses = { StyleNano.StyleClassTooltipActionCooldown }
             };
             tooltipVBox.AddChild(_actionCooldown);
+            _actionRequirements = new RichTextLabel
+            {
+                MaxWidth = TooltipTextMaxWidth,
+                StyleClasses = { StyleNano.StyleClassTooltipActionRequirements }
+            };
+            tooltipVBox.AddChild(_actionRequirements);
 
             uiManager.PopupRoot.AddChild(_tooltip);
 
-            UpdateAlertsControls();
+            UpdateHotbar();
         }
 
         private void PlayerDetached()
         {
             _ui?.Dispose();
             _ui = null;
-            _alertControls.Clear();
         }
 
         /// <summary>
-        /// Updates the displayed alerts based on current state of Alerts, performing
-        /// a diff to ensure we only change what's changed (this avoids active tooltips disappearing any
-        /// time state changes)
+        /// Updates the displayed hotbar based on current state of actions.
         /// </summary>
-        private void UpdateAlertsControls()
+        private void UpdateHotbar()
         {
             if (!CurrentlyControlled || _ui == null)
             {
                 return;
             }
 
-            // remove any controls with keys no longer present
-            var toRemove = new List<AlertKey>();
-            foreach (var existingKey in _alertControls.Keys)
+            // if we've been granted any actions which have no assignment to any hotbar, we must auto-populate them
+            // into the hotbar so the user knows about them.
+            // We fill their current hotbar first, rolling over to the next open slot on the next hotbar.
+            foreach (var actionState in EnumerateActionStates())
             {
-                if (!IsShowingAlert(existingKey))
+                if (!_assignments.ContainsKey(actionState.ActionType))
                 {
-                    toRemove.Add(existingKey);
+                    AutoPopulate(actionState.ActionType);
                 }
             }
 
-            foreach (var alertKeyToRemove in toRemove)
+            // now update the controls of only the current selected hotbar.
+            for (byte i = 0; i < Slots; i++)
             {
-                // remove and dispose the control
-                _alertControls.Remove(alertKeyToRemove, out var control);
-                control?.Dispose();
-            }
-
-            // now we know that alertControls contains alerts that should still exist but
-            // may need to updated,
-            // also there may be some new alerts we need to show.
-            // further, we need to ensure they are ordered w.r.t their configured order
-            foreach (var alertStatus in EnumerateAlertStates())
-            {
-                if (!AlertManager.TryGet(alertStatus.AlertType, out var newAlert))
+                var actionType = _slots[_selectedHotbar, i];
+                if (actionType == null) continue;
+                if (!IsGranted((ActionType) actionType))
                 {
-                    Logger.ErrorS("alert", "Unrecognized alertType {0}", alertStatus.AlertType);
+                    _ui.RevokeSlot(i);
                     continue;
                 }
-
-                if (_alertControls.TryGetValue(newAlert.AlertKey, out var existingAlertControl) &&
-                    existingAlertControl.Alert.AlertType == newAlert.AlertType)
-                {
-                    // id is the same, simply update the existing control severity
-                    existingAlertControl.SetSeverity(alertStatus.Severity);
-                }
-                else
-                {
-                    existingAlertControl?.Dispose();
-
-                    // this is a new alert + alert key or just a different alert with the same
-                    // key, create the control and add it in the appropriate order
-                    var newAlertControl = CreateAlertControl(newAlert, alertStatus);
-                    if (_alertOrder != null)
-                    {
-                        var added = false;
-                        foreach (var alertControl in _ui.Grid.Children)
-                        {
-                            if (_alertOrder.Compare(newAlert, ((AlertControl) alertControl).Alert) < 0)
-                            {
-                                var idx = alertControl.GetPositionInParent();
-                                _ui.Grid.Children.Add(newAlertControl);
-                                newAlertControl.SetPositionInParent(idx);
-                                added = true;
-                                break;
-                            }
-                        }
-
-                        if (!added)
-                        {
-                            _ui.Grid.Children.Add(newAlertControl);
-                        }
-                    }
-                    else
-                    {
-                        _ui.Grid.Children.Add(newAlertControl);
-                    }
-
-                    _alertControls[newAlert.AlertKey] = newAlertControl;
-                }
+                _ui.GrantSlot(i);
             }
         }
 
-        private AlertControl CreateAlertControl(AlertPrototype alert, AlertState alertState)
+        /// <summary>
+        /// Finds the next open slot the action can go in and assigns it there,
+        /// starting from the currently selected hotbar
+        /// </summary>
+        private void AutoPopulate(ActionType actionType)
         {
-
-            var alertControl = new AlertControl(alert, alertState.Severity, _resourceCache);
-            // show custom tooltip for the status control
-            alertControl.OnShowTooltip += AlertOnOnShowTooltip;
-            alertControl.OnHideTooltip += AlertOnOnHideTooltip;
-
-            alertControl.OnPressed += AlertControlOnPressed;
-
-            return alertControl;
+            for (byte hotbarOffset = 0; hotbarOffset < Hotbars; hotbarOffset++)
+            {
+                for (byte slot = 0; slot < Slots; slot++)
+                {
+                    if (_slots[(_selectedHotbar + hotbarOffset) % Hotbars, slot] != null) continue;
+                    AssignSlot(_selectedHotbar, slot, actionType);
+                    return;
+                }
+            }
+            // there was no empty slot
         }
 
-        private void AlertControlOnPressed(BaseButton.ButtonEventArgs args)
+        /// <summary>
+        /// Assigns the indicated hotbar slot to the specified action type, including updating the
+        /// hotbar slot if this corresponds to a currently displayed hotbar slot.
+        /// </summary>
+        /// <param name="hotbar">hotbar whose slot is being assigned</param>
+        /// <param name="slot">slot of the hotbar to assign to (0 = the slot labeled 1, 9 = the slot labeled 0)</param>
+        /// <param name="actionType">action to assign to the slot</param>
+        private void AssignSlot(byte hotbar, byte slot, ActionType actionType)
         {
-            AlertPressed(args, args.Button as AlertControl);
+            _slots[hotbar, slot] = actionType;
+            if (_assignments.TryGetValue(actionType, out var slotList))
+            {
+                slotList.Add((hotbar, slot));
+            }
+            else
+            {
+                var newList = new List<(byte Hotbar, byte Slot)> {(hotbar, slot)};
+                _assignments[actionType] = newList;
+            }
+
+            if (hotbar != _selectedHotbar) return;
+            if (ActionManager.TryGet(actionType, out var action))
+            {
+                _ui.Assign(slot, action);
+            }
+            else
+            {
+                Logger.WarningS("action", "unrecognized actionType {0}", actionType);
+            }
+
         }
 
-        private void AlertOnOnHideTooltip(object sender, EventArgs e)
+        private void ActionSlotOnPressed(BaseButton.ButtonEventArgs args)
+        {
+            ActionPressed(args, args.Button as AlertControl);
+        }
+
+        private void ActionOnOnHideTooltip(object sender, EventArgs e)
         {
             _tooltipReady = false;
             _tooltip.Visible = false;
         }
 
-        private void AlertOnOnShowTooltip(object sender, EventArgs e)
+        private void ActionOnOnShowTooltip(object sender, EventArgs e)
         {
-            var alertControl = (AlertControl) sender;
-            _actionName.SetMessage(alertControl.Alert.Name);
-            _actionDescription.SetMessage(alertControl.Alert.Description);
+            var actionSlot = (ActionSlot) sender;
+            if (actionSlot.Action == null) return;
+
+            _actionName.SetMessage(actionSlot.Action.Name);
+            _actionDescription.SetMessage(actionSlot.Action.Description);
             // check for a cooldown
-            if (alertControl.TotalDuration != null && alertControl.TotalDuration > 0)
+            if (actionSlot.TotalDuration != null && actionSlot.TotalDuration > 0)
             {
                 _actionCooldown.SetMessage(FormattedMessage.FromMarkup("[color=#776a6a]" +
-                                                                      alertControl.TotalDuration +
+                                                                      actionSlot.TotalDuration +
                                                                       " sec cooldown[/color]"));
                 _actionCooldown.Visible = true;
             }
@@ -281,21 +275,34 @@ namespace Content.Client.GameObjects.Components.Mobs
             {
                 _actionCooldown.Visible = false;
             }
-            // TODO: Text display of cooldown
+            //check for requirements message
+            if (actionSlot.Action.Requires != null)
+            {
+                _actionCooldown.SetMessage(FormattedMessage.FromMarkup("[color=#635c5c]" +
+                                                                       actionSlot.Action.Requires +
+                                                                       "[/color]"));
+            }
+            else
+            {
+                _actionRequirements.Visible = false;
+            }
+
+
             Tooltips.PositionTooltip(_tooltip);
             // if we set it visible here the size of the previous tooltip will flicker for a frame,
             // so instead we wait until FrameUpdate to make it visible
             _tooltipReady = true;
         }
 
-        private void AlertPressed(BaseButton.ButtonEventArgs args, AlertControl alert)
+        private void ActionPressed(BaseButton.ButtonEventArgs args, AlertControl alert)
         {
-            if (args.Event.Function != EngineKeyFunctions.UIClick)
-            {
-                return;
-            }
-
-            SendNetworkMessage(new ClickAlertMessage(alert.Alert.AlertType));
+            // TODO: Action logic
+            // if (args.Event.Function != EngineKeyFunctions.UIClick)
+            // {
+            //     return;
+            // }
+            //
+            // SendNetworkMessage(new ClickAlertMessage(alert.Alert.AlertType));
         }
 
         public void FrameUpdate(float frameTime)
@@ -305,44 +312,29 @@ namespace Content.Client.GameObjects.Components.Mobs
                 _tooltipReady = false;
                 _tooltip.Visible = true;
             }
-            foreach (var (alertKey, alertControl) in _alertControls)
+            // update the cooldowns for each currently displayed hotbar slot.
+            // note that we don't actually need to keep track of cooldowns for
+            // slots in other hotbars - since we store the precise start and end of each
+            // cooldown we have no need to actively tick down, we can always calculate current
+            // cooldown amount as-needed (for example when switching toolbars).
+            for (byte i = 0; i < Slots; i++)
             {
-                // reconcile all alert controls with their current cooldowns
-                if (TryGetAlertState(alertKey, out var alertState))
-                {
-                    alertControl.UpdateCooldown(alertState.Cooldown, _gameTiming.CurTime);
-                }
-                else
-                {
-                    Logger.WarningS("alert", "coding error - no alert state for alert {0} " +
-                                             "even though we had an AlertControl for it, this" +
-                                             " should never happen", alertControl.Alert.AlertType);
-                }
+                var actionType = _slots[_selectedHotbar, i];
+                if (actionType == null) continue;
 
+                if (!TryGetGrantedActionState((ActionType) actionType, out var actionState)) continue;
+                _ui.UpdateCooldown(i, actionState.Cooldown, _gameTiming.CurTime);
             }
         }
 
-        protected override void AfterShowAlert()
+        protected override void AfterGrantAction()
         {
-            UpdateAlertsControls();
+            UpdateHotbar();
         }
 
-        protected override void AfterClearAlert()
+        protected override void AfterRevokeAction()
         {
-            UpdateAlertsControls();
-        }
-
-        public override void OnRemove()
-        {
-            base.OnRemove();
-
-            foreach (var alertControl in _alertControls.Values)
-            {
-                alertControl.OnShowTooltip -= AlertOnOnShowTooltip;
-                alertControl.OnHideTooltip -= AlertOnOnHideTooltip;
-                alertControl.OnPressed -= AlertControlOnPressed;
-            }
-
+            UpdateHotbar();
         }
     }
 }

@@ -20,6 +20,12 @@ namespace Content.Client.UserInterface.Stylesheets
         public const string StyleClassTooltipAlertTitle = "tooltipAlertTitle";
         public const string StyleClassTooltipAlertDescription = "tooltipAlertDesc";
         public const string StyleClassTooltipAlertCooldown = "tooltipAlertCooldown";
+        public const string StyleClassTooltipActionTitle = "tooltipActionTitle";
+        public const string StyleClassTooltipActionDescription = "tooltipActionDesc";
+        public const string StyleClassTooltipActionCooldown = "tooltipActionCooldown";
+        public const string StyleClassTooltipActionRequirements = "tooltipActionCooldown";
+        public const string StyleClassHotbarSlotNumber = "hotbarSlotNumber";
+
 
         public const string StyleClassSliderRed = "Red";
         public const string StyleClassSliderGreen = "Green";
@@ -61,6 +67,8 @@ namespace Content.Client.UserInterface.Stylesheets
             var notoSansItalic12 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Italic.ttf", 12);
             var notoSansBold12 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Bold.ttf", 12);
             var notoSansDisplayBold14 = resCache.GetFont("/Fonts/NotoSansDisplay/NotoSansDisplay-Bold.ttf", 14);
+            var notoSansDisplayBold16 = resCache.GetFont("/Fonts/NotoSansDisplay/NotoSansDisplay-Bold.ttf", 16);
+            var notoSans15 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 15);
             var notoSans16 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 16);
             var notoSansBold16 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Bold.ttf", 16);
             var notoSansBold18 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Bold.ttf", 18);
@@ -544,6 +552,30 @@ namespace Content.Client.UserInterface.Stylesheets
                 new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassTooltipAlertCooldown}, null, null), new[]
                 {
                     new StyleProperty("font", notoSans16)
+                }),
+
+                // action tooltip
+                new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassTooltipActionTitle}, null, null), new[]
+                {
+                    new StyleProperty("font", notoSansBold16)
+                }),
+                new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassTooltipActionDescription}, null, null), new[]
+                {
+                    new StyleProperty("font", notoSans15)
+                }),
+                new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassTooltipActionCooldown}, null, null), new[]
+                {
+                    new StyleProperty("font", notoSans15)
+                }),
+                new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassTooltipActionRequirements}, null, null), new[]
+                {
+                    new StyleProperty("font", notoSans15)
+                }),
+
+                // hotbar slot
+                new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassHotbarSlotNumber}, null, null), new[]
+                {
+                    new StyleProperty("font", notoSansDisplayBold16)
                 }),
 
                 // Entity tooltip

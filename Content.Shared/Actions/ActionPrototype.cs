@@ -37,9 +37,9 @@ namespace Content.Shared.Actions
         public FormattedMessage Description { get; private set; }
 
         /// <summary>
-        /// Requirements message to show in UI. Accepts formatting.
+        /// Requirements message to show in UI. Does NOT accept formatting.
         /// </summary>
-        public FormattedMessage Requires { get; private set; }
+        public string Requires { get; private set; }
 
         /// <summary>
         /// The type of behavior this action has. This is determined based
@@ -83,8 +83,8 @@ namespace Content.Shared.Actions
                 s => Name = FormattedMessage.FromMarkup(s));
             serializer.DataReadFunction("description", string.Empty,
                 s => Description = FormattedMessage.FromMarkup(s));
-            serializer.DataReadFunction("requires", string.Empty,
-                s => Requires = FormattedMessage.FromMarkup(s));
+
+            serializer.DataField(this, x => x.Requires,"requires", null);
 
             serializer.DataField(this, x => x.ActionType, "actionType", ActionType.Error);
             if (ActionType == ActionType.Error)

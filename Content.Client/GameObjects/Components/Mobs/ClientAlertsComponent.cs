@@ -135,6 +135,12 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         private void PlayerDetached()
         {
+            foreach (var alertControl in _alertControls.Values)
+            {
+                alertControl.OnShowTooltip -= AlertOnOnShowTooltip;
+                alertControl.OnHideTooltip -= AlertOnOnHideTooltip;
+                alertControl.OnPressed -= AlertControlOnPressed;
+            }
             _ui?.Dispose();
             _ui = null;
             _alertControls.Clear();
@@ -265,7 +271,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             {
                 _alertCooldown.Visible = false;
             }
-            // TODO: Text display of cooldown
+
             Tooltips.PositionTooltip(_tooltip);
             // if we set it visible here the size of the previous tooltip will flicker for a frame,
             // so instead we wait until FrameUpdate to make it visible
@@ -314,19 +320,6 @@ namespace Content.Client.GameObjects.Components.Mobs
         protected override void AfterClearAlert()
         {
             UpdateAlertsControls();
-        }
-
-        public override void OnRemove()
-        {
-            base.OnRemove();
-
-            foreach (var alertControl in _alertControls.Values)
-            {
-                alertControl.OnShowTooltip -= AlertOnOnShowTooltip;
-                alertControl.OnHideTooltip -= AlertOnOnHideTooltip;
-                alertControl.OnPressed -= AlertControlOnPressed;
-            }
-
         }
     }
 }

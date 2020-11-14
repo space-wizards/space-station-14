@@ -16,6 +16,9 @@ namespace Content.Shared.GameObjects.Components.Mobs
     {
         private static readonly ActionState[] NoActions = new ActionState[0];
 
+        [Dependency]
+        protected readonly ActionManager ActionManager = default!;
+
         public override string Name => "ActionsUI";
         public override uint? NetID => ContentNetIDs.ACTIONS;
 
@@ -73,7 +76,11 @@ namespace Content.Shared.GameObjects.Components.Mobs
             return states;
         }
 
-        protected bool TryGetActionState(ActionType actionType, out ActionState actionState)
+        /// <summary>
+        /// Gets the current state of the action, if granted. Returns false if action is
+        /// not granted.
+        /// </summary>
+        protected bool TryGetGrantedActionState(ActionType actionType, out ActionState actionState)
         {
             return _actions.TryGetValue(actionType, out actionState);
         }

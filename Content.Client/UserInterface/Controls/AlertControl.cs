@@ -61,7 +61,7 @@ namespace Content.Client.UserInterface.Controls
         }
 
         /// <summary>
-        /// Updates the displayed cooldown amount, doing nothing if alertCooldown is null
+        /// Updates the displayed cooldown amount, clearing the cooldown if alertCooldown is null
         /// </summary>
         /// <param name="alertCooldown">cooldown start and end</param>
         /// <param name="curTime">current game time</param>
