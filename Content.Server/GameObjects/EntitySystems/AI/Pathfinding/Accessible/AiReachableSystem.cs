@@ -39,7 +39,6 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
          */
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private PathfindingSystem _pathfindingSystem;
 
@@ -717,7 +716,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
 
                     foreach (var node in region.Nodes)
                     {
-                        var nodeVector = grid.GridTileToLocal(node.TileRef.GridIndices).ToMapPos(_entityManager);
+                        var nodeVector = grid.GridTileToLocal(node.TileRef.GridIndices).ToMapPos(EntityManager);
                         debugRegionNodes.Add(nodeVector);
                     }
 
@@ -746,7 +745,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
 
                 foreach (var node in region.Nodes)
                 {
-                    var nodeVector = grid.GridTileToLocal(node.TileRef.GridIndices).ToMapPos(_entityManager);
+                    var nodeVector = grid.GridTileToLocal(node.TileRef.GridIndices).ToMapPos(EntityManager);
 
                     debugResult[_runningCacheIdx].Add(nodeVector);
                 }

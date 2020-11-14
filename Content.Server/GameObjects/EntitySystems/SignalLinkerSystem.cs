@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using Content.Server.Administration;
 using Content.Server.GameObjects.Components.MachineLinking;
 using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Shared.Administration;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
@@ -98,6 +100,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class SignalLinkerCommand : IClientCommand
     {
         public string Command => "signallink";

@@ -1,8 +1,10 @@
 ﻿using System;
-using System.Text;
+﻿using System.Text;
+using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Mobs.Roles;
 using Content.Server.Players;
+using Content.Shared.Administration;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Roles;
 using Robust.Server.Interfaces.Console;
@@ -14,6 +16,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Mobs
 {
 
+    [AdminCommand(AdminFlags.Admin)]
     public class MindInfoCommand : IClientCommand
     {
         public string Command => "mindinfo";
@@ -51,6 +54,7 @@ namespace Content.Server.Mobs
         }
     }
 
+    [AdminCommand(AdminFlags.Fun)]
     public class AddRoleCommand : IClientCommand
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -83,6 +87,7 @@ namespace Content.Server.Mobs
         }
     }
 
+    [AdminCommand(AdminFlags.Fun)]
     public class RemoveRoleCommand : IClientCommand
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -115,6 +120,7 @@ namespace Content.Server.Mobs
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class AddOverlayCommand : IClientCommand
     {
         public string Command => "addoverlay";
@@ -142,6 +148,7 @@ namespace Content.Server.Mobs
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class RemoveOverlayCommand : IClientCommand
     {
         public string Command => "rmoverlay";

@@ -126,7 +126,7 @@ namespace Content.Client.GameObjects.EntitySystems
             }
 
             if (!_playerCanSeeThroughContainers &&
-                ContainerHelpers.TryGetContainer(entity, out var container) &&
+                entity.TryGetContainer(out var container) &&
                 !container.ShowContents)
             {
                 return false;

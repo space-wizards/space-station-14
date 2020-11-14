@@ -1,9 +1,10 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Shared;
+using Content.Shared.Administration;
 using Content.Shared.GameObjects.Components.Movement;
 using JetBrains.Annotations;
 using Robust.Server.AI;
@@ -145,6 +146,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI
         public bool ProcessorTypeExists(string name) => _processorTypes.ContainsKey(name);
 
 
+        [AdminCommand(AdminFlags.Fun)]
         private class AddAiCommand : IClientCommand
         {
             public string Command => "addai";

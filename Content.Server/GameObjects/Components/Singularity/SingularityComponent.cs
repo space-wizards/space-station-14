@@ -29,7 +29,6 @@ namespace Content.Server.GameObjects.Components.Singularity
     public class SingularityComponent : Component, ICollideBehavior
     {
         [Dependency] private IEntityManager _entityManager = null!;
-        [Dependency] private IMapManager _mapManager = null!;
         [Dependency] private IRobustRandom _random = null!;
 
 
@@ -267,7 +266,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                 return;
             }
 
-            if (ContainerHelpers.IsInContainer(entity)) return;
+            if (entity.IsInContainer()) return;
 
             if (_delayTiming.ContainsKey(entity))
             {
