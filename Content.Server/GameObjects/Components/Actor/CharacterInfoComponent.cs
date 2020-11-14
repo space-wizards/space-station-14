@@ -1,6 +1,8 @@
 ﻿#nullable enable
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.Mobs.Roles;
 using Content.Shared.GameObjects.Components.Actor;
 using Content.Shared.Objectives;
 using Robust.Shared.GameObjects;
@@ -18,9 +20,10 @@ namespace Content.Server.GameObjects.Components.Actor
             {
                 case RequestCharacterInfoMessage msg:
                     var conditions = new Dictionary<string, List<ConditionInfo>>();
-                    var jobTitle = "Professional Greyshirt";
+                    var jobTitle = "No Profession";
                     if (Owner.TryGetComponent(out MindComponent? mindComponent))
                     {
+                        //getting conditions
                         if (mindComponent.Mind?.AllObjectives != null)
                         {
                             foreach (var objective in mindComponent.Mind?.AllObjectives!)
@@ -33,6 +36,13 @@ namespace Content.Server.GameObjects.Components.Actor
                                         condition.GetDescription(), condition.GetIcon(), condition.GetProgress(mindComponent.Mind)));
                                 }
                             }
+                        }
+                        //getting jobtitle
+                        var jobRole =
+                            mindComponent.Mind?.AllRoles.FirstOrDefault(role => role.GetType() == typeof(Job));
+                        if(jobRole != null)
+                        {
+                            jobTitle = jobRole.Name;
                         }
                     }
                     SendNetworkMessage(new CharacterInfoMessage(jobTitle, conditions));
