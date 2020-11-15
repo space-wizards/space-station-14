@@ -28,7 +28,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
         private GrinderMenu _menu;
         private Dictionary<int, EntityUid> _chamberVisualContents = new Dictionary<int, EntityUid>();
         private Dictionary<int, Solution.ReagentQuantity> _beakerVisualContents = new Dictionary<int, Solution.ReagentQuantity>();
-        public ReagentGrinderBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner,uiKey) { }
+        public ReagentGrinderBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey) { }
 
         protected override void Open()
         {
@@ -38,9 +38,9 @@ namespace Content.Client.GameObjects.Components.Kitchen
             _menu.OnClose += Close;
             _menu.GrindButton.OnPressed += args => SendMessage(new SharedReagentGrinderComponent.ReagentGrinderGrindStartMessage());
             _menu.JuiceButton.OnPressed += args => SendMessage(new SharedReagentGrinderComponent.ReagentGrinderJuiceStartMessage());
-            _menu.ChamberConentBox.EjectButton.OnPressed += args => SendMessage(new SharedReagentGrinderComponent.ReagentGrinderEjectChamberAllMessage());
+            _menu.ChamberContentBox.EjectButton.OnPressed += args => SendMessage(new SharedReagentGrinderComponent.ReagentGrinderEjectChamberAllMessage());
             _menu.BeakerContentBox.EjectButton.OnPressed += args => SendMessage(new SharedReagentGrinderComponent.ReagentGrinderEjectBeakerMessage());
-            _menu.ChamberConentBox.BoxContents.OnItemSelected += args =>
+            _menu.ChamberContentBox.BoxContents.OnItemSelected += args =>
             {
                 SendMessage(new SharedReagentGrinderComponent.ReagentGrinderEjectChamberContentMessage(_chamberVisualContents[args.ItemIndex]));
             };
@@ -72,18 +72,15 @@ namespace Content.Client.GameObjects.Components.Kitchen
             {
                 return;
             }
-
             _menu.BeakerContentBox.EjectButton.Disabled = !cState.HasBeakerIn;
-            _menu.ChamberConentBox.EjectButton.Disabled = cState.ChamberContents.Length <= 0;
+            _menu.ChamberContentBox.EjectButton.Disabled = cState.ChamberContents.Length <= 0;
             RefreshContentsDisplay(cState.ReagentQuantities, cState.ChamberContents, cState.HasBeakerIn);
-
         }
-
 
         protected override void ReceiveMessage(BoundUserInterfaceMessage message)
         {
             base.ReceiveMessage(message);
-            switch(message)
+            switch (message)
             {
                 case SharedReagentGrinderComponent.ReagentGrinderWorkStartedMessage workStarted:
                     _menu.GrindButton.Disabled = true;
@@ -102,34 +99,25 @@ namespace Content.Client.GameObjects.Components.Kitchen
 
         private void RefreshContentsDisplay(Solution.ReagentQuantity[] reagents, EntityUid[] containedSolids, bool isBeakerAttached)
         {
+            //But, if no beaker is attached use this guard to prevent hitting a null reference.
+            if (!isBeakerAttached || reagents == null)
+            {
+                return;
+            }
 
             //Much of this component's interface will just be ripped straight from microwave...
             _chamberVisualContents.Clear();
-            _menu.ChamberConentBox.BoxContents.Clear();
+            _menu.ChamberContentBox.BoxContents.Clear();
             for (var j = 0; j < containedSolids.Length; j++)
             {
                 if (!_entityManager.TryGetEntity(containedSolids[j], out var entity))
                 {
                     return;
                 }
-                if (entity.Deleted)
-                {
-                    continue;
-                }
+                var texture = entity.GetComponent<SpriteComponent>().Icon.Default;
 
-                Texture texture;
-                if (entity.TryGetComponent(out IconComponent iconComponent))
-                {
-                    texture = iconComponent.Icon?.Default;
-                }
-                else if (entity.TryGetComponent(out SpriteComponent spriteComponent))
-                {
-                    texture = spriteComponent.Icon?.Default;
-                }
-                else { continue; }
-
-                var solidItem = _menu.ChamberConentBox.BoxContents.AddItem(entity.Name, texture);
-                var solidIndex = _menu.ChamberConentBox.BoxContents.IndexOf(solidItem);
+                var solidItem = _menu.ChamberContentBox.BoxContents.AddItem(entity.Name, texture);
+                var solidIndex = _menu.ChamberContentBox.BoxContents.IndexOf(solidItem);
                 _chamberVisualContents.Add(solidIndex, containedSolids[j]);
             }
 
@@ -137,11 +125,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
             _beakerVisualContents.Clear();
             _menu.BeakerContentBox.BoxContents.Clear();
 
-            //But, if no beaker is attached use this guard to prevent hitting a null reference.
-            if (!isBeakerAttached || reagents == null)
-            {
-                return;
-            }
+
 
             //Looks like we have a beaker attached.
             if (reagents.Length <= 0)
@@ -152,8 +136,9 @@ namespace Content.Client.GameObjects.Components.Kitchen
             {
                 for (var i = 0; i < reagents.Length; i++)
                 {
-                    _prototypeManager.TryIndex(reagents[i].ReagentId, out ReagentPrototype proto);
-                    var reagentAdded = _menu.BeakerContentBox.BoxContents.AddItem($"{reagents[i].Quantity} {proto.Name}");
+                    var goodIndex = _prototypeManager.TryIndex(reagents[i].ReagentId, out ReagentPrototype proto);
+                    var reagentName = goodIndex ? Loc.GetString($"{reagents[i].Quantity} {proto.Name}") : Loc.GetString("???");
+                    var reagentAdded = _menu.BeakerContentBox.BoxContents.AddItem(reagentName);
                     var reagentIndex = _menu.BeakerContentBox.BoxContents.IndexOf(reagentAdded);
                     _beakerVisualContents.Add(reagentIndex, reagents[i]);
                 }
@@ -172,7 +157,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
              * | [J] |  |-----|       |-----|    |
              * |     |                           |
              * \---------------------------------/
-             * 
+             *
              */
 
             private ReagentGrinderBoundUserInterface Owner { get; set; }
@@ -183,7 +168,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
             public Button GrindButton { get; }
             public Button JuiceButton { get; }
 
-            public LabelledContentBox ChamberConentBox { get; }
+            public LabelledContentBox ChamberContentBox { get; }
             public LabelledContentBox BeakerContentBox { get; }
 
             public sealed class LabelledContentBox : VBoxContainer
@@ -195,7 +180,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
 
                 private Label _label;
 
-                public LabelledContentBox(string labelText, string buttonText) : base()
+                public LabelledContentBox(string labelText, string buttonText)
                 {
 
                     _label = new Label
@@ -253,7 +238,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
                 {
                     Text = Loc.GetString("Grind"),
                     TextAlign = Label.AlignMode.Center,
-                    CustomMinimumSize = (64,64)
+                    CustomMinimumSize = (64, 64)
                 };
 
                 JuiceButton = new Button
@@ -267,15 +252,15 @@ namespace Content.Client.GameObjects.Components.Kitchen
                 //inner button padding
                 vBoxGrindJuiceButtonPanel.AddChild(new Control
                 {
-                    CustomMinimumSize = (0,16),
+                    CustomMinimumSize = (0, 16),
                 });
                 vBoxGrindJuiceButtonPanel.AddChild(JuiceButton);
 
-                ChamberConentBox = new LabelledContentBox(Loc.GetString("Chamber"), Loc.GetString("Eject Contents"))
+                ChamberContentBox = new LabelledContentBox(Loc.GetString("Chamber"), Loc.GetString("Eject Contents"))
                 {
                     //Modulate = Color.Red,
                     SizeFlagsVertical = SizeFlags.FillExpand,
-                    SizeFlagsHorizontal = SizeFlags.FillExpand,                   
+                    SizeFlagsHorizontal = SizeFlags.FillExpand,
                     SizeFlagsStretchRatio = 2,
 
                 };
@@ -294,9 +279,9 @@ namespace Content.Client.GameObjects.Components.Kitchen
                 //Padding between the g/j buttons panel and the itemlist boxes panel.
                 hSplit.AddChild(new Control
                 {
-                    CustomMinimumSize = (16,0),
+                    CustomMinimumSize = (16, 0),
                 });
-                hSplit.AddChild(ChamberConentBox);
+                hSplit.AddChild(ChamberContentBox);
 
                 //Padding between the two itemlists.
                 hSplit.AddChild(new Control
