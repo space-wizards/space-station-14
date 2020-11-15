@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Text;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Damage;
@@ -22,18 +23,18 @@ namespace Content.Server.Commands
 
         private string DamageTypes()
         {
-            var msg = "";
+            var msg = new StringBuilder();
             foreach (var dClass in Enum.GetNames(typeof(DamageClass)))
             {
-                msg += $"\n{dClass}";
+                msg.Append($"\n{dClass}");
+
                 var types = Enum.Parse<DamageClass>(dClass).ToTypes();
 
                 if (types.Count > 0)
                 {
-                    msg += ": ";
+                    msg.Append(": ");
+                    msg.AppendJoin('|', types);
                 }
-
-                msg += string.Join('|', types);
             }
 
             return $"Damage Types:{msg}";
