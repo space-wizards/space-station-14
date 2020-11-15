@@ -1,8 +1,7 @@
 ﻿#nullable enable
+using System;
 using Content.Shared.GameObjects.Components.Movement;
 using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Interfaces.Timing;
-using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
@@ -11,51 +10,82 @@ namespace Content.Shared.Physics
 {
     public class MoverController : VirtualController
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-
         public override IPhysicsComponent? ControlledComponent { protected get; set; }
 
-        /*
-         * When we stop pressing inputs we need to stop faster. We can't just use friction because that also
-         * affects turnspeed and having friction too high feels like shit for turning.
-         * Thus we'll apply an impulse for a few ticks to help us stop faster (but don't continuously apply it so
-         * other controllers have a chance to do their thing).
-         */
+        private float _timeToVmax = 0.2f;
 
-        // Values below just WIP as I fuck around with fixing other stuff
-        private float _maxImpulse = 40.0f;
-
-        // TODO: Not currently in use just to make debugging easier
-        private const float FrictionModifier = 2f;
-
-        public void Push(Vector2 velocityDirection, float speed)
+        public void Move(Vector2 velocityDirection, float frameTime)
         {
             if (ControlledComponent == null)
+            {
                 return;
+            }
+            //apply a counteracting force to the standard friction between a human and a floor
+            //TODO: friction should involve mass, but in the current physics system it doesn't so we can't have it here either
+            //Vector2 antiFriction = velocityDirection.Normalized * (0.35f * 9.8f * frameTime);
 
-            //Logger.Debug($"Push is {velocityDirection}");
-            var existingVelocity = ControlledComponent.LinearVelocity;
+            float mass = ControlledComponent.Mass;
+            float dragCoeff = 5 / _timeToVmax;
+            if (ControlledComponent.Owner.IsWeightless())
+            {
+                dragCoeff /= 50; //ice level time
+            }
+            Vector2 thrustForce = velocityDirection * dragCoeff * mass;
+            Vector2 linearVelocity = ControlledComponent.LinearVelocity;
 
-            /*
-             * So velocityDirection is the ideal of what our velocity "should" be. We also have a maximum vector
-             * we can apply to our existing velocity to get to that direction as well
-             */
+            Vector2 netForce = thrustForce - linearVelocity * dragCoeff * mass;
+            Vector2 a = netForce / mass;
+            Vector2 k1 = a * frameTime;
 
-            var difference = velocityDirection * speed - existingVelocity;
+            netForce = thrustForce - (linearVelocity + k1/2) * dragCoeff * mass;
+            a = netForce / mass;
+            Vector2 k2 = a * frameTime;
 
-            // Close enough
-            if (difference.EqualsApprox(Vector2.Zero, 0.001)) return;
+            netForce = thrustForce - (linearVelocity + k2/2) * dragCoeff * mass;
+            a = netForce / mass;
+            Vector2 k3 = a * frameTime;
 
-            var velocity = difference;
+            netForce = thrustForce - (linearVelocity + k3) * dragCoeff * mass;
+            a = netForce / mass;
+            Vector2 k4 = a * frameTime;
 
-            // TODO here and below: It's possible to overshoot the difference.
-
-            Impulse = velocity;
+            Vector2 deltaV = (k1 + k2*2 + k3*2 + k4) / 6;
+            Impulse = deltaV * mass / frameTime;
         }
 
-        public void StopMoving()
+        public void StopMoving(float frameTime)
         {
+            if (ControlledComponent == null || (ControlledComponent.Owner.IsWeightless()))
+            {
+                return;
+            }
 
+            //apply a counteracting force to the standard friction between a human and a floor
+            //TODO: friction should involve mass, but in the current physics system it doesn't so we can't have it here either
+            //Vector2 antiFriction = velocityDirection.Normalized * (0.35f * 9.8f * frameTime);
+
+            float mass = ControlledComponent.Mass;
+            float dragCoeff = 5 / _timeToVmax;
+            var linearVelocity = ControlledComponent.LinearVelocity;
+
+            Vector2 netForce = Vector2.Zero;
+            Vector2 a = netForce / mass;
+            Vector2 k1 = a * frameTime;
+
+            netForce = - (linearVelocity + k1/2) * dragCoeff * mass;
+            a = netForce / mass;
+            Vector2 k2 = a * frameTime;
+
+            netForce = - (linearVelocity + k2/2) * dragCoeff * mass;
+            a = netForce / mass;
+            Vector2 k3 = a * frameTime;
+
+            netForce = - (linearVelocity + k3) * dragCoeff * mass;
+            a = netForce / mass;
+            Vector2 k4 = a * frameTime;
+
+            Vector2 deltaV = (k1 + k2*2 + k3*2 + k4) / 6;
+            Impulse = deltaV * mass / frameTime;
         }
     }
 }
