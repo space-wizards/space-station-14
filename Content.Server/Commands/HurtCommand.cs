@@ -174,7 +174,7 @@ namespace Content.Server.Commands
 
                     if (args[0] == "¿")
                     {
-                        types = types.Replace("e", "é");
+                        types = types.Replace('e', 'é');
                     }
 
                     shell.SendText(player, types);
