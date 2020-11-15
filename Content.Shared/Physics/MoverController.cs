@@ -15,6 +15,16 @@ namespace Content.Shared.Physics
         private float timeToVmax = 0.2f;
         private float minDesiredTimeStep = 1 / 30f;
 
+        /// <summary>
+        /// Simulates the movement model by one time interval.
+        /// </summary>
+        /// <remarks>
+        /// This uses a simple fluid drag model to achieve an acceleration curve and a maximum speed.
+        /// It uses Runge-Kutta 4 for integration. If the time step is too large, the integration WILL
+        /// fall apart with catastrophic results (players moving at ludicrous speed, vibrating through walls, etc),
+        /// so make sure the time step doesn't get larger than about 0.05 or so to be safe.
+        /// </remarks>
+        /// <returns>deltaV after the time interval.</returns>
         private Vector2 StepSimulation(Vector2 velocityDirection, Vector2 linearVelocity, float dragCoeff, float mass, float frameTime)
         {
             Vector2 thrustForce = velocityDirection * dragCoeff * mass;
