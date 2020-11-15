@@ -128,11 +128,6 @@ namespace Content.Client.GameObjects.Components.Actor
 
                     foreach (var objectiveCondition in objectiveConditions)
                     {
-                        var txtrect = new TextureRect
-                        {
-                            Texture = objectiveCondition.SpriteSpecifier.Frame0()
-                        };
-
                         var hbox = new HBoxContainer();
                         hbox.AddChild(new ProgressTextureRect
                         {
