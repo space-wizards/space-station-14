@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Shared.Actions;
+using Content.Shared.Alert;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
@@ -12,6 +13,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
     /// Manages the actions available to an entity.
     /// Should only be used for player-controlled entities.
     /// </summary>
+
     public abstract class SharedActionsComponent : Component
     {
         private static readonly ActionState[] NoActions = new ActionState[0];
@@ -142,5 +144,20 @@ namespace Content.Shared.GameObjects.Components.Mobs
     {
         public ActionType ActionType;
         public ValueTuple<TimeSpan, TimeSpan>? Cooldown;
+    }
+
+    /// <summary>
+    /// A message that tells server we want to run the instant action logic.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public class PerformInstantActionMessage : ComponentMessage
+    {
+        public readonly ActionType ActionType;
+
+        public PerformInstantActionMessage(ActionType actionType)
+        {
+            Directed = true;
+            ActionType = actionType;
+        }
     }
 }

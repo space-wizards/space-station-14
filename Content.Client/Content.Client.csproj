@@ -32,6 +32,10 @@
     <Compile Update="UserInterface\OptionsMenu.Audio.cs">
       <DependentUpon>OptionsMenu.cs</DependentUpon>
     </Compile>
+    <Compile Remove="Actions\ActionPrototype.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Actions" />
   </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Engine.targets" />
   <Target Name="ContentAfterBuild" DependsOnTargets="ClientAfterBuild" AfterTargets="Build" />

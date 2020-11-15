@@ -1,14 +1,11 @@
 ﻿#nullable enable
 using System;
 using Content.Client.UserInterface.Stylesheets;
-using Content.Client.Utility;
 using Content.Shared.Actions;
 using OpenToolkit.Mathematics;
-using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
-using Robust.Shared.IoC;
 using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Controls
@@ -53,7 +50,6 @@ namespace Content.Client.UserInterface.Controls
         public ActionSlot(byte slotNumber)
         {
             SlotNumber = slotNumber;
-            ToggleMode = true;
 
             CustomMinimumSize = (64, 64);
 

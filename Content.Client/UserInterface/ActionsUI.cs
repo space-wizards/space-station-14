@@ -17,7 +17,7 @@ namespace Content.Client.UserInterface
     {
         private readonly EventHandler _onShowTooltip;
         private readonly EventHandler _onHideTooltip;
-        private readonly Action<BaseButton.ButtonToggledEventArgs> _onSlotToggled;
+        private readonly Action<BaseButton.ButtonEventArgs> _onSlotPressed;
         private readonly ActionSlot[] _slots;
 
         private VBoxContainer _hotbarContainer;
@@ -31,12 +31,12 @@ namespace Content.Client.UserInterface
 
         /// <param name="onShowTooltip">OnShowTooltip handler to assign to each action slot</param>
         /// <param name="onHideTooltip">OnHideTooltip handler to assign to each action slot</param>
-        /// <param name="onSlotToggled">OnToggled handler to assign to each action slot button</param>
-        public ActionsUI(EventHandler onShowTooltip, EventHandler onHideTooltip, Action<BaseButton.ButtonToggledEventArgs> onSlotToggled)
+        /// <param name="onSlotPressed">OnPressed handler to assign to each action slot button</param>
+        public ActionsUI(EventHandler onShowTooltip, EventHandler onHideTooltip, Action<BaseButton.ButtonEventArgs> onSlotPressed)
         {
             _onShowTooltip = onShowTooltip;
             _onHideTooltip = onHideTooltip;
-            _onSlotToggled = onSlotToggled;
+            _onSlotPressed = onSlotPressed;
 
             SizeFlagsHorizontal = SizeFlags.FillExpand;
             SizeFlagsVertical = SizeFlags.FillExpand;
@@ -118,7 +118,7 @@ namespace Content.Client.UserInterface
                 var slot = new ActionSlot(i);
                 slot.OnShowTooltip += onShowTooltip;
                 slot.OnHideTooltip += onHideTooltip;
-                slot.OnToggled += onSlotToggled;
+                slot.OnPressed += onSlotPressed;
                 _slotContainer.AddChild(slot);
                 _slots[i - 1] = slot;
             }
@@ -160,7 +160,7 @@ namespace Content.Client.UserInterface
             {
                 slot.OnShowTooltip -= _onShowTooltip;
                 slot.OnHideTooltip -= _onHideTooltip;
-                slot.OnToggled -= _onSlotToggled;
+                slot.OnPressed -= _onSlotPressed;
             }
         }
 

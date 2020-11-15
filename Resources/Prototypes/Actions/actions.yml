@@ -3,6 +3,7 @@
   icon: Interface/Alerts/Human/human1.png
   name: "[color=red]Debug Instant[/color]"
   description: "This is a [color=red]debug message[/color]."
+  behaviorType: Instant
   behavior: !type:DebugInstant
     message: Instant action was used!
 

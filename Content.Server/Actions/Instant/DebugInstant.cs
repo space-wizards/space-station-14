@@ -1,4 +1,5 @@
-﻿using Content.Server.Utility;
+﻿using System;
+using Content.Server.Utility;
 using Content.Shared.Actions;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
@@ -8,6 +9,7 @@ namespace Content.Server.Actions.Instant
     /// <summary>
     /// Just shows a popup message.
     /// </summary>
+    [Serializable]
     public class DebugInstant : IInstantAction
     {
         public string Message { get; private set; }

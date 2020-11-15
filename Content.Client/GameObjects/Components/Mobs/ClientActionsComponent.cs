@@ -12,6 +12,7 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -110,7 +111,7 @@ namespace Content.Client.GameObjects.Components.Mobs
                 return;
             }
 
-            _ui = new ActionsUI(ActionOnOnShowTooltip, ActionOnOnHideTooltip, ActionSlotOnToggled);
+            _ui = new ActionsUI(ActionOnOnShowTooltip, ActionOnOnHideTooltip, ActionSlotOnPressed);
             LayoutContainer.SetGrowHorizontal(_ui, LayoutContainer.GrowDirection.End);
             LayoutContainer.SetAnchorAndMarginPreset(_ui, LayoutContainer.LayoutPreset.TopLeft, margin: 10);
             LayoutContainer.SetMarginTop(_ui, 100);
@@ -249,9 +250,9 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         }
 
-        private void ActionSlotOnToggled(BaseButton.ButtonToggledEventArgs args)
+        private void ActionSlotOnPressed(BaseButton.ButtonEventArgs args)
         {
-            ActionToggled(args, args.Button as ActionSlot);
+            ActionPressed(args, args.Button as ActionSlot);
         }
 
         private void ActionOnOnHideTooltip(object sender, EventArgs e)
@@ -298,15 +299,19 @@ namespace Content.Client.GameObjects.Components.Mobs
             _tooltipReady = true;
         }
 
-        private void ActionToggled(BaseButton.ButtonToggledEventArgs args, ActionSlot action)
+        private void ActionPressed(BaseButton.ButtonEventArgs args, ActionSlot actionSlot)
         {
-            // TODO: Action logic
-            // if (args.Event.Function != EngineKeyFunctions.UIClick)
-            // {
-            //     return;
-            // }
-            //
-            // SendNetworkMessage(new ClickAlertMessage(alert.Alert.AlertType));
+            if (actionSlot.Action == null) return;
+            if (args.Event.Function != EngineKeyFunctions.UIClick)
+            {
+                return;
+            }
+
+            if (actionSlot.Action.BehaviorType == BehaviorType.Instant)
+            {
+                // for instant actions, we immediately tell the server we're doing it
+                SendNetworkMessage(new PerformInstantActionMessage(actionSlot.Action.ActionType));
+            }
         }
 
         public void FrameUpdate(float frameTime)

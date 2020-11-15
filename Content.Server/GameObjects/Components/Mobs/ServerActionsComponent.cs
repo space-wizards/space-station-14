@@ -1,4 +1,5 @@
 ﻿using System;
+using Content.Server.Actions;
 using Content.Server.Commands;
 using Content.Shared.Actions;
 using Content.Shared.GameObjects.Components.Mobs;
@@ -7,6 +8,7 @@ using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Players;
 
 namespace Content.Server.GameObjects.Components.Mobs
@@ -29,10 +31,9 @@ namespace Content.Server.GameObjects.Components.Mobs
                 throw new ArgumentNullException(nameof(session));
             }
 
-            /* TODO: Handle usages
             switch (message)
             {
-                case ClickAlertMessage msg:
+                case PerformInstantActionMessage msg:
                 {
                     var player = session.AttachedEntity;
 
@@ -41,26 +42,38 @@ namespace Content.Server.GameObjects.Components.Mobs
                         break;
                     }
 
-                    if (!IsShowingAlert(msg.AlertType))
+                    if (!IsGranted(msg.ActionType))
                     {
-                        Logger.DebugS("alert", "user {0} attempted to" +
-                                              " click alert {1} which is not currently showing for them",
-                            player.Name, msg.AlertType);
+                        Logger.DebugS("action", "user {0} attempted to" +
+                                                " perform instant action {1} which is not granted to them", player.Name,
+                            msg.ActionType);
                         break;
                     }
 
-                    if (AlertManager.TryGet(msg.AlertType, out var alert))
+                    if (!ActionManager.TryGet(msg.ActionType, out var actionShared))
                     {
-                        alert.OnClick.AlertClicked(new ClickAlertEventArgs(player, alert));
+                        Logger.DebugS("action", "user {0} attempted to" +
+                                                " perform unrecognized instant action {1}", player.Name,
+                            msg.ActionType);
+                        break;
                     }
-                    else
+
+                    var action = actionShared as ActionPrototype;
+
+
+                    if (action.InstantAction == null)
                     {
-                        Logger.WarningS("alert", "unrecognized encoded alert {0}", msg.AlertType);
+                        Logger.DebugS("action", "user {0} attempted to" +
+                                                " perform action {1} as an instant action, but it isn't one", player.Name,
+                            msg.ActionType);
+                        break;
                     }
+
+                    action.InstantAction.DoInstantAction(new InstantActionEventArgs(player));
 
                     break;
                 }
-            }*/
+            }
         }
     }
 

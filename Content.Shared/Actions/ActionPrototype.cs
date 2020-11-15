@@ -1,4 +1,5 @@
-﻿using Content.Shared.Interfaces;
+﻿using System;
+using Content.Shared.Interfaces;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -12,7 +13,7 @@ namespace Content.Shared.Actions
     /// <summary>
     /// An action which appears in the action hotbar.
     /// </summary>
-    [Prototype(("action"))]
+    [Prototype("action")]
     public class ActionPrototype : IPrototype
     {
         /// <summary>
@@ -42,38 +43,37 @@ namespace Content.Shared.Actions
         public string Requires { get; private set; }
 
         /// <summary>
-        /// The type of behavior this action has. This is determined based
-        /// on the subtype of IActionBehavior this action has for its behavior. This is just
-        /// a more convenient way to check that.
+        /// The type of behavior this action has. This is valid clientside and serverside.
         /// </summary>
-        public ActionBehaviorType ActionBehaviorType { get; private set; }
+        public BehaviorType BehaviorType { get; private set; }
 
         /// <summary>
         /// The IInstantAction that should be invoked when performing this
         /// action. Null if this is not an Instant ActionBehaviorType.
+        /// Will be null on client side if the behavior is not in Content.Client.
         /// </summary>
         public IInstantAction InstantAction { get; private set; }
 
         /// <summary>
         /// The IToggleAction that should be invoked when performing this
         /// action. Null if this is not a Toggle ActionBehaviorType.
+        /// Will be null on client side if the behavior is not in Content.Client.
         /// </summary>
         public IToggleAction ToggleAction { get; private set; }
 
         /// <summary>
         /// The ITargetEntityAction that should be invoked when performing this
         /// action. Null if this is not a TargetEntity ActionBehaviorType.
+        /// Will be null on client side if the behavior is not in Content.Client.
         /// </summary>
         public ITargetEntityAction TargetEntityAction { get; private set; }
 
         /// <summary>
         /// The ITargetPointAction that should be invoked when performing this
         /// action. Null if this is not a TargetPoint ActionBehaviorType.
+        /// Will be null on client side if the behavior is not in Content.Client.
         /// </summary>
         public ITargetPointAction TargetPointAction { get; private set; }
-
-
-
 
         public void LoadFrom(YamlMappingNode mapping)
         {
@@ -93,48 +93,73 @@ namespace Content.Shared.Actions
                 Logger.WarningS("action", "missing or invalid actionType for action with name {0}", Name);
             }
 
+            // client needs to know what type of behavior it is even if the actual implementation is only
+            // on server side. If we wanted to avoid this we'd need to always add a shared or clientside interface
+            // for each action even if there was only server-side logic, which would be cumbersome
+            serializer.DataField(this, x => x.BehaviorType, "behaviorType", BehaviorType.None);
+            if (BehaviorType == BehaviorType.None)
+            {
+                Logger.WarningS("action", "Missing behaviorType for action with name {0}", Name);
+            }
+
+            // TODO: Split this class into server/client after RobustToolbox#1405
             if (IoCManager.Resolve<IModuleManager>().IsClientModule) return;
 
             IActionBehavior behavior = null;
             serializer.DataField(ref behavior, "behavior", null);
             if (behavior == null)
             {
-                ActionBehaviorType = ActionBehaviorType.None;
+                BehaviorType = BehaviorType.None;
                 Logger.WarningS("action", "missing or invalid behavior for action with name {0}", Name);
             }
             else if (behavior is IInstantAction instantAction)
             {
-                ActionBehaviorType = ActionBehaviorType.Instant;
+                ValidateBehaviorType(BehaviorType.Instant, typeof(IInstantAction));
+                BehaviorType = BehaviorType.Instant;
                 InstantAction = instantAction;
             }
             else if (behavior is IToggleAction toggleAction)
             {
-                ActionBehaviorType = ActionBehaviorType.Toggle;
+                ValidateBehaviorType(BehaviorType.Toggle, typeof(IToggleAction));
+                BehaviorType = BehaviorType.Toggle;
                 ToggleAction = toggleAction;
             }
             else if (behavior is ITargetEntityAction targetEntity)
             {
-                ActionBehaviorType = ActionBehaviorType.TargetEntity;
+                ValidateBehaviorType(BehaviorType.TargetEntity, typeof(ITargetEntityAction));
+                BehaviorType = BehaviorType.TargetEntity;
                 TargetEntityAction = targetEntity;
             }
             else if (behavior is ITargetPointAction targetPointAction)
             {
-                ActionBehaviorType = ActionBehaviorType.TargetPoint;
+                ValidateBehaviorType(BehaviorType.TargetPoint, typeof(ITargetPointAction));
+                BehaviorType = BehaviorType.TargetPoint;
                 TargetPointAction = targetPointAction;
             }
             else
             {
-                ActionBehaviorType = ActionBehaviorType.None;
+                BehaviorType = BehaviorType.None;
                 Logger.WarningS("action", "unrecognized behavior type for action with name {0}", Name);
+            }
+        }
+
+        private void ValidateBehaviorType(BehaviorType expected, Type actualInterface)
+        {
+            if (BehaviorType != expected)
+            {
+                Logger.WarningS("action", "for action named {0}, behavior implements " +
+                                          "{1}, so behaviorType should be {2} but was {3}", Name, actualInterface.Name, expected, BehaviorType);
             }
         }
     }
 
+
+
     /// <summary>
     /// The behavior / logic of the action. Each of these corresponds to a particular IActionBehavior
-    /// interface.
+    /// interface. Corresponds to action.behaviorType in YAML
     /// </summary>
-    public enum ActionBehaviorType
+    public enum BehaviorType
     {
         /// <summary>
         /// Action doesn't do anything.
@@ -142,23 +167,23 @@ namespace Content.Shared.Actions
         None,
 
         /// <summary>
-        /// Action which does something immediately when used and has
+        /// IInstantAction. Action which does something immediately when used and has
         /// no target.
         /// </summary>
         Instant,
 
         /// <summary>
-        /// Action which can be toggled on and off
+        /// IToggleAction Action which can be toggled on and off
         /// </summary>
         Toggle,
 
         /// <summary>
-        /// Action which is used on a targeted entity.
+        /// ITargetEntityAction. Action which is used on a targeted entity.
         /// </summary>
         TargetEntity,
 
         /// <summary>
-        /// Action which requires the user to select a target point, which
+        /// ITargetPointAction. Action which requires the user to select a target point, which
         /// does not necessarily have an entity on it.
         /// </summary>
         TargetPoint
