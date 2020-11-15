@@ -10,7 +10,6 @@ using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Interfaces.Configuration;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -23,7 +22,6 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
 
@@ -147,7 +145,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
 
                 foreach (var grid in _mapManager.FindGridsIntersecting(entity.Transform.MapID, worldBounds))
                 {
-                    if (!_entityManager.TryGetEntity(grid.GridEntityId, out var gridEnt)) continue;
+                    if (!EntityManager.TryGetEntity(grid.GridEntityId, out var gridEnt)) continue;
 
                     if (!gridEnt.TryGetComponent<GridAtmosphereComponent>(out var gam)) continue;
 
