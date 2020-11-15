@@ -208,8 +208,6 @@ namespace Content.Client.GameObjects.Components.Kitchen
                     {
                         Text = buttonText,
                         TextAlign = Label.AlignMode.Center,
-
-
                     };
 
                     var vSplit = new HSplitContainer
