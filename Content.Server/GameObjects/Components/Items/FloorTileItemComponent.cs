@@ -8,10 +8,10 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
+using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.Components.Items
 {
@@ -22,14 +22,15 @@ namespace Content.Server.GameObjects.Components.Items
         [Dependency] private readonly IMapManager _mapManager = default!;
 
         public override string Name => "FloorTile";
-        private string _outputTile;
-        private string _outputTile2;
+        private List<string> _outputTiles;
+        private int _default;
+
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _outputTile, "output", "floor_steel");
-            serializer.DataField(ref _outputTile2, "output2", null);
+            serializer.DataField(ref _outputTiles, "outputs", null);
+            serializer.DataField(ref _default, "default", 0);
         }
 
         public override void Initialize()
@@ -65,23 +66,27 @@ namespace Content.Server.GameObjects.Components.Items
             var location = eventArgs.ClickLocation.AlignWithClosestGridTile();
             var locationMap = location.ToMap(Owner.EntityManager);
 
-            var desiredTile = (ContentTileDefinition)_tileDefinitionManager[_outputTile];
+            var desiredTile = (ContentTileDefinition)_tileDefinitionManager[_outputTiles[_default]];
 
             if (_mapManager.TryGetGrid(location.GetGridId(Owner.EntityManager), out var mapGrid))
             {
                 var tile = mapGrid.GetTileRef(location);
                 var baseTurf = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TypeId];
 
-                Logger.Info(_outputTile2 + " " + baseTurf.DisplayName + " " + desiredTile.DisplayName);
-                if (_outputTile2 != null && baseTurf.DisplayName == desiredTile.DisplayName)
+                if (_outputTiles == null)
                 {
-                    PlaceAt(mapGrid, location, _tileDefinitionManager[_outputTile].TileId);
                     return;
                 }
 
-                if (HasBaseTurf(desiredTile, baseTurf.Name) && eventArgs.Target == null && stack.Use(1))
+                foreach (var currentTile in _outputTiles)
                 {
-                    PlaceAt(mapGrid, location, desiredTile.TileId);
+                    var currentTileDefinition = (ContentTileDefinition)_tileDefinitionManager[currentTile];
+
+                    if (HasBaseTurf(currentTileDefinition, baseTurf.Name) && stack.Use(1))
+                    {
+                        PlaceAt(mapGrid, location, currentTileDefinition.TileId);
+                        break;
+                    }
                 }
             }
             else if(HasBaseTurf(desiredTile, "space"))

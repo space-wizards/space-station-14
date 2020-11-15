@@ -26,6 +26,9 @@
   - type: Item
     sprite: Objects/Materials/sheets.rsi
     HeldPrefix: metal
+  - type: FloorTile
+    outputs:
+      - underplating
 
 - type: entity
   id: SteelSheet1
