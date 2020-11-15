@@ -68,11 +68,7 @@ namespace Content.Shared.Physics
             Vector2 linearVelocity = ControlledComponent.LinearVelocity;
 
             var multiplier = frameTime / minDesiredTimeStep;
-            var divisions = Math.Max(1, MathF.Round(multiplier, MidpointRounding.AwayFromZero));
-            if (divisions > 10)
-            {
-                return; //hah hah holy hell brother you have worse problems than players being unable to move
-            }
+            var divisions = MathHelper.Clamp(MathF.Round(multiplier, MidpointRounding.AwayFromZero), 1, 20);
 
             var timeStep = frameTime / divisions;
             Vector2 deltaV = Vector2.Zero;
@@ -100,11 +96,7 @@ namespace Content.Shared.Physics
             float dragCoeff = 5 / timeToVmax;
 
             var multiplier = frameTime / minDesiredTimeStep;
-            var divisions = Math.Max(1, MathF.Round(multiplier, MidpointRounding.AwayFromZero));
-            if (divisions > 10)
-            {
-                return; //hah hah holy hell brother you have worse problems than players being unable to move
-            }
+            var divisions = MathHelper.Clamp(MathF.Round(multiplier, MidpointRounding.AwayFromZero), 1, 20);
 
             var timeStep = frameTime / divisions;
             Vector2 deltaV = Vector2.Zero;
