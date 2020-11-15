@@ -10,6 +10,7 @@ using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
+using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -47,8 +48,6 @@ namespace Content.Server.GameObjects.Components.Kitchen
     /// </summary>
     public class ReagentGrinderComponent : SharedReagentGrinderComponent, IActivate, IInteractUsing
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
 
@@ -77,7 +76,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
         /// <summary>
         /// Should the BoundUI be told to update?
         /// </summary>
-        private bool _dirty = true;
+        private bool _uiDirty = true;
         /// <summary>
         /// Is the machine actively doing something and can't be used right now?
         /// </summary>
@@ -85,14 +84,14 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
 
         //YAML serialization vars
-        private int _storageCap = 16;
-        private int _workTime = 3500; //3.5 seconds, completely arbitrary for now.
+        [ViewVariables] private int _storageCap = 16;
+        [ViewVariables] private int _workTime = 3500; //3.5 seconds, completely arbitrary for now.
 
         public override void ExposeData(ObjectSerializer serializer)
         {
-            base.ExposeData(serializer);    
-            serializer.DataField(ref _storageCap, "chamber_capacity", 16);
-            serializer.DataField(ref _workTime, "time", 3500);
+            base.ExposeData(serializer);
+            serializer.DataField(ref _storageCap, "chamberCapacity", 16);
+            serializer.DataField(ref _workTime, "workTime", 3500);
         }
 
         public override void Initialize()
@@ -113,7 +112,6 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
             _audioSystem = EntitySystem.Get<AudioSystem>();
         }
-
         private void UserInterfaceOnReceiveMessage(ServerBoundUserInterfaceMessage message)
         {
             if(!Powered || _busy)
@@ -149,7 +147,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                     {
                         EjectSolid(msg.EntityID);
                         ClickSound();
-                        _dirty = true;
+                        _uiDirty = true;
                     }
                     break;
 
@@ -174,7 +172,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         public void OnUpdate()
         {
-            if(_dirty)
+            if(_uiDirty)
             {
                 UserInterface?.SetState(new ReagentGrinderInterfaceState
                 (
@@ -184,7 +182,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                     //Remember the beaker can be null!
                     _heldBeaker?.Solution.Contents.ToArray()
                 ));
-                _dirty = false;
+                _uiDirty = false;
             }
         }
 
@@ -193,9 +191,9 @@ namespace Content.Server.GameObjects.Components.Kitchen
             if (_busy)
                 return;
 
-            if (_entityManager.EntityExists(entityID))
+            if (Owner.EntityManager.EntityExists(entityID))
             {
-                var entity = _entityManager.GetEntity(entityID);
+                var entity = Owner.EntityManager.GetEntity(entityID);
                 _chamber.Remove(entity);
 
                 //Give the ejected entity a tiny bit of offset so each one is apparent in case of a big stack,
@@ -203,7 +201,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 const float ejectOffset = 0.4f;
                 entity.Transform.LocalPosition += (_random.NextFloat() * ejectOffset, _random.NextFloat() * ejectOffset);
             }
-            _dirty = true;
+            _uiDirty = true;
         }
 
         /// <summary>
@@ -226,7 +224,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 hands.PutInHand(item);
 
             _heldBeaker = null;
-            _dirty = true;
+            _uiDirty = true;
             SetAppearance(ReagentGrinderVisualState.NoBeaker);
         }
 
@@ -237,7 +235,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 return;
             }
 
-            _dirty = true;
+            _uiDirty = true;
             UserInterface?.Toggle(actor.playerSession);
         }
 
@@ -252,17 +250,17 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 return true;
             }
 
-            
+
             var heldEnt = eventArgs.Using;
 
             //First, check if user is trying to insert a beaker.
             //No promise it will be a beaker right now, but whatever.
             //Maybe this should whitelist "beaker" in the prototype id of heldEnt?
-            if(heldEnt!.TryGetComponent(out SolutionContainerComponent? beaker) && heldEnt!.Prototype!.ID.ToLower().Contains("beaker"))
+            if(heldEnt!.TryGetComponent(out SolutionContainerComponent? beaker) && beaker.Capabilities.HasFlag(SolutionContainerCaps.FitsInDispenser))
             {
                 _beakerContainer.Insert(heldEnt);
                 _heldBeaker = beaker;
-                _dirty = true;
+                _uiDirty = true;
                 //We are done, return. Insert the beaker and exit!
                 SetAppearance(ReagentGrinderVisualState.BeakerAttached);
                 ClickSound();
@@ -280,13 +278,13 @@ namespace Content.Server.GameObjects.Components.Kitchen
             }
 
             //Cap the chamber. Don't want someone putting in 500 entities and ejecting them all at once.
-            //Maybe I should have done that for the microwave too?         
+            //Maybe I should have done that for the microwave too?
             if (_chamber.ContainedEntities.Count >= _storageCap)
             {
                 return false;
             }
             _chamber.Insert(heldEnt);
-            _dirty = true;
+            _uiDirty = true;
 
             return true;
         }
@@ -330,7 +328,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                     }
 
                     _busy = false;
-                    _dirty = true;
+                    _uiDirty = true;
                     UserInterface?.SendMessage(new ReagentGrinderWorkCompleteMessage());
                     return;
                 }));
@@ -355,7 +353,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                     }
                     UserInterface?.SendMessage(new ReagentGrinderWorkCompleteMessage());
                     _busy = false;
-                    _dirty = true;
+                    _uiDirty = true;
                 }));
             }
 

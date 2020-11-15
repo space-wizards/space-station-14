@@ -3,6 +3,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Kitchen
 {
@@ -14,14 +15,13 @@ namespace Content.Server.GameObjects.Components.Kitchen
     {
         public override string Name => "Juiceable";
 
-        public Solution JuiceResultSolution => _solution;
 
-        private Solution _solution;
+        [ViewVariables] public Solution JuiceResultSolution;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(this, x => _solution, "result", new Solution());
+            serializer.DataField(this, x => JuiceResultSolution, "result", new Solution());
 
         }
 
