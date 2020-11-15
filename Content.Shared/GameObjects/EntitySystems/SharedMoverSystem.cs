@@ -12,6 +12,7 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -22,6 +23,8 @@ namespace Content.Shared.GameObjects.EntitySystems
 {
     public abstract class SharedMoverSystem : EntitySystem
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -47,7 +50,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             base.Shutdown();
         }
 
-        protected void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, IPhysicsComponent physics)
+        protected void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, IPhysicsComponent physics, float frameTime)
         {
             // TODO: We need a separate thing for shuttlecontrollers as all mover components are funneled through this.
             physics.EnsureController<MoverController>();
@@ -83,27 +86,29 @@ namespace Content.Shared.GameObjects.EntitySystems
             {
                 if (physics.TryGetController(out MoverController controller))
                 {
-                    controller.StopMoving();
+                    controller.StopMoving(frameTime);
                 }
             }
             else
             {
+                var total = walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed;
                 if (weightless)
                 {
                     if (physics.TryGetController(out MoverController controller))
                     {
-                        controller.Push(combined, mover.CurrentPushSpeed * 350f);
+                        // TODO: weightless movement
+                        //controller.Push(combined, mover.CurrentPushSpeed * 350f);
+                        controller.Move(total, frameTime);
                     }
 
                     transform.LocalRotation = physics.LinearVelocity.GetDir().ToAngle();
                     return;
                 }
 
-                var total = walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed;
                 {
                     if (physics.TryGetController(out MoverController controller))
                     {
-                        controller.Push(total, mover.CurrentSprintSpeed * 80f);
+                        controller.Move(total, frameTime);
                     }
                 }
 
@@ -121,6 +126,12 @@ namespace Content.Shared.GameObjects.EntitySystems
         private bool IsAroundCollider(ITransformComponent transform, IMoverComponent mover,
             IPhysicsComponent collider)
         {
+            var tile = _mapManager.GetGrid(transform.GridID).GetTileRef(transform.Coordinates).Tile;
+            if (!tile.IsEmpty)
+            {
+                return true;
+            }
+
             foreach (var entity in EntityManager.GetEntitiesInRange(transform.Owner, mover.GrabRange, true))
             {
                 if (entity == transform.Owner)

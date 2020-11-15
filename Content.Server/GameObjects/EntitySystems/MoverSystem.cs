@@ -60,7 +60,7 @@ namespace Content.Server.GameObjects.EntitySystems
             foreach (var (moverComponent, collidableComponent) in EntityManager.ComponentManager.EntityQuery<IMoverComponent, IPhysicsComponent>(false))
             {
                 var entity = moverComponent.Owner;
-                UpdateKinematics(entity.Transform, moverComponent, collidableComponent);
+                UpdateKinematics(entity.Transform, moverComponent, collidableComponent, frameTime);
             }
         }
 
@@ -79,12 +79,13 @@ namespace Content.Server.GameObjects.EntitySystems
                 ev.Entity.RemoveComponent<PlayerInputMoverComponent>();
             }
 
-            if (ev.Entity.TryGetComponent(out IPhysicsComponent? physics) &&
-                physics.TryGetController(out MoverController controller) &&
-                !ev.Entity.IsWeightless())
-            {
-                controller.StopMoving();
-            }
+            // Friction will sort 'em out lmao
+            // if (ev.Entity.TryGetComponent(out IPhysicsComponent? physics) &&
+            //     physics.TryGetController(out MoverController controller) &&
+            //     !ev.Entity.IsWeightless())
+            // {
+            //     controller.StopMoving();
+            // }
         }
 
         protected override void HandleFootsteps(IMoverComponent mover)
