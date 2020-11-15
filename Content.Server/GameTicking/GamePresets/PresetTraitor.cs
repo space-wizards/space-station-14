@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.PDA;
@@ -10,6 +11,7 @@ using Content.Server.Mobs.Roles.Traitor;
 using Content.Server.Players;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.PDA;
+using Content.Shared.Roles;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -29,12 +31,16 @@ namespace Content.Server.GameTicking.GamePresets
 
         public override string ModeTitle => "Traitor";
 
-        //make these cvars / prototypes
+        //make these cvars
         private int MinPlayers => 2;
+        private int TraitorPerPlayers => 5;
+        private int MaxTraitors => 4;
         private int CodewordCount => 2;
+        private int StartingTC => 20;
+
         private string[] Codewords => new[] {"cold", "winter", "radiator", "average", "furious"};
 
-    public override bool Start(IReadOnlyList<IPlayerSession> readyPlayers, bool force = false)
+        public override bool Start(IReadOnlyList<IPlayerSession> readyPlayers, bool force = false)
         {
             if (!force && readyPlayers.Count < MinPlayers)
             {
@@ -58,14 +64,14 @@ namespace Content.Server.GameTicking.GamePresets
                     continue;
                 }
                 var profile = readyProfiles[player.UserId];
-                //todo prefs: if (profile.AntagPreferences.Contains(_prototypeManager.Index<AntagPrototype>("Traitor").Name))
-                //{
+                if (profile.AntagPreferences.Contains("Traitor"))
+                {
                     prefList.Add(player);
-                //}
+                }
             }
 
-            var numTraitors = MathHelper.Clamp(readyPlayers.Count / 2, //todo better
-                1, readyPlayers.Count);
+            var numTraitors = MathHelper.Clamp(readyPlayers.Count / TraitorPerPlayers,
+                1, MaxTraitors);
 
             var traitors = new List<TraitorRole>();
 
@@ -96,17 +102,14 @@ namespace Content.Server.GameTicking.GamePresets
                     continue;
                 }
 
-                mind.AddRole(traitorRole);
-                traitors.Add(traitorRole);
                 // creadth: we need to create uplink for the antag.
                 // PDA should be in place already, so we just need to
                 // initiate uplink account.
-                var uplinkAccount =
-                    new UplinkAccount(mind.OwnedEntity.Uid,
-                        20);
+                var uplinkAccount = new UplinkAccount(mind.OwnedEntity.Uid, StartingTC);
                 var inventory = mind.OwnedEntity.GetComponent<InventoryComponent>();
                 if (!inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent pdaItem))
                 {
+                    Logger.ErrorS("preset", "Failed getting pda for picked traitor.");
                     continue;
                 }
 
@@ -115,9 +118,12 @@ namespace Content.Server.GameTicking.GamePresets
                 var pdaComponent = pda.GetComponent<PDAComponent>();
                 if (pdaComponent.IdSlotEmpty)
                 {
+                    Logger.ErrorS("preset","PDA had no id for picked traitor");
                     continue;
                 }
 
+                mind.AddRole(traitorRole);
+                traitors.Add(traitorRole);
                 pdaComponent.InitUplinkAccount(uplinkAccount);
             }
 
@@ -130,6 +136,7 @@ namespace Content.Server.GameTicking.GamePresets
             {
                 codewords[i] = _random.PickAndTake(codewordPool);
             }
+
             foreach (var traitor in traitors)
             {
                 traitor.GreetTraitor(codewords);
