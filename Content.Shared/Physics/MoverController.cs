@@ -33,12 +33,27 @@ namespace Content.Shared.Physics
             if (ControlledComponent == null)
                 return;
 
+            //Logger.Debug($"Push is {velocityDirection}");
+            var existingVelocity = ControlledComponent.LinearVelocity;
+
             /*
              * So velocityDirection is the ideal of what our velocity "should" be. We also have a maximum vector
              * we can apply to our existing velocity to get to that direction as well
              */
 
-            Impulse = velocityDirection * 300;
+            // TODO: Something weird happens here with frametiming where it looks like the friction is applied slightly more aggressively.
+
+
+            var difference = (velocityDirection - existingVelocity) * speed * 100;
+
+            // Close enough
+            if (difference.EqualsApprox(Vector2.Zero, 0.1)) return;
+
+            var velocity = difference;
+
+            // TODO here and below: It's possible to overshoot the difference.
+
+            Impulse = velocity;
         }
 
         public void StopMoving()
