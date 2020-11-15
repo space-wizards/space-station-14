@@ -182,7 +182,7 @@ namespace Content.Server.Commands
                     return;
                 // Not enough args
                 case var n when n < 2:
-                    shell.SendText(player, $"Invalid number of arguments.\n{Help}");
+                    shell.SendText(player, $"Invalid number of arguments ({args.Length}).\n{Help}");
                     return;
                 case var n when n >= 2 && n <= 4:
                     if (!TryParseDamageArgs(shell, player, args, out damageFunc))
@@ -214,7 +214,7 @@ namespace Content.Server.Commands
 
                     break;
                 default:
-                    shell.SendText(player, $"Invalid amount of arguments.\n{Help}");
+                    shell.SendText(player, $"Invalid amount of arguments ({args.Length}).\n{Help}");
                     return;
             }
 
