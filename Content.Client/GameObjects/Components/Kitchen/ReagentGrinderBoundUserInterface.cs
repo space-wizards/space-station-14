@@ -229,8 +229,6 @@ namespace Content.Client.GameObjects.Components.Kitchen
                         CustomMinimumSize = (100, 128)
                     };
                     AddChild(BoxContents);
-
-
                 }
             }
 
