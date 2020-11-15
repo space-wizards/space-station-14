@@ -55,9 +55,6 @@ namespace Content.Shared.Physics
             {
                 return;
             }
-            //apply a counteracting force to the standard friction between a human and a floor
-            //TODO: friction should involve mass, but in the current physics system it doesn't so we can't have it here either
-            //Vector2 antiFriction = velocityDirection.Normalized * (0.35f * 9.8f * frameTime);
 
             float mass = ControlledComponent.Mass;
             float dragCoeff = 5 / timeToVmax;
