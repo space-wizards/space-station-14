@@ -33,24 +33,12 @@ namespace Content.Shared.Physics
             if (ControlledComponent == null)
                 return;
 
-            //Logger.Debug($"Push is {velocityDirection}");
-            var existingVelocity = ControlledComponent.LinearVelocity;
-
             /*
              * So velocityDirection is the ideal of what our velocity "should" be. We also have a maximum vector
              * we can apply to our existing velocity to get to that direction as well
              */
 
-            var difference = velocityDirection * speed - existingVelocity;
-
-            // Close enough
-            if (difference.EqualsApprox(Vector2.Zero, 0.001)) return;
-
-            var velocity = difference;
-
-            // TODO here and below: It's possible to overshoot the difference.
-
-            Impulse = velocity;
+            Impulse = velocityDirection * 300;
         }
 
         public void StopMoving()
