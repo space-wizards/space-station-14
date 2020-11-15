@@ -1,5 +1,7 @@
 ﻿#nullable enable
 using System.Linq;
+using Content.Server.Administration;
+using Content.Shared.Administration;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Server.Interfaces.Console;
@@ -14,7 +16,7 @@ namespace Content.Server.GameObjects.Components.Interactable
     /// <summary>
     /// <see cref="TilePryingComponent.TryPryTile"/>
     /// </summary>
-    [UsedImplicitly]
+    [AdminCommand(AdminFlags.Debug)]
     class TilePryCommand : IClientCommand
     {
         public string Command => "tilepry";
@@ -69,7 +71,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         }
     }
 
-    [UsedImplicitly]
+    [AdminCommand(AdminFlags.Debug)]
     class AnchorCommand : IClientCommand
     {
         public string Command => "anchor";
@@ -114,7 +116,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         }
     }
 
-    [UsedImplicitly]
+    [AdminCommand(AdminFlags.Debug)]
     class UnAnchorCommand : IClientCommand
     {
         public string Command => "unanchor";

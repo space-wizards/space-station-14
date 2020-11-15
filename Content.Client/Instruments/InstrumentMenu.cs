@@ -218,7 +218,7 @@ namespace Content.Client.Instruments
             var instrumentEnt = _owner.Instrument.Owner;
             var instrument = _owner.Instrument;
 
-            ContainerHelpers.TryGetContainerMan(_owner.Instrument.Owner, out var conMan);
+            _owner.Instrument.Owner.TryGetContainerMan(out var conMan);
 
             var localPlayer = IoCManager.Resolve<IPlayerManager>().LocalPlayer;
 

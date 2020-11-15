@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Content.Client.Atmos;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
+using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.Interfaces.Graphics.Overlays;
@@ -19,7 +20,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    internal sealed class AtmosDebugOverlaySystem : SharedAtmosDebugOverlaySystem
+    internal sealed class AtmosDebugOverlaySystem : SharedAtmosDebugOverlaySystem, IResettingEntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
 
@@ -53,6 +54,11 @@ namespace Content.Client.GameObjects.EntitySystems
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
             if(!overlayManager.HasOverlay(nameof(GasTileOverlay)))
                 overlayManager.RemoveOverlay(nameof(GasTileOverlay));
+        }
+
+        public void Reset()
+        {
+            _tileData.Clear();
         }
 
         private void OnGridRemoved(GridId gridId)
