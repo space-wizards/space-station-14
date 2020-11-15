@@ -472,6 +472,7 @@ namespace Content.Server.GameTicking
                 "sandbox" => typeof(PresetSandbox),
                 "deathmatch" => typeof(PresetDeathMatch),
                 "suspicion" => typeof(PresetSuspicion),
+                "traitor" => typeof(PresetTraitor),
                 _ => default
             };
 
