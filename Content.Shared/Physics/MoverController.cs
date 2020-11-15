@@ -13,7 +13,7 @@ namespace Content.Shared.Physics
         public override IPhysicsComponent? ControlledComponent { protected get; set; }
 
         private float timeToVmax = 0.2f;
-        private float minDesiredTimeStep = 1 / 30f;
+        private float minDesiredTimeStep = 1 / 60f;
 
         /// <summary>
         /// Simulates the movement model by one time interval.
@@ -89,10 +89,6 @@ namespace Content.Shared.Physics
             {
                 return;
             }
-
-            //apply a counteracting force to the standard friction between a human and a floor
-            //TODO: friction should involve mass, but in the current physics system it doesn't so we can't have it here either
-            //Vector2 antiFriction = velocityDirection.Normalized * (0.35f * 9.8f * frameTime);
 
             var linearVelocity = ControlledComponent.LinearVelocity;
             if (MathHelper.CloseTo(linearVelocity.LengthSquared, 0))
