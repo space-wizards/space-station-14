@@ -113,10 +113,8 @@ namespace Content.Server.Commands
                         return;
                     }
 
-                    var response =
-                        $"Damaged entity {damageable.Owner.Name} with id {damageable.Owner.Uid} for {amount} {damageClass} damage{(ignoreResistances ? ", ignoring resistances." : ".")}";
-
-                    shell.SendText(player, response);
+                    shell.SendText(player,
+                        $"Damaged entity {damageable.Owner.Name} with id {damageable.Owner.Uid} for {amount} {damageClass} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
                 };
 
                 return true;
@@ -140,10 +138,7 @@ namespace Content.Server.Commands
                         return;
                     }
 
-                    var response =
-                        $"Damaged entity {damageable.Owner.Name} with id {damageable.Owner.Uid} for {amount} {damageType} damage{(ignoreResistances ? ", ignoring resistances." : ".")}";
-
-                    shell.SendText(player, response);
+                    shell.SendText(player, $"Damaged entity {damageable.Owner.Name} with id {damageable.Owner.Uid} for {amount} {damageType} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
                 };
 
                 return true;
