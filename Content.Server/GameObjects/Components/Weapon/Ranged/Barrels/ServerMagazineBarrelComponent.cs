@@ -202,6 +202,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
 
             Dirty();
+        }
+
+        protected override void Startup()
+        {
             UpdateAppearance();
         }
 
