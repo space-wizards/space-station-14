@@ -8,6 +8,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
@@ -22,11 +23,13 @@ namespace Content.Server.GameObjects.Components.Items
 
         public override string Name => "FloorTile";
         private string _outputTile;
+        private string _outputTile2;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _outputTile, "output", "floor_steel");
+            serializer.DataField(ref _outputTile2, "output2", null);
         }
 
         public override void Initialize()
@@ -68,6 +71,13 @@ namespace Content.Server.GameObjects.Components.Items
             {
                 var tile = mapGrid.GetTileRef(location);
                 var baseTurf = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TypeId];
+
+                Logger.Info(_outputTile2 + " " + baseTurf.DisplayName + " " + desiredTile.DisplayName);
+                if (_outputTile2 != null && baseTurf.DisplayName == desiredTile.DisplayName)
+                {
+                    PlaceAt(mapGrid, location, _tileDefinitionManager[_outputTile].TileId);
+                    return;
+                }
 
                 if (HasBaseTurf(desiredTile, baseTurf.Name) && eventArgs.Target == null && stack.Use(1))
                 {

@@ -21,3 +21,4 @@
       max: 50
     - type: FloorTile
       output: lattice
+      output2: underplating

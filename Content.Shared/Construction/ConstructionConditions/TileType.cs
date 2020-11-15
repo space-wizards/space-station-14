@@ -25,15 +25,12 @@ namespace Content.Shared.Construction.ConstructionConditions
 
         public bool Condition(IEntity user, EntityCoordinates location, Direction direction)
         {
-            if (!location.TryGetTileRef(out TileRef? turf))
+            var tileFound = location.GetTileRef();
+            if (tileFound == null)
                 return false;
-            var _tile = turf.Value.Tile;
-            var tile = TurfHelpers.GetContentTileDefinition(_tile);
+            var tile = TurfHelpers.GetContentTileDefinition(tileFound.Value.Tile);
             if (tile.Name == TargetTile)
-            {
                 return true;
-            }
-
             return false;
         }
     }

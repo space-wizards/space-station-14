@@ -11,3 +11,12 @@
 
     - node: Catwalk
       entity: Catwalk
+      edges:
+        - to: start
+          completed:
+          - !type:SpawnPrototype
+                prototype: MetalRod
+                amount: 1
+          - !type:DeleteEntity {}
+          steps:
+            - tool: Cutting
