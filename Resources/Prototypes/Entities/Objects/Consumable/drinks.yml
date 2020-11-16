@@ -1593,7 +1593,7 @@
   parent: DrinkGlassBase
   id: DrinkTomatoJuice
   name: tomato juice
-  description: Juice made from tomatos, usually used as a beverage, either plain or in cocktails.
+  description: Juice made from tomatoes, usually used as a beverage, either plain or in cocktails.
   components:
   - type: Drink
   - type: SolutionContainer
