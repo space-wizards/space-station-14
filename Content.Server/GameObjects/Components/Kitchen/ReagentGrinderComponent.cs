@@ -37,15 +37,14 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Kitchen
 {
 
-
-    [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
     /// <summary>
     /// The combo reagent grinder/juicer. The reason why grinding and juicing are seperate is simple,
     /// think of grinding as a utility to break an object down into its reagents. Think of juicing as
     /// converting something into it's single juice form. E.g, grind an apple and get the nutriment and sugar
     /// it contained, juice an apple and get "apple juice".
     /// </summary>
+    [RegisterComponent]
+    [ComponentReference(typeof(IActivate))]
     public class ReagentGrinderComponent : SharedReagentGrinderComponent, IActivate, IInteractUsing
     {
         [Dependency] private readonly IRobustRandom _random = default!;
@@ -112,6 +111,16 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
             _audioSystem = EntitySystem.Get<AudioSystem>();
         }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage -= UserInterfaceOnReceiveMessage;
+            }
+        }
+
         private void UserInterfaceOnReceiveMessage(ServerBoundUserInterfaceMessage message)
         {
             if(!Powered || _busy)
