@@ -74,6 +74,8 @@ namespace Content.Client.GameObjects.Components.Kitchen
             }
             _menu.BeakerContentBox.EjectButton.Disabled = !cState.HasBeakerIn;
             _menu.ChamberContentBox.EjectButton.Disabled = cState.ChamberContents.Length <= 0;
+            _menu.GrindButton.Disabled = !cState.CanGrind;
+            _menu.JuiceButton.Disabled = !cState.CanJuice;
             RefreshContentsDisplay(cState.ReagentQuantities, cState.ChamberContents, cState.HasBeakerIn);
         }
 
@@ -97,7 +99,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
             }
         }
 
-        private void RefreshContentsDisplay(Solution.ReagentQuantity[] reagents, EntityUid[] containedSolids, bool isBeakerAttached)
+        private void RefreshContentsDisplay(IList<Solution.ReagentQuantity> reagents, IReadOnlyList<EntityUid> containedSolids, bool isBeakerAttached)
         {
             //But, if no beaker is attached use this guard to prevent hitting a null reference.
             if (!isBeakerAttached || reagents == null)
@@ -108,17 +110,17 @@ namespace Content.Client.GameObjects.Components.Kitchen
             //Much of this component's interface will just be ripped straight from microwave...
             _chamberVisualContents.Clear();
             _menu.ChamberContentBox.BoxContents.Clear();
-            for (var j = 0; j < containedSolids.Length; j++)
+            foreach (var uid in containedSolids)
             {
-                if (!_entityManager.TryGetEntity(containedSolids[j], out var entity))
+                if (!_entityManager.TryGetEntity(uid, out var entity))
                 {
                     return;
                 }
-                var texture = entity.GetComponent<SpriteComponent>().Icon.Default;
+                var texture = entity.GetComponent<SpriteComponent>().Icon?.Default;
 
                 var solidItem = _menu.ChamberContentBox.BoxContents.AddItem(entity.Name, texture);
                 var solidIndex = _menu.ChamberContentBox.BoxContents.IndexOf(solidItem);
-                _chamberVisualContents.Add(solidIndex, containedSolids[j]);
+                _chamberVisualContents.Add(solidIndex, uid);
             }
 
             //Always clear the list no matter what.
@@ -128,13 +130,13 @@ namespace Content.Client.GameObjects.Components.Kitchen
 
 
             //Looks like we have a beaker attached.
-            if (reagents.Length <= 0)
+            if (reagents.Count <= 0)
             {
                 _menu.BeakerContentBox.BoxContents.AddItem(Loc.GetString("Empty"));
             }
             else
             {
-                for (var i = 0; i < reagents.Length; i++)
+                for (var i = 0; i < reagents.Count; i++)
                 {
                     var goodIndex = _prototypeManager.TryIndex(reagents[i].ReagentId, out ReagentPrototype proto);
                     var reagentName = goodIndex ? Loc.GetString($"{reagents[i].Quantity} {proto.Name}") : Loc.GetString("???");

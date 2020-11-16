@@ -174,10 +174,21 @@ namespace Content.Server.GameObjects.Components.Kitchen
         {
             if(_uiDirty)
             {
+                bool canJuice = false;
+                bool canGrind = false;
+                foreach (var entity in _chamber.ContainedEntities)
+                {
+                    if (!canJuice && entity.HasComponent<JuiceableComponent>()) canJuice = true;
+                    if (!canGrind && entity.HasComponent<GrindableComponent>()) canGrind = true;
+                    if (canJuice && canGrind) break;
+                }
+
                 UserInterface?.SetState(new ReagentGrinderInterfaceState
                 (
                     _busy,
                     HasBeaker,
+                    canJuice,
+                    canGrind,
                     _chamber.ContainedEntities.Select(item => item.Uid).ToArray(),
                     //Remember the beaker can be null!
                     _heldBeaker?.Solution.Contents.ToArray()
@@ -185,6 +196,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 _uiDirty = false;
             }
         }
+
 
         private void EjectSolid(EntityUid entityID)
         {

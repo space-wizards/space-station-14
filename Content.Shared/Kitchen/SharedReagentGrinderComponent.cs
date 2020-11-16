@@ -106,12 +106,16 @@ namespace Content.Shared.Kitchen
     {
         public bool IsBusy;
         public bool HasBeakerIn;
+        public bool CanJuice;
+        public bool CanGrind;
         public EntityUid[] ChamberContents;
         public Solution.ReagentQuantity[] ReagentQuantities;
-        public ReagentGrinderInterfaceState(bool isBusy, bool hasBeaker, EntityUid[] chamberContents, Solution.ReagentQuantity[] heldBeakerContents)
+        public ReagentGrinderInterfaceState(bool isBusy, bool hasBeaker, bool canJuice, bool canGrind, EntityUid[] chamberContents, Solution.ReagentQuantity[] heldBeakerContents)
         {
             IsBusy = isBusy;
             HasBeakerIn = hasBeaker;
+            CanJuice = canJuice;
+            CanGrind = canGrind;
             ChamberContents = chamberContents;
             ReagentQuantities = heldBeakerContents;
         }
