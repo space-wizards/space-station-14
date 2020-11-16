@@ -21,6 +21,8 @@ namespace Content.Client.UserInterface
         private readonly EventHandler _onShowTooltip;
         private readonly EventHandler _onHideTooltip;
         private readonly Action<ActionSlotEventArgs> _onActionPressed;
+        private readonly Action<BaseButton.ButtonEventArgs> _onNextHotbarPressed;
+        private readonly Action<BaseButton.ButtonEventArgs> _onPreviousHotbarPressed;
         private readonly ActionSlot[] _slots;
 
         private VBoxContainer _hotbarContainer;
@@ -37,11 +39,16 @@ namespace Content.Client.UserInterface
         /// <param name="onActionPressed">handler for interactions with
         /// action slots. Instant actions will be handled as presses, all other kinds of actions
         /// will be handled as toggles. Slots with no actions will not be handled by this.</param>
-        public ActionsUI(EventHandler onShowTooltip, EventHandler onHideTooltip, Action<ActionSlotEventArgs> onActionPressed)
+        /// <param name="onNextHotbarPressed">action to invoke when pressing the next hotbar button</param>
+        /// <param name="onPreviousHotbarPressed">action to invoke when pressing the previous hotbar button</param>
+        public ActionsUI(EventHandler onShowTooltip, EventHandler onHideTooltip, Action<ActionSlotEventArgs> onActionPressed,
+            Action<BaseButton.ButtonEventArgs> onNextHotbarPressed, Action<BaseButton.ButtonEventArgs> onPreviousHotbarPressed)
         {
             _onShowTooltip = onShowTooltip;
             _onHideTooltip = onHideTooltip;
             _onActionPressed = onActionPressed;
+            _onNextHotbarPressed = onNextHotbarPressed;
+            _onPreviousHotbarPressed = onPreviousHotbarPressed;
 
             SizeFlagsHorizontal = SizeFlags.FillExpand;
             SizeFlagsVertical = SizeFlags.FillExpand;
@@ -97,6 +104,7 @@ namespace Content.Client.UserInterface
                 SizeFlagsVertical = SizeFlags.ShrinkCenter,
                 SizeFlagsStretchRatio = 1
             };
+            _previousHotbarButton.OnPressed += _onPreviousHotbarPressed;
             loadoutContainer.AddChild(_previousHotbarButton);
             loadoutContainer.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 2 });
             _loadoutNumber = new Label
@@ -113,6 +121,7 @@ namespace Content.Client.UserInterface
                 SizeFlagsVertical = SizeFlags.ShrinkCenter,
                 SizeFlagsStretchRatio = 1
             };
+            _nextHotbarButton.OnPressed += _onNextHotbarPressed;
             loadoutContainer.AddChild(_nextHotbarButton);
             loadoutContainer.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 1 });
 
@@ -167,9 +176,18 @@ namespace Content.Client.UserInterface
         /// </summary>
         /// <param name="slot">slot index to assign to (0 corresponds to the one labeled 1, 9 corresponds to the one labeled 0)</param>
         /// <param name="action">action to assign</param>
-        public void Assign(byte slot, ActionPrototype action)
+        public void AssignSlot(byte slot, ActionPrototype action)
         {
             _slots[slot].Assign(action);
+        }
+
+        /// <summary>
+        /// Clears the action assigned to the indicated slot.
+        /// </summary>
+        /// <param name="slot">slot index to clear (0 corresponds to the one labeled 1, 9 corresponds to the one labeled 0)</param>
+        public void ClearSlot(byte slot)
+        {
+            _slots[slot].Clear();
         }
 
         /// <summary>
@@ -191,9 +209,17 @@ namespace Content.Client.UserInterface
             _slots[slot].Grant();
         }
 
+        public void SetHotbarLabel(int number)
+        {
+            _loadoutNumber.Text = number.ToString();
+        }
+
+
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
+            _nextHotbarButton.OnPressed -= _onNextHotbarPressed;
+            _previousHotbarButton.OnPressed -= _onPreviousHotbarPressed;
             foreach (var slot in _slots)
             {
                 slot.OnShowTooltip -= _onShowTooltip;
@@ -237,6 +263,7 @@ namespace Content.Client.UserInterface
 
             actionSlot.Pressed = toggledOn;
         }
+
     }
 
     /// <summary>

@@ -119,7 +119,7 @@ namespace Content.Client.GameObjects.Components.Mobs
                 return;
             }
 
-            _ui = new ActionsUI(ActionOnOnShowTooltip, ActionOnOnHideTooltip, ActionSlotOnPressed);
+            _ui = new ActionsUI(ActionOnOnShowTooltip, ActionOnOnHideTooltip, ActionSlotOnPressed, NextHotbar, PreviousHotbar);
             LayoutContainer.SetGrowHorizontal(_ui, LayoutContainer.GrowDirection.End);
             LayoutContainer.SetAnchorAndMarginPreset(_ui, LayoutContainer.LayoutPreset.TopLeft, margin: 10);
             LayoutContainer.SetMarginTop(_ui, 100);
@@ -199,7 +199,21 @@ namespace Content.Client.GameObjects.Components.Mobs
             for (byte i = 0; i < Slots; i++)
             {
                 var actionType = _slots[_selectedHotbar, i];
-                if (actionType == null) continue;
+                if (actionType == null)
+                {
+                    _ui.ClearSlot(i);
+                    continue;
+                }
+                if (ActionManager.TryGet((ActionType) actionType, out var action))
+                {
+                    _ui.AssignSlot(i, action);
+                }
+                else
+                {
+                    Logger.WarningS("action", "unrecognized actionType {0}", actionType);
+                    continue;
+                }
+
                 if (!IsGranted((ActionType) actionType))
                 {
                     // just revoked an action we were trying to target with, stop targeting
@@ -221,6 +235,27 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
         }
 
+        private void NextHotbar(BaseButton.ButtonEventArgs args)
+        {
+            ChangeHotbar((byte) ((_selectedHotbar + 1) % Hotbars));
+        }
+
+        private void PreviousHotbar(BaseButton.ButtonEventArgs args)
+        {
+            int newBar = _selectedHotbar == 0 ? Hotbars - 1 : _selectedHotbar - 1;
+            ChangeHotbar((byte) newBar);
+        }
+
+        private void ChangeHotbar(byte hotbar)
+        {
+            StopTargeting();
+            _selectedHotbar = hotbar;
+            _ui.SetHotbarLabel(hotbar + 1);
+
+            UpdateHotbar();
+        }
+
+
         /// <summary>
         /// Finds the next open slot the action can go in and assigns it there,
         /// starting from the currently selected hotbar
@@ -240,8 +275,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         }
 
         /// <summary>
-        /// Assigns the indicated hotbar slot to the specified action type, including updating the
-        /// hotbar slot if this corresponds to a currently displayed hotbar slot.
+        /// Assigns the indicated hotbar slot to the specified action type.
         /// </summary>
         /// <param name="hotbar">hotbar whose slot is being assigned</param>
         /// <param name="slot">slot of the hotbar to assign to (0 = the slot labeled 1, 9 = the slot labeled 0)</param>
@@ -258,17 +292,6 @@ namespace Content.Client.GameObjects.Components.Mobs
                 var newList = new List<(byte Hotbar, byte Slot)> {(hotbar, slot)};
                 _assignments[actionType] = newList;
             }
-
-            if (hotbar != _selectedHotbar) return;
-            if (ActionManager.TryGet(actionType, out var action))
-            {
-                _ui.Assign(slot, action);
-            }
-            else
-            {
-                Logger.WarningS("action", "unrecognized actionType {0}", actionType);
-            }
-
         }
 
         private void ActionSlotOnPressed(ActionSlotEventArgs args)

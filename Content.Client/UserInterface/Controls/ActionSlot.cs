@@ -128,12 +128,31 @@ namespace Content.Client.UserInterface.Controls
         /// <param name="action">action to assign</param>
         public void Assign(ActionPrototype action)
         {
+            // already assigned
+            if (Action != null && Action.ActionType == action.ActionType) return;
+
             Action = action;
             _icon.Texture = Action.Icon.Frame0();
             _icon.Visible = true;
             // all non-instant actions need to be toggle-able
             ToggleMode = action.BehaviorType != BehaviorType.Instant;
-            Grant();
+            Disabled = false;
+            Granted = true;
+            _number.SetMessage(SlotNumberLabel());
+        }
+
+        /// <summary>
+        /// Clears the action assigned to this slot
+        /// </summary>
+        public void Clear()
+        {
+            if (Action == null) return;
+            Action = null;
+            _icon.Texture = null;
+            _icon.Visible = false;
+            ToggleMode = false;
+            Disabled = true;
+            UpdateCooldown(null, TimeSpan.Zero);
         }
 
         /// <summary>
@@ -179,5 +198,6 @@ namespace Content.Client.UserInterface.Controls
                 SetOnlyStylePseudoClass(StylePseudoClassNormal);
             }
         }
+
     }
 }
