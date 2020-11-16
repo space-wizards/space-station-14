@@ -20,6 +20,7 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.ComponentDependencies;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
@@ -276,6 +277,11 @@ namespace Content.Server.GameObjects.Components.Buckle
                 {
                     pullableComponent.TryStopPull();
                 }
+            }
+
+            if (Owner.TryGetComponent(out IPhysicsComponent? physics))
+            {
+                physics.LinearVelocity = Vector2.Zero;
             }
 
             return true;
