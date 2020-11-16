@@ -211,6 +211,8 @@
             "RandomArcade",
             "RandomSpriteState",
             "ReagentGrinder",
+            "Grindable",
+            "Juiceable",
             "ConveyorAssembly",
             "TwoWayLever"
         };
