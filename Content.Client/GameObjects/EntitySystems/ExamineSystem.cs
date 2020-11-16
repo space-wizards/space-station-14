@@ -73,7 +73,7 @@ namespace Content.Client.GameObjects.EntitySystems
             const float minWidth = 300;
             CloseTooltip();
 
-            var popupPos = _inputManager.MouseScreenPosition;
+            var popupPos = _userInterfaceManager.MousePositionScaled;
 
             // Actually open the tooltip.
             _examineTooltipOpen = new Popup();
