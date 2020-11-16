@@ -110,7 +110,7 @@ namespace Content.Shared.Kitchen
         public Solution.ReagentQuantity[] ReagentQuantities;
         public ReagentGrinderInterfaceState(bool isBusy, bool hasBeaker, EntityUid[] chamberContents, Solution.ReagentQuantity[] heldBeakerContents)
         {
-            IsBusy = IsBusy;
+            IsBusy = isBusy;
             HasBeakerIn = hasBeaker;
             ChamberContents = chamberContents;
             ReagentQuantities = heldBeakerContents;
