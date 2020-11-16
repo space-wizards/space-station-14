@@ -59,6 +59,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             if (weightless)
             {
+                physics.Status = BodyStatus.InAir;
                 if (physics.Owner.TryGetComponent(out SharedClimbingComponent? climbingComponent))
                 {
                     climbingComponent.IsClimbing = true;
@@ -69,52 +70,40 @@ namespace Content.Shared.GameObjects.EntitySystems
 
                 if (!touching)
                 {
-                    physics.Status = BodyStatus.InAir;
-                    transform.LocalRotation = physics.LinearVelocity.GetDir().ToAngle();
                     return;
                 }
-                else
-                {
-                    physics.Status = BodyStatus.OnGround;
-                }
+            }
+            else
+            {
+                physics.Status = BodyStatus.OnGround;
             }
 
             // TODO: movement check.
             var (walkDir, sprintDir) = mover.VelocityDir;
             var combined = walkDir + sprintDir;
-            if (combined.LengthSquared < 0.001 || !ActionBlockerSystem.CanMove(mover.Owner) && !weightless)
+            if (combined.LengthSquared < 0.001 || !ActionBlockerSystem.CanMove(mover.Owner))
             {
-                if (physics.TryGetController(out MoverController controller))
+                if (!weightless && physics.TryGetController(out MoverController controller))
                 {
                     controller.StopMoving(frameTime);
+                }
+                if (weightless)
+                {
+                    transform.LocalRotation = physics.LinearVelocity.GetDir().ToAngle();
                 }
             }
             else
             {
                 var total = walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed;
-                if (weightless)
-                {
-                    if (physics.TryGetController(out MoverController controller))
-                    {
-                        // TODO: weightless movement
-                        //controller.Push(combined, mover.CurrentPushSpeed * 350f);
-                        controller.Move(total, frameTime);
-                    }
 
-                    transform.LocalRotation = physics.LinearVelocity.GetDir().ToAngle();
-                    return;
-                }
-
+                if (physics.TryGetController(out MoverController controller))
                 {
-                    if (physics.TryGetController(out MoverController controller))
-                    {
-                        controller.Move(total, frameTime);
-                    }
+                    controller.Move(total, frameTime);
                 }
 
                 transform.LocalRotation = total.GetDir().ToAngle();
-
-                HandleFootsteps(mover);
+                if (!weightless)
+                    HandleFootsteps(mover);
             }
         }
 
@@ -126,12 +115,6 @@ namespace Content.Shared.GameObjects.EntitySystems
         private bool IsAroundCollider(ITransformComponent transform, IMoverComponent mover,
             IPhysicsComponent collider)
         {
-            var tile = _mapManager.GetGrid(transform.GridID).GetTileRef(transform.Coordinates).Tile;
-            if (!tile.IsEmpty)
-            {
-                return true;
-            }
-
             foreach (var entity in EntityManager.GetEntitiesInRange(transform.Owner, mover.GrabRange, true))
             {
                 if (entity == transform.Owner)

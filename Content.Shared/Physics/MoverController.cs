@@ -78,7 +78,7 @@ namespace Content.Shared.Physics
 
         public void StopMoving(float frameTime)
         {
-            if (ControlledComponent == null || ControlledComponent.Owner.IsWeightless())
+            if (ControlledComponent == null)
             {
                 return;
             }

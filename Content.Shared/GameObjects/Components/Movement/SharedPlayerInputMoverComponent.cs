@@ -79,7 +79,7 @@ namespace Content.Shared.GameObjects.Components.Movement
         [ViewVariables(VVAccess.ReadWrite)]
         public float CurrentPushSpeed => 5;
         [ViewVariables(VVAccess.ReadWrite)]
-        public float GrabRange => 0.2f;
+        public float GrabRange => 0.8f;
         public bool Sprinting => !HasFlag(_heldMoveButtons, MoveButtons.Walk);
 
         /// <summary>

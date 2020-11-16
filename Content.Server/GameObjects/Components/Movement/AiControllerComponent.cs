@@ -133,7 +133,7 @@ namespace Content.Server.GameObjects.Components.Movement
 
         /// <inheritdoc />
         [ViewVariables]
-        public float GrabRange => 0.2f;
+        public float GrabRange => 0.8f;
 
 
         /// <summary>
