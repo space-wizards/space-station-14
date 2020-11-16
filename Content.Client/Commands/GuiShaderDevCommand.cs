@@ -10,6 +10,7 @@ using Robust.Client.Interfaces.Console;
 using Robust.Client.Interfaces.UserInterface;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.Commands
@@ -28,6 +29,7 @@ namespace Content.Client.Commands
         public bool Execute(IDebugConsole console, params string[] args)
         {
             var uiMan = IoCManager.Resolve<IUserInterfaceManager>();
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
             switch (args.Length)
             {
@@ -43,12 +45,23 @@ namespace Content.Client.Commands
                 }
                 case 1:
                 {
+                    if (!prototypeManager.HasIndex<ShaderPrototype>(args[0])) {
+                        console.AddLine("Shader '" + args[0] + "' cannot be found in shader prototypes!");
+                        return false;
+                    }
                     var wnd = new SimpleShaderDevWindow(args[0]);
                     wnd.OpenCentered();
                     break;
                 }
                 case 2:
                 {
+
+                    if (!prototypeManager.HasIndex<ShaderPrototype>(args[0]))
+                    {
+                        console.AddLine("Shader '" + args[0] + "' cannot be found in shader prototypes!");
+                        return false;
+                    }
+
                     if (args[1] == "textured")
                     {
                         var wnd = new TexturedShaderDevWindow(args[0]);

@@ -64,8 +64,7 @@ namespace Content.Client.Development
                 ShaderInstance?.Dispose();
                 if (ShaderName != null)
                 {
-                    ShaderPrototype = PrototypeManager.Index<ShaderPrototype>(ShaderName);
-                    if (ShaderPrototype != null)
+                    if (PrototypeManager.TryIndex<ShaderPrototype>(ShaderName, out ShaderPrototype))
                     {
                         var parameters = ShaderPrototype.Parameters;
                         if (parameters != null)
@@ -333,7 +332,7 @@ namespace Content.Client.Development
         {
             IoCManager.InjectDependencies(this);
 
-            Title = "Shader Development Window";
+            Title = "Shader Development Window ";
 
             BgColorRect = new ColorRect
             {

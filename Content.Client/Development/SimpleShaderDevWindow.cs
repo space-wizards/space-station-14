@@ -75,6 +75,7 @@ namespace Content.Client.Development
             : this()
         {
             ShaderName = shaderName;
+            Title = "Shader Dev: " + (ShaderName != null ? ("'" + ShaderName + "'") : "NULL");
         }
 
     }

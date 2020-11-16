@@ -1,70 +1,70 @@
 light_mode unshaded;
-uniform float time = 0.0;
+uniform highp float time = 0.0;
 
 
-float difRandom (vec2 st, float seedShift)
+highp float difRandom (highp vec2 st, highp float seedShift)
 {
     return fract(sin(dot(st.xy,
         vec2(12.9898,78.233)))*(43758.5453123 + seedShift * 30.0));
 }
 
-float rndCentered(vec2 st, float steps, float seedShift)
+highp float rndCentered(highp vec2 st, highp float steps, highp float seedShift)
 {
     return floor(difRandom(st, seedShift) * steps) * 2.0
         - steps / 2.0;
 }
 
-vec2 rndField(vec2 st, float steps, float seedShift)
+highp vec2 rndField(highp vec2 st, highp float steps, highp float seedShift)
 {
     return vec2(rndCentered(st, steps, seedShift), 
         rndCentered(st, steps, seedShift - 500.0));
 }
 
-vec2 shiftSt(vec2 uv, vec2 shift)
+highp vec2 shiftSt(highp vec2 uv, highp vec2 shift)
 {
     return uv.xy + shift;
 }
 
 /*
-float noise(float a){
+highp float noise(highp float a){
   return fract(sin(a * 78.233) * 43758.5453);
 }
 
-float noise(vec2 a){
+highp float noise(highp vec2 a){
   return fract(sin(dot(a, vec2(78.233,12.9898)))
    * 43758.5453);
 }
 
-float noise(vec3 a){
+highp float noise(highp vec3 a){
   return fract(sin(dot(a, vec3(12.9898,78.233,41.772)))
   * 43758.5453);
 }
 */
 
-float noise(vec2 uv) {
-    float a = dot(uv, vec2(92., 80.));
-    float b = dot(uv, vec2(41., 62.));
-    float x = sin(a) + cos(b) * 51.;
+highp float noise(highp vec2 uv) {
+    highp float a = dot(uv, vec2(92., 80.));
+    highp float b = dot(uv, vec2(41., 62.));
+    highp float x = sin(a) + cos(b) * 51.;
     return fract(x);
 }
 
 
-float mod(float x, float v) {
+highp float mod(highp float x, highp float v) {
   return x - floor(x * (1.0 / v)) * v;
 }
-vec2 mod(vec2 x, float v) {
+highp vec2 mod(highp vec2 x, highp float v) {
   return x - floor(x * (1.0 / v)) * v;
 }
-vec3 mod(vec3 x, float v) {
+highp vec3 mod(highp vec3 x, highp float v) {
   return x - floor(x * (1.0 / v)) * v;
 }
 
 void fragment() {
     vec4 c = texture(TEXTURE, UV);
-    //vec2 r = vec2(noise(UV+d.r*.05), noise(UV+d.b*.05));
+    //highp vec2 r = vec2(noise(UV+d.r*.05), noise(UV+d.b*.05));
 
-    float accuracy = 10.0;
-    float steps = 4.0;
+    highp float accuracy = 10.0;
+    highp float steps = 4.0;
 
     //COLOR = vec4(c.xyz, c.w);
     COLOR = c * 0.8;

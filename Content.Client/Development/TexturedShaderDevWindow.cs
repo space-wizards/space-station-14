@@ -48,6 +48,8 @@ namespace Content.Client.Development
             {
                 OnTextureLoadPressed(bgTextureSpec, bgTextureLoadBtn, BgTextureRect);
             };
+            bgTextureSpec.Text = "/Textures/default_shader_dev_background.png";
+            OnTextureLoadPressed(bgTextureSpec, bgTextureLoadBtn, BgTextureRect);
 
             var fgTextureSpec = new LineEdit {SizeFlagsHorizontal = SizeFlags.FillExpand};
             var fgTextureLoadBtn = new Button {Text = "Load"};
@@ -55,6 +57,8 @@ namespace Content.Client.Development
             {
                 OnTextureLoadPressed(fgTextureSpec, fgTextureLoadBtn, FgTextureRect);
             };
+            fgTextureSpec.Text = "/Textures/default_shader_dev_texture.png";
+            OnTextureLoadPressed(fgTextureSpec, fgTextureLoadBtn, FgTextureRect);
 
             ControlsContainer.AddChild(new VBoxContainer
             {
@@ -115,6 +119,7 @@ namespace Content.Client.Development
             : this()
         {
             ShaderName = shaderName;
+            Title = "Shader Dev: " + (ShaderName != null ? ("'" + ShaderName + "'") : "NULL");
         }
 
     }
