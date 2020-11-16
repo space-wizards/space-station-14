@@ -9,6 +9,7 @@
         DebugInstant,
         DebugToggle,
         DebugTargetPointLocal,
-        DebugTargetPointMap
+        DebugTargetPointMap,
+        DebugTargetEntity
     }
 }

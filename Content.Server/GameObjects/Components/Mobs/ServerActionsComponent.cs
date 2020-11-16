@@ -60,8 +60,6 @@ namespace Content.Server.GameObjects.Components.Mobs
             switch (performMsg)
             {
                 case PerformInstantActionMessage msg:
-                {
-
                     if (action.InstantAction == null)
                     {
                         Logger.DebugS("action", "user {0} attempted to" +
@@ -73,9 +71,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                     action.InstantAction.DoInstantAction(new InstantActionEventArgs(player));
 
                     break;
-                }
                 case PerformToggleActionMessage msg:
-                {
                     if (action.ToggleAction == null)
                     {
                         Logger.DebugS("action", "user {0} attempted to" +
@@ -96,10 +92,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
                     action.ToggleAction.DoToggleAction(new ToggleActionEventArgs(player, msg.ToggleOn));
                     break;
-                }
                 case PerformTargetPointActionMessage msg:
-                {
-
                     if (action.TargetPointAction == null)
                     {
                         Logger.DebugS("action", "user {0} attempted to" +
@@ -119,7 +112,34 @@ namespace Content.Server.GameObjects.Components.Mobs
 
                     action.TargetPointAction.DoTargetPointAction(new TargetPointActionEventArgs(player, msg.Target));
                     break;
-                }
+                case PerformTargetEntityActionMessage msg:
+                    if (action.TargetEntityAction == null)
+                    {
+                        Logger.DebugS("action", "user {0} attempted to" +
+                                                " perform action {1} as a target entity action, but it isn't one", player.Name,
+                            msg.ActionType);
+                        return;
+                    }
+
+                    if (!_entityManager.TryGetEntity(msg.Target, out var entity))
+                    {
+                        Logger.DebugS("action", "user {0} attempted to" +
+                                                " perform target entity action {1} but could not find entity with " +
+                                                "provided uid {2}", player.Name, msg.ActionType, msg.Target);
+                        return;
+                    }
+
+                    if (ActionBlockerSystem.CanChangeDirection(player))
+                    {
+                        var diff = entity.Transform.MapPosition.Position - player.Transform.MapPosition.Position;
+                        if (diff.LengthSquared > 0.01f)
+                        {
+                            player.Transform.LocalRotation = new Angle(diff);
+                        }
+                    }
+
+                    action.TargetEntityAction.DoTargetEntityAction(new TargetEntitytActionEventArgs(player, entity));
+                    break;
             }
         }
     }

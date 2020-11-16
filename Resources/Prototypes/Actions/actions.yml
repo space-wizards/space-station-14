@@ -35,3 +35,11 @@
   behavior: !type:DebugTargetPoint
     mapPos: true
 
+- type: action
+  actionType: DebugTargetEntity
+  icon: Interface/Alerts/Human/human6.png
+  name: "[color=red]Debug Target Entity[/color]"
+  description: "This is a [color=red]debug message[/color]."
+  behaviorType: TargetEntity
+  behavior: !type:DebugTargetEntity { }
+

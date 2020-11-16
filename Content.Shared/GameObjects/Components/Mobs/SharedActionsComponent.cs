@@ -270,4 +270,21 @@ namespace Content.Shared.GameObjects.Components.Mobs
             Target = target;
         }
     }
+
+    /// <summary>
+    /// A message that tells server we want to target the provided entity with a particular action.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public class PerformTargetEntityActionMessage : PerformActionMessage
+    {
+        /// <summary>
+        /// Targeted entity
+        /// </summary>
+        public readonly EntityUid Target;
+
+        public PerformTargetEntityActionMessage(ActionType actionType, EntityUid target) : base(actionType)
+        {
+            Target = target;
+        }
+    }
 }

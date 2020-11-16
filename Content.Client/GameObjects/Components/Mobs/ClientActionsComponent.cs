@@ -39,6 +39,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private ActionsUI _ui;
         private PanelContainer _tooltip;
@@ -275,21 +276,17 @@ namespace Content.Client.GameObjects.Components.Mobs
             switch (args.Action.BehaviorType)
             {
                 case BehaviorType.Instant:
-                {
                     // for instant actions, we immediately tell the server we're doing it
                     SendNetworkMessage(new PerformInstantActionMessage(args.Action.ActionType));
                     break;
-                }
                 case BehaviorType.Toggle:
-                {
                     // for toggle actions, we immediately tell the server we're toggling it.
                     // Pre-emptively toggle it on as well
                     ToggleAction(args.Action.ActionType, args.ToggleOn);
                     SendNetworkMessage(new PerformToggleActionMessage(args.Action.ActionType, args.ToggleOn));
                     break;
-                }
                 case BehaviorType.TargetPoint:
-                {
+                case BehaviorType.TargetEntity:
                     // for target actions, we go into "select target" mode, we don't
                     // message the server until we actually pick our target.
 
@@ -302,12 +299,9 @@ namespace Content.Client.GameObjects.Components.Mobs
                     }
                     StartTargeting(args.ActionSlot);
                     break;
-                }
                 default:
-                {
                     Logger.WarningS("action", "unhandled action press for action {0}", args.Action.ActionType);
                     break;
-                }
             }
         }
 
@@ -345,7 +339,6 @@ namespace Content.Client.GameObjects.Components.Mobs
                 (_selectingTargetFor.Action.BehaviorType != BehaviorType.TargetEntity &&
                 _selectingTargetFor.Action.BehaviorType != BehaviorType.TargetPoint)) return false;
 
-            // targeting a point
             if (_selectingTargetFor.Action.BehaviorType == BehaviorType.TargetPoint)
             {
                 // send our action to the server, we chose our target
@@ -354,7 +347,18 @@ namespace Content.Client.GameObjects.Components.Mobs
                 StopTargeting();
                 return true;
             }
-            // TODO: Target entity
+            if (_selectingTargetFor.Action.BehaviorType == BehaviorType.TargetEntity)
+            {
+                // target the currently hovered entity, if there is one
+                if (args.EntityUid != EntityUid.Invalid)
+                {
+                    // send our action to the server, we chose our target
+                    SendNetworkMessage(new PerformTargetEntityActionMessage(_selectingTargetFor.Action.ActionType,
+                        args.EntityUid));
+                    StopTargeting();
+                    return true;
+                }
+            }
 
             StopTargeting();
             return false;
