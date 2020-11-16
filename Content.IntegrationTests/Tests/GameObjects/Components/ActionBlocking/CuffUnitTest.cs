@@ -64,7 +64,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
                 human = entityManager.SpawnEntity("HumanDummy", MapCoordinates.Nullspace);
                 otherHuman = entityManager.SpawnEntity("HumanDummy", MapCoordinates.Nullspace);
                 cuffs = entityManager.SpawnEntity("HandcuffsDummy", MapCoordinates.Nullspace);
-                secondCuffs = entityManager.SpawnEntity("CablecuffsDummy", MapCoordinates.Nullspace);
+                secondCuffs = entityManager.SpawnEntity("HandcuffsDummy", MapCoordinates.Nullspace);
 
                 human.Transform.WorldPosition = otherHuman.Transform.WorldPosition;
 
