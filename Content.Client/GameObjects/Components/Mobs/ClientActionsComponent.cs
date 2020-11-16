@@ -1,18 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Client.GameObjects.EntitySystems;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Actions;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Client.GameObjects;
+using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -42,6 +47,8 @@ namespace Content.Client.GameObjects.Components.Mobs
         private RichTextLabel _actionCooldown;
         private RichTextLabel _actionRequirements;
         private bool _tooltipReady;
+        // tracks the action slot we are currently selecting a target for
+        private ActionSlot _selectingTargetFor;
 
         /// <summary>
         /// Allows calculating if we need to act due to this component being controlled by the current mob
@@ -161,6 +168,7 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         private void PlayerDetached()
         {
+            StopTargeting();
             _ui?.Dispose();
             _ui = null;
         }
@@ -193,6 +201,12 @@ namespace Content.Client.GameObjects.Components.Mobs
                 if (actionType == null) continue;
                 if (!IsGranted((ActionType) actionType))
                 {
+                    // just revoked an action we were trying to target with, stop targeting
+                    if (_selectingTargetFor.Action != null && _selectingTargetFor != null &&
+                        _selectingTargetFor.Action.ActionType == actionType)
+                    {
+                        StopTargeting();
+                    }
                     _ui.RevokeSlot(i);
                     continue;
                 }
@@ -274,11 +288,91 @@ namespace Content.Client.GameObjects.Components.Mobs
                     SendNetworkMessage(new PerformToggleActionMessage(args.Action.ActionType, args.ToggleOn));
                     break;
                 }
+                case BehaviorType.TargetPoint:
+                {
+                    // for target actions, we go into "select target" mode, we don't
+                    // message the server until we actually pick our target.
+
+                    // if we're clicking the same thing we're already targeting for, then we simply cancel
+                    // targeting
+                    if (_selectingTargetFor == args.ActionSlot)
+                    {
+                        StopTargeting();
+                        break;
+                    }
+                    StartTargeting(args.ActionSlot);
+                    break;
+                }
                 default:
                 {
                     Logger.WarningS("action", "unhandled action press for action {0}", args.Action.ActionType);
                     break;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Puts us in targeting mode, where we need to pick either a target point or entity
+        /// </summary>
+        private void StartTargeting(ActionSlot actionSlot)
+        {
+            // If we were targeting something else we should stop
+            StopTargeting();
+
+            _selectingTargetFor = actionSlot;
+
+            // show it as pressed to indicate we are currently selecting a target for it
+            if (!actionSlot.Pressed)
+            {
+                actionSlot.Pressed = true;
+            }
+
+            // intercept clicks in the game world, treating them as our target selection. We want to
+            // take priority before any other systems handle the click.
+            CommandBinds.Builder
+                .BindBefore(EngineKeyFunctions.Use, new PointerInputCmdHandler(TargetingOnUse),
+                    typeof(ConstructionSystem), typeof(DragDropSystem))
+                .Register<ClientActionsComponent>();
+        }
+
+        private bool TargetingOnUse(in PointerInputCmdHandler.PointerInputCmdArgs args)
+        {
+            // not currently predicted
+            if (EntitySystem.Get<InputSystem>().Predicted) return false;
+
+            // only do something for actual target-based actions
+            if (_selectingTargetFor?.Action == null ||
+                (_selectingTargetFor.Action.BehaviorType != BehaviorType.TargetEntity &&
+                _selectingTargetFor.Action.BehaviorType != BehaviorType.TargetPoint)) return false;
+
+            // targeting a point
+            if (_selectingTargetFor.Action.BehaviorType == BehaviorType.TargetPoint)
+            {
+                // send our action to the server, we chose our target
+                SendNetworkMessage(new PerformTargetPointActionMessage(_selectingTargetFor.Action.ActionType,
+                    args.Coordinates));
+                StopTargeting();
+                return true;
+            }
+            // TODO: Target entity
+
+            StopTargeting();
+            return false;
+        }
+
+        /// <summary>
+        /// Switch out of targeting mode if currently selecting target for an action
+        /// </summary>
+        private void StopTargeting()
+        {
+            CommandBinds.Unregister<ClientActionsComponent>();
+            if (_selectingTargetFor != null)
+            {
+                if (_selectingTargetFor.Pressed)
+                {
+                    _selectingTargetFor.Pressed = false;
+                }
+                _selectingTargetFor = null;
             }
         }
 

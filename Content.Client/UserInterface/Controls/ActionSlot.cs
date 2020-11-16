@@ -131,7 +131,8 @@ namespace Content.Client.UserInterface.Controls
             Action = action;
             _icon.Texture = Action.Icon.Frame0();
             _icon.Visible = true;
-            ToggleMode = action.BehaviorType == BehaviorType.Toggle;
+            // all non-instant actions need to be toggle-able
+            ToggleMode = action.BehaviorType != BehaviorType.Instant;
             Grant();
         }
 

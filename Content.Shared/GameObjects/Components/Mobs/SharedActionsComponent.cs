@@ -4,6 +4,7 @@ using Content.Shared.Actions;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -53,7 +54,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         }
 
         /// <param name="toggledOn">current toggled status</param>
-        /// <returns>true iff the action is granted and toggleable</returns>
+        /// <returns>true iff the action is granted and a Toggle action</returns>
         public bool IsToggleable(ActionType actionType, out bool toggledOn)
         {
             if (_actions.TryGetValue(actionType, out var actionState))
@@ -249,8 +250,24 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
         public PerformToggleActionMessage(ActionType actionType, bool toggleOn) : base(actionType)
         {
-            Directed = true;
             ToggleOn = toggleOn;
+        }
+    }
+
+    /// <summary>
+    /// A message that tells server we want to target the provided point with a particular action.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public class PerformTargetPointActionMessage : PerformActionMessage
+    {
+        /// <summary>
+        /// Targeted local coordinates
+        /// </summary>
+        public readonly EntityCoordinates Target;
+
+        public PerformTargetPointActionMessage(ActionType actionType, EntityCoordinates target) : base(actionType)
+        {
+            Target = target;
         }
     }
 }

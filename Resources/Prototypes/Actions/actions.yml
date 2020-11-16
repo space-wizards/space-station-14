@@ -17,3 +17,21 @@
     messageOn: Toggled on!
     messageOff: Toggled off!
 
+- type: action
+  actionType: DebugTargetPointLocal
+  icon: Interface/Alerts/Human/human4.png
+  name: "[color=red]Debug Target Local Position[/color]"
+  description: "This is a [color=red]debug message[/color]."
+  behaviorType: TargetPoint
+  behavior: !type:DebugTargetPoint
+    mapPos: false
+
+- type: action
+  actionType: DebugTargetPointMap
+  icon: Interface/Alerts/Human/human5.png
+  name: "[color=red]Debug Target Map Position[/color]"
+  description: "This is a [color=red]debug message[/color]."
+  behaviorType: TargetPoint
+  behavior: !type:DebugTargetPoint
+    mapPos: true
+

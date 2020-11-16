@@ -1,4 +1,6 @@
-﻿using Robust.Shared.Interfaces.Serialization;
+﻿using System;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Map;
 
 namespace Content.Shared.Actions
 {
@@ -8,6 +10,29 @@ namespace Content.Shared.Actions
     /// </summary>
     public interface ITargetPointAction : IActionBehavior
     {
+        /// <summary>
+        /// Invoked when the target point action should be performed.
+        /// Implementation should perform the server side logic of the action.
+        /// </summary>
+        void DoTargetPointAction(TargetPointActionEventArgs args);
+    }
 
+    public class TargetPointActionEventArgs : EventArgs
+    {
+        /// <summary>
+        /// Entity performing the action.
+        /// </summary>
+        public readonly IEntity Performer;
+
+        /// <summary>
+        /// Local coordinates of the targeted position.
+        /// </summary>
+        public readonly EntityCoordinates Target;
+
+        public TargetPointActionEventArgs(IEntity performer, EntityCoordinates target)
+        {
+            Performer = performer;
+            Target = target;
+        }
     }
 }

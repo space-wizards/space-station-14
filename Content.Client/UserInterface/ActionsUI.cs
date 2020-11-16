@@ -156,7 +156,7 @@ namespace Content.Client.UserInterface
             }
             // only instant actions should be handled as presses, all other actions
             // should be handled as toggles
-            if (actionSlot.Action.BehaviorType == BehaviorType.Toggle)
+            if (actionSlot.Action.BehaviorType != BehaviorType.Instant)
             {
                 _onActionPressed.Invoke(new ActionSlotEventArgs(true, args.Pressed, actionSlot, args));
             }
@@ -217,7 +217,9 @@ namespace Content.Client.UserInterface
 
         /// <summary>
         /// Toggles the action on the indicated slot, showing it as toggled on or off based
-        /// on toggleOn
+        /// on toggleOn. Note that instant actions cannot be toggled.
+        /// All others can, Target-based actions need to be toggleable so they can indicate
+        /// which one you are currently picking a target for.
         /// </summary>
         /// <param name="slot">slot index containing the action to toggle
         /// (0 corresponds to the one labeled 1, 9 corresponds to the one labeled 0)</param>

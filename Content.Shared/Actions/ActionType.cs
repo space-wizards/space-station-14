@@ -7,6 +7,8 @@
     {
         Error,
         DebugInstant,
-        DebugToggle
+        DebugToggle,
+        DebugTargetPointLocal,
+        DebugTargetPointMap
     }
 }

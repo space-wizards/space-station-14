@@ -3,12 +3,15 @@ using Content.Server.Actions;
 using Content.Server.Commands;
 using Content.Shared.Actions;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Maths;
 using Robust.Shared.Players;
 
 namespace Content.Server.GameObjects.Components.Mobs
@@ -17,6 +20,9 @@ namespace Content.Server.GameObjects.Components.Mobs
     [ComponentReference(typeof(SharedActionsComponent))]
     public sealed class ServerActionsComponent : SharedActionsComponent
     {
+
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+
         public override ComponentState GetComponentState()
         {
             return new ActionComponentState(CreateActionStatesArray());
@@ -89,6 +95,29 @@ namespace Content.Server.GameObjects.Components.Mobs
                     ToggleAction(action.ActionType, msg.ToggleOn);
 
                     action.ToggleAction.DoToggleAction(new ToggleActionEventArgs(player, msg.ToggleOn));
+                    break;
+                }
+                case PerformTargetPointActionMessage msg:
+                {
+
+                    if (action.TargetPointAction == null)
+                    {
+                        Logger.DebugS("action", "user {0} attempted to" +
+                                                " perform action {1} as a target point action, but it isn't one", player.Name,
+                            msg.ActionType);
+                        return;
+                    }
+
+                    if (ActionBlockerSystem.CanChangeDirection(player))
+                    {
+                        var diff = msg.Target.ToMapPos(_entityManager) - player.Transform.MapPosition.Position;
+                        if (diff.LengthSquared > 0.01f)
+                        {
+                            player.Transform.LocalRotation = new Angle(diff);
+                        }
+                    }
+
+                    action.TargetPointAction.DoTargetPointAction(new TargetPointActionEventArgs(player, msg.Target));
                     break;
                 }
             }
