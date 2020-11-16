@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection.Metadata;
-using System.Text;
+﻿using System.Collections.Generic;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -15,7 +12,6 @@ using Content.Shared.Chemistry;
 using Robust.Shared.IoC;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Prototypes;
-using Robust.Client.Graphics;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.GameObjects.Components.Kitchen
@@ -50,7 +46,6 @@ namespace Content.Client.GameObjects.Components.Kitchen
                 SendMessage(new SharedReagentGrinderComponent.ReagentGrinderVaporizeReagentIndexedMessage(_beakerVisualContents[args.ItemIndex]));
             };
         }
-
 
         protected override void Dispose(bool disposing)
         {
@@ -126,8 +121,6 @@ namespace Content.Client.GameObjects.Components.Kitchen
             //Always clear the list no matter what.
             _beakerVisualContents.Clear();
             _menu.BeakerContentBox.BoxContents.Clear();
-
-
 
             //Looks like we have a beaker attached.
             if (reagents.Count <= 0)
@@ -235,7 +228,6 @@ namespace Content.Client.GameObjects.Components.Kitchen
                     SizeFlagsVertical = SizeFlags.ShrinkCenter
                 };
 
-
                 GrindButton = new Button
                 {
                     Text = Loc.GetString("Grind"),
@@ -275,7 +267,6 @@ namespace Content.Client.GameObjects.Components.Kitchen
                     SizeFlagsStretchRatio = 2,
                 };
 
-
                 hSplit.AddChild(vBoxGrindJuiceButtonPanel);
 
                 //Padding between the g/j buttons panel and the itemlist boxes panel.
@@ -294,6 +285,5 @@ namespace Content.Client.GameObjects.Components.Kitchen
                 Contents.AddChild(hSplit);
             }
         }
-
     }
 }

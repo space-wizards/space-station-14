@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Content.Shared.GameObjects.Components.Power;
+﻿using Content.Shared.GameObjects.Components.Power;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using static Content.Shared.Kitchen.SharedReagentGrinderComponent;
@@ -10,7 +7,6 @@ namespace Content.Client.GameObjects.Components.Kitchen
 {
     public class ReagentGrinderVisualizer : AppearanceVisualizer
     {
-
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);

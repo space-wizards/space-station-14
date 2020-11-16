@@ -12,7 +12,6 @@ namespace Content.Shared.Kitchen
         public override string Name => "ReagentGrinder";
         public override uint? NetID => ContentNetIDs.REAGENT_GRINDER;
 
-
         [Serializable, NetSerializable]
         public class ReagentGrinderGrindStartMessage : BoundUserInterfaceMessage
         {
@@ -48,7 +47,6 @@ namespace Content.Shared.Kitchen
         [Serializable, NetSerializable]
         public class ReagentGrinderEjectChamberContentMessage : BoundUserInterfaceMessage
         {
-
             public EntityUid EntityID;
             public ReagentGrinderEjectChamberContentMessage(EntityUid entityID)
             {
@@ -59,7 +57,6 @@ namespace Content.Shared.Kitchen
         [Serializable, NetSerializable]
         public class ReagentGrinderVaporizeReagentIndexedMessage : BoundUserInterfaceMessage
         {
-
             public Solution.ReagentQuantity ReagentQuantity;
             public ReagentGrinderVaporizeReagentIndexedMessage(Solution.ReagentQuantity reagentQuantity)
             {
@@ -71,7 +68,6 @@ namespace Content.Shared.Kitchen
         public class ReagentGrinderWorkStartedMessage : BoundUserInterfaceMessage
         {
             public bool IsJuiceIntent;
-
             public ReagentGrinderWorkStartedMessage(bool wasJuiceIntent)
             {
                 IsJuiceIntent = wasJuiceIntent;
@@ -81,7 +77,6 @@ namespace Content.Shared.Kitchen
         [Serializable, NetSerializable]
         public class ReagentGrinderWorkCompleteMessage : BoundUserInterfaceMessage
         {
-
             public ReagentGrinderWorkCompleteMessage()
             {
             }

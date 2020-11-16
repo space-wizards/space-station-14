@@ -1,13 +1,11 @@
 ﻿#nullable enable
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
@@ -28,8 +26,6 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -48,10 +44,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
     public class ReagentGrinderComponent : SharedReagentGrinderComponent, IActivate, IInteractUsing
     {
         [Dependency] private readonly IRobustRandom _random = default!;
-
-
         private AudioSystem _audioSystem = default!;
-
         [ViewVariables] private ContainerSlot _beakerContainer = default!;
 
         /// <summary>
@@ -66,9 +59,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         [ViewVariables] private bool ChamberEmpty => _chamber.ContainedEntities.Count <= 0;
         [ViewVariables] private bool HasBeaker => _beakerContainer.ContainedEntity != null;
-
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ReagentGrinderUiKey.Key);
-
 
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 
@@ -80,7 +71,6 @@ namespace Content.Server.GameObjects.Components.Kitchen
         /// Is the machine actively doing something and can't be used right now?
         /// </summary>
         private bool _busy = false;
-
 
         //YAML serialization vars
         [ViewVariables] private int _storageCap = 16;
@@ -167,10 +157,12 @@ namespace Content.Server.GameObjects.Components.Kitchen
                     break;
             }
         }
+
         private void ClickSound()
         {
             _audioSystem.PlayFromEntity("/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
         }
+
         private void SetAppearance(ReagentGrinderVisualState state)
         {
             if (Owner.TryGetComponent(out AppearanceComponent? appearance))
@@ -205,7 +197,6 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 _uiDirty = false;
             }
         }
-
 
         private void EjectSolid(EntityUid entityID)
         {
@@ -255,7 +246,6 @@ namespace Content.Server.GameObjects.Components.Kitchen
             {
                 return;
             }
-
             _uiDirty = true;
             UserInterface?.Toggle(actor.playerSession);
         }
@@ -270,7 +260,6 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("You have no hands."));
                 return true;
             }
-
 
             var heldEnt = eventArgs.Using;
 
@@ -289,7 +278,6 @@ namespace Content.Server.GameObjects.Components.Kitchen
             }
 
             //Next, see if the user is trying to insert something they want to be ground/juiced.
-
             if(!heldEnt!.TryGetComponent(out GrindableComponent? grind) && !heldEnt!.TryGetComponent(out JuiceableComponent? juice))
             {
                 //Entity did NOT pass the whitelist for grind/juice.
@@ -309,7 +297,6 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
             return true;
         }
-
 
         /// <summary>
         /// The wzhzhzh of the grinder.
@@ -353,7 +340,6 @@ namespace Content.Server.GameObjects.Components.Kitchen
                     UserInterface?.SendMessage(new ReagentGrinderWorkCompleteMessage());
                     return;
                 }));
-
             }
             else
             {
@@ -377,10 +363,6 @@ namespace Content.Server.GameObjects.Components.Kitchen
                     _uiDirty = true;
                 }));
             }
-
         }
-
-
-
     }
 }
