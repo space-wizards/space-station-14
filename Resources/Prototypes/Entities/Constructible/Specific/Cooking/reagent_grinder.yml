@@ -22,7 +22,7 @@
   - type: Physics
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.16,-0.3,0.16,0.3"
+      bounds: "-0.42,-0.2,0.42,0.28"
       layer:
       - Opaque
       - Impassable
