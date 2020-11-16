@@ -1,6 +1,6 @@
 ﻿#nullable enable
-using Content.Server.GameObjects.EntitySystems.StationEvents;
 using JetBrains.Annotations;
+using Content.Server.GameObjects.EntitySystems.StationEvents;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects.Systems;
@@ -13,7 +13,9 @@ namespace Content.Server.StationEvents
     {
         public string Command => "events";
         public string Description => "Provides admin control to station events";
-        public string Help => $"events <list/pause/resume/stop/run <eventName/random>>\n{ListHelp}\n{PauseHelp}\n{ResumeHelp}\n{RunHelp}";
+        public string Help => $"events <running/list/pause/resume/stop/run <eventName/random>>\n{RunningHelp}\n{ListHelp}\n{PauseHelp}\n{ResumeHelp}\n{RunHelp}";
+
+        private const string RunningHelp = "running: return the current running event";
 
         private const string ListHelp = "list: return all event names that can be run";
 
@@ -36,6 +38,9 @@ namespace Content.Server.StationEvents
             {
                 case "list":
                     List(shell, player);
+                    break;
+                case "running":
+                    Running(shell, player);
                     break;
                 // Didn't use a "toggle" so it's explicit
                 case "pause":
@@ -73,6 +78,19 @@ namespace Content.Server.StationEvents
             shell.SendText(player, resultText);
         }
 
+        private void Running(IConsoleShell shell, IPlayerSession? player)
+        {
+            var eventName = EntitySystem.Get<StationEventSystem>().CurrentEvent?.Name;
+            if (!string.IsNullOrEmpty(eventName))
+            {
+                shell.SendText(player, eventName);
+            }
+            else
+            {
+                shell.SendText(player, Loc.GetString("No station event running"));
+            }
+        }
+        
         private void List(IConsoleShell shell, IPlayerSession? player)
         {
             var resultText = "Random\n" + EntitySystem.Get<StationEventSystem>().GetEventNames();

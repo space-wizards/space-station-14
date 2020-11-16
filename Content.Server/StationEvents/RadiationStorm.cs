@@ -25,16 +25,16 @@ namespace Content.Server.StationEvents
 
         public override string Name => "RadiationStorm";
 
-        public override string StartAnnouncement => Loc.GetString(
+        protected override string StartAnnouncement => Loc.GetString(
             "High levels of radiation detected near the station. Evacuate any areas containing abnormal green energy fields.");
 
         protected override string EndAnnouncement => Loc.GetString(
             "The radiation threat has passed. Please return to your workplaces.");
         protected override string StartAudio => "/Audio/Announcements/radiation.ogg";
 
-        protected override int StartWhen => 3;
+        protected override float StartWhen => 3.0f;
 
-        protected override int AnnounceWhen => 1;
+        protected override float AnnounceWhen => 1.0f;
 
         private float _timeUntilPulse;
         private const float MinPulseDelay = 0.2f;
@@ -50,7 +50,7 @@ namespace Content.Server.StationEvents
             base.Setup();
             EndWhen = _robustRandom.Next(30, 80) + StartWhen; // We want to be forgiving about the radstorm.
         }
-
+        
         public override void Start()
         {
             ResetTimeUntilPulse();

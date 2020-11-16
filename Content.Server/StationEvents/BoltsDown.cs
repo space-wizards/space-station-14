@@ -19,7 +19,7 @@ namespace Content.Server.StationEvents
         public override string Name => "BoltsDown";
         public override StationEventWeight Weight => StationEventWeight.Low;
         public override int? MaxOccurrences => 1;
-        public override string StartAnnouncement => Loc.GetString(
+        protected override string StartAnnouncement => Loc.GetString(
             "The clover hat hackers turned the bolts of all the airlocks in the station down. We have dispatched high quality hacking equipment at every crewmember location so that this productive shift can continue");
         protected override string EndAnnouncement => Loc.GetString(
             "Our cybersecurity team has dealt with the problem and restarted all the airlocks bolts in the station. Have a nice shift.");

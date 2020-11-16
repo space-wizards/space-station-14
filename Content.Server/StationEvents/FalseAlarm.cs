@@ -1,8 +1,6 @@
 ﻿using JetBrains.Annotations;
 using Content.Server.GameObjects.EntitySystems.StationEvents;
-using Content.Server.Interfaces.Chat;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.IoC;
 
 namespace Content.Server.StationEvents
 {
@@ -15,7 +13,7 @@ namespace Content.Server.StationEvents
 
         public override bool Fakeable => false;
 
-        protected override int EndWhen => 1;
+        protected override float EndWhen => 1.0f;
 
         public override int? MaxOccurrences => 5;
 

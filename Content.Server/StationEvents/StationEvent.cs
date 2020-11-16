@@ -26,7 +26,7 @@ namespace Content.Server.StationEvents
         /// <summary>
         /// What should be said in chat when the event starts (if anything).
         /// </summary>
-        public virtual string StartAnnouncement { get; } = null;
+        protected virtual string StartAnnouncement { get; } = null;
 
         /// <summary>
         /// What should be said in chat when the event end (if anything).
@@ -56,23 +56,23 @@ namespace Content.Server.StationEvents
         /// <summary>
         /// When in the lifetime to call Start().
         /// </summary>
-        protected virtual int StartWhen { get; } = 0;
+        protected virtual float StartWhen { get; } = 0.0f;
 
         /// <summary>
         /// When in the lifetime to call Announce().
         /// </summary>
         /// this has a set for dynamic configuration.
-        protected virtual int AnnounceWhen { get; set; } = 0;
+        protected virtual float AnnounceWhen { get; set; } = 0.0f;
 
         /// <summary>
         /// When in the lifetime the event should end.
         /// </summary>
-        protected virtual int EndWhen { get; set; } = 0;
+        protected virtual float EndWhen { get; set; } = 0.0f;
 
         /// <summary>
         /// How long has the event existed. Do not change this.
         /// </summary>
-        public virtual int ActiveFor { get; protected set; } = 0;
+        public virtual float ActiveFor { get; protected set; } = 0.0f;
 
         /// <summary>
         /// How many players need to be present on station for the event to run
@@ -90,6 +90,10 @@ namespace Content.Server.StationEvents
         /// </summary>
         public virtual int? MaxOccurrences { get; } = null;
 
+        private bool Started { get; set; } = false;
+        private bool Announced { get; set; } = false;
+        // No "Ended" as this assumes the end properly kicks off.
+
         /// <summary>
         /// Called before Start(). Allows you to setup your events, such as randomly setting variables.
         /// </summary>
@@ -97,7 +101,6 @@ namespace Content.Server.StationEvents
         {
             Running = true;
             Occurrences += 1;
-            return;
         }
 
         /// <summary>
@@ -120,7 +123,6 @@ namespace Content.Server.StationEvents
             {
                 EntitySystem.Get<AudioSystem>().PlayGlobal(StartAudio, AudioParams.Default.WithVolume(-10f));
             }
-            return;
         }
 
         /// <summary>
@@ -160,14 +162,16 @@ namespace Content.Server.StationEvents
                 return;
             }
 
-            if (ActiveFor == StartWhen)
+            if (ActiveFor >= StartWhen && !Started)
             {
                 Start();
+                Started = true;
             }
 
-            if (ActiveFor == AnnounceWhen)
+            if (ActiveFor >= AnnounceWhen && !Announced)
             {
                 Announce(false);
+                Announced = true;
             }
 
             if (StartWhen < ActiveFor && ActiveFor < EndWhen)
@@ -178,9 +182,11 @@ namespace Content.Server.StationEvents
             if (ActiveFor >= EndWhen && ActiveFor >= AnnounceWhen && ActiveFor >= StartWhen)
             {
                 End();
+                Started = false;
+                Announced = false;
                 return;
             }
-            ActiveFor += 1;
+            ActiveFor += frameTime;
         }
 
     }

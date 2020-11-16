@@ -29,7 +29,7 @@ namespace Content.Server.StationEvents
 
         protected override string StartAudio => "/Audio/Announcements/power_off.ogg";
 
-        protected override int AnnounceWhen => 3;
+        protected override float AnnounceWhen => 3.0f;
 
 
         private CancellationTokenSource _announceCancelToken;
