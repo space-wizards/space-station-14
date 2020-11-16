@@ -1,4 +1,4 @@
-using Content.Server.GameObjects;
+using Content.Server.GameObjects.Components.GUI;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.AI.Operators.Inventory
@@ -22,9 +22,9 @@ namespace Content.Server.AI.Operators.Inventory
             // TODO: If in clothing then click on it
             foreach (var hand in handsComponent.ActivePriorityEnumerable())
             {
-                if (handsComponent.GetHand(hand)?.Owner == _entity)
+                if (handsComponent.GetItem(hand)?.Owner == _entity)
                 {
-                    handsComponent.ActiveIndex = hand;
+                    handsComponent.ActiveHand = hand;
                     return Outcome.Success;
                 }
             }

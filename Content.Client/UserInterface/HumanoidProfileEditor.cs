@@ -1,23 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Content.Client.GameObjects.Components;
+﻿using Content.Client.GameObjects.Components;
+using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.Interfaces;
-using Content.Client.Utility;
-using Content.Shared;
-using Content.Shared.Jobs;
+using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
+using Content.Shared.Roles;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using static Content.Client.StaticIoC;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Content.Client.UserInterface
 {
@@ -42,19 +44,27 @@ namespace Content.Client.UserInterface
         private readonly FacialHairStylePicker _facialHairPicker;
         private readonly List<JobPrioritySelector> _jobPriorities;
         private readonly OptionButton _preferenceUnavailableButton;
+        private readonly List<AntagPreferenceSelector> _antagPreferences;
+
+        private readonly IEntity _previewDummy;
+        private readonly SpriteView _previewSprite;
+        private readonly SpriteView _previewSpriteSide;
 
         private bool _isDirty;
         public int CharacterSlot;
         public HumanoidCharacterProfile Profile;
         public event Action<HumanoidCharacterProfile> OnProfileChanged;
 
-        public HumanoidProfileEditor(IClientPreferencesManager preferencesManager, IPrototypeManager prototypeManager)
+        public HumanoidProfileEditor(IClientPreferencesManager preferencesManager, IPrototypeManager prototypeManager, IEntityManager entityManager)
         {
             _random = IoCManager.Resolve<IRobustRandom>();
-            Profile = (HumanoidCharacterProfile) preferencesManager.Preferences.SelectedCharacter;
-            CharacterSlot = preferencesManager.Preferences.SelectedCharacterIndex;
+
             _preferencesManager = preferencesManager;
 
+            var hbox = new HBoxContainer();
+            AddChild(hbox);
+
+            #region Left
             var margin = new MarginContainer
             {
                 MarginTopOverride = 10,
@@ -62,7 +72,7 @@ namespace Content.Client.UserInterface
                 MarginLeftOverride = 10,
                 MarginRightOverride = 10
             };
-            AddChild(margin);
+            hbox.AddChild(margin);
 
             var vBox = new VBoxContainer();
             margin.AddChild(vBox);
@@ -99,7 +109,7 @@ namespace Content.Client.UserInterface
                 {
                     SizeFlagsVertical = SizeFlags.FillExpand
                 };
-                var nameLabel = new Label {Text = Loc.GetString("Name:")};
+                var nameLabel = new Label { Text = Loc.GetString("Name:") };
                 _nameEdit = new LineEdit
                 {
                     CustomMinimumSize = (270, 0),
@@ -120,7 +130,7 @@ namespace Content.Client.UserInterface
 
             #endregion Name
 
-            var tabContainer = new TabContainer {SizeFlagsVertical = SizeFlags.FillExpand};
+            var tabContainer = new TabContainer { SizeFlagsVertical = SizeFlags.FillExpand };
             vBox.AddChild(tabContainer);
 
             #region Appearance
@@ -142,7 +152,7 @@ namespace Content.Client.UserInterface
                 {
                     var panel = HighlightedContainer();
                     var hBox = new HBoxContainer();
-                    var sexLabel = new Label {Text = Loc.GetString("Sex:")};
+                    var sexLabel = new Label { Text = Loc.GetString("Sex:") };
 
                     var sexButtonGroup = new ButtonGroup();
 
@@ -172,8 +182,8 @@ namespace Content.Client.UserInterface
                 {
                     var panel = HighlightedContainer();
                     var hBox = new HBoxContainer();
-                    var ageLabel = new Label {Text = Loc.GetString("Age:")};
-                    _ageEdit = new LineEdit {CustomMinimumSize = (40, 0)};
+                    var ageLabel = new Label { Text = Loc.GetString("Age:") };
+                    _ageEdit = new LineEdit { CustomMinimumSize = (40, 0) };
                     _ageEdit.OnTextChanged += args =>
                     {
                         if (!int.TryParse(args.Text, out var newAge))
@@ -321,6 +331,52 @@ namespace Content.Client.UserInterface
 
             #endregion
 
+            #region Antags
+
+            {
+                var antagList = new VBoxContainer();
+
+                var antagVBox = new VBoxContainer
+                {
+                    Children =
+                    {
+                        new ScrollContainer
+                        {
+                            SizeFlagsVertical = SizeFlags.FillExpand,
+                            Children =
+                            {
+                                antagList
+                            }
+                        }
+                    }
+                };
+
+                tabContainer.AddChild(antagVBox);
+
+                tabContainer.SetTabTitle(2, Loc.GetString("Antags"));
+
+                _antagPreferences = new List<AntagPreferenceSelector>();
+
+                foreach (var antag in prototypeManager.EnumeratePrototypes<AntagPrototype>().OrderBy(a => a.Name))
+                {
+                    if (!antag.SetPreference)
+                    {
+                        continue;
+                    }
+                    var selector = new AntagPreferenceSelector(antag);
+                    antagList.AddChild(selector);
+                    _antagPreferences.Add(selector);
+
+                    selector.PreferenceChanged += preference =>
+                    {
+                        Profile = Profile.WithAntagPreference(antag.ID, preference);
+                        IsDirty = true;
+                    };
+                }
+            }
+
+            #endregion
+
             var rightColumn = new VBoxContainer();
             middleContainer.AddChild(rightColumn);
 
@@ -365,9 +421,96 @@ namespace Content.Client.UserInterface
 
             #endregion Save
 
-            UpdateControls();
+            #endregion
+
+            #region Right
+
+            margin = new MarginContainer
+            {
+                MarginTopOverride = 10,
+                MarginBottomOverride = 10,
+                MarginLeftOverride = 10,
+                MarginRightOverride = 10
+            };
+            hbox.AddChild(margin);
+
+            vBox = new VBoxContainer()
+            {
+                SizeFlagsVertical = SizeFlags.FillExpand,
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+            };
+            hbox.AddChild(vBox);
+            
+            #region Preview
+
+            _previewDummy = entityManager.SpawnEntity("HumanMob_Dummy", MapCoordinates.Nullspace);
+            var sprite = _previewDummy.GetComponent<SpriteComponent>();
+
+            // Front
+            var box = new Control()
+            {
+                SizeFlagsHorizontal = SizeFlags.Fill,
+                SizeFlagsVertical = SizeFlags.FillExpand,
+                SizeFlagsStretchRatio = 1f,
+            };
+            vBox.AddChild(box);
+            _previewSprite = new SpriteView
+            {
+                Sprite = sprite,
+                Scale = (6, 6),
+                OverrideDirection = Direction.South,
+                SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                SizeFlagsStretchRatio = 1
+            };
+            box.AddChild(_previewSprite);
+
+            // Side
+            box = new Control()
+            {
+                SizeFlagsHorizontal = SizeFlags.Fill,
+                SizeFlagsVertical = SizeFlags.FillExpand,
+                SizeFlagsStretchRatio = 1f,
+            };
+            vBox.AddChild(box);
+            _previewSpriteSide = new SpriteView
+            {
+                Sprite = sprite,
+                Scale = (6, 6),
+                OverrideDirection = Direction.East,
+                SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                SizeFlagsStretchRatio = 1
+            };
+            box.AddChild(_previewSpriteSide);
+
+            #endregion
+            
+            #endregion
+
+            if (preferencesManager.ServerDataLoaded)
+            {
+                LoadServerData();
+            }
+
+            preferencesManager.OnServerDataLoaded += LoadServerData;
 
             IsDirty = false;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            if (!disposing)
+                return;
+
+            _previewDummy.Delete();
+            _preferencesManager.OnServerDataLoaded -= LoadServerData;
+        }
+
+        private void LoadServerData()
+        {
+            Profile = (HumanoidCharacterProfile) _preferencesManager.Preferences.SelectedCharacter;
+            CharacterSlot = _preferencesManager.Preferences.SelectedCharacterIndex;
+            UpdateControls();
         }
 
         private void SetAge(int newAge)
@@ -401,6 +544,7 @@ namespace Content.Client.UserInterface
             set
             {
                 _isDirty = value;
+                UpdatePreview();
                 UpdateSaveButton();
             }
         }
@@ -446,6 +590,15 @@ namespace Content.Client.UserInterface
             _saveButton.Disabled = Profile is null || !IsDirty;
         }
 
+        private void UpdatePreview()
+        {
+            if (Profile is null)
+                return;
+
+            _previewDummy.GetComponent<HumanoidAppearanceComponent>().UpdateFromProfile(Profile);
+            LobbyCharacterPreviewPanel.GiveDummyJobClothes(_previewDummy, Profile);
+        }
+
         public void UpdateControls()
         {
             if (Profile is null) return;
@@ -455,6 +608,9 @@ namespace Content.Client.UserInterface
             UpdateHairPickers();
             UpdateSaveButton();
             UpdateJobPriorities();
+            UpdateAntagPreferences();
+
+            UpdatePreview();
 
             _preferenceUnavailableButton.SelectId((int) Profile.PreferenceUnavailable);
         }
@@ -507,7 +663,7 @@ namespace Content.Client.UserInterface
 
                 if (job.Icon != null)
                 {
-                    var specifier = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/job_icons.rsi"), job.Icon);
+                    var specifier = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/job_icons.rsi"), job.Icon);
                     icon.Texture = specifier.Frame0();
                 }
 
@@ -520,6 +676,52 @@ namespace Content.Client.UserInterface
                         _optionButton
                     }
                 });
+            }
+        }
+
+        private void UpdateAntagPreferences()
+        {
+            foreach (var preferenceSelector in _antagPreferences)
+            {
+                var antagId = preferenceSelector.Antag.ID;
+
+                var preference = Profile.AntagPreferences.Contains(antagId);
+
+                preferenceSelector.Preference = preference;
+            }
+        }
+
+        private class AntagPreferenceSelector : Control
+        {
+            public AntagPrototype Antag { get; }
+            private readonly CheckBox _checkBox;
+
+            public bool Preference
+            {
+                get => _checkBox.Pressed;
+                set => _checkBox.Pressed = value;
+            }
+
+            public event Action<bool> PreferenceChanged;
+
+            public AntagPreferenceSelector(AntagPrototype antag)
+            {
+                Antag = antag;
+
+                _checkBox = new CheckBox {Text = $"{antag.Name}"};
+                _checkBox.OnToggled += OnCheckBoxToggled;
+
+                AddChild(new HBoxContainer
+                {
+                    Children =
+                    {
+                        _checkBox
+                    }
+                });
+            }
+            private void OnCheckBoxToggled(BaseButton.ButtonToggledEventArgs args)
+            {
+                PreferenceChanged?.Invoke(Preference);
             }
         }
     }

@@ -1,14 +1,11 @@
 ﻿using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Power;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Research;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Research
 {
@@ -65,19 +62,19 @@ namespace Content.Server.GameObjects.Components.Research
             }
         }
 
-        /// <remarks>If no <see cref="PowerDeviceComponent"/> is found, it's assumed power is not required.</remarks>
+        /// <remarks>If no <see cref="PowerReceiverComponent"/> is found, it's assumed power is not required.</remarks>
         [ViewVariables]
-        public bool CanRun => _powerDevice is null || _powerDevice.Powered;
+        public bool CanRun => _powerReceiver is null || _powerReceiver.Powered;
 
-        private PowerDeviceComponent _powerDevice;
+        private PowerReceiverComponent _powerReceiver;
 
         public override void Initialize()
         {
             base.Initialize();
             Id = ServerCount++;
             EntitySystem.Get<ResearchSystem>()?.RegisterServer(this);
-            Database = Owner.GetComponent<TechnologyDatabaseComponent>();
-            Owner.TryGetComponent(out _powerDevice);
+            Database = Owner.EnsureComponent<TechnologyDatabaseComponent>();
+            Owner.TryGetComponent(out _powerReceiver);
         }
 
         /// <inheritdoc />

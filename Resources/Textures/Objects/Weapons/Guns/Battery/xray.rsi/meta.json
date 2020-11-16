@@ -1,0 +1,53 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "https://github.com/discordia-space/CEV-Eris/raw/167a810bc8534a56c74ffa8f1373acd3b1ac70ee/icons/obj/guns/energy/xray.dmi",
+    "states": [
+        {
+            "name": "icon",
+            "directions": 1
+        },
+        {
+            "name": "base",
+            "directions": 1
+        },
+        {
+            "name": "mag-unshaded-0",
+            "directions": 1,
+            "delays": [
+                [
+                    0.3,
+                    0.3
+                ]
+            ]
+        },
+        {
+            "name": "mag-unshaded-1",
+            "directions": 1
+        },
+        {
+            "name": "mag-unshaded-2",
+            "directions": 1
+        },
+        {
+            "name": "mag-unshaded-3",
+            "directions": 1
+        },
+        {
+            "name": "mag-unshaded-4",
+            "directions": 1
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        }
+    ]
+}

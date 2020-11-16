@@ -4,7 +4,7 @@
   abstract: true
   components:
   - type: Sprite
-    sprite: Effects/weapons/arcs.rsi
+    sprite: Effects/arcs.rsi
     directional: false
     offset: 0.85, 0
     drawdepth: Overlays

@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Robust.Server.Interfaces.Maps;
@@ -25,7 +26,8 @@ namespace Content.IntegrationTests.Tests
             var mapManager = server.ResolveDependency<IMapManager>();
             server.Post(() =>
             {
-                mapLoader.SaveBlueprint(new GridId(2), "save load save 1.yml");
+                // TODO: Un-hardcode the grid Id for this test.
+                mapLoader.SaveBlueprint(new GridId(1), "save load save 1.yml");
                 var mapId = mapManager.CreateMap();
                 var grid = mapLoader.LoadBlueprint(mapId, "save load save 1.yml");
                 mapLoader.SaveBlueprint(grid.Index, "save load save 2.yml");
@@ -37,19 +39,34 @@ namespace Content.IntegrationTests.Tests
             string one;
             string two;
 
-            using (var stream = userData.Open(new ResourcePath("save load save 1.yml"), FileMode.Open))
+            var rp1 = new ResourcePath("/save load save 1.yml");
+            using (var stream = userData.Open(rp1, FileMode.Open))
             using (var reader = new StreamReader(stream))
             {
                 one = reader.ReadToEnd();
             }
 
-            using (var stream = userData.Open(new ResourcePath("save load save 2.yml"), FileMode.Open))
+            var rp2 = new ResourcePath("/save load save 2.yml");
+            using (var stream = userData.Open(rp2, FileMode.Open))
             using (var reader = new StreamReader(stream))
             {
                 two = reader.ReadToEnd();
             }
 
-            Assert.That(one, Is.EqualTo(two));
+            Assert.Multiple(() => {
+                Assert.That(one, Is.EqualTo(two));
+                var failed = TestContext.CurrentContext.Result.Assertions.FirstOrDefault();
+                if (failed != null)
+                {
+                    var path1 = Path.Combine(userData.RootDir!,rp1.ToRelativeSystemPath());
+                    var path2 = Path.Combine(userData.RootDir!,rp2.ToRelativeSystemPath());
+                    TestContext.AddTestAttachment(path1);
+                    TestContext.AddTestAttachment(path2);
+                    TestContext.Error.WriteLine("Complete output:");
+                    TestContext.Error.WriteLine(path1);
+                    TestContext.Error.WriteLine(path2);
+                }
+            });
         }
 
         /// <summary>
@@ -80,7 +97,7 @@ namespace Content.IntegrationTests.Tests
 
             server.Post(() =>
             {
-                mapLoader.SaveBlueprint(grid.Index, "load save ticks save 2.yml");
+                mapLoader.SaveBlueprint(grid.Index, "/load save ticks save 2.yml");
             });
 
             await server.WaitIdleAsync();
@@ -89,13 +106,13 @@ namespace Content.IntegrationTests.Tests
             string one;
             string two;
 
-            using (var stream = userData.Open(new ResourcePath("load save ticks save 1.yml"), FileMode.Open))
+            using (var stream = userData.Open(new ResourcePath("/load save ticks save 1.yml"), FileMode.Open))
             using (var reader = new StreamReader(stream))
             {
                 one = reader.ReadToEnd();
             }
 
-            using (var stream = userData.Open(new ResourcePath("load save ticks save 2.yml"), FileMode.Open))
+            using (var stream = userData.Open(new ResourcePath("/load save ticks save 2.yml"), FileMode.Open))
             using (var reader = new StreamReader(stream))
             {
                 two = reader.ReadToEnd();

@@ -1,30 +1,27 @@
 using System.Collections.Generic;
-using Content.Server.GameObjects;
+using Content.Server.GameObjects.Components.GUI;
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.AI.WorldState.States.Inventory
 {
     [UsedImplicitly]
-    public sealed class InventoryState : StateData<List<IEntity>>
+    public sealed class EnumerableInventoryState : StateData<IEnumerable<IEntity>>
     {
-        public override string Name => "Inventory";
+        public override string Name => "EnumerableInventory";
 
-        public override List<IEntity> GetValue()
+        public override IEnumerable<IEntity> GetValue()
         {
-            var inventory = new List<IEntity>();
-
             if (Owner.TryGetComponent(out HandsComponent handsComponent))
             {
                 foreach (var item in handsComponent.GetAllHeldItems())
                 {
-                    inventory.Add(item.Owner);
+                    if (item.Owner.Deleted)
+                        continue;
+                    
+                    yield return item.Owner;
                 }
             }
-
-            // TODO: InventoryComponent (Pockets were throwing)
-
-            return inventory;
         }
     }
 }

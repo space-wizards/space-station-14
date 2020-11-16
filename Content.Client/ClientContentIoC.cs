@@ -1,16 +1,19 @@
-﻿using Content.Client.Chat;
+﻿using Content.Client.Administration;
+using Content.Client.Chat;
+using Content.Client.Eui;
 using Content.Client.GameTicking;
 using Content.Client.Interfaces;
 using Content.Client.Interfaces.Chat;
 using Content.Client.Interfaces.Parallax;
 using Content.Client.Parallax;
 using Content.Client.Sandbox;
+using Content.Client.StationEvents;
 using Content.Client.UserInterface;
+using Content.Client.UserInterface.AdminMenu;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
-using Content.Shared.Chemistry;
 using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.Chemistry;
+using Content.Shared.Alert;
 using Robust.Shared.IoC;
 
 namespace Content.Client
@@ -33,6 +36,11 @@ namespace Content.Client
             IoCManager.Register<IStylesheetManager, StylesheetManager>();
             IoCManager.Register<IScreenshotHook, ScreenshotHook>();
             IoCManager.Register<IClickMapManager, ClickMapManager>();
+            IoCManager.Register<IStationEventManager, StationEventManager>();
+            IoCManager.Register<IAdminMenuManager, AdminMenuManager>();
+            IoCManager.Register<AlertManager, AlertManager>();
+            IoCManager.Register<IClientAdminManager, ClientAdminManager>();
+            IoCManager.Register<EuiManager, EuiManager>();
         }
     }
 }

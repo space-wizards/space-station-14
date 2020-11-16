@@ -1,0 +1,78 @@
+- type: entity
+  name: SniperBase
+  parent: BaseItem
+  id: SniperBase
+  description: A rooty tooty point and shooty.
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: bolt-closed
+      map: ["enum.RangedBarrelVisualLayers.Bolt"]
+  - type: Item
+    size: 24
+  - type: BoltActionBarrel
+    currentSelector: Single
+    allSelectors:
+    - Single
+    fillPrototype: CartridgeLRifle
+    caliber: LRifle
+    capacity: 10
+    fireRate: 1.0
+    minAngle: 5
+    maxAngle: 45
+    angleIncrease: 20
+    angleDecay: 15
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/sniper.ogg
+    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundInsert: /Audio/Weapons/Guns/MagIn/bullet_insert.ogg
+
+- type: entity
+  name: Kardashev-Mosin
+  parent: SniperBase
+  id: SniperBoltGun
+  description: Weapon for hunting, or endless trench warfare. If you’re on a budget, it’s a darn good rifle for just about everything.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Snipers/bolt_gun.rsi
+  - type: Item
+    sprite: Objects/Weapons/Guns/Snipers/bolt_gun.rsi
+  - type: RangedWeapon
+  - type: BoltActionBarrel
+  - type: Appearance
+    visuals:
+    - type: BarrelBoltVisualizer
+
+- type: entity
+  name: Kardashev-Mosin
+  parent: SniperBase
+  id: SniperBoltGunWood
+  description: Weapon for hunting, or endless trench warfare. If you’re on a budget, it’s a darn good rifle for just about everything.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
+  - type: RangedWeapon
+  - type: BoltActionBarrel
+  - type: Appearance
+    visuals:
+    - type: BarrelBoltVisualizer
+
+- type: entity
+  name: Hristov
+  parent: SniperBase
+  id: SniperHeavy
+  description: A portable anti-armour rifle, fitted with a scope, it was originally designed for use against armoured exosuits. It is capable of punching through windows and non-reinforced walls with ease. Fires armor piercing 14.5mm shells.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
+  - type: RangedWeapon
+  - type: BoltActionBarrel
+    caliber: AntiMaterial
+    capacity: 1
+    fillPrototype: CartridgeAntiMaterial
+  - type: Appearance
+    visuals:
+    - type: BarrelBoltVisualizer

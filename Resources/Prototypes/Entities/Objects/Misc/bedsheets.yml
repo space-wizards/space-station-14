@@ -1,0 +1,486 @@
+﻿- type: entity
+  parent: BaseItem
+  id: BedsheetBase
+  name: BedsheetBase
+  abstract: true
+  description: A surprisingly soft linen bedsheet.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Bed
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bedsheets.rsi
+
+  - type: Clothing
+    size: 10
+    QuickEquip: true
+    Slots:
+    - back
+  - type: SnapGrid
+    offset: Center
+
+- type: entity
+  id: BedsheetBlack
+  parent: BedsheetBase
+  name: black bedsheet
+  components:
+  - type: Sprite
+    state: sheetblack
+
+  - type: Clothing
+    size: 10
+    QuickEquip: true
+    Slots:
+    - neck
+    sprite: Clothing/Neck/Bedsheets/sheet_black.rsi
+    HeldPrefix: sheetblack
+
+- type: entity
+  id: BedsheetBlue
+  parent: BedsheetBase
+  name: blue bedsheet
+  components:
+  - type: Sprite
+    state: sheetblue
+
+  - type: Clothing
+    size: 10
+    QuickEquip: true
+    Slots:
+    - neck
+    sprite: Clothing/Neck/Bedsheets/sheet_blue.rsi
+    HeldPrefix: sheetblue
+
+- type: entity
+  id: BedsheetBrown
+  parent: BedsheetBase
+  name: brown bedsheet
+  components:
+  - type: Sprite
+    state: sheetbrown
+
+  - type: Clothing
+    size: 10
+    QuickEquip: true
+    Slots:
+    - neck
+    sprite: Clothing/Neck/Bedsheets/sheet_brown.rsi
+    HeldPrefix: sheetbrown
+
+- type: entity
+  id: BedsheetCaptain
+  parent: BedsheetBase
+  name: captain's bedsheet
+  description: It has a Nanotrasen symbol on it, and was woven with a revolutionary new kind of thread guaranteed to have 0.01% permeability for most non-chemical substances, popular among most modern captains.
+  components:
+  - type: Sprite
+    state: sheetcaptain
+
+  - type: Clothing
+    size: 10
+    QuickEquip: true
+    Slots:
+    - neck
+    sprite: Clothing/Neck/Bedsheets/sheet_captain.rsi
+    HeldPrefix: sheetcaptain
+
+- type: entity
+  id: BedsheetCE
+  parent: BedsheetBase
+  name: ce's bedsheet
+  components:
+  - type: Sprite
+    state: sheetce
+
+  - type: Clothing
+    size: 10
+    QuickEquip: true
+    Slots:
+    - neck
+    sprite: Clothing/Neck/Bedsheets/sheet_ce.rsi
+    HeldPrefix: sheetce
+
+- type: entity
+  id: BedsheetCentcom
+  parent: BedsheetBase
+  name: centcom bedsheet
+  components:
+  - type: Sprite
+    state: sheetcentcom
+
+  - type: Clothing
+    size: 10
+    QuickEquip: true
+    Slots:
+    - neck
+    sprite: Clothing/Neck/Bedsheets/sheet_centcom.rsi
+    HeldPrefix: sheetcentcom
+
+- type: entity
+  id: BedsheetClown
+  parent: BedsheetBase
+  name: clown's bedsheet
+  components:
+  - type: Sprite
+    state: sheetclown
+
+  - type: Clothing
+    size: 10
+    QuickEquip: true
+    Slots:
+    - neck
+    sprite: Clothing/Neck/Bedsheets/sheet_rainbow.rsi
+    HeldPrefix: sheetrainbow
+
+- type: entity
+  id: BedsheetCMO
+  parent: BedsheetBase
+  name: cmo's bedsheet
+  components:
+  - type: Sprite
+    state: sheetcmo
+
+  - type: Clothing
+    size: 10
+    QuickEquip: true
+    Slots:
+    - neck
+    sprite: Clothing/Neck/Bedsheets/sheet_cmo.rsi
+    HeldPrefix: sheetcmo
+
+- type: entity
+  id: BedsheetCosmos
+  parent: BedsheetBase
+  name: cosmos bedsheet
+  components:
+  - type: Sprite
+    state: sheetcosmos
+
+  - type: Clothing
+    size: 10
+    QuickEquip: true
+    Slots:
+    - neck
+    sprite: Clothing/Neck/Bedsheets/sheet_cosmos.rsi
+    HeldPrefix: sheetcosmos
+
+- type: entity
+  id: BedsheetCult
+  parent: BedsheetBase
+  name: cult bedsheet
+  components:
+  - type: Sprite
+    state: sheetcult
+
+  - type: Clothing
+    size: 10
+    QuickEquip: true
+    Slots:
+    - neck
+    sprite: Clothing/Neck/Bedsheets/sheet_cult.rsi
+    HeldPrefix: sheetcult
+
+- type: entity
+  id: BedsheetGreen
+  parent: BedsheetBase
+  name: green bedsheet
+  components:
+  - type: Sprite
+    state: sheetgreen
+
+  - type: Clothing
+    size: 10
+    QuickEquip: true
+    Slots:
+    - neck
+    sprite: Clothing/Neck/Bedsheets/sheet_green.rsi
+    HeldPrefix: sheetgreen
+
+- type: entity
+  id: BedsheetGrey
+  parent: BedsheetBase
+  name: grey bedsheet
+  components:
+  - type: Sprite
+    state: sheetgrey
+
+  - type: Clothing
+    size: 10
+    QuickEquip: true
+    Slots:
+    - neck
+    sprite: Clothing/Neck/Bedsheets/sheet_grey.rsi
+    HeldPrefix: sheetgrey
+
+- type: entity
+  id: BedsheetHOP
+  parent: BedsheetBase
+  name: hop's bedsheet
+  components:
+  - type: Sprite
+    state: sheethop
+
+  - type: Clothing
+    size: 10
+    QuickEquip: true
+    Slots:
+    - neck
+    sprite: Clothing/Neck/Bedsheets/sheet_hop.rsi
+    HeldPrefix: sheethop
+
+- type: entity
+  id: BedsheetHOS
+  parent: BedsheetBase
+  name: hos's bedsheet
+  components:
+  - type: Sprite
+    state: sheethos
+
+  - type: Clothing
+    size: 10
+    QuickEquip: true
+    Slots:
+    - neck
+    sprite: Clothing/Neck/Bedsheets/sheet_hos.rsi
+    HeldPrefix: sheethos
+
+- type: entity
+  id: BedsheetIan
+  parent: BedsheetBase
+  name: ian bedsheet
+  components:
+  - type: Sprite
+    state: sheetian
+
+  - type: Clothing
+    size: 10
+    QuickEquip: true
+    Slots:
+    - neck
+    sprite: Clothing/Neck/Bedsheets/sheet_ian.rsi
+    HeldPrefix: sheetian
+
+- type: entity
+  id: BedsheetMedical
+  parent: BedsheetBase
+  name: medical bedsheet
+  components:
+  - type: Sprite
+    state: sheetmedical
+
+  - type: Clothing
+    size: 10
+    QuickEquip: true
+    Slots:
+    - neck
+    sprite: Clothing/Neck/Bedsheets/sheet_medical.rsi
+    HeldPrefix: sheetmedical
+
+- type: entity
+  id: BedsheetMime
+  parent: BedsheetBase
+  name: mime's bedsheet
+  components:
+  - type: Sprite
+    state: sheetmime
+
+  - type: Clothing
+    size: 10
+    QuickEquip: true
+    Slots:
+    - neck
+    sprite: Clothing/Neck/Bedsheets/sheet_mime.rsi
+    HeldPrefix: sheetmime
+
+- type: entity
+  id: BedsheetNT
+  parent: BedsheetBase
+  name: nt bedsheet
+  components:
+  - type: Sprite
+    state: sheetNT
+
+  - type: Clothing
+    size: 10
+    QuickEquip: true
+    Slots:
+    - neck
+    sprite: Clothing/Neck/Bedsheets/sheet_NT.rsi
+    HeldPrefix: sheetNT
+
+- type: entity
+  id: BedsheetOrange
+  parent: BedsheetBase
+  name: orange bedsheet
+  components:
+  - type: Sprite
+    state: sheetorange
+
+  - type: Clothing
+    size: 10
+    QuickEquip: true
+    Slots:
+    - neck
+    sprite: Clothing/Neck/Bedsheets/sheet_orange.rsi
+    HeldPrefix: sheetorange
+
+- type: entity
+  id: BedsheetPurple
+  parent: BedsheetBase
+  name: purple bedsheet
+  components:
+  - type: Sprite
+    state: sheetpurple
+
+  - type: Clothing
+    size: 10
+    QuickEquip: true
+    Slots:
+    - neck
+    sprite: Clothing/Neck/Bedsheets/sheet_purple.rsi
+    HeldPrefix: sheetpurple
+
+- type: entity
+  id: BedsheetQM
+  parent: BedsheetBase
+  name: qm's bedsheet
+  components:
+  - type: Sprite
+    state: sheetqm
+
+  - type: Clothing
+    size: 10
+    QuickEquip: true
+    Slots:
+    - neck
+    sprite: Clothing/Neck/Bedsheets/sheet_qm.rsi
+    HeldPrefix: sheetqm
+
+- type: entity
+  id: BedsheetRainbow
+  parent: BedsheetBase
+  name: rainbow bedsheet
+  components:
+  - type: Sprite
+    state: sheetrainbow
+
+  - type: Clothing
+    size: 10
+    QuickEquip: true
+    Slots:
+    - neck
+    sprite: Clothing/Neck/Bedsheets/sheet_rainbow.rsi
+    HeldPrefix: sheetrainbow
+
+- type: entity
+  id: BedsheetRD
+  parent: BedsheetBase
+  name: rd's bedsheet
+  components:
+  - type: Sprite
+    state: sheetrd
+
+  - type: Clothing
+    size: 10
+    QuickEquip: true
+    Slots:
+    - neck
+    sprite: Clothing/Neck/Bedsheets/sheet_rd.rsi
+    HeldPrefix: sheetrd
+
+- type: entity
+  id: BedsheetRed
+  parent: BedsheetBase
+  name: red bedsheet
+  components:
+  - type: Sprite
+    state: sheetred
+
+  - type: Clothing
+    size: 10
+    QuickEquip: true
+    Slots:
+    - neck
+    sprite: Clothing/Neck/Bedsheets/sheet_red.rsi
+    HeldPrefix: sheetred
+
+- type: entity
+  id: BedsheetSyndie
+  parent: BedsheetBase
+  name: syndie bedsheet
+  components:
+  - type: Sprite
+    state: sheetsyndie
+
+  - type: Clothing
+    size: 10
+    QuickEquip: true
+    Slots:
+    - neck
+    sprite: Clothing/Neck/Bedsheets/sheet_syndie.rsi
+    HeldPrefix: sheetsyndie
+
+- type: entity
+  id: BedsheetUSA
+  parent: BedsheetBase
+  name: usa bedsheet
+  components:
+  - type: Sprite
+    state: sheetUSA
+
+  - type: Clothing
+    size: 10
+    QuickEquip: true
+    Slots:
+    - neck
+    sprite: Clothing/Neck/Bedsheets/sheet_USA.rsi
+    HeldPrefix: sheetUSA
+
+- type: entity
+  id: BedsheetWhite
+  parent: BedsheetBase
+  name: white bedsheet
+  components:
+  - type: Sprite
+    state: sheetwhite
+
+  - type: Clothing
+    size: 10
+    QuickEquip: true
+    Slots:
+    - neck
+    sprite: Clothing/Neck/Bedsheets/sheet_white.rsi
+    HeldPrefix: sheetwhite
+
+- type: entity
+  id: BedsheetWiz
+  parent: BedsheetBase
+  name: wizard's bedsheet
+  components:
+  - type: Sprite
+    state: sheetwiz
+
+  - type: Clothing
+    size: 10
+    QuickEquip: true
+    Slots:
+    - neck
+    sprite: Clothing/Neck/Bedsheets/sheet_wiz.rsi
+    HeldPrefix: sheetwiz
+
+- type: entity
+  id: BedsheetYellow
+  parent: BedsheetBase
+  name: yellow bedsheet
+  components:
+  - type: Sprite
+    state: sheetyellow
+
+  - type: Clothing
+    size: 10
+    QuickEquip: true
+    Slots:
+    - neck
+    sprite: Clothing/Neck/Bedsheets/sheet_yellow.rsi
+    HeldPrefix: sheetyellow

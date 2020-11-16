@@ -6,8 +6,8 @@
  using Robust.Shared.Interfaces.Map;
  using Robust.Shared.IoC;
  using Robust.Shared.Localization;
-using Robust.Shared.Localization.Macros;
-using Robust.Shared.Prototypes;
+ using Robust.Shared.Localization.Macros;
+ using Robust.Shared.Prototypes;
 
  namespace Content.Shared
 {
@@ -16,11 +16,8 @@ using Robust.Shared.Prototypes;
         // If you want to change your codebase's language, do it here.
         private const string Culture = "en-US";
 
-#pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
 
         public override void PreInit()
         {
@@ -30,7 +27,7 @@ using Robust.Shared.Prototypes;
             textMacroFactory.DoAutoRegistrations();
 
             // Default to en-US.
-            _localizationManager.LoadCulture(new CultureInfo(Culture));
+            Loc.LoadCulture(new CultureInfo(Culture));
         }
 
         public override void Init()

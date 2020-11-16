@@ -1,8 +1,8 @@
-using Content.Server.AI.Utility;
+﻿using Content.Server.AI.Utility;
 using Content.Server.AI.WorldState.States.Inventory;
-using Content.Server.GameObjects.Components;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Utility;
+using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.AI.Operators.Inventory
@@ -27,7 +27,7 @@ namespace Content.Server.AI.Operators.Inventory
             {
                 return true;
             }
-            
+
             var blackboard = UtilityAiHelpers.GetBlackboard(_owner);
 
             if (blackboard == null)
@@ -36,7 +36,7 @@ namespace Content.Server.AI.Operators.Inventory
             }
 
             _target = blackboard.GetState<LastOpenedStorageState>().GetValue();
-            
+
             return _target != null;
         }
 
@@ -50,17 +50,17 @@ namespace Content.Server.AI.Operators.Inventory
 
         public override Outcome Execute(float frameTime)
         {
-            if (!InteractionChecks.InRangeUnobstructed(_owner, _target.Transform.MapPosition))
+            if (!_owner.InRangeUnobstructed(_target, popup: true))
             {
                 return Outcome.Failed;
             }
 
-            if (!_target.TryGetComponent(out EntityStorageComponent storageComponent) || 
+            if (!_target.TryGetComponent(out EntityStorageComponent storageComponent) ||
                 storageComponent.IsWeldedShut)
             {
                 return Outcome.Failed;
             }
-            
+
             if (storageComponent.Open)
             {
                 var activateArgs = new ActivateEventArgs {User = _owner, Target = _target};

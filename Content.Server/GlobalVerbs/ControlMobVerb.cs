@@ -1,11 +1,12 @@
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Players;
-using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Verbs;
 using Robust.Server.Console;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 
 namespace Content.Server.GlobalVerbs
 {
@@ -13,6 +14,7 @@ namespace Content.Server.GlobalVerbs
     public class ControlMobVerb : GlobalVerb
     {
         public override bool RequireInteractionRange => false;
+        public override bool BlockedByContainers => false;
 
         public override void GetData(IEntity user, IEntity target, VerbData data)
         {
@@ -34,7 +36,7 @@ namespace Content.Server.GlobalVerbs
                 if (groupController.CanCommand(player.playerSession, "controlmob"))
                 {
                     data.Visibility = VerbVisibility.Visible;
-                    data.Text = "Control Mob";
+                    data.Text = Loc.GetString("Control Mob");
                     data.CategoryData = VerbCategories.Debug;
                 }
             }

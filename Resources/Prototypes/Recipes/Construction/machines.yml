@@ -1,0 +1,12 @@
+﻿- type: construction
+  name: computer
+  id: Computer
+  graph: computer
+  startNode: start
+  targetNode: computer
+  category: Machines
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Constructible/Misc/stock_parts.rsi
+    state: 4

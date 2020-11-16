@@ -1,0 +1,271 @@
+- type: entity
+  id: PartHuman
+  name: "human body part"
+  abstract: true
+
+- type: entity
+  id: TorsoHuman
+  name: "human torso"
+  parent: PartHuman
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Human/parts.rsi
+    state: "torso_m"
+  - type: Icon
+    sprite: Mobs/Species/Human/parts.rsi
+    state: "torso_m"
+  - type: BodyPart
+    partType: Torso
+    size: 14
+    compatibility: Biological
+    mechanisms:
+    - HeartHuman
+    - LungsHuman
+    - StomachHuman
+    - LiverHuman
+    - KidneysHuman
+  - type: BiologicalSurgeryData
+  - type: Damageable
+    # TODO BODY DettachableDamageableComponent?
+    damageContainer: biologicalDamageContainer
+    resistances: defaultResistances
+    criticalThreshold: 100
+    deadThreshold: 150
+
+- type: entity
+  id: HeadHuman
+  name: "human head"
+  parent: PartHuman
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Human/parts.rsi
+    state: "head_m"
+  - type: Icon
+    sprite: Mobs/Species/Human/parts.rsi
+    state: "head_m"
+  - type: BodyPart
+    partType: Head
+    size: 7
+    compatibility: Biological
+    isVital: true
+    mechanisms:
+    - BrainHuman
+    - EyesHuman
+  - type: BiologicalSurgeryData
+  - type: Damageable
+    damageContainer: biologicalDamageContainer
+    resistances: defaultResistances
+    criticalThreshold: 50
+    deadThreshold: 120
+
+- type: entity
+  id: LeftArmHuman
+  name: "left human arm"
+  parent: PartHuman
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Human/parts.rsi
+    state: "l_arm"
+  - type: Icon
+    sprite: Mobs/Species/Human/parts.rsi
+    state: "l_arm"
+  - type: BodyPart
+    partType: Arm
+    size: 5
+    compatibility: Biological
+    symmetry: Left
+  - type: BiologicalSurgeryData
+  - type: Damageable
+    damageContainer: biologicalDamageContainer
+    resistances: defaultResistances
+    criticalThreshold: 40
+    deadThreshold: 80
+  - type: Extension
+    distance: 2.4
+
+- type: entity
+  id: RightArmHuman
+  name: "right human arm"
+  parent: PartHuman
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Human/parts.rsi
+    state: "r_arm"
+  - type: Icon
+    sprite: Mobs/Species/Human/parts.rsi
+    state: "r_arm"
+  - type: BodyPart
+    partType: Arm
+    size: 5
+    compatibility: Biological
+    symmetry: Right
+  - type: BiologicalSurgeryData
+  - type: Damageable
+    damageContainer: biologicalDamageContainer
+    resistances: defaultResistances
+    criticalThreshold: 40
+    deadThreshold: 80
+  - type: Extension
+    distance: 2.4
+
+- type: entity
+  id: LeftHandHuman
+  name: "left human hand"
+  parent: PartHuman
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Human/parts.rsi
+    state: "l_hand"
+  - type: Icon
+    sprite: Mobs/Species/Human/parts.rsi
+    state: "l_hand"
+  - type: BodyPart
+    partType: Hand
+    size: 3
+    compatibility: Biological
+    symmetry: Left
+  - type: BiologicalSurgeryData
+  - type: Damageable
+    damageContainer: biologicalDamageContainer
+    resistances: defaultResistances
+    criticalThreshold: 30
+    deadThreshold: 60
+  - type: Grasp
+
+- type: entity
+  id: RightHandHuman
+  name: "right human hand"
+  parent: PartHuman
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Human/parts.rsi
+    state: "r_hand"
+  - type: Icon
+    sprite: Mobs/Species/Human/parts.rsi
+    state: "r_hand"
+  - type: BodyPart
+    partType: Hand
+    durability: 30
+    destroyThreshold: -60
+    size: 3
+    compatibility: Biological
+    symmetry: Right
+  - type: BiologicalSurgeryData
+  - type: Damageable
+    damageContainer: biologicalDamageContainer
+    resistances: defaultResistances
+    criticalThreshold: 30
+    deadThreshold: 60
+  - type: Grasp
+
+- type: entity
+  id: LeftLegHuman
+  name: "left human leg"
+  parent: PartHuman
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Human/parts.rsi
+    state: "l_leg"
+  - type: Icon
+    sprite: Mobs/Species/Human/parts.rsi
+    state: "l_leg"
+  - type: BodyPart
+    partType: Leg
+    size: 6
+    compatibility: Biological
+    symmetry: Left
+  - type: BiologicalSurgeryData
+  - type: Damageable
+    damageContainer: biologicalDamageContainer
+    resistances: defaultResistances
+    criticalThreshold: 45
+    deadThreshold: 90
+  - type: Leg
+    speed: 2.6
+  - type: Extension
+    distance: 3.0
+
+- type: entity
+  id: RightLegHuman
+  name: "right human leg"
+  parent: PartHuman
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Human/parts.rsi
+    state: "r_leg"
+  - type: Icon
+    sprite: Mobs/Species/Human/parts.rsi
+    state: "r_leg"
+  - type: BodyPart
+    partType: Leg
+    durability: 45
+    destroyThreshold: -90
+    size: 6
+    compatibility: Biological
+    symmetry: Right
+  - type: BiologicalSurgeryData
+  - type: Damageable
+    damageContainer: biologicalDamageContainer
+    resistances: defaultResistances
+    criticalThreshold: 45
+    deadThreshold: 90
+  - type: Leg
+    speed: 2.6
+  - type: Extension
+    distance: 3.0
+
+- type: entity
+  id: LeftFootHuman
+  name: "left human foot"
+  parent: PartHuman
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Human/parts.rsi
+    state: "l_foot"
+  - type: Icon
+    sprite: Mobs/Species/Human/parts.rsi
+    state: "l_foot"
+  - type: BodyPart
+    partType: Foot
+    size: 2
+    compatibility: Biological
+    symmetry: Left
+  - type: BiologicalSurgeryData
+  - type: Damageable
+    damageContainer: biologicalDamageContainer
+    resistances: defaultResistances
+    criticalThreshold: 30
+    deadThreshold: 60
+
+- type: entity
+  id: RightFootHuman
+  name: "right human foot"
+  parent: PartHuman
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Human/parts.rsi
+    state: "r_foot"
+  - type: Icon
+    sprite: Mobs/Species/Human/parts.rsi
+    state: "r_foot"
+  - type: BodyPart
+    partType: Foot
+    size: 2
+    compatibility: Biological
+    symmetry: Right
+  - type: BiologicalSurgeryData
+  - type: Damageable
+    damageContainer: biologicalDamageContainer
+    resistances: defaultResistances
+    criticalThreshold: 30
+    deadThreshold: 60

@@ -1,0 +1,92 @@
+﻿- type: entity
+  id: Window
+  name: window
+  description: Don't smudge up the glass down there.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Window
+  components:
+  - type: Clickable
+  - type: RCDDeconstructWhitelist
+  - type: InteractionOutline
+  - type: Sprite
+    color: "#DDDDDD"
+    netsync: false
+    drawdepth: WallTops
+    sprite: Constructible/Structures/Windows/window.rsi
+  - type: Icon
+    sprite: Constructible/Structures/Windows/window.rsi
+    state: full
+  - type: Physics
+    shapes:
+    - !type:PhysShapeAabb
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Destructible
+    deadThreshold: 15
+    resistances: metallicResistances
+    destroySoundCollection: WindowBreak
+    spawnOnDestroy:
+      ShardGlass:
+        Min: 1
+        Max: 3
+  - type: SnapGrid
+    offset: Center
+  - type: Airtight
+  - type: Window
+    base: window
+  - type: Construction
+    graph: window
+    node: window
+  - type: Appearance
+    visuals:
+    - type: WindowVisualizer
+
+- type: entity
+  id: ReinforcedWindow
+  name: reinforced window
+  parent: Window
+  components:
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Structures/Windows/reinforced_window.rsi
+  - type: Icon
+    sprite: Constructible/Structures/Windows/reinforced_window.rsi
+  - type: Destructible
+    deadThreshold: 75
+    resistances: metallicResistances
+  - type: Window
+    base: rwindow
+  - type: Construction
+    graph: window
+    node: reinforcedWindow
+
+- type: entity
+  id: PhoronWindow
+  name: phoronwindow
+  parent: Window
+  components:
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Structures/Windows/phoron_window.rsi
+  - type: Icon
+    sprite: Constructible/Structures/Windows/phoron_window.rsi
+  - type: Destructible
+    deadThreshold: 100
+    resistances: metallicResistances
+  - type: Window
+    base: pwindow
+  - type: Construction
+    graph: window
+    node: phoronWindow
+
+- type: soundCollection
+  id: WindowBreak
+  files:
+  - /Audio/Effects/glass_break1.ogg
+  - /Audio/Effects/glass_break2.ogg
+  - /Audio/Effects/glass_break3.ogg

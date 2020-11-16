@@ -1,7 +1,6 @@
-﻿using Content.Server.GameObjects.Components.Cargo;
+﻿using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Cargo;
 using Content.Shared.Prototypes.Cargo;
-using System;
-using System.Collections.Generic;
 
 namespace Content.Server.Cargo
 {
@@ -94,6 +93,12 @@ namespace Content.Server.Cargo
             if (!TryGetAccount(accountId, out var account))
                 return null;
             return account.GetOrders();
+        }
+
+        public (int CurrentCapacity, int MaxCapacity) GetCapacity(int id)
+        {
+            TryGetAccount(id, out var account);
+            return (account.CurrentOrderSize, account.MaxOrderSize);
         }
     }
 }

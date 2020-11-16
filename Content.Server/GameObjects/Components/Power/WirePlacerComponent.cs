@@ -1,68 +1,58 @@
 ﻿using Content.Server.GameObjects.Components.Stack;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Utility;
-using Robust.Server.GameObjects;
+using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
-using Robust.Shared.Map;
+using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power
 {
     [RegisterComponent]
     internal class WirePlacerComponent : Component, IAfterInteract
     {
-#pragma warning disable 649
-        [Dependency] private readonly IServerEntityManager _entityManager;
-        [Dependency] private readonly IMapManager _mapManager;
-#pragma warning restore 649
+        [Dependency] private readonly IServerEntityManager _entityManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         /// <inheritdoc />
         public override string Name => "WirePlacer";
 
+        [ViewVariables]
+        private string _wirePrototypeID;
+
+        [ViewVariables]
+        private WireType _blockingWireType;
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+            serializer.DataField(ref _wirePrototypeID, "wirePrototypeID", "HVWire");
+            serializer.DataField(ref _blockingWireType, "blockingWireType", WireType.HighVoltage);
+        }
+
         /// <inheritdoc />
         public void AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
-
-            if(!_mapManager.TryGetGrid(eventArgs.ClickLocation.GridID, out var grid))
+            if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return;
+            if(!_mapManager.TryGetGrid(eventArgs.ClickLocation.GetGridId(_entityManager), out var grid))
                 return;
-
             var snapPos = grid.SnapGridCellFor(eventArgs.ClickLocation, SnapGridOffset.Center);
             var snapCell = grid.GetSnapGridCell(snapPos, SnapGridOffset.Center);
-
             if(grid.GetTileRef(snapPos).Tile.IsEmpty)
                 return;
-
-            var found = false;
             foreach (var snapComp in snapCell)
             {
-                if (!snapComp.Owner.HasComponent<PowerTransferComponent>())
-                    continue;
-
-                found = true;
-                break;
+                if (snapComp.Owner.TryGetComponent<WireComponent>(out var wire) && wire.WireType == _blockingWireType)
+                {
+                    return;
+                }
             }
-
-            if (found)
-                return;
-
-            bool hasItemSpriteComp = Owner.TryGetComponent(out SpriteComponent itemSpriteComp);
-
             if (Owner.TryGetComponent(out StackComponent stack) && !stack.Use(1))
                 return;
-
-            GridCoordinates coordinates = grid.GridTileToLocal(snapPos);
-            var newWire = _entityManager.SpawnEntity("Wire", coordinates);
-            if (newWire.TryGetComponent(out SpriteComponent wireSpriteComp) && hasItemSpriteComp)
-            {
-                wireSpriteComp.Color = itemSpriteComp.Color;
-            }
-
-            //TODO: There is no way to set this wire as above or below the floor
+            _entityManager.SpawnEntity(_wirePrototypeID, grid.GridTileToLocal(snapPos));
         }
     }
 }

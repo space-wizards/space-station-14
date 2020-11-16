@@ -1,0 +1,113 @@
+﻿- type: entity
+  id: BaseLathe
+  name: "lathe"
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    mass: 25
+    anchored: true
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.4,0.4,0.4"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+  - type: SnapGrid
+    offset: Center
+  - type: Lathe
+  - type: MaterialStorage
+  - type: Anchorable
+  - type: Pullable
+  - type: UserInterface
+    interfaces:
+    - key: enum.LatheUiKey.Key
+      type: LatheBoundUserInterface
+  - type: PowerReceiver
+
+- type: entity
+  parent: BaseLathe
+  id: Autolathe
+  name: "autolathe"
+  description: It produces items using metal and glass.
+  components:
+  - type: Sprite
+    sprite: Constructible/Power/autolathe.rsi
+    layers:
+    - state: autolathe
+      map: ["enum.AutolatheVisualLayers.Base"]
+    - state: autolathe_unlit
+      shader: unshaded
+      map: ["enum.AutolatheVisualLayers.BaseUnlit"]
+  - type: LatheDatabase
+    static: true
+    recipes:
+      - Brutepack
+      - Ointment
+      - LightTube
+      - LightBulb
+      - MetalStack
+      - GlassStack
+      - Wirecutter
+      - Screwdriver
+      - Welder
+      - Wrench
+      - CableStack
+      - Crowbar
+      - Multitool
+  - type: Appearance
+    visuals:
+    - type: AutolatheVisualizer
+
+- type: entity
+  parent: BaseLathe
+  id: Protolathe
+  name: "protolathe"
+  description: Converts raw materials into useful objects.
+  components:
+  - type: Sprite
+    sprite: Constructible/Power/protolathe.rsi
+    layers:
+    - state: protolathe
+      map: ["enum.ProtolatheVisualLayers.Base"]
+    - state: protolathe_unlit
+      shader: unshaded
+      map: ["enum.ProtolatheVisualLayers.BaseUnlit"]
+    - state: protolathe
+      map: ["enum.ProtolatheVisualLayers.AnimationLayer"]
+  - type: ResearchClient
+  - type: TechnologyDatabase
+  - type: ProtolatheDatabase
+    protolatherecipes:
+      - Brutepack
+      - Ointment
+      - LightTube
+      - LightBulb
+      - MetalStack
+      - GlassStack
+      - Wirecutter
+      - Screwdriver
+      - Welder
+      - Wrench
+      - CableStack
+      - Crowbar
+      - Multitool
+  - type: UserInterface
+    interfaces:
+    - key: enum.LatheUiKey.Key
+      type: LatheBoundUserInterface
+    - key: enum.ResearchClientUiKey.Key
+      type: ResearchClientBoundUserInterface
+  - type: Appearance
+    visuals:
+    - type: ProtolatheVisualizer

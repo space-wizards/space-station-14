@@ -5,8 +5,6 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using System;
-using static Robust.Client.UserInterface.Controls.ItemList;
 
 namespace Content.Client.UserInterface.Cargo
 {
@@ -18,10 +16,6 @@ namespace Content.Client.UserInterface.Cargo
         private int[] _accountIds = new int[] { };
         private int _selectedAccountId = -1;
 
-#pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _loc;
-#pragma warning restore 649
-
         protected override Vector2? CustomSize => (300, 300);
 
         public CargoConsoleBoundUserInterface Owner;
@@ -30,7 +24,7 @@ namespace Content.Client.UserInterface.Cargo
         {
             IoCManager.InjectDependencies(this);
 
-            Title = _loc.GetString("Galactic Bank Selection");
+            Title = Loc.GetString("Galactic Bank Selection");
 
             _accounts = new ItemList() { SelectMode = ItemList.ItemListSelectMode.Single };
 

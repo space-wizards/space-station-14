@@ -1,0 +1,10 @@
+﻿- type: construction
+  name: crude spear
+  id: spear
+  graph: spear
+  startNode: start
+  targetNode: spear
+  category: Items/Weapons
+  description: A crude spear for when you need to put holes in somebody.
+  icon: Objects/Weapons/Melee/spear.rsi/spear.png
+  objectType: Item

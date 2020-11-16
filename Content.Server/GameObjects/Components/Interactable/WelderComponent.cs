@@ -1,20 +1,25 @@
-﻿using System;
-using System.Runtime.Remoting;
+﻿#nullable enable
+using System;
+using System.Threading.Tasks;
+using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Chemistry;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Interactable;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -22,12 +27,10 @@ namespace Content.Server.GameObjects.Components.Interactable
 {
     [RegisterComponent]
     [ComponentReference(typeof(ToolComponent))]
-    public class WelderComponent : ToolComponent, IExamine, IUse, ISuicideAct
+    [ComponentReference(typeof(IToolComponent))]
+    public class WelderComponent : ToolComponent, IExamine, IUse, ISuicideAct, ISolutionChange
     {
-#pragma warning disable 649
-        [Dependency] private IEntitySystemManager _entitySystemManager;
-        [Dependency] private IServerNotifyManager _notifyManager;
-#pragma warning restore 649
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
         public override string Name => "Welder";
         public override uint? NetID => ContentNetIDs.WELDER;
@@ -42,13 +45,16 @@ namespace Content.Server.GameObjects.Components.Interactable
         /// </summary>
         public const float FuelLossRate = 0.5f;
 
-        private bool _welderLit = false;
-        private WelderSystem _welderSystem;
-        private SpriteComponent _spriteComponent;
-        private SolutionComponent _solutionComponent;
+        private bool _welderLit;
+        private WelderSystem _welderSystem = default!;
+        private SpriteComponent? _spriteComponent;
+        private SolutionContainerComponent? _solutionComponent;
+        private PointLightComponent? _pointLightComponent;
+
+        public string? WeldSoundCollection { get; set; }
 
         [ViewVariables]
-        public float Fuel => _solutionComponent?.Solution.GetReagentQuantity("chem.WeldingFuel").Float() ?? 0f;
+        public float Fuel => _solutionComponent?.Solution?.GetReagentQuantity("chem.WeldingFuel").Float() ?? 0f;
 
         [ViewVariables]
         public float FuelCapacity => _solutionComponent?.MaxVolume.Float() ?? 0f;
@@ -77,6 +83,12 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             Owner.TryGetComponent(out _solutionComponent);
             Owner.TryGetComponent(out _spriteComponent);
+            Owner.TryGetComponent(out _pointLightComponent);
+        }
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            serializer.DataField(this, collection => WeldSoundCollection, "weldSoundCollection", string.Empty);
         }
 
         public override ComponentState GetComponentState()
@@ -84,36 +96,63 @@ namespace Content.Server.GameObjects.Components.Interactable
             return new WelderComponentState(FuelCapacity, Fuel, WelderLit);
         }
 
-        public override bool UseTool(IEntity user, IEntity target, ToolQuality toolQualityNeeded)
+        public override async Task<bool> UseTool(IEntity user, IEntity target, float doAfterDelay, ToolQuality toolQualityNeeded, Func<bool>? doAfterCheck = null)
         {
-            var canUse = base.UseTool(user, target, toolQualityNeeded);
+            bool ExtraCheck()
+            {
+                var extraCheck = doAfterCheck?.Invoke() ?? true;
+
+                if (!CanWeld(DefaultFuelCost))
+                {
+                    target.PopupMessage(user, "Can't weld!");
+
+                    return false;
+                }
+
+                return extraCheck;
+            }
+
+            var canUse = await base.UseTool(user, target, doAfterDelay, toolQualityNeeded, ExtraCheck);
 
             return toolQualityNeeded.HasFlag(ToolQuality.Welding) ? canUse && TryWeld(DefaultFuelCost, user) : canUse;
         }
 
-        public bool UseTool(IEntity user, IEntity target, ToolQuality toolQualityNeeded, float fuelConsumed)
+        public async Task<bool> UseTool(IEntity user, IEntity target, float doAfterDelay, ToolQuality toolQualityNeeded, float fuelConsumed, Func<bool>? doAfterCheck = null)
         {
-            return base.UseTool(user, target, toolQualityNeeded) && TryWeld(fuelConsumed, user);
+            bool ExtraCheck()
+            {
+                var extraCheck = doAfterCheck?.Invoke() ?? true;
+
+                return extraCheck && CanWeld(fuelConsumed);
+            }
+
+            return await base.UseTool(user, target, doAfterDelay, toolQualityNeeded, ExtraCheck) && TryWeld(fuelConsumed, user);
         }
 
-        private bool TryWeld(float value, IEntity user = null, bool silent = false)
+        private bool TryWeld(float value, IEntity? user = null, bool silent = false)
         {
             if (!WelderLit)
             {
-                if(!silent) _notifyManager.PopupMessage(Owner, user, Loc.GetString("The welder is turned off!"));
+                if(!silent) Owner.PopupMessage(user, Loc.GetString("The welder is turned off!"));
                 return false;
             }
 
             if (!CanWeld(value))
             {
-                if(!silent) _notifyManager.PopupMessage(Owner, user, Loc.GetString("The welder does not have enough fuel for that!"));
+                if(!silent) Owner.PopupMessage(user, Loc.GetString("The welder does not have enough fuel for that!"));
                 return false;
             }
 
             if (_solutionComponent == null)
                 return false;
 
-            return _solutionComponent.TryRemoveReagent("chem.WeldingFuel", ReagentUnit.New(value));
+            bool succeeded = _solutionComponent.TryRemoveReagent("chem.WeldingFuel", ReagentUnit.New(value));
+
+            if (succeeded && !silent)
+            {
+                PlaySoundCollection(WeldSoundCollection);
+            }
+            return succeeded;
         }
 
         private bool CanWeld(float value)
@@ -129,7 +168,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         /// <summary>
         /// Deactivates welding tool if active, activates welding tool if possible
         /// </summary>
-        private bool ToggleWelderStatus(IEntity user = null)
+        private bool ToggleWelderStatus(IEntity? user = null)
         {
             var item = Owner.GetComponent<ItemComponent>();
 
@@ -138,7 +177,10 @@ namespace Content.Server.GameObjects.Components.Interactable
                 WelderLit = false;
                 // Layer 1 is the flame.
                 item.EquippedPrefix = "off";
-                _spriteComponent.LayerSetVisible(1, false);
+                _spriteComponent?.LayerSetVisible(1, false);
+
+                if (_pointLightComponent != null) _pointLightComponent.Enabled = false;
+
                 PlaySoundCollection("WelderOff", -5);
                 _welderSystem.Unsubscribe(this);
                 return true;
@@ -146,15 +188,22 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             if (!CanLitWelder())
             {
-                _notifyManager.PopupMessage(Owner, user, Loc.GetString("The welder has no fuel left!"));
+                Owner.PopupMessage(user, Loc.GetString("The welder has no fuel left!"));
                 return false;
             }
 
             WelderLit = true;
             item.EquippedPrefix = "on";
-            _spriteComponent.LayerSetVisible(1, true);
+            _spriteComponent?.LayerSetVisible(1, true);
+
+            if (_pointLightComponent != null) _pointLightComponent.Enabled = true;
+
             PlaySoundCollection("WelderOn", -5);
             _welderSystem.Subscribe(this);
+
+            Owner.Transform.Coordinates
+                .GetTileAtmosphere()?.HotspotExpose(700f, 50f, true);
+
             return true;
         }
 
@@ -181,29 +230,60 @@ namespace Content.Server.GameObjects.Components.Interactable
             }
         }
 
+        protected override void Shutdown()
+        {
+            base.Shutdown();
+            _welderSystem.Unsubscribe(this);
+        }
+
         public void OnUpdate(float frameTime)
         {
-            if (!HasQuality(ToolQuality.Welding) || !WelderLit)
+            if (!HasQuality(ToolQuality.Welding) || !WelderLit || Owner.Deleted)
                 return;
 
-            _solutionComponent.TryRemoveReagent("chem.WeldingFuel", ReagentUnit.New(FuelLossRate * frameTime));
+            _solutionComponent?.TryRemoveReagent("chem.WeldingFuel", ReagentUnit.New(FuelLossRate * frameTime));
+
+            Owner.Transform.Coordinates
+                .GetTileAtmosphere()?.HotspotExpose(700f, 50f, true);
 
             if (Fuel == 0)
                 ToggleWelderStatus();
 
-            Dirty();
         }
 
         public SuicideKind Suicide(IEntity victim, IChatManager chat)
         {
+            string othersMessage;
+            string selfMessage;
+
             if (TryWeld(5, victim, silent: true))
             {
-                PlaySoundCollection("Welder", -5);
-                chat.EntityMe(victim, Loc.GetString("welds {0:their} every orifice closed! It looks like {0:theyre} trying to commit suicide!", victim)); //TODO: theyre macro
+                PlaySoundCollection(WeldSoundCollection);
+
+                othersMessage =
+                    Loc.GetString(
+                        "{0:theName} welds {0:their} every orifice closed! It looks like {0:theyre} trying to commit suicide!",
+                        victim);
+                victim.PopupMessageOtherClients(othersMessage);
+
+                selfMessage = Loc.GetString("You weld your every orifice closed!");
+                victim.PopupMessage(selfMessage);
+
                 return SuicideKind.Heat;
             }
-            chat.EntityMe(victim, Loc.GetString("bashes {0:themselves} with the {1}!", victim, Owner.Name));
-            return SuicideKind.Brute;
+
+            othersMessage = Loc.GetString("{0:theName} bashes themselves with the unlit welding torch!", victim);
+            victim.PopupMessageOtherClients(othersMessage);
+
+            selfMessage = Loc.GetString("You bash yourself with the unlit welding torch!");
+            victim.PopupMessage(selfMessage);
+
+            return SuicideKind.Blunt;
+        }
+
+        public void SolutionChanged(SolutionChangeEventArgs eventArgs)
+        {
+            Dirty();
         }
     }
 }

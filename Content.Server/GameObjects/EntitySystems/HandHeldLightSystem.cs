@@ -1,21 +1,16 @@
 using Content.Server.GameObjects.Components.Interactable;
-using Robust.Shared.GameObjects;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
-    public class HandHeldLightSystem : EntitySystem
+    [UsedImplicitly]
+    internal sealed class HandHeldLightSystem : EntitySystem
     {
-        public override void Initialize()
-        {
-            EntityQuery = new TypeEntityQuery(typeof(HandheldLightComponent));
-        }
-
         public override void Update(float frameTime)
         {
-            foreach (var entity in RelevantEntities)
+            foreach (var comp in ComponentManager.EntityQuery<HandheldLightComponent>(false))
             {
-                var comp = entity.GetComponent<HandheldLightComponent>();
                 comp.OnUpdate(frameTime);
             }
         }

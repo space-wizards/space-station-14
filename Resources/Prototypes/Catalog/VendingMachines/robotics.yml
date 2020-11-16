@@ -1,0 +1,5 @@
+- type: vendingMachineInventory
+  id: Robotech Deluxe
+  name: Robotech Deluxe
+  description: All the fine parts you need in one vending machine!
+  spriteName: robotics

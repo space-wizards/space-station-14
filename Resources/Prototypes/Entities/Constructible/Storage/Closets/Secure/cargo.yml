@@ -1,0 +1,11 @@
+- type: entity
+  id: LockerQuarterMaster
+  parent: LockerSecureBase
+  name: "quartermaster's locker"
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: qm
+  - type: AccessReader
+    access: [["Quartermaster"]]

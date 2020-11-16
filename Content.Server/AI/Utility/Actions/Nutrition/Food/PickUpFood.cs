@@ -1,13 +1,14 @@
+using System;
+using System.Collections.Generic;
 using Content.Server.AI.Operators.Sequences;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.Utility.Considerations.Containers;
-using Content.Server.AI.Utility.Considerations.Hands;
 using Content.Server.AI.Utility.Considerations.Movement;
-using Content.Server.AI.Utility.Considerations.Nutrition;
-using Content.Server.AI.Utility.Curves;
+using Content.Server.AI.Utility.Considerations.Nutrition.Food;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.Actions.Nutrition.Food
 {
@@ -26,24 +27,25 @@ namespace Content.Server.AI.Utility.Actions.Nutrition.Food
             ActionOperators = new GoPickupEntitySequence(Owner, _entity).Sequence;
         }
 
-        protected override Consideration[] Considerations => new Consideration[]
-        {
-            new TargetAccessibleCon(
-                new BoolCurve()),
-            new FreeHandCon(
-                new BoolCurve()),
-            new HungerCon(
-                new LogisticCurve(1000f, 1.3f, -1.0f, 0.5f)),
-            new DistanceCon(
-                new QuadraticCurve(1.0f, 1.0f, 0.02f, 0.0f)),
-            new FoodValueCon(
-                new QuadraticCurve(1.0f, 0.4f, 0.0f, 0.0f)),
-        };
-
         protected override void UpdateBlackboard(Blackboard context)
         {
             base.UpdateBlackboard(context);
             context.GetState<TargetEntityState>().SetValue(_entity);
+        }   
+        
+        protected override IReadOnlyCollection<Func<float>> GetConsiderations(Blackboard context)
+        {
+            var considerationsManager = IoCManager.Resolve<ConsiderationsManager>();
+
+            return new[]
+            {
+                considerationsManager.Get<TargetDistanceCon>()
+                    .PresetCurve(context, PresetCurve.Distance),
+                considerationsManager.Get<FoodValueCon>()
+                    .QuadraticCurve(context, 1.0f, 0.4f, 0.0f, 0.0f),
+                considerationsManager.Get<TargetAccessibleCon>()
+                    .BoolCurve(context),
+            };
         }
     }
 }

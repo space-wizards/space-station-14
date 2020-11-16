@@ -1,7 +1,7 @@
 - type: shader
   id: SelectionOutline
   kind: source
-  path: "/Shaders/outline.swsl"
+  path: "/Textures/Shaders/outline.swsl"
   params:
     outline_width: 2
     outline_color: "#FF000055"
@@ -9,7 +9,7 @@
 - type: shader
   id: SelectionOutlineInrange
   kind: source
-  path: "/Shaders/outline.swsl"
+  path: "/Textures/Shaders/outline.swsl"
   params:
     outline_width: 2
     outline_color: "#00FF0055"

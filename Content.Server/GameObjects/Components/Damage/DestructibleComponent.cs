@@ -1,116 +1,101 @@
 ﻿using System.Collections.Generic;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces;
-using Content.Shared.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.Components.Stack;
+using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
-using Robust.Shared.Map;
-using Robust.Shared.Random;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Destructible
+namespace Content.Server.GameObjects.Components.Damage
 {
     /// <summary>
-    /// Deletes the entity once a certain damage threshold has been reached.
+    ///     When attached to an <see cref="IEntity"/>, allows it to take damage and deletes it after taking enough damage.
     /// </summary>
     [RegisterComponent]
-    public class DestructibleComponent : Component, IOnDamageBehavior, IDestroyAct, IExAct
+    [ComponentReference(typeof(IDamageableComponent))]
+    public class DestructibleComponent : RuinableComponent, IDestroyAct
     {
-        #pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-        #pragma warning restore 649
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+
+        protected ActSystem ActSystem;
 
         /// <inheritdoc />
         public override string Name => "Destructible";
 
         /// <summary>
-        /// Damage threshold calculated from the values
-        /// given in the prototype declaration.
+        /// Entities spawned on destruction plus the min and max amount spawned.
         /// </summary>
-        [ViewVariables]
-        public DamageThreshold Threshold { get; private set; }
+        public Dictionary<string, MinMax> SpawnOnDestroy { get; private set; }
 
-        public DamageType damageType = DamageType.Total;
-        public int damageValue = 0;
-        public string spawnOnDestroy = "";
-        public string destroySound = "";
-        public bool destroyed = false;
+        void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
+        {
+            if (SpawnOnDestroy == null || !eventArgs.IsSpawnWreck) return;
+            foreach (var (key, value) in SpawnOnDestroy)
+            {
+                int count;
+                if (value.Min >= value.Max)
+                {
+                    count = value.Min;
+                }
+                else
+                {
+                    count = _random.Next(value.Min, value.Max + 1);
+                }
 
-        ActSystem _actSystem;
+                if (count == 0) continue;
+
+                if (EntityPrototypeHelpers.HasComponent<StackComponent>(key))
+                {
+                    var spawned = Owner.EntityManager.SpawnEntity(key, Owner.Transform.Coordinates);
+                    var stack = spawned.GetComponent<StackComponent>();
+                    stack.Count = count;
+                    spawned.RandomOffset(0.5f);
+                }
+                else
+                {
+                    for (var i = 0; i < count; i++)
+                    {
+                        var spawned = Owner.EntityManager.SpawnEntity(key, Owner.Transform.Coordinates);
+                        spawned.RandomOffset(0.5f);
+                    }
+                }
+            }
+        }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref damageValue, "thresholdvalue", 100);
-            serializer.DataField(ref damageType, "thresholdtype", DamageType.Total);
-            serializer.DataField(ref spawnOnDestroy, "spawnondestroy", "");
-            serializer.DataField(ref destroySound, "destroysound", "");
+
+            serializer.DataField(this, d => d.SpawnOnDestroy, "spawnOnDestroy", null);
         }
 
         public override void Initialize()
         {
             base.Initialize();
-            _actSystem = _entitySystemManager.GetEntitySystem<ActSystem>();
+            ActSystem = _entitySystemManager.GetEntitySystem<ActSystem>();
         }
 
-        /// <inheritdoc />
-        List<DamageThreshold> IOnDamageBehavior.GetAllDamageThresholds()
-        {
-            Threshold = new DamageThreshold(damageType, damageValue, ThresholdType.Destruction);
-            return new List<DamageThreshold>() { Threshold };
-        }
 
-        /// <inheritdoc />
-        void IOnDamageBehavior.OnDamageThresholdPassed(object obj, DamageThresholdPassedEventArgs e)
+        protected override void DestructionBehavior()
         {
-            if (e.Passed && e.DamageThreshold == Threshold && destroyed == false)
+            if (!Owner.Deleted)
             {
-                destroyed = true;
-                var pos = Owner.Transform.GridPosition;
-                _actSystem.HandleDestruction(Owner, true);
-                if(destroySound != string.Empty)
-                {
-                    EntitySystem.Get<AudioSystem>().PlayAtCoords(destroySound, pos);
-                }
-
-
+                var pos = Owner.Transform.Coordinates;
+                ActSystem.HandleDestruction(Owner,
+                    true); //This will call IDestroyAct.OnDestroy on this component (and all other components on this entity)
             }
-
         }
 
-        void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
+        public struct MinMax
         {
-            var prob = IoCManager.Resolve<IRobustRandom>();
-            switch (eventArgs.Severity)
-            {
-                case ExplosionSeverity.Destruction:
-                    _actSystem.HandleDestruction(Owner, false);
-                    break;
-                case ExplosionSeverity.Heavy:
-                    var spawnWreckOnHeavy = prob.Prob(0.5f);
-                    _actSystem.HandleDestruction(Owner, spawnWreckOnHeavy);
-                    break;
-                case ExplosionSeverity.Light:
-                    if (prob.Prob(0.4f))
-                        _actSystem.HandleDestruction(Owner, true);
-                    break;
-            }
-
-        }
-
-
-        void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
-        {
-            if (!string.IsNullOrWhiteSpace(spawnOnDestroy) && eventArgs.IsSpawnWreck)
-            {
-                Owner.EntityManager.SpawnEntity(spawnOnDestroy, Owner.Transform.GridPosition);
-            }
+            public int Min;
+            public int Max;
         }
     }
 }

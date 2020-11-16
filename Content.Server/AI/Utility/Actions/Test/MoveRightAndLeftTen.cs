@@ -1,10 +1,11 @@
+using System;
 using System.Collections.Generic;
 using Content.Server.AI.Operators;
 using Content.Server.AI.Operators.Movement;
 using Content.Server.AI.Utility.Considerations;
-using Content.Server.AI.Utility.Curves;
 using Content.Server.AI.WorldState;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Server.AI.Utility.Actions.Test
@@ -18,15 +19,10 @@ namespace Content.Server.AI.Utility.Actions.Test
 
         public MoveRightAndLeftTen(IEntity owner) : base(owner) {}
 
-        protected override Consideration[] Considerations { get; } = {
-            new DummyCon(
-                new BoolCurve())
-        };
-
         public override void SetupOperators(Blackboard context)
         {
-            var currentPosition = Owner.Transform.GridPosition;
-            var nextPosition = Owner.Transform.GridPosition.Offset(new Vector2(10.0f, 0.0f));
+            var currentPosition = Owner.Transform.Coordinates;
+            var nextPosition = Owner.Transform.Coordinates.Offset(new Vector2(10.0f, 0.0f));
             var originalPosOp = new MoveToGridOperator(Owner, currentPosition, 0.25f);
             var newPosOp = new MoveToGridOperator(Owner, nextPosition, 0.25f);
 
@@ -35,6 +31,17 @@ namespace Content.Server.AI.Utility.Actions.Test
                 newPosOp,
                 originalPosOp
             });
+        }
+
+        protected override IReadOnlyCollection<Func<float>> GetConsiderations(Blackboard context)
+        {
+            var considerationsManager = IoCManager.Resolve<ConsiderationsManager>();
+
+            return new[]
+            {
+                considerationsManager.Get<DummyCon>()
+                    .BoolCurve(context),
+            };
         }
     }
 }

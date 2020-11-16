@@ -1,0 +1,240 @@
+- type: entity
+  name: BaseSMG
+  parent: BaseItem
+  id: SmgBase
+  description: A rooty tooty point and shooty.
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+  - type: Icon
+    state: icon
+  - type: Item
+    size: 24
+    state: icon
+  - type: MagazineBarrel
+    currentSelector: Automatic
+    allSelectors:
+    - Single
+    - Automatic
+    fireRate: 8
+    caliber: Pistol
+    magazineTypes:
+    - Smg
+    minAngle: 5
+    maxAngle: 60
+    angleIncrease: 10
+    angleDecay: 60
+    magFillPrototype: MagazinePistolSmg
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/smg.ogg
+    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundRack: /Audio/Weapons/Guns/Cock/smg_cock.ogg
+    soundBoltOpen: /Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg
+    soundBoltClosed: /Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg
+    soundMagInsert: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+    soundMagEject: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+
+- type: entity
+  name: Atreides
+  parent: SmgBase
+  id: SmgAtreides
+  description: Pla-ket-ket-ket-ket!
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: bolt-closed
+      map: ["enum.RangedBarrelVisualLayers.Bolt"]
+    - state: mag-0
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+  - type: Icon
+    sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
+  - type: RangedWeapon
+  - type: MagazineBarrel
+    currentSelector: Automatic
+    allSelectors:
+    - Automatic
+    fireRate: 10
+    caliber: Pistol
+    magazineTypes:
+    - Smg
+    minAngle: 10
+    maxAngle: 60
+    angleIncrease: 12
+    angleDecay: 60
+  - type: Appearance
+    visuals:
+    - type: BarrelBoltVisualizer
+    - type: MagVisualizer
+      magState: mag
+      steps: 1
+      zeroVisible: true
+
+- type: entity
+  name: C-20r sub machine gun
+  parent: SmgBase
+  id: SmgC20r
+  description: A rooty tooty point and shooty.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: bolt-closed
+      map: ["enum.RangedBarrelVisualLayers.Bolt"]
+    - state: mag-0
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+  - type: Icon
+    sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
+  - type: RangedWeapon
+  - type: MagazineBarrel
+    currentSelector: Automatic
+    allSelectors:
+    - Single
+    - Automatic
+    fireRate: 8
+    caliber: Pistol
+    magazineTypes:
+    - Smg
+    minAngle: 5
+    maxAngle: 60
+    angleIncrease: 10
+    angleDecay: 60
+    autoEjectMag: true
+  - type: Appearance
+    visuals:
+    - type: BarrelBoltVisualizer
+    - type: MagVisualizer
+      magState: mag
+      steps: 1
+      zeroVisible: true
+
+- type: entity
+  name: Drozd
+  parent: SmgBase
+  id: SmgDrozd
+  description: An excellent fully automatic Heavy SMG. Rifled to take a larger caliber than a typical submachine gun, but unlike other heavy SMGs makes use of increased caliber to achieve excellent armor penetration capabilities. Suffers a bit less from poor recoil control and has worse than average fire rate.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: bolt-closed
+        map: ["enum.RangedBarrelVisualLayers.Bolt"]
+      - state: mag-0
+        map: ["enum.RangedBarrelVisualLayers.Mag"]
+  - type: Icon
+    sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
+  - type: RangedWeapon
+  - type: MagazineBarrel
+    fireRate: 6
+    currentSelector: Automatic
+    allSelectors:
+    - Automatic
+    caliber: Magnum
+    magazineTypes:
+    - Smg
+    magFillPrototype: MagazineMagnumSmg
+    minAngle: 5
+    maxAngle: 60
+    angleIncrease: 12
+    angleDecay: 60
+  - type: Appearance
+    visuals:
+    - type: BarrelBoltVisualizer
+    - type: MagVisualizer
+      magState: mag
+      steps: 1
+      zeroVisible: true
+
+- type: entity
+  name: WT550
+  parent: SmgBase
+  id: SmgWt550
+  description: A rooty tooty point and shooty.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: base-unshaded
+      map: ["enum.RangedBarrelVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: mag-0
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+    - state: mag-unshaded-0
+      map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Icon
+    sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
+  - type: RangedWeapon
+  - type: MagazineBarrel
+    currentSelector: Automatic
+    allSelectors:
+    - Automatic
+    fireRate: 8
+    caliber: Pistol
+    magazineTypes:
+    - SmgTopMounted
+    magFillPrototype: MagazinePistolSmgTopMounted
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 6
+      zeroVisible: true
+
+- type: entity
+  name: Zoric
+  parent: SmgBase
+  id: SmgZoric
+  description: A rooty tooty point and shooty.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/SMGs/zoric.rsi
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: bolt-closed
+      map: ["enum.RangedBarrelVisualLayers.Bolt"]
+    - state: mag-0
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+  - type: Icon
+    sprite: Objects/Weapons/Guns/SMGs/zoric.rsi
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/SMGs/zoric.rsi
+  - type: RangedWeapon
+  - type: MagazineBarrel
+    currentSelector: Automatic
+    allSelectors:
+    - Automatic
+    fireRate: 8
+    caliber: Magnum
+    magazineTypes:
+    - Smg
+    magFillPrototype: MagazineMagnumSmg
+  - type: Appearance
+    visuals:
+    - type: BarrelBoltVisualizer
+    - type: MagVisualizer
+      magState: mag
+      steps: 1
+      zeroVisible: true

@@ -1,11 +1,10 @@
 using System.Threading.Tasks;
-using Content.Server.GameObjects;
+using Content.Server.GameObjects.Components.GUI;
 using NUnit.Framework;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.IntegrationTests.Tests
@@ -37,7 +36,7 @@ namespace Content.IntegrationTests.Tests
                 var entityMan = IoCManager.Resolve<IEntityManager>();
 
                 human = entityMan.SpawnEntity("HumanMob_Content", MapCoordinates.Nullspace);
-                uniform = entityMan.SpawnEntity("JanitorUniform", MapCoordinates.Nullspace);
+                uniform = entityMan.SpawnEntity("UniformJanitor", MapCoordinates.Nullspace);
                 idCard = entityMan.SpawnEntity("AssistantIDCard", MapCoordinates.Nullspace);
                 pocketItem = entityMan.SpawnEntity("FlashlightLantern", MapCoordinates.Nullspace);
                 var tooBigItem = entityMan.SpawnEntity("ToolboxEmergency", MapCoordinates.Nullspace);

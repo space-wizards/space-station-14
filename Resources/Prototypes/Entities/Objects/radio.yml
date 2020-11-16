@@ -1,0 +1,19 @@
+- type: entity
+  name: radio
+  parent: BaseItem
+  id: RadioBase
+  abstract: true
+
+- type: entity
+  name: handheld radio
+  description: A handy handheld radio.
+  parent: RadioBase
+  id: RadioHandheld
+  components:
+  - type: Radio
+  - type: Sprite
+    sprite: Objects/Devices/communication.rsi
+    state: walkietalkie
+  - type: Icon
+    sprite: Objects/Devices/communication.rsi
+    state: walkietalkie

@@ -1,4 +1,5 @@
-﻿using Robust.Client.Graphics.Drawing;
+﻿using Content.Shared.GameObjects.Components.Mobs;
+using Robust.Client.Graphics.Drawing;
 using Robust.Client.Graphics.Overlays;
 using Robust.Client.Graphics.Shaders;
 using Robust.Client.Interfaces.Graphics.ClientEye;
@@ -8,22 +9,23 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Graphics.Overlays
 {
-    public class GradientCircleMask : Overlay
+    public class GradientCircleMaskOverlay : Overlay
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly IEyeManager _eyeManager;
-#pragma warning restore 649
-        public override OverlaySpace Space => OverlaySpace.WorldSpace;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IEyeManager _eyeManager = default!;
 
-        public GradientCircleMask() : base(nameof(GradientCircleMask))
+        public override OverlaySpace Space => OverlaySpace.WorldSpace;
+        private readonly ShaderInstance _shader;
+
+        public GradientCircleMaskOverlay() : base(nameof(SharedOverlayID.GradientCircleMaskOverlay))
         {
             IoCManager.InjectDependencies(this);
-            Shader = _prototypeManager.Index<ShaderPrototype>("GradientCircleMask").Instance();
+            _shader = _prototypeManager.Index<ShaderPrototype>("GradientCircleMask").Instance();
         }
 
-        protected override void Draw(DrawingHandleBase handle)
+        protected override void Draw(DrawingHandleBase handle, OverlaySpace currentSpace)
         {
+            handle.UseShader(_shader);
             var worldHandle = (DrawingHandleWorld)handle;
             var viewport = _eyeManager.GetWorldViewport();
             worldHandle.DrawRect(viewport, Color.White);

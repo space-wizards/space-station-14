@@ -1,6 +1,6 @@
-﻿using Content.Shared.Chemistry;
+﻿using System;
+using Content.Shared.Chemistry;
 using NUnit.Framework;
-using System;
 
 namespace Content.Tests.Shared.Chemistry
 {
@@ -14,7 +14,7 @@ namespace Content.Tests.Shared.Chemistry
         public void ReagentUnitIntegerTests(int value, string expected)
         {
             var result = ReagentUnit.New(value);
-            Assert.AreEqual(expected, $"{result}");
+            Assert.That($"{result}", Is.EqualTo(expected));
         }
 
         [Test]
@@ -23,7 +23,7 @@ namespace Content.Tests.Shared.Chemistry
         public void ReagentUnitFloatTests(float value, string expected)
         {
             var result = ReagentUnit.New(value);
-            Assert.AreEqual(expected, $"{result}");
+            Assert.That($"{result}", Is.EqualTo(expected));
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace Content.Tests.Shared.Chemistry
         public void ReagentUnitDoubleTests(double value, string expected)
         {
             var result = ReagentUnit.New(value);
-            Assert.AreEqual(expected, $"{result}");
+            Assert.That($"{result}", Is.EqualTo(expected));
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace Content.Tests.Shared.Chemistry
         public void ReagentUnitStringTests(string value, string expected)
         {
             var result = ReagentUnit.New(value);
-            Assert.AreEqual(expected, $"{result}");
+            Assert.That($"{result}", Is.EqualTo(expected));
         }
 
         [Test]
@@ -56,7 +56,7 @@ namespace Content.Tests.Shared.Chemistry
 
             var result = a + b;
 
-            Assert.AreEqual(expected, $"{result}");
+            Assert.That($"{result}", Is.EqualTo(expected));
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace Content.Tests.Shared.Chemistry
 
             var result = a - b;
 
-            Assert.AreEqual(expected, $"{result}");
+            Assert.That($"{result}", Is.EqualTo(expected));
         }
 
         [Test]
@@ -84,7 +84,7 @@ namespace Content.Tests.Shared.Chemistry
 
             var result = a / b;
 
-            Assert.AreEqual(expected, $"{result}");
+            Assert.That($"{result}", Is.EqualTo(expected));
         }
 
         [Test]
@@ -97,7 +97,7 @@ namespace Content.Tests.Shared.Chemistry
 
             var result = a * b;
 
-            Assert.AreEqual(expected, $"{result}");
+            Assert.That($"{result}", Is.EqualTo(expected));
         }
 
         [Test]
@@ -107,7 +107,7 @@ namespace Content.Tests.Shared.Chemistry
         public void FloatRoundingTest(float a, int expected)
         {
             var result = (int) MathF.Round(a * (float) MathF.Pow(10, 2), MidpointRounding.AwayFromZero);
-            Assert.AreEqual(expected, result);
+            Assert.That(result, Is.EqualTo(expected));
         }
 
         [Test]
@@ -122,24 +122,22 @@ namespace Content.Tests.Shared.Chemistry
                 ReagentUnit.New(4),
             };
             var min = ReagentUnit.Min(unorderedList);
-            Assert.AreEqual(ReagentUnit.New(1), min);
+            Assert.That(min, Is.EqualTo(ReagentUnit.New(1)));
         }
 
         [Test]
         [TestCase(1, 0, false)]
         [TestCase(0, 0, true)]
         [TestCase(-1, 0, false)]
-        [TestCase(null, 0, true)]
         [TestCase(1, 1, true)]
         [TestCase(0, 1, false)]
         [TestCase(-1, 1, false)]
-        [TestCase(null, 1, false)]
         public void ReagentUnitEquals(int a, int b, bool expected)
         {
             var parameter = ReagentUnit.New(a);
             var comparison = ReagentUnit.New(b);
-            Assert.AreEqual(comparison.Equals(parameter), parameter.Equals(comparison));
-            Assert.AreEqual(expected, comparison.Equals(parameter));
+            Assert.That(parameter.Equals(comparison), Is.EqualTo(comparison.Equals(parameter)));
+            Assert.That(comparison.Equals(parameter), Is.EqualTo(expected));
         }
     }
 }

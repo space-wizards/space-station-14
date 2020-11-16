@@ -1,0 +1,22 @@
+- type: entity
+  name: construction ghost
+  id: constructionghost
+  abstract: true
+  components:
+  - type: Sprite
+    color: '#3F38'
+  - type: ConstructionGhost
+  - type: Physics
+  - type: Clickable
+  - type: InteractionOutline
+
+- type: entity
+  name: somebody-messed-up frame
+  id: structureconstructionframe
+  abstract: true
+  components:
+  - type: Sprite
+  - type: Construction
+  - type: Physics
+  - type: Clickable
+  - type: InteractionOutline

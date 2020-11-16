@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.PDA;
@@ -19,12 +19,11 @@ namespace Content.Client.GameObjects.Components.PDA
 {
     public class PDABoundUserInterface : BoundUserInterface
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+
         private PDAMenu _menu;
-        private PDAMenuPopup failPopup;
+        private PDAMenuPopup _failPopup;
 
         public PDABoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
@@ -48,6 +47,11 @@ namespace Content.Client.GameObjects.Components.PDA
                 SendMessage(new PDAEjectIDMessage());
             };
 
+            _menu.EjectPenButton.OnPressed += args =>
+            {
+                SendMessage(new PDAEjectPenMessage());
+            };
+
             _menu.MasterTabContainer.OnTabChanged += i =>
             {
                 var tab = _menu.MasterTabContainer.GetChild(i);
@@ -61,16 +65,16 @@ namespace Content.Client.GameObjects.Components.PDA
             {
                 if (_menu.CurrentLoggedInAccount.DataBalance < listing.Price)
                 {
-                    failPopup = new PDAMenuPopup(Loc.GetString("Insufficient funds!"));
-                    _userInterfaceManager.ModalRoot.AddChild(failPopup);
-                    failPopup.Open(UIBox2.FromDimensions(_menu.Position.X + 150, _menu.Position.Y + 60, 156, 24));
+                    _failPopup = new PDAMenuPopup(Loc.GetString("Insufficient funds!"));
+                    _userInterfaceManager.ModalRoot.AddChild(_failPopup);
+                    _failPopup.Open(UIBox2.FromDimensions(_menu.Position.X + 150, _menu.Position.Y + 60, 156, 24));
                     _menu.OnClose += () =>
                     {
-                        failPopup.Dispose();
+                        _failPopup.Dispose();
                     };
                 }
 
-                SendMessage(new PDAUplinkBuyListingMessage(listing));
+                SendMessage(new PDAUplinkBuyListingMessage(listing.ItemId));
             };
 
             _menu.OnCategoryButtonPressed += (args, category) =>
@@ -84,9 +88,8 @@ namespace Content.Client.GameObjects.Components.PDA
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            DebugTools.Assert((state is PDAUBoundUserInterfaceState));
+            DebugTools.Assert(state is PDAUBoundUserInterfaceState);
 
-            var cstate = (PDAUBoundUserInterfaceState)state;
             switch (state)
             {
                 case PDAUpdateState msg:
@@ -108,6 +111,7 @@ namespace Content.Client.GameObjects.Components.PDA
                     }
 
                     _menu.EjectIDButton.Visible = msg.PDAOwnerInfo.IdOwner != null;
+                    _menu.EjectPenButton.Visible = msg.HasPen;
                     if (msg.Account != null)
                     {
                         _menu.CurrentLoggedInAccount = msg.Account;
@@ -135,6 +139,9 @@ namespace Content.Client.GameObjects.Components.PDA
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
+            if (!disposing)
+                return;
+
             _menu?.Dispose();
         }
 
@@ -219,6 +226,7 @@ namespace Content.Client.GameObjects.Components.PDA
 
             public Button FlashLightToggleButton { get; }
             public Button EjectIDButton { get; }
+            public Button EjectPenButton { get; }
 
             public TabContainer MasterTabContainer;
 
@@ -287,13 +295,20 @@ namespace Content.Client.GameObjects.Components.PDA
                     SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
                     SizeFlagsVertical = SizeFlags.ShrinkCenter
                 };
+                EjectPenButton = new Button
+                {
+                    Text = Loc.GetString("Eject Pen"),
+                    SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
+                    SizeFlagsVertical = SizeFlags.ShrinkCenter
+                };
 
                 var innerHBoxContainer = new HBoxContainer
                 {
                     Children =
                     {
                         IDInfoLabel,
-                        EjectIDButton
+                        EjectIDButton,
+                        EjectPenButton
                     }
                 };
 

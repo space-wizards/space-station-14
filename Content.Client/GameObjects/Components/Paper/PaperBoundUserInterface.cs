@@ -3,7 +3,7 @@ using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects.Components.UserInterface;
 
-namespace Content.Client.GameObjects.Components
+namespace Content.Client.GameObjects.Components.Paper
 {
     public class PaperBoundUserInterface : BoundUserInterface
     {

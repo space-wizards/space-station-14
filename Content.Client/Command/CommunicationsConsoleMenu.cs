@@ -1,11 +1,10 @@
-using System.Threading;
+﻿using System.Threading;
 using Content.Client.GameObjects.Components.Command;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Timer = Robust.Shared.Timers.Timer;
 
@@ -13,10 +12,6 @@ namespace Content.Client.Command
 {
     public class CommunicationsConsoleMenu : SS14Window
     {
-#pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-#pragma warning restore 649
-
         protected override Vector2? CustomSize => new Vector2(600, 400);
 
         private CommunicationsConsoleBoundUserInterface Owner { get; set; }
@@ -28,7 +23,7 @@ namespace Content.Client.Command
         {
             IoCManager.InjectDependencies(this);
 
-            Title = _localizationManager.GetString("Communications Console");
+            Title = Loc.GetString("Communications Console");
             Owner = owner;
 
             _countdownLabel = new RichTextLabel(){CustomMinimumSize = new Vector2(0, 200)};
@@ -56,11 +51,11 @@ namespace Content.Client.Command
             if (!Owner.CountdownStarted)
             {
                 _countdownLabel.SetMessage("");
-                _emergencyShuttleButton.Text = _localizationManager.GetString("Call emergency shuttle");
+                _emergencyShuttleButton.Text = Loc.GetString("Call emergency shuttle");
                 return;
             }
 
-            _emergencyShuttleButton.Text = _localizationManager.GetString("Recall emergency shuttle");
+            _emergencyShuttleButton.Text = Loc.GetString("Recall emergency shuttle");
             _countdownLabel.SetMessage($"Time remaining\n{Owner.Countdown.ToString()}s");
         }
 
@@ -73,7 +68,9 @@ namespace Content.Client.Command
 
         protected override void Dispose(bool disposing)
         {
-            if(disposing)
+            base.Dispose(disposing);
+
+            if (disposing)
                 _timerCancelTokenSource.Cancel();
         }
     }

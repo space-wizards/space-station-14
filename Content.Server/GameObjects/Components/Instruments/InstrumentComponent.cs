@@ -1,13 +1,13 @@
+﻿#nullable enable
 using System;
 using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces;
-using Content.Server.Interfaces.GameObjects;
-using Content.Server.Mobs;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Instruments;
-using NFluidsynth;
+using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
@@ -15,16 +15,13 @@ using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Log;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using Logger = Robust.Shared.Log.Logger;
-using MidiEvent = Robust.Shared.Audio.Midi.MidiEvent;
 
 namespace Content.Server.GameObjects.Components.Instruments
 {
@@ -40,12 +37,7 @@ namespace Content.Server.GameObjects.Components.Instruments
             IUse,
             IThrown
     {
-
-#pragma warning disable 649
-        [Dependency] private readonly IServerNotifyManager _notifyManager;
-
-        [Dependency] private readonly IGameTiming _gameTiming;
-#pragma warning restore 649
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         private static readonly TimeSpan OneSecAgo = TimeSpan.FromSeconds(-1);
 
@@ -53,7 +45,7 @@ namespace Content.Server.GameObjects.Components.Instruments
         ///     The client channel currently playing the instrument, or null if there's none.
         /// </summary>
         [ViewVariables]
-        private IPlayerSession _instrumentPlayer;
+        private IPlayerSession? _instrumentPlayer;
 
         private bool _handheld;
 
@@ -78,8 +70,46 @@ namespace Content.Server.GameObjects.Components.Instruments
         [ViewVariables]
         private int _midiEventCount = 0;
 
-        [ViewVariables]
-        private BoundUserInterface _userInterface;
+        private byte _instrumentProgram;
+        private byte _instrumentBank;
+        private bool _allowPercussion;
+        private bool _allowProgramChange;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public override byte InstrumentProgram { get => _instrumentProgram;
+            set
+            {
+                _instrumentProgram = value;
+                Dirty();
+            }
+        }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public override byte InstrumentBank { get => _instrumentBank;
+            set
+            {
+                _instrumentBank = value;
+                Dirty();
+            }
+        }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public override bool AllowPercussion { get => _allowPercussion;
+            set
+            {
+                _allowPercussion = value;
+                Dirty();
+            }
+        }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public override bool AllowProgramChange { get => _allowProgramChange;
+            set
+            {
+                _allowProgramChange = value;
+                Dirty();
+            }
+        }
 
         /// <summary>
         ///     Whether the instrument is an item which can be held or not.
@@ -101,7 +131,7 @@ namespace Content.Server.GameObjects.Components.Instruments
             }
         }
 
-        public IPlayerSession InstrumentPlayer
+        public IPlayerSession? InstrumentPlayer
         {
             get => _instrumentPlayer;
             private set
@@ -114,42 +144,52 @@ namespace Content.Server.GameObjects.Components.Instruments
                 _instrumentPlayer = value;
 
                 if (value != null)
-                    _instrumentPlayer.PlayerStatusChanged += OnPlayerStatusChanged;
+                    _instrumentPlayer!.PlayerStatusChanged += OnPlayerStatusChanged;
             }
         }
 
-        private void OnPlayerStatusChanged(object sender, SessionStatusEventArgs e)
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(InstrumentUiKey.Key);
+
+        private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
         {
-            if (e.NewStatus == SessionStatus.Disconnected)
-                InstrumentPlayer = null;
+            if (e.Session != _instrumentPlayer || e.NewStatus != SessionStatus.Disconnected) return;
+            InstrumentPlayer = null;
+            Clean();
         }
 
         public override void Initialize()
         {
             base.Initialize();
-            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>().GetBoundUserInterface(InstrumentUiKey.Key);
-            _userInterface.OnClosed += UserInterfaceOnClosed;
+
+            if (UserInterface != null)
+            {
+                UserInterface.OnClosed += UserInterfaceOnClosed;
+            }
         }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _handheld, "handheld", false);
+            serializer.DataField(ref _instrumentProgram, "program", (byte) 1);
+            serializer.DataField(ref _instrumentBank, "bank", (byte) 0);
+            serializer.DataField(ref _allowPercussion, "allowPercussion", false);
+            serializer.DataField(ref _allowProgramChange, "allowProgramChange", false);
         }
 
         public override ComponentState GetComponentState()
         {
-            return new InstrumentState(Playing, _lastSequencerTick);
+            return new InstrumentState(Playing, InstrumentProgram, InstrumentBank, AllowPercussion, AllowProgramChange, _lastSequencerTick);
         }
 
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, channel, session);
 
             switch (message)
             {
                 case InstrumentMidiEventMessage midiEventMsg:
-                    if (!Playing || session != _instrumentPlayer) return;
+                    if (!Playing || session != _instrumentPlayer || InstrumentPlayer == null) return;
 
                     var send = true;
 
@@ -169,11 +209,11 @@ namespace Content.Server.GameObjects.Components.Instruments
                         switch (_laggedBatches)
                         {
                             case (int) (MaxMidiLaggedBatches * (1 / 3d)) + 1:
-                                _notifyManager.PopupMessage(Owner, InstrumentPlayer.AttachedEntity,
+                                Owner.PopupMessage(InstrumentPlayer.AttachedEntity,
                                     "Your fingers are beginning to a cramp a little!");
                                 break;
                             case (int) (MaxMidiLaggedBatches * (2 / 3d)) + 1:
-                                _notifyManager.PopupMessage(Owner, InstrumentPlayer.AttachedEntity,
+                                Owner.PopupMessage(InstrumentPlayer.AttachedEntity,
                                     "Your fingers are seriously cramping up!");
                                 break;
                         }
@@ -210,9 +250,13 @@ namespace Content.Server.GameObjects.Components.Instruments
                     _lastSequencerTick = Math.Max(maxTick, minTick + 1);
                     break;
                 case InstrumentStartMidiMessage startMidi:
+                    if (session != _instrumentPlayer)
+                        break;
                     Playing = true;
                     break;
                 case InstrumentStopMidiMessage stopMidi:
+                    if (session != _instrumentPlayer)
+                        break;
                     Playing = false;
                     Clean();
                     break;
@@ -232,7 +276,7 @@ namespace Content.Server.GameObjects.Components.Instruments
             Clean();
             SendNetworkMessage(new InstrumentStopMidiMessage());
             InstrumentPlayer = null;
-            _userInterface.CloseAll();
+            UserInterface?.CloseAll();
         }
 
         public void Thrown(ThrownEventArgs eventArgs)
@@ -240,14 +284,17 @@ namespace Content.Server.GameObjects.Components.Instruments
             Clean();
             SendNetworkMessage(new InstrumentStopMidiMessage());
             InstrumentPlayer = null;
-            _userInterface.CloseAll();
+            UserInterface?.CloseAll();
         }
 
         public void HandSelected(HandSelectedEventArgs eventArgs)
         {
-            var session = eventArgs.User?.GetComponent<BasicActorComponent>()?.playerSession;
+            if (eventArgs.User == null || !eventArgs.User.TryGetComponent(out BasicActorComponent? actor))
+                return;
 
-            if (session == null) return;
+            var session = actor.playerSession;
+
+            if (session.Status != SessionStatus.InGame) return;
 
             InstrumentPlayer = session;
         }
@@ -256,12 +303,12 @@ namespace Content.Server.GameObjects.Components.Instruments
         {
             Clean();
             SendNetworkMessage(new InstrumentStopMidiMessage());
-            _userInterface.CloseAll();
+            UserInterface?.CloseAll();
         }
 
         public void Activate(ActivateEventArgs eventArgs)
         {
-            if (Handheld || !eventArgs.User.TryGetComponent(out IActorComponent actor)) return;
+            if (Handheld || !eventArgs.User.TryGetComponent(out IActorComponent? actor)) return;
 
             if (InstrumentPlayer != null) return;
 
@@ -271,7 +318,7 @@ namespace Content.Server.GameObjects.Components.Instruments
 
         public bool UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent actor)) return false;
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor)) return false;
 
             if (InstrumentPlayer == actor.playerSession)
             {
@@ -292,7 +339,7 @@ namespace Content.Server.GameObjects.Components.Instruments
 
         private void OpenUserInterface(IPlayerSession session)
         {
-            _userInterface.Open(session);
+            UserInterface?.Toggle(session);
         }
 
         public override void Update(float delta)
@@ -302,6 +349,8 @@ namespace Content.Server.GameObjects.Components.Instruments
             if (_instrumentPlayer != null && !ActionBlockerSystem.CanInteract(_instrumentPlayer.AttachedEntity))
             {
                 InstrumentPlayer = null;
+                Clean();
+                UserInterface?.CloseAll();
             }
 
             if ((_batchesDropped >= MaxMidiBatchDropped
@@ -313,21 +362,21 @@ namespace Content.Server.GameObjects.Components.Instruments
                 SendNetworkMessage(new InstrumentStopMidiMessage());
                 Playing = false;
 
-                _userInterface.CloseAll();
+                UserInterface?.CloseAll();
 
-                if (mob.TryGetComponent(out StunnableComponent stun))
+                if (mob != null && mob.TryGetComponent(out StunnableComponent? stun))
                 {
                     stun.Stun(1);
                     Clean();
                 }
                 else
                 {
-                    StandingStateHelper.DropAllItemsInHands(mob, false);
+                    EntitySystem.Get<StandingStateSystem>().DropAllItemsInHands(mob, false);
                 }
 
                 InstrumentPlayer = null;
 
-                _notifyManager.PopupMessage(Owner, mob, "Your fingers cramp up from playing!");
+                Owner.PopupMessage(mob, "Your fingers cramp up from playing!");
             }
 
             _timer += delta;

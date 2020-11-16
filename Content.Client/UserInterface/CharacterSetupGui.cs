@@ -3,8 +3,8 @@ using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.Interfaces;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
-using Content.Shared.Jobs;
 using Content.Shared.Preferences;
+using Content.Shared.Roles;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.ResourceManagement;
@@ -45,7 +45,7 @@ namespace Content.Client.UserInterface
 
             AddChild(margin);
 
-            var panelTex = resourceCache.GetTexture("/Nano/button.svg.96dpi.png");
+            var panelTex = resourceCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
             var back = new StyleBoxTexture
             {
                 Texture = panelTex,
@@ -136,7 +136,6 @@ namespace Content.Client.UserInterface
             _createNewCharacterButton = new Button
             {
                 Text = "Create new slot...",
-                ToolTip = $"A maximum of {preferencesManager.Settings.MaxCharacterSlots} characters are allowed."
             };
             _createNewCharacterButton.OnPressed += args =>
             {
@@ -150,11 +149,22 @@ namespace Content.Client.UserInterface
                 PanelOverride = new StyleBoxFlat {BackgroundColor = StyleNano.NanoGold},
                 CustomMinimumSize = (2, 0)
             });
-            _humanoidProfileEditor = new HumanoidProfileEditor(preferencesManager, prototypeManager);
+            _humanoidProfileEditor = new HumanoidProfileEditor(preferencesManager, prototypeManager, entityManager);
             _humanoidProfileEditor.OnProfileChanged += newProfile => { UpdateUI(); };
             hBox.AddChild(_humanoidProfileEditor);
 
             UpdateUI();
+
+            preferencesManager.OnServerDataLoaded += UpdateUI;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            if (!disposing)
+                return;
+
+            _preferencesManager.OnServerDataLoaded -= UpdateUI;
         }
 
         public void Save() => _humanoidProfileEditor.Save();
@@ -164,12 +174,19 @@ namespace Content.Client.UserInterface
             var numberOfFullSlots = 0;
             var characterButtonsGroup = new ButtonGroup();
             _charactersVBox.RemoveAllChildren();
-            var characterIndex = 0;
-            foreach (var character in _preferencesManager.Preferences.Characters)
+
+            if (!_preferencesManager.ServerDataLoaded)
+            {
+                return;
+            }
+
+            _createNewCharacterButton.ToolTip =
+                $"A maximum of {_preferencesManager.Settings.MaxCharacterSlots} characters are allowed.";
+
+            foreach (var (slot, character) in _preferencesManager.Preferences.Characters)
             {
                 if (character is null)
                 {
-                    characterIndex++;
                     continue;
                 }
 
@@ -180,7 +197,7 @@ namespace Content.Client.UserInterface
                     character);
                 _charactersVBox.AddChild(characterPickerButton);
 
-                var characterIndexCopy = characterIndex;
+                var characterIndexCopy = slot;
                 characterPickerButton.OnPressed += args =>
                 {
                     _humanoidProfileEditor.Profile = (HumanoidCharacterProfile) character;
@@ -190,7 +207,6 @@ namespace Content.Client.UserInterface
                     UpdateUI();
                     args.Event.Handle();
                 };
-                characterIndex++;
             }
 
             _createNewCharacterButton.Disabled =
@@ -276,7 +292,9 @@ namespace Content.Client.UserInterface
             protected override void Dispose(bool disposing)
             {
                 base.Dispose(disposing);
-                if (!disposing) return;
+                if (!disposing)
+                    return;
+
                 _previewDummy.Delete();
                 _previewDummy = null;
             }

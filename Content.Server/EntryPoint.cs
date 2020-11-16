@@ -1,10 +1,17 @@
-﻿using Content.Server.Interfaces;
-﻿using Content.Server.AI.WorldState;
+﻿using Content.Server.Administration;
+using Content.Server.AI.Utility.Considerations;
+using Content.Server.AI.WorldState;
+using Content.Server.Database;
+using Content.Server.Eui;
+using Content.Server.GameObjects.Components.Mobs.Speech;
+using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Interfaces.PDA;
 using Content.Server.Sandbox;
 using Content.Shared.Kitchen;
+using Content.Shared.Alert;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Interfaces.GameObjects;
@@ -18,6 +25,7 @@ namespace Content.Server
     public class EntryPoint : GameServer
     {
         private IGameTicker _gameTicker;
+        private EuiManager _euiManager;
         private StatusShell _statusShell;
 
         /// <inheritdoc />
@@ -29,40 +37,23 @@ namespace Content.Server
 
             factory.DoAutoRegistrations();
 
-            var registerIgnore = new[]
-            {
-                "ConstructionGhost",
-                "IconSmooth",
-                "SubFloorHide",
-                "LowWall",
-                "ReinforcedWall",
-                "Window",
-                "CharacterInfo",
-                "InteractionOutline",
-                "MeleeWeaponArcAnimation",
-                "AnimationsTest",
-                "ItemStatus",
-                "Marker",
-                "EmergencyLight",
-                "Clickable",
-            };
-
-            foreach (var ignoreName in registerIgnore)
+            foreach (var ignoreName in IgnoredComponents.List)
             {
                 factory.RegisterIgnore(ignoreName);
             }
 
             ServerContentIoC.Register();
 
-            if (TestingCallbacks != null)
+            foreach (var callback in TestingCallbacks)
             {
-                var cast = (ServerModuleTestingCallbacks) TestingCallbacks;
+                var cast = (ServerModuleTestingCallbacks) callback;
                 cast.ServerBeforeIoC?.Invoke();
             }
 
             IoCManager.BuildGraph();
 
             _gameTicker = IoCManager.Resolve<IGameTicker>();
+            _euiManager = IoCManager.Resolve<EuiManager>();
 
             IoCManager.Resolve<IServerNotifyManager>().Initialize();
             IoCManager.Resolve<IChatManager>().Initialize();
@@ -74,8 +65,12 @@ namespace Content.Server
             var logManager = IoCManager.Resolve<ILogManager>();
             logManager.GetSawmill("Storage").Level = LogLevel.Info;
 
-            IoCManager.Resolve<IServerPreferencesManager>().StartInit();
-
+            IoCManager.Resolve<IConnectionManager>().Initialize();
+            IoCManager.Resolve<IServerDbManager>().Init();
+            IoCManager.Resolve<IServerPreferencesManager>().Init();
+            IoCManager.Resolve<INodeGroupFactory>().Initialize();
+            IoCManager.Resolve<ISandboxManager>().Initialize();
+            IoCManager.Resolve<IAccentManager>().Initialize();
         }
 
         public override void PostInit()
@@ -83,11 +78,13 @@ namespace Content.Server
             base.PostInit();
 
             _gameTicker.Initialize();
-            IoCManager.Resolve<ISandboxManager>().Initialize();
-            IoCManager.Resolve<IServerPreferencesManager>().FinishInit();
             IoCManager.Resolve<RecipeManager>().Initialize();
+            IoCManager.Resolve<AlertManager>().Initialize();
             IoCManager.Resolve<BlackboardManager>().Initialize();
+            IoCManager.Resolve<ConsiderationsManager>().Initialize();
             IoCManager.Resolve<IPDAUplinkManager>().Initialize();
+            IoCManager.Resolve<IAdminManager>().Initialize();
+            _euiManager.Initialize();
         }
 
         public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)
@@ -99,6 +96,11 @@ namespace Content.Server
                 case ModUpdateLevel.PreEngine:
                 {
                     _gameTicker.Update(frameEventArgs);
+                    break;
+                }
+                case ModUpdateLevel.PostEngine:
+                {
+                    _euiManager.SendUpdates();
                     break;
                 }
             }

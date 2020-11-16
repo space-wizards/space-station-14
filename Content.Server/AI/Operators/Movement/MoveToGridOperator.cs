@@ -1,94 +1,63 @@
-using Content.Server.GameObjects.EntitySystems.JobQueues;
+using System;
+using Content.Server.GameObjects.EntitySystems.AI.Steering;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Utility;
 
 namespace Content.Server.AI.Operators.Movement
 {
-    public class MoveToGridOperator : BaseMover
+    public sealed class MoveToGridOperator : AiOperator
     {
-        private IMapManager _mapManager;
-        private float _desiredRange;
+        private readonly IEntity _owner;
+        private GridTargetSteeringRequest _request;
+        private readonly EntityCoordinates _target;
+        public float DesiredRange { get; set; }
 
-        public MoveToGridOperator(
-            IEntity owner,
-            GridCoordinates gridPosition,
-            float desiredRange = 1.5f)
+        public MoveToGridOperator(IEntity owner, EntityCoordinates target, float desiredRange = 1.5f)
         {
-            Setup(owner);
-            TargetGrid = gridPosition;
-            _mapManager = IoCManager.Resolve<IMapManager>();
-            PathfindingProximity = 0.2f; // Accept no substitutes
-            _desiredRange = desiredRange;
+            _owner = owner;
+            _target = target;
+            DesiredRange = desiredRange;
         }
 
-        public void UpdateTarget(GridCoordinates newTarget)
+        public override bool TryStartup()
         {
-            TargetGrid = newTarget;
-            HaveArrived();
-            GetRoute();
+            if (!base.TryStartup())
+            {
+                return true;
+            }
+
+            var steering = EntitySystem.Get<AiSteeringSystem>();
+            _request = new GridTargetSteeringRequest(_target, DesiredRange);
+            steering.Register(_owner, _request);
+            return true;
+        }
+
+        public override void Shutdown(Outcome outcome)
+        {
+            base.Shutdown(outcome);
+            var steering = EntitySystem.Get<AiSteeringSystem>();
+            steering.Unregister(_owner);
         }
 
         public override Outcome Execute(float frameTime)
         {
-            var baseOutcome = base.Execute(frameTime);
-
-            if (baseOutcome == Outcome.Failed ||
-                TargetGrid.GridID != Owner.Transform.GridID)
+            switch (_request.Status)
             {
-                HaveArrived();
-                return Outcome.Failed;
-            }
-
-            if (RouteJob != null)
-            {
-                if (RouteJob.Status != JobStatus.Finished)
-                {
+                case SteeringStatus.Pending:
+                    DebugTools.Assert(EntitySystem.Get<AiSteeringSystem>().IsRegistered(_owner));
                     return Outcome.Continuing;
-                }
-                ReceivedRoute();
-                return Route.Count == 0 ? Outcome.Failed : Outcome.Continuing;
+                case SteeringStatus.NoPath:
+                    return Outcome.Failed;
+                case SteeringStatus.Arrived:
+                    return Outcome.Success;
+                case SteeringStatus.Moving:
+                    DebugTools.Assert(EntitySystem.Get<AiSteeringSystem>().IsRegistered(_owner));
+                    return Outcome.Continuing;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
-
-            var targetRange = (TargetGrid.Position - Owner.Transform.GridPosition.Position).Length;
-
-            // We there
-            if (targetRange <= _desiredRange)
-            {
-                HaveArrived();
-                return Outcome.Success;
-            }
-
-            // No route
-            if (Route.Count == 0 && RouteJob == null)
-            {
-                GetRoute();
-                return Outcome.Continuing;
-            }
-
-            AntiStuck(frameTime);
-
-            if (IsStuck)
-            {
-                return Outcome.Continuing;
-            }
-
-            if (TryMove())
-            {
-                return Outcome.Continuing;
-            }
-
-            if (Route.Count == 0 && targetRange > 1.5f)
-            {
-                HaveArrived();
-                return Outcome.Failed;
-            }
-
-            var nextTile = Route.Dequeue();
-            NextTile();
-            NextGrid = _mapManager.GetGrid(nextTile.GridIndex).GridTileToLocal(nextTile.GridIndices);
-            return Outcome.Continuing;
         }
     }
 }

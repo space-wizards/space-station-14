@@ -1,0 +1,24 @@
+- type: job
+  id: StationEngineer
+  name: "station engineer"
+  positions: 3
+  spawnPositions: 2
+  startingGear: StationEngineerGear
+  department:
+  - Engineering
+  icon: "StationEngineer"
+  access:
+  - Maintenance
+  - Engineering
+  - External
+
+- type: startingGear
+  id: StationEngineerGear
+  equipment:
+    innerclothing: UniformEngineering
+    backpack: BackpackEngineeringFilled
+    shoes: ShoesWorkboots
+    outerclothing: OuterclothingHazard
+    idcard: EngineerPDA
+    belt: UtilityBeltClothingFilled
+    ears: HeadsetEngineering

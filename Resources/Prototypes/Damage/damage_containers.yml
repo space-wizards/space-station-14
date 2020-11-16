@@ -1,0 +1,14 @@
+- type: damageContainer
+  id: biologicalDamageContainer
+  activeDamageClasses:
+  - Brute
+  - Burn
+  - Toxin
+  - Airloss
+  - Genetic
+
+- type: damageContainer
+  id: metallicDamageContainer
+  activeDamageClasses:
+  - Brute
+  - Burn

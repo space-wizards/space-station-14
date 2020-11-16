@@ -1,14 +1,13 @@
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Gravity;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Gravity;
+using Content.Shared.GameObjects.EntitySystemMessages.Gravity;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -19,42 +18,34 @@ using Robust.Shared.Random;
 namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    public class GravitySystem: EntitySystem
+    internal sealed class GravitySystem : EntitySystem
     {
-#pragma warning disable 649
-        [Dependency] private readonly IMapManager _mapManager;
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly IRobustRandom _random;
-#pragma warning restore 649
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         private const float GravityKick = 100.0f;
 
         private const uint ShakeTimes = 10;
 
-        private Dictionary<GridId, uint> _gridsToShake;
+        private Dictionary<GridId, uint> _gridsToShake = new Dictionary<GridId, uint>();
 
-        private float internalTimer = 0.0f;
-
-        public override void Initialize()
-        {
-            EntityQuery = new TypeEntityQuery<GravityGeneratorComponent>();
-            _gridsToShake = new Dictionary<GridId, uint>();
-        }
+        private float _internalTimer = 0.0f;
 
         public override void Update(float frameTime)
         {
-            internalTimer += frameTime;
+            _internalTimer += frameTime;
             var gridsWithGravity = new List<GridId>();
-            foreach (var entity in RelevantEntities)
+            foreach (var generator in ComponentManager.EntityQuery<GravityGeneratorComponent>())
             {
-                var generator = entity.GetComponent<GravityGeneratorComponent>();
                 if (generator.NeedsUpdate)
                 {
                     generator.UpdateState();
                 }
+
                 if (generator.Status == GravityGeneratorStatus.On)
                 {
-                    gridsWithGravity.Add(entity.Transform.GridID);
+                    gridsWithGravity.Add(generator.Owner.Transform.GridID);
                 }
             }
 
@@ -62,20 +53,39 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 if (grid.HasGravity && !gridsWithGravity.Contains(grid.Index))
                 {
-                    grid.HasGravity = false;
-                    ScheduleGridToShake(grid.Index, ShakeTimes);
-                } else if (!grid.HasGravity && gridsWithGravity.Contains(grid.Index))
+                    DisableGravity(grid);
+                }
+                else if (!grid.HasGravity && gridsWithGravity.Contains(grid.Index))
                 {
-                    grid.HasGravity = true;
-                    ScheduleGridToShake(grid.Index, ShakeTimes);
+                    EnableGravity(grid);
                 }
             }
 
-            if (internalTimer > 0.2f)
+            if (_internalTimer > 0.2f)
             {
                 ShakeGrids();
-                internalTimer = 0.0f;
+                _internalTimer = 0.0f;
             }
+        }
+
+        private void EnableGravity(IMapGrid grid)
+        {
+            grid.HasGravity = true;
+            ScheduleGridToShake(grid.Index, ShakeTimes);
+
+            var message = new GravityChangedMessage(grid);
+
+            RaiseLocalEvent(message);
+        }
+
+        private void DisableGravity(IMapGrid grid)
+        {
+            grid.HasGravity = false;
+            ScheduleGridToShake(grid.Index, ShakeTimes);
+
+            var message = new GravityChangedMessage(grid);
+
+            RaiseLocalEvent(message);
         }
 
         private void ScheduleGridToShake(GridId gridId, uint shakeTimes)
@@ -93,7 +103,7 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 if (player.AttachedEntity == null
                     || player.AttachedEntity.Transform.GridID != gridId) continue;
-                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/effects/alert.ogg", player.AttachedEntity);
+                Get<AudioSystem>().PlayFromEntity("/Audio/Effects/alert.ogg", player.AttachedEntity);
             }
         }
 

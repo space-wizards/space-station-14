@@ -1,0 +1,22 @@
+- type: job
+  id: Bartender
+  name: "bartender"
+  positions: 1
+  startingGear: BartenderGear
+  department:
+  - Civilian
+  icon: "Bartender"
+  access:
+  - Service
+  - Bar
+  - Maintenance
+
+- type: startingGear
+  id: BartenderGear
+  equipment:
+    innerclothing: UniformBartender
+    outerclothing: OuterclothingArmorVest
+    backpack: BackpackClothingFilled
+    shoes: ShoesBlack
+    idcard: BartenderPDA
+    ears: HeadsetService

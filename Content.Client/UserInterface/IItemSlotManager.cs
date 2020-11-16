@@ -1,5 +1,4 @@
-﻿using Content.Client.GameObjects;
-using Robust.Client.UserInterface;
+﻿using Robust.Client.UserInterface;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Client.UserInterface
@@ -9,5 +8,6 @@ namespace Content.Client.UserInterface
         bool OnButtonPressed(GUIBoundKeyEventArgs args, IEntity item);
         void UpdateCooldown(ItemSlotButton cooldownTexture, IEntity entity);
         bool SetItemSlot(ItemSlotButton button, IEntity entity);
+        void HoverInSlot(ItemSlotButton button, IEntity entity, bool fits);
     }
 }

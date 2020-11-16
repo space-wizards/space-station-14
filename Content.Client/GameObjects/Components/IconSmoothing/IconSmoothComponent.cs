@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Content.Client.GameObjects.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Client.Interfaces.GameObjects.Components;
@@ -36,7 +35,7 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
 
         internal ISpriteComponent Sprite { get; private set; }
         internal SnapGridComponent SnapGrid { get; private set; }
-        private (GridId, MapIndices) _lastPosition;
+        private (GridId, Vector2i) _lastPosition;
 
         /// <summary>
         ///     We will smooth with other objects with the same key.
@@ -204,7 +203,17 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
                 cornerNW |= CornerFill.Diagonal;
             }
 
-            return (cornerNE, cornerNW, cornerSW, cornerSE);
+            switch (Owner.Transform.WorldRotation.GetCardinalDir())
+            {
+                case Direction.North:
+                    return (cornerSW, cornerSE, cornerNE, cornerNW);
+                case Direction.West:
+                    return (cornerSE, cornerNE, cornerNW, cornerSW);
+                case Direction.South:
+                    return (cornerNE, cornerNW, cornerSW, cornerSE);
+                default:
+                    return (cornerNW, cornerSW, cornerSE, cornerNE);
+            }
         }
 
         /// <inheritdoc />

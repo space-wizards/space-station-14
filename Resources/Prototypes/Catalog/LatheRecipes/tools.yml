@@ -1,0 +1,66 @@
+- type: latheRecipe
+  id: Wirecutter
+  icon: Objects/Tools/wirecutters.rsi/cutters-map.png
+  result: Wirecutter
+  completetime: 500
+  materials:
+    steel: 80
+
+- type: latheRecipe
+  id: Screwdriver
+  icon:
+    sprite: Objects/Tools/screwdriver.rsi
+    state: screwdriver-map
+  result: Screwdriver
+  completetime: 500
+  materials:
+    steel: 75
+
+- type: latheRecipe
+  id: Welder
+  icon:
+    sprite: Objects/Tools/welder.rsi
+    state: welder
+  result: Welder
+  completetime: 500
+  materials:
+    steel: 70
+    glass: 30
+
+- type: latheRecipe
+  id: Wrench
+  icon: Objects/Tools/wrench.rsi/icon.png
+  result: Wrench
+  completetime: 500
+  materials:
+    steel: 70
+    glass: 30
+
+- type: latheRecipe
+  id: CableStack
+  name: cable coil
+  icon: /Textures/Objects/Tools/cables.rsi/coil-30.png
+  result: ApcExtensionCableStack1
+  completetime: 500
+  materials:
+    steel: 50
+    glass: 50
+
+- type: latheRecipe
+  id: Crowbar
+  icon: Objects/Tools/crowbar.rsi/icon.png
+  result: Crowbar
+  completetime: 500
+  materials:
+    steel: 50
+
+- type: latheRecipe
+  id: Multitool
+  icon:
+    sprite: Objects/Tools/multitool.rsi
+    state: multitool
+  result: Multitool
+  completetime: 500
+  materials:
+    steel: 50
+    glass: 20

@@ -1,0 +1,22 @@
+- type: entity
+  name: "item"
+  id: BaseItem
+  abstract: true
+  components:
+  - type: Item
+    size: 5
+  - type: Clickable
+  - type: InteractionOutline
+  - type: MovedByPressure
+  - type: DamageOnHighSpeedImpact
+  - type: Physics
+    anchored: false
+    mass: 5
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.25,-0.25,0.25,0.25"
+      layer:
+      - Clickable
+  - type: Sprite
+    drawdepth: Items
+  - type: Pullable

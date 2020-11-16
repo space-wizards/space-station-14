@@ -1,4 +1,5 @@
 ﻿using System;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
@@ -26,6 +27,10 @@ namespace Content.Shared.GameObjects.Components
                 _count = value;
                 if (_count <= 0)
                 {
+                    if (Owner.TryGetContainerMan(out var containerManager))
+                    {
+                        containerManager.Remove(Owner);
+                    }
                     Owner.Delete();
                 }
 
@@ -53,7 +58,7 @@ namespace Content.Shared.GameObjects.Components
             serializer.DataFieldCached(ref _maxCount, "max", 50);
             serializer.DataFieldCached(ref _count, "count", MaxCount);
 
-            if (!serializer.Reading)
+            if (serializer.Writing)
             {
                 return;
             }
@@ -120,9 +125,15 @@ namespace Content.Shared.GameObjects.Components
     {
         Metal,
         Glass,
+        Plasteel,
         Cable,
+        Wood,
+        MVCable,
+        HVCable,
         Gold,
+        Phoron,
         Ointment,
+        Gauze,
         Brutepack,
         FloorTileSteel,
         FloorTileCarpet,

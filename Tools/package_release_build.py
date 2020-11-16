@@ -70,21 +70,40 @@ WINDOWS_NATIVES = {
     "libgthread-2.0-0.dll",
     "libinstpatch-2.dll",
     "libintl-8.dll",
-    "libsndfile-1.dll"
+    "libsndfile-1.dll",
+    "libEGL.dll",
+    "libGLESv2.dll"
 }
 
 LINUX_NATIVES = {
     "libglfw.so.3",
-    "libswnfd.so"
+    "libswnfd.so",
+    "libopenal.so.1"
 }
 
 MAC_NATIVES = {
     "libglfw.3.dylib",
-    "libswnfd.dylib"
+    "libswnfd.dylib",
+    "libfreetype.6.dylib"
 }
 
-SERVER_EXTRA_CONTENT_ASSEMBLIES = [
-    "Content.Server.Database.dll"
+# Assembly names to copy from content.
+# PDBs are included if available, .dll/.pdb appended automatically.
+SERVER_CONTENT_ASSEMBLIES = [
+    "Content.Server.Database",
+    "Content.Server",
+    "Content.Shared"
+]
+
+CLIENT_CONTENT_ASSEMBLIES = [
+    "Content.Client",
+    "Content.Shared"
+]
+
+# Extra assemblies to copy on the server, with a startswith
+SERVER_EXTRA_ASSEMBLIES = [
+    "Npgsql.",
+    "Microsoft",
 ]
 
 def main() -> None:
@@ -380,16 +399,29 @@ def copy_dir_into_zip(directory, basepath, zipf):
 
 
 def copy_content_assemblies(target, zipf, server):
+    files = []
     if server:
         source_dir = p("bin", "Content.Server")
-        files = ["Content.Shared.dll", "Content.Server.dll"] + SERVER_EXTRA_CONTENT_ASSEMBLIES
+        base_assemblies = SERVER_CONTENT_ASSEMBLIES
+
+        # Additional assemblies that need to be copied such as EFCore.
         for filename in os.listdir(source_dir):
-            if filename.startswith("Microsoft.") or filename.startswith("Npgsql."):
-                files.append(filename)
+            for extra_assembly_start in SERVER_EXTRA_ASSEMBLIES:
+                if filename.startswith(extra_assembly_start):
+                    files.append(filename)
+                    break
 
     else:
         source_dir = p("bin", "Content.Client")
-        files = ["Content.Shared.dll", "Content.Client.dll"]
+        base_assemblies = CLIENT_CONTENT_ASSEMBLIES
+
+    # Include content assemblies.
+    for asm in base_assemblies:
+        files.append(asm + ".dll")
+        # If PDB available, include it aswell.
+        pdb_path = asm + ".pdb"
+        if os.path.exists(p(source_dir, pdb_path)):
+            files.append(pdb_path)
 
     # Write assemblies dir if necessary.
     if not zip_entry_exists(zipf, target):

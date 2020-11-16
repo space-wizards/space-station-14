@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,8 +11,6 @@ using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
-
-#nullable enable
 
 namespace Content.Client
 {
@@ -70,7 +69,18 @@ namespace Content.Client
                 return false;
             }
 
-            var offset = rsiData.Offsets[state][(int) dir][frame];
+            if (!rsiData.Offsets.TryGetValue(state, out var stateDat) || stateDat.Length <= (int) dir)
+            {
+                return false;
+            }
+
+            var dirDat = stateDat[(int) dir];
+            if (dirDat.Length <= frame)
+            {
+                return false;
+            }
+
+            var offset = dirDat[frame];
             return SampleClickMap(rsiData.ClickMap, pos, rsi.Size, offset);
         }
 

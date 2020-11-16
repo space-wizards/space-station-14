@@ -1,0 +1,87 @@
+- type: entity
+  name: emergency medical kit
+  description: An emergency medical kit for those serious boo-boos.
+  parent: BaseItem
+  id: Medkit
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medical.rsi
+    state: medkit_r
+  - type: Storage
+    capacity: 60
+  - type: Item
+    size: 9999
+
+- type: entity
+  id: MedkitFilled
+  suffix: Filled
+  parent: Medkit
+  components:
+  - type: StorageFill
+    contents:
+      - name: Brutepack
+        amount: 3
+      - name: Ointment
+        amount: 3
+      # todo 1 Health Analyzer once it exists
+
+- type: entity
+  name: medical stack
+  id: MedicalStack
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Stack
+  - type: Item
+  - type: Healing
+
+- type: entity
+  name: ointment
+  description: Used to treat those nasty burns.
+  parent: MedicalStack
+  id: Ointment
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medical.rsi
+    state: ointment
+  - type: Healing
+    heal:
+      Heat: 10
+  - type: Stack
+    max: 5
+    count: 5
+    stacktype: enum.StackType.Ointment
+
+- type: entity
+  name: bruise pack
+  description: A therapeutic gel pack and bandages designed to treat blunt-force trauma.
+  parent: MedicalStack
+  id: Brutepack
+  components:
+    - type: Sprite
+      sprite: Objects/Specific/Medical/medical.rsi
+      state: brutepack
+    - type: Healing
+      heal:
+        Blunt: 10
+    - type: Stack
+      max: 5
+      count: 5
+      stacktype: enum.StackType.Brutepack
+
+- type: entity
+  name: roll of gauze
+  description: Some sterile gauze to wrap around bloody stumps.
+  parent: MedicalStack
+  id: Gauze
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medical.rsi
+    state: gauze
+#  - type: Healing
+#    heal:
+#      Blunt: 10
+  - type: Stack
+    max: 5
+    count: 5
+    stacktype: enum.StackType.Gauze

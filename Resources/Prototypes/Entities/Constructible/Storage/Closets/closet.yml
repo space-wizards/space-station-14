@@ -1,0 +1,52 @@
+﻿- type: entity
+  id: LockerGeneric
+  name: closet
+  description: A standard-issue Nanotrasen storage unit.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Constructible/Structures/closet.rsi
+    layers:
+    - state: generic
+    - state: generic_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.StorageVisualLayers.Welded"]
+  - type: Clickable
+  - type: MovedByPressure
+  - type: DamageOnHighSpeedImpact
+    soundHit: /Audio/Effects/bang.ogg
+  - type: InteractionOutline
+  - type: Physics
+    mass: 25
+    anchored: false
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5,-0.25,0.5,0.25"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: EntityStorage
+  - type: PlaceableSurface
+  - type: Destructible
+    deadThreshold: 100
+    resistances: metallicResistances
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state_open: generic_open
+      state_closed: generic_door
+  - type: LoopingSound
+  - type: Anchorable
+  - type: Pullable
+  placement:
+    snap:
+    - Wall

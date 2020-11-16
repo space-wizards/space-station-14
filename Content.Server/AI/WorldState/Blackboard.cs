@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
-using Robust.Shared.Utility;
 
 namespace Content.Server.AI.WorldState
 {
@@ -54,6 +52,11 @@ namespace Content.Server.AI.WorldState
             {
                 state.Reset();
             }
+        }
+
+        public void GetStoredState<T>(Type type, out StoredStateData<T> state)
+        {
+            state = (StoredStateData<T>) _states[type];
         }
 
         /// <summary>

@@ -1,0 +1,23 @@
+- type: job
+  id: Clown
+  name: "clown"
+  positions: 1
+  startingGear: ClownGear
+  department:
+  - Civilian
+  icon: "Clown"
+  access:
+  - Theatre
+  - Maintenance
+  special: !type:ClownSpecial {}
+
+- type: startingGear
+  id: ClownGear
+  equipment:
+    innerclothing: UniformClown
+    backpack: ClownPackFilled
+    shoes: ShoesClown
+    mask: MaskClown
+    pocket1: BikeHorn
+    idcard: ClownPDA
+    ears: HeadsetService

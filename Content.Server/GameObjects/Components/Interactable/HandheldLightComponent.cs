@@ -1,53 +1,35 @@
-﻿using Content.Server.GameObjects.Components.Power;
-using Content.Server.GameObjects.Components.Sound;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces.GameObjects;
-using Content.Server.Utility;
-using Content.Shared.GameObjects;
+﻿#nullable enable
+using System.Threading.Tasks;
+using Content.Server.GameObjects.Components.Items.Clothing;
+using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.Components.Power;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Maths;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Interactable
 {
     /// <summary>
-    ///     Component that represents a handheld lightsource which can be toggled on and off.
+    ///     Component that represents a powered handheld light source which can be toggled on and off.
     /// </summary>
     [RegisterComponent]
-    internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IInteractUsing, IMapInit
+    internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IInteractUsing
     {
-#pragma warning disable 649
-        [Dependency] private readonly ISharedNotifyManager _notifyManager;
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-#pragma warning restore 649
-
-        [ViewVariables(VVAccess.ReadWrite)] public float Wattage { get; set; } = 10;
-        [ViewVariables] private ContainerSlot _cellContainer;
-        private PointLightComponent _pointLight;
-        private SpriteComponent _spriteComponent;
-        private ClothingComponent _clothingComponent;
-
-        [ViewVariables]
-        private PowerCellComponent Cell
-        {
-            get
-            {
-                if (_cellContainer.ContainedEntity == null) return null;
-
-                _cellContainer.ContainedEntity.TryGetComponent(out PowerCellComponent cell);
-                return cell;
-            }
-        }
+        [ViewVariables(VVAccess.ReadWrite)] public float Wattage { get; set; } = 10f;
+        [ViewVariables] private PowerCellSlotComponent _cellSlot = default!;
+        private PowerCellComponent? Cell => _cellSlot.Cell;
 
         /// <summary>
         ///     Status of light, whether or not it is emitting light.
@@ -55,34 +37,53 @@ namespace Content.Server.GameObjects.Components.Interactable
         [ViewVariables]
         public bool Activated { get; private set; }
 
-        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        [ViewVariables] protected override bool HasCell => _cellSlot.HasCell;
+
+        [ViewVariables(VVAccess.ReadWrite)] public string? TurnOnSound;
+        [ViewVariables(VVAccess.ReadWrite)] public string? TurnOnFailSound;
+        [ViewVariables(VVAccess.ReadWrite)] public string? TurnOffSound;
+
+        /// <summary>
+        ///     Client-side ItemStatus level
+        /// </summary>
+        private byte? _lastLevel;
+
+        public override void ExposeData(ObjectSerializer serializer)
         {
-            if (!eventArgs.Using.HasComponent<PowerCellComponent>()) return false;
+            base.ExposeData(serializer);
+            serializer.DataField(this, x => x.Wattage, "wattage", 10f);
+            serializer.DataField(ref TurnOnSound, "turnOnSound", "/Audio/Items/flashlight_toggle.ogg");
+            serializer.DataField(ref TurnOnFailSound, "turnOnFailSound", "/Audio/Machines/button.ogg");
+            serializer.DataField(ref TurnOffSound, "turnOffSound", "/Audio/Items/flashlight_toggle.ogg");
+        }
 
-            if (Cell != null) return false;
+        public override void Initialize()
+        {
+            base.Initialize();
 
-            var handsComponent = eventArgs.User.GetComponent<IHandsComponent>();
-
-            if (!handsComponent.Drop(eventArgs.Using, _cellContainer))
-            {
-                return false;
-            }
-
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/items/weapons/pistol_magin.ogg", Owner);
-
+            Owner.EnsureComponent<PointLightComponent>();
+            _cellSlot = Owner.EnsureComponent<PowerCellSlotComponent>();
 
             Dirty();
+        }
 
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        {
+            if (!ActionBlockerSystem.CanInteract(eventArgs.User)) return false;
+            if (!_cellSlot.InsertCell(eventArgs.Using)) return false;
+            Dirty();
             return true;
         }
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            var loc = IoCManager.Resolve<ILocalizationManager>();
-
             if (Activated)
             {
-                message.AddMarkup(loc.GetString("The light is currently [color=darkgreen]on[/color]."));
+                message.AddMarkup(Loc.GetString("The light is currently [color=darkgreen]on[/color]."));
+            }
+            else
+            {
+                message.AddMarkup(Loc.GetString("The light is currently [color=darkred]off[/color]."));
             }
         }
 
@@ -91,181 +92,139 @@ namespace Content.Server.GameObjects.Components.Interactable
             return ToggleStatus(eventArgs.User);
         }
 
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            _pointLight = Owner.GetComponent<PointLightComponent>();
-            _spriteComponent = Owner.GetComponent<SpriteComponent>();
-            Owner.TryGetComponent(out _clothingComponent);
-            _cellContainer =
-                ContainerManagerComponent.Ensure<ContainerSlot>("flashlight_cell_container", Owner, out var existed);
-        }
-
         /// <summary>
         ///     Illuminates the light if it is not active, extinguishes it if it is active.
         /// </summary>
         /// <returns>True if the light's status was toggled, false otherwise.</returns>
         private bool ToggleStatus(IEntity user)
         {
-            // Update sprite and light states to match the activation.
-            if (Activated)
-            {
-                TurnOff();
-            }
-            else
-            {
-                TurnOn(user);
-            }
-
-            // Toggle always succeeds.
-            return true;
+            return Activated ? TurnOff() : TurnOn(user);
         }
 
-        private void TurnOff()
+        private bool TurnOff(bool makeNoise = true)
         {
             if (!Activated)
             {
-                return;
+                return false;
             }
 
             SetState(false);
             Activated = false;
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/items/flashlight_toggle.ogg", Owner);
+            if (makeNoise)
+            {
+                if (TurnOffSound != null) EntitySystem.Get<AudioSystem>().PlayFromEntity(TurnOffSound, Owner);
+            }
 
+            return true;
         }
 
-        private void TurnOn(IEntity user)
+        private bool TurnOn(IEntity user)
         {
             if (Activated)
             {
-                return;
+                return false;
             }
 
-            var cell = Cell;
-            if (cell == null)
+            if (Cell == null)
             {
-
-                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/machines/button.ogg", Owner);
-
-                _notifyManager.PopupMessage(Owner, user, _localizationManager.GetString("Cell missing..."));
-                return;
+                if (TurnOnFailSound != null) EntitySystem.Get<AudioSystem>().PlayFromEntity(TurnOnFailSound, Owner);
+                Owner.PopupMessage(user, Loc.GetString("Cell missing..."));
+                return false;
             }
 
             // To prevent having to worry about frame time in here.
             // Let's just say you need a whole second of charge before you can turn it on.
             // Simple enough.
-            if (cell.AvailableCharge(1) < Wattage)
+            if (Wattage > Cell.CurrentCharge)
             {
-                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/machines/button.ogg", Owner);
-                _notifyManager.PopupMessage(Owner, user, _localizationManager.GetString("Dead cell..."));
-                return;
+                if (TurnOnFailSound != null) EntitySystem.Get<AudioSystem>().PlayFromEntity(TurnOnFailSound, Owner);
+                Owner.PopupMessage(user, Loc.GetString("Dead cell..."));
+                return false;
             }
 
             Activated = true;
             SetState(true);
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/items/flashlight_toggle.ogg", Owner);
-
+            if (TurnOnSound != null) EntitySystem.Get<AudioSystem>().PlayFromEntity(TurnOnSound, Owner);
+            return true;
         }
 
         private void SetState(bool on)
         {
-            _spriteComponent.LayerSetVisible(1, on);
-            _pointLight.Enabled = on;
-            if (_clothingComponent != null)
+            if (Owner.TryGetComponent(out SpriteComponent? sprite))
             {
-                _clothingComponent.ClothingEquippedPrefix = on ? "On" : "Off";
+                sprite.LayerSetVisible(1, on);
+            }
+
+            if (Owner.TryGetComponent(out PointLightComponent? light))
+            {
+                light.Enabled = on;
+            }
+
+            if (Owner.TryGetComponent(out ClothingComponent? clothing))
+            {
+                clothing.ClothingEquippedPrefix = on ? "On" : "Off";
+            }
+
+            if (Owner.TryGetComponent(out ItemComponent? item))
+            {
+                item.EquippedPrefix = on ? "on" : "off";
             }
         }
 
         public void OnUpdate(float frameTime)
         {
-            if (!Activated) return;
-
-            var cell = Cell;
-            if (cell == null || !cell.TryDeductWattage(Wattage, frameTime)) TurnOff();
-
-            Dirty();
-        }
-
-        private void EjectCell(IEntity user)
-        {
             if (Cell == null)
             {
+                TurnOff(false);
                 return;
             }
 
-            var cell = Cell;
+            var appearanceComponent = Owner.GetComponent<AppearanceComponent>();
 
-            if (!_cellContainer.Remove(cell.Owner))
+            if (Cell.MaxCharge - Cell.CurrentCharge < Cell.MaxCharge * 0.70)
             {
-                return;
+                appearanceComponent.SetData(HandheldLightVisuals.Power, HandheldLightPowerStates.FullPower);
+            }
+            else if (Cell.MaxCharge - Cell.CurrentCharge < Cell.MaxCharge * 0.90)
+            {
+                appearanceComponent.SetData(HandheldLightVisuals.Power, HandheldLightPowerStates.LowPower);
+            }
+            else
+            {
+                appearanceComponent.SetData(HandheldLightVisuals.Power, HandheldLightPowerStates.Dying);
             }
 
-            if (!user.TryGetComponent(out HandsComponent hands))
+            if (Activated && !Cell.TryUseCharge(Wattage * frameTime)) TurnOff(false);
+
+            var level = GetLevel();
+
+            if (level != _lastLevel)
             {
-                return;
+                _lastLevel = level;
+                Dirty();
             }
+        }
 
-            if (!hands.PutInHand(cell.Owner.GetComponent<ItemComponent>()))
-            {
-                cell.Owner.Transform.GridPosition = user.Transform.GridPosition;
-            }
+        // Curently every single flashlight has the same number of levels for status and that's all it uses the charge for
+        // Thus we'll just check if the level changes.
+        private byte? GetLevel()
+        {
+            if (Cell == null)
+                return null;
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/items/weapons/pistol_magout.ogg", Owner);
+            var currentCharge = Cell.CurrentCharge;
 
+            if (MathHelper.CloseTo(currentCharge, 0) || Wattage > currentCharge)
+                return 0;
+
+            return (byte?) ContentHelpers.RoundToNearestLevels(currentCharge / Cell.MaxCharge * 255, 255, StatusLevels);
         }
 
         public override ComponentState GetComponentState()
         {
-            if (Cell == null)
-            {
-                return new HandheldLightComponentState(null);
-            }
-
-            if (Cell.AvailableCharge(1) < Wattage)
-            {
-                // Practically zero.
-                // This is so the item status works correctly.
-                return new HandheldLightComponentState(0);
-            }
-
-            return new HandheldLightComponentState(Cell.Charge / Cell.Capacity);
-        }
-
-        [Verb]
-        public sealed class EjectCellVerb : Verb<HandheldLightComponent>
-        {
-            protected override void GetData(IEntity user, HandheldLightComponent component, VerbData data)
-            {
-                if (component.Cell == null)
-                {
-                    data.Text = "Eject cell (cell missing)";
-                    data.Visibility = VerbVisibility.Disabled;
-                }
-                else
-                {
-                    data.Text = "Eject cell";
-                }
-            }
-
-            protected override void Activate(IEntity user, HandheldLightComponent component)
-            {
-                component.EjectCell(user);
-            }
-        }
-
-        void IMapInit.MapInit()
-        {
-            if (_cellContainer.ContainedEntity != null)
-            {
-                return;
-            }
-
-            var cell = Owner.EntityManager.SpawnEntity("PowerCellSmallHyper", Owner.Transform.GridPosition);
-            _cellContainer.Insert(cell);
+            return new HandheldLightComponentState(GetLevel());
         }
     }
 }

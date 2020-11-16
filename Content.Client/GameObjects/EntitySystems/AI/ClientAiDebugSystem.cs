@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.AI;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.UserInterface;
@@ -15,6 +16,8 @@ namespace Content.Client.GameObjects.EntitySystems.AI
 #if DEBUG
     public class ClientAiDebugSystem : EntitySystem
     {
+        [Dependency] private readonly IEyeManager _eyeManager = default!;
+
         private AiDebugMode _tooltips = AiDebugMode.None;
         private readonly Dictionary<IEntity, PanelContainer> _aiBoxes = new Dictionary<IEntity,PanelContainer>();
 
@@ -23,25 +26,43 @@ namespace Content.Client.GameObjects.EntitySystems.AI
             base.Update(frameTime);
             if (_tooltips == 0)
             {
+                if (_aiBoxes.Count > 0)
+                {
+                    foreach (var (_, panel) in _aiBoxes)
+                    {
+                        panel.Dispose();
+                    }
+
+                    _aiBoxes.Clear();
+                }
                 return;
             }
 
-            var eyeManager = IoCManager.Resolve<IEyeManager>();
+            var deletedEntities = new List<IEntity>(0);
             foreach (var (entity, panel) in _aiBoxes)
             {
-                if (entity == null) continue;
+                if (entity.Deleted)
+                {
+                    deletedEntities.Add(entity);
+                    continue;
+                }
 
-                if (!eyeManager.GetWorldViewport().Contains(entity.Transform.WorldPosition))
+                if (!_eyeManager.GetWorldViewport().Contains(entity.Transform.WorldPosition))
                 {
                     panel.Visible = false;
                     continue;
                 }
 
-                var (x, y) = eyeManager.WorldToScreen(entity.Transform.GridPosition).Position;
+                var (x, y) = _eyeManager.CoordinatesToScreen(entity.Transform.Coordinates).Position;
                 var offsetPosition = new Vector2(x - panel.Width / 2, y - panel.Height - 50f);
                 panel.Visible = true;
 
                 LayoutContainer.SetPosition(panel, offsetPosition);
+            }
+
+            foreach (var entity in deletedEntities)
+            {
+                _aiBoxes.Remove(entity);
             }
         }
 
@@ -60,11 +81,6 @@ namespace Content.Client.GameObjects.EntitySystems.AI
                 // I guess if it's out of range we don't know about it?
                 var entityManager = IoCManager.Resolve<IEntityManager>();
                 var entity = entityManager.GetEntity(message.EntityUid);
-                if (entity == null)
-                {
-                    return;
-                }
-
                 TryCreatePanel(entity);
 
                 // Probably shouldn't access by index but it's a debugging tool so eh
@@ -82,17 +98,12 @@ namespace Content.Client.GameObjects.EntitySystems.AI
             {
                 var entityManager = IoCManager.Resolve<IEntityManager>();
                 var entity = entityManager.GetEntity(message.EntityUid);
-                if (entity == null)
-                {
-                    return;
-                }
-
                 TryCreatePanel(entity);
 
                 var label = (Label) _aiBoxes[entity].GetChild(0).GetChild(1);
                 label.Text = $"Pathfinding time (ms): {message.TimeTaken * 1000:0.0000}\n" +
-                             $"Nodes traversed: {message.ClosedTiles.Count}\n" +
-                             $"Nodes per ms: {message.ClosedTiles.Count / (message.TimeTaken * 1000)}";
+                             $"Nodes traversed: {message.CameFrom.Count}\n" +
+                             $"Nodes per ms: {message.CameFrom.Count / (message.TimeTaken * 1000)}";
             }
         }
 
@@ -102,11 +113,6 @@ namespace Content.Client.GameObjects.EntitySystems.AI
             {
                 var entityManager = IoCManager.Resolve<IEntityManager>();
                 var entity = entityManager.GetEntity(message.EntityUid);
-                if (entity == null)
-                {
-                    return;
-                }
-
                 TryCreatePanel(entity);
 
                 var label = (Label) _aiBoxes[entity].GetChild(0).GetChild(1);
@@ -173,7 +179,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
 
                 var panel = new PanelContainer
                 {
-                    StyleClasses = {"tooltipBox"},
+                    StyleClasses = { StyleNano.StyleClassTooltipPanel },
                     Children = {vBox},
                     MouseFilter = Control.MouseFilterMode.Ignore,
                     ModulateSelfOverride = Color.White.WithAlpha(0.75f),

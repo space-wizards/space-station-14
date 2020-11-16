@@ -6,6 +6,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.EntitySystems
@@ -15,12 +16,10 @@ namespace Content.Client.GameObjects.EntitySystems
     /// </summary>
     internal sealed class SubFloorHideSystem : EntitySystem
     {
-        private bool _enableAll;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
 
-#pragma warning disable 649
-        [Dependency] private readonly IMapManager _mapManager;
-        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
-#pragma warning restore 649
+        private bool _enableAll;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool EnableAll
@@ -36,10 +35,9 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void UpdateAll()
         {
-            foreach (var comp in EntityManager.ComponentManager.GetAllComponents<SubFloorHideComponent>())
+            foreach (var comp in EntityManager.ComponentManager.EntityQuery<SubFloorHideComponent>())
             {
-                var gridId = comp.Owner.Transform.GridID;
-                var grid = _mapManager.GetGrid(gridId);
+                if (!_mapManager.TryGetGrid(comp.Owner.Transform.GridID, out var grid)) return;
 
                 var snapPos = comp.Owner.GetComponent<SnapGridComponent>();
                 UpdateTile(grid, snapPos.Position);
@@ -60,7 +58,11 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void HandleDirtyEvent(SubFloorHideDirtyEvent ev)
         {
-            var grid = _mapManager.GetGrid(ev.Sender.Transform.GridID);
+            if (!_mapManager.TryGetGrid(ev.Sender.Transform.GridID, out var grid))
+            {
+                return;
+            }
+
             var indices = grid.WorldToTile(ev.Sender.Transform.WorldPosition);
             UpdateTile(grid, indices);
         }
@@ -78,7 +80,7 @@ namespace Content.Client.GameObjects.EntitySystems
             }
         }
 
-        private void UpdateTile(IMapGrid grid, MapIndices position)
+        private void UpdateTile(IMapGrid grid, Vector2i position)
         {
             var tile = grid.GetTileRef(position);
             var tileDef = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];

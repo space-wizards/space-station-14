@@ -4,14 +4,20 @@ using Content.Client;
 using Content.Client.Interfaces.Parallax;
 using Content.Server;
 using Content.Server.Interfaces.GameTicking;
+using NUnit.Framework;
+using Robust.Server.Interfaces.Maps;
+using Robust.Server.Interfaces.Timing;
 using Robust.Shared.ContentPack;
+using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.UnitTesting;
 using EntryPoint = Content.Client.EntryPoint;
 
 namespace Content.IntegrationTests
 {
+    [Parallelizable(ParallelScope.All)]
     public abstract class ContentIntegrationTest : RobustIntegrationTest
     {
         protected sealed override ClientIntegrationInstance StartClient(ClientIntegrationOptions options = null)
@@ -49,6 +55,20 @@ namespace Content.IntegrationTests
             options ??= new ServerIntegrationOptions();
             options.ServerContentAssembly = typeof(Server.EntryPoint).Assembly;
             options.SharedContentAssembly = typeof(Shared.EntryPoint).Assembly;
+            options.BeforeStart += () =>
+            {
+                IoCManager.Resolve<IModLoader>().SetModuleBaseCallbacks(new ServerModuleTestingCallbacks
+                {
+                    ServerBeforeIoC = () =>
+                    {
+                        if (options is ServerContentIntegrationOption contentOptions)
+                        {
+                            contentOptions.ContentBeforeIoC?.Invoke();
+                        }
+                    }
+                });
+            };
+
             return base.StartServer(options);
         }
 
@@ -61,11 +81,6 @@ namespace Content.IntegrationTests
                 {
                     ServerBeforeIoC = () =>
                     {
-                        if (options is ServerContentIntegrationOption contentOptions)
-                        {
-                            contentOptions.ContentBeforeIoC?.Invoke();
-                        }
-
                         IoCManager.Register<IGameTicker, DummyGameTicker>(true);
                     }
                 });
@@ -77,17 +92,83 @@ namespace Content.IntegrationTests
         protected async Task<(ClientIntegrationInstance client, ServerIntegrationInstance server)> StartConnectedServerClientPair(ClientIntegrationOptions clientOptions = null, ServerIntegrationOptions serverOptions = null)
         {
             var client = StartClient(clientOptions);
+            var server = StartServer(serverOptions);
+
+            await StartConnectedPairShared(client, server);
+
+            return (client, server);
+        }
+
+
+        protected async Task<(ClientIntegrationInstance client, ServerIntegrationInstance server)> StartConnectedServerDummyTickerClientPair(ClientIntegrationOptions clientOptions = null, ServerIntegrationOptions serverOptions = null)
+        {
+            var client = StartClient(clientOptions);
             var server = StartServerDummyTicker(serverOptions);
 
+            await StartConnectedPairShared(client, server);
+
+            return (client, server);
+        }
+
+        protected async Task<IMapGrid> InitializeMap(ServerIntegrationInstance server, string mapPath)
+        {
+            await server.WaitIdleAsync();
+
+            var mapManager = server.ResolveDependency<IMapManager>();
+            var pauseManager = server.ResolveDependency<IPauseManager>();
+            var mapLoader = server.ResolveDependency<IMapLoader>();
+
+            IMapGrid grid = null;
+
+            server.Post(() =>
+            {
+                var mapId = mapManager.CreateMap();
+
+                pauseManager.AddUninitializedMap(mapId);
+
+                grid = mapLoader.LoadBlueprint(mapId, mapPath);
+
+                pauseManager.DoMapInitialize(mapId);
+            });
+
+            await server.WaitIdleAsync();
+
+            return grid;
+        }
+
+        protected async Task WaitUntil(IntegrationInstance instance, Func<bool> func, int maxTicks = 600, int tickStep = 1)
+        {
+            var ticksAwaited = 0;
+            bool passed;
+
+            await instance.WaitIdleAsync();
+
+            while (!(passed = func()) && ticksAwaited < maxTicks)
+            {
+                var ticksToRun = tickStep;
+
+                if (ticksAwaited + tickStep > maxTicks)
+                {
+                    ticksToRun = maxTicks - ticksAwaited;
+                }
+
+                await instance.WaitRunTicks(ticksToRun);
+
+                ticksAwaited += ticksToRun;
+            }
+
+            Assert.That(passed);
+        }
+
+        private static async Task StartConnectedPairShared(ClientIntegrationInstance client, ServerIntegrationInstance server)
+        {
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 
             client.SetConnectTarget(server);
 
-            client.Post(() => IoCManager.Resolve<IClientNetManager>().ClientConnect(null, 0, null));
+            client.Post(() => IoCManager.Resolve<IClientNetManager>().ClientConnect(null!, 0, null!));
 
             await RunTicksSync(client, server, 10);
-
-            return (client, server);
         }
 
         /// <summary>

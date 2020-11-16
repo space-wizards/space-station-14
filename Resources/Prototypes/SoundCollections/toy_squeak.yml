@@ -1,0 +1,6 @@
+- type: soundCollection
+  id: ToySqueak
+  files:
+  - /Audio/Items/Toys/toysqueak1.ogg
+  - /Audio/Items/Toys/toysqueak2.ogg
+  - /Audio/Items/Toys/toysqueak3.ogg

@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-using Content.Shared.Chat;
+﻿using Content.Shared.Chat;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
@@ -17,8 +15,6 @@ namespace Content.Client.Chat
 
         public delegate void FilterToggledHandler(ChatBox chatBox, BaseButton.ButtonToggledEventArgs e);
 
-        private readonly ILocalizationManager _localize = IoCManager.Resolve<ILocalizationManager>();
-
         public HistoryLineEdit Input { get; private set; }
         public OutputPanel Contents { get; }
 
@@ -26,6 +22,7 @@ namespace Content.Client.Chat
         public Button AllButton { get; }
         public Button LocalButton { get; }
         public Button OOCButton { get; }
+        public Button AdminButton { get; }
 
         /// <summary>
         ///     Default formatting string for the ClientChatConsole.
@@ -33,6 +30,8 @@ namespace Content.Client.Chat
         public string DefaultChatFormat { get; set; }
 
         public bool ReleaseFocusOnEnter { get; set; } = true;
+
+        public bool ClearOnEnter { get; set; } = true;
 
         public ChatBox()
         {
@@ -59,6 +58,7 @@ namespace Content.Client.Chat
             outerVBox.AddChild(panelContainer);
             outerVBox.AddChild(hBox);
 
+
             var contentMargin = new MarginContainer
             {
                 MarginLeftOverride = 4, MarginRightOverride = 4,
@@ -75,7 +75,7 @@ namespace Content.Client.Chat
 
             AllButton = new Button
             {
-                Text = _localize.GetString("All"),
+                Text = Loc.GetString("All"),
                 Name = "ALL",
                 SizeFlagsHorizontal = SizeFlags.ShrinkEnd | SizeFlags.Expand,
                 ToggleMode = true,
@@ -83,25 +83,35 @@ namespace Content.Client.Chat
 
             LocalButton = new Button
             {
-                Text = _localize.GetString("Local"),
+                Text = Loc.GetString("Local"),
                 Name = "Local",
                 ToggleMode = true,
             };
 
             OOCButton = new Button
             {
-                Text = _localize.GetString("OOC"),
+                Text = Loc.GetString("OOC"),
                 Name = "OOC",
                 ToggleMode = true,
+            };
+
+            AdminButton = new Button
+            {
+                Text = Loc.GetString("Admin"),
+                Name = "Admin",
+                ToggleMode = true,
+                Visible = false
             };
 
             AllButton.OnToggled += OnFilterToggled;
             LocalButton.OnToggled += OnFilterToggled;
             OOCButton.OnToggled += OnFilterToggled;
+            AdminButton.OnToggled += OnFilterToggled;
 
             hBox.AddChild(AllButton);
             hBox.AddChild(LocalButton);
             hBox.AddChild(OOCButton);
+            hBox.AddChild(AdminButton);
 
             AddChild(outerVBox);
         }
@@ -148,12 +158,18 @@ namespace Content.Client.Chat
 
         private void Input_OnTextEntered(LineEdit.LineEditEventArgs args)
         {
+            // We set it there to true so it's set to false by TextSubmitted.Invoke if necessary
+            ClearOnEnter = true;
+
             if (!string.IsNullOrWhiteSpace(args.Text))
             {
                 TextSubmitted?.Invoke(this, args.Text);
             }
 
-            Input.Clear();
+            if (ClearOnEnter)
+            {
+                Input.Clear();
+            }
 
             if (ReleaseFocusOnEnter)
             {

@@ -1,11 +1,11 @@
 using System;
-using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
+using Content.Shared;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Robust.Server.Interfaces.ServerStatus;
@@ -14,26 +14,20 @@ using Robust.Shared.Asynchronous;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
-using Robust.Shared.Utility;
 
 namespace Content.Server
 {
     internal sealed class MoMMILink : IMoMMILink, IPostInjectInit
     {
-#pragma warning disable 649
-        [Dependency] private readonly IConfigurationManager _configurationManager;
-        [Dependency] private readonly IStatusHost _statusHost;
-        [Dependency] private readonly IChatManager _chatManager;
-        [Dependency] private readonly ITaskManager _taskManager;
-#pragma warning restore 649
+        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+        [Dependency] private readonly IStatusHost _statusHost = default!;
+        [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly ITaskManager _taskManager = default!;
 
         private readonly HttpClient _httpClient = new HttpClient();
 
         void IPostInjectInit.PostInject()
         {
-            _configurationManager.RegisterCVar<string>("status.mommiurl", null);
-            _configurationManager.RegisterCVar<string>("status.mommipassword", null);
-
             _statusHost.AddHandler(_handleChatPost);
         }
 
@@ -50,8 +44,8 @@ namespace Content.Server
 
         private async Task _sendMessageInternal(string type, object messageObject)
         {
-            var url = _configurationManager.GetCVar<string>("status.mommiurl");
-            var password = _configurationManager.GetCVar<string>("status.mommipassword");
+            var url = _configurationManager.GetCVar(CCVars.StatusMoMMIUrl);
+            var password = _configurationManager.GetCVar(CCVars.StatusMoMMIPassword);
             if (string.IsNullOrWhiteSpace(url))
             {
                 return;
@@ -87,7 +81,7 @@ namespace Content.Server
                 return false;
             }
 
-            var password = _configurationManager.GetCVar<string>("status.mommipassword");
+            var password = _configurationManager.GetCVar(CCVars.StatusMoMMIPassword);
 
             OOCPostMessage message = null;
             try

@@ -1,0 +1,65 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA 3.0",
+    "copyright": "Taken from https://github.com/vgstation-coders/vgstation13 at a407fc1f5c25cbce8b653c553f53be294d15b071 and https://github.com/tgstation/tgstation at 259acc8c81054d89f7b6bcd9ff702fdf587a19ed. soapomega.png modified by Zumorica",
+    "states": [
+        {
+            "name": "soap",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "soapdeluxe",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "soapgibs",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "soapnt",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "soapomega",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "soapsyndie",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        }
+    ]
+}

@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
-using JetBrains.Annotations;
+﻿using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.PDA
@@ -33,6 +30,14 @@ namespace Content.Shared.GameObjects.Components.PDA
         }
     }
 
+    [Serializable, NetSerializable]
+    public sealed class PDAEjectPenMessage : BoundUserInterfaceMessage
+    {
+        public PDAEjectPenMessage()
+        {
+
+        }
+    }
 
     [Serializable, NetSerializable]
     public class PDAUBoundUserInterfaceState : BoundUserInterfaceState
@@ -44,28 +49,27 @@ namespace Content.Shared.GameObjects.Components.PDA
     public sealed class PDAUpdateState : PDAUBoundUserInterfaceState
     {
         public bool FlashlightEnabled;
+        public bool HasPen;
         public PDAIdInfoText PDAOwnerInfo;
         public UplinkAccountData Account;
         public UplinkListingData[] Listings;
 
-        public PDAUpdateState(bool isFlashlightOn, PDAIdInfoText ownerInfo)
+        public PDAUpdateState(bool isFlashlightOn, bool hasPen, PDAIdInfoText ownerInfo)
         {
             FlashlightEnabled = isFlashlightOn;
+            HasPen = hasPen;
             PDAOwnerInfo = ownerInfo;
         }
 
-        public PDAUpdateState(bool isFlashlightOn, PDAIdInfoText ownerInfo, UplinkAccountData accountData)
+        public PDAUpdateState(bool isFlashlightOn, bool hasPen, PDAIdInfoText ownerInfo, UplinkAccountData accountData)
+            : this(isFlashlightOn, hasPen, ownerInfo)
         {
-            FlashlightEnabled = isFlashlightOn;
-            PDAOwnerInfo = ownerInfo;
             Account = accountData;
         }
 
-        public PDAUpdateState(bool isFlashlightOn, PDAIdInfoText ownerInfo, UplinkAccountData accountData, UplinkListingData[] listings)
+        public PDAUpdateState(bool isFlashlightOn, bool hasPen, PDAIdInfoText ownerInfo, UplinkAccountData accountData, UplinkListingData[] listings)
+            : this(isFlashlightOn, hasPen, ownerInfo, accountData)
         {
-            FlashlightEnabled = isFlashlightOn;
-            PDAOwnerInfo = ownerInfo;
-            Account = accountData;
             Listings = listings;
         }
     }
@@ -73,10 +77,11 @@ namespace Content.Shared.GameObjects.Components.PDA
     [Serializable, NetSerializable]
     public sealed class PDAUplinkBuyListingMessage : BoundUserInterfaceMessage
     {
-        public UplinkListingData ListingToBuy;
-        public PDAUplinkBuyListingMessage(UplinkListingData itemToBuy)
+        public string ItemId;
+
+        public PDAUplinkBuyListingMessage(string itemId)
         {
-            ListingToBuy = itemToBuy;
+            ItemId = itemId;
         }
     }
 
@@ -99,8 +104,7 @@ namespace Content.Shared.GameObjects.Components.PDA
         }
     }
 
-
-    [NetSerializable, Serializable]
+    [Serializable, NetSerializable]
     public struct PDAIdInfoText
     {
         public string ActualOwnerName;
@@ -108,13 +112,14 @@ namespace Content.Shared.GameObjects.Components.PDA
         public string JobTitle;
     }
 
-    [NetSerializable, Serializable]
+    [Serializable, NetSerializable]
     public enum PDAVisuals
     {
-        ScreenLit,
+        FlashlightLit,
+        IDCardInserted
     }
 
-    [NetSerializable, Serializable]
+    [Serializable, NetSerializable]
     public enum PDAUiKey
     {
         Key
@@ -145,7 +150,7 @@ namespace Content.Shared.GameObjects.Components.PDA
         }
     }
 
-    [NetSerializable, Serializable]
+    [Serializable, NetSerializable]
     public class UplinkAccountData
     {
         public EntityUid DataAccountHolder;
@@ -158,7 +163,7 @@ namespace Content.Shared.GameObjects.Components.PDA
         }
     }
 
-    [NetSerializable, Serializable]
+    [Serializable, NetSerializable]
     public class UplinkListingData : ComponentState, IEquatable<UplinkListingData>
     {
         public string ItemId;
@@ -188,5 +193,4 @@ namespace Content.Shared.GameObjects.Components.PDA
             return ItemId == other.ItemId;
         }
     }
-
 }

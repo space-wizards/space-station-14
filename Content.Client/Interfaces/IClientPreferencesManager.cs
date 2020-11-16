@@ -1,9 +1,14 @@
+using System;
 using Content.Shared.Preferences;
 
 namespace Content.Client.Interfaces
 {
     public interface IClientPreferencesManager
     {
+        event Action OnServerDataLoaded;
+
+        bool ServerDataLoaded => Settings != null;
+
         GameSettings Settings { get; }
         PlayerPreferences Preferences { get; }
         void Initialize();

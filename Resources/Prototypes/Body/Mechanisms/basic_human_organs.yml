@@ -1,0 +1,107 @@
+- type: entity
+  id: BrainHuman
+  name: "human brain"
+  description: "The source of incredible, unending intelligence. Honk."
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Human/organs.rsi
+    state: brain
+  - type: Mechanism
+    durability: 10
+    size: 1
+    compatibility: Biological
+    behaviors:
+    - !type:BrainBehavior {}
+
+- type: entity
+  id: EyesHuman
+  name: "human eyes"
+  description: "Ocular organ capable of turning light into a colorful visual."
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Human/organs.rsi
+    state: eyeballs
+  - type: Mechanism
+    durability: 10
+    size: 1
+    compatibility: Biological
+
+- type: entity
+  id: HeartHuman
+  name: "human heart"
+  description: "Pumps blood throughout a body. Essential for any entity with blood."
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Human/organs.rsi
+    state: heart-on
+  - type: Mechanism
+    durability: 10
+    size: 1
+    compatibility: Biological
+    behaviors:
+    - !type:HeartBehavior {}
+
+- type: entity
+  id: LungsHuman
+  name: "human lungs"
+  description: "Filters oxygen from an atmosphere, which is then sent into the bloodstream to be used as an electron carrier."
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Human/organs.rsi
+    state: lungs
+  - type: Mechanism
+    durability: 13
+    size: 1
+    compatibility: Biological
+    behaviors:
+    - !type:LungBehavior {}
+
+- type: entity
+  id: StomachHuman
+  name: "human stomach"
+  description: "Gross. This is hard to stomach."
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Human/organs.rsi
+    state: stomach
+  - type: Mechanism
+    durability: 13
+    size: 1
+    compatibility: Biological
+    behaviors:
+    - !type:StomachBehavior
+      max_volume: 250
+      digestionDelay: 20
+
+- type: entity
+  id: LiverHuman
+  name: "human liver"
+  description: "Filters impurities out of a bloodstream and provides other important functionality to a human."
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Human/organs.rsi
+    state: liver
+  - type: Mechanism
+    durability: 15
+    size: 1
+    compatibility: Biological
+
+- type: entity
+  id: KidneysHuman
+  name: "human kidneys"
+  description: "Filters toxins out of a bloodstream."
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Human/organs.rsi
+    state: kidneys
+  - type: Mechanism
+    durability: 20
+    size: 1
+    compatibility: Biological

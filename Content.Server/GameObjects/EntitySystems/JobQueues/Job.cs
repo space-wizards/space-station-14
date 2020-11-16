@@ -127,6 +127,7 @@ namespace Content.Server.GameObjects.EntitySystems.JobQueues
 
         public void Run()
         {
+            StopWatch.Restart();
             _workInProgress ??= ProcessWrap();
 
             if (Status == JobStatus.Finished)
@@ -140,7 +141,6 @@ namespace Content.Server.GameObjects.EntitySystems.JobQueues
             _resume = null;
 
             Status = JobStatus.Running;
-            StopWatch.Restart();
 
             if (Cancellation.IsCancellationRequested)
             {

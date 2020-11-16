@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Shared.GameObjects.Components.Nutrition;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -21,10 +22,9 @@ namespace Content.Server.GameObjects.Components.Nutrition
     [RegisterComponent]
     public sealed class FoodContainer : SharedFoodContainerComponent, IUse
     {
-#pragma warning disable 649
-        [Dependency] private readonly IRobustRandom _random;
-        [Dependency] private readonly IEntityManager _entityManager;
-#pragma warning restore 649
+        [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+
         public override string Name => "FoodContainer";
 
         private AppearanceComponent _appearance;
@@ -55,9 +55,12 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
+            if (!eventArgs.User.TryGetComponent(out HandsComponent handsComponent))
+            {
+                return false;
+            }
 
-            var hands = eventArgs.User.TryGetComponent(out HandsComponent handsComponent);
-            var itemToSpawn = _entityManager.SpawnEntity(GetRandomPrototype(), Owner.Transform.GridPosition);
+            var itemToSpawn = _entityManager.SpawnEntity(GetRandomPrototype(), Owner.Transform.Coordinates);
             handsComponent.PutInHandOrDrop(itemToSpawn.GetComponent<ItemComponent>());
             _count--;
             if (_count < 1)

@@ -1,0 +1,49 @@
+- type: job
+  id: Captain
+  name: "captain"
+  head: true
+  positions: 1
+  startingGear: CaptainGear
+  department:
+  - Command
+  icon: "Captain"
+  access:
+  # All of em.
+  # Could probably do with some kind of wildcard or whatever to automate this.
+  # HELL FUCKING YEAH WE COULD
+  - Captain
+  - HeadOfPersonnel
+  - Command
+  - Security
+  - HeadOfSecurity
+  - Brig
+  - Detective
+  - ChiefEngineer
+  - Engineering
+  - ChiefMedicalOfficer
+  - Medical
+  - Quartermaster
+  - Cargo
+  - ResearchDirector
+  - Research
+  - Bar
+  - Kitchen
+  - Service
+  - Hydroponics
+  - Maintenance
+  - External
+  - Janitor
+  - Theatre
+
+- type: startingGear
+  id: CaptainGear
+  equipment:
+    innerclothing: UniformCaptain
+    backpack: BackpackCaptainFilled
+    shoes: ShoesBlack
+    head: HatCaptain
+    eyes: SunGlasses
+    gloves: GlovesCaptain
+    outerclothing: OuterclothingCaparmor
+    idcard: CaptainPDA
+    ears: HeadsetCommand

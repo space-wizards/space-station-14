@@ -1,0 +1,43 @@
+﻿- type: entity
+  abstract: true
+  id: PumpBase
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+  - type: SnapGrid
+    offset: Center
+  - type: Destructible
+    thresholdvalue: 100
+    resistances: metallicResistances
+  - type: Sprite
+    sprite: Constructible/Atmos/pump.rsi
+  - type: Icon
+    sprite: Constructible/Atmos/pump.rsi
+
+- type: entity
+  parent: PumpBase
+  id: DebugPressurePump
+  name: Debug Pressure Pump
+  components:
+  - type: NodeContainer
+    nodes:
+    - !type:PipeNode
+      nodeGroupID: Pipe
+      pipeDirection: West
+    - !type:PipeNode
+      nodeGroupID: Pipe
+      pipeDirection: East
+  - type: PressurePump
+    inletDirection: West
+    outletDirection: East
+  - type: Sprite
+    state: pumpPressure2
+  - type: Icon
+    state: pumpPressure2
+  - type: Appearance
+    visuals:
+    - type: PumpVisualizer
+      pumpEnabledState: pumpPressure2On

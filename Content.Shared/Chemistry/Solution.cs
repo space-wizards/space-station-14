@@ -1,24 +1,24 @@
-﻿using Content.Shared.Interfaces.Chemistry;
-using Robust.Shared.Interfaces.Serialization;
-using Robust.Shared.IoC;
-using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Chemistry
 {
     /// <summary>
     ///     A solution of reagents.
     /// </summary>
+    [Serializable, NetSerializable]
     public class Solution : IExposeData, IEnumerable<Solution.ReagentQuantity>
     {
         // Most objects on the station hold only 1 or 2 reagents
         [ViewVariables]
         private List<ReagentQuantity> _contents = new List<ReagentQuantity>(2);
+
         public IReadOnlyList<ReagentQuantity> Contents => _contents;
 
         /// <summary>
@@ -45,16 +45,16 @@ namespace Content.Shared.Chemistry
         /// <inheritdoc />
         public void ExposeData(ObjectSerializer serializer)
         {
-            serializer.DataField(ref _contents, "reagents", new List<ReagentQuantity>());
-
-            if (serializer.Reading)
-            {
-                TotalVolume = ReagentUnit.New(0);
-                foreach (var reagent in _contents)
+            serializer.DataReadWriteFunction(
+                "reagents",
+                new List<ReagentQuantity>(),
+                quantities =>
                 {
-                    TotalVolume += reagent.Quantity;
-                }
-            }
+                    _contents = quantities;
+                    TotalVolume = ReagentUnit.New(0);
+                    quantities.ForEach(reagent => TotalVolume += reagent.Quantity);
+                },
+                () => _contents);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Content.Shared.Chemistry
         }
 
         [Serializable, NetSerializable]
-        public readonly struct ReagentQuantity
+        public readonly struct ReagentQuantity: IComparable<ReagentQuantity>
         {
             public readonly string ReagentId;
             public readonly ReagentUnit Quantity;
@@ -263,6 +263,14 @@ namespace Content.Shared.Chemistry
             public override string ToString()
             {
                 return $"{ReagentId}:{Quantity}";
+            }
+
+            public int CompareTo(ReagentQuantity other) { return Quantity.Float().CompareTo(other.Quantity.Float()); }
+
+            public void Deconstruct(out string reagentId, out ReagentUnit quantity)
+            {
+                reagentId = ReagentId;
+                quantity = Quantity;
             }
         }
 
