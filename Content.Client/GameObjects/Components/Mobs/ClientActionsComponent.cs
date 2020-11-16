@@ -197,6 +197,12 @@ namespace Content.Client.GameObjects.Components.Mobs
                     continue;
                 }
                 _ui.GrantSlot(i);
+
+                // check if we need to toggle it
+                if (IsToggleable((ActionType) actionType, out var toggledOn))
+                {
+                    _ui.ToggleSlot(i, toggledOn);
+                }
             }
         }
 
@@ -250,9 +256,30 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         }
 
-        private void ActionSlotOnPressed(BaseButton.ButtonEventArgs args)
+        private void ActionSlotOnPressed(ActionSlotEventArgs args)
         {
-            ActionPressed(args, args.Button as ActionSlot);
+            switch (args.Action.BehaviorType)
+            {
+                case BehaviorType.Instant:
+                {
+                    // for instant actions, we immediately tell the server we're doing it
+                    SendNetworkMessage(new PerformInstantActionMessage(args.Action.ActionType));
+                    break;
+                }
+                case BehaviorType.Toggle:
+                {
+                    // for toggle actions, we immediately tell the server we're toggling it.
+                    // Pre-emptively toggle it on as well
+                    ToggleAction(args.Action.ActionType, args.ToggleOn);
+                    SendNetworkMessage(new PerformToggleActionMessage(args.Action.ActionType, args.ToggleOn));
+                    break;
+                }
+                default:
+                {
+                    Logger.WarningS("action", "unhandled action press for action {0}", args.Action.ActionType);
+                    break;
+                }
+            }
         }
 
         private void ActionOnOnHideTooltip(object sender, EventArgs e)
@@ -299,21 +326,6 @@ namespace Content.Client.GameObjects.Components.Mobs
             _tooltipReady = true;
         }
 
-        private void ActionPressed(BaseButton.ButtonEventArgs args, ActionSlot actionSlot)
-        {
-            if (actionSlot.Action == null) return;
-            if (args.Event.Function != EngineKeyFunctions.UIClick)
-            {
-                return;
-            }
-
-            if (actionSlot.Action.BehaviorType == BehaviorType.Instant)
-            {
-                // for instant actions, we immediately tell the server we're doing it
-                SendNetworkMessage(new PerformInstantActionMessage(actionSlot.Action.ActionType));
-            }
-        }
-
         public void FrameUpdate(float frameTime)
         {
             if (_tooltipReady)
@@ -342,6 +354,11 @@ namespace Content.Client.GameObjects.Components.Mobs
         }
 
         protected override void AfterRevokeAction()
+        {
+            UpdateHotbar();
+        }
+
+        protected override void AfterToggleAction()
         {
             UpdateHotbar();
         }

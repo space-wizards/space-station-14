@@ -7,3 +7,13 @@
   behavior: !type:DebugInstant
     message: Instant action was used!
 
+- type: action
+  actionType: DebugToggle
+  icon: Interface/Alerts/Human/human3.png
+  name: "[color=red]Debug Toggle[/color]"
+  description: "This is a [color=red]debug message[/color]."
+  behaviorType: Toggle
+  behavior: !type:DebugToggle
+    messageOn: Toggled on!
+    messageOff: Toggled off!
+

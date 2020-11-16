@@ -11,6 +11,10 @@ namespace Content.Shared.Actions
     public interface IInstantAction : IActionBehavior
     {
 
+        /// <summary>
+        /// Invoked when the instant action should be performed.
+        /// Implementation should perform the server side logic of the action.
+        /// </summary>
         void DoInstantAction(InstantActionEventArgs args);
     }
 

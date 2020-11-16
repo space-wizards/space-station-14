@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Shared.Actions;
-using Content.Shared.Alert;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -46,10 +46,27 @@ namespace Content.Shared.GameObjects.Components.Mobs
             }
         }
 
-        /// <returns>true iff an alert of the indicated id is currently showing</returns>
+        /// <returns>true iff an action of the indicated id is currently showing</returns>
         public bool IsGranted(ActionType actionType)
         {
             return _actions.ContainsKey(actionType);
+        }
+
+        /// <param name="toggledOn">current toggled status</param>
+        /// <returns>true iff the action is granted and toggleable</returns>
+        public bool IsToggleable(ActionType actionType, out bool toggledOn)
+        {
+            if (_actions.TryGetValue(actionType, out var actionState))
+            {
+                if (ActionManager.TryGet(actionType, out var action) && action.BehaviorType == BehaviorType.Toggle)
+                {
+                    toggledOn = actionState.ToggledOn;
+                    return true;
+                }
+            }
+
+            toggledOn = false;
+            return false;
         }
 
         /// <summary>
@@ -118,6 +135,47 @@ namespace Content.Shared.GameObjects.Components.Mobs
         }
 
         /// <summary>
+        /// Toggles the action to the specified value. Only has an effect if the action
+        /// is granted and is a Toggle action.
+        /// </summary>
+        protected void ToggleAction(ActionType actionType, bool toggleOn)
+        {
+            if (!_actions.TryGetValue(actionType, out var curState))
+            {
+                Logger.DebugS("action", "attempted to toggle actionType {0} which is not" +
+                                        " currently granted", actionType);
+                return;
+            }
+
+            if (curState.ToggledOn == toggleOn)
+            {
+                Logger.DebugS("action", "attempted to toggle actionType {0} to {1}" +
+                                        " but it is already {1}", actionType, toggleOn ? "on" : "off");
+                return;
+            }
+
+            if (!ActionManager.TryGet(actionType, out var action))
+            {
+                Logger.DebugS("action", "unrecognized actionType {0}", actionType);
+                return;
+            }
+
+            if (action.BehaviorType != BehaviorType.Toggle)
+            {
+                Logger.DebugS("action", "attempted to toggle actionType {0} but it" +
+                                        " is not a Toggle action.", actionType);
+                return;
+            }
+
+
+            curState.ToggledOn = toggleOn;
+            _actions[actionType] = curState;
+            AfterToggleAction();
+            Dirty();
+
+        }
+
+        /// <summary>
         /// Invoked after granting an action prior to dirtying the component
         /// </summary>
         protected virtual void AfterGrantAction() { }
@@ -126,6 +184,11 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// Invoked after revoking an action prior to dirtying the component
         /// </summary>
         protected virtual void AfterRevokeAction() { }
+
+        /// <summary>
+        /// Invoked after toggling a toggle action prior to dirtying the component
+        /// </summary>
+        protected virtual void AfterToggleAction() { }
     }
 
     [Serializable, NetSerializable]
@@ -143,21 +206,51 @@ namespace Content.Shared.GameObjects.Components.Mobs
     public struct ActionState
     {
         public ActionType ActionType;
+        /// <summary>
+        /// Only used for toggle actions, indicates whether it's currently toggled on or off
+        /// </summary>
+        public bool ToggledOn;
         public ValueTuple<TimeSpan, TimeSpan>? Cooldown;
+    }
+
+    [Serializable, NetSerializable]
+    public abstract class PerformActionMessage : ComponentMessage
+    {
+        public readonly ActionType ActionType;
+
+        public PerformActionMessage(ActionType actionType)
+        {
+            Directed = true;
+            ActionType = actionType;
+        }
     }
 
     /// <summary>
     /// A message that tells server we want to run the instant action logic.
     /// </summary>
     [Serializable, NetSerializable]
-    public class PerformInstantActionMessage : ComponentMessage
+    public class PerformInstantActionMessage : PerformActionMessage
     {
-        public readonly ActionType ActionType;
+        public PerformInstantActionMessage(ActionType actionType) : base(actionType)
+        {
+        }
+    }
 
-        public PerformInstantActionMessage(ActionType actionType)
+    /// <summary>
+    /// A message that tells server we want to toggle the indicated action.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public class PerformToggleActionMessage : PerformActionMessage
+    {
+        /// <summary>
+        /// True if we are trying to toggle the action on, false if trying to toggle it off.
+        /// </summary>
+        public readonly bool ToggleOn;
+
+        public PerformToggleActionMessage(ActionType actionType, bool toggleOn) : base(actionType)
         {
             Directed = true;
-            ActionType = actionType;
+            ToggleOn = toggleOn;
         }
     }
 }

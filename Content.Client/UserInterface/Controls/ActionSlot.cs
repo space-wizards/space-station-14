@@ -131,6 +131,7 @@ namespace Content.Client.UserInterface.Controls
             Action = action;
             _icon.Texture = Action.Icon.Frame0();
             _icon.Visible = true;
+            ToggleMode = action.BehaviorType == BehaviorType.Toggle;
             Grant();
         }
 

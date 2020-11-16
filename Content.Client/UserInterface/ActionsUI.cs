@@ -3,10 +3,13 @@ using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Utility;
 using Content.Shared.Actions;
+using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Input;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 
 namespace Content.Client.UserInterface
 {
@@ -17,7 +20,7 @@ namespace Content.Client.UserInterface
     {
         private readonly EventHandler _onShowTooltip;
         private readonly EventHandler _onHideTooltip;
-        private readonly Action<BaseButton.ButtonEventArgs> _onSlotPressed;
+        private readonly Action<ActionSlotEventArgs> _onActionPressed;
         private readonly ActionSlot[] _slots;
 
         private VBoxContainer _hotbarContainer;
@@ -31,12 +34,14 @@ namespace Content.Client.UserInterface
 
         /// <param name="onShowTooltip">OnShowTooltip handler to assign to each action slot</param>
         /// <param name="onHideTooltip">OnHideTooltip handler to assign to each action slot</param>
-        /// <param name="onSlotPressed">OnPressed handler to assign to each action slot button</param>
-        public ActionsUI(EventHandler onShowTooltip, EventHandler onHideTooltip, Action<BaseButton.ButtonEventArgs> onSlotPressed)
+        /// <param name="onActionPressed">handler for interactions with
+        /// action slots. Instant actions will be handled as presses, all other kinds of actions
+        /// will be handled as toggles. Slots with no actions will not be handled by this.</param>
+        public ActionsUI(EventHandler onShowTooltip, EventHandler onHideTooltip, Action<ActionSlotEventArgs> onActionPressed)
         {
             _onShowTooltip = onShowTooltip;
             _onHideTooltip = onHideTooltip;
-            _onSlotPressed = onSlotPressed;
+            _onActionPressed = onActionPressed;
 
             SizeFlagsHorizontal = SizeFlags.FillExpand;
             SizeFlagsVertical = SizeFlags.FillExpand;
@@ -118,9 +123,42 @@ namespace Content.Client.UserInterface
                 var slot = new ActionSlot(i);
                 slot.OnShowTooltip += onShowTooltip;
                 slot.OnHideTooltip += onHideTooltip;
-                slot.OnPressed += onSlotPressed;
+                slot.OnPressed += ActionSlotOnPressed;
+                slot.OnToggled += ActionSlotOnToggled;
                 _slotContainer.AddChild(slot);
                 _slots[i - 1] = slot;
+            }
+        }
+
+        private void ActionSlotOnPressed(BaseButton.ButtonEventArgs args)
+        {
+            if (!(args.Button is ActionSlot actionSlot)) return;
+            if (actionSlot.Action == null) return;
+            if (args.Event.Function != EngineKeyFunctions.UIClick)
+            {
+                return;
+            }
+            // only instant actions should be handled as presses, all other actions
+            // should be handled as toggles
+            if (actionSlot.Action.BehaviorType == BehaviorType.Instant)
+            {
+                _onActionPressed.Invoke(new ActionSlotEventArgs(false, false, actionSlot, args));
+            }
+        }
+
+        private void ActionSlotOnToggled(BaseButton.ButtonToggledEventArgs args)
+        {
+            if (!(args.Button is ActionSlot actionSlot)) return;
+            if (actionSlot.Action == null) return;
+            if (args.Event.Function != EngineKeyFunctions.UIClick)
+            {
+                return;
+            }
+            // only instant actions should be handled as presses, all other actions
+            // should be handled as toggles
+            if (actionSlot.Action.BehaviorType == BehaviorType.Toggle)
+            {
+                _onActionPressed.Invoke(new ActionSlotEventArgs(true, args.Pressed, actionSlot, args));
             }
         }
 
@@ -160,7 +198,8 @@ namespace Content.Client.UserInterface
             {
                 slot.OnShowTooltip -= _onShowTooltip;
                 slot.OnHideTooltip -= _onHideTooltip;
-                slot.OnPressed -= _onSlotPressed;
+                slot.OnPressed -= ActionSlotOnPressed;
+                slot.OnToggled -= ActionSlotOnToggled;
             }
         }
 
@@ -171,10 +210,62 @@ namespace Content.Client.UserInterface
         /// (0 corresponds to the one labeled 1, 9 corresponds to the one labeled 0)</param>
         /// <param name="cooldown">cooldown start and end time</param>
         /// <param name="curTime">current time</param>
-        /// <returns>the action slot control that the grant was performed on</returns>
         public void UpdateCooldown(byte slot, (TimeSpan start, TimeSpan end)? cooldown, TimeSpan curTime)
         {
             _slots[slot].UpdateCooldown(cooldown, curTime);
+        }
+
+        /// <summary>
+        /// Toggles the action on the indicated slot, showing it as toggled on or off based
+        /// on toggleOn
+        /// </summary>
+        /// <param name="slot">slot index containing the action to toggle
+        /// (0 corresponds to the one labeled 1, 9 corresponds to the one labeled 0)</param>
+        /// <param name="toggledOn">true to toggle it on, false to toggle it off</param>
+        public void ToggleSlot(byte slot, bool toggledOn)
+        {
+            var actionSlot = _slots[slot];
+            if (actionSlot.ToggleMode == false)
+            {
+                Logger.DebugS("action", "tried to toggle action slot for type {0} that is " +
+                                        "not in toggle mode", actionSlot.Action?.ActionType);
+                return;
+            }
+            if (actionSlot.Pressed == toggledOn) return;
+
+            actionSlot.Pressed = toggledOn;
+        }
+    }
+
+    /// <summary>
+    /// Args for clicking (for instant) or toggling (for non-instant) an action slot.
+    /// </summary>
+    public class ActionSlotEventArgs : EventArgs
+    {
+        /// <summary>
+        /// Whether this is a press (for instant actions) or toggle (for other kinds of actions)
+        /// </summary>
+        public readonly bool IsToggle;
+        /// <summary>
+        /// For non-instant actions, whether the action is being toggled on or off.
+        /// </summary>
+        public readonly bool ToggleOn;
+        /// <summary>
+        /// Action slot being interacted with
+        /// </summary>
+        public readonly ActionSlot ActionSlot;
+        public readonly BaseButton.ButtonEventArgs ButtonEventArgs;
+        /// <summary>
+        /// Action in the slot being interacted with
+        /// </summary>
+        public ActionPrototype Action => ActionSlot.Action;
+
+        public ActionSlotEventArgs(bool isToggle, bool toggleOn, ActionSlot actionSlot, BaseButton.ButtonEventArgs buttonEventArgs)
+        {
+            IsToggle = isToggle;
+            ToggleOn = toggleOn;
+            ActionSlot = actionSlot;
+            ButtonEventArgs = buttonEventArgs;
         }
     }
 }

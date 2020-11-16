@@ -31,46 +31,64 @@ namespace Content.Server.GameObjects.Components.Mobs
                 throw new ArgumentNullException(nameof(session));
             }
 
-            switch (message)
+            if (!(message is PerformActionMessage performMsg)) return;
+
+            var player = session.AttachedEntity;
+            if (player != Owner) return;
+
+            if (!TryGetGrantedActionState(performMsg.ActionType, out var actionState))
+            {
+                Logger.DebugS("action", "user {0} attempted to" +
+                                        " action {1} which is not granted to them", player.Name,
+                    performMsg.ActionType);
+            }
+
+            if (!ActionManager.TryGet(performMsg.ActionType, out var action))
+            {
+                Logger.DebugS("action", "user {0} attempted to" +
+                                        " perform unrecognized instant action {1}", player.Name,
+                    performMsg.ActionType);
+                return;
+            }
+
+            switch (performMsg)
             {
                 case PerformInstantActionMessage msg:
                 {
-                    var player = session.AttachedEntity;
-
-                    if (player != Owner)
-                    {
-                        break;
-                    }
-
-                    if (!IsGranted(msg.ActionType))
-                    {
-                        Logger.DebugS("action", "user {0} attempted to" +
-                                                " perform instant action {1} which is not granted to them", player.Name,
-                            msg.ActionType);
-                        break;
-                    }
-
-                    if (!ActionManager.TryGet(msg.ActionType, out var actionShared))
-                    {
-                        Logger.DebugS("action", "user {0} attempted to" +
-                                                " perform unrecognized instant action {1}", player.Name,
-                            msg.ActionType);
-                        break;
-                    }
-
-                    var action = actionShared as ActionPrototype;
-
 
                     if (action.InstantAction == null)
                     {
                         Logger.DebugS("action", "user {0} attempted to" +
                                                 " perform action {1} as an instant action, but it isn't one", player.Name,
                             msg.ActionType);
-                        break;
+                        return;
                     }
 
                     action.InstantAction.DoInstantAction(new InstantActionEventArgs(player));
 
+                    break;
+                }
+                case PerformToggleActionMessage msg:
+                {
+                    if (action.ToggleAction == null)
+                    {
+                        Logger.DebugS("action", "user {0} attempted to" +
+                                                " perform action {1} as a toggle action, but it isn't one", player.Name,
+                            msg.ActionType);
+                        return;
+                    }
+
+                    if (msg.ToggleOn == actionState.ToggledOn)
+                    {
+                        Logger.DebugS("action", "user {0} attempted to" +
+                                                " toggle action {1} to {2}, but it is already toggled {2}", player.Name,
+                            msg.ActionType, actionState.ToggledOn ? "on" : "off");
+                        return;
+                    }
+
+                    ToggleAction(action.ActionType, msg.ToggleOn);
+
+                    action.ToggleAction.DoToggleAction(new ToggleActionEventArgs(player, msg.ToggleOn));
                     break;
                 }
             }
