@@ -1,4 +1,5 @@
-﻿using Content.Shared.GameObjects.EntitySystems;
+﻿using Content.Shared.Alert;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 
@@ -15,10 +16,9 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
         {
             base.EnterState(entity);
 
-            if (entity.TryGetComponent(out SharedStatusEffectsComponent status))
+            if (entity.TryGetComponent(out SharedAlertsComponent status))
             {
-                status.ChangeStatusEffectIcon(StatusEffect.Health,
-                    "/Textures/Interface/StatusEffects/Human/humancrit-0.png"); //Todo: combine humancrit-0 and humancrit-1 into a gif and display it
+                status.ShowAlert(AlertType.HumanCrit); // TODO: combine humancrit-0 and humancrit-1 into a gif and display it
             }
         }
 

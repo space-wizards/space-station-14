@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
@@ -61,6 +62,16 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
             {
                 UpdateState(null, (CurrentState, CurrentThreshold.Value));
             }
+        }
+
+        public override void OnRemove()
+        {
+            if (Owner.TryGetComponent(out SharedAlertsComponent? status))
+            {
+                status.ClearAlert(AlertType.HumanHealth);
+            }
+
+            base.OnRemove();
         }
 
         public override ComponentState GetComponentState()

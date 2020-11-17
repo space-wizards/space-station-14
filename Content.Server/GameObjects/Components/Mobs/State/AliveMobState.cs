@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs.State;
@@ -32,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Mobs.State
                 return;
             }
 
-            if (!entity.TryGetComponent(out ServerStatusEffectsComponent? status))
+            if (!entity.TryGetComponent(out ServerAlertsComponent? alerts))
             {
                 return;
             }
@@ -42,15 +43,14 @@ namespace Content.Server.GameObjects.Components.Mobs.State
                 return;
             }
 
-            var modifier = 0;
+            short modifier = 0;
 
             if (stateComponent.TryGetEarliestIncapacitatedThreshold(threshold, out _, out var earliestThreshold))
             {
-                modifier = (int) (damageable.TotalDamage / (earliestThreshold / 7f));
+                modifier = (short) (damageable.TotalDamage / (earliestThreshold / 7f));
             }
 
-            status.ChangeStatusEffectIcon(StatusEffect.Health,
-                "/Textures/Interface/StatusEffects/Human/human" + modifier + ".png");
+            alerts.ShowAlert(AlertType.HumanHealth, modifier);
         }
     }
 }

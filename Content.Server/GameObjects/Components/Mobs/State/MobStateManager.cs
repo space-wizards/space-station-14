@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using Content.Shared.Alert;
-using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.Components.Mobs.State;
+﻿using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Mobs.State
@@ -15,12 +11,12 @@ namespace Content.Server.GameObjects.Components.Mobs.State
         public override void OnRemove()
         {
             // TODO: Might want to add an OnRemove() to IMobState since those are where these components are being used
-            base.OnRemove();
-
             if (Owner.TryGetComponent(out ServerOverlayEffectsComponent overlay))
             {
                 overlay.ClearOverlays();
             }
+
+            base.OnRemove();
         }
     }
 }
