@@ -31,4 +31,7 @@
     <EmbeddedResource Include="Text\Names\*.txt" />
     <Folder Include="GameObjects\Components\Visualizers" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="GameObjects\Components\Mobs\GrantedActions.cs" />
+  </ItemGroup>
 </Project>

@@ -136,6 +136,7 @@ namespace Content.Client.UserInterface.Controls
             _icon.Visible = true;
             // all non-instant actions need to be toggle-able
             ToggleMode = action.BehaviorType != BehaviorType.Instant;
+            Pressed = false;
             Disabled = false;
             Granted = true;
             _number.SetMessage(SlotNumberLabel());

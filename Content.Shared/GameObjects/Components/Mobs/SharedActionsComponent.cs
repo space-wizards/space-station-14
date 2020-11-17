@@ -26,7 +26,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         public override uint? NetID => ContentNetIDs.ACTIONS;
 
         /// <summary>
-        /// Holds all the currently granted actions.
+        /// Holds all the currently granted actions and their associated states.
         /// </summary>
         [ViewVariables]
         private Dictionary<ActionType, ActionState> _actions = new Dictionary<ActionType, ActionState>();

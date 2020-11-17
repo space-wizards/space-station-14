@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.Controls;
@@ -77,6 +78,12 @@ namespace Content.Client.GameObjects.Components.Mobs
         /// </summary>
         private Dictionary<ActionType, List<(byte Hotbar, byte Slot)>> _assignments = new Dictionary<ActionType, List<(byte Hotbar, byte Slot)>>();
 
+        /// <summary>
+        /// Actions which have been manually cleared by the user, thus should not
+        /// auto-populate.
+        /// </summary>
+        private HashSet<ActionType> _manuallyClearedActions = new HashSet<ActionType>();
+
         // index of currently displayed hotbar
         private byte _selectedHotbar = 0;
 
@@ -119,7 +126,7 @@ namespace Content.Client.GameObjects.Components.Mobs
                 return;
             }
 
-            _ui = new ActionsUI(ActionOnOnShowTooltip, ActionOnOnHideTooltip, ActionSlotOnPressed, NextHotbar, PreviousHotbar);
+            _ui = new ActionsUI(ActionOnOnShowTooltip, ActionOnOnHideTooltip, ActionSlotEventHandler, NextHotbar, PreviousHotbar);
             LayoutContainer.SetGrowHorizontal(_ui, LayoutContainer.GrowDirection.End);
             LayoutContainer.SetAnchorAndMarginPreset(_ui, LayoutContainer.LayoutPreset.TopLeft, margin: 10);
             LayoutContainer.SetMarginTop(_ui, 100);
@@ -191,6 +198,8 @@ namespace Content.Client.GameObjects.Components.Mobs
             {
                 if (!_assignments.ContainsKey(actionState.ActionType))
                 {
+                    // don't auto populate stuff which the user has manually cleared
+                    if (_manuallyClearedActions.Contains(actionState.ActionType)) continue;
                     AutoPopulate(actionState.ActionType);
                 }
             }
@@ -294,8 +303,33 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
         }
 
-        private void ActionSlotOnPressed(ActionSlotEventArgs args)
+        private void ActionSlotEventHandler(ActionSlotEventArgs args)
         {
+            if (args.ActionSlotEvent == ActionSlotEvent.RightClick)
+            {
+                // right click to clear the action
+
+                _manuallyClearedActions.Add(args.Action.ActionType);
+
+                // remove this particular assignment from our data structures
+                // (keeping in mind something can be assigned multiple slots)
+                var slot = args.ActionSlot.SlotNumber - 1;
+                var assignmentList = _assignments[args.Action.ActionType];
+                assignmentList = assignmentList.Where(a => a.Hotbar != _selectedHotbar || a.Slot != slot).ToList();
+                if (assignmentList.Count == 0)
+                {
+                    _assignments.Remove(args.Action.ActionType);
+                }
+                else
+                {
+                    _assignments[args.Action.ActionType] = assignmentList;
+                }
+                _slots[_selectedHotbar, slot] = null;
+
+                StopTargeting();
+                args.ActionSlot.Clear();
+                return;
+            }
             switch (args.Action.BehaviorType)
             {
                 case BehaviorType.Instant:
@@ -304,7 +338,7 @@ namespace Content.Client.GameObjects.Components.Mobs
                     break;
                 case BehaviorType.Toggle:
                     // for toggle actions, we immediately tell the server we're toggling it.
-                    // Pre-emptively toggle it on as well
+                    // Predictively toggle it on as well
                     ToggleAction(args.Action.ActionType, args.ToggleOn);
                     SendNetworkMessage(new PerformToggleActionMessage(args.Action.ActionType, args.ToggleOn));
                     break;

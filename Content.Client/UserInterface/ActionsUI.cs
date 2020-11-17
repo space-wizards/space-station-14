@@ -20,7 +20,7 @@ namespace Content.Client.UserInterface
     {
         private readonly EventHandler _onShowTooltip;
         private readonly EventHandler _onHideTooltip;
-        private readonly Action<ActionSlotEventArgs> _onActionPressed;
+        private readonly Action<ActionSlotEventArgs> _actionSlotEventHandler;
         private readonly Action<BaseButton.ButtonEventArgs> _onNextHotbarPressed;
         private readonly Action<BaseButton.ButtonEventArgs> _onPreviousHotbarPressed;
         private readonly ActionSlot[] _slots;
@@ -36,17 +36,16 @@ namespace Content.Client.UserInterface
 
         /// <param name="onShowTooltip">OnShowTooltip handler to assign to each action slot</param>
         /// <param name="onHideTooltip">OnHideTooltip handler to assign to each action slot</param>
-        /// <param name="onActionPressed">handler for interactions with
-        /// action slots. Instant actions will be handled as presses, all other kinds of actions
-        /// will be handled as toggles. Slots with no actions will not be handled by this.</param>
+        /// <param name="actionSlotEventHandler">handler for interactions with
+        /// action slots. Slots with no actions will not be handled by this.</param>
         /// <param name="onNextHotbarPressed">action to invoke when pressing the next hotbar button</param>
         /// <param name="onPreviousHotbarPressed">action to invoke when pressing the previous hotbar button</param>
-        public ActionsUI(EventHandler onShowTooltip, EventHandler onHideTooltip, Action<ActionSlotEventArgs> onActionPressed,
+        public ActionsUI(EventHandler onShowTooltip, EventHandler onHideTooltip, Action<ActionSlotEventArgs> actionSlotEventHandler,
             Action<BaseButton.ButtonEventArgs> onNextHotbarPressed, Action<BaseButton.ButtonEventArgs> onPreviousHotbarPressed)
         {
             _onShowTooltip = onShowTooltip;
             _onHideTooltip = onHideTooltip;
-            _onActionPressed = onActionPressed;
+            _actionSlotEventHandler = actionSlotEventHandler;
             _onNextHotbarPressed = onNextHotbarPressed;
             _onPreviousHotbarPressed = onPreviousHotbarPressed;
 
@@ -130,6 +129,7 @@ namespace Content.Client.UserInterface
             for (byte i = 1; i <= ClientActionsComponent.Slots; i++)
             {
                 var slot = new ActionSlot(i);
+                slot.EnableAllKeybinds = true;
                 slot.OnShowTooltip += onShowTooltip;
                 slot.OnHideTooltip += onHideTooltip;
                 slot.OnPressed += ActionSlotOnPressed;
@@ -143,15 +143,17 @@ namespace Content.Client.UserInterface
         {
             if (!(args.Button is ActionSlot actionSlot)) return;
             if (actionSlot.Action == null) return;
-            if (args.Event.Function != EngineKeyFunctions.UIClick)
+            if (args.Event.Function == EngineKeyFunctions.UIRightClick)
             {
+                _actionSlotEventHandler.Invoke(new ActionSlotEventArgs(ActionSlotEvent.RightClick, false, actionSlot, args));
                 return;
             }
+            if (args.Event.Function != EngineKeyFunctions.Use) return;
             // only instant actions should be handled as presses, all other actions
             // should be handled as toggles
             if (actionSlot.Action.BehaviorType == BehaviorType.Instant)
             {
-                _onActionPressed.Invoke(new ActionSlotEventArgs(false, false, actionSlot, args));
+                _actionSlotEventHandler.Invoke(new ActionSlotEventArgs(ActionSlotEvent.Press, false, actionSlot, args));
             }
         }
 
@@ -159,15 +161,17 @@ namespace Content.Client.UserInterface
         {
             if (!(args.Button is ActionSlot actionSlot)) return;
             if (actionSlot.Action == null) return;
-            if (args.Event.Function != EngineKeyFunctions.UIClick)
+            if (args.Event.Function == EngineKeyFunctions.UIRightClick)
             {
+                _actionSlotEventHandler.Invoke(new ActionSlotEventArgs(ActionSlotEvent.RightClick, args.Pressed, actionSlot, args));
                 return;
             }
+            if (args.Event.Function != EngineKeyFunctions.Use) return;
             // only instant actions should be handled as presses, all other actions
             // should be handled as toggles
             if (actionSlot.Action.BehaviorType != BehaviorType.Instant)
             {
-                _onActionPressed.Invoke(new ActionSlotEventArgs(true, args.Pressed, actionSlot, args));
+                _actionSlotEventHandler.Invoke(new ActionSlotEventArgs(ActionSlotEvent.Toggle, args.Pressed, actionSlot, args));
             }
         }
 
@@ -267,16 +271,16 @@ namespace Content.Client.UserInterface
     }
 
     /// <summary>
-    /// Args for clicking (for instant) or toggling (for non-instant) an action slot.
+    /// Args for interaction with an action slot
     /// </summary>
     public class ActionSlotEventArgs : EventArgs
     {
         /// <summary>
-        /// Whether this is a press (for instant actions) or toggle (for other kinds of actions)
+        /// Type of event
         /// </summary>
-        public readonly bool IsToggle;
+        public readonly ActionSlotEvent ActionSlotEvent;
         /// <summary>
-        /// For non-instant actions, whether the action is being toggled on or off.
+        /// For Toggle events, whether the action is being toggled on or off.
         /// </summary>
         public readonly bool ToggleOn;
         /// <summary>
@@ -289,12 +293,29 @@ namespace Content.Client.UserInterface
         /// </summary>
         public ActionPrototype Action => ActionSlot.Action;
 
-        public ActionSlotEventArgs(bool isToggle, bool toggleOn, ActionSlot actionSlot, BaseButton.ButtonEventArgs buttonEventArgs)
+        public ActionSlotEventArgs(ActionSlotEvent actionSlotEvent, bool toggleOn, ActionSlot actionSlot, BaseButton.ButtonEventArgs buttonEventArgs)
         {
-            IsToggle = isToggle;
+            ActionSlotEvent = actionSlotEvent;
             ToggleOn = toggleOn;
             ActionSlot = actionSlot;
             ButtonEventArgs = buttonEventArgs;
         }
     }
+
+    public enum ActionSlotEvent
+    {
+        /// <summary>
+        /// Left clicking an instant action
+        /// </summary>
+        Press,
+        /// <summary>
+        /// left clicking a non-instant action (toggles it)
+        /// </summary>
+        Toggle,
+        /// <summary>
+        /// Right clicking an action
+        /// </summary>
+        RightClick
+    }
+
 }
