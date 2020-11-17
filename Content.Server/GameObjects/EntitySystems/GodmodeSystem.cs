@@ -28,6 +28,11 @@ namespace Content.Server.GameObjects.EntitySystems
 
             _entities[entity] = new OldEntityInformation(entity);
 
+            if (entity.TryGetComponent(out MovedByPressureComponent? moved))
+            {
+                moved.Enabled = false;
+            }
+
             if (entity.TryGetComponent(out IDamageableComponent? damageable))
             {
                 damageable.AddFlag(DamageFlag.Invulnerable);
