@@ -18,6 +18,8 @@ namespace Content.Server.GameObjects.Components.Construction
     {
         [ViewVariables]
         private string[] _refineResult;
+        [ViewVariables]
+        private float _refineTime;
 
         public override string Name => "Refinable";
 
@@ -25,13 +27,14 @@ namespace Content.Server.GameObjects.Components.Construction
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _refineResult, "refineResult", new string[] { "GlassStack" });
+            serializer.DataField(ref _refineTime, "refineTime", 2f);
         }
 
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             // check if object is welder
             if (!eventArgs.Using.TryGetComponent(out ToolComponent tool)) return false;
-            if (!await tool.UseTool(eventArgs.User, Owner, 2, ToolQuality.Welding)) return false;
+            if (!await tool.UseTool(eventArgs.User, Owner, _refineTime, ToolQuality.Welding)) return false;
 
             Owner.Delete();
 
