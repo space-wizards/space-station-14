@@ -30,7 +30,7 @@
     - type: Item
       color: "#bbeeff"
     - type: Refinable
-      refineResult: "GlassStack"
+      refineResult: [ "GlassStack" ]
 
 - type: entity
   id: ShardGlassReinforced
@@ -43,7 +43,7 @@
     - type: Item
       color: "#96cdef"
     - type: Refinable
-      refineResult: "GlassStack"
+      refineResult: [ "GlassStack", "MetalStack"]
 - type: entity
   id: ShardGlassPhoron
   name: phoron glass shard
@@ -54,3 +54,5 @@
       color: "#f3b489"
     - type: Item
       color: "#f3b489"
+    - type: Refinable
+      refineResult: [ "GlassStack", "PhoronStack"]

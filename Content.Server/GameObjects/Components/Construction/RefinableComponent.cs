@@ -17,27 +17,32 @@ namespace Content.Server.GameObjects.Components.Construction
     public class RefinableComponent : Component, IInteractUsing
     {
         [ViewVariables]
-        private string _refineResult;
+        private string[] _refineResult;
 
         public override string Name => "Refinable";
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _refineResult, "refineResult", "GlassStack");
+            serializer.DataField(ref _refineResult, "refineResult", new string[] { "GlassStack" });
         }
 
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            // try refine object using welder
+            // check if object is welder
             if (!eventArgs.Using.TryGetComponent(out ToolComponent tool)) return false;
-            if (!await tool.UseTool(eventArgs.User, Owner, 0.25f, ToolQuality.Welding)) return false;
+            if (!await tool.UseTool(eventArgs.User, Owner, 2, ToolQuality.Welding)) return false;
 
             Owner.Delete();
-            var droppedEnt = Owner.EntityManager.SpawnEntity(_refineResult, eventArgs.ClickLocation);
 
-            if (droppedEnt.TryGetComponent<StackComponent>(out var stackComp))
-                stackComp.Count = 1;
+            // spawn each result afrer refine
+            foreach (var result in _refineResult)
+            {
+                var droppedEnt = Owner.EntityManager.SpawnEntity(result, eventArgs.ClickLocation);
+
+                if (droppedEnt.TryGetComponent<StackComponent>(out var stackComp))
+                    stackComp.Count = 1;
+            }
 
             return true;
         }
