@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System.Diagnostics.CodeAnalysis;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
@@ -33,7 +34,12 @@ namespace Content.Server.GameObjects.Components.Atmos
     {
         public static bool IsMovedByPressure(this IEntity entity)
         {
-            return entity.TryGetComponent(out MovedByPressureComponent? moved) &&
+            return entity.IsMovedByPressure(out _);
+        }
+
+        public static bool IsMovedByPressure(this IEntity entity, [NotNullWhen(true)] out MovedByPressureComponent? moved)
+        {
+            return entity.TryGetComponent(out moved) &&
                    moved.Enabled;
         }
     }
