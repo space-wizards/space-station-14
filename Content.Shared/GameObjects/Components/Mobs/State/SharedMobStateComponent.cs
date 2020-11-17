@@ -14,7 +14,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.GameObjects.Components.Mobs.State
 {
     /// <summary>
-    ///     When attacked to an <see cref="IDamageableComponent"/>,
+    ///     When attached to an <see cref="IDamageableComponent"/>,
     ///     this component will handle critical and death behaviors for mobs.
     ///     Additionally, it handles sending effects to clients
     ///     (such as blur effect for unconsciousness) and managing the health HUD.
