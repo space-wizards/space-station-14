@@ -158,7 +158,7 @@
   - type: Internals
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
+      0: !type:AliveMobState {}
       100: !type:CriticalMobState {}
       200: !type:DeadMobState {}
   - type: HeatResistance
@@ -308,7 +308,7 @@
       damagePrototype: biologicalDamageContainer
     - type: MobState
       thresholds:
-        0: !type:NormalMobState {}
+        0: !type:AliveMobState {}
         100: !type:CriticalMobState {}
         200: !type:DeadMobState {}
     - type: Appearance
