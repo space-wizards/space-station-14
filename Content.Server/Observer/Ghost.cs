@@ -52,23 +52,23 @@ namespace Content.Server.Observer
 
             if (canReturn && playerEntity.TryGetComponent(out SharedMobStateComponent mobState))
             {
-                switch (mobState.DamageState)
+                if (mobState.IsDead())
                 {
-                    case DamageState.Dead:
-                        canReturn = true;
-                        break;
-                    case DamageState.Critical:
-                        canReturn = true;
+                    canReturn = true;
+                }
+                else if (mobState.IsCritical())
+                {
+                    canReturn = true;
 
-                        if (playerEntity.TryGetComponent(out IDamageableComponent damageable))
-                        {
-                            //todo: what if they dont breathe lol
-                            damageable.ChangeDamage(DamageType.Asphyxiation, 100, true);
-                        }
-                        break;
-                    default:
-                        canReturn = false;
-                        break;
+                    if (playerEntity.TryGetComponent(out IDamageableComponent damageable))
+                    {
+                        //todo: what if they dont breathe lol
+                        damageable.ChangeDamage(DamageType.Asphyxiation, 100, true);
+                    }
+                }
+                else
+                {
+                    canReturn = false;
                 }
             }
 

@@ -127,12 +127,14 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 10
-    spawnOnDestroy:
-      FloodlightBroken:
-        Min: 1
-        Max: 1
-    destroySound: /Audio/Effects/glass_break1.ogg
+    thresholds:
+      10:
+        Sound: /Audio/Effects/glass_break1.ogg
+        Spawn:
+          FloodlightBroken:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]
   - type: Appearance
     visuals:
       - type: FlashLightVisualizer
@@ -150,12 +152,14 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 20
-    spawnOnDestroy:
-      SteelSheet1:
-        Min: 1
-        Max: 1
-    destroySound: /Audio/Effects/metalbreak.ogg
+    thresholds:
+      20:
+        Spawn:
+          SteelSheet1:
+            Min: 1
+            Max: 1
+        Sound: /Audio/Effects/metalbreak.ogg
+        Acts: ["Destruction"]
   - type: Physics
     shapes:
     - !type:PhysShapeAabb

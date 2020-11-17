@@ -61,8 +61,8 @@ namespace Content.Server.GameObjects.Components.Suspicion
 
         public bool IsDead()
         {
-            return Owner.TryGetComponent(out SharedMobStateComponent? damageable) &&
-                   damageable.DamageState == DamageState.Dead;
+            return Owner.TryGetComponent(out IMobStateComponent? state) &&
+                   state.IsDead();
         }
 
         public bool IsInnocent()

@@ -38,9 +38,10 @@
       - MobImpassable
   - type: Damageable
   - type: MobState
+    defaultState: !type:NormalMobState {}
     thresholds:
-      Critical: 150
-      Dead: 200
+      150: !type:CriticalState {}
+      200: !type:DeadState {}
   - type: Metabolism
   - type: HeatResistance
   - type: CombatMode

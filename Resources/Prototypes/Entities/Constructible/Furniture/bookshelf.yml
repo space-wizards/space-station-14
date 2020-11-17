@@ -22,12 +22,14 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 30
-    destroySound: /Audio/Effects/woodhit.ogg
-    spawnOnDestroy:
-      WoodPlank:
-        Min: 1
-        Max: 1
+    thresholds:
+      30:
+        Sound: /Audio/Effects/woodhit.ogg
+        Spawn:
+          WoodPlank:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]
   - type: Occluder
     sizeX: 32
     sizeY: 32

@@ -30,12 +30,14 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 30
-    destroySound: /Audio/Effects/metalbreak.ogg
-    spawnOnDestroy:
-      SteelSheet1:
-        Min: 1
-        Max: 1
+    thresholds:
+      30:
+        Sound: /Audio/Effects/metalbreak.ogg
+        Spawn:
+          SteelSheet1:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]
 
 - type: entity
   id: Shelf
@@ -69,9 +71,11 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 30
-    destroySound: /Audio/Effects/metalbreak.ogg
-    spawnOnDestroy:
-      SteelSheet1:
-        Min: 1
-        Max: 1
+    thresholds:
+      30:
+        Sound: /Audio/Effects/metalbreak.ogg
+        Spawn:
+          SteelSheet1:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]

@@ -22,7 +22,9 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 100
+    thresholds:
+      100:
+        Acts: ["Destruction"]
 
 - type: entity
   parent: ScrubberBase

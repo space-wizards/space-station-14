@@ -31,7 +31,9 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 50
+    thresholds:
+      50:
+        Acts: ["Destruction"]
 
 - type: entity
   name: chair

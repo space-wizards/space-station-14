@@ -20,5 +20,7 @@
   - type: Pullable
   - type: Damageable
   - type: Destructible
-    threshold: 50
+    thresholds:
+      50:
+        Acts: ["Destruction"]
   - type: KitchenSpike

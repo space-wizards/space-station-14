@@ -30,8 +30,10 @@
     offset: Center
   - type: Damageable
     resistances: metallicResistances
-  - type: Breakable
-    threshold: 50
+  - type: Destructible
+    thresholds:
+      50:
+        Acts: ["Breakage"]
   - type: UserInterface
     interfaces:
     - key: enum.VendingMachineUiKey.Key

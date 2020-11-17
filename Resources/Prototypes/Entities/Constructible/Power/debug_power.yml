@@ -29,8 +29,10 @@
     drawRate: 50
   - type: Damageable
     resistances: metallicResistances
-  - type: Breakable
-    threshold: 100
+  - type: Destructible
+    thresholds:
+      100:
+        Acts: ["Breakage"]
   - type: Anchorable
 
 - type: entity

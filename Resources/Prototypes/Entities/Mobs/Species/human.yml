@@ -140,9 +140,6 @@
     template: HumanoidTemplate
     preset: HumanPreset
     centerSlot: torso
-    thresholds:
-      Critical: 100
-      Dead: 200
   - type: Damageable
     damagePrototype: biologicalDamageContainer
   - type: Metabolism
@@ -160,6 +157,10 @@
       CarbonDioxide: 0.00015190972
   - type: Internals
   - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      100: !type:CriticalMobState {}
+      200: !type:DeadMobState {}
   - type: HeatResistance
   - type: Appearance
     visuals:
@@ -303,12 +304,13 @@
       template: HumanoidTemplate
       preset: HumanPreset
       centerSlot: torso
-      thresholds:
-        Critical: 100
-        Dead: 200
     - type: Damageable
       damagePrototype: biologicalDamageContainer
     - type: MobState
+      thresholds:
+        0: !type:NormalMobState {}
+        100: !type:CriticalMobState {}
+        200: !type:DeadMobState {}
     - type: Appearance
       visuals:
       - type: RotationVisualizer

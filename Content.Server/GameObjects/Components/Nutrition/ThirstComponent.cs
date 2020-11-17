@@ -192,7 +192,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             if (!Owner.TryGetComponent(out SharedMobStateComponent mobState))
                 return;
 
-            if (mobState.DamageState != DamageState.Dead)
+            if (!mobState.IsDead())
             {
                 damageable.ChangeDamage(DamageType.Blunt, 2, true);
             }

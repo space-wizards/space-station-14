@@ -340,7 +340,7 @@ namespace Content.Server.GameObjects.Components.Buckle
                 EntitySystem.Get<StandingStateSystem>().Standing(Owner);
             }
 
-            _mobStateComponent?.MobState.EnterState(Owner);
+            _mobStateComponent?.CurrentState?.EnterState(Owner);
 
             UpdateBuckleStatus();
 

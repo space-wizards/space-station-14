@@ -6,7 +6,9 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Damage.ResistanceSet
 {
     /// <summary>
-    ///     Set of resistances used by damageable objects. Each DamageType has a multiplier and flat damage reduction value.
+    ///     Set of resistances used by damageable objects.
+    ///     Each <see cref="DamageType"/> has a multiplier and flat damage
+    ///     reduction value.
     /// </summary>
     [NetSerializable]
     [Serializable]
@@ -33,14 +35,15 @@ namespace Content.Shared.Damage.ResistanceSet
         public string ID { get; }
 
         /// <summary>
-        ///     Adjusts input damage with the resistance set values. Only applies reduction if the amount is damage (positive), not
+        ///     Adjusts input damage with the resistance set values.
+        ///     Only applies reduction if the amount is damage (positive), not
         ///     healing (negative).
         /// </summary>
         /// <param name="damageType">Type of damage.</param>
         /// <param name="amount">Incoming amount of damage.</param>
         public int CalculateDamage(DamageType damageType, int amount)
         {
-            if (amount > 0) //Only apply reduction if it's healing, not damage.
+            if (amount > 0) // Only apply reduction if it's healing, not damage.
             {
                 amount -= _resistances[damageType].FlatReduction;
 
@@ -59,8 +62,7 @@ namespace Content.Shared.Damage.ResistanceSet
     /// <summary>
     ///     Settings for a specific damage type in a resistance set. Flat reduction is applied before the coefficient.
     /// </summary>
-    [NetSerializable]
-    [Serializable]
+    [Serializable, NetSerializable]
     public struct ResistanceSetSettings
     {
         [ViewVariables] public float Coefficient { get; private set; }

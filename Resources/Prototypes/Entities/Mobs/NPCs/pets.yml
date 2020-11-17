@@ -37,8 +37,9 @@
   - type: Damageable
   - type: MobState
     thresholds:
-      Critical: 50
-      Dead: 100
+      0: !type:NormalMobState {}
+      50: !type:CriticalMobState {}
+      100: !type:DeadMobState {}
   - type: HeatResistance
   - type: CombatMode
   - type: Teleportable

@@ -47,7 +47,7 @@ namespace Content.Server.StationEvents
                     && item?.Owner.Prototype?.ID == "UtilityBeltClothingFilledEvent") return;
                 if (playerEntity.TryGetComponent(out IDamageableComponent? damageable) &&
                     playerEntity.TryGetComponent(out SharedMobStateComponent? mobState) &&
-                    mobState.DamageState == DamageState.Dead)
+                    mobState.IsDead())
                 {
                     return;
                 }

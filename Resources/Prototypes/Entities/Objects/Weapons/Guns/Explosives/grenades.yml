@@ -20,7 +20,9 @@
     flashRange: 7
   - type: Damageable
   - type: Destructible
-    threshold: 10
+    thresholds:
+      10:
+        Acts: ["Destruction"]
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer
@@ -44,7 +46,9 @@
   - type: FlashExplosive
   - type: Damageable
   - type: Destructible
-    threshold: 10
+    thresholds:
+      10:
+        Acts: ["Destruction"]
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer
@@ -72,7 +76,9 @@
     flashRange: 10
   - type: Damageable
   - type: Destructible
-    threshold: 10
+    thresholds:
+      10:
+        Acts: ["Destruction"]
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer
@@ -99,7 +105,9 @@
     flashRange: 50
   - type: Damageable
   - type: Destructible
-    threshold:  50
+    thresholds:
+      50:
+        Acts: ["Destruction"]
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer

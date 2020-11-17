@@ -10,8 +10,6 @@ namespace Content.Server.GameObjects.Components.Damage
     [RegisterComponent]
     public class BreakableConstructionComponent : Component, IDestroyAct
     {
-        private ActSystem _actSystem = default!;
-
         public override string Name => "BreakableConstruction";
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -19,13 +17,6 @@ namespace Content.Server.GameObjects.Components.Damage
             base.ExposeData(serializer);
 
             serializer.DataField(this, x => x.Node, "node", string.Empty);
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            _actSystem = EntitySystem.Get<ActSystem>();
         }
 
         public string Node { get; private set; } = string.Empty;
@@ -38,8 +29,6 @@ namespace Content.Server.GameObjects.Components.Damage
             {
                 return;
             }
-
-            _actSystem.HandleBreakage(Owner);
 
             await construction.ChangeNode(Node);
         }

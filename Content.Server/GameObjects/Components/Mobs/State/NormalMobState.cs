@@ -9,24 +9,24 @@ using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Mobs.State
 {
-    public class NormalState : SharedNormalState
+    public class NormalMobState : SharedNormalMobState
     {
         public override void EnterState(IEntity entity)
         {
+            base.EnterState(entity);
+
             EntitySystem.Get<StandingStateSystem>().Standing(entity);
 
             if (entity.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(DamageStateVisuals.State, DamageState.Alive);
             }
-
-            UpdateState(entity);
         }
 
-        public override void ExitState(IEntity entity) { }
-
-        public override void UpdateState(IEntity entity)
+        public override void UpdateState(IEntity entity, int threshold)
         {
+            base.UpdateState(entity, threshold);
+
             if (!entity.TryGetComponent(out IDamageableComponent? damageable))
             {
                 return;
@@ -37,12 +37,17 @@ namespace Content.Server.GameObjects.Components.Mobs.State
                 return;
             }
 
-            if (!damageable.TryGetEarliestIncapacitatedThreshold(out var threshold))
+            if (!entity.TryGetComponent(out IMobStateComponent? stateComponent))
             {
                 return;
             }
 
-            var modifier = (int) (damageable.TotalDamage / (threshold / 7f));
+            var modifier = 0;
+
+            if (stateComponent.TryGetEarliestIncapacitatedThreshold(threshold, out _, out var earliestThreshold))
+            {
+                modifier = (int) (damageable.TotalDamage / (earliestThreshold / 7f));
+            }
 
             status.ChangeStatusEffectIcon(StatusEffect.Health,
                 "/Textures/Interface/StatusEffects/Human/human" + modifier + ".png");

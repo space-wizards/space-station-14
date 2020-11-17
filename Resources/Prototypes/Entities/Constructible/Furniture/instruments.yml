@@ -19,9 +19,11 @@
   - type: SnapGrid
     offset: Center
   - type: Damageable
-  - type: Destructible
-    threshold: 50
     resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+      50:
+        Acts: ["Destruction"]
   - type: UserInterface
     interfaces:
     - key: enum.InstrumentUiKey.Key

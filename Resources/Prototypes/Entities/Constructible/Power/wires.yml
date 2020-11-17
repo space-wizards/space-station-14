@@ -21,7 +21,9 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 100
+    thresholds:
+      100:
+        Acts: ["Destruction"]
   - type: SubFloorHide
 
 - type: entity
@@ -48,10 +50,13 @@
     wireDroppedOnCutPrototype: HVWireStack1
     wireType: HighVoltage
   - type: Destructible
-    spawnOnDestroy:
-      HVWireStack1:
-        Min: 1
-        Max: 1
+    thresholds:
+      100:
+        Spawn:
+          HVWireStack1:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]
 
 - type: entity
   parent: WireBase
@@ -79,10 +84,13 @@
     wireDroppedOnCutPrototype: MVWireStack1
     wireType: MediumVoltage
   - type: Destructible
-    spawnOnDestroy:
-      MVWireStack1:
-        Min: 1
-        Max: 1
+    thresholds:
+      100:
+        Spawn:
+          MVWireStack1:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]
 
 - type: entity
   parent: WireBase
@@ -112,7 +120,10 @@
     wireDroppedOnCutPrototype: ApcExtensionCableStack1
     wireType: Apc
   - type: Destructible
-    spawnOnDestroy:
-      ApcExtensionCableStack1:
-        Min: 1
-        Max: 1
+    thresholds:
+      100:
+        Spawn:
+          ApcExtensionCableStack1:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]

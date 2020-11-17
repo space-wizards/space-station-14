@@ -13,7 +13,9 @@
     offset: Center
   - type: Damageable
   - type: Destructible
-    threshold: 100
+    thresholds:
+      100:
+        Acts: ["Destruction"]
   - type: Sprite
   - type: Appearance
     visuals:

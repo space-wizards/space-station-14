@@ -38,12 +38,14 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 15
-    destroySound: /Audio/Effects/metalbreak.ogg
-    spawnOnDestroy:
-      SteelSheet1:
-        Min: 1
-        Max: 1
+    thresholds:
+      15:
+        Sound: /Audio/Effects/metalbreak.ogg
+        Spawn:
+          SteelSheet1:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]
 
 - type: entity
   id: TableFrame
@@ -58,12 +60,14 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 1
-    destroySound: /Audio/Effects/metalbreak.ogg
-    spawnOnDestroy:
-      SteelSheet1:
-        Min: 1
-        Max: 1
+    thresholds:
+      1:
+        Sound: /Audio/Effects/metalbreak.ogg
+        Spawn:
+          SteelSheet1:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]
 
 - type: entity
   id: TableBar
@@ -78,12 +82,14 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 1
-    destroySound: /Audio/Effects/metalbreak.ogg
-    spawnOnDestroy:
-      SteelSheet1:
-        Min: 1
-        Max: 1
+    thresholds:
+      1:
+        Sound: /Audio/Effects/metalbreak.ogg
+        Spawn:
+          SteelSheet1:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]
 
 - type: entity
   id: TableMetal
@@ -98,12 +104,14 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 15
-    destroySound: /Audio/Effects/metalbreak.ogg
-    spawnOnDestroy:
-      SteelSheet1:
-        Min: 1
-        Max: 1
+    thresholds:
+      15:
+        Sound: /Audio/Effects/metalbreak.ogg
+        Spawn:
+          SteelSheet1:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]
 
 - type: entity
   id: TableR
@@ -118,12 +126,14 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 75
-    destroySound: /Audio/Effects/metalbreak.ogg
-    spawnOnDestroy:
-      SteelSheet1:
-        Min: 1
-        Max: 1
+    thresholds:
+      75:
+        Sound: /Audio/Effects/metalbreak.ogg
+        Spawn:
+          SteelSheet1:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]
 
 - type: entity
   id: TableGlass
@@ -138,12 +148,14 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 5
-    destroySound: /Audio/Effects/glass_break2.ogg
-    spawnOnDestroy:
-      ShardGlass:
-        Min: 1
-        Max: 1
+    thresholds:
+      5:
+        Sound: /Audio/Effects/glass_break2.ogg
+        Spawn:
+          ShardGlass:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]
 
 - type: entity
   id: TableGlassR
@@ -158,12 +170,14 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 20
-    destroySound: /Audio/Effects/glass_break2.ogg
-    spawnOnDestroy:
-      ShardGlass:
-        Min: 1
-        Max: 1
+    thresholds:
+      20:
+        Sound: /Audio/Effects/glass_break2.ogg
+        Spawn:
+          ShardGlass:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]
 
 - type: entity
   id: TableWood
@@ -178,12 +192,14 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 15
-    destroySound: /Audio/Effects/woodhit.ogg
-    spawnOnDestroy:
-      WoodPlank:
-        Min: 1
-        Max: 1
+    thresholds:
+      15:
+        Sound: /Audio/Effects/woodhit.ogg
+        Spawn:
+          WoodPlank:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]
 
 - type: entity
   id: TableCarpet
@@ -198,12 +214,14 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 15
-    destroySound: /Audio/Effects/woodhit.ogg
-    spawnOnDestroy:
-      WoodPlank:
-        Min: 1
-        Max: 1
+    thresholds:
+      15:
+        Sound: /Audio/Effects/woodhit.ogg
+        Spawn:
+          WoodPlank:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]
 
 - type: entity
   id: TableStone
@@ -218,8 +236,10 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 50
-    destroySound: /Audio/Effects/picaxe2.ogg
+    thresholds:
+      50:
+        Sound: /Audio/Effects/picaxe2.ogg
+        Acts: ["Destruction"]
 
 - type: entity
   id: TableDebug
@@ -234,4 +254,6 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 1
+    thresholds:
+      1:
+        Acts: ["Destruction"]

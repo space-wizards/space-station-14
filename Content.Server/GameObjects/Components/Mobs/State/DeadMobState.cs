@@ -9,10 +9,12 @@ using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Mobs.State
 {
-    public class DeadState : SharedDeadState
+    public class DeadMobState : SharedDeadMobState
     {
         public override void EnterState(IEntity entity)
         {
+            base.EnterState(entity);
+
             if (entity.TryGetComponent(out AppearanceComponent appearance))
             {
                 appearance.SetData(DamageStateVisuals.State, DamageState.Dead);
@@ -44,6 +46,8 @@ namespace Content.Server.GameObjects.Components.Mobs.State
 
         public override void ExitState(IEntity entity)
         {
+            base.ExitState(entity);
+
             if (entity.TryGetComponent(out IPhysicsComponent physics))
             {
                 physics.CanCollide = true;
@@ -54,7 +58,5 @@ namespace Content.Server.GameObjects.Components.Mobs.State
                 overlay.ClearOverlays();
             }
         }
-
-        public override void UpdateState(IEntity entity) { }
     }
 }

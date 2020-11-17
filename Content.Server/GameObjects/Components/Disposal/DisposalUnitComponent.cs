@@ -16,6 +16,7 @@ using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Disposal;
 using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
@@ -139,11 +140,10 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-
             if (!entity.TryGetComponent(out IPhysicsComponent? physics) ||
                 !physics.CanCollide)
             {
-                if (!(entity.TryGetComponent(out IDamageableComponent? damageState) && damageState.CurrentState == DamageState.Dead)) {
+                if (!(entity.TryGetComponent(out IMobStateComponent? state) && state.IsDead())) {
                     return false;
                 }
             }

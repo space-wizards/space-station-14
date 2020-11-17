@@ -63,7 +63,7 @@ namespace Content.Server.GlobalVerbs
 
             if (target.TryGetComponent(out SharedMobStateComponent mobState))
             {
-                mobState.DamageState = DamageState.Alive;
+                mobState.UpdateState(0);
             }
 
             if (target.TryGetComponent(out HungerComponent hunger))

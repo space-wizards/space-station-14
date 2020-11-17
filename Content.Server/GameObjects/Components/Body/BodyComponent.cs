@@ -3,6 +3,7 @@ using Content.Server.Observer;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Components.Movement;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.Interfaces.Player;
@@ -76,8 +77,8 @@ namespace Content.Server.GameObjects.Components.Body
 
         void IRelayMoveInput.MoveInputPressed(ICommonSession session)
         {
-            if (Owner.TryGetComponent(out IDamageableComponent? damageable) &&
-                damageable.CurrentState == DamageState.Dead)
+            if (Owner.TryGetComponent(out IMobStateComponent? mobState) &&
+                mobState.IsDead())
             {
                 new Ghost().Execute(null, (IPlayerSession) session, null);
             }

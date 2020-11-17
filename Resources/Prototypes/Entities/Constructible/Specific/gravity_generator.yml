@@ -31,8 +31,10 @@
   - type: InteractionOutline
   - type: Damageable
     resistances: metallicResistances
-  - type: Breakable
-    threshold: 150
+  - type: Destructible
+    thresholds:
+      150:
+        Acts: ["Breakage"]
   - type: GravityGenerator
   - type: UserInterface
     interfaces:

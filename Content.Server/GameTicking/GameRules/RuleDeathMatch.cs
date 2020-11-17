@@ -65,12 +65,12 @@ namespace Content.Server.GameTicking.GameRules
             {
                 var playerEntity = playerSession.AttachedEntity;
                 if (playerEntity == null
-                    || !playerEntity.TryGetComponent(out SharedMobStateComponent mobState))
+                    || !playerEntity.TryGetComponent(out SharedMobStateComponent state))
                 {
                     continue;
                 }
 
-                if (mobState.DamageState != DamageState.Alive)
+                if (!state.IsAlive())
                 {
                     continue;
                 }

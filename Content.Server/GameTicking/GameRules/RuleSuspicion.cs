@@ -74,7 +74,7 @@ namespace Content.Server.GameTicking.GameRules
                     continue;
                 }
 
-                if (mobState.DamageState != DamageState.Alive)
+                if (!mobState.IsAlive())
                 {
                     continue;
                 }

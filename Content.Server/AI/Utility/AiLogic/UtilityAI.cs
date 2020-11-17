@@ -142,8 +142,7 @@ namespace Content.Server.AI.Utility.AiLogic
         public void MobStateChanged(MobStateChangedMessage message)
         {
             var oldDeadState = _isDead;
-            _isDead = message.CurrentDamageState == DamageState.Dead ||
-                      message.CurrentDamageState == DamageState.Critical;
+            _isDead = message.Component.IsIncapacitated();
 
             if (oldDeadState != _isDead)
             {

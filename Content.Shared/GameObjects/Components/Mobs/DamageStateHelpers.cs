@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Content.Shared.GameObjects.Components.Damage
+namespace Content.Shared.GameObjects.Components.Mobs
 {
     public static class DamageStateHelpers
     {

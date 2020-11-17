@@ -1,7 +1,6 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -57,6 +56,10 @@ namespace Content.Shared.GameObjects.Components.Damage
         /// <param name="flag">The flag to remove.</param>
         void RemoveFlag(DamageFlag flag);
 
+        bool SupportsDamageClass(DamageClass @class);
+
+        bool SupportsDamageType(DamageType type);
+
         /// <summary>
         ///     Gets the amount of damage of a type.
         /// </summary>
@@ -65,7 +68,7 @@ namespace Content.Shared.GameObjects.Components.Damage
         /// <returns>
         ///     True if the given <see cref="type"/> is supported, false otherwise.
         /// </returns>
-        bool TryGetDamage(DamageType type, [NotNullWhen(true)] out int damage);
+        bool TryGetDamage(DamageType type, out int damage);
 
         /// <summary>
         ///     Changes the specified <see cref="DamageType"/>, applying
@@ -89,7 +92,11 @@ namespace Content.Shared.GameObjects.Components.Damage
         ///     False if the given type is not supported or improper
         ///     <see cref="DamageChangeParams"/> were provided; true otherwise.
         /// </returns>
-        bool ChangeDamage(DamageType type, int amount, bool ignoreResistances, IEntity? source = null,
+        bool ChangeDamage(
+            DamageType type,
+            int amount,
+            bool ignoreResistances,
+            IEntity? source = null,
             DamageChangeParams? extraParams = null);
 
         /// <summary>
@@ -115,7 +122,11 @@ namespace Content.Shared.GameObjects.Components.Damage
         ///     Returns false if the given class is not supported or improper
         ///     <see cref="DamageChangeParams"/> were provided; true otherwise.
         /// </returns>
-        bool ChangeDamage(DamageClass @class, int amount, bool ignoreResistances, IEntity? source = null,
+        bool ChangeDamage(
+            DamageClass @class,
+            int amount,
+            bool ignoreResistances,
+            IEntity? source = null,
             DamageChangeParams? extraParams = null);
 
         /// <summary>
@@ -133,7 +144,11 @@ namespace Content.Shared.GameObjects.Components.Damage
         ///     Returns false if the given type is not supported or improper
         ///     <see cref="DamageChangeParams"/> were provided; true otherwise.
         /// </returns>
-        bool SetDamage(DamageType type, int newValue, IEntity? source = null, DamageChangeParams? extraParams = null);
+        bool SetDamage(
+            DamageType type,
+            int newValue,
+            IEntity? source = null,
+            DamageChangeParams? extraParams = null);
 
         /// <summary>
         ///     Sets all damage values to zero.

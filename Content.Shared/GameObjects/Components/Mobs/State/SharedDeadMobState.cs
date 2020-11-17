@@ -1,10 +1,9 @@
 ﻿namespace Content.Shared.GameObjects.Components.Mobs.State
 {
-    /// <summary>
-    ///     A state in which an entity is disabled from acting due to sufficient damage (considered unconscious).
-    /// </summary>
-    public abstract class SharedCriticalState : MobState
+    public abstract class SharedDeadMobState : BaseMobState
     {
+        protected override DamageState DamageState => DamageState.Dead;
+
         public override bool CanInteract()
         {
             return false;
@@ -61,6 +60,16 @@
         }
 
         public override bool CanChangeDirection()
+        {
+            return false;
+        }
+
+        public bool CanShiver()
+        {
+            return false;
+        }
+
+        public bool CanSweat()
         {
             return false;
         }

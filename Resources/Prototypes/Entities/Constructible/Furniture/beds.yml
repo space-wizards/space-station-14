@@ -30,6 +30,8 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 75
+    thresholds:
+      75:
+        Acts: ["Destruction"]
   placement:
     mode: SnapgridCenter

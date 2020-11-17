@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Shared.Damage;
 using Content.Shared.Damage.DamageContainer;
 using Content.Shared.Damage.ResistanceSet;
@@ -31,19 +32,28 @@ namespace Content.Shared.GameObjects.Components.Damage
 
         public override string Name => "Damageable";
 
+        public override uint? NetID => ContentNetIDs.DAMAGEABLE;
+
+        private readonly Dictionary<DamageType, int> _damageList = DamageTypeExtensions.ToDictionary();
+        private readonly HashSet<DamageType> _supportedTypes = new HashSet<DamageType>();
+        private readonly HashSet<DamageClass> _supportedClasses = new HashSet<DamageClass>();
         private DamageFlag _flags;
 
         public event Action<DamageChangedEventArgs>? HealthChangedEvent;
 
+        // TODO DAMAGE Use as default values, specify overrides in a separate property through yaml for better (de)serialization
+        [ViewVariables] public string DamageContainerId { get; set; } = default!;
+
         [ViewVariables] private ResistanceSet Resistances { get; set; } = default!;
 
-        [ViewVariables] private DamageContainer Damage { get; set; } = default!;
+        // TODO DAMAGE Cache this
+        [ViewVariables] public int TotalDamage => _damageList.Values.Sum();
 
-        [ViewVariables] public int TotalDamage => Damage.TotalDamage;
+        [ViewVariables]
+        public IReadOnlyDictionary<DamageClass, int> DamageClasses =>
+            DamageTypeExtensions.ToClassDictionary(_damageList);
 
-        public IReadOnlyDictionary<DamageClass, int> DamageClasses => Damage.DamageClasses;
-
-        public IReadOnlyDictionary<DamageType, int> DamageTypes => Damage.DamageTypes;
+        [ViewVariables] public IReadOnlyDictionary<DamageType, int> DamageTypes => _damageList;
 
         public DamageFlag Flags
         {
@@ -73,6 +83,16 @@ namespace Content.Shared.GameObjects.Components.Damage
         public void RemoveFlag(DamageFlag flag)
         {
             Flags &= ~flag;
+        }
+
+        public bool SupportsDamageClass(DamageClass @class)
+        {
+            return _supportedClasses.Contains(@class);
+        }
+
+        public bool SupportsDamageType(DamageType type)
+        {
+            return _supportedTypes.Contains(type);
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -120,9 +140,15 @@ namespace Content.Shared.GameObjects.Components.Damage
                 prototype =>
                 {
                     var damagePrototype = _prototypeManager.Index<DamageContainerPrototype>(prototype);
-                    Damage = new DamageContainer(OnHealthChanged, damagePrototype);
+
+                    _supportedClasses.Clear();
+                    _supportedTypes.Clear();
+
+                    _supportedClasses.UnionWith(damagePrototype.SupportedClasses);
+                    _supportedTypes.UnionWith(damagePrototype.SupportedTypes);
+
                 },
-                () => Damage.ID);
+                () => DamageContainerId);
 
             serializer.DataReadWriteFunction(
                 "resistancePrototype",
@@ -142,12 +168,118 @@ namespace Content.Shared.GameObjects.Components.Damage
             ForceHealthChangedEvent();
         }
 
-        public bool TryGetDamage(DamageType type, out int damage)
+        public override ComponentState GetComponentState()
         {
-            return Damage.TryGetDamageValue(type, out damage);
+            return new DamageableComponentState(_damageList, _flags);
         }
 
-        public bool ChangeDamage(DamageType type, int amount, bool ignoreResistances,
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+        {
+            base.HandleComponentState(curState, nextState);
+
+            if (!(curState is DamageableComponentState state))
+            {
+                return;
+            }
+
+            _damageList.Clear();
+
+            foreach (var (type, damage) in state.DamageList)
+            {
+                _damageList[type] = damage;
+            }
+
+            _flags = state.Flags;
+        }
+
+        public int GetDamage(DamageType type)
+        {
+            return _damageList.GetValueOrDefault(type);
+        }
+
+        public bool TryGetDamage(DamageType type, out int damage)
+        {
+            return _damageList.TryGetValue(type, out damage);
+        }
+
+        public int GetDamage(DamageClass @class)
+        {
+            if (!SupportsDamageClass(@class))
+            {
+                return 0;
+            }
+
+            var damage = 0;
+
+            foreach (var type in @class.ToTypes())
+            {
+                damage += GetDamage(type);
+            }
+
+            return damage;
+        }
+
+        public bool TryGetDamage(DamageClass @class, out int damage)
+        {
+            if (!SupportsDamageClass(@class))
+            {
+                damage = 0;
+                return false;
+            }
+
+            damage = GetDamage(@class);
+            return true;
+        }
+
+        /// <summary>
+        ///     Attempts to set the damage value for the given <see cref="DamageType"/>.
+        /// </summary>
+        /// <returns>
+        ///     True if successful, false if this container does not support that type.
+        /// </returns>
+        public bool TrySetDamage(DamageType type, int newValue)
+        {
+            if (newValue < 0)
+            {
+                return false;
+            }
+
+            var damageClass = type.ToClass();
+
+            if (_supportedClasses.Contains(damageClass))
+            {
+                var old = _damageList[type] = newValue;
+                _damageList[type] = newValue;
+
+                var delta = newValue - old;
+                var datum = new DamageChangeData(type, newValue, delta);
+                var data = new List<DamageChangeData> {datum};
+
+                OnHealthChanged(data);
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public void Heal(DamageType type)
+        {
+            SetDamage(type, 0);
+        }
+
+        public void Heal()
+        {
+            foreach (var type in _supportedTypes)
+            {
+                Heal(type);
+            }
+        }
+
+        public bool ChangeDamage(
+            DamageType type,
+            int amount,
+            bool ignoreResistances,
             IEntity? source = null,
             DamageChangeParams? extraParams = null)
         {
@@ -156,20 +288,39 @@ namespace Content.Shared.GameObjects.Components.Damage
                 return false;
             }
 
-            if (Damage.SupportsDamageType(type))
+            if (!SupportsDamageType(type))
             {
-                var finalDamage = amount;
-                if (!ignoreResistances)
-                {
-                    finalDamage = Resistances.CalculateDamage(type, amount);
-                }
-
-                Damage.ChangeDamageValue(type, finalDamage);
-
-                return true;
+                return false;
             }
 
-            return false;
+            var finalDamage = amount;
+
+            if (!ignoreResistances)
+            {
+                finalDamage = Resistances.CalculateDamage(type, amount);
+            }
+
+            if (!_damageList.TryGetValue(type, out var current))
+            {
+                return false;
+            }
+
+            _damageList[type] = current + finalDamage;
+
+            if (_damageList[type] < 0)
+            {
+                _damageList[type] = 0;
+                finalDamage = -current;
+            }
+
+            current = _damageList[type];
+
+            var datum = new DamageChangeData(type, current, finalDamage);
+            var data = new List<DamageChangeData> {datum};
+
+            OnHealthChanged(data);
+
+            return true;
         }
 
         public bool ChangeDamage(DamageClass @class, int amount, bool ignoreResistances,
@@ -181,7 +332,7 @@ namespace Content.Shared.GameObjects.Components.Damage
                 return false;
             }
 
-            if (!Damage.SupportsDamageClass(@class))
+            if (!SupportsDamageClass(@class))
             {
                 return false;
             }
@@ -219,10 +370,9 @@ namespace Content.Shared.GameObjects.Components.Damage
                     foreach (var type in types)
                     {
                         var healAmount =
-                            Math.Max(Math.Max(healPerType, -Damage.GetDamageValue(type)),
-                                healingLeft);
+                            Math.Max(Math.Max(healPerType, -GetDamage(type)), healingLeft);
 
-                        Damage.ChangeDamageValue(type, healAmount);
+                        ChangeDamage(type, healAmount, true);
                         healThisCycle += healAmount;
                         healingLeft -= healAmount;
                     }
@@ -249,7 +399,7 @@ namespace Content.Shared.GameObjects.Components.Damage
                 foreach (var type in types)
                 {
                     var damageAmount = Math.Min(damagePerType, damageLeft);
-                    Damage.ChangeDamageValue(type, damageAmount);
+                    ChangeDamage(type, damageAmount, true);
                     damageLeft -= damageAmount;
                 }
             }
@@ -257,36 +407,42 @@ namespace Content.Shared.GameObjects.Components.Damage
             return true;
         }
 
-        public bool SetDamage(DamageType type, int newValue, IEntity? source = null,
-            DamageChangeParams? extraParams = null)
+        public bool SetDamage(DamageType type, int newValue, IEntity? source = null,  DamageChangeParams? extraParams = null)
         {
             if (newValue >= TotalDamage && HasFlag(DamageFlag.Invulnerable))
             {
                 return false;
             }
 
-            if (Damage.SupportsDamageType(type))
+            if (newValue < 0)
             {
-                Damage.SetDamageValue(type, newValue);
-
-                return true;
+                return false;
             }
 
-            return false;
-        }
+            if (!_damageList.ContainsKey(type))
+            {
+                return false;
+            }
 
-        public void Heal()
-        {
-            Damage.Heal();
+            var old = _damageList[type];
+            _damageList[type] = newValue;
+
+            var delta = newValue - old;
+            var datum = new DamageChangeData(type, 0, delta);
+            var data = new List<DamageChangeData> {datum};
+
+            OnHealthChanged(data);
+
+            return true;
         }
 
         public void ForceHealthChangedEvent()
         {
             var data = new List<DamageChangeData>();
 
-            foreach (var type in Damage.SupportedTypes)
+            foreach (var type in _supportedTypes)
             {
-                var damage = Damage.GetDamageValue(type);
+                var damage = GetDamage(type);
                 var datum = new DamageChangeData(type, damage, 0);
                 data.Add(datum);
             }
@@ -330,6 +486,19 @@ namespace Content.Shared.GameObjects.Components.Damage
 
             ChangeDamage(DamageType.Piercing, damage, false);
             ChangeDamage(DamageType.Heat, damage, false);
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class DamageableComponentState : ComponentState
+    {
+        public readonly Dictionary<DamageType, int> DamageList;
+        public readonly DamageFlag Flags;
+
+        public DamageableComponentState(Dictionary<DamageType, int> damageList, DamageFlag flags) : base(ContentNetIDs.DAMAGEABLE)
+        {
+            DamageList = damageList;
+            Flags = flags;
         }
     }
 }

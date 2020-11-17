@@ -24,11 +24,13 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 500
-    spawnOnDestroy:
-      AMEPart:
-        Min: 1
-        Max: 1
+    thresholds:
+      500:
+        Spawn:
+          AMEPart:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]
   - type: SnapGrid
     offset: Center
   - type: Airtight

@@ -18,6 +18,7 @@ namespace Content.Shared.Damage
 
     public static class DamageClassExtensions
     {
+        // TODO DAMAGE This but not hardcoded
         private static readonly ImmutableDictionary<DamageClass, List<DamageType>> ClassToType =
             new Dictionary<DamageClass, List<DamageType>>
             {

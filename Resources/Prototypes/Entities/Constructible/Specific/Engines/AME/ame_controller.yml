@@ -22,7 +22,9 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 500
+    thresholds:
+      500:
+        Acts: ["Destruction"]
   - type: SnapGrid
     offset: Center
   - type: Anchorable
