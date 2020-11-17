@@ -20,9 +20,9 @@ namespace Content.Client.Commands
     internal class GuiShaderDevCommand : IConsoleCommand
     {
 
-        public string Command => "gui_shader_dev";
+        public string Command => "shaderDevWindow";
 
-        public string Help => "Usage: gui_shader_dev <name>\n" + Description;
+        public string Help => "Usage: shaderDevWindow <name>\n" + Description;
 
         public string Description => "Loads a shader onto a colored rectangle in a UI window.";
 
