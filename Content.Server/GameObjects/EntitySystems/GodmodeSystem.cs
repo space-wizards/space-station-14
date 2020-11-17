@@ -4,7 +4,6 @@ using Content.Server.GameObjects.Components.Atmos;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 
@@ -29,11 +28,6 @@ namespace Content.Server.GameObjects.EntitySystems
 
             _entities[entity] = new OldEntityInformation(entity);
 
-            if (entity.HasComponent<MovedByPressureComponent>())
-            {
-                entity.RemoveComponent<MovedByPressureComponent>();
-            }
-
             if (entity.TryGetComponent(out IDamageableComponent? damageable))
             {
                 damageable.AddFlag(DamageFlag.Invulnerable);
@@ -54,10 +48,9 @@ namespace Content.Server.GameObjects.EntitySystems
                 return false;
             }
 
-            if (old.MovedByPressure != null)
+            if (entity.TryGetComponent(out MovedByPressureComponent? moved))
             {
-                var newMoved = entity.EnsureComponent<MovedByPressureComponent>();
-                newMoved.CopyValues(old.MovedByPressure);
+                moved.Enabled = old.MovedByPressure;
             }
 
             if (entity.TryGetComponent(out IDamageableComponent? damageable))
@@ -92,11 +85,11 @@ namespace Content.Server.GameObjects.EntitySystems
             public OldEntityInformation(IEntity entity)
             {
                 Entity = entity;
-                MovedByPressure = entity.GetComponentOrNull<MovedByPressureComponent>();
+                MovedByPressure = entity.IsMovedByPressure();
             }
 
             public IEntity Entity { get; }
-            public MovedByPressureComponent? MovedByPressure { get; }
+            public bool MovedByPressure { get; }
         }
     }
 }
