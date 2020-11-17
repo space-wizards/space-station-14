@@ -54,7 +54,16 @@ namespace Content.Server.GameObjects.EntitySystems
                 return false;
             }
 
-            old.Restore();
+            if (old.MovedByPressure != null)
+            {
+                var newMoved = entity.EnsureComponent<MovedByPressureComponent>();
+                newMoved.CopyValues(old.MovedByPressure);
+            }
+
+            if (entity.TryGetComponent(out IDamageableComponent? damageable))
+            {
+                damageable.RemoveFlag(DamageFlag.Invulnerable);
+            }
 
             return true;
         }
@@ -88,20 +97,6 @@ namespace Content.Server.GameObjects.EntitySystems
 
             public IEntity Entity { get; }
             public MovedByPressureComponent? MovedByPressure { get; }
-
-            public void Restore()
-            {
-                if (MovedByPressure != null)
-                {
-                    var newMoved = Entity.EnsureComponent<MovedByPressureComponent>();
-                    newMoved.CopyValues(MovedByPressure);
-                }
-
-                if (Entity.TryGetComponent(out IDamageableComponent? damageable))
-                {
-                    damageable.RemoveFlag(DamageFlag.Invulnerable);
-                }
-            }
         }
     }
 }
