@@ -33,7 +33,7 @@
     spawnOnDestroy:
       ShardGlass:
         Min: 1
-        Max: 3
+        Max: 2
   - type: SnapGrid
     offset: Center
   - type: Airtight
