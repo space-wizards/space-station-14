@@ -3,7 +3,6 @@
   display_name: Plating
   texture: plating
   base_turfs:
-  - space
   - underplating
   is_subfloor: true
   footstep_sounds: footstep_plating
@@ -24,7 +23,6 @@
   display_name: Underplating
   texture: underplating
   base_turfs:
-  - space
   - lattice
   is_subfloor: true
   footstep_sounds: footstep_plating
