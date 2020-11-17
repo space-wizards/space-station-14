@@ -29,7 +29,7 @@
         public const uint RESEARCH_CONSOLE = 1023;
         public const uint WIRES = 1024;
         public const uint COMBATMODE = 1025;
-        public const uint STATUSEFFECTS = 1026;
+        public const uint ALERTS = 1026;
         public const uint OVERLAYEFFECTS = 1027;
         public const uint STOMACH = 1028;
         public const uint ITEMCOOLDOWN = 1029;

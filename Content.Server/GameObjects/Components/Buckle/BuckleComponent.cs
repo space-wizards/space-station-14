@@ -7,6 +7,7 @@ using Content.Server.GameObjects.Components.Mobs.State;
 using Content.Server.GameObjects.Components.Pulling;
 using Content.Server.GameObjects.Components.Strap;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Buckle;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Strap;
@@ -37,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Buckle
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         [ComponentDependency] public readonly AppearanceComponent? AppearanceComponent = null;
-        [ComponentDependency] private readonly ServerStatusEffectsComponent? _serverStatusEffectsComponent = null;
+        [ComponentDependency] private readonly ServerAlertsComponent? _serverAlertsComponent = null;
         [ComponentDependency] private readonly StunnableComponent? _stunnableComponent = null;
         [ComponentDependency] private readonly MobStateComponent? _mobStateComponent = null;
 
@@ -100,20 +101,30 @@ namespace Content.Server.GameObjects.Components.Buckle
         /// </summary>
         private void UpdateBuckleStatus()
         {
-            if (_serverStatusEffectsComponent == null)
+            if (_serverAlertsComponent == null)
             {
                 return;
             }
 
             if (Buckled)
             {
-                _serverStatusEffectsComponent.ChangeStatusEffectIcon(StatusEffect.Buckled, BuckledTo!.BuckledIcon);
+                _serverAlertsComponent.ShowAlert(BuckledTo != null ? BuckledTo.BuckledAlertType : AlertType.Buckled,
+                    onClickAlert: OnClickAlert);
             }
             else
             {
-                _serverStatusEffectsComponent.RemoveStatusEffect(StatusEffect.Buckled);
+                _serverAlertsComponent.ClearAlertCategory(AlertCategory.Buckled);
             }
         }
+
+        private void OnClickAlert(ClickAlertEventArgs args)
+        {
+            if (args.Player.TryGetComponent(out BuckleComponent? buckle))
+            {
+                buckle.TryUnbuckle(args.Player);
+            }
+        }
+
 
         /// <summary>
         ///     Reattaches this entity to the strap, modifying its position and rotation.
@@ -188,10 +199,10 @@ namespace Content.Server.GameObjects.Components.Buckle
             }
 
             // If in a container
-            if (ContainerHelpers.TryGetContainer(Owner, out var ownerContainer))
+            if (Owner.TryGetContainer(out var ownerContainer))
             {
                 // And not in the same container as the strap
-                if (!ContainerHelpers.TryGetContainer(strap.Owner, out var strapContainer) ||
+                if (!strap.Owner.TryGetContainer(out var strapContainer) ||
                     ownerContainer != strapContainer)
                 {
                     return false;
@@ -325,7 +336,7 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             if (Owner.Transform.Parent == oldBuckledTo.Owner.Transform)
             {
-                ContainerHelpers.AttachParentToContainerOrGrid(Owner.Transform);
+                Owner.Transform.AttachParentToContainerOrGrid();
                 Owner.Transform.WorldRotation = oldBuckledTo.Owner.Transform.WorldRotation;
             }
 

@@ -198,7 +198,7 @@ namespace Content.Server.Atmos
             {
                 if (!entity.TryGetComponent(out IPhysicsComponent physics)
                     ||  !entity.TryGetComponent(out MovedByPressureComponent pressure)
-                    ||  ContainerHelpers.IsInContainer(entity))
+                    || entity.IsInContainer())
                     continue;
 
                 physics.WakeBody();

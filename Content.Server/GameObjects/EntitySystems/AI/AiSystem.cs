@@ -2,8 +2,11 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.AI.Utility.AiLogic;
+using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Mobs.State;
+using Content.Shared;
+using Content.Shared.Administration;
 using Content.Shared.GameObjects.Components.Movement;
 using JetBrains.Annotations;
 using Robust.Server.AI;
@@ -45,7 +48,6 @@ namespace Content.Server.GameObjects.EntitySystems.AI
         public override void Initialize()
         {
             base.Initialize();
-            _configurationManager.RegisterCVar("ai.maxupdates", 64);
             SubscribeLocalEvent<SleepAiMessage>(HandleAiSleep);
             SubscribeLocalEvent<MobStateChangedMessage>(MobStateChanged);
 
@@ -62,7 +64,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI
         /// <inheritdoc />
         public override void Update(float frameTime)
         {
-            var cvarMaxUpdates = _configurationManager.GetCVar<int>("ai.maxupdates");
+            var cvarMaxUpdates = _configurationManager.GetCVar(CCVars.AIMaxUpdates);
             if (cvarMaxUpdates <= 0)
                 return;
 
@@ -171,6 +173,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI
         public bool ProcessorTypeExists(string name) => _processorTypes.ContainsKey(name);
 
 
+        [AdminCommand(AdminFlags.Fun)]
         private class AddAiCommand : IClientCommand
         {
             public string Command => "addai";

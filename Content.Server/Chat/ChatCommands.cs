@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Content.Server.Administration;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Observer;
@@ -8,6 +9,7 @@ using Content.Server.Interfaces.GameObjects;
 using Content.Server.Observer;
 using Content.Server.Players;
 using Content.Server.Utility;
+using Content.Shared.Administration;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.Interfaces;
@@ -20,6 +22,7 @@ using Robust.Shared.Localization;
 
 namespace Content.Server.Chat
 {
+    [AnyCommand]
     internal class SayCommand : IClientCommand
     {
         public string Command => "say";
@@ -51,6 +54,7 @@ namespace Content.Server.Chat
         }
     }
 
+    [AnyCommand]
     internal class MeCommand : IClientCommand
     {
         public string Command => "me";
@@ -76,6 +80,7 @@ namespace Content.Server.Chat
         }
     }
 
+    [AnyCommand]
     internal class OOCCommand : IClientCommand
     {
         public string Command => "ooc";
@@ -96,6 +101,7 @@ namespace Content.Server.Chat
         }
     }
 
+    [AdminCommand(AdminFlags.Admin)]
     internal class AdminChatCommand : IClientCommand
     {
         public string Command => "asay";
@@ -116,6 +122,7 @@ namespace Content.Server.Chat
         }
     }
 
+    [AnyCommand]
     internal class SuicideCommand : IClientCommand
     {
         public string Command => "suicide";

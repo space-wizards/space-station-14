@@ -10,7 +10,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Shared.GameObjects.Components.Body.Template
 {
     /// <summary>
-    ///     Prototype for the BodyTemplate class.
+    ///     Defines the layout of a <see cref="IBody"/>.
     /// </summary>
     [Prototype("bodyTemplate")]
     [Serializable, NetSerializable]

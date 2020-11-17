@@ -26,6 +26,7 @@ namespace Content.Server.GameObjects.Components.Damage
     [RegisterComponent]
     public class DestructibleComponent : Component
     {
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
         private ActSystem _actSystem = default!;

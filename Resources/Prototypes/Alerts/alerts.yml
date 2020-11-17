@@ -1,0 +1,205 @@
+﻿- type: alertOrder
+  # Defines ordering in alert tab, higher up = higher in tab.
+  # List below can contain alert type or category, if both are present the id will take precedence.
+  # If item is not in list it will go at the bottom (ties broken by alert type enum value)
+  order:
+    - category: Health
+    - alertType: Fire
+    - alertType: Handcuffed
+    - category: Buckled
+    - alertType: Pulling
+    - category: Piloting
+    - alertType: Stun
+    - category: Pressure
+    - category: Temperature
+    - category: Hunger
+    - category: Thirst
+
+
+
+- type: alert
+  alertType: LowPressure
+  category: Pressure
+  icon: /Textures/Interface/Alerts/Pressure/lowpressure.png
+  maxSeverity: 2
+  name: "[color=red]Low Pressure[/color]"
+  description: "The air around you is [color=red]hazardously thin[/color]. A [color=green]space suit[/color] would protect you."
+
+- type: alert
+  alertType: HighPressure
+  category: Pressure
+  icon: /Textures/Interface/Alerts/Pressure/highpressure.png
+  maxSeverity: 2
+  name: "[color=red]High Pressure[/color]"
+  description: "The air around you is [color=red]hazardously thick[/color]. A [color=green]fire suit[/color] would protect you."
+
+- type: alert
+  alertType: Fire
+  icon: /Textures/Interface/Alerts/Fire/fire.png
+  name: "[color=red]On Fire[/color]"
+  description: "You're [color=red]on fire[/color]. Click the alert to stop, drop and roll to put the fire out or move to a vacuum area."
+
+- type: alert
+  alertType: Cold
+  category: Temperature
+  icon: /Textures/Interface/Alerts/Temperature/cold.png
+  maxSeverity: 3
+  name: "[color=cyan]Too Cold[/color]"
+  description: "You're [color=cyan]freezing cold![/color] Get somewhere warmer and take off any insulating clothing like a space suit."
+
+- type: alert
+  alertType: Hot
+  category: Temperature
+  icon: /Textures/Interface/Alerts/Temperature/hot.png
+  maxSeverity: 3
+  name: "[color=red]Too Hot[/color]"
+  description: "It's [color=red]too hot![/color] Flee to space or at least away from the flames. Standing on weeds will heal you."
+
+- type: alert
+  alertType: Weightless
+  icon: /Textures/Interface/Alerts/Weightless/weightless.png
+  name: Weightless
+  description: >-
+    Gravity has ceased affecting you, and you're floating around aimlessly. You'll need something large and heavy, like a
+    wall or lattice, to push yourself off if you want to move. A jetpack would enable free range of motion. A pair of
+    magboots would let you walk around normally on the floor. Barring those, you can throw things, use a fire extinguisher,
+    or shoot a gun to move around via Newton's 3rd Law of Motion.
+
+- type: alert
+  alertType: Stun
+  icon: /Textures/Objects/Weapons/Melee/stunbaton.rsi/stunbaton_off.png
+  name: "[color=yellow]Stunned[/color]"
+  description: "You're [color=yellow]stunned[/color]! Wait for it to wear off."
+
+- type: alert
+  alertType: Handcuffed
+  icon: /Textures/Interface/Alerts/Handcuffed/Handcuffed.png
+  name: "[color=yellow]Handcuffed[/color]"
+  description: "You're [color=yellow]handcuffed[/color] and can't act. If anyone drags you, you won't be able to move.."
+
+- type: alert
+  alertType: Buckled
+  category: Buckled
+  icon: /Textures/Interface/Alerts/Buckle/buckled.png
+  name: "[color=yellow]Buckled[/color]"
+  description: "You've been [color=yellow]buckled[/color] to something. Click the alert to unbuckle unless you're [color=yellow]handcuffed.[/color]"
+
+- type: alert
+  alertType: HumanCrit
+  category: Health
+  icon: /Textures/Interface/Alerts/Human/humancrit-0.png
+  name: "[color=red]Critical Condition[/color]"
+  description: "You're severely injured and unconscious."
+
+- type: alert
+  alertType: HumanDead
+  category: Health
+  icon: /Textures/Interface/Alerts/Human/humandead.png
+  name: Dead
+  description: You're dead.
+
+- type: alert
+  alertType: HumanHealth
+  category: Health
+  icon: /Textures/Interface/Alerts/Human/human.png
+  name: Health
+  description: "[color=green]Green[/color] good. [color=red]Red[/color] bad."
+  minSeverity: 0
+  maxSeverity: 6
+
+- type: alert
+  alertType: PilotingShuttle
+  category: Piloting
+  icon: /Textures/Interface/Alerts/Buckle/buckled.png
+  name: Piloting Shuttle
+  description: You are piloting a shuttle. Click the alert to stop.
+
+- type: alert
+  alertType: Overfed
+  category: Hunger
+  icon: /Textures/Interface/Alerts/Hunger/Overfed.png
+  name: "[color=yellow]Overfed[/color]"
+  description: You ate too much food, lardass. Run around the station and lose some weight.
+
+- type: alert
+  alertType: Peckish
+  category: Hunger
+  icon: /Textures/Interface/Alerts/Hunger/Peckish.png
+  name: "[color=yellow]Peckish[/color]"
+  description: Some food would be good right about now.
+
+- type: alert
+  alertType: Starving
+  category: Hunger
+  icon: /Textures/Interface/Alerts/Hunger/Starving.png
+  name: "[color=red]Starving[/color]"
+  description: You're severely malnourished. The hunger pains make moving around a chore.
+
+- type: alert
+  alertType: Overhydrated
+  category: Thirst
+  icon: /Textures/Interface/Alerts/Thirst/OverHydrated.png
+  name: "[color=yellow]Overhydrated[/color]"
+  description: You drank too much.
+
+- type: alert
+  alertType: Thirsty
+  category: Thirst
+  icon: /Textures/Interface/Alerts/Thirst/Thirsty.png
+  name: "[color=yellow]Thirsty[/color]"
+  description: Something to drink would be good right about now.
+
+- type: alert
+  alertType: Parched
+  category: Thirst
+  icon: /Textures/Interface/Alerts/Thirst/Parched.png
+  name: "[color=red]Parched[/color]"
+  description: You're severely thirsty. The thirst makes moving around a chore.
+
+- type: alert
+  alertType: Pulled
+  icon: /Textures/Interface/Alerts/Pull/pulled.png
+  name: Pulled
+  description: You're being pulled. Move to break free.
+
+- type: alert
+  alertType: Pulling
+  icon: /Textures/Interface/Alerts/Pull/pulling.png
+  name: Pulling
+  description: You're pulling something. Click the alert to stop.
+
+- type: alert
+  alertType: Debug1
+  icon: /Textures/Interface/Alerts/Human/human1.png
+  name: Debug
+  description: Debug
+
+- type: alert
+  alertType: Debug2
+  icon: /Textures/Interface/Alerts/Human/human2.png
+  name: Debug
+  description: Debug
+
+- type: alert
+  alertType: Debug3
+  icon: /Textures/Interface/Alerts/Human/human3.png
+  name: Debug
+  description: Debug
+
+- type: alert
+  alertType: Debug4
+  icon: /Textures/Interface/Alerts/Human/human4.png
+  name: Debug
+  description: Debug
+
+- type: alert
+  alertType: Debug5
+  icon: /Textures/Interface/Alerts/Human/human5.png
+  name: Debug
+  description: Debug
+
+- type: alert
+  alertType: Debug6
+  icon: /Textures/Interface/Alerts/Human/human6.png
+  name: Debug
+  description: Debug
