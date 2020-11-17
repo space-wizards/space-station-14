@@ -26,8 +26,10 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
         public override uint? NetID => ContentNetIDs.MOB_STATE;
 
         /// <summary>
-        ///     Thresholds for this <see cref="SharedMobStateComponent"/>,
-        ///     mapped from threshold to its corresponding state.
+        ///     States that this <see cref="SharedMobStateComponent"/> mapped to
+        ///     the amount of damage at which they are triggered.
+        ///     A threshold is reached when the total damage of an entity is equal
+        ///     to or higher than the int key, but lower than the next threshold.
         ///     Ordered from lowest to highest.
         /// </summary>
         [ViewVariables]
