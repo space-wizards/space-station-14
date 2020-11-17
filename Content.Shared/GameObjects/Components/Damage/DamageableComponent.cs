@@ -144,9 +144,9 @@ namespace Content.Shared.GameObjects.Components.Damage
                     _supportedClasses.Clear();
                     _supportedTypes.Clear();
 
+                    DamageContainerId = damagePrototype.ID;
                     _supportedClasses.UnionWith(damagePrototype.SupportedClasses);
                     _supportedTypes.UnionWith(damagePrototype.SupportedTypes);
-
                 },
                 () => DamageContainerId);
 
