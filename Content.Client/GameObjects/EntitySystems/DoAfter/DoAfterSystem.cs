@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.Components;
@@ -124,9 +124,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
 
                     if (doAfter.BreakOnTargetMove)
                     {
-                        var targetEntity = _entityManager.GetEntity(doAfter.TargetUid);
-
-                        if (targetEntity.Transform.Coordinates != doAfter.TargetGrid)
+                        if (_entityManager.TryGetEntity(doAfter.TargetUid, out var targetEntity) && targetEntity.Transform.Coordinates != doAfter.TargetGrid)
                         {
                             comp.Cancel(id, currentTime);
                             continue;

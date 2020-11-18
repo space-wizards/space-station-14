@@ -200,8 +200,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 var magEntity = Owner.EntityManager.SpawnEntity(_magFillPrototype, Owner.Transform.Coordinates);
                 _magazineContainer.Insert(magEntity);
             }
-
             Dirty();
+        }
+
+        protected override void Startup()
+        {
             UpdateAppearance();
         }
 
@@ -242,7 +245,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     soundSystem.PlayAtCoords(_soundBoltOpen, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-5));
                 }
 
-                if (ContainerHelpers.TryGetContainer(Owner, out var container))
+                if (Owner.TryGetContainer(out var container))
                 {
                     Owner.PopupMessage(container.Owner, Loc.GetString("Bolt open"));
                 }

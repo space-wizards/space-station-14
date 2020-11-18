@@ -6,6 +6,7 @@ using Content.Server.Players;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Interfaces;
+using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.Components;
 using Robust.Server.Interfaces.Player;
@@ -75,9 +76,9 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        public bool InRange(EntityCoordinates from, EntityCoordinates to)
+        public bool InRange(IEntity pointer, EntityCoordinates coordinates)
         {
-            return from.InRange(EntityManager, to, 15);
+            return pointer.InRangeUnOccluded(coordinates, 15, e => e == pointer);
         }
 
         public bool TryPoint(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
@@ -100,7 +101,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 return false;
             }
 
-            if (!InRange(coords, player.Transform.Coordinates))
+            if (!InRange(player, coords))
             {
                 player.PopupMessage(Loc.GetString("You can't reach there!"));
                 return false;
