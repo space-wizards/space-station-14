@@ -132,7 +132,7 @@
   startNode: start
   targetNode: TableFrame
   category: Structures
-  description: A sturdy frame used in the construction of tables"
+  description: A sturdy frame used in the construction of tables
   icon:
     sprite: Constructible/Structures/Tables/frame.rsi
     state: full

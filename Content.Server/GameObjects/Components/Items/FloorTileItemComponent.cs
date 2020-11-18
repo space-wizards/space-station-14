@@ -63,20 +63,21 @@ namespace Content.Server.GameObjects.Components.Items
 
             var location = eventArgs.ClickLocation.AlignWithClosestGridTile();
             var locationMap = location.ToMap(Owner.EntityManager);
-
-            if (_mapManager.TryGetGrid(location.GetGridId(Owner.EntityManager), out var mapGrid))
+            foreach (var currentTile in _outputTiles)
             {
-                var tile = mapGrid.GetTileRef(location);
-                var baseTurf = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TypeId];
+                var currentTileDefinition = (ContentTileDefinition) _tileDefinitionManager[currentTile];
 
-                if (_outputTiles == null)
+                if (_mapManager.TryGetGrid(location.GetGridId(Owner.EntityManager), out var mapGrid))
                 {
-                    return;
-                }
+                    var tile = mapGrid.GetTileRef(location);
+                    var baseTurf = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
 
-                foreach (var currentTile in _outputTiles)
-                {
-                    var currentTileDefinition = (ContentTileDefinition)_tileDefinitionManager[currentTile];
+                    if (_outputTiles == null)
+                    {
+                        return;
+                    }
+
+
 
                     if (HasBaseTurf(currentTileDefinition, baseTurf.Name) && stack.Use(1))
                     {
@@ -84,16 +85,18 @@ namespace Content.Server.GameObjects.Components.Items
                         break;
                     }
                 }
-            }
-            else if(HasBaseTurf((ContentTileDefinition)_tileDefinitionManager[_outputTiles[0]], "space"))
-            {
-                mapGrid = _mapManager.CreateGrid(locationMap.MapId);
-                mapGrid.WorldPosition = locationMap.Position;
-                location = new EntityCoordinates(mapGrid.GridEntityId, Vector2.Zero);
-                PlaceAt(mapGrid, location, _tileDefinitionManager[_outputTiles[0]].TileId, mapGrid.TileSize/2f);
+                else if (HasBaseTurf(currentTileDefinition, "space"))
+                {
+                    mapGrid = _mapManager.CreateGrid(locationMap.MapId);
+                    mapGrid.WorldPosition = locationMap.Position;
+                    location = new EntityCoordinates(mapGrid.GridEntityId, Vector2.Zero);
+                    PlaceAt(mapGrid, location, _tileDefinitionManager[_outputTiles[0]].TileId, mapGrid.TileSize / 2f);
+                    break;
+                }
+
+
             }
 
         }
-
     }
 }

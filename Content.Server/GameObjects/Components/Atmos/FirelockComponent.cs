@@ -87,11 +87,13 @@ namespace Content.Server.GameObjects.Components.Atmos
                 }
 
                 if (!await tool.UseTool(eventArgs.User, Owner, holdingPressure || holdingFire ? 1.5f : 0.25f, ToolQuality.Prying)) return false;
-
-                if (State == DoorState.Closed && !IsWeldedShut)
-                    Open();
-                else if (State == DoorState.Open && !IsWeldedShut)
-                    Close();
+                if (!IsWeldedShut) { // Maybe just return here when it's welded?
+                    if (State == DoorState.Closed)
+                        Open();
+                    else if (State == DoorState.Open)
+                        Close();
+                }
+                
 
                 return true;
             }

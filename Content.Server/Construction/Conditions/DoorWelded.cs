@@ -23,15 +23,19 @@ namespace Content.Server.Construction.Conditions
         public async Task<bool> Condition(IEntity entity)
         {
             if (!entity.TryGetComponent(out ServerDoorComponent doorComponent)) return false;
-            return doorComponent.IsWeldedShut;
+            return doorComponent.IsWeldedShut == Welded;
         }
 
         public void DoExamine(IEntity entity, FormattedMessage message, bool inDetailsRange)
         {
             if (!entity.TryGetComponent(out ServerDoorComponent doorComponent)) return;
 
-            if (doorComponent.State == ServerDoorComponent.DoorState.Closed)
+            if (doorComponent.State == ServerDoorComponent.DoorState.Closed && Welded)
                 message.AddMarkup("First, weld the door.\n");
+            else if (doorComponent.IsWeldedShut && !Welded)
+            {
+                message.AddMarkup("First, Weld the door.\n");
+            }
         }
     }
 }
