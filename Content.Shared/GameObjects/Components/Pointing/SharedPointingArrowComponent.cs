@@ -1,16 +1,9 @@
-﻿using Content.Shared.GameObjects.Verbs;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
+﻿using Robust.Shared.GameObjects;
 
 namespace Content.Shared.GameObjects.Components.Pointing
 {
-    public class SharedPointingArrowComponent : Component, IShowContextMenu
+    public class SharedPointingArrowComponent : Component
     {
         public sealed override string Name => "PointingArrow";
-
-        public bool ShowContextMenu(IEntity examiner)
-        {
-            return false;
-        }
     }
 }
