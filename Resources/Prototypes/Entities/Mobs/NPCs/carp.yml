@@ -36,7 +36,7 @@
   - type: Damageable
   - type: MobState
     thresholds:
-      0: !type:AliveMobState {}
+      0: !type:NormalMobState {}
       50: !type:CriticalMobState {}
       100: !type:DeadMobState {}
   - type: HeatResistance

@@ -3,7 +3,7 @@
     /// <summary>
     ///     The standard state an entity is in; no negative effects.
     /// </summary>
-    public abstract class SharedAliveMobState : BaseMobState
+    public abstract class SharedNormalMobState : BaseMobState
     {
         protected override DamageState DamageState => DamageState.Alive;
 

@@ -5,7 +5,7 @@ using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Client.GameObjects.Components.Mobs.State
 {
-    public class AliveMobState : SharedAliveMobState
+    public class NormalMobState : SharedNormalMobState
     {
         public override void EnterState(IEntity entity)
         {
