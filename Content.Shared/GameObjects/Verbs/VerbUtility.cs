@@ -75,7 +75,7 @@ namespace Content.Shared.GameObjects.Verbs
         {
             var distanceSquared = (user.Transform.WorldPosition - target.Transform.WorldPosition)
                 .LengthSquared;
-            if (distanceSquared > InteractionRangeSquared
+            if (distanceSquared > InteractionRangeSquared)
             {
                 return false;
             }
