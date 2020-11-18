@@ -3,7 +3,6 @@ using Content.Server.GameObjects.Components.Pulling;
 using Content.Shared.GameObjects.Components.Pulling;
 using Content.Shared.Physics.Pull;
 using NUnit.Framework;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
@@ -17,10 +16,26 @@ namespace Content.IntegrationTests.Tests.Pulling
     [TestOf(typeof(PullController))]
     public class PullTest : ContentIntegrationTest
     {
+        private const string PROTOTYPES = @"
+- type: entity
+  name: PullTestPullerDummy
+  id: PullTestPullerDummy
+  components:
+  - type: Puller
+
+- type: entity
+  name: PullTestPullableDummy
+  id: PullTestPullableDummy
+  components:
+  - type: Pullable
+  - type: Physics
+";
+
         [Test]
         public async Task AnchoredNoPullTest()
         {
-            var server = StartServerDummyTicker();
+            var options = new ServerContentIntegrationOption {ExtraPrototypes = PROTOTYPES};
+            var server = StartServerDummyTicker(options);
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
@@ -29,12 +44,12 @@ namespace Content.IntegrationTests.Tests.Pulling
             {
                 mapManager.CreateNewMapEntity(MapId.Nullspace);
 
-                var human = entityManager.SpawnEntity("HumanMob_Content", MapCoordinates.Nullspace);
-                var chair = entityManager.SpawnEntity("ChairWood", MapCoordinates.Nullspace);
+                var pullerEntity = entityManager.SpawnEntity("PullTestPullerDummy", MapCoordinates.Nullspace);
+                var pullableEntity = entityManager.SpawnEntity("PullTestPullableDummy", MapCoordinates.Nullspace);
 
-                var puller = human.EnsureComponent<SharedPullerComponent>();
-                var pullable = chair.EnsureComponent<PullableComponent>();
-                var pullablePhysics = chair.GetComponent<PhysicsComponent>();
+                var puller = pullerEntity.GetComponent<SharedPullerComponent>();
+                var pullable = pullableEntity.GetComponent<PullableComponent>();
+                var pullablePhysics = pullableEntity.GetComponent<PhysicsComponent>();
 
                 pullablePhysics.Anchored = false;
 
