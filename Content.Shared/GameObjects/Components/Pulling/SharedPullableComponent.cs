@@ -8,6 +8,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
@@ -179,7 +180,10 @@ namespace Content.Shared.GameObjects.Components.Pulling
             }
 
             if (!Owner.EntityManager.TryGetEntity(state.Puller.Value, out var entity))
+            {
+                Logger.Error($"Invalid entity {state.Puller.Value} for pulling");
                 return;
+            }
 
             Puller = entity;
         }
