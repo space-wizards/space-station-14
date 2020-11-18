@@ -140,7 +140,7 @@ namespace Content.Server.GameObjects.Components.Recycling
                 return false;
             }
 
-            if (ContainerHelpers.IsInContainer(entity))
+            if (entity.IsInContainer())
             {
                 return false;
             }
@@ -171,7 +171,7 @@ namespace Content.Server.GameObjects.Components.Recycling
                 if (entity.TryGetComponent(out IPhysicsComponent physics))
                 {
                     var controller = physics.EnsureController<ConveyedController>();
-                    controller.Move(direction, frameTime);
+                    controller.Move(direction, frameTime, entity.Transform.WorldPosition - Owner.Transform.WorldPosition);
                 }
             }
         }

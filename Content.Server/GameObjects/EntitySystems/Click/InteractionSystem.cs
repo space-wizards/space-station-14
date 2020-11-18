@@ -329,19 +329,19 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             // If in a container
-            if (ContainerHelpers.IsInContainer(player))
+            if (player.IsInContainer())
             {
                 return;
             }
 
 
             // In a container where the attacked entity is not the container's owner
-            if (ContainerHelpers.TryGetContainer(player, out var playerContainer) &&
+            if (player.TryGetContainer(out var playerContainer) &&
                 attacked != playerContainer.Owner)
             {
                 // Either the attacked entity is null, not contained or in a different container
                 if (attacked == null ||
-                    !ContainerHelpers.TryGetContainer(attacked, out var attackedContainer) ||
+                    !attacked.TryGetContainer(out var attackedContainer) ||
                     attackedContainer != playerContainer)
                 {
                     return;

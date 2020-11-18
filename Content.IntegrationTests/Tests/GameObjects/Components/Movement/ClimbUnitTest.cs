@@ -17,10 +17,26 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
     [TestOf(typeof(ClimbingComponent))]
     public class ClimbUnitTest : ContentIntegrationTest
     {
+        private const string PROTOTYPES = @"
+- type: entity
+  name: HumanDummy
+  id: HumanDummy
+  components:
+  - type: Climbing
+  - type: Physics
+
+- type: entity
+  name: TableDummy
+  id: TableDummy
+  components:
+  - type: Climbable
+";
+
         [Test]
         public async Task Test()
         {
-            var server = StartServerDummyTicker();
+            var options = new ServerIntegrationOptions{ExtraPrototypes = PROTOTYPES};
+            var server = StartServerDummyTicker(options);
 
             IEntity human;
             IEntity table;
@@ -35,8 +51,8 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
                 var entityManager = IoCManager.Resolve<IEntityManager>();
 
                 // Spawn the entities
-                human = entityManager.SpawnEntity("HumanMob_Content", MapCoordinates.Nullspace);
-                table = entityManager.SpawnEntity("Table", MapCoordinates.Nullspace);
+                human = entityManager.SpawnEntity("HumanDummy", MapCoordinates.Nullspace);
+                table = entityManager.SpawnEntity("TableDummy", MapCoordinates.Nullspace);
 
                 // Test for climb components existing
                 // Players and tables should have these in their prototypes.
