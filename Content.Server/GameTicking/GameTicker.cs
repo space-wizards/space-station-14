@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -67,7 +68,6 @@ namespace Content.Server.GameTicking
         public const float PresetFailedCooldownIncrease = 30f;
         private const string PlayerPrototypeName = "HumanMob_Content";
         private const string ObserverPrototypeName = "MobObserver";
-        private const string MapFile = "Maps/saltern.yml";
         private static TimeSpan _roundStartTimeSpan;
 
         [ViewVariables] private readonly List<GameRule> _gameRules = new List<GameRule>();
@@ -88,7 +88,7 @@ namespace Content.Server.GameTicking
 
         [ViewVariables] private bool DisallowLateJoin { get; set; } = false;
 
-        [ViewVariables] private bool LobbyEnabled => _configurationManager.GetCVar<bool>("game.lobbyenabled");
+        [ViewVariables] private bool LobbyEnabled => _configurationManager.GetCVar(CCVars.GameLobbyEnabled);
 
         [ViewVariables] private bool _updateOnRoundEnd;
         private CancellationTokenSource _updateShutdownCts;
@@ -119,15 +119,13 @@ namespace Content.Server.GameTicking
         public event Action<GameRuleAddedEventArgs> OnRuleAdded;
 
         private TimeSpan LobbyDuration =>
-            TimeSpan.FromSeconds(_configurationManager.GetCVar<int>("game.lobbyduration"));
+            TimeSpan.FromSeconds(_configurationManager.GetCVar(CCVars.GameLobbyDuration));
 
         public override void Initialize()
         {
             base.Initialize();
 
             DebugTools.Assert(!_initialized);
-
-            PresetSuspicion.RegisterCVars(_configurationManager);
 
             _netManager.RegisterNetMessage<MsgTickerJoinLobby>(nameof(MsgTickerJoinLobby));
             _netManager.RegisterNetMessage<MsgTickerJoinGame>(nameof(MsgTickerJoinGame));
@@ -286,9 +284,9 @@ namespace Content.Server.GameTicking
 
             if (!preset.Start(assignedJobs.Keys.ToList(), force))
             {
-                if (_configurationManager.GetCVar<bool>("game.fallbackenabled"))
+                if (_configurationManager.GetCVar(CCVars.GameLobbyFallbackEnabled))
                 {
-                    SetStartPreset(_configurationManager.GetCVar<string>("game.fallbackpreset"));
+                    SetStartPreset(_configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset));
                     var newPreset = MakeGamePreset(profiles);
                     _chatManager.DispatchServerAnnouncement(
                         $"Failed to start {preset.ModeTitle} mode! Defaulting to {newPreset.ModeTitle}...");
@@ -700,11 +698,16 @@ namespace Content.Server.GameTicking
             DisallowLateJoin = false;
         }
 
+        private string GetMap()
+        {
+            return _configurationManager.GetCVar(CCVars.GameMap);
+        }
+
         private void _preRoundSetup()
         {
             DefaultMap = _mapManager.CreateMap();
             var startTime = _gameTiming.RealTime;
-            var grid = _mapLoader.LoadBlueprint(DefaultMap, MapFile);
+            var grid = _mapLoader.LoadBlueprint(DefaultMap, GetMap());
 
             DefaultGridId = grid.Index;
             _spawnPoint = grid.ToCoordinates();

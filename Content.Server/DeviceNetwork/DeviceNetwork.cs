@@ -1,4 +1,5 @@
-﻿using Content.Server.Interfaces;
+﻿using System;
+using Content.Server.Interfaces;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using System.Collections.Generic;
@@ -11,7 +12,8 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
     {
         private const int PACKAGES_PER_TICK = 30;
 
-        private readonly IRobustRandom _random = IoCManager.Resolve<IRobustRandom>();
+        [Dependency] private readonly IRobustRandom _random = default!;
+
         private readonly Dictionary<int, List<NetworkDevice>> _devices = new Dictionary<int, List<NetworkDevice>>();
         private readonly Queue<NetworkPackage> _packages = new Queue<NetworkPackage>();
 
@@ -40,11 +42,9 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
 
         public void Update()
         {
-            var i = PACKAGES_PER_TICK;
-            while (_packages.Count > 0 && i > 0)
+            var count = Math.Min(PACKAGES_PER_TICK, _packages.Count);
+            for (var i = 0; i < count; i++)
             {
-                i--;
-
                 var package = _packages.Dequeue();
 
                 if (package.Broadcast)
@@ -72,7 +72,7 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
                 Sender = sender,
                 Metadata = metadata
             };
-            
+
             _packages.Enqueue(package);
             return true;
         }
@@ -132,7 +132,7 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
         {
             var devices = DevicesForFrequency(netId, frequency);
 
-            var device = devices.Find(device => device.Address == address);
+            var device = devices.Find(dvc => dvc.Address == address);
 
             return device;
         }
@@ -192,7 +192,6 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
             public IReadOnlyDictionary<string, string> Data { get; set; }
             public Metadata Metadata;
             public string Sender;
-
         }
     }
 }

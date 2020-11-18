@@ -142,7 +142,7 @@ namespace Content.Server.GameObjects.Components.Recycling
                 return false;
             }
 
-            if (ContainerHelpers.IsInContainer(entity))
+            if (entity.IsInContainer())
             {
                 return false;
             }

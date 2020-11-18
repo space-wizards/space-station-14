@@ -9,8 +9,6 @@ namespace Content.Shared.Physics
 {
     public class ThrowKnockbackController : VirtualController
     {
-        [Dependency] private readonly IPhysicsManager _physicsManager = default!;
-
         public ThrowKnockbackController()
         {
             IoCManager.InjectDependencies(this);

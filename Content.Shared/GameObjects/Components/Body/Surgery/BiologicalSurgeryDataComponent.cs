@@ -94,7 +94,7 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
             return null;
         }
 
-        public override string GetDescription(IEntity target)
+        public override string GetDescription()
         {
             if (Parent == null)
             {
@@ -107,21 +107,21 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
             {
                 // Case: skin is opened, but not clamped.
                 toReturn += Loc.GetString("The skin on {0:their} {1} has an incision, but it is prone to bleeding.\n",
-                    target, Parent.Name);
+                    Owner, Parent.Name);
             }
             else if (_skinOpened && _vesselsClamped && !_skinRetracted)
             {
                 // Case: skin is opened and clamped, but not retracted.
                 toReturn += Loc.GetString("The skin on {0:their} {1} has an incision, but it is not retracted.\n",
-                    target, Parent.Name);
+                    Owner, Parent.Name);
             }
             else if (_skinOpened && _vesselsClamped && _skinRetracted)
             {
                 // Case: skin is fully open.
-                toReturn += Loc.GetString("There is an incision on {0:their} {1}.\n", target, Parent.Name);
+                toReturn += Loc.GetString("There is an incision on {0:their} {1}.\n", Owner, Parent.Name);
                 foreach (var mechanism in _disconnectedOrgans)
                 {
-                    toReturn += Loc.GetString("{0:their} {1} is loose.\n", target, mechanism.Name);
+                    toReturn += Loc.GetString("{0:their} {1} is loose.\n", Owner, mechanism.Name);
                 }
             }
 
