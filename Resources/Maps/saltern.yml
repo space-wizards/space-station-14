@@ -1388,15 +1388,12 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 163
-  type: ConveyorSwitch
+  type: TwoWayLever
   components:
   - parent: 855
     pos: -23.467268,-14.347846
     rot: 3.141592653589793 rad
     type: Transform
-  - conveyors: []
-    switches: []
-    type: ConveyorSwitch
 - uid: 164
   type: DisposalJunctionFlipped
   components:

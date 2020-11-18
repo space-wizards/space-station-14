@@ -10,6 +10,7 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.MachineLinking
@@ -87,11 +88,10 @@ namespace Content.Server.GameObjects.Components.MachineLinking
             }
         }
 
-        public bool TransmitSignal<T>(IEntity user, T signal)
+        public bool TransmitSignal<T>(T signal)
         {
             if (_receivers.Count == 0)
             {
-                Owner.PopupMessage(user, Loc.GetString("No receivers connected."));
                 return false;
             }
 
@@ -150,8 +150,9 @@ namespace Content.Server.GameObjects.Components.MachineLinking
         {
             base.Shutdown();
 
-            foreach (var receiver in _receivers)
+            for (var i = _receivers.Count-1; i >= 0; i++)
             {
+                var receiver = _receivers[i];
                 if (receiver.Deleted)
                 {
                     continue;
@@ -159,6 +160,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
 
                 receiver.Unsubscribe(this);
             }
+
             _receivers.Clear();
         }
     }
