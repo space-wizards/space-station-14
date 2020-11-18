@@ -47577,4 +47577,11 @@ entities:
       light_bulb:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
+- uid: 4187
+  type: MopBucket
+  components:
+  - parent: 855
+    pos: -21.5,10.5
+    rot: -1.5707963267948966 rad
+    type: Transform
 ...
