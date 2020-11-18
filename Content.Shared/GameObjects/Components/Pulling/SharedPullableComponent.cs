@@ -1,12 +1,15 @@
 ﻿#nullable enable
 using System;
+using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -204,29 +207,36 @@ namespace Content.Shared.GameObjects.Components.Pulling
 
         private void AddPullingStatuses(IEntity puller)
         {
-            if (Owner.TryGetComponent(out SharedStatusEffectsComponent? pulledStatus))
+            if (Owner.TryGetComponent(out SharedAlertsComponent? pulledStatus))
             {
-                pulledStatus.ChangeStatusEffectIcon(StatusEffect.Pulled,
-                    "/Textures/Interface/StatusEffects/Pull/pulled.png");
+                pulledStatus.ShowAlert(AlertType.Pulled);
             }
 
-            if (puller.TryGetComponent(out SharedStatusEffectsComponent? ownerStatus))
+            if (puller.TryGetComponent(out SharedAlertsComponent? ownerStatus))
             {
-                ownerStatus.ChangeStatusEffectIcon(StatusEffect.Pulling,
-                    "/Textures/Interface/StatusEffects/Pull/pulling.png");
+                ownerStatus.ShowAlert(AlertType.Pulling, onClickAlert: OnClickAlert);
             }
+        }
+
+        private void OnClickAlert(ClickAlertEventArgs args)
+        {
+            EntitySystem
+                .Get<SharedPullingSystem>()
+                .GetPulled(args.Player)?
+                .GetComponentOrNull<SharedPullableComponent>()?
+                .TryStopPull();
         }
 
         private void RemovePullingStatuses(IEntity puller)
         {
-            if (Owner.TryGetComponent(out SharedStatusEffectsComponent? pulledStatus))
+            if (Owner.TryGetComponent(out SharedAlertsComponent? pulledStatus))
             {
-                pulledStatus.RemoveStatusEffect(StatusEffect.Pulled);
+                pulledStatus.ClearAlert(AlertType.Pulled);
             }
 
-            if (puller.TryGetComponent(out SharedStatusEffectsComponent? ownerStatus))
+            if (puller.TryGetComponent(out SharedAlertsComponent? ownerStatus))
             {
-                ownerStatus.RemoveStatusEffect(StatusEffect.Pulling);
+                ownerStatus.ClearAlert(AlertType.Pulling);
             }
         }
 

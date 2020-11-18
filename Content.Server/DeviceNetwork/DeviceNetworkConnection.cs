@@ -11,14 +11,14 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
         private readonly int _netId;
 
         [ViewVariables]
-        public bool Open { get; internal set; }
+        public bool Open { get; private set; }
         [ViewVariables]
-        public string Address { get; internal set; }
+        public string Address { get; private set; }
         [ViewVariables]
-        public int Frequency { get; internal set; }
+        public int Frequency { get; private set; }
 
         [ViewVariables]
-        public bool RecieveAll
+        public bool ReceiveAll
         {
             get => _network.GetDeviceReceiveAll(_netId, Frequency, Address);
             set => _network.SetDeviceReceiveAll(_netId, Frequency, Address, value);

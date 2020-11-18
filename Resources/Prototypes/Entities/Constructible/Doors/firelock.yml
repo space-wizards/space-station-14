@@ -24,6 +24,7 @@
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
 
     - type: Physics
+      on: false
       shapes:
         - !type:PhysShapeAabb
           bounds: "-0.49,-0.49,0.49,0.49" # don't want this colliding with walls or they won't close
@@ -54,6 +55,7 @@
     - type: Airtight
       fixVacuum: true
     - type: Occluder
+      enabled: false
     - type: SnapGrid
       offset: Center
   placement:
@@ -80,8 +82,6 @@
     - type: Firelock
       occludes: false
       canCrush: false
-    - type: Occluder
-      enabled: false
     - type: Sprite
       sprite: Constructible/Structures/Doors/edge_door_hazard.rsi
     - type: Airtight

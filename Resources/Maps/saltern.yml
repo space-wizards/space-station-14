@@ -1325,7 +1325,7 @@ entities:
   - deadThreshold: 100
     type: Destructible
 - uid: 156
-  type: AirlockMaintCargo
+  type: AirlockMaint
   components:
   - parent: 855
     pos: -24.5,-12.5
@@ -1673,8 +1673,7 @@ entities:
     pos: -17.5,-22.5
     rot: 3.141592653589793 rad
     type: Transform
-  - entryDelay: 0
-    type: DisposalUnit
+  - type: DisposalUnit
   - deadThreshold: 100
     type: Destructible
   - containers:
@@ -1772,8 +1771,7 @@ entities:
     pos: -29.5,11.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - entryDelay: 0
-    type: DisposalUnit
+  - type: DisposalUnit
   - deadThreshold: 100
     type: Destructible
   - containers:
@@ -1897,8 +1895,7 @@ entities:
     pos: -5.5,17.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - entryDelay: 0
-    type: DisposalUnit
+  - type: DisposalUnit
   - deadThreshold: 100
     type: Destructible
   - containers:
@@ -1964,8 +1961,7 @@ entities:
     pos: 6.5,11.5
     rot: 3.141592653589793 rad
     type: Transform
-  - entryDelay: 0
-    type: DisposalUnit
+  - type: DisposalUnit
   - deadThreshold: 100
     type: Destructible
   - containers:
@@ -2044,8 +2040,7 @@ entities:
     pos: 24.5,8.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - entryDelay: 0
-    type: DisposalUnit
+  - type: DisposalUnit
   - deadThreshold: 100
     type: Destructible
   - containers:
@@ -2218,8 +2213,7 @@ entities:
     pos: 34.5,-4.5
     rot: 3.141592653589793 rad
     type: Transform
-  - entryDelay: 0
-    type: DisposalUnit
+  - type: DisposalUnit
   - deadThreshold: 100
     type: Destructible
   - containers:
@@ -2376,8 +2370,7 @@ entities:
     pos: 37.5,6.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - entryDelay: 0
-    type: DisposalUnit
+  - type: DisposalUnit
   - deadThreshold: 100
     type: Destructible
   - containers:
@@ -2795,8 +2788,7 @@ entities:
     pos: -2.5,29.5
     rot: 3.141592653589793 rad
     type: Transform
-  - entryDelay: 0
-    type: DisposalUnit
+  - type: DisposalUnit
   - deadThreshold: 100
     type: Destructible
   - containers:
@@ -3108,8 +3100,7 @@ entities:
     pos: 11.5,-11.5
     rot: 3.141592653589793 rad
     type: Transform
-  - entryDelay: 0
-    type: DisposalUnit
+  - type: DisposalUnit
   - deadThreshold: 100
     type: Destructible
   - containers:
@@ -3187,8 +3178,7 @@ entities:
     pos: 12.5,-2.5
     rot: 3.141592653589793 rad
     type: Transform
-  - entryDelay: 0
-    type: DisposalUnit
+  - type: DisposalUnit
   - deadThreshold: 100
     type: Destructible
   - containers:
@@ -3605,8 +3595,7 @@ entities:
     pos: 0.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - entryDelay: 0
-    type: DisposalUnit
+  - type: DisposalUnit
   - deadThreshold: 100
     type: Destructible
   - containers:
@@ -3968,8 +3957,7 @@ entities:
     pos: -12.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - entryDelay: 0
-    type: DisposalUnit
+  - type: DisposalUnit
   - deadThreshold: 100
     type: Destructible
   - containers:
@@ -4100,8 +4088,7 @@ entities:
     pos: -22.5,6.5
     rot: 3.141592653589793 rad
     type: Transform
-  - entryDelay: 0
-    type: DisposalUnit
+  - type: DisposalUnit
   - deadThreshold: 100
     type: Destructible
   - containers:
@@ -4466,8 +4453,7 @@ entities:
     pos: -27.5,-8.5
     rot: 1.5707963267948966 rad
     type: Transform
-  - entryDelay: 0
-    type: DisposalUnit
+  - type: DisposalUnit
   - deadThreshold: 100
     type: Destructible
   - containers:
@@ -4520,8 +4506,7 @@ entities:
     pos: -10.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - entryDelay: 0
-    type: DisposalUnit
+  - type: DisposalUnit
   - deadThreshold: 100
     type: Destructible
   - containers:
@@ -4529,7 +4514,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 407
-  type: AirlockMaintCommon
+  type: AirlockMaint
   components:
   - parent: 855
     pos: -24.5,-12.5
@@ -8295,8 +8280,7 @@ entities:
     pos: -5.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - entryDelay: 0
-    type: DisposalUnit
+  - type: DisposalUnit
   - deadThreshold: 100
     type: Destructible
   - containers:
@@ -21434,8 +21418,7 @@ entities:
   - parent: 855
     pos: 18.5,-0.5
     type: Transform
-  - entryDelay: 0
-    type: DisposalUnit
+  - type: DisposalUnit
   - deadThreshold: 100
     type: Destructible
   - containers:
@@ -46790,7 +46773,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4088
-  type: AirlockMaintCommon
+  type: AirlockMaint
   components:
   - parent: 855
     pos: -8.5,-6.5
@@ -46944,7 +46927,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4110
-  type: AirlockMaintCommon
+  type: AirlockMaint
   components:
   - parent: 855
     pos: -31.5,-7.5
@@ -47591,4 +47574,11 @@ entities:
       light_bulb:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
+- uid: 4187
+  type: MopBucket
+  components:
+  - parent: 855
+    pos: -21.5,10.5
+    rot: -1.5707963267948966 rad
+    type: Transform
 ...
