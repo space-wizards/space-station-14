@@ -11,7 +11,7 @@ namespace Content.Server.Administration.Commands
     public class DeleteComponent : IClientCommand
     {
         public string Command => "deletecomponent";
-        public string Description => "Removes all instances of the specified component.";
+        public string Description => "Deletes all instances of the specified component.";
         public string Help => $"Usage: {Command} <name>";
 
         public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
