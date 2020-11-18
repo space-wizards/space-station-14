@@ -2,7 +2,6 @@
 using Content.Shared.Administration;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
@@ -13,7 +12,7 @@ namespace Content.Server.Administration.Commands
     {
         public string Command => "deletecomponent";
         public string Description => "Removes all instances of the specified component.";
-        public string Help => $"Usage: {Command}";
+        public string Help => $"Usage: {Command} <name>";
 
         public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
         {
