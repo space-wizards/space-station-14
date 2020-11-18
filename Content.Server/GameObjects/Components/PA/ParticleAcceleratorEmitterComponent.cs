@@ -11,8 +11,6 @@ namespace Content.Server.GameObjects.Components.PA
     [ComponentReference(typeof(ParticleAcceleratorPartComponent))]
     public class ParticleAcceleratorEmitterComponent : ParticleAcceleratorPartComponent
     {
-        [Dependency] private IEntityManager _entityManager = null!;
-
         public override string Name => "ParticleAcceleratorEmitter";
         public ParticleAcceleratorEmitterType Type;
 
@@ -25,7 +23,7 @@ namespace Content.Server.GameObjects.Components.PA
 
         public void Fire(ParticleAcceleratorPowerState strength)
         {
-            var projectile = _entityManager.SpawnEntity("ParticlesProjectile", Owner.Transform.Coordinates);
+            var projectile = Owner.EntityManager.SpawnEntity("ParticlesProjectile", Owner.Transform.Coordinates);
 
             if (!projectile.TryGetComponent<ParticleProjectileComponent>(out var particleProjectileComponent))
             {

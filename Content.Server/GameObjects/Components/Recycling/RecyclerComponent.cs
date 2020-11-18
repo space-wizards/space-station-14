@@ -26,8 +26,6 @@ namespace Content.Server.GameObjects.Components.Recycling
     [RegisterComponent]
     public class RecyclerComponent : Component, ICollideBehavior
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-
         public override string Name => "Recycler";
 
         private List<IEntity> _intersecting = new List<IEntity>();
@@ -164,7 +162,7 @@ namespace Content.Server.GameObjects.Components.Recycling
             {
                 var entity = _intersecting[i];
 
-                if (entity.Deleted || !CanMove(entity) || !_entityManager.IsIntersecting(Owner, entity))
+                if (entity.Deleted || !CanMove(entity) || !Owner.EntityManager.IsIntersecting(Owner, entity))
                 {
                     _intersecting.RemoveAt(i);
                     continue;

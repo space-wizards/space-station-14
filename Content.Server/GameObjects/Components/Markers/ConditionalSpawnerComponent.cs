@@ -20,7 +20,6 @@ namespace Content.Server.GameObjects.Components.Markers
     {
         [Dependency] private readonly IGameTicker _gameTicker = default!;
         [Dependency] private readonly IReflectionManager _reflectionManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override string Name => "ConditionalSpawner";
@@ -87,7 +86,7 @@ namespace Content.Server.GameObjects.Components.Markers
             }
 
             if(!Owner.Deleted)
-                _entityManager.SpawnEntity(_robustRandom.Pick(Prototypes), Owner.Transform.Coordinates);
+                Owner.EntityManager.SpawnEntity(_robustRandom.Pick(Prototypes), Owner.Transform.Coordinates);
         }
 
         public virtual void MapInit()

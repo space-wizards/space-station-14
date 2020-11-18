@@ -18,8 +18,6 @@ namespace Content.Server.GameObjects.Components.MachineLinking
     [RegisterComponent]
     public class SignalTransmitterComponent : Component, IInteractUsing
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-
         public override string Name => "SignalTransmitter";
 
         private List<SignalReceiverComponent> _unresolvedReceivers;
@@ -62,7 +60,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
                 _unresolvedReceivers = new List<SignalReceiverComponent>();
                 foreach (var entityUid in entityUids)
                 {
-                    if (!_entityManager.TryGetEntity(entityUid, out var entity)
+                    if (!Owner.EntityManager.TryGetEntity(entityUid, out var entity)
                         || !entity.TryGetComponent<SignalReceiverComponent>(out var receiver))
                     {
                         continue;

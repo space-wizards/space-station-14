@@ -16,7 +16,6 @@ namespace Content.Shared.GameObjects.Components.Movement
 {
     public abstract class SharedSlipperyComponent : Component, ICollideBehavior
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public sealed override string Name => "Slippery";
 
@@ -110,13 +109,13 @@ namespace Content.Shared.GameObjects.Components.Movement
         {
             foreach (var uid in _slipped.ToArray())
             {
-                if (!uid.IsValid() || !_entityManager.EntityExists(uid))
+                if (!uid.IsValid() || !Owner.EntityManager.EntityExists(uid))
                 {
                     _slipped.Remove(uid);
                     continue;
                 }
 
-                var entity = _entityManager.GetEntity(uid);
+                var entity = Owner.EntityManager.GetEntity(uid);
                 var physics = Owner.GetComponent<IPhysicsComponent>();
                 var otherPhysics = entity.GetComponent<IPhysicsComponent>();
 

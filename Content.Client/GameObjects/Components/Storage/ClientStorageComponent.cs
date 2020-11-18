@@ -25,8 +25,6 @@ namespace Content.Client.GameObjects.Components.Storage
     [RegisterComponent]
     public class ClientStorageComponent : SharedStorageComponent, IDraggable
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-
         private List<IEntity> _storedEntities = new List<IEntity>();
         private int StorageSizeUsed;
         private int StorageCapacityMax;
@@ -58,7 +56,7 @@ namespace Content.Client.GameObjects.Components.Storage
             }
 
             _storedEntities = state.StoredEntities
-                .Select(id => _entityManager.GetEntity(id))
+                .Select(id => Owner.EntityManager.GetEntity(id))
                 .ToList();
         }
 
@@ -88,7 +86,7 @@ namespace Content.Client.GameObjects.Components.Storage
         /// <param name="storageState"></param>
         private void HandleStorageMessage(StorageHeldItemsMessage storageState)
         {
-            _storedEntities = storageState.StoredEntities.Select(id => _entityManager.GetEntity(id)).ToList();
+            _storedEntities = storageState.StoredEntities.Select(id => Owner.EntityManager.GetEntity(id)).ToList();
             StorageSizeUsed = storageState.StorageSizeUsed;
             StorageCapacityMax = storageState.StorageSizeMax;
             Window.BuildEntityList();
