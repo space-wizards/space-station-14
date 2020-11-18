@@ -23,14 +23,12 @@ namespace Content.Server.GameObjects.Components.Items
 
         public override string Name => "FloorTile";
         private List<string> _outputTiles;
-        private int _default;
 
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _outputTiles, "outputs", null);
-            serializer.DataField(ref _default, "default", 0);
         }
 
         public override void Initialize()
@@ -66,8 +64,6 @@ namespace Content.Server.GameObjects.Components.Items
             var location = eventArgs.ClickLocation.AlignWithClosestGridTile();
             var locationMap = location.ToMap(Owner.EntityManager);
 
-            var desiredTile = (ContentTileDefinition)_tileDefinitionManager[_outputTiles[_default]];
-
             if (_mapManager.TryGetGrid(location.GetGridId(Owner.EntityManager), out var mapGrid))
             {
                 var tile = mapGrid.GetTileRef(location);
@@ -89,12 +85,12 @@ namespace Content.Server.GameObjects.Components.Items
                     }
                 }
             }
-            else if(HasBaseTurf(desiredTile, "space"))
+            else if(HasBaseTurf((ContentTileDefinition)_tileDefinitionManager[_outputTiles[0]], "space"))
             {
                 mapGrid = _mapManager.CreateGrid(locationMap.MapId);
                 mapGrid.WorldPosition = locationMap.Position;
                 location = new EntityCoordinates(mapGrid.GridEntityId, Vector2.Zero);
-                PlaceAt(mapGrid, location, desiredTile.TileId, mapGrid.TileSize/2f);
+                PlaceAt(mapGrid, location, _tileDefinitionManager[_outputTiles[0]].TileId, mapGrid.TileSize/2f);
             }
 
         }

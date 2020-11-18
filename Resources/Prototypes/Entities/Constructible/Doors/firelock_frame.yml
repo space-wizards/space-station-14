@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: FirelockFrame
-  name: firelock electronics
+  name: Firelock Frame
   description: That is a firelock frame.
   components:
     - type: Sprite

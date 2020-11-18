@@ -145,7 +145,7 @@
   display_name: Techmaint Floor
   texture: "tech_maint"
   base_turfs:
-  - underplating
+  - plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
@@ -157,7 +157,7 @@
   display_name: White Floor
   texture: "white"
   base_turfs:
-  - underplating
+  - plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
@@ -180,7 +180,7 @@
   display_name: Asteroid Tile
   texture: Asteroid/asteroid_tile
   base_turfs:
-  - underplating
+  - plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_asteroid
@@ -247,7 +247,7 @@
   display_name: Gold Tile
   texture: gold
   base_turfs:
-  - underplating
+  - plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor

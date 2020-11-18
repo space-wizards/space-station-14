@@ -13,6 +13,7 @@ using Robust.Shared.Interfaces.GameObjects;
 namespace Content.Server.GameObjects.Components.Atmos
 {
     [RegisterComponent]
+    [ComponentReference(typeof(ServerDoorComponent))]
     public class FirelockComponent : ServerDoorComponent, IInteractUsing, ICollideBehavior
     {
         public override string Name => "Firelock";
@@ -89,7 +90,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                 if (State == DoorState.Closed && !IsWeldedShut)
                     Open();
-                else if (State == DoorState.Open)
+                else if (State == DoorState.Open && !IsWeldedShut)
                     Close();
 
                 return true;

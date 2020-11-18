@@ -5,6 +5,7 @@ using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Construction.Completions
@@ -12,7 +13,7 @@ namespace Content.Server.Construction.Completions
     [UsedImplicitly]
     public class SetStackCount : IGraphAction
     {
-        public int Amount { get; private set; } = 1;
+        public int Amount { get; private set; }
 
         public void ExposeData(ObjectSerializer serializer)
         {
@@ -27,7 +28,9 @@ namespace Content.Server.Construction.Completions
             if (Amount > stackComponent.MaxCount)
             {
                 Amount = stackComponent.MaxCount;
+                Logger.Error("StackCount is bigger than maximum stack capacity, for entity " + entity.Name);
             }
+
             stackComponent.Count = Amount;
         }
     }

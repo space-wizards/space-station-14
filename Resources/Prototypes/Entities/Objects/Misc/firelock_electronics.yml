@@ -2,7 +2,7 @@
   id: FirelockElectronics
   parent: BaseItem
   name: Firelock Electronics
-  description: Advanced circuit board used to detect differences in pressure, temepratue and gas concentrations between the two sides of the door.
+  description: Advanced circuit board used to detect differences in pressure, temperature and gas concentrations between the two sides of the door.
   components:
     - type: Sprite
       sprite: Constructible/Misc/module.rsi

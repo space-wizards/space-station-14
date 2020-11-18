@@ -15,6 +15,9 @@
 
     - node: frame1
       entity: FirelockFrame
+      actions:
+        - !type:SpriteStateChange
+          state: frame1
       edges:
         - to: frame2
           conditions:
@@ -68,7 +71,7 @@
     - node: frame3
       actions:
         - !type:SpriteStateChange
-          state: frame2
+          state: frame3
       edges:
         - to: frame4
           conditions:
@@ -103,6 +106,15 @@
             - tool: Anchoring
               doAfter: 1
 
+        - to: FirelockGlassFrame
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - material: Glass
+              amount: 2
+              doAfter: 2
+
         - to: frame3
           conditions:
             - !type:EntityAnchored
@@ -121,21 +133,33 @@
           steps:
             - tool: Anchoring
               doAfter: 0.25
+
+    - node: FirelockGlassFrame
+      edges:
         - to: FirelockGlass
           conditions:
             - !type:EntityAnchored
               anchored: true
           steps:
-            - material: Glass
+            - tool: Anchoring
+              doAfter: 1
+        - to: frame4
+          completed:
+            - !type:SpawnPrototype
+              prototype: GlassSheet1
               amount: 2
+          steps:
+            - tool: Screwing
+              doAfter: 1
+      
 
     - node: FirelockGlass
       entity: FirelockGlass
       edges:
-        - to: Firelock
+        - to: FirelockGlassFrame
           conditions:
             - !type:EntityAnchored
               anchored: true
           steps:
-            - tool: Screwing
-              doAfter: 0.3
+            - tool: Anchoring
+              doAfter: 1

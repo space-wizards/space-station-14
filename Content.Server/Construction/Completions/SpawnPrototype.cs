@@ -22,6 +22,7 @@ namespace Content.Server.Construction.Completions
             serializer.DataField(this, x => x.Amount, "amount", 1);
         }
 
+
         public async Task PerformAction(IEntity entity, IEntity? user)
         {
             if (entity.Deleted || string.IsNullOrEmpty(Prototype)) return;
@@ -38,7 +39,8 @@ namespace Content.Server.Construction.Completions
                     stackComponent.Count = stackComponent.MaxCount;
                 else
                     stackComponent.Count = Amount;
-            }else
+            }
+            else
             {
                 for (var i = 0; i < Amount; i++)
                 {

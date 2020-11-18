@@ -22,25 +22,15 @@ namespace Content.Server.Construction.Conditions
 
         public async Task<bool> Condition(IEntity entity)
         {
-            //if (!entity.TryGetComponent(out IPhysicsComponent physics)) return false;
-            ServerDoorComponent doorComponent2 = null;
-            FirelockComponent  doorComponent = null;
-            if (!entity.TryGetComponent(out doorComponent) && !entity.TryGetComponent(out doorComponent2)) return false;
-            if (doorComponent2 == null)
-            {
-                return doorComponent.IsWeldedShut;
-            }else
-            {
-                return doorComponent2.IsWeldedShut;
-            }
+            if (!entity.TryGetComponent(out ServerDoorComponent doorComponent)) return false;
+            return doorComponent.IsWeldedShut;
         }
 
         public void DoExamine(IEntity entity, FormattedMessage message, bool inDetailsRange)
         {
-            //if (!entity.TryGetComponent(out IPhysicsComponent physics)) return;
-            if(!entity.TryGetComponent(out ServerDoorComponent doorComponent)) return;
+            if (!entity.TryGetComponent(out ServerDoorComponent doorComponent)) return;
 
-            if ((doorComponent.State & (int)ServerDoorComponent.DoorState.Closed) != 0)
+            if (doorComponent.State == ServerDoorComponent.DoorState.Closed)
                 message.AddMarkup("First, weld the door.\n");
         }
     }

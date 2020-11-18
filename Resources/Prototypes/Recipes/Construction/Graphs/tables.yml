@@ -11,11 +11,6 @@
             - material: MetalRod
               amount: 2
               doAfter: 1
-        - to: PokerTable
-          steps:
-            - material: Wood
-              amount: 2
-              doAfter: 1
 
     - node: PokerTable
       entity: TableCarpet
@@ -76,6 +71,12 @@
 
     - node: WoodTable
       entity: TableWood
+      edges:
+        - to: PokerTable
+          steps:
+            - material: Wood
+              amount: 1
+              doAfter: 1
 
     - node: RGlassTable
       entity: TableGlassR

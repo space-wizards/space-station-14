@@ -2,6 +2,7 @@
   name: Metal Rod
   parent: BaseItem
   id: MetalRod
+  suffix: full
   components:
     - type: Sprite
       sprite: Objects/Materials/materials.rsi
@@ -17,9 +18,18 @@
       node: MetalRod
     - type: Stack
       stacktype: enum.StackType.MetalRod
-      count: 1
+      count: 50
       max: 50
     - type: FloorTile
       outputs:
         - lattice
         - floor_reinforced
+
+- type: entity
+  parent: MetalRod
+  id: MetalRodStack1
+  components:
+    - type: Stack
+      stacktype: enum.StackType.MetalRod
+      count: 1
+      max: 50
