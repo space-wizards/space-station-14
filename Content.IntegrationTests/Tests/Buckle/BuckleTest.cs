@@ -231,7 +231,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.True(buckle.Buckled);
 
                 // With items in all hands
-                foreach (var slot in hands.Hands)
+                foreach (var slot in hands.HandNames)
                 {
                     Assert.NotNull(hands.GetItem(slot));
                 }
@@ -253,7 +253,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.True(buckle.Buckled);
 
                 // Now with no item in any hand
-                foreach (var slot in hands.Hands)
+                foreach (var slot in hands.HandNames)
                 {
                     Assert.Null(hands.GetItem(slot));
                 }

@@ -192,7 +192,7 @@ namespace Content.Client.UserInterface
             _activeHandRect.Parent?.RemoveChild(_activeHandRect);
             component.GetHand(component.ActiveHand)?.Button?.AddChild(_activeHandRect);
 
-            if (hands.Length > 0)
+            if (_activeHandRect.Parent != null && hands.Length > 0)
             {
                 _activeHandRect.SetPositionInParent(1);
             }

@@ -64,7 +64,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
                 // Test to ensure a player with 4 hands will still only have 2 hands cuffed
                 AddHand(cuffed.Owner);
                 AddHand(cuffed.Owner);
-                Assert.True(cuffed.CuffedHandCount == 2 && hands.Hands.Count() == 4, "Player doesn't have correct amount of hands cuffed");
+                Assert.True(cuffed.CuffedHandCount == 2 && hands.HandNames.Count() == 4, "Player doesn't have correct amount of hands cuffed");
 
                 // Test to give a player with 4 hands 2 sets of cuffs
                 cuffed.AddNewCuffs(cables);

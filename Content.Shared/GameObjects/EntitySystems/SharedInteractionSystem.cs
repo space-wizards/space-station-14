@@ -28,8 +28,8 @@ namespace Content.Shared.GameObjects.EntitySystems
         public delegate bool Ignored(IEntity entity);
 
         /// <summary>
-        ///     Calls HandSelected on all components that implement the IHandSelected interface
-        ///     on an item entity on a hand that has just been selected.
+        ///     Calls <see cref="IHandSelected.HandSelected"/> on an item entity on a
+        ///     hand that has just been selected or picked up into the active hand.
         /// </summary>
         public void HandSelectedInteraction(IEntity user, IEntity item)
         {
@@ -50,8 +50,9 @@ namespace Content.Shared.GameObjects.EntitySystems
         }
 
         /// <summary>
-        ///     Calls HandDeselected on all components that implement the IHandDeselected interface
-        ///     on an item entity on a hand that has just been deselected.
+        ///     Calls <see cref="IHandDeselected.HandDeselected"/> on an item entity
+        ///     on a hand that has just been deselected or dropped from the active
+        ///     hand.
         /// </summary>
         public void HandDeselectedInteraction(IEntity user, IEntity item)
         {

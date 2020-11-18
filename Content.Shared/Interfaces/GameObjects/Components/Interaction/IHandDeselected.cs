@@ -6,7 +6,8 @@ using Robust.Shared.Interfaces.GameObjects;
 namespace Content.Shared.Interfaces.GameObjects.Components
 {
     /// <summary>
-    ///     This interface gives components behavior when they're held on a deselected hand.
+    ///     This interface gives components behavior when their hand is deselected
+    ///     or they are dropped from the active hand.
     /// </summary>
     public interface IHandDeselected
     {

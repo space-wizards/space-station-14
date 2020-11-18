@@ -113,7 +113,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             }
 
             _container.Insert(handcuff);
-            CanStillInteract = _hands.Hands.Count() > CuffedHandCount;
+            CanStillInteract = _hands.HandNames.Count() > CuffedHandCount;
 
             OnCuffedStateChanged.Invoke();
             UpdateAlert();
@@ -127,7 +127,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         private void UpdateHandCount()
         {
             var dirty = false;
-            var handCount = _hands.Hands.Count();
+            var handCount = _hands.HandNames.Count();
 
             while (CuffedHandCount > handCount && CuffedHandCount > 0)
             {
@@ -160,7 +160,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         public void UpdateHeldItems()
         {
             var itemCount = _hands.GetAllHeldItems().Count();
-            var freeHandCount = _hands.Hands.Count() - CuffedHandCount;
+            var freeHandCount = _hands.HandNames.Count() - CuffedHandCount;
 
             if (freeHandCount < itemCount)
             {
@@ -281,7 +281,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
                     }
                 }
 
-                CanStillInteract = _hands.Hands.Count() > CuffedHandCount;
+                CanStillInteract = _hands.HandNames.Count() > CuffedHandCount;
                 OnCuffedStateChanged.Invoke();
                 UpdateAlert();
                 Dirty();

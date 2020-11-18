@@ -22,7 +22,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <summary>
         ///     The hands in this component.
         /// </summary>
-        IEnumerable<string> Hands { get; }
+        IReadOnlyList<string> HandNames { get; }
 
         /// <summary>
         ///     The hand name of the currently active hand.
@@ -60,7 +60,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <param name="item">The item to put in a hand.</param>
         /// <param name="mobCheck">Whether to perform an ActionBlocker check to the entity.</param>
         /// <returns>True if the item was inserted, false otherwise.</returns>
-        bool PutInHand(ItemComponent item, bool mobCheck = true);
+        bool PutInHand(IItemComponent item, bool mobCheck = true);
 
         /// <summary>
         ///     Puts an item into a specific hand.
@@ -72,7 +72,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <param name="mobCheck">Whether to perform an ActionBlocker check to the entity.</param>
         /// </param>
         /// <returns>True if the item was inserted into a hand, false otherwise.</returns>
-        bool PutInHand(ItemComponent item, string index, bool fallback=true, bool mobCheck = true);
+        bool PutInHand(IItemComponent item, string index, bool fallback=true, bool mobCheck = true);
 
         /// <summary>
         ///     Checks to see if an item can be put in any hand.
@@ -89,7 +89,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <param name="index">The name for the hand to check for.</param>
         /// <param name="mobCheck">Whether to perform an ActionBlocker check to the entity.</param>
         /// <returns>True if the item can be inserted, false otherwise.</returns>
-        bool CanPutInHand(ItemComponent item, string index, bool mobCheck = true);
+        bool CanPutInHand(IItemComponent item, string index, bool mobCheck = true);
 
         /// <summary>
         ///     Finds the hand slot holding the specified entity, if any.

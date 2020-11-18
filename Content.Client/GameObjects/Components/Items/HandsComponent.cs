@@ -32,6 +32,8 @@ namespace Content.Client.GameObjects.Components.Items
 
         [ViewVariables] private ISpriteComponent? _sprite;
 
+        [ViewVariables] public override IReadOnlyList<string> HandNames => _hands.Select(h => h.Name).ToList();
+
         [ViewVariables]
         public override string? ActiveHand
         {
@@ -70,9 +72,37 @@ namespace Content.Client.GameObjects.Components.Items
             }
         }
 
+        private Hand AddHand(SharedHand sharedHand)
+        {
+            var hand = new Hand(this, sharedHand, Owner.EntityManager);
+
+            AddHand(hand);
+
+            return hand;
+        }
+
         private void AddHand(Hand hand)
         {
             _hands.Insert(hand.Index, hand);
+
+            if (_activeHand == hand.Name && hand.Entity != null)
+            {
+                var interactionSystem = EntitySystem.Get<SharedInteractionSystem>();
+                interactionSystem.HandSelectedInteraction(Owner, hand.Entity);
+            }
+        }
+
+        private void RemoveHand(Hand hand)
+        {
+            _hands.Remove(hand);
+            _gui?.RemoveHand(hand);
+            HideHand(hand);
+
+            if (_activeHand == hand.Name && hand.Entity != null)
+            {
+                var interactionSystem = EntitySystem.Get<SharedInteractionSystem>();
+                interactionSystem.HandDeselectedInteraction(Owner, hand.Entity);
+            }
         }
 
         public Hand? GetHand(string? name)
@@ -138,8 +168,7 @@ namespace Content.Client.GameObjects.Components.Items
             {
                 if (!TryHand(sharedHand.Name, out var hand))
                 {
-                    hand = new Hand(this, sharedHand, Owner.EntityManager);
-                    AddHand(hand);
+                    hand = AddHand(sharedHand);
                 }
                 else
                 {
@@ -159,9 +188,7 @@ namespace Content.Client.GameObjects.Components.Items
             {
                 if (state.Hands.All(newHand => newHand.Name != currentHand.Name))
                 {
-                    _hands.Remove(currentHand);
-                    _gui?.RemoveHand(currentHand);
-                    HideHand(currentHand);
+                    RemoveHand(currentHand);
                 }
             }
 
@@ -306,6 +333,7 @@ namespace Content.Client.GameObjects.Components.Items
     public class Hand
     {
         private bool _enabled = true;
+        private IEntity? _entity;
 
         public Hand(HandsComponent parent, SharedHand hand, IEntityManager manager, HandButton? button = null)
         {
@@ -328,7 +356,39 @@ namespace Content.Client.GameObjects.Components.Items
         public int Index { get; }
         public string Name { get; }
         public HandLocation Location { get; set; }
-        public IEntity? Entity { get; set; }
+
+        public IEntity? Entity
+        {
+            get => _entity;
+            set
+            {
+                if (_entity == value)
+                {
+                    return;
+                }
+
+                var old = _entity;
+                _entity = value;
+
+                var interactionSystem = EntitySystem.Get<SharedInteractionSystem>();
+
+                if (Parent.ActiveHand != Name)
+                {
+                    return;
+                }
+
+                if (old != null)
+                {
+                    interactionSystem.HandDeselectedInteraction(Parent.Owner, old);
+                }
+
+                if (value != null)
+                {
+                    interactionSystem.HandSelectedInteraction(Parent.Owner, value);
+                }
+            }
+        }
+
         public HandButton? Button { get; set; }
 
         public bool Enabled

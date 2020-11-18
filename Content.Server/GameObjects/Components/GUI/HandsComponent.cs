@@ -16,6 +16,7 @@ using Robust.Server.GameObjects.EntitySystemMessages;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
@@ -56,14 +57,28 @@ namespace Content.Server.GameObjects.Components.GUI
                     throw new ArgumentException($"No hand '{value}'");
                 }
 
+                var old = _activeHand;
                 _activeHand = value;
+
+                var interactionSystem = EntitySystem.Get<SharedInteractionSystem>();
+
+                if (old != null && TryGetItem(old, out var oldItem))
+                {
+                    interactionSystem.HandDeselectedInteraction(Owner, oldItem.Owner);
+                }
+
+                if (value != null && TryGetItem(value, out var newItem))
+                {
+                    interactionSystem.HandSelectedInteraction(Owner, newItem.Owner);
+                }
+
                 Dirty();
             }
         }
 
         [ViewVariables] private readonly List<Hand> _hands = new List<Hand>();
 
-        public IEnumerable<string> Hands => _hands.Select(h => h.Name);
+        [ViewVariables] public override IReadOnlyList<string> HandNames => _hands.Select(h => h.Name).ToList();
 
         // Mostly arbitrary.
         public const float PickupRange = 2;
@@ -147,7 +162,7 @@ namespace Content.Server.GameObjects.Components.GUI
             }
         }
 
-        public bool PutInHand(ItemComponent item, bool mobCheck = true)
+        public bool PutInHand(IItemComponent item, bool mobCheck = true)
         {
             foreach (var hand in ActivePriorityEnumerable())
             {
@@ -162,7 +177,7 @@ namespace Content.Server.GameObjects.Components.GUI
             return false;
         }
 
-        public bool PutInHand(ItemComponent item, string index, bool fallback = true, bool mobChecks = true)
+        public bool PutInHand(IItemComponent item, string index, bool fallback = true, bool mobChecks = true)
         {
             var hand = GetHand(index);
             if (!CanPutInHand(item, index, mobChecks) || hand == null)
@@ -178,7 +193,10 @@ namespace Content.Server.GameObjects.Components.GUI
                 OnItemChanged?.Invoke();
             }
 
-            _entitySystemManager.GetEntitySystem<InteractionSystem>().HandSelectedInteraction(Owner, item.Owner);
+            if (index == _activeHand)
+            {
+                _entitySystemManager.GetEntitySystem<InteractionSystem>().HandSelectedInteraction(Owner, item.Owner);
+            }
 
             return success;
         }
@@ -208,7 +226,7 @@ namespace Content.Server.GameObjects.Components.GUI
             return false;
         }
 
-        public bool CanPutInHand(ItemComponent item, string index, bool mobCheck = true)
+        public bool CanPutInHand(IItemComponent item, string index, bool mobCheck = true)
         {
             if (mobCheck && !ActionBlockerSystem.CanPickup(Owner))
                 return false;
@@ -289,6 +307,12 @@ namespace Content.Server.GameObjects.Components.GUI
             }
 
             OnItemChanged?.Invoke();
+
+            if (slot == _activeHand)
+            {
+                EntitySystem.Get<SharedInteractionSystem>().HandDeselectedInteraction(Owner, item.Owner);
+            }
+
 
             Dirty();
             return true;
@@ -375,6 +399,11 @@ namespace Content.Server.GameObjects.Components.GUI
             }
 
             OnItemChanged?.Invoke();
+
+            if (slot == _activeHand)
+            {
+                EntitySystem.Get<SharedInteractionSystem>().HandDeselectedInteraction(Owner, item.Owner);
+            }
 
             Dirty();
             return true;

@@ -126,7 +126,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 return dictionary;
             }
 
-            foreach (var hand in hands.Hands)
+            foreach (var hand in hands.HandNames)
             {
                 dictionary[hand] = hands.GetItem(hand)?.Owner.Name ?? "None";
             }

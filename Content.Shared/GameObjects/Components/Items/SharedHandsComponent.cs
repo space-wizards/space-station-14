@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System;
+using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
@@ -10,6 +11,7 @@ namespace Content.Shared.GameObjects.Components.Items
         public sealed override string Name => "Hands";
         public sealed override uint? NetID => ContentNetIDs.HANDS;
 
+        public abstract IReadOnlyList<string> HandNames { get; }
         public abstract string? ActiveHand { get; set; }
     }
 
