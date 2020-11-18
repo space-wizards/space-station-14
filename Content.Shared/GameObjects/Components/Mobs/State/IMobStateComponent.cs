@@ -16,9 +16,9 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
 
         bool IsIncapacitated();
 
-        (IMobState state, int threshold)? GetEarliestIncapacitatedThreshold(int minimumDamage);
+        (IMobState state, int threshold)? GetEarliestIncapacitatedState(int minimumDamage);
 
-        bool TryGetEarliestIncapacitatedThreshold(
+        bool TryGetEarliestIncapacitatedState(
             int minimumDamage,
             [NotNullWhen(true)] out IMobState? state,
             out int threshold);

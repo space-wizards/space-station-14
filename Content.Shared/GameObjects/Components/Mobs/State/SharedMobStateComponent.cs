@@ -33,7 +33,7 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
         ///     Ordered from lowest to highest.
         /// </summary>
         [ViewVariables]
-        private SortedDictionary<int, IMobState> _lowestToHighestThresholds = default!;
+        private SortedDictionary<int, IMobState> _lowestToHighestStates = default!;
 
         // TODO Remove Nullability?
         [ViewVariables]
@@ -51,9 +51,9 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
                 new Dictionary<int, IMobState>(),
                 thresholds =>
                 {
-                    _lowestToHighestThresholds = new SortedDictionary<int, IMobState>(thresholds);
+                    _lowestToHighestStates = new SortedDictionary<int, IMobState>(thresholds);
                 },
-                () => new Dictionary<int, IMobState>(_lowestToHighestThresholds));
+                () => new Dictionary<int, IMobState>(_lowestToHighestStates));
         }
 
         protected override void Startup()
@@ -143,9 +143,9 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
             return CurrentState?.IsIncapacitated() ?? false;
         }
 
-        public (IMobState state, int threshold)? GetHighestThreshold(int damage)
+        public (IMobState state, int threshold)? GetState(int damage)
         {
-            foreach (var (threshold, state) in _lowestToHighestThresholds.Reverse())
+            foreach (var (threshold, state) in _lowestToHighestStates.Reverse())
             {
                 if (damage >= threshold)
                 {
@@ -156,27 +156,27 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
             return null;
         }
 
-        public bool TryGetHighestThreshold(
+        public bool TryGetState(
             int damage,
             [NotNullWhen(true)] out IMobState? state,
             out int threshold)
         {
-            var highestThreshold = GetHighestThreshold(damage);
+            var highestState = GetState(damage);
 
-            if (highestThreshold == null)
+            if (highestState == null)
             {
                 state = default;
                 threshold = default;
                 return false;
             }
 
-            (state, threshold) = highestThreshold.Value;
+            (state, threshold) = highestState.Value;
             return true;
         }
 
-        public (IMobState state, int threshold)? GetEarliestIncapacitatedThreshold(int minimumDamage)
+        public (IMobState state, int threshold)? GetEarliestIncapacitatedState(int minimumDamage)
         {
-            foreach (var (threshold, state) in _lowestToHighestThresholds)
+            foreach (var (threshold, state) in _lowestToHighestStates)
             {
                 if (!state.IsIncapacitated())
                 {
@@ -194,21 +194,21 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
             return null;
         }
 
-        public bool TryGetEarliestIncapacitatedThreshold(
+        public bool TryGetEarliestIncapacitatedState(
             int minimumDamage,
             [NotNullWhen(true)] out IMobState? state,
             out int threshold)
         {
-            var earliestThreshold = GetEarliestIncapacitatedThreshold(minimumDamage);
+            var earliestState = GetEarliestIncapacitatedState(minimumDamage);
 
-            if (earliestThreshold == null)
+            if (earliestState == null)
             {
                 state = default;
                 threshold = default;
                 return false;
             }
 
-            (state, threshold) = earliestThreshold.Value;
+            (state, threshold) = earliestState.Value;
             return true;
         }
 
@@ -228,7 +228,7 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
 
         public void UpdateState(int damage, bool syncing = false)
         {
-            if (!TryGetHighestThreshold(damage, out var state, out var threshold))
+            if (!TryGetState(damage, out var state, out var threshold))
             {
                 return;
             }

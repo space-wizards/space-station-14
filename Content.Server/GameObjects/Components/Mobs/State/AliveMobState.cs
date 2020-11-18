@@ -45,7 +45,7 @@ namespace Content.Server.GameObjects.Components.Mobs.State
 
             short modifier = 0;
 
-            if (stateComponent.TryGetEarliestIncapacitatedThreshold(threshold, out _, out var earliestThreshold))
+            if (stateComponent.TryGetEarliestIncapacitatedState(threshold, out _, out var earliestThreshold))
             {
                 modifier = (short) (damageable.TotalDamage / (earliestThreshold / 7f));
             }
