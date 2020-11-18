@@ -13,7 +13,6 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystemMessages;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -25,7 +24,7 @@ using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefine
 namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    internal sealed class HandsSystem : EntitySystem
+    internal sealed class HandsSystem : SharedHandsSystem
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
 

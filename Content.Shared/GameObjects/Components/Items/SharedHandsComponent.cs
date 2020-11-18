@@ -9,6 +9,8 @@ namespace Content.Shared.GameObjects.Components.Items
     {
         public sealed override string Name => "Hands";
         public sealed override uint? NetID => ContentNetIDs.HANDS;
+
+        public abstract string? ActiveHand { get; set; }
     }
 
     [Serializable, NetSerializable]

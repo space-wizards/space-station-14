@@ -47,6 +47,8 @@ namespace Content.Client.UserInterface
         Action<bool> SandboxButtonToggled { get; set; }
 
         Control HandsContainer { get; }
+        Action<string> OnHandChanged { get; set; }
+
         Control SuspicionContainer { get; }
         Control InventoryQuickButtonContainer { get; }
 
@@ -79,6 +81,8 @@ namespace Content.Client.UserInterface
         [Dependency] private readonly IInputManager _inputManager = default!;
 
         public Control HandsContainer { get; private set; }
+        public Action<string> OnHandChanged { get; set; }
+
         public Control SuspicionContainer { get; private set; }
         public Control InventoryQuickButtonContainer { get; private set; }
 

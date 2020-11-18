@@ -20,6 +20,7 @@ namespace Content.Client.UserInterface
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
+        [Dependency] private readonly IGameHud _gameHud = default!;
 
         private readonly TextureRect _activeHandRect;
 
@@ -189,7 +190,7 @@ namespace Content.Client.UserInterface
             }
 
             _activeHandRect.Parent?.RemoveChild(_activeHandRect);
-            component.GetHand(component.ActiveIndex)?.Button?.AddChild(_activeHandRect);
+            component.GetHand(component.ActiveHand)?.Button?.AddChild(_activeHandRect);
 
             if (hands.Length > 0)
             {
@@ -209,7 +210,7 @@ namespace Content.Client.UserInterface
 
             if (args.Function == ContentKeyFunctions.MouseMiddle)
             {
-                hands.SetActiveHand(slotName);
+                _gameHud.OnHandChanged?.Invoke(slotName);
                 args.Handle();
                 return;
             }
@@ -217,9 +218,9 @@ namespace Content.Client.UserInterface
             var entity = hands.GetEntity(slotName);
             if (entity == null)
             {
-                if (args.Function == EngineKeyFunctions.UIClick && hands.ActiveIndex != slotName)
+                if (args.Function == EngineKeyFunctions.UIClick && hands.ActiveHand != slotName)
                 {
-                    hands.SetActiveHand(slotName);
+                    _gameHud.OnHandChanged?.Invoke(slotName);
                     args.Handle();
                 }
 
@@ -234,7 +235,7 @@ namespace Content.Client.UserInterface
 
             if (args.Function == EngineKeyFunctions.UIClick)
             {
-                if (hands.ActiveIndex == slotName)
+                if (hands.ActiveHand == slotName)
                 {
                     hands.UseActiveHand();
                 }
@@ -345,7 +346,7 @@ namespace Content.Client.UserInterface
                         }
                     }
 
-                    _topPanel.Update(component.ActiveHand);
+                    _topPanel.Update(component.HeldActiveEntity);
                     _leftPanel.Update(null);
                     _rightPanel.Update(null);
 

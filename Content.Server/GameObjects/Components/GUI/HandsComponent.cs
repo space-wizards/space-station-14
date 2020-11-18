@@ -30,6 +30,7 @@ namespace Content.Server.GameObjects.Components.GUI
     [RegisterComponent]
     [ComponentReference(typeof(IHandsComponent))]
     [ComponentReference(typeof(ISharedHandsComponent))]
+    [ComponentReference(typeof(SharedHandsComponent))]
     public class HandsComponent : SharedHandsComponent, IHandsComponent, IBodyPartAdded, IBodyPartRemoved
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
@@ -40,7 +41,7 @@ namespace Content.Server.GameObjects.Components.GUI
         public event Action? OnItemChanged;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public string? ActiveHand
+        public override string? ActiveHand
         {
             get => _activeHand;
             set

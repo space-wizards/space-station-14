@@ -17,12 +17,13 @@ namespace Content.Client.GameObjects.Components.Items
 {
     [RegisterComponent]
     [ComponentReference(typeof(ISharedHandsComponent))]
+    [ComponentReference(typeof(SharedHandsComponent))]
     public class HandsComponent : SharedHandsComponent
     {
         [Dependency] private readonly IGameHud _gameHud = default!;
 
         [ViewVariables]
-        private string? _activeIndex;
+        private string? _activeHand;
 
         private HandsGui? _gui;
         private readonly List<Hand> _hands = new List<Hand>();
@@ -31,19 +32,24 @@ namespace Content.Client.GameObjects.Components.Items
 
         [ViewVariables] private ISpriteComponent? _sprite;
 
-        [ViewVariables] public string? ActiveIndex => _activeIndex;
-
-        [ViewVariables] public IEntity? ActiveHand => GetEntity(ActiveIndex);
-
-        public void SetActiveHand(string? slotName, bool serverState = false)
+        [ViewVariables]
+        public override string? ActiveHand
         {
-            if (_activeIndex == slotName)
+            get => _activeHand;
+            set => SetActiveHand(value, false);
+        }
+
+        [ViewVariables] public IEntity? HeldActiveEntity => GetEntity(ActiveHand);
+
+        private void SetActiveHand(string? slotName, bool serverState)
+        {
+            if (_activeHand == slotName)
             {
                 return;
             }
 
-            var old = _activeIndex;
-            _activeIndex = slotName;
+            var old = _activeHand;
+            _activeHand = slotName;
 
             var interactionSystem = EntitySystem.Get<SharedInteractionSystem>();
 
@@ -52,17 +58,16 @@ namespace Content.Client.GameObjects.Components.Items
                 interactionSystem.HandDeselectedInteraction(Owner, oldHeld);
             }
 
-            if (TryGetEntity(_activeIndex, out var newHeld))
+            if (TryGetEntity(_activeHand, out var newHeld))
             {
                 interactionSystem.HandSelectedInteraction(Owner, newHeld);
             }
 
             if (!serverState)
             {
-                SendNetworkMessage(new ClientChangedHandMsg(ActiveIndex));
+                SendNetworkMessage(new ClientChangedHandMsg(ActiveHand));
+                Dirty();
             }
-
-            Dirty();
         }
 
         private void AddHand(Hand hand)
@@ -220,7 +225,7 @@ namespace Content.Client.GameObjects.Components.Items
 
         protected override void Startup()
         {
-            SetActiveHand(_hands.LastOrDefault()?.Name);
+            ActiveHand = _hands.LastOrDefault()?.Name;
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
@@ -281,7 +286,7 @@ namespace Content.Client.GameObjects.Components.Items
 
         public void UseActiveHand()
         {
-            if (GetEntity(ActiveIndex) != null)
+            if (GetEntity(ActiveHand) != null)
             {
                 SendNetworkMessage(new UseInHandMsg());
             }
