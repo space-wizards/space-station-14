@@ -37,6 +37,8 @@ namespace Content.IntegrationTests.Tests.Pulling
             var options = new ServerContentIntegrationOption {ExtraPrototypes = PROTOTYPES};
             var server = StartServerDummyTicker(options);
 
+            await server.WaitIdleAsync();
+
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
 
