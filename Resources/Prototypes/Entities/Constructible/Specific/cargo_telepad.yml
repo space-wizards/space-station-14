@@ -1,0 +1,26 @@
+﻿- type: entity
+  name: cargo telepad
+  id: cargoTelepad
+  description: "Temporary cargo delivery for developing Nanotrasen stations! Warning: destroying this while goods are in transit will lose them forever!"
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    mass: 25
+    anchored: true
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.45, -0.45, 0.00, 0.45"
+      layer: [ Passable ]
+  - type: Sprite
+    sprite: Constructible/Power/cargo_teleporter.rsi
+    state: pad-offline
+  - type: Destructible
+    deadThreshold: 75
+    resistances: metallicResistances
+  - type: Anchorable
+  - type: Pullable
+  - type: PowerReceiver
+  - type: CargoTelepad

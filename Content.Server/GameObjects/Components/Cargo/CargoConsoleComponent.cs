@@ -10,10 +10,12 @@ using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using System.Linq;
 
 namespace Content.Server.GameObjects.Components.Cargo
 {
@@ -120,59 +122,78 @@ namespace Content.Server.GameObjects.Components.Cargo
             switch (message)
             {
                 case CargoConsoleAddOrderMessage msg:
-                {
-                    if (msg.Amount <= 0 || _bankAccount == null)
                     {
-                        break;
-                    }
-
-                    _cargoOrderDataManager.AddOrder(orders.Database.Id, msg.Requester, msg.Reason, msg.ProductId, msg.Amount, _bankAccount.Id);
-                    break;
-                }
-                case CargoConsoleRemoveOrderMessage msg:
-                {
-                    _cargoOrderDataManager.RemoveOrder(orders.Database.Id, msg.OrderNumber);
-                    break;
-                }
-                case CargoConsoleApproveOrderMessage msg:
-                {
-                    if (_requestOnly ||
-                        !orders.Database.TryGetOrder(msg.OrderNumber, out var order) ||
-                        _bankAccount == null)
-                    {
-                        break;
-                    }
-
-                    PrototypeManager.TryIndex(order.ProductId, out CargoProductPrototype product);
-                    if (product == null!)
-                        break;
-                    var capacity = _cargoOrderDataManager.GetCapacity(orders.Database.Id);
-                    if (capacity.CurrentCapacity == capacity.MaxCapacity)
-                        break;
-                    if (!_cargoConsoleSystem.ChangeBalance(_bankAccount.Id, (-product.PointCost) * order.Amount))
-                        break;
-                    _cargoOrderDataManager.ApproveOrder(orders.Database.Id, msg.OrderNumber);
-                    UpdateUIState();
-                    break;
-                }
-                case CargoConsoleShuttleMessage _:
-                {
-                    var approvedOrders = _cargoOrderDataManager.RemoveAndGetApprovedFrom(orders.Database);
-                    orders.Database.ClearOrderCapacity();
-                    // TODO replace with shuttle code
-
-                    // TEMPORARY loop for spawning stuff on top of console
-                    foreach (var order in approvedOrders)
-                    {
-                        if (!PrototypeManager.TryIndex(order.ProductId, out CargoProductPrototype product))
-                            continue;
-                        for (var i = 0; i < order.Amount; i++)
+                        if (msg.Amount <= 0 || _bankAccount == null)
                         {
-                            Owner.EntityManager.SpawnEntity(product.Product, Owner.Transform.Coordinates);
+                            break;
                         }
+
+                        _cargoOrderDataManager.AddOrder(orders.Database.Id, msg.Requester, msg.Reason, msg.ProductId, msg.Amount, _bankAccount.Id);
+                        break;
                     }
-                    break;
-                }
+                case CargoConsoleRemoveOrderMessage msg:
+                    {
+                        _cargoOrderDataManager.RemoveOrder(orders.Database.Id, msg.OrderNumber);
+                        break;
+                    }
+                case CargoConsoleApproveOrderMessage msg:
+                    {
+                        if (_requestOnly ||
+                            !orders.Database.TryGetOrder(msg.OrderNumber, out var order) ||
+                            _bankAccount == null)
+                        {
+                            break;
+                        }
+
+                        PrototypeManager.TryIndex(order.ProductId, out CargoProductPrototype product);
+                        if (product == null!)
+                            break;
+                        var capacity = _cargoOrderDataManager.GetCapacity(orders.Database.Id);
+                        if (capacity.CurrentCapacity == capacity.MaxCapacity)
+                            break;
+                        if (!_cargoConsoleSystem.ChangeBalance(_bankAccount.Id, (-product.PointCost) * order.Amount))
+                            break;
+                        _cargoOrderDataManager.ApproveOrder(orders.Database.Id, msg.OrderNumber);
+                        UpdateUIState();
+                        break;
+                    }
+                case CargoConsoleShuttleMessage _:
+                    {
+                        //var approvedOrders = _cargoOrderDataManager.RemoveAndGetApprovedFrom(orders.Database);
+                        //orders.Database.ClearOrderCapacity();
+
+                        // TODO replace with shuttle code
+                        // TEMPORARY loop for spawning stuff on telepad (looks for a telepad adjacent to the console)
+                        IEntity? cargoTelepad = null;
+                        var serverEntityManager = IoCManager.Resolve<IServerEntityManager>();
+                        var adjacentEntities = serverEntityManager.GetEntitiesInRange(Owner.Transform.Coordinates, 2).ToList();
+                        foreach (IEntity entity in adjacentEntities)
+                        {
+                            if (entity.HasComponent<CargoTelepadComponent>() && entity.TryGetComponent<PowerReceiverComponent>(out var powerReceiver) && powerReceiver.Powered)
+                            {
+                                cargoTelepad = entity;
+                                break;
+                            }
+                        }
+                        if (cargoTelepad != null)
+                        {
+                            if (cargoTelepad.TryGetComponent<CargoTelepadComponent>(out var telepadComponent))
+                            {
+                                var approvedOrders = _cargoOrderDataManager.RemoveAndGetApprovedFrom(orders.Database);
+                                orders.Database.ClearOrderCapacity();
+                                foreach (var order in approvedOrders)
+                                {
+                                    if (!PrototypeManager.TryIndex(order.ProductId, out CargoProductPrototype product))
+                                        continue;
+                                    for (var i = 0; i < order.Amount; i++)
+                                    {
+                                        telepadComponent.QueueTeleport(product);
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    }
             }
         }
 

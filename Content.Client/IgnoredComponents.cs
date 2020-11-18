@@ -211,6 +211,7 @@
             "CrematoriumEntityStorage",
             "RandomArcade",
             "RandomSpriteState",
+            "CargoTelepad"
         };
     }
 }
