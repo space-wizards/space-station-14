@@ -23,6 +23,7 @@ namespace Content.IntegrationTests.Tests
   components:
   - type: Inventory
   - type: HumanInventoryController
+
 - type: entity
   name: UniformDummy
   id: UniformDummy
@@ -30,6 +31,7 @@ namespace Content.IntegrationTests.Tests
   - type: Clothing
     Slots: [innerclothing]
     size: 5
+
 - type: entity
   name: IDCardDummy
   id: IDCardDummy
@@ -39,12 +41,14 @@ namespace Content.IntegrationTests.Tests
     - idcard
     size: 5
   - type: IdCard
+
 - type: entity
   name: FlashlightDummy
   id: FlashlightDummy
   components:
   - type: Item
     size: 5
+
 - type: entity
   name: ToolboxDummy
   id: ToolboxDummy

@@ -24,6 +24,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
   components:
   - type: Climbing
   - type: Physics
+
 - type: entity
   name: TableDummy
   id: TableDummy

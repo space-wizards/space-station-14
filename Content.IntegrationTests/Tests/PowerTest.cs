@@ -29,6 +29,7 @@ namespace Content.IntegrationTests.Tests
   - type: Anchorable
   - type: SnapGrid
     offset: Center
+
 - type: entity
   name: ConsumerDummy
   id: ConsumerDummy
@@ -41,6 +42,7 @@ namespace Content.IntegrationTests.Tests
       nodeGroupID: HVPower
   - type: PowerConsumer
     drawRate: 50
+
 - type: entity
   name: SubstationDummy
   id: SubstationDummy
@@ -63,6 +65,7 @@ namespace Content.IntegrationTests.Tests
     activeSupplyRate: 1000
   - type: SnapGrid
     offset: Center
+
 - type: entity
   name: ApcDummy
   id: ApcDummy
@@ -86,6 +89,7 @@ namespace Content.IntegrationTests.Tests
       nodeGroupID: Apc
   - type: SnapGrid
     offset: Center
+
 - type: entity
   name: ApcExtensionCableDummy
   id: ApcExtensionCableDummy
@@ -102,6 +106,7 @@ namespace Content.IntegrationTests.Tests
     wireType: Apc
   - type: SnapGrid
     offset: Center
+
 - type: entity
   name: PowerReceiverDummy
   id: PowerReceiverDummy

@@ -19,7 +19,6 @@ namespace Content.IntegrationTests.Tests.Commands
   name: DamageableDummy
   id: DamageableDummy
   components:
-  - type: Transform
   - type: Damageable
     damagePrototype: biologicalDamageContainer
     criticalThreshold: 100

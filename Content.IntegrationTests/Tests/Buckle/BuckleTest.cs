@@ -33,12 +33,12 @@ namespace Content.IntegrationTests.Tests.Buckle
     template: HumanoidTemplate
     preset: HumanPreset
     centerSlot: torso
+
 - type: entity
   name: StrapDummy
   id: StrapDummy
   components:
   - type: Strap
-  - type: Transform
 ";
         [Test]
         public async Task BuckleUnbuckleCooldownRangeTest()

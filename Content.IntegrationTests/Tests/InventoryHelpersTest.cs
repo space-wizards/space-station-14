@@ -23,7 +23,6 @@ namespace Content.IntegrationTests.Tests
   name: InventoryStunnableDummy
   id: InventoryStunnableDummy
   components:
-  - type: Transform
   - type: Inventory
   - type: Stunnable
 ";

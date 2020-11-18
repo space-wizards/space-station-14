@@ -68,6 +68,7 @@ namespace Content.IntegrationTests.Tests.Disposal
     damagePrototype: biologicalDamageContainer
     criticalThreshold: 100
     deadThreshold: 200
+
 - type: entity
   name: WrenchDummy
   id: WrenchDummy
@@ -75,6 +76,7 @@ namespace Content.IntegrationTests.Tests.Disposal
   - type: Tool
     qualities:
       - Anchoring
+
 - type: entity
   name: DisposalUnitDummy
   id: DisposalUnitDummy
@@ -84,6 +86,7 @@ namespace Content.IntegrationTests.Tests.Disposal
   - type: PowerReceiver
   - type: Physics
     anchored: true
+
 - type: entity
   name: DisposalTrunkDummy
   id: DisposalTrunkDummy

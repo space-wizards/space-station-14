@@ -31,6 +31,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
     template: HumanoidTemplate
     preset: HumanPreset
     centerSlot: torso
+
 - type: entity
   name: HandcuffsDummy
   id: HandcuffsDummy
