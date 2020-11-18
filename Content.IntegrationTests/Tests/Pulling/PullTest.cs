@@ -22,6 +22,7 @@ namespace Content.IntegrationTests.Tests.Pulling
   id: PullTestPullerDummy
   components:
   - type: Puller
+  - type: Physics
 
 - type: entity
   name: PullTestPullableDummy
