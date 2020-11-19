@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   parent: HatBase
   id: HatAtmosHelm
   name: atmos helm
@@ -30,9 +30,24 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/hardhat_blue.rsi
-
+    layers:
+    - state: icon
+    - state: light-icon
+      shader: unshaded
+      visible: false
   - type: Clothing
     sprite: Clothing/Head/hardhat_blue.rsi
+    HeldPrefix: off
+    ClothingPrefix: off
+  - type: PointLight
+    enabled: false
+    radius: 3
+  - type: LoopingSound
+  - type: Appearance
+    visuals:
+      - type: FlashLightVisualizer
+  - type: HandheldLight
+  - type: PowerCellSlot
 
 - type: entity
   parent: HatBase

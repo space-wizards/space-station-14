@@ -166,7 +166,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             if (Owner.TryGetComponent(out ClothingComponent? clothing))
             {
-                clothing.ClothingEquippedPrefix = on ? "On" : "Off";
+                clothing.ClothingEquippedPrefix = on ? "on" : "off";
             }
 
             if (Owner.TryGetComponent(out ItemComponent? item))
