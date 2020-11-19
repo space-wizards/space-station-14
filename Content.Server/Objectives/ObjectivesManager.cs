@@ -29,9 +29,9 @@ namespace Content.Server.Objectives
 
             var result = new List<ObjectivePrototype>();
             var currentDifficulty = 0f;
+            _random.Shuffle(objectives);
             while (currentDifficulty < maxDifficulty)
             {
-                _random.Shuffle(objectives);
                 foreach (var objective in objectives)
                 {
                     if (!_random.Prob(objective.Probability)) continue;
