@@ -16,19 +16,13 @@ namespace Content.Server.StationEvents
     public sealed class PowerGridCheck : StationEvent
     {
         public override string Name => "PowerGridCheck";
-
         public override StationEventWeight Weight => StationEventWeight.Normal;
-
         public override int? MaxOccurrences => 3;
-
         protected override string StartAnnouncement => Loc.GetString(
             "Abnormal activity detected in the station's powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.");
-
         protected override string EndAnnouncement => Loc.GetString(
             "Power has been restored to the station. We apologize for the inconvenience.");
-
         protected override string StartAudio => "/Audio/Announcements/power_off.ogg";
-
         protected override float AnnounceWhen => 3.0f;
 
 
