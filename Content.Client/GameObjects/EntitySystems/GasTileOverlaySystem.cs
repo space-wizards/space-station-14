@@ -178,8 +178,7 @@ namespace Content.Client.GameObjects.EntitySystems
             {
                 var state = overlays.FireState - 1;
                 var frames = _fireFrames[state];
-                // TODO ATMOS Set color depending on temperature
-                list[length - 1] = (frames[_fireFrameCounter[state]], Color.White);
+                list[length - 1] = (frames[_fireFrameCounter[state]], GetFireColor(overlays.FireTemperature));
             }
 
             return list;
@@ -212,6 +211,77 @@ namespace Content.Client.GameObjects.EntitySystems
                 _fireTimer[i] = 0f;
                 _fireFrameCounter[i] = (frameCount + 1) % _fireFrames[i].Length;
             }
+        }
+
+
+        //Thank you to Goonstation for providing this scientifically correct(?) formula for getting color.
+        private Color GetFireColor(float temperature)
+        {
+            float red, green, blue;
+
+            if (temperature <= 6600)
+                red = 255;
+            else
+                red = 329.698727446f * (float) Math.Pow(temperature - 6000, -0.1332047592f);
+
+            if (temperature <= 6600)
+            {
+                green = (float)Math.Max(0.001, temperature/100);
+                green = 99.4708025861f * (float)Math.Log(green) - 161.1195681661f;
+            }
+            else
+                green = 288.1221695283f * (float) Math.Pow(temperature - 6000, -0.0755148492);
+
+            if (temperature >= 6600)
+                blue = 255;
+            else if(temperature <= 1900)
+                blue = 0;
+            else
+                blue = 138.5177312231f * (float) Math.Log(temperature - 1000) - 305.0447927307f;
+
+            red = Math.Clamp(red, 0, 255);
+            green = Math.Clamp(green, 0, 255);
+            blue = Math.Clamp(blue, 0, 255);
+            red = red / 255f;
+            green = green / 255f;
+            blue = blue / 255f;
+
+            return new Color(red, green, blue);
+
+            /*	
+            var/input = temperature / 100
+
+            var/red
+            if (input <= 66)
+                red = 255
+            else
+                red = input - 60
+                red = 329.698727446 * (red ** -0.1332047592)
+            red = clamp(red, 0, 255)
+
+            var/green
+            if (input <= 66)
+                green = max(0.001, input)
+                green = 99.4708025861 * log(green) - 161.1195681661
+            else
+                green = input - 60
+                green = 288.1221695283 * (green ** -0.0755148492)
+            green = clamp(green, 0, 255)
+
+            var/blue
+            if (input >= 66)
+                blue = 255
+            else
+                if (input <= 19)
+                    blue = 0
+                else
+                    blue = input - 10
+                    blue = 138.5177312231 * log(blue) - 305.0447927307
+            blue = clamp(blue, 0, 255)
+
+            color = rgb(red, green, blue)
+            */
+
         }
     }
 }
