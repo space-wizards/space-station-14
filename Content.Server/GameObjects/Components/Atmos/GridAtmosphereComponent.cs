@@ -262,7 +262,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 // TODO ATMOS: Query all the contents of this tile (like walls) and calculate the correct thermal conductivity
                 tile.ThermalConductivity = tile.Tile?.Tile.GetContentTileDefinition().ThermalConductivity ?? 0.5f;
                 tile.UpdateAdjacent();
-                tile.UpdateVisuals();
+                GasTileOverlaySystem.Invalidate(_gridId, indices);
 
                 for (var i = 0; i < Atmospherics.Directions; i++)
                 {
