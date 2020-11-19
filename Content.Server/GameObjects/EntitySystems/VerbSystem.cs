@@ -17,7 +17,6 @@ namespace Content.Server.GameObjects.EntitySystems
 {
     public class VerbSystem : SharedVerbSystem, IResettingEntitySystem
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         private readonly HashSet<IPlayerSession> _seesThroughContainers = new HashSet<IPlayerSession>();
@@ -76,7 +75,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private void UseVerb(UseVerbMessage use, EntitySessionEventArgs eventArgs)
         {
-            if (!_entityManager.TryGetEntity(use.EntityUid, out var entity))
+            if (!EntityManager.TryGetEntity(use.EntityUid, out var entity))
             {
                 return;
             }
@@ -127,7 +126,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             var player = (IPlayerSession) eventArgs.SenderSession;
 
-            if (!_entityManager.TryGetEntity(req.EntityUid, out var entity))
+            if (!EntityManager.TryGetEntity(req.EntityUid, out var entity))
             {
                 Logger.Warning($"{nameof(RequestVerbs)} called on a nonexistant entity with id {req.EntityUid} by player {player}.");
                 return;

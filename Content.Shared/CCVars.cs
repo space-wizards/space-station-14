@@ -46,6 +46,9 @@ namespace Content.Shared
         public static readonly CVarDef<int>
             GameMaxCharacterSlots = CVarDef.Create("game.maxcharacterslots", 10, CVar.ARCHIVE | CVar.SERVERONLY);
 
+        public static readonly CVarDef<string>
+            GameMap = CVarDef.Create("game.map", "Maps/saltern.yml", CVar.SERVERONLY);
+
         /// <summary>
         ///     When enabled, guests will be assigned permanent UIDs and will have their preferences stored.
         /// </summary>
@@ -66,6 +69,13 @@ namespace Content.Shared
 
         public static readonly CVarDef<bool> GameDiagonalMovement =
             CVarDef.Create("game.diagonalmovement", true, CVar.ARCHIVE);
+
+        /*
+         * Console
+         */
+
+        public static readonly CVarDef<bool>
+            ConsoleLoginLocal = CVarDef.Create("console.loginlocal", true, CVar.ARCHIVE | CVar.SERVERONLY);
 
 
         /*
@@ -130,5 +140,15 @@ namespace Content.Shared
 
         public static readonly CVarDef<float> NetGasOverlayTickRate =
             CVarDef.Create("net.gasoverlaytickrate", 3.0f);
+
+        /*
+         * Admin stuff
+         */
+
+        public static readonly CVarDef<bool> AdminAnnounceLogin =
+            CVarDef.Create("admin.announce_login", true, CVar.SERVERONLY);
+
+        public static readonly CVarDef<bool> AdminAnnounceLogout =
+            CVarDef.Create("admin.announce_logout", true, CVar.SERVERONLY);
     }
 }

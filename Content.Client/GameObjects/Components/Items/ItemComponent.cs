@@ -39,7 +39,7 @@ namespace Content.Client.GameObjects.Components.Items
             set
             {
                 _equippedPrefix = value;
-                if (!ContainerHelpers.TryGetContainer(Owner, out IContainer container)) return;
+                if (!Owner.TryGetContainer(out IContainer container)) return;
                 if(container.Owner.TryGetComponent(out HandsComponent hands))
                     hands.RefreshInHands();
             }

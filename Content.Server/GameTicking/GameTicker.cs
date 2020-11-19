@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -67,7 +68,6 @@ namespace Content.Server.GameTicking
         public const float PresetFailedCooldownIncrease = 30f;
         private const string PlayerPrototypeName = "HumanMob_Content";
         private const string ObserverPrototypeName = "MobObserver";
-        private const string MapFile = "Maps/saltern.yml";
         private static TimeSpan _roundStartTimeSpan;
 
         [ViewVariables] private readonly List<GameRule> _gameRules = new List<GameRule>();
@@ -698,11 +698,16 @@ namespace Content.Server.GameTicking
             DisallowLateJoin = false;
         }
 
+        private string GetMap()
+        {
+            return _configurationManager.GetCVar(CCVars.GameMap);
+        }
+
         private void _preRoundSetup()
         {
             DefaultMap = _mapManager.CreateMap();
             var startTime = _gameTiming.RealTime;
-            var grid = _mapLoader.LoadBlueprint(DefaultMap, MapFile);
+            var grid = _mapLoader.LoadBlueprint(DefaultMap, GetMap());
 
             DefaultGridId = grid.Index;
             _spawnPoint = grid.ToCoordinates();

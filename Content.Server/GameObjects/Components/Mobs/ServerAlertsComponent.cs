@@ -1,6 +1,8 @@
 ﻿using System;
+using Content.Server.Administration;
 using Content.Server.Commands;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Administration;
 using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Server.Interfaces.Console;
@@ -88,6 +90,7 @@ namespace Content.Server.GameObjects.Components.Mobs
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public sealed class ShowAlert : IClientCommand
     {
         public string Command => "showalert";
@@ -129,6 +132,7 @@ namespace Content.Server.GameObjects.Components.Mobs
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public sealed class ClearAlert : IClientCommand
     {
         public string Command => "clearalert";

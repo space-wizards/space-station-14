@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Body.Part.Property;
+using Content.Shared.GameObjects.Components.Body.Preset;
+using Content.Shared.GameObjects.Components.Body.Template;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Shared.GameObjects.Components.Body
@@ -14,48 +16,80 @@ namespace Content.Shared.GameObjects.Components.Body
     /// </summary>
     public interface IBody : IComponent, IBodyPartContainer
     {
+        /// <summary>
+        ///     The name of the <see cref="BodyTemplatePrototype"/> used by this
+        ///     <see cref="IBody"/>.
+        /// </summary>
         public string? TemplateName { get; }
 
+        /// <summary>
+        ///     The name of the <see cref="BodyPresetPrototype"/> used by this
+        ///     <see cref="IBody"/>.
+        /// </summary>
         public string? PresetName { get; }
 
-        // TODO BODY tf is this
+        // TODO BODY Part slots
+        // TODO BODY Sensible templates
         /// <summary>
-        ///     Maps all parts on this template to its BodyPartType.
-        ///     For instance, "right arm" is mapped to "BodyPartType.arm" on the humanoid
-        ///     template.
+        ///     Mapping of <see cref="IBodyPart"/> slots in this body to their
+        ///     <see cref="BodyPartType"/>.
         /// </summary>
         public Dictionary<string, BodyPartType> Slots { get; }
 
         /// <summary>
-        ///     Maps slots to the part filling each one.
+        ///     Mapping of slots to the <see cref="IBodyPart"/> filling each one.
         /// </summary>
         public IReadOnlyDictionary<string, IBodyPart> Parts { get; }
 
-        // TODO BODY what am i doing
         /// <summary>
-        ///     Maps limb name to the list of their connections to other limbs.
-        ///     For instance, on the humanoid template "torso" is mapped to a list
-        ///     containing "right arm", "left arm", "left leg", and "right leg".
-        ///     This is mapped both ways during runtime, but in the prototype only one
-        ///     way has to be defined, i.e., "torso" to "left arm" will automatically
-        ///     map "left arm" to "torso".
+        ///     Mapping of slots to which other slots they connect to.
+        ///     For example, the torso could be mapped to a list containing
+        ///     "right arm", "left arm", "left leg", and "right leg".
+        ///     This is mapped both ways during runtime, but in the prototype
+        ///     it only has to be defined one-way, "torso": "left arm" will automatically
+        ///     map "left arm" to "torso" as well.
         /// </summary>
         public Dictionary<string, List<string>> Connections { get; }
 
         /// <summary>
-        ///     Maps a template slot to the ID of the <see cref="IBodyPart"/>
+        ///     Mapping of template slots to the ID of the <see cref="IBodyPart"/>
         ///     that should fill it. E.g. "right arm" : "BodyPart.arm.basic_human".
         /// </summary>
         public IReadOnlyDictionary<string, string> PartIds { get; }
 
         /// <summary>
-        ///     Adds the given <see cref="IBodyPart"/> into the given slot.
+        ///     Attempts to add a part to the given slot.
         /// </summary>
-        /// <returns>True if successful, false otherwise.</returns>
+        /// <param name="slot">The slot to add this part to.</param>
+        /// <param name="part">The part to add.</param>
+        /// <param name="force">
+        ///     Whether or not to check for the validity of the given <see cref="part"/>.
+        ///     Passing true does not guarantee it to be added, for example if it
+        ///     had already been added before.
+        /// </param>
+        /// <returns>
+        ///     true if the part was added, false otherwise even if it was already added.
+        /// </returns>
         bool TryAddPart(string slot, IBodyPart part, bool force = false);
 
+        /// <summary>
+        ///     Checks if there is a <see cref="IBodyPart"/> in the given slot.
+        /// </summary>
+        /// <param name="slot">The slot to look in.</param>
+        /// <returns>
+        ///     true if there is a part in the given <see cref="slot"/>,
+        ///     false otherwise.
+        /// </returns>
         bool HasPart(string slot);
 
+        /// <summary>
+        ///     Checks if this <see cref="IBody"/> contains the given <see cref="part"/>.
+        /// </summary>
+        /// <param name="part">The part to look for.</param>
+        /// <returns>
+        ///     true if the given <see cref="part"/> is attached to the body,
+        ///     false otherwise.
+        /// </returns>
         bool HasPart(IBodyPart part);
 
         /// <summary>
@@ -200,8 +234,18 @@ namespace Content.Shared.GameObjects.Components.Body
         List<(IBodyPart part, T property)> GetPartsWithProperty<T>() where T : class, IBodyPartProperty;
 
         // TODO BODY Make a slot object that makes sense to the human mind, and make it serializable. Imagine the possibilities!
+        /// <summary>
+        ///     Retrieves the slot at the given index.
+        /// </summary>
+        /// <param name="index">The index to look in.</param>
+        /// <returns>A pair of the slot name and part type occupying it.</returns>
         KeyValuePair<string, BodyPartType> SlotAt(int index);
 
+        /// <summary>
+        ///     Retrieves the part at the given index.
+        /// </summary>
+        /// <param name="index">The index to look in.</param>
+        /// <returns>A pair of the part name and body part occupying it.</returns>
         KeyValuePair<string, IBodyPart> PartAt(int index);
     }
 }

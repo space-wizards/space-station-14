@@ -1,0 +1,57 @@
+﻿- type: constructionGraph
+  id: ConveyorGraph
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: entity
+          steps:
+            - component: ConveyorAssembly
+              icon:
+                sprite: Constructible/Power/conveyor.rsi
+                state: conveyor_loose
+              name: conveyor belt assembly
+              doAfter: 2
+    - node: item
+      entity: ConveyorBeltAssembly
+      actions:
+        - !type:SetAnchor
+          value: false
+    - node: entity
+      entity: ConveyorBelt
+      actions:
+        - !type:SetAnchor
+          value: true
+        - !type:SnapToGrid
+          offset: Center
+      edges:
+        - to: item
+          steps:
+            - tool: Prying
+              doAfter: 3
+
+- type: constructionGraph
+  id: leverGraph
+  start: start
+  graph:
+  - node: start
+    actions:
+      - !type:SpawnPrototype
+        prototype: SteelSheet1
+        amount: 2
+      - !type:DeleteEntity {}
+    edges:
+      - to: lever
+        completed:
+          - !type:SnapToGrid {}
+        steps:
+          - material: Metal
+            amount: 2
+            doAfter: 1
+  - node: lever
+    entity: TwoWayLever
+    edges:
+      - to: start
+        steps:
+          - tool: Anchoring
+            doAfter: 1

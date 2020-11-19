@@ -234,7 +234,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         private InternalsComponent? GetInternalsComponent(IEntity? owner = null)
         {
             if (owner != null) return owner.GetComponentOrNull<InternalsComponent>();
-            return ContainerHelpers.TryGetContainer(Owner, out var container)
+            return Owner.TryGetContainer(out var container)
                 ? container.Owner.GetComponentOrNull<InternalsComponent>()
                 : null;
         }
