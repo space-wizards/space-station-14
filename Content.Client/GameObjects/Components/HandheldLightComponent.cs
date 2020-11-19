@@ -25,7 +25,9 @@ namespace Content.Client.GameObjects.Components
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            if (!(curState is HandheldLightComponentState cast))
+            base.HandleComponentState(curState, nextState);
+
+            if (curState is not HandheldLightComponentState cast)
                 return;
 
             _level = cast.Charge;

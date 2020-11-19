@@ -20,7 +20,7 @@ namespace Content.Client.GameObjects.Components.Cargo
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
             base.HandleComponentState(curState, nextState);
-            if (!(curState is GalacticMarketState state))
+            if (curState is not GalacticMarketState state)
                 return;
             _products.Clear();
             foreach (var productId in state.Products)

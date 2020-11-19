@@ -10,7 +10,9 @@ namespace Content.Client.GameObjects.Components.Movement
     {
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
-            if (!(curState is SlipperyComponentState state)) return;
+            base.HandleComponentState(curState, nextState);
+
+            if (curState is not SlipperyComponentState state) return;
 
             Slippery = state.Slippery;
             IntersectPercentage = state.IntersectPercentage;

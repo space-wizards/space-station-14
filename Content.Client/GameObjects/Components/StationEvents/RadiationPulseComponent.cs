@@ -25,7 +25,7 @@ namespace Content.Client.GameObjects.Components.StationEvents
         {
             base.HandleComponentState(curState, nextState);
 
-            if (!(curState is RadiationPulseState state))
+            if (curState is not RadiationPulseState state)
             {
                 return;
             }

@@ -16,7 +16,7 @@ namespace Content.Client.GameObjects.Components.Research
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
             base.HandleComponentState(curState, nextState);
-            if (!(curState is MaterialStorageState state)) return;
+            if (curState is not MaterialStorageState state) return;
             Storage = state.Storage;
             OnMaterialStorageChanged?.Invoke();
         }

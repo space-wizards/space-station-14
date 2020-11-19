@@ -21,7 +21,7 @@ namespace Content.Client.GameObjects.Components.Research
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
             base.HandleComponentState(curState, nextState);
-            if (!(curState is ProtolatheDatabaseState state)) return;
+            if (curState is not ProtolatheDatabaseState state) return;
             Clear();
             foreach (var ID in state.Recipes)
             {

@@ -78,7 +78,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            if (!(state is MicrowaveUpdateUserInterfaceState cState))
+            if (state is not MicrowaveUpdateUserInterfaceState cState)
             {
                 return;
             }

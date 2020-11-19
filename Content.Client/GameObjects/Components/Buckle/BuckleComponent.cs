@@ -21,7 +21,7 @@ namespace Content.Client.GameObjects.Components.Buckle
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            if (!(curState is BuckleComponentState buckle))
+            if (curState is not BuckleComponentState buckle)
             {
                 return;
             }

@@ -48,7 +48,7 @@ namespace Content.Client.GameObjects.Components.Mobs.State
         {
             base.HandleComponentState(curState, nextState);
 
-            if (!(curState is MobStateManagerComponentState state))
+            if (curState is not MobStateManagerComponentState state)
             {
                 return;
             }

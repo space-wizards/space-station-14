@@ -40,7 +40,7 @@ namespace Content.Client.GameObjects.Components.Cargo
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
             base.HandleComponentState(curState, nextState);
-            if (!(curState is CargoOrderDatabaseState state))
+            if (curState is not CargoOrderDatabaseState state)
                 return;
             Clear();
             if (state.Orders == null)

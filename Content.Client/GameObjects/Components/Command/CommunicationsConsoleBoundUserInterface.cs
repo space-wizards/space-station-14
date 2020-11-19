@@ -56,7 +56,9 @@ namespace Content.Client.GameObjects.Components.Command
 
         protected override void UpdateState(BoundUserInterfaceState state)
         {
-            if (!(state is CommunicationsConsoleInterfaceState commsState))
+            base.UpdateState(state);
+
+            if (state is not CommunicationsConsoleInterfaceState commsState)
                 return;
 
             _expectedCountdownTime = commsState.ExpectedCountdownEnd;

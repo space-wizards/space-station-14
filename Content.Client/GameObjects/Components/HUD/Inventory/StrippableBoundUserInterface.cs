@@ -90,7 +90,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         {
             base.UpdateState(state);
 
-            if (!(state is StrippingBoundUserInterfaceState stripState)) return;
+            if (state is not StrippingBoundUserInterfaceState stripState) return;
 
             Inventory = stripState.Inventory;
             Hands = stripState.Hands;

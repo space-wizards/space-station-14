@@ -22,7 +22,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         {
             base.HandleComponentState(curState, nextState);
 
-            if (!(curState is StunnableComponentState state))
+            if (curState is not StunnableComponentState state)
             {
                 return;
             }

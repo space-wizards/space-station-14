@@ -21,7 +21,7 @@ namespace Content.Client.GameObjects.Components.ActionBlocking
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
-            if (!(curState is CuffableComponentState cuffState))
+            if (curState is not CuffableComponentState cuffState)
             {
                 return;
             }

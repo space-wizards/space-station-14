@@ -25,7 +25,7 @@ namespace Content.Client.GameObjects.Components.Crayon
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            if (!(curState is CrayonComponentState state))
+            if (curState is not CrayonComponentState state)
                 return;
 
             _color = state.Color;
