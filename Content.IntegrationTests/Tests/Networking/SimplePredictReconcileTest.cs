@@ -401,7 +401,7 @@ namespace Content.IntegrationTests.Tests.Networking
 
             public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
             {
-                if (!(curState is PredictionComponentState pred))
+                if (curState is not PredictionComponentState pred)
                 {
                     return;
                 }
