@@ -63,21 +63,15 @@ namespace Content.Server.GameObjects.Components.Items
 
             var location = eventArgs.ClickLocation.AlignWithClosestGridTile();
             var locationMap = location.ToMap(Owner.EntityManager);
+            _mapManager.TryGetGrid(location.GetGridId(Owner.EntityManager), out var mapGrid);
             foreach (var currentTile in _outputTiles)
             {
                 var currentTileDefinition = (ContentTileDefinition) _tileDefinitionManager[currentTile];
 
-                if (_mapManager.TryGetGrid(location.GetGridId(Owner.EntityManager), out var mapGrid))
+                if (mapGrid != null)
                 {
                     var tile = mapGrid.GetTileRef(location);
                     var baseTurf = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
-
-                    if (_outputTiles == null)
-                    {
-                        return;
-                    }
-
-
 
                     if (HasBaseTurf(currentTileDefinition, baseTurf.Name) && stack.Use(1))
                     {
