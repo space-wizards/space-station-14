@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Explosion
             serializer.DataField(ref FlashRange, "flashRange", 0);
         }
 
-        public bool Explosion()
+        public bool Explosion(bool delete = true)
         {
             //Prevent adjacent explosives from infinitely blowing each other up.
             if (_beingExploded) return true;
@@ -36,7 +36,9 @@ namespace Content.Server.GameObjects.Components.Explosion
 
             Owner.SpawnExplosion(DevastationRange, HeavyImpactRange, LightImpactRange, FlashRange);
 
-            Owner.Delete();
+            if (delete){
+                Owner.Delete();
+            }
             return true;
         }
 
