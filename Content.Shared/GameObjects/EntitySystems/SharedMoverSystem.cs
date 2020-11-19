@@ -204,7 +204,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
             {
-                if (!(message is FullInputCmdMessage full))
+                if (message is not FullInputCmdMessage full)
                 {
                     return false;
                 }
@@ -218,7 +218,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         {
             public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
             {
-                if (!(message is FullInputCmdMessage full))
+                if (message is not FullInputCmdMessage full)
                 {
                     return false;
                 }

@@ -51,7 +51,9 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            if (!(curState is HumanoidAppearanceComponentState cast))
+            base.HandleComponentState(curState, nextState);
+
+            if (curState is not HumanoidAppearanceComponentState cast)
                 return;
 
             Appearance = cast.Appearance;

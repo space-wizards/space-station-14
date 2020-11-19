@@ -52,7 +52,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
         {
             base.HandleMessage(message, component);
 
-            if (!(message is PullMessage pullMessage) ||
+            if (message is not PullMessage pullMessage ||
                 pullMessage.Puller.Owner != Owner)
             {
                 return;

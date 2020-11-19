@@ -62,7 +62,9 @@ namespace Content.Shared.GameObjects.Components.Items
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            if (!(curState is ItemCooldownComponentState cast))
+            base.HandleComponentState(curState, nextState);
+
+            if (curState is not ItemCooldownComponentState cast)
                 return;
 
             CooldownStart = cast.CooldownStart;

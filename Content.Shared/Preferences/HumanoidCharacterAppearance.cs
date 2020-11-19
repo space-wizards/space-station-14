@@ -145,7 +145,7 @@ namespace Content.Shared.Preferences
 
         public bool MemberwiseEquals(ICharacterAppearance maybeOther)
         {
-            if (!(maybeOther is HumanoidCharacterAppearance other)) return false;
+            if (maybeOther is not HumanoidCharacterAppearance other) return false;
             if (HairStyleName != other.HairStyleName) return false;
             if (!HairColor.Equals(other.HairColor)) return false;
             if (FacialHairStyleName != other.FacialHairStyleName) return false;

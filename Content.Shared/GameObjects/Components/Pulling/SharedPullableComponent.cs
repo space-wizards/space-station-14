@@ -171,7 +171,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
         {
             base.HandleComponentState(curState, nextState);
 
-            if (!(curState is PullableComponentState state))
+            if (curState is not PullableComponentState state)
             {
                 return;
             }
@@ -195,7 +195,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
         {
             base.HandleMessage(message, component);
 
-            if (!(message is PullMessage pullMessage) ||
+            if (message is not PullMessage pullMessage ||
                 pullMessage.Pulled.Owner != Owner)
             {
                 return;

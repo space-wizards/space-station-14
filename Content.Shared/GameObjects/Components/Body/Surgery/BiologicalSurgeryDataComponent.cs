@@ -255,7 +255,7 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
         private void RemoveBodyPartSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
             if (Parent == null) return;
-            if (!(container is IBody body)) return;
+            if (container is not IBody body) return;
 
             performer.PopupMessage(Loc.GetString("Saw off the limb!"));
 

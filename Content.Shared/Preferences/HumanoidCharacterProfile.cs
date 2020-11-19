@@ -236,7 +236,7 @@ namespace Content.Shared.Preferences
 
         public bool MemberwiseEquals(ICharacterProfile maybeOther)
         {
-            if (!(maybeOther is HumanoidCharacterProfile other)) return false;
+            if (maybeOther is not HumanoidCharacterProfile other) return false;
             if (Name != other.Name) return false;
             if (Age != other.Age) return false;
             if (Sex != other.Sex) return false;

@@ -97,7 +97,7 @@ namespace Content.Shared.GameObjects.Components
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            if (!(curState is StackComponentState cast))
+            if (curState is not StackComponentState cast)
             {
                 return;
             }
