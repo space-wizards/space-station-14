@@ -68,6 +68,7 @@ namespace Content.Server.Atmos
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class AddUnsimulatedAtmos : IClientCommand
     {
         public string Command => "addunsimulatedatmos";
@@ -118,6 +119,7 @@ namespace Content.Server.Atmos
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class ListGases : IClientCommand
     {
         public string Command => "listgases";
@@ -134,6 +136,7 @@ namespace Content.Server.Atmos
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class AddGas : IClientCommand
     {
         public string Command => "addgas";
@@ -207,6 +210,7 @@ namespace Content.Server.Atmos
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class FillGas : IClientCommand
     {
         public string Command => "fillgas";
@@ -265,6 +269,7 @@ namespace Content.Server.Atmos
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class RemoveGas : IClientCommand
     {
         public string Command => "removegas";
@@ -328,6 +333,7 @@ namespace Content.Server.Atmos
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class SetTemperature : IClientCommand
     {
         public string Command => "settemp";
@@ -392,6 +398,7 @@ namespace Content.Server.Atmos
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class SetAtmosTemperature : IClientCommand
     {
         public string Command => "setatmostemp";
@@ -451,6 +458,7 @@ namespace Content.Server.Atmos
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class DeleteGasCommand : IClientCommand
     {
         public string Command => "deletegas";
@@ -627,25 +635,27 @@ namespace Content.Server.Atmos
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class ShowAtmos : IClientCommand
     {
         public string Command => "showatmos";
-        public string Description => "Toggles seeing atmos debug overlay";
+        public string Description => "Toggles seeing atmos debug overlay.";
         public string Help => $"Usage: {Command}";
 
         public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
         {
-            if (player == null) return;
+            if (player == null)
+            {
+                shell.SendText(player, "You must be a player to use this command.");
+                return;
+            }
+
             var atmosDebug = EntitySystem.Get<AtmosDebugOverlaySystem>();
-            if (atmosDebug.PlayerObservers.Contains(player))
-            {
-                atmosDebug.PlayerObservers.Remove(player);
-                shell.SendText(player, $"Ok, disabled");
-            }
-            else
-            {
-                atmosDebug.PlayerObservers.Add(player);
-                shell.SendText(player, $"Ok, enabled");
-            }
+            var enabled = atmosDebug.ToggleObserver(player);
+
+            shell.SendText(player, enabled
+                ? "Enabled the atmospherics debug overlay."
+                : "Disabled the atmospherics debug overlay.");
         }
-    }}
+    }
+}
