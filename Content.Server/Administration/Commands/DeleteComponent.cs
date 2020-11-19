@@ -25,7 +25,14 @@ namespace Content.Server.Administration.Commands
                     var name = string.Join(" ", args);
                     var componentFactory = IoCManager.Resolve<IComponentFactory>();
                     var entityManager = IoCManager.Resolve<IEntityManager>();
-                    var componentType = componentFactory.GetRegistration(name).Type;
+
+                    if (!componentFactory.TryGetRegistration(name, out var registration))
+                    {
+                        shell.SendText(player, $"No component exists with name {name}.");
+                        break;
+                    }
+
+                    var componentType = registration.Type;
 
                     var components = entityManager.ComponentManager.GetAllComponents(componentType);
 
