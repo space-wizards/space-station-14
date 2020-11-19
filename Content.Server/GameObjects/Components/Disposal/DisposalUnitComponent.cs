@@ -381,7 +381,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return;
             }
 
-            if (!(obj.Message is UiButtonPressedMessage message))
+            if (obj.Message is not UiButtonPressedMessage message)
             {
                 return;
             }

@@ -46,7 +46,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         protected override void OnAddNode(Node node)
         {
-            if (!(node is PipeNode pipeNode))
+            if (node is not PipeNode pipeNode)
                 return;
             _pipes.Add(pipeNode);
             pipeNode.JoinPipeNet(this);
@@ -58,7 +58,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         protected override void OnRemoveNode(Node node)
         {
             RemoveFromGridAtmos();
-            if (!(node is PipeNode pipeNode))
+            if (node is not PipeNode pipeNode)
                 return;
             var pipeAir = pipeNode.LocalAir;
             pipeAir.Merge(Air);
@@ -68,7 +68,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         protected override void OnGivingNodesForCombine(INodeGroup newGroup)
         {
-            if (!(newGroup is IPipeNet newPipeNet))
+            if (newGroup is not IPipeNet newPipeNet)
                 return;
             newPipeNet.Air.Merge(Air);
             Air.Clear();
@@ -78,7 +78,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         {
             foreach (var newGroup in newGroups)
             {
-                if (!(newGroup is IPipeNet newPipeNet))
+                if (newGroup is not IPipeNet newPipeNet)
                     continue;
                 newPipeNet.Air.Merge(Air);
                 var newPipeNetGas = newPipeNet.Air;

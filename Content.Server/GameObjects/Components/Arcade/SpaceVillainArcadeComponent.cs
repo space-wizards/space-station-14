@@ -119,7 +119,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             if (!Powered)
                 return;
 
-            if (!(serverMsg.Message is SpaceVillainArcadePlayerActionMessage msg)) return;
+            if (serverMsg.Message is not SpaceVillainArcadePlayerActionMessage msg) return;
 
             switch (msg.PlayerAction)
             {

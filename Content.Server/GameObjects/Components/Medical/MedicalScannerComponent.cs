@@ -257,7 +257,7 @@ namespace Content.Server.GameObjects.Components.Medical
 
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
-            if (!(obj.Message is UiButtonPressedMessage message)) return;
+            if (obj.Message is not UiButtonPressedMessage message) return;
 
             switch (message.Button)
             {
