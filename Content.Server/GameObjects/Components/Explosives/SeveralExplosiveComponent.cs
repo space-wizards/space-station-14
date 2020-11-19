@@ -5,6 +5,8 @@ using Robust.Shared.GameObjects;
 using System;
 using System.Threading.Tasks;
 using Robust.Shared.Timers;
+using Robust.Shared.ViewVariables;
+using Robust.Shared.Log;
 
 namespace Content.Server.GameObjects.Components.Explosives
 {
@@ -13,7 +15,7 @@ namespace Content.Server.GameObjects.Components.Explosives
 
         public override string Name => "SeveralExplosive";
 
-
+        [ViewVariables]
         private int _grenadesCounter = 0;
         private ExplosiveComponent? _explosiveComponent;
 
@@ -43,6 +45,7 @@ namespace Content.Server.GameObjects.Components.Explosives
                         }
                 }
                 _grenadesCounter++;
+                args.Using.Delete();
                 return true;
             }
             catch{
@@ -52,7 +55,10 @@ namespace Content.Server.GameObjects.Components.Explosives
 
         public override void Initialize(){
             base.Initialize();
-
+            bool explosive = Owner.TryGetComponent<ExplosiveComponent>(out _explosiveComponent);
+            if (!explosive){
+                Logger.Log(LogLevel.Warning, "SeveralExplosive component need Explosive component but no one was found");
+            }
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs){
