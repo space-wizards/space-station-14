@@ -13,7 +13,7 @@
       qualities:
         - Cutting
       useSound: /Audio/Items/wirecutter.ogg
-      speed: 0.1
+      speed: 0.05
     - type: Item
       sprite: Objects/Tools/Cowtools/haycutters.rsi
     - type: PlantSampleTaker
@@ -35,7 +35,7 @@
       qualities:
         - Screwing
       useSoundCollection: Screwdriver
-      speed: 0.1
+      speed: 0.05
 
 - type: entity
   name: wronch
@@ -54,7 +54,7 @@
       qualities:
         - Anchoring
       useSound: /Audio/Items/ratchet.ogg
-      speed: 0.1
+      speed: 0.05
 
 - type: entity
   name: cowbar
@@ -64,7 +64,7 @@
   components:
     - type: Sprite
       sprite: Objects/Tools/Cowtools/cowbar.rsi
-      state: icon
+      state: cowbar
     - type: Item
       sprite: Objects/Tools/Cowtools/cowbar.rsi
     - type: ItemCooldown
@@ -73,7 +73,7 @@
       qualities:
         - Prying
       useSound: /Audio/Items/crowbar.ogg
-      speed: 0.1
+      speed: 0.05
     - type: TilePrying
 
 - type: entity
@@ -101,7 +101,7 @@
     - type: Sprite
       sprite: Objects/Tools/Cowtools/cowelder.rsi
       layers:
-        - state: cowelder
+        - state: icon
         - state: welder_flame
           shader: unshaded
           visible: false
@@ -121,7 +121,7 @@
             Quantity: 100
     - type: Welder
       weldSoundCollection: Welder
-      speed: 0.1
+      speed: 0.05
     - type: PointLight
       enabled: false
       radius: 1.5
@@ -134,8 +134,8 @@
   description: A hand-held environmental scanner which reports current gas levels. Moo!
   components:
     - type: Sprite
-      sprite: Objects/Tools/Cowtools/milkalyser.rsi
-      state: milkalyser
+      sprite: Objects/Tools/Cowtools/milkalyzer.rsi
+      state: milkalyzer
     - type: GasAnalyzer
     - type: UserInterface
       interfaces:
@@ -144,8 +144,8 @@
     - type: Appearance
       visuals:
         - type: GasAnalyzerVisualizer
-          state_off: milkalyser
-          state_working: working
+          state_off: milkalyzer
+          state_working: milkalyzer
 
 - type: entity
   name: cow toolbox
@@ -167,7 +167,7 @@
   components:
     - type: StorageFill
       contents:
-        - name: Haycutter
+        - name: Haycutters
         - name: Moodriver
         - name: Wronch
         - name: Cowbar
