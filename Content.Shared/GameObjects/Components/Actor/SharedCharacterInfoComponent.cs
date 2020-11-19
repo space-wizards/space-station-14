@@ -12,7 +12,13 @@ namespace Content.Shared.GameObjects.Components.Actor
         public override uint? NetID => ContentNetIDs.CHARACTERINFO;
 
         [Serializable, NetSerializable]
-        protected class RequestCharacterInfoMessage : ComponentMessage {}
+        protected class RequestCharacterInfoMessage : ComponentMessage
+        {
+            public RequestCharacterInfoMessage()
+            {
+                Directed = true;
+            }
+        }
 
         [Serializable, NetSerializable]
         protected class CharacterInfoMessage : ComponentMessage
@@ -22,8 +28,9 @@ namespace Content.Shared.GameObjects.Components.Actor
 
             public CharacterInfoMessage(string jobTitle, Dictionary<string, List<ConditionInfo>> objectives)
             {
+                Directed = true;
                 JobTitle = jobTitle;
-                this.Objectives = objectives;
+                Objectives = objectives;
             }
         }
     }
