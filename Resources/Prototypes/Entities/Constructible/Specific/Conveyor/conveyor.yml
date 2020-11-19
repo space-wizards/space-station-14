@@ -25,7 +25,8 @@
     sprite: Constructible/Power/conveyor.rsi
     state: conveyor_started_cw
     drawdepth: FloorObjects
-
+  - type: SignalReceiver
+    maxTransmitters: 1
   - type: Conveyor
   - type: Appearance
     visuals:
@@ -33,26 +34,23 @@
       state_running: conveyor_started_cw
       state_stopped: conveyor_stopped_cw
       state_reversed: conveyor_started_cw_r
-      state_loose: conveyor_loose
   - type: PowerReceiver
+  - type: Construction
+    graph: ConveyorGraph
+    node: entity
 
 - type: entity
-  id: ConveyorSwitch
-  name: conveyor switch
-  description: A conveyor control switch.
+  id: ConveyorBeltAssembly
+  parent: BaseItem
+  name: conveyor belt
+  suffix: assembly
+  description: A conveyor belt assembly. Used to construct a conveyor belt.
   components:
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Sprite
-    netsync: false
-    sprite: Constructible/Power/conveyor.rsi
-    state: switch-off
-
-  - type: ConveyorSwitch
-  - type: Appearance
-    visuals:
-      - type: ConveyorSwitchVisualizer
-        state_forward: switch-fwd
-        state_off: switch-off
-        state_reversed: switch-rev
-        state_loose: switch
+    - type: Sprite
+      netsync: false
+      sprite: Constructible/Power/conveyor.rsi
+      state: conveyor_loose
+    - type: ConveyorAssembly
+    - type: Construction
+      graph: ConveyorGraph
+      node: item

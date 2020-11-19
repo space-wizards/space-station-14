@@ -121,8 +121,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 _appearanceComponent = appearanceComponent;
             }
-
             Dirty();
+        }
+
+        protected override void Startup()
+        {
             UpdateAppearance();
         }
 
