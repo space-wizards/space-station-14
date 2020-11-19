@@ -1,0 +1,11 @@
+- type: entity
+  parent: Clothing
+  id: ClothingBeltBase
+  abstract: true
+  components:
+  - type: Sprite
+    state: icon
+  - type: Clothing
+    Slots: [belt]
+    size: 50
+    QuickEquip: false

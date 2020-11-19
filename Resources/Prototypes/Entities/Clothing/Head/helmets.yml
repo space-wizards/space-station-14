@@ -33,17 +33,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatHelmetDeathsquad
-  name: deathsquad
-  description: A robust helmet for special operations.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Helmets/deathsquad.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Helmets/deathsquad.rsi
-
-- type: entity
-  parent: HatBase
   id: HatHelmetHelmet
   name: helmet
   description: A usual helmet.

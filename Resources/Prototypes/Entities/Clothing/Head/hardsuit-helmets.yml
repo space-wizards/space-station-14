@@ -14,7 +14,7 @@
 
 - type: entity
   parent: HelmetHardsuitBase
-  id: HelmetHardsuitCap
+  id: ClothingHelmetHardsuitCap
   name: captain's hardsuit helmet
   description: Special hardsuit helmet, made for the captain of the station.
   components:
@@ -26,6 +26,20 @@
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 100
 
+- type: entity
+  parent: HatBase
+  id: ClothingHeadHardsuitDeathsquad
+  name: deathsquad
+  description: A robust helmet for special operations.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/deathsquad.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/deathsquad.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 100
+    
 - type: entity
   parent: HelmetHardsuitBase
   id: ClothingHeadHardsuitEngineering
@@ -56,7 +70,7 @@
 
 - type: entity
   parent: HatBase
-  id: HelmetIHSVoidHelm
+  id: ClothingHelmetIHSVoidHelm
   name: IHS voidhelm
   description: A robust, tactical IHS helmet.
   components:

@@ -135,7 +135,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: GlovesLatex
+      - name: ClothingHandsGlovesLatex
         prob: 0.4
 
 - type: entity
@@ -241,7 +241,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: GlovesLatex
+      - name: ClothingHandsGlovesLatex
         prob: 0.4
 
 - type: entity

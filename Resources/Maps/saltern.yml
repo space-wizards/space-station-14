@@ -1,7 +1,7 @@
 meta:
   format: 2
-  name: DemoStation
-  author: Space-Wizards
+  name: Saltern
+  author: Buncha sickass mfers
   postmapinit: false
 tilemap:
   0: space
@@ -490,14 +490,14 @@ entities:
   - useSound: /Audio/Items/jaws_pry.ogg
     type: Tool
 - uid: 54
-  type: GlovesLatex
+  type: ClothingHandsGlovesLatex
   components:
   - parent: 855
     pos: 22.086878,-4.4133806
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 55
-  type: GlovesLatex
+  type: ClothingHandsGlovesLatex
   components:
   - parent: 855
     pos: 21.618128,-4.4133806
