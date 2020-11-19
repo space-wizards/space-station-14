@@ -1,32 +1,38 @@
 - type: entity
   parent: GlassesBase
-  id: ClothingEyesGlassesMeson
+  id: MesonGlasses
   name: optical meson scanners
   description: The pinnacle of modern science, wallhacks in real life
   components:
   - type: Sprite
-    sprite: Clothing/Eyes/Glasses/meson.rsi
+    sprite: Clothing/Glasses/meson_scanners.rsi
+    state: icon
+
   - type: Clothing
-    sprite: Clothing/Eyes/Glasses/meson.rsi
+    sprite: Clothing/Glasses/meson_scanners.rsi
 
 - type: entity
   parent: GlassesBase
-  id: ClothingEyesGlassesSunglasses
+  id: SunGlasses
   name: sun glasses
   description: Useful both for security and cargonia
   components:
   - type: Sprite
-    sprite: Clothing/Eyes/Glasses/sunglasses.rsi
+    sprite: Clothing/Glasses/sunglasses.rsi
+    state: icon
+
   - type: Clothing
-    sprite: Clothing/Eyes/Glasses/sunglasses.rsi
+    sprite: Clothing/Glasses/sunglasses.rsi
 
 - type: entity
   parent: GlassesBase
-  id: ClothingEyesGlassesSechud
+  id: SecGlasses
   name: security sunglasses
   description: Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks many flashes. Often worn by budget security officers.
   components:
   - type: Sprite
-    sprite: Clothing/Eyes/Glasses/sechud.rsi
+    sprite: Clothing/Glasses/sunglasses_sec.rsi
+    state: icon
+
   - type: Clothing
-    sprite: Clothing/Eyes/Glasses/sechud.rsi
+    sprite: Clothing/Glasses/sunglasses_sec.rsi
