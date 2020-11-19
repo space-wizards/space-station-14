@@ -36,7 +36,7 @@ namespace Content.Server.Objectives.Conditions
 
         public string GetTitle() => Loc.GetString("Steal {0} {1}", Amount > 1 ? $"{Amount}x" : "", Loc.GetString(PrototypeName));
 
-        public string GetDescription() => Loc.GetString("We need you to steal {0}. Dont get caught.", Loc.GetString(PrototypeName));
+        public string GetDescription() => Loc.GetString("We need you to steal {0}. Don't get caught.", Loc.GetString(PrototypeName));
 
         public SpriteSpecifier GetIcon()
         {
