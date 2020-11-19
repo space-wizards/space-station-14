@@ -33,7 +33,6 @@ namespace Content.Server.Administration.Commands
                     }
 
                     var componentType = registration.Type;
-
                     var components = entityManager.ComponentManager.GetAllComponents(componentType);
 
                     var i = 0;
