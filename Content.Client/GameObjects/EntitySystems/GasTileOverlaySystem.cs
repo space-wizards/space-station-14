@@ -162,10 +162,7 @@ namespace Content.Client.GameObjects.EntitySystems
             if (overlays.Gas == null)
                 return Array.Empty<(Texture, Color)>();
 
-            var fire = overlays.FireState != 0;
-            var length = overlays.Gas.Length + (fire ? 1 : 0);
-
-            var list = new (Texture, Color)[length];
+            var list = new (Texture, Color)[overlays.Gas.Length];
 
             for (var i = 0; i < overlays.Gas.Length; i++)
             {
@@ -174,14 +171,56 @@ namespace Content.Client.GameObjects.EntitySystems
                 list[i] = (frames[_frameCounter[gasData.Index]], Color.White.WithAlpha(gasData.Opacity));
             }
 
-            if (fire)
-            {
-                var state = overlays.FireState - 1;
-                var frames = _fireFrames[state];
-                list[length - 1] = (frames[_fireFrameCounter[state]], GetFireColor(overlays.FireTemperature));
-            }
-
             return list;
+        }
+
+        public (Texture, Color[]) GetFireOverlay(GridId gridIndex, Vector2i indices)
+        {
+
+            if (!_tileData.TryGetValue(gridIndex, out var chunks))
+                return (Texture.Transparent, new Color[5]);
+
+            var chunkIndex = GetGasChunkIndices(indices);
+
+            if (!chunks.TryGetValue(chunkIndex, out var chunk))
+                return (Texture.Transparent, new Color[5]);
+
+            var overlayData = chunk.GetData(indices);
+
+            if (overlayData.FireState == 0)
+                return (Texture.Transparent, new Color[5]);       
+
+            var state = overlayData.FireState - 1;
+            var frames = _fireFrames[state];
+
+            TryGetFireOverlayColor(gridIndex, indices + new Vector2i(0, 1), out var topColor);
+            TryGetFireOverlayColor(gridIndex, indices + new Vector2i(1, 0), out var rightColor);
+            TryGetFireOverlayColor(gridIndex, indices + new Vector2i(0, -1), out var bottomColor);
+            TryGetFireOverlayColor(gridIndex, indices + new Vector2i(-1, 0), out var leftColor);
+
+
+            return (frames[_fireFrameCounter[state]], new Color[5] { GetFireColor(overlayData.FireTemperature), topColor, rightColor, bottomColor, leftColor });
+        }
+
+        private bool TryGetFireOverlayColor(GridId gridIndex, Vector2i indices, out Color color)
+        {
+            color = Color.Transparent;
+
+            if (!_tileData.TryGetValue(gridIndex, out var chunks))
+                return false;
+
+            var chunkIndex = GetGasChunkIndices(indices);
+
+            if (!chunks.TryGetValue(chunkIndex, out var chunk))
+                return false;
+
+            var overlayData = chunk.GetData(indices);
+
+            if (overlayData.FireState == 0)
+                return false;
+
+            color = GetFireColor(overlayData.FireTemperature);
+            return true;
         }
 
         public override void FrameUpdate(float frameTime)
@@ -222,7 +261,7 @@ namespace Content.Client.GameObjects.EntitySystems
             if (temperature <= 6600)
                 red = 255;
             else
-                red = 329.698727446f * (float) Math.Pow(temperature - 6000, -0.1332047592f);
+                red = 329.698727446f * (float) Math.Pow(temperature/100 - 6000, -0.1332047592f);
 
             if (temperature <= 6600)
             {
@@ -230,14 +269,15 @@ namespace Content.Client.GameObjects.EntitySystems
                 green = 99.4708025861f * (float)Math.Log(green) - 161.1195681661f;
             }
             else
-                green = 288.1221695283f * (float) Math.Pow(temperature - 6000, -0.0755148492);
+                green = 288.1221695283f * (float) Math.Pow(temperature/100 - 6000, -0.0755148492);
 
             if (temperature >= 6600)
                 blue = 255;
             else if(temperature <= 1900)
                 blue = 0;
             else
-                blue = 138.5177312231f * (float) Math.Log(temperature - 1000) - 305.0447927307f;
+                blue = 138.5177312231f * (float) Math.Log(temperature/100 - 1000) - 305.0447927307f;
+
 
             red = Math.Clamp(red, 0, 255);
             green = Math.Clamp(green, 0, 255);
