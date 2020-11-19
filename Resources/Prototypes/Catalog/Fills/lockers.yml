@@ -21,7 +21,7 @@
         prob: 0.7
       - name: Multitool
         prob: 0.2
-      - name: UtilityBeltClothing
+      - name: ClothingBeltUtility
         prob: 0.2
       - name: GlovesYellow
         prob: 0.05
