@@ -1,10 +1,12 @@
 using Content.Shared.GameObjects.Components;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects.Components.UserInterface;
 
 namespace Content.Client.GameObjects.Components.Paper
 {
+    [UsedImplicitly]
     public class PaperBoundUserInterface : BoundUserInterface
     {
         private PaperWindow _window;

@@ -1,10 +1,12 @@
-﻿using Robust.Client.GameObjects;
+﻿using JetBrains.Annotations;
+using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using static Content.Shared.GameObjects.Components.Power.AME.SharedAMEShieldComponent;
 
 namespace Content.Client.GameObjects.Components.Power.AME
 {
+    [UsedImplicitly]
     public class AMEVisualizer : AppearanceVisualizer
     {
         public override void InitializeEntity(IEntity entity)

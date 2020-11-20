@@ -2,6 +2,7 @@
 using Content.Client.GameObjects.Components.Items;
 using Content.Client.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.Input;
@@ -15,6 +16,7 @@ using Robust.Shared.Map;
 
 namespace Content.Client.GameObjects.EntitySystems
 {
+    [UsedImplicitly]
     public class RangedWeaponSystem : EntitySystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;

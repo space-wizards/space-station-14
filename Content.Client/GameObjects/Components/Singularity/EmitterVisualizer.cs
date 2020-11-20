@@ -1,10 +1,12 @@
 ﻿using System;
 using Content.Shared.GameObjects.Components.Singularity;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 
 namespace Content.Client.GameObjects.Components.Singularity
 {
+    [UsedImplicitly]
     public class EmitterVisualizer : AppearanceVisualizer
     {
         private const string OverlayBeam = "emitter-beam";

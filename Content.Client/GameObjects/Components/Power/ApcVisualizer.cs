@@ -1,4 +1,5 @@
 using Content.Shared.GameObjects.Components.Power;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
@@ -7,6 +8,7 @@ namespace Content.Client.GameObjects.Components.Power
 {
     public class ApcVisualizer : AppearanceVisualizer
     {
+        [UsedImplicitly]
         public override void InitializeEntity(IEntity entity)
         {
             base.InitializeEntity(entity);

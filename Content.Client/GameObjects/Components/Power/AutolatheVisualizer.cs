@@ -1,5 +1,6 @@
 ﻿using System;
 using Content.Shared.GameObjects.Components.Power;
+using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.Components.Animations;
@@ -9,6 +10,7 @@ using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Power
 {
+    [UsedImplicitly]
     public class AutolatheVisualizer : AppearanceVisualizer
     {
         private const string AnimationKey = "autolathe_animation";

@@ -26,11 +26,6 @@ namespace Content.Server.GameObjects.Components.Trigger.TimerTrigger
             serializer.DataField(ref _delay, "delay", 0f);
         }
 
-        public override void Initialize()
-        {
-            base.Initialize();
-        }
-
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             var triggerSystem = _entitySystemManager.GetEntitySystem<TriggerSystem>();

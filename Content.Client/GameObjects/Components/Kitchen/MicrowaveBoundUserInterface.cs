@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Content.Shared.Chemistry;
 using Content.Shared.Kitchen;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Client.Graphics;
@@ -19,7 +20,8 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.GameObjects.Components.Kitchen
 {
-    public  class MicrowaveBoundUserInterface : BoundUserInterface
+    [UsedImplicitly]
+    public class MicrowaveBoundUserInterface : BoundUserInterface
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;

@@ -1,5 +1,6 @@
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.Utility;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
@@ -8,6 +9,7 @@ using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Power
 {
+    [UsedImplicitly]
     public class PowerCellVisualizer : AppearanceVisualizer
     {
         private string _prefix;

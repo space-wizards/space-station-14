@@ -2,6 +2,7 @@
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.PDA;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.UserInterface;
@@ -17,6 +18,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.GameObjects.Components.PDA
 {
+    [UsedImplicitly]
     public class PDABoundUserInterface : BoundUserInterface
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;

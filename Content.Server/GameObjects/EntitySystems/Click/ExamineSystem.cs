@@ -1,5 +1,6 @@
 ﻿using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameObjects.EntitySystems;
+using JetBrains.Annotations;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -9,6 +10,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.EntitySystems.Click
 {
+    [UsedImplicitly]
     public class ExamineSystem : ExamineSystemShared
     {
         private static readonly FormattedMessage _entityNotFoundMessage;

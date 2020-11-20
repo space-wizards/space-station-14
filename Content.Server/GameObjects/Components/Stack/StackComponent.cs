@@ -26,12 +26,6 @@ namespace Content.Server.GameObjects.Components.Stack
     {
         private bool _throwIndividually = false;
 
-        public override int Count
-        {
-            get => base.Count;
-            set => base.Count = value;
-        }
-
         [ViewVariables(VVAccess.ReadWrite)]
         public bool ThrowIndividually
         {
