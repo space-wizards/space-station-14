@@ -11,6 +11,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 
@@ -190,6 +191,7 @@ namespace Content.Client.Arcade
 
             _finalNewGameButton = new Button
             {
+                // Text = Loc.GetString("New Game"),
                 Text = "New Game",
                 TextAlign = Label.AlignMode.Center
             };
