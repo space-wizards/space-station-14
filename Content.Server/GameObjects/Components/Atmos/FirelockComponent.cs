@@ -70,7 +70,8 @@ namespace Content.Server.GameObjects.Components.Atmos
         public override async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
 
-            await base.InteractUsing(eventArgs);
+            if (!await base.InteractUsing(eventArgs))
+                return false;
 
             if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
                 return false;
