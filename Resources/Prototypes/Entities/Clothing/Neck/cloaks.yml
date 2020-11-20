@@ -1,6 +1,6 @@
 - type: entity
   parent: ClothingNeckBase
-  id: ClothingCloakCap
+  id: ClothingNeckCloakCap
   name: captain's cloak
   description: A pompous and comfy blue cloak with a nice gold trim.
   components:
@@ -11,7 +11,7 @@
 
 - type: entity
   parent: ClothingNeckBase
-  id: ClothingCloakHos
+  id: ClothingNeckCloakHos
   name: HoS's cloak
   description: An exquisite dark and red cloak of a Head of Security.
   components:
@@ -22,7 +22,7 @@
 
 - type: entity
   parent: ClothingNeckBase
-  id: ClothingCloakCe
+  id: ClothingNeckCloakCe
   name: CE's cloak
   description: A dark green cloak with light blue ornaments.
   components:
@@ -45,7 +45,7 @@
 
 - type: entity
   parent: ClothingNeckBase
-  id: ClothingCloakRd
+  id: ClothingNeckCloakRd
   name: RD's cloak
   description: A white cloak with violet stripes.
   components:
@@ -56,7 +56,7 @@
 
 - type: entity
   parent: ClothingNeckBase
-  id: ClothingCloakQm
+  id: ClothingNeckCloakQm
   name: QM's cloak
   description: A strong brown cloak with a reflective stripe.
   components:
@@ -67,7 +67,7 @@
 
 - type: entity
   parent: ClothingNeckBase
-  id: ClothingCloakHop
+  id: ClothingNeckCloakHop
   name: HoP's cloak
   description: A blue cloak with red shoudlers and gold buttons.
   components:
@@ -78,7 +78,7 @@
 
 - type: entity
   parent: ClothingNeckBase
-  id: ClothingCloakHerald
+  id: ClothingNeckCloakHerald
   name: Herald's cloak
   description: An evil-looking red cloak with spikes on its shoulders.
   components:

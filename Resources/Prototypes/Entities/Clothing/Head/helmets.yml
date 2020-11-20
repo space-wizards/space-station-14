@@ -45,7 +45,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHelmetHelmetOld
-  name: helmet 
+  name: helmet
   description: An old usual helmet.
   components:
   - type: Sprite
@@ -79,7 +79,7 @@
   parent: ClothingHeadBase
   id: ClothingHeadHelmetSpaceNinja
   name: space ninja helmet
-  description: ''
+  description:
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/spaceninja.rsi
@@ -90,7 +90,7 @@
   parent: ClothingHeadBase
   id: ClothingHeadHelmetSyndicate
   name: syndicate
-  description: 'A stylish, robust syndicate helmet.'
+  description: A stylish, robust syndicate helmet
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/syndicate.rsi
@@ -99,9 +99,20 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadHelmetTemplar
+  name: templar helmet
+  description: DEUS VULT
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/templar.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/templar.rsi
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHelmetThunderdome
   name: thunderdome
-  description: 'Let the battle commence!'
+  description: Let the battle commence!
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/thunderdome.rsi
@@ -112,7 +123,7 @@
   parent: ClothingHeadBase
   id: ClothingHeadHelmetWizardHelm
   name: wizard helm
-  description: "Strange-looking helmet that most certainly belongs to a real magic user."
+  description: Strange-looking helmet that most certainly belongs to a real magic user.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/wizardhelm.rsi
