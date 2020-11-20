@@ -69,17 +69,3 @@
   - type: Clothing
     sprite: Clothing/Mask/sterile.rsi
   - type: BreathMask
-
-- type: entity
-  parent: ClothingMaskBase
-  id: BreathMaskClothing
-  abstract : true
-  # Can't figure out why it won't build without this -Swept
-  name: sterile mask
-  description: A sterile mask designed to help prevent the spread of diseases.
-  components:
-  - type: Sprite
-    sprite: Clothing/Mask/sterile.rsi
-  - type: Clothing
-    sprite: Clothing/Mask/sterile.rsi
-  - type: BreathMask
