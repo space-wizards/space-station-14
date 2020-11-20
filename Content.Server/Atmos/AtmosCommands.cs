@@ -639,22 +639,23 @@ namespace Content.Server.Atmos
     public class ShowAtmos : IClientCommand
     {
         public string Command => "showatmos";
-        public string Description => "Toggles seeing atmos debug overlay";
+        public string Description => "Toggles seeing atmos debug overlay.";
         public string Help => $"Usage: {Command}";
 
         public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
         {
-            if (player == null) return;
+            if (player == null)
+            {
+                shell.SendText(player, "You must be a player to use this command.");
+                return;
+            }
+
             var atmosDebug = EntitySystem.Get<AtmosDebugOverlaySystem>();
-            if (atmosDebug.PlayerObservers.Contains(player))
-            {
-                atmosDebug.PlayerObservers.Remove(player);
-                shell.SendText(player, $"Ok, disabled");
-            }
-            else
-            {
-                atmosDebug.PlayerObservers.Add(player);
-                shell.SendText(player, $"Ok, enabled");
-            }
+            var enabled = atmosDebug.ToggleObserver(player);
+
+            shell.SendText(player, enabled
+                ? "Enabled the atmospherics debug overlay."
+                : "Disabled the atmospherics debug overlay.");
         }
-    }}
+    }
+}

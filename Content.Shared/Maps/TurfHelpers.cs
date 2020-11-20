@@ -54,10 +54,12 @@ namespace Content.Shared.Maps
             if (!coordinates.IsValid(entityManager))
                 return null;
 
+
             mapManager ??= IoCManager.Resolve<IMapManager>();
 
             if (!mapManager.TryGetGrid(coordinates.GetGridId(entityManager), out var grid))
                 return null;
+
 
             if (!grid.TryGetTileRef(coordinates, out var tile))
                 return null;

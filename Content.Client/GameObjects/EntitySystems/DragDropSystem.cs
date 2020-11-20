@@ -30,7 +30,6 @@ namespace Content.Client.GameObjects.EntitySystems
     public class DragDropSystem : EntitySystem
     {
         [Dependency] private readonly IStateManager _stateManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -137,7 +136,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
             // possibly initiating a drag
             // check if the clicked entity is draggable
-            if (_entityManager.TryGetEntity(args.EntityUid, out var entity))
+            if (EntityManager.TryGetEntity(args.EntityUid, out var entity))
             {
                 // check if the entity is reachable
                 if (!_interactionSystem.InRangeUnobstructed(dragger, entity))
@@ -241,7 +240,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 _state = DragState.Dragging;
                 // pop up drag shadow under mouse
                 var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
-                _dragShadow = _entityManager.SpawnEntity("dragshadow", mousePos);
+                _dragShadow = EntityManager.SpawnEntity("dragshadow", mousePos);
                 var dragSprite = _dragShadow.GetComponent<SpriteComponent>();
                 dragSprite.CopyFrom(draggedSprite);
                 dragSprite.RenderOrder = EntityManager.CurrentTick.Value;
@@ -328,7 +327,7 @@ namespace Content.Client.GameObjects.EntitySystems
             RemoveHighlights();
             if (_dragShadow != null)
             {
-                _entityManager.DeleteEntity(_dragShadow);
+                EntityManager.DeleteEntity(_dragShadow);
             }
 
             _dragShadow = null;

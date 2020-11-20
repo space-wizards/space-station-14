@@ -35,7 +35,6 @@ namespace Content.Server.GameObjects.Components.Singularity
     [ComponentReference(typeof(IActivate))]
     public class EmitterComponent : Component, IActivate, IInteractUsing
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         [ComponentDependency] private AppearanceComponent? _appearance = default;
@@ -251,7 +250,7 @@ namespace Content.Server.GameObjects.Components.Singularity
 
         private void Fire()
         {
-            var projectile = _entityManager.SpawnEntity(_boltType, Owner.Transform.Coordinates);
+            var projectile = Owner.EntityManager.SpawnEntity(_boltType, Owner.Transform.Coordinates);
 
             if (!projectile.TryGetComponent<PhysicsComponent>(out var physicsComponent))
             {

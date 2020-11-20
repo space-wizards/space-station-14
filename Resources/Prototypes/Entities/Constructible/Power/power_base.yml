@@ -187,6 +187,9 @@
     interfaces:
     - key: enum.ApcUiKey.Key
       type: ApcBoundUserInterface
+  - type: Construction
+    graph: apc
+    node: apc
 
 - type: entity
   id: SolarPanel
