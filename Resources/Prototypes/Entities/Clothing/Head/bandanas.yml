@@ -5,9 +5,9 @@
   description: A black bandana to make you look cool.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Bandanas/ban_black.rsi
+    sprite: Clothing/Head/Bandanas/black.rsi
   - type: Clothing
-    sprite: Clothing/Head/Bandanas/ban_black.rsi
+    sprite: Clothing/Head/Bandanas/black.rsi
 
 - type: entity
   parent: ClothingHeadBase
@@ -16,9 +16,9 @@
   description: A blue bandana to make you look cool.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Bandanas/ban_blue.rsi
+    sprite: Clothing/Head/Bandanas/blue.rsi
   - type: Clothing
-    sprite: Clothing/Head/Bandanas/ban_blue.rsi
+    sprite: Clothing/Head/Bandanas/blue.rsi
 
 - type: entity
   parent: ClothingHeadBase
@@ -27,9 +27,9 @@
   description: A botany bandana to make you look cool, made from natural fibers.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Bandanas/ban_botany.rsi
+    sprite: Clothing/Head/Bandanas/botany.rsi
   - type: Clothing
-    sprite: Clothing/Head/Bandanas/ban_botany.rsi
+    sprite: Clothing/Head/Bandanas/botany.rsi
 
 - type: entity
   parent: ClothingHeadBase
@@ -38,9 +38,9 @@
   description: A gold bandana to make you look cool.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Bandanas/ban_gold.rsi
+    sprite: Clothing/Head/Bandanas/gold.rsi
   - type: Clothing
-    sprite: Clothing/Head/Bandanas/ban_gold.rsi
+    sprite: Clothing/Head/Bandanas/gold.rsi
 
 - type: entity
   parent: ClothingHeadBase
@@ -49,9 +49,9 @@
   description: A green bandana to make you look cool.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Bandanas/ban_green.rsi
+    sprite: Clothing/Head/Bandanas/green.rsi
   - type: Clothing
-    sprite: Clothing/Head/Bandanas/ban_green.rsi
+    sprite: Clothing/Head/Bandanas/green.rsi
 
 - type: entity
   parent: ClothingHeadBase
@@ -60,9 +60,9 @@
   description: A grey bandana to make you look cool.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Bandanas/ban_grey.rsi
+    sprite: Clothing/Head/Bandanas/grey.rsi
   - type: Clothing
-    sprite: Clothing/Head/Bandanas/ban_grey.rsi
+    sprite: Clothing/Head/Bandanas/grey.rsi
 
 - type: entity
   parent: ClothingHeadBase
@@ -71,9 +71,9 @@
   description: A red bandana to make you look cool.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Bandanas/ban_red.rsi
+    sprite: Clothing/Head/Bandanas/red.rsi
   - type: Clothing
-    sprite: Clothing/Head/Bandanas/ban_red.rsi
+    sprite: Clothing/Head/Bandanas/red.rsi
 
 - type: entity
   parent: ClothingHeadBase
@@ -82,6 +82,6 @@
   description: A bandana with a skull to make you look even cooler.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Bandanas/ban_skull.rsi
+    sprite: Clothing/Head/Bandanas/skull.rsi
   - type: Clothing
-    sprite: Clothing/Head/Bandanas/ban_skull.rsi
+    sprite: Clothing/Head/Bandanas/skull.rsi

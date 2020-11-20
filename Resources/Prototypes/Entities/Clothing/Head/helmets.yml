@@ -27,9 +27,9 @@
   description: A robust, evil-looking cult helmet.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Helmets/cult_helmet.rsi
+    sprite: Clothing/Head/Helmets/cult.rsi
   - type: Clothing
-    sprite: Clothing/Head/Helmets/cult_helmet.rsi
+    sprite: Clothing/Head/Helmets/cult.rsi
 
 - type: entity
   parent: ClothingHeadBase
@@ -38,9 +38,9 @@
   description: A usual helmet.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Helmets/helmet.rsi
+    sprite: Clothing/Head/Helmets/security.rsi
   - type: Clothing
-    sprite: Clothing/Head/Helmets/helmet.rsi
+    sprite: Clothing/Head/Helmets/security.rsi
 
 - type: entity
   parent: ClothingHeadBase
@@ -49,9 +49,9 @@
   description: An old usual helmet.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Helmets/helmetold.rsi
+    sprite: Clothing/Head/Helmets/securityold.rsi
   - type: Clothing
-    sprite: Clothing/Head/Helmets/helmetold.rsi
+    sprite: Clothing/Head/Helmets/securityold.rsi
 
 - type: entity
   parent: ClothingHeadBase

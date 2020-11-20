@@ -5,9 +5,9 @@
   description: A hard hat, painted in blue, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardhats/hardhat_blue.rsi
+    sprite: Clothing/Head/Hardhats/blue.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardhats/hardhat_blue.rsi
+    sprite: Clothing/Head/Hardhats/blue.rsi
 
 - type: entity
   parent: ClothingHeadBase
@@ -16,9 +16,9 @@
   description: A hard hat, painted in orange, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardhats/hardhat_orange.rsi
+    sprite: Clothing/Head/Hardhats/orange.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardhats/hardhat_orange.rsi
+    sprite: Clothing/Head/Hardhats/orange.rsi
 
 - type: entity
   parent: ClothingHeadBase
@@ -27,9 +27,9 @@
   description: A hard hat, painted in red, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardhats/hardhat_red.rsi
+    sprite: Clothing/Head/Hardhats/red.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardhats/hardhat_red.rsi
+    sprite: Clothing/Head/Hardhats/red.rsi
 
 - type: entity
   parent: ClothingHeadBase
@@ -38,9 +38,9 @@
   description: A hard hat, painted in white, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardhats/hardhat_white.rsi
+    sprite: Clothing/Head/Hardhats/white.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardhats/hardhat_white.rsi
+    sprite: Clothing/Head/Hardhats/white.rsi
 
 - type: entity
   parent: ClothingHeadBase
@@ -49,6 +49,6 @@
   description: A hard hat, painted in yellow, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardhats/hardhat_yellow.rsi
+    sprite: Clothing/Head/Hardhats/yellow.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardhats/hardhat_yellow.rsi
+    sprite: Clothing/Head/Hardhats/yellow.rsi

@@ -77,9 +77,9 @@
   description: Maximum piety in this star system.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hoods/chaplain_hood.rsi
+    sprite: Clothing/Head/Hoods/chaplain.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hoods/chaplain_hood.rsi
+    sprite: Clothing/Head/Hoods/chaplain.rsi
 
 - type: entity
   parent: ClothingHeadBase
@@ -88,9 +88,9 @@
   description: There's no cult without cult hoods.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hoods/culthood.rsi
+    sprite: Clothing/Head/Hoods/cult.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hoods/culthood.rsi
+    sprite: Clothing/Head/Hoods/cult.rsi
 
 - type: entity
   parent: ClothingHeadBase
@@ -99,9 +99,9 @@
   description: Maximum piety in this star system.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hoods/nun_hood.rsi
+    sprite: Clothing/Head/Hoods/nun.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hoods/nun_hood.rsi
+    sprite: Clothing/Head/Hoods/nun.rsi
 
 - type: entity
   parent: ClothingHeadBase
