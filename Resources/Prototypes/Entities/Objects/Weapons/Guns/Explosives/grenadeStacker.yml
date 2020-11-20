@@ -8,9 +8,4 @@
     sprite: Objects/Devices/pda.rsi
     netsync: false
     state: pda
-  - type: Explosive
-    devastationRange: 0
-    heavyImpactRange: 0
-    lightImpactRange: 0
-    flashRange: 0
-  - type: SeveralExplosive
+  - type: SeveralFlashExplosive

@@ -19,6 +19,10 @@ namespace Content.Server.GameObjects.Components.Explosion
         public override string Name => "FlashExplosive";
 
         private float _range;
+        public float Range {
+            get => _range;
+            protected set => _range = value;
+        }
         private float _duration;
         private string _sound;
         private bool _deleteOnFlash;
