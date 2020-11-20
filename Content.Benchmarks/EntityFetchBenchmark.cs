@@ -12,8 +12,8 @@ namespace Content.Benchmarks
 
         public int M { get; set; } = 10;
 
-        private readonly DictEntityStorage _dictStorage = new DictEntityStorage();
-        private readonly GenEntityStorage _genStorage = new GenEntityStorage();
+        private readonly DictEntityStorage _dictStorage = new();
+        private readonly GenEntityStorage _genStorage = new();
 
         private IEntityStorage<DictEntity, DictEntityUid> _dictStorageInterface;
         private IEntityStorage<GenEntity, GenEntityUid> _genStorageInterface;
@@ -146,7 +146,7 @@ namespace Content.Benchmarks
         {
             private int _nextValue;
 
-            private readonly Dictionary<DictEntityUid, DictEntity> _dict = new Dictionary<DictEntityUid, DictEntity>();
+            private readonly Dictionary<DictEntityUid, DictEntity> _dict = new();
 
             public override bool TryGetEntity(DictEntityUid entityUid, out DictEntity entity)
             {
@@ -198,7 +198,7 @@ namespace Content.Benchmarks
         private sealed class GenEntityStorage : EntityStorage<GenEntity, GenEntityUid>
         {
             private (int generation, GenEntity entity)[] _entities = new (int, GenEntity)[1];
-            private readonly List<int> _availableSlots = new List<int> {0};
+            private readonly List<int> _availableSlots = new() {0};
 
             public override bool TryGetEntity(GenEntityUid entityUid, out GenEntity entity)
             {

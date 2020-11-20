@@ -23,8 +23,8 @@ namespace Content.Benchmarks
         [Params(8, 64, 256, 1024)]
         public int StringLength { get; set; }
 
-        private readonly MemoryStream _outputStream = new MemoryStream(2048);
-        private readonly MemoryStream _inputStream = new MemoryStream(2048);
+        private readonly MemoryStream _outputStream = new(2048);
+        private readonly MemoryStream _inputStream = new(2048);
 
         [GlobalSetup]
         public void Setup()
