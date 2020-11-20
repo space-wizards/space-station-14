@@ -1,0 +1,42 @@
+﻿
+uniform highp vec4 mainColor = vec4(0, 0, 0, 0);
+uniform highp vec4 colorTop = vec4(0, 0, 0, 0);
+uniform highp vec4 colorRight = vec4(0, 0, 0, 0);
+uniform highp vec4 colorBottom = vec4(0, 0, 0, 0);
+uniform highp vec4 colorLeft = vec4(0, 0, 0, 0);
+void fragment() {
+    highp vec4 color = zTexture(UV);
+	
+	vec2 textureCoords = UV;
+	
+	
+	
+	
+	highp vec4 finalColor = color * mainColor;
+	highp vec4 xColor = finalColor;
+	highp vec4 yColor = finalColor;
+	
+	if(textureCoords.x >= 0.5){
+		highp float lerpValue = (textureCoords.x-0.5)*2;
+		yColor = mix(xColor, colorTop, lerpValue);
+	}
+	else{
+		highp float lerpValue = (textureCoords.x-0.5)*-2;
+		xColor = mix(xColor, colorBottom, lerpValue);
+	}
+	
+	if(textureCoords.y >= 0.5){
+		highp float lerpValue = (textureCoords.y-0.5)*2;
+		yColor = mix(yColor, colorTop, lerpValue);
+	}
+	else{
+		highp float lerpValue = (textureCoords.y-0.5)*-2;
+		yColor = mix(yColor, colorBottom, lerpValue);
+	}
+	
+	finalColor = mix(xColor, yColor, 0.5);
+
+    COLOR = finalColor;
+	
+	COLOR = vec4(1, 0, 1, 1);
+}

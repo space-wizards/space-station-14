@@ -12,3 +12,8 @@
   id: FlashedEffect
   kind: source
   path: "/Textures/Shaders/flashed_effect.swsl"
+
+- type: shader
+  id: AtmosFire
+  kind: source
+  path: "/Textures/Shaders/atmos_fire.swsl"

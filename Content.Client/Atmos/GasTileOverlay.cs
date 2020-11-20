@@ -61,7 +61,12 @@ namespace Content.Client.Atmos
                     }
                 }
             }
-
+            ResetShaderInstances();
+            var qq = GetShaderInstance();
+            drawHandle.UseShader(qq);
+            var viewport = _eyeManager.GetWorldViewport();
+            drawHandle.DrawRect(viewport, Color.White);
+            return; 
             ResetShaderInstances();
             foreach (var mapGrid in intersectingGrids)
             {
