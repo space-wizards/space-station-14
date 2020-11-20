@@ -158,8 +158,7 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
                 return true;
             }
 
-            behavior = new T();
-            IoCManager.InjectDependencies(behavior);
+            behavior = IoCManager.Resolve<IDynamicTypeFactory>().CreateInstance<T>();
             _behaviors.Add(typeof(T), behavior);
             behavior.Initialize(this);
             behavior.Startup();
