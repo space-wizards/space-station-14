@@ -16,7 +16,6 @@ namespace Content.Client.GameObjects.Components.Conveyor
         private string _stateRunning;
         private string _stateStopped;
         private string _stateReversed;
-        private string _stateLoose;
 
         private void ChangeState(AppearanceComponent appearance)
         {
@@ -32,7 +31,6 @@ namespace Content.Client.GameObjects.Components.Conveyor
                 ConveyorState.Off => _stateStopped,
                 ConveyorState.Forward => _stateRunning,
                 ConveyorState.Reversed => _stateReversed,
-                ConveyorState.Loose => _stateLoose,
                 _ => throw new ArgumentOutOfRangeException()
             };
 
@@ -46,7 +44,6 @@ namespace Content.Client.GameObjects.Components.Conveyor
             _stateRunning = node.GetNode("state_running").AsString();
             _stateStopped = node.GetNode("state_stopped").AsString();
             _stateReversed = node.GetNode("state_reversed").AsString();
-            _stateLoose = node.GetNode("state_loose").AsString();
         }
 
         public override void InitializeEntity(IEntity entity)

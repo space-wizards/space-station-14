@@ -27,7 +27,6 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
      *     It'll also handle overall cleanup when one is removed (i.e. removing it from DoAfterGui).
     */
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         /// <summary>
         ///     We'll use an excess time so stuff like finishing effects can show.
@@ -39,7 +38,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
         private HashSet<DoAfterComponent> _knownComponents = new HashSet<DoAfterComponent>();
 
         private IEntity? _attachedEntity;
-        
+
         public override void Initialize()
         {
             base.Initialize();
@@ -50,14 +49,14 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
         {
             _attachedEntity = message.AttachedEntity;
         }
-        
+
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
 
             var currentTime = _gameTiming.CurTime;
             var foundComps = new HashSet<DoAfterComponent>();
-            
+
             // Can't see any I guess?
             if (_attachedEntity == null || _attachedEntity.Deleted)
                 return;
@@ -68,7 +67,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
                 {
                     _knownComponents.Add(comp);
                 }
-                
+
                 var doAfters = comp.DoAfters.ToList();
 
                 if (doAfters.Count == 0)
@@ -88,10 +87,10 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
                 {
                     if (comp.Gui != null)
                         comp.Gui.FirstDraw = true;
-                    
+
                     return;
                 }
-                
+
                 comp.Enable();
 
                 var userGrid = comp.Owner.Transform.Coordinates;
@@ -124,7 +123,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
 
                     if (doAfter.BreakOnTargetMove)
                     {
-                        if (_entityManager.TryGetEntity(doAfter.TargetUid, out var targetEntity) && targetEntity.Transform.Coordinates != doAfter.TargetGrid)
+                        if (EntityManager.TryGetEntity(doAfter.TargetUid, out var targetEntity) && targetEntity.Transform.Coordinates != doAfter.TargetGrid)
                         {
                             comp.Cancel(id, currentTime);
                             continue;
@@ -142,7 +141,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
                         comp.Remove(cancelled.Message);
                     }
                 }
-                
+
                 // Remove any components that we no longer need to track
                 foundComps.Add(comp);
             }

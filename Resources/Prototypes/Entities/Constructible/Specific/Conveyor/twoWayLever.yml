@@ -1,0 +1,21 @@
+﻿- type: entity
+  id: TwoWayLever
+  name: two way switch
+  description: A two way switch.
+  components:
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Sprite
+      netsync: false
+      sprite: Constructible/Power/conveyor.rsi
+      state: switch-off
+    - type: TwoWayLever
+    - type: Appearance
+      visuals:
+        - type: TwoWayLeverVisualizer
+          state_forward: switch-fwd
+          state_off: switch-off
+          state_reversed: switch-rev
+    - type: Construction
+      graph: leverGraph
+      node: lever

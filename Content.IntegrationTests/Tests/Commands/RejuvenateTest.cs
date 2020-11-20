@@ -14,10 +14,22 @@ namespace Content.IntegrationTests.Tests.Commands
     [TestOf(typeof(RejuvenateVerb))]
     public class RejuvenateTest : ContentIntegrationTest
     {
+        private const string PROTOTYPES = @"
+- type: entity
+  name: DamageableDummy
+  id: DamageableDummy
+  components:
+  - type: Damageable
+    damagePrototype: biologicalDamageContainer
+    criticalThreshold: 100
+    deadThreshold: 200
+";
+
         [Test]
         public async Task RejuvenateDeadTest()
         {
-            var server = StartServerDummyTicker();
+            var options = new ServerIntegrationOptions{ExtraPrototypes = PROTOTYPES};
+            var server = StartServerDummyTicker(options);
 
             await server.WaitAssertion(() =>
             {
@@ -27,7 +39,7 @@ namespace Content.IntegrationTests.Tests.Commands
 
                 var entityManager = IoCManager.Resolve<IEntityManager>();
 
-                var human = entityManager.SpawnEntity("HumanMob_Content", MapCoordinates.Nullspace);
+                var human = entityManager.SpawnEntity("DamageableDummy", MapCoordinates.Nullspace);
 
                 // Sanity check
                 Assert.True(human.TryGetComponent(out IDamageableComponent damageable));

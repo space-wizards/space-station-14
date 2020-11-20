@@ -135,7 +135,6 @@
             "DisposalBend",
             "Recycler",
             "Conveyor",
-            "ConveyorSwitch",
             "Flippable",
             "Airtight",
             "MovedByPressure",
@@ -213,6 +212,8 @@
             "RandomSpriteState",
             "ShaderAura",
             "SingularityShaderAura",
+            "ConveyorAssembly",
+            "TwoWayLever"
         };
     }
 }
