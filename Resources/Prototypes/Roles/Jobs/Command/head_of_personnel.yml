@@ -23,8 +23,8 @@
   id: HoPGear
   equipment:
     innerclothing: ClothingUniformJumpsuitHoP
-    backpack: BackpackClothingFilled
-    shoes: ClothingShoesBrown
-    head: HatHopcap
+    backpack: ClothingBackpackFilled
+    shoes: ClothingShoesColorBrown
+    head: ClothingHeadHatHopcap
     idcard: HoPPDA
     ears: ClothingHeadsetAltCommand

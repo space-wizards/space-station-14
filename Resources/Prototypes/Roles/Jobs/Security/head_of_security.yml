@@ -23,9 +23,9 @@
     innerclothing: ClothingUniformJumpsuitHoS
     backpack: ClothingBackpackSecurityFilled
     shoes: ClothingShoesJackboots
-    outerclothing: OuterclothingHoSTrenchcoat
-    eyes: SecGlasses
-    head: HatBeretHoS
+    outerclothing: ClothingOuterCoatHoSTrench
+    eyes: ClothingEyesGlassesSecurity
+    head: ClothingHeadHatBeretHoS
     idcard: HoSPDA
     ears: ClothingHeadsetAltSecurity
     belt: ClothingBeltSecurityFilled

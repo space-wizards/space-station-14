@@ -1,6 +1,6 @@
 - type: entity
-  parent: HatBase
-  id: HatWelding
+  parent: ClothingHeadBase
+  id: ClothingHeadHatWelding
   name: welding mask
   description: A head-mounted face cover designed to protect the wearer completely from space-arc eye.
   components:
@@ -10,8 +10,8 @@
     sprite: Clothing/Head/Welding/welding.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatWeldingMaskFlame
+  parent: ClothingHeadBase
+  id: ClothingHeadHatWeldingMaskFlame
   name: flame welding mask
   description: A painted welding helmet, this one has flames on it.
   components:
@@ -21,8 +21,8 @@
     sprite: Clothing/Head/Welding/flame_welding_mask.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatWeldingMaskFlameBlue
+  parent: ClothingHeadBase
+  id: ClothingHeadHatWeldingMaskFlameBlue
   name: blue-flame welding mask
   description: A painted welding helmet, this one has blue flames on it.
   components:
@@ -32,8 +32,8 @@
     sprite: Clothing/Head/Welding/blue_flame_welding_mask.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatWeldingMaskPainted
+  parent: ClothingHeadBase
+  id: ClothingHeadHatWeldingMaskPainted
   name: painted welding mask
   description: A welding helmet, painted in crimson.
   components:

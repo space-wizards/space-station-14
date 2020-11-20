@@ -17,6 +17,6 @@
   equipment:
     innerclothing: ClothingUniformJumpsuitHydroponics
     backpack: ClothingBackpackFilled
-    shoes: ClothingShoesBrown
+    shoes: ClothingShoesColorBrown
     idcard: BotanistPDA
     ears: ClothingHeadsetService

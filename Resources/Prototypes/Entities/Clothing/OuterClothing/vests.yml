@@ -1,6 +1,6 @@
 - type: entity
   parent: ClothingOuterBase
-  id: OuterclothingMercwebvest
+  id: ClothingOuterVestWebMerc
   name: merc web vest
   description: A high-quality armored vest made from a hard synthetic material. It is surprisingly flexible and light, despite formidable armor plating.
   components:
@@ -11,7 +11,7 @@
 
 - type: entity
   parent: ClothingOuterBase
-  id: OuterclothingWebvest
+  id: ClothingOuterVestWeb
   name: web vest
   description: A synthetic armor vest. This one has added webbing and ballistic plates.
   components:
@@ -22,7 +22,7 @@
 
 - type: entity
   parent: ClothingOuterBase
-  id: OuterclothingKvest
+  id: ClothingOuterVestKevlar
   name: kevlar vest
   description: An armor vest made of synthetic fibers.
   components:
@@ -33,7 +33,7 @@
 
 - type: entity
   parent: ClothingOuterBase
-  id: OuterclothingDetvest
+  id: ClothingOuterVestDetective
   name: detective's vest
   description: A hard-boiled private investigator's grey trenchcoat.
   components:
@@ -44,7 +44,7 @@
 
 - type: entity
   parent: ClothingOuterBase
-  id: OuterclothingHazard
+  id: ClothingOuterVestHazard
   name: hazard
   description: A high-visibility vest used in work zones.
   components:
@@ -55,7 +55,7 @@
 
 - type: entity
   parent: ClothingOuterBase
-  id: OuterclothingVest
+  id: ClothingOuterVest
   name: vest
   description: A thick vest with a rubbery, water-resistant shell.
   components:

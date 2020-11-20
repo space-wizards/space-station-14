@@ -1,6 +1,6 @@
 - type: entity
-  parent: HatBase
-  id: HatCatGrey
+  parent: ClothingHeadBase
+  id: ClothingHeadHatAnimalCat
   name: grey cat
   description: A cute and fluffy head of a grey cat.
   components:
@@ -10,8 +10,8 @@
     sprite: Clothing/Head/Animals/cat.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatCatBrown
+  parent: ClothingHeadBase
+  id: ClothingHeadHatAnimalCatBrown
   name: brown cat
   description: A cute and fluffy head of a brown cat.
   components:
@@ -21,8 +21,8 @@
     sprite: Clothing/Head/Animals/cat2.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatCatBlack
+  parent: ClothingHeadBase
+  id: ClothingHeadHatAnimalCatBlack
   name: black cat
   description: A cute and fluffy head of a black cat.
   components:
@@ -32,8 +32,8 @@
     sprite: Clothing/Head/Animals/cat3.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatHeadslime
+  parent: ClothingHeadBase
+  id: ClothingHeadHatAnimalHeadslime
   name: headslime
   description: A green, sticky headslime, you put it on your head.
   components:
@@ -43,8 +43,8 @@
     sprite: Clothing/Head/Animals/headslime.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatMonkey
+  parent: ClothingHeadBase
+  id: ClothingHeadHatAnimalMonkey
   name: monkey
   description: That's a monkey head. It has a hole on a mouth to eat bananas.
   components:
@@ -54,8 +54,8 @@
     sprite: Clothing/Head/Animals/monkey.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatMouseBrown
+  parent: ClothingHeadBase
+  id: ClothingHeadHatAnimalMouseBrown
   name: mouse brown
   description: This is a head of a brown mouse. Squeak!
   components:
@@ -65,8 +65,8 @@
     sprite: Clothing/Head/Animals/mouse_brown.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatMouseGray
+  parent: ClothingHeadBase
+  id: ClothingHeadHatAnimalMouseGray
   name: mouse gray
   description: This is a head of a grey mouse. Squeak!
   components:
@@ -76,8 +76,8 @@
     sprite: Clothing/Head/Animals/mouse_gray.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatMouseWhite
+  parent: ClothingHeadBase
+  id: ClothingHeadHatAnimalMouseWhite
   name: mouse white
   description: This is a head of a white mouse. Squeak!
   components:

@@ -5,7 +5,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: OuterclothingHazard
+      - name: ClothingOuterVestHazard
         prob: 0.4
       - name: FlashlightLantern
         prob: 0.7
@@ -23,9 +23,9 @@
         prob: 0.2
       - name: ClothingBeltUtility
         prob: 0.2
-      - name: GlovesYellow
+      - name: ClothingHandsColorGlovesYellow
         prob: 0.05
-      - name: HatHardhatRed
+      - name: ClothingHeadHatHardhatRed
         prob: 0.4
       - name: ApcExtensionCableStack
         prob: 0.3
@@ -79,7 +79,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: ClothingHeadHardsuitEngineeringWhite
+      - name: ClothingHeadHelmetHardsuitEngineeringWhite
       - name: ClothingOuterHardsuitEngineeringWhite
       - name: ClothingMaskBreath
       - name: OxygenTankFilled
@@ -101,7 +101,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: ClothingHeadHardsuitAtmos
+      - name: ClothingHeadHelmetHardsuitAtmos
       - name: ClothingOuterHardsuitAtmos
       - name: ClothingMaskBreath
       - name: OxygenTankFilled
@@ -113,7 +113,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: ClothingHeadHardsuitEngineering
+      - name: ClothingHeadHelmetHardsuitEngineering
       - name: ClothingOuterHardsuitEngineering
       - name: ClothingMaskBreath
       - name: OxygenTankFilled
@@ -328,7 +328,7 @@
       contents:
         - name: RedOxygenTankFilled
           prob: 0.6
-        - name: OuterclothingFiresuit
+        - name: ClothingOuterSuitFire
           prob: 0.75
 
 - type: entity

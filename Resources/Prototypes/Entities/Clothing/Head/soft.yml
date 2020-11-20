@@ -1,6 +1,6 @@
 - type: entity
-  parent: HatBase
-  id: HatBluesoft
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBluesoft
   name: bluesoft
   description: "It's a baseball hat in a tasteless blue colour."
   components:
@@ -10,8 +10,8 @@
     sprite: Clothing/Head/Soft/bluesoft.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatBluesoftFlipped
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBluesoftFlipped
   name: bluesoft flipped
   description: "It's a baseball hat in a tasteless blue colour. Flipped."
   components:
@@ -21,8 +21,8 @@
     sprite: Clothing/Head/Soft/bluesoft_flipped.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatCargosoft
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCargosoft
   name: cargosoft
   description: "It's a baseball hat painted in Cargo colours."
   components:
@@ -32,8 +32,8 @@
     sprite: Clothing/Head/Soft/cargosoft.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatCargosoftFlipped
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCargosoftFlipped
   name: cargosoft flipped
   description: "It's a baseball hat painted in Cargo colours. Flipped."
   components:
@@ -43,8 +43,8 @@
     sprite: Clothing/Head/Soft/cargosoft_flipped.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatCorpsoft
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCorpsoft
   name: corpsoft
   description: A baseball bat in corporation colors.
   components:
@@ -54,8 +54,8 @@
     sprite: Clothing/Head/Soft/corpsoft.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatCorpsoftFlipped
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCorpsoftFlipped
   name: corpsoft flipped
   description: A baseball bat in corporation colors. Flipped.
   components:
@@ -65,8 +65,8 @@
     sprite: Clothing/Head/Soft/corpsoft_flipped.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatGreensoft
+  parent: ClothingHeadBase
+  id: ClothingHeadHatGreensoft
   name: greensoft
   description: "It's a baseball hat in a tasteless green colour."
   components:
@@ -76,8 +76,8 @@
     sprite: Clothing/Head/Soft/greensoft.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatGreensoftFlipped
+  parent: ClothingHeadBase
+  id: ClothingHeadHatGreensoftFlipped
   name: greensoft flipped
   description: "It's a baseball hat in a tasteless green colour. Flipped."
   components:
@@ -87,8 +87,8 @@
     sprite: Clothing/Head/Soft/greensoft_flipped.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatGreysoft
+  parent: ClothingHeadBase
+  id: ClothingHeadHatGreysoft
   name: greysoft
   description: "It's a baseball hat in a tasteless grey colour."
   components:
@@ -98,8 +98,8 @@
     sprite: Clothing/Head/Soft/greysoft.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatGreysoftFlipped
+  parent: ClothingHeadBase
+  id: ClothingHeadHatGreysoftFlipped
   name: greysoft flipped
   description: "It's a baseball hat in a tasteless grey colour. Flipped."
   components:
@@ -109,8 +109,8 @@
     sprite: Clothing/Head/Soft/greysoft_flipped.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatMimesoft
+  parent: ClothingHeadBase
+  id: ClothingHeadHatMimesoft
   name: mimesoft
   description: "It's a baseball hat in a tasteless white colour."
   components:
@@ -120,8 +120,8 @@
     sprite: Clothing/Head/Soft/mimesoft.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatMimesoftFlipped
+  parent: ClothingHeadBase
+  id: ClothingHeadHatMimesoftFlipped
   name: mimesoft flipped
   description: It's a baseball hat in a tasteless white colour. Flipped.
   components:
@@ -131,8 +131,8 @@
     sprite: Clothing/Head/Soft/mimesoft_flipped.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatOrangesoft
+  parent: ClothingHeadBase
+  id: ClothingHeadHatOrangesoft
   name: orangesoft
   description: It's a baseball hat in a good-looking orange colour.
   components:
@@ -142,8 +142,8 @@
     sprite: Clothing/Head/Soft/orangesoft.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatOrangesoftFlipped
+  parent: ClothingHeadBase
+  id: ClothingHeadHatOrangesoftFlipped
   name: orangesoft flipped
   description: It's a baseball hat in a good-looking orange colour. Flipped.
   components:
@@ -153,8 +153,8 @@
     sprite: Clothing/Head/Soft/orangesoft_flipped.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatPurplesoft
+  parent: ClothingHeadBase
+  id: ClothingHeadHatPurplesoft
   name: purple soft
   description: It's a baseball hat in a tasteless purple colour.
   components:
@@ -164,8 +164,8 @@
     sprite: Clothing/Head/Soft/purplesoft.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatPurplesoftFlipped
+  parent: ClothingHeadBase
+  id: ClothingHeadHatPurplesoftFlipped
   name: purplesoft flipped
   description: It's a baseball hat in a tasteless purple colour. Flipped.
   components:
@@ -175,8 +175,8 @@
     sprite: Clothing/Head/Soft/purplesoft_flipped.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatRedsoft
+  parent: ClothingHeadBase
+  id: ClothingHeadHatRedsoft
   name: redsoft
   description: It's a baseball hat in a tasteless red colour.
   components:
@@ -186,8 +186,8 @@
     sprite: Clothing/Head/Soft/redsoft.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatRedsoftFlipped
+  parent: ClothingHeadBase
+  id: ClothingHeadHatRedsoftFlipped
   name: redsoft flipped
   description: It's a baseball hat in a tasteless purple colour. Flipped.
   components:
@@ -197,8 +197,8 @@
     sprite: Clothing/Head/Soft/redsoft_flipped.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatSecsoft
+  parent: ClothingHeadBase
+  id: ClothingHeadHatSecsoft
   name: secsoft
   description: It's a robust baseball hat in tasteful red colour.
   components:
@@ -208,8 +208,8 @@
     sprite: Clothing/Head/Soft/secsoft.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatSecsoftFlipped
+  parent: ClothingHeadBase
+  id: ClothingHeadHatSecsoftFlipped
   name: secsoft flipped
   description: It's a robust baseball hat in tasteful red colour. Flipped.
   components:
@@ -219,8 +219,8 @@
     sprite: Clothing/Head/Soft/secsoft_flipped.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatYellowsoft
+  parent: ClothingHeadBase
+  id: ClothingHeadHatYellowsoft
   name: yellowsoft
   description: A yellow baseball hat.
   components:
@@ -230,8 +230,8 @@
     sprite: Clothing/Head/Soft/yellowsoft.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatYellowsoftFlipped
+  parent: ClothingHeadBase
+  id: ClothingHeadHatYellowsoftFlipped
   name: yellowsoft flipped
   description: A yellow flipped baseball hat.
   components:

@@ -10,7 +10,7 @@
 - type: entity
   abstract: true
   parent: ClothingBackpackClown
-  id: ClownPackFilled
+  id: ClothingBackpackClownFilled
   components:
   - type: StorageFill
     contents:

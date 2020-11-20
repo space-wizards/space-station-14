@@ -15,7 +15,8 @@
   id: ChefGear
   equipment:
     innerclothing: ClothingUniformJumpsuitChef
+    head: ClothingHeadHatChef
     backpack: ClothingBackpackFilled
-    shoes: ClothingShoesBlack
+    shoes: ClothingShoesColorBlack
     idcard: ChefPDA
     ears: ClothingHeadsetService

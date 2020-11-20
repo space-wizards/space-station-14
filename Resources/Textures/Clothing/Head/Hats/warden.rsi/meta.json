@@ -12,15 +12,7 @@
       "directions": 1
     },
     {
-      "name": "equipped-OUTERCLOTHING",
-      "directions": 4
-    },
-    {
-      "name": "inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "inhand-right",
+      "name": "equipped-HELMET",
       "directions": 4
     }
   ]

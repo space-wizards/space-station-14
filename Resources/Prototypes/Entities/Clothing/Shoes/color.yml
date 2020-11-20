@@ -1,6 +1,6 @@
 - type: entity
   parent: ClothingShoesBase
-  id: ClothingShoesBlack
+  id: ClothingShoesColorBlack
   name: black shoes
   description: Stylish black shoes.
   components:
@@ -11,7 +11,7 @@
 
 - type: entity
   parent: ClothingShoesBase
-  id: ClothingShoesBlue
+  id: ClothingShoesColorBlue
   name: blue shoes
   description: Stylish blue shoes.
   components:
@@ -22,7 +22,7 @@
 
 - type: entity
   parent: ClothingShoesBase
-  id: ClothingShoesBrown
+  id: ClothingShoesColorBrown
   name: brown shoes
   description: A pair of brown shoes.
   components:
@@ -33,7 +33,7 @@
 
 - type: entity
   parent: ClothingShoesBase
-  id: ClothingShoesGreen
+  id: ClothingShoesColorGreen
   name: green shoes
   description: Stylish green shoes.
   components:
@@ -44,7 +44,7 @@
 
 - type: entity
   parent: ClothingShoesBase
-  id: ClothingShoesOrange
+  id: ClothingShoesColorOrange
   name: orange shoes
   description: Stylish orange shoes.
   components:
@@ -55,7 +55,7 @@
 
 - type: entity
   parent: ClothingShoesBase
-  id: ClothingShoesPurple
+  id: ClothingShoesColorPurple
   name: purple shoes
   description: Stylish purple shoes.
   components:
@@ -66,7 +66,7 @@
 
 - type: entity
   parent: ClothingShoesBase
-  id: ClothingShoesRed
+  id: ClothingShoesColorRed
   name: red shoes
   description: Stylish red shoes.
   components:
@@ -77,7 +77,7 @@
 
 - type: entity
   parent: ClothingShoesBase
-  id: ClothingShoesWhite
+  id: ClothingShoesColorWhite
   name: white shoes
   description: Don't take them off at your office Christmas party.
   components:
@@ -88,7 +88,7 @@
 
 - type: entity
   parent: ClothingShoesBase
-  id: ClothingShoesYellow
+  id: ClothingShoesColorYellow
   name: yellow shoes
   description: Stylish yellow shoes.
   components:

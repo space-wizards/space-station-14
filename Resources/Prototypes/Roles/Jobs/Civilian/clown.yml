@@ -17,7 +17,7 @@
     innerclothing: ClothingUniformJumpsuitClown
     backpack: ClothingBackpackClownFilled
     shoes: ClothingShoesClown
-    mask: MaskClown
+    mask: ClothingMaskClown
     pocket1: BikeHorn
     idcard: ClownPDA
     ears: ClothingHeadsetService

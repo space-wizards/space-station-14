@@ -20,9 +20,9 @@
   id: CMOGear
   equipment:
     innerclothing: ClothingUniformJumpsuitCMO
-    backpack: BackpackMedicalFilled
-    shoes: ClothingShoesBrown
-    outerclothing: OuterclothingLabcoatcmo
+    backpack: ClothingBackpackMedicalFilled
+    shoes: ClothingShoesColorBrown
+    outerclothing: ClothingOuterCoatLabCmo
     idcard: CMOPDA
     ears: ClothingHeadsetAltMedical
     belt: ClothingBeltMedical

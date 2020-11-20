@@ -15,12 +15,12 @@
   equipment:
     innerclothing: ClothingUniformJumpsuitMime
     backpack: ClothingBackpackFilled
-    head: HatBeret
-    belt: SuspendersClothing
-    gloves: GlovesWhite
-    shoes: ClothingShoesWhite
+    head: ClothingHeadHatBeret
+    belt: ClothingBeltSuspenders
+    gloves: ClothingHandsGlovesLatex
+    shoes: ClothingShoesColorWhite
     pocket1: Pen
     pocket2: Paper
-    mask: MaskMime
+    mask: ClothingMaskMime
     idcard: MimePDA
     ears: ClothingHeadsetService

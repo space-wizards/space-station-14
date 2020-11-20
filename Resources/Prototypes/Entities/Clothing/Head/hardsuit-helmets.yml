@@ -1,6 +1,6 @@
 - type: entity
-  parent: HelmetHardsuitBase
-  id: ClothingHeadHardsuitAtmos
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitAtmos
   name: atmos hardsuit helmet
   description: A special hardsuit helmet designed for working in low-pressure, high thermal environments.
   components:
@@ -8,13 +8,10 @@
     sprite: Clothing/Head/Hardsuits/atmospherics.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/atmospherics.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.5
-    lowPressureMultiplier: 100
 
 - type: entity
-  parent: HelmetHardsuitBase
-  id: ClothingHelmetHardsuitCap
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitCap
   name: captain's hardsuit helmet
   description: Special hardsuit helmet, made for the captain of the station.
   components:
@@ -22,13 +19,10 @@
     sprite: Clothing/Head/Hardsuits/capspace.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/capspace.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.5
-    lowPressureMultiplier: 100
 
 - type: entity
   parent: HatBase
-  id: ClothingHeadHardsuitDeathsquad
+  id: ClothingHeadHelmetHardsuitDeathsquad
   name: deathsquad
   description: A robust helmet for special operations.
   components:
@@ -36,13 +30,10 @@
     sprite: Clothing/Head/Hardsuits/deathsquad.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/deathsquad.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.5
-    lowPressureMultiplier: 100
-    
+
 - type: entity
-  parent: HelmetHardsuitBase
-  id: ClothingHeadHardsuitEngineering
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitEngineering
   name: engineering hardsuit helmet
   description: An engineering hardsuit helmet designed for working in low-pressure, high radioactive environments.
   components:
@@ -51,12 +42,12 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/engineering.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.65
+    highPressureMultiplier: 0.40
     lowPressureMultiplier: 100
 
 - type: entity
-  parent: HelmetHardsuitBase
-  id: ClothingHeadHardsuitEngineeringWhite
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitEngineeringWhite
   name: CE hardsuit helmet
   description: Special hardsuit helmet, made for the chief engineer of the station.
   components:
@@ -64,13 +55,10 @@
     sprite: Clothing/Head/Hardsuits/engineering-white.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/engineering-white.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.5
-    lowPressureMultiplier: 100
 
 - type: entity
   parent: HatBase
-  id: ClothingHelmetIHSVoidHelm
+  id: ClothingHeadHelmetIHSVoidHelm
   name: IHS voidhelm
   description: A robust, tactical IHS helmet.
   components:
@@ -83,8 +71,8 @@
     lowPressureMultiplier: 100
 
 - type: entity
-  parent: HelmetHardsuitBase
-  id: HelmetHardsuitMedical
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitMedical
   name: medical hardsuit helmet
   description: Lightweight medical hardsuit helmet that doesn't restrict your head movements.
   components:
@@ -97,8 +85,8 @@
     lowPressureMultiplier: 55
 
 - type: entity
-  parent: HelmetHardsuitBase
-  id: HelmetHardsuitRd
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitRd
   name: rd hardsuit helmet
   description: Lightweight hardsuit helmet that doesn't restrict your head movements.
   components:
@@ -111,8 +99,8 @@
     lowPressureMultiplier: 55
 
 - type: entity
-  parent: HelmetHardsuitBase
-  id: HelmetHardsuitSalvage
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitSalvage
   name: salvage hardsuit helmet
   description: A special helmet designed for work in a hazardous, low pressure environment. Has reinforced plating for wildlife encounters and dual floodlights.
   components:
@@ -125,8 +113,8 @@
     lowPressureMultiplier: 100
 
 - type: entity
-  parent: HelmetHardsuitBase
-  id: HelmetHardsuitSecurity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitSecurity
   name: security hardsuit helmet
   description: Armored hardsuit helmet for security needs.
   components:
@@ -139,8 +127,8 @@
     lowPressureMultiplier: 100
 
 - type: entity
-  parent: HelmetHardsuitBase
-  id: HelmetHardsuitSecurityRed
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitSecurityRed
   name: hos hardsuit helmet
   description: Red armored hardsuit helmet for security needs. Belongs to the HoS.
   components:
@@ -153,8 +141,8 @@
     lowPressureMultiplier: 100
 
 - type: entity
-  parent: HelmetHardsuitBase
-  id: HelmetHardsuitSyndie
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitSyndie
   name: blood red hardsuit helmet
   description: An advanced red hardsuit helmet designed for work in special operations.
   components:
@@ -162,13 +150,10 @@
     sprite: Clothing/Head/Hardsuits/syndicate.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/syndicate.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.45
-    lowPressureMultiplier: 100
 
 - type: entity
-  parent: HelmetHardsuitBase
-  id: HelmetHardsuitWizard
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitWizard
   name: wizard hardsuit helmet
   description: A bizarre gem-encrusted helmet that radiates magical energies.
   components:
@@ -176,6 +161,3 @@
     sprite: Clothing/Head/Hardsuits/wizard.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/wizard.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.45
-    lowPressureMultiplier: 100

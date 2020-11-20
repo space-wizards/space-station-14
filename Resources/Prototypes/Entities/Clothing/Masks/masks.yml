@@ -1,23 +1,13 @@
 - type: entity
-  parent: Clothing
-  id: ClothingMaskBase
-  abstract: true
-  components:
-  - type: Clothing
-    Slots: [mask]
-  - type: Sprite
-    state: icon
-
-- type: entity
   parent: ClothingMaskBase
   id: ClothingMaskGas
   name: old gas mask
   description: An old, dusty mask. Yet still dutifully functional.
   components:
   - type: Sprite
-    sprite: Clothing/Masks/mask_gas.rsi
+    sprite: Clothing/Mask/gas.rsi
   - type: Clothing
-    sprite: Clothing/Masks/mask_gas.rsi
+    sprite: Clothing/Mask/gas.rsi
   - type: BreathMask
 
 - type: entity
@@ -27,9 +17,9 @@
   description: Might as well keep this on 24/7.
   components:
   - type: Sprite
-    sprite: Clothing/Masks/mask_breath.rsi
+    sprite: Clothing/Mask/breath.rsi
   - type: Clothing
-    sprite: Clothing/Masks/mask_breath.rsi
+    sprite: Clothing/Mask/breath.rsi
   - type: BreathMask
 
 - type: entity
@@ -39,9 +29,9 @@
   description: A true prankster's facial attire. A clown is incomplete without his wig and mask.
   components:
   - type: Sprite
-    sprite: Clothing/Masks/mask_clown.rsi
+    sprite: Clothing/Mask/clown.rsi
   - type: Clothing
-    sprite: Clothing/Masks/mask_clown.rsi
+    sprite: Clothing/Mask/clown.rsi
   - type: BreathMask
 
 - type: entity
@@ -51,9 +41,9 @@
   description: Express your happiness or hide your sorrows with this laughing face with crying tears of joy cutout.
   components:
   - type: Sprite
-    sprite: Clothing/Masks/mask_joy.rsi
+    sprite: Clothing/Mask/joy.rsi
   - type: Clothing
-    sprite: Clothing/Masks/mask_joy.rsi
+    sprite: Clothing/Mask/joy.rsi
   - type: BreathMask
 
 - type: entity
@@ -63,9 +53,9 @@
   description: The traditional mime's mask. It has an eerie facial posture.
   components:
   - type: Sprite
-    sprite: Clothing/Masks/mask_mime.rsi
+    sprite: Clothing/Mask/mime.rsi
   - type: Clothing
-    sprite: Clothing/Masks/mask_mime.rsi
+    sprite: Clothing/Mask/mime.rsi
   - type: BreathMask
 
 - type: entity
@@ -75,9 +65,9 @@
   description: A sterile mask designed to help prevent the spread of diseases.
   components:
   - type: Sprite
-    sprite: Clothing/Masks/mask_sterile.rsi
+    sprite: Clothing/Mask/sterile.rsi
   - type: Clothing
-    sprite: Clothing/Masks/mask_sterile.rsi
+    sprite: Clothing/Mask/sterile.rsi
   - type: BreathMask
 
 - type: entity
@@ -89,7 +79,7 @@
   description: A sterile mask designed to help prevent the spread of diseases.
   components:
   - type: Sprite
-    sprite: Clothing/Masks/mask_sterile.rsi
+    sprite: Clothing/Mask/sterile.rsi
   - type: Clothing
-    sprite: Clothing/Masks/mask_sterile.rsi
+    sprite: Clothing/Mask/sterile.rsi
   - type: BreathMask

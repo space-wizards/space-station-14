@@ -16,8 +16,8 @@
   equipment:
     innerclothing: ClothingUniformJumpsuitMedicalDoctor
     backpack: ClothingBackpackMedicalFilled
-    shoes: ClothingShoesWhite
-    outerclothing: OuterclothingLabcoatmedspecopen
+    shoes: ClothingShoesColorWhite
+    outerclothing: ClothingOuterCoatLab
     idcard: MedicalPDA
     ears: ClothingHeadsetMedical
     belt: ClothingBeltMedical

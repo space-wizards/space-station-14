@@ -33,7 +33,6 @@
   components:
   - type: StorageFill
     contents:
-      - name: SecGlasses
       - name: GrenadeFlashBang
       - name: GrenadeFlashBang
       - name: Stunbaton

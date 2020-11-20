@@ -1,42 +1,51 @@
 - type: entity
   parent: ClothingOuterBase
-  id: OuterclothingApron
+  id: ClothingOuterApron
   name: apron
-  description: A fancy purple apron for a stylish person.
+  description: A fancy apron for a stylish person.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Misc/apron.rsi
-
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/apron.rsi
 
 - type: entity
   parent: ClothingOuterBase
-  id: OuterclothingApronchef
-  name: apron (chef)
+  id: ClothingOuterApronChef
+  name: apron
+  suffix: Chef
   description: An apron-jacket used by a high class chef.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Misc/apronchef.rsi
-
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/apronchef.rsi
 
 - type: entity
   parent: ClothingOuterBase
-  id: OuterclothingBlackhoodie
+  id: ClothingOuterJacketChef
+  name: chef
+  description: An apron-jacket used by a high class chef.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Misc/chef.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Misc/chef.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterHoodieBlack
   name: black hoodie
   description: Oh my God, it's a black hoodie!
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Misc/black_hoodie.rsi
-
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/black_hoodie.rsi
 
 - type: entity
   parent: ClothingOuterBase
-  id: OuterclothingGreyhoodie
+  id: ClothingOuterHoodieGrey
   name: grey hoodie
   description: A grey hoodie.
   components:
@@ -47,164 +56,140 @@
 
 - type: entity
   parent: ClothingOuterBase
-  id: OuterclothingCardborg
+  id: ClothingOuterCardborg
   name: cardborg
   description: An ordinary cardboard box with holes cut in the sides.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Misc/cardborg.rsi
-
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/cardborg.rsi
 
 - type: entity
   parent: ClothingOuterBase
-  id: OuterclothingChaplainhoodie
+  id: ClothingOuterHoodieChaplain
   name: chaplain hoodie
   description: Black and strict chaplain hoodie.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Misc/chaplain_hoodie.rsi
-
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/chaplain_hoodie.rsi
 
 - type: entity
   parent: ClothingOuterBase
-  id: OuterclothingChef
-  name: chef
-  description: An apron-jacket used by a high class chef.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Misc/chef.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Misc/chef.rsi
-
-- type: entity
-  parent: ClothingOuterBase
-  id: OuterclothingClassicponcho
+  id: ClothingOuterPonchoClassic
   name: classic poncho
   description: A warm and comfy classic poncho.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Misc/classicponcho.rsi
-
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/classicponcho.rsi
 
 - type: entity
   parent: ClothingOuterBase
-  id: OuterclothingCultrobes
+  id: ClothingOuterRobesCult
   name: cult robes
   description: There's no cult without classic red/crimson cult robes.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Misc/cultrobes.rsi
-
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/cultrobes.rsi
 
 - type: entity
   parent: ClothingOuterBase
-  id: OuterclothingJudge
+  id: ClothingOuterRobesJudge
   name: judge
   description: This robe commands authority.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Misc/judge.rsi
-
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/judge.rsi
 
 - type: entity
   parent: ClothingOuterBase
-  id: OuterclothingPoncho
+  id: ClothingOuterPoncho
   name: poncho
   description: A warm and comfy poncho.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Misc/poncho.rsi
-
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/poncho.rsi
 
 - type: entity
   parent: ClothingOuterBase
-  id: OuterclothingSanta
+  id: ClothingOuterSanta
   name: santa
   description: Ho ho ho!
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Misc/santa.rsi
-
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/santa.rsi
 
 - type: entity
   parent: ClothingOuterBase
-  id: OuterclothingStraightjacket
+  id: ClothingOuterStraightjacket
   name: straight jacket
   description: A straight jacket.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Misc/straight_jacket.rsi
-
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/straight_jacket.rsi
 
 # Is this wizard wearing a fanny pack???
 - type: entity
   parent: ClothingOuterBase
-  id: OuterclothingVioletwizard
+  id: ClothingOuterWizardViolet
   name: violet wizard
   description: A bizarre gem-encrusted violet robe that radiates magical energies.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Misc/violetwizard.rsi
-
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/violetwizard.rsi
 
 - type: entity
   parent: ClothingOuterBase
-  id: OuterclothingWizard
+  id: ClothingOuterWizard
   name: wizard
   description: A bizarre gem-encrusted blue robe that radiates magical energies.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Misc/wizard.rsi
-
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/wizard.rsi
 
 - type: entity
   parent: ClothingOuterBase
-  id: OuterclothingXenos
+  id: ClothingOuterXenos
   name: xenos
   description: A suit made out of chitinous alien hide.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Misc/xenos.rsi
-
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/xenos.rsi
 
 - type: entity
   parent: ClothingOuterBase
-  id: OuterclothingRedwizard
+  id: ClothingOuterWizardRed
   name: red wizard
   description: Strange-looking, red, hat-wear that most certainly belongs to a real magic user.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Misc/redwizard.rsi
-
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/redwizard.rsi
 
 - type: entity
   parent: ClothingOuterBase
-  id: OuterclothingSkub
+  id: ClothingOuterSkub
   name: Skub Suit
   description: 'Skub is crudely written on the outside of this cylindrical suit.'
   components:

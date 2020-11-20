@@ -16,7 +16,7 @@
   equipment:
     innerclothing: ClothingUniformJumpsuitScientist
     backpack: ClothingBackpackFilled
-    shoes: ClothingShoesWhite
-    outerclothing: OuterclothingLabcoat
+    shoes: ClothingShoesColorWhite
+    outerclothing: ClothingOuterCoatLab
     idcard: SciencePDA
     ears: ClothingHeadsetScience

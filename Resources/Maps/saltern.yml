@@ -971,19 +971,19 @@ entities:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 117
-  type: HatHardhatYellow
+  type: ClothingHeadHatHardhatYellow
   components:
   - parent: 855
     pos: 31.357727,-4.36431
     type: Transform
 - uid: 118
-  type: HatHardhatWhite
+  type: ClothingHeadHatHardhatWhite
   components:
   - parent: 855
     pos: 31.623352,-4.14556
     type: Transform
 - uid: 119
-  type: HatHardhatRed
+  type: ClothingHeadHatHardhatRed
   components:
   - parent: 855
     pos: 31.201477,-4.05181

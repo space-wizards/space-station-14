@@ -18,10 +18,10 @@
 - type: startingGear
   id: ChiefEngineerGear
   equipment:
-    head: HatHardhatWhite
+    head: ClothingHeadHatHardhatWhite
     innerclothing: ClothingUniformJumpsuitChiefEngineer
     backpack: ClothingBackpackEngineeringFilled
-    shoes: ClothingShoesBrown
+    shoes: ClothingShoesColorBrown
     idcard: CEPDA
     ears: ClothingHeadsetEngineering
     belt: ClothingBeltChiefEngineerFilled

@@ -17,9 +17,10 @@
   equipment:
     innerclothing: ClothingUniformJumpsuitSec
     backpack: ClothingBackpackSecurityFilled
-    shoes: ClothingShoesJackboots
-    eyes: SecGlasses
-    outerclothing: OuterclothingArmorVest
+    shoes: ClothingShoesBootsJack
+    eyes: ClothingEyesGlassesSecurity
+    head: ClothingHeadHelmetHelmetOld
+    outerclothing: ClothingOuterVestKevlar
     idcard: SecurityPDA
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled

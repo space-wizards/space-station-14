@@ -351,7 +351,7 @@
 
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniform
+  id: ClothingUniformJumpsuitWarden
   name: warden's uniform
   description: A formal security suit for officers complete with Nanotrasen belt buckle.
   components:
@@ -537,3 +537,14 @@
     sprite: Clothing/Uniforms/Jumpsuit/Color/maroon.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/Color/maroon.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformColorRainbow
+  name: rainbow jumpsuit
+  description: A multi-colored jumpsuit!
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/rainbow.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/rainbow.rsi

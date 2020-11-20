@@ -20,7 +20,6 @@
     innerclothing: ClothingUniformJumpsuitResearchDirector
     # Note to Swept add science backpacks
     backpack: ClothingBackpackFilled
-    shoes: ClothingShoesBrown
-    outerclothing: OuterclothingLabcoatopen
+    shoes: ClothingShoesColorBrown
     idcard: RnDPDA
     ears: ClothingHeadsetScience
