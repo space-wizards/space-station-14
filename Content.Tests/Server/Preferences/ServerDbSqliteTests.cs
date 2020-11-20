@@ -22,7 +22,7 @@ namespace Content.Tests.Server.Preferences
 
         private static HumanoidCharacterProfile CharlieCharlieson()
         {
-            return new HumanoidCharacterProfile(
+            return new(
                 "Charlie Charlieson",
                 21,
                 Sex.Male,
@@ -87,7 +87,7 @@ namespace Content.Tests.Server.Preferences
 
         private static NetUserId NewUserId()
         {
-            return new NetUserId(Guid.NewGuid());
+            return new(Guid.NewGuid());
         }
     }
 }
