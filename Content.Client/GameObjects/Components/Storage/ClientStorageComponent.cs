@@ -25,7 +25,7 @@ namespace Content.Client.GameObjects.Components.Storage
     [RegisterComponent]
     public class ClientStorageComponent : SharedStorageComponent, IDraggable
     {
-        private List<IEntity> _storedEntities = new List<IEntity>();
+        private List<IEntity> _storedEntities = new();
         private int StorageSizeUsed;
         private int StorageCapacityMax;
         private StorageWindow Window;
@@ -138,8 +138,8 @@ namespace Content.Client.GameObjects.Components.Storage
             private Label Information;
             public ClientStorageComponent StorageEntity;
 
-            private StyleBoxFlat _HoveredBox = new StyleBoxFlat { BackgroundColor = Color.Black.WithAlpha(0.35f) };
-            private StyleBoxFlat _unHoveredBox = new StyleBoxFlat { BackgroundColor = Color.Black.WithAlpha(0.0f) };
+            private StyleBoxFlat _HoveredBox = new() { BackgroundColor = Color.Black.WithAlpha(0.35f) };
+            private StyleBoxFlat _unHoveredBox = new() { BackgroundColor = Color.Black.WithAlpha(0.0f) };
 
             protected override Vector2? CustomSize => (180, 320);
 

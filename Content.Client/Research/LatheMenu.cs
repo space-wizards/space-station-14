@@ -27,8 +27,8 @@ namespace Content.Client.Research
 
         public LatheBoundUserInterface Owner { get; set; }
 
-        private List<LatheRecipePrototype> _recipes = new List<LatheRecipePrototype>();
-        private List<LatheRecipePrototype> _shownRecipes = new List<LatheRecipePrototype>();
+        private List<LatheRecipePrototype> _recipes = new();
+        private List<LatheRecipePrototype> _shownRecipes = new();
 
         public LatheMenu(LatheBoundUserInterface owner = null)
         {

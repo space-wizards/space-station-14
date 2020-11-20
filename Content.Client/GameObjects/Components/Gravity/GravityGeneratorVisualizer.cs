@@ -11,7 +11,7 @@ namespace Content.Client.GameObjects.Components.Gravity
 {
     public class GravityGeneratorVisualizer : AppearanceVisualizer
     {
-        private Dictionary<GravityGeneratorStatus, string> _spriteMap = new Dictionary<GravityGeneratorStatus, string>();
+        private Dictionary<GravityGeneratorStatus, string> _spriteMap = new();
 
         public override void InitializeEntity(IEntity entity)
         {

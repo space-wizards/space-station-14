@@ -29,7 +29,7 @@ namespace Content.Client
         [Dependency] private readonly IClientNetManager _netManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
-        private readonly List<PopupLabel> _aliveLabels = new List<PopupLabel>();
+        private readonly List<PopupLabel> _aliveLabels = new();
         private bool _initialized;
 
         public void Initialize()

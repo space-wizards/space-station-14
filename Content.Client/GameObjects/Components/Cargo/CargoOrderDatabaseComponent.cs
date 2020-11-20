@@ -9,7 +9,7 @@ namespace Content.Client.GameObjects.Components.Cargo
     [RegisterComponent]
     public class CargoOrderDatabaseComponent : SharedCargoOrderDatabaseComponent
     {
-        private List<CargoOrderData> _orders = new List<CargoOrderData>();
+        private List<CargoOrderData> _orders = new();
 
         public IReadOnlyList<CargoOrderData> Orders => _orders;
         /// <summary>

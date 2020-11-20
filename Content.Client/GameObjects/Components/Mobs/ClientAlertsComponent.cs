@@ -48,7 +48,7 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         [ViewVariables]
         private Dictionary<AlertKey, AlertControl> _alertControls
-            = new Dictionary<AlertKey, AlertControl>();
+            = new();
 
         /// <summary>
         /// Allows calculating if we need to act due to this component being controlled by the current mob

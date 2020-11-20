@@ -361,7 +361,7 @@ namespace Content.Client.GameObjects.Components
         }
 
         [ViewVariables(VVAccess.ReadOnly)]
-        private List<AnimationContainer> _animations = new List<AnimationContainer>();
+        private List<AnimationContainer> _animations = new();
 
         private float _originalRadius = default;
         private float _originalEnergy = default;

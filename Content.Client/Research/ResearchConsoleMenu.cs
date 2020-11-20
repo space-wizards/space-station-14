@@ -18,9 +18,9 @@ namespace Content.Client.Research
 
         protected override Vector2? CustomSize => (800, 400);
 
-        private List<TechnologyPrototype> _unlockedTechnologyPrototypes = new List<TechnologyPrototype>();
-        private List<TechnologyPrototype> _unlockableTechnologyPrototypes = new List<TechnologyPrototype>();
-        private List<TechnologyPrototype> _futureTechnologyPrototypes = new List<TechnologyPrototype>();
+        private List<TechnologyPrototype> _unlockedTechnologyPrototypes = new();
+        private List<TechnologyPrototype> _unlockableTechnologyPrototypes = new();
+        private List<TechnologyPrototype> _futureTechnologyPrototypes = new();
 
         private Label _pointLabel;
         private Label _pointsPerSecondLabel;
