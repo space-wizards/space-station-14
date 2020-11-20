@@ -30,7 +30,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
     {
         [ViewVariables]
         public IReadOnlyList<Node> Nodes => _nodes;
-        private readonly List<Node> _nodes = new List<Node>();
+        private readonly List<Node> _nodes = new();
 
         [ViewVariables]
         public int NodeCount => Nodes.Count;
@@ -104,7 +104,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         private class NullNodeGroup : INodeGroup
         {
             public IReadOnlyList<Node> Nodes => _nodes;
-            private readonly List<Node> _nodes = new List<Node>();
+            private readonly List<Node> _nodes = new();
             public void Initialize(Node sourceNode) { }
             public void AddNode(Node node) { }
             public void CombineGroup(INodeGroup newGroup) { }

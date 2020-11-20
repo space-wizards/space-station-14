@@ -118,22 +118,22 @@ namespace Content.Server.GameObjects.Components
         /// Contains all registered wires.
         /// </summary>
         [ViewVariables]
-        public readonly List<Wire> WiresList = new List<Wire>();
+        public readonly List<Wire> WiresList = new();
 
         /// <summary>
         /// Status messages are displayed at the bottom of the UI.
         /// </summary>
         [ViewVariables]
-        private readonly Dictionary<object, object> _statuses = new Dictionary<object, object>();
+        private readonly Dictionary<object, object> _statuses = new();
 
         /// <summary>
         /// <see cref="AssignAppearance"/> and <see cref="WiresBuilder.CreateWire"/>.
         /// </summary>
         private readonly List<WireColor> _availableColors =
-            new List<WireColor>((WireColor[]) Enum.GetValues(typeof(WireColor)));
+            new((WireColor[]) Enum.GetValues(typeof(WireColor)));
 
         private readonly List<WireLetter> _availableLetters =
-            new List<WireLetter>((WireLetter[]) Enum.GetValues(typeof(WireLetter)));
+            new((WireLetter[]) Enum.GetValues(typeof(WireLetter)));
 
         private string _boardName = default!;
 

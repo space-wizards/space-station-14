@@ -7,7 +7,7 @@ namespace Content.Server.AI.Utility.Considerations
 {
     public class ConsiderationsManager
     {
-        private Dictionary<Type, Consideration> _considerations = new Dictionary<Type, Consideration>();
+        private Dictionary<Type, Consideration> _considerations = new();
 
         public void Initialize()
         {

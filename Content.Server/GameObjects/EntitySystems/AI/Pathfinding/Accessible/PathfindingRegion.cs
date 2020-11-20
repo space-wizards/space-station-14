@@ -27,7 +27,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         public int Width { get; private set; } = 1;
 
         public PathfindingChunk ParentChunk => OriginNode.ParentChunk;
-        public HashSet<PathfindingRegion> Neighbors { get; } = new HashSet<PathfindingRegion>();
+        public HashSet<PathfindingRegion> Neighbors { get; } = new();
 
         public bool IsDoor { get; }
         public HashSet<PathfindingNode> Nodes => _nodes;

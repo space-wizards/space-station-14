@@ -43,11 +43,11 @@ namespace Content.Server.GameObjects.Components.Metabolism
 
         [ViewVariables(VVAccess.ReadWrite)] private int _suffocationDamage;
 
-        [ViewVariables] public Dictionary<Gas, float> NeedsGases { get; set; } = new Dictionary<Gas, float>();
+        [ViewVariables] public Dictionary<Gas, float> NeedsGases { get; set; } = new();
 
-        [ViewVariables] public Dictionary<Gas, float> ProducesGases { get; set; } = new Dictionary<Gas, float>();
+        [ViewVariables] public Dictionary<Gas, float> ProducesGases { get; set; } = new();
 
-        [ViewVariables] public Dictionary<Gas, float> DeficitGases { get; set; } = new Dictionary<Gas, float>();
+        [ViewVariables] public Dictionary<Gas, float> DeficitGases { get; set; } = new();
 
         /// <summary>
         /// Heat generated due to metabolism. It's generated via metabolism

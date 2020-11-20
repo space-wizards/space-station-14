@@ -429,7 +429,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             /// <returns>A Metadata-message.</returns>
             public SpaceVillainArcadeMetaDataUpdateMessage GenerateMetaDataMessage()
             {
-                return new SpaceVillainArcadeMetaDataUpdateMessage(_playerHp, _playerMp, _enemyHp, _enemyMp, _latestPlayerActionMessage, _latestEnemyActionMessage, Name, _enemyName, !_running);
+                return new(_playerHp, _playerMp, _enemyHp, _enemyMp, _latestPlayerActionMessage, _latestEnemyActionMessage, Name, _enemyName, !_running);
             }
 
             /// <summary>
@@ -439,7 +439,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             public SpaceVillainArcadeDataUpdateMessage
                 GenerateUpdateMessage()
             {
-                return new SpaceVillainArcadeDataUpdateMessage(_playerHp, _playerMp, _enemyHp, _enemyMp, _latestPlayerActionMessage,
+                return new(_playerHp, _playerMp, _enemyHp, _enemyMp, _latestPlayerActionMessage,
                     _latestEnemyActionMessage);
             }
         }

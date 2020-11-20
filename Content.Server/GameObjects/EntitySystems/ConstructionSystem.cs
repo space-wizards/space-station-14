@@ -38,7 +38,7 @@ namespace Content.Server.GameObjects.EntitySystems
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
-        private readonly Dictionary<ICommonSession, HashSet<int>> _beingBuilt = new Dictionary<ICommonSession, HashSet<int>>();
+        private readonly Dictionary<ICommonSession, HashSet<int>> _beingBuilt = new();
 
         public override void Initialize()
         {

@@ -22,7 +22,7 @@ namespace Content.Server.GameObjects.Components.Interactable
     [RegisterComponent]
     public class ExpendableLightComponent : SharedExpendableLightComponent, IUse
     {
-        private static readonly AudioParams LoopedSoundParams = new AudioParams(0, 1, "Master", 62.5f, 1, AudioMixTarget.Stereo, true, 0.3f);
+        private static readonly AudioParams LoopedSoundParams = new(0, 1, "Master", 62.5f, 1, AudioMixTarget.Stereo, true, 0.3f);
 
         /// <summary>
         ///     Status of light, whether or not it is emitting light.

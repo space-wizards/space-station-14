@@ -441,7 +441,7 @@ namespace Content.Server.GameObjects.Components.PDA
         private sealed class PdaAccessSet : ISet<string>
         {
             private readonly PDAComponent _pdaComponent;
-            private static readonly HashSet<string> EmptySet = new HashSet<string>();
+            private static readonly HashSet<string> EmptySet = new();
 
             public PdaAccessSet(PDAComponent pdaComponent)
             {

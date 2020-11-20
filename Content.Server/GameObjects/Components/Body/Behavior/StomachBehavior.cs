@@ -103,7 +103,7 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
         ///     Used to track how long each reagent has been in the stomach
         /// </summary>
         [ViewVariables]
-        private readonly List<ReagentDelta> _reagentDeltas = new List<ReagentDelta>();
+        private readonly List<ReagentDelta> _reagentDeltas = new();
 
         public override void ExposeData(ObjectSerializer serializer)
         {

@@ -7,7 +7,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 {
     public abstract class BaseNetConnectorNodeGroup<TNetConnector, TNetType> : BaseNodeGroup where TNetConnector : BaseNetConnectorComponent<TNetType>
     {
-        private readonly Dictionary<Node, List<TNetConnector>> _netConnectorComponents = new Dictionary<Node, List<TNetConnector>>();
+        private readonly Dictionary<Node, List<TNetConnector>> _netConnectorComponents = new();
 
         protected override void OnAddNode(Node node)
         {

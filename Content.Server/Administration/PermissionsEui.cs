@@ -26,7 +26,7 @@ namespace Content.Server.Administration
         private bool _isLoading;
 
         private readonly List<(Admin a, string? lastUserName)> _admins = new List<(Admin, string? lastUserName)>();
-        private readonly List<DbAdminRank> _adminRanks = new List<DbAdminRank>();
+        private readonly List<DbAdminRank> _adminRanks = new();
 
         public PermissionsEui()
         {

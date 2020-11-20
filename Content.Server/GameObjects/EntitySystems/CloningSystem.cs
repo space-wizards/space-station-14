@@ -17,7 +17,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        public readonly Dictionary<int, Mind> Minds = new Dictionary<int, Mind>();
+        public readonly Dictionary<int, Mind> Minds = new();
 
         public void AddToDnaScans(Mind mind)
         {

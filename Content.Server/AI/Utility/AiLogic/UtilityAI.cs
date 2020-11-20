@@ -31,8 +31,8 @@ namespace Content.Server.AI.Utility.AiLogic
         /// <summary>
         /// The sum of all BehaviorSets gives us what actions the AI can take
         /// </summary>
-        public Dictionary<Type, BehaviorSet> BehaviorSets { get; } = new Dictionary<Type, BehaviorSet>();
-        private readonly List<IAiUtility> _availableActions = new List<IAiUtility>();
+        public Dictionary<Type, BehaviorSet> BehaviorSets { get; } = new();
+        private readonly List<IAiUtility> _availableActions = new();
 
         /// <summary>
         /// The currently running action; most importantly are the operators.

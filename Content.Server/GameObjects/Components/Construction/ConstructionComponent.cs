@@ -41,7 +41,7 @@ namespace Content.Server.GameObjects.Components.Construction
         private string _startingNodeIdentifier = string.Empty;
 
         [ViewVariables]
-        private HashSet<string> _containers = new HashSet<string>();
+        private HashSet<string> _containers = new();
         [ViewVariables]
         private List<List<ConstructionGraphStep>>? _edgeNestedStepProgress = null;
 

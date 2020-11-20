@@ -12,8 +12,8 @@ namespace Content.Server.GameObjects.EntitySystems
     // ReSharper disable once ClassNeverInstantiated.Global
     public class BlockGameSystem : EntitySystem
     {
-        private readonly List<BlockGameMessages.HighScoreEntry> _roundHighscores = new List<BlockGameMessages.HighScoreEntry>();
-        private readonly List<BlockGameMessages.HighScoreEntry> _globalHighscores = new List<BlockGameMessages.HighScoreEntry>();
+        private readonly List<BlockGameMessages.HighScoreEntry> _roundHighscores = new();
+        private readonly List<BlockGameMessages.HighScoreEntry> _globalHighscores = new();
 
         public HighScorePlacement RegisterHighScore(string name, int score)
         {

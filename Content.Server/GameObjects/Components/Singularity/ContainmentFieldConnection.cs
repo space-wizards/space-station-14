@@ -15,9 +15,9 @@ namespace Content.Server.GameObjects.Components.Singularity
     {
         public readonly ContainmentFieldGeneratorComponent Generator1;
         public readonly ContainmentFieldGeneratorComponent Generator2;
-        private List<IEntity> _fields = new List<IEntity>();
+        private List<IEntity> _fields = new();
         private int _sharedEnergyPool;
-        private CancellationTokenSource _powerDecreaseCancellationTokenSource = new CancellationTokenSource();
+        private CancellationTokenSource _powerDecreaseCancellationTokenSource = new();
         public int SharedEnergyPool
         {
             get => _sharedEnergyPool;

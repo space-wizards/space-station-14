@@ -17,7 +17,7 @@ namespace Content.Server.GameTicking
     public partial class GameTicker
     {
         [ViewVariables]
-        private readonly Dictionary<string, int> _spawnedPositions = new Dictionary<string, int>();
+        private readonly Dictionary<string, int> _spawnedPositions = new();
 
         private Dictionary<IPlayerSession, string> AssignJobs(List<IPlayerSession> available,
             Dictionary<NetUserId, HumanoidCharacterProfile> profiles)

@@ -12,7 +12,7 @@ namespace Content.Server.Atmos
         private bool _disposed = false;
 
         [ViewVariables]
-        private readonly HashSet<TileAtmosphere> _tiles = new HashSet<TileAtmosphere>();
+        private readonly HashSet<TileAtmosphere> _tiles = new();
 
         [ViewVariables]
         private GridAtmosphereComponent _gridAtmosphereComponent;

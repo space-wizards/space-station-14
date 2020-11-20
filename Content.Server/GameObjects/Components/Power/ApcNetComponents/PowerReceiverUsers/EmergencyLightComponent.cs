@@ -174,7 +174,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             On
         }
 
-        public Dictionary<EmergencyLightState, string> BatteryStateText = new Dictionary<EmergencyLightState, string>
+        public Dictionary<EmergencyLightState, string> BatteryStateText = new()
         {
             { EmergencyLightState.Full, "[color=darkgreen]Full[/color]"},
             { EmergencyLightState.Empty, "[color=darkred]Empty[/color]"},

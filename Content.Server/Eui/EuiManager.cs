@@ -19,7 +19,7 @@ namespace Content.Server.Eui
         [Dependency] private readonly IServerNetManager _net = default!;
 
         private readonly Dictionary<IPlayerSession, PlayerEuiData> _playerData =
-            new Dictionary<IPlayerSession, PlayerEuiData>();
+            new();
 
         private readonly Queue<(IPlayerSession player, uint id)> _stateUpdateQueue =
             new Queue<(IPlayerSession, uint id)>();
@@ -27,7 +27,7 @@ namespace Content.Server.Eui
         private sealed class PlayerEuiData
         {
             public uint NextId = 1;
-            public readonly Dictionary<uint, BaseEui> OpenUIs = new Dictionary<uint, BaseEui>();
+            public readonly Dictionary<uint, BaseEui> OpenUIs = new();
         }
 
         void IPostInjectInit.PostInject()

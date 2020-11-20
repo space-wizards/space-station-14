@@ -20,12 +20,12 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
     public class PipeNet : BaseNodeGroup, IPipeNet
     {
         [ViewVariables]
-        public GasMixture Air { get; set; } = new GasMixture();
+        public GasMixture Air { get; set; } = new();
 
         public static readonly IPipeNet NullNet = new NullPipeNet();
 
         [ViewVariables]
-        private readonly List<PipeNode> _pipes = new List<PipeNode>();
+        private readonly List<PipeNode> _pipes = new();
 
         [ViewVariables] private AtmosphereSystem _atmosphereSystem;
 
@@ -94,7 +94,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         private class NullPipeNet : IPipeNet
         {
-            GasMixture IGasMixtureHolder.Air { get; set; } = new GasMixture();
+            GasMixture IGasMixtureHolder.Air { get; set; } = new();
             public void Update() { }
         }
     }

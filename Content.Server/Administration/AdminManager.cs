@@ -39,7 +39,7 @@ namespace Content.Server.Administration
         [Dependency] private readonly IConsoleShell _consoleShell = default!;
         [Dependency] private readonly IChatManager _chat = default!;
 
-        private readonly Dictionary<IPlayerSession, AdminReg> _admins = new Dictionary<IPlayerSession, AdminReg>();
+        private readonly Dictionary<IPlayerSession, AdminReg> _admins = new();
 
         public event Action<AdminPermsChangedEventArgs>? OnPermsChanged;
 
@@ -49,8 +49,8 @@ namespace Content.Server.Administration
 
         // If a command isn't in this list it's server-console only.
         // if a command is in but the flags value is null it's available to everybody.
-        private readonly HashSet<string> _anyCommands = new HashSet<string>();
-        private readonly Dictionary<string, AdminFlags[]> _adminCommands = new Dictionary<string, AdminFlags[]>();
+        private readonly HashSet<string> _anyCommands = new();
+        private readonly Dictionary<string, AdminFlags[]> _adminCommands = new();
 
         public AdminData? GetAdminData(IPlayerSession session, bool includeDeAdmin = false)
         {

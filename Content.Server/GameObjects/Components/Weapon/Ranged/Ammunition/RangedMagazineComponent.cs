@@ -24,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
     {
         public override string Name => "RangedMagazine";
 
-        private Stack<IEntity> _spawnedAmmo = new Stack<IEntity>();
+        private Stack<IEntity> _spawnedAmmo = new();
         private Container _ammoContainer;
 
         public int ShotsLeft => _spawnedAmmo.Count + _unspawnedCount;

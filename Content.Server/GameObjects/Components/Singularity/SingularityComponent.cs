@@ -163,7 +163,7 @@ namespace Content.Server.GameObjects.Components.Singularity
             _singularityController?.Push(pushVector.Normalized, 2);
         }
 
-        List<IEntity> _previousPulledEntites = new List<IEntity>();
+        List<IEntity> _previousPulledEntites = new();
         public void PullUpdate()
         {
             foreach (var previousPulledEntity in _previousPulledEntites)

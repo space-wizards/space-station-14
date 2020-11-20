@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Recycling
     {
         public override string Name => "Recycler";
 
-        private List<IEntity> _intersecting = new List<IEntity>();
+        private List<IEntity> _intersecting = new();
 
         /// <summary>
         ///     Whether or not sentient beings will be recycled

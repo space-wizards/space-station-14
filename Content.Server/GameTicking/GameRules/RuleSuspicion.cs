@@ -33,7 +33,7 @@ namespace Content.Server.GameTicking.GameRules
         [Dependency] private readonly IGameTicker _gameTicker = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
 
-        private readonly CancellationTokenSource _checkTimerCancel = new CancellationTokenSource();
+        private readonly CancellationTokenSource _checkTimerCancel = new();
 
         public override void Added()
         {

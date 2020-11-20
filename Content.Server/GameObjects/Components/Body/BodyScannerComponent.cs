@@ -62,7 +62,7 @@ namespace Content.Server.GameObjects.Components.Body
         /// </summary>
         private BodyScannerUIState InterfaceState(IBody body)
         {
-            return new BodyScannerUIState(body.Owner.Uid);
+            return new(body.Owner.Uid);
         }
     }
 }

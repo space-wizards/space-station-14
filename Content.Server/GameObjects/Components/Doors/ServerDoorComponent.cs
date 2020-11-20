@@ -64,7 +64,7 @@ namespace Content.Server.GameObjects.Components.Doors
         [ViewVariables(VVAccess.ReadWrite)]
         protected float CloseSpeed = AutoCloseDelay;
 
-        private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
+        private CancellationTokenSource _cancellationTokenSource = new();
 
         protected virtual TimeSpan CloseTimeOne => TimeSpan.FromSeconds(0.3f);
         protected virtual TimeSpan CloseTimeTwo => TimeSpan.FromSeconds(0.9f);

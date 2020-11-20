@@ -35,7 +35,7 @@ namespace Content.Server.GameObjects.EntitySystems
             AllowAll
         }
         
-        private List<ServerDoorComponent> _activeDoors = new List<ServerDoorComponent>();
+        private List<ServerDoorComponent> _activeDoors = new();
 
         public override void Initialize()
         {

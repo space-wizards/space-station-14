@@ -25,10 +25,10 @@ namespace Content.Server.GameObjects.Components.Markers
         public override string Name => "ConditionalSpawner";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public List<string> Prototypes { get; set; } = new List<string>();
+        public List<string> Prototypes { get; set; } = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private List<string> _gameRules = new List<string>();
+        private List<string> _gameRules = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float Chance { get; set; } = 1.0f;

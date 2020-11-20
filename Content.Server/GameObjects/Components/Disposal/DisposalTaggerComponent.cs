@@ -99,7 +99,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// <returns>Returns a <see cref="DisposalTaggerUserInterfaceState"/></returns>
         private DisposalTaggerUserInterfaceState GetUserInterfaceState()
         {
-            return new DisposalTaggerUserInterfaceState(_tag);
+            return new(_tag);
         }
 
         private void UpdateUserInterface()

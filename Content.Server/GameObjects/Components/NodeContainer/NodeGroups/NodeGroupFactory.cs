@@ -26,7 +26,7 @@
         [Dependency] private readonly IReflectionManager _reflectionManager = default!;
         [Dependency] private readonly IDynamicTypeFactory _typeFactory = default!;
 
-        private readonly Dictionary<NodeGroupID, Type> _groupTypes = new Dictionary<NodeGroupID, Type>();
+        private readonly Dictionary<NodeGroupID, Type> _groupTypes = new();
 
         public void Initialize()
         {

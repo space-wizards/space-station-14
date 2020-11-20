@@ -22,7 +22,7 @@ namespace Content.Server.GameObjects.Components
         [ViewVariables] private BoundUserInterface UserInterface => Owner.GetUIOrNull(ConfigurationUiKey.Key);
 
         [ViewVariables]
-        private readonly Dictionary<string, string> _config = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> _config = new();
 
         private Regex _validation;
 

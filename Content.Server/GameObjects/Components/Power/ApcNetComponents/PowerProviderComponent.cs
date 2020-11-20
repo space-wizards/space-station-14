@@ -37,7 +37,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         [ViewVariables]
         public IReadOnlyList<PowerReceiverComponent> LinkedReceivers => _linkedReceivers;
-        private List<PowerReceiverComponent> _linkedReceivers = new List<PowerReceiverComponent>();
+        private List<PowerReceiverComponent> _linkedReceivers = new();
 
         /// <summary>
         ///     If <see cref="PowerReceiverComponent"/>s should consider connecting to this.

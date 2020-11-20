@@ -19,7 +19,7 @@ namespace Content.Server.GameObjects.EntitySystems
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-        private readonly HashSet<IPlayerSession> _seesThroughContainers = new HashSet<IPlayerSession>();
+        private readonly HashSet<IPlayerSession> _seesThroughContainers = new();
 
         public override void Initialize()
         {

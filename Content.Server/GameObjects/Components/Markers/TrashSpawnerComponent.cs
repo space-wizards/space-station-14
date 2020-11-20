@@ -19,10 +19,10 @@ namespace Content.Server.GameObjects.Components.Markers
         public override string Name => "TrashSpawner";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public List<string> RarePrototypes { get; set; } = new List<string>();
+        public List<string> RarePrototypes { get; set; } = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private List<string> _gameRules = new List<string>();
+        private List<string> _gameRules = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float RareChance { get; set; } = 0.05f;

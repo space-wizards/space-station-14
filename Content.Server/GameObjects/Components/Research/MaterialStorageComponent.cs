@@ -11,7 +11,7 @@ namespace Content.Server.GameObjects.Components.Research
     public class MaterialStorageComponent : SharedMaterialStorageComponent
     {
         [ViewVariables]
-        protected override Dictionary<string, int> Storage { get; set; } = new Dictionary<string, int>();
+        protected override Dictionary<string, int> Storage { get; set; } = new();
 
         /// <summary>
         ///     How much material the storage can store in total.

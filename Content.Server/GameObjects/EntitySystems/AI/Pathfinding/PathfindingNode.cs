@@ -22,17 +22,17 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         /// Whenever there's a change in the collision layers we update the mask as the graph has more reads than writes
         /// </summary>
         public int BlockedCollisionMask { get; private set; }
-        private readonly Dictionary<IEntity, int> _blockedCollidables = new Dictionary<IEntity, int>(0);
+        private readonly Dictionary<IEntity, int> _blockedCollidables = new(0);
 
         public IReadOnlyDictionary<IEntity, int> PhysicsLayers => _physicsLayers;
-        private readonly Dictionary<IEntity, int> _physicsLayers = new Dictionary<IEntity, int>(0);
+        private readonly Dictionary<IEntity, int> _physicsLayers = new(0);
 
         /// <summary>
         /// The entities on this tile that require access to traverse
         /// </summary>
         /// We don't store the ICollection, at least for now, as we'd need to replicate the access code here
         public IReadOnlyCollection<AccessReader> AccessReaders => _accessReaders.Values;
-        private readonly Dictionary<IEntity, AccessReader> _accessReaders = new Dictionary<IEntity, AccessReader>(0);
+        private readonly Dictionary<IEntity, AccessReader> _accessReaders = new(0);
 
         public PathfindingNode(PathfindingChunk parent, TileRef tileRef)
         {

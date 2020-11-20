@@ -17,7 +17,7 @@ namespace Content.Server.GameObjects.Components.Access
         public override string Name => "Access";
 
         [ViewVariables]
-        private readonly HashSet<string> _tags = new HashSet<string>();
+        private readonly HashSet<string> _tags = new();
 
         public ISet<string> Tags => _tags;
         public bool IsReadOnly => false;

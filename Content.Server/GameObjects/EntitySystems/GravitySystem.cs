@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private const uint ShakeTimes = 10;
 
-        private Dictionary<GridId, uint> _gridsToShake = new Dictionary<GridId, uint>();
+        private Dictionary<GridId, uint> _gridsToShake = new();
 
         private float _internalTimer = 0.0f;
 

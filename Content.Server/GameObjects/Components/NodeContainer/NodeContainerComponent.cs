@@ -16,7 +16,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer
 
         [ViewVariables]
         public IReadOnlyList<Node> Nodes => _nodes;
-        private List<Node> _nodes = new List<Node>();
+        private List<Node> _nodes = new();
 
         public override void ExposeData(ObjectSerializer serializer)
         {
