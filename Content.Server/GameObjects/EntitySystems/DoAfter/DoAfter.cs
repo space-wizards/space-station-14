@@ -119,7 +119,7 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
 
             // TODO :Handle inertia in space.
             if (EventArgs.BreakOnUserMove && !EventArgs.User.Transform.Coordinates.InRange(
-                EventArgs.User.EntityManager,UserGrid, EventArgs.MovementThreshold))
+                EventArgs.User.EntityManager, UserGrid, EventArgs.MovementThreshold))
             {
                 return true;
             }
