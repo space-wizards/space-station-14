@@ -35,7 +35,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
 
         // Each component in range will have its own vBox which we need to keep track of so if they go out of range or
         // come into range it needs altering
-        private HashSet<DoAfterComponent> _knownComponents = new HashSet<DoAfterComponent>();
+        private readonly HashSet<DoAfterComponent> _knownComponents = new HashSet<DoAfterComponent>();
 
         private IEntity? _attachedEntity;
 

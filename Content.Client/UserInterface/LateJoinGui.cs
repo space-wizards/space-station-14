@@ -26,7 +26,7 @@ namespace Content.Client.UserInterface
 
         public event Action<string> SelectedId;
 
-        private Dictionary<string, JobButton> JobButtons = new Dictionary<string, JobButton>();
+        private readonly Dictionary<string, JobButton> _jobButtons = new Dictionary<string, JobButton>();
 
         public LateJoinGui()
         {
@@ -95,7 +95,7 @@ namespace Content.Client.UserInterface
                     jobButton.Disabled = true;
                 }
 
-                JobButtons[job.ID] = jobButton;
+                _jobButtons[job.ID] = jobButton;
             }
 
             SelectedId += jobId =>
@@ -115,7 +115,7 @@ namespace Content.Client.UserInterface
 
         private void JobsAvailableUpdated(IReadOnlyList<string> jobs)
         {
-            foreach (var (id, button) in JobButtons)
+            foreach (var (id, button) in _jobButtons)
             {
                 button.Disabled = !jobs.Contains(id);
             }
@@ -128,7 +128,7 @@ namespace Content.Client.UserInterface
             if (disposing)
             {
                 _gameTicker.LobbyJobsAvailableUpdated -= JobsAvailableUpdated;
-                JobButtons.Clear();
+                _jobButtons.Clear();
             }
         }
     }

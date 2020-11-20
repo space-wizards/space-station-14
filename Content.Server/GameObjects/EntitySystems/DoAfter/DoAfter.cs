@@ -32,8 +32,8 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
         public DoAfterStatus Status => AsTask.IsCompletedSuccessfully ? AsTask.Result : DoAfterStatus.Running;
 
         // NeedHand
-        private string? _activeHand;
-        private ItemComponent? _activeItem;
+        private readonly string? _activeHand;
+        private readonly ItemComponent? _activeItem;
 
         public DoAfter(DoAfterEventArgs eventArgs)
         {

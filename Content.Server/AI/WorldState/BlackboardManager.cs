@@ -14,7 +14,7 @@ namespace Content.Server.AI.WorldState
     {
         // Cache the known types
         public IReadOnlyCollection<Type> AiStates => _aiStates;
-        private List<Type> _aiStates = new List<Type>();
+        private readonly List<Type> _aiStates = new List<Type>();
 
         public void Initialize()
         {
@@ -24,7 +24,7 @@ namespace Content.Server.AI.WorldState
             {
                 _aiStates.Add(state);
             }
-            
+
             DebugTools.AssertNotNull(_aiStates);
         }
     }

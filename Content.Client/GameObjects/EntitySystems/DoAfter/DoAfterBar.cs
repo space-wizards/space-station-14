@@ -14,8 +14,8 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
     public sealed class DoAfterBar : Control
     {
         private IGameTiming _gameTiming = default!;
-        
-        private ShaderInstance _shader;
+
+        private readonly ShaderInstance _shader;
 
         /// <summary>
         ///     Set from 0.0f to 1.0f to reflect bar progress
@@ -40,13 +40,13 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
                 {
                     return;
                 }
-                
+
                 _cancelled = value;
                 if (_cancelled)
                 {
                     _gameTiming = IoCManager.Resolve<IGameTiming>();
                     _lastFlash = _gameTiming.CurTime;
-                }   
+                }
             }
         }
 
@@ -87,7 +87,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
                     _lastFlash = _gameTiming.CurTime;
                     _flash = !_flash;
                 }
-            } 
+            }
         }
 
         protected override void Draw(DrawingHandleScreen handle)

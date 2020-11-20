@@ -22,8 +22,8 @@ namespace Content.Client.Graphics.Overlays
 
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;
         private readonly ShaderInstance _shader;
-        private double _startTime;
-        private int lastsFor = 5000;
+        private readonly double _startTime;
+        private int _lastsFor = 5000;
         private Texture _screenshotTexture;
 
         public FlashOverlay() : base(nameof(SharedOverlayID.FlashOverlay))
@@ -42,7 +42,7 @@ namespace Content.Client.Graphics.Overlays
         protected override void Draw(DrawingHandleBase handle, OverlaySpace currentSpace)
         {
             handle.UseShader(_shader);
-            var percentComplete = (float) ((_gameTiming.CurTime.TotalMilliseconds - _startTime) / lastsFor);
+            var percentComplete = (float) ((_gameTiming.CurTime.TotalMilliseconds - _startTime) / _lastsFor);
             _shader?.SetParameter("percentComplete", percentComplete);
 
             var screenSpaceHandle = handle as DrawingHandleScreen;
@@ -63,7 +63,7 @@ namespace Content.Client.Graphics.Overlays
 
         public void Configure(TimedOverlayParameter parameters)
         {
-            lastsFor = parameters.Length;
+            _lastsFor = parameters.Length;
         }
     }
 }
