@@ -30,15 +30,15 @@ namespace Content.Shared.GameObjects.Components.Body.Template
 
         [ViewVariables] public string CenterSlot => _centerSlot;
 
-        [ViewVariables] public Dictionary<string, BodyPartType> Slots => new Dictionary<string, BodyPartType>(_slots);
+        [ViewVariables] public Dictionary<string, BodyPartType> Slots => new(_slots);
 
         [ViewVariables]
         public Dictionary<string, List<string>> Connections =>
             _connections.ToDictionary(x => x.Key, x => x.Value.ToList());
 
-        [ViewVariables] public Dictionary<string, string> Layers => new Dictionary<string, string>(_layers);
+        [ViewVariables] public Dictionary<string, string> Layers => new(_layers);
 
-        [ViewVariables] public Dictionary<string, string> MechanismLayers => new Dictionary<string, string>(_mechanismLayers);
+        [ViewVariables] public Dictionary<string, string> MechanismLayers => new(_mechanismLayers);
 
         public virtual void LoadFrom(YamlMappingNode mapping)
         {

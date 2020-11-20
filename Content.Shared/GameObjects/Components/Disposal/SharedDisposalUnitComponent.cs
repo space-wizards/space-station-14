@@ -16,7 +16,7 @@ namespace Content.Shared.GameObjects.Components.Disposal
     {
         public override string Name => "DisposalUnit";
 
-        private readonly List<IEntity> _intersecting = new List<IEntity>();
+        private readonly List<IEntity> _intersecting = new();
 
         [ViewVariables]
         public bool Anchored =>

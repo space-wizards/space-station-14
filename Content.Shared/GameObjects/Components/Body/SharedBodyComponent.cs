@@ -32,19 +32,19 @@ namespace Content.Shared.GameObjects.Components.Body
 
         private string? _centerSlot;
 
-        private Dictionary<string, string> _partIds = new Dictionary<string, string>();
+        private Dictionary<string, string> _partIds = new();
 
-        private readonly Dictionary<string, IBodyPart> _parts = new Dictionary<string, IBodyPart>();
+        private readonly Dictionary<string, IBodyPart> _parts = new();
 
         [ViewVariables] public string? TemplateName { get; private set; }
 
         [ViewVariables] public string? PresetName { get; private set; }
 
         [ViewVariables]
-        public Dictionary<string, BodyPartType> Slots { get; private set; } = new Dictionary<string, BodyPartType>();
+        public Dictionary<string, BodyPartType> Slots { get; private set; } = new();
 
         [ViewVariables]
-        public Dictionary<string, List<string>> Connections { get; private set; } = new Dictionary<string, List<string>>();
+        public Dictionary<string, List<string>> Connections { get; private set; } = new();
 
         /// <summary>
         ///     Maps slots to the part filling each one.

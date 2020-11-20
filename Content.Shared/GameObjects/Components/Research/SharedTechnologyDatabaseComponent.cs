@@ -14,7 +14,7 @@ namespace Content.Shared.GameObjects.Components.Research
         public override string Name => "TechnologyDatabase";
         public override uint? NetID => ContentNetIDs.TECHNOLOGY_DATABASE;
 
-        protected List<TechnologyPrototype> _technologies = new List<TechnologyPrototype>();
+        protected List<TechnologyPrototype> _technologies = new();
 
         /// <summary>
         ///     A read-only list of unlocked technologies.

@@ -11,7 +11,7 @@ namespace Content.Shared.GameObjects.Components.Disposal
     {
         public override string Name => "DisposalTagger";
 
-        public static readonly Regex TagRegex = new Regex("^[a-zA-Z0-9 ]*$", RegexOptions.Compiled);
+        public static readonly Regex TagRegex = new("^[a-zA-Z0-9 ]*$", RegexOptions.Compiled);
 
         [Serializable, NetSerializable]
         public class DisposalTaggerUserInterfaceState : BoundUserInterfaceState

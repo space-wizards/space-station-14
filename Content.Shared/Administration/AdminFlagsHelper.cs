@@ -13,7 +13,7 @@ namespace Content.Shared.Administration
         // As you can tell from the boatload of bitwise ops,
         // writing this class was genuinely fun.
 
-        private static readonly Dictionary<string, AdminFlags> NameFlagsMap = new Dictionary<string, AdminFlags>();
+        private static readonly Dictionary<string, AdminFlags> NameFlagsMap = new();
         private static readonly string[] FlagsNameMap = new string[32];
 
         /// <summary>

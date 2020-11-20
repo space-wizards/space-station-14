@@ -17,7 +17,7 @@ namespace Content.Shared.Chemistry
     {
         // Most objects on the station hold only 1 or 2 reagents
         [ViewVariables]
-        private List<ReagentQuantity> _contents = new List<ReagentQuantity>(2);
+        private List<ReagentQuantity> _contents = new(2);
 
         public IReadOnlyList<ReagentQuantity> Contents => _contents;
 

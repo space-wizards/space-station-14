@@ -14,7 +14,7 @@ namespace Content.Shared.GameObjects.Components.Research
         public override string Name => "LatheDatabase";
         public override uint? NetID => ContentNetIDs.LATHE_DATABASE;
 
-        private List<LatheRecipePrototype> _recipes = new List<LatheRecipePrototype>();
+        private List<LatheRecipePrototype> _recipes = new();
 
         /// <summary>
         ///     Removes all recipes from the database if it's not static.

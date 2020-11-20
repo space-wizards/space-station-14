@@ -27,7 +27,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         public override uint? NetID => ContentNetIDs.ALERTS;
 
         [ViewVariables]
-        private Dictionary<AlertKey, ClickableAlertState> _alerts = new Dictionary<AlertKey, ClickableAlertState>();
+        private Dictionary<AlertKey, ClickableAlertState> _alerts = new();
 
         /// <returns>true iff an alert of the indicated alert category is currently showing</returns>
         public bool IsShowingAlertCategory(AlertCategory alertCategory)

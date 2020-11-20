@@ -183,7 +183,7 @@ namespace Content.Shared.Alert
         /// <returns>An alert key for the provided alert category</returns>
         public static AlertKey ForCategory(AlertCategory category)
         {
-            return new AlertKey(null, category);
+            return new(null, category);
         }
     }
 }

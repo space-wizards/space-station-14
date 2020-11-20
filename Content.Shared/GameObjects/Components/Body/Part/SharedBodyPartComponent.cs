@@ -23,11 +23,11 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         private IBody? _body;
 
         // TODO BODY Remove
-        private List<string> _mechanismIds = new List<string>();
+        private List<string> _mechanismIds = new();
         public IReadOnlyList<string> MechanismIds => _mechanismIds;
 
         [ViewVariables]
-        private HashSet<IMechanism> _mechanisms = new HashSet<IMechanism>();
+        private HashSet<IMechanism> _mechanisms = new();
 
         [ViewVariables]
         public IBody? Body

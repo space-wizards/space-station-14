@@ -13,8 +13,8 @@ namespace Content.Shared.Alert
     [Prototype("alertOrder")]
     public class AlertOrderPrototype : IPrototype, IComparer<AlertPrototype>
     {
-        private Dictionary<AlertType, int> _typeToIdx = new Dictionary<AlertType, int>();
-        private Dictionary<AlertCategory, int> _categoryToIdx = new Dictionary<AlertCategory, int>();
+        private Dictionary<AlertType, int> _typeToIdx = new();
+        private Dictionary<AlertCategory, int> _categoryToIdx = new();
 
         public void LoadFrom(YamlMappingNode mapping)
         {

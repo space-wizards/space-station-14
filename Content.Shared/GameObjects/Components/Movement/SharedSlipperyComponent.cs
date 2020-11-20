@@ -23,7 +23,7 @@ namespace Content.Shared.GameObjects.Components.Movement
         ///     The list of entities that have been slipped by this component,
         ///     and which have not stopped colliding with its owner yet.
         /// </summary>
-        protected readonly List<EntityUid> _slipped = new List<EntityUid>();
+        protected readonly List<EntityUid> _slipped = new();
 
         /// <summary>
         ///     How many seconds the mob will be paralyzed for.

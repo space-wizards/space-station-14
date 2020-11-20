@@ -19,7 +19,7 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
     {
         public override string Name => "BiologicalSurgeryData";
 
-        private readonly List<IMechanism> _disconnectedOrgans = new List<IMechanism>();
+        private readonly List<IMechanism> _disconnectedOrgans = new();
 
         private bool _skinOpened;
         private bool _skinRetracted;
