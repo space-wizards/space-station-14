@@ -48,6 +48,6 @@
     contents:
       - name: Soap #Make a soap group and pick between when i'm not lazy
       - name: SprayBottleSpaceCleaner
-      - name: # GrenadeChem
-      - name: # GrenadeChem
+      #- name: GrenadeChem
+      #- name: GrenadeChem
       - name: FlashlightLantern
