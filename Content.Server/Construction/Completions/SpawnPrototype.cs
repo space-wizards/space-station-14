@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.Construction;
@@ -35,10 +36,7 @@ namespace Content.Server.Construction.Completions
                 var _entity = entityManager.SpawnEntity(Prototype, coordinates);
                 StackComponent stackComponent = _entity.GetComponent<StackComponent>();
 
-                if (Amount > stackComponent.MaxCount)
-                    stackComponent.Count = stackComponent.MaxCount;
-                else
-                    stackComponent.Count = Amount;
+                stackComponent.Count = Math.Min(stackComponent.MaxCount, Amount);
             }
             else
             {

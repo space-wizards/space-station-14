@@ -50,11 +50,12 @@
             - !type:EntityAnchored
               anchored: true
           steps:
-            - prototype: FirelockElectronics
+            - component: FirelockElectronics
+              store: Firelock Electornics
+              name: Firelock Electornics
               icon:
-                sprite: Constructible/Misc/module.rsi
-                state: mainboard
-              name: Firelock Electronics
+                sprite: "Constructible/Misc/module.rsi"
+                state: "mainboard"
 
         - to: frame1
           completed:

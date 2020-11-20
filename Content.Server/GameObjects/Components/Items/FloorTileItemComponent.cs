@@ -19,7 +19,6 @@ namespace Content.Server.GameObjects.Components.Items
     public class FloorTileItemComponent : Component, IAfterInteract
     {
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
 
         public override string Name => "FloorTile";
         private List<string> _outputTiles;
@@ -60,10 +59,11 @@ namespace Content.Server.GameObjects.Components.Items
         {
             if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return;
             if (!Owner.TryGetComponent(out StackComponent stack)) return;
+            var mapManager = IoCManager.Resolve<IMapManager>();
 
             var location = eventArgs.ClickLocation.AlignWithClosestGridTile();
             var locationMap = location.ToMap(Owner.EntityManager);
-            _mapManager.TryGetGrid(location.GetGridId(Owner.EntityManager), out var mapGrid);
+            mapManager.TryGetGrid(location.GetGridId(Owner.EntityManager), out var mapGrid);
             foreach (var currentTile in _outputTiles)
             {
                 var currentTileDefinition = (ContentTileDefinition) _tileDefinitionManager[currentTile];
@@ -81,7 +81,7 @@ namespace Content.Server.GameObjects.Components.Items
                 }
                 else if (HasBaseTurf(currentTileDefinition, "space"))
                 {
-                    mapGrid = _mapManager.CreateGrid(locationMap.MapId);
+                    mapGrid = mapManager.CreateGrid(locationMap.MapId);
                     mapGrid.WorldPosition = locationMap.Position;
                     location = new EntityCoordinates(mapGrid.GridEntityId, Vector2.Zero);
                     PlaceAt(mapGrid, location, _tileDefinitionManager[_outputTiles[0]].TileId, mapGrid.TileSize / 2f);

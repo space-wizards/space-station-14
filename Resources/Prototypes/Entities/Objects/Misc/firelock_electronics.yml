@@ -7,3 +7,4 @@
     - type: Sprite
       sprite: Constructible/Misc/module.rsi
       state: mainboard
+    - type: FirelockElectronics
