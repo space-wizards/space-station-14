@@ -1,9 +1,6 @@
 ﻿using Content.Shared.GameObjects.Components.Bible;
 using Robust.Client.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Content.Client.GameObjects.Components.Bible
 {

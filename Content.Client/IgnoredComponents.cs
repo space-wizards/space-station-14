@@ -213,6 +213,7 @@
             "ConveyorAssembly",
             "TwoWayLever",
             "Bible",
+            "TextureSelect",
         };
     }
 }

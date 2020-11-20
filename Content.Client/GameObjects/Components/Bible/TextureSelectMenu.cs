@@ -1,26 +1,24 @@
-﻿using Content.Shared.GameObjects.Components.Bible;
+﻿using Content.Shared.GameObjects.Components.TextureSelect;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Localization;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Content.Client.GameObjects.Components.Bible
 {
-    internal class BibleSelectMenu : SS14Window
+    internal class TextureSelectMenu : SS14Window
     {
-        private BibleBoundUserInterface _owner;
+        private TextureSelectBoundUserInterface _owner;
 
-        private List<string> _styles;
-        private OptionButton _dropDown;
+        private List<string> _textures;
+        private readonly OptionButton _dropDown;
 
-        public BibleSelectMenu(BibleBoundUserInterface owner)
+        public TextureSelectMenu(TextureSelectBoundUserInterface owner)
         {
             _owner = owner;
-            Title = Loc.GetString("Select Bible Style");
+            Title = Loc.GetString("Select Texture"); //TODO: read from yaml?
 
-            _styles = new List<string>();
+            _textures = new List<string>();
 
             var hBox = new HBoxContainer();
             Contents.AddChild(hBox);
@@ -38,12 +36,12 @@ namespace Content.Client.GameObjects.Components.Bible
             hBox.AddChild(selectButton);
         }
 
-        public void Populate(BibleBoundUserInterfaceState state)
+        public void Populate(TextureSelectBoundUserInterfaceState state)
         {
-            _styles = state.Styles;
+            _textures = state.Textures;
             _dropDown.Clear();
 
-            foreach (var style in _styles)
+            foreach (var style in _textures)
             {
                 _dropDown.AddItem(style);
             }
@@ -51,7 +49,7 @@ namespace Content.Client.GameObjects.Components.Bible
 
         private void SelectButton_OnPressed(BaseButton.ButtonEventArgs obj)
         {
-            _owner.SelectStyle(_styles[_dropDown.SelectedId]);
+            _owner.SelectStyle(_textures[_dropDown.SelectedId]);
         }
     }
 }

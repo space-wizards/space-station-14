@@ -14,14 +14,13 @@
     #size: 10?
   - type: UserInterface
     interfaces:
-    - key: enum.BibleUiKey.Key
-      type: BibleBoundUserInterface
+    - key: enum.TextureSelectUiKey.Key
+      type: TextureSelectBoundUserInterface
   - type: Appearance
     visuals:
     - type: BibleVisualizer
-  - type: Bible
-    styleSelected: false
-    styles:
+  - type: TextureSelect
+    textures:
       - atheist
       - bible
       - burning
@@ -41,3 +40,4 @@
       - scrapbook
       - tome
       - white
+  - type: Bible

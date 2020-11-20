@@ -1,24 +1,21 @@
-﻿using Content.Shared.GameObjects.Components.Bible;
+﻿using Content.Shared.GameObjects.Components.TextureSelect;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Shared.GameObjects.Components.UserInterface;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Content.Client.GameObjects.Components.Bible
 {
-    public class BibleBoundUserInterface : BoundUserInterface
+    public class TextureSelectBoundUserInterface : BoundUserInterface
     {
-        public BibleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public TextureSelectBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
         }
 
-        private BibleSelectMenu _menu;
+        private TextureSelectMenu _menu;
 
         protected override void Open()
         {
             base.Open();
-            _menu = new BibleSelectMenu(this);
+            _menu = new TextureSelectMenu(this);
 
             _menu.OnClose += Close;
             _menu.OpenCentered();
@@ -27,12 +24,12 @@ namespace Content.Client.GameObjects.Components.Bible
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            _menu.Populate((BibleBoundUserInterfaceState) state);
+            _menu.Populate((TextureSelectBoundUserInterfaceState) state);
         }
 
         public void SelectStyle(string style)
         {
-            SendMessage(new BibleSelectStyleMessage(style));
+            SendMessage(new TextureSelectMessage(style));
         }
 
         protected override void Dispose(bool disposing)
