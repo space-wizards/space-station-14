@@ -69,8 +69,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public override async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
-
-            if (!await base.InteractUsing(eventArgs))
+            if (await base.InteractUsing(eventArgs))
                 return false;
 
             if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
@@ -83,19 +82,20 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                 if (State == DoorState.Closed)
                 {
-                    if(holdingPressure)
+                    if (holdingPressure)
                         Owner.PopupMessage(eventArgs.User, "A gush of air blows in your face... Maybe you should reconsider.");
                 }
 
-                if (!await tool.UseTool(eventArgs.User, Owner, holdingPressure || holdingFire ? 1.5f : 0.25f, ToolQuality.Prying)) return false;
-                if (!IsWeldedShut && State == DoorState.Closed)
+                if (IsWeldedShut || !await tool.UseTool(eventArgs.User, Owner, holdingPressure || holdingFire ? 1.5f : 0.25f, ToolQuality.Prying)) return false;
+                if (State == DoorState.Closed)
                 {
                     Open();
-                }else if (State == DoorState.Open)
+                }
+                else if (State == DoorState.Open)
                 {
                     Close();
                 }
-                
+
 
                 return true;
             }
