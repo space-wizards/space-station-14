@@ -6,8 +6,7 @@
   - type: Sprite
     state: icon
   - type: Clothing
-    Slots:
-    - innerclothing
+    Slots: [innerclothing]
 
 - type: entity
   parent: Clothing
@@ -17,6 +16,5 @@
   - type: Sprite
     state: icon
   - type: Clothing
-    Slots:
-    - innerclothing
+    Slots: [innerclothing]
     femaleMask: UniformTop
