@@ -8,7 +8,7 @@
    "copyright":"https://github.com/discordia-space/CEV-Eris/raw/40b254106b46981b8ad95ccd5589deb8fa56e765/icons/inventory/head/mob.dmi",
    "states":[
       {
-         "name":"equipped-HELMET",
+         "name":"off-equipped-HELMET",
          "directions":4,
          "delays":[
             [
@@ -26,7 +26,7 @@
          ]
       },
       {
-         "name":"inhand-left",
+         "name":"off-inhand-left",
          "directions":4,
          "delays":[
             [
@@ -44,7 +44,7 @@
          ]
       },
       {
-         "name":"inhand-right",
+         "name":"off-inhand-right",
          "directions":4,
          "delays":[
             [
@@ -125,7 +125,7 @@
          ]
       },
       {
-         "name":"on-icon",
+         "name":"light-icon",
          "directions":1,
          "delays":[
             [
