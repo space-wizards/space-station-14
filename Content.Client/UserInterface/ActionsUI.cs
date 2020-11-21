@@ -23,6 +23,7 @@ namespace Content.Client.UserInterface
         private readonly Action<ActionSlotEventArgs> _actionSlotEventHandler;
         private readonly Action<BaseButton.ButtonEventArgs> _onNextHotbarPressed;
         private readonly Action<BaseButton.ButtonEventArgs> _onPreviousHotbarPressed;
+        private readonly Action<BaseButton.ButtonEventArgs> _onSettingsButtonPressed;
         private readonly ActionSlot[] _slots;
 
         private VBoxContainer _hotbarContainer;
@@ -40,14 +41,17 @@ namespace Content.Client.UserInterface
         /// action slots. Slots with no actions will not be handled by this.</param>
         /// <param name="onNextHotbarPressed">action to invoke when pressing the next hotbar button</param>
         /// <param name="onPreviousHotbarPressed">action to invoke when pressing the previous hotbar button</param>
+        /// <param name="onSettingsButtonPressed">action to invoke when pressing the settings button</param>
         public ActionsUI(EventHandler onShowTooltip, EventHandler onHideTooltip, Action<ActionSlotEventArgs> actionSlotEventHandler,
-            Action<BaseButton.ButtonEventArgs> onNextHotbarPressed, Action<BaseButton.ButtonEventArgs> onPreviousHotbarPressed)
+            Action<BaseButton.ButtonEventArgs> onNextHotbarPressed, Action<BaseButton.ButtonEventArgs> onPreviousHotbarPressed,
+            Action<BaseButton.ButtonEventArgs> onSettingsButtonPressed)
         {
             _onShowTooltip = onShowTooltip;
             _onHideTooltip = onHideTooltip;
             _actionSlotEventHandler = actionSlotEventHandler;
             _onNextHotbarPressed = onNextHotbarPressed;
             _onPreviousHotbarPressed = onPreviousHotbarPressed;
+            _onSettingsButtonPressed = onSettingsButtonPressed;
 
             SizeFlagsHorizontal = SizeFlags.FillExpand;
             SizeFlagsVertical = SizeFlags.FillExpand;
@@ -83,6 +87,7 @@ namespace Content.Client.UserInterface
                 SizeFlagsVertical = SizeFlags.ShrinkCenter,
                 SizeFlagsStretchRatio = 1
             };
+            _settingsButton.OnPressed += _onSettingsButtonPressed;
             settingsContainer.AddChild(_settingsButton);
             settingsContainer.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 1 });
 
@@ -224,6 +229,7 @@ namespace Content.Client.UserInterface
             base.Dispose(disposing);
             _nextHotbarButton.OnPressed -= _onNextHotbarPressed;
             _previousHotbarButton.OnPressed -= _onPreviousHotbarPressed;
+            _settingsButton.OnPressed -= _onSettingsButtonPressed;
             foreach (var slot in _slots)
             {
                 slot.OnShowTooltip -= _onShowTooltip;

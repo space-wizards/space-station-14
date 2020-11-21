@@ -43,6 +43,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private ActionsUI _ui;
+        private ActionMenu _menu;
         private PanelContainer _tooltip;
         private RichTextLabel _actionName;
         private RichTextLabel _actionDescription;
@@ -126,7 +127,9 @@ namespace Content.Client.GameObjects.Components.Mobs
                 return;
             }
 
-            _ui = new ActionsUI(ActionOnOnShowTooltip, ActionOnOnHideTooltip, ActionSlotEventHandler, NextHotbar, PreviousHotbar);
+            _ui = new ActionsUI(ActionOnOnShowTooltip, ActionOnOnHideTooltip, ActionSlotEventHandler, NextHotbar,
+                PreviousHotbar, OpenActionMenu);
+            _menu = new ActionMenu(ActionMenuItemSelected);
             LayoutContainer.SetGrowHorizontal(_ui, LayoutContainer.GrowDirection.End);
             LayoutContainer.SetAnchorAndMarginPreset(_ui, LayoutContainer.LayoutPreset.TopLeft, margin: 10);
             LayoutContainer.SetMarginTop(_ui, 100);
@@ -177,6 +180,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         private void PlayerDetached()
         {
             StopTargeting();
+            _menu?.Dispose();
             _ui?.Dispose();
             _ui = null;
         }
@@ -226,8 +230,7 @@ namespace Content.Client.GameObjects.Components.Mobs
                 if (!IsGranted((ActionType) actionType))
                 {
                     // just revoked an action we were trying to target with, stop targeting
-                    if (_selectingTargetFor.Action != null && _selectingTargetFor != null &&
-                        _selectingTargetFor.Action.ActionType == actionType)
+                    if (_selectingTargetFor?.Action != null && _selectingTargetFor.Action.ActionType == actionType)
                     {
                         StopTargeting();
                     }
@@ -264,10 +267,29 @@ namespace Content.Client.GameObjects.Components.Mobs
             UpdateHotbar();
         }
 
+        private void OpenActionMenu(BaseButton.ButtonEventArgs args)
+        {
+            if (_menu.IsOpen)
+            {
+                _menu.Close();
+            }
+            else
+            {
+                _menu.Open();
+            }
+        }
+
+        private void ActionMenuItemSelected(ActionMenuItemSelectedEventArgs args)
+        {
+            AutoPopulate(args.Action.ActionType);
+            UpdateHotbar();
+        }
+
 
         /// <summary>
         /// Finds the next open slot the action can go in and assigns it there,
-        /// starting from the currently selected hotbar
+        /// starting from the currently selected hotbar.
+        /// Does not update any UI elements, only updates the assignment data structures.
         /// </summary>
         private void AutoPopulate(ActionType actionType)
         {

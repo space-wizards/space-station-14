@@ -31,6 +31,12 @@ namespace Content.Shared.Actions
             }
         }
 
+        public IEnumerable<ActionPrototype> EnumerateActions()
+        {
+            return _typeToAction.Values;
+        }
+
+
         /// <summary>
         /// Tries to get the action of the indicated type
         /// </summary>
