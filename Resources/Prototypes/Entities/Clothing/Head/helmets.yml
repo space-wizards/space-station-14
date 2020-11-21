@@ -24,19 +24,15 @@
 
 - type: entity
   parent: HatBase
-  id: HatHardhatBlue
-  name: blue hard hat
-  description: A hard hat, painted in blue, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
+  id: HatHardhatBase
   components:
   - type: Sprite
-    sprite: Clothing/Head/hardhat_blue.rsi
     layers:
     - state: icon
     - state: light-icon
       shader: unshaded
       visible: false
   - type: Clothing
-    sprite: Clothing/Head/hardhat_blue.rsi
     HeldPrefix: off
     ClothingPrefix: off
   - type: PointLight
@@ -50,14 +46,24 @@
   - type: PowerCellSlot
 
 - type: entity
-  parent: HatBase
+  parent: HatHardhatBase
+  id: HatHardhatBlue
+  name: blue hard hat
+  description: A hard hat, painted in blue, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/hardhat_blue.rsi
+  - type: Clothing
+    sprite: Clothing/Head/hardhat_blue.rsi
+
+- type: entity
+  parent: HatHardhatBase
   id: HatHardhatOrange
   name: orange hard hat
   description: A hard hat, painted in orange, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
   components:
   - type: Sprite
     sprite: Clothing/Head/hardhat_orange.rsi
-
   - type: Clothing
     sprite: Clothing/Head/hardhat_orange.rsi
 
