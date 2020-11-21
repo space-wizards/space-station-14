@@ -1025,15 +1025,15 @@ The current game mode is: [color=white]{0}[/color].
             return preset;
         }
 
-        [Dependency] private IEntityManager _entityManager = default!;
-        [Dependency] private IMapManager _mapManager = default!;
-        [Dependency] private IMapLoader _mapLoader = default!;
-        [Dependency] private IGameTiming _gameTiming = default!;
-        [Dependency] private IConfigurationManager _configurationManager = default!;
-        [Dependency] private IChatManager _chatManager = default!;
-        [Dependency] private IServerNetManager _netManager = default!;
-        [Dependency] private IDynamicTypeFactory _dynamicTypeFactory = default!;
-        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IMapLoader _mapLoader = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+        [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly IServerNetManager _netManager = default!;
+        [Dependency] private readonly IDynamicTypeFactory _dynamicTypeFactory = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly IServerPreferencesManager _prefsManager = default!;
         [Dependency] private readonly IBaseServer _baseServer = default!;

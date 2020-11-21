@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
     [RegisterComponent]
     public class PoweredLightComponent : Component, IInteractHand, IInteractUsing, IMapInit, ISignalReceiver<bool>, ISignalReceiver<ToggleSignal>
     {
-        [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override string Name => "PoweredLight";
 

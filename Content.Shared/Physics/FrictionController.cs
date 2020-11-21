@@ -7,7 +7,7 @@ namespace Content.Shared.Physics
 {
     public abstract class FrictionController : VirtualController
     {
-        [Dependency] private IPhysicsManager _physicsManager = default!;
+        [Dependency] private readonly IPhysicsManager _physicsManager = default!;
 
         public override void UpdateAfterProcessing()
         {

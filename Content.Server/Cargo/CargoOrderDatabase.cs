@@ -7,7 +7,7 @@ namespace Content.Server.Cargo
 {
     public class CargoOrderDatabase
     {
-        private Dictionary<int, CargoOrderData> _orders = new Dictionary<int, CargoOrderData>();
+        private readonly Dictionary<int, CargoOrderData> _orders = new Dictionary<int, CargoOrderData>();
         private int _orderNumber = 0;
 
         public CargoOrderDatabase(int id)
@@ -84,7 +84,7 @@ namespace Content.Server.Cargo
         {
             return _orders.Remove(orderNumber);
         }
-        
+
         /// <summary>
         ///     Approves an order in the database.
         /// </summary>
@@ -96,7 +96,7 @@ namespace Content.Server.Cargo
             if (!_orders.TryGetValue(orderNumber, out var order))
                 return;
             else if (CurrentOrderSize + order.Amount > MaxOrderSize)
-            { 
+            {
                 AddOrder(order.Requester, Loc.GetString("{0} (Overflow)", order.Reason.Replace(" (Overflow)","")), order.ProductId,
                     order.Amount - MaxOrderSize - CurrentOrderSize, order.PayingAccountId);
                 order.Amount = MaxOrderSize - CurrentOrderSize;

@@ -9,7 +9,7 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     internal sealed class EmergencyLightSystem : EntitySystem
     {
-        private List<EmergencyLightComponent> _activeLights = new List<EmergencyLightComponent>();
+        private readonly List<EmergencyLightComponent> _activeLights = new List<EmergencyLightComponent>();
 
         public override void Initialize()
         {
@@ -24,7 +24,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 case EmergencyLightComponent.EmergencyLightState.Charging:
                     if (_activeLights.Contains(message.Component))
                         _activeLights.Add(message.Component);
-                    
+
                     break;
                 case EmergencyLightComponent.EmergencyLightState.Full:
                 case EmergencyLightComponent.EmergencyLightState.Empty:
