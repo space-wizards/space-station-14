@@ -226,7 +226,6 @@ namespace Content.Server.GameObjects.Components.Arcade
             private const float _pressCheckSpeed = 0.08f;
 
             private bool _running;
-            public bool Running => _running;
             public bool Paused => !(_running && _started);
             private bool _started;
             public bool Started => _started;
