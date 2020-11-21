@@ -11,7 +11,10 @@ using Robust.Shared.Utility;
 namespace Content.Client.UserInterface.Controls
 {
     /// <summary>
-    /// A slot in the action hotbar
+    /// A slot in the action hotbar.
+    /// Note that this should never be Disabled internally, it always needs to be clickable regardless
+    /// of whether the action is revoked (so actions can still be dragged / unassigned).
+    /// Thus any event handlers should check if the action is granted.
     /// </summary>
     public class ActionSlot : ContainerButton
     {
@@ -87,8 +90,6 @@ namespace Content.Client.UserInterface.Controls
             AddChild(_icon);
             AddChild(_cooldownGraphic);
 
-            // initially has no action, should not be interactable
-            Disabled = true;
             UpdateCooldown(null, TimeSpan.Zero);
 
         }
@@ -137,8 +138,8 @@ namespace Content.Client.UserInterface.Controls
             // all non-instant actions need to be toggle-able
             ToggleMode = action.BehaviorType != BehaviorType.Instant;
             Pressed = false;
-            Disabled = false;
             Granted = true;
+            DrawModeChanged();
             _number.SetMessage(SlotNumberLabel());
         }
 
@@ -152,8 +153,9 @@ namespace Content.Client.UserInterface.Controls
             _icon.Texture = null;
             _icon.Visible = false;
             ToggleMode = false;
-            Disabled = true;
+            DrawModeChanged();
             UpdateCooldown(null, TimeSpan.Zero);
+            _number.SetMessage(SlotNumberLabel());
         }
 
         /// <summary>
@@ -163,8 +165,8 @@ namespace Content.Client.UserInterface.Controls
         {
             if (Action == null || Granted) return;
 
-            Disabled = false;
             Granted = true;
+            DrawModeChanged();
             _number.SetMessage(SlotNumberLabel());
         }
 
@@ -176,7 +178,7 @@ namespace Content.Client.UserInterface.Controls
             if (Action == null || !Granted) return;
 
             Granted = false;
-            Disabled = true;
+            DrawModeChanged();
             _number.SetMessage(SlotNumberLabel());
             UpdateCooldown(null, TimeSpan.Zero);
         }
@@ -192,13 +194,19 @@ namespace Content.Client.UserInterface.Controls
         protected override void DrawModeChanged()
         {
             base.DrawModeChanged();
-            // when there's no action, it should not be interactable but it should show
-            // the normal style, not the "disabled" style
-            if (DrawMode == DrawModeEnum.Disabled && Action == null)
+            // when there's no action, it should only show the "normal" style
+            // regardless of mouseover
+            if (Action == null)
             {
                 SetOnlyStylePseudoClass(StylePseudoClassNormal);
             }
+            else if (!Granted)
+            {
+                // when there's an action but its revoked, it should only
+                // show the disabled style (even though it's still clickable so it can
+                // be rightclick removed)
+                SetOnlyStylePseudoClass(StylePseudoClassDisabled);
+            }
         }
-
     }
 }

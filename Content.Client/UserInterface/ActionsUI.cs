@@ -154,6 +154,7 @@ namespace Content.Client.UserInterface
                 return;
             }
             if (args.Event.Function != EngineKeyFunctions.Use) return;
+            if (!actionSlot.Granted) return;
             // only instant actions should be handled as presses, all other actions
             // should be handled as toggles
             if (actionSlot.Action.BehaviorType == BehaviorType.Instant)
@@ -172,6 +173,7 @@ namespace Content.Client.UserInterface
                 return;
             }
             if (args.Event.Function != EngineKeyFunctions.Use) return;
+            if (!actionSlot.Granted) return;
             // only instant actions should be handled as presses, all other actions
             // should be handled as toggles
             if (actionSlot.Action.BehaviorType != BehaviorType.Instant)

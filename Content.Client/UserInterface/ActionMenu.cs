@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Actions;
@@ -20,6 +22,12 @@ namespace Content.Client.UserInterface
     /// </summary>
     public class ActionMenu : SS14Window
     {
+        private static readonly Regex NonAlphanumeric = new Regex(@"\W", RegexOptions.Compiled);
+        private static readonly Regex Whitespace = new Regex(@"\s+", RegexOptions.Compiled);
+        private static readonly int MinSearchLength = 3;
+        private static ActionPrototype[] EmptyActionList = new ActionPrototype[0];
+
+
         // parallel list of actions currently selectable in itemList
         private ActionPrototype[] _actionList;
 
@@ -81,6 +89,9 @@ namespace Content.Client.UserInterface
                     }
                 }
             });
+
+            _clearButton.OnPressed += OnClearButtonPressed;
+            _searchBar.OnTextChanged += OnSearchTextChanged;
         }
 
         protected override void Resized()
@@ -94,6 +105,91 @@ namespace Content.Client.UserInterface
         private void OnItemPressed(BaseButton.ButtonEventArgs args)
         {
             _onItemSelected?.Invoke(new ActionMenuItemSelectedEventArgs((args.Button as ActionMenuItem).Action));
+        }
+
+        private void OnClearButtonPressed(BaseButton.ButtonEventArgs args)
+        {
+            _searchBar.Clear();
+            ClearList();
+        }
+
+        private void OnSearchTextChanged(LineEdit.LineEditEventArgs obj)
+        {
+            var search = Standardize(obj.Text);
+            if (string.IsNullOrWhiteSpace(search) || search.Length < MinSearchLength)
+            {
+                ClearList();
+                return;
+            }
+
+            // search on names
+            var matchingActions = _actionManager.EnumerateActions()
+                .Where(a => MatchesSearch(a, search));
+
+            PopulateActions(matchingActions);
+        }
+
+        private bool MatchesSearch(ActionPrototype action, string search)
+        {
+            if (Standardize(action.ActionType.ToString()).Contains(search))
+            {
+                return true;
+            }
+
+            // allows matching by typing spaces between the enum case changes, like "xeno spit" if the
+            // actiontype is "XenoSpit"
+            if (Standardize(action.ActionType.ToString(), true).Contains(search))
+            {
+                return true;
+            }
+
+            if (Standardize(action.Name.ToString()).Contains(search))
+            {
+                return true;
+            }
+
+            // TODO: Matching on tags
+
+            return false;
+
+        }
+
+
+        private static string Standardize(string rawText, bool splitOnCaseChange = false)
+        {
+            rawText ??= "";
+
+            // treat non-alphanumeric characters as whitespace
+            rawText = NonAlphanumeric.Replace(rawText, " ");
+
+            // trim spaces and reduce internal whitespaces to 1 max
+            rawText = Whitespace.Replace(rawText, " ").Trim();
+            if (splitOnCaseChange)
+            {
+                // insert a space when case switches from lower to upper
+                rawText = AddSpaces(rawText, true);
+            }
+
+            return rawText.ToLowerInvariant().Trim();
+        }
+
+        // taken from https://stackoverflow.com/a/272929 (CC BY-SA 3.0)
+        private static string AddSpaces(string text, bool preserveAcronyms)
+        {
+            if (string.IsNullOrWhiteSpace(text))
+                return string.Empty;
+            var newText = new StringBuilder(text.Length * 2);
+            newText.Append(text[0]);
+            for (int i = 1; i < text.Length; i++)
+            {
+                if (char.IsUpper(text[i]))
+                    if ((text[i - 1] != ' ' && !char.IsUpper(text[i - 1])) ||
+                        (preserveAcronyms && char.IsUpper(text[i - 1]) &&
+                         i < text.Length - 1 && !char.IsUpper(text[i + 1])))
+                        newText.Append(' ');
+                newText.Append(text[i]);
+            }
+            return newText.ToString();
         }
 
         protected override void Opened()
@@ -117,16 +213,13 @@ namespace Content.Client.UserInterface
             }
         }
 
-        public override void Close()
-        {
-            base.Close();
-            ClearList();
-        }
-
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
             ClearList();
+            // TODO: this probably isn't needed since these are children of this control
+            _clearButton.OnPressed -= OnClearButtonPressed;
+            _searchBar.OnTextChanged -= OnSearchTextChanged;
         }
 
         private void ClearList()
@@ -137,6 +230,7 @@ namespace Content.Client.UserInterface
                 (actionItem as ActionMenuItem).OnPressed -= OnItemPressed;
             }
             _resultsGrid.Children.Clear();
+            _actionList = EmptyActionList;
         }
 
         /// <summary>
