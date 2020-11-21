@@ -1,6 +1,6 @@
 - type: entity
-  name: grenade stacker
-  description: Useless with explosive grenades but good with flashbangs
+  name: grenade clusterbang
+  description: Can be used only with flashbangs. Explodes several times.
   parent: BaseItem
   id: GrenadeStacker
   components:
@@ -9,3 +9,6 @@
     netsync: false
     state: pda
   - type: SeveralFlashExplosive
+    range: 0
+    duration: 0
+    deleteOnFlash: false

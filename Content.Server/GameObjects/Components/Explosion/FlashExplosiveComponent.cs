@@ -24,6 +24,11 @@ namespace Content.Server.GameObjects.Components.Explosion
             protected set => _range = value;
         }
         private float _duration;
+
+        public float Duration{
+            get => _duration;
+            protected set => _duration = value;
+        }
         private string _sound;
         private bool _deleteOnFlash;
 

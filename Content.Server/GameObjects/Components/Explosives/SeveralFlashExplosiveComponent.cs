@@ -2,7 +2,6 @@
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Server.GameObjects.Components.Explosion;
 using Robust.Shared.GameObjects;
-using System;
 using System.Threading.Tasks;
 using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
@@ -11,7 +10,7 @@ using Robust.Shared.Log;
 namespace Content.Server.GameObjects.Components.Explosives
 {
     [RegisterComponent]
-    public class SeveralFlashExplosiveComponent : FlashExplosiveComponent, IInteractUsing, IActivate {
+    public class SeveralFlashExplosiveComponent : FlashExplosiveComponent, IInteractUsing, IUse {
 
         public override string Name => "SeveralFlashExplosive";
 
@@ -28,11 +27,15 @@ namespace Content.Server.GameObjects.Components.Explosives
                 if (!explosive){
                     return false;
                 }
+                if (grenade == null){
+                    return false;
+                }
                 if (_grenadesCounter == 0){
                    Range = grenade.Range;
+                   Duration = grenade.Duration;
                 }
                 else{
-                    if (Range != grenade.Range){
+                    if (Range != grenade.Range || Duration != grenade.Duration){
                         return false;
                     }
                 }
@@ -49,18 +52,29 @@ namespace Content.Server.GameObjects.Components.Explosives
             base.Initialize();
         }
 
-        void IActivate.Activate(ActivateEventArgs eventArgs){
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs){
             int counter;
             int delay;
             for (counter = 0, delay = 1500; counter != _grenadesCounter; delay += 1500, counter++){
                 Timer.Spawn(delay, () =>{
-                    Explode();
+                    try{
+                        Explode();
+                    }
+                    catch{
+                        Logger.Log(LogLevel.Error, "Can't create explosion in SeveralFlashExplosive");
+                    }
                 });
             }
-            delay += 1500;
+            delay += 100;
             Timer.Spawn(delay, () =>{
-                Owner.Delete();
+                try{
+                    Owner.Delete();
+                }
+                catch{
+                    Logger.Log(LogLevel.Warning, "Can't delete Entity with SeveralFlashExplosiveComponent");
+                }
             });
+            return true;
         }
     }
 }
