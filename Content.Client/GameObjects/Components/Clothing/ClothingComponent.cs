@@ -1,9 +1,13 @@
-﻿using Content.Client.GameObjects.Components.Items;
+﻿using Content.Client.GameObjects.Components.HUD.Inventory;
+using Content.Client.GameObjects.Components.Items;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.Items;
 using Robust.Client.Graphics;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -18,8 +22,28 @@ namespace Content.Client.GameObjects.Components.Clothing
         public override string Name => "Clothing";
         public override uint? NetID => ContentNetIDs.CLOTHING;
 
+        private string _clothingEquippedPrefix;
+
         [ViewVariables(VVAccess.ReadWrite)]
-        public string ClothingEquippedPrefix { get; set; }
+        public string ClothingEquippedPrefix
+        {
+            get
+            {
+                return _clothingEquippedPrefix;
+            }
+            set
+            {
+                _clothingEquippedPrefix = value;
+                if (!Owner.TryGetContainer(out IContainer container))
+                    return;
+                if (!container.Owner.TryGetComponent(out ClientInventoryComponent inventory))
+                    return;
+                if (!inventory.TryFindItemSlots(Owner, out EquipmentSlotDefines.Slots slots))
+                    return;
+
+                inventory.SetSlotVisuals(slots, Owner);
+            }
+        }
 
         [ViewVariables(VVAccess.ReadWrite)]
         public FemaleClothingMask FemaleMask

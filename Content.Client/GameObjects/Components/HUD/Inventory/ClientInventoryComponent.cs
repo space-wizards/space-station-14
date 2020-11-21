@@ -214,5 +214,20 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         {
             return _slots.TryGetValue(slot, out item);
         }
+
+        public bool TryFindItemSlots(IEntity item, out Slots slots)
+        {
+            foreach (var pair in _slots)
+            {
+                if (pair.Value == item)
+                {
+                    slots = pair.Key;
+                    return true;
+                }
+            }
+
+            slots = Slots.NONE;
+            return false;
+        }
     }
 }
