@@ -103,7 +103,6 @@ namespace Content.Client.Sandbox
         private EntitySpawnWindow _spawnWindow;
         private TileSpawnWindow _tilesSpawnWindow;
         private bool _sandboxWindowToggled;
-        private bool SpawnEntitiesButton { get; set; }
 
         public void Initialize()
         {
