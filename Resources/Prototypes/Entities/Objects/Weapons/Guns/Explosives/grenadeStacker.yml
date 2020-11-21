@@ -8,7 +8,4 @@
     sprite: Objects/Devices/pda.rsi
     netsync: false
     state: pda
-  - type: SeveralFlashExplosive
-    range: 0
-    duration: 0
-    deleteOnFlash: false
+  - type: ClusterFlash

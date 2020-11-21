@@ -6,59 +6,42 @@ using System.Threading.Tasks;
 using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
 using Robust.Shared.Log;
+using Robust.Server.GameObjects.Components.Container;
 
 namespace Content.Server.GameObjects.Components.Explosives
 {
     [RegisterComponent]
-    public class SeveralFlashExplosiveComponent : FlashExplosiveComponent, IInteractUsing, IUse {
+    public class ClusterFlashComponent : Component, IInteractUsing, IUse{
 
-        public override string Name => "SeveralFlashExplosive";
+        public override string Name => "ClusterFlash";
 
-        [ViewVariables]
-        private int _grenadesCounter = 0;
-
+        protected Container? _grenadesContainer;
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args){
-            try{
-                if (_grenadesCounter >= 4){
-                    return false;
-                }
-                FlashExplosiveComponent? grenade;
-                bool explosive = args.Using.TryGetComponent<FlashExplosiveComponent>(out grenade);
-                if (!explosive){
-                    return false;
-                }
-                if (grenade == null){
-                    return false;
-                }
-                if (_grenadesCounter == 0){
-                   Range = grenade.Range;
-                   Duration = grenade.Duration;
-                }
-                else{
-                    if (Range != grenade.Range || Duration != grenade.Duration){
-                        return false;
-                    }
-                }
-                _grenadesCounter++;
-                args.Using.Delete();
-                return true;
-            }
-            catch{
+            if (_grenadesContainer == null || _grenadesContainer.ContainedEntities.Count >= 4 || !args.Using.HasComponent<FlashExplosiveComponent>()){
                 return false;
             }
+            _grenadesContainer.Insert(args.Using);
+            return true;
         }
 
         public override void Initialize(){
             base.Initialize();
+
+            _grenadesContainer = ContainerManagerComponent.Ensure<Container>("clusterFlash", Owner);
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs){
+            if (_grenadesContainer == null){
+                return false;
+            }
             int counter;
             int delay;
-            for (counter = 0, delay = 1500; counter != _grenadesCounter; delay += 1500, counter++){
+            for (counter = 0, delay = 1500; counter != _grenadesContainer.ContainedEntities.Count; delay += 1500, counter++){
                 Timer.Spawn(delay, () =>{
                     try{
-                        Explode();
+                        if (_grenadesContainer.ContainedEntities[0].TryGetComponent<FlashExplosiveComponent>(out var grenadeFlashComponent)){
+                            grenadeFlashComponent.Explode();
+                        }
                     }
                     catch{
                         Logger.Log(LogLevel.Error, "Can't create explosion in SeveralFlashExplosive");
