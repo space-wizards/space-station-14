@@ -154,7 +154,7 @@
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitSyndie
-  name: blood red hardsuit
+  name: blood-red hardsuit
   description: A dual-mode advanced hardsuit designed for work in special operations.
   components:
   - type: Sprite

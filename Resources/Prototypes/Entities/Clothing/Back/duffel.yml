@@ -1,7 +1,7 @@
 - type: entity
   parent: Clothing
   id: ClothingBackpackDuffel
-  name: duffelbag
+  name: duffel bag
   description: "A large duffel bag for holding extra things."
   components:
   - type: Sprite
@@ -19,7 +19,7 @@
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelEngineering
-  name: engineering duffelbag
+  name: engineering duffel bag
   description:
   components:
   - type: Sprite
@@ -30,7 +30,7 @@
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelMedical
-  name: medical duffelbag
+  name: medical duffel bag
   description: "A large duffel bag for holding extra medical supplies."
   components:
   - type: Sprite
@@ -41,7 +41,7 @@
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelCaptain
-  name: captain's duffelbag
+  name: captain's duffel bag
   description: "A large duffel bag for holding extra captainly goods."
   components:
   - type: Sprite
@@ -52,7 +52,7 @@
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelClown
-  name: clown duffelbag
+  name: clown duffel bag
   description: "A large duffel bag for holding extra honk goods."
   components:
   - type: Sprite
@@ -63,7 +63,7 @@
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelSecurity
-  name: security duffelbag
+  name: security duffel bag
   description: "A large duffel bag for holding extra security related goods."
   components:
   - type: Sprite
@@ -74,7 +74,7 @@
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelSyndicate
-  name: syndicate duffelbag
+  name: syndicate duffel bag
   description: "A large duffel bag for holding various traitor goods."
   components:
   - type: Sprite

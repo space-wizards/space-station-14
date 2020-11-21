@@ -1,4 +1,4 @@
-- type: constructionGraph
+﻿- type: constructionGraph
   id: window
   start: start
   graph:
@@ -17,10 +17,7 @@
 
         - to: reinforcedWindow
           steps:
-            - material: Metal
-              amount: 2
-              doAfter: 2
-            - material: Glass
+            - material: ReinforcedGlass
               amount: 2
               doAfter: 2
 
@@ -51,10 +48,7 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-              prototype: GlassSheet1
-              amount: 2
-            - !type:SpawnPrototype
-              prototype: MetalSheet1
+              prototype: RGlassSheet1
               amount: 2
             - !type:DeleteEntity {}
           steps:
