@@ -25,6 +25,8 @@ namespace Content.Client.UserInterface.Stylesheets
         public const string StyleClassTooltipActionCooldown = "tooltipActionCooldown";
         public const string StyleClassTooltipActionRequirements = "tooltipActionCooldown";
         public const string StyleClassHotbarSlotNumber = "hotbarSlotNumber";
+        public const string StyleClassActionSearchBox = "actionSearchBox";
+        public const string StyleClassActionMenuItemRevoked = "actionMenuItemRevoked";
 
 
         public const string StyleClassSliderRed = "Red";
@@ -136,6 +138,29 @@ namespace Content.Client.UserInterface.Stylesheets
                 Modulate = ButtonColorDisabled
             };
 
+            var buttonRectActionMenuItemTex = resCache.GetTexture("/Textures/Interface/Nano/black_panel_light_thin_border.png");
+            var buttonRectActionMenuRevokedItemTex = resCache.GetTexture("/Textures/Interface/Nano/black_panel_red_thin_border.png");
+            var buttonRectActionMenuItem = new StyleBoxTexture(BaseButton)
+            {
+                Texture = buttonRectActionMenuItemTex
+            };
+            buttonRectActionMenuItem.SetPatchMargin(StyleBox.Margin.All, 2);
+            buttonRectActionMenuItem.SetPadding(StyleBox.Margin.All, 2);
+            buttonRectActionMenuItem.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
+            buttonRectActionMenuItem.SetContentMarginOverride(StyleBox.Margin.Horizontal, 2);
+            var buttonRectActionMenuItemRevoked = new StyleBoxTexture(buttonRectActionMenuItem)
+            {
+                Texture = buttonRectActionMenuRevokedItemTex
+            };
+            var buttonRectActionMenuItemHover = new StyleBoxTexture(buttonRectActionMenuItem)
+            {
+                Modulate = ButtonColorHovered
+            };
+            var buttonRectActionMenuItemPressed = new StyleBoxTexture(buttonRectActionMenuItem)
+            {
+                Modulate = ButtonColorPressed
+            };
+
             var textureInvertedTriangle = resCache.GetTexture("/Textures/Interface/Nano/inverted_triangle.svg.png");
 
             var lineEditTex = resCache.GetTexture("/Textures/Interface/Nano/lineedit.png");
@@ -145,6 +170,14 @@ namespace Content.Client.UserInterface.Stylesheets
             };
             lineEdit.SetPatchMargin(StyleBox.Margin.All, 3);
             lineEdit.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
+
+            var actionSearchBoxTex = resCache.GetTexture("/Textures/Interface/Nano/black_panel_dark_thin_border.png");
+            var actionSearchBox = new StyleBoxTexture
+            {
+                Texture = actionSearchBoxTex,
+            };
+            actionSearchBox.SetPatchMargin(StyleBox.Margin.All, 3);
+            actionSearchBox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
 
             var tabContainerPanelTex = resCache.GetTexture("/Textures/Interface/Nano/tabcontainer_panel.png");
             var tabContainerPanel = new StyleBoxTexture
@@ -441,6 +474,25 @@ namespace Content.Client.UserInterface.Stylesheets
                     new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonRectDisabled),
                 }),
 
+                // action menu item buttons
+                new StyleRule(new SelectorElement(typeof(ActionMenuItem), null, null, new[] {ContainerButton.StylePseudoClassNormal}), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonRectActionMenuItem),
+                }),
+                // we don't actually disable the action menu items, only change their style based on the underlying action being revoked
+                new StyleRule(new SelectorElement(typeof(ActionMenuItem), new [] {StyleClassActionMenuItemRevoked}, null, new[] {ContainerButton.StylePseudoClassNormal}), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonRectActionMenuItemRevoked),
+                }),
+                new StyleRule(new SelectorElement(typeof(ActionMenuItem), null, null, new[] {ContainerButton.StylePseudoClassHover}), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonRectActionMenuItemHover),
+                }),
+                new StyleRule(new SelectorElement(typeof(ActionMenuItem), null, null, new[] {ContainerButton.StylePseudoClassPressed}), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonRectActionMenuItemPressed),
+                }),
+
                 // Main menu: Make those buttons bigger.
                 new StyleRule(new SelectorChild(
                     new SelectorElement(typeof(Button), null, "mainMenu", null),
@@ -476,6 +528,13 @@ namespace Content.Client.UserInterface.Stylesheets
                     new[]
                     {
                         new StyleProperty("font-color", Color.Gray),
+                    }),
+
+                // Action searchbox lineedit
+                new StyleRule(new SelectorElement(typeof(LineEdit), new[] {StyleClassActionSearchBox}, null, null),
+                    new[]
+                    {
+                        new StyleProperty(LineEdit.StylePropertyStyleBox, actionSearchBox),
                     }),
 
                 // TabContainer

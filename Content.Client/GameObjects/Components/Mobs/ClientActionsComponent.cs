@@ -117,7 +117,7 @@ namespace Content.Client.GameObjects.Components.Mobs
                 return;
             }
 
-            UpdateHotbar();
+            UpdateUI();
         }
 
         private void PlayerAttached()
@@ -129,7 +129,7 @@ namespace Content.Client.GameObjects.Components.Mobs
 
             _ui = new ActionsUI(ActionOnOnShowTooltip, ActionOnOnHideTooltip, ActionSlotEventHandler, NextHotbar,
                 PreviousHotbar, OpenActionMenu);
-            _menu = new ActionMenu(ActionMenuItemSelected);
+            _menu = new ActionMenu(this, ActionMenuItemSelected);
             LayoutContainer.SetGrowHorizontal(_ui, LayoutContainer.GrowDirection.End);
             LayoutContainer.SetAnchorAndMarginPreset(_ui, LayoutContainer.LayoutPreset.TopLeft, margin: 10);
             LayoutContainer.SetMarginTop(_ui, 100);
@@ -174,7 +174,7 @@ namespace Content.Client.GameObjects.Components.Mobs
 
             uiManager.PopupRoot.AddChild(_tooltip);
 
-            UpdateHotbar();
+            UpdateUI();
         }
 
         private void PlayerDetached()
@@ -186,14 +186,16 @@ namespace Content.Client.GameObjects.Components.Mobs
         }
 
         /// <summary>
-        /// Updates the displayed hotbar based on current state of actions.
+        /// Updates the displayed hotbar (and menu) based on current state of actions.
         /// </summary>
-        private void UpdateHotbar()
+        private void UpdateUI()
         {
             if (!CurrentlyControlled || _ui == null)
             {
                 return;
             }
+
+            _menu?.UpdateActionStates();
 
             // if we've been granted any actions which have no assignment to any hotbar, we must auto-populate them
             // into the hotbar so the user knows about them.
@@ -264,7 +266,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             _selectedHotbar = hotbar;
             _ui.SetHotbarLabel(hotbar + 1);
 
-            UpdateHotbar();
+            UpdateUI();
         }
 
         private void OpenActionMenu(BaseButton.ButtonEventArgs args)
@@ -282,7 +284,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         private void ActionMenuItemSelected(ActionMenuItemSelectedEventArgs args)
         {
             AutoPopulate(args.Action.ActionType);
-            UpdateHotbar();
+            UpdateUI();
         }
 
 
@@ -527,17 +529,17 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         protected override void AfterGrantAction()
         {
-            UpdateHotbar();
+            UpdateUI();
         }
 
         protected override void AfterRevokeAction()
         {
-            UpdateHotbar();
+            UpdateUI();
         }
 
         protected override void AfterToggleAction()
         {
-            UpdateHotbar();
+            UpdateUI();
         }
     }
 }

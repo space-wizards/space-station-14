@@ -47,7 +47,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
             }
         }
 
-        /// <returns>true iff an action of the indicated id is currently showing</returns>
+        /// <returns>true iff an action of the indicated id is currently granted</returns>
         public bool IsGranted(ActionType actionType)
         {
             return _actions.ContainsKey(actionType);
