@@ -58,6 +58,10 @@
       enabled: false
     - type: SnapGrid
       offset: Center
+    - type: Construction
+      graph: Firelock
+      node: Firelock
+
   placement:
     mode: SnapgridCenter
 

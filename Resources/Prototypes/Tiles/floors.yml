@@ -1,9 +1,8 @@
-- type: tile
+﻿- type: tile
   name: floor_dark
   display_name: Dark floor
   texture: "dark"
   base_turfs:
-  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -16,7 +15,6 @@
   display_name: Elevator shaft
   texture: "elevator_shaft"
   base_turfs:
-  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -28,7 +26,6 @@
   display_name: Freezer
   texture: "freezer"
   base_turfs:
-  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -41,7 +38,6 @@
   display_name: Hydro floor
   texture: "hydro"
   base_turfs:
-  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -53,7 +49,6 @@
   display_name: Green circuit floor
   texture: "green_circuit"
   base_turfs:
-  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -66,7 +61,6 @@
   display_name: Linoleum floor
   texture: "lino"
   base_turfs:
-  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -79,7 +73,6 @@
   display_name: Mono floor
   texture: "mono"
   base_turfs:
-  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -92,7 +85,6 @@
   display_name: Reinforced floor
   texture: "reinforced"
   base_turfs:
-  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -105,7 +97,6 @@
   display_name: rock floor
   texture: "rock_vault"
   base_turfs:
-  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -118,7 +109,6 @@
   display_name: Showroom floor
   texture: "showroom"
   base_turfs:
-  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -131,7 +121,6 @@
   display_name: Steel floor
   texture: "steel"
   base_turfs:
-  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -144,7 +133,6 @@
   display_name: Dirty steel floor
   texture: "steel_dirty"
   base_turfs:
-  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -157,8 +145,7 @@
   display_name: Techmaint Floor
   texture: "tech_maint"
   base_turfs:
-  - space
-  - underplating
+  - plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
@@ -170,8 +157,7 @@
   display_name: White Floor
   texture: "white"
   base_turfs:
-  - space
-  - underplating
+  - plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
@@ -194,8 +180,7 @@
   display_name: Asteroid Tile
   texture: Asteroid/asteroid_tile
   base_turfs:
-  - space
-  - underplating
+  - plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_asteroid
@@ -262,8 +247,7 @@
   display_name: Gold Tile
   texture: gold
   base_turfs:
-  - space
-  - underplating
+  - plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
