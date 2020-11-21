@@ -23,7 +23,7 @@
         prob: 0.2
       - name: ClothingBeltUtility
         prob: 0.2
-      - name: ClothingHandsColorGlovesYellow
+      - name: ClothingHandsGlovesColorYellow
         prob: 0.05
       - name: ClothingHeadHatHardhatRed
         prob: 0.4

@@ -1,6 +1,6 @@
 - type: entity
   parent: ClothingHandsBase
-  id: ClothingHandsColorGlovesPurple
+  id: ClothingHandsGlovesColorPurple
   name: purple gloves
   description: Regular purple gloves that do not keep you from frying.
   components:
@@ -11,7 +11,7 @@
 
 - type: entity
   parent: ClothingHandsBase
-  id: ClothingHandsColorGlovesRed
+  id: ClothingHandsGlovesColorRed
   name: red gloves
   description: Regular red gloves that do not keep you from frying.
   components:
@@ -22,7 +22,7 @@
 
 - type: entity
   parent: ClothingHandsBase
-  id: ClothingHandsColorGlovesBlack
+  id: ClothingHandsGlovesColorBlack
   name: black gloves
   description: Regular black gloves that do not keep you from frying.
   components:
@@ -33,7 +33,7 @@
 
 - type: entity
   parent: ClothingHandsBase
-  id: ClothingHandsColorGlovesBlue
+  id: ClothingHandsGlovesColorBlue
   name: blue gloves
   description: Regular blue gloves that do not keep you from frying.
   components:
@@ -44,7 +44,7 @@
 
 - type: entity
   parent: ClothingHandsBase
-  id: ClothingHandsColorGlovesBrown
+  id: ClothingHandsGlovesColorBrown
   name: brown gloves
   description: Regular brown gloves that do not keep you from frying.
   components:
@@ -55,7 +55,7 @@
 
 - type: entity
   parent: ClothingHandsBase
-  id: ClothingHandsColorGlovesGray
+  id: ClothingHandsGlovesColorGray
   name: grey gloves
   description: Regular grey gloves that do not keep you from frying.
   components:
@@ -66,7 +66,7 @@
 
 - type: entity
   parent: ClothingHandsBase
-  id: ClothingHandsColorGlovesGreen
+  id: ClothingHandsGlovesColorGreen
   name: green gloves
   description: Regular green gloves that do not keep you from frying.
   components:
@@ -77,7 +77,7 @@
 
 - type: entity
   parent: ClothingHandsBase
-  id: ClothingHandsColorGlovesLightBrown
+  id: ClothingHandsGlovesColorLightBrown
   name: light brown gloves
   description: Regular light brown gloves that do not keep you from frying.
   components:
@@ -88,7 +88,7 @@
 
 - type: entity
   parent: ClothingHandsBase
-  id: ClothingHandsColorGlovesOrange
+  id: ClothingHandsGlovesColorOrange
   name: orange gloves
   description: Regular orange gloves that do not keep you from frying.
   components:
@@ -99,7 +99,7 @@
 
 - type: entity
   parent: ClothingHandsBase
-  id: ClothingHandsColorGlovesWhite
+  id: ClothingHandsGlovesColorWhite
   name: white gloves
   description: Those gloves look fancy.
   components:
@@ -110,7 +110,7 @@
 
 - type: entity
   parent: ClothingHandsBase
-  id: ClothingHandsColorGlovesYellow
+  id: ClothingHandsGlovesColorYellow
   name: insulated gloves
   description: These gloves will protect the wearer from electric shocks.
   components:
