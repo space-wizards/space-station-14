@@ -49,7 +49,7 @@ namespace Content.Shared.Audio
         /// <param name="variation">Max number of semitones to shift in either direction. Values above 12 have no effect.</param>
         public static AudioParams WithSemitoneVariation(int variation)
         {
-            variation = Math.Min(variation, 12);
+            variation = Math.Clamp(variation, 0, 12);
             return ShiftSemitone(IoCManager.Resolve<IRobustRandom>().Next(-variation, variation));
         }
 
