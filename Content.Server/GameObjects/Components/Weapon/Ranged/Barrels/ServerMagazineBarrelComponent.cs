@@ -200,8 +200,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 var magEntity = Owner.EntityManager.SpawnEntity(_magFillPrototype, Owner.Transform.Coordinates);
                 _magazineContainer.Insert(magEntity);
             }
-
             Dirty();
+        }
+
+        protected override void Startup()
+        {
             UpdateAppearance();
         }
 

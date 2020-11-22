@@ -18,19 +18,19 @@ namespace Content.Client.Research
 
         protected override Vector2? CustomSize => (800, 400);
 
-        private List<TechnologyPrototype> _unlockedTechnologyPrototypes = new List<TechnologyPrototype>();
-        private List<TechnologyPrototype> _unlockableTechnologyPrototypes = new List<TechnologyPrototype>();
-        private List<TechnologyPrototype> _futureTechnologyPrototypes = new List<TechnologyPrototype>();
+        private readonly List<TechnologyPrototype> _unlockedTechnologyPrototypes = new List<TechnologyPrototype>();
+        private readonly List<TechnologyPrototype> _unlockableTechnologyPrototypes = new List<TechnologyPrototype>();
+        private readonly List<TechnologyPrototype> _futureTechnologyPrototypes = new List<TechnologyPrototype>();
 
-        private Label _pointLabel;
-        private Label _pointsPerSecondLabel;
-        private Label _technologyName;
-        private Label _technologyDescription;
-        private Label _technologyRequirements;
-        private TextureRect _technologyIcon;
-        private ItemList _unlockedTechnologies;
-        private ItemList _unlockableTechnologies;
-        private ItemList _futureTechnologies;
+        private readonly Label _pointLabel;
+        private readonly Label _pointsPerSecondLabel;
+        private readonly Label _technologyName;
+        private readonly Label _technologyDescription;
+        private readonly Label _technologyRequirements;
+        private readonly TextureRect _technologyIcon;
+        private readonly ItemList _unlockedTechnologies;
+        private readonly ItemList _unlockableTechnologies;
+        private readonly ItemList _futureTechnologies;
 
         public Button UnlockButton { get; private set; }
         public Button ServerSelectionButton { get; private set; }

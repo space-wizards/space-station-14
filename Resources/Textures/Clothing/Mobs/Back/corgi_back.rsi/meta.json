@@ -1,1 +1,173 @@
-{"version": 1, "size": {"x": 32, "y": 32}, "license": "CC-BY-SA-3.0", "copyright": "https://github.com/tgstation/tgstation/commit/53d1f1477d22a11a99c6c6924977cd431075761b", "states": [{"name": "armor", "directions": 4, "delays": [[1.0], [1.0], [1.0], [1.0]]}, {"name": "cardborg", "directions": 4, "delays": [[1.0], [1.0], [1.0], [1.0]]}, {"name": "deathsquad", "directions": 4, "delays": [[1.0], [1.0], [1.0], [1.0]]}, {"name": "fire_extinguisher0", "directions": 4, "delays": [[1.0], [1.0], [1.0], [1.0]]}, {"name": "fire_extinguisher1", "directions": 4, "delays": [[1.0], [1.0], [1.0], [1.0]]}, {"name": "ian", "directions": 4, "delays": [[1.0], [1.0], [1.0], [1.0]]}, {"name": "oxygen", "directions": 4, "delays": [[1.0], [1.0], [1.0], [1.0]]}, {"name": "petcollar", "directions": 4, "delays": [[1.0], [1.0], [1.0], [1.0]]}, {"name": "walkietalkie", "directions": 4, "delays": [[1.0], [1.0], [1.0], [1.0]]}]}
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/53d1f1477d22a11a99c6c6924977cd431075761b",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "armor",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "cardborg",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "deathsquad",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "fire_extinguisher0",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "fire_extinguisher1",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "ian",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "oxygen",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "petcollar",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "walkietalkie",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    }
+  ]
+}

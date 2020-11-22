@@ -1,0 +1,43 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckScarfStripedRed
+  name: striped red scarf
+  description: A stylish striped red scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Scarfs/red.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Scarfs/red.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckScarfStripedBlue
+  name: striped blue scarf
+  description: A stylish striped blue scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Scarfs/blue.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Scarfs/blue.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckScarfStripedGreen
+  name: striped green scarf
+  description: A stylish striped green scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Scarfs/green.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Scarfs/green.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckScarfStripedZebra
+  name: zebra scarf
+  description: A striped scarf, a mandatory accessory for artists.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Scarfs/zebra.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Scarfs/zebra.rsi

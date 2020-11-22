@@ -26,8 +26,8 @@ namespace Content.Client.GameObjects.Components.Kitchen
 
         private MicrowaveMenu _menu;
 
-        private Dictionary<int, EntityUid> _solids = new Dictionary<int, EntityUid>();
-        private Dictionary<int, Solution.ReagentQuantity> _reagents =new Dictionary<int, Solution.ReagentQuantity>();
+        private readonly Dictionary<int, EntityUid> _solids = new Dictionary<int, EntityUid>();
+        private readonly Dictionary<int, Solution.ReagentQuantity> _reagents =new Dictionary<int, Solution.ReagentQuantity>();
 
         public MicrowaveBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner,uiKey)
         {

@@ -1,0 +1,120 @@
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesColorPurple
+  name: purple gloves
+  description: Regular purple gloves that do not keep you from frying.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Color/purple.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/Color/purple.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesColorRed
+  name: red gloves
+  description: Regular red gloves that do not keep you from frying.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Color/red.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/Color/red.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesColorBlack
+  name: black gloves
+  description: Regular black gloves that do not keep you from frying.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Color/black.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/Color/black.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesColorBlue
+  name: blue gloves
+  description: Regular blue gloves that do not keep you from frying.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Color/blue.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/Color/blue.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesColorBrown
+  name: brown gloves
+  description: Regular brown gloves that do not keep you from frying.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Color/brown.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/Color/brown.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesColorGray
+  name: grey gloves
+  description: Regular grey gloves that do not keep you from frying.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Color/gray.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/Color/gray.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesColorGreen
+  name: green gloves
+  description: Regular green gloves that do not keep you from frying.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Color/green.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/Color/green.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesColorLightBrown
+  name: light brown gloves
+  description: Regular light brown gloves that do not keep you from frying.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Color/lightbrown.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/Color/lightbrown.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesColorOrange
+  name: orange gloves
+  description: Regular orange gloves that do not keep you from frying.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Color/orange.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/Color/orange.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesColorWhite
+  name: white gloves
+  description: Those gloves look fancy.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Color/white.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/Color/white.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesColorYellow
+  name: insulated gloves
+  description: These gloves will protect the wearer from electric shocks.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Color/yellow.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/Color/yellow.rsi

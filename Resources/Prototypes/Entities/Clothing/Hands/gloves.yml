@@ -1,0 +1,127 @@
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesBoxingRed
+  name: boxing gloves
+  description: Red gloves for competitive boxing.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/boxing.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/boxing.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesBoxingBlue
+  name: blue boxing gloves
+  description: Blue gloves for competitive boxing.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/boxing.rsi
+    state: icon-blue
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/boxing.rsi
+    HeldPrefix: blue
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesBoxingGreen
+  name: green boxing gloves
+  description: Green gloves for competitive boxing.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/boxing.rsi
+    state: icon-green
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/boxing.rsi
+    HeldPrefix: green
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesBoxingYellow
+  name: yellow boxing gloves
+  description: Yellow gloves for competitive boxing.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/boxing.rsi
+    state: icon-yellow
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/boxing.rsi
+    HeldPrefix: yellow
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesCaptain
+  name: captain gloves
+  description: Regal blue gloves, with a nice gold trim. Swanky.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/captain.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/captain.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesIhscombat
+  name: IHS combat gloves
+  description: These tactical gloves are somewhat fire and impact resistant.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/ihscombat.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/ihscombat.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesLatex
+  name: latex gloves
+  description: Thin sterile latex gloves.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/latex.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/latex.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesLeather
+  name: "botanist's leather gloves"
+  description: "These leather gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin. They're also quite warm."
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/leather.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/leather.rsi
+    HeatResistance: 1400
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesPowerglove
+  name: power gloves
+  description: Now I'm playin' with power! Wait, they are turned off. # Use "Now I'm playin' with power! BAM!" for when they're turned on
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/powerglove.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/powerglove.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesRobohands
+  name: robohands gloves
+  description: Beep boop borp!
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/robohands.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/robohands.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesSpaceNinja
+  name: space ninja gloves
+  description: These black nano-enhanced gloves insulate from electricity and provide fire resistance.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/spaceninja.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/spaceninja.rsi

@@ -169,8 +169,8 @@ namespace Content.Client.GameObjects.EntitySystems.AI
 
     internal sealed class DebugPathfindingOverlay : Overlay
     {
-        private IEyeManager _eyeManager;
-        private IPlayerManager _playerManager;
+        private readonly IEyeManager _eyeManager;
+        private readonly IPlayerManager _playerManager;
 
         // TODO: Add a box like the debug one and show the most recent path stuff
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;

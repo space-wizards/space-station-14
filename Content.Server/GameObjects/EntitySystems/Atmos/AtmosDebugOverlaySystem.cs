@@ -1,7 +1,5 @@
 ﻿#nullable enable
-using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.Atmos;
 using Content.Shared;
@@ -12,41 +10,36 @@ using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Interfaces.Configuration;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
-using Robust.Shared.Map;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
-using Robust.Shared.Timing;
 
 namespace Content.Server.GameObjects.EntitySystems.Atmos
 {
     [UsedImplicitly]
     public sealed class AtmosDebugOverlaySystem : SharedAtmosDebugOverlaySystem
     {
-        [Robust.Shared.IoC.Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Robust.Shared.IoC.Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Robust.Shared.IoC.Dependency] private readonly IEntityManager _entityManager = default!;
-        [Robust.Shared.IoC.Dependency] private readonly IMapManager _mapManager = default!;
-        [Robust.Shared.IoC.Dependency] private readonly IConfigurationManager _configManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
 
         /// <summary>
-        ///     Players allowed to see the atmos debug overlay
+        ///     Players allowed to see the atmos debug overlay.
+        ///     To modify it see <see cref="AddObserver"/> and
+        ///     <see cref="RemoveObserver"/>.
         /// </summary>
-        public HashSet<IPlayerSession> PlayerObservers = new HashSet<IPlayerSession>();
+        private readonly HashSet<IPlayerSession> _playerObservers = new HashSet<IPlayerSession>();
 
         /// <summary>
         ///     Overlay update ticks per second.
         /// </summary>
         private float _updateCooldown;
 
-        private AtmosphereSystem _atmosphereSystem = default!;
-
         public override void Initialize()
         {
             base.Initialize();
-
-            _atmosphereSystem = Get<AtmosphereSystem>();
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
         }
 
@@ -56,16 +49,53 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
             _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
         }
 
+        public bool AddObserver(IPlayerSession observer)
+        {
+            return _playerObservers.Add(observer);
+        }
+
+        public bool HasObserver(IPlayerSession observer)
+        {
+            return _playerObservers.Contains(observer);
+        }
+
+        public bool RemoveObserver(IPlayerSession observer)
+        {
+            if (!_playerObservers.Remove(observer))
+            {
+                return false;
+            }
+
+            var message = new AtmosDebugOverlayDisableMessage();
+            RaiseNetworkEvent(message, observer.ConnectedClient);
+
+            return true;
+        }
+
+        /// <summary>
+        ///     Adds the given observer if it doesn't exist, removes it otherwise.
+        /// </summary>
+        /// <param name="observer">The observer to toggle.</param>
+        /// <returns>true if added, false if removed.</returns>
+        public bool ToggleObserver(IPlayerSession observer)
+        {
+            if (HasObserver(observer))
+            {
+                RemoveObserver(observer);
+                return false;
+            }
+            else
+            {
+                AddObserver(observer);
+                return true;
+            }
+        }
+
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
         {
             if (e.NewStatus != SessionStatus.InGame)
             {
-                if (PlayerObservers.Contains(e.Session))
-                {
-                    PlayerObservers.Remove(e.Session);
-                }
-
-                return;
+                RemoveObserver(e.Session);
             }
         }
 
@@ -104,7 +134,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
             // Now we'll go through each player, then through each chunk in range of that player checking if the player is still in range
             // If they are, check if they need the new data to send (i.e. if there's an overlay for the gas).
             // Afterwards we reset all the chunk data for the next time we tick.
-            foreach (var session in PlayerObservers)
+            foreach (var session in _playerObservers)
             {
                 if (session.AttachedEntity == null) continue;
 
@@ -115,7 +145,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
 
                 foreach (var grid in _mapManager.FindGridsIntersecting(entity.Transform.MapID, worldBounds))
                 {
-                    if (!_entityManager.TryGetEntity(grid.GridEntityId, out var gridEnt)) continue;
+                    if (!EntityManager.TryGetEntity(grid.GridEntityId, out var gridEnt)) continue;
 
                     if (!gridEnt.TryGetComponent<GridAtmosphereComponent>(out var gam)) continue;
 

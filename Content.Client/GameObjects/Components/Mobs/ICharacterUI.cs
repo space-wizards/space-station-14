@@ -17,5 +17,10 @@ namespace Content.Client.GameObjects.Components.Mobs
         /// The order it will appear in the character UI, higher is lower
         /// </summary>
         UIPriority Priority { get; }
+
+        /// <summary>
+        /// Called when the CharacterUi was opened
+        /// </summary>
+        void Opened(){}
     }
 }

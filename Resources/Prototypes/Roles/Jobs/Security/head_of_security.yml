@@ -20,12 +20,12 @@
 - type: startingGear
   id: HoSGear
   equipment:
-    innerclothing: UniformHoS
-    backpack: SecPackFilled
-    shoes: ShoesJackboots
-    outerclothing: OuterclothingHoSTrenchcoat
-    eyes: SecGlasses
-    head: HatBeretHoS
+    innerclothing: ClothingUniformJumpsuitHoS
+    backpack: ClothingBackpackSecurityFilled
+    shoes: ClothingShoesJackboots
+    outerclothing: ClothingOuterCoatHoSTrench
+    eyes: ClothingEyesGlassesSecurity
+    head: ClothingHeadHatBeretHoS
     idcard: HoSPDA
-    ears: HeadsetSecurityAlt
+    ears: ClothingHeadsetAltSecurity
     belt: ClothingBeltSecurityFilled
