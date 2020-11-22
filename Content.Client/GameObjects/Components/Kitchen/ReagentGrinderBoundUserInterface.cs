@@ -100,7 +100,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
 
         private void RefreshContentsDisplay(IList<Solution.ReagentQuantity> reagents, IReadOnlyList<EntityUid> containedSolids, bool isBeakerAttached)
         {
-            //Much of this component's interface will just be ripped straight from microwave...
+            //Refresh chamber contents
             _chamberVisualContents.Clear();
             _menu.ChamberContentBox.BoxContents.Clear();
             foreach (var uid in containedSolids)
@@ -116,10 +116,9 @@ namespace Content.Client.GameObjects.Components.Kitchen
                 _chamberVisualContents.Add(solidIndex, uid);
             }
 
-            //Always clear the list no matter what.
+            //Refresh beaker contents
             _beakerVisualContents.Clear();
             _menu.BeakerContentBox.BoxContents.Clear();
-
             //if no beaker is attached use this guard to prevent hitting a null reference.
             if (!isBeakerAttached || reagents == null)
             {
