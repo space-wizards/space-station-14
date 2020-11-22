@@ -8,10 +8,10 @@ namespace Content.Shared.Chemistry
     [Serializable]
     public struct ReagentUnit : ISelfSerialize, IComparable<ReagentUnit>, IEquatable<ReagentUnit>
     {
-        private int _value;
+        private uint _value;
         private static readonly int Shift = 2;
 
-        public static ReagentUnit MaxValue { get; } = new ReagentUnit(int.MaxValue);
+        public static ReagentUnit MaxValue { get; } = new ReagentUnit(uint.MaxValue);
         public static ReagentUnit Epsilon { get; } = new ReagentUnit(1);
         public static ReagentUnit Zero { get; } = new ReagentUnit(0);
 
@@ -20,14 +20,14 @@ namespace Content.Shared.Chemistry
             return _value / Math.Pow(10, Shift);
         }
 
-        private ReagentUnit(int value)
+        private ReagentUnit(uint value)
         {
             _value = value;
         }
 
-        public static ReagentUnit New(int value)
+        public static ReagentUnit New(uint value)
         {
-            return new ReagentUnit(value * (int) Math.Pow(10, Shift));
+            return new ReagentUnit(value * (uint) Math.Pow(10, Shift));
         }
 
         public static ReagentUnit New(float value)
@@ -35,14 +35,29 @@ namespace Content.Shared.Chemistry
             return new ReagentUnit(FromFloat(value));
         }
 
-        private static int FromFloat(float value)
+        private static uint FromFloat(float value)
         {
-            return (int) MathF.Round(value * MathF.Pow(10, Shift), MidpointRounding.AwayFromZero);
+            float v = MathF.Round(value * MathF.Pow(10, Shift), MidpointRounding.AwayFromZero);
+            if (v < 0)
+            {
+                return 0;
+            }
+            return (uint) v;
         }
 
         public static ReagentUnit New(double value)
         {
-            return new ReagentUnit((int) Math.Round(value * Math.Pow(10, Shift), MidpointRounding.AwayFromZero));
+            return new ReagentUnit(FromDouble(value));
+        }
+
+        private static uint FromDouble(double value)
+        {
+            double v = Math.Round(value * Math.Pow(10, Shift), MidpointRounding.AwayFromZero);
+            if (v < 0)
+            {
+                return 0;
+            }
+            return (uint) v;
         }
 
         public static ReagentUnit New(string value)
@@ -57,13 +72,18 @@ namespace Content.Shared.Chemistry
 
         public static ReagentUnit operator +(ReagentUnit a) => a;
 
-        public static ReagentUnit operator -(ReagentUnit a) => new ReagentUnit(-a._value);
-
         public static ReagentUnit operator +(ReagentUnit a, ReagentUnit b)
             => new ReagentUnit(a._value + b._value);
 
         public static ReagentUnit operator -(ReagentUnit a, ReagentUnit b)
-            => a + -b;
+        {
+            if (b._value > a._value)
+            {
+                // underflow
+                return ReagentUnit.Zero;
+            }
+            return new ReagentUnit(a._value - b._value);
+        }
 
         public static ReagentUnit operator *(ReagentUnit a, ReagentUnit b)
         {
@@ -84,7 +104,7 @@ namespace Content.Shared.Chemistry
             return New(aD * b);
         }
 
-        public static ReagentUnit operator *(ReagentUnit a, int b)
+        public static ReagentUnit operator *(ReagentUnit a, uint b)
         {
             return new ReagentUnit(a._value * b);
         }
@@ -100,34 +120,34 @@ namespace Content.Shared.Chemistry
             return New(aD / bD);
         }
 
-        public static bool operator <=(ReagentUnit a, int b)
+        public static bool operator <=(ReagentUnit a, uint b)
         {
             return a.ShiftDown() <= b;
         }
 
-        public static bool operator >=(ReagentUnit a, int b)
+        public static bool operator >=(ReagentUnit a, uint b)
         {
             return a.ShiftDown() >= b;
         }
 
-        public static bool operator <(ReagentUnit a, int b)
+        public static bool operator <(ReagentUnit a, uint b)
         {
             return a.ShiftDown() < b;
         }
 
-        public static bool operator >(ReagentUnit a, int b)
+        public static bool operator >(ReagentUnit a, uint b)
         {
             return a.ShiftDown() > b;
         }
 
-        public static bool operator ==(ReagentUnit a, int b)
+        public static bool operator ==(ReagentUnit a, uint b)
         {
-            return a.Int() == b;
+            return a.UInt() == b;
         }
 
-        public static bool operator !=(ReagentUnit a, int b)
+        public static bool operator !=(ReagentUnit a, uint b)
         {
-            return a.Int() != b;
+            return a.UInt() != b;
         }
 
         public static bool operator ==(ReagentUnit a, ReagentUnit b)
@@ -170,9 +190,9 @@ namespace Content.Shared.Chemistry
             return ShiftDown();
         }
 
-        public int Int()
+        public uint UInt()
         {
-            return (int) ShiftDown();
+            return (uint) ShiftDown();
         }
 
         public static ReagentUnit Min(params ReagentUnit[] reagentUnits)

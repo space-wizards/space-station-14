@@ -1,4 +1,4 @@
-using Content.Server.AI.WorldState;
+﻿using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Server.GameObjects.Components.Chemistry;
 
@@ -15,12 +15,12 @@ namespace Content.Server.AI.Utility.Considerations.Nutrition.Food
                 return 0.0f;
             }
 
-            var nutritionValue = 0;
+            uint nutritionValue = 0;
 
             foreach (var reagent in food.ReagentList)
             {
                 // TODO
-                nutritionValue += (reagent.Quantity * 30).Int();
+                nutritionValue += (reagent.Quantity * 30).UInt();
             }
 
             return nutritionValue / 1000.0f;

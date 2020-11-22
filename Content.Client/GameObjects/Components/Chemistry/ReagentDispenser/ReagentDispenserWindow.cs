@@ -204,7 +204,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
                 EjectButton.Disabled = true;
             }
 
-            switch (castState.SelectedDispenseAmount.Int())
+            switch (castState.SelectedDispenseAmount.UInt())
             {
                 case 1:
                     DispenseButton1.Pressed = true;

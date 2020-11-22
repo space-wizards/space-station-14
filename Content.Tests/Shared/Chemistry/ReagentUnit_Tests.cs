@@ -10,8 +10,8 @@ namespace Content.Tests.Shared.Chemistry
         [Test]
         [TestCase(1, "1")]
         [TestCase(0, "0")]
-        [TestCase(-1, "-1")]
-        public void ReagentUnitIntegerTests(int value, string expected)
+        [TestCase(-1, "0")]
+        public void ReagentUnitUnsignedIntegerTests(int value, string expected)
         {
             var result = ReagentUnit.New(value);
             Assert.That($"{result}", Is.EqualTo(expected));
@@ -20,6 +20,7 @@ namespace Content.Tests.Shared.Chemistry
         [Test]
         [TestCase(1.001f, "1")]
         [TestCase(0.999f, "1")]
+        [TestCase(-0.001f, "0")]
         public void ReagentUnitFloatTests(float value, string expected)
         {
             var result = ReagentUnit.New(value);
@@ -29,6 +30,7 @@ namespace Content.Tests.Shared.Chemistry
         [Test]
         [TestCase(1.001d, "1")]
         [TestCase(0.999d, "1")]
+        [TestCase(-0.001d, "0")]
         public void ReagentUnitDoubleTests(double value, string expected)
         {
             var result = ReagentUnit.New(value);
@@ -38,6 +40,7 @@ namespace Content.Tests.Shared.Chemistry
         [Test]
         [TestCase("1.005", "1.01")]
         [TestCase("0.999", "1")]
+        [TestCase("-0.001", "0")]
         public void ReagentUnitStringTests(string value, string expected)
         {
             var result = ReagentUnit.New(value);
@@ -62,7 +65,7 @@ namespace Content.Tests.Shared.Chemistry
         [Test]
         [TestCase(1.001f, 1.001f, "0")]
         [TestCase(1.001f, 1.004f, "0")]
-        [TestCase(1f, 2.005f, "-1.01")]
+        [TestCase(1f, 2f, "0")]
         public void CalculusMinus(float aFloat, float bFloat, string expected)
         {
             var a = ReagentUnit.New(aFloat);
@@ -126,12 +129,10 @@ namespace Content.Tests.Shared.Chemistry
         }
 
         [Test]
-        [TestCase(1, 0, false)]
         [TestCase(0, 0, true)]
-        [TestCase(-1, 0, false)]
-        [TestCase(1, 1, true)]
         [TestCase(0, 1, false)]
-        [TestCase(-1, 1, false)]
+        [TestCase(1, 0, false)]
+        [TestCase(1, 1, true)]
         public void ReagentUnitEquals(int a, int b, bool expected)
         {
             var parameter = ReagentUnit.New(a);

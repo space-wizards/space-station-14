@@ -135,7 +135,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             var threeQuarters = direction * 0.75f;
             var quarter = direction * 0.25f;
 
-            var amount = Math.Max(Math.Min((contents.CurrentVolume / _transferAmount).Int(), _vaporAmount), 1);
+            var amount = Math.Max(Math.Min((contents.CurrentVolume / _transferAmount).UInt(), _vaporAmount), 1);
 
             var spread = _vaporSpread / amount;
 

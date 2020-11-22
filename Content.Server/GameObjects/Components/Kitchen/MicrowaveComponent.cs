@@ -446,7 +446,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                     return MicrowaveSuccessState.RecipeFail;
                 }
 
-                if (amount.Int() < reagent.Value)
+                if (amount.UInt() < reagent.Value)
                 {
                     return MicrowaveSuccessState.RecipeFail;
                 }
