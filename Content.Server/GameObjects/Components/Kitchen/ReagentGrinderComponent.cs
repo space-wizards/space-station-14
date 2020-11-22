@@ -36,7 +36,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
     /// <summary>
     /// The combo reagent grinder/juicer. The reason why grinding and juicing are seperate is simple,
     /// think of grinding as a utility to break an object down into its reagents. Think of juicing as
-    /// converting something into it's single juice form. E.g, grind an apple and get the nutriment and sugar
+    /// converting something into its single juice form. E.g, grind an apple and get the nutriment and sugar
     /// it contained, juice an apple and get "apple juice".
     /// </summary>
     [RegisterComponent]
@@ -73,8 +73,8 @@ namespace Content.Server.GameObjects.Components.Kitchen
         private bool _busy = false;
 
         //YAML serialization vars
-        [ViewVariables] private int _storageCap = 16;
-        [ViewVariables] private int _workTime = 3500; //3.5 seconds, completely arbitrary for now.
+        [ViewVariables(VVAccess.ReadWrite)] private int _storageCap = 16;
+        [ViewVariables(VVAccess.ReadWrite)] private int _workTime = 3500; //3.5 seconds, completely arbitrary for now.
 
         public override void ExposeData(ObjectSerializer serializer)
         {
