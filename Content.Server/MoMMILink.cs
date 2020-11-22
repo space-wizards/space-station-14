@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
+using Content.Shared;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Robust.Server.Interfaces.ServerStatus;
@@ -27,9 +28,6 @@ namespace Content.Server
 
         void IPostInjectInit.PostInject()
         {
-            _configurationManager.RegisterCVar<string>("status.mommiurl", null);
-            _configurationManager.RegisterCVar<string>("status.mommipassword", null);
-
             _statusHost.AddHandler(_handleChatPost);
         }
 
@@ -46,8 +44,8 @@ namespace Content.Server
 
         private async Task _sendMessageInternal(string type, object messageObject)
         {
-            var url = _configurationManager.GetCVar<string>("status.mommiurl");
-            var password = _configurationManager.GetCVar<string>("status.mommipassword");
+            var url = _configurationManager.GetCVar(CCVars.StatusMoMMIUrl);
+            var password = _configurationManager.GetCVar(CCVars.StatusMoMMIPassword);
             if (string.IsNullOrWhiteSpace(url))
             {
                 return;
@@ -83,7 +81,7 @@ namespace Content.Server
                 return false;
             }
 
-            var password = _configurationManager.GetCVar<string>("status.mommipassword");
+            var password = _configurationManager.GetCVar(CCVars.StatusMoMMIPassword);
 
             OOCPostMessage message = null;
             try

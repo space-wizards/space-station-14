@@ -6,9 +6,10 @@
   - type: InteractionOutline
   - type: Physics
   - type: Sprite
-    sprite: Constructible/Linking/switch.rsi
+    sprite: Constructible/Power/switch.rsi
     state: on
   - type: SignalSwitch
+  - type: Rotatable
   - type: SignalTransmitter
   placement:
     snap:
@@ -22,9 +23,10 @@
   - type: InteractionOutline
   - type: Physics
   - type: Sprite
-    sprite: Constructible/Linking/switch.rsi
+    sprite: Constructible/Power/switch.rsi
     state: dead
   - type: SignalButton
+  - type: Rotatable
   - type: SignalTransmitter
   placement:
     snap:

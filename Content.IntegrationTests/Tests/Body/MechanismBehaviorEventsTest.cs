@@ -103,10 +103,22 @@ namespace Content.IntegrationTests.Tests.Body
             }
         }
 
+        private const string PROTOTYPES = @"
+- type: entity
+  name: HumanBodyDummy
+  id: HumanBodyDummy
+  components:
+  - type: Body
+    template: HumanoidTemplate
+    preset: HumanPreset
+    centerSlot: torso
+";
+
         [Test]
         public async Task EventsTest()
         {
-            var server = StartServerDummyTicker();
+            var options = new ServerContentIntegrationOption {ExtraPrototypes = PROTOTYPES};
+            var server = StartServerDummyTicker(options);
 
             await server.WaitAssertion(() =>
             {
@@ -116,7 +128,7 @@ namespace Content.IntegrationTests.Tests.Body
                 mapManager.CreateNewMapEntity(mapId);
 
                 var entityManager = IoCManager.Resolve<IEntityManager>();
-                var human = entityManager.SpawnEntity("HumanMob_Content", MapCoordinates.Nullspace);
+                var human = entityManager.SpawnEntity("HumanBodyDummy", MapCoordinates.Nullspace);
 
                 Assert.That(human.TryGetComponent(out IBody? body));
                 Assert.NotNull(body);

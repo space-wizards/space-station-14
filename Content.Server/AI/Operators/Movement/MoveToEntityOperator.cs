@@ -16,12 +16,12 @@ namespace Content.Server.AI.Operators.Movement
         public float ArrivalDistance { get; }
         public float PathfindingProximity { get; }
 
-        private bool _requiresInRangeUnobstructed;
+        private readonly bool _requiresInRangeUnobstructed;
 
         public MoveToEntityOperator(
-            IEntity owner, 
-            IEntity target, 
-            float arrivalDistance = 1.0f, 
+            IEntity owner,
+            IEntity target,
+            float arrivalDistance = 1.0f,
             float pathfindingProximity = 1.5f,
             bool requiresInRangeUnobstructed = false)
         {
@@ -44,7 +44,7 @@ namespace Content.Server.AI.Operators.Movement
             steering.Register(_owner, _request);
             return true;
         }
-        
+
         public override void Shutdown(Outcome outcome)
         {
             base.Shutdown(outcome);

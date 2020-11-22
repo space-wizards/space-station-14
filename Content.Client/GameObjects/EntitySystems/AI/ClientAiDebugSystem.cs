@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.AI;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.UserInterface;
@@ -178,7 +179,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
 
                 var panel = new PanelContainer
                 {
-                    StyleClasses = {"tooltipBox"},
+                    StyleClasses = { StyleNano.StyleClassTooltipPanel },
                     Children = {vBox},
                     MouseFilter = Control.MouseFilterMode.Ignore,
                     ModulateSelfOverride = Color.White.WithAlpha(0.75f),

@@ -83,6 +83,7 @@
   parent: SeatBase
   components:
   - type: Rotatable
+    rotateWhileAnchored: true
   - type: Sprite
     state: officechair_white
   - type: Physics

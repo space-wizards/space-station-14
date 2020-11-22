@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Gravity;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Gravity;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
@@ -19,10 +20,18 @@ namespace Content.IntegrationTests.Tests.Gravity
     [TestOf(typeof(GravityGeneratorComponent))]
     public class WeightlessStatusTests : ContentIntegrationTest
     {
+        private const string PROTOTYPES = @"
+- type: entity
+  name: HumanDummy
+  id: HumanDummy
+  components:
+  - type: AlertsUI
+";
         [Test]
         public async Task WeightlessStatusTest()
         {
-            var server = StartServer();
+            var options = new ServerIntegrationOptions{ExtraPrototypes = PROTOTYPES};
+            var server = StartServer(options);
 
             await server.WaitIdleAsync();
 
@@ -32,7 +41,7 @@ namespace Content.IntegrationTests.Tests.Gravity
             var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
 
             IEntity human = null;
-            SharedStatusEffectsComponent statusEffects = null;
+            SharedAlertsComponent alerts = null;
 
             await server.WaitAssertion(() =>
             {
@@ -55,9 +64,9 @@ namespace Content.IntegrationTests.Tests.Gravity
 
                 pauseManager.DoMapInitialize(mapId);
 
-                human = entityManager.SpawnEntity("HumanMob_Content", coordinates);
+                human = entityManager.SpawnEntity("HumanDummy", coordinates);
 
-                Assert.True(human.TryGetComponent(out statusEffects));
+                Assert.True(human.TryGetComponent(out alerts));
             });
 
             // Let WeightlessSystem and GravitySystem tick
@@ -68,7 +77,7 @@ namespace Content.IntegrationTests.Tests.Gravity
             await server.WaitAssertion(() =>
             {
                 // No gravity without a gravity generator
-                Assert.True(statusEffects.Statuses.ContainsKey(StatusEffect.Weightless));
+                Assert.True(alerts.IsShowingAlert(AlertType.Weightless));
 
                 gravityGenerator = human.EnsureComponent<GravityGeneratorComponent>();
             });
@@ -78,7 +87,7 @@ namespace Content.IntegrationTests.Tests.Gravity
 
             await server.WaitAssertion(() =>
             {
-                Assert.False(statusEffects.Statuses.ContainsKey(StatusEffect.Weightless));
+                Assert.False(alerts.IsShowingAlert(AlertType.Weightless));
 
                 // Disable the gravity generator
                 var args = new BreakageEventArgs {Owner = human};
@@ -89,7 +98,7 @@ namespace Content.IntegrationTests.Tests.Gravity
 
             await server.WaitAssertion(() =>
             {
-                Assert.False(statusEffects.Statuses.ContainsKey(StatusEffect.Weightless));
+                Assert.False(alerts.IsShowingAlert(AlertType.Weightless));
             });
         }
     }

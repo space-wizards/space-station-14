@@ -65,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Headset
 
         public void Receive(string message, int channel, IEntity source)
         {
-            if (ContainerHelpers.TryGetContainer(Owner, out var container))
+            if (Owner.TryGetContainer(out var container))
             {
                 if (!container.Owner.TryGetComponent(out IActorComponent actor))
                     return;

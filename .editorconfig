@@ -332,5 +332,8 @@ dotnet_naming_symbols.types_and_namespaces_symbols.applicable_kinds = namespace,
 dotnet_naming_symbols.type_parameters_symbols.applicable_accessibilities = *
 dotnet_naming_symbols.type_parameters_symbols.applicable_kinds = type_parameter
 
+# ReSharper properties
+resharper_braces_for_ifelse = required_for_multiline
+
 [*.{csproj,xml,yml,dll.config,msbuildproj,targets}]
 indent_size = 2

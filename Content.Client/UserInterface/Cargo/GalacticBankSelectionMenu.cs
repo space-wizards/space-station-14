@@ -10,7 +10,7 @@ namespace Content.Client.UserInterface.Cargo
 {
     public class GalacticBankSelectionMenu : SS14Window
     {
-        private ItemList _accounts;
+        private readonly ItemList _accounts;
         private int _accountCount = 0;
         private string[] _accountNames = new string[] { };
         private int[] _accountIds = new int[] { };

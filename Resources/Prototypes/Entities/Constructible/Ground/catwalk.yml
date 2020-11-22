@@ -23,3 +23,6 @@
     key: catwalk
     base: catwalk_
   - type: Catwalk
+  - type: Construction
+    graph: Catwalk
+    node: Catwalk

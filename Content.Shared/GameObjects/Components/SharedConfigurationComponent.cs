@@ -13,9 +13,22 @@ namespace Content.Shared.GameObjects.Components
         [Serializable, NetSerializable]
         public class ConfigurationBoundUserInterfaceState : BoundUserInterfaceState
         {
-            public readonly Dictionary<string, string> Config;
-            
+            public Dictionary<string, string> Config { get; }
+
             public ConfigurationBoundUserInterfaceState(Dictionary<string, string> config)
+            {
+                Config = config;
+            }
+        }
+
+        /// <summary>
+        ///     Message sent to other components on this entity when DeviceNetwork configuration updated.
+        /// </summary>
+        public class ConfigUpdatedComponentMessage : ComponentMessage
+        {
+            public Dictionary<string, string> Config { get; }
+
+            public ConfigUpdatedComponentMessage(Dictionary<string, string> config)
             {
                 Config = config;
             }
@@ -27,7 +40,7 @@ namespace Content.Shared.GameObjects.Components
         [Serializable, NetSerializable]
         public class ConfigurationUpdatedMessage : BoundUserInterfaceMessage
         {
-            public readonly Dictionary<string, string> Config;
+            public Dictionary<string, string> Config { get; }
 
             public ConfigurationUpdatedMessage(Dictionary<string, string> config)
             {
@@ -38,7 +51,7 @@ namespace Content.Shared.GameObjects.Components
         [Serializable, NetSerializable]
         public class ValidationUpdateMessage : BoundUserInterfaceMessage
         {
-            public readonly string ValidationString;
+            public string ValidationString { get; }
 
             public ValidationUpdateMessage(string validationString)
             {

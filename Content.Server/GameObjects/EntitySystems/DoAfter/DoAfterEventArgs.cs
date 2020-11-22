@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 using System;
 using System.Threading;
 using Content.Shared.Physics;
@@ -60,6 +60,11 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
         /// </summary>
         public bool BreakOnTargetMove { get; set; }
 
+        /// <summary>
+        ///     Threshold for user and target movement
+        /// </summary>
+        public float MovementThreshold { get; set; }
+
         public bool BreakOnDamage { get; set; }
         public bool BreakOnStun { get; set; }
 
@@ -86,6 +91,7 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
             Delay = delay;
             CancelToken = cancelToken;
             Target = target;
+            MovementThreshold = 0.1f;
 
             if (Target == null)
             {

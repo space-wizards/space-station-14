@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Interfaces.GameObjects;
+using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
@@ -22,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         public void Update(float airPressure)
         {
             if (!Owner.TryGetComponent(out IDamageableComponent damageable)) return;
-            Owner.TryGetComponent(out ServerStatusEffectsComponent status);
+            Owner.TryGetComponent(out ServerAlertsComponent status);
 
             var highPressureMultiplier = 1f;
             var lowPressureMultiplier = 1f;
@@ -50,11 +51,11 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                     if (pressure <= Atmospherics.HazardLowPressure)
                     {
-                        status.ChangeStatusEffect(StatusEffect.Pressure, "/Textures/Interface/StatusEffects/Pressure/lowpressure2.png", null);
+                        status.ShowAlert(AlertType.LowPressure, 2);
                         break;
                     }
 
-                    status.ChangeStatusEffect(StatusEffect.Pressure, "/Textures/Interface/StatusEffects/Pressure/lowpressure1.png", null);
+                    status.ShowAlert(AlertType.LowPressure, 1);
                     break;
 
                 // High pressure.
@@ -72,16 +73,16 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                     if (pressure >= Atmospherics.HazardHighPressure)
                     {
-                        status.ChangeStatusEffect(StatusEffect.Pressure, "/Textures/Interface/StatusEffects/Pressure/highpressure2.png", null);
+                        status.ShowAlert(AlertType.HighPressure, 2);
                         break;
                     }
 
-                    status.ChangeStatusEffect(StatusEffect.Pressure, "/Textures/Interface/StatusEffects/Pressure/highpressure1.png", null);
+                    status.ShowAlert(AlertType.HighPressure, 1);
                     break;
 
                 // Normal pressure.
                 default:
-                    status?.RemoveStatusEffect(StatusEffect.Pressure);
+                    status?.ClearAlertCategory(AlertCategory.Pressure);
                     break;
             }
 

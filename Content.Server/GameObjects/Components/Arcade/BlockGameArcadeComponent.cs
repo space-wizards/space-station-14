@@ -26,18 +26,20 @@ namespace Content.Server.GameObjects.Components.Arcade
     [ComponentReference(typeof(IActivate))]
     public class BlockGameArcadeComponent : Component, IActivate
     {
-        [Dependency] private IRobustRandom _random = null!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         public override string Name => "BlockGameArcade";
         public override uint? NetID => ContentNetIDs.BLOCKGAME_ARCADE;
-        [ComponentDependency] private PowerReceiverComponent? _powerReceiverComponent = default!;
+
+        [ComponentDependency] private readonly PowerReceiverComponent? _powerReceiverComponent = default!;
+
         private bool Powered => _powerReceiverComponent?.Powered ?? false;
         private BoundUserInterface? UserInterface => Owner.GetUIOrNull(BlockGameUiKey.Key);
 
         private BlockGame? _game;
 
         private IPlayerSession? _player;
-        private List<IPlayerSession> _spectators = new List<IPlayerSession>();
+        private readonly List<IPlayerSession> _spectators = new List<IPlayerSession>();
 
         public void Activate(ActivateEventArgs eventArgs)
         {
@@ -162,9 +164,9 @@ namespace Content.Server.GameObjects.Components.Arcade
         {
             //note: field is 10(0 -> 9) wide and 20(0 -> 19) high
 
-            private BlockGameArcadeComponent _component;
+            private readonly BlockGameArcadeComponent _component;
 
-            private List<BlockGameBlock> _field = new List<BlockGameBlock>();
+            private readonly List<BlockGameBlock> _field = new List<BlockGameBlock>();
 
             private BlockGamePiece _currentPiece;
 
@@ -299,6 +301,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                 _component = component;
                 _allBlockGamePieces = (BlockGamePieceType[]) Enum.GetValues(typeof(BlockGamePieceType));
                 _internalNextPiece = GetRandomBlockGamePiece(_component._random);
+                InitializeNewBlock();
             }
 
             private void SendHighscoreUpdate()
@@ -315,8 +318,6 @@ namespace Content.Server.GameObjects.Components.Arcade
 
             public void StartGame()
             {
-                InitializeNewBlock();
-
                 _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Game));
 
                 FullUpdate();
@@ -569,10 +570,10 @@ namespace Content.Server.GameObjects.Components.Arcade
                         break;
                     case BlockGamePlayerAction.Pause:
                         _running = false;
-                        _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Pause));
+                        _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Pause, _started));
                         break;
                     case BlockGamePlayerAction.Unpause:
-                        if (!_gameOver)
+                        if (!_gameOver && _started)
                         {
                             _running = true;
                             _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Game));
@@ -583,7 +584,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                         break;
                     case BlockGamePlayerAction.ShowHighscores:
                         _running = false;
-                        _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Highscores));
+                        _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Highscores, _started));
                         break;
                 }
             }
@@ -654,6 +655,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             }
 
             private bool IsGameOver => _field.Any(block => block.Position.Y == 0);
+
             private void InvokeGameover()
             {
                 _running = false;

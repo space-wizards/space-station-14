@@ -102,7 +102,7 @@ namespace Content.Server.GameObjects.Components.Observer
                         {
                             if (player.AttachedEntity != null && warp.PlayerTarget == player.AttachedEntity.Uid)
                             {
-                                session?.AttachedEntity!.Transform.Coordinates =
+                                session!.AttachedEntity!.Transform.Coordinates =
                                     player.AttachedEntity.Transform.Coordinates;
                             }
                         }
@@ -113,7 +113,7 @@ namespace Content.Server.GameObjects.Components.Observer
                         {
                             if (warp.WarpName == warpPoint.Location)
                             {
-                                session?.AttachedEntity!.Transform.Coordinates = warpPoint.Owner.Transform.Coordinates ;
+                                session!.AttachedEntity!.Transform.Coordinates = warpPoint.Owner.Transform.Coordinates ;
                             }
                         }
                     }
