@@ -20,12 +20,14 @@ namespace Content.Server.GameObjects.Components.Sound
 
         public string _soundName;
         public float _pitchVariation;
+        public int _semitoneVariation;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _soundName, "sound", string.Empty);
             serializer.DataField(ref _pitchVariation, "variation", 0.0f);
+            serializer.DataField(ref _semitoneVariation, "semitoneVariation", 0);
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
@@ -35,6 +37,11 @@ namespace Content.Server.GameObjects.Components.Sound
                 if (_pitchVariation > 0.0)
                 {
                     EntitySystem.Get<AudioSystem>().PlayFromEntity(_soundName, Owner, AudioHelpers.WithVariation(_pitchVariation).WithVolume(-2f));
+                    return true;
+                }
+                if (_semitoneVariation > 0)
+                {
+                    EntitySystem.Get<AudioSystem>().PlayFromEntity(_soundName, Owner, AudioHelpers.WithSemitoneVariation(_semitoneVariation).WithVolume(-2f));
                     return true;
                 }
                 EntitySystem.Get<AudioSystem>().PlayFromEntity(_soundName, Owner, AudioParams.Default.WithVolume(-2f));
