@@ -56,7 +56,7 @@ namespace Content.Client.Arcade
 
         public BlockGameMenu(BlockGameBoundUserInterface owner)
         {
-            Title = "Nanotrasen Block Game";
+            Title = Loc.GetString("Nanotrasen Block Game");
             _owner = owner;
 
             var resourceCache = IoCManager.Resolve<IResourceCache>();
@@ -536,7 +536,7 @@ namespace Content.Client.Arcade
             List<BlockGameMessages.HighScoreEntry> globalHighscores)
         {
             var localHighscoreText = Loc.GetString("Station") + ":\n";
-            var globalHighscoreText = "Nanotrasen:\n";
+            var globalHighscoreText = Loc.GetString("Nanotrasen") + ":\n";
             for (int i = 0; i < 5; i++)
             {
                 localHighscoreText += $"#{i + 1} " + (localHighscores.Count > i
