@@ -91,7 +91,7 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
             Delay = delay;
             CancelToken = cancelToken;
             Target = target;
-            MovementThreshold = .1f;
+            MovementThreshold = 0.1f;
 
             if (Target == null)
             {
