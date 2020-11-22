@@ -11,16 +11,17 @@
   access:
   - Maintenance
   - Engineering
+  - ChiefEngineer
   - Command
   - External
 
 - type: startingGear
   id: ChiefEngineerGear
   equipment:
-    head: HatHardhatWhite
-    innerclothing: UniformChiefEngineer
-    backpack: BackpackEngineeringFilled
-    shoes: ShoesBrown
+    head: ClothingHeadHatHardhatWhite
+    innerclothing: ClothingUniformJumpsuitChiefEngineer
+    backpack: ClothingBackpackEngineeringFilled
+    shoes: ClothingShoesColorBrown
     idcard: CEPDA
-    belt: UtilityBeltClothingFilled
-    ears: HeadsetEngineering
+    ears: ClothingHeadsetEngineering
+    belt: ClothingBeltChiefEngineerFilled

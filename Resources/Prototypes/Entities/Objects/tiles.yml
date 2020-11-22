@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   parent: BaseItem
   id: FloorTileItemBase
   description: These could work as a pretty decent throwing weapon.
@@ -7,9 +7,10 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_steel
-
   - type: FloorTile
-    output: floor_steel
+    outputs:
+      - plating
+      - floor_steel
   - type: Stack
     stacktype: FloorTileSteel
     count: 1
@@ -25,23 +26,6 @@
     HeldPrefix: tile_steel
 
 - type: entity
-  name: carpet floor tile
-  parent: FloorTileItemBase
-  id: FloorTileItemCarpet
-  components:
-  - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_carpet
-
-  - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_carpet
-  - type: FloorTile
-    output: floor_carpet
-  - type: Stack
-    stacktype: FloorTileCarpet
-
-- type: entity
   name: wood floor tile
   parent: FloorTileItemBase
   id: FloorTileItemWood
@@ -49,12 +33,13 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_wood
-
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_wood
   - type: FloorTile
-    output: floor_wood
+    outputs:
+      - plating
+      - floor_wood
   - type: Stack
     stacktype: FloorTileWood
     count: 1
@@ -68,12 +53,13 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_white
-
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_white
   - type: FloorTile
-    output: floor_white
+    outputs:
+      - plating
+      - floor_white
   - type: Stack
     stacktype: FloorTileWhite
     count: 1
@@ -87,12 +73,13 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_dark
-
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_dark
   - type: FloorTile
-    output: floor_dark
+    outputs:
+      - plating
+      - floor_dark
   - type: Stack
     stacktype: FloorTileDark
     count: 1
@@ -106,12 +93,13 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_dark_techfloor_grid
-
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_dark
   - type: FloorTile
-    output: floor_techmaint
+    outputs:
+      - plating
+      - floor_techmaint
 
 - type: entity
   name: floor tile freezer
@@ -121,12 +109,13 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_showroom
-
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_showroom
   - type: FloorTile
-    output: floor_freezer
+    outputs:
+      - plating
+      - floor_freezer
 
 - type: entity
   name: floor tile showroom
@@ -136,12 +125,13 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_showroom
-
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_showroom
   - type: FloorTile
-    output: floor_showroom
+    outputs:
+      - plating
+      - floor_showroom
 
 - type: entity
   name: floor tile snow
@@ -151,12 +141,13 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_snow
-
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_silver
   - type: FloorTile
-    output: floor_snow
+    outputs:
+      - plating
+      - floor_snow
 
 - type: entity
   name: floor tile green circuit
@@ -166,12 +157,13 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_gcircuit
-
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_silver
   - type: FloorTile
-    output: floor_green_circuit
+    outputs:
+      - plating
+      - floor_green_circuit
 
 - type: entity
   name: floor tile gold
@@ -181,12 +173,13 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_gold
-
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_gold
   - type: FloorTile
-    output: floor_gold
+    outputs:
+      - plating
+      - floor_gold
 
 - type: entity
   name: floor tile reinforced
@@ -196,12 +189,13 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_reinforced
-
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_reinforced
   - type: FloorTile
-    output: floor_reinforced
+    outputs:
+      - plating
+      - floor_reinforced
 
 - type: entity
   name: floor tile rock
@@ -211,12 +205,13 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_rockvault
-
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_steel
   - type: FloorTile
-    output: floor_rockvault
+    outputs:
+      - plating
+      - floor_rockvault
 
 - type: entity
   name: floor tile mono
@@ -226,12 +221,13 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_white_monofloor
-
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_steel
   - type: FloorTile
-    output: floor_mono
+    outputs:
+      - plating
+      - floor_mono
 
 - type: entity
   name: floor tile linoleum
@@ -241,12 +237,13 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_white_monofloor
-
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_steel
   - type: FloorTile
-    output: floor_lino
+    outputs:
+      - plating
+      - floor_lino
 
 - type: entity
   name: floor tile asteroid
@@ -256,12 +253,13 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_white
-
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_brown
   - type: FloorTile
-    output: floor_asteroid_tile
+    outputs:
+      - plating
+      - floor_asteroid_tile
 
 - type: entity
   name: floor tile hydro
@@ -271,12 +269,13 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_hydro
-
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_hydro
   - type: FloorTile
-    output: floor_hydro
+    outputs:
+      - plating
+      - floor_hydro
 
 - type: entity
   name: floor tile dirty
@@ -286,9 +285,10 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_dirty
-
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_brown
   - type: FloorTile
-    output: floor_steel_dirty
+    outputs:
+      - plating
+      - floor_steel_dirty

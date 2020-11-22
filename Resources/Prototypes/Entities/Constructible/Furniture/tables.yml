@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   id: TableBase
   name: "table"
   description: A square piece of metal standing on four metal legs.
@@ -39,13 +39,16 @@
     deadThreshold: 15
     destroySound: /Audio/Effects/metalbreak.ogg
     resistances: metallicResistances
-    spawnOnDestroy: SteelSheet1
+    spawnOnDestroy:
+      SteelSheet1:
+        Min: 1
+        Max: 1
 
 - type: entity
   id: TableFrame
   parent: TableBase
   name: "table frame"
-  description:
+  description: Pieces of metal that make the frame of a table.
   components:
   - type: Sprite
     sprite: Constructible/Structures/Tables/frame.rsi
@@ -55,13 +58,19 @@
     deadThreshold: 1
     destroySound: /Audio/Effects/metalbreak.ogg
     resistances: metallicResistances
-    spawnOnDestroy: SteelSheet1
+    spawnOnDestroy:
+      SteelSheet1:
+        Min: 1
+        Max: 1
+  - type: Construction
+    graph: Tables
+    node: TableFrame
 
 - type: entity
   id: TableBar
   parent: TableBase
   name: "bar table"
-  description:
+  description: "Fancy table. Perfect for serving drinks."
   components:
   - type: Sprite
     sprite: Constructible/Structures/Tables/bar.rsi
@@ -71,13 +80,16 @@
     deadThreshold: 1
     destroySound: /Audio/Effects/metalbreak.ogg
     resistances: metallicResistances
-    spawnOnDestroy: SteelSheet1
+    spawnOnDestroy:
+      SteelSheet1:
+        Min: 1
+        Max: 1
 
 - type: entity
   id: TableMetal
   parent: TableBase
   name: "metal table"
-  description:
+  description: "Just a metal table."
   components:
   - type: Sprite
     sprite: Constructible/Structures/Tables/metal.rsi
@@ -87,29 +99,41 @@
     deadThreshold: 15
     destroySound: /Audio/Effects/metalbreak.ogg
     resistances: metallicResistances
-    spawnOnDestroy: SteelSheet1
+    spawnOnDestroy:
+      SteelSheet1:
+        Min: 1
+        Max: 1
+  - type: Construction
+    graph: Tables
+    node: MetalTable
 
 - type: entity
   id: TableR
   parent: TableBase
   name: "reinforced table"
-  description:
+  description: "A square piece of metal standing on four metal legs. Extra robust."
   components:
   - type: Sprite
     sprite: Constructible/Structures/Tables/reinforced.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/reinforced.rsi
   - type: Destructible
-    deadThreshold: 1
+    deadThreshold: 75
     destroySound: /Audio/Effects/metalbreak.ogg
     resistances: metallicResistances
-    spawnOnDestroy: SteelSheet1
+    spawnOnDestroy:
+      SteelSheet1:
+        Min: 1
+        Max: 1
+  - type: Construction
+    graph: Tables
+    node: ReinforcedTable
 
 - type: entity
   id: TableGlass
   parent: TableBase
   name: "glass table"
-  description:
+  description: "A square piece of glass, standing on four metal legs."
   components:
   - type: Sprite
     sprite: Constructible/Structures/Tables/glass.rsi
@@ -117,14 +141,21 @@
     sprite: Constructible/Structures/Tables/glass.rsi
   - type: Destructible
     deadThreshold: 5
-    destroySound: /Audio/Effects/glassbreak2.ogg
+    destroySound: /Audio/Effects/glass_break2.ogg
     resistances: metallicResistances
+    spawnOnDestroy:
+      ShardGlass:
+        Min: 1
+        Max: 1
+  - type: Construction
+    graph: Tables
+    node: GlassTable
 
 - type: entity
   id: TableGlassR
   parent: TableBase
   name: "reinforced glass table"
-  description:
+  description: "A square piece of glass, standing on four metal legs. Extra robust."
   components:
   - type: Sprite
     sprite: Constructible/Structures/Tables/r_glass.rsi
@@ -132,8 +163,15 @@
     sprite: Constructible/Structures/Tables/r_glass.rsi
   - type: Destructible
     deadThreshold: 20
-    destroySound: /Audio/Effects/glassbreak2.ogg
+    destroySound: /Audio/Effects/glass_break2.ogg
     resistances: metallicResistances
+    spawnOnDestroy:
+      ShardGlass:
+        Min: 1
+        Max: 1
+  - type: Construction
+    graph: Tables
+    node: RGlassTable
 
 - type: entity
   id: TableWood
@@ -149,7 +187,13 @@
     deadThreshold: 15
     destroySound: /Audio/Effects/woodhit.ogg
     resistances: metallicResistances
-    spawnOnDestroy: WoodPlank
+    spawnOnDestroy:
+      WoodPlank:
+        Min: 1
+        Max: 1
+  - type: Construction
+    graph: Tables
+    node: WoodTable
 
 - type: entity
   id: TableCarpet
@@ -165,7 +209,13 @@
     deadThreshold: 15
     destroySound: /Audio/Effects/woodhit.ogg
     resistances: metallicResistances
-    spawnOnDestroy: WoodPlank
+    spawnOnDestroy:
+      WoodPlank:
+        Min: 1
+        Max: 1
+  - type: Construction
+    graph: Tables
+    node: PokerTable
 
 - type: entity
   id: TableStone

@@ -11,11 +11,13 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
 {
     public class AStarPathfindingJob : Job<Queue<TileRef>>
     {
+#if DEBUG
         public static event Action<SharedAiDebug.AStarRouteDebug> DebugRoute;
+#endif
 
-        private PathfindingNode _startNode;
+        private readonly PathfindingNode _startNode;
         private PathfindingNode _endNode;
-        private PathfindingArgs _pathfindingArgs;
+        private readonly PathfindingArgs _pathfindingArgs;
 
         public AStarPathfindingJob(
             double maxTime,

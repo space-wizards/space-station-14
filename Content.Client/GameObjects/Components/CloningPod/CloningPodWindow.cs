@@ -25,9 +25,9 @@ namespace Content.Client.GameObjects.Components.CloningPod
         public readonly Button EjectButton;
         private readonly CloningScanButton _measureButton;
         private CloningScanButton? _selectedButton;
-        private Label _progressLabel;
+        private readonly Label _progressLabel;
         private readonly ProgressBar _cloningProgressBar;
-        private Label _mindState;
+        private readonly Label _mindState;
 
         protected override Vector2 ContentsMinimumSize => _mainVBox?.CombinedMinimumSize ?? Vector2.Zero;
         private CloningPodBoundUserInterfaceState _lastUpdate = null!;

@@ -1,6 +1,6 @@
 - type: entity
   parent: Clothing
-  id: SatchelBase
+  id: ClothingBackpackSatchel
   name: satchel
   description: A trendy looking satchel.
   components:
@@ -17,85 +17,78 @@
     capacity: 100
 
 - type: entity
-  parent: SatchelBase
-  id: SatchelEngineering
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelEngineering
   name: engineering satchel
   description: A tough satchel with extra pockets.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchels/satchel_engineering.rsi
-    state: icon
+    sprite: Clothing/Back/Satchels/engineering.rsi
   - type: Clothing
-    sprite: Clothing/Back/Satchels/satchel_engineering.rsi
+    sprite: Clothing/Back/Satchels/engineering.rsi
 
 - type: entity
-  parent: SatchelBase
-  id: SatchelMedical
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelMedical
   name: medical satchel
   description: A sterile satchel used in medical departments.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchels/satchel_medical.rsi
-    state: icon
+    sprite: Clothing/Back/Satchels/medical.rsi
   - type: Clothing
-    sprite: Clothing/Back/Satchels/satchel_medical.rsi
+    sprite: Clothing/Back/Satchels/medical.rsi
 
 - type: entity
-  parent: SatchelBase
-  id: SatchelChemistry
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelChemistry
   name: chemistry satchel
   description: A sterile satchel with chemist colours.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchels/satchel_chemistry.rsi
-    state: icon
+    sprite: Clothing/Back/Satchels/chemistry.rsi
   - type: Clothing
-    sprite: Clothing/Back/Satchels/satchel_chemistry.rsi
+    sprite: Clothing/Back/Satchels/chemistry.rsi
 
 - type: entity
-  parent: SatchelBase
-  id: SatchelScience
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelScience
   name: science satchel
   description: Useful for holding research materials.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchels/satchel_science.rsi
-    state: icon
+    sprite: Clothing/Back/Satchels/science.rsi
   - type: Clothing
-    sprite: Clothing/Back/Satchels/satchel_science.rsi
+    sprite: Clothing/Back/Satchels/science.rsi
 
 - type: entity
-  parent: SatchelBase
-  id: SatchelSecurity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelSecurity
   name: security satchel
   description: A robust satchel for security related needs.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchels/satchel_security.rsi
-    state: icon
+    sprite: Clothing/Back/Satchels/security.rsi
   - type: Clothing
-    sprite: Clothing/Back/Satchels/satchel_security.rsi
+    sprite: Clothing/Back/Satchels/security.rsi
 
 - type: entity
-  parent: SatchelBase
-  id: SatchelCaptain
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelCaptain
   name: captain's satchel
   description: An exclusive satchel for Nanotrasen officers.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchels/satchel_captain.rsi
-    state: icon
+    sprite: Clothing/Back/Satchels/captain.rsi
   - type: Clothing
-    sprite: Clothing/Back/Satchels/satchel_captain.rsi
+    sprite: Clothing/Back/Satchels/captain.rsi
 
 - type: entity
-  parent: SatchelBase
-  id: SatchelHydroponics
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelHydroponics
   name: hydroponics satchel
   description: A satchel made of all natural fibers.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchels/satchel_hydroponics.rsi
-    state: icon
+    sprite: Clothing/Back/Satchels/hydroponics.rsi
   - type: Clothing
-    sprite: Clothing/Back/Satchels/satchel_hydroponics.rsi
+    sprite: Clothing/Back/Satchels/hydroponics.rsi

@@ -4,22 +4,19 @@
   description: A vending machine containing hats.
   spriteName: hats
   startingInventory:
-    HatBandana: 3
-    HatBandblack: 3
-    HatBandblue: 3
-    HatBandbotany: 3
-    HatBandcamo: 3
-    HatBandgreen: 3
-    HatBandred: 3
-    HatBandskull: 3
-    HatBearpelt: 3
-    HatBeret: 3
-    HatBluesoft: 3
-    HatBluesoftFlipped: 3
-    HatBowler: 3
-    HatBunny: 3
-    HatCake: 3
-    HatCargosoft: 3
-    HatCentcom: 3
-    HatChefhat: 3
-    HatCowboy: 3
+    HatBandBlack: 3
+    HatBandBlue: 3
+    HatBandBotany: 3
+    HatBandGreen: 3
+    HatBandRed: 3
+    HatBandSkull: 3
+    ClothingHeadHatBearpelt: 3
+    ClothingHeadHatBeret: 3
+    ClothingHeadHatBluesoft: 3
+    ClothingHeadHatBluesoftFlipped: 3
+    ClothingHeadHatBowlerHat: 3
+    ClothingHeadHatBunny: 3
+    ClothingHeadHatCake: 3
+    ClothingHeadHatCargosoft: 3
+    ClothingHeadHatCentcom: 3
+    ClothingHeadHatChef: 3

@@ -11,13 +11,8 @@ namespace Content.Server.GameObjects.EntitySystems
     {
         public override void Update(float frameTime)
         {
-            foreach (var comp in ComponentManager.EntityQuery<BatteryStorageComponent>())
+            foreach (var comp in ComponentManager.EntityQuery<BatteryStorageComponent>(false))
             {
-                if (comp.Owner.Paused)
-                {
-                    continue;
-                }
-
                 comp.Update(frameTime);
             }
         }

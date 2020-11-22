@@ -197,8 +197,8 @@ namespace Content.Server.Atmos
             foreach (var entity in _gridTileLookupSystem.GetEntitiesIntersecting(GridIndex, GridIndices))
             {
                 if (!entity.TryGetComponent(out IPhysicsComponent physics)
-                    ||  !entity.TryGetComponent(out MovedByPressureComponent pressure)
-                    ||  ContainerHelpers.IsInContainer(entity))
+                    || !entity.IsMovedByPressure(out var pressure)
+                    || entity.IsInContainer())
                     continue;
 
                 physics.WakeBody();
@@ -1127,6 +1127,10 @@ namespace Content.Server.Atmos
 
             UpdateVisuals();
 
+            if (!Excited)
+            {
+                _gridAtmosphereComponent.AddActiveTile(this);
+            }
             return true;
         }
 

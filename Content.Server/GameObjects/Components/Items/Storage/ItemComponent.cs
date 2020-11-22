@@ -58,12 +58,12 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             }
         }
 
-        public void Equipped(EquippedEventArgs eventArgs)
+        public virtual void Equipped(EquippedEventArgs eventArgs)
         {
             EquippedToSlot();
         }
 
-        public void Unequipped(UnequippedEventArgs eventArgs)
+        public virtual void Unequipped(UnequippedEventArgs eventArgs)
         {
             RemovedFromSlot();
         }
@@ -111,7 +111,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             protected override void GetData(IEntity user, ItemComponent component, VerbData data)
             {
                 if (!ActionBlockerSystem.CanInteract(user) ||
-                    ContainerHelpers.IsInContainer(component.Owner) ||
+                    component.Owner.IsInContainer() ||
                     !component.CanPickup(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;

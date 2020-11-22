@@ -12,6 +12,7 @@ namespace Content.Client.UserInterface.Stylesheets
         public const string ClassHighDivider = "HighDivider";
         public const string StyleClassLabelHeading = "LabelHeading";
         public const string StyleClassLabelSubText = "LabelSubText";
+        public const string StyleClassItalic = "Italic";
 
         public const string ButtonOpenRight = "OpenRight";
         public const string ButtonOpenLeft = "OpenLeft";
@@ -31,6 +32,7 @@ namespace Content.Client.UserInterface.Stylesheets
         protected StyleBase(IResourceCache resCache)
         {
             var notoSans12 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 12);
+            var notoSans12Italic = resCache.GetFont("/Fonts/NotoSans/NotoSans-Italic.ttf", 12);
 
             // Button styles.
             var buttonTex = resCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
@@ -76,6 +78,14 @@ namespace Content.Client.UserInterface.Stylesheets
                     new[]
                     {
                         new StyleProperty("font", notoSans12),
+                    }),
+
+                // Default font.
+                new StyleRule(
+                    new SelectorElement(null, new[] {StyleClassItalic}, null, null),
+                    new[]
+                    {
+                        new StyleProperty("font", notoSans12Italic),
                     }),
             };
         }

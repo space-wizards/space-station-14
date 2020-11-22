@@ -7,6 +7,7 @@ using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -23,8 +24,6 @@ namespace Content.Server.GameObjects.Components.Stack
     [ComponentReference(typeof(SharedStackComponent))]
     public class StackComponent : SharedStackComponent, IInteractUsing, IExamine
     {
-        [Dependency] private IEntityManager _entityManager = default!;
-
         private bool _throwIndividually = false;
 
         public override int Count
@@ -77,7 +76,7 @@ namespace Content.Server.GameObjects.Components.Stack
             {
                 Count -= amount;
 
-                stack = _entityManager.SpawnEntity(Owner.Prototype?.ID, spawnPosition);
+                stack = Owner.EntityManager.SpawnEntity(Owner.Prototype?.ID, spawnPosition);
 
                 if (stack.TryGetComponent(out StackComponent? stackComp))
                 {
@@ -117,7 +116,7 @@ namespace Content.Server.GameObjects.Components.Stack
 
                     if (stack.AvailableSpace == 0)
                     {
-                        Timer.Spawn(300, () => popupPos.PopupMessage(eventArgs.User, "Stack is now full."));
+                        Owner.SpawnTimer(300, () => popupPos.PopupMessage(eventArgs.User, "Stack is now full."));
                     }
 
                     return true;

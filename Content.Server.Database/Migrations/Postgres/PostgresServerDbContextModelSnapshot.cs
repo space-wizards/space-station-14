@@ -20,6 +20,104 @@ namespace Content.Server.Database.Migrations.Postgres
                 .HasAnnotation("ProductVersion", "3.1.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
+            modelBuilder.Entity("Content.Server.Database.Admin", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("user_id")
+                        .HasColumnType("uuid");
+
+                    b.Property<int?>("AdminRankId")
+                        .HasColumnName("admin_rank_id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Title")
+                        .HasColumnName("title")
+                        .HasColumnType("text");
+
+                    b.HasKey("UserId");
+
+                    b.HasIndex("AdminRankId");
+
+                    b.ToTable("admin");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.AdminFlag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("admin_flag_id")
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<Guid>("AdminId")
+                        .HasColumnName("admin_id")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Flag")
+                        .IsRequired()
+                        .HasColumnName("flag")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("Negative")
+                        .HasColumnName("negative")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdminId");
+
+                    b.HasIndex("Flag", "AdminId")
+                        .IsUnique();
+
+                    b.ToTable("admin_flag");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.AdminRank", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("admin_rank_id")
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnName("name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("admin_rank");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.AdminRankFlag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("admin_rank_flag_id")
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("AdminRankId")
+                        .HasColumnName("admin_rank_id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Flag")
+                        .IsRequired()
+                        .HasColumnName("flag")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdminRankId");
+
+                    b.HasIndex("Flag", "AdminRankId")
+                        .IsUnique();
+
+                    b.ToTable("admin_rank_flag");
+                });
+
             modelBuilder.Entity("Content.Server.Database.Antag", b =>
                 {
                     b.Property<int>("Id")
@@ -167,6 +265,8 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LastSeenUserName");
 
                     b.HasIndex("UserId")
                         .IsUnique();
@@ -346,6 +446,32 @@ namespace Content.Server.Database.Migrations.Postgres
                         .IsUnique();
 
                     b.ToTable("profile");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.Admin", b =>
+                {
+                    b.HasOne("Content.Server.Database.AdminRank", "AdminRank")
+                        .WithMany("Admins")
+                        .HasForeignKey("AdminRankId")
+                        .OnDelete(DeleteBehavior.SetNull);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.AdminFlag", b =>
+                {
+                    b.HasOne("Content.Server.Database.Admin", "Admin")
+                        .WithMany("Flags")
+                        .HasForeignKey("AdminId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Content.Server.Database.AdminRankFlag", b =>
+                {
+                    b.HasOne("Content.Server.Database.AdminRank", "Rank")
+                        .WithMany("Flags")
+                        .HasForeignKey("AdminRankId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Content.Server.Database.Antag", b =>

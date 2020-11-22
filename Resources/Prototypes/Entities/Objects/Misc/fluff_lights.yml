@@ -16,7 +16,7 @@
   name: lamp
   id: Lamp
   parent: BaseLamp
-  description:
+  description: A light emitting device.
   components:
     - type: Sprite
       layers:
@@ -36,7 +36,7 @@
   name: banana lamp
   id: LampBanana
   parent: BaseLamp
-  description:
+  description: A light emitting device, shaped like bannana.
   components:
     - type: Sprite
       layers:
@@ -56,7 +56,7 @@
   name: desk lamp
   id: LampGold
   parent: BaseLamp
-  description:
+  description: A light emitting device, that would look great on a desk.
   components:
     - type: Sprite
       layers:
@@ -126,8 +126,11 @@
     - type: Anchorable
     - type: Destructible
       deadThreshold: 10
-      spawnOnDestroy: FloodlightBroken
-      destroySound: /Audio/Effects/glassbreak1.ogg
+      spawnOnDestroy:
+        FloodlightBroken:
+          Min: 1
+          Max: 1
+      destroySound: /Audio/Effects/glass_break1.ogg
       resistances: metallicResistances
     - type: Appearance
       visuals:
@@ -145,7 +148,10 @@
     - type: Anchorable
     - type: Destructible
       deadThreshold: 20
-      spawnOnDestroy: SteelSheet1
+      spawnOnDestroy:
+        SteelSheet1:
+          Min: 1
+          Max: 1
       destroySound: /Audio/Effects/metalbreak.ogg
       resistances: metallicResistances
     - type: Physics

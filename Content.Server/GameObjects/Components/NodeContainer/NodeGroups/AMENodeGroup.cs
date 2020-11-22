@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         public AMEControllerComponent MasterController => _masterController;
 
-        private List<AMEShieldComponent> _cores = new List<AMEShieldComponent>();
+        private readonly List<AMEShieldComponent> _cores = new List<AMEShieldComponent>();
 
         public int CoreCount => _cores.Count;
 
@@ -143,9 +143,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
             intensity = Math.Min(intensity, 8);
 
-            ExplosionHelper.SpawnExplosion(epicenter.Owner.Transform.Coordinates, intensity / 2, intensity, intensity * 2, intensity * 3);
-
+            epicenter.Owner.SpawnExplosion(intensity / 2, intensity, intensity * 2, intensity * 3);
         }
-
     }
 }

@@ -8,7 +8,7 @@ namespace Content.Client.GameObjects.Components.Research
 {
     public class ResearchClientServerSelectionMenu : SS14Window
     {
-        private ItemList _servers;
+        private readonly ItemList _servers;
         private int _serverCount = 0;
         private string[] _serverNames = new string[]{};
         private int[] _serverIds = new int[]{};

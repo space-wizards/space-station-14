@@ -17,12 +17,12 @@ using Content.Shared.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Doors
         [ViewVariables(VVAccess.ReadWrite)]
         protected float CloseSpeed = AutoCloseDelay;
 
-        private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
+        private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
         protected virtual TimeSpan CloseTimeOne => TimeSpan.FromSeconds(0.3f);
         protected virtual TimeSpan CloseTimeTwo => TimeSpan.FromSeconds(0.9f);
@@ -259,7 +259,7 @@ namespace Content.Server.GameObjects.Components.Doors
                 occluder.Enabled = false;
             }
 
-            Timer.Spawn(OpenTimeOne, async () =>
+            Owner.SpawnTimer(OpenTimeOne, async () =>
             {
                 if (Owner.TryGetComponent(out AirtightComponent? airtight))
                 {
@@ -329,7 +329,7 @@ namespace Content.Server.GameObjects.Components.Doors
                 stun.Paralyze(DoorStunTime);
 
                 // If we hit someone, open up after stun (opens right when stun ends)
-                Timer.Spawn(TimeSpan.FromSeconds(DoorStunTime) - OpenTimeOne - OpenTimeTwo, Open);
+                Owner.SpawnTimer(TimeSpan.FromSeconds(DoorStunTime) - OpenTimeOne - OpenTimeTwo, Open);
                 break;
             }
         }
@@ -412,7 +412,7 @@ namespace Content.Server.GameObjects.Components.Doors
                 occluder.Enabled = true;
             }
 
-            Timer.Spawn(CloseTimeOne, async () =>
+            Owner.SpawnTimer(CloseTimeOne, async () =>
             {
                 if (shouldCheckCrush && _canCrush)
                 {
@@ -445,7 +445,7 @@ namespace Content.Server.GameObjects.Components.Doors
                 return;
 
             SetAppearance(DoorVisualState.Deny);
-            Timer.Spawn(DenyTime, () =>
+            Owner.SpawnTimer(DenyTime, () =>
             {
                 SetAppearance(DoorVisualState.Closed);
             }, _cancellationTokenSource.Token);

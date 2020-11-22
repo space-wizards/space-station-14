@@ -5,6 +5,7 @@ using System.Linq;
 using Content.Shared.Physics;
 using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Eye;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
@@ -46,7 +47,11 @@ namespace Content.Shared.GameObjects.Verbs
                        !occluder.Enabled;
             }
 
-            var result = player.InRangeUnobstructed(targetPos, distance, CollisionGroup.Opaque, Ignored);
+            var mask = player.TryGetComponent(out SharedEyeComponent? eye) && eye.DrawFov
+                ? CollisionGroup.Opaque
+                : CollisionGroup.None;
+
+            var result = player.InRangeUnobstructed(targetPos, distance, mask, Ignored);
 
             if (!result)
             {
