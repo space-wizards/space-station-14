@@ -529,7 +529,7 @@ namespace Content.Client.Arcade
 
         public void UpdateLevel(int level)
         {
-            _levelLabel.Text = Loc.GetString("Level") + $" { level + 1}";
+            _levelLabel.Text = Loc.GetString("Level") + $" {level + 1}";
         }
 
         public void UpdateHighscores(List<BlockGameMessages.HighScoreEntry> localHighscores,
