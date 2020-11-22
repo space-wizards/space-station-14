@@ -67,17 +67,17 @@ namespace Content.Shared.Atmos
         {
             var serializer = YamlObjectSerializer.NewReader(mapping);
 
-            serializer.DataField(this, x => ID, "id", string.Empty);
-            serializer.DataField(this, x => Name, "name", string.Empty);
-            serializer.DataField(this, x => OverlayPath, "overlayPath", string.Empty);
-            serializer.DataField(this, x => SpecificHeat, "specificHeat", 0f);
-            serializer.DataField(this, x => HeatCapacityRatio, "heatCapacityRatio", 1.4f);
-            serializer.DataField(this, x => MolarMass, "molarMass", 1f);
-            serializer.DataField(this, x => GasMolesVisible, "gasMolesVisible", 0.25f);
-            serializer.DataField(this, x => GasOverlayTexture, "gasOverlayTexture", string.Empty);
-            serializer.DataField(this, x => GasOverlaySprite, "gasOverlaySprite", string.Empty);
-            serializer.DataField(this, x => GasOverlayState, "gasOverlayState", string.Empty);
-            serializer.DataField(this, x => Color, "color", string.Empty);
+            serializer.DataField(this, x => x.ID, "id", string.Empty);
+            serializer.DataField(this, x => x.Name, "name", string.Empty);
+            serializer.DataField(this, x => x.OverlayPath, "overlayPath", string.Empty);
+            serializer.DataField(this, x => x.SpecificHeat, "specificHeat", 0f);
+            serializer.DataField(this, x => x.HeatCapacityRatio, "heatCapacityRatio", 1.4f);
+            serializer.DataField(this, x => x.MolarMass, "molarMass", 1f);
+            serializer.DataField(this, x => x.GasMolesVisible, "gasMolesVisible", 0.25f);
+            serializer.DataField(this, x => x.GasOverlayTexture, "gasOverlayTexture", string.Empty);
+            serializer.DataField(this, x => x.GasOverlaySprite, "gasOverlaySprite", string.Empty);
+            serializer.DataField(this, x => x.GasOverlayState, "gasOverlayState", string.Empty);
+            serializer.DataField(this, x => x.Color, "color", string.Empty);
         }
     }
 }
