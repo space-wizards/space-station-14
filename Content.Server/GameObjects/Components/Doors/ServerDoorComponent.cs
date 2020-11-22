@@ -80,6 +80,10 @@ namespace Content.Server.GameObjects.Components.Doors
 
         public bool Occludes => _occludes;
 
+        [ViewVariables(VVAccess.ReadWrite)] private bool _bumpOpen;
+
+        public bool BumpOpen => _bumpOpen;
+
         [ViewVariables(VVAccess.ReadWrite)]
         public bool IsWeldedShut
         {
@@ -112,6 +116,7 @@ namespace Content.Server.GameObjects.Components.Doors
             base.ExposeData(serializer);
 
             serializer.DataField(ref _occludes, "occludes", true);
+            serializer.DataField(ref _bumpOpen, "bumpOpen", true);
             serializer.DataField(ref _isWeldedShut, "welded", false);
             serializer.DataField(ref _canCrush, "canCrush", true);
         }
@@ -143,6 +148,11 @@ namespace Content.Server.GameObjects.Components.Doors
         void ICollideBehavior.CollideWith(IEntity entity)
         {
             if (State != DoorState.Closed)
+            {
+                return;
+            }
+
+            if (!_bumpOpen)
             {
                 return;
             }
