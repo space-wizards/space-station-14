@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Mobs.Roles;
+using Content.Server.Objectives;
 using Content.Server.Players;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
@@ -26,6 +27,8 @@ namespace Content.Server.Mobs
     public sealed class Mind
     {
         private readonly ISet<Role> _roles = new HashSet<Role>();
+
+        private readonly List<ObjectivePrototype> _objectives = new List<ObjectivePrototype>();
 
         /// <summary>
         ///     Creates the new mind attached to a specific player session.
@@ -73,6 +76,12 @@ namespace Content.Server.Mobs
         /// </summary>
         [ViewVariables]
         public IEnumerable<Role> AllRoles => _roles;
+
+        /// <summary>
+        ///     An enumerable over all the objectives this mind has.
+        /// </summary>
+        [ViewVariables]
+        public IEnumerable<ObjectivePrototype> AllObjectives => _objectives;
 
         /// <summary>
         ///     The session of the player owning this mind.
@@ -143,6 +152,32 @@ namespace Content.Server.Mobs
 
             return _roles.Any(role => role.GetType() == t);
         }
+
+        /// <summary>
+        /// Adds an objective to this mind.
+        /// </summary>
+        public bool TryAddObjective(ObjectivePrototype objective)
+        {
+            if (!objective.CanBeAssigned(this))
+                return false;
+            _objectives.Add(objective);
+            return true;
+        }
+
+        /// <summary>
+        /// Removes an objective to this mind.
+        /// </summary>
+        /// <returns>Returns true if the removal succeeded.</returns>
+        public bool TryRemoveObjective(int index)
+        {
+            if (_objectives.Count >= index) return false;
+
+            var objective = _objectives[index];
+            _objectives.Remove(objective);
+            return true;
+        }
+
+
 
         /// <summary>
         ///     Transfer this mind's control over to a new entity.
