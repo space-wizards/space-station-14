@@ -36,7 +36,7 @@ namespace Content.Server.GameObjects.Components.Morgue
         [ViewVariables(VVAccess.ReadWrite)]
         private int _burnMilis = 3000;
 
-        private CancellationTokenSource _cancelToken;
+        private CancellationTokenSource? _cremateCancelToken;
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
@@ -86,10 +86,10 @@ namespace Content.Server.GameObjects.Components.Morgue
             Appearance?.SetData(CrematoriumVisuals.Burning, true);
             Cooking = true;
 
-            if (_cancelToken != null)
-                _cancelToken.Cancel();
+            if (_cremateCancelToken != null)
+                _cremateCancelToken.Cancel();
 
-            _cancelToken = new CancellationTokenSource();
+            _cremateCancelToken = new CancellationTokenSource();
             Robust.Shared.Timers.Timer.Spawn(_burnMilis, () =>
             {
                 Appearance?.SetData(CrematoriumVisuals.Burning, false);
@@ -111,7 +111,7 @@ namespace Content.Server.GameObjects.Components.Morgue
                 TryOpenStorage(Owner);
 
                 EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/ding.ogg", Owner);
-            }, _cancelToken.Token);
+            }, _cremateCancelToken.Token);
         }
 
         public SuicideKind Suicide(IEntity victim, IChatManager chat)
