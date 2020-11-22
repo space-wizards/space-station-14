@@ -2,12 +2,13 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Administration;
-using Content.Server.GameObjects.Components.Atmos;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.GameObjects.Components.Damage;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
@@ -204,17 +205,12 @@ namespace Content.Server.GameObjects.Components.Damage
                     return;
             }
 
-            if (entity.HasComponent<MovedByPressureComponent>())
-            {
-                entity.RemoveComponent<MovedByPressureComponent>();
-            }
+            var godmodeSystem = EntitySystem.Get<GodmodeSystem>();
+            var enabled = godmodeSystem.ToggleGodmode(entity);
 
-            if (entity.TryGetComponent(out IDamageableComponent? damageable))
-            {
-                damageable.AddFlag(DamageFlag.Invulnerable);
-            }
-
-            shell.SendText(player, $"Enabled godmode for entity {entity.Name}");
+            shell.SendText(player, enabled
+                ? $"Enabled godmode for entity {entity.Name} with id {entity.Uid}"
+                : $"Disabled godmode for entity {entity.Name} with id {entity.Uid}");
         }
     }
 }

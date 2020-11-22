@@ -3,14 +3,11 @@ using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Body.Surgery
 {
     /// <summary>
-    ///     This data class represents the state of a <see cref="IBodyPart"/> in
-    ///     regards to everything surgery related - whether there's an incision on
-    ///     it, whether the bone is broken, etc.
+    ///     Represents the current surgery state of a <see cref="IBodyPart"/>.
     /// </summary>
     public abstract class SurgeryDataComponent : Component
     {
@@ -29,10 +26,10 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
         protected BodyPartType? ParentType => Parent?.PartType;
 
         /// <summary>
-        ///     Returns the description of this current <see cref="IBodyPart"/> to
-        ///     be shown upon observing the given entity.
+        ///     Returns a description of this entity.
         /// </summary>
-        public abstract string GetDescription(IEntity target);
+        /// <returns>The description shown upon observing this entity.</returns>
+        public abstract string GetDescription();
 
         /// <summary>
         ///     Returns whether a <see cref="IMechanism"/> can be added into the

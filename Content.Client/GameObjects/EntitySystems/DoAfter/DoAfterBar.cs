@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Graphics.Shaders;
@@ -15,7 +15,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
     {
         private IGameTiming _gameTiming = default!;
 
-        private ShaderInstance _shader;
+        private readonly ShaderInstance _shader;
 
         /// <summary>
         ///     Set from 0.0f to 1.0f to reflect bar progress

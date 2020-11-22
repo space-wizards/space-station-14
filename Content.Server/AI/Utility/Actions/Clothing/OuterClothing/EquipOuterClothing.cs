@@ -13,7 +13,7 @@ namespace Content.Server.AI.Utility.Actions.Clothing.OuterClothing
 {
     public sealed class EquipOuterClothing : UtilityAction
     {
-        private IEntity _entity;
+        private readonly IEntity _entity;
 
         public EquipOuterClothing(IEntity owner, IEntity entity, float weight) : base(owner)
         {

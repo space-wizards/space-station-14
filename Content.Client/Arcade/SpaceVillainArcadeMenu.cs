@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Content.Client.GameObjects.Components.Arcade;
+﻿using Content.Client.GameObjects.Components.Arcade;
 using Content.Shared.GameObjects.Components.Arcade;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -13,13 +12,13 @@ namespace Content.Client.Arcade
         protected override Vector2? CustomSize => (400, 200);
         public SpaceVillainArcadeBoundUserInterface Owner { get; set; }
 
-        private Label _enemyNameLabel;
-        private Label _playerInfoLabel;
-        private Label _enemyInfoLabel;
-        private Label _playerActionLabel;
-        private Label _enemyActionLabel;
+        private readonly Label _enemyNameLabel;
+        private readonly Label _playerInfoLabel;
+        private readonly Label _enemyInfoLabel;
+        private readonly Label _playerActionLabel;
+        private readonly Label _enemyActionLabel;
 
-        private Button[] _gameButtons = new Button[3]; //used to disable/enable all game buttons
+        private readonly Button[] _gameButtons = new Button[3]; //used to disable/enable all game buttons
         public SpaceVillainArcadeMenu(SpaceVillainArcadeBoundUserInterface owner)
         {
             Title = Loc.GetString("Space Villain");
@@ -97,8 +96,8 @@ namespace Content.Client.Arcade
 
         private class ActionButton : Button
         {
-            private SpaceVillainArcadeBoundUserInterface _owner;
-            private SharedSpaceVillainArcadeComponent.PlayerAction _playerAction;
+            private readonly SpaceVillainArcadeBoundUserInterface _owner;
+            private readonly SharedSpaceVillainArcadeComponent.PlayerAction _playerAction;
 
             public ActionButton(SpaceVillainArcadeBoundUserInterface owner,SharedSpaceVillainArcadeComponent.PlayerAction playerAction)
             {

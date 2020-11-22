@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.Stylesheets;
-using Content.Client.Utility;
 using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Client.GameObjects;
@@ -19,11 +18,9 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using Serilog;
 
 namespace Content.Client.GameObjects.Components.Mobs
 {
@@ -47,7 +44,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         private bool _tooltipReady;
 
         [ViewVariables]
-        private Dictionary<AlertKey, AlertControl> _alertControls
+        private readonly Dictionary<AlertKey, AlertControl> _alertControls
             = new Dictionary<AlertKey, AlertControl>();
 
         /// <summary>

@@ -1,4 +1,4 @@
-- type: material
+﻿- type: material
   id: steel
   name: steel
   color: gray
@@ -17,6 +17,16 @@
   electricResistivity: 1.0e+13
   thermalConductivity: 0.9
   specificHeat: 840
+
+- type: material
+  id: rglass
+  name: Reinforced glass
+  color: '#49c9a7'
+  icon: Objects/Materials/sheets.rsi/rglass.png
+  density: 5000
+  electricResistivity: 1.0e+13
+  thermalConductivity: 0.9
+  specificHeat: 5000
 
 - type: material
   id: gold
