@@ -6,7 +6,7 @@
   description: "It opens, it closes, it might crush you, and there might be only space behind it.\nHas to be manually activated."
   components:
   - type: Airlock
-    autoOpen: false
+    bumpOpen: false
   - type: Sprite
     sprite: Constructible/Structures/Doors/airlock_external.rsi
   - type: Appearance

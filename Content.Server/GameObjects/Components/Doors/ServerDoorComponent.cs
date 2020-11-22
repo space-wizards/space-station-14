@@ -80,9 +80,9 @@ namespace Content.Server.GameObjects.Components.Doors
 
         public bool Occludes => _occludes;
 
-        [ViewVariables(VVAccess.ReadWrite)] private bool _autoOpen;
+        [ViewVariables(VVAccess.ReadWrite)] private bool _bumpOpen;
 
-        public bool AutoOpen => _autoOpen;
+        public bool BumpOpen => _bumpOpen;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool IsWeldedShut
@@ -116,7 +116,7 @@ namespace Content.Server.GameObjects.Components.Doors
             base.ExposeData(serializer);
 
             serializer.DataField(ref _occludes, "occludes", true);
-            serializer.DataField(ref _autoOpen, "autoOpen", true);
+            serializer.DataField(ref _bumpOpen, "bumpOpen", true);
             serializer.DataField(ref _isWeldedShut, "welded", false);
             serializer.DataField(ref _canCrush, "canCrush", true);
         }
@@ -152,7 +152,7 @@ namespace Content.Server.GameObjects.Components.Doors
                 return;
             }
 
-            if (!_autoOpen)
+            if (!_bumpOpen)
             {
                 return;
             }
