@@ -67,10 +67,10 @@ namespace Content.Shared.Kitchen
         [Serializable, NetSerializable]
         public class ReagentGrinderWorkStartedMessage : BoundUserInterfaceMessage
         {
-            public bool IsJuiceIntent;
-            public ReagentGrinderWorkStartedMessage(bool wasJuiceIntent)
+            public GrinderProgram GrinderProgram;
+            public ReagentGrinderWorkStartedMessage(GrinderProgram grinderProgram)
             {
-                IsJuiceIntent = wasJuiceIntent;
+                GrinderProgram = grinderProgram;
             }
         }
 
@@ -83,16 +83,22 @@ namespace Content.Shared.Kitchen
         }
 
         [Serializable, NetSerializable]
-        public enum ReagentGrinderVisualState
+        public enum ReagentGrinderVisualState : byte
         {
-            NoBeaker,
             BeakerAttached
         }
 
         [NetSerializable, Serializable]
-        public enum ReagentGrinderUiKey
+        public enum ReagentGrinderUiKey : byte
         {
             Key
+        }
+
+        [Serializable, NetSerializable]
+        public enum GrinderProgram : byte
+        {
+            Grind,
+            Juice
         }
     }
 

@@ -9,10 +9,10 @@ using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Kitchen;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -26,7 +26,6 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -133,13 +132,13 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 case ReagentGrinderGrindStartMessage msg:
                     if (!Powered) break;
                     ClickSound();
-                    DoWork(message.Session.AttachedEntity!, false);
+                    DoWork(message.Session.AttachedEntity!, GrinderProgram.Grind);
                     break;
 
                 case ReagentGrinderJuiceStartMessage msg:
                     if (!Powered) break;
                     ClickSound();
-                    DoWork(message.Session.AttachedEntity!, true);
+                    DoWork(message.Session.AttachedEntity!, GrinderProgram.Juice);
                     break;
 
                 case ReagentGrinderEjectChamberAllMessage msg:
@@ -164,7 +163,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
                 case ReagentGrinderEjectBeakerMessage msg:
                     ClickSound();
-                    EjectBeaker(message.Session.AttachedEntity!);
+                    EjectBeaker(message.Session.AttachedEntity);
                     //EjectBeaker will dirty the UI for us, we don't have to do it explicitly here.
                     break;
             }
@@ -180,11 +179,11 @@ namespace Content.Server.GameObjects.Components.Kitchen
             _audioSystem.PlayFromEntity("/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
         }
 
-        private void SetAppearance(ReagentGrinderVisualState state)
+        private void SetAppearance()
         {
             if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
-                appearance.SetData(PowerDeviceVisuals.VisualState, state);
+                appearance.SetData(ReagentGrinderVisualState.BeakerAttached, HasBeaker);
             }
         }
 
@@ -231,41 +230,35 @@ namespace Content.Server.GameObjects.Components.Kitchen
             if (_busy)
                 return;
 
-            if (Owner.EntityManager.EntityExists(entityID))
+            if (Owner.EntityManager.TryGetEntity(entityID, out var entity))
             {
-                var entity = Owner.EntityManager.GetEntity(entityID);
                 _chamber.Remove(entity);
 
                 //Give the ejected entity a tiny bit of offset so each one is apparent in case of a big stack,
                 //but (hopefully) not enough to clip it through a solid (wall).
-                const float ejectOffset = 0.4f;
-                entity.Transform.LocalPosition += (_random.NextFloat() * ejectOffset, _random.NextFloat() * ejectOffset);
+                entity.RandomOffset(0.4f);
             }
             _uiDirty = true;
         }
 
         /// <summary>
-        /// If this component contains an entity with a <see cref="SolutionContainerComponent"/>, eject it.
-        /// Tries to eject into user's hands first, then ejects onto dispenser if both hands are full.
+        /// Tries to eject whatever is in the beaker slot. Puts the item in the user's hands or failing that on top
+        /// of the grinder.
         /// </summary>
-        private void EjectBeaker(IEntity user)
+        private void EjectBeaker(IEntity? user)
         {
             if (!HasBeaker || _busy)
                 return;
 
-            //Eject the beaker into the hands of the user.
             _beakerContainer.Remove(_beakerContainer.ContainedEntity);
 
-            //UpdateUserInterface();
-
-            if (!user.TryGetComponent<HandsComponent>(out var hands) || !_heldBeaker!.Owner.TryGetComponent<ItemComponent>(out var item))
+            if (user == null || !user.TryGetComponent<HandsComponent>(out var hands) || !_heldBeaker!.Owner.TryGetComponent<ItemComponent>(out var item))
                 return;
-            if (hands.CanPutInHand(item))
-                hands.PutInHand(item);
+            hands.PutInHandOrDrop(item);
 
             _heldBeaker = null;
             _uiDirty = true;
-            SetAppearance(ReagentGrinderVisualState.NoBeaker);
+            SetAppearance();
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
@@ -286,24 +279,24 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 return true;
             }
 
-            var heldEnt = eventArgs.Using;
+            IEntity heldEnt = eventArgs.Using;
 
             //First, check if user is trying to insert a beaker.
             //No promise it will be a beaker right now, but whatever.
             //Maybe this should whitelist "beaker" in the prototype id of heldEnt?
-            if(heldEnt!.TryGetComponent(out SolutionContainerComponent? beaker) && beaker.Capabilities.HasFlag(SolutionContainerCaps.FitsInDispenser))
+            if(heldEnt.TryGetComponent(out SolutionContainerComponent? beaker) && beaker.Capabilities.HasFlag(SolutionContainerCaps.FitsInDispenser))
             {
                 _beakerContainer.Insert(heldEnt);
                 _heldBeaker = beaker;
                 _uiDirty = true;
                 //We are done, return. Insert the beaker and exit!
-                SetAppearance(ReagentGrinderVisualState.BeakerAttached);
+                SetAppearance();
                 ClickSound();
                 return true;
             }
 
             //Next, see if the user is trying to insert something they want to be ground/juiced.
-            if(!heldEnt!.TryGetComponent(out GrindableComponent? grind) && !heldEnt!.TryGetComponent(out JuiceableComponent? juice))
+            if(!heldEnt.TryGetComponent(out GrindableComponent? grind) && !heldEnt.TryGetComponent(out JuiceableComponent? juice))
             {
                 //Entity did NOT pass the whitelist for grind/juice.
                 //Wouldn't want the clown grinding up the Captain's ID card now would you?
@@ -317,17 +310,19 @@ namespace Content.Server.GameObjects.Components.Kitchen
             {
                 return false;
             }
-            _chamber.Insert(heldEnt);
-            _uiDirty = true;
 
+            if (!_chamber.Insert(heldEnt))
+                return false;
+
+            _uiDirty = true;
             return true;
         }
 
         /// <summary>
-        /// The wzhzhzh of the grinder.
+        /// The wzhzhzh of the grinder. Processes the contents of the grinder and puts the output in the beaker.
         /// </summary>
         /// <param name="isJuiceIntent">true for wanting to juice, false for wanting to grind.</param>
-        private async void DoWork(IEntity user, bool isJuiceIntent)
+        private async void DoWork(IEntity user, GrinderProgram program)
         {
             //Have power, are  we busy, chamber has anything to grind, a beaker for the grounds to go?
             if(!Powered || _busy || ChamberEmpty || !HasBeaker)
@@ -340,53 +335,49 @@ namespace Content.Server.GameObjects.Components.Kitchen
             var chamberContentsArray = _chamber.ContainedEntities.ToArray();
             var chamberCount = chamberContentsArray.Length;
 
-            //This block is for grinding behaviour only.
-            if (!isJuiceIntent)
+            UserInterface?.SendMessage(new ReagentGrinderWorkStartedMessage(program));
+            switch (program)
             {
-                UserInterface?.SendMessage(new ReagentGrinderWorkStartedMessage(isJuiceIntent));
-                _audioSystem.PlayFromEntity("/Audio/Machines/blender.ogg", Owner, AudioParams.Default);
-                //Get each item inside the chamber and get the reagents it contains. Transfer those reagents to the beaker, given we have one in.
-                Owner.SpawnTimer(_workTime, (Action) (() =>
-                {
-                    for (int i = chamberCount - 1; i >= 0; i--)
+                case GrinderProgram.Grind:
+                    _audioSystem.PlayFromEntity("/Audio/Machines/blender.ogg", Owner, AudioParams.Default);
+                    //Get each item inside the chamber and get the reagents it contains. Transfer those reagents to the beaker, given we have one in.
+                    Owner.SpawnTimer(_workTime, (Action) (() =>
                     {
-                        var item = chamberContentsArray[i];
-                        if (item.TryGetComponent<SolutionContainerComponent>(out var solution))
+                        for (int i = chamberCount - 1; i >= 0; i--)
                         {
+                            var item = chamberContentsArray[i];
+                            if (!item.HasComponent<GrindableComponent>()) continue;
+                            if (!item.TryGetComponent<SolutionContainerComponent>(out var solution)) continue;
                             if (_heldBeaker!.CurrentVolume + solution.CurrentVolume > _heldBeaker!.MaxVolume) continue;
                             _heldBeaker!.TryAddSolution(solution.Solution);
-                            solution!.RemoveAllSolution();
+                            solution.RemoveAllSolution();
                             _chamber.ContainedEntities[i].Delete();
                         }
-                    }
 
-                    _busy = false;
-                    _uiDirty = true;
-                    UserInterface?.SendMessage(new ReagentGrinderWorkCompleteMessage());
-                    return;
-                }));
-            }
-            else
-            {
-                UserInterface?.SendMessage(new ReagentGrinderWorkStartedMessage(isJuiceIntent));
-                _audioSystem.PlayFromEntity("/Audio/Machines/juicer.ogg", Owner, AudioParams.Default);
-                Owner.SpawnTimer(_workTime, (Action) (() =>
-                {
-                    //OK, so if we made it this far we want to juice instead.
-                    for (int i = chamberCount - 1; i >= 0; i--)
+                        _busy = false;
+                        _uiDirty = true;
+                        UserInterface?.SendMessage(new ReagentGrinderWorkCompleteMessage());
+                    }));
+                    break;
+
+                case GrinderProgram.Juice:
+                    _audioSystem.PlayFromEntity("/Audio/Machines/juicer.ogg", Owner, AudioParams.Default);
+                    Owner.SpawnTimer(_workTime, (Action) (() =>
                     {
-                        var item = chamberContentsArray[i];
-                        if (item.TryGetComponent<JuiceableComponent>(out var juiceMe))
+                        //OK, so if we made it this far we want to juice instead.
+                        for (int i = chamberCount - 1; i >= 0; i--)
                         {
+                            var item = chamberContentsArray[i];
+                            if (!item.TryGetComponent<JuiceableComponent>(out var juiceMe)) continue;
                             if (_heldBeaker!.CurrentVolume + juiceMe.JuiceResultSolution.TotalVolume > _heldBeaker!.MaxVolume) continue;
                             _heldBeaker!.TryAddSolution(juiceMe.JuiceResultSolution);
                             _chamber.ContainedEntities[i].Delete();
                         }
-                    }
-                    UserInterface?.SendMessage(new ReagentGrinderWorkCompleteMessage());
-                    _busy = false;
-                    _uiDirty = true;
-                }));
+                        UserInterface?.SendMessage(new ReagentGrinderWorkCompleteMessage());
+                        _busy = false;
+                        _uiDirty = true;
+                    }));
+                    break;
             }
         }
     }

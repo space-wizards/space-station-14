@@ -81,9 +81,9 @@ namespace Content.Client.GameObjects.Components.Kitchen
             {
                 case SharedReagentGrinderComponent.ReagentGrinderWorkStartedMessage workStarted:
                     _menu.GrindButton.Disabled = true;
-                    _menu.GrindButton.Modulate = workStarted.IsJuiceIntent ? Color.White : Color.Green;
+                    _menu.GrindButton.Modulate = workStarted.GrinderProgram == SharedReagentGrinderComponent.GrinderProgram.Grind ? Color.Green : Color.White;
                     _menu.JuiceButton.Disabled = true;
-                    _menu.JuiceButton.Modulate = !workStarted.IsJuiceIntent ? Color.White : Color.Green;
+                    _menu.JuiceButton.Modulate = workStarted.GrinderProgram == SharedReagentGrinderComponent.GrinderProgram.Juice ? Color.Green : Color.White;
                     _menu.BeakerContentBox.EjectButton.Disabled = true;
                     _menu.ChamberContentBox.EjectButton.Disabled = true;
                     break;
