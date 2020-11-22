@@ -23,10 +23,12 @@ namespace Content.Server.GameObjects.Components.Actor
                     var jobTitle = "No Profession";
                     if (Owner.TryGetComponent(out MindComponent? mindComponent))
                     {
-                        //getting conditions
-                        if (mindComponent.Mind?.AllObjectives != null)
+                        var mind = mindComponent.Mind;
+
+                        if (mind != null)
                         {
-                            foreach (var objective in mindComponent.Mind?.AllObjectives!)
+                            // getting conditions
+                            foreach (var objective in mind.AllObjectives)
                             {
                                 if (!conditions.ContainsKey(objective.Issuer))
                                     conditions[objective.Issuer] = new List<ConditionInfo>();
@@ -36,11 +38,9 @@ namespace Content.Server.GameObjects.Components.Actor
                                         condition.GetDescription(), condition.GetIcon(), condition.GetProgress(mindComponent.Mind)));
                                 }
                             }
-                        }
-                        //getting jobtitle
-                        if (mindComponent.Mind != null)
-                        {
-                            foreach (var role in mindComponent.Mind.AllRoles)
+
+                            // getting jobtitle
+                            foreach (var role in mind.AllRoles)
                             {
                                 if (role.GetType() == typeof(Job))
                                 {
