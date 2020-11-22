@@ -131,13 +131,15 @@ namespace Content.Server.GameObjects.Components.Kitchen
             switch(message.Message)
             {
                 case ReagentGrinderGrindStartMessage msg:
+                    if (!Powered) break;
                     ClickSound();
-                    DoWork(user:message.Session.AttachedEntity!,isJuiceIntent:false);
+                    DoWork(message.Session.AttachedEntity!, false);
                     break;
 
                 case ReagentGrinderJuiceStartMessage msg:
+                    if (!Powered) break;
                     ClickSound();
-                    DoWork(user: message.Session.AttachedEntity!,isJuiceIntent:true);
+                    DoWork(message.Session.AttachedEntity!, true);
                     break;
 
                 case ReagentGrinderEjectChamberAllMessage msg:
