@@ -1,5 +1,9 @@
 ﻿#nullable enable
 using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.Interfaces.Chat;
+using Content.Server.Interfaces.GameObjects;
+using Content.Server.Utility;
+using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Morgue;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
@@ -13,6 +17,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Timers;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
+using System.Threading;
 
 namespace Content.Server.GameObjects.Components.Morgue
 {
@@ -21,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Morgue
     [ComponentReference(typeof(EntityStorageComponent))]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
-    public class CrematoriumEntityStorageComponent : MorgueEntityStorageComponent, IExamine
+    public class CrematoriumEntityStorageComponent : MorgueEntityStorageComponent, IExamine, ISuicideAct
     {
         public override string Name => "CrematoriumEntityStorage";
 
@@ -30,6 +35,8 @@ namespace Content.Server.GameObjects.Components.Morgue
 
         [ViewVariables(VVAccess.ReadWrite)]
         private int _burnMilis = 3000;
+
+        private CancellationTokenSource _cancelToken;
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
@@ -63,15 +70,27 @@ namespace Content.Server.GameObjects.Components.Morgue
             return base.CanOpen(user, silent);
         }
 
-        public void Cremate()
+        public void TryCremate()
         {
             if (Cooking) return;
             if (Open) return;
 
+            Cremate();
+        }
+
+        public void Cremate()
+        {
+            if (Open)
+                CloseStorage();
+
             Appearance?.SetData(CrematoriumVisuals.Burning, true);
             Cooking = true;
 
-            Timer.Spawn(_burnMilis, () =>
+            if (_cancelToken != null)
+                _cancelToken.Cancel();
+
+            _cancelToken = new CancellationTokenSource();
+            Robust.Shared.Timers.Timer.Spawn(_burnMilis, () =>
             {
                 Appearance?.SetData(CrematoriumVisuals.Burning, false);
                 Cooking = false;
@@ -92,7 +111,34 @@ namespace Content.Server.GameObjects.Components.Morgue
                 TryOpenStorage(Owner);
 
                 EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/ding.ogg", Owner);
-            });
+            }, _cancelToken.Token);
+        }
+
+        public SuicideKind Suicide(IEntity victim, IChatManager chat)
+        {
+
+            if (victim.TryGetComponent<IBody>(out var body))
+            {
+                foreach (var part in body.Parts.Values)
+                {
+                    if (!body.TryDropPart(part, out var dropped))
+                    {
+                        continue;
+                    }
+
+                    foreach (var drop in dropped)
+                    {
+                        Contents.Insert(drop.Owner);
+                    }
+                }
+            }
+
+            Cremate();
+
+            victim.PopupMessageOtherClients(Loc.GetString("{0:theName} is cremating {0:themself}!", victim));
+            victim.PopupMessage(Loc.GetString("You cremate yourself!"));
+
+            return SuicideKind.Heat;
         }
 
         [Verb]
@@ -112,7 +158,7 @@ namespace Content.Server.GameObjects.Components.Morgue
             /// <inheritdoc />
             protected override void Activate(IEntity user, CrematoriumEntityStorageComponent component)
             {
-                component.Cremate();
+                component.TryCremate();
             }
         }
     }

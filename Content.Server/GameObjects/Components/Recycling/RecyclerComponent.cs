@@ -3,9 +3,14 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameObjects.Components.Conveyor;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.Interfaces.Chat;
+using Content.Server.Interfaces.GameObjects;
+using Content.Server.Utility;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Recycling;
+using Content.Shared.Interfaces;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -13,6 +18,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Map;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -21,7 +27,7 @@ namespace Content.Server.GameObjects.Components.Recycling
 {
     // TODO: Add sound and safe beep
     [RegisterComponent]
-    public class RecyclerComponent : Component, ICollideBehavior
+    public class RecyclerComponent : Component, ICollideBehavior, ISuicideAct
     {
         public override string Name => "Recycler";
 
@@ -61,7 +67,7 @@ namespace Content.Server.GameObjects.Components.Recycling
 
         private bool CanGib(IEntity entity)
         {
-            return entity.HasComponent<IBody>() && !_safe && Powered;
+            return entity.HasComponent<IDamageableComponent>() && !_safe && Powered;
         }
 
         private bool CanRecycle(IEntity entity, [MaybeNullWhen(false)] out ConstructionPrototype prototype)
@@ -81,21 +87,44 @@ namespace Content.Server.GameObjects.Components.Recycling
             }
 
             // TODO: Prevent collision with recycled items
-            if (CanGib(entity))
+            if (entity.HasComponent<IBody>())
             {
-                entity.Delete(); // TODO: Gib
-                Bloodstain();
-                return;
+                if (CanGib(entity))
+                {
+                    PerformGib(entity);
+                    return;
+                }
             }
-
-            if (!CanRecycle(entity, out var prototype))
+            else
             {
-                return;
+                if (CanRecycle(entity, out var prototype))
+                {
+                    entity.Delete();
+                }
             }
 
             // TODO CONSTRUCTION fix this
+        }
 
-            entity.Delete();
+        private void PerformGib(IEntity entity)
+        {
+            if (entity.TryGetComponent<IBody>(out var body))
+            {
+                foreach (var part in body.Parts.Values)
+                {
+                    if (!body.TryDropPart(part, out var dropped))
+                    {
+                        continue;
+                    }
+
+                    foreach (var drop in dropped)
+                    {
+                        drop.Owner.Delete();
+                    }
+                }
+            }
+            
+            Bloodstain();
         }
 
         private bool CanRun()
@@ -184,6 +213,32 @@ namespace Content.Server.GameObjects.Components.Recycling
         void ICollideBehavior.CollideWith(IEntity collidedWith)
         {
             Recycle(collidedWith);
+        }
+
+        public SuicideKind Suicide(IEntity victim, IChatManager chat)
+        {
+            victim.PopupMessageOtherClients(Loc.GetString("{0:theName} tries to recycle {0:themself}!", victim));
+            victim.PopupMessage(Loc.GetString("You recycle yourself!"));
+
+            if (victim.TryGetComponent<IBody>(out var body))
+            {
+                foreach (var part in body.Parts.Values)
+                {
+                    if (!body.TryDropPart(part, out var dropped))
+                    {
+                        continue;
+                    }
+
+                    foreach (var drop in dropped)
+                    {
+                        drop.Owner.Delete();
+                    }
+                }
+            }
+
+            Bloodstain();
+
+            return SuicideKind.Bloodloss;
         }
     }
 }
