@@ -1,65 +1,23 @@
 {
-    "version": 1,
-    "size": {
-        "x": 32,
-        "y": 32
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/f8f4aeda930fcd0805ca4cc76d9bc9412a5b3428",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon",
+      "directions": 1
     },
-    "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/f8f4aeda930fcd0805ca4cc76d9bc9412a5b3428/icons/obj/radio.dmi",
-    "states": [
-        {
-            "name": "equipped-EARS",
-            "directions": 4,
-            "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
-            ]
-        },
-        {
-            "name": "cmo_cypherkey",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "med_cypherkey",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "icon",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "icon_alt",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        }
-    ]
+    {
+      "name": "icon_alt",
+      "directions": 1
+    },
+    {
+      "name": "equipped-EARS",
+      "directions": 4
+    }
+  ]
 }

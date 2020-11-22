@@ -16,7 +16,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -37,8 +36,8 @@ namespace Content.Server.GameObjects.Components.Singularity
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
-        [ComponentDependency] private AppearanceComponent? _appearance = default;
-        [ComponentDependency] private AccessReader? _accessReader = default;
+        [ComponentDependency] private readonly AppearanceComponent? _appearance = default;
+        [ComponentDependency] private readonly AccessReader? _accessReader = default;
 
         public override string Name => "Emitter";
 

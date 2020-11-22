@@ -213,8 +213,9 @@
             "ReagentGrinder",
             "Grindable",
             "Juiceable",
+            "WelderRefinable",
             "ConveyorAssembly",
-            "TwoWayLever"
+            "TwoWayLever",
         };
     }
 }

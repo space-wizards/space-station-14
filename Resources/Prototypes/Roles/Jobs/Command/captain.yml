@@ -11,6 +11,7 @@
   # All of em.
   # Could probably do with some kind of wildcard or whatever to automate this.
   # HELL FUCKING YEAH WE COULD
+  # Guys please don't fight
   - Captain
   - HeadOfPersonnel
   - Command
@@ -38,12 +39,12 @@
 - type: startingGear
   id: CaptainGear
   equipment:
-    innerclothing: UniformCaptain
-    backpack: BackpackCaptainFilled
-    shoes: ShoesBlack
-    head: HatCaptain
-    eyes: SunGlasses
-    gloves: GlovesCaptain
-    outerclothing: OuterclothingCaparmor
+    innerclothing: ClothingUniformJumpsuitCaptain
+    backpack: ClothingBackpackCaptainFilled
+    shoes: ClothingShoesColorBlack
+    head: ClothingHeadHatCaptain
+    eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesCaptain
+    outerclothing: ClothingOuterHardsuitCap
     idcard: CaptainPDA
-    ears: HeadsetCommand
+    ears: ClothingHeadsetAltCommand

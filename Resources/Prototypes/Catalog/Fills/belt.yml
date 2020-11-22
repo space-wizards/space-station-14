@@ -1,0 +1,53 @@
+- type: entity
+  id: ClothingBeltUtilityFilled
+  parent: ClothingBeltUtility
+  description: "Holds tools."
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - name: Crowbar
+      - name: Wrench
+      - name: Screwdriver
+      - name: Wirecutter
+      - name: Welder
+      - name: Multitool
+
+- type: entity
+  id: ClothingBeltChiefEngineerFilled
+  parent: ClothingBeltChiefEngineer
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - name: PowerDrill
+      - name: JawsOfLife
+      - name: WelderExperimental
+      - name: Multitool
+      - name: ApcExtensionCableStack
+
+- type: entity
+  id: ClothingBeltSecurityFilled
+  parent: ClothingBeltSecurity
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - name: GrenadeFlashBang
+      - name: GrenadeFlashBang
+      - name: Stunbaton
+      - name: Handcuffs
+      - name: Handcuffs
+
+- type: entity
+  id: ClothingBeltJanitorFilled
+  parent: ClothingBeltJanitor
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - name: Soap #Make a soap group and pick between when i'm not lazy
+      - name: SprayBottleSpaceCleaner
+      #- name: GrenadeChem
+      #- name: GrenadeChem
+      - name: FlashlightLantern

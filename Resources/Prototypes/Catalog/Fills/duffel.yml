@@ -1,0 +1,16 @@
+- type: entity
+  parent: ClothingBackpackDuffelMedical
+  id: ClothingBackpackDuffelSurgeryFilled
+  name: surgical duffel bag
+  description: "A large duffel bag for holding extra medical supplies - this one seems to be designed for holding surgical tools."
+  components:
+  - type: StorageFill
+    contents:
+      - name: Hemostat
+      - name: BoneSaw
+      - name: Drill
+      - name: Cautery
+      - name: Retractor
+      - name: Scalpel
+  - type: Storage
+    capacity: 30

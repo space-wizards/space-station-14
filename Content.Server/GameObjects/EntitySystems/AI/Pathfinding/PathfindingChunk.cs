@@ -32,7 +32,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         // Nodes per chunk row
         public static int ChunkSize => 8;
         public PathfindingNode[,] Nodes => _nodes;
-        private PathfindingNode[,] _nodes = new PathfindingNode[ChunkSize,ChunkSize];
+        private readonly PathfindingNode[,] _nodes = new PathfindingNode[ChunkSize,ChunkSize];
 
         public PathfindingChunk(GridId gridId, Vector2i indices)
         {

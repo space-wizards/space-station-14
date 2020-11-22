@@ -1,0 +1,32 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckHeadphones
+  name: headphones
+  description: Quality headphones from Drunk Masters, with good sound insulation.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/headphones.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Misc/headphones.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckStethoscope
+  name: stethoscope
+  description: An outdated medical apparatus for listening to the sounds of the human body. It also makes you look like you know what you're doing.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/stethoscope.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Misc/stethoscope.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckBling
+  name: bling
+  description: Damn, it feels good to be a gangster.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/bling.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Misc/bling.rsi

@@ -1,276 +1,109 @@
 - type: entity
-  parent: OuterclothingBase
-  id: OuterclothingBomber
+  parent: ClothingOuterBase
+  id: ClothingOuterCoatBomber
   name: bomber
   description: A thick, well-worn WW2 leather bomber jacket.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/bomber.rsi
-
+    sprite: Clothing/OuterClothing/Coats/bomber.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/bomber.rsi
+    sprite: Clothing/OuterClothing/Coats/bomber.rsi
 
 - type: entity
-  parent: OuterclothingBase
-  id: OuterclothingBomberopen
-  name: bomber (open)
-  description: A thick, well-worn WW2 leather bomber jacket.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/bomber_open.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/bomber_open.rsi
-
-- type: entity
-  parent: OuterclothingBase
-  id: OuterclothingCargojacket
-  name: cargo jacket
-  description: A cargo jacket.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/cargo_jacket.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/cargo_jacket.rsi
-
-- type: entity
-  parent: OuterclothingBase
-  id: OuterclothingChurchcoat
-  name: church coat
-  description: A piety, blessed church coat.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/church_coat.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/church_coat.rsi
-
-- type: entity
-  parent: OuterclothingBase
-  id: OuterclothingDetective
+  parent: ClothingOuterBase
+  id: ClothingOuterCoatDetective
   name: detective
   description: A rugged canvas trenchcoat, designed and created by TX Fabrication Corp. The coat is externally impact resistant - perfect for your next act of autodefenestration!
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/detective.rsi
-
+    sprite: Clothing/OuterClothing/Coats/detective.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/detective.rsi
+    sprite: Clothing/OuterClothing/Coats/detective.rsi
 
 - type: entity
-  parent: OuterclothingBase
-  id: OuterclothingGentlecoat
+  parent: ClothingOuterBase
+  id: ClothingOuterCoatGentle
   name: gentle coat
   description: A gentle coat for a gentle man, or woman.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/gentlecoat.rsi
-
+    sprite: Clothing/OuterClothing/Coats/gentlecoat.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/gentlecoat.rsi
+    sprite: Clothing/OuterClothing/Coats/gentlecoat.rsi
 
 - type: entity
-  parent: OuterclothingBase
-  id: OuterclothingGreyhoodie
-  name: grey hoodie
-  description: A grey hoodie.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/grey_hoodie.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/grey_hoodie.rsi
-
-- type: entity
-  parent: OuterclothingBase
-  id: OuterclothingGreyhoodieopen
-  name: grey hoodie (open)
-  description: A grey hoodie.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/grey_hoodie_open.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/grey_hoodie_open.rsi
-
-- type: entity
-  parent: OuterclothingBase
-  id: OuterclothingInspcoat
-  name: inspector coat
-  description: A strict inspector coat for being intimidating during inspections.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/insp_coat.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/insp_coat.rsi
-
-- type: entity
-  parent: OuterclothingBase
-  id: OuterclothingJensencoat
-  name: jensen coat
-  description: A jensen coat.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/jensencoat.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/jensencoat.rsi
-
-- type: entity
-  parent: OuterclothingBase
-  id: OuterclothingLabcoat
-  name: lab coat
-  description: A suit that protects against minor chemical spills.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/labcoat.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/labcoat.rsi
-
-- type: entity
-  parent: OuterclothingBase
-  id: OuterclothingLabcoatopen
-  name: lab coat (open)
-  description: A suit that protects against minor chemical spills.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/labcoat_open.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/labcoat_open.rsi
-
-- type: entity
-  parent: OuterclothingBase
-  id: OuterclothingLabcoatchem
-  name: lab coat (chem)
-  description: A suit that protects against minor chemical spills. Has an orange stripe on the shoulder.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/labcoat_chem.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/labcoat_chem.rsi
-
-- type: entity
-  parent: OuterclothingBase
-  id: OuterclothingLabcoatchemopen
-  name: lab coat (chem open)
-  description: A suit that protects against minor chemical spills. Has an orange stripe on the shoulder.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/labcoat_chem_open.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/labcoat_chem_open.rsi
-
-- type: entity
-  parent: OuterclothingBase
-  id: OuterclothingLabcoatcmo
-  name: lab coat (CMO)
-  description: Bluer than the standard model.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/labcoat_cmo.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/labcoat_cmo.rsi
-
-- type: entity
-  parent: OuterclothingBase
-  id: OuterclothingLabcoatcmoopen
-  name: lab coat (CMO open)
-  description: Bluer than the standard model.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/labcoat_cmo_open.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/labcoat_cmo_open.rsi
-
-- type: entity
-  parent: OuterclothingBase
-  id: OuterclothingLabcoatmedspec
-  name: lab coat (medical)
-  description: A snow-white, sterilised coat that protects against minor chemical spills.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/labcoat_medspec.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/labcoat_medspec.rsi
-
-- type: entity
-  parent: OuterclothingBase
-  id: OuterclothingLabcoatmedspecopen
-  name: lab coat (medical open)
-  description: A snow-white, sterilised coat that protects against minor chemical spills.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/labcoat_medspec_open.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/labcoat_medspec_open.rsi
-
-- type: entity
-  parent: OuterclothingBase
-  id: OuterclothingLeatherjacket
-  name: leather jacket
-  description: A badass leather jacket.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/leather_jacket.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/leather_jacket.rsi
-
-- type: entity
-  parent: OuterclothingBase
-  id: OuterclothingPirate
-  name: pirate
-  description: Yarr.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/pirate.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/pirate.rsi
-
-- type: entity
-  parent: OuterclothingBase
-  id: OuterclothingQmcoat
-  name: QM coat
-  description: A robust and comfy coat for quartermasters.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/qm_coat.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/qm_coat.rsi
-
-- type: entity
-  parent: OuterclothingBase
-  id: OuterclothingRedwizard
-  name: red wizard
-  description: Strange-looking, red, hat-wear that most certainly belongs to a real magic user.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/redwizard.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/redwizard.rsi
-
-- type: entity
-  parent: OuterclothingBase
-  id: OuterclothingHoSTrenchcoat
+  parent: ClothingOuterBase
+  id: ClothingOuterCoatHoSTrench
   name: head of security trenchcoat
   description: This trenchcoat was specifically designed for asserting superior authority.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/hos_trenchcoat.rsi
-    state: hos_trenchcoat
-
+    sprite: Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/hos_trenchcoat.rsi
+    sprite: Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterCoatInspector
+  name: inspector coat
+  description: A strict inspector coat for being intimidating during inspections.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/insp_coat.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/insp_coat.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterCoatJensen
+  name: jensen coat
+  description: A jensen coat.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/jensencoat.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/jensencoat.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterCoatLab
+  name: lab coat
+  description: A suit that protects against minor chemical spills.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/labcoat.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/labcoat.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterCoatLabChem
+  name: lab coat (chem)
+  description: A suit that protects against minor chemical spills. Has an orange stripe on the shoulder.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/labcoat_chem.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/labcoat_chem.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterCoatLabCmo
+  name: lab coat (CMO)
+  description: Bluer than the standard model.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/labcoat_cmo.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/labcoat_cmo.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterCoatPirate
+  name: pirate
+  description: Yarr.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/pirate.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/pirate.rsi
