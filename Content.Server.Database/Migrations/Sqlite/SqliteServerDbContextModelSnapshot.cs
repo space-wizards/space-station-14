@@ -16,6 +16,101 @@ namespace Content.Server.Database.Migrations.Sqlite
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.4");
 
+            modelBuilder.Entity("Content.Server.Database.Admin", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("user_id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("AdminRankId")
+                        .HasColumnName("admin_rank_id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Title")
+                        .HasColumnName("title")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("UserId");
+
+                    b.HasIndex("AdminRankId");
+
+                    b.ToTable("admin");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.AdminFlag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("admin_flag_id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid>("AdminId")
+                        .HasColumnName("admin_id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Flag")
+                        .IsRequired()
+                        .HasColumnName("flag")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("Negative")
+                        .HasColumnName("negative")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdminId");
+
+                    b.HasIndex("Flag", "AdminId")
+                        .IsUnique();
+
+                    b.ToTable("admin_flag");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.AdminRank", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("admin_rank_id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnName("name")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("admin_rank");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.AdminRankFlag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("admin_rank_flag_id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("AdminRankId")
+                        .HasColumnName("admin_rank_id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Flag")
+                        .IsRequired()
+                        .HasColumnName("flag")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdminRankId");
+
+                    b.HasIndex("Flag", "AdminRankId")
+                        .IsUnique();
+
+                    b.ToTable("admin_rank_flag");
+                });
+
             modelBuilder.Entity("Content.Server.Database.Antag", b =>
                 {
                     b.Property<int>("Id")
@@ -251,6 +346,8 @@ namespace Content.Server.Database.Migrations.Sqlite
 
                     b.HasKey("Id");
 
+                    b.HasIndex("LastSeenUserName");
+
                     b.ToTable("player");
                 });
 
@@ -316,6 +413,32 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .IsUnique();
 
                     b.ToTable("unban");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.Admin", b =>
+                {
+                    b.HasOne("Content.Server.Database.AdminRank", "AdminRank")
+                        .WithMany("Admins")
+                        .HasForeignKey("AdminRankId")
+                        .OnDelete(DeleteBehavior.SetNull);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.AdminFlag", b =>
+                {
+                    b.HasOne("Content.Server.Database.Admin", "Admin")
+                        .WithMany("Flags")
+                        .HasForeignKey("AdminId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Content.Server.Database.AdminRankFlag", b =>
+                {
+                    b.HasOne("Content.Server.Database.AdminRank", "Rank")
+                        .WithMany("Flags")
+                        .HasForeignKey("AdminRankId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Content.Server.Database.Antag", b =>

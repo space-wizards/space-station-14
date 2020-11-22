@@ -250,6 +250,9 @@ namespace Content.Client.Construction
                             case StackType.Cable:
                                 return _resourceCache.GetTexture("/Textures/Objects/Tools/cables.rsi/coil-30.png");
 
+                            case StackType.MetalRod:
+                                return _resourceCache.GetTexture("/Textures/Objects/Materials/materials.rsi/rods.png");
+
                         }
                         break;
 

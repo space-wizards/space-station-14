@@ -24,3 +24,6 @@
     base: catwalk_
   - type: FootstepModifier
     footstepSoundCollection: footstep_catwalk
+  - type: Construction
+    graph: Catwalk
+    node: Catwalk

@@ -1,98 +1,71 @@
 - type: entity
-  parent: Clothing
-  id: MasksBase
-  abstract: true
-  components:
-  - type: Clothing
-    Slots: [mask]
-
-- type: entity
-  parent: MasksBase
-  id: OldGasMaskClothing
+  parent: ClothingMaskBase
+  id: ClothingMaskGas
   name: old gas mask
   description: An old, dusty mask. Yet still dutifully functional.
   components:
   - type: Sprite
-    sprite: Clothing/Masks/mask_gasalt.rsi
-    state: icon
-  - type: BreathMask
+    sprite: Clothing/Mask/gas.rsi
   - type: Clothing
-    sprite: Clothing/Masks/mask_gasalt.rsi
+    sprite: Clothing/Mask/gas.rsi
+  - type: BreathMask
 
 - type: entity
-  parent: MasksBase
-  id: GasMaskClothing
-  name: gas mask
-  description: Regulations require these to be stocked after the fourth coolant leak.
-  components:
-  - type: Sprite
-    sprite: Clothing/Masks/mask_gas.rsi
-    state: icon
-  - type: BreathMask
-  - type: Clothing
-    sprite: Clothing/Masks/mask_gas.rsi
-
-- type: entity
-  parent: MasksBase
-  id: BreathMaskClothing
+  parent: ClothingMaskBase
+  id: ClothingMaskBreath
   name: breath mask
   description: Might as well keep this on 24/7.
   components:
   - type: Sprite
-    sprite: Clothing/Masks/mask_breath.rsi
-    state: icon
-  - type: BreathMask
+    sprite: Clothing/Mask/breath.rsi
   - type: Clothing
-    sprite: Clothing/Masks/mask_breath.rsi
+    sprite: Clothing/Mask/breath.rsi
+  - type: BreathMask
 
 - type: entity
-  parent: MasksBase
-  id: MaskClown
+  parent: ClothingMaskBase
+  id: ClothingMaskClown
   name: clown wig and mask
   description: A true prankster's facial attire. A clown is incomplete without his wig and mask.
   components:
   - type: Sprite
-    sprite: Clothing/Masks/mask_clown.rsi
-    state: icon
-  - type: BreathMask
+    sprite: Clothing/Mask/clown.rsi
   - type: Clothing
-    sprite: Clothing/Masks/mask_clown.rsi
+    sprite: Clothing/Mask/clown.rsi
+  - type: BreathMask
 
 - type: entity
-  parent: MasksBase
-  id: MaskJoy
+  parent: ClothingMaskBase
+  id: ClothingMaskJoy
   name: joy mask
   description: Express your happiness or hide your sorrows with this laughing face with crying tears of joy cutout.
   components:
   - type: Sprite
-    sprite: Clothing/Masks/mask_joy.rsi
-    state: icon
-  - type: BreathMask
+    sprite: Clothing/Mask/joy.rsi
   - type: Clothing
-    sprite: Clothing/Masks/mask_joy.rsi
+    sprite: Clothing/Mask/joy.rsi
+  - type: BreathMask
 
 - type: entity
-  parent: MasksBase
-  id: MaskMime
+  parent: ClothingMaskBase
+  id: ClothingMaskMime
   name: mime mask
   description: The traditional mime's mask. It has an eerie facial posture.
   components:
   - type: Sprite
-    sprite: Clothing/Masks/mask_mime.rsi
-    state: icon
-  - type: BreathMask
+    sprite: Clothing/Mask/mime.rsi
   - type: Clothing
-    sprite: Clothing/Masks/mask_mime.rsi
+    sprite: Clothing/Mask/mime.rsi
+  - type: BreathMask
 
 - type: entity
-  parent: MasksBase
-  id: MaskSterile
+  parent: ClothingMaskBase
+  id: ClothingMaskSterile
   name: sterile mask
   description: A sterile mask designed to help prevent the spread of diseases.
   components:
   - type: Sprite
-    sprite: Clothing/Masks/mask_sterile.rsi
-    state: icon
-  - type: BreathMask
+    sprite: Clothing/Mask/sterile.rsi
   - type: Clothing
-    sprite: Clothing/Masks/mask_sterile.rsi
+    sprite: Clothing/Mask/sterile.rsi
+  - type: BreathMask

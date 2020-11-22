@@ -29,7 +29,7 @@
         public const uint RESEARCH_CONSOLE = 1023;
         public const uint WIRES = 1024;
         public const uint COMBATMODE = 1025;
-        public const uint STATUSEFFECTS = 1026;
+        public const uint ALERTS = 1026;
         public const uint OVERLAYEFFECTS = 1027;
         public const uint STOMACH = 1028;
         public const uint ITEMCOOLDOWN = 1029;
@@ -84,6 +84,7 @@
         public const uint PULLABLE = 1078;
         public const uint GAS_TANK = 1079;
         public const uint SINGULARITY = 1080;
+        public const uint CHARACTERINFO = 1081;
 
         // Net IDs for integration tests.
         public const uint PREDICTION_TEST = 10001;

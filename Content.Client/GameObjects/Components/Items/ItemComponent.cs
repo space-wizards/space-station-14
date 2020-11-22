@@ -21,7 +21,7 @@ namespace Content.Client.GameObjects.Components.Items
     [ComponentReference(typeof(IItemComponent))]
     public class ItemComponent : Component, IItemComponent, IDraggable
     {
-        [Dependency] private IResourceCache _resourceCache = default!;
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
 
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;
@@ -39,7 +39,7 @@ namespace Content.Client.GameObjects.Components.Items
             set
             {
                 _equippedPrefix = value;
-                if (!ContainerHelpers.TryGetContainer(Owner, out IContainer container)) return;
+                if (!Owner.TryGetContainer(out IContainer container)) return;
                 if(container.Owner.TryGetComponent(out HandsComponent hands))
                     hands.RefreshInHands();
             }

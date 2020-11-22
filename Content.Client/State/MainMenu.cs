@@ -8,6 +8,7 @@ using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
@@ -111,10 +112,10 @@ namespace Content.Client.State
                 return;
             }
 
-            var configName = _configurationManager.GetCVar<string>("player.name");
+            var configName = _configurationManager.GetCVar(CVars.PlayerName);
             if (_mainMenuControl.UserNameBox.Text != configName)
             {
-                _configurationManager.SetCVar("player.name", inputName);
+                _configurationManager.SetCVar(CVars.PlayerName, inputName);
                 _configurationManager.SaveToFile();
             }
 
@@ -248,7 +249,7 @@ namespace Content.Client.State
                 vBox.AddChild(userNameHBox);
                 userNameHBox.AddChild(new Label {Text = "Username:"});
 
-                var currentUserName = _configurationManager.GetCVar<string>("player.name");
+                var currentUserName = _configurationManager.GetCVar(CVars.PlayerName);
                 UserNameBox = new LineEdit
                 {
                     Text = currentUserName, PlaceHolder = "Username",

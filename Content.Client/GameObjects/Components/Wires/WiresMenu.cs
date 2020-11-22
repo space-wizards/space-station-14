@@ -21,7 +21,7 @@ namespace Content.Client.GameObjects.Components.Wires
 {
     public class WiresMenu : BaseWindow
     {
-        [Dependency] private IResourceCache _resourceCache = default!;
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
 
         public WiresBoundUserInterface Owner { get; }
 
@@ -424,7 +424,7 @@ namespace Content.Client.GameObjects.Components.Wires
                     "/Textures/Interface/WireHacking/wire_2_copper.svg.96dpi.png"
                 };
 
-                private IResourceCache _resourceCache;
+                private readonly IResourceCache _resourceCache;
 
                 public WireRender(WireColor color, bool isCut, bool flip, bool mirror, int type, IResourceCache resourceCache)
                 {

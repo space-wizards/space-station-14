@@ -12,8 +12,8 @@
 - type: startingGear
   id: AssistantGear
   equipment:
-    innerclothing: UniformColorGrey
-    backpack: BackpackClothingFilled
-    shoes: ShoesBlack
+    innerclothing: ClothingUniformJumpsuitColorGrey
+    backpack: ClothingBackpackFilled
+    shoes: ClothingShoesColorBlack
     idcard: AssistantPDA
-    ears: HeadsetService
+    ears: ClothingHeadsetService
