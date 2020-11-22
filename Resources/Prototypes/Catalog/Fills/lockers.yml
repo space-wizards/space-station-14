@@ -5,7 +5,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: OuterclothingHazard
+      - name: ClothingOuterVestHazard
         prob: 0.4
       - name: FlashlightLantern
         prob: 0.7
@@ -21,11 +21,11 @@
         prob: 0.7
       - name: Multitool
         prob: 0.2
-      - name: UtilityBeltClothing
+      - name: ClothingBeltUtility
         prob: 0.2
-      - name: GlovesYellow
+      - name: ClothingHandsGlovesColorYellow
         prob: 0.05
-      - name: HatHardhatRed
+      - name: ClothingHeadHatHardhatRed
         prob: 0.4
       - name: ApcExtensionCableStack
         prob: 0.3
@@ -43,9 +43,9 @@
     contents:
       - name: ToolboxEmergencyFilled
         prob: 0.4
-      - name: BreathMaskClothing
+      - name: ClothingMaskBreath
         prob: 0.4
-      - name: BreathMaskClothing
+      - name: ClothingMaskBreath
         prob: 0.25
       - name: EmergencyOxygenTankFilled
         prob: 0.4
@@ -79,9 +79,9 @@
   components:
   - type: StorageFill
     contents:
-      - name: HelmetHardsuitCE
-      - name: HardsuitCE
-      - name: BreathMaskClothing
+      - name: ClothingHeadHelmetHardsuitEngineeringWhite
+      - name: ClothingOuterHardsuitEngineeringWhite
+      - name: ClothingMaskBreath
       - name: OxygenTankFilled
 
 - type: entity
@@ -101,9 +101,9 @@
   components:
   - type: StorageFill
     contents:
-      - name: HelmetHardsuitAtmos
-      - name: HardsuitAtmos
-      - name: BreathMaskClothing
+      - name: ClothingHeadHelmetHardsuitAtmos
+      - name: ClothingOuterHardsuitAtmos
+      - name: ClothingMaskBreath
       - name: OxygenTankFilled
 
 - type: entity
@@ -113,9 +113,9 @@
   components:
   - type: StorageFill
     contents:
-      - name: HelmetHardsuitEngineering
-      - name: HardsuitEngineering
-      - name: BreathMaskClothing
+      - name: ClothingHeadHelmetHardsuitEngineering
+      - name: ClothingOuterHardsuitEngineering
+      - name: ClothingMaskBreath
       - name: OxygenTankFilled
 
 - type: entity
@@ -135,7 +135,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: GlovesLatex
+      - name: ClothingHandsGlovesLatex
         prob: 0.4
 
 - type: entity
@@ -241,7 +241,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: GlovesLatex
+      - name: ClothingHandsGlovesLatex
         prob: 0.4
 
 - type: entity
@@ -328,7 +328,7 @@
       contents:
         - name: RedOxygenTankFilled
           prob: 0.6
-        - name: OuterclothingFiresuit
+        - name: ClothingOuterSuitFire
           prob: 0.75
 
 - type: entity

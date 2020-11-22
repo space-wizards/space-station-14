@@ -1,11 +1,120 @@
 - type: entity
-  parent: HatBase
-  id: HatSkub
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBearpelt
+  name: bear pelt
+  description: It's a cute bear pelt.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/bearpelt.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/bearpelt.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBunny
+  name: bunny
+  description: Cute bunny ears.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/bunny.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/bunny.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCake
+  name: cake hat
+  description: You put the cake on your head. Brilliant.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/cake.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/cake.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatChickenhead
+  name: chicken head
+  description: "It's a chicken head. Bok bok bok!"
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/chickenhead.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/chickenhead.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHairflower
+  name: hairflower
+  description: A red rose for beautiful ladies.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/hairflower.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/hairflower.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatPumpkin
+  name: pumpkin hat
+  description: A jack o' lantern! Believed to ward off evil spirits.
+  components:
+    - type: Sprite
+      sprite: Clothing/Head/Misc/pumpkin.rsi
+    - type: Clothing
+      sprite: Clothing/Head/Misc/pumpkin.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatPwig
+  name: pwig
+  description: To be honest, those look ridiculous.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/pwig.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/pwig.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatRichard
+  name: richard
+  description: 'Do you like hurting people?'
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/richard.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/richard.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatSkub
   name: Skub Hat
   description: 'Best paired with the Skub Suit.'
   components:
   - type: Sprite
-    sprite: Clothing/Head/skubhead.rsi
-
+    sprite: Clothing/Head/Misc/skubhead.rsi
   - type: Clothing
-    sprite: Clothing/Head/skubhead.rsi
+    sprite: Clothing/Head/Misc/skubhead.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatXenoMom
+  name: xeno matriarch
+  description: Hiss hiss hiss!
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/xenom.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/xenom.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatXeno
+  name: xenos
+  description: Hiss hiss hiss!
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/xenos.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/xenos.rsi
