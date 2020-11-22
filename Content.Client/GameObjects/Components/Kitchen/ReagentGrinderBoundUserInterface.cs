@@ -69,8 +69,8 @@ namespace Content.Client.GameObjects.Components.Kitchen
             }
             _menu.BeakerContentBox.EjectButton.Disabled = !cState.HasBeakerIn;
             _menu.ChamberContentBox.EjectButton.Disabled = cState.ChamberContents.Length <= 0;
-            _menu.GrindButton.Disabled = !cState.CanGrind;
-            _menu.JuiceButton.Disabled = !cState.CanJuice;
+            _menu.GrindButton.Disabled = !cState.CanGrind && !cState.Powered;
+            _menu.JuiceButton.Disabled = !cState.CanJuice && !cState.Powered;
             RefreshContentsDisplay(cState.ReagentQuantities, cState.ChamberContents, cState.HasBeakerIn);
         }
 

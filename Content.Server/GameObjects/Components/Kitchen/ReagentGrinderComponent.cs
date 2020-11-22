@@ -188,6 +188,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 (
                     _busy,
                     HasBeaker,
+                    Powered,
                     canJuice,
                     canGrind,
                     _chamber.ContainedEntities.Select(item => item.Uid).ToArray(),
@@ -242,7 +243,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor) || !Powered)
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }
@@ -252,9 +253,6 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!Powered)
-                return false;
-
             if (!eventArgs.User.TryGetComponent(out IHandsComponent? hands))
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("You have no hands."));
