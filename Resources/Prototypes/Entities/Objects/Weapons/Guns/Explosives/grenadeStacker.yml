@@ -1,11 +1,26 @@
 - type: entity
-  name: grenade clusterbang
+  name: Clusterbang
   description: Can be used only with flashbangs. Explodes several times.
   parent: BaseItem
-  id: GrenadeStacker
+  id: ClusterBang
   components:
   - type: Sprite
     sprite: Objects/Devices/pda.rsi
     netsync: false
     state: pda
   - type: ClusterFlash
+
+- type: entity
+  name: Clusterbang
+  suffix: Full
+  description: Can be used only with flashbangs. Explodes several times.
+  parent: BaseItem
+  id: ClusterBangFull
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/pda.rsi
+    netsync: false
+    state: pda
+  - type: ClusterFlash
+    startFull: true
+
