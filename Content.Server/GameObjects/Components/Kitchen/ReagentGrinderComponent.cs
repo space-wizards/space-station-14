@@ -99,6 +99,11 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 UserInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
             }
 
+            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
+            {
+                receiver.OnPowerStateChanged += OnPowerStateChanged;
+            }
+
             _audioSystem = EntitySystem.Get<AudioSystem>();
         }
 
@@ -109,11 +114,16 @@ namespace Content.Server.GameObjects.Components.Kitchen
             {
                 UserInterface.OnReceiveMessage -= UserInterfaceOnReceiveMessage;
             }
+
+            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
+            {
+                receiver.OnPowerStateChanged -= OnPowerStateChanged;
+            }
         }
 
         private void UserInterfaceOnReceiveMessage(ServerBoundUserInterfaceMessage message)
         {
-            if(!Powered || _busy)
+            if(_busy)
             {
                 return;
             }
@@ -158,6 +168,11 @@ namespace Content.Server.GameObjects.Components.Kitchen
             }
         }
 
+        private void OnPowerStateChanged(object? sender, PowerStateEventArgs e)
+        {
+            _uiDirty = true;
+        }
+
         private void ClickSound()
         {
             _audioSystem.PlayFromEntity("/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
@@ -175,28 +190,38 @@ namespace Content.Server.GameObjects.Components.Kitchen
         {
             if(_uiDirty)
             {
-                bool canJuice = false;
-                bool canGrind = false;
+                UpdateInterface();
+                _uiDirty = false;
+            }
+        }
+
+        // This doesn't check for UI dirtiness so handle that when calling this.
+        private void UpdateInterface()
+        {
+            bool canJuice = false;
+            bool canGrind = false;
+            if (HasBeaker)
+            {
                 foreach (var entity in _chamber.ContainedEntities)
                 {
                     if (!canJuice && entity.HasComponent<JuiceableComponent>()) canJuice = true;
                     if (!canGrind && entity.HasComponent<GrindableComponent>()) canGrind = true;
                     if (canJuice && canGrind) break;
                 }
-
-                UserInterface?.SetState(new ReagentGrinderInterfaceState
-                (
-                    _busy,
-                    HasBeaker,
-                    Powered,
-                    canJuice,
-                    canGrind,
-                    _chamber.ContainedEntities.Select(item => item.Uid).ToArray(),
-                    //Remember the beaker can be null!
-                    _heldBeaker?.Solution.Contents.ToArray()
-                ));
-                _uiDirty = false;
             }
+
+            UserInterface?.SetState(new ReagentGrinderInterfaceState
+            (
+                _busy,
+                HasBeaker,
+                Powered,
+                canJuice,
+                canGrind,
+                _chamber.ContainedEntities.Select(item => item.Uid).ToArray(),
+                //Remember the beaker can be null!
+                _heldBeaker?.Solution.Contents.ToArray()
+            ));
+            _uiDirty = false;
         }
 
         private void EjectSolid(EntityUid entityID)

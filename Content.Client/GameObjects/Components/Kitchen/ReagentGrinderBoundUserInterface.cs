@@ -69,8 +69,8 @@ namespace Content.Client.GameObjects.Components.Kitchen
             }
             _menu.BeakerContentBox.EjectButton.Disabled = !cState.HasBeakerIn;
             _menu.ChamberContentBox.EjectButton.Disabled = cState.ChamberContents.Length <= 0;
-            _menu.GrindButton.Disabled = !cState.CanGrind && !cState.Powered;
-            _menu.JuiceButton.Disabled = !cState.CanJuice && !cState.Powered;
+            _menu.GrindButton.Disabled = !cState.CanGrind || !cState.Powered;
+            _menu.JuiceButton.Disabled = !cState.CanJuice || !cState.Powered;
             RefreshContentsDisplay(cState.ReagentQuantities, cState.ChamberContents, cState.HasBeakerIn);
         }
 
@@ -96,12 +96,6 @@ namespace Content.Client.GameObjects.Components.Kitchen
 
         private void RefreshContentsDisplay(IList<Solution.ReagentQuantity> reagents, IReadOnlyList<EntityUid> containedSolids, bool isBeakerAttached)
         {
-            //But, if no beaker is attached use this guard to prevent hitting a null reference.
-            if (!isBeakerAttached || reagents == null)
-            {
-                return;
-            }
-
             //Much of this component's interface will just be ripped straight from microwave...
             _chamberVisualContents.Clear();
             _menu.ChamberContentBox.BoxContents.Clear();
@@ -121,6 +115,12 @@ namespace Content.Client.GameObjects.Components.Kitchen
             //Always clear the list no matter what.
             _beakerVisualContents.Clear();
             _menu.BeakerContentBox.BoxContents.Clear();
+
+            //if no beaker is attached use this guard to prevent hitting a null reference.
+            if (!isBeakerAttached || reagents == null)
+            {
+                return;
+            }
 
             //Looks like we have a beaker attached.
             if (reagents.Count <= 0)
