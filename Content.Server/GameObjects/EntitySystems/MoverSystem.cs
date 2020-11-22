@@ -56,7 +56,8 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var (moverComponent, collidableComponent) in EntityManager.ComponentManager.EntityQuery<IMoverComponent, IPhysicsComponent>())
+            foreach (var (moverComponent, collidableComponent) in EntityManager.ComponentManager
+                .EntityQuery<IMoverComponent, IPhysicsComponent>(false))
             {
                 var entity = moverComponent.Owner;
                 UpdateKinematics(entity.Transform, moverComponent, collidableComponent);
@@ -141,24 +142,19 @@ namespace Content.Server.GameObjects.EntitySystems
             var grid = _mapManager.GetGrid(coordinates.GetGridId(EntityManager));
             var tile = grid.GetTileRef(coordinates);
 
-            // If the coordinates have a catwalk, it's always catwalk.
-            string soundCollectionName;
-            var catwalk = false;
-            foreach (var maybeCatwalk in grid.GetSnapGridCell(tile.GridIndices, SnapGridOffset.Center))
+            // If the coordinates have a FootstepModifier component
+            // i.e. component that emit sound on footsteps emit that sound
+            string? soundCollectionName = null;
+            foreach (var maybeFootstep in grid.GetSnapGridCell(tile.GridIndices, SnapGridOffset.Center))
             {
-                if (maybeCatwalk.Owner.HasComponent<CatwalkComponent>())
+                if (maybeFootstep.Owner.TryGetComponent(out FootstepModifierComponent? footstep))
                 {
-                    catwalk = true;
+                    soundCollectionName = footstep._soundCollectionName;
                     break;
                 }
             }
-
-            if (catwalk)
-            {
-                // Catwalk overrides tile sound.s
-                soundCollectionName = "footstep_catwalk";
-            }
-            else
+            // if there is no FootstepModifierComponent, determine sound based on tiles
+            if (soundCollectionName == null)
             {
                 // Walking on a tile.
                 var def = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
