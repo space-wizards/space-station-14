@@ -332,9 +332,6 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
             _busy = true;
 
-            var chamberContentsArray = _chamber.ContainedEntities.ToArray();
-            var chamberCount = chamberContentsArray.Length;
-
             UserInterface?.SendMessage(new ReagentGrinderWorkStartedMessage(program));
             switch (program)
             {
@@ -343,15 +340,14 @@ namespace Content.Server.GameObjects.Components.Kitchen
                     //Get each item inside the chamber and get the reagents it contains. Transfer those reagents to the beaker, given we have one in.
                     Owner.SpawnTimer(_workTime, (Action) (() =>
                     {
-                        for (int i = chamberCount - 1; i >= 0; i--)
+                        foreach (var item in _chamber.ContainedEntities.ToList())
                         {
-                            var item = chamberContentsArray[i];
                             if (!item.HasComponent<GrindableComponent>()) continue;
                             if (!item.TryGetComponent<SolutionContainerComponent>(out var solution)) continue;
                             if (_heldBeaker!.CurrentVolume + solution.CurrentVolume > _heldBeaker!.MaxVolume) continue;
                             _heldBeaker!.TryAddSolution(solution.Solution);
                             solution.RemoveAllSolution();
-                            _chamber.ContainedEntities[i].Delete();
+                            item.Delete();
                         }
 
                         _busy = false;
@@ -364,14 +360,12 @@ namespace Content.Server.GameObjects.Components.Kitchen
                     _audioSystem.PlayFromEntity("/Audio/Machines/juicer.ogg", Owner, AudioParams.Default);
                     Owner.SpawnTimer(_workTime, (Action) (() =>
                     {
-                        //OK, so if we made it this far we want to juice instead.
-                        for (int i = chamberCount - 1; i >= 0; i--)
+                        foreach (var item in _chamber.ContainedEntities.ToList())
                         {
-                            var item = chamberContentsArray[i];
                             if (!item.TryGetComponent<JuiceableComponent>(out var juiceMe)) continue;
                             if (_heldBeaker!.CurrentVolume + juiceMe.JuiceResultSolution.TotalVolume > _heldBeaker!.MaxVolume) continue;
                             _heldBeaker!.TryAddSolution(juiceMe.JuiceResultSolution);
-                            _chamber.ContainedEntities[i].Delete();
+                            item.Delete();
                         }
                         UserInterface?.SendMessage(new ReagentGrinderWorkCompleteMessage());
                         _busy = false;
