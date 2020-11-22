@@ -232,11 +232,9 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             if (userEntity.TryGetComponent(out CombatModeComponent combat) && combat.IsInCombatMode)
-                DoAttack(userEntity, coords, false, uid);
+                return DoAttack(userEntity, coords, false, uid);
             else
                 return UserInteraction(userEntity, coords, uid);
-
-            return true;
         }
 
         private bool HandleTryPullObject(ICommonSession session, EntityCoordinates coords, EntityUid uid)
@@ -288,6 +286,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             return pull.TogglePull(player);
         }
 
+        /// <returns>False if cannot interact.</returns>
         private bool UserInteraction(IEntity player, EntityCoordinates coordinates, EntityUid clickedUid)
         {
             // Get entity clicked upon from UID if valid UID, if not assume no entity clicked upon and null
@@ -808,20 +807,21 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
         }
 
-        private void DoAttack(IEntity player, EntityCoordinates coordinates, bool wideAttack, EntityUid target = default)
+        /// <returns>False if cannot attack or interact.</returns>
+        private bool DoAttack(IEntity player, EntityCoordinates coordinates, bool wideAttack, EntityUid target = default)
         {
             // Verify player is on the same map as the entity he clicked on
             if (_mapManager.GetGrid(coordinates.GetGridId(_entityManager)).ParentMapId != player.Transform.MapID)
             {
                 Logger.WarningS("system.interaction",
                     $"Player named {player.Name} clicked on a map he isn't located on");
-                return;
+                return false;
             }
 
             if (!ActionBlockerSystem.CanAttack(player) ||
                 (!wideAttack && !player.InRangeUnobstructed(coordinates, ignoreInsideBlocker: true)))
             {
-                return;
+                return false;
             }
 
             var eventArgs = new AttackEventArgs(player, coordinates, wideAttack, target);
@@ -836,7 +836,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                     foreach (var attackComponent in item.GetAllComponents<IAttack>())
                     {
                         if (wideAttack ? attackComponent.WideAttack(eventArgs) : attackComponent.ClickAttack(eventArgs))
-                            return;
+                            return true;
                     }
                 }
                 else
@@ -847,7 +847,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                         if (targetEnt.HasComponent<ItemComponent>())
                         {
                             Interaction(player, targetEnt);
-                            return;
+                            return true;
                         }
                     }
                 }
@@ -860,6 +860,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 else
                     attackComponent.ClickAttack(eventArgs);
             }
+            return true;
         }
     }
 }
