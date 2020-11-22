@@ -545,14 +545,8 @@ namespace Content.Server.GameObjects.Components.Arcade
                         case BlockGamePlayerAction.StartLeft:
                             _leftPressed = true;
                             break;
-                        case BlockGamePlayerAction.EndLeft:
-                            _leftPressed = false;
-                            break;
                         case BlockGamePlayerAction.StartRight:
                             _rightPressed = true;
-                            break;
-                        case BlockGamePlayerAction.EndRight:
-                            _rightPressed = false;
                             break;
                         case BlockGamePlayerAction.Rotate:
                             TrySetRotation(Next(_currentRotation, false));
@@ -563,9 +557,6 @@ namespace Content.Server.GameObjects.Components.Arcade
                         case BlockGamePlayerAction.SoftdropStart:
                             _softDropPressed = true;
                             if (_accumulatedFieldFrameTime > Speed) _accumulatedFieldFrameTime = Speed; //to prevent jumps
-                            break;
-                        case BlockGamePlayerAction.SoftdropEnd:
-                            _softDropPressed = false;
                             break;
                         case BlockGamePlayerAction.Harddrop:
                             PerformHarddrop();
@@ -578,6 +569,15 @@ namespace Content.Server.GameObjects.Components.Arcade
 
                 switch (action)
                 {
+                    case BlockGamePlayerAction.EndLeft:
+                        _leftPressed = false;
+                        break;
+                    case BlockGamePlayerAction.EndRight:
+                        _rightPressed = false;
+                        break;
+                    case BlockGamePlayerAction.SoftdropEnd:
+                        _softDropPressed = false;
+                        break;
                     case BlockGamePlayerAction.Pause:
                         _running = false;
                         _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Pause, _started));
