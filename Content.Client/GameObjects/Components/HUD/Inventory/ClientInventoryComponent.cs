@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.GameObjects.Components.Clothing;
 using Content.Shared.GameObjects.Components.Inventory;
@@ -215,18 +216,19 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             return _slots.TryGetValue(slot, out item);
         }
 
-        public bool TryFindItemSlots(IEntity item, out Slots slots)
+        public bool TryFindItemSlots(IEntity item, [NotNullWhen(true)] out Slots? slots)
         {
-            foreach (var pair in _slots)
+            slots = null;
+
+            foreach (var (slot, entity) in _slots)
             {
-                if (pair.Value == item)
+                if (entity == item)
                 {
-                    slots = pair.Key;
+                    slots = slot;
                     return true;
                 }
             }
 
-            slots = Slots.NONE;
             return false;
         }
     }

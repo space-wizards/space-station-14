@@ -27,21 +27,21 @@ namespace Content.Client.GameObjects.Components.Clothing
         [ViewVariables(VVAccess.ReadWrite)]
         public string ClothingEquippedPrefix
         {
-            get
-            {
-                return _clothingEquippedPrefix;
-            }
+            get => _clothingEquippedPrefix;
             set
             {
+                if (_clothingEquippedPrefix == value)
+                    return;
                 _clothingEquippedPrefix = value;
+
                 if (!Owner.TryGetContainer(out IContainer container))
                     return;
                 if (!container.Owner.TryGetComponent(out ClientInventoryComponent inventory))
                     return;
-                if (!inventory.TryFindItemSlots(Owner, out EquipmentSlotDefines.Slots slots))
+                if (!inventory.TryFindItemSlots(Owner, out EquipmentSlotDefines.Slots? slots))
                     return;
 
-                inventory.SetSlotVisuals(slots, Owner);
+                inventory.SetSlotVisuals(slots.Value, Owner);
             }
         }
 
