@@ -35,7 +35,6 @@ namespace Content.Server.GameObjects.EntitySystems
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private AudioSystem _audioSystem = default!;
 
@@ -94,7 +93,7 @@ namespace Content.Server.GameObjects.EntitySystems
             if (_mapManager.GridExists(mover.LastPosition.GetGridId(EntityManager)))
             {
                 // Can happen when teleporting between grids.
-                if (!transform.Coordinates.TryDistance(_entityManager, mover.LastPosition, out var distance))
+                if (!transform.Coordinates.TryDistance(EntityManager, mover.LastPosition, out var distance))
                 {
                     mover.LastPosition = transform.Coordinates;
                     return;

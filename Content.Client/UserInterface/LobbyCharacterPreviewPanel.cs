@@ -23,8 +23,8 @@ namespace Content.Client.UserInterface
         private readonly IClientPreferencesManager _preferencesManager;
         private IEntity _previewDummy;
         private readonly Label _summaryLabel;
-        private VBoxContainer _loaded;
-        private Label _unloaded;
+        private readonly VBoxContainer _loaded;
+        private readonly Label _unloaded;
 
         public LobbyCharacterPreviewPanel(IEntityManager entityManager,
             IClientPreferencesManager preferencesManager)

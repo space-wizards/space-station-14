@@ -199,7 +199,6 @@
   - type: StorageFill
     contents:
       - name: MopItem
-      - name: MopBucket
       - name: WetFloorSign
         amount: 3
       - name: TrashBag

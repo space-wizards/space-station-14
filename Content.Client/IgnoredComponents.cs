@@ -135,7 +135,6 @@
             "DisposalBend",
             "Recycler",
             "Conveyor",
-            "ConveyorSwitch",
             "Flippable",
             "Airtight",
             "MovedByPressure",
@@ -212,6 +211,8 @@
             "RandomArcade",
             "RandomSpriteState",
             "WelderRefinable",
+            "ConveyorAssembly",
+            "TwoWayLever",
         };
     }
 }

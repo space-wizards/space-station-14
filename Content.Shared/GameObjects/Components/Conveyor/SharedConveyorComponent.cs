@@ -12,9 +12,8 @@ namespace Content.Shared.GameObjects.Components.Conveyor
     [Serializable, NetSerializable]
     public enum ConveyorState
     {
-        Off = 0,
+        Off,
         Forward,
-        Reversed,
-        Loose
+        Reversed
     }
 }

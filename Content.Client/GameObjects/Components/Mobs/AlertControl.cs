@@ -3,9 +3,9 @@ using System;
 using Content.Client.UserInterface;
 using Content.Client.Utility;
 using Content.Shared.Alert;
-using OpenToolkit.Mathematics;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Maths;
 
 namespace Content.Client.GameObjects.Components.Mobs
 {
@@ -20,7 +20,7 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         private short? _severity;
         private readonly TextureRect _icon;
-        private CooldownGraphic _cooldownGraphic;
+        private readonly CooldownGraphic _cooldownGraphic;
 
         private readonly IResourceCache _resourceCache;
 
