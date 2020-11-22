@@ -7,6 +7,7 @@ namespace Content.Server.GameObjects.Components.Destructible
     [Serializable]
     public enum ThresholdActs
     {
+        Invalid = 0,
         Breakage,
         Destruction
     }

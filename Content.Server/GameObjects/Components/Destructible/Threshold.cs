@@ -14,25 +14,22 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Destructible
 {
-    public struct Threshold : IExposeData
+    public class Threshold : IExposeData
     {
         /// <summary>
         ///     Entities spawned on reaching this threshold, from a min to a max.
         /// </summary>
-        [ViewVariables]
-        public Dictionary<string, MinMax>? Spawn;
+        [ViewVariables] public Dictionary<string, MinMax>? Spawn;
 
         /// <summary>
         ///     Sound played upon destruction.
         /// </summary>
-        [ViewVariables]
-        public string Sound;
+        [ViewVariables] public string Sound = string.Empty;
 
         /// <summary>
         ///     Used instead of <see cref="Sound"/> if specified.
         /// </summary>
-        [ViewVariables]
-        public string SoundCollection;
+        [ViewVariables] public string SoundCollection = string.Empty;
 
         /// <summary>
         ///     What acts this threshold should trigger upon activation.
@@ -40,28 +37,38 @@ namespace Content.Server.GameObjects.Components.Destructible
         /// </summary>
         [ViewVariables] public int Acts;
 
+        /// <summary>
+        ///     Whether or not this threshold has already been triggered.
+        /// </summary>
+        [ViewVariables] public bool Triggered;
+
         public void ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(ref Spawn, "Spawn", null);
             serializer.DataField(ref Sound, "Sound", string.Empty);
             serializer.DataField(ref SoundCollection, "SoundCollection", string.Empty);
             serializer.DataField(ref Acts, "Acts", 0, WithFormat.Flags<ActsFlags>());
+            serializer.DataField(ref Triggered, "Triggered", false);
         }
 
-        public void Trigger(IEntity owner, IRobustRandom random, ActSystem acts)
+        /// <summary>
+        ///     Triggers this threshold.
+        /// </summary>
+        /// <param name="owner">The entity that owns this threshold.</param>
+        /// <param name="random">
+        ///     An instance of <see cref="IRobustRandom"/> to get randomness from, if relevant.
+        /// </param>
+        /// <param name="actSystem">
+        ///     An instance of <see cref="ActSystem"/> to call acts on, if relevant.
+        /// </param>
+        /// <param name="thresholdAmount">The amount of damage that triggered this threshold.</param>
+        public void Trigger(IEntity owner, IRobustRandom random, ActSystem actSystem)
         {
-            var destructible = owner.GetComponentOrNull<DestructibleComponent>();
+            Triggered = true;
+
             PlaySound(owner);
             DoSpawn(owner, random);
-            DoActs(owner, acts);
-
-            if (destructible == null)
-            {
-                return;
-            }
-
-            var message = new DestructibleThresholdReachedMessage(destructible, this);
-            owner.SendMessage(destructible, message);
+            DoActs(owner, actSystem);
         }
 
         private void PlaySound(IEntity owner)

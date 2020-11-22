@@ -1,18 +1,11 @@
 ﻿#nullable enable
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using Content.Server.GameObjects.Components.Stack;
-using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Utility;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -33,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Destructible
         public override string Name => "Destructible";
 
         [ViewVariables]
-        private SortedDictionary<int, Threshold> _thresholds = new SortedDictionary<int, Threshold>();
+        private SortedDictionary<int, Threshold> _lowestToHighestThresholds = new SortedDictionary<int, Threshold>();
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -42,8 +35,8 @@ namespace Content.Server.GameObjects.Components.Destructible
             serializer.DataReadWriteFunction(
                 "thresholds",
                 new Dictionary<int, Threshold>(),
-                thresholds => _thresholds = new SortedDictionary<int, Threshold>(thresholds, Comparer<int>.Create((a, b) => b.CompareTo(a))),
-                () => new Dictionary<int, Threshold>(_thresholds));
+                thresholds => _lowestToHighestThresholds = new SortedDictionary<int, Threshold>(thresholds),
+                () => new Dictionary<int, Threshold>(_lowestToHighestThresholds));
         }
 
         public override void Initialize()
@@ -66,13 +59,19 @@ namespace Content.Server.GameObjects.Components.Destructible
                         break;
                     }
 
-                    // TODO LINQ
-                    foreach (var (threshold, state) in _thresholds.Reverse())
+                    foreach (var (damage, threshold) in _lowestToHighestThresholds)
                     {
-                        if (msg.Damageable.TotalDamage >= threshold)
+                        if (threshold.Triggered)
                         {
-                            state.Trigger(Owner, _random, _actSystem);
-                            break;
+                            continue;
+                        }
+
+                        if (msg.Damageable.TotalDamage >= damage)
+                        {
+                            var thresholdMessage = new DestructibleThresholdReachedMessage(this, threshold, msg.Damageable.TotalDamage);
+                            SendMessage(thresholdMessage);
+
+                            threshold.Trigger(Owner, _random, _actSystem);
                         }
                     }
 
