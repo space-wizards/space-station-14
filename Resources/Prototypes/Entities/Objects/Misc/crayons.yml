@@ -94,18 +94,3 @@
     capacity: 30
   - type: Item
     size: 9999
-
-- type: entity
-  id: CrayonBoxFilled
-  name: crayon box
-  parent: CrayonBox
-  suffix: Filled
-  components:
-  - type: StorageFill
-    contents:
-      - name: CrayonGreen
-      - name: CrayonOrange
-      - name: CrayonPurple
-      - name: CrayonRed
-      - name: CrayonWhite
-      - name: CrayonYellow

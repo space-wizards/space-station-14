@@ -13,19 +13,6 @@
     size: 9999
 
 - type: entity
-  id: MedkitFilled
-  suffix: Filled
-  parent: Medkit
-  components:
-  - type: StorageFill
-    contents:
-      - name: Brutepack
-        amount: 3
-      - name: Ointment
-        amount: 3
-      # todo 1 Health Analyzer once it exists
-
-- type: entity
   name: medical stack
   id: MedicalStack
   parent: BaseItem
