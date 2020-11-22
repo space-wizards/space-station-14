@@ -68,8 +68,8 @@
   - type: Sprite
     netsync: false
     sprite: Constructible/Power/smes.rsi
-    state: smes
     layers:
+    - state: smes
     - state: smes-display
       shader: unshaded
   - type: Smes
