@@ -18,7 +18,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
     ///     <see cref="DamageStateHelpers.AliveToDead"/>.
     /// </summary>
     [Serializable, NetSerializable]
-    public enum DamageState
+    public enum DamageState : byte
     {
         Invalid = 0,
         Alive = 1,
