@@ -370,12 +370,12 @@ namespace Content.Client.GameObjects.Components.Items
                 var old = _entity;
                 _entity = value;
 
-                var interactionSystem = EntitySystem.Get<SharedInteractionSystem>();
-
                 if (Parent.ActiveHand != Name)
                 {
                     return;
                 }
+
+                var interactionSystem = EntitySystem.Get<SharedInteractionSystem>();
 
                 if (old != null)
                 {
