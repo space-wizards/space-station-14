@@ -1,7 +1,7 @@
 meta:
   format: 2
-  name: DemoStation
-  author: Space-Wizards
+  name: Saltern
+  author: Buncha sickass mfers
   postmapinit: false
 tilemap:
   0: space
@@ -474,7 +474,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 52
-  type: ShoesCoder
+  type: ClothingUnderSocksCoder
   components:
   - parent: 855
     pos: 47.437466,-6.6893435
@@ -490,14 +490,14 @@ entities:
   - useSound: /Audio/Items/jaws_pry.ogg
     type: Tool
 - uid: 54
-  type: GlovesLatex
+  type: ClothingHandsGlovesLatex
   components:
   - parent: 855
     pos: 22.086878,-4.4133806
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 55
-  type: GlovesLatex
+  type: ClothingHandsGlovesLatex
   components:
   - parent: 855
     pos: 21.618128,-4.4133806
@@ -712,14 +712,14 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 82
-  type: Bling
+  type: ClothingNeckBling
   components:
   - parent: 855
     pos: -2.861164,18.612366
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 83
-  type: Bling
+  type: ClothingNeckBling
   components:
   - parent: 855
     pos: -2.564289,18.643616
@@ -971,19 +971,19 @@ entities:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 117
-  type: HatHardhatYellow
+  type: ClothingHeadHatHardhatYellow
   components:
   - parent: 855
     pos: 31.357727,-4.36431
     type: Transform
 - uid: 118
-  type: HatHardhatWhite
+  type: ClothingHeadHatHardhatWhite
   components:
   - parent: 855
     pos: 31.623352,-4.14556
     type: Transform
 - uid: 119
-  type: HatHardhatRed
+  type: ClothingHeadHatHardhatRed
   components:
   - parent: 855
     pos: 31.201477,-4.05181
@@ -47190,7 +47190,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4144
-  type: MaskJoy
+  type: ClothingMaskJoy
   components:
   - parent: 855
     pos: 13.418978,24.555822

@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.GameObjects.Components;
@@ -31,6 +31,7 @@ namespace Content.Server.GameObjects.Components
                     doAfter.EventArgs.Delay,
                     doAfter.EventArgs.BreakOnUserMove,
                     doAfter.EventArgs.BreakOnTargetMove,
+                    doAfter.EventArgs.MovementThreshold,
                     doAfter.EventArgs.Target?.Uid ?? EntityUid.Invalid);
                 
                 toAdd.Add(clientDoAfter);

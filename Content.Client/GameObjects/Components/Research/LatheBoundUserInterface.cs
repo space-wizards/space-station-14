@@ -25,7 +25,7 @@ namespace Content.Client.GameObjects.Components.Research
 
         [ViewVariables]
         public Queue<LatheRecipePrototype> QueuedRecipes => _queuedRecipes;
-        private Queue<LatheRecipePrototype> _queuedRecipes = new Queue<LatheRecipePrototype>();
+        private readonly Queue<LatheRecipePrototype> _queuedRecipes = new Queue<LatheRecipePrototype>();
 
         public LatheBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {

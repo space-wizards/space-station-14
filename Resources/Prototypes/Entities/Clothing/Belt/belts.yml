@@ -1,17 +1,3 @@
-# BASE
-- type: entity
-  parent: Clothing
-  id: ClothingBeltBase
-  abstract: true
-  components:
-  - type: Sprite
-    state: icon
-  - type: Clothing
-    Slots: [belt]
-    size: 50
-    QuickEquip: false
-
-# CONTENT
 - type: entity
   parent: ClothingBeltBase
   id: ClothingBeltAssault
@@ -41,7 +27,7 @@
 - type: entity
   parent: ClothingBeltBase
   id: ClothingBeltChiefEngineer
-  name:  the Chief Engineer's toolbelt
+  name:  chief's toolbelt
   description: "Holds tools, looks snazzy."
   components:
   - type: Sprite
@@ -168,7 +154,7 @@
 
 - type: entity
   parent: ClothingBeltBase
-  id: UtilityBeltClothing #Change to ClothingBeltUtility
+  id: ClothingBeltUtility
   name: utility belt
   description: "Can hold various things."
   components:

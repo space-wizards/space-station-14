@@ -1,0 +1,81 @@
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesChef
+  name: chef shoes
+  description: Sturdy shoes that minimize injury from falling objects or knives.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Specific/chef.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Specific/chef.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesClown
+  name: clown shoes
+  description: "The prankster's standard-issue clowning shoes. Damn they're huge!"
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Specific/clown.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Specific/clown.rsi
+  - type: LoopingSound
+  - type: FootstepModifier
+    footstepSoundCollection: footstep_clown
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesCult
+  name: cult shoes
+  description: A pair of boots worn by the followers of Nar'Sie.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Specific/cult.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Specific/cult.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesGaloshes
+  name: galoshes shoes
+  description: Rubber boots.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Specific/galoshes.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Specific/galoshes.rsi
+  - type: NoSlip
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesSNinja
+  name: S ninja shoes
+  description: A pair of nano-enhanced oots with built-in magnetic suction cups.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Specific/spaceninja.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Specific/spaceninja.rsi
+  - type: NoSlip
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesSwat
+  name: swat shoes
+  description: When you want to turn up the heat.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Specific/swat.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Specific/swat.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesWizard
+  name: wizard shoes
+  description: A pair of magic shoes.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Specific/wizard.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Specific/wizard.rsi

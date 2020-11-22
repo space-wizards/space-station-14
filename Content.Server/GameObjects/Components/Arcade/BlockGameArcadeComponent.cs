@@ -26,18 +26,20 @@ namespace Content.Server.GameObjects.Components.Arcade
     [ComponentReference(typeof(IActivate))]
     public class BlockGameArcadeComponent : Component, IActivate
     {
-        [Dependency] private IRobustRandom _random = null!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         public override string Name => "BlockGameArcade";
         public override uint? NetID => ContentNetIDs.BLOCKGAME_ARCADE;
-        [ComponentDependency] private PowerReceiverComponent? _powerReceiverComponent = default!;
+
+        [ComponentDependency] private readonly PowerReceiverComponent? _powerReceiverComponent = default!;
+
         private bool Powered => _powerReceiverComponent?.Powered ?? false;
         private BoundUserInterface? UserInterface => Owner.GetUIOrNull(BlockGameUiKey.Key);
 
         private BlockGame? _game;
 
         private IPlayerSession? _player;
-        private List<IPlayerSession> _spectators = new List<IPlayerSession>();
+        private readonly List<IPlayerSession> _spectators = new List<IPlayerSession>();
 
         public void Activate(ActivateEventArgs eventArgs)
         {
@@ -162,9 +164,9 @@ namespace Content.Server.GameObjects.Components.Arcade
         {
             //note: field is 10(0 -> 9) wide and 20(0 -> 19) high
 
-            private BlockGameArcadeComponent _component;
+            private readonly BlockGameArcadeComponent _component;
 
-            private List<BlockGameBlock> _field = new List<BlockGameBlock>();
+            private readonly List<BlockGameBlock> _field = new List<BlockGameBlock>();
 
             private BlockGamePiece _currentPiece;
 

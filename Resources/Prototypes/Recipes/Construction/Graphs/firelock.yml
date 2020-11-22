@@ -1,0 +1,166 @@
+﻿- type: constructionGraph
+  id: Firelock
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: frame1
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Metal
+              amount: 3
+              doAfter: 1
+
+
+    - node: frame1
+      entity: FirelockFrame
+      actions:
+        - !type:SpriteStateChange
+          state: frame1
+      edges:
+        - to: frame2
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - material: Cable
+              amount: 2
+              doAfter: 1
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SteelSheet1
+              amount: 3
+            - !type:DeleteEntity {}
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tool: Welding
+              doAfter: 1
+
+    - node: frame2
+      actions:
+        - !type:SpriteStateChange
+          state: frame2
+      edges:
+        - to: frame3
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - component: FirelockElectronics
+              store: Firelock Electornics
+              name: Firelock Electornics
+              icon:
+                sprite: "Constructible/Misc/module.rsi"
+                state: "mainboard"
+
+        - to: frame1
+          completed:
+            - !type:SpawnPrototype
+              prototype: ApcExtensionCableStack1
+              amount: 2
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tool: Cutting
+              doAfter: 1.5
+
+    - node: frame3
+      actions:
+        - !type:SpriteStateChange
+          state: frame3
+      edges:
+        - to: frame4
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tool: Screwing
+              doAfter: 0.25
+        - to: frame2
+          completed:
+            - !type:SpawnPrototype
+              prototype: FirelockElectronics
+              amount: 1
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tool: Prying
+              doAfter: 0.25
+
+    - node: frame4
+      entity: FirelockFrame
+      actions:
+        - !type:SpriteStateChange
+          state: frame4
+      edges:
+        - to: Firelock
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+
+        - to: FirelockGlassFrame
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - material: Glass
+              amount: 2
+              doAfter: 2
+
+        - to: frame3
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tool: Screwing
+              doAfter: 0.75
+
+    - node: Firelock
+      entity: Firelock
+      edges:
+        - to: frame4
+          conditions:
+            - !type:DoorWelded
+              welded: true
+          steps:
+            - tool: Anchoring
+              doAfter: 0.25
+
+    - node: FirelockGlassFrame
+      edges:
+        - to: FirelockGlass
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+        - to: frame4
+          completed:
+            - !type:SpawnPrototype
+              prototype: GlassSheet1
+              amount: 2
+          steps:
+            - tool: Screwing
+              doAfter: 1
+      
+
+    - node: FirelockGlass
+      entity: FirelockGlass
+      edges:
+        - to: FirelockGlassFrame
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tool: Anchoring
+              doAfter: 1

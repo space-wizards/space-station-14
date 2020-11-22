@@ -1,0 +1,113 @@
+- type: entity
+  parent: Clothing
+  id: ClothingHeadset
+  name: headset
+  abstract: true
+  description: An updated, modular intercom that fits over the head. Takes encryption keys.
+  components:
+  - type: Headset
+  - type: Sprite
+    state: icon
+  - type: Clothing
+    Slots:
+    - ears
+    sprite: Clothing/Ears/Headsets/base.rsi
+
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetCargo
+  name: cargo headset
+  description: A headset used by the quartermaster and his slaves.
+  components:
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/cargo.rsi
+
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetCentCom
+  name: centcomm headset
+  description: A headset used by the upper echelons of Nanotrasen.
+  components:
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/centcom.rsi
+
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetCommand
+  name: command headset
+  description: A headset with a commanding channel.
+  components:
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/command.rsi
+
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetEngineering
+  name: engineering headset
+  description: When the engineers wish to chat like girls.
+  components:
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/engineering.rsi
+
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetMedical
+  name: medical headset
+  description: A headset for the trained staff of the medbay.
+  components:
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/medical.rsi
+
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetMedicalScience
+  name: medical research headset
+  description: A headset that is a result of the mating between medical and science.
+  components:
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/medicalscience.rsi
+
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetMining
+  name: mining headset
+  description: Headset used by shaft miners.
+  components:
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/mining.rsi
+
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetRobotics
+  name: robotics headset
+  description: Made specifically for the roboticists, who cannot decide between departments.
+  components:
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/robotics.rsi
+
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetScience
+  name: science headset
+  description: A sciency headset. Like usual.
+  components:
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/science.rsi
+
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetSecurity
+  name: security headset
+  description: This is used by your elite security force.
+  components:
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/security.rsi
+
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetService
+  name: service headset
+  description: Headset used by the service staff, tasked with keeping the station full, happy and clean.
+  components:
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/service.rsi

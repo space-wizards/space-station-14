@@ -14,7 +14,7 @@ namespace Content.Server.AI.Utility.Actions.Nutrition.Drink
 {
     public sealed class PickUpDrink : UtilityAction
     {
-        private IEntity _entity;
+        private readonly IEntity _entity;
 
         public PickUpDrink(IEntity owner, IEntity entity, float weight) : base(owner)
         {
@@ -26,17 +26,17 @@ namespace Content.Server.AI.Utility.Actions.Nutrition.Drink
         {
             ActionOperators = new GoPickupEntitySequence(Owner, _entity).Sequence;
         }
-        
+
         protected override void UpdateBlackboard(Blackboard context)
         {
             base.UpdateBlackboard(context);
             context.GetState<TargetEntityState>().SetValue(_entity);
         }
-        
+
         protected override IReadOnlyCollection<Func<float>> GetConsiderations(Blackboard context)
         {
             var considerationsManager = IoCManager.Resolve<ConsiderationsManager>();
-            
+
             return new[]
             {
                 considerationsManager.Get<TargetDistanceCon>()

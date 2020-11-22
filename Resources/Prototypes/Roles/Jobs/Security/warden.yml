@@ -16,11 +16,12 @@
 - type: startingGear
   id: WardenGear
   equipment:
-    innerclothing: UniformWarden
-    backpack: SecPackFilled
-    shoes: ShoesJackboots
-    eyes: SecGlasses
-    outerclothing: OuterclothingArmorVest
+    head: ClothingHeadHatWarden
+    innerclothing: ClothingUniformJumpsuitWarden
+    backpack: ClothingBackpackSecurityFilled
+    shoes: ClothingShoesBootsJack
+    eyes: ClothingEyesGlassesSecurity
+    outerclothing: ClothingOuterVestKevlar
     idcard: WardenPDA
-    ears: HeadsetSecurity
+    ears: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled

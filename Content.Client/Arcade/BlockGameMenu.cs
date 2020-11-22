@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net.Mime;
 using Content.Client.GameObjects.Components.Arcade;
 using Content.Client.Utility;
 using Content.Shared.Arcade;
-using Content.Shared.GameObjects.Components.Arcade;
 using Content.Shared.Input;
 using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
@@ -13,7 +10,6 @@ using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
@@ -22,15 +18,14 @@ namespace Content.Client.Arcade
 {
     public class BlockGameMenu : SS14Window
     {
+        private static readonly Color OverlayBackgroundColor = new Color(74,74,81,180);
+        private static readonly Color OverlayShadowColor = new Color(0,0,0,83);
 
-        private static Color overlayBackgroundColor = new Color(74,74,81,180);
-        private static Color overlayShadowColor = new Color(0,0,0,83);
+        private static readonly Vector2 BlockSize = new Vector2(15,15);
 
-        private static Vector2 blockSize = new Vector2(15,15);
+        private readonly BlockGameBoundUserInterface _owner;
 
-        private BlockGameBoundUserInterface _owner;
-
-        private PanelContainer _mainPanel;
+        private readonly PanelContainer _mainPanel;
 
         private VBoxContainer _gameRootContainer;
         private GridContainer _gameGrid;
@@ -88,7 +83,7 @@ namespace Content.Client.Arcade
             var rootBack = new StyleBoxTexture
             {
                 Texture = backgroundTexture,
-                Modulate = overlayShadowColor
+                Modulate = OverlayShadowColor
             };
             rootBack.SetPatchMargin(StyleBox.Margin.All, 10);
             _highscoresRootContainer = new PanelContainer
@@ -98,7 +93,7 @@ namespace Content.Client.Arcade
                 SizeFlagsHorizontal = SizeFlags.ShrinkCenter
             };
 
-            var c = new Color(overlayBackgroundColor.R,overlayBackgroundColor.G,overlayBackgroundColor.B,220);
+            var c = new Color(OverlayBackgroundColor.R,OverlayBackgroundColor.G,OverlayBackgroundColor.B,220);
             var innerBack = new StyleBoxTexture
             {
                 Texture = backgroundTexture,
@@ -154,7 +149,7 @@ namespace Content.Client.Arcade
             var rootBack = new StyleBoxTexture
             {
                 Texture = backgroundTexture,
-                Modulate = overlayShadowColor
+                Modulate = OverlayShadowColor
             };
             rootBack.SetPatchMargin(StyleBox.Margin.All, 10);
             _gameOverRootContainer = new PanelContainer
@@ -167,7 +162,7 @@ namespace Content.Client.Arcade
             var innerBack = new StyleBoxTexture
             {
                 Texture = backgroundTexture,
-                Modulate = overlayBackgroundColor
+                Modulate = OverlayBackgroundColor
             };
             innerBack.SetPatchMargin(StyleBox.Margin.All, 10);
             var menuInnerPanel = new PanelContainer
@@ -212,7 +207,7 @@ namespace Content.Client.Arcade
             var rootBack = new StyleBoxTexture
             {
                 Texture = backgroundTexture,
-                Modulate = overlayShadowColor
+                Modulate = OverlayShadowColor
             };
             rootBack.SetPatchMargin(StyleBox.Margin.All, 10);
             _menuRootContainer = new PanelContainer
@@ -225,7 +220,7 @@ namespace Content.Client.Arcade
             var innerBack = new StyleBoxTexture
             {
                 Texture = backgroundTexture,
-                Modulate = overlayBackgroundColor
+                Modulate = OverlayBackgroundColor
             };
             innerBack.SetPatchMargin(StyleBox.Margin.All, 10);
             var menuInnerPanel = new PanelContainer
@@ -404,7 +399,7 @@ namespace Content.Client.Arcade
             var nextBlockPanel = new PanelContainer
             {
                 PanelOverride = previewBack,
-                CustomMinimumSize = blockSize * 6.5f,
+                CustomMinimumSize = BlockSize * 6.5f,
                 SizeFlagsHorizontal = SizeFlags.None,
                 SizeFlagsVertical = SizeFlags.None
             };
@@ -442,7 +437,7 @@ namespace Content.Client.Arcade
             var holdBlockPanel = new PanelContainer
             {
                 PanelOverride = previewBack,
-                CustomMinimumSize = blockSize * 6.5f,
+                CustomMinimumSize = BlockSize * 6.5f,
                 SizeFlagsHorizontal = SizeFlags.None,
                 SizeFlagsVertical = SizeFlags.None
             };
@@ -623,7 +618,7 @@ namespace Content.Client.Arcade
                     _nextBlockGrid.AddChild(new PanelContainer
                     {
                         PanelOverride = new StyleBoxFlat {BackgroundColor = c},
-                        CustomMinimumSize = blockSize,
+                        CustomMinimumSize = BlockSize,
                         RectDrawClipMargin = 0
                     });
                 }
@@ -645,7 +640,7 @@ namespace Content.Client.Arcade
                     _holdBlockGrid.AddChild(new PanelContainer
                     {
                         PanelOverride = new StyleBoxFlat {BackgroundColor = c},
-                        CustomMinimumSize = blockSize,
+                        CustomMinimumSize = BlockSize,
                         RectDrawClipMargin = 0
                     });
                 }
@@ -663,7 +658,7 @@ namespace Content.Client.Arcade
                     _gameGrid.AddChild(new PanelContainer
                     {
                         PanelOverride = new StyleBoxFlat {BackgroundColor = c},
-                        CustomMinimumSize = blockSize,
+                        CustomMinimumSize = BlockSize,
                         RectDrawClipMargin = 0
                     });
                 }

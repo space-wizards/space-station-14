@@ -4,7 +4,6 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
@@ -17,7 +16,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
     [RegisterComponent]
     public class CursedEntityStorageComponent : EntityStorageComponent
     {
-         [Dependency] private IRobustRandom _robustRandom = default!;
+         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override string Name => "CursedEntityStorage";
 
