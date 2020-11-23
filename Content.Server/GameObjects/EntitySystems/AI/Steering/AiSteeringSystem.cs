@@ -27,7 +27,6 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         // http://www.red3d.com/cwr/papers/1999/gdc99steer.html for a steering overview
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPauseManager _pauseManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private PathfindingSystem _pathfindingSystem;
 
@@ -269,7 +268,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
 
             // Validation
             // Check if we can even arrive -> Currently only samegrid movement supported
-            if (entity.Transform.GridID != steeringRequest.TargetGrid.GetGridId(_entityManager))
+            if (entity.Transform.GridID != steeringRequest.TargetGrid.GetGridId(EntityManager))
             {
                 controller.VelocityDir = Vector2.Zero;
                 return SteeringStatus.NoPath;

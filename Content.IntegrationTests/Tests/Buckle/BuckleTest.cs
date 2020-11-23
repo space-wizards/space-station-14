@@ -21,10 +21,30 @@ namespace Content.IntegrationTests.Tests.Buckle
     [TestOf(typeof(StrapComponent))]
     public class BuckleTest : ContentIntegrationTest
     {
+        private const string PROTOTYPES = @"
+- type: entity
+  name: BuckleDummy
+  id: BuckleDummy
+  components:
+  - type: Buckle
+  - type: Transform
+  - type: Hands
+  - type: Body
+    template: HumanoidTemplate
+    preset: HumanPreset
+    centerSlot: torso
+
+- type: entity
+  name: StrapDummy
+  id: StrapDummy
+  components:
+  - type: Strap
+";
         [Test]
         public async Task BuckleUnbuckleCooldownRangeTest()
         {
-            var server = StartServerDummyTicker();
+            var options = new ServerIntegrationOptions {ExtraPrototypes = PROTOTYPES};
+            var server = StartServerDummyTicker(options);
 
             IEntity human = null;
             IEntity chair = null;
@@ -39,8 +59,8 @@ namespace Content.IntegrationTests.Tests.Buckle
 
                 var entityManager = IoCManager.Resolve<IEntityManager>();
 
-                human = entityManager.SpawnEntity("HumanMob_Content", MapCoordinates.Nullspace);
-                chair = entityManager.SpawnEntity("ChairWood", MapCoordinates.Nullspace);
+                human = entityManager.SpawnEntity("BuckleDummy", MapCoordinates.Nullspace);
+                chair = entityManager.SpawnEntity("StrapDummy", MapCoordinates.Nullspace);
 
                 // Default state, unbuckled
                 Assert.True(human.TryGetComponent(out buckle));
@@ -173,7 +193,8 @@ namespace Content.IntegrationTests.Tests.Buckle
         [Test]
         public async Task BuckledDyingDropItemsTest()
         {
-            var server = StartServer();
+            var options = new ServerIntegrationOptions {ExtraPrototypes = PROTOTYPES};
+            var server = StartServer(options);
 
             IEntity human;
             IEntity chair;
@@ -198,8 +219,8 @@ namespace Content.IntegrationTests.Tests.Buckle
 
                 grid.SetTile(coordinates, tile);
 
-                human = entityManager.SpawnEntity("HumanMob_Content", coordinates);
-                chair = entityManager.SpawnEntity("ChairWood", coordinates);
+                human = entityManager.SpawnEntity("BuckleDummy", coordinates);
+                chair = entityManager.SpawnEntity("StrapDummy", coordinates);
 
                 // Component sanity check
                 Assert.True(human.TryGetComponent(out buckle));
@@ -263,7 +284,8 @@ namespace Content.IntegrationTests.Tests.Buckle
         [Test]
         public async Task ForceUnbuckleBuckleTest()
         {
-            var server = StartServer();
+            var options = new ServerIntegrationOptions {ExtraPrototypes = PROTOTYPES};
+            var server = StartServer(options);
 
             IEntity human = null;
             IEntity chair = null;
@@ -286,8 +308,8 @@ namespace Content.IntegrationTests.Tests.Buckle
 
                 grid.SetTile(coordinates, tile);
 
-                human = entityManager.SpawnEntity("HumanMob_Content", coordinates);
-                chair = entityManager.SpawnEntity("ChairWood", coordinates);
+                human = entityManager.SpawnEntity("BuckleDummy", coordinates);
+                chair = entityManager.SpawnEntity("StrapDummy", coordinates);
 
                 // Component sanity check
                 Assert.True(human.TryGetComponent(out buckle));

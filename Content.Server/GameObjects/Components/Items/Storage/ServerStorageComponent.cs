@@ -36,8 +36,6 @@ namespace Content.Server.GameObjects.Components.Items.Storage
     [ComponentReference(typeof(IStorageComponent))]
     public class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IUse, IActivate, IStorageComponent, IDestroyAct, IExAct
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-
         private const string LoggerName = "Storage";
 
         private Container? _storage;
@@ -361,14 +359,14 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                     var ownerTransform = Owner.Transform;
                     var playerTransform = player.Transform;
 
-                    if (!playerTransform.Coordinates.InRange(_entityManager, ownerTransform.Coordinates, 2) ||
+                    if (!playerTransform.Coordinates.InRange(Owner.EntityManager, ownerTransform.Coordinates, 2) ||
                         !ownerTransform.IsMapTransform &&
                         !playerTransform.ContainsEntity(ownerTransform))
                     {
                         break;
                     }
 
-                    var entity = _entityManager.GetEntity(remove.EntityUid);
+                    var entity = Owner.EntityManager.GetEntity(remove.EntityUid);
 
                     if (entity == null || _storage?.Contains(entity) == false)
                     {

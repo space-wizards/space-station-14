@@ -27,7 +27,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         public IReadOnlyList<string> MechanismIds => _mechanismIds;
 
         [ViewVariables]
-        private HashSet<IMechanism> _mechanisms = new HashSet<IMechanism>();
+        private readonly HashSet<IMechanism> _mechanisms = new HashSet<IMechanism>();
 
         [ViewVariables]
         public IBody? Body

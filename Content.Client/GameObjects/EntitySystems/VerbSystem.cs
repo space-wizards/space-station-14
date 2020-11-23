@@ -43,7 +43,6 @@ namespace Content.Client.GameObjects.EntitySystems
     public sealed class VerbSystem : SharedVerbSystem, IResettingEntitySystem
     {
         [Dependency] private readonly IStateManager _stateManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
@@ -148,7 +147,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 return false;
             }
 
-            var mapCoordinates = args.Coordinates.ToMap(_entityManager);
+            var mapCoordinates = args.Coordinates.ToMap(EntityManager);
             var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
 
             if (playerEntity == null || !TryGetContextEntities(playerEntity, mapCoordinates, out var entities))
@@ -196,7 +195,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void FillEntityPopup(VerbSystemMessages.VerbsResponseMessage msg)
         {
-            if (_currentEntity != msg.Entity || !_entityManager.TryGetEntity(_currentEntity, out var entity))
+            if (_currentEntity != msg.Entity || !EntityManager.TryGetEntity(_currentEntity, out var entity))
             {
                 return;
             }

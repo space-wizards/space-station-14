@@ -460,7 +460,7 @@ namespace Content.Server.Administration
 
         private sealed class AdminReg
         {
-            public IPlayerSession Session;
+            public readonly IPlayerSession Session;
 
             public AdminData Data;
             public int? RankId;

@@ -27,7 +27,6 @@ namespace Content.Client.GameObjects.EntitySystems
     {
         [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private int _nextId;
         private readonly Dictionary<int, ConstructionGhostComponent> _ghosts = new Dictionary<int, ConstructionGhostComponent>();
@@ -124,7 +123,7 @@ namespace Content.Client.GameObjects.EntitySystems
             if (!args.EntityUid.IsValid() || !args.EntityUid.IsClientSide())
                 return false;
 
-            var entity = _entityManager.GetEntity(args.EntityUid);
+            var entity = EntityManager.GetEntity(args.EntityUid);
 
             if (!entity.TryGetComponent(out ConstructionGhostComponent ghostComp))
                 return false;
@@ -167,7 +166,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     return;
             }
 
-            var ghost = _entityManager.SpawnEntity("constructionghost", loc);
+            var ghost = EntityManager.SpawnEntity("constructionghost", loc);
             var comp = ghost.GetComponent<ConstructionGhostComponent>();
             comp.Prototype = prototype;
             comp.GhostID = _nextId++;

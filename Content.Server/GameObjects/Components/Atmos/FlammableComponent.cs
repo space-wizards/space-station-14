@@ -31,8 +31,6 @@ namespace Content.Server.GameObjects.Components.Atmos
     [RegisterComponent]
     public class FlammableComponent : SharedFlammableComponent, ICollideBehavior, IFireAct, IReagentReaction
     {
-        [Dependency] private IEntityManager _entityManager = default!;
-
         private bool _resisting = false;
         private readonly List<EntityUid> _collided = new List<EntityUid>();
 
@@ -137,13 +135,13 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             foreach (var uid in _collided.ToArray())
             {
-                if (!uid.IsValid() || !_entityManager.EntityExists(uid))
+                if (!uid.IsValid() || !Owner.EntityManager.EntityExists(uid))
                 {
                     _collided.Remove(uid);
                     continue;
                 }
 
-                var entity = _entityManager.GetEntity(uid);
+                var entity = Owner.EntityManager.GetEntity(uid);
                 var physics = Owner.GetComponent<IPhysicsComponent>();
                 var otherPhysics = entity.GetComponent<IPhysicsComponent>();
 

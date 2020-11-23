@@ -22,8 +22,6 @@ namespace Content.Server.GameObjects.Components.Radio
     public class HandheldRadioComponent : Component, IUse, IListen, IRadio, IActivate, IExamine
     {
         [Dependency] private readonly IChatManager _chatManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-
         public override string Name => "Radio";
 
         private RadioSystem _radioSystem = default!;
@@ -91,7 +89,7 @@ namespace Content.Server.GameObjects.Components.Radio
         public bool CanListen(string message, IEntity source)
         {
             return RadioOn &&
-                   Owner.Transform.Coordinates.TryDistance(_entityManager, source.Transform.Coordinates, out var distance) &&
+                   Owner.Transform.Coordinates.TryDistance(Owner.EntityManager, source.Transform.Coordinates, out var distance) &&
                    distance <= ListenRange;
         }
 

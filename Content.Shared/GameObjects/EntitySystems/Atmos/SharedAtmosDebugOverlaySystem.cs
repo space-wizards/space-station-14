@@ -53,5 +53,10 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
                 OverlayData = overlayData;
             }
         }
+
+        [Serializable, NetSerializable]
+        public sealed class AtmosDebugOverlayDisableMessage : EntitySystemMessage
+        {
+        }
     }
 }
