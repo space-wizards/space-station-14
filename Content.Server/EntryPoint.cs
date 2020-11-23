@@ -1,7 +1,8 @@
-﻿using Content.Server.AI.Utility.Considerations;
+﻿using Content.Server.Administration;
+using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.WorldState;
-using Content.Server.Body.Network;
 using Content.Server.Database;
+using Content.Server.Eui;
 using Content.Server.GameObjects.Components.Mobs.Speech;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.Interfaces;
@@ -10,6 +11,7 @@ using Content.Server.Interfaces.GameTicking;
 using Content.Server.Interfaces.PDA;
 using Content.Server.Sandbox;
 using Content.Shared.Kitchen;
+using Content.Shared.Alert;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Interfaces.GameObjects;
@@ -23,6 +25,7 @@ namespace Content.Server
     public class EntryPoint : GameServer
     {
         private IGameTicker _gameTicker;
+        private EuiManager _euiManager;
         private StatusShell _statusShell;
 
         /// <inheritdoc />
@@ -41,17 +44,16 @@ namespace Content.Server
 
             ServerContentIoC.Register();
 
-            if (TestingCallbacks != null)
+            foreach (var callback in TestingCallbacks)
             {
-                var cast = (ServerModuleTestingCallbacks) TestingCallbacks;
+                var cast = (ServerModuleTestingCallbacks) callback;
                 cast.ServerBeforeIoC?.Invoke();
             }
 
             IoCManager.BuildGraph();
 
-            IoCManager.Resolve<IBodyNetworkFactory>().DoAutoRegistrations();
-
             _gameTicker = IoCManager.Resolve<IGameTicker>();
+            _euiManager = IoCManager.Resolve<EuiManager>();
 
             IoCManager.Resolve<IServerNotifyManager>().Initialize();
             IoCManager.Resolve<IChatManager>().Initialize();
@@ -77,9 +79,12 @@ namespace Content.Server
 
             _gameTicker.Initialize();
             IoCManager.Resolve<RecipeManager>().Initialize();
+            IoCManager.Resolve<AlertManager>().Initialize();
             IoCManager.Resolve<BlackboardManager>().Initialize();
             IoCManager.Resolve<ConsiderationsManager>().Initialize();
             IoCManager.Resolve<IPDAUplinkManager>().Initialize();
+            IoCManager.Resolve<IAdminManager>().Initialize();
+            _euiManager.Initialize();
         }
 
         public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)
@@ -91,6 +96,11 @@ namespace Content.Server
                 case ModUpdateLevel.PreEngine:
                 {
                     _gameTicker.Update(frameEventArgs);
+                    break;
+                }
+                case ModUpdateLevel.PostEngine:
+                {
+                    _euiManager.SendUpdates();
                     break;
                 }
             }

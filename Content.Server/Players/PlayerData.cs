@@ -25,6 +25,12 @@ namespace Content.Server.Players
         [ViewVariables]
         public Mind? Mind { get; set; }
 
+        /// <summary>
+        ///     If true, the player is an admin and they explicitly de-adminned mid-game,
+        ///     so they should not regain admin if they reconnect.
+        /// </summary>
+        public bool ExplicitlyDeadminned { get; set; }
+
         public void WipeMind()
         {
             Mind?.ChangeOwningPlayer(null);

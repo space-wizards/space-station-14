@@ -19,7 +19,7 @@ namespace Content.Server.StationEvents
 
         public override StationEventWeight Weight => StationEventWeight.Normal;
 
-        public override int? MaxOccurrences => 3;
+        public override int? MaxOccurrences => 2;
 
         protected override string StartAnnouncement => Loc.GetString(
             "Abnormal activity detected in the station's powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.");
@@ -29,27 +29,25 @@ namespace Content.Server.StationEvents
 
         private float _elapsedTime;
         private int _failDuration;
-        
+
         /// <summary>
         ///     So we don't overlap the announcement with power-down sounds we'll delay it a few seconds.
         /// </summary>
         private bool _announced;
 
         private CancellationTokenSource _announceCancelToken;
-        
-        private List<IEntity> _powered = new List<IEntity>();
-        
 
-        
+        private readonly List<IEntity> _powered = new List<IEntity>();
+
         public override void Startup()
         {
             base.Startup();
 
             _announced = false;
             _elapsedTime = 0.0f;
-            _failDuration = IoCManager.Resolve<IRobustRandom>().Next(30, 120);
+            _failDuration = IoCManager.Resolve<IRobustRandom>().Next(60, 120);
             var componentManager = IoCManager.Resolve<IComponentManager>();
-            
+
             foreach (PowerReceiverComponent component in componentManager.EntityQuery<PowerReceiverComponent>())
             {
                 component.PowerDisabled = true;
@@ -64,13 +62,13 @@ namespace Content.Server.StationEvents
             foreach (var entity in _powered)
             {
                 if (entity.Deleted) continue;
-                
+
                 if (entity.TryGetComponent(out PowerReceiverComponent powerReceiverComponent))
                 {
                     powerReceiverComponent.PowerDisabled = false;
                 }
             }
-            
+
             _announceCancelToken?.Cancel();
             _announceCancelToken = new CancellationTokenSource();
             Timer.Spawn(3000, () =>
@@ -92,7 +90,7 @@ namespace Content.Server.StationEvents
                 EntitySystem.Get<AudioSystem>().PlayGlobal("/Audio/Announcements/power_off.ogg");
                 _announced = true;
             }
-            
+
             _elapsedTime += frameTime;
 
             if (_elapsedTime < _failDuration)

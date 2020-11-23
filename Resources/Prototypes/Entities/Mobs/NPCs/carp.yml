@@ -2,7 +2,7 @@
   save: false
   name: space carp
   id: CarpMob_Content
-  description:
+  description: It's a space carp.
   drawdepth: Mobs
   suffix: AI
   components:
@@ -19,11 +19,9 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: carp
       sprite: Mobs/Aliens/Carps/carp_space.rsi
-
-  - type: Clickable
   - type: Physics
+    anchored: false
     mass: 50
-  - type: Collidable
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.35,-0.35,0.35,0.35"
@@ -60,7 +58,7 @@
   name: magicarp
   parent: CarpMob_Content
   id: MagicarpMob_Content
-  description:
+  description: Looks like some kind of fish. Might be magical.
   drawdepth: Mobs
   suffix: AI
   components:
@@ -70,7 +68,6 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: magicarp
       sprite: Mobs/Aliens/Carps/carp_magic.rsi
-
   - type: Physics
     mass: 60
   - type: Appearance
@@ -84,7 +81,7 @@
   name: holocarp
   parent: CarpMob_Content
   id: HolocarpMob_Content
-  description:
+  description: Carp made out of holographic energies.
   drawdepth: Mobs
   suffix: AI
   components:
@@ -94,7 +91,6 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: holocarp
       sprite: Mobs/Aliens/Carps/carp_holo.rsi
-
   - type: Physics
     mass: 5
   - type: Appearance

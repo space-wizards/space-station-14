@@ -11,6 +11,7 @@ using Robust.Server.GameObjects.EntitySystems.TileLookup;
 using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Map;
+using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
@@ -26,7 +27,6 @@ namespace Content.Server.GameObjects.EntitySystems
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPauseManager _pauseManager = default!;
-        [Dependency] private IEntityManager _entityManager = default!;
 
         private GasReactionPrototype[] _gasReactions = Array.Empty<GasReactionPrototype>();
 
@@ -37,11 +37,6 @@ namespace Content.Server.GameObjects.EntitySystems
         ///     List of gas reactions ordered by priority.
         /// </summary>
         public IEnumerable<GasReactionPrototype> GasReactions => _gasReactions!;
-
-        /// <summary>
-        ///     EventBus reference for gas reactions.
-        /// </summary>
-        public IEventBus EventBus => _entityManager.EventBus;
 
         public GridTileLookupSystem GridTileLookupSystem => _gridTileLookup ??= Get<GridTileLookupSystem>();
 
@@ -57,6 +52,24 @@ namespace Content.Server.GameObjects.EntitySystems
             IoCManager.InjectDependencies(_spaceAtmos);
 
             _mapManager.TileChanged += OnTileChanged;
+
+            // Required for airtight components.
+            EntityManager.EventBus.SubscribeEvent<RotateEvent>(EventSource.Local, this, RotateEvent);
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            EntityManager.EventBus.UnsubscribeEvent<RotateEvent>(EventSource.Local, this);
+        }
+
+        private void RotateEvent(RotateEvent ev)
+        {
+            if (ev.Sender.TryGetComponent(out AirtightComponent? airtight))
+            {
+                airtight.RotateEvent(ev);
+            }
         }
 
         public IGridAtmosphereComponent? GetGridAtmosphere(GridId gridId)

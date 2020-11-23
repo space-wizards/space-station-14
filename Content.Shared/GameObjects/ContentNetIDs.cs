@@ -29,7 +29,7 @@
         public const uint RESEARCH_CONSOLE = 1023;
         public const uint WIRES = 1024;
         public const uint COMBATMODE = 1025;
-        public const uint STATUSEFFECTS = 1026;
+        public const uint ALERTS = 1026;
         public const uint OVERLAYEFFECTS = 1027;
         public const uint STOMACH = 1028;
         public const uint ITEMCOOLDOWN = 1029;
@@ -63,7 +63,7 @@
         public const uint GAS_ANALYZER = 1057;
         public const uint DO_AFTER = 1058;
         public const uint RADIATION_PULSE = 1059;
-        public const uint BODY_MANAGER = 1060;
+        public const uint BODY = 1060;
         public const uint CLIMBING = 1061;
         public const uint BOLTACTION_BARREL = 1062;
         public const uint PUMP_BARREL = 1063;
@@ -77,6 +77,14 @@
         public const uint SLIP = 1071;
         public const uint SPACE_VILLAIN_ARCADE = 1072;
         public const uint BLOCKGAME_ARCADE = 1073;
+        public const uint BODY_PART = 1074;
+        public const uint CRAYONS = 1075;
+        public const uint PLACEABLE_SURFACE = 1076;
+        public const uint STORABLE = 1077;
+        public const uint PULLABLE = 1078;
+        public const uint GAS_TANK = 1079;
+        public const uint SINGULARITY = 1080;
+        public const uint CHARACTERINFO = 1081;
 
         // Net IDs for integration tests.
         public const uint PREDICTION_TEST = 10001;

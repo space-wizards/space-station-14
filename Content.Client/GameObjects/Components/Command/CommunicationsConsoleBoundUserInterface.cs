@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Client.Command;
 using Content.Shared.GameObjects.Components.Command;
 using Robust.Client.GameObjects.Components.UserInterface;
@@ -69,6 +69,7 @@ namespace Content.Client.GameObjects.Components.Command
         {
             base.Dispose(disposing);
             if (!disposing) return;
+
             _menu?.Dispose();
         }
     }

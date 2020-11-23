@@ -40,10 +40,10 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-            if (!disposing) return;
-            _strippingMenu.Dispose();
+            if (!disposing)
+                return;
 
-            _strippingMenu.Close();
+            _strippingMenu.Dispose();
         }
 
         private void UpdateMenu()

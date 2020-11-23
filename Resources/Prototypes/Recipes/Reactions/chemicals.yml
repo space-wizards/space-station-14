@@ -134,3 +134,47 @@
       flashRange: 0.2
       scaled: true #Scaled proportionally to amount of potassium and water
       maxScale: 30 #Explosion strength stops scaling at 30 potassium + 30 water
+
+- type: reaction
+  id: react.EZNutrient
+  reactants:
+    chem.N:
+      amount: 1
+    chem.P:
+      amount: 1
+    chem.K:
+      amount: 1
+  products:
+    chem.EZNutrient: 3
+
+- type: reaction
+  id: react.RobustHarvest
+  reactants:
+    chem.EZNutrient:
+      amount: 1
+    chem.H2SO4:
+      amount: 1
+      catalyst: true
+  products:
+    chem.RobustHarvest: 1
+
+- type: reaction
+  id: react.Left4Zed
+  reactants:
+    chem.EZNutrient:
+      amount: 1
+    chem.Ra:
+      amount: 1
+      catalyst: true
+  products:
+    chem.Left4Zed: 1
+
+- type: reaction
+  id: react.PlantBGone
+  reactants:
+    chem.Toxin:
+      amount: 1
+    chem.H2O:
+      amount: 4
+  products:
+    chem.PlantBGone: 5

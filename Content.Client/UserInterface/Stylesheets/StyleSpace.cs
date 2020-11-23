@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using Content.Client.Utility;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.ResourceManagement;
@@ -27,8 +27,8 @@ namespace Content.Client.UserInterface.Stylesheets
 
         public StyleSpace(IResourceCache resCache) : base(resCache)
         {
-            var notoSans10 = resCache.GetFont("/Textures/Interface/Nano/NotoSans/NotoSans-Regular.ttf", 10);
-            var notoSansBold16 = resCache.GetFont("/Textures/Interface/Nano/NotoSans/NotoSans-Bold.ttf", 16);
+            var notoSans10 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 10);
+            var notoSansBold16 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Bold.ttf", 16);
 
             Stylesheet = new Stylesheet(BaseRules.Concat(new StyleRule[]
             {

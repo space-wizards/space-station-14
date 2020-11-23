@@ -3,6 +3,7 @@ using Content.Client.GameObjects.Components.HUD.Inventory;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.Interfaces;
 using Content.Shared;
+using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Client.Interfaces.GameObjects.Components;
@@ -22,8 +23,8 @@ namespace Content.Client.UserInterface
         private readonly IClientPreferencesManager _preferencesManager;
         private IEntity _previewDummy;
         private readonly Label _summaryLabel;
-        private VBoxContainer _loaded;
-        private Label _unloaded;
+        private readonly VBoxContainer _loaded;
+        private readonly Label _unloaded;
 
         public LobbyCharacterPreviewPanel(IEntityManager entityManager,
             IClientPreferencesManager preferencesManager)

@@ -1,12 +1,13 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
@@ -23,9 +24,11 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
     {
         [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
 
+        [ViewVariables] [ComponentDependency] private readonly IPhysicsComponent? _physicsComponent = null;
+
         public override string Name => "PowerReceiver";
 
-        public event EventHandler<PowerStateEventArgs> OnPowerStateChanged;
+        public event EventHandler<PowerStateEventArgs>? OnPowerStateChanged;
 
         [ViewVariables]
         public bool Powered => (HasApcPower || !NeedsPower) && !PowerDisabled;
@@ -50,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         /// </summary>
         public bool Connectable => Anchored;
 
-        private bool Anchored => !Owner.TryGetComponent<ICollidableComponent>(out var collidable) || collidable.Anchored;
+        private bool Anchored => _physicsComponent == null || _physicsComponent.Anchored;
 
         [ViewVariables]
         public bool NeedsProvider { get; private set; } = true;
@@ -92,18 +95,18 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
             {
                 TryFindAndSetProvider();
             }
-            if (Owner.TryGetComponent<ICollidableComponent>(out var collidable))
+            if (_physicsComponent != null)
             {
                 AnchorUpdate();
-                collidable.AnchoredChanged += AnchorUpdate;
+                _physicsComponent.AnchoredChanged += AnchorUpdate;
             }
         }
 
         public override void OnRemove()
         {
-            if (Owner.TryGetComponent<ICollidableComponent>(out var collidable))
+            if (_physicsComponent != null)
             {
-                collidable.AnchoredChanged -= AnchorUpdate;
+                _physicsComponent.AnchoredChanged -= AnchorUpdate;
             }
             _provider.RemoveReceiver(this);
             base.OnRemove();
@@ -139,7 +142,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
                     }
                 }
             }
-            foundProvider = default;
+            foundProvider = default!;
             return false;
         }
 
@@ -204,7 +207,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         private void OnNewPowerState()
         {
             OnPowerStateChanged?.Invoke(this, new PowerStateEventArgs(Powered));
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            if (Owner.TryGetComponent<AppearanceComponent>(out var appearance))
             {
                 appearance.SetData(PowerDeviceVisuals.Powered, Powered);
             }
@@ -230,7 +233,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddMarkup(Loc.GetString("It appears to be {0}.", this.Powered ? "[color=darkgreen]powered[/color]" : "[color=darkred]un-powered[/color]"));
+            message.AddMarkup(Loc.GetString("It appears to be {0}.", Powered ? "[color=darkgreen]powered[/color]" : "[color=darkred]un-powered[/color]"));
         }
     }
 

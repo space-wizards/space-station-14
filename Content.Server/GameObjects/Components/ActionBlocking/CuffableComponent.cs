@@ -6,6 +6,7 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.ActionBlocking;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
@@ -114,8 +115,8 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             _container.Insert(handcuff);
             CanStillInteract = _hands.Hands.Count() > CuffedHandCount;
 
-            OnCuffedStateChanged.Invoke();
-            UpdateStatusEffect();
+            OnCuffedStateChanged?.Invoke();
+            UpdateAlert();
             UpdateHeldItems();
             Dirty();
         }
@@ -163,12 +164,12 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
             if (freeHandCount < itemCount)
             {
-                foreach (ItemComponent item in _hands.GetAllHeldItems())
+                foreach (var item in _hands.GetAllHeldItems())
                 {
                     if (freeHandCount < itemCount)
                     {
                         freeHandCount++;
-                        _hands.Drop(item.Owner);
+                        _hands.Drop(item.Owner, false);
                     }
                     else
                     {
@@ -181,17 +182,17 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         /// <summary>
         /// Updates the status effect indicator on the HUD.
         /// </summary>
-        private void UpdateStatusEffect()
+        private void UpdateAlert()
         {
-            if (Owner.TryGetComponent(out ServerStatusEffectsComponent status))
+            if (Owner.TryGetComponent(out ServerAlertsComponent status))
             {
                 if (CanStillInteract)
                 {
-                    status.RemoveStatusEffect(StatusEffect.Cuffed);
+                    status.ClearAlert(AlertType.Handcuffed);
                 }
                 else
                 {
-                    status.ChangeStatusEffectIcon(StatusEffect.Cuffed, "/Textures/Interface/StatusEffects/Handcuffed/Handcuffed.png");
+                    status.ShowAlert(AlertType.Handcuffed);
                 }
             }
         }
@@ -230,7 +231,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
                 return;
             }
 
-            if (!isOwner && user.InRangeUnobstructed(Owner, _interactRange))
+            if (!isOwner && !user.InRangeUnobstructed(Owner, _interactRange))
             {
                 user.PopupMessage(Loc.GetString("You are too far away to remove the cuffs."));
                 return;
@@ -282,7 +283,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
                 CanStillInteract = _hands.Hands.Count() > CuffedHandCount;
                 OnCuffedStateChanged.Invoke();
-                UpdateStatusEffect();
+                UpdateAlert();
                 Dirty();
 
                 if (CuffedHandCount == 0)

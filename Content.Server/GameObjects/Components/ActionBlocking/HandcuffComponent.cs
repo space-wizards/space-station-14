@@ -110,7 +110,6 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         // Non-exposed data fields
         private bool _isBroken = false;
         private float _interactRange;
-        private DoAfterSystem _doAfterSystem;
         private AudioSystem _audioSystem;
 
         public override void Initialize()
@@ -118,7 +117,6 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             base.Initialize();
 
             _audioSystem = EntitySystem.Get<AudioSystem>();
-            _doAfterSystem = EntitySystem.Get<DoAfterSystem>();
             _interactRange = SharedInteractionSystem.InteractionRange / 2;
         }
 
@@ -213,7 +211,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
                 NeedHand = true
             };
 
-            var result = await _doAfterSystem.DoAfter(doAfterEventArgs);
+            var result = await EntitySystem.Get<DoAfterSystem>().DoAfter(doAfterEventArgs);
 
             if (result != DoAfterStatus.Cancelled)
             {

@@ -199,7 +199,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
                     }
 
                     intermediate = pathfindingSystem.GetNode(grid.GetTileRef(
-                        new MapIndices(intermediate.TileRef.X + xOffset, intermediate.TileRef.Y + yOffset)));
+                        new Vector2i(intermediate.TileRef.X + xOffset, intermediate.TileRef.Y + yOffset)));
 
                     if (intermediate.TileRef != current.TileRef)
                     {

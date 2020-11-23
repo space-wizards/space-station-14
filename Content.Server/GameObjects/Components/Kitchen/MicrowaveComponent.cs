@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Body;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -14,6 +13,7 @@ using Content.Server.Interfaces.GameObjects;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -26,6 +26,7 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -40,7 +41,6 @@ namespace Content.Server.GameObjects.Components.Kitchen
     [ComponentReference(typeof(IActivate))]
     public class MicrowaveComponent : SharedMicrowaveComponent, IActivate, IInteractUsing, ISolutionChange, ISuicideAct
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly RecipeManager _recipeManager = default!;
 
         #region YAMLSERIALIZE
@@ -312,7 +312,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                            (_currentCookTimerTime == (uint)recipeToCook.CookTime);
             SetAppearance(MicrowaveVisualState.Cooking);
             _audioSystem.PlayFromEntity(_startCookingSound, Owner, AudioParams.Default);
-            Timer.Spawn((int)(_currentCookTimerTime * _cookTimeMultiplier), (Action)(() =>
+            Owner.SpawnTimer((int)(_currentCookTimerTime * _cookTimeMultiplier), (Action)(() =>
             {
                 if (_lostPower)
                 {
@@ -339,7 +339,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                     if (recipeToCook != null)
                     {
                         var entityToSpawn = goodMeal ? recipeToCook.Result : _badRecipeName;
-                        _entityManager.SpawnEntity(entityToSpawn, Owner.Transform.Coordinates);
+                        Owner.EntityManager.SpawnEntity(entityToSpawn, Owner.Transform.Coordinates);
                     }
                 }
                 _audioSystem.PlayFromEntity(_cookingCompleteSound, Owner, AudioParams.Default.WithVolume(-1f));
@@ -390,9 +390,9 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         private void EjectSolid(EntityUid entityID)
         {
-            if (_entityManager.EntityExists(entityID))
+            if (Owner.EntityManager.EntityExists(entityID))
             {
-                _storage.Remove(_entityManager.GetEntity(entityID));
+                _storage.Remove(Owner.EntityManager.GetEntity(entityID));
             }
         }
 
@@ -477,27 +477,37 @@ namespace Content.Server.GameObjects.Components.Kitchen
         public SuicideKind Suicide(IEntity victim, IChatManager chat)
         {
             var headCount = 0;
-            if (victim.TryGetComponent<BodyManagerComponent>(out var bodyManagerComponent))
+
+            if (victim.TryGetComponent<IBody>(out var body))
             {
-                var heads = bodyManagerComponent.GetPartsOfType(BodyPartType.Head);
+                var heads = body.GetPartsOfType(BodyPartType.Head);
                 foreach (var head in heads)
                 {
-                    var droppedHead = bodyManagerComponent.DropPart(head);
-
-                    if (droppedHead == null)
+                    if (!body.TryDropPart(head, out var dropped))
                     {
                         continue;
                     }
 
-                    _storage.Insert(droppedHead);
-                    headCount++;
+                    var droppedHeads = dropped.Where(p => p.PartType == BodyPartType.Head);
+
+                    foreach (var droppedHead in droppedHeads)
+                    {
+                        _storage.Insert(droppedHead.Owner);
+                        headCount++;
+                    }
                 }
             }
 
-            var othersMessage = Loc.GetString("{0:theName} is trying to cook {0:their} head!", victim);
+            var othersMessage = headCount > 1
+                ? Loc.GetString("{0:theName} is trying to cook {0:their} heads!", victim)
+                : Loc.GetString("{0:theName} is trying to cook {0:their} head!", victim);
+
             victim.PopupMessageOtherClients(othersMessage);
 
-            var selfMessage = Loc.GetString("You cook your head!");
+            var selfMessage = headCount > 1
+                ? Loc.GetString("You cook your heads!")
+                : Loc.GetString("You cook your head!");
+
             victim.PopupMessage(selfMessage);
 
             _currentCookTimerTime = 10;

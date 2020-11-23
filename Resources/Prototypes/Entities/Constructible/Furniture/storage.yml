@@ -9,19 +9,31 @@
   - type: Sprite
     sprite: Constructible/Misc/furniture.rsi
     state: rack
-  - type: Collidable
+  - type: Physics
+    mass: 25
+    anchored: true
     shapes:
     - !type:PhysShapeAabb
+      bounds: "-0.4,-0.4,0.4,0.4"
       layer:
       - Opaque
       - Impassable
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+  - type: Pullable
+  - type: Anchorable
   - type: Destructible
     deadThreshold: 30
     destroySound: /Audio/Effects/metalbreak.ogg
-    spawnOnDestroy: MetalSheet1
+    spawnOnDestroy:
+      SteelSheet1:
+        Min: 1
+        Max: 1
     resistances: metallicResistances
 
 - type: entity
@@ -35,17 +47,29 @@
   - type: Sprite
     sprite: Constructible/Misc/furniture.rsi
     state: shelf
-  - type: Collidable
+  - type: Physics
+    mass: 25
+    anchored: true
     shapes:
     - !type:PhysShapeAabb
+      bounds: "-0.4,-0.4,0.4,0.4"
       layer:
       - Opaque
       - Impassable
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+  - type: Pullable
+  - type: Anchorable
   - type: Destructible
     deadThreshold: 30
     destroySound: /Audio/Effects/metalbreak.ogg
-    spawnOnDestroy: MetalSheet1
+    spawnOnDestroy:
+      SteelSheet1:
+        Min: 1
+        Max: 1
     resistances: metallicResistances

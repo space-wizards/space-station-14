@@ -16,7 +16,6 @@
       state: generic
       state_closed: blue_door
 
-
 # Pink wardrobe
 - type: entity
   id: WardrobePink
@@ -28,7 +27,6 @@
     - type: StorageVisualizer
       state: generic
       state_closed: pink_door
-
 
 # Black wardrobe
 - type: entity
@@ -42,7 +40,6 @@
       state: generic
       state_closed: black_door
 
-
 # Green wardrobe
 - type: entity
   id: WardrobeGreen
@@ -54,7 +51,6 @@
     - type: StorageVisualizer
       state: generic
       state_closed: green_door
-
 
 # Prison wardrobe
 - type: entity
@@ -68,7 +64,6 @@
       state: generic
       state_closed: orange_door
 
-
 # Yellow wardrobe
 - type: entity
   id: WardrobeYellow
@@ -80,7 +75,6 @@
     - type: StorageVisualizer
       state: generic
       state_closed: yellow_door
-
 
 # White wardrobe
 - type: entity
@@ -94,7 +88,6 @@
       state: generic
       state_closed: white_door
 
-
 # Grey wardrobe
 - type: entity
   id: WardrobeGrey
@@ -107,7 +100,6 @@
       state: generic
       state_closed: grey_door
 
-
 # Mixed wardrobe
 - type: entity
   id: WardrobeMixed
@@ -119,4 +111,3 @@
     - type: StorageVisualizer
       state: generic
       state_closed: mixed_door
-

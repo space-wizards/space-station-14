@@ -1,11 +1,7 @@
 ﻿#nullable enable
 using System;
-using Content.Shared.Physics.Pull;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Items
 {
@@ -13,42 +9,6 @@ namespace Content.Shared.GameObjects.Components.Items
     {
         public sealed override string Name => "Hands";
         public sealed override uint? NetID => ContentNetIDs.HANDS;
-
-        [ViewVariables]
-        public ICollidableComponent? PulledObject { get; protected set; }
-
-        [ViewVariables]
-        protected bool IsPulling => PulledObject != null;
-
-        public virtual void StopPull()
-        {
-            if (PulledObject != null &&
-                PulledObject.TryGetController(out PullController controller))
-            {
-                controller.StopPull();
-            }
-        }
-
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-
-            if (!(message is PullMessage pullMessage) ||
-                pullMessage.Puller.Owner != Owner)
-            {
-                return;
-            }
-
-            switch (message)
-            {
-                case PullStartedMessage msg:
-                    PulledObject = msg.Pulled;
-                    break;
-                case PullStoppedMessage _:
-                    PulledObject = null;
-                    break;
-            }
-        }
     }
 
     [Serializable, NetSerializable]
@@ -58,13 +18,15 @@ namespace Content.Shared.GameObjects.Components.Items
         public readonly string Name;
         public readonly EntityUid? EntityUid;
         public readonly HandLocation Location;
+        public readonly bool Enabled;
 
-        public SharedHand(int index, string name, EntityUid? entityUid, HandLocation location)
+        public SharedHand(int index, string name, EntityUid? entityUid, HandLocation location, bool enabled)
         {
             Index = index;
             Name = name;
             EntityUid = entityUid;
             Location = location;
+            Enabled = enabled;
         }
     }
 
@@ -130,6 +92,28 @@ namespace Content.Shared.GameObjects.Components.Items
         {
             Directed = true;
             Index = index;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class HandEnabledMsg : ComponentMessage
+    {
+        public string Name { get; }
+
+        public HandEnabledMsg(string name)
+        {
+            Name = name;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class HandDisabledMsg : ComponentMessage
+    {
+        public string Name { get; }
+
+        public HandDisabledMsg(string name)
+        {
+            Name = name;
         }
     }
 

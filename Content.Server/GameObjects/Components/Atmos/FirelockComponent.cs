@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Doors;
 using Content.Server.GameObjects.Components.Interactable;
-using Content.Server.Interfaces;
 using Content.Shared.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces;
@@ -11,11 +9,11 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
     [RegisterComponent]
+    [ComponentReference(typeof(ServerDoorComponent))]
     public class FirelockComponent : ServerDoorComponent, IInteractUsing, ICollideBehavior
     {
         public override string Name => "Firelock";
@@ -39,17 +37,13 @@ namespace Content.Server.GameObjects.Components.Atmos
                 airtightComponent.AirBlocked = false;
             }
 
-            if (Owner.TryGetComponent(out ICollidableComponent collidableComponent))
+            if (Owner.TryGetComponent(out IPhysicsComponent physics))
             {
-                collidableComponent.Hard = false;
+                physics.CanCollide = false;
             }
 
+            AutoClose = false;
             Safety = false;
-
-            if (Occludes && Owner.TryGetComponent(out OccluderComponent occluder))
-            {
-                occluder.Enabled = false;
-            }
 
             State = DoorState.Open;
             SetAppearance(DoorVisualState.Open);
@@ -73,31 +67,39 @@ namespace Content.Server.GameObjects.Components.Atmos
         public override bool CanClose(IEntity user) => true;
         public override bool CanOpen(IEntity user) => CanOpen();
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        public override async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
+            if (await base.InteractUsing(eventArgs))
+                return false;
+
             if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
                 return false;
 
-            if (tool.HasQuality(ToolQuality.Prying))
+            if (tool.HasQuality(ToolQuality.Prying) && !IsWeldedShut)
             {
                 var holdingPressure = IsHoldingPressure();
                 var holdingFire = IsHoldingFire();
 
                 if (State == DoorState.Closed)
                 {
-                    if(holdingPressure)
+                    if (holdingPressure)
                         Owner.PopupMessage(eventArgs.User, "A gush of air blows in your face... Maybe you should reconsider.");
                 }
 
-                if (!await tool.UseTool(eventArgs.User, Owner, holdingPressure || holdingFire ? 1.5f : 0.25f, ToolQuality.Prying)) return false;
-
+                if (IsWeldedShut || !await tool.UseTool(eventArgs.User, Owner, holdingPressure || holdingFire ? 1.5f : 0.25f, ToolQuality.Prying)) return false;
                 if (State == DoorState.Closed)
+                {
                     Open();
+                }
                 else if (State == DoorState.Open)
+                {
                     Close();
+                }
+
 
                 return true;
             }
+
 
             return false;
         }

@@ -1,20 +1,33 @@
-﻿using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+﻿using Content.Shared.GameObjects.Components.Storage;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
 {
     [RegisterComponent]
-    public class StorableComponent : Component
+    [ComponentReference(typeof(SharedStorableComponent))]
+    public class StorableComponent : SharedStorableComponent
     {
-        public override string Name => "Storable";
+        private int _size;
 
-        public int ObjectSize;
-
-        public override void ExposeData(ObjectSerializer serializer)
+        public override int Size
         {
-            base.ExposeData(serializer);
+            get => _size;
+            set
+            {
+                if (_size == value)
+                {
+                    return;
+                }
 
-            serializer.DataField(ref ObjectSize, "size", 1);
+                _size = value;
+
+                Dirty();
+            }
+        }
+
+        public override ComponentState GetComponentState()
+        {
+            return new StorableComponentState(_size);
         }
     }
 

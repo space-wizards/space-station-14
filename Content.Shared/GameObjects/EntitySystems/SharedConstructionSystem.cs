@@ -76,28 +76,5 @@ namespace Content.Shared.GameObjects.EntitySystems
                 GhostId = ghostId;
             }
         }
-
-        public void DoExamine(FormattedMessage message, ConstructionPrototype prototype, int stage, bool inDetailRange)
-        {
-            var stages = prototype.Stages;
-            if (stage >= 0 && stage < stages.Count)
-            {
-                var curStage = stages[stage];
-                if (curStage.Backward != null && curStage.Backward is ConstructionStepTool)
-                {
-                    var backward = (ConstructionStepTool) curStage.Backward;
-                    message.AddText(Loc.GetString("To deconstruct: {0}x {1} Tool", backward.Amount, backward.ToolQuality));
-                }
-                if (curStage.Forward != null && curStage.Forward is ConstructionStepMaterial)
-                {
-                    if (curStage.Backward != null)
-                    {
-                        message.AddText("\n");
-                    }
-                    var forward = (ConstructionStepMaterial) curStage.Forward;
-                    message.AddText(Loc.GetString("To construct: {0}x {1}", forward.Amount, forward.Material));
-                }
-            }
-        }
     }
 }

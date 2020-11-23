@@ -1,22 +1,22 @@
-﻿using Content.Server.GameObjects.Components;
+﻿using Content.Server.Interfaces;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Map;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
-    internal sealed class ListeningSystem : EntitySystem
+    [UsedImplicitly]
+    public class ListeningSystem : EntitySystem
     {
-        public void PingListeners(IEntity source, EntityCoordinates sourcePos, string message)
+        public void PingListeners(IEntity source, string message)
         {
-            foreach (var listener in ComponentManager.EntityQuery<ListeningComponent>())
+            foreach (var listener in ComponentManager.EntityQuery<IListen>())
             {
-                if (!sourcePos.TryDistance(EntityManager, listener.Owner.Transform.Coordinates, out var distance))
+                // TODO: Map Position distance
+                if (listener.CanListen(message, source))
                 {
-                    return;
+                    listener.Listen(message, source);
                 }
-
-                listener.PassSpeechData(message, source, distance);
             }
         }
     }

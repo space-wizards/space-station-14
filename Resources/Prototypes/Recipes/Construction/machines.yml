@@ -1,25 +1,12 @@
 ﻿- type: construction
-  name: wall light
-  id: WallLight
-  keywords: [fixture, lamp]
+  name: computer
+  id: Computer
+  graph: computer
+  startNode: start
+  targetNode: computer
   category: Machines
-  description: A simple wall-mounted light fixture.
-  placementMode: SnapgridBorder
-  canBuildInImpassable: true
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
   icon:
-    sprite: Constructible/Lighting/lighting.rsi
-    state: on
-  result: Poweredlight
-  steps:
-  - material: Metal
-    amount: 1
-    icon:
-      sprite: Constructible/Lighting/lighting.rsi
-      state: construct
-  - material: Cable
-    amount: 1
-    icon:
-      sprite: Constructible/Lighting/lighting.rsi
-      state: empty
-  - material: Glass
-    amount: 1
+    sprite: Constructible/Misc/stock_parts.rsi
+    state: 4

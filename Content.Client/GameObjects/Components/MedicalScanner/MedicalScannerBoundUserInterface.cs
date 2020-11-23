@@ -1,4 +1,4 @@
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using static Content.Shared.GameObjects.Components.Medical.SharedMedicalScannerComponent;
@@ -30,6 +30,14 @@ namespace Content.Client.GameObjects.Components.MedicalScanner
         {
             base.UpdateState(state);
             _window.Populate((MedicalScannerBoundUserInterfaceState) state);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            if (!disposing)
+                return;
+            _window.Dispose();
         }
     }
 }

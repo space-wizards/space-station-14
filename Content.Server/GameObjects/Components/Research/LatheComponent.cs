@@ -16,6 +16,7 @@ using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
 
@@ -124,7 +125,7 @@ namespace Content.Server.GameObjects.Components.Research
             State = LatheState.Producing;
             SetAppearance(LatheVisualState.Producing);
 
-            Timer.Spawn(recipe.CompleteTime, () =>
+            Owner.SpawnTimer(recipe.CompleteTime, () =>
             {
                 Producing = false;
                 _producingRecipe = null;
@@ -195,7 +196,7 @@ namespace Content.Server.GameObjects.Components.Research
                     break;
             }
 
-            Timer.Spawn(InsertionTime, () =>
+            Owner.SpawnTimer(InsertionTime, () =>
             {
                 State = LatheState.Base;
                 SetAppearance(LatheVisualState.Idle);

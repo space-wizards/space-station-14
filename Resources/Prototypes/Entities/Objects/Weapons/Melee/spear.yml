@@ -7,8 +7,6 @@
     sprite: Objects/Weapons/Melee/spear.rsi
     state: spear
 
-
-
   - type: MeleeWeapon
     range: 1.5
     arcwidth: 0
@@ -18,6 +16,10 @@
     size: 24
     sprite: Objects/Weapons/Melee/spear.rsi
     prefix: inhand
+
+  - type: Construction
+    graph: spear
+    node: spear
 
   - type: ItemCooldown
 

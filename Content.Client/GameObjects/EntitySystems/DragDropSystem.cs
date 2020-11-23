@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using Content.Client.Interfaces.GameObjects.Components.Interaction;
 using Content.Client.State;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces.GameObjects.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.EntitySystems;
@@ -30,7 +30,6 @@ namespace Content.Client.GameObjects.EntitySystems
     public class DragDropSystem : EntitySystem
     {
         [Dependency] private readonly IStateManager _stateManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -52,7 +51,7 @@ namespace Content.Client.GameObjects.EntitySystems
         // entity performing the drag action
         private IEntity _dragger;
         private IEntity _draggedEntity;
-        private readonly List<IClientDraggable> _draggables = new List<IClientDraggable>();
+        private readonly List<IDraggable> _draggables = new List<IDraggable>();
         private IEntity _dragShadow;
         private DragState _state;
         // time since mouse down over the dragged entity
@@ -72,7 +71,7 @@ namespace Content.Client.GameObjects.EntitySystems
         private SharedInteractionSystem _interactionSystem;
         private InputSystem _inputSystem;
 
-        private List<SpriteComponent> highlightedSprites = new List<SpriteComponent>();
+        private readonly List<SpriteComponent> _highlightedSprites = new List<SpriteComponent>();
 
         private enum DragState
         {
@@ -137,7 +136,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
             // possibly initiating a drag
             // check if the clicked entity is draggable
-            if (_entityManager.TryGetEntity(args.EntityUid, out var entity))
+            if (EntityManager.TryGetEntity(args.EntityUid, out var entity))
             {
                 // check if the entity is reachable
                 if (!_interactionSystem.InRangeUnobstructed(dragger, entity))
@@ -146,10 +145,10 @@ namespace Content.Client.GameObjects.EntitySystems
                 }
 
                 var canDrag = false;
-                foreach (var draggable in entity.GetAllComponents<IClientDraggable>())
+                foreach (var draggable in entity.GetAllComponents<IDraggable>())
                 {
-                    var dragEventArgs = new CanDragEventArgs(args.Session.AttachedEntity, entity);
-                    if (draggable.ClientCanDrag(dragEventArgs))
+                    var dragEventArgs = new StartDragDropEventArgs(args.Session.AttachedEntity, entity);
+                    if (draggable.CanStartDrag(dragEventArgs))
                     {
                         // wait to initiate a drag
                         _dragger = dragger;
@@ -202,19 +201,26 @@ namespace Content.Client.GameObjects.EntitySystems
             foreach (var entity in entities)
             {
                 // check if it's able to be dropped on by current dragged entity
-                var canDropArgs = new CanDropEventArgs(_dragger, _draggedEntity, entity);
-                var anyValidDraggable = _draggables.Any(draggable => draggable.ClientCanDropOn(canDropArgs));
+                var dropArgs = new DragDropEventArgs(_dragger, args.Coordinates, _draggedEntity, entity);
 
-                if (anyValidDraggable)
+                foreach (var draggable in _draggables)
                 {
+                    if (!draggable.CanDrop(dropArgs))
+                    {
+                        continue;
+                    }
+
                     // tell the server about the drop attempt
                     RaiseNetworkEvent(new DragDropMessage(args.Coordinates, _draggedEntity.Uid,
                         entity.Uid));
+
+                    draggable.Drop(dropArgs);
 
                     CancelDrag(false, null);
                     return true;
                 }
             }
+
             CancelDrag(false, null);
             return false;
         }
@@ -234,13 +240,17 @@ namespace Content.Client.GameObjects.EntitySystems
                 _state = DragState.Dragging;
                 // pop up drag shadow under mouse
                 var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
-                _dragShadow = _entityManager.SpawnEntity("dragshadow", mousePos);
+                _dragShadow = EntityManager.SpawnEntity("dragshadow", mousePos);
                 var dragSprite = _dragShadow.GetComponent<SpriteComponent>();
                 dragSprite.CopyFrom(draggedSprite);
                 dragSprite.RenderOrder = EntityManager.CurrentTick.Value;
                 dragSprite.Color = dragSprite.Color.WithAlpha(0.7f);
                 // keep it on top of everything
                 dragSprite.DrawDepth = (int) DrawDepth.Overlays;
+                if (dragSprite.Directional)
+                {
+                    _dragShadow.Transform.WorldRotation = _draggedEntity.Transform.WorldRotation;
+                }
 
                 HighlightTargets();
             }
@@ -279,8 +289,8 @@ namespace Content.Client.GameObjects.EntitySystems
                     if (inRangeSprite.Visible == false) continue;
 
                     // check if it's able to be dropped on by current dragged entity
-                    var canDropArgs = new CanDropEventArgs(_dragger, _draggedEntity, pvsEntity);
-                    var anyValidDraggable = _draggables.Any(draggable => draggable.ClientCanDropOn(canDropArgs));
+                    var canDropArgs = new CanDropEventArgs(_dragger,  _draggedEntity, pvsEntity);
+                    var anyValidDraggable = _draggables.Any(draggable => draggable.CanDrop(canDropArgs));
 
                     if (anyValidDraggable)
                     {
@@ -288,7 +298,7 @@ namespace Content.Client.GameObjects.EntitySystems
                         var inRange = _interactionSystem.InRangeUnobstructed(_dragger, pvsEntity);
                         inRangeSprite.PostShader = inRange ? _dropTargetInRangeShader : _dropTargetOutOfRangeShader;
                         inRangeSprite.RenderOrder = EntityManager.CurrentTick.Value;
-                        highlightedSprites.Add(inRangeSprite);
+                        _highlightedSprites.Add(inRangeSprite);
                     }
                 }
             }
@@ -296,12 +306,12 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void RemoveHighlights()
         {
-            foreach (var highlightedSprite in highlightedSprites)
+            foreach (var highlightedSprite in _highlightedSprites)
             {
                 highlightedSprite.PostShader = null;
                 highlightedSprite.RenderOrder = 0;
             }
-            highlightedSprites.Clear();
+            _highlightedSprites.Clear();
         }
 
         /// <summary>
@@ -317,7 +327,7 @@ namespace Content.Client.GameObjects.EntitySystems
             RemoveHighlights();
             if (_dragShadow != null)
             {
-                _entityManager.DeleteEntity(_dragShadow);
+                EntityManager.DeleteEntity(_dragShadow);
             }
 
             _dragShadow = null;

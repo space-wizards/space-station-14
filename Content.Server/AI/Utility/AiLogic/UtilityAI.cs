@@ -151,12 +151,12 @@ namespace Content.Server.AI.Utility.AiLogic
         private void DeathHandle(HealthChangedEventArgs eventArgs)
         {
             var oldDeadState = _isDead;
-            _isDead = eventArgs.Damageable.CurrentDamageState == DamageState.Dead || eventArgs.Damageable.CurrentDamageState == DamageState.Critical;
+            _isDead = eventArgs.Damageable.CurrentState == DamageState.Dead || eventArgs.Damageable.CurrentState == DamageState.Critical;
 
             if (oldDeadState != _isDead)
             {
                 var entityManager = IoCManager.Resolve<IEntityManager>();
-                
+
                 switch (_isDead)
                 {
                     case true:

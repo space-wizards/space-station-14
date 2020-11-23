@@ -16,6 +16,7 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -152,7 +153,7 @@ namespace Content.Server.GameObjects.Components.Items.RCD
 
         }
 
-        private bool IsRCDStillValid(AfterInteractEventArgs eventArgs, IMapGrid mapGrid, TileRef tile, MapIndices snapPos, RcdMode startingMode)
+        private bool IsRCDStillValid(AfterInteractEventArgs eventArgs, IMapGrid mapGrid, TileRef tile, Vector2i snapPos, RcdMode startingMode)
         {
             //Less expensive checks first. Failing those ones, we need to check that the tile isn't obstructed.
             if (_ammo <= 0)

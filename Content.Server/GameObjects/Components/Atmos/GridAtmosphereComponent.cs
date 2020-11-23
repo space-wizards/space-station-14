@@ -8,6 +8,7 @@ using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Atmos.Piping;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.Atmos;
 using Content.Shared.Atmos;
 using Content.Shared.Maps;
 using Robust.Server.GameObjects.EntitySystems.TileLookup;
@@ -20,6 +21,7 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
@@ -38,6 +40,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         [Robust.Shared.IoC.Dependency] private IServerEntityManager _serverEntityManager = default!;
 
         public GridTileLookupSystem GridTileLookupSystem { get; private set; } = default!;
+        internal GasTileOverlaySystem GasTileOverlaySystem { get; private set; } = default!;
         public AtmosphereSystem AtmosphereSystem { get; private set; } = default!;
 
         /// <summary>
@@ -78,7 +81,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         private double _excitedGroupLastProcess;
 
         [ViewVariables]
-        protected readonly Dictionary<MapIndices, TileAtmosphere> Tiles = new Dictionary<MapIndices, TileAtmosphere>(1000);
+        protected readonly Dictionary<Vector2i, TileAtmosphere> Tiles = new Dictionary<Vector2i, TileAtmosphere>(1000);
 
         [ViewVariables]
         private readonly HashSet<TileAtmosphere> _activeTiles = new HashSet<TileAtmosphere>(1000);
@@ -108,7 +111,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         private double _superconductivityLastProcess;
 
         [ViewVariables]
-        private readonly HashSet<MapIndices> _invalidatedCoords = new HashSet<MapIndices>(1000);
+        private readonly HashSet<Vector2i> _invalidatedCoords = new HashSet<Vector2i>(1000);
 
         [ViewVariables]
         private int InvalidatedCoordsCount => _invalidatedCoords.Count;
@@ -162,7 +165,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         }
 
         /// <inheritdoc />
-        public virtual void PryTile(MapIndices indices)
+        public virtual void PryTile(Vector2i indices)
         {
             if (IsSpace(indices) || IsAirBlocked(indices)) return;
 
@@ -172,10 +175,11 @@ namespace Content.Server.GameObjects.Components.Atmos
         public override void Initialize()
         {
             base.Initialize();
-            RepopulateTiles();
-
             GridTileLookupSystem = EntitySystem.Get<GridTileLookupSystem>();
+            GasTileOverlaySystem = EntitySystem.Get<GasTileOverlaySystem>();
             AtmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+
+            RepopulateTiles();
         }
 
         public override void OnAdd()
@@ -206,7 +210,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         }
 
         /// <inheritdoc />
-        public virtual void Invalidate(MapIndices indices)
+        public virtual void Invalidate(Vector2i indices)
         {
             _invalidatedCoords.Add(indices);
         }
@@ -240,6 +244,12 @@ namespace Content.Server.GameObjects.Components.Atmos
                         FixVacuum(tile.GridIndices);
                     }
 
+                    // Tile used to be space, but isn't anymore.
+                    if (tile.Air?.Immutable ?? false)
+                    {
+                        tile.Air = null;
+                    }
+
                     tile.Air ??= new GasMixture(GetVolumeForCells(1), AtmosphereSystem){Temperature = Atmospherics.T20C};
                 }
 
@@ -264,13 +274,13 @@ namespace Content.Server.GameObjects.Components.Atmos
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void UpdateAdjacentBits(MapIndices indices)
+        public void UpdateAdjacentBits(Vector2i indices)
         {
             GetTile(indices)?.UpdateAdjacent();
         }
 
         /// <inheritdoc />
-        public virtual void FixVacuum(MapIndices indices)
+        public virtual void FixVacuum(Vector2i indices)
         {
             var tile = GetTile(indices);
             if (tile?.GridIndex != _gridId) return;
@@ -299,12 +309,15 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void RemoveActiveTile(TileAtmosphere? tile)
+        public virtual void RemoveActiveTile(TileAtmosphere? tile, bool disposeGroup = true)
         {
             if (tile == null) return;
             _activeTiles.Remove(tile);
             tile.Excited = false;
-            tile.ExcitedGroup?.Dispose();
+            if(disposeGroup)
+                tile.ExcitedGroup?.Dispose();
+            else
+                tile.ExcitedGroup?.RemoveTile(tile);
         }
 
         /// <inheritdoc />
@@ -387,11 +400,11 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// <inheritdoc />
         public virtual TileAtmosphere? GetTile(EntityCoordinates coordinates, bool createSpace = true)
         {
-            return GetTile(coordinates.ToMapIndices(_serverEntityManager, _mapManager), createSpace);
+            return GetTile(coordinates.ToVector2i(_serverEntityManager, _mapManager), createSpace);
         }
 
         /// <inheritdoc />
-        public virtual TileAtmosphere? GetTile(MapIndices indices, bool createSpace = true)
+        public virtual TileAtmosphere? GetTile(Vector2i indices, bool createSpace = true)
         {
             if (Tiles.TryGetValue(indices, out var tile)) return tile;
 
@@ -405,7 +418,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         }
 
         /// <inheritdoc />
-        public bool IsAirBlocked(MapIndices indices, AtmosDirection direction = AtmosDirection.All)
+        public bool IsAirBlocked(Vector2i indices, AtmosDirection direction = AtmosDirection.All)
         {
             foreach (var obstructingComponent in GetObstructingComponents(indices))
             {
@@ -420,7 +433,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         }
 
         /// <inheritdoc />
-        public virtual bool IsSpace(MapIndices indices)
+        public virtual bool IsSpace(Vector2i indices)
         {
             // TODO ATMOS use ContentTileDefinition to define in YAML whether or not a tile is considered space
             if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return default;
@@ -428,7 +441,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             return mapGrid.Grid.GetTileRef(indices).Tile.IsEmpty;
         }
 
-        public Dictionary<AtmosDirection, TileAtmosphere> GetAdjacentTiles(MapIndices indices, bool includeAirBlocked = false)
+        public Dictionary<AtmosDirection, TileAtmosphere> GetAdjacentTiles(Vector2i indices, bool includeAirBlocked = false)
         {
             var sides = new Dictionary<AtmosDirection, TileAtmosphere>();
             for (var i = 0; i < Atmospherics.Directions; i++)
@@ -780,7 +793,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             return true;
         }
 
-        protected virtual IEnumerable<AirtightComponent> GetObstructingComponents(MapIndices indices)
+        protected virtual IEnumerable<AirtightComponent> GetObstructingComponents(Vector2i indices)
         {
             var gridLookup = EntitySystem.Get<GridTileLookupSystem>();
 
@@ -795,7 +808,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             return list;
         }
 
-        private bool NeedsVacuumFixing(MapIndices indices)
+        private bool NeedsVacuumFixing(Vector2i indices)
         {
             var value = false;
 
@@ -807,13 +820,14 @@ namespace Content.Server.GameObjects.Components.Atmos
             return value;
         }
 
-        private AtmosDirection GetBlockedDirections(MapIndices indices)
+        private AtmosDirection GetBlockedDirections(Vector2i indices)
         {
             var value = AtmosDirection.Invalid;
 
             foreach (var airtightComponent in GetObstructingComponents(indices))
             {
-                value |= airtightComponent.AirBlockedDirection;
+                if(airtightComponent.AirBlocked)
+                    value |= airtightComponent.AirBlockedDirection;
             }
 
             return value;
@@ -833,7 +847,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 var gridId = mapGrid.Grid.Index;
 
                 if (!serializer.TryReadDataField("uniqueMixes", out List<GasMixture>? uniqueMixes) ||
-                    !serializer.TryReadDataField("tiles", out Dictionary<MapIndices, int>? tiles))
+                    !serializer.TryReadDataField("tiles", out Dictionary<Vector2i, int>? tiles))
                     return;
 
                 Tiles.Clear();
@@ -844,7 +858,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                     {
                         Tiles.Add(indices, new TileAtmosphere(this, gridId, indices, (GasMixture)uniqueMixes![mix].Clone()));
                     }
-                    catch (ArgumentOutOfRangeException e)
+                    catch (ArgumentOutOfRangeException)
                     {
                         Logger.Error($"Error during atmos serialization! Tile at {indices} points to an unique mix ({mix}) out of range!");
                         throw;
@@ -857,7 +871,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             {
                 var uniqueMixes = new List<GasMixture>();
                 var uniqueMixHash = new Dictionary<GasMixture, int>();
-                var tiles = new Dictionary<MapIndices, int>();
+                var tiles = new Dictionary<Vector2i, int>();
                 foreach (var (indices, tile) in Tiles)
                 {
                     if (tile.Air == null) continue;
@@ -875,7 +889,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 }
 
                 serializer.DataField(ref uniqueMixes, "uniqueMixes", new List<GasMixture>());
-                serializer.DataField(ref tiles, "tiles", new Dictionary<MapIndices, int>());
+                serializer.DataField(ref tiles, "tiles", new Dictionary<Vector2i, int>());
             }
         }
 
@@ -890,7 +904,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         }
 
         /// <inheritdoc />
-        public virtual void BurnTile(MapIndices gridIndices)
+        public virtual void BurnTile(Vector2i gridIndices)
         {
             // TODO ATMOS
         }

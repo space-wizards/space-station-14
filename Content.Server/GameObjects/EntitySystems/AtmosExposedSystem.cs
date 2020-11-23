@@ -11,7 +11,6 @@ namespace Content.Server.GameObjects.EntitySystems
     public class AtmosExposedSystem
     : EntitySystem
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private const float UpdateDelay = 1f;
         private float _lastUpdate;
@@ -24,7 +23,7 @@ namespace Content.Server.GameObjects.EntitySystems
             // creadth: everything exposable by atmos should be updated as well
             foreach (var atmosExposedComponent in EntityManager.ComponentManager.EntityQuery<AtmosExposedComponent>())
             {
-                var tile = atmosExposedComponent.Owner.Transform.Coordinates.GetTileAtmosphere(_entityManager);
+                var tile = atmosExposedComponent.Owner.Transform.Coordinates.GetTileAtmosphere(EntityManager);
                 if (tile == null) continue;
                 atmosExposedComponent.Update(tile, _lastUpdate);
             }

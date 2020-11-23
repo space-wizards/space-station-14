@@ -82,7 +82,7 @@
   name: x-ray cannon
   parent: BaseItem
   id: XrayCannon
-  description: Blah blah blah
+  description: Blah blah blah...
   components:
   - type: Sprite
     netsync: false
@@ -138,7 +138,7 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Battery/taser.rsi
-    prefix: icon
+    HeldPrefix: taser4
   - type: RangedWeapon
   - type: BatteryBarrel
     currentSelector: Single

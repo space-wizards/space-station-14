@@ -21,18 +21,18 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        private Dictionary<byte, PanelContainer> _doAfterControls = new Dictionary<byte, PanelContainer>();
-        private Dictionary<byte, DoAfterBar> _doAfterBars = new Dictionary<byte, DoAfterBar>();
+        private readonly Dictionary<byte, PanelContainer> _doAfterControls = new Dictionary<byte, PanelContainer>();
+        private readonly Dictionary<byte, DoAfterBar> _doAfterBars = new Dictionary<byte, DoAfterBar>();
 
         // We'll store cancellations for a little bit just so we can flash the graphic to indicate it's cancelled
-        private Dictionary<byte, TimeSpan> _cancelledDoAfters = new Dictionary<byte, TimeSpan>();
+        private readonly Dictionary<byte, TimeSpan> _cancelledDoAfters = new Dictionary<byte, TimeSpan>();
 
         public IEntity? AttachedEntity { get; set; }
         private ScreenCoordinates _playerPosition;
 
         // This behavior probably shouldn't be happening; so for whatever reason the control position is set the frame after
         // I got NFI why because I don't know the UI internals
-        private bool _firstDraw = true;
+        public bool FirstDraw { get; set; }
 
         public DoAfterGui()
         {
@@ -43,21 +43,18 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
             LayoutContainer.SetGrowVertical(this, LayoutContainer.GrowDirection.Begin);
         }
 
-        /// <summary>
-        ///     Called when the mind is detached from an entity
-        /// </summary>
-        ///     Rather than just dispose of the Gui we'll just remove its child controls and re-use the control.
-        public void Detached()
+        protected override void Dispose(bool disposing)
         {
+            base.Dispose(disposing);
+            if (Disposed)
+                return;
+
             foreach (var (_, control) in _doAfterControls)
             {
                 control.Dispose();
             }
+
             _doAfterControls.Clear();
-            foreach (var (_, control) in _doAfterBars)
-            {
-                control.Dispose();
-            }
             _doAfterBars.Clear();
             _cancelledDoAfters.Clear();
         }
@@ -66,12 +63,10 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
         ///     Add the necessary control for a DoAfter progress bar.
         /// </summary>
         /// <param name="message"></param>
-        public void AddDoAfter(DoAfterMessage message)
+        public void AddDoAfter(ClientDoAfter message)
         {
             if (_doAfterControls.ContainsKey(message.ID))
-            {
                 return;
-            }
 
             var doAfterBar = new DoAfterBar
             {
@@ -108,18 +103,16 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
         public void RemoveDoAfter(byte id)
         {
             if (!_doAfterControls.ContainsKey(id))
-            {
                 return;
-            }
 
             var control = _doAfterControls[id];
             RemoveChild(control);
             _doAfterControls.Remove(id);
             _doAfterBars.Remove(id);
+
             if (_cancelledDoAfters.ContainsKey(id))
-            {
                 _cancelledDoAfters.Remove(id);
-            }
+
         }
 
         /// <summary>
@@ -130,12 +123,15 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
         public void CancelDoAfter(byte id)
         {
             if (_cancelledDoAfters.ContainsKey(id))
-            {
                 return;
+
+            if (!_doAfterBars.TryGetValue(id, out var doAfterBar))
+            {
+                doAfterBar = new DoAfterBar();
+                _doAfterBars[id] = doAfterBar;
             }
 
-            var control = _doAfterControls[id];
-            _doAfterBars[id].Cancelled = true;
+            doAfterBar.Cancelled = true;
             _cancelledDoAfters.Add(id, _gameTiming.CurTime);
         }
 
@@ -143,28 +139,24 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
         {
             base.FrameUpdate(args);
 
-            if (AttachedEntity?.IsValid() != true || !AttachedEntity.TryGetComponent(out DoAfterComponent? doAfterComponent))
+            if (AttachedEntity?.IsValid() != true ||
+                !AttachedEntity.TryGetComponent(out DoAfterComponent? doAfterComponent))
             {
                 return;
             }
 
             var doAfters = doAfterComponent.DoAfters;
-
-            // Nothing to render so we'll hide.
-            if (doAfters.Count == 0 && _cancelledDoAfters.Count == 0)
-            {
-                _firstDraw = true;
-                Visible = false;
+            if (doAfters.Count == 0)
                 return;
-            }
 
             // Set position ready for 2nd+ frames.
             _playerPosition = _eyeManager.CoordinatesToScreen(AttachedEntity.Transform.Coordinates);
             LayoutContainer.SetPosition(this, new Vector2(_playerPosition.X - Width / 2, _playerPosition.Y - Height - 30.0f));
 
-            if (_firstDraw)
+            if (FirstDraw)
             {
-                _firstDraw = false;
+                Visible = false;
+                FirstDraw = false;
                 return;
             }
 
@@ -176,9 +168,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
             foreach (var (id, cancelTime) in _cancelledDoAfters)
             {
                 if ((currentTime - cancelTime).TotalSeconds > DoAfterSystem.ExcessTime)
-                {
                     toCancel.Add(id);
-                }
             }
 
             foreach (var id in toCancel)
@@ -190,9 +180,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
             foreach (var (id, message) in doAfters)
             {
                 if (_cancelledDoAfters.ContainsKey(id) || !_doAfterControls.ContainsKey(id))
-                {
                     continue;
-                }
 
                 var doAfterBar = _doAfterBars[id];
                 doAfterBar.Ratio = MathF.Min(1.0f,

@@ -34,8 +34,8 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         [ViewVariables]
         public bool Anchored =>
-            !Owner.TryGetComponent(out ICollidableComponent? collidable) ||
-            collidable.Anchored;
+            !Owner.TryGetComponent(out IPhysicsComponent? physics) ||
+            physics.Anchored;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalRouterUiKey.Key);
 

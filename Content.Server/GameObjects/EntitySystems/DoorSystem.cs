@@ -1,6 +1,9 @@
-﻿using Content.Server.GameObjects.Components.Doors;
+﻿using System;
+using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Doors;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -32,18 +35,43 @@ namespace Content.Server.GameObjects.EntitySystems
             AllowAll
         }
 
+        private readonly List<ServerDoorComponent> _activeDoors = new List<ServerDoorComponent>();
+
         public override void Initialize()
         {
             base.Initialize();
 
             AccessType = AccessTypes.Id;
+            SubscribeLocalEvent<DoorStateMessage>(HandleDoorState);
+        }
+
+        private void HandleDoorState(DoorStateMessage message)
+        {
+            switch (message.State)
+            {
+                case ServerDoorComponent.DoorState.Closed:
+                    _activeDoors.Remove(message.Component);
+                    break;
+                case ServerDoorComponent.DoorState.Open:
+                    _activeDoors.Add(message.Component);
+                    break;
+                case ServerDoorComponent.DoorState.Closing:
+                case ServerDoorComponent.DoorState.Opening:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         /// <inheritdoc />
         public override void Update(float frameTime)
         {
-            foreach (var comp in ComponentManager.EntityQuery<ServerDoorComponent>())
+            for (var i = _activeDoors.Count - 1; i >= 0; i--)
             {
+                var comp = _activeDoors[i];
+                if (comp.Deleted)
+                    _activeDoors.RemoveAt(i);
+
                 comp.OnUpdate(frameTime);
             }
         }

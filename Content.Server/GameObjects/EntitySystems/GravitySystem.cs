@@ -1,7 +1,9 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Gravity;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Gravity;
+using Content.Shared.GameObjects.EntitySystemMessages.Gravity;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
@@ -40,7 +42,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 {
                     generator.UpdateState();
                 }
-                
+
                 if (generator.Status == GravityGeneratorStatus.On)
                 {
                     gridsWithGravity.Add(generator.Owner.Transform.GridID);
@@ -51,12 +53,11 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 if (grid.HasGravity && !gridsWithGravity.Contains(grid.Index))
                 {
-                    grid.HasGravity = false;
-                    ScheduleGridToShake(grid.Index, ShakeTimes);
-                } else if (!grid.HasGravity && gridsWithGravity.Contains(grid.Index))
+                    DisableGravity(grid);
+                }
+                else if (!grid.HasGravity && gridsWithGravity.Contains(grid.Index))
                 {
-                    grid.HasGravity = true;
-                    ScheduleGridToShake(grid.Index, ShakeTimes);
+                    EnableGravity(grid);
                 }
             }
 
@@ -65,6 +66,26 @@ namespace Content.Server.GameObjects.EntitySystems
                 ShakeGrids();
                 _internalTimer = 0.0f;
             }
+        }
+
+        private void EnableGravity(IMapGrid grid)
+        {
+            grid.HasGravity = true;
+            ScheduleGridToShake(grid.Index, ShakeTimes);
+
+            var message = new GravityChangedMessage(grid);
+
+            RaiseLocalEvent(message);
+        }
+
+        private void DisableGravity(IMapGrid grid)
+        {
+            grid.HasGravity = false;
+            ScheduleGridToShake(grid.Index, ShakeTimes);
+
+            var message = new GravityChangedMessage(grid);
+
+            RaiseLocalEvent(message);
         }
 
         private void ScheduleGridToShake(GridId gridId, uint shakeTimes)

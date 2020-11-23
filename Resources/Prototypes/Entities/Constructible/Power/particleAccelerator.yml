@@ -1,0 +1,348 @@
+﻿- type: entity
+  id: ParticleAcceleratorBase
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: InteractionOutline
+    - type: Anchorable
+    - type: Physics
+      mass: 25
+      anchored: true
+      shapes:
+        - !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,0.49"
+          layer:
+            - Opaque
+            - Impassable
+            - MobImpassable
+            - VaultImpassable
+      IsScrapingFloor: true
+    - type: SnapGrid
+      offset: Center
+    - type: Pullable
+    - type: Clickable
+
+- type: entity
+  name: Particles
+  description: "Accelerated particles."
+  id: ParticlesProjectile
+  parent: BulletBase
+  components:
+    - type: Sprite
+      sprite: Constructible/Power/PA/particle.rsi
+      state: particle0
+      shader: unshaded
+    - type: Projectile
+      delete_on_collide: false
+      soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
+      damages:
+        Radiation: 10
+    - type: Physics
+      hard: false
+      shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.48,-0.48,0.48,0.48"
+        layer: [None]
+        mask:
+        - MobMask
+        - Clickable
+    - type: ParticleProjectile
+
+# Working PA
+
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorControlBox
+  name: Particle Accelerator Control Computer
+  description: This controls the density of the particles.
+  components:
+    - type: Sprite
+      sprite: Constructible/Power/PA/control_box.rsi
+      layers:
+        - state: control_boxc
+          map: [ "enum.ParticleAcceleratorVisualLayers.Base" ]
+        - state: control_box_unlitp
+          map: [ "enum.ParticleAcceleratorVisualLayers.Unlit" ]
+          shader: unshaded
+          visible: false
+    - type: Appearance
+      visuals:
+        - type: ParticleAcceleratorPartVisualizer
+          baseState: control_box_unlit
+    - type: PowerReceiver
+    - type: ParticleAcceleratorControlBox
+    - type: Construction
+      graph: particleAcceleratorControlBox
+      node: completed
+    - type: UserInterface
+      interfaces:
+        - key: enum.ParticleAcceleratorControlBoxUiKey.Key
+          type: ParticleAcceleratorBoundUserInterface
+        - key: enum.WiresUiKey.Key
+          type: WiresBoundUserInterface
+    - type: Wires
+      BoardName: "Mk2 Particle Accelerator"
+      LayoutId: ParticleAccelerator
+
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorEmitterLeft
+  name: EM Containment Grid
+  suffix: Left
+  description: This launchs the Alpha particles, might not want to stand near this end.
+  components:
+    - type: Sprite
+      sprite: Constructible/Power/PA/emitter_left.rsi
+      layers:
+        - state: emitter_leftc
+          map: [ "enum.ParticleAcceleratorVisualLayers.Base" ]
+        - state: emitter_left_unlitp
+          map: [ "enum.ParticleAcceleratorVisualLayers.Unlit" ]
+          shader: unshaded
+          visible: false
+    - type: Appearance
+      visuals:
+        - type: ParticleAcceleratorPartVisualizer
+          baseState: emitter_left_unlit
+    - type: ParticleAcceleratorEmitter
+      emitterType: Left
+    - type: Construction
+      graph: particleAcceleratorEmitterLeft
+      node: completed
+
+
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorEmitterCenter
+  name: EM Containment Grid
+  suffix: Center
+  description: This launchs the Alpha particles, might not want to stand near this end.
+  components:
+    - type: Sprite
+      sprite: Constructible/Power/PA/emitter_center.rsi
+      layers:
+        - state: emitter_centerc
+          map: [ "enum.ParticleAcceleratorVisualLayers.Base" ]
+        - state: emitter_center_unlitp
+          map: [ "enum.ParticleAcceleratorVisualLayers.Unlit" ]
+          shader: unshaded
+          visible: false
+    - type: Appearance
+      visuals:
+        - type: ParticleAcceleratorPartVisualizer
+          baseState: emitter_center_unlit
+    - type: ParticleAcceleratorEmitter
+      emitterType: Center
+    - type: Construction
+      graph: particleAcceleratorEmitterCenter
+      node: completed
+
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorEmitterRight
+  name: EM Containment Grid
+  suffix: Right
+  description: This launchs the Alpha particles, might not want to stand near this end.
+  components:
+    - type: Sprite
+      sprite: Constructible/Power/PA/emitter_right.rsi
+      layers:
+        - state: emitter_rightc
+          map: [ "enum.ParticleAcceleratorVisualLayers.Base" ]
+        - state: emitter_right_unlitp
+          map: [ "enum.ParticleAcceleratorVisualLayers.Unlit" ]
+          shader: unshaded
+          visible: false
+    - type: Appearance
+      visuals:
+        - type: ParticleAcceleratorPartVisualizer
+          baseState: emitter_right_unlit
+    - type: ParticleAcceleratorEmitter
+      emitterType: Right
+    - type: Construction
+      graph: particleAcceleratorEmitterRight
+      node: completed
+
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorEndCap
+  name: Alpha Particle Generation Array
+  description: This is where Alpha particles are generated from [REDACTED].
+  components:
+    - type: Sprite
+      sprite: Constructible/Power/PA/end_cap.rsi
+      state: end_capc
+    - type: ParticleAcceleratorEndCap
+    - type: Construction
+      graph: particleAcceleratorEndCap
+      node: completed
+
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorFuelChamber
+  name: EM Acceleration Chamber
+  description: This is where the Alpha particles are accelerated to radical speeds.
+  components:
+    - type: Sprite
+      sprite: Constructible/Power/PA/fuel_chamber.rsi
+      layers:
+        - state: fuel_chamberc
+          map: [ "enum.ParticleAcceleratorVisualLayers.Base" ]
+        - state: fuel_chamber_unlitp
+          map: [ "enum.ParticleAcceleratorVisualLayers.Unlit" ]
+          shader: unshaded
+          visible: false
+    - type: Appearance
+      visuals:
+        - type: ParticleAcceleratorPartVisualizer
+          baseState: fuel_chamber_unlit
+    - type: ParticleAcceleratorFuelChamber
+    - type: Construction
+      graph: particleAcceleratorFuelChamber
+      node: completed
+
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorPowerBox
+  name: Particle Focusing EM Lens
+  description: This uses electromagnetic waves to focus the Alpha-Particles.
+  components:
+    - type: Sprite
+      sprite: Constructible/Power/PA/power_box.rsi
+      layers:
+        - state: power_boxc
+          map: [ "enum.ParticleAcceleratorVisualLayers.Base" ]
+        - state: power_box_unlitp
+          map: [ "enum.ParticleAcceleratorVisualLayers.Unlit" ]
+          shader: unshaded
+          visible: false
+    - type: Appearance
+      visuals:
+        - type: ParticleAcceleratorPartVisualizer
+          baseState: power_box_unlit
+    - type: ParticleAcceleratorPowerBox
+    - type: PowerConsumer
+      voltage: High
+    - type: NodeContainer
+      nodes:
+        - !type:AdjacentNode
+          nodeGroupID: HVPower
+    - type: Construction
+      graph: particleAcceleratorPowerBox
+      node: completed
+
+
+# Unfinished PA
+
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorControlBoxUnfinished
+  name: Particle Accelerator Control Computer
+  suffix: Unfinished
+  description: This controls the density of the particles. It looks unfinished.
+  components:
+    - type: Physics
+      anchored: false
+    - type: Sprite
+      sprite: Constructible/Power/PA/control_box.rsi
+      state: control_box
+    - type: Construction
+      graph: particleAcceleratorControlBox
+      node: start
+
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorEmitterLeftUnfinished
+  name: EM Containment Grid
+  suffix: Unfinished, Left
+  description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
+  components:
+    - type: Physics
+      anchored: false
+    - type: Sprite
+      sprite: Constructible/Power/PA/emitter_left.rsi
+      state: emitter_left
+    - type: Construction
+      graph: particleAcceleratorEmitterLeft
+      node: start
+
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorEmitterCenterUnfinished
+  name: EM Containment Grid
+  suffix: Unfinished, Center
+  description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
+  components:
+    - type: Physics
+      anchored: false
+    - type: Sprite
+      sprite: Constructible/Power/PA/emitter_center.rsi
+      state: emitter_center
+    - type: Construction
+      graph: particleAcceleratorEmitterCenter
+      node: start
+
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorEmitterRightUnfinished
+  name: EM Containment Grid
+  suffix: Unfinished, Right
+  description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
+  components:
+    - type: Physics
+      anchored: false
+    - type: Sprite
+      sprite: Constructible/Power/PA/emitter_right.rsi
+      state: emitter_right
+    - type: Construction
+      graph: particleAcceleratorEmitterRight
+      node: start
+
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorEndCapUnfinished
+  name: Alpha Particle Generation Array
+  suffix: Unfinished
+  description: This is where Alpha particles are generated from [REDACTED]. It looks unfinished.
+  components:
+    - type: Physics
+      anchored: false
+    - type: Sprite
+      sprite: Constructible/Power/PA/end_cap.rsi
+      state: end_cap
+    - type: Construction
+      graph: particleAcceleratorEndCap
+      node: start
+
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorFuelChamberUnfinished
+  name: EM Acceleration Chamber
+  suffix: Unfinished
+  description: This is where the Alpha particles are accelerated to radical speeds. It looks unfinished.
+  components:
+    - type: Physics
+      anchored: false
+    - type: Sprite
+      sprite: Constructible/Power/PA/fuel_chamber.rsi
+      state: fuel_chamber
+    - type: Construction
+      graph: particleAcceleratorFuelChamber
+      node: start
+
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorPowerBoxUnfinished
+  name: Particle Focusing EM Lens
+  suffix: Unfinished
+  description: This uses electromagnetic waves to focus the Alpha-Particles. It looks unfinished.
+  components:
+    - type: Physics
+      anchored: false
+    - type: Sprite
+      sprite: Constructible/Power/PA/power_box.rsi
+      state: power_box
+    - type: Construction
+      graph: particleAcceleratorPowerBox
+      node: start

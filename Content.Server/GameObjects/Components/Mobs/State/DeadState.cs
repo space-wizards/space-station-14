@@ -1,4 +1,5 @@
 ﻿using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs.State;
@@ -18,10 +19,9 @@ namespace Content.Server.GameObjects.Components.Mobs.State
                 appearance.SetData(DamageStateVisuals.State, DamageState.Dead);
             }
 
-            if (entity.TryGetComponent(out ServerStatusEffectsComponent status))
+            if (entity.TryGetComponent(out ServerAlertsComponent status))
             {
-                status.ChangeStatusEffectIcon(StatusEffect.Health,
-                    "/Textures/Interface/StatusEffects/Human/humandead.png");
+                status.ShowAlert(AlertType.HumanDead);
             }
 
             if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlayComponent))
@@ -36,19 +36,17 @@ namespace Content.Server.GameObjects.Components.Mobs.State
 
             EntitySystem.Get<StandingStateSystem>().Down(entity);
 
-            if (entity.TryGetComponent(out CollidableComponent collidable))
+            if (entity.TryGetComponent(out IPhysicsComponent physics))
             {
-                collidable.CanCollide = false;
+                physics.CanCollide = false;
             }
         }
 
         public override void ExitState(IEntity entity)
         {
-            EntitySystem.Get<StandingStateSystem>().Standing(entity);
-
-            if (entity.TryGetComponent(out CollidableComponent collidable))
+            if (entity.TryGetComponent(out IPhysicsComponent physics))
             {
-                collidable.CanCollide = true;
+                physics.CanCollide = true;
             }
 
             if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlay))

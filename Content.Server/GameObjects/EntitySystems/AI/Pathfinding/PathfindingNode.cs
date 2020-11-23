@@ -41,10 +41,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             GenerateMask();
         }
 
-        public static bool IsRelevant(IEntity entity, ICollidableComponent collidableComponent)
+        public static bool IsRelevant(IEntity entity, IPhysicsComponent physicsComponent)
         {
             if (entity.Transform.GridID == GridId.Invalid ||
-                (PathfindingSystem.TrackedCollisionLayers & collidableComponent.CollisionLayer) == 0)
+                (PathfindingSystem.TrackedCollisionLayers & physicsComponent.CollisionLayer) == 0)
             {
                 return false;
             }
@@ -69,7 +69,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
                 for (var y = -1; y <= 1; y++)
                 {
                     if (x == 0 && y == 0) continue;
-                    var indices = new MapIndices(TileRef.X + x, TileRef.Y + y);
+                    var indices = new Vector2i(TileRef.X + x, TileRef.Y + y);
                     if (ParentChunk.InBounds(indices))
                     {
                         var (relativeX, relativeY) = (indices.X - ParentChunk.Indices.X,
@@ -100,7 +100,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         {
             var chunkXOffset = TileRef.X - ParentChunk.Indices.X;
             var chunkYOffset = TileRef.Y - ParentChunk.Indices.Y;
-            MapIndices neighborMapIndices;
+            Vector2i neighborVector2i;
 
             switch (direction)
             {
@@ -110,13 +110,13 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
                         return ParentChunk.Nodes[chunkXOffset + 1, chunkYOffset];
                     }
 
-                    neighborMapIndices = new MapIndices(TileRef.X + 1, TileRef.Y);
+                    neighborVector2i = new Vector2i(TileRef.X + 1, TileRef.Y);
                     foreach (var neighbor in ParentChunk.GetNeighbors())
                     {
-                        if (neighbor.InBounds(neighborMapIndices))
+                        if (neighbor.InBounds(neighborVector2i))
                         {
-                            return neighbor.Nodes[neighborMapIndices.X - neighbor.Indices.X,
-                                neighborMapIndices.Y - neighbor.Indices.Y];
+                            return neighbor.Nodes[neighborVector2i.X - neighbor.Indices.X,
+                                neighborVector2i.Y - neighbor.Indices.Y];
                         }
                     }
 
@@ -127,13 +127,13 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
                         return ParentChunk.Nodes[chunkXOffset + 1, chunkYOffset + 1];
                     }
 
-                    neighborMapIndices = new MapIndices(TileRef.X + 1, TileRef.Y + 1);
+                    neighborVector2i = new Vector2i(TileRef.X + 1, TileRef.Y + 1);
                     foreach (var neighbor in ParentChunk.GetNeighbors())
                     {
-                        if (neighbor.InBounds(neighborMapIndices))
+                        if (neighbor.InBounds(neighborVector2i))
                         {
-                            return neighbor.Nodes[neighborMapIndices.X - neighbor.Indices.X,
-                                neighborMapIndices.Y - neighbor.Indices.Y];
+                            return neighbor.Nodes[neighborVector2i.X - neighbor.Indices.X,
+                                neighborVector2i.Y - neighbor.Indices.Y];
                         }
                     }
 
@@ -144,13 +144,13 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
                         return ParentChunk.Nodes[chunkXOffset, chunkYOffset + 1];
                     }
 
-                    neighborMapIndices = new MapIndices(TileRef.X, TileRef.Y + 1);
+                    neighborVector2i = new Vector2i(TileRef.X, TileRef.Y + 1);
                     foreach (var neighbor in ParentChunk.GetNeighbors())
                     {
-                        if (neighbor.InBounds(neighborMapIndices))
+                        if (neighbor.InBounds(neighborVector2i))
                         {
-                            return neighbor.Nodes[neighborMapIndices.X - neighbor.Indices.X,
-                                neighborMapIndices.Y - neighbor.Indices.Y];
+                            return neighbor.Nodes[neighborVector2i.X - neighbor.Indices.X,
+                                neighborVector2i.Y - neighbor.Indices.Y];
                         }
                     }
 
@@ -161,13 +161,13 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
                         return ParentChunk.Nodes[chunkXOffset - 1, chunkYOffset + 1];
                     }
 
-                    neighborMapIndices = new MapIndices(TileRef.X - 1, TileRef.Y + 1);
+                    neighborVector2i = new Vector2i(TileRef.X - 1, TileRef.Y + 1);
                     foreach (var neighbor in ParentChunk.GetNeighbors())
                     {
-                        if (neighbor.InBounds(neighborMapIndices))
+                        if (neighbor.InBounds(neighborVector2i))
                         {
-                            return neighbor.Nodes[neighborMapIndices.X - neighbor.Indices.X,
-                                neighborMapIndices.Y - neighbor.Indices.Y];
+                            return neighbor.Nodes[neighborVector2i.X - neighbor.Indices.X,
+                                neighborVector2i.Y - neighbor.Indices.Y];
                         }
                     }
 
@@ -178,13 +178,13 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
                         return ParentChunk.Nodes[chunkXOffset - 1, chunkYOffset];
                     }
 
-                    neighborMapIndices = new MapIndices(TileRef.X - 1, TileRef.Y);
+                    neighborVector2i = new Vector2i(TileRef.X - 1, TileRef.Y);
                     foreach (var neighbor in ParentChunk.GetNeighbors())
                     {
-                        if (neighbor.InBounds(neighborMapIndices))
+                        if (neighbor.InBounds(neighborVector2i))
                         {
-                            return neighbor.Nodes[neighborMapIndices.X - neighbor.Indices.X,
-                                neighborMapIndices.Y - neighbor.Indices.Y];
+                            return neighbor.Nodes[neighborVector2i.X - neighbor.Indices.X,
+                                neighborVector2i.Y - neighbor.Indices.Y];
                         }
                     }
 
@@ -195,13 +195,13 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
                         return ParentChunk.Nodes[chunkXOffset - 1, chunkYOffset - 1];
                     }
 
-                    neighborMapIndices = new MapIndices(TileRef.X - 1, TileRef.Y - 1);
+                    neighborVector2i = new Vector2i(TileRef.X - 1, TileRef.Y - 1);
                     foreach (var neighbor in ParentChunk.GetNeighbors())
                     {
-                        if (neighbor.InBounds(neighborMapIndices))
+                        if (neighbor.InBounds(neighborVector2i))
                         {
-                            return neighbor.Nodes[neighborMapIndices.X - neighbor.Indices.X,
-                                neighborMapIndices.Y - neighbor.Indices.Y];
+                            return neighbor.Nodes[neighborVector2i.X - neighbor.Indices.X,
+                                neighborVector2i.Y - neighbor.Indices.Y];
                         }
                     }
 
@@ -212,13 +212,13 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
                         return ParentChunk.Nodes[chunkXOffset, chunkYOffset - 1];
                     }
 
-                    neighborMapIndices = new MapIndices(TileRef.X, TileRef.Y - 1);
+                    neighborVector2i = new Vector2i(TileRef.X, TileRef.Y - 1);
                     foreach (var neighbor in ParentChunk.GetNeighbors())
                     {
-                        if (neighbor.InBounds(neighborMapIndices))
+                        if (neighbor.InBounds(neighborVector2i))
                         {
-                            return neighbor.Nodes[neighborMapIndices.X - neighbor.Indices.X,
-                                neighborMapIndices.Y - neighbor.Indices.Y];
+                            return neighbor.Nodes[neighborVector2i.X - neighbor.Indices.X,
+                                neighborVector2i.Y - neighbor.Indices.Y];
                         }
                     }
 
@@ -229,13 +229,13 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
                         return ParentChunk.Nodes[chunkXOffset + 1, chunkYOffset - 1];
                     }
 
-                    neighborMapIndices = new MapIndices(TileRef.X + 1, TileRef.Y - 1);
+                    neighborVector2i = new Vector2i(TileRef.X + 1, TileRef.Y - 1);
                     foreach (var neighbor in ParentChunk.GetNeighbors())
                     {
-                        if (neighbor.InBounds(neighborMapIndices))
+                        if (neighbor.InBounds(neighborVector2i))
                         {
-                            return neighbor.Nodes[neighborMapIndices.X - neighbor.Indices.X,
-                                neighborMapIndices.Y - neighbor.Indices.Y];
+                            return neighbor.Nodes[neighborVector2i.X - neighbor.Indices.X,
+                                neighborVector2i.Y - neighbor.Indices.Y];
                         }
                     }
 
@@ -257,7 +257,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         /// <param name="entity"></param>
         /// TODO: These 2 methods currently don't account for a bunch of changes (e.g. airlock unpowered, wrenching, etc.)
         /// TODO: Could probably optimise this slightly more.
-        public void AddEntity(IEntity entity, ICollidableComponent collidableComponent)
+        public void AddEntity(IEntity entity, IPhysicsComponent physicsComponent)
         {
             // If we're a door
             if (entity.HasComponent<AirlockComponent>() || entity.HasComponent<ServerDoorComponent>())
@@ -274,15 +274,15 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
                 return;
             }
 
-            DebugTools.Assert((PathfindingSystem.TrackedCollisionLayers & collidableComponent.CollisionLayer) != 0);
+            DebugTools.Assert((PathfindingSystem.TrackedCollisionLayers & physicsComponent.CollisionLayer) != 0);
 
-            if (!collidableComponent.Anchored)
+            if (!physicsComponent.Anchored)
             {
-                _physicsLayers.Add(entity, collidableComponent.CollisionLayer);
+                _physicsLayers.Add(entity, physicsComponent.CollisionLayer);
             }
             else
             {
-                _blockedCollidables.Add(entity, collidableComponent.CollisionLayer);
+                _blockedCollidables.Add(entity, physicsComponent.CollisionLayer);
                 GenerateMask();
                 ParentChunk.Dirty();
             }

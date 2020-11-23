@@ -111,7 +111,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
 
             if (disposing)
             {
-                _window.Dispose();
+                _window?.Dispose();
             }
         }
     }

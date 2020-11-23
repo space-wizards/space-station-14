@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.IoC;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -19,14 +17,16 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         void AddReceiver(PowerReceiverComponent receiver);
 
         void RemoveReceiver(PowerReceiverComponent receiver);
+
+        public IEntity ProviderOwner { get; }
     }
 
     [RegisterComponent]
     public class PowerProviderComponent : BaseApcNetComponent, IPowerProvider
     {
-        [Dependency] private readonly IServerEntityManager _serverEntityManager;
-
         public override string Name => "PowerProvider";
+
+        public IEntity ProviderOwner => Owner;
 
         /// <summary>
         ///     The max distance this can transmit power to <see cref="PowerReceiverComponent"/>s from.
@@ -93,13 +93,13 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         private List<PowerReceiverComponent> FindAvailableReceivers()
         {
-            var nearbyEntities = _serverEntityManager
+            var nearbyEntities = Owner.EntityManager
                 .GetEntitiesInRange(Owner, PowerTransferRange);
             return nearbyEntities.Select(entity => entity.TryGetComponent<PowerReceiverComponent>(out var receiver) ? receiver : null)
                 .Where(receiver => receiver != null)
                 .Where(receiver => receiver.Connectable)
                 .Where(receiver => receiver.NeedsProvider)
-                .Where(receiver => receiver.Owner.Transform.Coordinates.TryDistance(_serverEntityManager, Owner.Transform.Coordinates, out var distance) && distance < Math.Min(PowerTransferRange, receiver.PowerReceptionRange))
+                .Where(receiver => receiver.Owner.Transform.Coordinates.TryDistance(Owner.EntityManager, Owner.Transform.Coordinates, out var distance) && distance < Math.Min(PowerTransferRange, receiver.PowerReceptionRange))
                 .ToList();
         }
 
@@ -115,7 +115,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         private void SetPowerTransferRange(int newPowerTransferRange)
         {
-            foreach (var receiver in _linkedReceivers)
+            foreach (var receiver in _linkedReceivers.ToArray())
             {
                 receiver.ClearProvider();
             }
@@ -128,6 +128,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         {
             public void AddReceiver(PowerReceiverComponent receiver) { }
             public void RemoveReceiver(PowerReceiverComponent receiver) { }
+            public IEntity ProviderOwner => default;
         }
     }
 }

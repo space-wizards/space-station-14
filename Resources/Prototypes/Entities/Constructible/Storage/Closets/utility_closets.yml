@@ -11,7 +11,6 @@
       state: eng
       state_closed: eng_tool_door
 
-
 # Radiation suit closet
 - type: entity
   id: LockerRadiationSuit
@@ -25,7 +24,6 @@
       state: eng
       state_closed: eng_rad_door
 
-
 # Emergency closet
 - type: entity
   id: LockerEmergency
@@ -37,7 +35,6 @@
     visuals:
     - type: StorageVisualizer
       state: emergency
-
 
 # Fire safety closet
 - type: entity
@@ -51,7 +48,6 @@
     - type: StorageVisualizer
       state: fire
 
-
 # EOD closet
 - type: entity
   id: LockerBomb
@@ -63,4 +59,3 @@
     visuals:
     - type: StorageVisualizer
       state: bomb
-

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,6 +27,8 @@ namespace Content.Server.Database
         public DbSet<Preference> Preference { get; set; } = null!;
         public DbSet<Profile> Profile { get; set; } = null!;
         public DbSet<AssignedUserId> AssignedUserId { get; set; } = null!;
+        public DbSet<Admin> Admin { get; set; } = null!;
+        public DbSet<AdminRank> AdminRank { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -49,12 +52,31 @@ namespace Content.Server.Database
             modelBuilder.Entity<AssignedUserId>()
                 .HasIndex(p => p.UserId)
                 .IsUnique();
+
+            modelBuilder.Entity<Admin>()
+                .HasOne(p => p.AdminRank)
+                .WithMany(p => p!.Admins)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<AdminFlag>()
+                .HasIndex(f => new {f.Flag, f.AdminId})
+                .IsUnique();
+
+            modelBuilder.Entity<AdminRankFlag>()
+                .HasIndex(f => new {f.Flag, f.AdminRankId})
+                .IsUnique();
         }
     }
 
     [Table("preference")]
     public class Preference
     {
+        // NOTE: on postgres there SHOULD be an FK ensuring that the selected character slot always exists.
+        // I had to use a migration to implement it and as a result its creation is a finicky mess.
+        // Because if I let EFCore know about it it would explode on a circular reference.
+        // Also it has to be DEFERRABLE INITIALLY DEFERRED so that insertion of new preferences works.
+        // Also I couldn't figure out how to create it on SQLite.
+
         [Column("preference_id")] public int Id { get; set; }
         [Column("user_id")] public Guid UserId { get; set; }
         [Column("selected_character_slot")] public int SelectedCharacterSlot { get; set; }
@@ -128,5 +150,47 @@ namespace Content.Server.Database
         [Column("user_name")] public string UserName { get; set; } = null!;
 
         [Column("user_id")] public Guid UserId { get; set; }
+    }
+
+    [Table("admin")]
+    public class Admin
+    {
+        [Column("user_id"), Key] public Guid UserId { get; set; }
+        [Column("title")] public string? Title { get; set; }
+
+        [Column("admin_rank_id")] public int? AdminRankId { get; set; }
+        public AdminRank? AdminRank { get; set; }
+        public List<AdminFlag> Flags { get; set; } = default!;
+    }
+
+    [Table("admin_flag")]
+    public class AdminFlag
+    {
+        [Column("admin_flag_id")] public int Id { get; set; }
+        [Column("flag")] public string Flag { get; set; } = default!;
+        [Column("negative")] public bool Negative { get; set; }
+
+        [Column("admin_id")] public Guid AdminId { get; set; }
+        public Admin Admin { get; set; } = default!;
+    }
+
+    [Table("admin_rank")]
+    public class AdminRank
+    {
+        [Column("admin_rank_id")] public int Id { get; set; }
+        [Column("name")] public string Name { get; set; } = default!;
+
+        public List<Admin> Admins { get; set; } = default!;
+        public List<AdminRankFlag> Flags { get; set; } = default!;
+    }
+
+    [Table("admin_rank_flag")]
+    public class AdminRankFlag
+    {
+        [Column("admin_rank_flag_id")] public int Id { get; set; }
+        [Column("flag")] public string Flag { get; set; } = default!;
+
+        [Column("admin_rank_id")] public int AdminRankId { get; set; }
+        public AdminRank Rank { get; set; } = default!;
     }
 }

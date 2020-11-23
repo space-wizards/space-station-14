@@ -1,4 +1,5 @@
-﻿using Content.Client.GameObjects.Components.Construction;
+﻿#nullable enable
+using Content.Client.GameObjects.Components.Construction;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.Construction;
 using Robust.Client.Placement;
@@ -8,15 +9,18 @@ using Robust.Shared.Map;
 
 namespace Content.Client.Construction
 {
-    public class ConstructionPlacementHijack : PlacementHijack
+    public sealed class ConstructionPlacementHijack : PlacementHijack
     {
         private readonly ConstructionSystem _constructionSystem;
-        private readonly ConstructionPrototype _prototype;
+        private readonly ConstructionPrototype? _prototype;
 
-        public ConstructionPlacementHijack(ConstructionSystem constructionSystem, ConstructionPrototype prototype)
+        public override bool CanRotate { get; }
+
+        public ConstructionPlacementHijack(ConstructionSystem constructionSystem, ConstructionPrototype? prototype)
         {
             _constructionSystem = constructionSystem;
             _prototype = prototype;
+            CanRotate = prototype?.CanRotate ?? true;
         }
 
         /// <inheritdoc />
@@ -33,7 +37,7 @@ namespace Content.Client.Construction
         /// <inheritdoc />
         public override bool HijackDeletion(IEntity entity)
         {
-            if (entity.TryGetComponent(out ConstructionGhostComponent ghost))
+            if (entity.TryGetComponent(out ConstructionGhostComponent? ghost))
             {
                 _constructionSystem.ClearGhost(ghost.GhostID);
             }
@@ -45,7 +49,7 @@ namespace Content.Client.Construction
         {
             base.StartHijack(manager);
 
-            manager.CurrentBaseSprite = _prototype.Icon.DirFrame0();
+            manager.CurrentBaseSprite = _prototype?.Icon.DirFrame0();
         }
     }
 }

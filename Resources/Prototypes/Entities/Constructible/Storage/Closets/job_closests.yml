@@ -10,7 +10,6 @@
       state: generic
       state_closed: red_door
 
-
 # Atmospherics wardrobe
 - type: entity
   id: WardrobeAtmospherics
@@ -23,3 +22,9 @@
       state: generic
       state_closed: atmos_wardrobe_door
 
+# Janitor locker (moved here from the Fills group because it was being misused)
+- type: entity
+  id: LockerJanitor
+  parent: WardrobeMixed
+  name: "custodial closet"
+  description: "It's a storage unit for janitorial clothes and gear."

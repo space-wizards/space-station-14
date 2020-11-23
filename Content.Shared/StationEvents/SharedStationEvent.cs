@@ -24,7 +24,7 @@ namespace Content.Shared.StationEvents
             {
                 var serializer = IoCManager.Resolve<IRobustSerializer>();
                 var length = buffer.ReadVariableInt32();
-                using var stream = buffer.ReadAsStream(length);
+                using var stream = buffer.ReadAlignedMemory(length);
                 Events = serializer.Deserialize<List<string>>(stream);
             }
 

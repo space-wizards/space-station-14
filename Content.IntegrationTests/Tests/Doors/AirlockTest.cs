@@ -14,10 +14,18 @@ namespace Content.IntegrationTests.Tests.Doors
     [TestOf(typeof(AirlockComponent))]
     public class AirlockTest : ContentIntegrationTest
     {
+        private const string PROTOTYPES = @"
+- type: entity
+  name: AirlockDummy
+  id: AirlockDummy
+  components:
+  - type: Airlock
+";
         [Test]
         public async Task OpenCloseDestroyTest()
         {
-            var server = StartServerDummyTicker();
+            var options = new ServerIntegrationOptions{ExtraPrototypes = PROTOTYPES};
+            var server = StartServerDummyTicker(options);
 
             await server.WaitIdleAsync();
 
@@ -47,7 +55,7 @@ namespace Content.IntegrationTests.Tests.Doors
 
             await server.WaitIdleAsync();
 
-            await WaitUntil(server, _ => airlockComponent.State == DoorState.Open);
+            await WaitUntil(server, () => airlockComponent.State == DoorState.Open);
 
             Assert.That(airlockComponent.State, Is.EqualTo(DoorState.Open));
 
@@ -57,7 +65,7 @@ namespace Content.IntegrationTests.Tests.Doors
                 Assert.That(airlockComponent.State, Is.EqualTo(DoorState.Closing));
             });
 
-            await WaitUntil(server, _ => airlockComponent.State == DoorState.Closed);
+            await WaitUntil(server, () => airlockComponent.State == DoorState.Closed);
 
             Assert.That(airlockComponent.State, Is.EqualTo(DoorState.Closed));
 
@@ -77,7 +85,8 @@ namespace Content.IntegrationTests.Tests.Doors
         [Test]
         public async Task AirlockBlockTest()
         {
-            var server = StartServer();
+            var options = new ServerIntegrationOptions {ExtraPrototypes = PROTOTYPES};
+            var server = StartServer(options);
 
             await server.WaitIdleAsync();
 
@@ -101,9 +110,9 @@ namespace Content.IntegrationTests.Tests.Doors
 
                 airlock = entityManager.SpawnEntity("Airlock", new MapCoordinates((0, 0), mapId));
 
-                Assert.True(human.TryGetComponent(out ICollidableComponent collidable));
+                Assert.True(human.TryGetComponent(out IPhysicsComponent physics));
 
-                controller = collidable.EnsureController<TestController>();
+                controller = physics.EnsureController<TestController>();
 
                 Assert.True(airlock.TryGetComponent(out airlockComponent));
                 Assert.That(airlockComponent.State, Is.EqualTo(DoorState.Closed));
@@ -117,7 +126,7 @@ namespace Content.IntegrationTests.Tests.Doors
             for (var i = 0; i < 240; i += 10)
             {
                 // Keep the airlock awake so they collide
-                airlock.GetComponent<ICollidableComponent>().WakeBody();
+                airlock.GetComponent<IPhysicsComponent>().WakeBody();
 
                 // Ensure that it is still closed
                 Assert.That(airlockComponent.State, Is.EqualTo(DoorState.Closed));

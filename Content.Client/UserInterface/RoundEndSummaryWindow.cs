@@ -7,7 +7,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using static Content.Shared.SharedGameTicker;
+using static Content.Shared.GameTicking.SharedGameTicker;
 
 namespace Content.Client.UserInterface
 {

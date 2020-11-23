@@ -2,15 +2,16 @@
   id: VendingMachine
   name: vending machine
   abstract: true
+  placement:
+    mode: SnapgridCenter
   components:
-  - type: Physics
-    anchored: true
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/empty.rsi
     netsync: false
-  - type: Collidable
+  - type: Physics
+    anchored: true
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.5,-0.25,0.5,0.25"
@@ -47,6 +48,7 @@
   parent: VendingMachine
   id: VendingMachineBooze
   name: Booze-O-Mat
+  description: A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one.
   components:
   - type: VendingMachine
     pack: Booze-O-Mat
@@ -66,6 +68,8 @@
       normalUnshaded: true
       broken: true
     - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Bar"]]
 
 - type: entity
   parent: VendingMachine
@@ -122,6 +126,7 @@
   parent: VendingMachine
   id: VendingMachineCigs
   name: cigarette machine
+  description: If you want to smoke, might as well do it in style.
   components:
   - type: VendingMachine
     pack: Cigarette machine
@@ -224,6 +229,8 @@
       ejectUnshaded: true
       broken: true
     - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Kitchen"]]
 
 - type: entity
   parent: VendingMachine
@@ -274,11 +281,14 @@
       denyUnshaded: true
       broken: true
     - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Engineering"]]
 
 - type: entity
   parent: VendingMachine
   id: VendingMachineHats
   name: Hatlord 9000
+  description: Hats for the hatlord. Skulls for the hat-throne!
   components:
   - type: VendingMachine
     pack: Hatlord 9000
@@ -348,6 +358,8 @@
       denyUnshaded: true
       broken: true
     - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Medical"]]
 
 - type: entity
   parent: VendingMachine
@@ -399,6 +411,8 @@
       denyUnshaded: true
       broken: true
     - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Hydroponics"]]
 
 - type: entity
   parent: VendingMachine
@@ -424,6 +438,8 @@
       denyUnshaded: true
       broken: true
     - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Research"]]
 
 - type: entity
   parent: VendingMachine
@@ -475,6 +491,8 @@
       denyUnshaded: true
       broken: true
     - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Security"]]
 
 - type: entity
   parent: VendingMachine
@@ -501,11 +519,14 @@
       ejectUnshaded: true
       broken: true
     - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Hydroponics"]]
 
 - type: entity
   parent: VendingMachine
   id: VendingMachineShoes
   name: Shoelord 9000
+  description: Finest shoes on all of station.
   components:
   - type: VendingMachine
     pack: Shoelord 9000
@@ -556,6 +577,7 @@
   parent: VendingMachine
   id: VendingMachineSnack
   name: Getmore Chocolate Corp
+  description: A snack machine courtesy of the Getmore Chocolate Corporation, based out of Mars.
   components:
   - type: VendingMachine
     pack: Getmore Chocolate Corp
@@ -610,6 +632,7 @@
   parent: VendingMachine
   id: VendingMachineSuits
   name: Suitlord 9000
+  description: Suits for every ocassion!
   components:
   - type: VendingMachine
     pack: Suitlord 9000
@@ -635,6 +658,7 @@
   parent: VendingMachine
   id: VendingMachineTheater
   name: AutoDrobe
+  description: Enchance RP with costumes!
   components:
   - type: VendingMachine
     pack: AutoDrobe
@@ -666,6 +690,7 @@
   parent: VendingMachine
   id: VendingMachineVendomat
   name: Vendomat
+  description: Only the finest robust equipment in space!
   components:
   - type: VendingMachine
     pack: Vendomat
@@ -740,6 +765,8 @@
       denyUnshaded: true
       broken: true
     - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Medical"]]
 
 - type: entity
   parent: VendingMachine

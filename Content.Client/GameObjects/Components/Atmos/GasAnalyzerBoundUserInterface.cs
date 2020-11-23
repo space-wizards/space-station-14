@@ -35,8 +35,10 @@ namespace Content.Client.GameObjects.Components.Atmos
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
+            if (!disposing)
+                return;
 
-            _menu.Close();
+            _menu?.Dispose();
         }
     }
 }

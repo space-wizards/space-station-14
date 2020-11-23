@@ -11,6 +11,7 @@ using Robust.Shared.Utility;
 using System;
 using Content.Shared.GameObjects.Components.Atmos;
 using YamlDotNet.RepresentationModel;
+using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Client.GameObjects.Components.Atmos
 {
@@ -37,23 +38,26 @@ namespace Content.Client.GameObjects.Components.Atmos
             }
         }
 
+        public override void InitializeEntity(IEntity entity)
+        {
+            base.InitializeEntity(entity);
+            if (!entity.TryGetComponent(out ISpriteComponent sprite)) return;
+            sprite.LayerMapReserveBlank(Layer.SiphonBase);
+            var pipeBaseLayer = sprite.LayerMapGet(Layer.SiphonBase);
+            sprite.LayerSetRSI(pipeBaseLayer, _siphonRSI);
+            sprite.LayerSetVisible(pipeBaseLayer, true);
+        }
+
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent(out ISpriteComponent sprite))
-            {
-                return;
-            }
-            if (!component.TryGetData(SiphonVisuals.VisualState, out SiphonVisualState siphonVisualState))
-            {
-                return;
-            }
+            if (!component.Owner.TryGetComponent(out ISpriteComponent sprite)) return;
+            if (!component.TryGetData(SiphonVisuals.VisualState, out SiphonVisualState siphonVisualState)) return;
 
             var siphonBaseState = "scrub";
             siphonBaseState += siphonVisualState.SiphonEnabled ? "On" : "Off";
 
-            sprite.LayerMapReserveBlank(Layer.SiphonBase);
             var baseSiphonLayer = sprite.LayerMapGet(Layer.SiphonBase);
             sprite.LayerSetRSI(baseSiphonLayer, _siphonRSI);
             sprite.LayerSetState(baseSiphonLayer, siphonBaseState);

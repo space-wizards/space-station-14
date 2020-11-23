@@ -11,8 +11,7 @@ namespace Content.Shared.Damage.DamageContainer
     ///     Prototype for the DamageContainer class.
     /// </summary>
     [Prototype("damageContainer")]
-    [NetSerializable]
-    [Serializable]
+    [Serializable, NetSerializable]
     public class DamageContainerPrototype : IPrototype, IIndexedPrototype
     {
         private List<DamageClass> _activeDamageClasses;

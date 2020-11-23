@@ -56,6 +56,9 @@ namespace Content.Server.GameObjects.Components
                 }
 
                 _isPanelOpen = value;
+
+                if (!_isPanelOpen)
+                    UserInterface?.CloseAll();
                 UpdateAppearance();
             }
         }
@@ -368,6 +371,14 @@ namespace Content.Server.GameObjects.Components
         public void OpenInterface(IPlayerSession session)
         {
             UserInterface?.Open(session);
+        }
+
+        /// <summary>
+        /// Closes all wire UIs.
+        /// </summary>
+        public void CloseAll()
+        {
+            UserInterface?.CloseAll();
         }
 
         private void UserInterfaceOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)

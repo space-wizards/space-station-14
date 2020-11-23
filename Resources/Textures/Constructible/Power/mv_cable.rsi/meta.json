@@ -1,1 +1,155 @@
-{ "version": 1, "size": { "x": 32, "y": 32 }, "states": [ { "name": "mvcable_0", "directions": 1 }, { "name": "mvcable_1", "directions": 1 }, { "name": "mvcable_2", "directions": 1 }, { "name": "mvcable_3", "directions": 1 }, { "name": "mvcable_4", "directions": 1 }, { "name": "mvcable_5", "directions": 1 }, { "name": "mvcable_6", "directions": 1 }, { "name": "mvcable_7", "directions": 1 }, { "name": "mvcable_8", "directions": 1 }, { "name": "mvcable_9", "directions": 1 }, { "name": "mvcable_10", "directions": 1 }, { "name": "mvcable_11", "directions": 1 }, { "name": "mvcable_12", "directions": 1 }, { "name": "mvcable_13", "directions": 1 }, { "name": "mvcable_14", "directions": 1 }, { "name": "mvcable_15", "directions": 1 }, ] } 
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+	"license": "CC-BY-SA-3.0",
+	"copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/fcf375d7d9ce6ceed5c7face899725e5655ab640",
+    "states": [
+        {
+            "name": "mvcable_0",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "mvcable_1",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "mvcable_2",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "mvcable_3",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "mvcable_4",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "mvcable_5",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "mvcable_6",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "mvcable_7",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "mvcable_8",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "mvcable_9",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "mvcable_10",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "mvcable_11",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "mvcable_12",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "mvcable_13",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "mvcable_14",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "mvcable_15",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        }
+    ]
+}

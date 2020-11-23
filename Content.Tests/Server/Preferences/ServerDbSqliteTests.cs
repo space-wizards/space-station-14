@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Shared;
+using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -68,7 +69,7 @@ namespace Content.Tests.Server.Preferences
             var originalProfile = CharlieCharlieson();
             await db.InitPrefsAsync(username, originalProfile);
             var prefs = await db.GetPlayerPreferencesAsync(username);
-            Assert.That(prefs.Characters.ElementAt(slot).MemberwiseEquals(originalProfile));
+            Assert.That(prefs.Characters.Single(p => p.Key == slot).Value.MemberwiseEquals(originalProfile));
         }
 
         [Test]
@@ -81,7 +82,7 @@ namespace Content.Tests.Server.Preferences
             await db.SaveSelectedCharacterIndexAsync(username, 1);
             await db.SaveCharacterSlotAsync(username, null, 1);
             var prefs = await db.GetPlayerPreferencesAsync(username);
-            Assert.That(prefs.Characters.Skip(1).All(character => character is null));
+            Assert.That(!prefs.Characters.Any(p => p.Key != 0));
         }
 
         private static NetUserId NewUserId()

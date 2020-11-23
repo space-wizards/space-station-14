@@ -10,7 +10,6 @@
     - type: StorageVisualizer
       state: bio
 
-
 # Virology variant
 - type: entity
   id: LockerL3Virology
@@ -20,7 +19,6 @@
     visuals:
     - type: StorageVisualizer
       state: bio_viro
-
 
 # Security variant
 - type: entity
@@ -32,7 +30,6 @@
     - type: StorageVisualizer
       state: bio_sec
 
-
 # Janitor variant
 - type: entity
   id: LockerL3Janitor
@@ -42,4 +39,3 @@
     visuals:
     - type: StorageVisualizer
       state: bio_jan
-

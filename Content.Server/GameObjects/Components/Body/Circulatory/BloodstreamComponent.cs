@@ -5,6 +5,7 @@ using Content.Server.GameObjects.Components.Metabolism;
 using Content.Server.Interfaces;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry;
+using Content.Shared.GameObjects.Components.Body.Networks;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -12,7 +13,8 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Body.Circulatory
 {
     [RegisterComponent]
-    public class BloodstreamComponent : Component, IGasMixtureHolder
+    [ComponentReference(typeof(SharedBloodstreamComponent))]
+    public class BloodstreamComponent : SharedBloodstreamComponent, IGasMixtureHolder
     {
         public override string Name => "Bloodstream";
 
@@ -58,7 +60,7 @@ namespace Content.Server.GameObjects.Components.Body.Circulatory
         /// </summary>
         /// <param name="solution">Solution to be transferred</param>
         /// <returns>Whether or not transfer was a success</returns>
-        public bool TryTransferSolution(Solution solution)
+        public override bool TryTransferSolution(Solution solution)
         {
             // For now doesn't support partial transfers
             if (solution.TotalVolume + _internalSolution.CurrentVolume > _internalSolution.MaxVolume)

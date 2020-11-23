@@ -82,16 +82,16 @@ namespace Content.Client.GameObjects.EntitySystems
             {
                 var pos = ev.LastPosition.Value.pos;
 
-                AddValidEntities(grid.GetSnapGridCell(pos + new MapIndices(1, 0), ev.Offset));
-                AddValidEntities(grid.GetSnapGridCell(pos + new MapIndices(-1, 0), ev.Offset));
-                AddValidEntities(grid.GetSnapGridCell(pos + new MapIndices(0, 1), ev.Offset));
-                AddValidEntities(grid.GetSnapGridCell(pos + new MapIndices(0, -1), ev.Offset));
+                AddValidEntities(grid.GetSnapGridCell(pos + new Vector2i(1, 0), ev.Offset));
+                AddValidEntities(grid.GetSnapGridCell(pos + new Vector2i(-1, 0), ev.Offset));
+                AddValidEntities(grid.GetSnapGridCell(pos + new Vector2i(0, 1), ev.Offset));
+                AddValidEntities(grid.GetSnapGridCell(pos + new Vector2i(0, -1), ev.Offset));
                 if (ev.Mode == IconSmoothingMode.Corners)
                 {
-                    AddValidEntities(grid.GetSnapGridCell(pos + new MapIndices(1, 1), ev.Offset));
-                    AddValidEntities(grid.GetSnapGridCell(pos + new MapIndices(-1, -1), ev.Offset));
-                    AddValidEntities(grid.GetSnapGridCell(pos + new MapIndices(-1, 1), ev.Offset));
-                    AddValidEntities(grid.GetSnapGridCell(pos + new MapIndices(1, -1), ev.Offset));
+                    AddValidEntities(grid.GetSnapGridCell(pos + new Vector2i(1, 1), ev.Offset));
+                    AddValidEntities(grid.GetSnapGridCell(pos + new Vector2i(-1, -1), ev.Offset));
+                    AddValidEntities(grid.GetSnapGridCell(pos + new Vector2i(-1, 1), ev.Offset));
+                    AddValidEntities(grid.GetSnapGridCell(pos + new Vector2i(1, -1), ev.Offset));
                 }
             }
         }
@@ -135,7 +135,7 @@ namespace Content.Client.GameObjects.EntitySystems
     /// </summary>
     public sealed class IconSmoothDirtyEvent : EntitySystemMessage
     {
-        public IconSmoothDirtyEvent(IEntity sender, (GridId grid, MapIndices pos)? lastPosition, SnapGridOffset offset, IconSmoothingMode mode)
+        public IconSmoothDirtyEvent(IEntity sender, (GridId grid, Vector2i pos)? lastPosition, SnapGridOffset offset, IconSmoothingMode mode)
         {
             LastPosition = lastPosition;
             Offset = offset;
@@ -143,7 +143,7 @@ namespace Content.Client.GameObjects.EntitySystems
             Sender = sender;
         }
 
-        public (GridId grid, MapIndices pos)? LastPosition { get; }
+        public (GridId grid, Vector2i pos)? LastPosition { get; }
         public SnapGridOffset Offset { get; }
         public IconSmoothingMode Mode { get; }
         public IEntity Sender { get; }

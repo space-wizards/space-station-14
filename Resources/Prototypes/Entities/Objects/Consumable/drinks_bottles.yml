@@ -56,7 +56,7 @@
   parent: DrinkBottleBaseFull
   id: DrinkBottleOfNothingFull
   name: bottle of nothing
-  description: A bottle filled with nothing
+  description: A bottle filled with nothing.
   components:
   - type: Drink
   - type: Sprite
@@ -105,7 +105,7 @@
   parent: DrinkBottleBaseFull
   id: DrinkKahluaBottleFull
   name: kahlua bottle
-  description: A widely known, Mexican coffee-flavoured liqueur. In production since 1936, HONK
+  description: A widely known, Mexican coffee-flavoured liqueur. In production since 1936, HONK.
   components:
   - type: SolutionContainer
     maxVol: 80
@@ -165,7 +165,7 @@
   parent: DrinkBottleBaseFull
   id: DrinkVermouthBottleFull
   name: goldeneye vermouth bottle
-  description: Sweet, sweet dryness~
+  description: Sweet, sweet dryness!
   components:
   - type: Drink
   - type: Sprite

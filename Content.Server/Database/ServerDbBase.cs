@@ -1,7 +1,9 @@
 ﻿#nullable enable
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Content.Shared.Preferences;
 using Microsoft.EntityFrameworkCore;
@@ -24,39 +26,36 @@ namespace Content.Server.Database
 
             if (prefs is null) return null;
 
-            var maxSlot = prefs.Profiles.Max(p => p.Slot)+1;
-            var profiles = new ICharacterProfile[maxSlot];
+            var maxSlot = prefs.Profiles.Max(p => p.Slot) + 1;
+            var profiles = new Dictionary<int, ICharacterProfile>(maxSlot);
             foreach (var profile in prefs.Profiles)
             {
                 profiles[profile.Slot] = ConvertProfiles(profile);
             }
 
-            return new PlayerPreferences
-            (
-                profiles,
-                prefs.SelectedCharacterSlot
-            );
+            return new PlayerPreferences(profiles, prefs.SelectedCharacterSlot);
         }
 
         public async Task SaveSelectedCharacterIndexAsync(NetUserId userId, int index)
         {
             await using var db = await GetDb();
 
-            var prefs = await db.DbContext.Preference.SingleAsync(p => p.UserId == userId.UserId);
-            prefs.SelectedCharacterSlot = index;
+            await SetSelectedCharacterSlotAsync(userId, index, db.DbContext);
 
             await db.DbContext.SaveChangesAsync();
         }
 
         public async Task SaveCharacterSlotAsync(NetUserId userId, ICharacterProfile? profile, int slot)
         {
+            await using var db = await GetDb();
+
             if (profile is null)
             {
-                await DeleteCharacterSlotAsync(userId, slot);
+                DeleteCharacterSlot(db.DbContext, userId, slot);
+                await db.DbContext.SaveChangesAsync();
                 return;
             }
 
-            await using var db = await GetDb();
             if (!(profile is HumanoidCharacterProfile humanoid))
             {
                 // TODO: Handle other ICharacterProfile implementations properly
@@ -83,17 +82,12 @@ namespace Content.Server.Database
             await db.DbContext.SaveChangesAsync();
         }
 
-        private async Task DeleteCharacterSlotAsync(NetUserId userId, int slot)
+        private static void DeleteCharacterSlot(ServerDbContext db, NetUserId userId, int slot)
         {
-            await using var db = await GetDb();
-
-            db.DbContext
-                .Preference
+            db.Preference
                 .Single(p => p.UserId == userId.UserId)
                 .Profiles
                 .RemoveAll(h => h.Slot == slot);
-
-            await db.DbContext.SaveChangesAsync();
         }
 
         public async Task<PlayerPreferences> InitPrefsAsync(NetUserId userId, ICharacterProfile defaultProfile)
@@ -113,7 +107,23 @@ namespace Content.Server.Database
 
             await db.DbContext.SaveChangesAsync();
 
-            return new PlayerPreferences(new []{defaultProfile}, 0);
+            return new PlayerPreferences(new[] {new KeyValuePair<int, ICharacterProfile>(0, defaultProfile)}, 0);
+        }
+
+        public async Task DeleteSlotAndSetSelectedIndex(NetUserId userId, int deleteSlot, int newSlot)
+        {
+            await using var db = await GetDb();
+
+            DeleteCharacterSlot(db.DbContext, userId, deleteSlot);
+            await SetSelectedCharacterSlotAsync(userId, newSlot, db.DbContext);
+
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        private static async Task SetSelectedCharacterSlotAsync(NetUserId userId, int newSlot, ServerDbContext db)
+        {
+            var prefs = await db.Preference.SingleAsync(p => p.UserId == userId.UserId);
+            prefs.SelectedCharacterSlot = newSlot;
         }
 
         private static HumanoidCharacterProfile ConvertProfiles(Profile profile)
@@ -191,6 +201,7 @@ namespace Content.Server.Database
             await db.DbContext.SaveChangesAsync();
         }
 
+
         /*
          * BAN STUFF
          */
@@ -201,12 +212,103 @@ namespace Content.Server.Database
          * PLAYER RECORDS
          */
         public abstract Task UpdatePlayerRecord(NetUserId userId, string userName, IPAddress address);
+        public abstract Task<PlayerRecord?> GetPlayerRecordByUserName(string userName, CancellationToken cancel);
+        public abstract Task<PlayerRecord?> GetPlayerRecordByUserId(NetUserId userId, CancellationToken cancel);
 
         /*
          * CONNECTION LOG
          */
         public abstract Task AddConnectionLogAsync(NetUserId userId, string userName, IPAddress address);
 
+        /*
+         * ADMIN STUFF
+         */
+        public async Task<Admin?> GetAdminDataForAsync(NetUserId userId, CancellationToken cancel)
+        {
+            await using var db = await GetDb();
+
+            return await db.DbContext.Admin
+                .Include(p => p.Flags)
+                .Include(p => p.AdminRank)
+                .ThenInclude(p => p!.Flags)
+                .SingleOrDefaultAsync(p => p.UserId == userId.UserId, cancel);
+        }
+
+        public abstract Task<((Admin, string? lastUserName)[] admins, AdminRank[])>
+            GetAllAdminAndRanksAsync(CancellationToken cancel);
+
+        public async Task<AdminRank?> GetAdminRankDataForAsync(int id, CancellationToken cancel = default)
+        {
+            await using var db = await GetDb();
+
+            return await db.DbContext.AdminRank
+                .Include(r => r.Flags)
+                .SingleOrDefaultAsync(r => r.Id == id, cancel);
+        }
+
+        public async Task RemoveAdminAsync(NetUserId userId, CancellationToken cancel)
+        {
+            await using var db = await GetDb();
+
+            var admin = await db.DbContext.Admin.SingleAsync(a => a.UserId == userId.UserId, cancel);
+            db.DbContext.Admin.Remove(admin);
+
+            await db.DbContext.SaveChangesAsync(cancel);
+        }
+
+        public async Task AddAdminAsync(Admin admin, CancellationToken cancel)
+        {
+            await using var db = await GetDb();
+
+            db.DbContext.Admin.Add(admin);
+
+            await db.DbContext.SaveChangesAsync(cancel);
+        }
+
+        public async Task UpdateAdminAsync(Admin admin, CancellationToken cancel)
+        {
+            await using var db = await GetDb();
+
+            var existing = await db.DbContext.Admin.Include(a => a.Flags).SingleAsync(a => a.UserId == admin.UserId, cancel);
+            existing.Flags = admin.Flags;
+            existing.Title = admin.Title;
+            existing.AdminRankId = admin.AdminRankId;
+
+            await db.DbContext.SaveChangesAsync(cancel);
+        }
+
+        public async Task RemoveAdminRankAsync(int rankId, CancellationToken cancel)
+        {
+            await using var db = await GetDb();
+
+            var admin = await db.DbContext.AdminRank.SingleAsync(a => a.Id == rankId, cancel);
+            db.DbContext.AdminRank.Remove(admin);
+
+            await db.DbContext.SaveChangesAsync(cancel);
+        }
+
+        public async Task AddAdminRankAsync(AdminRank rank, CancellationToken cancel)
+        {
+            await using var db = await GetDb();
+
+            db.DbContext.AdminRank.Add(rank);
+
+            await db.DbContext.SaveChangesAsync(cancel);
+        }
+
+        public async Task UpdateAdminRankAsync(AdminRank rank, CancellationToken cancel)
+        {
+            await using var db = await GetDb();
+
+            var existing = await db.DbContext.AdminRank
+                .Include(r => r.Flags)
+                .SingleAsync(a => a.Id == rank.Id, cancel);
+
+            existing.Flags = rank.Flags;
+            existing.Name = rank.Name;
+
+            await db.DbContext.SaveChangesAsync(cancel);
+        }
 
         protected abstract Task<DbGuard> GetDb();
 
@@ -216,6 +318,5 @@ namespace Content.Server.Database
 
             public abstract ValueTask DisposeAsync();
         }
-
     }
 }

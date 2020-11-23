@@ -5,6 +5,7 @@ using Content.Client.UserInterface;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
+using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.EntitySystems;
@@ -26,7 +27,6 @@ namespace Content.Client.GameObjects.EntitySystems
     {
         [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private int _nextId;
         private readonly Dictionary<int, ConstructionGhostComponent> _ghosts = new Dictionary<int, ConstructionGhostComponent>();
@@ -123,7 +123,7 @@ namespace Content.Client.GameObjects.EntitySystems
             if (!args.EntityUid.IsValid() || !args.EntityUid.IsClientSide())
                 return false;
 
-            var entity = _entityManager.GetEntity(args.EntityUid);
+            var entity = EntityManager.GetEntity(args.EntityUid);
 
             if (!entity.TryGetComponent(out ConstructionGhostComponent ghostComp))
                 return false;
@@ -152,12 +152,21 @@ namespace Content.Client.GameObjects.EntitySystems
         /// </summary>
         public void SpawnGhost(ConstructionPrototype prototype, EntityCoordinates loc, Direction dir)
         {
-            if (GhostPresent(loc))
+            var user = _playerManager.LocalPlayer?.ControlledEntity;
+
+            // This InRangeUnobstructed should probably be replaced with "is there something blocking us in that tile?"
+            if (user == null || GhostPresent(loc) || !user.InRangeUnobstructed(loc, 20f, ignoreInsideBlocker:prototype.CanBuildInImpassable))
             {
                 return;
             }
 
-            var ghost = _entityManager.SpawnEntity("constructionghost", loc);
+            foreach (var condition in prototype.Conditions)
+            {
+                if (!condition.Condition(user, loc, dir))
+                    return;
+            }
+
+            var ghost = EntityManager.SpawnEntity("constructionghost", loc);
             var comp = ghost.GetComponent<ConstructionGhostComponent>();
             comp.Prototype = prototype;
             comp.GhostID = _nextId++;
@@ -204,7 +213,7 @@ namespace Content.Client.GameObjects.EntitySystems
         }
 
         /// <summary>
-        /// Removes a construction ghost entity with the given ID.
+        ///     Removes a construction ghost entity with the given ID.
         /// </summary>
         public void ClearGhost(int ghostId)
         {
@@ -213,6 +222,19 @@ namespace Content.Client.GameObjects.EntitySystems
                 ghost.Owner.Delete();
                 _ghosts.Remove(ghostId);
             }
+        }
+
+        /// <summary>
+        ///     Removes all construction ghosts.
+        /// </summary>
+        public void ClearAllGhosts()
+        {
+            foreach (var (_, ghost) in _ghosts)
+            {
+                ghost.Owner.Delete();
+            }
+
+            _ghosts.Clear();
         }
     }
 }

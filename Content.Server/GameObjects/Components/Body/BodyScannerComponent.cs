@@ -1,8 +1,7 @@
 ﻿#nullable enable
-using System.Collections.Generic;
-using Content.Server.Body;
 using Content.Server.Utility;
-using Content.Shared.Body.Scanner;
+using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Body.Scanner;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
@@ -14,27 +13,32 @@ namespace Content.Server.GameObjects.Components.Body
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class BodyScannerComponent : Component, IActivate
+    [ComponentReference(typeof(SharedBodyScannerComponent))]
+    public class BodyScannerComponent : SharedBodyScannerComponent, IActivate
     {
-        public sealed override string Name => "BodyScanner";
-
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(BodyScannerUiKey.Key);
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor) ||
-                actor.playerSession.AttachedEntity == null)
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }
 
-            if (actor.playerSession.AttachedEntity.TryGetComponent(out BodyManagerComponent? attempt))
+            var session = actor.playerSession;
+
+            if (session.AttachedEntity == null)
             {
-                var state = InterfaceState(attempt.Template, attempt.Parts);
+                return;
+            }
+
+            if (session.AttachedEntity.TryGetComponent(out IBody? body))
+            {
+                var state = InterfaceState(body);
                 UserInterface?.SetState(state);
             }
 
-            UserInterface?.Open(actor.playerSession);
+            UserInterface?.Open(session);
         }
 
         public override void Initialize()
@@ -56,29 +60,9 @@ namespace Content.Server.GameObjects.Components.Body
         /// <summary>
         ///     Copy BodyTemplate and BodyPart data into a common data class that the client can read.
         /// </summary>
-        private BodyScannerInterfaceState InterfaceState(BodyTemplate template, IReadOnlyDictionary<string, IBodyPart> bodyParts)
+        private BodyScannerUIState InterfaceState(IBody body)
         {
-            var partsData = new Dictionary<string, BodyScannerBodyPartData>();
-
-            foreach (var (slotName, part) in bodyParts)
-            {
-                var mechanismData = new List<BodyScannerMechanismData>();
-
-                foreach (var mechanism in part.Mechanisms)
-                {
-                    mechanismData.Add(new BodyScannerMechanismData(mechanism.Name, mechanism.Description,
-                        mechanism.RSIPath,
-                        mechanism.RSIState, mechanism.MaxDurability, mechanism.CurrentDurability));
-                }
-
-                partsData.Add(slotName,
-                    new BodyScannerBodyPartData(part.Name, part.RSIPath, part.RSIState, part.MaxDurability,
-                        part.CurrentDurability, mechanismData));
-            }
-
-            var templateData = new BodyScannerTemplateData(template.Name, template.Slots);
-
-            return new BodyScannerInterfaceState(partsData, templateData);
+            return new BodyScannerUIState(body.Owner.Uid);
         }
     }
 }

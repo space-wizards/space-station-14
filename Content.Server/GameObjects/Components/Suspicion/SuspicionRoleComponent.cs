@@ -61,7 +61,7 @@ namespace Content.Server.GameObjects.Components.Suspicion
         public bool IsDead()
         {
             return Owner.TryGetComponent(out IDamageableComponent? damageable) &&
-                   damageable.CurrentDamageState == DamageState.Dead;
+                   damageable.CurrentState == DamageState.Dead;
         }
 
         public bool IsInnocent()

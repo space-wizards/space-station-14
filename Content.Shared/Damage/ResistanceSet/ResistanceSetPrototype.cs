@@ -11,8 +11,7 @@ namespace Content.Shared.Damage.ResistanceSet
     ///     Prototype for the BodyPart class.
     /// </summary>
     [Prototype("resistanceSet")]
-    [NetSerializable]
-    [Serializable]
+    [Serializable, NetSerializable]
     public class ResistanceSetPrototype : IPrototype, IIndexedPrototype
     {
         private Dictionary<DamageType, float> _coefficients;

@@ -16,7 +16,6 @@ namespace Content.Shared.GameObjects.Components.Movement
 {
     public abstract class SharedSlipperyComponent : Component, ICollideBehavior
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public sealed override string Name => "Slippery";
 
@@ -59,11 +58,11 @@ namespace Content.Shared.GameObjects.Components.Movement
         private bool TrySlip(IEntity entity)
         {
             if (!Slippery
-                || ContainerHelpers.IsInContainer(Owner)
+                || Owner.IsInContainer()
                 ||  _slipped.Contains(entity.Uid)
                 ||  !entity.TryGetComponent(out SharedStunnableComponent stun)
-                ||  !entity.TryGetComponent(out ICollidableComponent otherBody)
-                ||  !Owner.TryGetComponent(out ICollidableComponent body))
+                ||  !entity.TryGetComponent(out IPhysicsComponent otherBody)
+                ||  !Owner.TryGetComponent(out IPhysicsComponent body))
             {
                 return false;
             }
@@ -85,10 +84,10 @@ namespace Content.Shared.GameObjects.Components.Movement
                 return false;
             }
 
-            if (entity.TryGetComponent(out ICollidableComponent collidable))
+            if (entity.TryGetComponent(out IPhysicsComponent physics))
             {
-                var controller = collidable.EnsureController<SlipController>();
-                controller.LinearVelocity = collidable.LinearVelocity * LaunchForwardsMultiplier;
+                var controller = physics.EnsureController<SlipController>();
+                controller.LinearVelocity = physics.LinearVelocity * LaunchForwardsMultiplier;
             }
 
             stun.Paralyze(5);
@@ -110,17 +109,17 @@ namespace Content.Shared.GameObjects.Components.Movement
         {
             foreach (var uid in _slipped.ToArray())
             {
-                if (!uid.IsValid() || !_entityManager.EntityExists(uid))
+                if (!uid.IsValid() || !Owner.EntityManager.EntityExists(uid))
                 {
                     _slipped.Remove(uid);
                     continue;
                 }
 
-                var entity = _entityManager.GetEntity(uid);
-                var collidable = Owner.GetComponent<ICollidableComponent>();
-                var otherCollidable = entity.GetComponent<ICollidableComponent>();
+                var entity = Owner.EntityManager.GetEntity(uid);
+                var physics = Owner.GetComponent<IPhysicsComponent>();
+                var otherPhysics = entity.GetComponent<IPhysicsComponent>();
 
-                if (!collidable.WorldAABB.Intersects(otherCollidable.WorldAABB))
+                if (!physics.WorldAABB.Intersects(otherPhysics.WorldAABB))
                 {
                     _slipped.Remove(uid);
                 }
@@ -131,11 +130,11 @@ namespace Content.Shared.GameObjects.Components.Movement
         {
             base.Initialize();
 
-            var collidable = Owner.EnsureComponent<CollidableComponent>();
+            var physics = Owner.EnsureComponent<PhysicsComponent>();
 
-            collidable.Hard = false;
+            physics.Hard = false;
 
-            var shape = collidable.PhysicsShapes.FirstOrDefault();
+            var shape = physics.PhysicsShapes.FirstOrDefault();
 
             if (shape != null)
             {
@@ -150,7 +149,7 @@ namespace Content.Shared.GameObjects.Components.Movement
 
             serializer.DataField(this, x => x.ParalyzeTime, "paralyzeTime", 3f);
             serializer.DataField(this, x  => x.IntersectPercentage, "intersectPercentage", 0.3f);
-            serializer.DataField(this, x => x.RequiredSlipSpeed, "requiredSlipSpeed", 0f);
+            serializer.DataField(this, x => x.RequiredSlipSpeed, "requiredSlipSpeed", 0.1f);
             serializer.DataField(this, x => x.LaunchForwardsMultiplier, "launchForwardsMultiplier", 1f);
             serializer.DataField(this, x => x.Slippery, "slippery", true);
         }

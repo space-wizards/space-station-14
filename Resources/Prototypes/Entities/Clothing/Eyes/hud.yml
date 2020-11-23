@@ -1,0 +1,32 @@
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesHudDiagnostic
+  name: diagnostic hud
+  description: A heads-up display capable of analyzing the integrity and status of robotics and exosuits.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Hud/diag.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Hud/diag.rsi
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesHudMedical
+  name: medical hud
+  description: A heads-up display that scans the humanoids in view and provides accurate data about their health status.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Hud/med.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Hud/med.rsi
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesHudSecurity
+  name: security hud
+  description: A heads-up display that scans the humanoids in view and provides accurate data about their ID status and security records.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Hud/sec.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Hud/sec.rsi

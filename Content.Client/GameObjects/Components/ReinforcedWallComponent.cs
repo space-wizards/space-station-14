@@ -1,4 +1,5 @@
 using Content.Client.GameObjects.Components.IconSmoothing;
+using Content.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -35,6 +36,7 @@ namespace Content.Client.GameObjects.Components
             Sprite.LayerSetDirOffset(ReinforcedCornerLayers.NW, DirectionOffset.Flip);
             Sprite.LayerMapSet(ReinforcedCornerLayers.SW, Sprite.AddLayerState(state0));
             Sprite.LayerSetDirOffset(ReinforcedCornerLayers.SW, DirectionOffset.Clockwise);
+            Sprite.LayerMapSet(ReinforcedWallVisualLayers.Deconstruction, Sprite.AddBlankLayer());
         }
 
         internal override void CalculateNewSprite()

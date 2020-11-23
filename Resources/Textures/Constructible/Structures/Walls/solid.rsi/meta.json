@@ -285,6 +285,15 @@
           1
         ]
       ]
+    },
+    {
+      "name": "reinforced_wall_girder",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
     }
   ]
 }

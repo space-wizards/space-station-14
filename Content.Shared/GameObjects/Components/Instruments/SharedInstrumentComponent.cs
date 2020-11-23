@@ -2,6 +2,7 @@ using System;
 using Robust.Shared.Audio.Midi;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Instruments
 {
@@ -16,6 +17,11 @@ namespace Content.Shared.GameObjects.Components.Instruments
 
         public override string Name => "Instrument";
         public override uint? NetID => ContentNetIDs.INSTRUMENTS;
+
+        public virtual byte InstrumentProgram { get; set; }
+        public virtual byte InstrumentBank { get; set; }
+        public virtual bool AllowPercussion { get; set; }
+        public virtual bool AllowProgramChange { get ; set; }
 
         public virtual void Update(float delta)
         {
@@ -58,10 +64,18 @@ namespace Content.Shared.GameObjects.Components.Instruments
     public class InstrumentState : ComponentState
     {
         public bool Playing { get; }
+        public byte InstrumentProgram { get; }
+        public byte InstrumentBank { get; }
+        public bool AllowPercussion { get; }
+        public bool AllowProgramChange { get; }
 
-        public InstrumentState(bool playing, uint sequencerTick = 0) : base(ContentNetIDs.INSTRUMENTS)
+        public InstrumentState(bool playing, byte instrumentProgram, byte instrumentBank, bool allowPercussion, bool allowProgramChange, uint sequencerTick = 0) : base(ContentNetIDs.INSTRUMENTS)
         {
             Playing = playing;
+            InstrumentProgram = instrumentProgram;
+            InstrumentBank = instrumentBank;
+            AllowPercussion = allowPercussion;
+            AllowProgramChange = allowProgramChange;
         }
     }
 

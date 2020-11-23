@@ -10,7 +10,9 @@
     netsync: false
     directional: true
     sprite: Objects/Consumable/Trash/ash.rsi
-    state: icon
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
     drawdepth: FloorObjects
 
 - type: entity

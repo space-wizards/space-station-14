@@ -1,12 +1,16 @@
+using System.Collections.Generic;
 using Content.Client.UserInterface;
 using Content.Shared.GameObjects.Components.Observer;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
+using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 
+#nullable enable
 namespace Content.Client.GameObjects.Components.Observer
 {
     [RegisterComponent]
@@ -15,8 +19,10 @@ namespace Content.Client.GameObjects.Components.Observer
         [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IComponentManager _componentManager = default!;
+        public List<string> WarpNames = new List<string>();
+        public Dictionary<EntityUid,string> PlayerNames = new Dictionary<EntityUid,string>();
 
-        private GhostGui _gui;
+        private GhostGui? _gui ;
 
         [ViewVariables(VVAccess.ReadOnly)] public bool CanReturnToBody { get; private set; } = true;
 
@@ -40,8 +46,10 @@ namespace Content.Client.GameObjects.Components.Observer
         {
             foreach (var ghost in _componentManager.GetAllComponents(typeof(GhostComponent)))
             {
-                if (ghost.Owner.TryGetComponent(out SpriteComponent component))
+                if (ghost.Owner.TryGetComponent(out SpriteComponent? component))
+                {
                     component.Visible = visibility;
+                }
             }
         }
 
@@ -49,12 +57,14 @@ namespace Content.Client.GameObjects.Components.Observer
         {
             base.Initialize();
 
-            if (Owner.TryGetComponent(out SpriteComponent component))
+            if (Owner.TryGetComponent(out SpriteComponent? component))
+            {
                 component.Visible =
-                    _playerManager.LocalPlayer.ControlledEntity?.HasComponent<GhostComponent>() ?? false;
+                    _playerManager.LocalPlayer?.ControlledEntity?.HasComponent<GhostComponent>() ?? false;
+            }
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent component)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
 
@@ -77,7 +87,7 @@ namespace Content.Client.GameObjects.Components.Observer
                     break;
 
                 case PlayerDetachedMsg _:
-                    _gui.Parent?.RemoveChild(_gui);
+                    _gui!.Parent?.RemoveChild(_gui);
                     SetGhostVisibility(false);
                     _isAttached = false;
                     break;
@@ -86,7 +96,13 @@ namespace Content.Client.GameObjects.Components.Observer
 
         public void SendReturnToBodyMessage() => SendNetworkMessage(new ReturnToBodyComponentMessage());
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public void SendGhostWarpRequestMessage(EntityUid target = default, string warpName = default!) => SendNetworkMessage(new GhostWarpRequestMessage(target, warpName));
+
+        public void GhostRequestWarpPoint() => SendNetworkMessage(new GhostRequestWarpPointData());
+
+        public void GhostRequestPlayerNames() => SendNetworkMessage(new GhostRequestPlayerNameData());
+
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
 
@@ -94,9 +110,32 @@ namespace Content.Client.GameObjects.Components.Observer
 
             CanReturnToBody = state.CanReturnToBody;
 
-            if (Owner == _playerManager.LocalPlayer.ControlledEntity)
+            if (Owner == _playerManager.LocalPlayer!.ControlledEntity)
             {
                 _gui?.Update();
+            }
+        }
+
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
+        {
+            base.HandleNetworkMessage(message, netChannel, session);
+
+            switch (message)
+            {
+                case GhostReplyWarpPointData data:
+                    WarpNames = new List<string>();
+                    foreach (var names in data.WarpName)
+                    {
+                        WarpNames.Add(names);
+                    }
+                    break;
+                case GhostReplyPlayerNameData data:
+                    PlayerNames = new Dictionary<EntityUid, string>();
+                    foreach (var (key, value) in data.PlayerNames)
+                    {
+                        PlayerNames.Add(key,value);
+                    }
+                    break;
             }
         }
     }
