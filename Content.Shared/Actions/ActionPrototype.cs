@@ -97,7 +97,7 @@ namespace Content.Shared.Actions
             serializer.DataField(this, x => x.ActionType, "actionType", ActionType.Error);
             if (ActionType == ActionType.Error)
             {
-                Logger.WarningS("action", "missing or invalid actionType for action with name {0}", Name);
+                Logger.ErrorS("action", "missing or invalid actionType for action with name {0}", Name);
             }
 
             // client needs to know what type of behavior it is even if the actual implementation is only
@@ -106,7 +106,7 @@ namespace Content.Shared.Actions
             serializer.DataField(this, x => x.BehaviorType, "behaviorType", BehaviorType.None);
             if (BehaviorType == BehaviorType.None)
             {
-                Logger.WarningS("action", "Missing behaviorType for action with name {0}", Name);
+                Logger.ErrorS("action", "Missing behaviorType for action with name {0}", Name);
             }
 
             serializer.DataReadFunction("searchTags", new List<string>(),
@@ -123,7 +123,7 @@ namespace Content.Shared.Actions
             if (behavior == null)
             {
                 BehaviorType = BehaviorType.None;
-                Logger.WarningS("action", "missing or invalid behavior for action with name {0}", Name);
+                Logger.ErrorS("action", "missing or invalid behavior for action with name {0}", Name);
             }
             else if (behavior is IInstantAction instantAction)
             {
@@ -152,7 +152,7 @@ namespace Content.Shared.Actions
             else
             {
                 BehaviorType = BehaviorType.None;
-                Logger.WarningS("action", "unrecognized behavior type for action with name {0}", Name);
+                Logger.ErrorS("action", "unrecognized behavior type for action with name {0}", Name);
             }
         }
 
@@ -160,8 +160,8 @@ namespace Content.Shared.Actions
         {
             if (BehaviorType != expected)
             {
-                Logger.WarningS("action", "for action named {0}, behavior implements " +
-                                          "{1}, so behaviorType should be {2} but was {3}", Name, actualInterface.Name, expected, BehaviorType);
+                Logger.ErrorS("action", "for action named {0}, behavior implements " +
+                                        "{1}, so behaviorType should be {2} but was {3}", Name, actualInterface.Name, expected, BehaviorType);
             }
         }
     }

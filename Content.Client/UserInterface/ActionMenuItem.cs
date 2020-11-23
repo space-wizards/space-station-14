@@ -10,6 +10,9 @@ namespace Content.Client.UserInterface
     /// </summary>
     public class ActionMenuItem : ContainerButton
     {
+        // shorter than default tooltip delay so user can
+        // quickly explore what each action is
+        private const float CustomTooltipDelay = 0.2f;
 
         private readonly TextureRect _icon;
         public ActionPrototype Action { get; private set; }
@@ -29,6 +32,8 @@ namespace Content.Client.UserInterface
                 Texture = action.Icon.Frame0()
             };
             AddChild(_icon);
+
+            TooltipDelay = CustomTooltipDelay;
         }
 
         /// <summary>

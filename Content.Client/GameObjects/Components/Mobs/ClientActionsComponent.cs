@@ -129,7 +129,7 @@ namespace Content.Client.GameObjects.Components.Mobs
 
             _ui = new ActionsUI(ActionOnOnShowTooltip, ActionOnOnHideTooltip, ActionSlotEventHandler, NextHotbar,
                 PreviousHotbar, OpenActionMenu);
-            _menu = new ActionMenu(this, ActionMenuItemSelected);
+            _menu = new ActionMenu(ActionOnOnShowTooltip, ActionOnOnHideTooltip, this, ActionMenuItemSelected);
             LayoutContainer.SetGrowHorizontal(_ui, LayoutContainer.GrowDirection.End);
             LayoutContainer.SetAnchorAndMarginPreset(_ui, LayoutContainer.LayoutPreset.TopLeft, margin: 10);
             LayoutContainer.SetMarginTop(_ui, 100);
@@ -469,16 +469,35 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         private void ActionOnOnShowTooltip(object sender, EventArgs e)
         {
-            var actionSlot = (ActionSlot) sender;
-            if (actionSlot.Action == null) return;
+            // this can come from an ActionSlot or an ActionMenuItem depending on if its for the
+            // action hotbar or the action menu
 
-            _actionName.SetMessage(actionSlot.Action.Name);
-            _actionDescription.SetMessage(actionSlot.Action.Description);
+            ActionPrototype action = null;
+            int? totalCooldownDuration = null;
+            if (sender is ActionSlot actionSlot)
+            {
+                action = actionSlot.Action;
+                totalCooldownDuration = actionSlot.TotalDuration;
+            }
+            else if (sender is ActionMenuItem actionMenuItem)
+            {
+                action = actionMenuItem.Action;
+            }
+            else
+            {
+                // coding error, we got an unexpected sender
+                throw new InvalidOperationException();
+            }
+
+            if (action == null) return;
+
+            _actionName.SetMessage(action.Name);
+            _actionDescription.SetMessage(action.Description);
             // check for a cooldown
-            if (actionSlot.TotalDuration != null && actionSlot.TotalDuration > 0)
+            if (totalCooldownDuration != null && totalCooldownDuration > 0)
             {
                 _actionCooldown.SetMessage(FormattedMessage.FromMarkup("[color=#776a6a]" +
-                                                                      actionSlot.TotalDuration +
+                                                                       totalCooldownDuration +
                                                                       " sec cooldown[/color]"));
                 _actionCooldown.Visible = true;
             }
@@ -487,10 +506,10 @@ namespace Content.Client.GameObjects.Components.Mobs
                 _actionCooldown.Visible = false;
             }
             //check for requirements message
-            if (actionSlot.Action.Requires != null)
+            if (action.Requires != null)
             {
                 _actionCooldown.SetMessage(FormattedMessage.FromMarkup("[color=#635c5c]" +
-                                                                       actionSlot.Action.Requires +
+                                                                       action.Requires +
                                                                        "[/color]"));
             }
             else

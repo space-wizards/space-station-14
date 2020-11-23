@@ -35,8 +35,8 @@ namespace Content.Client.UserInterface
         private Label _loadoutNumber;
         private TextureButton _nextHotbarButton;
 
-        /// <param name="onShowTooltip">OnShowTooltip handler to assign to each action slot</param>
-        /// <param name="onHideTooltip">OnHideTooltip handler to assign to each action slot</param>
+        /// <param name="onShowTooltip">OnShowTooltip handler to assign to each ActionSlot</param>
+        /// <param name="onHideTooltip">OnHideTooltip handler to assign to each ActionSlot</param>
         /// <param name="actionSlotEventHandler">handler for interactions with
         /// action slots. Slots with no actions will not be handled by this.</param>
         /// <param name="onNextHotbarPressed">action to invoke when pressing the next hotbar button</param>

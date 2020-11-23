@@ -29,6 +29,7 @@ namespace Content.Client.UserInterface
         private static ActionPrototype[] EmptyActionList = new ActionPrototype[0];
 
 
+
         // parallel list of actions currently selectable in itemList
         private ActionPrototype[] _actionList;
 
@@ -40,15 +41,21 @@ namespace Content.Client.UserInterface
         private readonly Label _filterLabel;
         private readonly Button _clearButton;
         private readonly GridContainer _resultsGrid;
+        private readonly EventHandler _onShowTooltip;
+        private readonly EventHandler _onHideTooltip;
 
 
         private event Action<ActionMenuItemSelectedEventArgs> _onItemSelected;
 
+        /// <param name="onShowTooltip">OnShowTooltip handler to assign to each ActionMenuItem</param>
+        /// <param name="onHideTooltip">OnHideTooltip handler to assign to each ActionMenuItem</param>
         /// <param name="actionsComponent">component to use to lookup action statuses</param>
         /// <param name="onItemSelected">invoked when an action item
         /// in the list is clicked</param>
-        public ActionMenu(ClientActionsComponent actionsComponent, Action<ActionMenuItemSelectedEventArgs> onItemSelected)
+        public ActionMenu(EventHandler onShowTooltip, EventHandler onHideTooltip, ClientActionsComponent actionsComponent, Action<ActionMenuItemSelectedEventArgs> onItemSelected)
         {
+            _onShowTooltip = onShowTooltip;
+            _onHideTooltip = onHideTooltip;
             _actionsComponent = actionsComponent;
             _onItemSelected = onItemSelected;
             _actionManager = IoCManager.Resolve<ActionManager>();
@@ -111,6 +118,22 @@ namespace Content.Client.UserInterface
             }
 
             UpdateFilterLabel();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            _clearButton.OnPressed -= OnClearButtonPressed;
+            _searchBar.OnTextChanged -= OnSearchTextChanged;
+            _filterButton.OnItemSelected -= OnFilterItemSelected;
+
+            foreach (var actionMenuControl in _resultsGrid.Children)
+            {
+                var actionMenuItem = (actionMenuControl as ActionMenuItem);
+                actionMenuItem.OnPressed -= OnItemPressed;
+                actionMenuItem.OnShowTooltip -= _onShowTooltip;
+                actionMenuItem.OnHideTooltip -= _onHideTooltip;
+            }
         }
 
         private void OnFilterItemSelected(MultiselectOptionButton<string>.ItemPressedEventArgs args)
@@ -258,6 +281,8 @@ namespace Content.Client.UserInterface
                 actionItem.SetActionState(_actionsComponent.IsGranted(action.ActionType));
 
                 actionItem.OnPressed += OnItemPressed;
+                actionItem.OnShowTooltip += _onShowTooltip;
+                actionItem.OnHideTooltip += _onHideTooltip;
             }
         }
 
