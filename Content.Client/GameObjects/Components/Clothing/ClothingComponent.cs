@@ -1,4 +1,5 @@
-﻿using Content.Client.GameObjects.Components.HUD.Inventory;
+﻿#nullable enable
+using Content.Client.GameObjects.Components.HUD.Inventory;
 using Content.Client.GameObjects.Components.Items;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Inventory;
@@ -7,7 +8,6 @@ using Robust.Client.Graphics;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
-using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -22,7 +22,7 @@ namespace Content.Client.GameObjects.Components.Clothing
         public override string Name => "Clothing";
         public override uint? NetID => ContentNetIDs.CLOTHING;
 
-        private string _clothingEquippedPrefix;
+        private string _clothingEquippedPrefix = default!;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public string ClothingEquippedPrefix
@@ -32,11 +32,12 @@ namespace Content.Client.GameObjects.Components.Clothing
             {
                 if (_clothingEquippedPrefix == value)
                     return;
+
                 _clothingEquippedPrefix = value;
 
-                if (!Owner.TryGetContainer(out IContainer container))
+                if (!Owner.TryGetContainer(out IContainer? container))
                     return;
-                if (!container.Owner.TryGetComponent(out ClientInventoryComponent inventory))
+                if (!container.Owner.TryGetComponent(out ClientInventoryComponent? inventory))
                     return;
                 if (!inventory.TryFindItemSlots(Owner, out EquipmentSlotDefines.Slots? slots))
                     return;
@@ -78,7 +79,7 @@ namespace Content.Client.GameObjects.Components.Clothing
             return null;
         }
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             if (curState == null)
                 return;
