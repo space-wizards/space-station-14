@@ -47,7 +47,7 @@ namespace Content.Shared
             GameMaxCharacterSlots = CVarDef.Create("game.maxcharacterslots", 10, CVar.ARCHIVE | CVar.SERVERONLY);
 
         public static readonly CVarDef<string>
-            GameMap = CVarDef.Create("game.map", "Maps/saltern.yml", CVar.SERVERONLY);
+            GameMap = CVarDef.Create("game.map", "Maps/boxstation.yml", CVar.SERVERONLY);
 
         /// <summary>
         ///     When enabled, guests will be assigned permanent UIDs and will have their preferences stored.
