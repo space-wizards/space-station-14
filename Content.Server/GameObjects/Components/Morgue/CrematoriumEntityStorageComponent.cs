@@ -86,8 +86,7 @@ namespace Content.Server.GameObjects.Components.Morgue
             Appearance?.SetData(CrematoriumVisuals.Burning, true);
             Cooking = true;
 
-            if (_cremateCancelToken != null)
-                _cremateCancelToken.Cancel();
+            _cremateCancelToken?.Cancel();
 
             _cremateCancelToken = new CancellationTokenSource();
             Robust.Shared.Timers.Timer.Spawn(_burnMilis, () =>
