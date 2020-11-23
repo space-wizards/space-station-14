@@ -91,6 +91,9 @@ namespace Content.Server.GameObjects.Components.Morgue
             _cremateCancelToken = new CancellationTokenSource();
             Robust.Shared.Timers.Timer.Spawn(_burnMilis, () =>
             {
+                if (Owner.Deleted)
+                    return;
+
                 Appearance?.SetData(CrematoriumVisuals.Burning, false);
                 Cooking = false;
 
