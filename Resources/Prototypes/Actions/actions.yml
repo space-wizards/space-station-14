@@ -3,6 +3,9 @@
   icon: Interface/Alerts/Human/human1.png
   name: "[color=red]Debug Instant[/color]"
   description: "This is a [color=red]debug message[/color]."
+  searchTags:
+    - debug
+    - instant
   behaviorType: Instant
   behavior: !type:DebugInstant
     message: Instant action was used!
@@ -12,6 +15,9 @@
   icon: Interface/Alerts/Human/human3.png
   name: "[color=red]Debug Toggle[/color]"
   description: "This is a [color=red]debug message[/color]."
+  searchTags:
+    - debug
+    - toggle
   behaviorType: Toggle
   behavior: !type:DebugToggle
     messageOn: Toggled on!
@@ -22,6 +28,9 @@
   icon: Interface/Alerts/Human/human4.png
   name: "[color=red]Debug Target Local Position[/color]"
   description: "This is a [color=red]debug message[/color]."
+  searchTags:
+    - target
+    - debug
   behaviorType: TargetPoint
   behavior: !type:DebugTargetPoint
     mapPos: false
@@ -31,6 +40,9 @@
   icon: Interface/Alerts/Human/human5.png
   name: "[color=red]Debug Target Map Position[/color]"
   description: "This is a [color=red]debug message[/color]."
+  searchTags:
+    - debug
+    - target
   behaviorType: TargetPoint
   behavior: !type:DebugTargetPoint
     mapPos: true
@@ -40,6 +52,9 @@
   icon: Interface/Alerts/Human/human6.png
   name: "[color=red]Debug Target Entity[/color]"
   description: "This is a [color=red]debug message[/color]."
+  searchTags:
+    - debug
+    - target
   behaviorType: TargetEntity
   behavior: !type:DebugTargetEntity { }
 

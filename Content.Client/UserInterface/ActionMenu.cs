@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -33,8 +34,10 @@ namespace Content.Client.UserInterface
 
         private readonly ActionManager _actionManager;
         private readonly ClientActionsComponent _actionsComponent;
-        private readonly  VBoxContainer _mainVBox;
+        private readonly VBoxContainer _mainVBox;
         private readonly LineEdit _searchBar;
+        private readonly MultiselectOptionButton<string> _filterButton;
+        private readonly Label _filterLabel;
         private readonly Button _clearButton;
         private readonly GridContainer _resultsGrid;
 
@@ -66,14 +69,17 @@ namespace Content.Client.UserInterface
                                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                                 PlaceHolder = Loc.GetString("Search")
                             }),
-
-                            (_clearButton = new Button
+                            (_filterButton = new MultiselectOptionButton<string>()
                             {
-                                Disabled = true,
-                                Text = Loc.GetString("Clear"),
-                            })
+                                Label = Loc.GetString("Filter")
+                            }),
                         }
                     },
+                    (_clearButton = new Button
+                    {
+                        Text = Loc.GetString("Clear"),
+                    }),
+                    (_filterLabel = new Label()),
                     new ScrollContainer
                     {
                         //TODO: needed? CustomMinimumSize = new Vector2(200.0f, 0.0f),
@@ -92,6 +98,25 @@ namespace Content.Client.UserInterface
 
             _clearButton.OnPressed += OnClearButtonPressed;
             _searchBar.OnTextChanged += OnSearchTextChanged;
+            _filterButton.OnItemSelected += OnFilterItemSelected;
+
+            // populate filters from search tags
+            var searchTags = _actionManager.EnumerateActions()
+                .SelectMany(a => a.SearchTags)
+                .Distinct()
+                .OrderBy(tag => tag);
+            foreach (var tag in searchTags)
+            {
+                _filterButton.AddItem( CultureInfo.CurrentCulture.TextInfo.ToTitleCase(tag), tag);
+            }
+
+            UpdateFilterLabel();
+        }
+
+        private void OnFilterItemSelected(MultiselectOptionButton<string>.ItemPressedEventArgs args)
+        {
+            UpdateFilterLabel();
+            SearchAndDisplay();
         }
 
         protected override void Resized()
@@ -110,27 +135,58 @@ namespace Content.Client.UserInterface
         private void OnClearButtonPressed(BaseButton.ButtonEventArgs args)
         {
             _searchBar.Clear();
-            ClearList();
+            _filterButton.DeselectAll();
+            UpdateFilterLabel();
+            SearchAndDisplay();
         }
 
         private void OnSearchTextChanged(LineEdit.LineEditEventArgs obj)
         {
-            var search = Standardize(obj.Text);
-            if (string.IsNullOrWhiteSpace(search) || search.Length < MinSearchLength)
+            SearchAndDisplay();
+        }
+
+        private void SearchAndDisplay()
+        {
+            var search = Standardize(_searchBar.Text);
+            // only display nothing if there are no filters selected and text is not long enough.
+            // otherwise we will search if even one filter is applied, regardless of length of search string
+            if (_filterButton.SelectedKeys.Count == 0 &&
+                (string.IsNullOrWhiteSpace(search) || search.Length < MinSearchLength))
             {
                 ClearList();
                 return;
             }
 
-            // search on names
             var matchingActions = _actionManager.EnumerateActions()
-                .Where(a => MatchesSearch(a, search));
+                .Where(a => MatchesSearchCriteria(a, search, _filterButton.SelectedKeys));
 
             PopulateActions(matchingActions);
         }
 
-        private bool MatchesSearch(ActionPrototype action, string search)
+        private void UpdateFilterLabel()
         {
+            if (_filterButton.SelectedKeys.Count == 0)
+            {
+                _filterLabel.Visible = false;
+            }
+            else
+            {
+                _filterLabel.Visible = true;
+                _filterLabel.Text = Loc.GetString("Filters") + ": " +
+                                    string.Join(", ", _filterButton.SelectedLabels);
+            }
+        }
+
+        private bool MatchesSearchCriteria(ActionPrototype action, string search,
+            IReadOnlyList<string> tags)
+        {
+            // check tag match first - each action must contain all tags currently selected.
+            // if no tags selected, don't check tags
+            if (tags.Count > 0 && tags.Any(tag => !action.SearchTags.Contains(tag)))
+            {
+                return false;
+            }
+
             if (Standardize(action.ActionType.ToString()).Contains(search))
             {
                 return true;
@@ -147,8 +203,6 @@ namespace Content.Client.UserInterface
             {
                 return true;
             }
-
-            // TODO: Matching on tags
 
             return false;
 
@@ -192,18 +246,12 @@ namespace Content.Client.UserInterface
             return newText.ToString();
         }
 
-        protected override void Opened()
-        {
-            base.Opened();
-            PopulateActions(_actionManager.EnumerateActions());
-        }
-
         private void PopulateActions(IEnumerable<ActionPrototype> actions)
         {
             ClearList();
 
             _actionList = actions.ToArray();
-            foreach (var action in _actionList)
+            foreach (var action in _actionList.OrderBy(act => act.Name.ToString()))
             {
                 var actionItem = new ActionMenuItem(action);
                 _resultsGrid.Children.Add(actionItem);
@@ -211,15 +259,6 @@ namespace Content.Client.UserInterface
 
                 actionItem.OnPressed += OnItemPressed;
             }
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            ClearList();
-            // TODO: this probably isn't needed since these are children of this control
-            _clearButton.OnPressed -= OnClearButtonPressed;
-            _searchBar.OnTextChanged -= OnSearchTextChanged;
         }
 
         private void ClearList()

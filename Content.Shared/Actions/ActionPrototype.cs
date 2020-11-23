@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Content.Shared.Interfaces;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
@@ -46,6 +48,11 @@ namespace Content.Shared.Actions
         /// The type of behavior this action has. This is valid clientside and serverside.
         /// </summary>
         public BehaviorType BehaviorType { get; private set; }
+
+        /// <summary>
+        /// Tags that can be used to filter to this item in action menu.
+        /// </summary>
+        public IEnumerable<string> SearchTags { get; private set; }
 
         /// <summary>
         /// The IInstantAction that should be invoked when performing this
@@ -101,6 +108,12 @@ namespace Content.Shared.Actions
             {
                 Logger.WarningS("action", "Missing behaviorType for action with name {0}", Name);
             }
+
+            serializer.DataReadFunction("searchTags", new List<string>(),
+                rawTags =>
+                {
+                    SearchTags = rawTags.Select(rawTag => rawTag.Trim()).ToList();
+                });
 
             // TODO: Split this class into server/client after RobustToolbox#1405
             if (IoCManager.Resolve<IModuleManager>().IsClientModule) return;
