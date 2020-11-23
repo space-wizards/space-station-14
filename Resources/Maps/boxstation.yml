@@ -206,7 +206,7 @@ entities:
   - shapes:
     - !type:PhysShapeGrid
       grid: 0
-    type: Collidable
+    type: Physics
 - uid: 1
   type: reinforced_wall
   components:
@@ -8486,7 +8486,7 @@ entities:
     - None
     type: Destructible
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 829
   type: LowWall
   components:
@@ -57457,7 +57457,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
   - IsPlaceable: False
     type: PlaceableSurface
   - flags:
@@ -57937,7 +57937,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
   - IsPlaceable: False
     type: PlaceableSurface
   - flags:
@@ -57955,7 +57955,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
   - IsPlaceable: False
     type: PlaceableSurface
   - flags:
