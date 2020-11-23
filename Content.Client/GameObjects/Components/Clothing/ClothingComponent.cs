@@ -22,10 +22,10 @@ namespace Content.Client.GameObjects.Components.Clothing
         public override string Name => "Clothing";
         public override uint? NetID => ContentNetIDs.CLOTHING;
 
-        private string _clothingEquippedPrefix = default!;
+        private string? _clothingEquippedPrefix;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public string ClothingEquippedPrefix
+        public string? ClothingEquippedPrefix
         {
             get => _clothingEquippedPrefix;
             set
