@@ -438,10 +438,9 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// <inheritdoc />
         public virtual bool IsSpace(Vector2i indices)
         {
-            // TODO ATMOS use ContentTileDefinition to define in YAML whether or not a tile is considered space
             if (_mapGridComponent == null) return default;
 
-            return _mapGridComponent.Grid.GetTileRef(indices).Tile.IsEmpty;
+            return _mapGridComponent.Grid.GetTileRef(indices).IsSpace();
         }
 
         public Dictionary<AtmosDirection, TileAtmosphere> GetAdjacentTiles(Vector2i indices, bool includeAirBlocked = false)

@@ -7,6 +7,7 @@ using Content.Server.Atmos.Reactions;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
+using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems.TileLookup;
 using Robust.Server.Interfaces.Timing;
@@ -116,7 +117,7 @@ namespace Content.Server.GameObjects.EntitySystems
             // space -> not space or vice versa. So if the old tile is the
             // same as the new tile in terms of space-ness, ignore the change
 
-            if (eventArgs.NewTile.Tile.IsEmpty == eventArgs.OldTile.IsEmpty)
+            if (eventArgs.NewTile.IsSpace() == eventArgs.OldTile.IsSpace())
             {
                 return;
             }
