@@ -1,10 +1,8 @@
 #nullable enable
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.StationEvents;
 using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
@@ -15,7 +13,6 @@ using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Map;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -29,9 +26,7 @@ namespace Content.Server.GameObjects.Components.Singularity
     [RegisterComponent]
     public class SingularityComponent : Component, ICollideBehavior
     {
-        [Dependency] private IEntityManager _entityManager = null!;
-        [Dependency] private IRobustRandom _random = null!;
-
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         public override uint? NetID => ContentNetIDs.SINGULARITY;
 
@@ -163,17 +158,17 @@ namespace Content.Server.GameObjects.Components.Singularity
             _singularityController?.Push(pushVector.Normalized, 2);
         }
 
-        List<IEntity> _previousPulledEntites = new List<IEntity>();
+        private readonly List<IEntity> _previousPulledEntities = new List<IEntity>();
         public void PullUpdate()
         {
-            foreach (var previousPulledEntity in _previousPulledEntites)
+            foreach (var previousPulledEntity in _previousPulledEntities)
             {
                 if(previousPulledEntity.Deleted) continue;
                 if (!previousPulledEntity.TryGetComponent<PhysicsComponent>(out var collidableComponent)) continue;
                 var controller = collidableComponent.EnsureController<SingularityPullController>();
                 controller.StopPull();
             }
-            _previousPulledEntites.Clear();
+            _previousPulledEntities.Clear();
 
             var entitiesToPull = Owner.EntityManager.GetEntitiesInRange(Owner.Transform.Coordinates, Level * 10);
             foreach (var entity in entitiesToPull)
@@ -187,7 +182,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                 var speed = 10 / vec.Length * Level;
 
                 controller.Pull(vec.Normalized, speed);
-                _previousPulledEntites.Add(entity);
+                _previousPulledEntities.Add(entity);
             }
         }
 

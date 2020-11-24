@@ -14,9 +14,10 @@
 - type: startingGear
   id: BartenderGear
   equipment:
-    innerclothing: UniformBartender
-    outerclothing: OuterclothingArmorVest
-    backpack: BackpackClothingFilled
-    shoes: ShoesBlack
+    head: ClothingHeadHatTophat
+    innerclothing: ClothingUniformJumpsuitBartender
+    outerclothing: ClothingOuterVestKevlar
+    backpack: ClothingBackpackFilled
+    shoes: ClothingShoesColorBlack
     idcard: BartenderPDA
-    ears: HeadsetService
+    ears: ClothingHeadsetService

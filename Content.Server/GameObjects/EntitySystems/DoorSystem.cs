@@ -34,8 +34,8 @@ namespace Content.Server.GameObjects.EntitySystems
             /// <summary> Allows everyone to open all doors. </summary>
             AllowAll
         }
-        
-        private List<ServerDoorComponent> _activeDoors = new List<ServerDoorComponent>();
+
+        private readonly List<ServerDoorComponent> _activeDoors = new List<ServerDoorComponent>();
 
         public override void Initialize()
         {
@@ -71,7 +71,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 var comp = _activeDoors[i];
                 if (comp.Deleted)
                     _activeDoors.RemoveAt(i);
-                
+
                 comp.OnUpdate(frameTime);
             }
         }

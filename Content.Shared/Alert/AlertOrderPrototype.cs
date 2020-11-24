@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -13,8 +12,8 @@ namespace Content.Shared.Alert
     [Prototype("alertOrder")]
     public class AlertOrderPrototype : IPrototype, IComparer<AlertPrototype>
     {
-        private Dictionary<AlertType, int> _typeToIdx = new Dictionary<AlertType, int>();
-        private Dictionary<AlertCategory, int> _categoryToIdx = new Dictionary<AlertCategory, int>();
+        private readonly Dictionary<AlertType, int> _typeToIdx = new Dictionary<AlertType, int>();
+        private readonly Dictionary<AlertCategory, int> _categoryToIdx = new Dictionary<AlertCategory, int>();
 
         public void LoadFrom(YamlMappingNode mapping)
         {

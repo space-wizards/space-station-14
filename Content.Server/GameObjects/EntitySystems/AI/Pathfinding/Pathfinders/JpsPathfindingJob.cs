@@ -19,9 +19,9 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
         public static event Action<SharedAiDebug.JpsRouteDebug> DebugRoute;
 #endif
 
-        private PathfindingNode _startNode;
+        private readonly PathfindingNode _startNode;
         private PathfindingNode _endNode;
-        private PathfindingArgs _pathfindingArgs;
+        private readonly PathfindingArgs _pathfindingArgs;
 
         public JpsPathfindingJob(double maxTime,
             PathfindingNode startNode,
