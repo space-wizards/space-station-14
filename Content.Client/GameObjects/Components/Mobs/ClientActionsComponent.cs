@@ -127,7 +127,9 @@ namespace Content.Client.GameObjects.Components.Mobs
                 return;
             }
 
-            _ui = new ActionsUI(ActionOnOnShowTooltip, ActionOnOnHideTooltip, ActionSlotEventHandler, NextHotbar,
+            _ui = new ActionsUI(ActionOnOnShowTooltip, ActionOnOnHideTooltip, ActionSlotEventHandler,
+                ActionDragDropHandler,
+                NextHotbar,
                 PreviousHotbar, OpenActionMenu);
             _menu = new ActionMenu(ActionOnOnShowTooltip, ActionOnOnHideTooltip, this, ActionMenuItemSelected);
             LayoutContainer.SetGrowHorizontal(_ui, LayoutContainer.GrowDirection.End);
@@ -176,6 +178,7 @@ namespace Content.Client.GameObjects.Components.Mobs
 
             UpdateUI();
         }
+
 
         private void PlayerDetached()
         {
@@ -327,28 +330,39 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
         }
 
+        /// <summary>
+        /// Clear the assignment to the indicated slot.
+        /// </summary>
+        /// <param name="hotbar">hotbar whose slot is being cleared</param>
+        /// <param name="slot">slot of the hotbar to clear (0 = the slot labeled 1, 9 = the slot labeled 0)</param>
+        private void ClearSlot(byte hotbar, byte slot)
+        {
+            // remove this particular assignment from our data structures
+            // (keeping in mind something can be assigned multiple slots)
+            var currentAction = _slots[hotbar, slot];
+            if (currentAction == null) return;
+            var assignmentList = _assignments[(ActionType) currentAction];
+            assignmentList = assignmentList.Where(a => a.Hotbar != _selectedHotbar || a.Slot != slot).ToList();
+            if (assignmentList.Count == 0)
+            {
+                _assignments.Remove((ActionType) currentAction);
+            }
+            else
+            {
+                _assignments[(ActionType) currentAction] = assignmentList;
+            }
+            _slots[_selectedHotbar, slot] = null;
+        }
+
         private void ActionSlotEventHandler(ActionSlotEventArgs args)
         {
+            if (_ui.IsDragging) return;
             if (args.ActionSlotEvent == ActionSlotEvent.RightClick)
             {
                 // right click to clear the action
-
                 _manuallyClearedActions.Add(args.Action.ActionType);
 
-                // remove this particular assignment from our data structures
-                // (keeping in mind something can be assigned multiple slots)
-                var slot = args.ActionSlot.SlotNumber - 1;
-                var assignmentList = _assignments[args.Action.ActionType];
-                assignmentList = assignmentList.Where(a => a.Hotbar != _selectedHotbar || a.Slot != slot).ToList();
-                if (assignmentList.Count == 0)
-                {
-                    _assignments.Remove(args.Action.ActionType);
-                }
-                else
-                {
-                    _assignments[args.Action.ActionType] = assignmentList;
-                }
-                _slots[_selectedHotbar, slot] = null;
+                ClearSlot(_selectedHotbar, args.ActionSlot.SlotIndex);
 
                 StopTargeting();
                 args.ActionSlot.Clear();
@@ -384,6 +398,29 @@ namespace Content.Client.GameObjects.Components.Mobs
                     Logger.WarningS("action", "unhandled action press for action {0}", args.Action.ActionType);
                     break;
             }
+        }
+
+        private void ActionDragDropHandler(ActionSlotDragDropEventArgs obj)
+        {
+            // swap the 2 slots
+            var fromAction = obj.FromSlot.Action;
+            var fromIdx = obj.FromSlot.SlotIndex;
+            var toAction = obj.ToSlot.Action;
+            var toIdx = obj.ToSlot.SlotIndex;
+
+            if (fromIdx == toIdx) return;
+
+            AssignSlot(_selectedHotbar, toIdx, fromAction.ActionType);
+            if (toAction != null)
+            {
+                AssignSlot(_selectedHotbar, fromIdx, toAction.ActionType);
+            }
+            else
+            {
+                ClearSlot(_selectedHotbar, fromIdx);
+            }
+
+            UpdateUI();
         }
 
         /// <summary>

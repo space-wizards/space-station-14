@@ -4,12 +4,16 @@ using Content.Client.UserInterface.Controls;
 using Content.Client.Utility;
 using Content.Shared.Actions;
 using Content.Shared.GameObjects.Components.Mobs;
+using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Client.Utility;
 using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Maths;
+using Robust.Shared.Timing;
 
 namespace Content.Client.UserInterface
 {
@@ -18,37 +22,70 @@ namespace Content.Client.UserInterface
     /// </summary>
     public sealed class ActionsUI : PanelContainer
     {
+        // drag will be triggered when mouse leaves this deadzone around the click position.
+        private const float DragDeadzone = 2f;
+
+        private readonly IInputManager _inputManager;
+
         private readonly EventHandler _onShowTooltip;
         private readonly EventHandler _onHideTooltip;
         private readonly Action<ActionSlotEventArgs> _actionSlotEventHandler;
+        private readonly Action<ActionSlotDragDropEventArgs> _actionDragDropEventHandler;
         private readonly Action<BaseButton.ButtonEventArgs> _onNextHotbarPressed;
         private readonly Action<BaseButton.ButtonEventArgs> _onPreviousHotbarPressed;
         private readonly Action<BaseButton.ButtonEventArgs> _onSettingsButtonPressed;
         private readonly ActionSlot[] _slots;
 
-        private VBoxContainer _hotbarContainer;
-        private VBoxContainer _slotContainer;
+        private readonly VBoxContainer _hotbarContainer;
+        private readonly VBoxContainer _slotContainer;
 
-        private TextureButton _lockButton;
-        private TextureButton _settingsButton;
-        private TextureButton _previousHotbarButton;
-        private Label _loadoutNumber;
-        private TextureButton _nextHotbarButton;
+        private readonly TextureButton _lockButton;
+        private readonly TextureButton _settingsButton;
+        private readonly TextureButton _previousHotbarButton;
+        private readonly Label _loadoutNumber;
+        private readonly TextureButton _nextHotbarButton;
+
+        // slot being dragged and dropped to another slot
+        private ActionSlot _draggedSlot;
+        // time since mouse down over the dragged slot
+        private float _mouseDownTime;
+        // screen pos where the mouse down began for the drag
+        private Vector2 _mouseDownScreenPos;
+        private DragState _dragState = DragState.NotDragging;
+        private readonly TextureRect _dragShadow;
+
+        // TODO: Refactor to share with DragDropSystem + relevant logic.
+        private enum DragState
+        {
+            NotDragging,
+            // not dragging yet, waiting to see
+            // if they hold for long enough
+            MouseDown,
+            // currently dragging something
+            Dragging,
+        }
+
+        public bool IsDragging => _dragState == DragState.Dragging;
 
         /// <param name="onShowTooltip">OnShowTooltip handler to assign to each ActionSlot</param>
         /// <param name="onHideTooltip">OnHideTooltip handler to assign to each ActionSlot</param>
         /// <param name="actionSlotEventHandler">handler for interactions with
         /// action slots. Slots with no actions will not be handled by this.</param>
+        /// <param name="actionDragDropEventHandler">handler for drag and drop events between
+        /// slots.</param>
         /// <param name="onNextHotbarPressed">action to invoke when pressing the next hotbar button</param>
         /// <param name="onPreviousHotbarPressed">action to invoke when pressing the previous hotbar button</param>
         /// <param name="onSettingsButtonPressed">action to invoke when pressing the settings button</param>
         public ActionsUI(EventHandler onShowTooltip, EventHandler onHideTooltip, Action<ActionSlotEventArgs> actionSlotEventHandler,
+            Action<ActionSlotDragDropEventArgs> actionDragDropEventHandler,
             Action<BaseButton.ButtonEventArgs> onNextHotbarPressed, Action<BaseButton.ButtonEventArgs> onPreviousHotbarPressed,
             Action<BaseButton.ButtonEventArgs> onSettingsButtonPressed)
         {
+            _inputManager = IoCManager.Resolve<IInputManager>();
             _onShowTooltip = onShowTooltip;
             _onHideTooltip = onHideTooltip;
             _actionSlotEventHandler = actionSlotEventHandler;
+            _actionDragDropEventHandler = actionDragDropEventHandler;
             _onNextHotbarPressed = onNextHotbarPressed;
             _onPreviousHotbarPressed = onPreviousHotbarPressed;
             _onSettingsButtonPressed = onSettingsButtonPressed;
@@ -131,17 +168,89 @@ namespace Content.Client.UserInterface
 
             _slots = new ActionSlot[ClientActionsComponent.Slots];
 
+            _dragShadow = new TextureRect
+            {
+                CustomMinimumSize = (64, 64),
+                Stretch = TextureRect.StretchMode.Scale,
+                Visible = false
+            };
+            UserInterfaceManager.PopupRoot.AddChild(_dragShadow);
+            LayoutContainer.SetSize(_dragShadow, (64, 64));
+
             for (byte i = 1; i <= ClientActionsComponent.Slots; i++)
             {
                 var slot = new ActionSlot(i);
                 slot.EnableAllKeybinds = true;
                 slot.OnShowTooltip += onShowTooltip;
                 slot.OnHideTooltip += onHideTooltip;
+                slot.OnButtonDown += ActionSlotOnButtonDown;
+                slot.OnButtonUp += ActionSlotOnButtonUp;
                 slot.OnPressed += ActionSlotOnPressed;
                 slot.OnToggled += ActionSlotOnToggled;
                 _slotContainer.AddChild(slot);
                 _slots[i - 1] = slot;
             }
+        }
+
+        private void ActionSlotOnButtonDown(BaseButton.ButtonEventArgs args)
+        {
+            if (args.Event.Function != EngineKeyFunctions.Use) return;
+            CancelDrag();
+
+            // start checking for a drag
+            _draggedSlot = args.Button as ActionSlot;
+            _dragState = DragState.MouseDown;
+            _mouseDownTime = 0;
+            _mouseDownScreenPos = _inputManager.MouseScreenPosition;
+        }
+
+        private void ActionSlotOnButtonUp(BaseButton.ButtonEventArgs args)
+        {
+            // note the buttonup only fires on the control that was originally
+            // pressed to initiate the drag, NOT the one we are currently hovering
+            if (args.Event.Function != EngineKeyFunctions.Use) return;
+
+            if (UserInterfaceManager.CurrentlyHovered != null &&
+                UserInterfaceManager.CurrentlyHovered is ActionSlot targetSlot)
+            {
+                if (_dragState != DragState.Dragging || _draggedSlot?.Action == null)
+                {
+                    // quick mouseup or not dragging, or dragging slot that's now empty,
+                    // should treat this like a normal click.
+                    CancelDrag();
+                    return;
+                }
+
+                // drag and drop
+                _actionDragDropEventHandler?.Invoke(new ActionSlotDragDropEventArgs(_draggedSlot, targetSlot));
+            }
+
+            // TODO: Ensure we skip pressed / toggle handlers
+
+            CancelDrag();
+        }
+
+        private void CancelDrag()
+        {
+            // cancel drag and any shadows currently being shown
+            _dragShadow.Visible = false;
+            _draggedSlot = null;
+            _dragState = DragState.NotDragging;
+            _mouseDownTime = 0;
+        }
+
+        private void StartDragging()
+        {
+            if (_draggedSlot?.Action == null)
+            {
+                CancelDrag();
+                return;
+            }
+
+            _dragState = DragState.Dragging;
+            _dragShadow.Texture = _draggedSlot.Action.Icon.Frame0();
+            // don't make visible until frameupdate, otherwise it'll flicker
+            LayoutContainer.SetPosition(_dragShadow, UserInterfaceManager.MousePositionScaled - (32, 32));
         }
 
         private void ActionSlotOnPressed(BaseButton.ButtonEventArgs args)
@@ -276,6 +385,56 @@ namespace Content.Client.UserInterface
             actionSlot.Pressed = toggledOn;
         }
 
+        protected override void FrameUpdate(FrameEventArgs args)
+        {
+            base.Update(args);
+
+            // check if dragging should begin
+            if (_dragState == DragState.MouseDown)
+            {
+                var screenPos = _inputManager.MouseScreenPosition;
+                if (_draggedSlot?.Action == null)
+                {
+                    // slot is blank, nothing to drag
+                    CancelDrag();
+                    return;
+                }
+                else if ((_mouseDownScreenPos - screenPos).Length > DragDeadzone)
+                {
+                    StartDragging();
+                    _mouseDownTime = 0;
+                }
+            }
+            else if (_dragState == DragState.Dragging)
+            {
+                if (_draggedSlot?.Action == null)
+                {
+                    // slot is blank, nothing to drag anymore
+                    CancelDrag();
+                    return;
+                }
+
+                // keep dragged entity centered under mouse
+                LayoutContainer.SetPosition(_dragShadow, UserInterfaceManager.MousePositionScaled - (32, 32));
+                // we don't set this visible until frameupdate, otherwise it flickers
+                _dragShadow.Visible = true;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Args for dragging and dropping the contents of one slot onto another slot.
+    /// </summary>
+    public class ActionSlotDragDropEventArgs : EventArgs
+    {
+        public readonly ActionSlot FromSlot;
+        public readonly ActionSlot ToSlot;
+
+        public ActionSlotDragDropEventArgs(ActionSlot fromSlot, ActionSlot toSlot)
+        {
+            FromSlot = fromSlot;
+            ToSlot = toSlot;
+        }
     }
 
     /// <summary>

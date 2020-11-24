@@ -35,6 +35,7 @@ namespace Content.Client.UserInterface.Controls
         /// 1-10 corresponding to the number label on the slot (10 is labeled as 0)
         /// </summary>
         public byte SlotNumber { get; private set; }
+        public byte SlotIndex => (byte) (SlotNumber - 1);
 
         /// <summary>
         /// Total duration of the cooldown in seconds. Null if no duration / cooldown.
