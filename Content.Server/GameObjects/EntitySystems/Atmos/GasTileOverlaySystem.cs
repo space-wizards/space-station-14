@@ -17,33 +17,36 @@ using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
+// ReSharper disable once RedundantUsingDirective
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
+using Dependency = Robust.Shared.IoC.DependencyAttribute;
 
 namespace Content.Server.GameObjects.EntitySystems.Atmos
 {
     [UsedImplicitly]
     internal sealed class GasTileOverlaySystem : SharedGasTileOverlaySystem, IResettingEntitySystem
     {
-        [Robust.Shared.IoC.Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Robust.Shared.IoC.Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Robust.Shared.IoC.Dependency] private readonly IMapManager _mapManager = default!;
-        [Robust.Shared.IoC.Dependency] private readonly IConfigurationManager _configManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
 
         /// <summary>
         ///     The tiles that have had their atmos data updated since last tick
         /// </summary>
-        private Dictionary<GridId, HashSet<Vector2i>> _invalidTiles = new();
+        private readonly Dictionary<GridId, HashSet<Vector2i>> _invalidTiles = new Dictionary<GridId, HashSet<Vector2i>>();
 
-        private Dictionary<IPlayerSession, PlayerGasOverlay> _knownPlayerChunks =
-            new();
+        private readonly Dictionary<IPlayerSession, PlayerGasOverlay> _knownPlayerChunks =
+            new Dictionary<IPlayerSession, PlayerGasOverlay>();
 
         /// <summary>
         ///     Gas data stored in chunks to make PVS / bubbling easier.
         /// </summary>
-        private Dictionary<GridId, Dictionary<Vector2i, GasOverlayChunk>> _overlay =
-            new();
+        private readonly Dictionary<GridId, Dictionary<Vector2i, GasOverlayChunk>> _overlay =
+            new Dictionary<GridId, Dictionary<Vector2i, GasOverlayChunk>>();
 
         /// <summary>
         ///     How far away do we update gas overlays (minimum; due to chunking further away tiles may also be updated).
@@ -374,14 +377,14 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
         private sealed class PlayerGasOverlay
         {
             private readonly Dictionary<GridId, Dictionary<Vector2i, GasOverlayChunk>> _data =
-                new();
+                new Dictionary<GridId, Dictionary<Vector2i, GasOverlayChunk>>();
 
             private readonly Dictionary<GasOverlayChunk, GameTick> _lastSent =
-                new();
+                new Dictionary<GasOverlayChunk, GameTick>();
 
             public GasOverlayMessage UpdateClient(GridId grid, List<(Vector2i, GasOverlayData)> data)
             {
-                return new(grid, data);
+                return new GasOverlayMessage(grid, data);
             }
 
             public void Reset()

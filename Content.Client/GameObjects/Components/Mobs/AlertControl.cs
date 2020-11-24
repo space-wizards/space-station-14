@@ -20,7 +20,7 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         private short? _severity;
         private readonly TextureRect _icon;
-        private CooldownGraphic _cooldownGraphic;
+        private readonly CooldownGraphic _cooldownGraphic;
 
         private readonly IResourceCache _resourceCache;
 

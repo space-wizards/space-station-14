@@ -26,7 +26,7 @@ namespace Content.Client.GameObjects.Components.VendingMachines
         private Dictionary<string, bool> _baseStates;
 
         private static readonly Dictionary<string, VendingMachineVisualLayers> LayerMap =
-            new()
+            new Dictionary<string, VendingMachineVisualLayers>
             {
                 {"off", VendingMachineVisualLayers.Unlit},
                 {"screen", VendingMachineVisualLayers.Screen},
@@ -39,7 +39,7 @@ namespace Content.Client.GameObjects.Components.VendingMachines
                 {"broken", VendingMachineVisualLayers.Unlit},
             };
 
-        private Dictionary<string, Animation> _animations = new();
+        private readonly Dictionary<string, Animation> _animations = new Dictionary<string, Animation>();
 
         public override void LoadData(YamlMappingNode node)
         {

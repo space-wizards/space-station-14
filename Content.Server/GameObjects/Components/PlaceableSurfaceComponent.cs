@@ -32,7 +32,7 @@ namespace Content.Server.GameObjects.Components
         }
 
         [ViewVariables]
-        int IInteractUsing.Priority => 1;
+        int IInteractUsing.Priority => -10;
 
         public override void ExposeData(ObjectSerializer serializer)
         {

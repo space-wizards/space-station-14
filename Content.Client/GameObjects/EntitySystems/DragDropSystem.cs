@@ -51,7 +51,7 @@ namespace Content.Client.GameObjects.EntitySystems
         // entity performing the drag action
         private IEntity _dragger;
         private IEntity _draggedEntity;
-        private readonly List<IDraggable> _draggables = new();
+        private readonly List<IDraggable> _draggables = new List<IDraggable>();
         private IEntity _dragShadow;
         private DragState _state;
         // time since mouse down over the dragged entity
@@ -71,7 +71,7 @@ namespace Content.Client.GameObjects.EntitySystems
         private SharedInteractionSystem _interactionSystem;
         private InputSystem _inputSystem;
 
-        private List<SpriteComponent> highlightedSprites = new();
+        private readonly List<SpriteComponent> _highlightedSprites = new List<SpriteComponent>();
 
         private enum DragState
         {
@@ -298,7 +298,7 @@ namespace Content.Client.GameObjects.EntitySystems
                         var inRange = _interactionSystem.InRangeUnobstructed(_dragger, pvsEntity);
                         inRangeSprite.PostShader = inRange ? _dropTargetInRangeShader : _dropTargetOutOfRangeShader;
                         inRangeSprite.RenderOrder = EntityManager.CurrentTick.Value;
-                        highlightedSprites.Add(inRangeSprite);
+                        _highlightedSprites.Add(inRangeSprite);
                     }
                 }
             }
@@ -306,12 +306,12 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void RemoveHighlights()
         {
-            foreach (var highlightedSprite in highlightedSprites)
+            foreach (var highlightedSprite in _highlightedSprites)
             {
                 highlightedSprite.PostShader = null;
                 highlightedSprite.RenderOrder = 0;
             }
-            highlightedSprites.Clear();
+            _highlightedSprites.Clear();
         }
 
         /// <summary>
