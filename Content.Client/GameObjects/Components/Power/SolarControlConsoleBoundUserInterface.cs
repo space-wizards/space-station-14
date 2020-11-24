@@ -17,7 +17,7 @@ namespace Content.Client.GameObjects.Components.Power
         [Dependency] private readonly IGameTiming _gameTiming = default;
 
         private SolarControlWindow _window;
-        private SolarControlConsoleBoundInterfaceState _lastState = new SolarControlConsoleBoundInterfaceState(0, 0, 0, 0);
+        private SolarControlConsoleBoundInterfaceState _lastState = new(0, 0, 0, 0);
 
         protected override void Open()
         {
@@ -161,7 +161,7 @@ namespace Content.Client.GameObjects.Components.Power
             // This makes the display feel a lot smoother.
             private IGameTiming _gameTiming;
 
-            private SolarControlConsoleBoundInterfaceState _lastState = new SolarControlConsoleBoundInterfaceState(0, 0, 0, 0);
+            private SolarControlConsoleBoundInterfaceState _lastState = new(0, 0, 0, 0);
 
             private TimeSpan _lastStateTime = TimeSpan.Zero;
 

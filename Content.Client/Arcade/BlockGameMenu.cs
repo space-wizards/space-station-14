@@ -18,10 +18,10 @@ namespace Content.Client.Arcade
 {
     public class BlockGameMenu : SS14Window
     {
-        private static readonly Color OverlayBackgroundColor = new Color(74,74,81,180);
-        private static readonly Color OverlayShadowColor = new Color(0,0,0,83);
+        private static readonly Color OverlayBackgroundColor = new(74,74,81,180);
+        private static readonly Color OverlayShadowColor = new(0,0,0,83);
 
-        private static readonly Vector2 BlockSize = new Vector2(15,15);
+        private static readonly Vector2 BlockSize = new(15,15);
 
         private readonly BlockGameBoundUserInterface _owner;
 

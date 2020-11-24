@@ -10,8 +10,8 @@ namespace Content.Client.UserInterface
 {
     public class GhostGui : Control
     {
-        private readonly Button _returnToBody = new Button() {Text = Loc.GetString("Return to body")};
-        private readonly Button _ghostWarp = new Button() {Text = Loc.GetString("Ghost Warp")};
+        private readonly Button _returnToBody = new() {Text = Loc.GetString("Return to body")};
+        private readonly Button _ghostWarp = new() {Text = Loc.GetString("Ghost Warp")};
         private readonly GhostComponent _owner;
 
         public GhostGui(GhostComponent owner)

@@ -17,10 +17,10 @@ namespace Content.Client.GameObjects.Components
         public override string Name => "DoAfter";
 
         public IReadOnlyDictionary<byte, ClientDoAfter> DoAfters => _doAfters;
-        private readonly Dictionary<byte, ClientDoAfter> _doAfters = new Dictionary<byte, ClientDoAfter>();
+        private readonly Dictionary<byte, ClientDoAfter> _doAfters = new();
         
         public readonly List<(TimeSpan CancelTime, ClientDoAfter Message)> CancelledDoAfters = 
-                     new List<(TimeSpan CancelTime, ClientDoAfter Message)>();
+                     new();
 
         public DoAfterGui? Gui { get; set; }
 

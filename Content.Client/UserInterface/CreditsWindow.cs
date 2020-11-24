@@ -20,7 +20,7 @@ namespace Content.Client.UserInterface
     {
         [Dependency] private readonly IResourceCache _resourceManager = default!;
 
-        private static readonly Dictionary<string, int> PatronTierPriority = new Dictionary<string, int>
+        private static readonly Dictionary<string, int> PatronTierPriority = new()
         {
             ["Nuclear Operative"] = 1,
             ["Syndicate Agent"] = 2,

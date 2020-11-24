@@ -22,7 +22,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
     [RegisterComponent]
     public class ClientMagazineBarrelComponent : Component, IItemStatus
     {
-        private static readonly Animation AlarmAnimationSmg = new Animation
+        private static readonly Animation AlarmAnimationSmg = new()
         {
             Length = TimeSpan.FromSeconds(1.4),
             AnimationTracks =
@@ -45,7 +45,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
             }
         };
 
-        private static readonly Animation AlarmAnimationLmg = new Animation
+        private static readonly Animation AlarmAnimationLmg = new()
         {
             Length = TimeSpan.FromSeconds(0.75),
             AnimationTracks =

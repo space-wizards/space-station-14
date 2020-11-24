@@ -9,7 +9,7 @@ namespace Content.Client.GameObjects.Components.Research
     [ComponentReference(typeof(SharedMaterialStorageComponent))]
     public class MaterialStorageComponent : SharedMaterialStorageComponent
     {
-        protected override Dictionary<string, int> Storage { get; set; } = new Dictionary<string, int>();
+        protected override Dictionary<string, int> Storage { get; set; } = new();
 
         public event Action OnMaterialStorageChanged;
 

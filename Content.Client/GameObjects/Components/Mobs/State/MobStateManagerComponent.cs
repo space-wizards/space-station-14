@@ -10,7 +10,7 @@ namespace Content.Client.GameObjects.Components.Mobs.State
     [ComponentReference(typeof(SharedMobStateManagerComponent))]
     public class MobStateManagerComponent : SharedMobStateManagerComponent
     {
-        private readonly Dictionary<DamageState, IMobState> _behavior = new Dictionary<DamageState, IMobState>
+        private readonly Dictionary<DamageState, IMobState> _behavior = new()
         {
             {DamageState.Alive, new NormalState()},
             {DamageState.Critical, new CriticalState()},

@@ -22,7 +22,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
     [RegisterComponent]
     public class ClientInventoryComponent : SharedInventoryComponent
     {
-        private readonly Dictionary<Slots, IEntity> _slots = new Dictionary<Slots, IEntity>();
+        private readonly Dictionary<Slots, IEntity> _slots = new();
 
         [ViewVariables] public InventoryInterfaceController InterfaceController { get; private set; } = default!;
 
