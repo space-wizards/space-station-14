@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -232,7 +232,7 @@ namespace Content.Shared.Preferences
         }
 
         public string Summary =>
-            $"{Name}, {Age} years old {Sex.ToString().ToLower()} human.";
+            $"{Name}, {Age} years old human. Their gender is {Sex.ToString().ToLower()}.";
 
         public bool MemberwiseEquals(ICharacterProfile maybeOther)
         {

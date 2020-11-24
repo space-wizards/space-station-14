@@ -40,6 +40,7 @@ namespace Content.Client.UserInterface
         private readonly Button _saveButton;
         private readonly Button _sexFemaleButton;
         private readonly Button _sexMaleButton;
+        private readonly Button _sexClassifiedButton;
         private readonly HairStylePicker _hairPicker;
         private readonly FacialHairStylePicker _facialHairPicker;
         private readonly List<JobPrioritySelector> _jobPriorities;
@@ -162,15 +163,26 @@ namespace Content.Client.UserInterface
                         Group = sexButtonGroup
                     };
                     _sexMaleButton.OnPressed += args => { SetSex(Sex.Male); };
+
                     _sexFemaleButton = new Button
                     {
                         Text = Loc.GetString("Female"),
                         Group = sexButtonGroup
                     };
                     _sexFemaleButton.OnPressed += args => { SetSex(Sex.Female); };
+
+                    _sexClassifiedButton = new Button
+                    {
+                        /* DUR WHAT IF I PUT ATTACK HELICOPTER HERE DUR HUR AHUHRUHWUIDHAEILUBFOWEL(*&RFH#W*(OBFD&*/
+                        Text = Loc.GetString("Classified"),
+                        Group = sexButtonGroup
+                    };
+                    _sexClassifiedButton.OnPressed += args => { SetSex(Sex.Classified); };
+
                     hBox.AddChild(sexLabel);
                     hBox.AddChild(_sexMaleButton);
                     hBox.AddChild(_sexFemaleButton);
+                    hBox.AddChild(_sexClassifiedButton);
                     panel.AddChild(hBox);
                     sexAndAgeRow.AddChild(panel);
                 }
