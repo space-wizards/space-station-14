@@ -220,7 +220,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         protected virtual void Revalidate()
         {
-            foreach (var indices in _invalidatedCoords.ToArray())
+            foreach (var indices in _invalidatedCoords)
             {
                 var tile = GetTile(indices);
 
@@ -423,12 +423,18 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// <inheritdoc />
         public bool IsAirBlocked(Vector2i indices, AtmosDirection direction = AtmosDirection.All)
         {
+            var directions = AtmosDirection.Invalid;
+
             foreach (var obstructingComponent in GetObstructingComponents(indices))
             {
                 if (!obstructingComponent.AirBlocked)
                     continue;
 
-                if (obstructingComponent.AirBlockedDirection.IsFlagSet(direction))
+                // We set the directions that are air-blocked so far,
+                // as you could have a full obstruction with only 4 directional air blockers.
+                directions |= obstructingComponent.AirBlockedDirection;
+
+                if (directions.IsFlagSet(direction))
                     return true;
             }
 
@@ -799,15 +805,11 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             var gridLookup = EntitySystem.Get<GridTileLookupSystem>();
 
-            var list = new List<AirtightComponent>();
-
             foreach (var v in gridLookup.GetEntitiesIntersecting(_gridId, indices))
             {
                 if (v.TryGetComponent<AirtightComponent>(out var ac))
-                    list.Add(ac);
+                    yield return ac;
             }
-
-            return list;
         }
 
         private bool NeedsVacuumFixing(Vector2i indices)
