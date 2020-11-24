@@ -24,6 +24,25 @@
     sprite: Objects/Tools/Toolboxes/toolbox_red.rsi
 
 - type: entity
+  id: ToolboxEmergencyFilled
+  name: emergency toolbox
+  parent: ToolboxEmergency
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - name: ClothingMaskBreath
+        amount: 2
+      - name: FoodChocolateBar
+      - name: FlashlightLantern
+        amount: 2
+      - name: HarmonicaInstrument
+        prob: 0.15
+        orGroup: HarmonicaOrChocolate
+      - name: FoodChocolateBar
+        orGroup: HarmonicaOrChocolate
+
+- type: entity
   name: mechanical toolbox
   parent: ToolboxBase
   id: ToolboxMechanical
@@ -82,3 +101,19 @@
     state: icon
   - type: Item
     sprite: Objects/Tools/Toolboxes/toolbox_gold.rsi
+
+- type: entity
+  id: ToolboxGoldFilled
+  name: golden toolbox
+  parent: ToolboxGolden
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - name: GoldStack
+        amount: 5
+      - name: DrinkGoldenCup
+        prob: 0.05
+        orGroup: CupOrGold
+      - name: GoldStack
+        orGroup: CupOrGold
