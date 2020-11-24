@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.GameObjects.Components.Clothing;
 using Content.Shared.GameObjects.Components.Inventory;
@@ -22,10 +24,9 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
     {
         private readonly Dictionary<Slots, IEntity> _slots = new Dictionary<Slots, IEntity>();
 
-        [ViewVariables]
-        public InventoryInterfaceController InterfaceController { get; private set; }
+        [ViewVariables] public InventoryInterfaceController InterfaceController { get; private set; } = default!;
 
-        private ISpriteComponent _sprite;
+        private ISpriteComponent? _sprite;
 
         private bool _playerAttached = false;
 
@@ -69,7 +70,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             }
         }
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
 
@@ -126,7 +127,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                 return;
             }
 
-            if (entity != null && entity.TryGetComponent(out ClothingComponent clothing))
+            if (entity.TryGetComponent(out ClothingComponent? clothing))
             {
                 var flag = SlotMasks[slot];
                 var data = clothing.GetEquippedStateInfo(flag);
@@ -155,6 +156,9 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 
         internal void ClearAllSlotVisuals()
         {
+            if (_sprite == null)
+                return;
+
             foreach (var slot in InventoryInstance.SlotMasks)
             {
                 if (slot != Slots.NONE)
@@ -192,7 +196,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             SendNetworkMessage(new OpenSlotStorageUIMessage(slot));
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent component)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
 
@@ -210,9 +214,25 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             }
         }
 
-        public bool TryGetSlot(Slots slot, out IEntity item)
+        public bool TryGetSlot(Slots slot, out IEntity? item)
         {
             return _slots.TryGetValue(slot, out item);
+        }
+
+        public bool TryFindItemSlots(IEntity item, [NotNullWhen(true)] out Slots? slots)
+        {
+            slots = null;
+
+            foreach (var (slot, entity) in _slots)
+            {
+                if (entity == item)
+                {
+                    slots = slot;
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

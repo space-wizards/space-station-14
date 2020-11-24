@@ -114,7 +114,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
                     // Predictions
                     if (doAfter.BreakOnUserMove)
                     {
-                        if (userGrid != doAfter.UserGrid)
+                        if (!userGrid.InRange(EntityManager, doAfter.UserGrid, doAfter.MovementThreshold))
                         {
                             comp.Cancel(id, currentTime);
                             continue;
@@ -123,7 +123,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
 
                     if (doAfter.BreakOnTargetMove)
                     {
-                        if (EntityManager.TryGetEntity(doAfter.TargetUid, out var targetEntity) && targetEntity.Transform.Coordinates != doAfter.TargetGrid)
+                        if (EntityManager.TryGetEntity(doAfter.TargetUid, out var targetEntity) && !targetEntity.Transform.Coordinates.InRange(EntityManager, doAfter.TargetGrid, doAfter.MovementThreshold))
                         {
                             comp.Cancel(id, currentTime);
                             continue;

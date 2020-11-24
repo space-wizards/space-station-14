@@ -1,0 +1,20 @@
+- type: entity
+  parent: Clothing
+  id: ClothingOuterBase
+  abstract: true
+  components:
+  - type: Clothing
+    Slots:
+    - outerclothing
+  - type: Sprite
+    state: icon
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterHardsuitBase
+  name: base hardsuit
+  abstract: true
+  components:
+    - type: PressureProtection
+      highPressureMultiplier: 0.75
+      lowPressureMultiplier: 100

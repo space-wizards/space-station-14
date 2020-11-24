@@ -116,6 +116,7 @@ namespace Content.Client.GameObjects.Components.Actor
         public class CharacterWindow : SS14Window
         {
             private readonly VBoxContainer _contentsVBox;
+            private readonly List<ICharacterUI> _windowComponents;
 
             public CharacterWindow(List<ICharacterUI> windowComponents)
             {
@@ -128,6 +129,17 @@ namespace Content.Client.GameObjects.Components.Actor
                 foreach (var element in windowComponents)
                 {
                     _contentsVBox.AddChild(element.Scene);
+                }
+
+                _windowComponents = windowComponents;
+            }
+
+            protected override void Opened()
+            {
+                base.Opened();
+                foreach (var windowComponent in _windowComponents)
+                {
+                    windowComponent.Opened();
                 }
             }
         }
