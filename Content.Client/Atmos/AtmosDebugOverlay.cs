@@ -54,7 +54,7 @@ namespace Content.Client.Atmos
 
                 var gridBounds = new Box2(mapGrid.WorldToLocal(worldBounds.BottomLeft), mapGrid.WorldToLocal(worldBounds.TopRight));
 
-                for (var pass = 0; pass < 3; pass++)
+                for (var pass = 0; pass < 2; pass++)
                 {
                     foreach (var tile in mapGrid.GetTilesIntersecting(gridBounds))
                     {
@@ -64,6 +64,7 @@ namespace Content.Client.Atmos
                             var data = (SharedAtmosDebugOverlaySystem.AtmosDebugOverlayData) dataMaybeNull!;
                             if (pass == 0)
                             {
+                                // -- Mole Count --
                                 float total = 0;
                                 foreach (float f in data.Moles)
                                 {
@@ -75,6 +76,25 @@ namespace Content.Client.Atmos
                             }
                             else if (pass == 1)
                             {
+                                // -- Blocked Directions --
+                                void CheckAndShowBlockDir(AtmosDirection dir)
+                                {
+                                    if (data.BlockDirection.HasFlag(dir))
+                                    {
+                                        var atmosAngle = dir.ToAngle();
+                                        var atmosAngleOfs = atmosAngle.ToVec() * 0.45f;
+                                        var atmosAngleOfsR90 = new Vector2(atmosAngleOfs.Y, -atmosAngleOfs.X);
+                                        var tileCentre = new Vector2(tile.X + 0.5f, tile.Y + 0.5f);
+                                        var basisA = mapGrid.LocalToWorld(tileCentre + atmosAngleOfs - atmosAngleOfsR90);
+                                        var basisB = mapGrid.LocalToWorld(tileCentre + atmosAngleOfs + atmosAngleOfsR90);
+                                        drawHandle.DrawLine(basisA, basisB, Color.Azure);
+                                    }
+                                }
+                                CheckAndShowBlockDir(AtmosDirection.North);
+                                CheckAndShowBlockDir(AtmosDirection.South);
+                                CheckAndShowBlockDir(AtmosDirection.East);
+                                CheckAndShowBlockDir(AtmosDirection.West);
+                                // -- Pressure Direction --
                                 if (data.PressureDirection != AtmosDirection.Invalid)
                                 {
                                     var atmosAngle = data.PressureDirection.ToAngle();
@@ -84,9 +104,7 @@ namespace Content.Client.Atmos
                                     var basisB = mapGrid.LocalToWorld(tileCentre + atmosAngleOfs);
                                     drawHandle.DrawLine(basisA, basisB, Color.Blue);
                                 }
-                            }
-                            else if (pass == 2)
-                            {
+                                // -- Excited Groups --
                                 if (data.InExcitedGroup)
                                 {
                                     var tilePos = new Vector2(tile.X, tile.Y);
