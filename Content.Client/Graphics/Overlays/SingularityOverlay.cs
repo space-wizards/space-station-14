@@ -42,7 +42,7 @@ namespace Content.Client.Graphics.Overlays
         private float _intensity = 3.8f;
         private float _falloff = 5.1f;
 
-        public SingularityOverlay() : base()
+        public SingularityOverlay()
         {
             IoCManager.InjectDependencies(this);
             _shader = _prototypeManager.Index<ShaderPrototype>("Singularity").Instance().Duplicate();

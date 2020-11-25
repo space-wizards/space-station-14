@@ -204,7 +204,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
         public readonly List<SharedAiDebug.AStarRouteMessage> AStarRoutes = new List<SharedAiDebug.AStarRouteMessage>();
         public readonly List<SharedAiDebug.JpsRouteMessage> JpsRoutes = new List<SharedAiDebug.JpsRouteMessage>();
 
-        public DebugPathfindingOverlay() : base()
+        public DebugPathfindingOverlay()
         {
             _shader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>("unshaded").Instance();
             _eyeManager = IoCManager.Resolve<IEyeManager>();

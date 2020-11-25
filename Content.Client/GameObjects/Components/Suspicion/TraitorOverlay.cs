@@ -33,7 +33,6 @@ namespace Content.Client.GameObjects.Components.Suspicion
             IEntityManager entityManager,
             IResourceCache resourceCache,
             IEyeManager eyeManager)
-            : base()
         {
             _entityManager = entityManager;
             _eyeManager = eyeManager;

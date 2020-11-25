@@ -19,7 +19,7 @@ namespace Content.Client.Graphics.Overlays
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
         private readonly ShaderInstance _shader;
 
-        public GradientCircleMaskOverlay() : base()
+        public GradientCircleMaskOverlay()
         {
             IoCManager.InjectDependencies(this);
             _shader = _prototypeManager.Index<ShaderPrototype>("GradientCircleMask").Instance();

@@ -110,7 +110,7 @@ namespace Content.Client.GameObjects.Components.Weapons
         private readonly IClyde _displayManager;
         public TimeSpan StartTime { get; set; }
         public double Duration { get; set; }
-        public FlashOverlay(double duration) : base()
+        public FlashOverlay(double duration)
         {
             _timer = IoCManager.Resolve<IGameTiming>();
             _displayManager = IoCManager.Resolve<IClyde>();

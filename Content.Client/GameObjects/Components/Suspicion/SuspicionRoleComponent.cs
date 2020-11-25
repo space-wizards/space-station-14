@@ -78,7 +78,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
                 return false;
             }
 
-            if (!_overlayManager.GetOverlaysOfClass<TraitorOverlay>(out var overlays))
+            if (!_overlayManager.TryGetOverlaysOfClass<TraitorOverlay>(out var overlays))
             {
                 return false;
             }
@@ -94,7 +94,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
                 return false;
             }
 
-            if (!_overlayManager.GetOverlaysOfClass<TraitorOverlay>(out var overlays))
+            if (!_overlayManager.TryGetOverlaysOfClass<TraitorOverlay>(out var overlays))
             {
                 return false;
             }

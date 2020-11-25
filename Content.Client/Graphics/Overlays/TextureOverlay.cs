@@ -46,7 +46,7 @@ namespace Content.Client.Graphics.Overlays
         private float _cutoffTransparency = 0.0f;
         private bool _disableTransparency = false;
 
-        public TextureOverlay() : base()
+        public TextureOverlay()
         {
             IoCManager.InjectDependencies(this);
             _shader = _prototypeManager.Index<ShaderPrototype>("Texture").Instance().Duplicate();

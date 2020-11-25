@@ -28,7 +28,7 @@ namespace Content.Client.Graphics.Overlays
         private int _lastsFor = 5000;
         private Texture _screenshotTexture;
 
-        public FlashOverlay() : base()
+        public FlashOverlay()
         {
             IoCManager.InjectDependencies(this);
             _shader = _prototypeManager.Index<ShaderPrototype>("FlashedEffect").Instance().Duplicate();

@@ -20,7 +20,7 @@ namespace Content.Server.GameObjects.Components.Effects
     {
         public override string Name => "SingularityShaderAura";
 
-        protected override int Radius => 25;
+        protected override int Radius => 40;
         protected string CurrentActiveTexturePath = "Objects/Fun/toys.rsi";
         protected string CurrentActiveTextureState = "singularitytoy";
         protected float CurrentIntensity = 3.8f;

@@ -25,7 +25,7 @@ namespace Content.Client.Atmos
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
-        public AtmosDebugOverlay() : base()
+        public AtmosDebugOverlay()
         {
             IoCManager.InjectDependencies(this);
 

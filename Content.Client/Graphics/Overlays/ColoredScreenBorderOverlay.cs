@@ -20,7 +20,7 @@ namespace Content.Client.Graphics.Overlays
         public override OverlayPriority Priority => OverlayPriority.P7;
         private readonly ShaderInstance _shader;
 
-        public ColoredScreenBorderOverlay() : base()
+        public ColoredScreenBorderOverlay()
         {
             IoCManager.InjectDependencies(this);
             _shader = _prototypeManager.Index<ShaderPrototype>("ColoredScreenBorder").Instance();

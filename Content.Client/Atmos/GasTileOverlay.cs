@@ -23,7 +23,7 @@ namespace Content.Client.Atmos
 
         public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
 
-        public GasTileOverlay() : base()
+        public GasTileOverlay()
         {
             IoCManager.InjectDependencies(this);
 

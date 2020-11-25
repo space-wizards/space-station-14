@@ -28,7 +28,7 @@ namespace Content.Client.Parallax
         public override OverlaySpace Space => OverlaySpace.ScreenSpaceBelowWorld;
         private readonly ShaderInstance _shader;
 
-        public ParallaxOverlay() : base()
+        public ParallaxOverlay()
         {
             IoCManager.InjectDependencies(this);
             _shader = _prototypeManager.Index<ShaderPrototype>("unshaded").Instance();
