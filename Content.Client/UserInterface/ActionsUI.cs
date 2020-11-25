@@ -53,8 +53,8 @@ namespace Content.Client.UserInterface
         /// <param name="onHideTooltip">OnHideTooltip handler to assign to each ActionSlot</param>
         /// <param name="actionSlotEventHandler">handler for interactions with
         /// action slots. Slots with no actions will not be handled by this.</param>
-        /// <param name="actionDragDropEventHandler">handler for drag and drop events between
-        /// slots.</param>
+        /// <param name="actionDragDropEventHandler">handler for dragging and dropping from
+        /// one slot to another.</param>
         /// <param name="onNextHotbarPressed">action to invoke when pressing the next hotbar button</param>
         /// <param name="onPreviousHotbarPressed">action to invoke when pressing the previous hotbar button</param>
         /// <param name="onSettingsButtonPressed">action to invoke when pressing the settings button</param>
@@ -187,7 +187,7 @@ namespace Content.Client.UserInterface
             return true;
         }
 
-        private bool OnContinueActionDrag()
+        private bool OnContinueActionDrag(float frameTime)
         {
             // stop if there's no action in the slot
             if (_dragDropHelper.Target.Action == null) return false;
@@ -367,7 +367,7 @@ namespace Content.Client.UserInterface
         protected override void FrameUpdate(FrameEventArgs args)
         {
             base.Update(args);
-            _dragDropHelper.FrameUpdate();
+            _dragDropHelper.Update(args.DeltaSeconds);
         }
     }
 

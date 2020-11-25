@@ -7,7 +7,18 @@ using Robust.Shared.Timing;
 namespace Content.Client.Utility
 {
     /// <summary>
-    /// Helper for dealing with drag and drop interactions.
+    /// Helper for implementing drag and drop interactions.
+    ///
+    /// The basic flow for a drag drop interaction as per this helper is:
+    /// 1. User presses mouse down on something (using class should communicate this to helper by calling MouseDown()).
+    /// 2. User continues to hold the mouse down and moves the mouse outside of the defined
+    ///    deadzone. OnBeginDrag is invoked to see if a drag should be initiated. If so, initiates a drag.
+    ///    If user didn't move the mouse beyond the deadzone the drag is not initiated (OnEndDrag invoked).
+    /// 3. Every Update/FrameUpdate, OnContinueDrag is invoked.
+    /// 4. User lifts mouse up. This is not handled by DragDropHelper. The using class of the helper should
+    ///     do whatever they want and then end the drag by calling EndDrag() (which invokes OnEndDrag).
+    ///
+    /// If for any reason the drag is ended, OnEndDrag is invoked.
     /// </summary>
     /// <typeparam name="T">thing being dragged and dropped</typeparam>
     public class DragDropHelper<T>
@@ -22,10 +33,12 @@ namespace Content.Client.Utility
         /// <summary>
         /// Convenience method, current mouse screen position as provided by inputmanager.
         /// </summary>
-        public Vector2 MouseScreenPos => _inputManager.MouseScreenPosition;
+        public Vector2 MouseScreenPosition => _inputManager.MouseScreenPosition;
 
         /// <summary>
-        /// True if currently dragging something.
+        /// True if initiated a drag and currently dragging something.
+        /// I.e. this will be false if we've just had a mousedown over something but the mouse
+        /// has not moved outside of the drag deadzone.
         /// </summary>
         public bool IsDragging => _state == DragState.Dragging;
 
@@ -72,7 +85,10 @@ namespace Content.Client.Utility
         /// </summary>
         public void MouseDown(T target)
         {
-            EndDrag();
+            if (_state != DragState.NotDragging)
+            {
+                EndDrag();
+            }
 
             Target = target;
             _state = DragState.MouseDown;
@@ -102,10 +118,10 @@ namespace Content.Client.Utility
         }
 
         /// <summary>
-        /// Should be invoked by using class every FrameUpdate.
+        /// Should be invoked by using class every FrameUpdate or Update.
         /// </summary>
         /// <param name="args"></param>
-        public void FrameUpdate()
+        public void Update(float frameTime)
         {
             switch (_state)
             {
@@ -122,7 +138,7 @@ namespace Content.Client.Utility
                 }
                 case DragState.Dragging:
                 {
-                    if (!_onContinueDrag.Invoke())
+                    if (!_onContinueDrag.Invoke(frameTime))
                     {
                         EndDrag();
                     }
@@ -145,7 +161,7 @@ namespace Content.Client.Utility
     /// make the drag shadow follow the mouse position.
     /// </summary>
     /// <returns>true if drag should continue, false to end.</returns>
-    public delegate bool OnContinueDrag();
+    public delegate bool OnContinueDrag(float frameTime);
 
     /// <summary>
     /// invoked when
