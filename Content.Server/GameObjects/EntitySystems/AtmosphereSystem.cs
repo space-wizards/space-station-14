@@ -5,7 +5,9 @@ using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Reactions;
 using Content.Server.GameObjects.Components.Atmos;
+using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
+using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems.TileLookup;
 using Robust.Server.Interfaces.Timing;
@@ -17,6 +19,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameObjects.EntitySystems
@@ -38,6 +41,9 @@ namespace Content.Server.GameObjects.EntitySystems
         /// </summary>
         public IEnumerable<GasReactionPrototype> GasReactions => _gasReactions!;
 
+        private float[] _gasSpecificHeats = new float[Atmospherics.TotalNumberOfGases];
+        public float[] GasSpecificHeats => _gasSpecificHeats;
+
         public GridTileLookupSystem GridTileLookupSystem => _gridTileLookup ??= Get<GridTileLookupSystem>();
 
         public override void Initialize()
@@ -52,6 +58,13 @@ namespace Content.Server.GameObjects.EntitySystems
             IoCManager.InjectDependencies(_spaceAtmos);
 
             _mapManager.TileChanged += OnTileChanged;
+
+            Array.Resize(ref _gasSpecificHeats, MathHelper.NextMultipleOf(Atmospherics.TotalNumberOfGases, 4));
+
+            for (var i = 0; i < GasPrototypes.Length; i++)
+            {
+                _gasSpecificHeats[i] = GasPrototypes[i].SpecificHeat;
+            }
 
             // Required for airtight components.
             EntityManager.EventBus.SubscribeEvent<RotateEvent>(EventSource.Local, this, RotateEvent);
@@ -104,7 +117,7 @@ namespace Content.Server.GameObjects.EntitySystems
             // space -> not space or vice versa. So if the old tile is the
             // same as the new tile in terms of space-ness, ignore the change
 
-            if (eventArgs.NewTile.Tile.IsEmpty == eventArgs.OldTile.IsEmpty)
+            if (eventArgs.NewTile.IsSpace() == eventArgs.OldTile.IsSpace())
             {
                 return;
             }

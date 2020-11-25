@@ -156,21 +156,22 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
 
             var tileData = new List<GasData>();
 
-            for (byte i = 0; i < Atmospherics.TotalNumberOfGases; i++)
-            {
-                var gas = _atmosphereSystem.GetGas(i);
-                var overlay = _atmosphereSystem.GetOverlay(i);
-                if (overlay == null || tile?.Air == null) continue;
+            if(tile.Air != null)
+                for (byte i = 0; i < Atmospherics.TotalNumberOfGases; i++)
+                {
+                    var gas = _atmosphereSystem.GetGas(i);
+                    var overlay = _atmosphereSystem.GetOverlay(i);
+                    if (overlay == null) continue;
 
-                var moles = tile.Air.Gases[i];
+                    var moles = tile.Air.Gases[i];
 
-                if (moles < gas.GasMolesVisible) continue;
+                    if (moles < gas.GasMolesVisible) continue;
 
-                var data = new GasData(i, (byte) (MathHelper.Clamp01(moles / gas.GasMolesVisibleMax) * 255));
-                tileData.Add(data);
-            }
+                    var data = new GasData(i, (byte) (MathHelper.Clamp01(moles / gas.GasMolesVisibleMax) * 255));
+                    tileData.Add(data);
+                }
 
-            overlayData = new GasOverlayData(tile!.Hotspot.State, tile.Hotspot.Temperature, tileData.Count == 0 ? null : tileData.ToArray());
+            overlayData = new GasOverlayData(tile!.Hotspot.State, tile.Hotspot.Temperature, tileData.Count == 0 ? Array.Empty<GasData>() : tileData.ToArray());
 
             if (overlayData.Equals(oldTile))
             {

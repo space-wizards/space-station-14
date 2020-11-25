@@ -17,6 +17,7 @@
   is_subfloor: true
   footstep_sounds: footstep_plating
   friction: 0.5
+  is_space: true
 
 - type: tile
   name: underplating
