@@ -25,46 +25,117 @@ namespace Content.Shared.GameObjects.Components.Pulling
 
         [ComponentDependency] private readonly IPhysicsComponent? _physics = default!;
 
+        /// <summary>
+        /// Only set in Puller->set! Only set in unison with _pullerPhysics!
+        /// </summary>
         private IEntity? _puller;
+        private IPhysicsComponent? _pullerPhysics;
+        public IPhysicsComponent? PullerPhysics => _pullerPhysics;
 
+        /// <summary>
+        /// The current entity pulling this component.
+        /// Setting this performs the entire setup process for pulling.
+        /// </summary>
         public virtual IEntity? Puller
         {
             get => _puller;
-            private set
+            set
             {
                 if (_puller == value)
                 {
                     return;
                 }
 
-                _puller = value;
-                Dirty();
-
-                if (_physics == null)
-                {
-                    return;
-                }
-
                 PullController controller;
 
-                if (value == null)
+                // New value. Abandon being pulled by any existing object.
+                if (_puller != null)
                 {
-                    if (_physics.TryGetController(out controller))
-                    {
-                        controller.StopPull();
-                    }
+                    var oldPuller = _puller;
+                    var oldPullerPhysics = _pullerPhysics;
 
+                    _puller = null;
+                    _pullerPhysics = null;
+
+                    if (_physics != null)
+                    {
+                        var message = new PullStoppedMessage(oldPullerPhysics, _physics);
+
+                        oldPuller.SendMessage(null, message);
+                        Owner.SendMessage(null, message);
+
+                        oldPuller.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
+                        _physics.WakeBody();
+                        _physics.TryRemoveController<PullController>();
+                    }
+                    // else-branch warning is handled below
+                }
+
+                // Now that is settled, prepare to be pulled by a new object.
+                if (_physics == null)
+                {
+                    Logger.WarningS("c.go.c.pulling", "Well now you've done it, haven't you? SharedPullableComponent didn't have an IPhysicsComponent.");
                     return;
                 }
 
-                controller = _physics.EnsureController<PullController>();
-                controller.StartPull(value);
+                if (value != null)
+                {
+                    // Pulling a new object : Perform sanity checks.
+
+                    if (!_canStartPull(value))
+                    {
+                        return;
+                    }
+
+                    if (!value.TryGetComponent<IPhysicsComponent>(out var valuePhysics))
+                    {
+                        return;
+                    }
+
+                    var pullAttempt = new PullAttemptMessage(valuePhysics, _physics);
+
+                    value.SendMessage(null, pullAttempt);
+
+                    if (pullAttempt.Cancelled)
+                    {
+                        return;
+                    }
+
+                    _physics.Owner.SendMessage(null, pullAttempt);
+
+                    if (pullAttempt.Cancelled)
+                    {
+                        return;
+                    }
+
+                    // Pull start confirm
+
+                    _puller = value;
+                    _pullerPhysics = valuePhysics;
+
+                    controller = _physics.EnsureController<PullController>();
+                    controller.Manager = this;
+                    var message = new PullStartedMessage(controller, _pullerPhysics, _physics);
+
+                    _puller.SendMessage(null, message);
+                    _physics.Owner.SendMessage(null, message);
+
+                    _puller.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
+
+                    _physics.WakeBody();
+                }
+                // Code here will not run if pulling a new object was attempted and failed because of the returns from the refactor.
             }
         }
 
         public bool BeingPulled => Puller != null;
 
-        public bool CanStartPull(IEntity puller)
+        /// <summary>
+        /// Sanity-check pull. This is called from Puller setter, so it will never deny a pull that's valid by setting Puller.
+        /// It might allow an impossible pull (i.e: puller has no PhysicsComponent somehow).
+        /// Ultimately this is only used separately to stop TryStartPull from cancelling a pull for no reason.
+        /// </summary>
+        private bool _canStartPull(IEntity puller)
         {
             if (!puller.HasComponent<SharedPullerComponent>())
             {
@@ -96,7 +167,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
 
         public bool TryStartPull(IEntity puller)
         {
-            if (!CanStartPull(puller))
+            if (!_canStartPull(puller))
             {
                 return false;
             }
