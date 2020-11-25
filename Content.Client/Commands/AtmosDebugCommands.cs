@@ -11,8 +11,8 @@ namespace Content.Client.Commands
     internal sealed class AtvRangeCommand : IConsoleCommand
     {
         public string Command => "atvrange";
-        public string Description => "Sets the atmos debug scale.";
-        public string Help => "atvscale <start> <end>";
+        public string Description => "Sets the atmos debug range (as two floats, start [red] and end [blue])";
+        public string Help => "atvrange <start> <end>";
         public bool Execute(IDebugConsole console, params string[] args)
         {
             if (args.Length != 2)
