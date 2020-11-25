@@ -21,11 +21,11 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        private Dictionary<byte, PanelContainer> _doAfterControls = new Dictionary<byte, PanelContainer>();
-        private Dictionary<byte, DoAfterBar> _doAfterBars = new Dictionary<byte, DoAfterBar>();
+        private readonly Dictionary<byte, PanelContainer> _doAfterControls = new Dictionary<byte, PanelContainer>();
+        private readonly Dictionary<byte, DoAfterBar> _doAfterBars = new Dictionary<byte, DoAfterBar>();
 
         // We'll store cancellations for a little bit just so we can flash the graphic to indicate it's cancelled
-        private Dictionary<byte, TimeSpan> _cancelledDoAfters = new Dictionary<byte, TimeSpan>();
+        private readonly Dictionary<byte, TimeSpan> _cancelledDoAfters = new Dictionary<byte, TimeSpan>();
 
         public IEntity? AttachedEntity { get; set; }
         private ScreenCoordinates _playerPosition;
@@ -48,12 +48,12 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
             base.Dispose(disposing);
             if (Disposed)
                 return;
-            
+
             foreach (var (_, control) in _doAfterControls)
             {
                 control.Dispose();
             }
-            
+
             _doAfterControls.Clear();
             _doAfterBars.Clear();
             _cancelledDoAfters.Clear();
@@ -109,10 +109,10 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
             RemoveChild(control);
             _doAfterControls.Remove(id);
             _doAfterBars.Remove(id);
-            
+
             if (_cancelledDoAfters.ContainsKey(id))
                 _cancelledDoAfters.Remove(id);
-            
+
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
                 doAfterBar = new DoAfterBar();
                 _doAfterBars[id] = doAfterBar;
             }
-            
+
             doAfterBar.Cancelled = true;
             _cancelledDoAfters.Add(id, _gameTiming.CurTime);
         }
@@ -139,7 +139,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
         {
             base.FrameUpdate(args);
 
-            if (AttachedEntity?.IsValid() != true || 
+            if (AttachedEntity?.IsValid() != true ||
                 !AttachedEntity.TryGetComponent(out DoAfterComponent? doAfterComponent))
             {
                 return;

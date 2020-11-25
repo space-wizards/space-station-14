@@ -13,7 +13,7 @@ namespace Content.Shared.Construction
     public class ConstructionGraphPrototype : IPrototype, IIndexedPrototype
     {
         private readonly Dictionary<string, ConstructionGraphNode> _nodes = new Dictionary<string, ConstructionGraphNode>();
-        private Dictionary<ValueTuple<string, string>, ConstructionGraphNode[]> _paths = new Dictionary<ValueTuple<string, string>, ConstructionGraphNode[]>();
+        private readonly Dictionary<ValueTuple<string, string>, ConstructionGraphNode[]> _paths = new Dictionary<ValueTuple<string, string>, ConstructionGraphNode[]>();
         private Dictionary<ConstructionGraphNode, ConstructionGraphNode> _pathfinding = new Dictionary<ConstructionGraphNode, ConstructionGraphNode>();
 
         [ViewVariables]

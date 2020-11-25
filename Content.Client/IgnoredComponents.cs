@@ -35,7 +35,6 @@
             "Smes",
             "LightBulb",
             "Healing",
-            "Catwalk",
             "RangedMagazine",
             "Ammo",
             "HitscanWeaponCapacitor",
@@ -212,8 +211,9 @@
             "RandomSpriteState",
             "ShaderAura",
             "SingularityShaderAura",
+            "WelderRefinable",
             "ConveyorAssembly",
-            "TwoWayLever"
+            "TwoWayLever",
         };
     }
 }

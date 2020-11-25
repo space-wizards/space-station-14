@@ -4,7 +4,6 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Nutrition;
 using Robust.Shared.GameObjects;
@@ -55,7 +54,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         [ViewVariables(VVAccess.ReadOnly)]
         public Dictionary<HungerThreshold, float> HungerThresholds => _hungerThresholds;
-        private Dictionary<HungerThreshold, float> _hungerThresholds = new Dictionary<HungerThreshold, float>
+        private readonly Dictionary<HungerThreshold, float> _hungerThresholds = new Dictionary<HungerThreshold, float>
         {
             {HungerThreshold.Overfed, 600.0f},
             {HungerThreshold.Okay, 450.0f},

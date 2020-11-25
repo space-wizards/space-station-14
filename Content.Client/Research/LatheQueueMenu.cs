@@ -16,10 +16,10 @@ namespace Content.Client.Research
         public LatheBoundUserInterface Owner { get; set; }
 
         [ViewVariables]
-        private ItemList QueueList;
-        private Label NameLabel;
-        private Label Description;
-        private TextureRect Icon;
+        private readonly ItemList _queueList;
+        private readonly Label _nameLabel;
+        private readonly Label _description;
+        private readonly TextureRect _icon;
 
         public LatheQueueMenu()
         {
@@ -54,7 +54,7 @@ namespace Content.Client.Research
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
             };
 
-            Icon = new TextureRect()
+            _icon = new TextureRect()
             {
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                 SizeFlagsStretchRatio = 2,
@@ -66,13 +66,13 @@ namespace Content.Client.Research
                 SizeFlagsStretchRatio = 3,
             };
 
-            NameLabel = new Label()
+            _nameLabel = new Label()
             {
                 RectClipContent = true,
                 SizeFlagsHorizontal = SizeFlags.Fill,
             };
 
-            Description = new Label()
+            _description = new Label()
             {
                 RectClipContent = true,
                 SizeFlagsVertical = SizeFlags.FillExpand,
@@ -80,7 +80,7 @@ namespace Content.Client.Research
 
             };
 
-            QueueList = new ItemList()
+            _queueList = new ItemList()
             {
                 SizeFlagsHorizontal = SizeFlags.Fill,
                 SizeFlagsVertical = SizeFlags.FillExpand,
@@ -88,16 +88,16 @@ namespace Content.Client.Research
                 SelectMode = ItemList.ItemListSelectMode.None
             };
 
-            vBoxInfo.AddChild(NameLabel);
-            vBoxInfo.AddChild(Description);
+            vBoxInfo.AddChild(_nameLabel);
+            vBoxInfo.AddChild(_description);
 
-            hBox.AddChild(Icon);
+            hBox.AddChild(_icon);
             hBox.AddChild(vBoxInfo);
 
             descMargin.AddChild(hBox);
 
             vBox.AddChild(descMargin);
-            vBox.AddChild(QueueList);
+            vBox.AddChild(_queueList);
 
             margin.AddChild(vBox);
 
@@ -108,27 +108,27 @@ namespace Content.Client.Research
 
         public void SetInfo(LatheRecipePrototype recipe)
         {
-            Icon.Texture = recipe.Icon.Frame0();
+            _icon.Texture = recipe.Icon.Frame0();
             if (recipe.Name != null)
-                NameLabel.Text = recipe.Name;
+                _nameLabel.Text = recipe.Name;
             if (recipe.Description != null)
-                Description.Text = recipe.Description;
+                _description.Text = recipe.Description;
         }
 
         public void ClearInfo()
         {
-            Icon.Texture = Texture.Transparent;
-            NameLabel.Text = "-------";
-            Description.Text = "Not producing anything.";
+            _icon.Texture = Texture.Transparent;
+            _nameLabel.Text = "-------";
+            _description.Text = "Not producing anything.";
         }
 
         public void PopulateList()
         {
-            QueueList.Clear();
+            _queueList.Clear();
             var idx = 1;
             foreach (var recipe in Owner.QueuedRecipes)
             {
-                QueueList.AddItem($"{idx}. {recipe.Name}", recipe.Icon.Frame0());
+                _queueList.AddItem($"{idx}. {recipe.Name}", recipe.Icon.Frame0());
                 idx++;
             }
         }

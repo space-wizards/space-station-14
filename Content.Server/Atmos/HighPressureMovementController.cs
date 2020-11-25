@@ -4,19 +4,17 @@ using Content.Server.GameObjects.Components.Atmos;
 using Content.Shared.Atmos;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
 using Robust.Shared.Random;
 
 namespace Content.Server.Atmos
 {
     public class HighPressureMovementController : FrictionController
     {
-        [Dependency] private IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
         public override IPhysicsComponent? ControlledComponent { protected get; set; }
 
         private const float MoveForcePushRatio = 1f;

@@ -62,7 +62,7 @@ namespace Content.Client.Eui
 
         private sealed class EuiData
         {
-            public BaseEui Eui;
+            public readonly BaseEui Eui;
 
             public EuiData(BaseEui eui)
             {

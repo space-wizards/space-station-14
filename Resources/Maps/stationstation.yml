@@ -1977,7 +1977,7 @@ entities:
   - anchored: False
     type: Physics
 - uid: 225
-  type: OuterclothingVest
+  type: ClothingOuterVest
   components:
   - parent: 216
     pos: 1.412994,7.507263
@@ -2973,7 +2973,7 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 361
-  type: OuterclothingVest
+  type: ClothingOuterVest
   components:
   - parent: 216
     pos: 0.5223687,7.507263
@@ -3874,7 +3874,7 @@ entities:
   - anchored: False
     type: Physics
 - uid: 473
-  type: UniformEngineering
+  type: ClothingUniformJumpsuitEngineering
   components:
   - parent: 216
     pos: -0.6474335,-10.27245
@@ -3883,7 +3883,7 @@ entities:
   - anchored: False
     type: Physics
 - uid: 474
-  type: GasMaskClothing
+  type: ClothingMaskGas
   components:
   - parent: 216
     pos: -0.2880585,-10.69432
@@ -3892,7 +3892,7 @@ entities:
   - anchored: False
     type: Physics
 - uid: 475
-  type: OuterclothingVest
+  type: ClothingOuterVest
   components:
   - parent: 216
     pos: -0.9130585,-10.66307
@@ -3901,7 +3901,7 @@ entities:
   - anchored: False
     type: Physics
 - uid: 476
-  type: UtilityBeltClothingFilled
+  type: ClothingBeltUtilityFilled
   components:
   - parent: 216
     pos: -1.895102,-10.33495
@@ -3914,7 +3914,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 477
-  type: UtilityBeltClothingFilled
+  type: ClothingBeltUtilityFilled
   components:
   - parent: 216
     pos: -1.770102,-10.63182
@@ -3972,7 +3972,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 481
-  type: BackpackClothing
+  type: ClothingBackpack
   components:
   - parent: 216
     pos: -5.089887,7.591276
@@ -3985,7 +3985,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 482
-  type: BackpackClothing
+  type: ClothingBackpack
   components:
   - parent: 216
     pos: -4.683637,7.606901
@@ -3998,7 +3998,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 483
-  type: GlovesBlack
+  type: ClothingHandsGlovesColorBlack
   components:
   - parent: 216
     pos: -3.386762,7.466276
@@ -4348,7 +4348,7 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 527
-  type: GlovesLeather
+  type: ClothingHandsGlovesLeather
   components:
   - parent: 216
     pos: -4.332221,4.64238
@@ -4357,7 +4357,7 @@ entities:
   - anchored: False
     type: Physics
 - uid: 528
-  type: GlovesLeather
+  type: ClothingHandsGlovesLeather
   components:
   - parent: 216
     pos: -3.519721,4.64238
@@ -4366,7 +4366,7 @@ entities:
   - anchored: False
     type: Physics
 - uid: 529
-  type: GlovesLeather
+  type: ClothingHandsGlovesLeather
   components:
   - parent: 216
     pos: -2.597846,4.61113
