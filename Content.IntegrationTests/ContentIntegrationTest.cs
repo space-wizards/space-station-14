@@ -13,7 +13,6 @@ using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.UnitTesting;
-using EntryPoint = Content.Client.EntryPoint;
 
 namespace Content.IntegrationTests
 {
@@ -23,11 +22,14 @@ namespace Content.IntegrationTests
         protected sealed override ClientIntegrationInstance StartClient(ClientIntegrationOptions options = null)
         {
             options ??= new ClientIntegrationOptions();
-            options.ExtraAssemblies = new[] {typeof(ContentIntegrationTest).Assembly};
-
             // ReSharper disable once RedundantNameQualifier
-            options.ClientContentAssembly = typeof(EntryPoint).Assembly;
-            options.SharedContentAssembly = typeof(Shared.EntryPoint).Assembly;
+            options.ContentAssemblies = new[]
+            {
+                typeof(Shared.EntryPoint).Assembly,
+                typeof(Client.EntryPoint).Assembly,
+                typeof(ContentIntegrationTest).Assembly
+            };
+
             options.BeforeStart += () =>
             {
                 IoCManager.Resolve<IModLoader>().SetModuleBaseCallbacks(new ClientModuleTestingCallbacks
@@ -54,9 +56,12 @@ namespace Content.IntegrationTests
         protected override ServerIntegrationInstance StartServer(ServerIntegrationOptions options = null)
         {
             options ??= new ServerIntegrationOptions();
-            options.ExtraAssemblies = new[] {typeof(ContentIntegrationTest).Assembly};
-            options.ServerContentAssembly = typeof(Server.EntryPoint).Assembly;
-            options.SharedContentAssembly = typeof(Shared.EntryPoint).Assembly;
+            options.ContentAssemblies = new[]
+            {
+                typeof(Shared.EntryPoint).Assembly,
+                typeof(Server.EntryPoint).Assembly,
+                typeof(ContentIntegrationTest).Assembly
+            };
             options.BeforeStart += () =>
             {
                 IoCManager.Resolve<IModLoader>().SetModuleBaseCallbacks(new ServerModuleTestingCallbacks
