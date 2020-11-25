@@ -44,28 +44,10 @@ namespace Content.Client.UserInterface
         private readonly TextureButton _previousHotbarButton;
         private readonly Label _loadoutNumber;
         private readonly TextureButton _nextHotbarButton;
-
-        // slot being dragged and dropped to another slot
-        private ActionSlot _draggedSlot;
-        // time since mouse down over the dragged slot
-        private float _mouseDownTime;
-        // screen pos where the mouse down began for the drag
-        private Vector2 _mouseDownScreenPos;
-        private DragState _dragState = DragState.NotDragging;
         private readonly TextureRect _dragShadow;
 
-        // TODO: Refactor to share with DragDropSystem + relevant logic.
-        private enum DragState
-        {
-            NotDragging,
-            // not dragging yet, waiting to see
-            // if they hold for long enough
-            MouseDown,
-            // currently dragging something
-            Dragging,
-        }
-
-        public bool IsDragging => _dragState == DragState.Dragging;
+        private readonly DragDropHelper<ActionSlot> _dragDropHelper;
+        public bool IsDragging => _dragDropHelper.IsDragging;
 
         /// <param name="onShowTooltip">OnShowTooltip handler to assign to each ActionSlot</param>
         /// <param name="onHideTooltip">OnHideTooltip handler to assign to each ActionSlot</param>
@@ -190,18 +172,42 @@ namespace Content.Client.UserInterface
                 _slotContainer.AddChild(slot);
                 _slots[i - 1] = slot;
             }
+
+            _dragDropHelper = new DragDropHelper<ActionSlot>(DragDeadzone, OnBeginActionDrag, OnContinueActionDrag, OnEndActionDrag);
+        }
+
+        private bool OnBeginActionDrag()
+        {
+            // only initiate the drag if the slot has an action in it
+            if (_dragDropHelper.Target.Action == null) return false;
+
+            _dragShadow.Texture = _dragDropHelper.Target.Action.Icon.Frame0();
+            // don't make visible until frameupdate, otherwise it'll flicker
+            LayoutContainer.SetPosition(_dragShadow, UserInterfaceManager.MousePositionScaled - (32, 32));
+            return true;
+        }
+
+        private bool OnContinueActionDrag()
+        {
+            // stop if there's no action in the slot
+            if (_dragDropHelper.Target.Action == null) return false;
+
+            // keep dragged entity centered under mouse
+            LayoutContainer.SetPosition(_dragShadow, UserInterfaceManager.MousePositionScaled - (32, 32));
+            // we don't set this visible until frameupdate, otherwise it flickers
+            _dragShadow.Visible = true;
+            return true;
+        }
+
+        private void OnEndActionDrag()
+        {
+            _dragShadow.Visible = false;
         }
 
         private void ActionSlotOnButtonDown(BaseButton.ButtonEventArgs args)
         {
             if (args.Event.Function != EngineKeyFunctions.Use) return;
-            CancelDrag();
-
-            // start checking for a drag
-            _draggedSlot = args.Button as ActionSlot;
-            _dragState = DragState.MouseDown;
-            _mouseDownTime = 0;
-            _mouseDownScreenPos = _inputManager.MouseScreenPosition;
+            _dragDropHelper.MouseDown(args.Button as ActionSlot);
         }
 
         private void ActionSlotOnButtonUp(BaseButton.ButtonEventArgs args)
@@ -213,44 +219,17 @@ namespace Content.Client.UserInterface
             if (UserInterfaceManager.CurrentlyHovered != null &&
                 UserInterfaceManager.CurrentlyHovered is ActionSlot targetSlot)
             {
-                if (_dragState != DragState.Dragging || _draggedSlot?.Action == null)
+                if (!_dragDropHelper.IsDragging || _dragDropHelper.Target?.Action == null)
                 {
-                    // quick mouseup or not dragging, or dragging slot that's now empty,
-                    // should treat this like a normal click.
-                    CancelDrag();
+                    _dragDropHelper.EndDrag();
                     return;
                 }
 
                 // drag and drop
-                _actionDragDropEventHandler?.Invoke(new ActionSlotDragDropEventArgs(_draggedSlot, targetSlot));
+                _actionDragDropEventHandler?.Invoke(new ActionSlotDragDropEventArgs(_dragDropHelper.Target, targetSlot));
             }
 
-            // TODO: Ensure we skip pressed / toggle handlers
-
-            CancelDrag();
-        }
-
-        private void CancelDrag()
-        {
-            // cancel drag and any shadows currently being shown
-            _dragShadow.Visible = false;
-            _draggedSlot = null;
-            _dragState = DragState.NotDragging;
-            _mouseDownTime = 0;
-        }
-
-        private void StartDragging()
-        {
-            if (_draggedSlot?.Action == null)
-            {
-                CancelDrag();
-                return;
-            }
-
-            _dragState = DragState.Dragging;
-            _dragShadow.Texture = _draggedSlot.Action.Icon.Frame0();
-            // don't make visible until frameupdate, otherwise it'll flicker
-            LayoutContainer.SetPosition(_dragShadow, UserInterfaceManager.MousePositionScaled - (32, 32));
+            _dragDropHelper.EndDrag();
         }
 
         private void ActionSlotOnPressed(BaseButton.ButtonEventArgs args)
@@ -388,37 +367,7 @@ namespace Content.Client.UserInterface
         protected override void FrameUpdate(FrameEventArgs args)
         {
             base.Update(args);
-
-            // check if dragging should begin
-            if (_dragState == DragState.MouseDown)
-            {
-                var screenPos = _inputManager.MouseScreenPosition;
-                if (_draggedSlot?.Action == null)
-                {
-                    // slot is blank, nothing to drag
-                    CancelDrag();
-                    return;
-                }
-                else if ((_mouseDownScreenPos - screenPos).Length > DragDeadzone)
-                {
-                    StartDragging();
-                    _mouseDownTime = 0;
-                }
-            }
-            else if (_dragState == DragState.Dragging)
-            {
-                if (_draggedSlot?.Action == null)
-                {
-                    // slot is blank, nothing to drag anymore
-                    CancelDrag();
-                    return;
-                }
-
-                // keep dragged entity centered under mouse
-                LayoutContainer.SetPosition(_dragShadow, UserInterfaceManager.MousePositionScaled - (32, 32));
-                // we don't set this visible until frameupdate, otherwise it flickers
-                _dragShadow.Visible = true;
-            }
+            _dragDropHelper.FrameUpdate();
         }
     }
 
