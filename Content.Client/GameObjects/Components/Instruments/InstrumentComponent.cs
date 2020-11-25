@@ -349,12 +349,11 @@ namespace Content.Client.GameObjects.Components.Instruments
             return true;
         }
 
-        /// <inheritdoc cref="MidiRenderer.OpenMidi(string)"/>
-        public bool OpenMidi(string filename)
+        public bool OpenMidi(ReadOnlySpan<byte> data)
         {
             SetupRenderer();
 
-            if (_renderer == null || !_renderer.OpenMidi(filename))
+            if (_renderer == null || !_renderer.OpenMidi(data))
             {
                 return false;
             }
