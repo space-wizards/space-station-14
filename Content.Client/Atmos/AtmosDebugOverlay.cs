@@ -66,12 +66,40 @@ namespace Content.Client.Atmos
                             {
                                 // -- Mole Count --
                                 float total = 0;
-                                foreach (float f in data.Moles)
-                                {
-                                    total += f;
+                                switch (_atmosDebugOverlaySystem.CfgMode) {
+                                    case AtmosDebugOverlayMode.TotalMoles:
+                                        foreach (float f in data.Moles)
+                                        {
+                                            total += f;
+                                        }
+                                        break;
+                                    case AtmosDebugOverlayMode.GasMoles:
+                                        total = data.Moles[_atmosDebugOverlaySystem.CfgSpecificGas];
+                                        break;
+                                    case AtmosDebugOverlayMode.Temperature:
+                                        total = data.Temperature;
+                                        break;
                                 }
-                                var interp = total / (Atmospherics.MolesCellStandard * 2);
-                                var res = Color.InterpolateBetween(Color.Red, Color.Green, interp).WithAlpha(0.75f);
+                                var interp = ((total - _atmosDebugOverlaySystem.CfgBase) / _atmosDebugOverlaySystem.CfgScale);
+                                Color res;
+                                if (_atmosDebugOverlaySystem.CfgCBM)
+                                {
+                                    // Greyscale interpolation
+                                    res = Color.InterpolateBetween(Color.Black, Color.White, interp);
+                                }
+                                else
+                                {
+                                    // Red-Green-Blue interpolation
+                                    if (interp < 0.5f)
+                                    {
+                                        res = Color.InterpolateBetween(Color.Red, Color.Green, interp * 2);
+                                    }
+                                    else
+                                    {
+                                        res = Color.InterpolateBetween(Color.Green, Color.Blue, (interp - 0.5f) * 2);
+                                    }
+                                }
+                                res = res.WithAlpha(0.75f);
                                 drawHandle.DrawRect(Box2.FromDimensions(mapGrid.LocalToWorld(new Vector2(tile.X, tile.Y)), new Vector2(1, 1)), res);
                             }
                             else if (pass == 1)
