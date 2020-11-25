@@ -41,12 +41,12 @@ namespace Content.Shared.GameObjects.Components.Pulling
             get => _puller;
             set
             {
+                // Debug stuff over
+
                 if (_puller == value)
                 {
                     return;
                 }
-
-                PullController controller;
 
                 // New value. Abandon being pulled by any existing object.
                 if (_puller != null)
@@ -61,6 +61,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
                     {
                         var message = new PullStoppedMessage(oldPullerPhysics, _physics);
 
+                        Logger.Debug("SEND STOP");
                         oldPuller.SendMessage(null, message);
                         Owner.SendMessage(null, message);
 
@@ -74,7 +75,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
                 // Now that is settled, prepare to be pulled by a new object.
                 if (_physics == null)
                 {
-                    Logger.WarningS("c.go.c.pulling", "Well now you've done it, haven't you? SharedPullableComponent didn't have an IPhysicsComponent.");
+                    Logger.WarningS("c.go.c.pulling", "Well now you've done it, haven't you? SharedPullableComponent on {0} didn't have an IPhysicsComponent.", Owner);
                     return;
                 }
 
@@ -92,6 +93,31 @@ namespace Content.Shared.GameObjects.Components.Pulling
                         return;
                     }
 
+                    if (!value.TryGetComponent<SharedPullerComponent>(out var valuePuller))
+                    {
+                        return;
+                    }
+
+                    // Ensure that the puller is not currently pulling anything.
+                    // If this isn't done, then it happens too late, and the start/stop messages go out of order,
+                    //  and next thing you know it thinks it's not pulling anything even though it is!
+
+                    var oldPulling = valuePuller.Pulling;
+                    if (oldPulling != null)
+                    {
+                        if (oldPulling.TryGetComponent(out SharedPullableComponent? pullable))
+                        {
+                            pullable.Puller = null;
+                        }
+                        else
+                        {
+                            Logger.WarningS("c.go.c.pulling", "Well now you've done it, haven't you? Someone transferred pulling to this component (on {0}) while presently pulling something that has no Pullable component (on {1})!", Owner, oldPulling);
+                            return;
+                        }
+                    }
+
+                    // Continue with pulling process.
+
                     var pullAttempt = new PullAttemptMessage(valuePhysics, _physics);
 
                     value.SendMessage(null, pullAttempt);
@@ -101,7 +127,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
                         return;
                     }
 
-                    _physics.Owner.SendMessage(null, pullAttempt);
+                    Owner.SendMessage(null, pullAttempt);
 
                     if (pullAttempt.Cancelled)
                     {
@@ -113,12 +139,12 @@ namespace Content.Shared.GameObjects.Components.Pulling
                     _puller = value;
                     _pullerPhysics = valuePhysics;
 
-                    controller = _physics.EnsureController<PullController>();
-                    controller.Manager = this;
-                    var message = new PullStartedMessage(controller, _pullerPhysics, _physics);
+                    _physics.EnsureController<PullController>().Manager = this;
+                    var message = new PullStartedMessage(_pullerPhysics, _physics);
 
+                    Logger.Debug("SEND START");
                     _puller.SendMessage(null, message);
-                    _physics.Owner.SendMessage(null, message);
+                    Owner.SendMessage(null, message);
 
                     _puller.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
 
@@ -272,27 +298,22 @@ namespace Content.Shared.GameObjects.Components.Pulling
                 return;
             }
 
+            SharedAlertsComponent? pulledStatus = Owner.GetComponentOrNull<SharedAlertsComponent>();
+
             switch (message)
             {
                 case PullStartedMessage msg:
-                    AddPullingStatuses(msg.Puller.Owner);
+                    if (pulledStatus != null)
+                    {
+                        pulledStatus.ShowAlert(AlertType.Pulled);
+                    }
                     break;
                 case PullStoppedMessage msg:
-                    RemovePullingStatuses(msg.Puller.Owner);
+                    if (pulledStatus != null)
+                    {
+                        pulledStatus.ClearAlert(AlertType.Pulled);
+                    }
                     break;
-            }
-        }
-
-        private void AddPullingStatuses(IEntity puller)
-        {
-            if (Owner.TryGetComponent(out SharedAlertsComponent? pulledStatus))
-            {
-                pulledStatus.ShowAlert(AlertType.Pulled);
-            }
-
-            if (puller.TryGetComponent(out SharedAlertsComponent? ownerStatus))
-            {
-                ownerStatus.ShowAlert(AlertType.Pulling, onClickAlert: OnClickAlert);
             }
         }
 
@@ -303,19 +324,6 @@ namespace Content.Shared.GameObjects.Components.Pulling
                 .GetPulled(args.Player)?
                 .GetComponentOrNull<SharedPullableComponent>()?
                 .TryStopPull();
-        }
-
-        private void RemovePullingStatuses(IEntity puller)
-        {
-            if (Owner.TryGetComponent(out SharedAlertsComponent? pulledStatus))
-            {
-                pulledStatus.ClearAlert(AlertType.Pulled);
-            }
-
-            if (puller.TryGetComponent(out SharedAlertsComponent? ownerStatus))
-            {
-                ownerStatus.ClearAlert(AlertType.Pulling);
-            }
         }
 
         public override void OnRemove()
