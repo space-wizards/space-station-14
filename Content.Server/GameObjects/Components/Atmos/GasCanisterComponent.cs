@@ -1,4 +1,4 @@
-﻿#nullable enable annotations
+﻿#nullable enable
 using System;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Atmos.Piping;
@@ -44,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// What <see cref="GasMixture"/> the canister contains.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public GasMixture? Air { get; set; }
+        public GasMixture Air { get; set; } = default!;
 
         [ViewVariables]
         public bool Anchored => !Owner.TryGetComponent<IPhysicsComponent>(out var physics) || physics.Anchored;
@@ -72,8 +72,6 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// </summary>
         private GasCanisterBoundUserInterfaceState? _lastUiState;
 
-        private IGridAtmosphereComponent? _gridAtmosphere;
-
         private AppearanceComponent? _appearance;
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -100,11 +98,6 @@ namespace Content.Server.GameObjects.Components.Atmos
             Label = Owner.Name;
             Owner.TryGetComponent(out _appearance);
 
-            // Get the GridAtmosphere
-            var gridId = Owner.Transform.Coordinates.GetGridId(Owner.EntityManager);
-            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
-            _gridAtmosphere = atmosphereSystem.GetGridAtmosphere(gridId);
-
             UpdateUserInterface();
             UpdateAppearance();
         }
@@ -127,7 +120,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             var port = snapGrid.GetLocal()
                 .Select(entity => entity.TryGetComponent<GasCanisterPortComponent>(out var port) ? port : null)
                 .Where(port => port != null)
-                .Where(port => !port.ConnectedToCanister)
+                .Where(port => !port!.ConnectedToCanister)
                 .FirstOrDefault();
             if (port == null) return;
             ConnectedPort = port;
@@ -327,12 +320,21 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// <param name="frameTime"></param>
         public void Update(in float frameTime)
         {
-
             if (ValveOpened)
             {
                 var tileAtmosphere = Owner.Transform.Coordinates.GetTileAtmosphere();
-                Air.ReleaseGasTo(tileAtmosphere.Air, ReleasePressure);
-                _gridAtmosphere.Invalidate(tileAtmosphere.GridIndices);
+                if (tileAtmosphere != null)
+                {
+                    // Get the GridAtmosphere
+                    var gridId = Owner.Transform.Coordinates.GetGridId(Owner.EntityManager);
+                    var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+                    var gridAtmosphere = atmosphereSystem.GetGridAtmosphere(gridId);
+                    if (gridAtmosphere != null)
+                    {
+                        Air.ReleaseGasTo(tileAtmosphere.Air, ReleasePressure);
+                        gridAtmosphere.Invalidate(tileAtmosphere.GridIndices);
+                    }
+                }
 
                 UpdateUserInterface();
             }
