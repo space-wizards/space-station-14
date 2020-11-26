@@ -16,7 +16,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(this, x => JuiceResultSolution, "result", new Solution());
+            serializer.DataField(this, x => x.JuiceResultSolution, "result", new Solution());
 
         }
     }
