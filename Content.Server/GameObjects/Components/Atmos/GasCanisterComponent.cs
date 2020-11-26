@@ -331,7 +331,8 @@ namespace Content.Server.GameObjects.Components.Atmos
                     var gridAtmosphere = atmosphereSystem.GetGridAtmosphere(gridId);
                     // This shouldn't be null, and is only checked as a failsafe because it could theoretically still be null anyway.
                     // Releasing gas without invalidation is more dangerous than failing to release.
-                    if (gridAtmosphere != null)
+                    // Also, if tileAtmosphere.Air is null, then we're airblocked, so DON'T release
+                    if ((gridAtmosphere != null) && (tileAtmosphere.Air != null))
                     {
                         Air.ReleaseGasTo(tileAtmosphere.Air, ReleasePressure);
                         gridAtmosphere.Invalidate(tileAtmosphere.GridIndices);
