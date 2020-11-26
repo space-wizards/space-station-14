@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 
@@ -134,6 +135,12 @@ namespace Content.Shared.Atmos
         public static AtmosDirection WithoutFlag(this AtmosDirection direction, AtmosDirection other)
         {
             return direction & ~other;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsFlagSet(this AtmosDirection direction, AtmosDirection other)
+        {
+            return (direction & other) != 0;
         }
     }
 

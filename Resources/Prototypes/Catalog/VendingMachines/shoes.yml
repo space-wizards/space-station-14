@@ -4,7 +4,7 @@
   description: A vending machine containing footwear.
   spriteName: shoes
   startingInventory:
-    ShoesWhite: 3
-    ShoesClown: 3
-    ShoesJackboots: 3
-    ShoesBrown: 3
+    ClothingShoesColorWhite: 3
+    ClothingShoesClown: 3
+    ClothingShoesBootsJack: 3
+    ClothingShoesColorBrown: 3

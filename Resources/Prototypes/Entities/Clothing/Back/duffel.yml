@@ -1,7 +1,7 @@
 - type: entity
   parent: Clothing
-  id: Duffelbag
-  name: duffelbag
+  id: ClothingBackpackDuffel
+  name: duffel bag
   description: "A large duffel bag for holding extra things."
   components:
   - type: Sprite
@@ -17,97 +17,67 @@
     capacity: 100
 
 - type: entity
-  parent: Duffelbag
-  id: DuffelbagEngineering
-  name: engineering duffelbag
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelEngineering
+  name: engineering duffel bag
   description:
   components:
   - type: Sprite
-    sprite: Clothing/Back/Duffels/duffel_eng.rsi
-    state: icon
+    sprite: Clothing/Back/Duffels/engineering.rsi
   - type: Clothing
-    sprite: Clothing/Back/Duffels/duffel_eng.rsi
+    sprite: Clothing/Back/Duffels/engineering.rsi
 
 - type: entity
-  parent: Duffelbag
-  id: DuffelbagMedical
-  name: medical duffelbag
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelMedical
+  name: medical duffel bag
   description: "A large duffel bag for holding extra medical supplies."
   components:
   - type: Sprite
-    sprite: Clothing/Back/Duffels/duffel_med.rsi
-    state: icon
+    sprite: Clothing/Back/Duffels/medical.rsi
   - type: Clothing
-    sprite: Clothing/Back/Duffels/duffel_med.rsi
+    sprite: Clothing/Back/Duffels/medical.rsi
 
 - type: entity
-  parent: Duffelbag
-  id: DuffelbagCaptain
-  name: captain duffelbag
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelCaptain
+  name: captain's duffel bag
   description: "A large duffel bag for holding extra captainly goods."
   components:
   - type: Sprite
-    sprite: Clothing/Back/Duffels/duffel_cap.rsi
-    state: icon
+    sprite: Clothing/Back/Duffels/captain.rsi
   - type: Clothing
-    sprite: Clothing/Back/Duffels/duffel_cap.rsi
+    sprite: Clothing/Back/Duffels/captain.rsi
 
 - type: entity
-  parent: Duffelbag
-  id: DuffelbagClown
-  name: clown duffelbag
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelClown
+  name: clown duffel bag
   description: "A large duffel bag for holding extra honk goods."
   components:
   - type: Sprite
-    sprite: Clothing/Back/Duffels/duffel_clown.rsi
-    state: icon
+    sprite: Clothing/Back/Duffels/clown.rsi
   - type: Clothing
-    sprite: Clothing/Back/Duffels/duffel_clown.rsi
+    sprite: Clothing/Back/Duffels/clown.rsi
 
 - type: entity
-  parent: Duffelbag
-  id: DuffelbagSecurity
-  name: security duffelbag
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelSecurity
+  name: security duffel bag
   description: "A large duffel bag for holding extra security related goods."
   components:
   - type: Sprite
-    sprite: Clothing/Back/Duffels/duffel_sec.rsi
-    state: icon
+    sprite: Clothing/Back/Duffels/security.rsi
   - type: Clothing
-    sprite: Clothing/Back/Duffels/duffel_sec.rsi
+    sprite: Clothing/Back/Duffels/security.rsi
 
 - type: entity
-  parent: Duffelbag
-  id: DuffelbagSyndicate
-  name: syndicate duffelbag
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelSyndicate
+  name: syndicate duffel bag
   description: "A large duffel bag for holding various traitor goods."
   components:
   - type: Sprite
-    sprite: Clothing/Back/Duffels/duffel_syn.rsi
-    state: icon
+    sprite: Clothing/Back/Duffels/syndicate.rsi
   - type: Clothing
-    sprite: Clothing/Back/Duffels/duffel_syn.rsi
-
-# FILLED
-
-- type: entity
-  parent: Duffelbag
-  id: DuffelbagSurgeryFilled
-  name: surgical duffelbag
-  description: "A large duffel bag for holding extra medical supplies - this one seems to be designed for holding surgical tools."
-  components:
-  - type: Sprite
-    sprite: Clothing/Back/Duffels/duffel_med.rsi
-    state: icon
-  - type: Clothing
-    sprite: Clothing/Back/Duffels/duffel_med.rsi
-  - type: StorageFill
-    contents:
-      - name: Hemostat
-      - name: BoneSaw
-      - name: Drill
-      - name: Cautery
-      - name: Retractor
-      - name: Scalpel
-  - type: Storage
-    capacity: 30
+    sprite: Clothing/Back/Duffels/syndicate.rsi

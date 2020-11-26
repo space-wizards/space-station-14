@@ -1,7 +1,6 @@
 using Content.Client.GameObjects.Components.Instruments;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
-using Content.Shared.GameObjects.EntitySystems;
 using Robust.Client.Audio.Midi;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.UserInterface;
@@ -23,10 +22,10 @@ namespace Content.Client.Instruments
         [Dependency] private readonly IMidiManager _midiManager = default!;
         [Dependency] private readonly IFileDialogManager _fileDialogManager = default!;
 
-        private InstrumentBoundUserInterface _owner;
-        private Button midiLoopButton;
-        private Button midiStopButton;
-        private Button midiInputButton;
+        private readonly InstrumentBoundUserInterface _owner;
+        private readonly Button _midiLoopButton;
+        private readonly Button _midiStopButton;
+        private readonly Button _midiInputButton;
 
         protected override Vector2? CustomSize => (400, 150);
 
@@ -59,7 +58,7 @@ namespace Content.Client.Instruments
                 Align = BoxContainer.AlignMode.Center
             };
 
-            midiInputButton = new Button()
+            _midiInputButton = new Button()
             {
                 Text = Loc.GetString("MIDI Input"),
                 TextAlign = Label.AlignMode.Center,
@@ -69,7 +68,7 @@ namespace Content.Client.Instruments
                 Pressed = _owner.Instrument.IsInputOpen,
             };
 
-            midiInputButton.OnToggled += MidiInputButtonOnOnToggled;
+            _midiInputButton.OnToggled += MidiInputButtonOnOnToggled;
 
             var topSpacer = new Control()
             {
@@ -95,7 +94,7 @@ namespace Content.Client.Instruments
                 Align = BoxContainer.AlignMode.Center
             };
 
-            midiLoopButton = new Button()
+            _midiLoopButton = new Button()
             {
                 Text = Loc.GetString("Loop"),
                 TextAlign = Label.AlignMode.Center,
@@ -106,7 +105,7 @@ namespace Content.Client.Instruments
                 Pressed = _owner.Instrument.LoopMidi,
             };
 
-            midiLoopButton.OnToggled += MidiLoopButtonOnOnToggled;
+            _midiLoopButton.OnToggled += MidiLoopButtonOnOnToggled;
 
             var bottomSpacer = new Control()
             {
@@ -114,7 +113,7 @@ namespace Content.Client.Instruments
                 SizeFlagsStretchRatio = 2,
             };
 
-            midiStopButton = new Button()
+            _midiStopButton = new Button()
             {
                 Text = Loc.GetString("Stop"),
                 TextAlign = Label.AlignMode.Center,
@@ -123,13 +122,13 @@ namespace Content.Client.Instruments
                 Disabled = !_owner.Instrument.IsMidiOpen,
             };
 
-            midiStopButton.OnPressed += MidiStopButtonOnPressed;
+            _midiStopButton.OnPressed += MidiStopButtonOnPressed;
 
-            hBoxBottomButtons.AddChild(midiLoopButton);
+            hBoxBottomButtons.AddChild(_midiLoopButton);
             hBoxBottomButtons.AddChild(bottomSpacer);
-            hBoxBottomButtons.AddChild(midiStopButton);
+            hBoxBottomButtons.AddChild(_midiStopButton);
 
-            hBoxTopButtons.AddChild(midiInputButton);
+            hBoxTopButtons.AddChild(_midiInputButton);
             hBoxTopButtons.AddChild(topSpacer);
             hBoxTopButtons.AddChild(midiFileButton);
 
@@ -168,8 +167,8 @@ namespace Content.Client.Instruments
 
         public void MidiPlaybackSetButtonsDisabled(bool disabled)
         {
-            midiLoopButton.Disabled = disabled;
-            midiStopButton.Disabled = disabled;
+            _midiLoopButton.Disabled = disabled;
+            _midiStopButton.Disabled = disabled;
         }
 
         private async void MidiFileButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
@@ -195,8 +194,8 @@ namespace Content.Client.Instruments
             await Timer.Delay(100);
             if (!_owner.Instrument.OpenMidi(filename)) return;
             MidiPlaybackSetButtonsDisabled(false);
-            if (midiInputButton.Pressed)
-                midiInputButton.Pressed = false;
+            if (_midiInputButton.Pressed)
+                _midiInputButton.Pressed = false;
         }
 
         private void MidiInputButtonOnOnToggled(BaseButton.ButtonToggledEventArgs obj)

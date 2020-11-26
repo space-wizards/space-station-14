@@ -17,32 +17,35 @@ using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
+// ReSharper disable once RedundantUsingDirective
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
+using Dependency = Robust.Shared.IoC.DependencyAttribute;
 
 namespace Content.Server.GameObjects.EntitySystems.Atmos
 {
     [UsedImplicitly]
     internal sealed class GasTileOverlaySystem : SharedGasTileOverlaySystem, IResettingEntitySystem
     {
-        [Robust.Shared.IoC.Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Robust.Shared.IoC.Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Robust.Shared.IoC.Dependency] private readonly IMapManager _mapManager = default!;
-        [Robust.Shared.IoC.Dependency] private readonly IConfigurationManager _configManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
 
         /// <summary>
         ///     The tiles that have had their atmos data updated since last tick
         /// </summary>
-        private Dictionary<GridId, HashSet<Vector2i>> _invalidTiles = new Dictionary<GridId, HashSet<Vector2i>>();
+        private readonly Dictionary<GridId, HashSet<Vector2i>> _invalidTiles = new Dictionary<GridId, HashSet<Vector2i>>();
 
-        private Dictionary<IPlayerSession, PlayerGasOverlay> _knownPlayerChunks =
+        private readonly Dictionary<IPlayerSession, PlayerGasOverlay> _knownPlayerChunks =
             new Dictionary<IPlayerSession, PlayerGasOverlay>();
 
         /// <summary>
         ///     Gas data stored in chunks to make PVS / bubbling easier.
         /// </summary>
-        private Dictionary<GridId, Dictionary<Vector2i, GasOverlayChunk>> _overlay =
+        private readonly Dictionary<GridId, Dictionary<Vector2i, GasOverlayChunk>> _overlay =
             new Dictionary<GridId, Dictionary<Vector2i, GasOverlayChunk>>();
 
         /// <summary>
@@ -153,21 +156,22 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
 
             var tileData = new List<GasData>();
 
-            for (byte i = 0; i < Atmospherics.TotalNumberOfGases; i++)
-            {
-                var gas = _atmosphereSystem.GetGas(i);
-                var overlay = _atmosphereSystem.GetOverlay(i);
-                if (overlay == null || tile?.Air == null) continue;
+            if(tile.Air != null)
+                for (byte i = 0; i < Atmospherics.TotalNumberOfGases; i++)
+                {
+                    var gas = _atmosphereSystem.GetGas(i);
+                    var overlay = _atmosphereSystem.GetOverlay(i);
+                    if (overlay == null) continue;
 
-                var moles = tile.Air.Gases[i];
+                    var moles = tile.Air.Gases[i];
 
-                if (moles < gas.GasMolesVisible) continue;
+                    if (moles < gas.GasMolesVisible) continue;
 
-                var data = new GasData(i, (byte) (MathHelper.Clamp01(moles / gas.GasMolesVisibleMax) * 255));
-                tileData.Add(data);
-            }
+                    var data = new GasData(i, (byte) (MathHelper.Clamp01(moles / gas.GasMolesVisibleMax) * 255));
+                    tileData.Add(data);
+                }
 
-            overlayData = new GasOverlayData(tile!.Hotspot.State, tile.Hotspot.Temperature, tileData.Count == 0 ? null : tileData.ToArray());
+            overlayData = new GasOverlayData(tile!.Hotspot.State, tile.Hotspot.Temperature, tileData.Count == 0 ? Array.Empty<GasData>() : tileData.ToArray());
 
             if (overlayData.Equals(oldTile))
             {

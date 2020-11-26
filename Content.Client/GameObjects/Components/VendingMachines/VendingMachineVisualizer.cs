@@ -39,7 +39,7 @@ namespace Content.Client.GameObjects.Components.VendingMachines
                 {"broken", VendingMachineVisualLayers.Unlit},
             };
 
-        private Dictionary<string, Animation> _animations = new Dictionary<string, Animation>();
+        private readonly Dictionary<string, Animation> _animations = new Dictionary<string, Animation>();
 
         public override void LoadData(YamlMappingNode node)
         {
