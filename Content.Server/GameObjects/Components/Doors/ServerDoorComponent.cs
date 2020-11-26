@@ -351,7 +351,8 @@ namespace Content.Server.GameObjects.Components.Doors
 
             foreach (var (direction, adjacent) in gridAtmosphere.GetAdjacentTiles(tileAtmos.GridIndices))
             {
-                var moles = adjacent.Air.TotalMoles;
+                // includeAirBlocked remains false, and therefore Air must be present
+                var moles = adjacent.Air!.TotalMoles;
                 if (moles < minMoles)
                     minMoles = moles;
                 if (moles > maxMoles)
