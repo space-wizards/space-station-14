@@ -142,7 +142,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 return true;
             }
 
-            if (!(_stateManager.CurrentState is GameScreenBase gameScreen))
+            if (_stateManager.CurrentState is not GameScreenBase)
             {
                 return false;
             }

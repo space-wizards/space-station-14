@@ -119,7 +119,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
         {
             base.HandleComponentState(curState, nextState);
 
-            if (!(curState is SuspicionRoleComponentState state))
+            if (curState is not SuspicionRoleComponentState state)
             {
                 return;
             }

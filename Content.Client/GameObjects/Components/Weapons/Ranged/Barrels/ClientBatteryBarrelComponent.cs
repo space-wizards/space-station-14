@@ -30,7 +30,9 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            if (!(curState is BatteryBarrelComponentState cast))
+            base.HandleComponentState(curState, nextState);
+
+            if (curState is not BatteryBarrelComponentState cast)
                 return;
 
             MagazineCount = cast.Magazine;

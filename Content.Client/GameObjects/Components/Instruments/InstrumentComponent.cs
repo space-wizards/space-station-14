@@ -306,7 +306,7 @@ namespace Content.Client.GameObjects.Components.Instruments
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
-            if (!(curState is InstrumentState state)) return;
+            if (curState is not InstrumentState state) return;
 
             if (state.Playing)
             {

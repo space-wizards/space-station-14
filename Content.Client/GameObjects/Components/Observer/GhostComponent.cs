@@ -106,7 +106,7 @@ namespace Content.Client.GameObjects.Components.Observer
         {
             base.HandleComponentState(curState, nextState);
 
-            if (!(curState is GhostComponentState state)) return;
+            if (curState is not GhostComponentState state) return;
 
             CanReturnToBody = state.CanReturnToBody;
 
