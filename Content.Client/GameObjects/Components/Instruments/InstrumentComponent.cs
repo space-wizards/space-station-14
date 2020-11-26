@@ -227,7 +227,7 @@ namespace Content.Client.GameObjects.Components.Instruments
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(this, x => Handheld, "handheld", false);
+            serializer.DataField(this, x => x.Handheld, "handheld", false);
             serializer.DataField(ref _instrumentProgram, "program", (byte) 1);
             serializer.DataField(ref _instrumentBank, "bank", (byte) 0);
             serializer.DataField(ref _allowPercussion, "allowPercussion", false);
@@ -349,12 +349,11 @@ namespace Content.Client.GameObjects.Components.Instruments
             return true;
         }
 
-        /// <inheritdoc cref="MidiRenderer.OpenMidi(string)"/>
-        public bool OpenMidi(string filename)
+        public bool OpenMidi(ReadOnlySpan<byte> data)
         {
             SetupRenderer();
 
-            if (_renderer == null || !_renderer.OpenMidi(filename))
+            if (_renderer == null || !_renderer.OpenMidi(data))
             {
                 return false;
             }
