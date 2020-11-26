@@ -41,8 +41,6 @@ namespace Content.Shared.GameObjects.Components.Pulling
             get => _puller;
             set
             {
-                // Debug stuff over
-
                 if (_puller == value)
                 {
                     return;
@@ -61,7 +59,6 @@ namespace Content.Shared.GameObjects.Components.Pulling
                     {
                         var message = new PullStoppedMessage(oldPullerPhysics, _physics);
 
-                        Logger.Debug("SEND STOP");
                         oldPuller.SendMessage(null, message);
                         Owner.SendMessage(null, message);
 
@@ -142,7 +139,6 @@ namespace Content.Shared.GameObjects.Components.Pulling
                     _physics.EnsureController<PullController>().Manager = this;
                     var message = new PullStartedMessage(_pullerPhysics, _physics);
 
-                    Logger.Debug("SEND START");
                     _puller.SendMessage(null, message);
                     Owner.SendMessage(null, message);
 
