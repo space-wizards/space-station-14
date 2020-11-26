@@ -27,9 +27,9 @@ namespace Content.Server.StationEvents
 
 
         private CancellationTokenSource _announceCancelToken;
-        
+
         private List<IEntity> _powered = new List<IEntity>();
-        
+
         public override void Setup()
         {
             base.Setup();
@@ -39,6 +39,7 @@ namespace Content.Server.StationEvents
         public override void Start()
         {
             var componentManager = IoCManager.Resolve<IComponentManager>();
+
             foreach (PowerReceiverComponent component in componentManager.EntityQuery<PowerReceiverComponent>())
             {
                 component.PowerDisabled = true;
@@ -51,13 +52,13 @@ namespace Content.Server.StationEvents
             foreach (var entity in _powered)
             {
                 if (entity.Deleted) continue;
-                
+
                 if (entity.TryGetComponent(out PowerReceiverComponent powerReceiverComponent))
                 {
                     powerReceiverComponent.PowerDisabled = false;
                 }
             }
-            
+
             _announceCancelToken?.Cancel();
             _announceCancelToken = new CancellationTokenSource();
             Timer.Spawn(3000, () =>

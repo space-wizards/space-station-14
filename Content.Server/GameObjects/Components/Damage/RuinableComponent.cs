@@ -20,7 +20,6 @@ namespace Content.Server.GameObjects.Components.Damage
     [ComponentReference(typeof(IDamageableComponent))]
     public abstract class RuinableComponent : DamageableComponent
     {
-        [Dependency] private IRobustRandom _random = default!;
         /// <summary>
         ///     Sound played upon destruction.
         /// </summary>

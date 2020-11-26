@@ -23,7 +23,6 @@ namespace Content.Shared.GameObjects.EntitySystems
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] protected readonly IPhysicsManager PhysicsManager = default!;
-        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
         public override void Initialize()
         {
@@ -41,8 +40,6 @@ namespace Content.Shared.GameObjects.EntitySystems
                 .Bind(EngineKeyFunctions.MoveDown, moveDownCmdHandler)
                 .Bind(EngineKeyFunctions.Walk, new WalkInputCmdHandler())
                 .Register<SharedMoverSystem>();
-
-            _configurationManager.RegisterCVar("game.diagonalmovement", true, CVar.ARCHIVE);
         }
 
         /// <inheritdoc />
@@ -52,7 +49,8 @@ namespace Content.Shared.GameObjects.EntitySystems
             base.Shutdown();
         }
 
-        protected void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, IPhysicsComponent physics)
+        //TODO: reorganize this to make more logical sense
+        protected void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, IPhysicsComponent physics) 
         {
             physics.EnsureController<MoverController>();
 
@@ -73,14 +71,14 @@ namespace Content.Shared.GameObjects.EntitySystems
             // TODO: movement check.
             var (walkDir, sprintDir) = mover.VelocityDir;
             var combined = walkDir + sprintDir;
-            if (combined.LengthSquared < 0.001 || !ActionBlockerSystem.CanMove(mover.Owner) && !weightless)
+            if (combined.LengthSquared < 0.001 || !ActionBlockerSystem.CanMove(mover.Owner) && !weightless) 
             {
                 if (physics.TryGetController(out MoverController controller))
                 {
                     controller.StopMoving();
                 }
             }
-            else
+            else if (ActionBlockerSystem.CanMove(mover.Owner))
             {
                 if (weightless)
                 {

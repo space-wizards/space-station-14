@@ -14,8 +14,7 @@ namespace Content.Client.GameObjects.Components.Power
 {
     public class SolarControlConsoleBoundUserInterface : BoundUserInterface
     {
-        [Dependency]
-        private IGameTiming _gameTiming = default;
+        [Dependency] private readonly IGameTiming _gameTiming = default;
 
         private SolarControlWindow _window;
         private SolarControlConsoleBoundInterfaceState _lastState = new SolarControlConsoleBoundInterfaceState(0, 0, 0, 0);
@@ -93,13 +92,13 @@ namespace Content.Client.GameObjects.Components.Power
 
         private sealed class SolarControlWindow : SS14Window
         {
-            public Label OutputPower;
-            public Label SunAngle;
+            public readonly Label OutputPower;
+            public readonly Label SunAngle;
 
-            public SolarControlNotARadar NotARadar;
+            public readonly SolarControlNotARadar NotARadar;
 
-            public LineEdit PanelRotation;
-            public LineEdit PanelVelocity;
+            public readonly LineEdit PanelRotation;
+            public readonly LineEdit PanelVelocity;
 
             public SolarControlWindow(IGameTiming igt)
             {

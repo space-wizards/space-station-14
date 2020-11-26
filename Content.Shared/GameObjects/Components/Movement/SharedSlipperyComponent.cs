@@ -16,7 +16,6 @@ namespace Content.Shared.GameObjects.Components.Movement
 {
     public abstract class SharedSlipperyComponent : Component, ICollideBehavior
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public sealed override string Name => "Slippery";
 
@@ -59,7 +58,7 @@ namespace Content.Shared.GameObjects.Components.Movement
         private bool TrySlip(IEntity entity)
         {
             if (!Slippery
-                || ContainerHelpers.IsInContainer(Owner)
+                || Owner.IsInContainer()
                 ||  _slipped.Contains(entity.Uid)
                 ||  !entity.TryGetComponent(out SharedStunnableComponent stun)
                 ||  !entity.TryGetComponent(out IPhysicsComponent otherBody)
@@ -110,13 +109,13 @@ namespace Content.Shared.GameObjects.Components.Movement
         {
             foreach (var uid in _slipped.ToArray())
             {
-                if (!uid.IsValid() || !_entityManager.EntityExists(uid))
+                if (!uid.IsValid() || !Owner.EntityManager.EntityExists(uid))
                 {
                     _slipped.Remove(uid);
                     continue;
                 }
 
-                var entity = _entityManager.GetEntity(uid);
+                var entity = Owner.EntityManager.GetEntity(uid);
                 var physics = Owner.GetComponent<IPhysicsComponent>();
                 var otherPhysics = entity.GetComponent<IPhysicsComponent>();
 
@@ -150,7 +149,7 @@ namespace Content.Shared.GameObjects.Components.Movement
 
             serializer.DataField(this, x => x.ParalyzeTime, "paralyzeTime", 3f);
             serializer.DataField(this, x  => x.IntersectPercentage, "intersectPercentage", 0.3f);
-            serializer.DataField(this, x => x.RequiredSlipSpeed, "requiredSlipSpeed", 0f);
+            serializer.DataField(this, x => x.RequiredSlipSpeed, "requiredSlipSpeed", 0.1f);
             serializer.DataField(this, x => x.LaunchForwardsMultiplier, "launchForwardsMultiplier", 1f);
             serializer.DataField(this, x => x.Slippery, "slippery", true);
         }

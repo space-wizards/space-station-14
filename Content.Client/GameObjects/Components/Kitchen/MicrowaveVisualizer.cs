@@ -1,4 +1,5 @@
-﻿using Content.Client.GameObjects.Components.Sound;
+﻿#nullable enable
+using Content.Client.GameObjects.Components.Sound;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.GameObjects.Components.Sound;
 using Content.Shared.Kitchen;
@@ -11,13 +12,13 @@ namespace Content.Client.GameObjects.Components.Kitchen
 {
     public sealed class MicrowaveVisualizer : AppearanceVisualizer
     {
-        private LoopingSoundComponent _loopingSoundComponent;
-
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
-            _loopingSoundComponent ??= component.Owner.GetComponent<LoopingSoundComponent>();
+
+            var loopingSoundComponent = component.Owner.GetComponentOrNull<LoopingSoundComponent>();
+
             if (!component.TryGetData(PowerDeviceVisuals.VisualState, out MicrowaveVisualState state))
             {
                 state = MicrowaveVisualState.Idle;
@@ -27,7 +28,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
                 case MicrowaveVisualState.Idle:
                     sprite.LayerSetState(MicrowaveVisualizerLayers.Base, "mw");
                     sprite.LayerSetState(MicrowaveVisualizerLayers.BaseUnlit, "mw_unlit");
-                    _loopingSoundComponent.StopAllSounds();
+                    loopingSoundComponent?.StopAllSounds();
                     break;
 
                 case MicrowaveVisualState.Cooking:
@@ -38,8 +39,8 @@ namespace Content.Client.GameObjects.Components.Kitchen
                     var scheduledSound = new ScheduledSound();
                     scheduledSound.Filename = "/Audio/Machines/microwave_loop.ogg";
                     scheduledSound.AudioParams = audioParams;
-                    _loopingSoundComponent.StopAllSounds();
-                    _loopingSoundComponent.AddScheduledSound(scheduledSound);
+                    loopingSoundComponent?.StopAllSounds();
+                    loopingSoundComponent?.AddScheduledSound(scheduledSound);
                     break;
 
                 default:

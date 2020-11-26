@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Shared.GameObjects.Components.Body.Part;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -8,7 +9,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Shared.GameObjects.Components.Body.Preset
 {
     /// <summary>
-    ///     Prototype for the BodyPreset class.
+    ///     Defines the <see cref="IBodyPart"/>s used in a <see cref="IBody"/>.
     /// </summary>
     [Prototype("bodyPreset")]
     [Serializable, NetSerializable]

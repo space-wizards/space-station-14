@@ -29,7 +29,6 @@
   components:
     - type: Sprite
       sprite: Objects/Tanks/oxygen.rsi
-      state: icon
     - type: GasTank
       outputPressure: 21.27825
       air:
@@ -65,7 +64,6 @@
   components:
     - type: Sprite
       sprite: Objects/Tanks/yellow.rsi
-      state: icon
     - type: Clothing
       sprite: Objects/Tanks/yellow.rsi
       Slots:
@@ -81,7 +79,6 @@
   components:
     - type: Sprite
       sprite: Objects/Tanks/yellow.rsi
-      state: icon
     - type: Clothing
       sprite: Objects/Tanks/yellow.rsi
       Slots:
@@ -97,7 +94,6 @@
   components:
     - type: Sprite
       sprite: Objects/Tanks/red.rsi
-      state: icon
     - type: Clothing
       sprite: Objects/Tanks/red.rsi
       Slots:
@@ -113,7 +109,6 @@
   components:
     - type: Sprite
       sprite: Objects/Tanks/red.rsi
-      state: icon
     - type: Clothing
       sprite: Objects/Tanks/red.rsi
       Slots:
@@ -129,7 +124,6 @@
   components:
     - type: Sprite
       sprite: Objects/Tanks/emergency.rsi
-      state: icon
     - type: GasTank
       outputPressure: 21.27825
       air:
@@ -166,7 +160,6 @@
   components:
     - type: Sprite
       sprite: Objects/Tanks/emergency_yellow.rsi
-      state: icon
     - type: GasTank
       outputPressure: 21.27825
       air:
@@ -203,7 +196,6 @@
   components:
     - type: Sprite
       sprite: Objects/Tanks/emergency_double.rsi
-      state: icon
     - type: GasTank
       outputPressure: 21.27825
       air:
@@ -240,7 +232,6 @@
   components:
     - type: Sprite
       sprite: Objects/Tanks/generic.rsi
-      state: icon
     - type: GasTank
       outputPressure: 101.325
       air:
@@ -261,7 +252,6 @@
   components:
     - type: Sprite
       sprite: Objects/Tanks/generic.rsi
-      state: icon
     - type: GasTank
       outputPressure: 101.325
       air:
@@ -285,7 +275,6 @@
   components:
     - type: Sprite
       sprite: Objects/Tanks/phoron.rsi
-      state: icon
     - type: GasTank
       outputPressure: 101.325
       air:

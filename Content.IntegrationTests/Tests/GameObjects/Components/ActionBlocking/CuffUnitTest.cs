@@ -20,17 +20,36 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
     [TestOf(typeof(HandcuffComponent))]
     public class CuffUnitTest : ContentIntegrationTest
     {
+        private const string PROTOTYPES = @"
+- type: entity
+  name: HumanDummy
+  id: HumanDummy
+  components:
+  - type: Cuffable
+  - type: Hands
+  - type: Body
+    template: HumanoidTemplate
+    preset: HumanPreset
+    centerSlot: torso
+
+- type: entity
+  name: HandcuffsDummy
+  id: HandcuffsDummy
+  components:
+  - type: Handcuff
+";
         [Test]
         public async Task Test()
         {
-            var server = StartServerDummyTicker();
+            var options = new ServerIntegrationOptions{ExtraPrototypes = PROTOTYPES};
+            var server = StartServerDummyTicker(options);
 
             IEntity human;
             IEntity otherHuman;
             IEntity cuffs;
-            IEntity cables;
-            HandcuffComponent cableHandcuff;
+            IEntity secondCuffs;
             HandcuffComponent handcuff;
+            HandcuffComponent secondHandcuff;
             CuffableComponent cuffed;
             IHandsComponent hands;
             IBody body;
@@ -43,10 +62,10 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
                 var entityManager = IoCManager.Resolve<IEntityManager>();
 
                 // Spawn the entities
-                human = entityManager.SpawnEntity("BaseHumanMob_Content", MapCoordinates.Nullspace);
-                otherHuman = entityManager.SpawnEntity("BaseHumanMob_Content", MapCoordinates.Nullspace);
-                cuffs = entityManager.SpawnEntity("Handcuffs", MapCoordinates.Nullspace);
-                cables = entityManager.SpawnEntity("Cablecuffs", MapCoordinates.Nullspace);
+                human = entityManager.SpawnEntity("HumanDummy", MapCoordinates.Nullspace);
+                otherHuman = entityManager.SpawnEntity("HumanDummy", MapCoordinates.Nullspace);
+                cuffs = entityManager.SpawnEntity("HandcuffsDummy", MapCoordinates.Nullspace);
+                secondCuffs = entityManager.SpawnEntity("HandcuffsDummy", MapCoordinates.Nullspace);
 
                 human.Transform.WorldPosition = otherHuman.Transform.WorldPosition;
 
@@ -55,7 +74,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
                 Assert.True(human.TryGetComponent(out hands!), $"Human has no {nameof(HandsComponent)}");
                 Assert.True(human.TryGetComponent(out body!), $"Human has no {nameof(IBody)}");
                 Assert.True(cuffs.TryGetComponent(out handcuff!), $"Handcuff has no {nameof(HandcuffComponent)}");
-                Assert.True(cables.TryGetComponent(out cableHandcuff!), $"Cablecuff has no {nameof(HandcuffComponent)}");
+                Assert.True(secondCuffs.TryGetComponent(out secondHandcuff!), $"Second handcuffs has no {nameof(HandcuffComponent)}");
 
                 // Test to ensure cuffed players register the handcuffs
                 cuffed.AddNewCuffs(cuffs);
@@ -67,7 +86,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
                 Assert.True(cuffed.CuffedHandCount == 2 && hands.Hands.Count() == 4, "Player doesn't have correct amount of hands cuffed");
 
                 // Test to give a player with 4 hands 2 sets of cuffs
-                cuffed.AddNewCuffs(cables);
+                cuffed.AddNewCuffs(secondCuffs);
                 Assert.True(cuffed.CuffedHandCount == 4, "Player doesn't have correct amount of hands cuffed");
 
             });

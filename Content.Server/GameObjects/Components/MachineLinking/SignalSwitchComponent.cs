@@ -1,5 +1,6 @@
 ﻿using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -52,7 +53,10 @@ namespace Content.Server.GameObjects.Components.MachineLinking
                 return;
             }
 
-            transmitter.TransmitSignal(user, _on);
+            if (!transmitter.TransmitSignal(_on))
+            {
+                Owner.PopupMessage(user, Loc.GetString("No receivers connected."));
+            }
         }
 
         private void UpdateSprite()

@@ -26,8 +26,6 @@ namespace Content.Server.GameObjects.Components.Atmos
     [RegisterComponent]
     public class GasAnalyzerComponent : SharedGasAnalyzerComponent, IAfterInteract, IDropped, IUse
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-
         private GasAnalyzerDanger _pressureDanger;
         private float _timeSinceSync;
         private const float TimeBetweenSyncs = 2f;
@@ -183,14 +181,14 @@ namespace Content.Server.GameObjects.Components.Atmos
             if (!_checkPlayer && _position.HasValue)
             {
                 // Check if position is out of range => don't update
-                if (!_position.Value.InRange(_entityManager, pos, SharedInteractionSystem.InteractionRange))
+                if (!_position.Value.InRange(Owner.EntityManager, pos, SharedInteractionSystem.InteractionRange))
                     return;
 
                 pos = _position.Value;
             }
 
             var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
-            var gam = atmosSystem.GetGridAtmosphere(pos.GetGridId(_entityManager));
+            var gam = atmosSystem.GetGridAtmosphere(pos.GetGridId(Owner.EntityManager));
             var tile = gam?.GetTile(pos).Air;
             if (tile == null)
             {

@@ -1,206 +1,180 @@
 - type: entity
-  parent: OuterclothingBase
-  id: HardsuitBase
-  name: base hardsuit
-  abstract: true
-  components:
-    - type: PressureProtection
-      highPressureMultiplier: 0.75
-      lowPressureMultiplier: 100
-
-- type: entity
-  parent: HardsuitBase
-  id: HardsuitDeathsquad
-  name: deathsquad hardsuit
-  description: An advanced hardsuit favored by commandos for use in special operations.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/deathsquad.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/deathsquad.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.45
-    lowPressureMultiplier: 100
-
-- type: entity
-  parent: HardsuitBase
-  id: IHVoidsuit
-  name: IH voidsuit
-  description: A special void suit that protects against hazardous, low pressure environments.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/ihvoidsuit.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/ihvoidsuit.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 1
-    lowPressureMultiplier: 100
-
-- type: entity
-  parent: HardsuitBase
-  id: HardsuitAtmos
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitAtmos
   name: atmos hardsuit
   description: A special suit that protects against hazardous, low pressure environments. Has thermal shielding.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/hardsuit_atmos.rsi
-
+    sprite: Clothing/OuterClothing/Hardsuits/atmospherics.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/hardsuit_atmos.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/atmospherics.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 100
 
 - type: entity
-  parent: HardsuitBase
-  id: HardsuitEngineering
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitCap
+  name: captain's armor
+  description: A suit of protective formal armor made for the station's captain.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/capspace.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/capspace.rsi
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 100
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitDeathsquad
+  name: deathsquad hardsuit
+  description: An advanced hardsuit favored by commandos for use in special operations.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/deathsquad.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/deathsquad.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.45
+    lowPressureMultiplier: 100
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitEngineering
   name: engineering hardsuit
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/hardsuit_engineering.rsi
-
+    sprite: Clothing/OuterClothing/Hardsuits/engineering.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/hardsuit_engineering.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/engineering.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.65
     lowPressureMultiplier: 100
 
 - type: entity
-  parent: HardsuitBase
-  id: HardsuitHazard
-  name: hazard hardsuit
-  description: A robust hardsuit made for dangerous and hazardous situations.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/hardsuit_hazardhardsuit.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/hardsuit_hazardhardsuit.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.75
-    lowPressureMultiplier: 100
-
-- type: entity
-  parent: HardsuitBase
-  id: HardsuitMedical
-  name: medical hardsuit
-  description: A special suit that protects against hazardous, low pressure environments. Built with lightweight materials for easier movement.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/hardsuit_medical.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/hardsuit_medical.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.75
-    lowPressureMultiplier: 100
-
-- type: entity
-  parent: HardsuitBase
-  id: HardsuitMining
-  name: mining hardsuit
-  description: A special suit that protects against hazardous, low pressure environments. Has reinforced plating for wildlife encounters.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/hardsuit_mining.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/hardsuit_mining.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.75
-    lowPressureMultiplier: 100
-
-- type: entity
-  parent: HardsuitBase
-  id: HardsuitSecurity
-  name: security hardsuit
-  description: A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/hardsuit_sectg.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/hardsuit_sectg.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.75
-    lowPressureMultiplier: 100
-
-- type: entity
-  parent: HardsuitBase
-  id: HardsuitSyndie
-  name: blood red hardsuit
-  description: A dual-mode advanced hardsuit designed for work in special operations.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/hardsuit_syndie.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/hardsuit_syndie.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.45
-    lowPressureMultiplier: 100
-
-# Some massive smoothbrain had this named "hardsuit white" yeah thanks fuckhead really useful.
-- type: entity
-  parent: HardsuitBase
-  id: HardsuitCE
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitEngineeringWhite
   name: CE hardsuit
   description: A special hardsuit that protects against hazardous, low pressure environments, made for the chief engineer of the station.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/hardsuit_ce.rsi
-
+    sprite: Clothing/OuterClothing/Hardsuits/engineering-white.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/hardsuit_ce.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/engineering-white.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.45
     lowPressureMultiplier: 100
 
 - type: entity
-  parent: HardsuitBase
-  id: HardsuitWizard
+  parent: ClothingOuterHardsuitBase
+  id: IHSVoidsuit
+  name: IHS voidsuit
+  description: A special void suit that protects against hazardous, low pressure environments.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/ihsvoid.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/ihsvoid.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 1
+    lowPressureMultiplier: 100
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitMedical
+  name: medical hardsuit
+  description: A special suit that protects against hazardous, low pressure environments. Built with lightweight materials for easier movement.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/medical.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/medical.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.75
+    lowPressureMultiplier: 100
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitRd
+  name: research director's hardsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/rd.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/rd.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.75
+    lowPressureMultiplier: 100
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitSalvage
+  name: salvage hardsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has reinforced plating for wildlife encounters.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/salvage.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/salvage.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.75
+    lowPressureMultiplier: 100
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitSecurity
+  name: security hardsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/security.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/security.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.75
+    lowPressureMultiplier: 100
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitSecurityRed
+  name: head of security's hardsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/security-red.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/security-red.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.75
+    lowPressureMultiplier: 100
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitSyndie
+  name: blood-red hardsuit
+  description: A dual-mode advanced hardsuit designed for work in special operations.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.45
+    lowPressureMultiplier: 100
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitWizard
   name: wizard hardsuit
   description: A bizarre gem-encrusted suit that radiates magical energies.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/hardsuit_wiz.rsi
-
+    sprite: Clothing/OuterClothing/Hardsuits/wizard.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/hardsuit_wiz.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/wizard.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.45
-    lowPressureMultiplier: 100
-
-# I don't know what the hell "td" is but whatever i'll dump it here.
-- type: entity
-  parent: HardsuitBase
-  id: HardsuitTDGreen
-  name: green TD hardsuit
-  description: Heavily armored black and green suit for long combat situations, also provides protection from low-pressure/vacuum damage.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/tdgreen.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/tdgreen.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 1
-    lowPressureMultiplier: 100
-
-- type: entity
-  parent: HardsuitBase
-  id: HardsuitTDRed
-  name: red TD hardsuit
-  description: Heavily armored black and red suit for long combat situations, also provides protection from low-pressure/vacuum damage.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/tdred.rsi
-
-  - type: Clothing
-    sprite: Clothing/OuterClothing/tdred.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 1
     lowPressureMultiplier: 100

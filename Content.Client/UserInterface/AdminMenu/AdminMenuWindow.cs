@@ -607,7 +607,7 @@ namespace Content.Client.UserInterface.AdminMenu
                 GetValueFromData = (obj) => ((GasPrototype) obj).ID.ToString(),
             };
 
-            private CommandUISpinBox _amount = new CommandUISpinBox
+            private readonly CommandUISpinBox _amount = new CommandUISpinBox
             {
                 Name = "Amount"
             };

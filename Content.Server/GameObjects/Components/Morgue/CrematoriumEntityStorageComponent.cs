@@ -3,6 +3,7 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Shared.GameObjects.Components.Morgue;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
@@ -52,6 +53,16 @@ namespace Content.Server.GameObjects.Components.Morgue
             }
         }
 
+        public override bool CanOpen(IEntity user, bool silent = false)
+        {
+            if (Cooking)
+            {
+                if (!silent) Owner.PopupMessage(user, Loc.GetString("Safety first, not while it's active!"));
+                return false;
+            }
+            return base.CanOpen(user, silent);
+        }
+
         public void Cremate()
         {
             if (Cooking) return;
@@ -77,7 +88,7 @@ namespace Content.Server.GameObjects.Components.Morgue
                     var ash = Owner.EntityManager.SpawnEntity("Ash", Owner.Transform.Coordinates);
                     Contents.Insert(ash);
                 }
-               
+
                 TryOpenStorage(Owner);
 
                 EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/ding.ogg", Owner);
@@ -89,7 +100,7 @@ namespace Content.Server.GameObjects.Components.Morgue
         {
             protected override void GetData(IEntity user, CrematoriumEntityStorageComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user) || component.Cooking)
+                if (!ActionBlockerSystem.CanInteract(user) || component.Cooking || component.Open)
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

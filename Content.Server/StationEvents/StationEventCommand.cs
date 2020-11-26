@@ -1,6 +1,7 @@
 ﻿#nullable enable
-using JetBrains.Annotations;
+using Content.Server.Administration;
 using Content.Server.GameObjects.EntitySystems.StationEvents;
+using Content.Shared.Administration;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects.Systems;
@@ -8,7 +9,7 @@ using Robust.Shared.Localization;
 
 namespace Content.Server.StationEvents
 {
-    [UsedImplicitly]
+    [AdminCommand(AdminFlags.Server)]
     public sealed class StationEventCommand : IClientCommand
     {
         public string Command => "events";
@@ -90,7 +91,7 @@ namespace Content.Server.StationEvents
                 shell.SendText(player, Loc.GetString("No station event running"));
             }
         }
-        
+
         private void List(IConsoleShell shell, IPlayerSession? player)
         {
             var resultText = "Random\n" + EntitySystem.Get<StationEventSystem>().GetEventNames();

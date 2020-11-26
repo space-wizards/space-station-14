@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   id: TableBase
   name: "table"
   description: A square piece of metal standing on four metal legs.
@@ -62,6 +62,9 @@
       SteelSheet1:
         Min: 1
         Max: 1
+  - type: Construction
+    graph: Tables
+    node: TableFrame
 
 - type: entity
   id: TableBar
@@ -100,6 +103,9 @@
       SteelSheet1:
         Min: 1
         Max: 1
+  - type: Construction
+    graph: Tables
+    node: MetalTable
 
 - type: entity
   id: TableR
@@ -119,6 +125,9 @@
       SteelSheet1:
         Min: 1
         Max: 1
+  - type: Construction
+    graph: Tables
+    node: ReinforcedTable
 
 - type: entity
   id: TableGlass
@@ -138,6 +147,9 @@
       ShardGlass:
         Min: 1
         Max: 1
+  - type: Construction
+    graph: Tables
+    node: GlassTable
 
 - type: entity
   id: TableGlassR
@@ -157,6 +169,9 @@
       ShardGlass:
         Min: 1
         Max: 1
+  - type: Construction
+    graph: Tables
+    node: RGlassTable
 
 - type: entity
   id: TableWood
@@ -176,6 +191,9 @@
       WoodPlank:
         Min: 1
         Max: 1
+  - type: Construction
+    graph: Tables
+    node: WoodTable
 
 - type: entity
   id: TableCarpet
@@ -195,6 +213,9 @@
       WoodPlank:
         Min: 1
         Max: 1
+  - type: Construction
+    graph: Tables
+    node: PokerTable
 
 - type: entity
   id: TableStone

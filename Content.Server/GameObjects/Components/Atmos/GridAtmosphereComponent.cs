@@ -14,6 +14,7 @@ using Content.Shared.Maps;
 using Robust.Server.GameObjects.EntitySystems.TileLookup;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.GameObjects.Components.Map;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
@@ -64,6 +65,8 @@ namespace Content.Server.GameObjects.Components.Atmos
         private float _timer = 0f;
         private Stopwatch _stopwatch = new Stopwatch();
         private GridId _gridId;
+
+        [ComponentDependency] private IMapGridComponent? _mapGridComponent = default!;
 
         [ViewVariables]
         public int UpdateCounter { get; private set; } = 0;
@@ -217,7 +220,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         protected virtual void Revalidate()
         {
-            foreach (var indices in _invalidatedCoords.ToArray())
+            foreach (var indices in _invalidatedCoords)
             {
                 var tile = GetTile(indices);
 
@@ -259,7 +262,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 // TODO ATMOS: Query all the contents of this tile (like walls) and calculate the correct thermal conductivity
                 tile.ThermalConductivity = tile.Tile?.Tile.GetContentTileDefinition().ThermalConductivity ?? 0.5f;
                 tile.UpdateAdjacent();
-                tile.UpdateVisuals();
+                GasTileOverlaySystem.Invalidate(_gridId, indices);
 
                 for (var i = 0; i < Atmospherics.Directions; i++)
                 {
@@ -420,12 +423,18 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// <inheritdoc />
         public bool IsAirBlocked(Vector2i indices, AtmosDirection direction = AtmosDirection.All)
         {
+            var directions = AtmosDirection.Invalid;
+
             foreach (var obstructingComponent in GetObstructingComponents(indices))
             {
                 if (!obstructingComponent.AirBlocked)
                     continue;
 
-                if (obstructingComponent.AirBlockedDirection.HasFlag(direction))
+                // We set the directions that are air-blocked so far,
+                // as you could have a full obstruction with only 4 directional air blockers.
+                directions |= obstructingComponent.AirBlockedDirection;
+
+                if (directions.IsFlagSet(direction))
                     return true;
             }
 
@@ -435,10 +444,9 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// <inheritdoc />
         public virtual bool IsSpace(Vector2i indices)
         {
-            // TODO ATMOS use ContentTileDefinition to define in YAML whether or not a tile is considered space
-            if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return default;
+            if (_mapGridComponent == null) return default;
 
-            return mapGrid.Grid.GetTileRef(indices).Tile.IsEmpty;
+            return _mapGridComponent.Grid.GetTileRef(indices).IsSpace();
         }
 
         public Dictionary<AtmosDirection, TileAtmosphere> GetAdjacentTiles(Vector2i indices, bool includeAirBlocked = false)
@@ -461,9 +469,9 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// <inheritdoc />
         public float GetVolumeForCells(int cellCount)
         {
-            if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return default;
+            if (_mapGridComponent == null) return default;
 
-            return mapGrid.Grid.TileSize * cellCount * Atmospherics.CellVolume;
+            return _mapGridComponent.Grid.TileSize * cellCount * Atmospherics.CellVolume;
         }
 
         /// <inheritdoc />
@@ -797,15 +805,11 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             var gridLookup = EntitySystem.Get<GridTileLookupSystem>();
 
-            var list = new List<AirtightComponent>();
-
             foreach (var v in gridLookup.GetEntitiesIntersecting(_gridId, indices))
             {
                 if (v.TryGetComponent<AirtightComponent>(out var ac))
-                    list.Add(ac);
+                    yield return ac;
             }
-
-            return list;
         }
 
         private bool NeedsVacuumFixing(Vector2i indices)
@@ -841,8 +845,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            if (serializer.Reading &&
-                Owner.TryGetComponent(out IMapGridComponent? mapGrid))
+            if (serializer.Reading && Owner.TryGetComponent(out IMapGridComponent? mapGrid))
             {
                 var gridId = mapGrid.Grid.Index;
 

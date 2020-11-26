@@ -117,7 +117,7 @@
   id: CornSeeds
   components:
     - type: Seed
-      seed: apple
+      seed: corn
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/corn.rsi
 
