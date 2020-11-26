@@ -15,12 +15,82 @@
   - type: GasCanister
   - type: Anchorable
   - type: Pullable
+  - type: UserInterface
+  - type: Appearance
+
+
 
 - type: entity
   parent: GasCanisterBase
   id: GasCanister
   name: Gas Canister
+  description: A canister that can contain any type of gas. It can be attached to connector ports using a wrench.
   components:
   - type: Sprite
-    sprite: "Constructible/Power/apc.rsi"
-    state: apc0
+    layers:
+      - sprite: Constructible/Atmos/canister.rsi
+        state: grey
+  - type: Appearance
+    visuals:
+    - type: GasCanisterVisualizer
+      sprite: Constructible/Atmos/canister.rsi
+      stateConnected: can-connector
+  - type: UserInterface
+    interfaces:
+      - key: enum.GasCanisterUiKey.Key
+        type: GasCanisterBoundUserInterface
+  - type: Physics
+    mass: 25
+    anchored: false
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.5,-0.25,0.5,0.25"
+        mask:
+          - Impassable
+          - MobImpassable
+          - VaultImpassable
+          - SmallImpassable
+        layer:
+          - Opaque
+          - MobImpassable
+          - VaultImpassable
+          - SmallImpassable
+
+
+
+- type: entity
+  parent: GasCanister
+  id: OxygenCanister
+  name: Oxygen Canister
+  components:
+  - type: Sprite
+    layers:
+    - sprite: Constructible/Atmos/canister.rsi
+      state: blue
+  - type: GasCanister
+    gasMixture:
+      volume: 10
+      moles:
+        - 100
+      temperature: 293.15
+
+
+
+- type: entity
+  parent: GasCanister
+  id: PhoronCanister
+  name: Phoron Canister
+  components:
+    - type: Sprite
+      layers:
+        - sprite: Constructible/Atmos/canister.rsi
+          state: orange
+    - type: GasCanister
+      gasMixture:
+        volume: 10
+        moles:
+          - 0
+          - 0
+          - 0
+          - 100
+        temperature: 293.15
