@@ -21,7 +21,6 @@ namespace Content.Client.GameObjects.Components.Suspicion
     public class SuspicionRoleComponent : SharedSuspicionRoleComponent
     {
         [Dependency] private readonly IGameHud _gameHud = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
@@ -107,7 +106,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
                 return;
             }
 
-            var overlay = new TraitorOverlay(Owner, _entityManager, _resourceCache, _eyeManager);
+            var overlay = new TraitorOverlay(Owner, Owner.EntityManager, _resourceCache, _eyeManager);
             _overlayManager.AddOverlay(overlay);
         }
 

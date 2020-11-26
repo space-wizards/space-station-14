@@ -4,7 +4,6 @@ using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
@@ -20,7 +19,6 @@ namespace Content.Server.GameObjects.Components.Markers
     {
         [Dependency] private readonly IGameTicker _gameTicker = default!;
         [Dependency] private readonly IReflectionManager _reflectionManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override string Name => "ConditionalSpawner";
@@ -29,7 +27,7 @@ namespace Content.Server.GameObjects.Components.Markers
         public List<string> Prototypes { get; set; } = new List<string>();
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private List<string> _gameRules = new List<string>();
+        private readonly List<string> _gameRules = new List<string>();
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float Chance { get; set; } = 1.0f;
@@ -87,7 +85,7 @@ namespace Content.Server.GameObjects.Components.Markers
             }
 
             if(!Owner.Deleted)
-                _entityManager.SpawnEntity(_robustRandom.Pick(Prototypes), Owner.Transform.Coordinates);
+                Owner.EntityManager.SpawnEntity(_robustRandom.Pick(Prototypes), Owner.Transform.Coordinates);
         }
 
         public virtual void MapInit()

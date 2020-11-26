@@ -40,7 +40,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public override void AddActiveTile(TileAtmosphere? tile) { }
 
-        public override void RemoveActiveTile(TileAtmosphere? tile) { }
+        public override void RemoveActiveTile(TileAtmosphere? tile, bool disposeGroup = true) { }
 
         public override void AddHotspotTile(TileAtmosphere? tile) { }
 

@@ -2,7 +2,7 @@
   name: paper
   parent: BaseItem
   id: Paper
-  description: 'A piece of white paper'
+  description: 'A piece of white paper.'
   components:
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -20,7 +20,7 @@
   name: pen
   parent: BaseItem
   id: Pen
-  description: 'A dark ink pen'
+  description: 'A dark ink pen.'
   components:
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi

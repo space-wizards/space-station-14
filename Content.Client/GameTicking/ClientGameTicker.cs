@@ -4,6 +4,7 @@ using Content.Client.Interfaces;
 using Content.Client.State;
 using Content.Client.UserInterface;
 using Content.Shared;
+using Content.Shared.GameTicking;
 using Content.Shared.Network.NetMessages;
 using Robust.Client.Interfaces.Graphics;
 using Robust.Client.Interfaces.State;
@@ -21,6 +22,7 @@ namespace Content.Client.GameTicking
         [Dependency] private readonly IStateManager _stateManager = default!;
 
         [ViewVariables] private bool _initialized;
+        private readonly List<string> _jobsAvailable = new List<string>();
 
         [ViewVariables] public bool AreWeReady { get; private set; }
         [ViewVariables] public bool IsGameStarted { get; private set; }
@@ -29,11 +31,13 @@ namespace Content.Client.GameTicking
         [ViewVariables] public DateTime StartTime { get; private set; }
         [ViewVariables] public bool Paused { get; private set; }
         [ViewVariables] public Dictionary<NetUserId, PlayerStatus> Status { get; private set; }
+        [ViewVariables] public IReadOnlyList<string> JobsAvailable => _jobsAvailable;
 
         public event Action InfoBlobUpdated;
         public event Action LobbyStatusUpdated;
         public event Action LobbyReadyUpdated;
         public event Action LobbyLateJoinStatusUpdated;
+        public event Action<IReadOnlyList<string>> LobbyJobsAvailableUpdated;
 
         public void Initialize()
         {
@@ -51,6 +55,7 @@ namespace Content.Client.GameTicking
                 IoCManager.Resolve<IClyde>().RequestWindowAttention();
             });
             _netManager.RegisterNetMessage<MsgTickerLateJoinStatus>(nameof(MsgTickerLateJoinStatus), LateJoinStatus);
+            _netManager.RegisterNetMessage<MsgTickerJobsAvailable>(nameof(MsgTickerJobsAvailable), UpdateJobsAvailable);
 
             Status = new Dictionary<NetUserId, PlayerStatus>();
             _initialized = true;
@@ -62,6 +67,12 @@ namespace Content.Client.GameTicking
             LobbyLateJoinStatusUpdated?.Invoke();
         }
 
+        private void UpdateJobsAvailable(MsgTickerJobsAvailable message)
+        {
+            _jobsAvailable.Clear();
+            _jobsAvailable.AddRange(message.JobsAvailable);
+            LobbyJobsAvailableUpdated?.Invoke(JobsAvailable);
+        }
 
         private void JoinLobby(MsgTickerJoinLobby message)
         {

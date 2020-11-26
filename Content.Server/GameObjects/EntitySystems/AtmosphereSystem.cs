@@ -5,17 +5,21 @@ using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Reactions;
 using Content.Server.GameObjects.Components.Atmos;
+using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
+using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems.TileLookup;
 using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Map;
+using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameObjects.EntitySystems
@@ -26,7 +30,6 @@ namespace Content.Server.GameObjects.EntitySystems
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPauseManager _pauseManager = default!;
-        [Dependency] private IEntityManager _entityManager = default!;
 
         private GasReactionPrototype[] _gasReactions = Array.Empty<GasReactionPrototype>();
 
@@ -38,10 +41,8 @@ namespace Content.Server.GameObjects.EntitySystems
         /// </summary>
         public IEnumerable<GasReactionPrototype> GasReactions => _gasReactions!;
 
-        /// <summary>
-        ///     EventBus reference for gas reactions.
-        /// </summary>
-        public IEventBus EventBus => _entityManager.EventBus;
+        private float[] _gasSpecificHeats = new float[Atmospherics.TotalNumberOfGases];
+        public float[] GasSpecificHeats => _gasSpecificHeats;
 
         public GridTileLookupSystem GridTileLookupSystem => _gridTileLookup ??= Get<GridTileLookupSystem>();
 
@@ -57,6 +58,31 @@ namespace Content.Server.GameObjects.EntitySystems
             IoCManager.InjectDependencies(_spaceAtmos);
 
             _mapManager.TileChanged += OnTileChanged;
+
+            Array.Resize(ref _gasSpecificHeats, MathHelper.NextMultipleOf(Atmospherics.TotalNumberOfGases, 4));
+
+            for (var i = 0; i < GasPrototypes.Length; i++)
+            {
+                _gasSpecificHeats[i] = GasPrototypes[i].SpecificHeat;
+            }
+
+            // Required for airtight components.
+            EntityManager.EventBus.SubscribeEvent<RotateEvent>(EventSource.Local, this, RotateEvent);
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            EntityManager.EventBus.UnsubscribeEvent<RotateEvent>(EventSource.Local, this);
+        }
+
+        private void RotateEvent(RotateEvent ev)
+        {
+            if (ev.Sender.TryGetComponent(out AirtightComponent? airtight))
+            {
+                airtight.RotateEvent(ev);
+            }
         }
 
         public IGridAtmosphereComponent? GetGridAtmosphere(GridId gridId)
@@ -91,7 +117,7 @@ namespace Content.Server.GameObjects.EntitySystems
             // space -> not space or vice versa. So if the old tile is the
             // same as the new tile in terms of space-ness, ignore the change
 
-            if (eventArgs.NewTile.Tile.IsEmpty == eventArgs.OldTile.IsEmpty)
+            if (eventArgs.NewTile.IsSpace() == eventArgs.OldTile.IsSpace())
             {
                 return;
             }

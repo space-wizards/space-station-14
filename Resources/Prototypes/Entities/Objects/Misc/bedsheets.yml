@@ -11,7 +11,6 @@
   components:
   - type: Sprite
     sprite: Objects/Misc/bedsheets.rsi
-
   - type: Clothing
     size: 10
     QuickEquip: true
@@ -27,14 +26,12 @@
   components:
   - type: Sprite
     state: sheetblack
-
   - type: Clothing
     size: 10
     QuickEquip: true
     Slots:
     - neck
-    sprite: Clothing/Neck/Bedsheets/sheet_black.rsi
-    HeldPrefix: sheetblack
+    sprite: Clothing/Neck/Bedsheets/black.rsi
 
 - type: entity
   id: BedsheetBlue
@@ -43,14 +40,12 @@
   components:
   - type: Sprite
     state: sheetblue
-
   - type: Clothing
     size: 10
     QuickEquip: true
     Slots:
     - neck
-    sprite: Clothing/Neck/Bedsheets/sheet_blue.rsi
-    HeldPrefix: sheetblue
+    sprite: Clothing/Neck/Bedsheets/blue.rsi
 
 - type: entity
   id: BedsheetBrown
@@ -59,14 +54,12 @@
   components:
   - type: Sprite
     state: sheetbrown
-
   - type: Clothing
     size: 10
     QuickEquip: true
     Slots:
     - neck
-    sprite: Clothing/Neck/Bedsheets/sheet_brown.rsi
-    HeldPrefix: sheetbrown
+    sprite: Clothing/Neck/Bedsheets/brown.rsi
 
 - type: entity
   id: BedsheetCaptain
@@ -76,14 +69,12 @@
   components:
   - type: Sprite
     state: sheetcaptain
-
   - type: Clothing
     size: 10
     QuickEquip: true
     Slots:
     - neck
-    sprite: Clothing/Neck/Bedsheets/sheet_captain.rsi
-    HeldPrefix: sheetcaptain
+    sprite: Clothing/Neck/Bedsheets/captain.rsi
 
 - type: entity
   id: BedsheetCE
@@ -92,14 +83,12 @@
   components:
   - type: Sprite
     state: sheetce
-
   - type: Clothing
     size: 10
     QuickEquip: true
     Slots:
     - neck
-    sprite: Clothing/Neck/Bedsheets/sheet_ce.rsi
-    HeldPrefix: sheetce
+    sprite: Clothing/Neck/Bedsheets/ce.rsi
 
 - type: entity
   id: BedsheetCentcom
@@ -108,14 +97,12 @@
   components:
   - type: Sprite
     state: sheetcentcom
-
   - type: Clothing
     size: 10
     QuickEquip: true
     Slots:
     - neck
-    sprite: Clothing/Neck/Bedsheets/sheet_centcom.rsi
-    HeldPrefix: sheetcentcom
+    sprite: Clothing/Neck/Bedsheets/centcom.rsi
 
 - type: entity
   id: BedsheetClown
@@ -124,14 +111,12 @@
   components:
   - type: Sprite
     state: sheetclown
-
   - type: Clothing
     size: 10
     QuickEquip: true
     Slots:
     - neck
-    sprite: Clothing/Neck/Bedsheets/sheet_rainbow.rsi
-    HeldPrefix: sheetrainbow
+    sprite: Clothing/Neck/Bedsheets/rainbow.rsi
 
 - type: entity
   id: BedsheetCMO
@@ -140,14 +125,12 @@
   components:
   - type: Sprite
     state: sheetcmo
-
   - type: Clothing
     size: 10
     QuickEquip: true
     Slots:
     - neck
-    sprite: Clothing/Neck/Bedsheets/sheet_cmo.rsi
-    HeldPrefix: sheetcmo
+    sprite: Clothing/Neck/Bedsheets/cmo.rsi
 
 - type: entity
   id: BedsheetCosmos
@@ -156,14 +139,12 @@
   components:
   - type: Sprite
     state: sheetcosmos
-
   - type: Clothing
     size: 10
     QuickEquip: true
     Slots:
     - neck
-    sprite: Clothing/Neck/Bedsheets/sheet_cosmos.rsi
-    HeldPrefix: sheetcosmos
+    sprite: Clothing/Neck/Bedsheets/cosmos.rsi
 
 - type: entity
   id: BedsheetCult
@@ -172,14 +153,12 @@
   components:
   - type: Sprite
     state: sheetcult
-
   - type: Clothing
     size: 10
     QuickEquip: true
     Slots:
     - neck
-    sprite: Clothing/Neck/Bedsheets/sheet_cult.rsi
-    HeldPrefix: sheetcult
+    sprite: Clothing/Neck/Bedsheets/cult.rsi
 
 - type: entity
   id: BedsheetGreen
@@ -188,14 +167,12 @@
   components:
   - type: Sprite
     state: sheetgreen
-
   - type: Clothing
     size: 10
     QuickEquip: true
     Slots:
     - neck
-    sprite: Clothing/Neck/Bedsheets/sheet_green.rsi
-    HeldPrefix: sheetgreen
+    sprite: Clothing/Neck/Bedsheets/green.rsi
 
 - type: entity
   id: BedsheetGrey
@@ -204,14 +181,12 @@
   components:
   - type: Sprite
     state: sheetgrey
-
   - type: Clothing
     size: 10
     QuickEquip: true
     Slots:
     - neck
-    sprite: Clothing/Neck/Bedsheets/sheet_grey.rsi
-    HeldPrefix: sheetgrey
+    sprite: Clothing/Neck/Bedsheets/grey.rsi
 
 - type: entity
   id: BedsheetHOP
@@ -220,14 +195,12 @@
   components:
   - type: Sprite
     state: sheethop
-
   - type: Clothing
     size: 10
     QuickEquip: true
     Slots:
     - neck
-    sprite: Clothing/Neck/Bedsheets/sheet_hop.rsi
-    HeldPrefix: sheethop
+    sprite: Clothing/Neck/Bedsheets/hop.rsi
 
 - type: entity
   id: BedsheetHOS
@@ -236,14 +209,12 @@
   components:
   - type: Sprite
     state: sheethos
-
   - type: Clothing
     size: 10
     QuickEquip: true
     Slots:
     - neck
-    sprite: Clothing/Neck/Bedsheets/sheet_hos.rsi
-    HeldPrefix: sheethos
+    sprite: Clothing/Neck/Bedsheets/hos.rsi
 
 - type: entity
   id: BedsheetIan
@@ -252,14 +223,12 @@
   components:
   - type: Sprite
     state: sheetian
-
   - type: Clothing
     size: 10
     QuickEquip: true
     Slots:
     - neck
-    sprite: Clothing/Neck/Bedsheets/sheet_ian.rsi
-    HeldPrefix: sheetian
+    sprite: Clothing/Neck/Bedsheets/ian.rsi
 
 - type: entity
   id: BedsheetMedical
@@ -268,14 +237,12 @@
   components:
   - type: Sprite
     state: sheetmedical
-
   - type: Clothing
     size: 10
     QuickEquip: true
     Slots:
     - neck
-    sprite: Clothing/Neck/Bedsheets/sheet_medical.rsi
-    HeldPrefix: sheetmedical
+    sprite: Clothing/Neck/Bedsheets/medical.rsi
 
 - type: entity
   id: BedsheetMime
@@ -284,14 +251,12 @@
   components:
   - type: Sprite
     state: sheetmime
-
   - type: Clothing
     size: 10
     QuickEquip: true
     Slots:
     - neck
-    sprite: Clothing/Neck/Bedsheets/sheet_mime.rsi
-    HeldPrefix: sheetmime
+    sprite: Clothing/Neck/Bedsheets/mime.rsi
 
 - type: entity
   id: BedsheetNT
@@ -300,14 +265,12 @@
   components:
   - type: Sprite
     state: sheetNT
-
   - type: Clothing
     size: 10
     QuickEquip: true
     Slots:
     - neck
-    sprite: Clothing/Neck/Bedsheets/sheet_NT.rsi
-    HeldPrefix: sheetNT
+    sprite: Clothing/Neck/Bedsheets/NT.rsi
 
 - type: entity
   id: BedsheetOrange
@@ -316,14 +279,12 @@
   components:
   - type: Sprite
     state: sheetorange
-
   - type: Clothing
     size: 10
     QuickEquip: true
     Slots:
     - neck
-    sprite: Clothing/Neck/Bedsheets/sheet_orange.rsi
-    HeldPrefix: sheetorange
+    sprite: Clothing/Neck/Bedsheets/orange.rsi
 
 - type: entity
   id: BedsheetPurple
@@ -332,14 +293,12 @@
   components:
   - type: Sprite
     state: sheetpurple
-
   - type: Clothing
     size: 10
     QuickEquip: true
     Slots:
     - neck
-    sprite: Clothing/Neck/Bedsheets/sheet_purple.rsi
-    HeldPrefix: sheetpurple
+    sprite: Clothing/Neck/Bedsheets/purple.rsi
 
 - type: entity
   id: BedsheetQM
@@ -348,14 +307,12 @@
   components:
   - type: Sprite
     state: sheetqm
-
   - type: Clothing
     size: 10
     QuickEquip: true
     Slots:
     - neck
-    sprite: Clothing/Neck/Bedsheets/sheet_qm.rsi
-    HeldPrefix: sheetqm
+    sprite: Clothing/Neck/Bedsheets/qm.rsi
 
 - type: entity
   id: BedsheetRainbow
@@ -364,14 +321,12 @@
   components:
   - type: Sprite
     state: sheetrainbow
-
   - type: Clothing
     size: 10
     QuickEquip: true
     Slots:
     - neck
-    sprite: Clothing/Neck/Bedsheets/sheet_rainbow.rsi
-    HeldPrefix: sheetrainbow
+    sprite: Clothing/Neck/Bedsheets/rainbow.rsi
 
 - type: entity
   id: BedsheetRD
@@ -380,14 +335,12 @@
   components:
   - type: Sprite
     state: sheetrd
-
   - type: Clothing
     size: 10
     QuickEquip: true
     Slots:
     - neck
-    sprite: Clothing/Neck/Bedsheets/sheet_rd.rsi
-    HeldPrefix: sheetrd
+    sprite: Clothing/Neck/Bedsheets/rd.rsi
 
 - type: entity
   id: BedsheetRed
@@ -396,14 +349,12 @@
   components:
   - type: Sprite
     state: sheetred
-
   - type: Clothing
     size: 10
     QuickEquip: true
     Slots:
     - neck
-    sprite: Clothing/Neck/Bedsheets/sheet_red.rsi
-    HeldPrefix: sheetred
+    sprite: Clothing/Neck/Bedsheets/red.rsi
 
 - type: entity
   id: BedsheetSyndie
@@ -412,14 +363,12 @@
   components:
   - type: Sprite
     state: sheetsyndie
-
   - type: Clothing
     size: 10
     QuickEquip: true
     Slots:
     - neck
-    sprite: Clothing/Neck/Bedsheets/sheet_syndie.rsi
-    HeldPrefix: sheetsyndie
+    sprite: Clothing/Neck/Bedsheets/syndie.rsi
 
 - type: entity
   id: BedsheetUSA
@@ -428,14 +377,12 @@
   components:
   - type: Sprite
     state: sheetUSA
-
   - type: Clothing
     size: 10
     QuickEquip: true
     Slots:
     - neck
-    sprite: Clothing/Neck/Bedsheets/sheet_USA.rsi
-    HeldPrefix: sheetUSA
+    sprite: Clothing/Neck/Bedsheets/USA.rsi
 
 - type: entity
   id: BedsheetWhite
@@ -444,14 +391,12 @@
   components:
   - type: Sprite
     state: sheetwhite
-
   - type: Clothing
     size: 10
     QuickEquip: true
     Slots:
     - neck
-    sprite: Clothing/Neck/Bedsheets/sheet_white.rsi
-    HeldPrefix: sheetwhite
+    sprite: Clothing/Neck/Bedsheets/white.rsi
 
 - type: entity
   id: BedsheetWiz
@@ -460,14 +405,12 @@
   components:
   - type: Sprite
     state: sheetwiz
-
   - type: Clothing
     size: 10
     QuickEquip: true
     Slots:
     - neck
-    sprite: Clothing/Neck/Bedsheets/sheet_wiz.rsi
-    HeldPrefix: sheetwiz
+    sprite: Clothing/Neck/Bedsheets/wiz.rsi
 
 - type: entity
   id: BedsheetYellow
@@ -476,11 +419,9 @@
   components:
   - type: Sprite
     state: sheetyellow
-
   - type: Clothing
     size: 10
     QuickEquip: true
     Slots:
     - neck
-    sprite: Clothing/Neck/Bedsheets/sheet_yellow.rsi
-    HeldPrefix: sheetyellow
+    sprite: Clothing/Neck/Bedsheets/yellow.rsi

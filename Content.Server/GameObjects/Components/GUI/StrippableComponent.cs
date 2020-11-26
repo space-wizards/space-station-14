@@ -23,7 +23,7 @@ using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefine
 namespace Content.Server.GameObjects.Components.GUI
 {
     [RegisterComponent]
-    public sealed class StrippableComponent : SharedStrippableComponent, IDragDrop
+    public sealed class StrippableComponent : SharedStrippableComponent
     {
         public const float StripDelay = 2f;
 
@@ -75,23 +75,9 @@ namespace Content.Server.GameObjects.Components.GUI
             UserInterface.SetState(new StrippingBoundUserInterfaceState(inventory, hands, cuffs));
         }
 
-        public bool CanBeStripped(IEntity by)
+        public override bool Drop(DragDropEventArgs args)
         {
-            return by != Owner
-                   && by.HasComponent<HandsComponent>()
-                   && ActionBlockerSystem.CanInteract(by);
-        }
-
-        public bool CanDragDrop(DragDropEventArgs eventArgs)
-        {
-            return eventArgs.Target != eventArgs.Dropped
-                   && eventArgs.Target == eventArgs.User
-                   && CanBeStripped(eventArgs.User);
-        }
-
-        public bool DragDrop(DragDropEventArgs eventArgs)
-        {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor)) return false;
+            if (!args.User.TryGetComponent(out IActorComponent? actor)) return false;
 
             OpenUserInterface(actor.playerSession);
             return true;

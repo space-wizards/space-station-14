@@ -1,13 +1,13 @@
 - type: entity
   id: CarpetBase
-  description:
+  description: "Fancy walking surface."
   abstract: true
   placement:
     mode: SnapgridCenter
   components:
   - type: Clickable
   - type: Sprite
-    drawdepth: FloorTiles
+    drawdepth: BelowFloor
   - type: Icon
     state: full
   - type: SnapGrid

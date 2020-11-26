@@ -18,7 +18,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.SharedGameTicker;
+using static Content.Shared.GameTicking.SharedGameTicker;
 
 namespace Content.Client.State
 {

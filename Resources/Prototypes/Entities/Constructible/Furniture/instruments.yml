@@ -8,9 +8,10 @@
    - type: Clickable
    - type: InteractionOutline
    - type: Anchorable
-   - type: Collidable
+   - type: Physics
      shapes:
        - !type:PhysShapeAabb
+         layer: [MobMask]
          mask:
            - Impassable
            - MobImpassable
@@ -65,8 +66,7 @@
    name: xylophone
    parent: BasePlaceableInstrument
    id: XylophoneInstrument
-   # could not find the description for this item, so this is just temporary
-   description: That's a Xylophone
+   description: Rainbow colored glockenspiel.
    components:
    - type: Instrument
      program: 13

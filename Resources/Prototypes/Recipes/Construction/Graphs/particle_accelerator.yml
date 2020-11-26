@@ -1,0 +1,358 @@
+﻿- type: constructionGraph
+  id: particleAcceleratorControlBox
+  start: start
+  graph:
+    - node: start
+      entity: ParticleAcceleratorControlBoxUnfinished
+      actions:
+        - !type:SpriteStateChange
+          state: "control_box"
+      edges:
+        - to: wired
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Cable
+              doAfter: 0.5
+
+    - node: wired
+      entity: ParticleAcceleratorControlBoxUnfinished
+      actions:
+        - !type:SpriteStateChange
+          state: "control_boxw"
+      edges:
+        - to: completed
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:SnapToGrid {}
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+        - to: start
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:SpawnPrototype
+              prototype: ApcExtensionCableStack1
+          steps:
+            - tool: Cutting
+              doAfter: 0.5
+
+    - node: completed
+      entity: ParticleAcceleratorControlBox
+      edges:
+        - to: wired
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - tool: Prying
+              doAfter: 0.5
+
+
+- type: constructionGraph
+  id: particleAcceleratorPowerBox
+  start: start
+  graph:
+    - node: start
+      entity: ParticleAcceleratorPowerBoxUnfinished
+      actions:
+        - !type:SpriteStateChange
+          state: "power_box"
+      edges:
+        - to: wired
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Cable
+              doAfter: 0.5
+
+    - node: wired
+      entity: ParticleAcceleratorPowerBoxUnfinished
+      actions:
+        - !type:SpriteStateChange
+          state: "power_boxw"
+      edges:
+        - to: completed
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:SnapToGrid {}
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+        - to: start
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:SpawnPrototype
+              prototype: ApcExtensionCableStack1
+          steps:
+            - tool: Cutting
+              doAfter: 0.5
+
+    - node: completed
+      entity: ParticleAcceleratorPowerBox
+      edges:
+        - to: wired
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+
+
+- type: constructionGraph
+  id: particleAcceleratorFuelChamber
+  start: start
+  graph:
+    - node: start
+      entity: ParticleAcceleratorFuelChamberUnfinished
+      actions:
+        - !type:SpriteStateChange
+          state: "fuel_chamber"
+      edges:
+        - to: wired
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Cable
+              doAfter: 0.5
+
+    - node: wired
+      entity: ParticleAcceleratorFuelChamberUnfinished
+      actions:
+        - !type:SpriteStateChange
+          state: "fuel_chamberw"
+      edges:
+        - to: completed
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:SnapToGrid {}
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+        - to: start
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:SpawnPrototype
+              prototype: ApcExtensionCableStack1
+          steps:
+            - tool: Cutting
+              doAfter: 0.5
+
+    - node: completed
+      entity: ParticleAcceleratorFuelChamber
+      edges:
+        - to: wired
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+
+- type: constructionGraph
+  id: particleAcceleratorEndCap
+  start: start
+  graph:
+    - node: start
+      entity: ParticleAcceleratorEndCapUnfinished
+      actions:
+        - !type:SpriteStateChange
+          state: "end_cap"
+      edges:
+        - to: wired
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Cable
+              doAfter: 0.5
+
+    - node: wired
+      entity: ParticleAcceleratorEndCapUnfinished
+      actions:
+        - !type:SpriteStateChange
+          state: "end_capw"
+      edges:
+        - to: completed
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:SnapToGrid {}
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+        - to: start
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:SpawnPrototype
+              prototype: ApcExtensionCableStack1
+          steps:
+            - tool: Cutting
+              doAfter: 0.5
+
+    - node: completed
+      entity: ParticleAcceleratorEndCap
+      edges:
+        - to: wired
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+
+- type: constructionGraph
+  id: particleAcceleratorEmitterLeft
+  start: start
+  graph:
+    - node: start
+      entity: ParticleAcceleratorEmitterLeftUnfinished
+      actions:
+        - !type:SpriteStateChange
+          state: "emitter_left"
+      edges:
+        - to: wired
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Cable
+              doAfter: 0.5
+
+    - node: wired
+      entity: ParticleAcceleratorEmitterLeftUnfinished
+      actions:
+        - !type:SpriteStateChange
+          state: "emitter_leftw"
+      edges:
+        - to: completed
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:SnapToGrid {}
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+        - to: start
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:SpawnPrototype
+              prototype: ApcExtensionCableStack1
+          steps:
+            - tool: Cutting
+              doAfter: 0.5
+
+    - node: completed
+      entity: ParticleAcceleratorEmitterLeft
+      edges:
+        - to: wired
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+
+- type: constructionGraph
+  id: particleAcceleratorEmitterCenter
+  start: start
+  graph:
+    - node: start
+      entity: ParticleAcceleratorEmitterCenterUnfinished
+      actions:
+        - !type:SpriteStateChange
+          state: "emitter_center"
+      edges:
+        - to: wired
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Cable
+              doAfter: 0.5
+
+    - node: wired
+      entity: ParticleAcceleratorEmitterCenterUnfinished
+      actions:
+        - !type:SpriteStateChange
+          state: "emitter_centerw"
+      edges:
+        - to: completed
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:SnapToGrid {}
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+        - to: start
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:SpawnPrototype
+              prototype: ApcExtensionCableStack1
+          steps:
+            - tool: Cutting
+              doAfter: 0.5
+
+    - node: completed
+      entity: ParticleAcceleratorEmitterCenter
+      edges:
+        - to: wired
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+
+- type: constructionGraph
+  id: particleAcceleratorEmitterRight
+  start: start
+  graph:
+    - node: start
+      entity: ParticleAcceleratorEmitterRightUnfinished
+      actions:
+        - !type:SpriteStateChange
+          state: "emitter_right"
+      edges:
+        - to: wired
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Cable
+              doAfter: 0.5
+
+    - node: wired
+      entity: ParticleAcceleratorEmitterRightUnfinished
+      actions:
+        - !type:SpriteStateChange
+          state: "emitter_rightw"
+      edges:
+        - to: completed
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:SnapToGrid {}
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+        - to: start
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:SpawnPrototype
+              prototype: ApcExtensionCableStack1
+          steps:
+            - tool: Cutting
+              doAfter: 0.5
+
+    - node: completed
+      entity: ParticleAcceleratorEmitterRight
+      edges:
+        - to: wired
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - tool: Screwing
+              doAfter: 0.5

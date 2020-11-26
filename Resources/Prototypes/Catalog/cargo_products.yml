@@ -14,7 +14,9 @@
   name: "medkit"
   id: cargo.Medkit
   description: "Everything you need to patch someone up."
-  icon: Objects/Specific/Medical/medkit_r.png
+  icon:
+    sprite: Objects/Specific/Medical/medical.rsi
+    state: medkit_r
   product: Medkit
   cost: 200
   category: Medical
@@ -48,7 +50,9 @@
   name: "fire extinguisher"
   id: cargo.fireextinguisher
   description: "Puts out fires. Or propels you in space."
-  icon: Objects/Misc/fire_extinguisher.png
+  icon:
+    sprite: Objects/Misc/fire_extinguisher.rsi
+    state: fire_extinguisher_closed
   product: CrateFireExtinguisher
   cost: 300
   category: Other
@@ -94,7 +98,9 @@
   name: "fuel tank"
   id: cargo.fueltank
   description: "Movable fuel tank for welders. No boom boom."
-  icon: Constructible/Misc/weldtank.png
+  icon:
+    sprite: Constructible/Misc/tanks.rsi
+    state: fueltank
   product: CrateFuelTank
   cost: 200
   category: Engineering
@@ -116,7 +122,9 @@
   name: "glass crate"
   id: cargo.glass
   description: "50 sheets of glass."
-  icon: Objects/Materials/sheets.rsi/glass.png
+  icon:
+    sprite: Objects/Materials/sheets.rsi
+    state: glass
   product: CrateGlass
   cost: 50
   category: Engineering
@@ -126,7 +134,9 @@
   name: "cable crate"
   id: cargo.cable
   description: "50 coils of cable."
-  icon: /Textures/Objects/Tools/cables.rsi/coil-30.png
+  icon:
+    sprite: Objects/Tools/cables.rsi
+    state: coilall-30
   product: CrateCable
   cost: 50
   category: Engineering

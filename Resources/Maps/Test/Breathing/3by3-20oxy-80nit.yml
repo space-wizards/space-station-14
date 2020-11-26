@@ -91,7 +91,7 @@ entities:
   - shapes:
     - !type:PhysShapeGrid
       grid: 0
-    type: Collidable
+    type: Physics
   - uniqueMixes:
     - volume: 2500
       temperatureArchived: 293.15

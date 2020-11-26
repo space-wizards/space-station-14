@@ -13,7 +13,7 @@ namespace Content.Server.AI.Utility.Actions.Clothing.Gloves
 {
     public sealed class EquipGloves : UtilityAction
     {
-        private IEntity _entity;
+        private readonly IEntity _entity;
 
         public EquipGloves(IEntity owner, IEntity entity, float weight) : base(owner)
         {
@@ -35,7 +35,7 @@ namespace Content.Server.AI.Utility.Actions.Clothing.Gloves
             base.UpdateBlackboard(context);
             context.GetState<TargetEntityState>().SetValue(_entity);
         }
-        
+
         protected override IReadOnlyCollection<Func<float>> GetConsiderations(Blackboard context)
         {
             var considerationsManager = IoCManager.Resolve<ConsiderationsManager>();

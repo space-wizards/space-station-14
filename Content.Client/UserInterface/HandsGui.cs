@@ -111,7 +111,8 @@ namespace Content.Client.UserInterface
         {
             var buttonTexture = HandTexture(buttonLocation);
             var storageTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/back.png");
-            var button = new HandButton(buttonTexture, storageTexture, buttonLocation);
+            var blockedTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/blocked.png");
+            var button = new HandButton(buttonTexture, storageTexture, blockedTexture, buttonLocation);
             var slot = hand.Name;
 
             button.OnPressed += args => HandKeyBindDown(args, slot);

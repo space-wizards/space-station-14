@@ -12,7 +12,7 @@ namespace Content.Server.Atmos
         private bool _disposed = false;
 
         [ViewVariables]
-        private readonly HashSet<TileAtmosphere> _tile = new HashSet<TileAtmosphere>();
+        private readonly HashSet<TileAtmosphere> _tiles = new HashSet<TileAtmosphere>();
 
         [ViewVariables]
         private GridAtmosphereComponent _gridAtmosphereComponent;
@@ -25,35 +25,41 @@ namespace Content.Server.Atmos
 
         public void AddTile(TileAtmosphere tile)
         {
-            _tile.Add(tile);
+            _tiles.Add(tile);
             tile.ExcitedGroup = this;
             ResetCooldowns();
         }
 
+        public bool RemoveTile(TileAtmosphere tile)
+        {
+            tile.ExcitedGroup = null;
+            return _tiles.Remove(tile);
+        }
+
         public void MergeGroups(ExcitedGroup other)
         {
-            var ourSize = _tile.Count;
-            var otherSize = other._tile.Count;
+            var ourSize = _tiles.Count;
+            var otherSize = other._tiles.Count;
 
             if (ourSize > otherSize)
             {
-                foreach (var tile in other._tile)
+                foreach (var tile in other._tiles)
                 {
                     tile.ExcitedGroup = this;
-                    _tile.Add(tile);
+                    _tiles.Add(tile);
                 }
-                other._tile.Clear();
+                other._tiles.Clear();
                 other.Dispose();
                 ResetCooldowns();
             }
             else
             {
-                foreach (var tile in _tile)
+                foreach (var tile in _tiles)
                 {
                     tile.ExcitedGroup = other;
-                    other._tile.Add(tile);
+                    other._tiles.Add(tile);
                 }
-                _tile.Clear();
+                _tiles.Clear();
                 Dispose();
                 other.ResetCooldowns();
             }
@@ -80,7 +86,7 @@ namespace Content.Server.Atmos
         {
             var combined = new GasMixture(Atmospherics.CellVolume);
 
-            var tileSize = _tile.Count;
+            var tileSize = _tiles.Count;
 
             if (_disposed) return;
 
@@ -90,7 +96,7 @@ namespace Content.Server.Atmos
                 return;
             }
 
-            foreach (var tile in _tile)
+            foreach (var tile in _tiles)
             {
                 if (tile?.Air == null) continue;
                 combined.Merge(tile.Air);
@@ -101,11 +107,10 @@ namespace Content.Server.Atmos
 
             combined.Multiply(1 / (float)tileSize);
 
-            foreach (var tile in _tile)
+            foreach (var tile in _tiles)
             {
                 if (tile?.Air == null) continue;
                 tile.Air.CopyFromMutable(combined);
-                tile.AtmosCooldown = 0;
                 tile.UpdateVisuals();
             }
 
@@ -114,7 +119,7 @@ namespace Content.Server.Atmos
 
         public void Dismantle(bool unexcite = true)
         {
-            foreach (var tile in _tile)
+            foreach (var tile in _tiles)
             {
                 if (tile == null) continue;
                 tile.ExcitedGroup = null;
@@ -123,7 +128,7 @@ namespace Content.Server.Atmos
                 _gridAtmosphereComponent.RemoveActiveTile(tile);
             }
 
-            _tile.Clear();
+            _tiles.Clear();
         }
 
         public void Dispose()

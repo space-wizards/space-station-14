@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Explosion
             if (_beingExploded) return true;
             _beingExploded = true;
 
-            ExplosionHelper.SpawnExplosion(Owner.Transform.Coordinates, DevastationRange, HeavyImpactRange, LightImpactRange, FlashRange);
+            Owner.SpawnExplosion(DevastationRange, HeavyImpactRange, LightImpactRange, FlashRange);
 
             Owner.Delete();
             return true;

@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using System.Threading.Tasks;
 using Content.Client;
 using Content.Client.Interfaces.Parallax;
@@ -13,7 +12,6 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 using Robust.UnitTesting;
 using EntryPoint = Content.Client.EntryPoint;
 
@@ -57,6 +55,20 @@ namespace Content.IntegrationTests
             options ??= new ServerIntegrationOptions();
             options.ServerContentAssembly = typeof(Server.EntryPoint).Assembly;
             options.SharedContentAssembly = typeof(Shared.EntryPoint).Assembly;
+            options.BeforeStart += () =>
+            {
+                IoCManager.Resolve<IModLoader>().SetModuleBaseCallbacks(new ServerModuleTestingCallbacks
+                {
+                    ServerBeforeIoC = () =>
+                    {
+                        if (options is ServerContentIntegrationOption contentOptions)
+                        {
+                            contentOptions.ContentBeforeIoC?.Invoke();
+                        }
+                    }
+                });
+            };
+
             return base.StartServer(options);
         }
 
@@ -69,11 +81,6 @@ namespace Content.IntegrationTests
                 {
                     ServerBeforeIoC = () =>
                     {
-                        if (options is ServerContentIntegrationOption contentOptions)
-                        {
-                            contentOptions.ContentBeforeIoC?.Invoke();
-                        }
-
                         IoCManager.Register<IGameTicker, DummyGameTicker>(true);
                     }
                 });
@@ -129,19 +136,26 @@ namespace Content.IntegrationTests
             return grid;
         }
 
-        protected async Task WaitUntil(IntegrationInstance instance, Func<bool> func, int tickStep = 10, int maxTicks = 600)
+        protected async Task WaitUntil(IntegrationInstance instance, Func<bool> func, int maxTicks = 600, int tickStep = 1)
         {
             var ticksAwaited = 0;
             bool passed;
 
+            await instance.WaitIdleAsync();
+
             while (!(passed = func()) && ticksAwaited < maxTicks)
             {
-                await instance.WaitIdleAsync();
-                instance.RunTicks(tickStep);
-                ticksAwaited += tickStep;
-            }
+                var ticksToRun = tickStep;
 
-            await instance.WaitIdleAsync();
+                if (ticksAwaited + tickStep > maxTicks)
+                {
+                    ticksToRun = maxTicks - ticksAwaited;
+                }
+
+                await instance.WaitRunTicks(ticksToRun);
+
+                ticksAwaited += ticksToRun;
+            }
 
             Assert.That(passed);
         }

@@ -7,6 +7,7 @@ using Content.Shared.Physics;
 using Robust.Client.Audio.Midi;
 using Robust.Shared.Audio.Midi;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -41,6 +42,10 @@ namespace Content.Client.GameObjects.Components.Instruments
 
         private uint _sequenceStartTick;
 
+        private bool _allowPercussion;
+
+        private bool _allowProgramChange;
+
         /// <summary>
         ///     A queue of MidiEvents to be sent to the server.
         /// </summary>
@@ -67,7 +72,7 @@ namespace Content.Client.GameObjects.Components.Instruments
         ///     Changes the instrument the midi renderer will play.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public byte InstrumentProgram
+        public override byte InstrumentProgram
         {
             get => _instrumentProgram;
             set
@@ -84,7 +89,7 @@ namespace Content.Client.GameObjects.Components.Instruments
         ///     Changes the instrument bank the midi renderer will use.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public byte InstrumentBank
+        public override byte InstrumentBank
         {
             get => _instrumentBank;
             set
@@ -93,6 +98,34 @@ namespace Content.Client.GameObjects.Components.Instruments
                 if (_renderer != null)
                 {
                     _renderer.MidiBank = _instrumentBank;
+                }
+            }
+        }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public override bool AllowPercussion
+        {
+            get => _allowPercussion;
+            set
+            {
+                _allowPercussion = value;
+                if (_renderer != null)
+                {
+                    _renderer.DisablePercussionChannel = !_allowPercussion;
+                }
+            }
+        }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public override bool AllowProgramChange
+        {
+            get => _allowProgramChange;
+            set
+            {
+                _allowProgramChange = value;
+                if (_renderer != null)
+                {
+                    _renderer.DisableProgramChangeEvent = !_allowProgramChange;
                 }
             }
         }
@@ -127,7 +160,7 @@ namespace Content.Client.GameObjects.Components.Instruments
             IoCManager.InjectDependencies(this);
         }
 
-        protected void SetupRenderer(bool fromStateChange = false)
+        protected virtual void SetupRenderer(bool fromStateChange = false)
         {
             if (IsRendererAlive) return;
 
@@ -141,6 +174,8 @@ namespace Content.Client.GameObjects.Components.Instruments
                 _renderer.MidiBank = _instrumentBank;
                 _renderer.MidiProgram = _instrumentProgram;
                 _renderer.TrackingEntity = Owner;
+                _renderer.DisablePercussionChannel = !_allowPercussion;
+                _renderer.DisableProgramChangeEvent = !_allowProgramChange;
                 _renderer.OnMidiPlayerFinished += () =>
                 {
                     OnMidiPlaybackEnded?.Invoke();
@@ -173,7 +208,7 @@ namespace Content.Client.GameObjects.Components.Instruments
             var renderer = _renderer;
 
             // We dispose of the synth two seconds from now to allow the last notes to stop from playing.
-            Timer.Spawn(2000, () => { renderer?.Dispose(); });
+            Owner.SpawnTimer(2000, () => { renderer?.Dispose(); });
             _renderer = null;
             _midiEventBuffer.Clear();
 
@@ -195,6 +230,8 @@ namespace Content.Client.GameObjects.Components.Instruments
             serializer.DataField(this, x => Handheld, "handheld", false);
             serializer.DataField(ref _instrumentProgram, "program", (byte) 1);
             serializer.DataField(ref _instrumentBank, "bank", (byte) 0);
+            serializer.DataField(ref _allowPercussion, "allowPercussion", false);
+            serializer.DataField(ref _allowProgramChange, "allowProgramChange", false);
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
@@ -279,6 +316,11 @@ namespace Content.Client.GameObjects.Components.Instruments
             {
                 EndRenderer(true);
             }
+
+            AllowPercussion = state.AllowPercussion;
+            AllowProgramChange = state.AllowProgramChange;
+            InstrumentBank = state.InstrumentBank;
+            InstrumentProgram = state.InstrumentProgram;
         }
 
         /// <inheritdoc cref="MidiRenderer.OpenInput"/>

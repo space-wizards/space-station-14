@@ -19,8 +19,8 @@ namespace Content.Server.GameObjects.Components.Damage
     [RegisterComponent]
     public class DamageOnHighSpeedImpactComponent : Component, ICollideBehavior
     {
-        [Dependency] private IRobustRandom _robustRandom = default!;
-        [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override string Name => "DamageOnHighSpeedImpact";
 

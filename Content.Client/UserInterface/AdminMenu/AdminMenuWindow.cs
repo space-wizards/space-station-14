@@ -37,7 +37,7 @@ namespace Content.Client.UserInterface.AdminMenu
         {
             new KickCommandButton(),
             new DirectCommandButton("Admin Ghost", "aghost"),
-            //TODO: teleport
+            new TeleportCommandButton(),
         };
         private readonly List<CommandButton> _adminbusButtons = new List<CommandButton>
         {
@@ -534,6 +534,30 @@ namespace Content.Client.UserInterface.AdminMenu
             }
         }
 
+        private class TeleportCommandButton : UICommandButton
+        {
+            public override string Name => "Teleport";
+            public override string RequiredCommand => "tpto";
+
+            private readonly CommandUIDropDown _playerDropDown = new CommandUIDropDown
+            {
+                Name = "Player",
+                GetData = () => IoCManager.Resolve<IPlayerManager>().Sessions.ToList<object>(),
+                GetDisplayName = (obj) => $"{((IPlayerSession) obj).Name} ({((IPlayerSession) obj).AttachedEntity?.Name})",
+                GetValueFromData = (obj) => ((IPlayerSession) obj).Name,
+            };
+
+            public override List<CommandUIControl> UI => new List<CommandUIControl>
+            {
+                _playerDropDown
+            };
+
+            public override void Submit()
+            {
+                IoCManager.Resolve<IClientConsole>().ProcessCommand($"tpto \"{_playerDropDown.GetValue()}\"");
+            }
+        }
+
         private class AddAtmosCommandButton : UICommandButton
         {
             public override string Name => "Add Atmos";
@@ -583,7 +607,7 @@ namespace Content.Client.UserInterface.AdminMenu
                 GetValueFromData = (obj) => ((GasPrototype) obj).ID.ToString(),
             };
 
-            private CommandUISpinBox _amount = new CommandUISpinBox
+            private readonly CommandUISpinBox _amount = new CommandUISpinBox
             {
                 Name = "Amount"
             };

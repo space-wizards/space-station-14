@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Atmos;
@@ -6,6 +7,7 @@ using Content.Server.GameObjects.Components.Body.Behavior;
 using Content.Server.GameObjects.Components.Body.Circulatory;
 using Content.Server.GameObjects.Components.Metabolism;
 using Content.Shared.Atmos;
+using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using NUnit.Framework;
 using Robust.Server.Interfaces.Maps;
@@ -18,13 +20,40 @@ using Robust.Shared.Maths;
 namespace Content.IntegrationTests.Tests.Body
 {
     [TestFixture]
-    [TestOf(typeof(LungBehaviorComponent))]
+    [TestOf(typeof(LungBehavior))]
     public class LungTest : ContentIntegrationTest
     {
+        private const string PROTOTYPES = @"
+- type: entity
+  name: HumanBodyAndBloodstreamDummy
+  id: HumanBodyAndBloodstreamDummy
+  components:
+  - type: Bloodstream
+    max_volume: 100
+  - type: Body
+    template: HumanoidTemplate
+    preset: HumanPreset
+    centerSlot: torso
+  - type: Metabolism
+    metabolismHeat: 5000
+    radiatedHeat: 400
+    implicitHeatRegulation: 5000
+    sweatHeatRegulation: 5000
+    shiveringHeatRegulation: 5000
+    normalBodyTemperature: 310.15
+    thermalRegulationTemperatureThreshold: 25
+    needsGases:
+      Oxygen: 0.00060763888
+    producesGases:
+      Oxygen: 0.00045572916
+      CarbonDioxide: 0.00015190972
+";
+
         [Test]
         public async Task AirConsistencyTest()
         {
-            var server = StartServerDummyTicker();
+            var options = new ServerContentIntegrationOption{ExtraPrototypes = PROTOTYPES};
+            var server = StartServerDummyTicker(options);
 
             server.Assert(() =>
             {
@@ -34,17 +63,18 @@ namespace Content.IntegrationTests.Tests.Body
 
                 var entityManager = IoCManager.Resolve<IEntityManager>();
 
-                var human = entityManager.SpawnEntity("HumanMob_Content", MapCoordinates.Nullspace);
+                var human = entityManager.SpawnEntity("HumanBodyAndBloodstreamDummy", MapCoordinates.Nullspace);
 
-                Assert.True(human.TryGetMechanismBehaviors(out List<LungBehaviorComponent> lungs));
+                Assert.That(human.TryGetComponent(out IBody body));
+                Assert.That(body.TryGetMechanismBehaviors(out List<LungBehavior> lungs));
                 Assert.That(lungs.Count, Is.EqualTo(1));
-                Assert.True(human.TryGetComponent(out BloodstreamComponent bloodstream));
+                Assert.That(human.TryGetComponent(out BloodstreamComponent bloodstream));
 
                 var gas = new GasMixture(1);
 
                 var originalOxygen = 2;
                 var originalNitrogen = 8;
-                var breathedPercentage = Atmospherics.BreathPercentage;
+                var breathedPercentage = Atmospherics.BreathVolume / gas.Volume;
 
                 gas.AdjustMoles(Gas.Oxygen, originalOxygen);
                 gas.AdjustMoles(Gas.Nitrogen, originalNitrogen);
@@ -74,7 +104,7 @@ namespace Content.IntegrationTests.Tests.Body
                 lung.Exhale(1, gas);
 
                 var lungOxygenAfterExhale = lung.Air.GetMoles(Gas.Oxygen);
-                var exhaledOxygen = lungOxygenBeforeExhale - lungOxygenAfterExhale;
+                var exhaledOxygen = Math.Abs(lungOxygenBeforeExhale - lungOxygenAfterExhale);
 
                 // Not completely empty
                 Assert.Positive(lung.Air.Gases.Sum());
@@ -137,14 +167,17 @@ namespace Content.IntegrationTests.Tests.Body
                 var coordinates = new EntityCoordinates(grid.GridEntityId, center);
                 human = entityManager.SpawnEntity("HumanMob_Content", coordinates);
 
-                Assert.True(human.HasMechanismBehavior<LungBehaviorComponent>());
+                Assert.True(human.TryGetComponent(out IBody body));
+                Assert.True(body.HasMechanismBehavior<LungBehavior>());
                 Assert.True(human.TryGetComponent(out metabolism));
                 Assert.False(metabolism.Suffocating);
             });
 
-            for (var tick = 0; tick < 600; tick++)
+            var increment = 10;
+
+            for (var tick = 0; tick < 600; tick += increment)
             {
-                await server.WaitRunTicks(tick);
+                await server.WaitRunTicks(increment);
                 Assert.False(metabolism.Suffocating, $"Entity {human.Name} is suffocating on tick {tick}");
             }
 

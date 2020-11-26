@@ -6,7 +6,7 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
   - type: SnapGrid
     offset: Center
   - type: Sprite
@@ -24,4 +24,3 @@
   - type: Sprite
     sprite: "Constructible/Power/apc.rsi"
     state: apc0
-    

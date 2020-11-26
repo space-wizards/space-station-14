@@ -1,0 +1,27 @@
+- type: job
+  id: Warden
+  name: "warden"
+  positions: 1
+  spawnPositions: 1
+  startingGear: WardenGear
+  department:
+  - Security
+  icon: "Warden"
+  access:
+  - Security
+  - Brig
+  - Maintenance
+  - Service
+
+- type: startingGear
+  id: WardenGear
+  equipment:
+    head: ClothingHeadHatWarden
+    innerclothing: ClothingUniformJumpsuitWarden
+    backpack: ClothingBackpackSecurityFilled
+    shoes: ClothingShoesBootsJack
+    eyes: ClothingEyesGlassesSecurity
+    outerclothing: ClothingOuterVestKevlar
+    idcard: WardenPDA
+    ears: ClothingHeadsetSecurity
+    belt: ClothingBeltSecurityFilled

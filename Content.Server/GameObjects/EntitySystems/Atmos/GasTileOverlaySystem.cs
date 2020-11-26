@@ -4,42 +4,48 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Content.Server.GameObjects.Components.Atmos;
+using Content.Shared;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
+using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
+using Robust.Shared;
 using Robust.Shared.Enums;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
+// ReSharper disable once RedundantUsingDirective
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
+using Dependency = Robust.Shared.IoC.DependencyAttribute;
 
 namespace Content.Server.GameObjects.EntitySystems.Atmos
 {
     [UsedImplicitly]
-    internal sealed class GasTileOverlaySystem : SharedGasTileOverlaySystem
+    internal sealed class GasTileOverlaySystem : SharedGasTileOverlaySystem, IResettingEntitySystem
     {
-        [Robust.Shared.IoC.Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Robust.Shared.IoC.Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Robust.Shared.IoC.Dependency] private readonly IMapManager _mapManager = default!;
-        [Robust.Shared.IoC.Dependency] private readonly IConfigurationManager _configManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
 
         /// <summary>
         ///     The tiles that have had their atmos data updated since last tick
         /// </summary>
-        private Dictionary<GridId, HashSet<Vector2i>> _invalidTiles = new Dictionary<GridId, HashSet<Vector2i>>();
+        private readonly Dictionary<GridId, HashSet<Vector2i>> _invalidTiles = new Dictionary<GridId, HashSet<Vector2i>>();
 
-        private Dictionary<IPlayerSession, PlayerGasOverlay> _knownPlayerChunks =
+        private readonly Dictionary<IPlayerSession, PlayerGasOverlay> _knownPlayerChunks =
             new Dictionary<IPlayerSession, PlayerGasOverlay>();
 
         /// <summary>
         ///     Gas data stored in chunks to make PVS / bubbling easier.
         /// </summary>
-        private Dictionary<GridId, Dictionary<Vector2i, GasOverlayChunk>> _overlay =
+        private readonly Dictionary<GridId, Dictionary<Vector2i, GasOverlayChunk>> _overlay =
             new Dictionary<GridId, Dictionary<Vector2i, GasOverlayChunk>>();
 
         /// <summary>
@@ -64,7 +70,6 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
             _atmosphereSystem = Get<AtmosphereSystem>();
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             _mapManager.OnGridRemoved += OnGridRemoved;
-            _configManager.RegisterCVar("net.gasoverlaytickrate", 3.0f);
         }
 
         public override void Shutdown()
@@ -113,17 +118,6 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
             }
         }
 
-        public void ResettingCleanup()
-        {
-            _invalidTiles.Clear();
-            _overlay.Clear();
-
-            foreach (var (_, data) in _knownPlayerChunks)
-            {
-                data.Reset();
-            }
-        }
-
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
         {
             if (e.NewStatus != SessionStatus.InGame)
@@ -162,21 +156,22 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
 
             var tileData = new List<GasData>();
 
-            for (byte i = 0; i < Atmospherics.TotalNumberOfGases; i++)
-            {
-                var gas = _atmosphereSystem.GetGas(i);
-                var overlay = _atmosphereSystem.GetOverlay(i);
-                if (overlay == null || tile?.Air == null) continue;
+            if(tile.Air != null)
+                for (byte i = 0; i < Atmospherics.TotalNumberOfGases; i++)
+                {
+                    var gas = _atmosphereSystem.GetGas(i);
+                    var overlay = _atmosphereSystem.GetOverlay(i);
+                    if (overlay == null) continue;
 
-                var moles = tile.Air.Gases[i];
+                    var moles = tile.Air.Gases[i];
 
-                if (moles < gas.GasMolesVisible) continue;
+                    if (moles < gas.GasMolesVisible) continue;
 
-                var data = new GasData(i, (byte) (MathHelper.Clamp01(moles / gas.GasMolesVisibleMax) * 255));
-                tileData.Add(data);
-            }
+                    var data = new GasData(i, (byte) (MathHelper.Clamp01(moles / gas.GasMolesVisibleMax) * 255));
+                    tileData.Add(data);
+                }
 
-            overlayData = new GasOverlayData(tile!.Hotspot.State, tile.Hotspot.Temperature, tileData.Count == 0 ? null : tileData.ToArray());
+            overlayData = new GasOverlayData(tile!.Hotspot.State, tile.Hotspot.Temperature, tileData.Count == 0 ? Array.Empty<GasData>() : tileData.ToArray());
 
             if (overlayData.Equals(oldTile))
             {
@@ -238,14 +233,14 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
         public override void Update(float frameTime)
         {
             AccumulatedFrameTime += frameTime;
-            _updateCooldown = 1 / _configManager.GetCVar<float>("net.gasoverlaytickrate");
+            _updateCooldown = 1 / _configManager.GetCVar(CCVars.NetGasOverlayTickRate);
 
             if (AccumulatedFrameTime < _updateCooldown)
             {
                 return;
             }
 
-            _updateRange = _configManager.GetCVar<float>("net.maxupdaterange") + RangeOffset;
+            _updateRange = _configManager.GetCVar(CVars.NetMaxUpdateRange) + RangeOffset;
 
             // TODO: So in the worst case scenario we still have to send a LOT of tile data per tick if there's a fire.
             // If we go with say 15 tile radius then we have up to 900 tiles to update per tick.
@@ -481,6 +476,17 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
                 }
 
                 return new GasOverlayMessage(chunk.GridIndices, tileData);
+            }
+        }
+
+        public void Reset()
+        {
+            _invalidTiles.Clear();
+            _overlay.Clear();
+
+            foreach (var (_, data) in _knownPlayerChunks)
+            {
+                data.Reset();
             }
         }
     }

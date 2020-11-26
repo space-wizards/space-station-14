@@ -34,7 +34,7 @@
   - type: SolutionContainer
     maxVol: 500
     caps: AddTo, RemoveFrom
-  - type: Collidable
+  - type: Physics
     mass: 5
     anchored: false
     shapes:
@@ -66,7 +66,7 @@
   - type: SolutionContainer
     maxVol: 500
     caps: AddTo, RemoveFrom
-  - type: Collidable
+  - type: Physics
     mass: 5
     anchored: false
     shapes:
@@ -101,7 +101,7 @@
     sprite: Objects/Specific/Janitorial/soap.rsi
   - type: Slippery
     paralyzeTime: 2.5
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.3,-0.4,0.3,0.4"
@@ -175,7 +175,7 @@
       layers:
         - state: chempuff
           map: [ "enum.VaporVisualLayers.Base" ]
-    - type: Collidable
+    - type: Physics
       anchored: false
       hard: false
       shapes:

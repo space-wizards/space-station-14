@@ -3,10 +3,8 @@ using Content.Server.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Rotation;
-using Content.Shared.GameObjects.EntitySystems;
 using NUnit.Framework;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
@@ -19,10 +17,23 @@ namespace Content.IntegrationTests.Tests.Body
     [TestOf(typeof(BodyComponent))]
     public class LegTest : ContentIntegrationTest
     {
+        private const string PROTOTYPES = @"
+- type: entity
+  name: HumanBodyAndAppearanceDummy
+  id: HumanBodyAndAppearanceDummy
+  components:
+  - type: Appearance
+  - type: Body
+    template: HumanoidTemplate
+    preset: HumanPreset
+    centerSlot: torso
+";
+
         [Test]
         public async Task RemoveLegsFallTest()
         {
-            var server = StartServerDummyTicker();
+            var options = new ServerContentIntegrationOption{ExtraPrototypes = PROTOTYPES};
+            var server = StartServerDummyTicker(options);
 
             AppearanceComponent appearance = null;
 
@@ -34,9 +45,9 @@ namespace Content.IntegrationTests.Tests.Body
                 mapManager.CreateNewMapEntity(mapId);
 
                 var entityManager = IoCManager.Resolve<IEntityManager>();
-                var human = entityManager.SpawnEntity("HumanMob_Content", MapCoordinates.Nullspace);
+                var human = entityManager.SpawnEntity("HumanBodyAndAppearanceDummy", MapCoordinates.Nullspace);
 
-                Assert.That(human.TryGetBody(out var body));
+                Assert.That(human.TryGetComponent(out IBody body));
                 Assert.That(human.TryGetComponent(out appearance));
 
                 Assert.That(!appearance.TryGetData(RotationVisuals.RotationState, out RotationState _));
@@ -45,7 +56,7 @@ namespace Content.IntegrationTests.Tests.Body
 
                 foreach (var leg in legs)
                 {
-                    body.RemovePart(leg, false);
+                    body.RemovePart(leg);
                 }
             });
 

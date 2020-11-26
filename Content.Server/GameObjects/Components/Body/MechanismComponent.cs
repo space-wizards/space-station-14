@@ -47,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Body
             PerformerCache = null;
             BodyCache = null;
 
-            if (eventArgs.Target.TryGetBody(out var body))
+            if (eventArgs.Target.TryGetComponent(out IBody? body))
             {
                 SendBodyPartListToUser(eventArgs, body);
             }
@@ -155,26 +155,6 @@ namespace Content.Server.GameObjects.Components.Body
                 case ReceiveBodyPartSurgeryUIMessage msg:
                     HandleReceiveBodyPart(msg.SelectedOptionId);
                     break;
-            }
-        }
-
-        protected override void OnPartAdd(IBodyPart? old, IBodyPart current)
-        {
-            base.OnPartAdd(old, current);
-
-            if (Owner.TryGetComponent(out SpriteComponent? sprite))
-            {
-                sprite.Visible = false;
-            }
-        }
-
-        protected override void OnPartRemove(IBodyPart old)
-        {
-            base.OnPartRemove(old);
-
-            if (Owner.TryGetComponent(out SpriteComponent? sprite))
-            {
-                sprite.Visible = true;
             }
         }
     }

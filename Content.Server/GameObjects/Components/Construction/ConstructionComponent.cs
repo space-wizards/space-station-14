@@ -31,7 +31,6 @@ namespace Content.Server.GameObjects.Components.Construction
     public class ConstructionComponent : Component, IExamine, IInteractUsing
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override string Name => "Construction";
 
@@ -392,7 +391,7 @@ namespace Content.Server.GameObjects.Components.Construction
         {
             if (node.Entity == Owner.Prototype?.ID || string.IsNullOrEmpty(node.Entity)) return false;
 
-            var entity = _entityManager.SpawnEntity(node.Entity, Owner.Transform.Coordinates);
+            var entity = Owner.EntityManager.SpawnEntity(node.Entity, Owner.Transform.Coordinates);
 
             entity.Transform.LocalRotation = Owner.Transform.LocalRotation;
 

@@ -1,6 +1,7 @@
 using Content.Server.GameObjects.Components.Items.Storage;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Timers;
@@ -45,7 +46,7 @@ namespace Content.Server.GameObjects.Components.GUI
                     var itemComponent = entity.GetComponent<ItemComponent>();
 
                     // If this item is small enough then it always fits in pockets.
-                    if (itemComponent.ObjectSize <= (int) ReferenceSizes.Pocket)
+                    if (itemComponent.Size <= (int) ReferenceSizes.Pocket)
                     {
                         return true;
                     }
@@ -67,7 +68,7 @@ namespace Content.Server.GameObjects.Components.GUI
             switch (message)
             {
                 case ContainerContentsModifiedMessage contentsModified:
-                    Timer.Spawn(0, DropIdAndPocketsIfWeNoLongerHaveAUniform);
+                    Owner.SpawnTimer(0, DropIdAndPocketsIfWeNoLongerHaveAUniform);
                     break;
             }
         }

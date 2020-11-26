@@ -286,7 +286,7 @@
   name: ian toy
   parent: BaseItem
   id: ToyIan
-  description: Ian action figure
+  description: Ian action figure.
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
@@ -576,7 +576,7 @@
   name: syndie balloon
   parent: BaseItem
   id: BalloonSyn
-  description: Loud and proud
+  description: Loud and proud.
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
@@ -591,7 +591,7 @@
   name: corgi balloon
   parent: BaseItem
   id: BalloonCorgi
-  description: Cute
+  description: Cute.
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi

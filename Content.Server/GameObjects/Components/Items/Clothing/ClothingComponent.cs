@@ -4,6 +4,7 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
@@ -17,6 +18,7 @@ namespace Content.Server.GameObjects.Components.Items.Clothing
     [RegisterComponent]
     [ComponentReference(typeof(ItemComponent))]
     [ComponentReference(typeof(StorableComponent))]
+    [ComponentReference(typeof(SharedStorableComponent))]
     [ComponentReference(typeof(IItemComponent))]
     public class ClothingComponent : ItemComponent, IUse
     {

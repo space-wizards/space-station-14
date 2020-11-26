@@ -1,11 +1,10 @@
-﻿using Content.Client.Interfaces.GameObjects.Components.Interaction;
-using Content.Shared.GameObjects.Components.Movement;
+﻿using Content.Shared.GameObjects.Components.Movement;
 using Robust.Shared.GameObjects;
 
 namespace Content.Client.GameObjects.Components.Movement
 {
     [RegisterComponent]
-    public class ClimbingComponent : SharedClimbingComponent, IClientDraggable
+    public class ClimbingComponent : SharedClimbingComponent
     {
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
@@ -14,19 +13,9 @@ namespace Content.Client.GameObjects.Components.Movement
                 return;
             }
 
-            IsClimbing = climbModeState.Climbing; 
+            IsClimbing = climbModeState.Climbing;
         }
 
         public override bool IsClimbing { get; set; }
-
-        bool IClientDraggable.ClientCanDropOn(CanDropEventArgs eventArgs)
-        {
-            return eventArgs.Target.HasComponent<IClimbable>();
-        }
-
-        bool IClientDraggable.ClientCanDrag(CanDragEventArgs eventArgs)
-        {
-            return true;
-        }
     }
 }

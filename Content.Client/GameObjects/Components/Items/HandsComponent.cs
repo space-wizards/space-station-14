@@ -21,7 +21,6 @@ namespace Content.Client.GameObjects.Components.Items
 
         private HandsGui? _gui;
 
-        /// <inheritdoc />
         private readonly List<Hand> _hands = new List<Hand>();
 
         [ViewVariables] public IReadOnlyList<Hand> Hands => _hands;
@@ -90,7 +89,7 @@ namespace Content.Client.GameObjects.Components.Items
             {
                 if (!TryHand(sharedHand.Name, out var hand))
                 {
-                    hand = new Hand(sharedHand, Owner.EntityManager);
+                    hand = new Hand(this, sharedHand, Owner.EntityManager);
                     AddHand(hand);
                 }
                 else
@@ -101,6 +100,8 @@ namespace Content.Client.GameObjects.Components.Items
                         ? Owner.EntityManager.GetEntity(sharedHand.EntityUid.Value)
                         : null;
                 }
+
+                hand.Enabled = sharedHand.Enabled;
 
                 UpdateHandSprites(hand);
             }
@@ -197,10 +198,35 @@ namespace Content.Client.GameObjects.Components.Items
                     _gameHud.HandsContainer.AddChild(_gui);
                     _gui.UpdateHandIcons();
                     break;
-
                 case PlayerDetachedMsg _:
                     _gui?.Parent?.RemoveChild(_gui);
                     break;
+                case HandEnabledMsg msg:
+                {
+                    var hand = GetHand(msg.Name);
+
+                    if (hand?.Button == null)
+                    {
+                        break;
+                    }
+
+                    hand.Button.Blocked.Visible = false;
+
+                    break;
+                }
+                case HandDisabledMsg msg:
+                {
+                    var hand = GetHand(msg.Name);
+
+                    if (hand?.Button == null)
+                    {
+                        break;
+                    }
+
+                    hand.Button.Blocked.Visible = true;
+
+                    break;
+                }
             }
         }
 
@@ -235,9 +261,11 @@ namespace Content.Client.GameObjects.Components.Items
 
     public class Hand
     {
-        // TODO: Separate into server hand and client hand
-        public Hand(SharedHand hand, IEntityManager manager, HandButton? button = null)
+        private bool _enabled = true;
+
+        public Hand(HandsComponent parent, SharedHand hand, IEntityManager manager, HandButton? button = null)
         {
+            Parent = parent;
             Index = hand.Index;
             Name = hand.Name;
             Location = hand.Location;
@@ -252,10 +280,33 @@ namespace Content.Client.GameObjects.Components.Items
             Entity = entity;
         }
 
+        private HandsComponent Parent { get; }
         public int Index { get; }
         public string Name { get; }
         public HandLocation Location { get; set; }
         public IEntity? Entity { get; set; }
         public HandButton? Button { get; set; }
+
+        public bool Enabled
+        {
+            get => _enabled;
+            set
+            {
+                if (_enabled == value)
+                {
+                    return;
+                }
+
+                _enabled = value;
+                Parent.Dirty();
+
+                var message = value
+                    ? (ComponentMessage) new HandEnabledMsg(Name)
+                    : new HandDisabledMsg(Name);
+
+                Parent.HandleMessage(message, Parent);
+                Parent.Owner.SendMessage(Parent, message);
+            }
+        }
     }
 }

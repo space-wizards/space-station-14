@@ -6,7 +6,7 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
   - type: SnapGrid
     offset: Center
   - type: Sprite
@@ -27,4 +27,3 @@
   - type: Sprite
     sprite: Constructible/Power/smes.rsi
     state: smes
-    
