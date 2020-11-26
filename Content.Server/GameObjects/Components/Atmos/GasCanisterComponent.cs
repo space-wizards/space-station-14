@@ -329,11 +329,17 @@ namespace Content.Server.GameObjects.Components.Atmos
                     var gridId = Owner.Transform.Coordinates.GetGridId(Owner.EntityManager);
                     var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
                     var gridAtmosphere = atmosphereSystem.GetGridAtmosphere(gridId);
+                    // This shouldn't be null, and is only checked as a failsafe because it could theoretically still be null anyway.
+                    // Releasing gas without invalidation is more dangerous than failing to release.
                     if (gridAtmosphere != null)
                     {
                         Air.ReleaseGasTo(tileAtmosphere.Air, ReleasePressure);
                         gridAtmosphere.Invalidate(tileAtmosphere.GridIndices);
                     }
+                }
+                else
+                {
+                    Air.ReleaseGasTo(null, ReleasePressure);
                 }
 
                 UpdateUserInterface();
