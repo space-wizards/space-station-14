@@ -1,4 +1,5 @@
-﻿using Content.Server.Interfaces.Chat;
+﻿#nullable enable
+using Content.Server.Interfaces.Chat;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
@@ -26,22 +27,22 @@ namespace Content.Server.StationEvents
         /// <summary>
         /// What should be said in chat when the event starts (if anything).
         /// </summary>
-        protected virtual string StartAnnouncement { get; } = null;
+        protected virtual string? StartAnnouncement { get; } = null;
 
         /// <summary>
         /// What should be said in chat when the event end (if anything).
         /// </summary>
-        protected virtual string EndAnnouncement { get; } = null;
+        protected virtual string? EndAnnouncement { get; } = null;
 
         /// <summary>
         /// Starting audio of the event.
         /// </summary>
-        protected virtual string StartAudio { get; } = "/Audio/Effects/alert.ogg";
+        protected virtual string? StartAudio { get; } = "/Audio/Effects/alert.ogg";
 
         /// <summary>
         /// Ending audio of the event.
         /// </summary>
-        protected virtual string EndAudio { get; } = null;
+        protected virtual string? EndAudio { get; } = null;
 
         /// <summary>
         /// Can the false alarm fake this event?
@@ -56,7 +57,7 @@ namespace Content.Server.StationEvents
         /// <summary>
         /// When in the lifetime to call Start().
         /// </summary>
-        protected virtual float StartWhen { get; } = 0.0f;
+        protected virtual float StartAfter { get; } = 0.0f;
 
         /// <summary>
         /// When in the lifetime to call Announce().
@@ -72,7 +73,7 @@ namespace Content.Server.StationEvents
         /// <summary>
         /// How long has the event existed. Do not change this.
         /// </summary>
-        public virtual float ActiveFor { get; protected set; } = 0.0f;
+        private float ActiveFor { get; set; } = 0.0f;
 
         /// <summary>
         /// How many players need to be present on station for the event to run
@@ -104,15 +105,14 @@ namespace Content.Server.StationEvents
         }
 
         /// <summary>
-        /// Called when the tick is equal to the StartWhen variable.
+        /// Called when the tick is equal to the StartAfter variable.
         /// </summary>
         public abstract void Start();
 
         /// <summary>
-        /// Called when the tick is qual to the AnnounceWhen variable.
+        /// Called when after the time has elapsed to the AnnounceWhen variable.
         /// </summary>
-        /// <param name="fake"></param>
-        public virtual void Announce(bool fake)
+        public virtual void Announce()
         {
             if (StartAnnouncement != null)
             {
@@ -162,7 +162,7 @@ namespace Content.Server.StationEvents
                 return;
             }
 
-            if (ActiveFor >= StartWhen && !Started)
+            if (ActiveFor >= StartAfter && !Started)
             {
                 Start();
                 Started = true;
@@ -170,16 +170,16 @@ namespace Content.Server.StationEvents
 
             if (ActiveFor >= AnnounceWhen && !Announced)
             {
-                Announce(false);
+                Announce();
                 Announced = true;
             }
 
-            if (StartWhen < ActiveFor && ActiveFor < EndWhen)
+            if (StartAfter < ActiveFor && ActiveFor < EndWhen)
             {
                 Tick(frameTime);
             }
 
-            if (ActiveFor >= EndWhen && ActiveFor >= AnnounceWhen && ActiveFor >= StartWhen)
+            if (ActiveFor >= EndWhen && ActiveFor >= AnnounceWhen && ActiveFor >= StartAfter)
             {
                 End();
                 Started = false;

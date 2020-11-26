@@ -24,16 +24,12 @@ namespace Content.Server.StationEvents
         [Dependency] private IRobustRandom _robustRandom = default!;
 
         public override string Name => "RadiationStorm";
-
         protected override string StartAnnouncement => Loc.GetString(
             "High levels of radiation detected near the station. Evacuate any areas containing abnormal green energy fields.");
-
         protected override string EndAnnouncement => Loc.GetString(
             "The radiation threat has passed. Please return to your workplaces.");
         protected override string StartAudio => "/Audio/Announcements/radiation.ogg";
-
-        protected override float StartWhen => 3.0f;
-
+        protected override float StartAfter => 3.0f;
         protected override float AnnounceWhen => 1.0f;
 
         private float _timeUntilPulse;
@@ -48,7 +44,7 @@ namespace Content.Server.StationEvents
         public override void Setup()
         {
             base.Setup();
-            EndWhen = _robustRandom.Next(30, 80) + StartWhen; // We want to be forgiving about the radstorm.
+            EndWhen = _robustRandom.Next(30, 80) + StartAfter; // We want to be forgiving about the radstorm.
         }
         
         public override void Start()

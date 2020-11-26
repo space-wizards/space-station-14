@@ -1,8 +1,10 @@
 ﻿#nullable enable
 using JetBrains.Annotations;
 using System.Linq;
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Doors;
 using Content.Server.GameObjects.Components.Access;
+using Content.Server.Utility;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -26,31 +28,32 @@ namespace Content.Server.StationEvents
         private int _severity = 1;
 
         // Access-like for airlocks, because we don't have areas
-        private string[] _secLike = { "Security", "Brig" };
-        private string[] _comandLike = { "Command", "Bridge"};
-        private string[] _engineLike = { "Engineering" };
-        private string[] _medicalLike = { "Medical" };
-        private string[] _cargoLike = { "Cargo" };
-        private string[] _scienceLike = { "Science", "Research And Development"};
 
-        private string[][] _eventTargets = { }; // Access IDs the event will target
+
+        private List<string> _eventTargets = new List<string> { }; // Access IDs the event will target
 
         public override void Setup()
         {
             base.Setup();
             var robustRandom = IoCManager.Resolve<IRobustRandom>();
-
             AnnounceWhen = robustRandom.Next(50, 60);
             EndWhen = robustRandom.Next(20, 30);
             _severity = robustRandom.Next(1, 3);
 
+            var accessHelper = new AccessHelper();
             // possible event target(s)
-            var posEventTarget = new[] { _secLike, _comandLike, _engineLike, _medicalLike, _cargoLike, _scienceLike };
+
+            var posEventTarget = new[] {AccessHelper.DoorSector.Security, AccessHelper.DoorSector.Command };
             for (int i = 0; i < _severity; i++)
             {
-                var pickedArea = posEventTarget.Take(robustRandom.Next(0, posEventTarget.Length)).ToList();
-                _eventTargets.Union(pickedArea); // why isn't union unionizing the strings inside the list :salt:
+                var diceRolled = robustRandom.Next(0, posEventTarget.Length);
+                var selected = posEventTarget[diceRolled];
+                var salt = AccessHelper.DoorSector.Medical;
+                accessHelper.TryGetDepartmentDoorNames(salt, out var access);
+                _eventTargets.Concat(access);
+                posEventTarget.Take(diceRolled);
             }
+            accessHelper = null;
         }
 
         public override void Start()
@@ -63,7 +66,7 @@ namespace Content.Server.StationEvents
             var componentManager = IoCManager.Resolve<IComponentManager>();
             // apc manager, blow the lights
             // secure lockers, open it up
-            // unbolt, open, bolt airlocks 
+            // unbolt, open, bolt airlocks
             foreach (var airlock in componentManager.EntityQuery<AirlockComponent>())
             {
                 var skipMe = false;
@@ -72,7 +75,7 @@ namespace Content.Server.StationEvents
                     // i fucking hate this :salt:
                     foreach (var accessTarget in _eventTargets)
                     {
-                        skipMe = accessReader.AccessLists.Any(list => list.All(accessTarget.Contains)); 
+                        skipMe = accessReader.AccessLists.Any(list => list.All(accessTarget.Contains));
                         if (skipMe) continue;
                     }
                     if (skipMe) continue;

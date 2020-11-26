@@ -130,7 +130,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
         }
 
         /// <summary>
-        /// Randomly picks a valid event. Used by RunRandomEvent and FalseAlarm.
+        /// Randomly picks a valid event.
         /// </summary>
         public StationEvent PickRandomEvent()
         {
