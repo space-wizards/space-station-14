@@ -325,7 +325,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
         private async void DoWork(IEntity user, GrinderProgram program)
         {
             //Have power, are  we busy, chamber has anything to grind, a beaker for the grounds to go?
-            if(!Powered || _busy || ChamberEmpty || !HasBeaker)
+            if(!Powered || _busy || ChamberEmpty || !HasBeaker || _heldBeaker == null)
             {
                 return;
             }
@@ -344,8 +344,8 @@ namespace Content.Server.GameObjects.Components.Kitchen
                         {
                             if (!item.HasComponent<GrindableComponent>()) continue;
                             if (!item.TryGetComponent<SolutionContainerComponent>(out var solution)) continue;
-                            if (_heldBeaker!.CurrentVolume + solution.CurrentVolume > _heldBeaker!.MaxVolume) continue;
-                            _heldBeaker!.TryAddSolution(solution.Solution);
+                            if (_heldBeaker.CurrentVolume + solution.CurrentVolume > _heldBeaker.MaxVolume) continue;
+                            _heldBeaker.TryAddSolution(solution.Solution);
                             solution.RemoveAllSolution();
                             item.Delete();
                         }
@@ -363,8 +363,8 @@ namespace Content.Server.GameObjects.Components.Kitchen
                         foreach (var item in _chamber.ContainedEntities.ToList())
                         {
                             if (!item.TryGetComponent<JuiceableComponent>(out var juiceMe)) continue;
-                            if (_heldBeaker!.CurrentVolume + juiceMe.JuiceResultSolution.TotalVolume > _heldBeaker!.MaxVolume) continue;
-                            _heldBeaker!.TryAddSolution(juiceMe.JuiceResultSolution);
+                            if (_heldBeaker.CurrentVolume + juiceMe.JuiceResultSolution.TotalVolume > _heldBeaker.MaxVolume) continue;
+                            _heldBeaker.TryAddSolution(juiceMe.JuiceResultSolution);
                             item.Delete();
                         }
                         UserInterface?.SendMessage(new ReagentGrinderWorkCompleteMessage());
