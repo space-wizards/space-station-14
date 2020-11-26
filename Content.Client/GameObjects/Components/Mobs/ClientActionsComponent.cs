@@ -127,11 +127,12 @@ namespace Content.Client.GameObjects.Components.Mobs
                 return;
             }
 
-            _ui = new ActionsUI(ActionOnOnShowTooltip, ActionOnOnHideTooltip, ActionSlotEventHandler,
-                ActionDragDropHandler,
+            _ui = new ActionsUI(ActionOnOnShowTooltip, ActionOnOnHideTooltip, OnActionPress,
+                OnActionSlotDragDrop,
                 NextHotbar,
                 PreviousHotbar, OpenActionMenu);
-            _menu = new ActionMenu(ActionOnOnShowTooltip, ActionOnOnHideTooltip, this, ActionMenuItemSelected);
+            _menu = new ActionMenu(ActionOnOnShowTooltip, ActionOnOnHideTooltip, this, ActionMenuItemSelected,
+                ActionMenuItemDragDropped);
             LayoutContainer.SetGrowHorizontal(_ui, LayoutContainer.GrowDirection.End);
             LayoutContainer.SetAnchorAndMarginPreset(_ui, LayoutContainer.LayoutPreset.TopLeft, margin: 10);
             LayoutContainer.SetMarginTop(_ui, 100);
@@ -178,7 +179,6 @@ namespace Content.Client.GameObjects.Components.Mobs
 
             UpdateUI();
         }
-
 
         private void PlayerDetached()
         {
@@ -354,7 +354,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             _slots[_selectedHotbar, slot] = null;
         }
 
-        private void ActionSlotEventHandler(ActionSlotEventArgs args)
+        private void OnActionPress(ActionSlotEventArgs args)
         {
             if (_ui.IsDragging) return;
             if (args.ActionSlotEvent == ActionSlotEvent.RightClick)
@@ -400,7 +400,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
         }
 
-        private void ActionDragDropHandler(ActionSlotDragDropEventArgs obj)
+        private void OnActionSlotDragDrop(ActionSlotDragDropEventArgs obj)
         {
             // swap the 2 slots
             var fromAction = obj.FromSlot.Action;
@@ -420,6 +420,13 @@ namespace Content.Client.GameObjects.Components.Mobs
                 ClearSlot(_selectedHotbar, fromIdx);
             }
 
+            UpdateUI();
+        }
+
+        private void ActionMenuItemDragDropped(ActionMenuItemDragDropEventArgs obj)
+        {
+            // assign the dragged action to the target slot
+            AssignSlot(_selectedHotbar, obj.ToSlot.SlotIndex, obj.ActionMenuItem.Action.ActionType);
             UpdateUI();
         }
 

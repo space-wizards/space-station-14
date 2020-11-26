@@ -35,8 +35,6 @@ namespace Content.Client.GameObjects.EntitySystems
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        // drag will be triggered when mouse leaves this deadzone around the click position.
-        private const float DragDeadzone = 2f;
         // how often to recheck possible targets (prevents calling expensive
         // check logic each update)
         private const float TargetRecheckInterval = 0.25f;
@@ -74,7 +72,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         public override void Initialize()
         {
-            _dragDropHelper = new DragDropHelper<IEntity>(DragDeadzone, OnBeginDrag, OnContinueDrag, OnEndDrag);
+            _dragDropHelper = new DragDropHelper<IEntity>(OnBeginDrag, OnContinueDrag, OnEndDrag);
 
             _dropTargetInRangeShader = _prototypeManager.Index<ShaderPrototype>(ShaderDropTargetInRange).Instance();
             _dropTargetOutOfRangeShader = _prototypeManager.Index<ShaderPrototype>(ShaderDropTargetOutOfRange).Instance();
@@ -164,14 +162,14 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private bool OnBeginDrag()
         {
-            if (_dragDropHelper.Target == null || _dragDropHelper.Target.Deleted)
+            if (_dragDropHelper.Dragged == null || _dragDropHelper.Dragged.Deleted)
             {
                 // something happened to the clicked entity or we moved the mouse off the target so
                 // we shouldn't replay the original click
                 return false;
             }
 
-            if (_dragDropHelper.Target.TryGetComponent<SpriteComponent>(out var draggedSprite))
+            if (_dragDropHelper.Dragged.TryGetComponent<SpriteComponent>(out var draggedSprite))
             {
                 // pop up drag shadow under mouse
                 var mousePos = _eyeManager.ScreenToMap(_dragDropHelper.MouseScreenPosition);
@@ -184,7 +182,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 dragSprite.DrawDepth = (int) DrawDepth.Overlays;
                 if (dragSprite.Directional)
                 {
-                    _dragShadow.Transform.WorldRotation = _dragDropHelper.Target.Transform.WorldRotation;
+                    _dragShadow.Transform.WorldRotation = _dragDropHelper.Dragged.Transform.WorldRotation;
                 }
 
                 HighlightTargets();
@@ -194,18 +192,18 @@ namespace Content.Client.GameObjects.EntitySystems
             }
 
             Logger.Warning("Unable to display drag shadow for {0} because it" +
-                           " has no sprite component.", _dragDropHelper.Target.Name);
+                           " has no sprite component.", _dragDropHelper.Dragged.Name);
             return false;
         }
 
         private bool OnContinueDrag(float frameTime)
         {
-            if (_dragDropHelper.Target == null || _dragDropHelper.Target.Deleted)
+            if (_dragDropHelper.Dragged == null || _dragDropHelper.Dragged.Deleted)
             {
                 return false;
             }
             // still in range of the thing we are dragging?
-            if (!_interactionSystem.InRangeUnobstructed(_dragger, _dragDropHelper.Target))
+            if (!_interactionSystem.InRangeUnobstructed(_dragger, _dragDropHelper.Dragged))
             {
                 return false;
             }
@@ -282,7 +280,7 @@ namespace Content.Client.GameObjects.EntitySystems
             foreach (var entity in entities)
             {
                 // check if it's able to be dropped on by current dragged entity
-                var dropArgs = new DragDropEventArgs(_dragger, args.Coordinates, _dragDropHelper.Target, entity);
+                var dropArgs = new DragDropEventArgs(_dragger, args.Coordinates, _dragDropHelper.Dragged, entity);
 
                 foreach (var draggable in _draggables)
                 {
@@ -292,7 +290,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     }
 
                     // tell the server about the drop attempt
-                    RaiseNetworkEvent(new DragDropMessage(args.Coordinates, _dragDropHelper.Target.Uid,
+                    RaiseNetworkEvent(new DragDropMessage(args.Coordinates, _dragDropHelper.Dragged.Uid,
                         entity.Uid));
 
                     draggable.Drop(dropArgs);
@@ -309,8 +307,8 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void HighlightTargets()
         {
-            if (_dragDropHelper.Target == null ||
-                _dragDropHelper.Target.Deleted || _dragShadow == null || _dragShadow.Deleted)
+            if (_dragDropHelper.Dragged == null ||
+                _dragDropHelper.Dragged.Deleted || _dragShadow == null || _dragShadow.Deleted)
             {
                 Logger.Warning("Programming error. Can't highlight drag and drop targets, not currently " +
                                "dragging anything or dragged entity / shadow was deleted.");
@@ -335,7 +333,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     if (inRangeSprite.Visible == false) continue;
 
                     // check if it's able to be dropped on by current dragged entity
-                    var canDropArgs = new CanDropEventArgs(_dragger,  _dragDropHelper.Target, pvsEntity);
+                    var canDropArgs = new CanDropEventArgs(_dragger,  _dragDropHelper.Dragged, pvsEntity);
                     var anyValidDraggable = _draggables.Any(draggable => draggable.CanDrop(canDropArgs));
 
                     if (anyValidDraggable)

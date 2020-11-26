@@ -5,15 +5,19 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Content.Client.GameObjects.Components.Mobs;
+using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Stylesheets;
+using Content.Client.Utility;
 using Content.Shared.Actions;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Utility;
+using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Timing;
 
 namespace Content.Client.UserInterface
 {
@@ -43,21 +47,29 @@ namespace Content.Client.UserInterface
         private readonly GridContainer _resultsGrid;
         private readonly EventHandler _onShowTooltip;
         private readonly EventHandler _onHideTooltip;
+        private readonly TextureRect _dragShadow;
+        private readonly DragDropHelper<ActionMenuItem> _dragDropHelper;
 
 
-        private event Action<ActionMenuItemSelectedEventArgs> _onItemSelected;
+        private readonly Action<ActionMenuItemSelectedEventArgs> _onItemSelected;
+        private readonly Action<ActionMenuItemDragDropEventArgs> _onItemDragDrop;
 
         /// <param name="onShowTooltip">OnShowTooltip handler to assign to each ActionMenuItem</param>
         /// <param name="onHideTooltip">OnHideTooltip handler to assign to each ActionMenuItem</param>
         /// <param name="actionsComponent">component to use to lookup action statuses</param>
         /// <param name="onItemSelected">invoked when an action item
         /// in the list is clicked</param>
-        public ActionMenu(EventHandler onShowTooltip, EventHandler onHideTooltip, ClientActionsComponent actionsComponent, Action<ActionMenuItemSelectedEventArgs> onItemSelected)
+        /// <param name="onItemDragDrop">invoked when an action item
+        /// in the list is dragged and dropped onto a hotbar slot</param>
+        public ActionMenu(EventHandler onShowTooltip, EventHandler onHideTooltip, ClientActionsComponent actionsComponent,
+            Action<ActionMenuItemSelectedEventArgs> onItemSelected,
+            Action<ActionMenuItemDragDropEventArgs> onItemDragDrop)
         {
             _onShowTooltip = onShowTooltip;
             _onHideTooltip = onHideTooltip;
             _actionsComponent = actionsComponent;
             _onItemSelected = onItemSelected;
+            _onItemDragDrop = onItemDragDrop;
             _actionManager = IoCManager.Resolve<ActionManager>();
             Title = Loc.GetString("Actions");
             CustomMinimumSize = (300, 300);
@@ -118,6 +130,17 @@ namespace Content.Client.UserInterface
             }
 
             UpdateFilterLabel();
+
+            _dragShadow = new TextureRect
+            {
+                CustomMinimumSize = (64, 64),
+                Stretch = TextureRect.StretchMode.Scale,
+                Visible = false
+            };
+            UserInterfaceManager.PopupRoot.AddChild(_dragShadow);
+            LayoutContainer.SetSize(_dragShadow, (64, 64));
+
+            _dragDropHelper = new DragDropHelper<ActionMenuItem>(OnBeginActionDrag, OnContinueActionDrag, OnEndActionDrag);
         }
 
         protected override void Dispose(bool disposing)
@@ -130,6 +153,8 @@ namespace Content.Client.UserInterface
             foreach (var actionMenuControl in _resultsGrid.Children)
             {
                 var actionMenuItem = (actionMenuControl as ActionMenuItem);
+                actionMenuItem.OnButtonDown -= OnItemButtonDown;
+                actionMenuItem.OnButtonUp -= OnItemButtonUp;
                 actionMenuItem.OnPressed -= OnItemPressed;
                 actionMenuItem.OnShowTooltip -= _onShowTooltip;
                 actionMenuItem.OnHideTooltip -= _onHideTooltip;
@@ -148,6 +173,56 @@ namespace Content.Client.UserInterface
             // TODO: Can rework this once https://github.com/space-wizards/RobustToolbox/issues/1392 is done,
             // currently no good way to let the grid know what size it has to "work with", so must manually resize
             _resultsGrid.MaxWidth = Width;
+        }
+
+        private bool OnBeginActionDrag()
+        {
+            _dragShadow.Texture = _dragDropHelper.Dragged.Action.Icon.Frame0();
+            // don't make visible until frameupdate, otherwise it'll flicker
+            LayoutContainer.SetPosition(_dragShadow, UserInterfaceManager.MousePositionScaled - (32, 32));
+            return true;
+        }
+
+        private bool OnContinueActionDrag(float frameTime)
+        {
+            // keep dragged entity centered under mouse
+            LayoutContainer.SetPosition(_dragShadow, UserInterfaceManager.MousePositionScaled - (32, 32));
+            // we don't set this visible until frameupdate, otherwise it flickers
+            _dragShadow.Visible = true;
+            return true;
+        }
+
+        private void OnEndActionDrag()
+        {
+            _dragShadow.Visible = false;
+        }
+
+        private void OnItemButtonDown(BaseButton.ButtonEventArgs args)
+        {
+            if (args.Event.Function != EngineKeyFunctions.UIClick) return;
+            _dragDropHelper.MouseDown(args.Button as ActionMenuItem);
+        }
+
+        private void OnItemButtonUp(BaseButton.ButtonEventArgs args)
+        {
+            // note the buttonup only fires on the control that was originally
+            // pressed to initiate the drag, NOT the one we are currently hovering
+            if (args.Event.Function != EngineKeyFunctions.UIClick) return;
+
+            if (UserInterfaceManager.CurrentlyHovered != null &&
+                UserInterfaceManager.CurrentlyHovered is ActionSlot targetSlot)
+            {
+                if (!_dragDropHelper.IsDragging || _dragDropHelper.Dragged?.Action == null)
+                {
+                    _dragDropHelper.EndDrag();
+                    return;
+                }
+
+                // drag and drop
+                _onItemDragDrop?.Invoke(new ActionMenuItemDragDropEventArgs(_dragDropHelper.Dragged, targetSlot));
+            }
+
+            _dragDropHelper.EndDrag();
         }
 
         private void OnItemPressed(BaseButton.ButtonEventArgs args)
@@ -280,6 +355,8 @@ namespace Content.Client.UserInterface
                 _resultsGrid.Children.Add(actionItem);
                 actionItem.SetActionState(_actionsComponent.IsGranted(action.ActionType));
 
+                actionItem.OnButtonDown += OnItemButtonDown;
+                actionItem.OnButtonUp += OnItemButtonUp;
                 actionItem.OnPressed += OnItemPressed;
                 actionItem.OnShowTooltip += _onShowTooltip;
                 actionItem.OnHideTooltip += _onHideTooltip;
@@ -309,6 +386,12 @@ namespace Content.Client.UserInterface
                 actionMenuItem.SetActionState(_actionsComponent.IsGranted(actionMenuItem.Action.ActionType));
             }
         }
+
+        protected override void FrameUpdate(FrameEventArgs args)
+        {
+            base.Update(args);
+            _dragDropHelper.Update(args.DeltaSeconds);
+        }
     }
 
     public class ActionMenuItemSelectedEventArgs : EventArgs
@@ -318,6 +401,21 @@ namespace Content.Client.UserInterface
         public ActionMenuItemSelectedEventArgs(ActionPrototype action)
         {
             Action = action;
+        }
+    }
+
+    /// <summary>
+    /// Args for dragging and dropping an action menu item onto a hotbar slot.
+    /// </summary>
+    public class ActionMenuItemDragDropEventArgs : EventArgs
+    {
+        public readonly ActionMenuItem ActionMenuItem;
+        public readonly ActionSlot ToSlot;
+
+        public ActionMenuItemDragDropEventArgs(ActionMenuItem actionMenuItem, ActionSlot toSlot)
+        {
+            ActionMenuItem = actionMenuItem;
+            ToSlot = toSlot;
         }
     }
 }

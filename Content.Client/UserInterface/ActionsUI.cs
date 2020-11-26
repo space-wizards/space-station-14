@@ -3,8 +3,6 @@ using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Utility;
 using Content.Shared.Actions;
-using Content.Shared.GameObjects.Components.Mobs;
-using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -12,7 +10,6 @@ using Robust.Client.Utility;
 using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 
 namespace Content.Client.UserInterface
@@ -22,15 +19,10 @@ namespace Content.Client.UserInterface
     /// </summary>
     public sealed class ActionsUI : PanelContainer
     {
-        // drag will be triggered when mouse leaves this deadzone around the click position.
-        private const float DragDeadzone = 2f;
-
-        private readonly IInputManager _inputManager;
-
         private readonly EventHandler _onShowTooltip;
         private readonly EventHandler _onHideTooltip;
-        private readonly Action<ActionSlotEventArgs> _actionSlotEventHandler;
-        private readonly Action<ActionSlotDragDropEventArgs> _actionDragDropEventHandler;
+        private readonly Action<ActionSlotEventArgs> _onPressAction;
+        private readonly Action<ActionSlotDragDropEventArgs> _onDragDropAction;
         private readonly Action<BaseButton.ButtonEventArgs> _onNextHotbarPressed;
         private readonly Action<BaseButton.ButtonEventArgs> _onPreviousHotbarPressed;
         private readonly Action<BaseButton.ButtonEventArgs> _onSettingsButtonPressed;
@@ -44,30 +36,29 @@ namespace Content.Client.UserInterface
         private readonly TextureButton _previousHotbarButton;
         private readonly Label _loadoutNumber;
         private readonly TextureButton _nextHotbarButton;
-        private readonly TextureRect _dragShadow;
 
+        private readonly TextureRect _dragShadow;
         private readonly DragDropHelper<ActionSlot> _dragDropHelper;
         public bool IsDragging => _dragDropHelper.IsDragging;
 
         /// <param name="onShowTooltip">OnShowTooltip handler to assign to each ActionSlot</param>
         /// <param name="onHideTooltip">OnHideTooltip handler to assign to each ActionSlot</param>
-        /// <param name="actionSlotEventHandler">handler for interactions with
+        /// <param name="onPressAction">handler for click interactions with
         /// action slots. Slots with no actions will not be handled by this.</param>
-        /// <param name="actionDragDropEventHandler">handler for dragging and dropping from
+        /// <param name="onDragDropAction">invoked when dragging and dropping an action from
         /// one slot to another.</param>
-        /// <param name="onNextHotbarPressed">action to invoke when pressing the next hotbar button</param>
-        /// <param name="onPreviousHotbarPressed">action to invoke when pressing the previous hotbar button</param>
-        /// <param name="onSettingsButtonPressed">action to invoke when pressing the settings button</param>
-        public ActionsUI(EventHandler onShowTooltip, EventHandler onHideTooltip, Action<ActionSlotEventArgs> actionSlotEventHandler,
-            Action<ActionSlotDragDropEventArgs> actionDragDropEventHandler,
+        /// <param name="onNextHotbarPressed">invoked when pressing the next hotbar button</param>
+        /// <param name="onPreviousHotbarPressed">invoked when pressing the previous hotbar button</param>
+        /// <param name="onSettingsButtonPressed">invoked when pressing the settings button</param>
+        public ActionsUI(EventHandler onShowTooltip, EventHandler onHideTooltip, Action<ActionSlotEventArgs> onPressAction,
+            Action<ActionSlotDragDropEventArgs> onDragDropAction,
             Action<BaseButton.ButtonEventArgs> onNextHotbarPressed, Action<BaseButton.ButtonEventArgs> onPreviousHotbarPressed,
             Action<BaseButton.ButtonEventArgs> onSettingsButtonPressed)
         {
-            _inputManager = IoCManager.Resolve<IInputManager>();
             _onShowTooltip = onShowTooltip;
             _onHideTooltip = onHideTooltip;
-            _actionSlotEventHandler = actionSlotEventHandler;
-            _actionDragDropEventHandler = actionDragDropEventHandler;
+            _onPressAction = onPressAction;
+            _onDragDropAction = onDragDropAction;
             _onNextHotbarPressed = onNextHotbarPressed;
             _onPreviousHotbarPressed = onPreviousHotbarPressed;
             _onSettingsButtonPressed = onSettingsButtonPressed;
@@ -173,15 +164,15 @@ namespace Content.Client.UserInterface
                 _slots[i - 1] = slot;
             }
 
-            _dragDropHelper = new DragDropHelper<ActionSlot>(DragDeadzone, OnBeginActionDrag, OnContinueActionDrag, OnEndActionDrag);
+            _dragDropHelper = new DragDropHelper<ActionSlot>(OnBeginActionDrag, OnContinueActionDrag, OnEndActionDrag);
         }
 
         private bool OnBeginActionDrag()
         {
             // only initiate the drag if the slot has an action in it
-            if (_dragDropHelper.Target.Action == null) return false;
+            if (_dragDropHelper.Dragged.Action == null) return false;
 
-            _dragShadow.Texture = _dragDropHelper.Target.Action.Icon.Frame0();
+            _dragShadow.Texture = _dragDropHelper.Dragged.Action.Icon.Frame0();
             // don't make visible until frameupdate, otherwise it'll flicker
             LayoutContainer.SetPosition(_dragShadow, UserInterfaceManager.MousePositionScaled - (32, 32));
             return true;
@@ -190,7 +181,7 @@ namespace Content.Client.UserInterface
         private bool OnContinueActionDrag(float frameTime)
         {
             // stop if there's no action in the slot
-            if (_dragDropHelper.Target.Action == null) return false;
+            if (_dragDropHelper.Dragged.Action == null) return false;
 
             // keep dragged entity centered under mouse
             LayoutContainer.SetPosition(_dragShadow, UserInterfaceManager.MousePositionScaled - (32, 32));
@@ -219,14 +210,14 @@ namespace Content.Client.UserInterface
             if (UserInterfaceManager.CurrentlyHovered != null &&
                 UserInterfaceManager.CurrentlyHovered is ActionSlot targetSlot)
             {
-                if (!_dragDropHelper.IsDragging || _dragDropHelper.Target?.Action == null)
+                if (!_dragDropHelper.IsDragging || _dragDropHelper.Dragged?.Action == null)
                 {
                     _dragDropHelper.EndDrag();
                     return;
                 }
 
                 // drag and drop
-                _actionDragDropEventHandler?.Invoke(new ActionSlotDragDropEventArgs(_dragDropHelper.Target, targetSlot));
+                _onDragDropAction?.Invoke(new ActionSlotDragDropEventArgs(_dragDropHelper.Dragged, targetSlot));
             }
 
             _dragDropHelper.EndDrag();
@@ -238,7 +229,7 @@ namespace Content.Client.UserInterface
             if (actionSlot.Action == null) return;
             if (args.Event.Function == EngineKeyFunctions.UIRightClick)
             {
-                _actionSlotEventHandler.Invoke(new ActionSlotEventArgs(ActionSlotEvent.RightClick, false, actionSlot, args));
+                _onPressAction.Invoke(new ActionSlotEventArgs(ActionSlotEvent.RightClick, false, actionSlot, args));
                 return;
             }
             if (args.Event.Function != EngineKeyFunctions.Use) return;
@@ -247,7 +238,7 @@ namespace Content.Client.UserInterface
             // should be handled as toggles
             if (actionSlot.Action.BehaviorType == BehaviorType.Instant)
             {
-                _actionSlotEventHandler.Invoke(new ActionSlotEventArgs(ActionSlotEvent.Press, false, actionSlot, args));
+                _onPressAction.Invoke(new ActionSlotEventArgs(ActionSlotEvent.Press, false, actionSlot, args));
             }
         }
 
@@ -257,7 +248,7 @@ namespace Content.Client.UserInterface
             if (actionSlot.Action == null) return;
             if (args.Event.Function == EngineKeyFunctions.UIRightClick)
             {
-                _actionSlotEventHandler.Invoke(new ActionSlotEventArgs(ActionSlotEvent.RightClick, args.Pressed, actionSlot, args));
+                _onPressAction.Invoke(new ActionSlotEventArgs(ActionSlotEvent.RightClick, args.Pressed, actionSlot, args));
                 return;
             }
             if (args.Event.Function != EngineKeyFunctions.Use) return;
@@ -266,7 +257,7 @@ namespace Content.Client.UserInterface
             // should be handled as toggles
             if (actionSlot.Action.BehaviorType != BehaviorType.Instant)
             {
-                _actionSlotEventHandler.Invoke(new ActionSlotEventArgs(ActionSlotEvent.Toggle, args.Pressed, actionSlot, args));
+                _onPressAction.Invoke(new ActionSlotEventArgs(ActionSlotEvent.Toggle, args.Pressed, actionSlot, args));
             }
         }
 

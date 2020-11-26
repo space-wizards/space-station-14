@@ -23,6 +23,8 @@ namespace Content.Client.Utility
     /// <typeparam name="T">thing being dragged and dropped</typeparam>
     public class DragDropHelper<T>
     {
+        private const float DefaultDragDeadzone = 2f;
+
         private readonly IInputManager _inputManager;
 
         private readonly OnBeginDrag _onBeginDrag;
@@ -45,7 +47,7 @@ namespace Content.Client.Utility
         /// <summary>
         /// Current thing being dragged or which mouse button is being held down on.
         /// </summary>
-        public T Target { get; private set; }
+        public T Dragged { get; private set; }
 
         // screen pos where the mouse down began for the drag
         private Vector2 _mouseDownScreenPos;
@@ -61,13 +63,13 @@ namespace Content.Client.Utility
             Dragging,
         }
 
-        /// <param name="deadzone">drag will be triggered when mouse leaves
-        ///     this deadzone around the mousedown position</param>
         /// <param name="onBeginDrag"><see cref="OnBeginDrag"/></param>
         /// <param name="onContinueDrag"><see cref="OnContinueDrag"/></param>
         /// <param name="onEndDrag"><see cref="OnEndDrag"/></param>
-        public DragDropHelper(float deadzone, OnBeginDrag onBeginDrag, OnContinueDrag onContinueDrag,
-            OnEndDrag onEndDrag)
+        /// <param name="deadzone">drag will be triggered when mouse leaves
+        ///     this deadzone around the mousedown position</param>
+        public DragDropHelper(OnBeginDrag onBeginDrag, OnContinueDrag onContinueDrag,
+            OnEndDrag onEndDrag, float deadzone = DefaultDragDeadzone)
         {
             _deadzone = deadzone;
             _inputManager = IoCManager.Resolve<IInputManager>();
@@ -90,7 +92,7 @@ namespace Content.Client.Utility
                 EndDrag();
             }
 
-            Target = target;
+            Dragged = target;
             _state = DragState.MouseDown;
             _mouseDownScreenPos = _inputManager.MouseScreenPosition;
         }
@@ -100,7 +102,7 @@ namespace Content.Client.Utility
         /// </summary>
         public void EndDrag()
         {
-            Target = default;
+            Dragged = default;
             _state = DragState.NotDragging;
             _onEndDrag.Invoke();
         }
