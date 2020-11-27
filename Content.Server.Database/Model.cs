@@ -80,7 +80,7 @@ namespace Content.Server.Database
         [Column("preference_id")] public int Id { get; set; }
         [Column("user_id")] public Guid UserId { get; set; }
         [Column("selected_character_slot")] public int SelectedCharacterSlot { get; set; }
-        public List<Profile> Profiles { get; } = new List<Profile>();
+        public List<Profile> Profiles { get; } = new();
     }
 
     [Table("profile")]
@@ -97,8 +97,8 @@ namespace Content.Server.Database
         [Column("facial_hair_color")] public string FacialHairColor { get; set; } = null!;
         [Column("eye_color")] public string EyeColor { get; set; } = null!;
         [Column("skin_color")] public string SkinColor { get; set; } = null!;
-        public List<Job> Jobs { get; } = new List<Job>();
-        public List<Antag> Antags { get; } = new List<Antag>();
+        public List<Job> Jobs { get; } = new();
+        public List<Antag> Antags { get; } = new();
 
         [Column("pref_unavailable")] public DbPreferenceUnavailableMode PreferenceUnavailable { get; set; }
 

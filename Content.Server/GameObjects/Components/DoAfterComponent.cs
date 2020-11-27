@@ -10,7 +10,7 @@ namespace Content.Server.GameObjects.Components
     public sealed class DoAfterComponent : SharedDoAfterComponent
     {
         public IReadOnlyCollection<DoAfter> DoAfters => _doAfters.Keys;
-        private readonly Dictionary<DoAfter, byte> _doAfters = new Dictionary<DoAfter, byte>();
+        private readonly Dictionary<DoAfter, byte> _doAfters = new();
 
         // So the client knows which one to update (and so we don't send all of the do_afters every time 1 updates)
         // we'll just send them the index. Doesn't matter if it wraps around.

@@ -158,7 +158,7 @@ namespace Content.Server.GameObjects.Components.Singularity
             _singularityController?.Push(pushVector.Normalized, 2);
         }
 
-        private readonly List<IEntity> _previousPulledEntities = new List<IEntity>();
+        private readonly List<IEntity> _previousPulledEntities = new();
         public void PullUpdate()
         {
             foreach (var previousPulledEntity in _previousPulledEntities)

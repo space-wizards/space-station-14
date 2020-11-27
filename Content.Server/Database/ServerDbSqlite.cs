@@ -23,7 +23,7 @@ namespace Content.Server.Database
         // For SQLite we use a single DB context via SQLite.
         // This doesn't allow concurrent access so that's what the semaphore is for.
         // That said, this is bloody SQLite, I don't even think EFCore bothers to truly async it.
-        private readonly SemaphoreSlim _prefsSemaphore = new SemaphoreSlim(1, 1);
+        private readonly SemaphoreSlim _prefsSemaphore = new(1, 1);
 
         private readonly Task _dbReadyTask;
         private readonly SqliteServerDbContext _prefsCtx;

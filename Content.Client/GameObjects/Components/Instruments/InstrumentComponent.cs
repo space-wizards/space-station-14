@@ -50,7 +50,7 @@ namespace Content.Client.GameObjects.Components.Instruments
         ///     A queue of MidiEvents to be sent to the server.
         /// </summary>
         [ViewVariables]
-        private readonly List<MidiEvent> _midiEventBuffer = new List<MidiEvent>();
+        private readonly List<MidiEvent> _midiEventBuffer = new();
 
         /// <summary>
         ///     Whether a midi song will loop or not.
@@ -227,7 +227,7 @@ namespace Content.Client.GameObjects.Components.Instruments
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(this, x => Handheld, "handheld", false);
+            serializer.DataField(this, x => x.Handheld, "handheld", false);
             serializer.DataField(ref _instrumentProgram, "program", (byte) 1);
             serializer.DataField(ref _instrumentBank, "bank", (byte) 0);
             serializer.DataField(ref _allowPercussion, "allowPercussion", false);
@@ -306,7 +306,7 @@ namespace Content.Client.GameObjects.Components.Instruments
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
-            if (!(curState is InstrumentState state)) return;
+            if (curState is not InstrumentState state) return;
 
             if (state.Playing)
             {
@@ -349,12 +349,11 @@ namespace Content.Client.GameObjects.Components.Instruments
             return true;
         }
 
-        /// <inheritdoc cref="MidiRenderer.OpenMidi(string)"/>
-        public bool OpenMidi(string filename)
+        public bool OpenMidi(ReadOnlySpan<byte> data)
         {
             SetupRenderer();
 
-            if (_renderer == null || !_renderer.OpenMidi(filename))
+            if (_renderer == null || !_renderer.OpenMidi(data))
             {
                 return false;
             }

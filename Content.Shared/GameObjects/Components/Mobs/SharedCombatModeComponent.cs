@@ -39,7 +39,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         {
             base.HandleComponentState(curState, nextState);
 
-            if (!(curState is CombatModeComponentState state))
+            if (curState is not CombatModeComponentState state)
                 return;
 
             IsInCombatMode = state.IsInCombatMode;

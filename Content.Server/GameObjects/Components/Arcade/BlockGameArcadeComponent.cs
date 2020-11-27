@@ -39,7 +39,7 @@ namespace Content.Server.GameObjects.Components.Arcade
         private BlockGame? _game;
 
         private IPlayerSession? _player;
-        private readonly List<IPlayerSession> _spectators = new List<IPlayerSession>();
+        private readonly List<IPlayerSession> _spectators = new();
 
         public void Activate(ActivateEventArgs eventArgs)
         {
@@ -166,7 +166,7 @@ namespace Content.Server.GameObjects.Components.Arcade
 
             private readonly BlockGameArcadeComponent _component;
 
-            private readonly List<BlockGameBlock> _field = new List<BlockGameBlock>();
+            private readonly List<BlockGameBlock> _field = new();
 
             private BlockGamePiece _currentPiece;
 
@@ -733,7 +733,7 @@ namespace Content.Server.GameObjects.Components.Arcade
 
             private readonly BlockGamePieceType[] _allBlockGamePieces;
 
-            private List<BlockGamePieceType> _blockGamePiecesBuffer = new List<BlockGamePieceType>();
+            private List<BlockGamePieceType> _blockGamePiecesBuffer = new();
 
             private BlockGamePiece GetRandomBlockGamePiece(IRobustRandom random)
             {

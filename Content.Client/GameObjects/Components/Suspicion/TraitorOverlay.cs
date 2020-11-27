@@ -23,7 +23,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
         private readonly Font _font;
 
         private readonly IEntity _user;
-        private readonly HashSet<EntityUid> _allies = new HashSet<EntityUid>();
+        private readonly HashSet<EntityUid> _allies = new();
         private readonly string _traitorText = Loc.GetString("Traitor");
 
         public TraitorOverlay(

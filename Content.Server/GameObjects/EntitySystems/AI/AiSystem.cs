@@ -28,15 +28,15 @@ namespace Content.Server.GameObjects.EntitySystems.AI
         [Dependency] private readonly IDynamicTypeFactory _typeFactory = default!;
         [Dependency] private readonly IReflectionManager _reflectionManager = default!;
 
-        private readonly Dictionary<string, Type> _processorTypes = new Dictionary<string, Type>();
+        private readonly Dictionary<string, Type> _processorTypes = new();
 
         /// <summary>
         ///     To avoid iterating over dead AI continuously they can wake and sleep themselves when necessary.
         /// </summary>
-        private readonly HashSet<AiLogicProcessor> _awakeAi = new HashSet<AiLogicProcessor>();
+        private readonly HashSet<AiLogicProcessor> _awakeAi = new();
 
         // To avoid modifying awakeAi while iterating over it.
-        private readonly List<SleepAiMessage> _queuedSleepMessages = new List<SleepAiMessage>();
+        private readonly List<SleepAiMessage> _queuedSleepMessages = new();
 
         public bool IsAwake(AiLogicProcessor processor) => _awakeAi.Contains(processor);
 

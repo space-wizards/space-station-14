@@ -12,7 +12,7 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     public class GodmodeSystem : EntitySystem, IResettingEntitySystem
     {
-        private readonly Dictionary<IEntity, OldEntityInformation> _entities = new Dictionary<IEntity, OldEntityInformation>();
+        private readonly Dictionary<IEntity, OldEntityInformation> _entities = new();
 
         public void Reset()
         {

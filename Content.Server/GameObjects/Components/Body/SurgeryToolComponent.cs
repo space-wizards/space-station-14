@@ -32,7 +32,7 @@ namespace Content.Server.GameObjects.Components.Body
         public override string Name => "SurgeryTool";
         public override uint? NetID => ContentNetIDs.SURGERY;
 
-        private readonly Dictionary<int, object> _optionsCache = new Dictionary<int, object>();
+        private readonly Dictionary<int, object> _optionsCache = new();
 
         private float _baseOperateTime;
 

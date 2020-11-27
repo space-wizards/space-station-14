@@ -24,11 +24,11 @@ namespace Content.Client.Parallax
         [Dependency] private readonly ILogManager _logManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
-        private static readonly ResourcePath ParallaxConfigPath = new ResourcePath("/parallax_config.toml");
+        private static readonly ResourcePath ParallaxConfigPath = new("/parallax_config.toml");
 
         // Both of these below are in the user directory.
-        private static readonly ResourcePath ParallaxPath = new ResourcePath("/parallax_cache.png");
-        private static readonly ResourcePath ParallaxConfigOld = new ResourcePath("/parallax_config_old");
+        private static readonly ResourcePath ParallaxPath = new("/parallax_cache.png");
+        private static readonly ResourcePath ParallaxConfigOld = new("/parallax_config_old");
 
         public event Action<Texture> OnTextureLoaded;
         public Texture ParallaxTexture { get; private set; }

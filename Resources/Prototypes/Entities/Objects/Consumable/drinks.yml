@@ -165,11 +165,17 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkBerryjJice
+  id: DrinkBerryJuice
   name: berry juice
   description: A delicious blend of several different kinds of berries.
   components:
   - type: Drink
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+        - ReagentId: chem.BerryJuice
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/berryjuice.rsi
 
@@ -252,6 +258,12 @@
   description: Has a uniquely sweet flavour of concentrated carrots.
   components:
   - type: Drink
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+        - ReagentId: chem.CarrotJuice
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/carrotjuice.rsi
 
@@ -564,6 +576,12 @@
   description: The sweet-sour juice of limes.
   components:
   - type: Drink
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+        - ReagentId: chem.LimeJuice
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_green.rsi
 
@@ -575,8 +593,30 @@
   description: Liquid extract of the orange tree fruit, produced by squeezing or reaming oranges.
   components:
   - type: Drink
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+        - ReagentId: chem.OrangeJuice
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_orange.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkGlassYellow
+  name: lemon juice
+  description: Used to make lemonade, soft drinks, and cocktails.
+  components:
+  - type: Drink
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+        - ReagentId: chem.LemonJuice
+          Quantity: 20
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/glass_yellow.rsi
 
 
 - type: entity
@@ -586,6 +626,12 @@
   description: Juice made from tomatoes, usually used as a beverage, either plain or in cocktails
   components:
   - type: Drink
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+        - ReagentId: chem.TomatoJuice
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_red.rsi
 
@@ -605,18 +651,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_white.rsi
 
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkGlassYellow
-  name: lemon juice
-  description: ''
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/glass_yellow.rsi
-
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkGoldschlagerGlass
@@ -635,6 +669,12 @@
   description: The juice is often sold in stores or fermented and made into wine, brandy, or vinegar.
   components:
   - type: Drink
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+        - ReagentId: chem.GrapeJuice
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/grapejuice.rsi
 
@@ -903,6 +943,12 @@
   description: Used to make lemonade, soft drinks, and cocktails.
   components:
   - type: Drink
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+        - ReagentId: chem.LemonJuice
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lemonjuice.rsi
 
@@ -914,6 +960,14 @@
   description: A tangy substance made of lime and lemon.
   components:
   - type: Drink
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+        - ReagentId: chem.LemonJuice
+          Quantity: 10
+        - ReagentId: chem.LimeJuice
+          Quantity: 10
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lemonlime.rsi
 
@@ -925,6 +979,12 @@
   description: The sweet-sour juice of limes.
   components:
   - type: Drink
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+        - ReagentId: chem.LimeJuice
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/limejuice.rsi
 
@@ -1100,6 +1160,12 @@
   description: Liquid extract of the orange tree fruit, produced by squeezing or reaming oranges.
   components:
   - type: Drink
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+        - ReagentId: chem.OrangeJuice
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/orangejuice.rsi
 
@@ -1122,6 +1188,12 @@
   description: A tasty juice blended from various kinds of very deadly and toxic berries.
   components:
   - type: Drink
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+        - ReagentId: chem.PoisonBerryJuice
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/poisonberryjuice.rsi
 
@@ -1521,9 +1593,15 @@
   parent: DrinkGlassBase
   id: DrinkTomatoJuice
   name: tomato juice
-  description: Juice made from tomatoes, usually used as a beverage, either plain or in cocktails
+  description: Juice made from tomatoes, usually used as a beverage, either plain or in cocktails.
   components:
   - type: Drink
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+        - ReagentId: chem.TomatoJuice
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/tomatojuice.rsi
 
@@ -1612,6 +1690,12 @@
   description: Delicious juice made from watermelon.
   components:
   - type: Drink
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+        - ReagentId: chem.WatermelonJuice
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/watermelon.rsi
 
