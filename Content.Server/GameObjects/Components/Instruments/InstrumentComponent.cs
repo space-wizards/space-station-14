@@ -21,6 +21,7 @@ using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -218,11 +219,11 @@ namespace Content.Server.GameObjects.Components.Instruments
                         if (_laggedBatches == (int) (maxMidiLaggedBatches * (1 / 3d) + 1))
                         {
                             Owner.PopupMessage(InstrumentPlayer.AttachedEntity,
-                                "Your fingers are beginning to a cramp a little!");
+                                Loc.GetString("Your fingers are beginning to a cramp a little!"));
                         } else if (_laggedBatches == (int) (maxMidiLaggedBatches * (2 / 3d) + 1))
                         {
                             Owner.PopupMessage(InstrumentPlayer.AttachedEntity,
-                                "Your fingers are seriously cramping up!");
+                                Loc.GetString("Your fingers are seriously cramping up!"));
                         }
 
                         if (_laggedBatches > maxMidiLaggedBatches)
