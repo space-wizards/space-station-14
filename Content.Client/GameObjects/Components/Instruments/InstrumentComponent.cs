@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Client.GameObjects.EntitySystems;
 using Content.Shared;
 using Content.Shared.GameObjects.Components.Instruments;
 using Content.Shared.Physics;
@@ -9,6 +10,7 @@ using Robust.Client.Audio.Midi;
 using Robust.Shared.Audio.Midi;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Timers;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Timing;
@@ -33,9 +35,10 @@ namespace Content.Client.GameObjects.Components.Instruments
         [Dependency] private readonly IMidiManager _midiManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IClientNetManager _netManager = default!;
-        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         private IMidiRenderer? _renderer;
+
+        private InstrumentSystem _instrumentSystem = default!;
 
         private byte _instrumentProgram = 1;
 
@@ -161,6 +164,7 @@ namespace Content.Client.GameObjects.Components.Instruments
         {
             base.Initialize();
             IoCManager.InjectDependencies(this);
+            _instrumentSystem = EntitySystem.Get<InstrumentSystem>();
         }
 
         protected virtual void SetupRenderer(bool fromStateChange = false)
@@ -425,7 +429,7 @@ namespace Content.Client.GameObjects.Components.Instruments
 
             if (_midiEventBuffer.Count == 0) return;
 
-            var max = Math.Min(_cfg.GetCVar(CCVars.MaxMidiEventsPerBatch), _cfg.GetCVar(CCVars.MaxMidiEventsPerSecond) - _sentWithinASec);
+            var max = Math.Min(_instrumentSystem.MaxMidiEventsPerBatch, _instrumentSystem.MaxMidiEventsPerSecond - _sentWithinASec);
 
             if (max <= 0)
             {

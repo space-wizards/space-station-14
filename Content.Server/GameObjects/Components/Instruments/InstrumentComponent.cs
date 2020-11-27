@@ -41,9 +41,9 @@ namespace Content.Server.GameObjects.Components.Instruments
             IThrown
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         private static readonly TimeSpan OneSecAgo = TimeSpan.FromSeconds(-1);
+        private InstrumentSystem _instrumentSystem = default!;
 
         /// <summary>
         ///     The client channel currently playing the instrument, or null if there's none.
@@ -169,6 +169,8 @@ namespace Content.Server.GameObjects.Components.Instruments
             {
                 UserInterface.OnClosed += UserInterfaceOnClosed;
             }
+
+            _instrumentSystem = EntitySystem.Get<InstrumentSystem>();
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -190,10 +192,9 @@ namespace Content.Server.GameObjects.Components.Instruments
         {
             base.HandleNetworkMessage(message, channel, session);
 
-            int maxMidiLaggedBatches = _cfg.GetCVar(CCVars.MaxMidiLaggedBatches);
-            int maxMidiBatchDropped = _cfg.GetCVar(CCVars.MaxMidiBatchDropped);
-            int maxMidiEventsPerSecond = _cfg.GetCVar(CCVars.MaxMidiEventsPerSecond);
-            int maxMidiEventsPerBatch = _cfg.GetCVar(CCVars.MaxMidiEventsPerBatch);
+            var maxMidiLaggedBatches = _instrumentSystem.MaxMidiLaggedBatches;
+            var maxMidiEventsPerSecond = _instrumentSystem.MaxMidiEventsPerSecond;
+            var maxMidiEventsPerBatch = _instrumentSystem.MaxMidiEventsPerBatch;
 
             switch (message)
             {
@@ -354,8 +355,8 @@ namespace Content.Server.GameObjects.Components.Instruments
         {
             base.Update(delta);
 
-            var maxMidiLaggedBatches = _cfg.GetCVar(CCVars.MaxMidiLaggedBatches);
-            var maxMidiBatchDropped = _cfg.GetCVar(CCVars.MaxMidiBatchDropped);
+            var maxMidiLaggedBatches = _instrumentSystem.MaxMidiLaggedBatches;
+            var maxMidiBatchDropped = _instrumentSystem.MaxMidiBatchDropped;
 
             if (_instrumentPlayer != null && !ActionBlockerSystem.CanInteract(_instrumentPlayer.AttachedEntity))
             {
