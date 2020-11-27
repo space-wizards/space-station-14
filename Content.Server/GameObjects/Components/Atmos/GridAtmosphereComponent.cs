@@ -9,6 +9,7 @@ using Content.Server.GameObjects.Components.Atmos.Piping;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.Atmos;
+using Content.Shared;
 using Content.Shared.Atmos;
 using Content.Shared.Maps;
 using Robust.Server.GameObjects.EntitySystems.TileLookup;
@@ -16,10 +17,9 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.GameObjects.Components.Map;
-using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.Map;
-using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -39,6 +39,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         [Robust.Shared.IoC.Dependency] private IMapManager _mapManager = default!;
         [Robust.Shared.IoC.Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
         [Robust.Shared.IoC.Dependency] private IServerEntityManager _serverEntityManager = default!;
+        [Robust.Shared.IoC.Dependency] private IConfigurationManager _cfg = default!;
 
         public GridTileLookupSystem GridTileLookupSystem { get; private set; } = default!;
         internal GasTileOverlaySystem GasTileOverlaySystem { get; private set; } = default!;
@@ -48,16 +49,6 @@ namespace Content.Server.GameObjects.Components.Atmos
         ///     Check current execution time every n instances processed.
         /// </summary>
         private const int LagCheckIterations = 30;
-
-        /// <summary>
-        ///     Max milliseconds allowed for atmos updates.
-        /// </summary>
-        private const float LagCheckMaxMilliseconds = 5f;
-
-        /// <summary>
-        ///     How much time before atmos updates are ran.
-        /// </summary>
-        private const float AtmosTime = 1/26f;
 
         public override string Name => "GridAtmosphere";
 
@@ -256,7 +247,12 @@ namespace Content.Server.GameObjects.Components.Atmos
                     tile.Air ??= new GasMixture(GetVolumeForCells(1), AtmosphereSystem){Temperature = Atmospherics.T20C};
                 }
 
+                // By removing the active tile, we effectively remove its excited group, if any.
+                RemoveActiveTile(tile);
+
+                // Then we activate the tile again.
                 AddActiveTile(tile);
+
                 tile.BlockedAirflow = GetBlockedDirections(indices);
 
                 // TODO ATMOS: Query all the contents of this tile (like walls) and calculate the correct thermal conductivity
@@ -478,20 +474,23 @@ namespace Content.Server.GameObjects.Components.Atmos
         public virtual void Update(float frameTime)
         {
             _timer += frameTime;
+            var atmosTime = 1f/_cfg.GetCVar(CCVars.AtmosTickRate);
 
             if (_invalidatedCoords.Count != 0)
                 Revalidate();
 
-            if (_timer < AtmosTime)
+            if (_timer < atmosTime)
                 return;
 
             // We subtract it so it takes lost time into account.
-            _timer -= AtmosTime;
+            _timer -= atmosTime;
+
+            var maxProcessTime = _cfg.GetCVar(CCVars.AtmosMaxProcessTime);
 
             switch (_state)
             {
                 case ProcessState.TileEqualize:
-                    if (!ProcessTileEqualize(_paused))
+                    if (!ProcessTileEqualize(_paused, maxProcessTime))
                     {
                         _paused = true;
                         return;
@@ -501,7 +500,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                     _state = ProcessState.ActiveTiles;
                     return;
                 case ProcessState.ActiveTiles:
-                    if (!ProcessActiveTiles(_paused))
+                    if (!ProcessActiveTiles(_paused, maxProcessTime))
                     {
                         _paused = true;
                         return;
@@ -511,7 +510,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                     _state = ProcessState.ExcitedGroups;
                     return;
                 case ProcessState.ExcitedGroups:
-                    if (!ProcessExcitedGroups(_paused))
+                    if (!ProcessExcitedGroups(_paused, maxProcessTime))
                     {
                         _paused = true;
                         return;
@@ -521,7 +520,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                     _state = ProcessState.HighPressureDelta;
                     return;
                 case ProcessState.HighPressureDelta:
-                    if (!ProcessHighPressureDelta(_paused))
+                    if (!ProcessHighPressureDelta(_paused, maxProcessTime))
                     {
                         _paused = true;
                         return;
@@ -531,7 +530,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                     _state = ProcessState.Hotspots;
                     break;
                 case ProcessState.Hotspots:
-                    if (!ProcessHotspots(_paused))
+                    if (!ProcessHotspots(_paused, maxProcessTime))
                     {
                         _paused = true;
                         return;
@@ -541,7 +540,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                     _state = ProcessState.Superconductivity;
                     break;
                 case ProcessState.Superconductivity:
-                    if (!ProcessSuperconductivity(_paused))
+                    if (!ProcessSuperconductivity(_paused, maxProcessTime))
                     {
                         _paused = true;
                         return;
@@ -551,7 +550,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                     _state = ProcessState.PipeNet;
                     break;
                 case ProcessState.PipeNet:
-                    if (!ProcessPipeNets(_paused))
+                    if (!ProcessPipeNets(_paused, maxProcessTime))
                     {
                         _paused = true;
                         return;
@@ -561,21 +560,24 @@ namespace Content.Server.GameObjects.Components.Atmos
                     _state = ProcessState.PipeNetDevices;
                     break;
                 case ProcessState.PipeNetDevices:
-                    if (!ProcessPipeNetDevices(_paused))
+                    if (!ProcessPipeNetDevices(_paused, maxProcessTime))
                     {
                         _paused = true;
                         return;
                     }
 
                     _paused = false;
-                    _state = ProcessState.TileEqualize;
+                    // Next state depends on whether monstermos equalization is enabled or not.
+                    // Note: We do this here instead of on the tile equalization step to prevent ending it early.
+                    //       Therefore, a change to this CVar might only be applied after that step is over.
+                    _state = _cfg.GetCVar(CCVars.MonstermosEqualization) ? ProcessState.TileEqualize : ProcessState.ActiveTiles;
                     break;
             }
 
             UpdateCounter++;
         }
 
-        public virtual bool ProcessTileEqualize(bool resumed = false)
+        public virtual bool ProcessTileEqualize(bool resumed = false, float lagCheck = 5f)
         {
             _stopwatch.Restart();
 
@@ -591,7 +593,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
                 // Process the rest next time.
-                if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
+                if (_stopwatch.Elapsed.TotalMilliseconds >= lagCheck)
                 {
                     _tileEqualizeLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
                     return false;
@@ -602,9 +604,11 @@ namespace Content.Server.GameObjects.Components.Atmos
             return true;
         }
 
-        public virtual bool ProcessActiveTiles(bool resumed = false)
+        public virtual bool ProcessActiveTiles(bool resumed = false, float lagCheck = 5f)
         {
             _stopwatch.Restart();
+
+            var spaceWind = _cfg.GetCVar(CCVars.SpaceWind);
 
             if(!resumed)
                 _currentRunTiles = new Queue<TileAtmosphere>(_activeTiles);
@@ -613,12 +617,12 @@ namespace Content.Server.GameObjects.Components.Atmos
             while (_currentRunTiles.Count > 0)
             {
                 var tile = _currentRunTiles.Dequeue();
-                tile.ProcessCell(UpdateCounter);
+                tile.ProcessCell(UpdateCounter, spaceWind);
 
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
                 // Process the rest next time.
-                if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
+                if (_stopwatch.Elapsed.TotalMilliseconds >= lagCheck)
                 {
                     _activeTilesLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
                     return false;
@@ -629,9 +633,11 @@ namespace Content.Server.GameObjects.Components.Atmos
             return true;
         }
 
-        public virtual bool ProcessExcitedGroups(bool resumed = false)
+        public virtual bool ProcessExcitedGroups(bool resumed = false, float lagCheck = 5f)
         {
             _stopwatch.Restart();
+
+            var spaceIsAllConsuming = _cfg.GetCVar(CCVars.ExcitedGroupsSpaceIsAllConsuming);
 
             if(!resumed)
                 _currentRunExcitedGroups = new Queue<ExcitedGroup>(_excitedGroups);
@@ -644,7 +650,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 excitedGroup.DismantleCooldown++;
 
                 if(excitedGroup.BreakdownCooldown > Atmospherics.ExcitedGroupBreakdownCycles)
-                    excitedGroup.SelfBreakdown();
+                    excitedGroup.SelfBreakdown(spaceIsAllConsuming);
 
                 else if(excitedGroup.DismantleCooldown > Atmospherics.ExcitedGroupsDismantleCycles)
                     excitedGroup.Dismantle();
@@ -652,7 +658,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
                 // Process the rest next time.
-                if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
+                if (_stopwatch.Elapsed.TotalMilliseconds >= lagCheck)
                 {
                     _excitedGroupLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
                     return false;
@@ -663,7 +669,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             return true;
         }
 
-        public virtual bool ProcessHighPressureDelta(bool resumed = false)
+        public virtual bool ProcessHighPressureDelta(bool resumed = false, float lagCheck = 5f)
         {
             _stopwatch.Restart();
 
@@ -682,7 +688,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
                 // Process the rest next time.
-                if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
+                if (_stopwatch.Elapsed.TotalMilliseconds >= lagCheck)
                 {
                     _highPressureDeltaLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
                     return false;
@@ -693,7 +699,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             return true;
         }
 
-        protected virtual bool ProcessHotspots(bool resumed = false)
+        protected virtual bool ProcessHotspots(bool resumed = false, float lagCheck = 5f)
         {
             _stopwatch.Restart();
 
@@ -709,7 +715,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
                 // Process the rest next time.
-                if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
+                if (_stopwatch.Elapsed.TotalMilliseconds >= lagCheck)
                 {
                     _hotspotsLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
                     return false;
@@ -720,7 +726,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             return true;
         }
 
-        protected virtual bool ProcessSuperconductivity(bool resumed = false)
+        protected virtual bool ProcessSuperconductivity(bool resumed = false, float lagCheck = 5f)
         {
             _stopwatch.Restart();
 
@@ -736,7 +742,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
                 // Process the rest next time.
-                if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
+                if (_stopwatch.Elapsed.TotalMilliseconds >= lagCheck)
                 {
                     _superconductivityLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
                     return false;
@@ -747,7 +753,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             return true;
         }
 
-        protected virtual bool ProcessPipeNets(bool resumed = false)
+        protected virtual bool ProcessPipeNets(bool resumed = false, float lagCheck = 5f)
         {
             _stopwatch.Restart();
 
@@ -763,7 +769,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
                 // Process the rest next time.
-                if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
+                if (_stopwatch.Elapsed.TotalMilliseconds >= lagCheck)
                 {
                     _pipeNetLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
                     return false;
@@ -774,7 +780,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             return true;
         }
 
-        protected virtual bool ProcessPipeNetDevices(bool resumed = false)
+        protected virtual bool ProcessPipeNetDevices(bool resumed = false, float lagCheck = 5f)
         {
             _stopwatch.Restart();
 
@@ -790,7 +796,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
                 // Process the rest next time.
-                if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
+                if (_stopwatch.Elapsed.TotalMilliseconds >= lagCheck)
                 {
                     _pipeNetDevicesLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
                     return false;
