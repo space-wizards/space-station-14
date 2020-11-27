@@ -181,5 +181,11 @@ namespace Content.Shared
 
         public static readonly CVarDef<bool> ExcitedGroupsSpaceIsAllConsuming =
             CVarDef.Create("atmos.excited_groups_space_is_all_consuming", false, CVar.SERVERONLY);
+
+        /*
+         * Branding stuff
+         */
+
+        public static readonly CVarDef<bool> BrandingSteam = CVarDef.Create("branding.steam", false, CVar.CLIENTONLY);
     }
 }
