@@ -118,7 +118,7 @@ namespace Content.Server.GameObjects.Components.Morgue
 
         public SuicideKind Suicide(IEntity victim, IChatManager chat)
         {
-
+            // TODO: gibbing?
             if (victim.TryGetComponent<IBody>(out var body))
             {
                 foreach (var part in body.Parts.Values)

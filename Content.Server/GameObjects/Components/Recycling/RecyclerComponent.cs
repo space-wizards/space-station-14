@@ -108,6 +108,7 @@ namespace Content.Server.GameObjects.Components.Recycling
 
         private void PerformGib(IEntity entity)
         {
+            // TODO: gibbing
             if (entity.TryGetComponent<IBody>(out var body))
             {
                 foreach (var part in body.Parts.Values)
