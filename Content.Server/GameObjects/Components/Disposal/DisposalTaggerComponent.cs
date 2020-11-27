@@ -1,20 +1,26 @@
 ﻿#nullable enable
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Server.Console;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
+using Robust.Server.Interfaces.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
+using System;
 using static Content.Shared.GameObjects.Components.Disposal.SharedDisposalTaggerComponent;
 
 namespace Content.Server.GameObjects.Components.Disposal
@@ -63,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             var msg = (UiActionMessage) obj.Message;
 
-            if (!PlayerCanUseDisposalTagger(obj.Session.AttachedEntity))
+            if (!PlayerCanUseDisposalTagger(obj.Session))
                 return;
 
             //Check for correct message and ignore maleformed strings
@@ -77,17 +83,19 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// <summary>
         /// Checks whether the player entity is able to use the configuration interface of the pipe tagger.
         /// </summary>
-        /// <param name="playerEntity">The player entity.</param>
+        /// <param name="IPlayerSession">The player entity.</param>
         /// <returns>Returns true if the entity can use the configuration interface, and false if it cannot.</returns>
-        private bool PlayerCanUseDisposalTagger(IEntity? playerEntity)
+        private bool PlayerCanUseDisposalTagger(IPlayerSession session)
         {
             //Need player entity to check if they are still able to use the configuration interface
-            if (playerEntity == null)
+            if (session.AttachedEntity == null)
                 return false;
             if (!Anchored)
                 return false;
+
+            var groupController = IoCManager.Resolve<IConGroupController>();
             //Check if player can interact in their current state
-            if (!ActionBlockerSystem.CanInteract(playerEntity) || !ActionBlockerSystem.CanUse(playerEntity))
+            if (!groupController.CanAdminMenu(session) && (!ActionBlockerSystem.CanInteract(session.AttachedEntity) || !ActionBlockerSystem.CanUse(session.AttachedEntity)))
                 return false;
 
             return true;
@@ -133,8 +141,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             var activeHandEntity = hands.GetActiveHand?.Owner;
             if (activeHandEntity == null)
             {
-                UpdateUserInterface();
-                UserInterface?.Open(actor.playerSession);
+                OpenUserInterface(actor);
             }
         }
 
@@ -142,6 +149,38 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             base.OnRemove();
             UserInterface?.CloseAll();
+        }
+
+        [Verb]
+        public sealed class ConfigureVerb : Verb<DisposalTaggerComponent>
+        {
+            protected override void GetData(IEntity user, DisposalTaggerComponent component, VerbData data)
+            {
+
+                var groupController = IoCManager.Resolve<IConGroupController>();
+                if (!user.TryGetComponent(out IActorComponent? actor) || !groupController.CanAdminMenu(actor.playerSession))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
+                data.Text = Loc.GetString("Open Configuration");
+                data.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.96dpi.png";
+            }
+
+            protected override void Activate(IEntity user, DisposalTaggerComponent component)
+            {
+                if (user.TryGetComponent(out IActorComponent? actor))
+                {
+                    component.OpenUserInterface(actor);
+                }
+            }
+        }
+
+        private void OpenUserInterface(IActorComponent actor)
+        {
+            UpdateUserInterface();
+            UserInterface?.Open(actor.playerSession);
         }
     }
 }
