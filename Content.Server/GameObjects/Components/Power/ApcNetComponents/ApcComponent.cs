@@ -16,6 +16,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
@@ -29,6 +30,10 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         public override string Name => "Apc";
 
         public bool MainBreakerEnabled { get; private set; } = true;
+
+        public TimeSpan DisruptionLength { get; private set; }
+
+        public TimeSpan DisruptionCooldown { get; private set; }
 
         private ApcChargeState _lastChargeState;
 
@@ -51,6 +56,13 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ApcUiKey.Key);
 
         public BatteryComponent? Battery => Owner.TryGetComponent(out BatteryComponent? batteryComponent) ? batteryComponent : null;
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+            serializer.DataField(this, x => DisruptionLength, "disruptionLength", TimeSpan.FromSeconds(5));
+            serializer.DataField(this, x => DisruptionCooldown, "disruptionCooldown", TimeSpan.FromSeconds(5));
+        }
 
         public override void Initialize()
         {
@@ -92,7 +104,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
                     var apcNet = nodeContainer.Nodes.Select(node => node.NodeGroup).OfType<IApcNet>().FirstOrDefault();
                     if (apcNet != null)
                     {
-                        apcNet.DisruptPower(TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(5));
+                        apcNet.DisruptPower(DisruptionLength, DisruptionCooldown);
                     }
                 }
             }
