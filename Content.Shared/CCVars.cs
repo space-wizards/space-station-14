@@ -151,6 +151,36 @@ namespace Content.Shared
         public static readonly CVarDef<bool> AdminAnnounceLogout =
             CVarDef.Create("admin.announce_logout", true, CVar.SERVERONLY);
 
+        /*
+         * Atmos
+         */
+
+        /// <summary>
+        ///     Whether gas differences will move entities.
+        /// </summary>
+        public static readonly CVarDef<bool> SpaceWind =
+            CVarDef.Create("atmos.space_wind", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Whether monstermos tile equalization is enabled.
+        /// </summary>
+        public static readonly CVarDef<bool> MonstermosEqualization =
+            CVarDef.Create("atmos.monstermos_equalization", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Maximum time in milliseconds that atmos can take processing.
+        /// </summary>
+        public static readonly CVarDef<float> AtmosMaxProcessTime =
+            CVarDef.Create("atmos.max_process_time", 5f, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Atmos tickrate in TPS. Atmos processing will happen every 1/TPS seconds.
+        /// </summary>
+        public static readonly CVarDef<float> AtmosTickRate =
+            CVarDef.Create("atmos.tickrate", 26f, CVar.SERVERONLY);
+
+        public static readonly CVarDef<bool> ExcitedGroupsSpaceIsAllConsuming =
+            CVarDef.Create("atmos.excited_groups_space_is_all_consuming", false, CVar.SERVERONLY);
 
         /*
          * Branding stuff
