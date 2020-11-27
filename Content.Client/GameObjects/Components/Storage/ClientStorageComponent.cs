@@ -279,19 +279,6 @@ namespace Content.Client.GameObjects.Components.Storage
                 args.Button.Pressed = false;
                 StorageEntity.Interact(control.EntityUid);
             }
-
-            /// <summary>
-            /// Function assigned to button that adds items to the storage entity.
-            /// </summary>
-            private void OnAddItemButtonPressed(BaseButton.ButtonEventArgs args)
-            {
-                var controlledEntity = IoCManager.Resolve<IPlayerManager>().LocalPlayer.ControlledEntity;
-
-                if (controlledEntity.TryGetComponent(out HandsComponent hands))
-                {
-                    StorageEntity.SendNetworkMessage(new InsertEntityMessage());
-                }
-            }
         }
 
         /// <summary>

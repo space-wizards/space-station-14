@@ -22,9 +22,6 @@ namespace Content.Server.GameObjects.Components.Markers
         public List<string> RarePrototypes { get; set; } = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private List<string> _gameRules = new();
-
-        [ViewVariables(VVAccess.ReadWrite)]
         public float RareChance { get; set; } = 0.05f;
 
         [ViewVariables(VVAccess.ReadWrite)]

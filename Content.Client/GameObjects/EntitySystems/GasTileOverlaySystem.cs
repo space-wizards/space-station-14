@@ -24,8 +24,6 @@ namespace Content.Client.GameObjects.EntitySystems
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
 
-        private readonly Dictionary<float, Color> _fireCache = new();
-
         // Gas overlays
         private readonly float[] _timer = new float[Atmospherics.TotalNumberOfGases];
         private readonly float[][] _frameDelays = new float[Atmospherics.TotalNumberOfGases][];

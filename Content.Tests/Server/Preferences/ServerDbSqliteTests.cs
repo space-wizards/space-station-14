@@ -18,8 +18,6 @@ namespace Content.Tests.Server.Preferences
     [TestFixture]
     public class ServerDbSqliteTests : RobustUnitTest
     {
-        private const int MaxCharacterSlots = 10;
-
         private static HumanoidCharacterProfile CharlieCharlieson()
         {
             return new(
