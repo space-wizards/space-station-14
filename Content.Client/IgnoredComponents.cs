@@ -215,6 +215,7 @@
             "WelderRefinable",
             "ConveyorAssembly",
             "TwoWayLever",
+            "FirelockElectronics",
         };
     }
 }
