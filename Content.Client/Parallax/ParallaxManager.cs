@@ -18,7 +18,7 @@ using SixLabors.ImageSharp.PixelFormats;
 
 namespace Content.Client.Parallax
 {
-    internal sealed class ParallaxManager : IParallaxManager, IPostInjectInit
+    internal sealed class ParallaxManager : IParallaxManager
     {
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly ILogManager _logManager = default!;
@@ -118,12 +118,6 @@ namespace Content.Client.Parallax
             }
 
             OnTextureLoaded?.Invoke(ParallaxTexture);
-        }
-
-        public void PostInject()
-        {
-            _configurationManager.RegisterCVar("parallax.enabled", true);
-            _configurationManager.RegisterCVar("parallax.debug", false);
         }
     }
 }
