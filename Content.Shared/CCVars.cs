@@ -166,5 +166,11 @@ namespace Content.Shared
 
         public static readonly CVarDef<int> MaxMidiLaggedBatches =
             CVarDef.Create("midi.max_lagged_batches", 8, CVar.SERVERONLY);
+
+        /*
+         * Branding stuff
+         */
+
+        public static readonly CVarDef<bool> BrandingSteam = CVarDef.Create("branding.steam", false, CVar.CLIENTONLY);
     }
 }

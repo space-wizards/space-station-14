@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Content.Client.UserInterface.Stylesheets;
+using Content.Shared;
 using Robust.Client.Credits;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
@@ -19,6 +21,7 @@ namespace Content.Client.UserInterface
     public sealed class CreditsWindow : SS14Window
     {
         [Dependency] private readonly IResourceCache _resourceManager = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         private static readonly Dictionary<string, int> PatronTierPriority = new()
         {
@@ -84,12 +87,20 @@ namespace Content.Client.UserInterface
             margin.AddChild(vBox);
             var patrons = LoadPatrons();
 
-            Button patronButton;
-            vBox.AddChild(patronButton = new Button
+            // Do not show "become a patron" button on Steam builds
+            // since Patreon violates Valve's rules about alternative storefronts.
+            if (!_cfg.GetCVar(CCVars.BrandingSteam))
             {
-                Text = "Become a Patron",
-                SizeFlagsHorizontal = SizeFlags.ShrinkCenter
-            });
+                Button patronButton;
+                vBox.AddChild(patronButton = new Button
+                {
+                    Text = "Become a Patron",
+                    SizeFlagsHorizontal = SizeFlags.ShrinkCenter
+                });
+
+                patronButton.OnPressed +=
+                    _ => IoCManager.Resolve<IUriOpener>().OpenUri(UILinks.Patreon);
+            }
 
             var first = true;
             foreach (var tier in patrons.GroupBy(p => p.Tier).OrderBy(p => PatronTierPriority[p.Key]))
@@ -111,15 +122,13 @@ namespace Content.Client.UserInterface
             }
 
 
-            patronButton.OnPressed +=
-                _ => IoCManager.Resolve<IUriOpener>().OpenUri(UILinks.Patreon);
 
             patronsList.AddChild(margin);
         }
 
         private IEnumerable<PatronEntry> LoadPatrons()
         {
-            var yamlStream = _resourceManager.ContentFileReadYaml(new ResourcePath("/Credits/Patrons.json"));
+            var yamlStream = _resourceManager.ContentFileReadYaml(new ResourcePath("/Credits/Patrons.yml"));
             var sequence = (YamlSequenceNode) yamlStream.Documents[0].RootNode;
 
             return sequence
