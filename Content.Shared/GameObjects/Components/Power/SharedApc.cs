@@ -49,6 +49,11 @@ namespace Content.Shared.GameObjects.Components.Power
     { 
     }
 
+    [Serializable, NetSerializable]
+    public sealed class ApcCyclePowerMessage : BoundUserInterfaceMessage
+    {
+    }
+
     public enum ApcExternalPowerState
     {
         None,

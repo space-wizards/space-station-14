@@ -1,5 +1,7 @@
 ﻿#nullable enable
 using System;
+using System.Linq;
+using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Server.Utility;
@@ -82,6 +84,17 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
                 MainBreakerEnabled = !MainBreakerEnabled;
                 _uiDirty = true;
                 EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+            }
+            else if (serverMsg.Message is ApcCyclePowerMessage)
+            {
+                if (Owner.TryGetComponent<NodeContainerComponent>(out var nodeContainer))
+                {
+                    var apcNet = nodeContainer.Nodes.Select(node => node.NodeGroup).OfType<IApcNet>().FirstOrDefault();
+                    if (apcNet != null)
+                    {
+                        apcNet.DisruptPower(TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(5));
+                    }
+                }
             }
         }
 

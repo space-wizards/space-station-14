@@ -28,6 +28,9 @@ namespace Content.Client.GameObjects.Components.Power
             _breakerButton = _window.BreakerButton;
             _breakerButton.OnPressed += _ => SendMessage(new ApcToggleMainBreakerMessage());
 
+            _breakerButton = _window.CycleButton;
+            _breakerButton.OnPressed += _ => SendMessage(new ApcCyclePowerMessage());
+
             _externalPowerStateLabel = _window.ExternalPowerStateLabel;
             _chargeBar = _window.ChargeBar;
         }
@@ -118,6 +121,7 @@ namespace Content.Client.GameObjects.Components.Power
         private class ApcWindow : SS14Window
         {
             public Button BreakerButton { get; set; }
+            public Button CycleButton { get; set; }
             public Label ExternalPowerStateLabel { get; set; }
             public ProgressBar ChargeBar { get; set; }
             public Label ChargePercentage { get; set; }
@@ -136,6 +140,13 @@ namespace Content.Client.GameObjects.Components.Power
                 breaker.AddChild(breakerLabel);
                 breaker.AddChild(BreakerButton);
                 rows.AddChild(breaker);
+
+                var cycle = new HBoxContainer();
+                var cycleLabel = new Label { Text = "Power Cycle: " };
+                CycleButton = new CheckButton { Text = "Cycle" };
+                cycle.AddChild(cycleLabel);
+                cycle.AddChild(CycleButton);
+                rows.AddChild(cycle);
 
                 var externalStatus = new HBoxContainer();
                 var externalStatusLabel = new Label {Text = "External Power: "};
