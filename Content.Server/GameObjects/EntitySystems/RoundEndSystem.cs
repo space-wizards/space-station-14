@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
+using Content.Shared.GameTicking;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -10,7 +11,7 @@ using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
-    public class RoundEndSystem : EntitySystem
+    public class RoundEndSystem : EntitySystem, IResettingEntitySystem
     {
         [Dependency] private readonly IGameTicker _gameTicker = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -31,6 +32,14 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public delegate void RoundEndCountdownFinished();
         public event RoundEndCountdownFinished OnRoundEndCountdownFinished;
+
+        void IResettingEntitySystem.Reset()
+        {
+            IsRoundEndCountdownStarted = false;
+            _roundEndCancellationTokenSource.Cancel();
+            _roundEndCancellationTokenSource = new CancellationTokenSource();
+            ExpectedCountdownEnd = null;
+        }
 
         public void RequestRoundEnd()
         {

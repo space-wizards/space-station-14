@@ -252,7 +252,7 @@ namespace Content.Server.Atmos
             for (var i = 0; i < Atmospherics.Directions; i++)
             {
                 var direction = (AtmosDirection) (1 << i);
-                if (!_adjacentBits.HasFlag(direction)) continue;
+                if (!_adjacentBits.IsFlagSet(direction)) continue;
                 var other = _adjacentTiles[i];
                 if (other?.Air == null) continue;
                 var comparisonMoles = other.Air.TotalMoles;
@@ -288,7 +288,7 @@ namespace Content.Server.Atmos
                 for (var j = 0; j < Atmospherics.Directions; j++)
                 {
                     var direction = (AtmosDirection) (1 << j);
-                    if (!exploring._adjacentBits.HasFlag(direction)) continue;
+                    if (!exploring._adjacentBits.IsFlagSet(direction)) continue;
                     var adj = exploring._adjacentTiles[j];
                     if (adj?.Air == null) continue;
                     if(adj._tileAtmosInfo.LastQueueCycle == queueCycle) continue;
@@ -360,7 +360,7 @@ namespace Content.Server.Atmos
                     for (var j = 0; j < Atmospherics.Directions; j++)
                     {
                         var direction = (AtmosDirection) (1 << j);
-                        if (!tile._adjacentBits.HasFlag(direction)) continue;
+                        if (!tile._adjacentBits.IsFlagSet(direction)) continue;
                         var tile2 = tile._adjacentTiles[j];
 
                         // skip anything that isn't part of our current processing block.
@@ -378,7 +378,7 @@ namespace Content.Server.Atmos
                     for (var j = 0; j < Atmospherics.Directions; j++)
                     {
                         var direction = (AtmosDirection) (1 << j);
-                        if (!eligibleDirections.HasFlag(direction)) continue;
+                        if (!eligibleDirections.IsFlagSet(direction)) continue;
 
                         tile.AdjustEqMovement(direction, molesToMove);
                         tile._tileAtmosInfo.MoleDelta -= molesToMove;
@@ -425,7 +425,7 @@ namespace Content.Server.Atmos
                             for (var k = 0; k < Atmospherics.Directions; k++)
                             {
                                 var direction = (AtmosDirection) (1 << k);
-                                if (!tile._adjacentBits.HasFlag(direction)) continue;
+                                if (!tile._adjacentBits.IsFlagSet(direction)) continue;
                                 var tile2 = tile._adjacentTiles[k];
                                 if (giver._tileAtmosInfo.MoleDelta <= 0) break; // We're done here now. Let's not do more work than needed.
                                 if (tile2._tileAtmosInfo.LastQueueCycle != queueCycle) continue;
@@ -493,7 +493,7 @@ namespace Content.Server.Atmos
                             for (var k = 0; k < Atmospherics.Directions; k++)
                             {
                                 var direction = (AtmosDirection) (1 << k);
-                                if (!tile._adjacentBits.HasFlag(direction)) continue;
+                                if (!tile._adjacentBits.IsFlagSet(direction)) continue;
                                 var tile2 = tile._adjacentTiles[k];
 
                                 if (taker._tileAtmosInfo.MoleDelta >= 0) break; // We're done here now. Let's not do more work than needed.
@@ -554,7 +554,7 @@ namespace Content.Server.Atmos
                     for (var j = 0; j < Atmospherics.Directions; j++)
                     {
                         var direction = (AtmosDirection) (1 << j);
-                        if (!tile._adjacentBits.HasFlag(direction)) continue;
+                        if (!tile._adjacentBits.IsFlagSet(direction)) continue;
                         var tile2 = tile._adjacentTiles[j];
                         if (tile2?.Air?.Compare(Air) == GasMixture.GasCompareResult.NoExchange) continue;
                         _gridAtmosphereComponent.AddActiveTile(tile2);
@@ -587,7 +587,7 @@ namespace Content.Server.Atmos
             for(var i = 0; i < Atmospherics.Directions; i++)
             {
                 var direction = (AtmosDirection) (1 << i);
-                if (!_adjacentBits.HasFlag(direction)) continue;
+                if (!_adjacentBits.IsFlagSet(direction)) continue;
                 var amount = transferDirections[i];
                 var tile = _adjacentTiles[i];
                 if (tile?.Air == null) continue;
@@ -612,7 +612,7 @@ namespace Content.Server.Atmos
             {
                 var direction = (AtmosDirection) (1 << i);
                 var amount = transferDirs[i];
-                if(amount < 0 && _adjacentBits.HasFlag(direction))
+                if(amount < 0 && _adjacentBits.IsFlagSet(direction))
                     _adjacentTiles[i].FinalizeEq();  // A bit of recursion if needed.
             }
         }
@@ -654,14 +654,14 @@ namespace Content.Server.Atmos
             for (var i = 0; i < Atmospherics.Directions; i++)
             {
                 var direction = (AtmosDirection) (1 << i);
-                if(_adjacentBits.HasFlag(direction))
+                if(_adjacentBits.IsFlagSet(direction))
                     adjacentTileLength++;
             }
 
             for(var i = 0; i < Atmospherics.Directions; i++)
             {
                 var direction = (AtmosDirection) (1 << i);
-                if (!_adjacentBits.HasFlag(direction)) continue;
+                if (!_adjacentBits.IsFlagSet(direction)) continue;
                 var enemyTile = _adjacentTiles[i];
 
                 // If the tile is null or has no air, we don't do anything for it.
@@ -848,7 +848,7 @@ namespace Content.Server.Atmos
             for(var i = 0; i < Atmospherics.Directions; i++)
             {
                 var direction = (AtmosDirection) (1 << i);
-                if (!directions.HasFlag(direction)) continue;
+                if (!directions.IsFlagSet(direction)) continue;
 
                 var adjacent = _adjacentTiles[direction.ToIndex()];
 
@@ -1002,7 +1002,7 @@ namespace Content.Server.Atmos
                     for (var j = 0; j < Atmospherics.Directions; j++)
                     {
                         var direction = (AtmosDirection) (1 << j);
-                        if (!tile._adjacentBits.HasFlag(direction)) continue;
+                        if (!tile._adjacentBits.IsFlagSet(direction)) continue;
                         var tile2 = tile._adjacentTiles[j];
                         if (tile2.Air == null) continue;
                         if (tile2._tileAtmosInfo.LastQueueCycle == queueCycle) continue;
@@ -1010,7 +1010,7 @@ namespace Content.Server.Atmos
                         tile.ConsiderFirelocks(tile2);
 
                         // The firelocks might have closed on us.
-                        if (!tile._adjacentBits.HasFlag(direction)) continue;
+                        if (!tile._adjacentBits.IsFlagSet(direction)) continue;
                         tile2._tileAtmosInfo = new TileAtmosInfo {LastQueueCycle = queueCycle};
                         tiles[tileCount++] = tile2;
                     }
@@ -1039,7 +1039,7 @@ namespace Content.Server.Atmos
                 {
                     var direction = (AtmosDirection) (1 << j);
                     // TODO ATMOS This is a terrible hack that accounts for the mess that are space TileAtmospheres.
-                    if (!tile._adjacentBits.HasFlag(direction) && !tile.Air.Immutable) continue;
+                    if (!tile._adjacentBits.IsFlagSet(direction) && !tile.Air.Immutable) continue;
                     var tile2 = tile._adjacentTiles[j];
                     if (tile2?._tileAtmosInfo.LastQueueCycle != queueCycle) continue;
                     if (tile2._tileAtmosInfo.LastSlowQueueCycle == queueCycleSlow) continue;
@@ -1156,7 +1156,7 @@ namespace Content.Server.Atmos
                 _adjacentTiles[direction.ToIndex()] = adjacent;
                 adjacent?.UpdateAdjacent(direction.GetOpposite());
 
-                if (adjacent != null && !BlockedAirflow.HasFlag(direction) && !_gridAtmosphereComponent.IsAirBlocked(adjacent.GridIndices, direction.GetOpposite()))
+                if (adjacent != null && !BlockedAirflow.IsFlagSet(direction) && !_gridAtmosphereComponent.IsAirBlocked(adjacent.GridIndices, direction.GetOpposite()))
                 {
                     _adjacentBits |= direction;
                 }
@@ -1167,7 +1167,7 @@ namespace Content.Server.Atmos
         {
             _adjacentTiles[direction.ToIndex()] = _gridAtmosphereComponent.GetTile(GridIndices.Offset(direction.ToDirection()));
 
-            if (!BlockedAirflow.HasFlag(direction) && !_gridAtmosphereComponent.IsAirBlocked(GridIndices.Offset(direction.ToDirection()), direction.GetOpposite()))
+            if (!BlockedAirflow.IsFlagSet(direction) && !_gridAtmosphereComponent.IsAirBlocked(GridIndices.Offset(direction.ToDirection()), direction.GetOpposite()))
             {
                 _adjacentBits |= direction;
             }

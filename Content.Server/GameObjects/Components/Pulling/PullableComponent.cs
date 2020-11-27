@@ -41,26 +41,17 @@ namespace Content.Server.GameObjects.Components.Pulling
                     return;
                 }
 
-                var controller = targetPhysics.EnsureController<PullController>();
-
                 data.Visibility = VerbVisibility.Visible;
-                data.Text = controller.Puller == userPhysics
+                data.Text = component.Puller == userPhysics
                     ? Loc.GetString("Stop pulling")
                     : Loc.GetString("Pull");
             }
 
             protected override void Activate(IEntity user, PullableComponent component)
             {
-                if (!user.TryGetComponent(out IPhysicsComponent? userCollidable) ||
-                    !component.Owner.TryGetComponent(out IPhysicsComponent? targetCollidable) ||
-                    targetCollidable.Anchored)
-                {
-                    return;
-                }
-
-                var controller = targetCollidable.EnsureController<PullController>();
-
-                if (controller.Puller == userCollidable)
+                // There used to be sanity checks here for no reason.
+                // Why no reason? Because they're supposed to be performed in TryStartPull.
+                if (component.Puller == user)
                 {
                     component.TryStopPull();
                 }

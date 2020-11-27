@@ -42,7 +42,16 @@ namespace Content.Server.GameObjects.Components.Command
 
         private void UpdateBoundInterface()
         {
-            UserInterface?.SetState(new CommunicationsConsoleInterfaceState(RoundEndSystem.ExpectedCountdownEnd));
+            if (!Deleted)
+                UserInterface?.SetState(new CommunicationsConsoleInterfaceState(RoundEndSystem.ExpectedCountdownEnd));
+        }
+
+        public override void OnRemove()
+        {
+            RoundEndSystem.OnRoundEndCountdownStarted -= UpdateBoundInterface;
+            RoundEndSystem.OnRoundEndCountdownCancelled -= UpdateBoundInterface;
+            RoundEndSystem.OnRoundEndCountdownFinished -= UpdateBoundInterface;
+            base.OnRemove();
         }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage obj)

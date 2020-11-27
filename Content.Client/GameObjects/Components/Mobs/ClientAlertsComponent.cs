@@ -78,7 +78,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         {
             base.HandleComponentState(curState, nextState);
 
-            if (!(curState is AlertsComponentState state))
+            if (curState is not AlertsComponentState state)
             {
                 return;
             }

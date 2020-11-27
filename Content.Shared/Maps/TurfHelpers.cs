@@ -9,6 +9,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
@@ -16,15 +17,6 @@ namespace Content.Shared.Maps
 {
     public static class TurfHelpers
     {
-        /// <summary>
-        ///     Returns the content tile definition for a tile.
-        /// </summary>
-        public static ContentTileDefinition GetContentTileDefinition(this Tile tile)
-        {
-            var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
-            return (ContentTileDefinition)tileDefinitionManager[tile.TypeId];
-        }
-
         /// <summary>
         ///     Attempts to get the turf at map indices with grid id or null if no such turf is found.
         /// </summary>
@@ -70,6 +62,39 @@ namespace Content.Shared.Maps
         public static bool TryGetTileRef(this EntityCoordinates coordinates, [NotNullWhen(true)] out TileRef? turf)
         {
             return (turf = coordinates.GetTileRef()) != null;
+        }
+
+        /// <summary>
+        ///     Returns the content tile definition for a tile.
+        /// </summary>
+        public static ContentTileDefinition GetContentTileDefinition(this Tile tile, ITileDefinitionManager? tileDefinitionManager = null)
+        {
+            tileDefinitionManager ??= IoCManager.Resolve<ITileDefinitionManager>();
+            return (ContentTileDefinition)tileDefinitionManager[tile.TypeId];
+        }
+
+        /// <summary>
+        ///     Returns whether a tile is considered space.
+        /// </summary>
+        public static bool IsSpace(this Tile tile, ITileDefinitionManager? tileDefinitionManager = null)
+        {
+            return tile.GetContentTileDefinition(tileDefinitionManager).IsSpace;
+        }
+
+        /// <summary>
+        ///     Returns the content tile definition for a tile ref.
+        /// </summary>
+        public static ContentTileDefinition GetContentTileDefinition(this TileRef tile, ITileDefinitionManager? tileDefinitionManager = null)
+        {
+            return tile.Tile.GetContentTileDefinition(tileDefinitionManager);
+        }
+
+        /// <summary>
+        ///     Returns whether a tile ref is considered space.
+        /// </summary>
+        public static bool IsSpace(this TileRef tile, ITileDefinitionManager? tileDefinitionManager = null)
+        {
+            return tile.Tile.IsSpace(tileDefinitionManager);
         }
 
         public static bool PryTile(this EntityCoordinates coordinates, IEntityManager? entityManager = null,

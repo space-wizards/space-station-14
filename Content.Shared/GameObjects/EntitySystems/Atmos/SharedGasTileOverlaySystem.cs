@@ -20,15 +20,25 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
         }
 
         [Serializable, NetSerializable]
-        public struct GasData
+        public readonly struct GasData : IEquatable<GasData>
         {
-            public byte Index { get; set; }
-            public byte Opacity { get; set; }
+            public readonly byte Index;
+            public readonly byte Opacity;
 
             public GasData(byte gasId, byte opacity)
             {
                 Index = gasId;
                 Opacity = opacity;
+            }
+
+            public override int GetHashCode()
+            {
+                return HashCode.Combine(Index, Opacity);
+            }
+
+            public bool Equals(GasData other)
+            {
+                return other.Index == Index && other.Opacity == Opacity;
             }
         }
 
@@ -38,39 +48,48 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
             public readonly byte FireState;
             public readonly float FireTemperature;
             public readonly GasData[] Gas;
+            public readonly int HashCode;
 
             public GasOverlayData(byte fireState, float fireTemperature, GasData[] gas)
             {
                 FireState = fireState;
                 FireTemperature = fireTemperature;
-                Gas = gas;
+                Gas = gas ?? Array.Empty<GasData>();
+
+                Array.Sort(Gas, (a, b) => a.Index.CompareTo(b.Index));
+
+                var hash = new HashCode();
+                hash.Add(FireState);
+                hash.Add(FireTemperature);
+
+                foreach (var gasData in Gas)
+                {
+                    hash.Add(gasData);
+                }
+
+                HashCode = hash.ToHashCode();
+            }
+
+            public override int GetHashCode()
+            {
+                return HashCode;
             }
 
             public bool Equals(GasOverlayData other)
             {
-                // TODO: Moony had a suggestion on how to do this faster with the hash
-                // https://discordapp.com/channels/310555209753690112/310555209753690112/744080145219846204
-                // Aside from that I can't really see any low-hanging fruit CPU perf wise.
-                if (Gas?.Length != other.Gas?.Length) return false;
+
+                if (HashCode != other.HashCode) return false;
+                if (Gas.Length != other.Gas.Length) return false;
                 if (FireState != other.FireState) return false;
-                if (FireTemperature != other.FireTemperature) return false;
-
-                if (Gas == null)
-                {
-                    return true;
-                }
-
-                DebugTools.Assert(other.Gas != null);
+                if (MathHelper.CloseTo(FireTemperature, FireTemperature)) return false;
+                if (Gas.GetHashCode() != other.Gas.GetHashCode()) return false;
 
                 for (var i = 0; i < Gas.Length; i++)
                 {
-                    var thisGas = Gas[i];
+                    var gas = Gas[i];
                     var otherGas = other.Gas[i];
-
-                    if (!thisGas.Equals(otherGas))
-                    {
+                    if (!gas.Equals(otherGas))
                         return false;
-                    }
                 }
 
                 return true;

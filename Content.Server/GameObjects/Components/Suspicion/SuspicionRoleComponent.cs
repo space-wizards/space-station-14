@@ -215,8 +215,8 @@ namespace Content.Server.GameObjects.Components.Suspicion
         {
             base.HandleMessage(message, component);
 
-            if (!(message is RoleMessage msg) ||
-                !(msg.Role is SuspicionRole role))
+            if (message is not RoleMessage msg ||
+                msg.Role is not SuspicionRole role)
             {
                 return;
             }

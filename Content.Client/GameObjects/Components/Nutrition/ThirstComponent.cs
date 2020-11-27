@@ -13,7 +13,9 @@ namespace Content.Client.GameObjects.Components.Nutrition
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
-            if (!(curState is ThirstComponentState thirst))
+            base.HandleComponentState(curState, nextState);
+
+            if (curState is not ThirstComponentState thirst)
             {
                 return;
             }

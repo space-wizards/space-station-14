@@ -74,14 +74,12 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         {
             base.HandleComponentState(curState, nextState);
 
-            if (curState == null)
+            if (curState is not InventoryComponentState state)
                 return;
-
-            var cast = (InventoryComponentState) curState;
 
             var doneSlots = new HashSet<Slots>();
 
-            foreach (var (slot, entityUid) in cast.Entities)
+            foreach (var (slot, entityUid) in state.Entities)
             {
                 if (!Owner.EntityManager.TryGetEntity(entityUid, out var entity))
                 {
@@ -95,9 +93,9 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                 doneSlots.Add(slot);
             }
 
-            if (cast.HoverEntity != null)
+            if (state.HoverEntity != null)
             {
-                var (slot, (entityUid, fits)) = cast.HoverEntity.Value;
+                var (slot, (entityUid, fits)) = state.HoverEntity.Value;
                 var entity = Owner.EntityManager.GetEntity(entityUid);
 
                 InterfaceController?.HoverInSlot(slot, entity, fits);
