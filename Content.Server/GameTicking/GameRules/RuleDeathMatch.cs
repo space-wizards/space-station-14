@@ -2,6 +2,7 @@
 using System.Threading;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
+using Content.Shared;
 using Content.Shared.GameObjects.Components.Damage;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
@@ -56,7 +57,7 @@ namespace Content.Server.GameTicking.GameRules
         {
             _checkTimerCancel = null;
 
-            if (!_cfg.GetCVar<bool>("game.enablewin"))
+            if (!_cfg.GetCVar(CCVars.GameLobbyEnableWin))
                 return;
 
             IPlayerSession winner = null;

@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         public AMEControllerComponent MasterController => _masterController;
 
-        private List<AMEShieldComponent> _cores = new List<AMEShieldComponent>();
+        private readonly List<AMEShieldComponent> _cores = new List<AMEShieldComponent>();
 
         public int CoreCount => _cores.Count;
 

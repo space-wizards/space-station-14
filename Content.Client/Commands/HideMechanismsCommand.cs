@@ -29,7 +29,7 @@ namespace Content.Client.Commands
                 sprite.ContainerOccluded = false;
 
                 var tempParent = mechanism.Owner;
-                while (ContainerHelpers.TryGetContainer(tempParent, out var container))
+                while (tempParent.TryGetContainer(out var container))
                 {
                     if (!container.ShowContents)
                     {

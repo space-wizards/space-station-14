@@ -104,7 +104,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         {
             base.HandleComponentState(curState, nextState);
 
-            if (!(curState is SolutionContainerComponentState state))
+            if (curState is not SolutionContainerComponentState state)
             {
                 return;
             }

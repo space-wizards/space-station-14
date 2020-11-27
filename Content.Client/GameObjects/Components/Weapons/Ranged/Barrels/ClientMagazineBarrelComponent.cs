@@ -99,7 +99,9 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            if (!(curState is MagazineBarrelComponentState cast))
+            base.HandleComponentState(curState, nextState);
+
+            if (curState is not MagazineBarrelComponentState cast)
                 return;
 
             Chambered = cast.Chambered;
@@ -113,7 +115,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
 
             switch (message)
             {
-                
+
                 case MagazineAutoEjectMessage _:
                     _statusControl?.PlayAlarmAnimation();
                     return;

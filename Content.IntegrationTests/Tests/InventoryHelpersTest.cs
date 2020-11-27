@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
@@ -8,6 +9,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.IntegrationTests.Tests
@@ -16,10 +18,19 @@ namespace Content.IntegrationTests.Tests
     [TestOf(typeof(InventoryHelpers))]
     public class InventoryHelpersTest : ContentIntegrationTest
     {
+        private const string PROTOTYPES = @"
+- type: entity
+  name: InventoryStunnableDummy
+  id: InventoryStunnableDummy
+  components:
+  - type: Inventory
+  - type: Stunnable
+";
         [Test]
         public async Task SpawnItemInSlotTest()
         {
-            var server = StartServerDummyTicker();
+            var options = new ServerIntegrationOptions {ExtraPrototypes = PROTOTYPES};
+            var server = StartServerDummyTicker(options);
 
             IEntity human = null;
             InventoryComponent inventory = null;
@@ -34,7 +45,7 @@ namespace Content.IntegrationTests.Tests
 
                 var entityMan = IoCManager.Resolve<IEntityManager>();
 
-                human = entityMan.SpawnEntity("HumanMob_Content", MapCoordinates.Nullspace);
+                human = entityMan.SpawnEntity("InventoryStunnableDummy", MapCoordinates.Nullspace);
                 inventory = human.GetComponent<InventoryComponent>();
                 stun = human.GetComponent<StunnableComponent>();
 
@@ -42,11 +53,11 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(inventory.HasSlot(Slots.INNERCLOTHING));
                 Assert.That(inventory.HasSlot(Slots.IDCARD));
 
-                Assert.That(inventory.SpawnItemInSlot(Slots.INNERCLOTHING, "UniformJanitor", true));
+                Assert.That(inventory.SpawnItemInSlot(Slots.INNERCLOTHING, "ClothingUniformJumpsuitJanitor", true));
 
                 // Do we actually have the uniform equipped?
                 Assert.That(inventory.TryGetSlotItem(Slots.INNERCLOTHING, out ItemComponent uniform));
-                Assert.That(uniform.Owner.Prototype != null && uniform.Owner.Prototype.ID == "UniformJanitor");
+                Assert.That(uniform.Owner.Prototype != null && uniform.Owner.Prototype.ID == "ClothingUniformJumpsuitJanitor");
 
                 stun.Stun(1f);
 

@@ -17,9 +17,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -37,15 +35,21 @@ namespace Content.Server.GameObjects.Components
 
         private Regex _validation;
 
-        public event Action<Dictionary<string, string>> OnConfigUpdate;
-
-        public override void Initialize()
+        public override void OnAdd()
         {
-            base.Initialize();
-
+            base.OnAdd();
             if (UserInterface != null)
             {
                 UserInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
+            }
+        }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage -= UserInterfaceOnReceiveMessage;
             }
         }
 
@@ -57,7 +61,7 @@ namespace Content.Server.GameObjects.Components
                 (list) => FillConfiguration(list, _config, ""),
                 () => _config.Keys.ToList());
 
-            serializer.DataReadFunction("vailidation", "^[a-zA-Z0-9 ]*$", value => _validation = new Regex("^[a-zA-Z0-9 ]*$", RegexOptions.Compiled));
+            serializer.DataReadFunction("validation", "^[a-zA-Z0-9 ]*$", value => _validation = new Regex("^[a-zA-Z0-9 ]*$", RegexOptions.Compiled));
         }
 
         public string GetConfig(string name)
@@ -97,22 +101,19 @@ namespace Content.Server.GameObjects.Components
                 {
                     var value = msg.Config.GetValueOrDefault(key);
 
-                    if (_validation != null && !_validation.IsMatch(value) && value != "")
+                    if (value == null || _validation != null && !_validation.IsMatch(value) && value != "")
                         continue;
 
                     _config[key] = value;
                 }
 
-                OnConfigUpdate(_config);
+                SendMessage(new ConfigUpdatedComponentMessage(config));
             }
          }
 
         private void UpdateUserInterface()
         {
-            if (UserInterface == null)
-                return;
-
-            UserInterface.SetState(new ConfigurationBoundUserInterfaceState(_config));
+            UserInterface?.SetState(new ConfigurationBoundUserInterfaceState(_config));
         }
 
         private void OpenUserInterface(IActorComponent actor)

@@ -675,7 +675,7 @@ namespace Content.Shared.GameObjects.Components.Body
         {
             base.HandleComponentState(curState, nextState);
 
-            if (!(curState is BodyComponentState state))
+            if (curState is not BodyComponentState state)
             {
                 return;
             }

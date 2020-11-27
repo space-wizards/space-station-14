@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.Administration;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
+using Content.Shared.Administration;
 using Content.Shared.Maps;
 using Content.Shared.Roles;
 using Robust.Server.Interfaces.Console;
@@ -18,6 +20,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking
 {
+    [AdminCommand(AdminFlags.Server)]
     class DelayStartCommand : IClientCommand
     {
         public string Command => "delaystart";
@@ -60,6 +63,7 @@ namespace Content.Server.GameTicking
         }
     }
 
+    [AdminCommand(AdminFlags.Server)]
     class StartRoundCommand : IClientCommand
     {
         public string Command => "startround";
@@ -80,6 +84,7 @@ namespace Content.Server.GameTicking
         }
     }
 
+    [AdminCommand(AdminFlags.Server)]
     class EndRoundCommand : IClientCommand
     {
         public string Command => "endround";
@@ -100,6 +105,7 @@ namespace Content.Server.GameTicking
         }
     }
 
+    [AdminCommand(AdminFlags.Server)]
     public class NewRoundCommand : IClientCommand
     {
         public string Command => "restartround";
@@ -165,6 +171,7 @@ namespace Content.Server.GameTicking
         }
     }
 
+    [AnyCommand]
     class ObserveCommand : IClientCommand
     {
         public string Command => "observe";
@@ -183,6 +190,7 @@ namespace Content.Server.GameTicking
         }
     }
 
+    [AnyCommand]
     class JoinGameCommand : IClientCommand
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -228,6 +236,7 @@ namespace Content.Server.GameTicking
         }
     }
 
+    [AnyCommand]
     class ToggleReadyCommand : IClientCommand
     {
         public string Command => "toggleready";
@@ -246,6 +255,7 @@ namespace Content.Server.GameTicking
         }
     }
 
+    [AdminCommand(AdminFlags.Server)]
     class ToggleDisallowLateJoinCommand: IClientCommand
     {
         public string Command => "toggledisallowlatejoin";
@@ -274,6 +284,7 @@ namespace Content.Server.GameTicking
         }
     }
 
+    [AdminCommand(AdminFlags.Server)]
     class SetGamePresetCommand : IClientCommand
     {
         public string Command => "setgamepreset";
@@ -294,6 +305,7 @@ namespace Content.Server.GameTicking
         }
     }
 
+    [AdminCommand(AdminFlags.Server)]
     class ForcePresetCommand : IClientCommand
     {
         public string Command => "forcepreset";
@@ -327,6 +339,7 @@ namespace Content.Server.GameTicking
         }
     }
 
+    [AdminCommand(AdminFlags.Server | AdminFlags.Mapping)]
     class MappingCommand : IClientCommand
     {
         public string Command => "mapping";
@@ -383,6 +396,7 @@ namespace Content.Server.GameTicking
         }
     }
 
+    [AdminCommand(AdminFlags.Mapping)]
     class TileWallsCommand : IClientCommand
     {
         // ReSharper disable once StringLiteralTypo

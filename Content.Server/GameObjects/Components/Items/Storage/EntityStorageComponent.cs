@@ -1,7 +1,8 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Body;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.Components.Body;
@@ -14,7 +15,6 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
@@ -47,8 +47,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         [ViewVariables]
         private bool _isCollidableWhenOpen;
         [ViewVariables]
-        protected IEntityQuery EntityQuery;
-
+        protected IEntityQuery? EntityQuery;
         private bool _showContents;
         private bool _occludesLight;
         private bool _open;
@@ -58,7 +57,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         private string _openSound = "/Audio/Machines/closetopen.ogg";
 
         [ViewVariables]
-        protected Container Contents;
+        protected Container Contents = default!;
 
         /// <summary>
         /// Determines if the container contents should be drawn when the container is closed.
@@ -100,20 +99,25 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             {
                 _isWeldedShut = value;
 
-                if (Owner.TryGetComponent(out AppearanceComponent appearance))
+                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
                 {
                     appearance.SetData(StorageVisuals.Welded, value);
                 }
             }
         }
 
+        private bool _beingWelded;
+
         [ViewVariables(VVAccess.ReadWrite)]
         public bool CanWeldShut {
             get => _canWeldShut;
             set
             {
+                if (_canWeldShut == value)
+                    return;
+
                 _canWeldShut = value;
-                if (Owner.TryGetComponent(out AppearanceComponent appearance))
+                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
                 {
                     appearance.SetData(StorageVisuals.CanWeld, value);
                 }
@@ -187,6 +191,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         protected virtual void CloseStorage()
         {
             Open = false;
+            EntityQuery ??= new IntersectingEntityQuery(Owner);
             var entities = Owner.EntityManager.GetEntities(EntityQuery);
             var count = 0;
             foreach (var entity in entities)
@@ -243,7 +248,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 placeableSurfaceComponent.IsPlaceable = Open;
             }
 
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(StorageVisuals.Open, Open);
             }
@@ -252,7 +257,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         protected virtual bool AddToContents(IEntity entity)
         {
             if (entity == Owner) return false;
-            if (entity.TryGetComponent(out IPhysicsComponent entityPhysicsComponent))
+            if (entity.TryGetComponent(out IPhysicsComponent? entityPhysicsComponent))
             {
                 if(MaxSize < entityPhysicsComponent.WorldAABB.Size.X
                     || MaxSize < entityPhysicsComponent.WorldAABB.Size.Y)
@@ -294,7 +299,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         }
 
         /// <inheritdoc />
-        public override void HandleMessage(ComponentMessage message, IComponent component)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
 
@@ -367,25 +372,46 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
+            if (_beingWelded)
+                return false;
 
             if (Open)
+            {
+                _beingWelded = false;
                 return false;
+            }
 
             if (!CanWeldShut)
+            {
+                _beingWelded = false;
                 return false;
+            }
 
             if (Contents.Contains(eventArgs.User))
             {
+                _beingWelded = false;
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("It's too Cramped!"));
                 return false;
             }
 
-            if (!eventArgs.Using.TryGetComponent(out WelderComponent tool))
+            if (!eventArgs.Using.TryGetComponent(out WelderComponent? tool) || !tool.WelderLit)
+            {
+                _beingWelded = false;
                 return false;
+            }
+
+            if (_beingWelded)
+                return false;
+
+            _beingWelded = true;
 
             if (!await tool.UseTool(eventArgs.User, Owner, 1f, ToolQuality.Welding, 1f))
+            {
+                _beingWelded = false;
                 return false;
+            }
 
+            _beingWelded = false;
             IsWeldedShut ^= true;
             return true;
         }

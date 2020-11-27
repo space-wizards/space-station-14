@@ -1,7 +1,7 @@
 - type: entity
   abstract: true
-  parent: BackpackClothing
-  id: BackpackClothingFilled
+  parent: ClothingBackpack
+  id: ClothingBackpackFilled
   components:
   - type: StorageFill
     contents:
@@ -9,8 +9,8 @@
 
 - type: entity
   abstract: true
-  parent: ClownPack
-  id: ClownPackFilled
+  parent: ClothingBackpackClown
+  id: ClothingBackpackClownFilled
   components:
   - type: StorageFill
     contents:
@@ -18,8 +18,8 @@
 
 - type: entity
   abstract: true
-  parent: SecPack
-  id: SecPackFilled
+  parent: ClothingBackpackSecurity
+  id: ClothingBackpackSecurityFilled
   components:
   - type: StorageFill
     contents:
@@ -29,8 +29,8 @@
 
 - type: entity
   abstract: true
-  parent: BackpackMedical
-  id: BackpackMedicalFilled
+  parent: ClothingBackpackMedical
+  id: ClothingBackpackMedicalFilled
   components:
   - type: StorageFill
     contents:
@@ -38,8 +38,8 @@
 
 - type: entity
   abstract: true
-  parent: BackpackCaptain
-  id: BackpackCaptainFilled
+  parent: ClothingBackpackCaptain
+  id: ClothingBackpackCaptainFilled
   components:
   - type: StorageFill
     contents:
@@ -49,8 +49,8 @@
 
 - type: entity
   abstract: true
-  parent: BackpackEngineering
-  id: BackpackEngineeringFilled
+  parent: ClothingBackpackEngineering
+  id: ClothingBackpackEngineeringFilled
   components:
   - type: StorageFill
     contents:

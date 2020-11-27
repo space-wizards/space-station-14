@@ -49,6 +49,7 @@ namespace Content.Client.GameObjects.Components.Wires
         {
             base.Dispose(disposing);
 
+            _menu.OnClose -= Close;
             _menu.Close();
         }
     }

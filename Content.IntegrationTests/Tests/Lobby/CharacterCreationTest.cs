@@ -38,9 +38,7 @@ namespace Content.IntegrationTests.Tests.Lobby
 
             await server.WaitAssertion(() =>
             {
-                var lobbyCvar = CCVars.GameLobbyEnabled;
-                serverConfig.SetCVar(lobbyCvar.Name, true);
-
+                serverConfig.SetCVar(CCVars.GameLobbyEnabled, true);
                 serverTicker.RestartRound();
             });
 

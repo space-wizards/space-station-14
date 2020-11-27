@@ -22,9 +22,9 @@
 - type: startingGear
   id: HoPGear
   equipment:
-    innerclothing: UniformHoP
-    backpack: BackpackClothingFilled
-    shoes: ShoesBrown
-    head: HatHopcap
+    innerclothing: ClothingUniformJumpsuitHoP
+    backpack: ClothingBackpackFilled
+    shoes: ClothingShoesColorBrown
+    head: ClothingHeadHatHopcap
     idcard: HoPPDA
-    ears: HeadsetCommand
+    ears: ClothingHeadsetAltCommand

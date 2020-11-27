@@ -23,7 +23,7 @@ namespace Content.Client.UserInterface.Cargo
         public event Action<BaseButton.ButtonEventArgs> OnOrderApproved;
         public event Action<BaseButton.ButtonEventArgs> OnOrderCanceled;
 
-        private List<string> _categoryStrings = new List<string>();
+        private readonly List<string> _categoryStrings = new List<string>();
 
         private Label _accountNameLabel { get; set; }
         private Label _pointsLabel { get; set; }

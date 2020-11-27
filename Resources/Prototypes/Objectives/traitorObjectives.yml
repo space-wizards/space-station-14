@@ -1,0 +1,9 @@
+﻿- type: objective
+  id: SoapDeluxeStealObjective
+  prob: 0.3
+  issuer: The Syndicate
+  requirements:
+    - !type:SuspicionTraitorRequirement {}
+  conditions:
+    - !type:StealCondition
+      prototype: SoapDeluxe
