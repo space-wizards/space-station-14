@@ -98,7 +98,7 @@ namespace Content.Client.Parallax
 
                 if (table.TryGetValue("seed", out tomlObject))
                 {
-                    Seed = (uint) ((TomlValue<int>) tomlObject).Value;
+                    Seed = Convert.ToUInt32(((TomlValue<int>) tomlObject).Value);
                 }
 
                 if (table.TryGetValue("persistence", out tomlObject))
