@@ -2,12 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Shared;
 using Content.Shared.GameObjects.Components.Instruments;
 using Content.Shared.Physics;
 using Robust.Client.Audio.Midi;
 using Robust.Shared.Audio.Midi;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Timers;
+using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -31,6 +33,7 @@ namespace Content.Client.GameObjects.Components.Instruments
         [Dependency] private readonly IMidiManager _midiManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IClientNetManager _netManager = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         private IMidiRenderer? _renderer;
 
@@ -422,7 +425,7 @@ namespace Content.Client.GameObjects.Components.Instruments
 
             if (_midiEventBuffer.Count == 0) return;
 
-            var max = Math.Min(MaxMidiEventsPerBatch, MaxMidiEventsPerSecond - _sentWithinASec);
+            var max = Math.Min(_cfg.GetCVar(CCVars.MaxMidiEventsPerBatch), _cfg.GetCVar(CCVars.MaxMidiEventsPerSecond) - _sentWithinASec);
 
             if (max <= 0)
             {

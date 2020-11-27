@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Utility;
+using Content.Shared;
 using Content.Shared.GameObjects.Components.Instruments;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
@@ -16,6 +17,7 @@ using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -38,6 +40,7 @@ namespace Content.Server.GameObjects.Components.Instruments
             IThrown
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         private static readonly TimeSpan OneSecAgo = TimeSpan.FromSeconds(-1);
 
@@ -186,6 +189,11 @@ namespace Content.Server.GameObjects.Components.Instruments
         {
             base.HandleNetworkMessage(message, channel, session);
 
+            int maxMidiLaggedBatches = _cfg.GetCVar(CCVars.MaxMidiLaggedBatches);
+            int maxMidiBatchDropped = _cfg.GetCVar(CCVars.MaxMidiBatchDropped);
+            int maxMidiEventsPerSecond = _cfg.GetCVar(CCVars.MaxMidiEventsPerSecond);
+            int maxMidiEventsPerBatch = _cfg.GetCVar(CCVars.MaxMidiEventsPerBatch);
+
             switch (message)
             {
                 case InstrumentMidiEventMessage midiEventMsg:
@@ -206,26 +214,25 @@ namespace Content.Server.GameObjects.Components.Instruments
                         }
 
                         _laggedBatches++;
-                        switch (_laggedBatches)
+
+                        if (_laggedBatches == (int) (maxMidiLaggedBatches * (1 / 3d) + 1))
                         {
-                            case (int) (MaxMidiLaggedBatches * (1 / 3d)) + 1:
-                                Owner.PopupMessage(InstrumentPlayer.AttachedEntity,
-                                    "Your fingers are beginning to a cramp a little!");
-                                break;
-                            case (int) (MaxMidiLaggedBatches * (2 / 3d)) + 1:
-                                Owner.PopupMessage(InstrumentPlayer.AttachedEntity,
-                                    "Your fingers are seriously cramping up!");
-                                break;
+                            Owner.PopupMessage(InstrumentPlayer.AttachedEntity,
+                                "Your fingers are beginning to a cramp a little!");
+                        } else if (_laggedBatches == (int) (maxMidiLaggedBatches * (2 / 3d) + 1))
+                        {
+                            Owner.PopupMessage(InstrumentPlayer.AttachedEntity,
+                                "Your fingers are seriously cramping up!");
                         }
 
-                        if (_laggedBatches > MaxMidiLaggedBatches)
+                        if (_laggedBatches > maxMidiLaggedBatches)
                         {
                             send = false;
                         }
                     }
 
-                    if (++_midiEventCount > MaxMidiEventsPerSecond
-                        || midiEventMsg.MidiEvent.Length > MaxMidiEventsPerBatch)
+                    if (++_midiEventCount > maxMidiEventsPerSecond
+                        || midiEventMsg.MidiEvent.Length > maxMidiEventsPerBatch)
                     {
                         var now = _gameTiming.RealTime;
                         var oneSecAGo = now.Add(OneSecAgo);
@@ -346,6 +353,9 @@ namespace Content.Server.GameObjects.Components.Instruments
         {
             base.Update(delta);
 
+            var maxMidiLaggedBatches = _cfg.GetCVar(CCVars.MaxMidiLaggedBatches);
+            var maxMidiBatchDropped = _cfg.GetCVar(CCVars.MaxMidiBatchDropped);
+
             if (_instrumentPlayer != null && !ActionBlockerSystem.CanInteract(_instrumentPlayer.AttachedEntity))
             {
                 InstrumentPlayer = null;
@@ -353,8 +363,8 @@ namespace Content.Server.GameObjects.Components.Instruments
                 UserInterface?.CloseAll();
             }
 
-            if ((_batchesDropped >= MaxMidiBatchDropped
-                    || _laggedBatches >= MaxMidiLaggedBatches)
+            if ((_batchesDropped >= maxMidiBatchDropped
+                    || _laggedBatches >= maxMidiLaggedBatches)
                 && InstrumentPlayer != null)
             {
                 var mob = InstrumentPlayer.AttachedEntity;
