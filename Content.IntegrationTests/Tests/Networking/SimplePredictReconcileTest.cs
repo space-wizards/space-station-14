@@ -433,7 +433,7 @@ namespace Content.IntegrationTests.Tests.Networking
 
             // Queue of all the events that come in so we can test that they come in perfectly as expected.
             public List<(GameTick tick, bool firstPredict, bool old, bool @new, bool value)> EventTriggerList { get; } =
-                new List<(GameTick, bool, bool, bool, bool)>();
+                new();
 
             [Dependency] private readonly IGameTiming _gameTiming = default!;
 

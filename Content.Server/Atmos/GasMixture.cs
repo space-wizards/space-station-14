@@ -23,7 +23,7 @@ namespace Content.Server.Atmos
     {
         private readonly AtmosphereSystem _atmosphereSystem;
 
-        public static GasMixture SpaceGas => new GasMixture() {Volume = 2500f, Immutable = true, Temperature = Atmospherics.TCMB};
+        public static GasMixture SpaceGas => new() {Volume = 2500f, Immutable = true, Temperature = Atmospherics.TCMB};
 
         // This must always have a length that is a multiple of 4 for SIMD acceleration.
         [ViewVariables]
@@ -44,7 +44,7 @@ namespace Content.Server.Atmos
         public float LastShare { get; private set; } = 0;
 
         [ViewVariables]
-        public readonly Dictionary<GasReaction, float> ReactionResults = new Dictionary<GasReaction, float>()
+        public readonly Dictionary<GasReaction, float> ReactionResults = new()
         {
             // We initialize the dictionary here.
             { GasReaction.Fire, 0f }

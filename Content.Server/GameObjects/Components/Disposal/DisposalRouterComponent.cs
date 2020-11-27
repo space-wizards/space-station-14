@@ -36,7 +36,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         public override string Name => "DisposalRouter";
 
         [ViewVariables]
-        private readonly HashSet<string> _tags = new HashSet<string>();
+        private readonly HashSet<string> _tags = new();
 
         [ViewVariables]
         public bool Anchored =>

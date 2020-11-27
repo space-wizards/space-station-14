@@ -15,7 +15,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         /// <inheritdoc />
         public sealed override uint? NetID => ContentNetIDs.SOLUTION;
 
-        private Solution _solution = new Solution();
+        private Solution _solution = new();
         private ReagentUnit _maxVolume;
         private Color _substanceColor;
 

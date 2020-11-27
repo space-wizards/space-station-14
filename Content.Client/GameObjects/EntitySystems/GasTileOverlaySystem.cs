@@ -24,7 +24,7 @@ namespace Content.Client.GameObjects.EntitySystems
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
 
-        private readonly Dictionary<float, Color> _fireCache = new Dictionary<float, Color>();
+        private readonly Dictionary<float, Color> _fireCache = new();
 
         // Gas overlays
         private readonly float[] _timer = new float[Atmospherics.TotalNumberOfGases];
@@ -42,7 +42,7 @@ namespace Content.Client.GameObjects.EntitySystems
         private readonly Texture[][] _fireFrames = new Texture[FireStates][];
 
         private readonly Dictionary<GridId, Dictionary<Vector2i, GasOverlayChunk>> _tileData =
-            new Dictionary<GridId, Dictionary<Vector2i, GasOverlayChunk>>();
+            new();
 
         private AtmosphereSystem _atmosphereSystem = default!;
 

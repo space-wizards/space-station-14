@@ -31,7 +31,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         /// <summary>
         /// A list of overlay containers representing the current overlays applied
         /// </summary>
-        private List<OverlayContainer> _currentEffects = new List<OverlayContainer>();
+        private List<OverlayContainer> _currentEffects = new();
 
         [ViewVariables(VVAccess.ReadOnly)]
         public List<OverlayContainer> ActiveOverlays

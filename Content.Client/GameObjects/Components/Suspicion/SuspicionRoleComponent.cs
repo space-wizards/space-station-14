@@ -67,7 +67,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
             }
         }
 
-        public HashSet<EntityUid> Allies { get; } = new HashSet<EntityUid>();
+        public HashSet<EntityUid> Allies { get; } = new();
 
         private bool AddAlly(EntityUid ally)
         {

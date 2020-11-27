@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         private bool _paused = false;
         private float _timer = 0f;
-        private Stopwatch _stopwatch = new Stopwatch();
+        private Stopwatch _stopwatch = new();
         private GridId _gridId;
 
         [ComponentDependency] private IMapGridComponent? _mapGridComponent = default!;
@@ -75,7 +75,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         private double _tileEqualizeLastProcess;
 
         [ViewVariables]
-        private readonly HashSet<ExcitedGroup> _excitedGroups = new HashSet<ExcitedGroup>(1000);
+        private readonly HashSet<ExcitedGroup> _excitedGroups = new(1000);
 
         [ViewVariables]
         private int ExcitedGroupCount => _excitedGroups.Count;
@@ -84,10 +84,10 @@ namespace Content.Server.GameObjects.Components.Atmos
         private double _excitedGroupLastProcess;
 
         [ViewVariables]
-        protected readonly Dictionary<Vector2i, TileAtmosphere> Tiles = new Dictionary<Vector2i, TileAtmosphere>(1000);
+        protected readonly Dictionary<Vector2i, TileAtmosphere> Tiles = new(1000);
 
         [ViewVariables]
-        private readonly HashSet<TileAtmosphere> _activeTiles = new HashSet<TileAtmosphere>(1000);
+        private readonly HashSet<TileAtmosphere> _activeTiles = new(1000);
 
         [ViewVariables]
         private int ActiveTilesCount => _activeTiles.Count;
@@ -96,7 +96,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         private double _activeTilesLastProcess;
 
         [ViewVariables]
-        private readonly HashSet<TileAtmosphere> _hotspotTiles = new HashSet<TileAtmosphere>(1000);
+        private readonly HashSet<TileAtmosphere> _hotspotTiles = new(1000);
 
         [ViewVariables]
         private int HotspotTilesCount => _hotspotTiles.Count;
@@ -105,7 +105,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         private double _hotspotsLastProcess;
 
         [ViewVariables]
-        private readonly HashSet<TileAtmosphere> _superconductivityTiles = new HashSet<TileAtmosphere>(1000);
+        private readonly HashSet<TileAtmosphere> _superconductivityTiles = new(1000);
 
         [ViewVariables]
         private int SuperconductivityTilesCount => _superconductivityTiles.Count;
@@ -114,13 +114,13 @@ namespace Content.Server.GameObjects.Components.Atmos
         private double _superconductivityLastProcess;
 
         [ViewVariables]
-        private readonly HashSet<Vector2i> _invalidatedCoords = new HashSet<Vector2i>(1000);
+        private readonly HashSet<Vector2i> _invalidatedCoords = new(1000);
 
         [ViewVariables]
         private int InvalidatedCoordsCount => _invalidatedCoords.Count;
 
         [ViewVariables]
-        private HashSet<TileAtmosphere> _highPressureDelta = new HashSet<TileAtmosphere>(1000);
+        private HashSet<TileAtmosphere> _highPressureDelta = new(1000);
 
         [ViewVariables]
         private int HighPressureDeltaCount => _highPressureDelta.Count;
@@ -129,28 +129,28 @@ namespace Content.Server.GameObjects.Components.Atmos
         private double _highPressureDeltaLastProcess;
 
         [ViewVariables]
-        private readonly HashSet<IPipeNet> _pipeNets = new HashSet<IPipeNet>();
+        private readonly HashSet<IPipeNet> _pipeNets = new();
 
         [ViewVariables]
         private double _pipeNetLastProcess;
 
         [ViewVariables]
-        private readonly HashSet<PipeNetDeviceComponent> _pipeNetDevices = new HashSet<PipeNetDeviceComponent>();
+        private readonly HashSet<PipeNetDeviceComponent> _pipeNetDevices = new();
 
         [ViewVariables]
         private double _pipeNetDevicesLastProcess;
 
         [ViewVariables]
-        private Queue<TileAtmosphere> _currentRunTiles = new Queue<TileAtmosphere>();
+        private Queue<TileAtmosphere> _currentRunTiles = new();
 
         [ViewVariables]
-        private Queue<ExcitedGroup> _currentRunExcitedGroups = new Queue<ExcitedGroup>();
+        private Queue<ExcitedGroup> _currentRunExcitedGroups = new();
 
         [ViewVariables]
-        private Queue<IPipeNet> _currentRunPipeNet = new Queue<IPipeNet>();
+        private Queue<IPipeNet> _currentRunPipeNet = new();
 
         [ViewVariables]
-        private Queue<PipeNetDeviceComponent> _currentRunPipeNetDevice = new Queue<PipeNetDeviceComponent>();
+        private Queue<PipeNetDeviceComponent> _currentRunPipeNetDevice = new();
 
         [ViewVariables]
         private ProcessState _state = ProcessState.TileEqualize;

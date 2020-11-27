@@ -19,7 +19,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
         [Dependency] private readonly IEyeManager _eyeManager = default!;
 
         private AiDebugMode _tooltips = AiDebugMode.None;
-        private readonly Dictionary<IEntity, PanelContainer> _aiBoxes = new Dictionary<IEntity,PanelContainer>();
+        private readonly Dictionary<IEntity, PanelContainer> _aiBoxes = new();
 
         public override void Update(float frameTime)
         {

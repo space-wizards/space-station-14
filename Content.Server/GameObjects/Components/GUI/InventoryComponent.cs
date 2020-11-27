@@ -30,7 +30,7 @@ namespace Content.Server.GameObjects.Components.GUI
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
         [ViewVariables]
-        private readonly Dictionary<Slots, ContainerSlot> _slotContainers = new Dictionary<Slots, ContainerSlot>();
+        private readonly Dictionary<Slots, ContainerSlot> _slotContainers = new();
 
         private KeyValuePair<Slots, (EntityUid entity, bool fits)>? _hoverEntity;
 

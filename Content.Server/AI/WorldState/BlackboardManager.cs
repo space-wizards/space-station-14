@@ -14,7 +14,7 @@ namespace Content.Server.AI.WorldState
     {
         // Cache the known types
         public IReadOnlyCollection<Type> AiStates => _aiStates;
-        private readonly List<Type> _aiStates = new List<Type>();
+        private readonly List<Type> _aiStates = new();
 
         public void Initialize()
         {

@@ -42,12 +42,12 @@ namespace Content.Client.GameObjects.Components
 
             private float _timer;
 
-            private static readonly StyleBoxFlat _styleBoxLit = new StyleBoxFlat
+            private static readonly StyleBoxFlat _styleBoxLit = new()
             {
                 BackgroundColor = Color.Green
             };
 
-            private static readonly StyleBoxFlat _styleBoxUnlit = new StyleBoxFlat
+            private static readonly StyleBoxFlat _styleBoxUnlit = new()
             {
                 BackgroundColor = Color.Black
             };

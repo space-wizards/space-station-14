@@ -21,7 +21,7 @@ namespace Content.Client.GameObjects.Components
 {
     public class ParticleAcceleratorPartVisualizer : AppearanceVisualizer
     {
-        private readonly Dictionary<ParticleAcceleratorVisualState, string> _states = new Dictionary<ParticleAcceleratorVisualState, string>();
+        private readonly Dictionary<ParticleAcceleratorVisualState, string> _states = new();
 
         public override void LoadData(YamlMappingNode node)
         {

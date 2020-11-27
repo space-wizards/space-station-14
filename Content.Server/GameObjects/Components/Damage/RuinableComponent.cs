@@ -33,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Damage
         protected string DestroySoundCollection { get; private set; }
 
         public override List<DamageState> SupportedDamageStates =>
-            new List<DamageState> {DamageState.Alive, DamageState.Dead};
+            new() {DamageState.Alive, DamageState.Dead};
 
         public override void ExposeData(ObjectSerializer serializer)
         {

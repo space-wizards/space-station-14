@@ -50,7 +50,7 @@ namespace Content.Client.GameObjects.Components.Instruments
         ///     A queue of MidiEvents to be sent to the server.
         /// </summary>
         [ViewVariables]
-        private readonly List<MidiEvent> _midiEventBuffer = new List<MidiEvent>();
+        private readonly List<MidiEvent> _midiEventBuffer = new();
 
         /// <summary>
         ///     Whether a midi song will loop or not.

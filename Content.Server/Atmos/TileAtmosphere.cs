@@ -36,7 +36,7 @@ namespace Content.Server.Atmos
         private readonly GridTileLookupSystem _gridTileLookupSystem = default!;
 
 
-        private static readonly TileAtmosphereComparer Comparer = new TileAtmosphereComparer();
+        private static readonly TileAtmosphereComparer Comparer = new();
 
         [ViewVariables] private int _archivedCycle;
         [ViewVariables] private int _currentCycle;

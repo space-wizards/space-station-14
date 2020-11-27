@@ -17,10 +17,9 @@ namespace Content.Client.GameObjects.Components
         public override string Name => "DoAfter";
 
         public IReadOnlyDictionary<byte, ClientDoAfter> DoAfters => _doAfters;
-        private readonly Dictionary<byte, ClientDoAfter> _doAfters = new Dictionary<byte, ClientDoAfter>();
-
-        public readonly List<(TimeSpan CancelTime, ClientDoAfter Message)> CancelledDoAfters =
-                     new List<(TimeSpan CancelTime, ClientDoAfter Message)>();
+        private readonly Dictionary<byte, ClientDoAfter> _doAfters = new();
+        
+        public readonly List<(TimeSpan CancelTime, ClientDoAfter Message)> CancelledDoAfters = new();
 
         public DoAfterGui? Gui { get; set; }
 

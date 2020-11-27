@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Portal
         [ViewVariables] private bool _onCooldown;
         [ViewVariables] private string _departureSound = "";
         [ViewVariables] private string _arrivalSound = "";
-        public readonly List<IEntity> ImmuneEntities = new List<IEntity>(); // K
+        public readonly List<IEntity> ImmuneEntities = new(); // K
         [ViewVariables(VVAccess.ReadWrite)] private float _aliveTime;
 
         public override void ExposeData(ObjectSerializer serializer)

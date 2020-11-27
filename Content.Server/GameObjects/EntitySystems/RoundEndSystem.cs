@@ -19,7 +19,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public const float RestartRoundTime = 20f;
 
-        private CancellationTokenSource _roundEndCancellationTokenSource = new CancellationTokenSource();
+        private CancellationTokenSource _roundEndCancellationTokenSource = new();
         public bool IsRoundEndCountdownStarted { get; private set; }
         public TimeSpan RoundEndCountdownTime { get; set; } = TimeSpan.FromMinutes(4);
         public TimeSpan? ExpectedCountdownEnd = null;
