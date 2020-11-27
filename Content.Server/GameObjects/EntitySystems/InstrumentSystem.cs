@@ -18,13 +18,13 @@ namespace Content.Server.GameObjects.EntitySystems
 
             _cfg.OnValueChanged(CCVars.MaxMidiEventsPerSecond, OnMaxMidiEventsPerSecondChanged, true);
             _cfg.OnValueChanged(CCVars.MaxMidiEventsPerBatch, OnMaxMidiEventsPerBatchChanged, true);
-            _cfg.OnValueChanged(CCVars.MaxMidiBatchDropped, OnMaxMidiBatchDroppedChanged, true);
+            _cfg.OnValueChanged(CCVars.MaxMidiBatchesDropped, OnMaxMidiBatchesDroppedChanged, true);
             _cfg.OnValueChanged(CCVars.MaxMidiLaggedBatches, OnMaxMidiLaggedBatchesChanged, true);
         }
 
         public int MaxMidiEventsPerSecond { get; private set; }
         public int MaxMidiEventsPerBatch { get; private set; }
-        public int MaxMidiBatchDropped { get; private set; }
+        public int MaxMidiBatchesDropped { get; private set; }
         public int MaxMidiLaggedBatches { get; private set; }
 
         private void OnMaxMidiLaggedBatchesChanged(int obj)
@@ -32,9 +32,9 @@ namespace Content.Server.GameObjects.EntitySystems
             MaxMidiLaggedBatches = obj;
         }
 
-        private void OnMaxMidiBatchDroppedChanged(int obj)
+        private void OnMaxMidiBatchesDroppedChanged(int obj)
         {
-            MaxMidiBatchDropped = obj;
+            MaxMidiBatchesDropped = obj;
         }
 
         private void OnMaxMidiEventsPerBatchChanged(int obj)

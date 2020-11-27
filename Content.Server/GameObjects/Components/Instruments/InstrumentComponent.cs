@@ -356,7 +356,7 @@ namespace Content.Server.GameObjects.Components.Instruments
             base.Update(delta);
 
             var maxMidiLaggedBatches = _instrumentSystem.MaxMidiLaggedBatches;
-            var maxMidiBatchDropped = _instrumentSystem.MaxMidiBatchDropped;
+            var maxMidiBatchDropped = _instrumentSystem.MaxMidiBatchesDropped;
 
             if (_instrumentPlayer != null && !ActionBlockerSystem.CanInteract(_instrumentPlayer.AttachedEntity))
             {
