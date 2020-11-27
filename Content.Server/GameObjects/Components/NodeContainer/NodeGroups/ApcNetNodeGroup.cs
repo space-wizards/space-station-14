@@ -40,13 +40,19 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         public TimeSpan DisruptionEnd { get; private set; } = new();
 
         [ViewVariables]
-        public TimeSpan DisruptionCooldownEnd { get; private set; } = new();
-
-        [ViewVariables]
         private bool Disrupted => _gameTiming.CurTime <= DisruptionEnd;
 
         [ViewVariables]
+        private TimeSpan RemainingDisruption => DisruptionEnd - _gameTiming.CurTime;
+
+        [ViewVariables]
+        public TimeSpan DisruptionCooldownEnd { get; private set; } = new();
+
+        [ViewVariables]
         private bool DisruptionOnCooldown => _gameTiming.CurTime <= DisruptionCooldownEnd;
+
+        [ViewVariables]
+        private TimeSpan RemainingDisruptionCooldown => DisruptionCooldownEnd - _gameTiming.CurTime;
 
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -170,6 +176,30 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         }
 
         #endregion
+
+        protected override void OnGivingNodesForCombine(INodeGroup newGroup)
+        {
+            if (!Disrupted)
+                return;
+
+            if (newGroup is not IApcNet newApcNet)
+                return;
+
+            newApcNet.DisruptPower(RemainingDisruption, RemainingDisruptionCooldown);
+        }
+
+        protected override void AfterRemake(IEnumerable<INodeGroup> newGroups)
+        {
+            if (!Disrupted)
+                return;
+
+            foreach (var newGroup in newGroups)
+            {
+                if (newGroup is not IApcNet newApcNet)
+                    continue;
+                newApcNet.DisruptPower(RemainingDisruption, RemainingDisruptionCooldown);
+            }
+        }
 
         private class NullApcNet : IApcNet
         {
