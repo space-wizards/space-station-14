@@ -39,7 +39,6 @@ namespace Content.Server.GameObjects.Components.Atmos
         [Robust.Shared.IoC.Dependency] private IMapManager _mapManager = default!;
         [Robust.Shared.IoC.Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
         [Robust.Shared.IoC.Dependency] private IServerEntityManager _serverEntityManager = default!;
-        [Robust.Shared.IoC.Dependency] private IConfigurationManager _cfg = default!;
 
         public GridTileLookupSystem GridTileLookupSystem { get; private set; } = default!;
         internal GasTileOverlaySystem GasTileOverlaySystem { get; private set; } = default!;
@@ -474,7 +473,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         public virtual void Update(float frameTime)
         {
             _timer += frameTime;
-            var atmosTime = 1f/_cfg.GetCVar(CCVars.AtmosTickRate);
+            var atmosTime = 1f/AtmosphereSystem.AtmosTickRate;
 
             if (_invalidatedCoords.Count != 0)
                 Revalidate();
@@ -485,7 +484,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             // We subtract it so it takes lost time into account.
             _timer -= atmosTime;
 
-            var maxProcessTime = _cfg.GetCVar(CCVars.AtmosMaxProcessTime);
+            var maxProcessTime = AtmosphereSystem.AtmosMaxProcessTime;
 
             switch (_state)
             {
@@ -570,7 +569,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                     // Next state depends on whether monstermos equalization is enabled or not.
                     // Note: We do this here instead of on the tile equalization step to prevent ending it early.
                     //       Therefore, a change to this CVar might only be applied after that step is over.
-                    _state = _cfg.GetCVar(CCVars.MonstermosEqualization) ? ProcessState.TileEqualize : ProcessState.ActiveTiles;
+                    _state = AtmosphereSystem.MonstermosEqualization ? ProcessState.TileEqualize : ProcessState.ActiveTiles;
                     break;
             }
 
@@ -608,7 +607,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             _stopwatch.Restart();
 
-            var spaceWind = _cfg.GetCVar(CCVars.SpaceWind);
+            var spaceWind = AtmosphereSystem.SpaceWind;
 
             if(!resumed)
                 _currentRunTiles = new Queue<TileAtmosphere>(_activeTiles);
@@ -637,7 +636,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             _stopwatch.Restart();
 
-            var spaceIsAllConsuming = _cfg.GetCVar(CCVars.ExcitedGroupsSpaceIsAllConsuming);
+            var spaceIsAllConsuming = AtmosphereSystem.ExcitedGroupsSpaceIsAllConsuming;
 
             if(!resumed)
                 _currentRunExcitedGroups = new Queue<ExcitedGroup>(_excitedGroups);
