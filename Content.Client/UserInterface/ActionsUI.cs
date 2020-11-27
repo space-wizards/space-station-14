@@ -8,6 +8,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
 using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Timing;
@@ -232,7 +233,7 @@ namespace Content.Client.UserInterface
                 _onPressAction.Invoke(new ActionSlotEventArgs(ActionSlotEvent.RightClick, false, actionSlot, args));
                 return;
             }
-            if (args.Event.Function != EngineKeyFunctions.Use) return;
+            if (args.Event.Function != EngineKeyFunctions.Use && args.Event.Function != EngineKeyFunctions.UIClick) return;
             if (!actionSlot.Granted) return;
             // only instant actions should be handled as presses, all other actions
             // should be handled as toggles
@@ -251,7 +252,7 @@ namespace Content.Client.UserInterface
                 _onPressAction.Invoke(new ActionSlotEventArgs(ActionSlotEvent.RightClick, args.Pressed, actionSlot, args));
                 return;
             }
-            if (args.Event.Function != EngineKeyFunctions.Use) return;
+            if (args.Event.Function != EngineKeyFunctions.Use && args.Event.Function != EngineKeyFunctions.UIClick) return;
             if (!actionSlot.Granted) return;
             // only instant actions should be handled as presses, all other actions
             // should be handled as toggles
@@ -259,6 +260,20 @@ namespace Content.Client.UserInterface
             {
                 _onPressAction.Invoke(new ActionSlotEventArgs(ActionSlotEvent.Toggle, args.Pressed, actionSlot, args));
             }
+            else
+            {
+                _onPressAction.Invoke(new ActionSlotEventArgs(ActionSlotEvent.Press, false, actionSlot, args));
+            }
+        }
+
+        /// <summary>
+        /// Handle keydown / keyup for one of the slots via a keybinding, simulates mousedown/mouseup on it.
+        /// </summary>
+        /// <param name="slot">slot index to to receive the press (0 corresponds to the one labeled 1, 9 corresponds to the one labeled 0)</param>
+        public void HandleHotbarKeybind(byte slot, PointerInputCmdHandler.PointerInputCmdArgs args)
+        {
+            var actionSlot = _slots[slot];
+            actionSlot.HandleKeybind(args.State);
         }
 
         /// <summary>

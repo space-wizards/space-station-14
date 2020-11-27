@@ -301,3 +301,36 @@ binds:
 - function: Arcade3
   type: State
   key: Z
+- function: OpenAbilitiesMenu
+  type: State
+  key: Equal
+- function: Hotbar0
+  type: State
+  key: Num0
+- function: Hotbar1
+  type: State
+  key: Num1
+- function: Hotbar2
+  type: State
+  key: Num2
+- function: Hotbar3
+  type: State
+  key: Num3
+- function: Hotbar4
+  type: State
+  key: Num4
+- function: Hotbar5
+  type: State
+  key: Num5
+- function: Hotbar6
+  type: State
+  key: Num6
+- function: Hotbar7
+  type: State
+  key: Num7
+- function: Hotbar8
+  type: State
+  key: Num8
+- function: Hotbar9
+  type: State
+  key: Num9

@@ -6,6 +6,8 @@ using OpenToolkit.Mathematics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
+using Robust.Shared.Input;
+using Robust.Shared.Map;
 using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Controls
@@ -208,6 +210,28 @@ namespace Content.Client.UserInterface.Controls
                 // be rightclick removed)
                 SetOnlyStylePseudoClass(StylePseudoClassDisabled);
             }
+        }
+
+        /// <summary>
+        /// Simulates clicking on this, but being done via a keybind
+        /// </summary>
+        public void HandleKeybind(BoundKeyState keyState)
+        {
+            // simulate a click, using UIClick so it won't be treated as a possible drag / drop attempt
+            // TODO: this is sketchy, need a better mechanism to map a key to a button
+            var guiArgs = new GUIBoundKeyEventArgs(EngineKeyFunctions.UIClick,
+                keyState, new ScreenCoordinates(GlobalPixelPosition), true,
+                default,
+                default);
+            if (keyState == BoundKeyState.Down)
+            {
+                KeyBindDown(guiArgs);
+            }
+            else
+            {
+                KeyBindUp(guiArgs);
+            }
+
         }
     }
 }

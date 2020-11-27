@@ -8,6 +8,7 @@ using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Actions;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Input;
 using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Interfaces.ResourceManagement;
@@ -130,7 +131,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             _ui = new ActionsUI(ActionOnOnShowTooltip, ActionOnOnHideTooltip, OnActionPress,
                 OnActionSlotDragDrop,
                 NextHotbar,
-                PreviousHotbar, OpenActionMenu);
+                PreviousHotbar, HandleOpenActionMenu);
             _menu = new ActionMenu(ActionOnOnShowTooltip, ActionOnOnHideTooltip, this, ActionMenuItemSelected,
                 ActionMenuItemDragDropped);
             LayoutContainer.SetGrowHorizontal(_ui, LayoutContainer.GrowDirection.End);
@@ -177,12 +178,54 @@ namespace Content.Client.GameObjects.Components.Mobs
 
             uiManager.PopupRoot.AddChild(_tooltip);
 
+            // set up hotkeys for hotbar
+            CommandBinds.Builder
+                .Bind(ContentKeyFunctions.OpenActionsMenu,
+                    InputCmdHandler.FromDelegate(s => ToggleActionsMenu()))
+                .Bind(ContentKeyFunctions.Hotbar1,
+                    HandleHotbarKeybind(0))
+                .Bind(ContentKeyFunctions.Hotbar2,
+                    HandleHotbarKeybind(1))
+                .Bind(ContentKeyFunctions.Hotbar3,
+                    HandleHotbarKeybind(2))
+                .Bind(ContentKeyFunctions.Hotbar4,
+                    HandleHotbarKeybind(3))
+                .Bind(ContentKeyFunctions.Hotbar5,
+                    HandleHotbarKeybind(4))
+                .Bind(ContentKeyFunctions.Hotbar6,
+                    HandleHotbarKeybind(5))
+                .Bind(ContentKeyFunctions.Hotbar7,
+                    HandleHotbarKeybind(6))
+                .Bind(ContentKeyFunctions.Hotbar8,
+                    HandleHotbarKeybind(7))
+                .Bind(ContentKeyFunctions.Hotbar9,
+                    HandleHotbarKeybind(8))
+                .Bind(ContentKeyFunctions.Hotbar0,
+                    HandleHotbarKeybind(9))
+                // when selecting a target, we intercept clicks in the game world, treating them as our target selection. We want to
+                // take priority before any other systems handle the click.
+                .BindBefore(EngineKeyFunctions.Use, new PointerInputCmdHandler(TargetingOnUse),
+                    typeof(ConstructionSystem), typeof(DragDropSystem))
+                .Register<ClientActionsComponent>();
+
             UpdateUI();
+        }
+
+        private PointerInputCmdHandler HandleHotbarKeybind(byte slot)
+        {
+            // delegate to the ActionsUI, simulating a click on it
+            return new PointerInputCmdHandler((in PointerInputCmdHandler.PointerInputCmdArgs args) =>
+                {
+                    _ui.HandleHotbarKeybind(slot, args);
+                    return true;
+                },
+                false);
         }
 
         private void PlayerDetached()
         {
             StopTargeting();
+            CommandBinds.Unregister<ClientActionsComponent>();
             _menu?.Dispose();
             _ui?.Dispose();
             _ui = null;
@@ -272,7 +315,12 @@ namespace Content.Client.GameObjects.Components.Mobs
             UpdateUI();
         }
 
-        private void OpenActionMenu(BaseButton.ButtonEventArgs args)
+        private void HandleOpenActionMenu(BaseButton.ButtonEventArgs args)
+        {
+            ToggleActionsMenu();
+        }
+
+        private void ToggleActionsMenu()
         {
             if (_menu.IsOpen)
             {
@@ -445,13 +493,6 @@ namespace Content.Client.GameObjects.Components.Mobs
             {
                 actionSlot.Pressed = true;
             }
-
-            // intercept clicks in the game world, treating them as our target selection. We want to
-            // take priority before any other systems handle the click.
-            CommandBinds.Builder
-                .BindBefore(EngineKeyFunctions.Use, new PointerInputCmdHandler(TargetingOnUse),
-                    typeof(ConstructionSystem), typeof(DragDropSystem))
-                .Register<ClientActionsComponent>();
         }
 
         private bool TargetingOnUse(in PointerInputCmdHandler.PointerInputCmdArgs args)
@@ -494,7 +535,6 @@ namespace Content.Client.GameObjects.Components.Mobs
         /// </summary>
         private void StopTargeting()
         {
-            CommandBinds.Unregister<ClientActionsComponent>();
             if (_selectingTargetFor != null)
             {
                 if (_selectingTargetFor.Pressed)
