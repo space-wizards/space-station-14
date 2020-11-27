@@ -61,7 +61,7 @@ namespace Content.Client.Chat
         private const char MeAlias = '@';
         private const char AdminChatAlias = ']';
 
-        private readonly List<StoredChatMessage> filteredHistory = new List<StoredChatMessage>();
+        private readonly List<StoredChatMessage> filteredHistory = new();
 
         // Filter Button States
         private bool _allState;
@@ -88,13 +88,13 @@ namespace Content.Client.Chat
         ///     We track them to push them up when new ones get added.
         /// </summary>
         private readonly Dictionary<EntityUid, List<SpeechBubble>> _activeSpeechBubbles =
-            new Dictionary<EntityUid, List<SpeechBubble>>();
+            new();
 
         /// <summary>
         ///     Speech bubbles that are to-be-sent because of the "rate limit" they have.
         /// </summary>
         private readonly Dictionary<EntityUid, SpeechBubbleQueueData> _queuedSpeechBubbles
-            = new Dictionary<EntityUid, SpeechBubbleQueueData>();
+            = new();
 
         public void Initialize()
         {
@@ -532,7 +532,7 @@ namespace Content.Client.Chat
             /// </summary>
             public float TimeLeft { get; set; }
 
-            public Queue<SpeechBubbleData> MessageQueue { get; } = new Queue<SpeechBubbleData>();
+            public Queue<SpeechBubbleData> MessageQueue { get; } = new();
         }
     }
 }

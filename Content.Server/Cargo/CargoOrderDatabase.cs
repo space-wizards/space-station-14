@@ -7,7 +7,7 @@ namespace Content.Server.Cargo
 {
     public class CargoOrderDatabase
     {
-        private readonly Dictionary<int, CargoOrderData> _orders = new Dictionary<int, CargoOrderData>();
+        private readonly Dictionary<int, CargoOrderData> _orders = new();
         private int _orderNumber = 0;
 
         public CargoOrderDatabase(int id)

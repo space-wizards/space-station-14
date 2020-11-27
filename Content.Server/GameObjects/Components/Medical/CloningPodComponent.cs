@@ -147,7 +147,7 @@ namespace Content.Server.GameObjects.Components.Medical
 
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
-            if (!(obj.Message is CloningPodUiButtonPressedMessage message)) return;
+            if (obj.Message is not CloningPodUiButtonPressedMessage message) return;
 
             switch (message.Button)
             {

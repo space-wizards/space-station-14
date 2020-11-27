@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Damage
         private ActSystem _actSystem;
 
         public override List<DamageState> SupportedDamageStates =>
-            new List<DamageState> {DamageState.Alive, DamageState.Dead};
+            new() {DamageState.Alive, DamageState.Dead};
 
         void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
         {

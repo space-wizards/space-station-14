@@ -8,7 +8,7 @@ namespace Content.Shared.Construction
 {
     public class NestedConstructionGraphStep : ConstructionGraphStep
     {
-        public List<List<ConstructionGraphStep>> Steps { get; private set; } = new List<List<ConstructionGraphStep>>();
+        public List<List<ConstructionGraphStep>> Steps { get; private set; } = new();
 
         public void LoadFrom(YamlMappingNode mapping)
         {

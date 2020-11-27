@@ -35,7 +35,6 @@
             "Smes",
             "LightBulb",
             "Healing",
-            "Catwalk",
             "RangedMagazine",
             "Ammo",
             "HitscanWeaponCapacitor",
@@ -210,8 +209,12 @@
             "CrematoriumEntityStorage",
             "RandomArcade",
             "RandomSpriteState",
+            "ReagentGrinder",
+            "Grindable",
+            "Juiceable",
+            "WelderRefinable",
             "ConveyorAssembly",
-            "TwoWayLever"
+            "TwoWayLever",
         };
     }
 }

@@ -32,7 +32,9 @@ namespace Content.Client.GameObjects.Components.Interactable
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            if (!(curState is WelderComponentState weld))
+            base.HandleComponentState(curState, nextState);
+
+            if (curState is not WelderComponentState weld)
                 return;
 
             FuelCapacity = weld.FuelCapacity;

@@ -54,7 +54,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         [ViewVariables(VVAccess.ReadOnly)]
         public Dictionary<HungerThreshold, float> HungerThresholds => _hungerThresholds;
-        private readonly Dictionary<HungerThreshold, float> _hungerThresholds = new Dictionary<HungerThreshold, float>
+        private readonly Dictionary<HungerThreshold, float> _hungerThresholds = new()
         {
             {HungerThreshold.Overfed, 600.0f},
             {HungerThreshold.Okay, 450.0f},
@@ -70,7 +70,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         }
 
 
-        public static readonly Dictionary<HungerThreshold, AlertType> HungerThresholdAlertTypes = new Dictionary<HungerThreshold, AlertType>
+        public static readonly Dictionary<HungerThreshold, AlertType> HungerThresholdAlertTypes = new()
         {
             { HungerThreshold.Overfed, AlertType.Overfed },
             { HungerThreshold.Peckish, AlertType.Peckish },

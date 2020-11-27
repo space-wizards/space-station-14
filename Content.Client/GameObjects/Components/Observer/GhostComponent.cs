@@ -19,8 +19,8 @@ namespace Content.Client.GameObjects.Components.Observer
         [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IComponentManager _componentManager = default!;
-        public List<string> WarpNames = new List<string>();
-        public Dictionary<EntityUid,string> PlayerNames = new Dictionary<EntityUid,string>();
+        public List<string> WarpNames = new();
+        public Dictionary<EntityUid,string> PlayerNames = new();
 
         private GhostGui? _gui ;
 
@@ -106,7 +106,7 @@ namespace Content.Client.GameObjects.Components.Observer
         {
             base.HandleComponentState(curState, nextState);
 
-            if (!(curState is GhostComponentState state)) return;
+            if (curState is not GhostComponentState state) return;
 
             CanReturnToBody = state.CanReturnToBody;
 

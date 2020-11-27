@@ -143,7 +143,7 @@ namespace Content.Client.Construction
 
         private static ItemList.Item GetItem(ConstructionPrototype recipe, ItemList itemList)
         {
-            return new ItemList.Item(itemList)
+            return new(itemList)
             {
                 Metadata = recipe,
                 Text = recipe.Name,

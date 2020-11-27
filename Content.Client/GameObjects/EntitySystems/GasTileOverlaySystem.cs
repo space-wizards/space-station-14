@@ -40,7 +40,7 @@ namespace Content.Client.GameObjects.EntitySystems
         private readonly Texture[][] _fireFrames = new Texture[FireStates][];
 
         private readonly Dictionary<GridId, Dictionary<Vector2i, GasOverlayChunk>> _tileData =
-            new Dictionary<GridId, Dictionary<Vector2i, GasOverlayChunk>>();
+            new();
 
         private AtmosphereSystem _atmosphereSystem = default!;
 

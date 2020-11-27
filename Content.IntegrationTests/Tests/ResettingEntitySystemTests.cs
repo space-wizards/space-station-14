@@ -6,6 +6,7 @@ using NUnit.Framework;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Reflection;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -13,6 +14,7 @@ namespace Content.IntegrationTests.Tests
     [TestOf(typeof(IResettingEntitySystem))]
     public class ResettingEntitySystemTests : ContentIntegrationTest
     {
+        [Reflect(false)]
         private class TestResettingEntitySystem : EntitySystem, IResettingEntitySystem
         {
             public bool HasBeenReset { get; set; }

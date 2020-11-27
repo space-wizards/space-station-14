@@ -179,27 +179,27 @@ namespace Content.Client.GameObjects.EntitySystems.AI
         public PathfindingDebugMode Modes { get; set; } = PathfindingDebugMode.None;
 
         // Graph debugging
-        public readonly Dictionary<int, List<Vector2>> Graph = new Dictionary<int, List<Vector2>>();
-        private readonly Dictionary<int, Color> _graphColors = new Dictionary<int, Color>();
+        public readonly Dictionary<int, List<Vector2>> Graph = new();
+        private readonly Dictionary<int, Color> _graphColors = new();
 
         // Cached regions
         public readonly Dictionary<GridId, Dictionary<int, List<Vector2>>> CachedRegions =
-                    new Dictionary<GridId, Dictionary<int, List<Vector2>>>();
+                    new();
 
         private readonly Dictionary<GridId, Dictionary<int, Color>> _cachedRegionColors =
-                     new Dictionary<GridId, Dictionary<int, Color>>();
+                     new();
 
         // Regions
         public readonly Dictionary<GridId, Dictionary<int, Dictionary<int, List<Vector2>>>> Regions =
-                    new Dictionary<GridId, Dictionary<int, Dictionary<int, List<Vector2>>>>();
+                    new();
 
         private readonly Dictionary<GridId, Dictionary<int, Dictionary<int, Color>>> _regionColors =
-                     new Dictionary<GridId, Dictionary<int, Dictionary<int, Color>>>();
+                     new();
 
         // Route debugging
         // As each pathfinder is very different you'll likely want to draw them completely different
-        public readonly List<SharedAiDebug.AStarRouteMessage> AStarRoutes = new List<SharedAiDebug.AStarRouteMessage>();
-        public readonly List<SharedAiDebug.JpsRouteMessage> JpsRoutes = new List<SharedAiDebug.JpsRouteMessage>();
+        public readonly List<SharedAiDebug.AStarRouteMessage> AStarRoutes = new();
+        public readonly List<SharedAiDebug.JpsRouteMessage> JpsRoutes = new();
 
         public DebugPathfindingOverlay() : base(nameof(DebugPathfindingOverlay))
         {

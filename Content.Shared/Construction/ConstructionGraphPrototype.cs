@@ -12,9 +12,9 @@ namespace Content.Shared.Construction
     [Prototype("constructionGraph")]
     public class ConstructionGraphPrototype : IPrototype, IIndexedPrototype
     {
-        private readonly Dictionary<string, ConstructionGraphNode> _nodes = new Dictionary<string, ConstructionGraphNode>();
-        private readonly Dictionary<ValueTuple<string, string>, ConstructionGraphNode[]> _paths = new Dictionary<ValueTuple<string, string>, ConstructionGraphNode[]>();
-        private Dictionary<ConstructionGraphNode, ConstructionGraphNode> _pathfinding = new Dictionary<ConstructionGraphNode, ConstructionGraphNode>();
+        private readonly Dictionary<string, ConstructionGraphNode> _nodes = new();
+        private readonly Dictionary<ValueTuple<string, string>, ConstructionGraphNode[]> _paths = new();
+        private Dictionary<ConstructionGraphNode, ConstructionGraphNode> _pathfinding = new();
 
         [ViewVariables]
         public string ID { get; private set; }

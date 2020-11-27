@@ -18,7 +18,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Speech
         }.AsReadOnly();
         private string RandomFace => _random.Pick(Faces);
 
-        private static readonly Dictionary<string, string> SpecialWords = new Dictionary<string, string>
+        private static readonly Dictionary<string, string> SpecialWords = new()
         {
             { "you", "wu" },
         };

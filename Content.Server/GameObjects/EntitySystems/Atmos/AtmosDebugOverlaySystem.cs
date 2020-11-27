@@ -30,7 +30,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
         ///     To modify it see <see cref="AddObserver"/> and
         ///     <see cref="RemoveObserver"/>.
         /// </summary>
-        private readonly HashSet<IPlayerSession> _playerObservers = new HashSet<IPlayerSession>();
+        private readonly HashSet<IPlayerSession> _playerObservers = new();
 
         /// <summary>
         ///     Overlay update ticks per second.

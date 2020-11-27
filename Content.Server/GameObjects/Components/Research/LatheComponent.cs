@@ -29,7 +29,7 @@ namespace Content.Server.GameObjects.Components.Research
         public const int VolumePerSheet = 3750;
 
         [ViewVariables]
-        public Queue<LatheRecipePrototype> Queue { get; } = new Queue<LatheRecipePrototype>();
+        public Queue<LatheRecipePrototype> Queue { get; } = new();
 
         [ViewVariables]
         public bool Producing { get; private set; }
