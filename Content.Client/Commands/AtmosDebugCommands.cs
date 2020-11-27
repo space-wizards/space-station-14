@@ -70,14 +70,9 @@ namespace Content.Client.Commands
                     console.AddLine("A target gas must be provided for this mode.");
                     return false;
                 }
-                if (!int.TryParse(args[1], out xSpecificGas))
+                if (!AtmosCommandUtils.TryParseGasID(args[1], out xSpecificGas))
                 {
-                    console.AddLine("Gas ID not parsable.");
-                    return false;
-                }
-                if ((xSpecificGas < 0) || (xSpecificGas >= Atmospherics.TotalNumberOfGases))
-                {
-                    console.AddLine("OUT OF RANGE");
+                    console.AddLine("Gas ID not parsable or out of range.");
                     return false;
                 }
             }
