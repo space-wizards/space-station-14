@@ -28,7 +28,6 @@ namespace Content.Client.UserInterface
         private readonly IClientPreferencesManager _preferencesManager;
         public readonly Button CloseButton;
         public readonly Button SaveButton;
-        public readonly Label Test;
 
         public CharacterSetupGui(IEntityManager entityManager,
             IResourceCache resourceCache,
