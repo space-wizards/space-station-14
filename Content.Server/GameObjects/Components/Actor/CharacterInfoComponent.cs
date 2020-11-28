@@ -16,6 +16,8 @@ namespace Content.Server.GameObjects.Components.Actor
     {
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
         {
+            if(session?.AttachedEntity != Owner) return;
+
             switch (message)
             {
                 case RequestCharacterInfoMessage _:
