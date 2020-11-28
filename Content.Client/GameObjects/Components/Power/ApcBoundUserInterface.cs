@@ -161,7 +161,6 @@ namespace Content.Client.GameObjects.Components.Power
                 rows.AddChild(CyclingLabel);
                 CycleButton = new CheckButton { Text = "Cycle Power" };
                 rows.AddChild(CycleButton);
-                //add disruption & disruption cooldown info
 
                 var externalStatus = new HBoxContainer();
                 var externalStatusLabel = new Label {Text = "External Power: "};
