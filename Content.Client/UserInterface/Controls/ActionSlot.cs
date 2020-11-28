@@ -62,9 +62,9 @@ namespace Content.Client.UserInterface.Controls
         public byte SlotIndex => (byte) (SlotNumber - 1);
 
         /// <summary>
-        /// Total duration of the current cooldown in seconds. Null if no duration / cooldown.
+        /// Total duration of the current cooldown in seconds. TimeSpan.Zero if no duration / cooldown.
         /// </summary>
-        public int? TotalDuration { get; private set; }
+        public TimeSpan TotalDuration { get; private set; }
         /// <summary>
         /// Remaining cooldown in seconds. TimeSpan.Zero if no cooldown or cooldown
         /// is over.
@@ -138,7 +138,7 @@ namespace Content.Client.UserInterface.Controls
             {
                 _cooldownGraphic.Progress = 0;
                 _cooldownGraphic.Visible = false;
-                TotalDuration = null;
+                TotalDuration = TimeSpan.Zero;
                 CooldownRemaining = TimeSpan.Zero;
             }
             else
@@ -147,12 +147,13 @@ namespace Content.Client.UserInterface.Controls
                 var start = alertCooldown.Value.Start;
                 var end = alertCooldown.Value.End;
 
-                var length = (end - start).TotalSeconds;
+                TotalDuration = end - start;
+                var length = TotalDuration.TotalSeconds;
                 var progress = (curTime - start).TotalSeconds / length;
                 var ratio = (progress <= 1 ? (1 - progress) : (curTime - end).TotalSeconds * -5);
 
                 CooldownRemaining = end > curTime ? (end - curTime) : TimeSpan.Zero;
-                TotalDuration = (int?) Math.Round(length);
+
                 _cooldownGraphic.Progress = MathHelper.Clamp((float)ratio, -1, 1);
                 _cooldownGraphic.Visible = ratio > -1f;
             }

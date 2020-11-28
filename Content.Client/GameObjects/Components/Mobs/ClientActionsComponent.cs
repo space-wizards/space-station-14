@@ -34,7 +34,7 @@ namespace Content.Client.GameObjects.Components.Mobs
     [ComponentReference(typeof(SharedActionsComponent))]
     public sealed class ClientActionsComponent : SharedActionsComponent
     {
-        private static readonly float TooltipTextMaxWidth = 280;
+        private static readonly float TooltipTextMaxWidth = 350;
         public static readonly byte Hotbars = 10;
         public static readonly byte Slots = 10;
 
@@ -50,6 +50,9 @@ namespace Content.Client.GameObjects.Components.Mobs
         private RichTextLabel _actionCooldown;
         private RichTextLabel _actionRequirements;
         private bool _tooltipReady;
+        private ActionSlot _showingTooltipFor;
+        // so we don't call it every frame and only update the text each second that ticks
+        private int _tooltipCooldownSecs = -1;
         // tracks the action slot we are currently selecting a target for
         private ActionSlot _selectingTargetFor;
 
@@ -339,7 +342,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
             else
             {
-                _menu.Open();
+                _menu.OpenCentered();
             }
         }
 
@@ -587,6 +590,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         {
             _tooltipReady = false;
             _tooltip.Visible = false;
+            _showingTooltipFor = null;
         }
 
         private void ActionOnOnShowTooltip(object sender, EventArgs e)
@@ -595,13 +599,14 @@ namespace Content.Client.GameObjects.Components.Mobs
             // action hotbar or the action menu
 
             ActionPrototype action = null;
-            int? totalCooldownDuration = null;
+            var totalCooldownDuration = TimeSpan.Zero;
             var cooldownRemaining = TimeSpan.Zero;
             if (sender is ActionSlot actionSlot)
             {
                 action = actionSlot.Action;
                 totalCooldownDuration = actionSlot.TotalDuration;
                 cooldownRemaining = actionSlot.CooldownRemaining;
+                _showingTooltipFor = actionSlot;
             }
             else if (sender is ActionMenuItem actionMenuItem)
             {
@@ -615,27 +620,23 @@ namespace Content.Client.GameObjects.Components.Mobs
                 throw new InvalidOperationException();
             }
 
-            if (action == null) return;
+            if (action == null)
+            {
+                _showingTooltipFor = null;
+                return;
+            }
 
             _actionName.SetMessage(action.Name);
             _actionDescription.SetMessage(action.Description);
             // check for a cooldown
-            if (cooldownRemaining != TimeSpan.Zero)
-            {
-                _actionCooldown.SetMessage(FormattedMessage.FromMarkup(
-                    $"[color=#776a6a]{totalCooldownDuration} sec cooldown ({cooldownRemaining.Seconds} sec remaining)[/color]"));
-                _actionCooldown.Visible = true;
-            }
-            else
-            {
-                _actionCooldown.Visible = false;
-            }
+            _tooltipCooldownSecs = -1;
+            UpdateTooltipCooldown(cooldownRemaining, totalCooldownDuration);
             //check for requirements message
             if (action.Requires != null)
             {
-                _actionCooldown.SetMessage(FormattedMessage.FromMarkup("[color=#635c5c]" +
-                                                                       action.Requires +
-                                                                       "[/color]"));
+                _actionRequirements.SetMessage(FormattedMessage.FromMarkup("[color=#635c5c]" +
+                                                                           action.Requires +
+                                                                           "[/color]"));
             }
             else
             {
@@ -647,6 +648,23 @@ namespace Content.Client.GameObjects.Components.Mobs
             // if we set it visible here the size of the previous tooltip will flicker for a frame,
             // so instead we wait until FrameUpdate to make it visible
             _tooltipReady = true;
+        }
+
+        private void UpdateTooltipCooldown(TimeSpan cooldownRemaining, TimeSpan totalDuration)
+        {
+            if (cooldownRemaining != TimeSpan.Zero)
+            {
+                if (cooldownRemaining.Seconds == _tooltipCooldownSecs) return;
+                _actionCooldown.SetMessage(FormattedMessage.FromMarkup(
+                    $"[color=#a10505]{totalDuration.Seconds} sec cooldown ({cooldownRemaining.Seconds + 1} sec remaining)[/color]"));
+                _actionCooldown.Visible = true;
+                _tooltipCooldownSecs = cooldownRemaining.Seconds;
+            }
+            else
+            {
+                _tooltipCooldownSecs = -1;
+                _actionCooldown.Visible = false;
+            }
         }
 
         public void FrameUpdate(float frameTime)
@@ -661,13 +679,21 @@ namespace Content.Client.GameObjects.Components.Mobs
             // slots in other hotbars - since we store the precise start and end of each
             // cooldown we have no need to actively tick down, we can always calculate current
             // cooldown amount as-needed (for example when switching toolbars).
+            if (_ui == null) return;
             foreach (var actionSlot in _ui.Slots)
             {
                 var assignedActionType = _slots[_selectedHotbar, actionSlot.SlotIndex];
                 if (!assignedActionType.HasValue) continue;
 
-                if (!TryGetActionState((ActionType) assignedActionType, out var actionState)) continue;
-                actionSlot.UpdateCooldown(actionState.Value.Cooldown, GameTiming.CurTime);
+                if (TryGetActionState((ActionType) assignedActionType, out var actionState))
+                {
+                    actionSlot.UpdateCooldown(actionState.Value.Cooldown, GameTiming.CurTime);
+                }
+                if (_showingTooltipFor == actionSlot)
+                {
+                    UpdateTooltipCooldown(actionSlot.CooldownRemaining, actionSlot.TotalDuration);
+                }
+
             }
         }
 

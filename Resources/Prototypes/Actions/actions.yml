@@ -3,6 +3,7 @@
   icon: Interface/Alerts/Human/human1.png
   name: "[color=red]Debug Instant[/color]"
   description: "This is a [color=red]debug message[/color]."
+  requires: "Requires blah blah"
   searchTags:
     - debug
     - instant
@@ -15,6 +16,7 @@
   icon: Interface/Alerts/Human/human3.png
   name: "[color=red]Debug Toggle[/color]"
   description: "This is a [color=red]debug message[/color]."
+  requires: "Requires blah blah"
   searchTags:
     - debug
     - toggle

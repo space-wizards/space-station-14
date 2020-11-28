@@ -117,7 +117,7 @@ namespace Content.Shared.Actions
             }
 
             serializer.DataField(this, x => x.Repeat, "repeat", false);
-            if (BehaviorType != BehaviorType.TargetEntity && BehaviorType != BehaviorType.TargetPoint)
+            if (Repeat && BehaviorType != BehaviorType.TargetEntity && BehaviorType != BehaviorType.TargetPoint)
             {
                 Logger.ErrorS("action", " action named {0} used repeat: true, but this is only supported for" +
                                         " TargetEntity and TargetPoint behaviorType and its behaviorType is {1}",
