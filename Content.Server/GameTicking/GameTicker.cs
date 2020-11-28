@@ -70,11 +70,11 @@ namespace Content.Server.GameTicking
         private const string ObserverPrototypeName = "MobObserver";
         private static TimeSpan _roundStartTimeSpan;
 
-        [ViewVariables] private readonly List<GameRule> _gameRules = new List<GameRule>();
-        [ViewVariables] private readonly List<ManifestEntry> _manifest = new List<ManifestEntry>();
+        [ViewVariables] private readonly List<GameRule> _gameRules = new();
+        [ViewVariables] private readonly List<ManifestEntry> _manifest = new();
 
         [ViewVariables]
-        private readonly Dictionary<IPlayerSession, PlayerStatus> _playersInLobby = new Dictionary<IPlayerSession, PlayerStatus>();
+        private readonly Dictionary<IPlayerSession, PlayerStatus> _playersInLobby = new();
 
         [ViewVariables] private bool _initialized;
 

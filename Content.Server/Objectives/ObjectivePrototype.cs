@@ -24,8 +24,8 @@ namespace Content.Server.Objectives
         [ViewVariables]
         public float Difficulty => _difficultyOverride ?? _conditions.Sum(c => c.Difficulty);
 
-        private List<IObjectiveCondition> _conditions = new List<IObjectiveCondition>();
-        private List<IObjectiveRequirement> _requirements = new List<IObjectiveRequirement>();
+        private List<IObjectiveCondition> _conditions = new();
+        private List<IObjectiveRequirement> _requirements = new();
 
         public IReadOnlyList<IObjectiveCondition> Conditions => _conditions;
 

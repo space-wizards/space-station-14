@@ -40,7 +40,7 @@ namespace Content.Client.State
         private bool _isConnecting;
 
         // ReSharper disable once InconsistentNaming
-        private static readonly Regex IPv6Regex = new Regex(@"\[(.*:.*:.*)](?::(\d+))?");
+        private static readonly Regex IPv6Regex = new(@"\[(.*:.*:.*)](?::(\d+))?");
 
         /// <inheritdoc />
         public override void Startup()

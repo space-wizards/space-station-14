@@ -26,7 +26,7 @@ namespace Content.Client.UserInterface
 
         public event Action<string> SelectedId;
 
-        private readonly Dictionary<string, JobButton> _jobButtons = new Dictionary<string, JobButton>();
+        private readonly Dictionary<string, JobButton> _jobButtons = new();
 
         public LateJoinGui()
         {

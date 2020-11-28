@@ -11,10 +11,15 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Utility;
+using Content.Shared.GameObjects.Components.Pulling;
 using static Content.Shared.GameObjects.EntitySystems.SharedInteractionSystem;
 
 namespace Content.Shared.Physics.Pull
 {
+    /// <summary>
+    /// This is applied upon a Pullable object when that object is being pulled.
+    /// It lives only to serve that Pullable object.
+    /// </summary>
     public class PullController : VirtualController
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -24,11 +29,15 @@ namespace Content.Shared.Physics.Pull
 
         private const float StopMoveThreshold = 0.25f;
 
-        private IPhysicsComponent? _puller;
+        /// <summary>
+        /// The managing SharedPullableComponent of this PullController.
+        /// MUST BE SET! If you go attaching PullControllers yourself, YOU ARE DOING IT WRONG.
+        /// If you get a crash based on such, then, well, see previous note.
+        /// This is set by the SharedPullableComponent attaching the PullController.
+        /// </summary>
+        public SharedPullableComponent Manager = default!;
 
         private EntityCoordinates? _movingTo;
-
-        public IPhysicsComponent? Puller => _puller;
 
         public EntityCoordinates? MovingTo
         {
@@ -47,6 +56,7 @@ namespace Content.Shared.Physics.Pull
 
         private bool PullerMovingTowardsPulled()
         {
+            var _puller = Manager.PullerPhysics;
             if (_puller == null)
             {
                 return false;
@@ -74,93 +84,9 @@ namespace Content.Shared.Physics.Pull
             return rayResults.Any();
         }
 
-        public bool StartPull(IEntity entity)
-        {
-            DebugTools.AssertNotNull(entity);
-
-            if (!entity.TryGetComponent(out IPhysicsComponent? physics))
-            {
-                return false;
-            }
-
-            return StartPull(physics);
-        }
-
-        public bool StartPull(IPhysicsComponent puller)
-        {
-            DebugTools.AssertNotNull(puller);
-
-            if (_puller == puller)
-            {
-                return false;
-            }
-
-            if (ControlledComponent == null)
-            {
-                return false;
-            }
-
-            var pullAttempt = new PullAttemptMessage(puller, ControlledComponent);
-
-            puller.Owner.SendMessage(null, pullAttempt);
-
-            if (pullAttempt.Cancelled)
-            {
-                return false;
-            }
-
-            ControlledComponent.Owner.SendMessage(null, pullAttempt);
-
-            if (pullAttempt.Cancelled)
-            {
-                return false;
-            }
-
-            _puller = puller;
-
-            var message = new PullStartedMessage(this, _puller, ControlledComponent);
-
-            _puller.Owner.SendMessage(null, message);
-            ControlledComponent.Owner.SendMessage(null, message);
-
-            _puller.Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
-
-            ControlledComponent.WakeBody();
-
-            return true;
-        }
-
-        public bool StopPull()
-        {
-            var oldPuller = _puller;
-
-            if (oldPuller == null)
-            {
-                return false;
-            }
-
-            _puller = null;
-
-            if (ControlledComponent == null)
-            {
-                return false;
-            }
-
-            var message = new PullStoppedMessage(oldPuller, ControlledComponent);
-
-            oldPuller.Owner.SendMessage(null, message);
-            ControlledComponent.Owner.SendMessage(null, message);
-
-            oldPuller.Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
-
-            ControlledComponent.WakeBody();
-            ControlledComponent.TryRemoveController<PullController>();
-
-            return true;
-        }
-
         public bool TryMoveTo(EntityCoordinates from, EntityCoordinates to)
         {
+            var _puller = Manager.PullerPhysics;
             if (_puller == null || ControlledComponent == null)
             {
                 return false;
@@ -199,6 +125,7 @@ namespace Content.Shared.Physics.Pull
 
         public override void UpdateBeforeProcessing()
         {
+            var _puller = Manager.PullerPhysics;
             if (_puller == null || ControlledComponent == null)
             {
                 return;
@@ -206,7 +133,7 @@ namespace Content.Shared.Physics.Pull
 
             if (!_puller.Owner.IsInSameOrNoContainer(ControlledComponent.Owner))
             {
-                StopPull();
+                Manager.Puller = null;
                 return;
             }
 
@@ -214,7 +141,7 @@ namespace Content.Shared.Physics.Pull
 
             if (distance.Length > DistBeforeStopPull)
             {
-                StopPull();
+                Manager.Puller = null;
             }
             else if (MovingTo.HasValue)
             {

@@ -77,8 +77,6 @@ namespace Content.Client.GameObjects.Components.Body.Surgery
 
         private SpriteView SpriteView { get; }
 
-        private Control EntityControl { get; }
-
         private Label DisplayText { get; }
 
         public int CallbackData { get; }

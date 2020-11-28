@@ -28,7 +28,7 @@ namespace Content.Server.Mobs
     {
         private readonly ISet<Role> _roles = new HashSet<Role>();
 
-        private readonly List<Objective> _objectives = new List<Objective>();
+        private readonly List<Objective> _objectives = new();
 
         /// <summary>
         ///     Creates the new mind attached to a specific player session.

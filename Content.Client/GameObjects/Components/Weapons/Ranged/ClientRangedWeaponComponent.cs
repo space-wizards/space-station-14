@@ -14,7 +14,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged
         Mag,
         MagUnshaded,
     }
-    
+
     [RegisterComponent]
     public sealed class ClientRangedWeaponComponent : SharedRangedWeaponComponent
     {
@@ -23,7 +23,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
             base.HandleComponentState(curState, nextState);
-            if (!(curState is RangedWeaponComponentState rangedState))
+            if (curState is not RangedWeaponComponentState rangedState)
             {
                 return;
             }

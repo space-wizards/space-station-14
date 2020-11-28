@@ -15,7 +15,7 @@ namespace Content.Shared.Construction
     [Serializable]
     public class ConstructionGraphEdge : IExposeData
     {
-        private List<ConstructionGraphStep> _steps = new List<ConstructionGraphStep>();
+        private List<ConstructionGraphStep> _steps = new();
         private List<IEdgeCondition> _conditions;
         private List<IGraphAction> _completed;
 

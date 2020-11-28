@@ -24,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Suspicion
     public class SuspicionRoleComponent : SharedSuspicionRoleComponent, IExamine
     {
         private Role? _role;
-        private readonly HashSet<SuspicionRoleComponent> _allies = new HashSet<SuspicionRoleComponent>();
+        private readonly HashSet<SuspicionRoleComponent> _allies = new();
 
         [ViewVariables]
         public Role? Role
@@ -215,8 +215,8 @@ namespace Content.Server.GameObjects.Components.Suspicion
         {
             base.HandleMessage(message, component);
 
-            if (!(message is RoleMessage msg) ||
-                !(msg.Role is SuspicionRole role))
+            if (message is not RoleMessage msg ||
+                msg.Role is not SuspicionRole role)
             {
                 return;
             }

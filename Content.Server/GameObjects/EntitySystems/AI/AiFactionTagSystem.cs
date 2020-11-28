@@ -24,7 +24,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI
 
         public Faction GetHostileFactions(Faction faction) => _hostileFactions.TryGetValue(faction, out var hostiles) ? hostiles : Faction.None;
 
-        private readonly Dictionary<Faction, Faction> _hostileFactions = new Dictionary<Faction, Faction>
+        private readonly Dictionary<Faction, Faction> _hostileFactions = new()
         {
             {Faction.NanoTransen,
                 Faction.SimpleHostile | Faction.Syndicate | Faction.Xeno},

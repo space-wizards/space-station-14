@@ -2,19 +2,25 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Server.Console;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
+using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
@@ -30,7 +36,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         public override string Name => "DisposalRouter";
 
         [ViewVariables]
-        private readonly HashSet<string> _tags = new HashSet<string>();
+        private readonly HashSet<string> _tags = new();
 
         [ViewVariables]
         public bool Anchored =>
@@ -77,7 +83,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             var msg = (UiActionMessage) obj.Message;
 
-            if (!PlayerCanUseDisposalTagger(obj.Session.AttachedEntity))
+            if (!PlayerCanUseDisposalTagger(obj.Session))
                 return;
 
             //Check for correct message and ignore maleformed strings
@@ -95,21 +101,24 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// <summary>
         /// Checks whether the player entity is able to use the configuration interface of the pipe tagger.
         /// </summary>
-        /// <param name="playerEntity">The player entity.</param>
+        /// <param name="IPlayerSession">The player session.</param>
         /// <returns>Returns true if the entity can use the configuration interface, and false if it cannot.</returns>
-        private bool PlayerCanUseDisposalTagger(IEntity playerEntity)
+        private bool PlayerCanUseDisposalTagger(IPlayerSession session)
         {
             //Need player entity to check if they are still able to use the configuration interface
-            if (playerEntity == null)
+            if (session.AttachedEntity == null)
                 return false;
             if (!Anchored)
                 return false;
+
+            var groupController = IoCManager.Resolve<IConGroupController>();
             //Check if player can interact in their current state
-            if (!ActionBlockerSystem.CanInteract(playerEntity) || !ActionBlockerSystem.CanUse(playerEntity))
+            if (!groupController.CanAdminMenu(session) && (!ActionBlockerSystem.CanInteract(session.AttachedEntity) || !ActionBlockerSystem.CanUse(session.AttachedEntity)))
                 return false;
 
             return true;
         }
+
 
         /// <summary>
         /// Gets component data to be used to update the user interface client-side.
@@ -166,8 +175,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             var activeHandEntity = hands.GetActiveHand?.Owner;
             if (activeHandEntity == null)
             {
-                UpdateUserInterface();
-                UserInterface?.Open(actor.playerSession);
+                OpenUserInterface(actor);
             }
         }
 
@@ -175,6 +183,38 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             UserInterface?.CloseAll();
             base.OnRemove();
+        }
+
+        private void OpenUserInterface(IActorComponent actor)
+        {
+            UpdateUserInterface();
+            UserInterface?.Open(actor.playerSession);
+        }
+
+        [Verb]
+        public sealed class ConfigureVerb : Verb<DisposalRouterComponent>
+        {
+            protected override void GetData(IEntity user, DisposalRouterComponent component, VerbData data)
+            {
+                var session = user.PlayerSession();
+                var groupController = IoCManager.Resolve<IConGroupController>();
+                if (session == null || !groupController.CanAdminMenu(session))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
+                data.Text = Loc.GetString("Open Configuration");
+                data.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.96dpi.png";
+            }
+
+            protected override void Activate(IEntity user, DisposalRouterComponent component)
+            {
+                if (user.TryGetComponent(out IActorComponent? actor))
+                {
+                    component.OpenUserInterface(actor);
+                }
+            }
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Content.Client.UserInterface
         private sealed class KeyRebindControl : Control
         {
             // List of key functions that must be registered as toggle instead.
-            private static readonly HashSet<BoundKeyFunction> ToggleFunctions = new HashSet<BoundKeyFunction>
+            private static readonly HashSet<BoundKeyFunction> ToggleFunctions = new()
             {
                 EngineKeyFunctions.ShowDebugMonitors,
                 EngineKeyFunctions.HideUI,
@@ -31,9 +31,9 @@ namespace Content.Client.UserInterface
             private BindButton? _currentlyRebinding;
 
             private readonly Dictionary<BoundKeyFunction, KeyControl> _keyControls =
-                new Dictionary<BoundKeyFunction, KeyControl>();
+                new();
 
-            private readonly List<Action> _deferCommands = new List<Action>();
+            private readonly List<Action> _deferCommands = new();
 
             public KeyRebindControl()
             {

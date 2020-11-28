@@ -85,6 +85,7 @@
         public const uint GAS_TANK = 1079;
         public const uint SINGULARITY = 1080;
         public const uint CHARACTERINFO = 1081;
+        public const uint REAGENT_GRINDER = 1082;
 
         // Net IDs for integration tests.
         public const uint PREDICTION_TEST = 10001;
