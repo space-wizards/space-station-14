@@ -361,8 +361,9 @@ namespace Content.Client.GameObjects.Components.Mobs
             {
                 for (byte slot = 0; slot < Slots; slot++)
                 {
-                    if (_slots[(_selectedHotbar + hotbarOffset) % Hotbars, slot] != null) continue;
-                    AssignSlot(_selectedHotbar, slot, actionType);
+                    var hotbar = (byte) ((_selectedHotbar + hotbarOffset) % Hotbars);
+                    if (_slots[hotbar, slot] != null) continue;
+                    AssignSlot(hotbar, slot, actionType);
                     return;
                 }
             }
