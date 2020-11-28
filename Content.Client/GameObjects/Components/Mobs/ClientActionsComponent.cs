@@ -40,7 +40,6 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private ActionsUI _ui;
@@ -241,14 +240,14 @@ namespace Content.Client.GameObjects.Components.Mobs
                 return;
             }
 
-            _menu?.UpdateActionStates();
+            _menu?.UpdateUI();
 
             // if we've been granted any actions which have no assignment to any hotbar, we must auto-populate them
             // into the hotbar so the user knows about them.
             // We fill their current hotbar first, rolling over to the next open slot on the next hotbar.
             foreach (var actionState in EnumerateActionStates())
             {
-                if (!_assignments.ContainsKey(actionState.ActionType))
+                if (actionState.Granted && !_assignments.ContainsKey(actionState.ActionType))
                 {
                     // don't auto populate stuff which the user has manually cleared
                     if (_manuallyClearedActions.Contains(actionState.ActionType)) continue;
@@ -257,40 +256,52 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
 
             // now update the controls of only the current selected hotbar.
-            for (byte i = 0; i < Slots; i++)
+            foreach (var actionSlot in _ui.Slots)
             {
-                var actionType = _slots[_selectedHotbar, i];
-                if (actionType == null)
+                var assignedActionType = _slots[_selectedHotbar, actionSlot.SlotIndex];
+                if (assignedActionType == null)
                 {
-                    _ui.ClearSlot(i);
+                    actionSlot.Clear();
                     continue;
                 }
-                if (ActionManager.TryGet((ActionType) actionType, out var action))
+                if (ActionManager.TryGet((ActionType) assignedActionType, out var action))
                 {
-                    _ui.AssignSlot(i, action);
+                    actionSlot.Assign(action);
                 }
                 else
                 {
-                    Logger.WarningS("action", "unrecognized actionType {0}", actionType);
+                    Logger.WarningS("action", "unrecognized actionType {0}", assignedActionType);
                     continue;
                 }
 
-                if (!IsGranted((ActionType) actionType))
+                if (!TryGetActionState((ActionType) assignedActionType, out var actionState) || !actionState.Value.Granted)
                 {
+                    // action is currently revoked
+
                     // just revoked an action we were trying to target with, stop targeting
-                    if (_selectingTargetFor?.Action != null && _selectingTargetFor.Action.ActionType == actionType)
+                    if (_selectingTargetFor?.Action != null && _selectingTargetFor.Action.ActionType == assignedActionType)
                     {
                         StopTargeting();
                     }
-                    _ui.RevokeSlot(i);
-                    continue;
+                    actionSlot.Revoke();
                 }
-                _ui.GrantSlot(i);
+                else
+                {
+                    // action is currently granted
+                    actionSlot.Grant();
+
+                    // if we are targeting with an action now on cooldown, stop targeting
+                    if (_selectingTargetFor?.Action != null && _selectingTargetFor.Action.ActionType == assignedActionType &&
+                        actionState.Value.IsOnCooldown(GameTiming))
+                    {
+                        StopTargeting();
+                    }
+                }
 
                 // check if we need to toggle it
-                if (IsToggleable((ActionType) actionType, out var toggledOn))
+                if (action.BehaviorType == BehaviorType.Toggle)
                 {
-                    _ui.ToggleSlot(i, toggledOn);
+                    actionSlot.ToggledOn = actionState?.ToggledOn ?? false;
                 }
             }
         }
@@ -402,31 +413,52 @@ namespace Content.Client.GameObjects.Components.Mobs
             _slots[_selectedHotbar, slot] = null;
         }
 
-        private void OnActionPress(ActionSlotEventArgs args)
+        private void OnActionPress(BaseButton.ButtonEventArgs args)
         {
             if (_ui.IsDragging) return;
-            if (args.ActionSlotEvent == ActionSlotEvent.RightClick)
+            if (!(args.Button is ActionSlot actionSlot)) return;
+            if (actionSlot.Action == null) return;
+
+            if (args.Event.Function == EngineKeyFunctions.UIRightClick)
             {
                 // right click to clear the action
-                _manuallyClearedActions.Add(args.Action.ActionType);
+                _manuallyClearedActions.Add(actionSlot.Action.ActionType);
 
-                ClearSlot(_selectedHotbar, args.ActionSlot.SlotIndex);
+                ClearSlot(_selectedHotbar, actionSlot.SlotIndex);
 
                 StopTargeting();
-                args.ActionSlot.Clear();
+                actionSlot.Clear();
                 return;
             }
-            switch (args.Action.BehaviorType)
+
+            if (args.Event.Function != EngineKeyFunctions.Use && args.Event.Function != EngineKeyFunctions.UIClick) return;
+
+            // no left-click interaction with it on cooldown or revoked
+            if (!actionSlot.Granted || actionSlot.IsOnCooldown) return;
+
+            switch (actionSlot.Action.BehaviorType)
             {
                 case BehaviorType.Instant:
                     // for instant actions, we immediately tell the server we're doing it
-                    SendNetworkMessage(new PerformInstantActionMessage(args.Action.ActionType));
+                    SendNetworkMessage(new PerformInstantActionMessage(actionSlot.Action.ActionType));
                     break;
                 case BehaviorType.Toggle:
                     // for toggle actions, we immediately tell the server we're toggling it.
                     // Predictively toggle it on as well
-                    ToggleAction(args.Action.ActionType, args.ToggleOn);
-                    SendNetworkMessage(new PerformToggleActionMessage(args.Action.ActionType, args.ToggleOn));
+                    if (TryGetActionState(actionSlot.Action.ActionType, out var actionState))
+                    {
+                        actionSlot.ToggledOn = !actionState.Value.ToggledOn;
+                        // TODO: This flickers when toggling on due to ResetPredictedEntities being
+                        // called with an older (toggled off) state from the server.
+                        ToggleAction(actionSlot.Action.ActionType, !actionState.Value.ToggledOn);
+                        SendNetworkMessage(new PerformToggleActionMessage(actionSlot.Action.ActionType, !actionState.Value.ToggledOn));
+
+                    }
+                    else
+                    {
+                        Logger.WarningS("action", "attempted to toggle action {0} which has" +
+                                                  " unknown state", actionSlot.Action.ActionType);
+                    }
                     break;
                 case BehaviorType.TargetPoint:
                 case BehaviorType.TargetEntity:
@@ -435,15 +467,15 @@ namespace Content.Client.GameObjects.Components.Mobs
 
                     // if we're clicking the same thing we're already targeting for, then we simply cancel
                     // targeting
-                    if (_selectingTargetFor == args.ActionSlot)
+                    if (_selectingTargetFor == actionSlot)
                     {
                         StopTargeting();
                         break;
                     }
-                    StartTargeting(args.ActionSlot);
+                    StartTargeting(actionSlot);
                     break;
                 default:
-                    Logger.WarningS("action", "unhandled action press for action {0}", args.Action.ActionType);
+                    Logger.WarningS("action", "unhandled action press for action {0}", actionSlot.Action.ActionType);
                     break;
             }
         }
@@ -488,10 +520,10 @@ namespace Content.Client.GameObjects.Components.Mobs
 
             _selectingTargetFor = actionSlot;
 
-            // show it as pressed to indicate we are currently selecting a target for it
-            if (!actionSlot.Pressed)
+            // show it as toggled on to indicate we are currently selecting a target for it
+            if (!actionSlot.ToggledOn)
             {
-                actionSlot.Pressed = true;
+                actionSlot.ToggledOn = true;
             }
         }
 
@@ -537,9 +569,9 @@ namespace Content.Client.GameObjects.Components.Mobs
         {
             if (_selectingTargetFor != null)
             {
-                if (_selectingTargetFor.Pressed)
+                if (_selectingTargetFor.ToggledOn)
                 {
-                    _selectingTargetFor.Pressed = false;
+                    _selectingTargetFor.ToggledOn = false;
                 }
                 _selectingTargetFor = null;
             }
@@ -558,14 +590,18 @@ namespace Content.Client.GameObjects.Components.Mobs
 
             ActionPrototype action = null;
             int? totalCooldownDuration = null;
+            var cooldownRemaining = TimeSpan.Zero;
             if (sender is ActionSlot actionSlot)
             {
                 action = actionSlot.Action;
                 totalCooldownDuration = actionSlot.TotalDuration;
+                cooldownRemaining = actionSlot.CooldownRemaining;
             }
             else if (sender is ActionMenuItem actionMenuItem)
             {
                 action = actionMenuItem.Action;
+                // TODO: We can't report cooldowns in the action menu
+                // because they are currently set on-demand.
             }
             else
             {
@@ -578,11 +614,10 @@ namespace Content.Client.GameObjects.Components.Mobs
             _actionName.SetMessage(action.Name);
             _actionDescription.SetMessage(action.Description);
             // check for a cooldown
-            if (totalCooldownDuration != null && totalCooldownDuration > 0)
+            if (cooldownRemaining != TimeSpan.Zero)
             {
-                _actionCooldown.SetMessage(FormattedMessage.FromMarkup("[color=#776a6a]" +
-                                                                       totalCooldownDuration +
-                                                                      " sec cooldown[/color]"));
+                _actionCooldown.SetMessage(FormattedMessage.FromMarkup(
+                    $"[color=#776a6a]{totalCooldownDuration} sec cooldown ({cooldownRemaining.Seconds} sec remaining)[/color]"));
                 _actionCooldown.Visible = true;
             }
             else
@@ -620,17 +655,22 @@ namespace Content.Client.GameObjects.Components.Mobs
             // slots in other hotbars - since we store the precise start and end of each
             // cooldown we have no need to actively tick down, we can always calculate current
             // cooldown amount as-needed (for example when switching toolbars).
-            for (byte i = 0; i < Slots; i++)
+            foreach (var actionSlot in _ui.Slots)
             {
-                var actionType = _slots[_selectedHotbar, i];
-                if (actionType == null) continue;
+                var assignedActionType = _slots[_selectedHotbar, actionSlot.SlotIndex];
+                if (!assignedActionType.HasValue) continue;
 
-                if (!TryGetGrantedActionState((ActionType) actionType, out var actionState)) continue;
-                _ui.UpdateCooldown(i, actionState.Cooldown, _gameTiming.CurTime);
+                if (!TryGetActionState((ActionType) assignedActionType, out var actionState)) continue;
+                actionSlot.UpdateCooldown(actionState.Value.Cooldown, GameTiming.CurTime);
             }
         }
 
         protected override void AfterGrantAction()
+        {
+            UpdateUI();
+        }
+
+        protected override void AfterCooldownAction()
         {
             UpdateUI();
         }

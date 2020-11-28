@@ -378,7 +378,7 @@ namespace Content.Client.UserInterface
         /// Should be invoked when action states change, ensures
         /// currently displayed actions are properly showing their revoked / granted status
         /// </summary>
-        public void UpdateActionStates()
+        public void UpdateUI()
         {
             foreach (var actionItem in _resultsGrid.Children)
             {

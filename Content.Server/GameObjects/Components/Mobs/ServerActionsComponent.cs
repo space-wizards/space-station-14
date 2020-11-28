@@ -9,10 +9,12 @@ using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
+using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameObjects.Components.Mobs
 {
@@ -20,13 +22,7 @@ namespace Content.Server.GameObjects.Components.Mobs
     [ComponentReference(typeof(SharedActionsComponent))]
     public sealed class ServerActionsComponent : SharedActionsComponent
     {
-
         [Dependency] private readonly IEntityManager _entityManager = default!;
-
-        public override ComponentState GetComponentState()
-        {
-            return new ActionComponentState(CreateActionStatesArray());
-        }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession session = null)
         {
@@ -42,11 +38,20 @@ namespace Content.Server.GameObjects.Components.Mobs
             var player = session.AttachedEntity;
             if (player != Owner) return;
 
-            if (!TryGetGrantedActionState(performMsg.ActionType, out var actionState))
+            if (!TryGetActionState(performMsg.ActionType, out var actionState) || !actionState.Value.Granted)
             {
-                Logger.DebugS("action", "user {0} attempted to" +
+                Logger.DebugS("action", "user {0} attempted to use" +
                                         " action {1} which is not granted to them", player.Name,
                     performMsg.ActionType);
+                return;
+            }
+
+            if (actionState.Value.IsOnCooldown(GameTiming))
+            {
+                Logger.DebugS("action", "user {0} attempted to use" +
+                                        " action {1} which is on cooldown", player.Name,
+                    performMsg.ActionType);
+                return;
             }
 
             if (!ActionManager.TryGet(performMsg.ActionType, out var action))
@@ -80,11 +85,11 @@ namespace Content.Server.GameObjects.Components.Mobs
                         return;
                     }
 
-                    if (msg.ToggleOn == actionState.ToggledOn)
+                    if (msg.ToggleOn == actionState.Value.ToggledOn)
                     {
                         Logger.DebugS("action", "user {0} attempted to" +
                                                 " toggle action {1} to {2}, but it is already toggled {2}", player.Name,
-                            msg.ActionType, actionState.ToggledOn ? "on" : "off");
+                            msg.ActionType, actionState.Value.ToggledOn ? "on" : "off");
                         return;
                     }
 
@@ -167,9 +172,15 @@ namespace Content.Server.GameObjects.Components.Mobs
                 return;
             }
 
-            var actionType = args[0];
+            var actionTypeRaw = args[0];
+            if (!Enum.TryParse<ActionType>(actionTypeRaw, out var actionType))
+            {
+                shell.SendText(player, "unrecognized ActionType enum value, please" +
+                                       " ensure you used correct casing: " + actionTypeRaw);
+                return;
+            }
             var actionMgr = IoCManager.Resolve<ActionManager>();
-            if (!actionMgr.TryGet(Enum.Parse<ActionType>(actionType), out var action))
+            if (!actionMgr.TryGet(actionType, out var action))
             {
                 shell.SendText(player, "unrecognized actionType " + actionType);
                 return;
@@ -201,15 +212,72 @@ namespace Content.Server.GameObjects.Components.Mobs
                 return;
             }
 
-            var actionType = args[0];
+            var actionTypeRaw = args[0];
+            if (!Enum.TryParse<ActionType>(actionTypeRaw, out var actionType))
+            {
+                shell.SendText(player, "unrecognized ActionType enum value, please" +
+                                       " ensure you used correct casing: " + actionTypeRaw);
+                return;
+            }
             var actionMgr = IoCManager.Resolve<ActionManager>();
-            if (!actionMgr.TryGet(Enum.Parse<ActionType>(actionType), out var action))
+            if (!actionMgr.TryGet(actionType, out var action))
             {
                 shell.SendText(player, "unrecognized actionType " + actionType);
                 return;
             }
 
             actionsComponent.RevokeAction(action.ActionType);
+        }
+    }
+
+    public sealed class CooldownAction : IClientCommand
+    {
+        public string Command => "coolaction";
+        public string Description => "Sets a cooldown on an action for a player, defaulting to current player";
+        public string Help => "coolaction <actionType> <seconds> <name or userID, omit for current player>";
+
+        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        {
+            var attachedEntity = player.AttachedEntity;
+            if (args.Length > 2)
+            {
+                var target = args[2];
+                if (!CommandUtils.TryGetAttachedEntityByUsernameOrId(shell, target, player, out attachedEntity)) return;
+            }
+
+            if (!CommandUtils.ValidateAttachedEntity(shell, player, attachedEntity)) return;
+
+            if (!attachedEntity.TryGetComponent(out ServerActionsComponent actionsComponent))
+            {
+                shell.SendText(player, "user has no actions component");
+                return;
+            }
+
+            var actionTypeRaw = args[0];
+            if (!Enum.TryParse<ActionType>(actionTypeRaw, out var actionType))
+            {
+                shell.SendText(player, "unrecognized ActionType enum value, please" +
+                                       " ensure you used correct casing: " + actionTypeRaw);
+                return;
+            }
+            var actionMgr = IoCManager.Resolve<ActionManager>();
+
+            if (!actionMgr.TryGet(actionType, out var action))
+            {
+                shell.SendText(player, "unrecognized actionType " + actionType);
+                return;
+            }
+
+            var cooldownStart = IoCManager.Resolve<IGameTiming>().CurTime;
+            if (!uint.TryParse(args[1], out var seconds))
+            {
+                shell.SendText(player, "cannot parse seconds: " + args[1]);
+                return;
+            }
+
+            var cooldownEnd = cooldownStart.Add(TimeSpan.FromSeconds(seconds));
+
+            actionsComponent.CooldownAction(action.ActionType, (cooldownStart, cooldownEnd));
         }
     }
 }

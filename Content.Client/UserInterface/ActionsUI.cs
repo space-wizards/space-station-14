@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Utility;
@@ -22,7 +23,7 @@ namespace Content.Client.UserInterface
     {
         private readonly EventHandler _onShowTooltip;
         private readonly EventHandler _onHideTooltip;
-        private readonly Action<ActionSlotEventArgs> _onPressAction;
+        private readonly Action<BaseButton.ButtonEventArgs> _onPressAction;
         private readonly Action<ActionSlotDragDropEventArgs> _onDragDropAction;
         private readonly Action<BaseButton.ButtonEventArgs> _onNextHotbarPressed;
         private readonly Action<BaseButton.ButtonEventArgs> _onPreviousHotbarPressed;
@@ -42,16 +43,20 @@ namespace Content.Client.UserInterface
         private readonly DragDropHelper<ActionSlot> _dragDropHelper;
         public bool IsDragging => _dragDropHelper.IsDragging;
 
+        /// <summary>
+        /// All the action slots in order.
+        /// </summary>
+        public IEnumerable<ActionSlot> Slots => _slots;
+
         /// <param name="onShowTooltip">OnShowTooltip handler to assign to each ActionSlot</param>
         /// <param name="onHideTooltip">OnHideTooltip handler to assign to each ActionSlot</param>
-        /// <param name="onPressAction">handler for click interactions with
-        /// action slots. Slots with no actions will not be handled by this.</param>
+        /// <param name="onPressAction">OnPressed handler to assign to each action slot</param>
         /// <param name="onDragDropAction">invoked when dragging and dropping an action from
         /// one slot to another.</param>
         /// <param name="onNextHotbarPressed">invoked when pressing the next hotbar button</param>
         /// <param name="onPreviousHotbarPressed">invoked when pressing the previous hotbar button</param>
         /// <param name="onSettingsButtonPressed">invoked when pressing the settings button</param>
-        public ActionsUI(EventHandler onShowTooltip, EventHandler onHideTooltip, Action<ActionSlotEventArgs> onPressAction,
+        public ActionsUI(EventHandler onShowTooltip, EventHandler onHideTooltip, Action<BaseButton.ButtonEventArgs> onPressAction,
             Action<ActionSlotDragDropEventArgs> onDragDropAction,
             Action<BaseButton.ButtonEventArgs> onNextHotbarPressed, Action<BaseButton.ButtonEventArgs> onPreviousHotbarPressed,
             Action<BaseButton.ButtonEventArgs> onSettingsButtonPressed)
@@ -159,13 +164,26 @@ namespace Content.Client.UserInterface
                 slot.OnHideTooltip += onHideTooltip;
                 slot.OnButtonDown += ActionSlotOnButtonDown;
                 slot.OnButtonUp += ActionSlotOnButtonUp;
-                slot.OnPressed += ActionSlotOnPressed;
-                slot.OnToggled += ActionSlotOnToggled;
+                slot.OnPressed += _onPressAction;
                 _slotContainer.AddChild(slot);
                 _slots[i - 1] = slot;
             }
 
             _dragDropHelper = new DragDropHelper<ActionSlot>(OnBeginActionDrag, OnContinueActionDrag, OnEndActionDrag);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            _nextHotbarButton.OnPressed -= _onNextHotbarPressed;
+            _previousHotbarButton.OnPressed -= _onPreviousHotbarPressed;
+            _settingsButton.OnPressed -= _onSettingsButtonPressed;
+            foreach (var slot in _slots)
+            {
+                slot.OnShowTooltip -= _onShowTooltip;
+                slot.OnHideTooltip -= _onHideTooltip;
+                slot.OnPressed -= _onPressAction;
+            }
         }
 
         private bool OnBeginActionDrag()
@@ -224,48 +242,6 @@ namespace Content.Client.UserInterface
             _dragDropHelper.EndDrag();
         }
 
-        private void ActionSlotOnPressed(BaseButton.ButtonEventArgs args)
-        {
-            if (!(args.Button is ActionSlot actionSlot)) return;
-            if (actionSlot.Action == null) return;
-            if (args.Event.Function == EngineKeyFunctions.UIRightClick)
-            {
-                _onPressAction.Invoke(new ActionSlotEventArgs(ActionSlotEvent.RightClick, false, actionSlot, args));
-                return;
-            }
-            if (args.Event.Function != EngineKeyFunctions.Use && args.Event.Function != EngineKeyFunctions.UIClick) return;
-            if (!actionSlot.Granted) return;
-            // only instant actions should be handled as presses, all other actions
-            // should be handled as toggles
-            if (actionSlot.Action.BehaviorType == BehaviorType.Instant)
-            {
-                _onPressAction.Invoke(new ActionSlotEventArgs(ActionSlotEvent.Press, false, actionSlot, args));
-            }
-        }
-
-        private void ActionSlotOnToggled(BaseButton.ButtonToggledEventArgs args)
-        {
-            if (!(args.Button is ActionSlot actionSlot)) return;
-            if (actionSlot.Action == null) return;
-            if (args.Event.Function == EngineKeyFunctions.UIRightClick)
-            {
-                _onPressAction.Invoke(new ActionSlotEventArgs(ActionSlotEvent.RightClick, args.Pressed, actionSlot, args));
-                return;
-            }
-            if (args.Event.Function != EngineKeyFunctions.Use && args.Event.Function != EngineKeyFunctions.UIClick) return;
-            if (!actionSlot.Granted) return;
-            // only instant actions should be handled as presses, all other actions
-            // should be handled as toggles
-            if (actionSlot.Action.BehaviorType != BehaviorType.Instant)
-            {
-                _onPressAction.Invoke(new ActionSlotEventArgs(ActionSlotEvent.Toggle, args.Pressed, actionSlot, args));
-            }
-            else
-            {
-                _onPressAction.Invoke(new ActionSlotEventArgs(ActionSlotEvent.Press, false, actionSlot, args));
-            }
-        }
-
         /// <summary>
         /// Handle keydown / keyup for one of the slots via a keybinding, simulates mousedown/mouseup on it.
         /// </summary>
@@ -276,99 +252,11 @@ namespace Content.Client.UserInterface
             actionSlot.HandleKeybind(args.State);
         }
 
-        /// <summary>
-        /// Updates the action assigned to the indicated slot.
-        /// </summary>
-        /// <param name="slot">slot index to assign to (0 corresponds to the one labeled 1, 9 corresponds to the one labeled 0)</param>
-        /// <param name="action">action to assign</param>
-        public void AssignSlot(byte slot, ActionPrototype action)
-        {
-            _slots[slot].Assign(action);
-        }
-
-        /// <summary>
-        /// Clears the action assigned to the indicated slot.
-        /// </summary>
-        /// <param name="slot">slot index to clear (0 corresponds to the one labeled 1, 9 corresponds to the one labeled 0)</param>
-        public void ClearSlot(byte slot)
-        {
-            _slots[slot].Clear();
-        }
-
-        /// <summary>
-        /// Displays the action on the indicated slot as revoked (makes the number red)
-        /// </summary>
-        /// <param name="slot">slot index containing the action to revoke (0 corresponds to the one labeled 1, 9 corresponds to the one labeled 0)</param>
-        public void RevokeSlot(byte slot)
-        {
-            _slots[slot].Revoke();
-        }
-
-
-        /// <summary>
-        /// Displays the action on the indicated slot as granted (makes the number white)
-        /// </summary>
-        /// <param name="slot">slot index containing the action to revoke (0 corresponds to the one labeled 1, 9 corresponds to the one labeled 0)</param>
-        public void GrantSlot(byte slot)
-        {
-            _slots[slot].Grant();
-        }
-
         public void SetHotbarLabel(int number)
         {
             _loadoutNumber.Text = number.ToString();
         }
 
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            _nextHotbarButton.OnPressed -= _onNextHotbarPressed;
-            _previousHotbarButton.OnPressed -= _onPreviousHotbarPressed;
-            _settingsButton.OnPressed -= _onSettingsButtonPressed;
-            foreach (var slot in _slots)
-            {
-                slot.OnShowTooltip -= _onShowTooltip;
-                slot.OnHideTooltip -= _onHideTooltip;
-                slot.OnPressed -= ActionSlotOnPressed;
-                slot.OnToggled -= ActionSlotOnToggled;
-            }
-        }
-
-        /// <summary>
-        /// Update the cooldown shown on the indicated slot, clearing it if cooldown is null
-        /// </summary>
-        /// <param name="slot">slot index containing the action to update the cooldown of
-        /// (0 corresponds to the one labeled 1, 9 corresponds to the one labeled 0)</param>
-        /// <param name="cooldown">cooldown start and end time</param>
-        /// <param name="curTime">current time</param>
-        public void UpdateCooldown(byte slot, (TimeSpan start, TimeSpan end)? cooldown, TimeSpan curTime)
-        {
-            _slots[slot].UpdateCooldown(cooldown, curTime);
-        }
-
-        /// <summary>
-        /// Toggles the action on the indicated slot, showing it as toggled on or off based
-        /// on toggleOn. Note that instant actions cannot be toggled.
-        /// All others can, Target-based actions need to be toggleable so they can indicate
-        /// which one you are currently picking a target for.
-        /// </summary>
-        /// <param name="slot">slot index containing the action to toggle
-        /// (0 corresponds to the one labeled 1, 9 corresponds to the one labeled 0)</param>
-        /// <param name="toggledOn">true to toggle it on, false to toggle it off</param>
-        public void ToggleSlot(byte slot, bool toggledOn)
-        {
-            var actionSlot = _slots[slot];
-            if (actionSlot.ToggleMode == false)
-            {
-                Logger.DebugS("action", "tried to toggle action slot for type {0} that is " +
-                                        "not in toggle mode", actionSlot.Action?.ActionType);
-                return;
-            }
-            if (actionSlot.Pressed == toggledOn) return;
-
-            actionSlot.Pressed = toggledOn;
-        }
 
         protected override void FrameUpdate(FrameEventArgs args)
         {
@@ -391,53 +279,4 @@ namespace Content.Client.UserInterface
             ToSlot = toSlot;
         }
     }
-
-    /// <summary>
-    /// Args for interaction with an action slot
-    /// </summary>
-    public class ActionSlotEventArgs : EventArgs
-    {
-        /// <summary>
-        /// Type of event
-        /// </summary>
-        public readonly ActionSlotEvent ActionSlotEvent;
-        /// <summary>
-        /// For Toggle events, whether the action is being toggled on or off.
-        /// </summary>
-        public readonly bool ToggleOn;
-        /// <summary>
-        /// Action slot being interacted with
-        /// </summary>
-        public readonly ActionSlot ActionSlot;
-        public readonly BaseButton.ButtonEventArgs ButtonEventArgs;
-        /// <summary>
-        /// Action in the slot being interacted with
-        /// </summary>
-        public ActionPrototype Action => ActionSlot.Action;
-
-        public ActionSlotEventArgs(ActionSlotEvent actionSlotEvent, bool toggleOn, ActionSlot actionSlot, BaseButton.ButtonEventArgs buttonEventArgs)
-        {
-            ActionSlotEvent = actionSlotEvent;
-            ToggleOn = toggleOn;
-            ActionSlot = actionSlot;
-            ButtonEventArgs = buttonEventArgs;
-        }
-    }
-
-    public enum ActionSlotEvent
-    {
-        /// <summary>
-        /// Left clicking an instant action
-        /// </summary>
-        Press,
-        /// <summary>
-        /// left clicking a non-instant action (toggles it)
-        /// </summary>
-        Toggle,
-        /// <summary>
-        /// Right clicking an action
-        /// </summary>
-        RightClick
-    }
-
 }

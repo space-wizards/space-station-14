@@ -237,6 +237,7 @@
   - hungry
   - grantaction
   - revokeaction
+  - coolaction
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true

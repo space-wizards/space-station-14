@@ -33,6 +33,24 @@ namespace Content.Client.UserInterface.Controls
         /// </summary>
         public bool Granted { get; private set; }
 
+        private bool _toggledOn;
+
+        /// <summary>
+        /// Separate from Pressed, if true, this button will be displayed as pressed
+        /// regardless of the Pressed setting.
+        /// </summary>
+        public bool ToggledOn
+        {
+            get => _toggledOn;
+            set
+            {
+                if (_toggledOn == value) return;
+                _toggledOn = value;
+                DrawModeChanged();
+            }
+
+        }
+
         /// <summary>
         /// 1-10 corresponding to the number label on the slot (10 is labeled as 0)
         /// </summary>
@@ -40,9 +58,16 @@ namespace Content.Client.UserInterface.Controls
         public byte SlotIndex => (byte) (SlotNumber - 1);
 
         /// <summary>
-        /// Total duration of the cooldown in seconds. Null if no duration / cooldown.
+        /// Total duration of the current cooldown in seconds. Null if no duration / cooldown.
         /// </summary>
-        public int? TotalDuration { get; set; }
+        public int? TotalDuration { get; private set; }
+        /// <summary>
+        /// Remaining cooldown in seconds. TimeSpan.Zero if no cooldown or cooldown
+        /// is over.
+        /// </summary>
+        public TimeSpan CooldownRemaining { get; private set; }
+
+        public bool IsOnCooldown => CooldownRemaining != TimeSpan.Zero;
 
         private readonly RichTextLabel _number;
         private readonly TextureRect _icon;
@@ -109,6 +134,7 @@ namespace Content.Client.UserInterface.Controls
                 _cooldownGraphic.Progress = 0;
                 _cooldownGraphic.Visible = false;
                 TotalDuration = null;
+                CooldownRemaining = TimeSpan.Zero;
             }
             else
             {
@@ -120,6 +146,7 @@ namespace Content.Client.UserInterface.Controls
                 var progress = (curTime - start).TotalSeconds / length;
                 var ratio = (progress <= 1 ? (1 - progress) : (curTime - end).TotalSeconds * -5);
 
+                CooldownRemaining = end > curTime ? (end - curTime) : TimeSpan.Zero;
                 TotalDuration = (int?) Math.Round(length);
                 _cooldownGraphic.Progress = MathHelper.Clamp((float)ratio, -1, 1);
                 _cooldownGraphic.Visible = ratio > -1f;
@@ -138,9 +165,8 @@ namespace Content.Client.UserInterface.Controls
             Action = action;
             _icon.Texture = Action.Icon.Frame0();
             _icon.Visible = true;
-            // all non-instant actions need to be toggle-able
-            ToggleMode = action.BehaviorType != BehaviorType.Instant;
             Pressed = false;
+            ToggledOn = false;
             Granted = true;
             DrawModeChanged();
             _number.SetMessage(SlotNumberLabel());
@@ -155,7 +181,8 @@ namespace Content.Client.UserInterface.Controls
             Action = null;
             _icon.Texture = null;
             _icon.Visible = false;
-            ToggleMode = false;
+            ToggledOn = false;
+            Pressed = false;
             DrawModeChanged();
             UpdateCooldown(null, TimeSpan.Zero);
             _number.SetMessage(SlotNumberLabel());
@@ -197,18 +224,23 @@ namespace Content.Client.UserInterface.Controls
         protected override void DrawModeChanged()
         {
             base.DrawModeChanged();
-            // when there's no action, it should only show the "normal" style
-            // regardless of mouseover
+            // when there's no action or its on cooldown or revoked, it should
+            // not appear as if it's interactable (no mouseover or press style)
             if (Action == null)
             {
                 SetOnlyStylePseudoClass(StylePseudoClassNormal);
             }
+            else if (_cooldownGraphic.Visible && Granted)
+            {
+                SetOnlyStylePseudoClass(ToggledOn ? StylePseudoClassPressed : StylePseudoClassNormal);
+            }
             else if (!Granted)
             {
-                // when there's an action but its revoked, it should only
-                // show the disabled style (even though it's still clickable so it can
-                // be rightclick removed)
-                SetOnlyStylePseudoClass(StylePseudoClassDisabled);
+                SetOnlyStylePseudoClass(ToggledOn ? StylePseudoClassPressed : StylePseudoClassDisabled);
+            }
+            else if (DrawMode != DrawModeEnum.Hover && ToggledOn)
+            {
+                SetOnlyStylePseudoClass(StylePseudoClassPressed);
             }
         }
 
@@ -218,7 +250,6 @@ namespace Content.Client.UserInterface.Controls
         public void HandleKeybind(BoundKeyState keyState)
         {
             // simulate a click, using UIClick so it won't be treated as a possible drag / drop attempt
-            // TODO: this is sketchy, need a better mechanism to map a key to a button
             var guiArgs = new GUIBoundKeyEventArgs(EngineKeyFunctions.UIClick,
                 keyState, new ScreenCoordinates(GlobalPixelPosition), true,
                 default,
