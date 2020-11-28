@@ -35,6 +35,10 @@
     - type: GasCanisterVisualizer
       sprite: Constructible/Atmos/canister.rsi
       stateConnected: can-connector
+      stateO0: can-o0
+      stateO1: can-o1
+      stateO2: can-o2
+      stateO3: can-o3
   - type: UserInterface
     interfaces:
       - key: enum.GasCanisterUiKey.Key

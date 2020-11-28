@@ -16,6 +16,7 @@ using Content.Shared.GameObjects.Components.Atmos;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Atmos;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
@@ -245,6 +246,24 @@ namespace Content.Server.GameObjects.Components.Atmos
         private void UpdateAppearance()
         {
             _appearance?.SetData(GasCanisterVisuals.ConnectedState, ConnectedToPort);
+            // The Eris canisters are being used, so best to use the Eris light logic unless someone else has a better idea.
+            // https://github.com/discordia-space/CEV-Eris/blob/fdd6ee7012f46838a6711adb1737cd90c48ae448/code/game/machinery/atmoalter/canister.dm#L129
+            if (Air.Pressure < 10)
+            {
+	            _appearance?.SetData(GasCanisterVisuals.PressureState, 0);
+            }
+            else if (Air.Pressure < Atmospherics.OneAtmosphere)
+            {
+	            _appearance?.SetData(GasCanisterVisuals.PressureState, 1);
+            }
+            else if (Air.Pressure < (15 * Atmospherics.OneAtmosphere))
+            {
+	            _appearance?.SetData(GasCanisterVisuals.PressureState, 2);
+            }
+            else
+            {
+	            _appearance?.SetData(GasCanisterVisuals.PressureState, 3);
+            }
         }
 
         /// <summary>
@@ -260,6 +279,11 @@ namespace Content.Server.GameObjects.Components.Atmos
                 ValveOpened);
         }
 
+        public void AirWasUpdated()
+        {
+            UpdateUserInterface();
+            UpdateAppearance();
+        }
 
         #region Check methods
 
@@ -349,7 +373,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                     Air.ReleaseGasTo(null, ReleasePressure);
                 }
 
-                UpdateUserInterface();
+                AirWasUpdated();
             }
         }
     }

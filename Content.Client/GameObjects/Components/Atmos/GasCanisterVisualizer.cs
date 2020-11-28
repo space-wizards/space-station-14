@@ -15,12 +15,15 @@ namespace Content.Client.GameObjects.Components.Atmos
     {
         private string _sprite;
         private string _stateConnected;
-
-        public bool ConnectedToPort = false;
+        private string[] _statePressure = new string[] {"", "", "", ""};
 
         private enum VisualLayers
         {
             ConnectedToPort = 1,
+            Pressure0 = 2,
+            Pressure1 = 3,
+            Pressure2 = 4,
+            Pressure3 = 5,
         }
 
         public override void LoadData(YamlMappingNode node)
@@ -29,6 +32,8 @@ namespace Content.Client.GameObjects.Components.Atmos
 
             _sprite = node.GetNode("sprite").AsString();
             _stateConnected = node.GetNode("stateConnected").AsString();
+            for (int i = 0; i < _statePressure.Length; i++)
+                _statePressure[i] = node.GetNode("stateO" + i).AsString();
         }
 
         public override void InitializeEntity(IEntity entity)
@@ -39,13 +44,22 @@ namespace Content.Client.GameObjects.Components.Atmos
 
             if (appearance.Owner.TryGetComponent(out ISpriteComponent sprite))
             {
-
                 // Add new layers
                 sprite.AddLayer(
                     new SpriteSpecifier.Rsi(new ResourcePath(_sprite), _stateConnected),
                     (int) VisualLayers.ConnectedToPort);
 
                 sprite.LayerSetVisible((int) VisualLayers.ConnectedToPort, false);
+
+                for (int i = 0; i < _statePressure.Length; i++)
+                {
+                    int layerIdx = ((int) VisualLayers.Pressure0) + i;
+                    sprite.AddLayer(
+                        new SpriteSpecifier.Rsi(new ResourcePath(_sprite), _statePressure[i]),
+                        layerIdx);
+
+                    sprite.LayerSetVisible(layerIdx, false);
+                }
             }
         }
 
@@ -69,6 +83,10 @@ namespace Content.Client.GameObjects.Components.Atmos
                 sprite.LayerSetVisible((int) VisualLayers.ConnectedToPort, isConnected);
             }
 
+            // Update the visuals : Canister lights
+            if (component.TryGetData(GasCanisterVisuals.PressureState, out int pressureState))
+                for (int i = 0; i < _statePressure.Length; i++)
+                    sprite.LayerSetVisible(((int) VisualLayers.Pressure0) + i, pressureState == i);
         }
     }
 }

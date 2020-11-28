@@ -39,7 +39,8 @@ namespace Content.Shared.GameObjects.Components.Atmos
     [Serializable, NetSerializable]
     public enum GasCanisterVisuals
     {
-        ConnectedState
+        ConnectedState,
+        PressureState
     }
 
     #endregion
