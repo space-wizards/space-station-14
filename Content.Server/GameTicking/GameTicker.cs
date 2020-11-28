@@ -297,6 +297,7 @@ namespace Content.Server.GameTicking
 
                     DisallowLateJoin = false;
                     DisallowLateJoin |= newPreset.DisallowLateJoin;
+                    preset = newPreset;
                 }
                 else
                 {
@@ -306,6 +307,7 @@ namespace Content.Server.GameTicking
                     return;
                 }
             }
+            OnRunLevelChanged += preset.OnRunLevelChanged;
 
             _roundStartTimeSpan = IoCManager.Resolve<IGameTiming>().RealTime;
             _sendStatusToAll();

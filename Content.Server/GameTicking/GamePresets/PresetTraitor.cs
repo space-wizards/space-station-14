@@ -8,6 +8,7 @@ using Content.Server.GameTicking.GameRules;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs.Roles.Traitor;
+using Content.Server.Objectives.Interfaces;
 using Content.Server.Players;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.PDA;
@@ -39,6 +40,7 @@ namespace Content.Server.GameTicking.GamePresets
         private int StartingTC => 20;
 
         private string[] Codewords => new[] {"cold", "winter", "radiator", "average", "furious"};
+        private List<TraitorRole> _traitors = new List<TraitorRole>();
 
         public override bool Start(IReadOnlyList<IPlayerSession> readyPlayers, bool force = false)
         {
@@ -72,8 +74,6 @@ namespace Content.Server.GameTicking.GamePresets
 
             var numTraitors = MathHelper.Clamp(readyPlayers.Count / TraitorPerPlayers,
                 1, MaxTraitors);
-
-            var traitors = new List<TraitorRole>();
 
             for (var i = 0; i < numTraitors; i++)
             {
@@ -123,11 +123,9 @@ namespace Content.Server.GameTicking.GamePresets
                 }
 
                 mind.AddRole(traitorRole);
-                traitors.Add(traitorRole);
+                _traitors.Add(traitorRole);
                 pdaComponent.InitUplinkAccount(uplinkAccount);
             }
-
-            //todo give traitors their objectives
 
             var codewordPool = new List<string>(Codewords);
             var finalCodewordCount = Math.Min(CodewordCount, Codewords.Length);
@@ -137,13 +135,27 @@ namespace Content.Server.GameTicking.GamePresets
                 codewords[i] = _random.PickAndTake(codewordPool);
             }
 
-            foreach (var traitor in traitors)
+            foreach (var traitor in _traitors)
             {
                 traitor.GreetTraitor(codewords);
             }
 
             _gameticker.AddGameRule<RuleTraitor>();
             return true;
+        }
+
+        public override void OnGameStarted()
+        {
+            var objectivesMgr = IoCManager.Resolve<IObjectivesManager>();
+            foreach (var traitor in _traitors)
+            {
+                //give traitors their objectives
+                var objectives = objectivesMgr.GetRandomObjectives(traitor.Mind);
+                foreach (var objective in objectives)
+                {
+                    traitor.Mind.TryAddObjective(objective);
+                }
+            }
         }
     }
 }

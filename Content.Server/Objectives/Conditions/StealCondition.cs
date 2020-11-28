@@ -2,6 +2,7 @@
 using Content.Server.GameObjects.Components.ContainerExt;
 using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
+using JetBrains.Annotations;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -13,6 +14,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Conditions
 {
+    [UsedImplicitly]
     public class StealCondition : IObjectiveCondition
     {
         public string PrototypeId { get; private set; } = default!;

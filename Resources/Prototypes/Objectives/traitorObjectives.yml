@@ -1,9 +1,32 @@
 ﻿- type: objective
-  id: SoapDeluxeStealObjective
-  prob: 0.3
+  id: CaptainIDStealObjective
   issuer: The Syndicate
   requirements:
-    - !type:SuspicionTraitorRequirement {}
+    - !type:TraitorRequirement {}
   conditions:
     - !type:StealCondition
-      prototype: SoapDeluxe
+      prototype: CaptainIDCard
+
+- type: objective
+  id: KillRandomObjective
+  issuer: The Syndicate
+  requirements:
+    - !type:TraitorRequirement {}
+  conditions:
+    - !type:KillRandomPersonCondition {}
+
+- type: objective
+  id: StayAliveObjective
+  issuer: The Syndicate
+  requirements:
+    - !type:TraitorRequirement {}
+  conditions:
+    - !type:StayAliveCondition {}
+
+- type: objective
+  id: DieObjective
+  issuer: The Syndicate
+  requirements:
+    - !type:TraitorRequirement {}
+  conditions:
+    - !type:DieCondition {}
