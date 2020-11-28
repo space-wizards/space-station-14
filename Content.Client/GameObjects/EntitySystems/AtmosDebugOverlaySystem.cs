@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Content.Client.Atmos;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
+using Content.Shared.Atmos;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Client.Interfaces.Graphics.Overlays;
@@ -19,6 +20,19 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private readonly Dictionary<GridId, AtmosDebugOverlayMessage> _tileData =
             new();
+
+        // Configuration set by debug commands and used by AtmosDebugOverlay {
+        /// <summary>Value source for display</summary>
+        public AtmosDebugOverlayMode CfgMode;
+        /// <summary>This is subtracted from value (applied before CfgScale)</summary>
+        public float CfgBase = 0;
+        /// <summary>The value is divided by this (applied after CfgBase)</summary>
+        public float CfgScale = Atmospherics.MolesCellStandard * 2;
+        /// <summary>Gas ID used by GasMoles mode</summary>
+        public int CfgSpecificGas = 0;
+        /// <summary>Uses black-to-white interpolation (as opposed to red-green-blue) for colourblind users</summary>
+        public bool CfgCBM = false;
+        // }
 
         public override void Initialize()
         {
@@ -82,5 +96,12 @@ namespace Content.Client.GameObjects.EntitySystems
 
             return srcMsg.OverlayData[relative.X + (relative.Y * LocalViewRange)];
         }
+    }
+
+    internal enum AtmosDebugOverlayMode
+    {
+        TotalMoles,
+        GasMoles,
+        Temperature
     }
 }
