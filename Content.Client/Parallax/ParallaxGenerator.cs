@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -27,7 +27,7 @@ namespace Content.Client.Parallax
             sawmill.Debug("Timing start!");
             var sw = new Stopwatch();
             sw.Start();
-            var image = new Image<Rgba32>(Configuration.Default, size.Width, size.Height, new Rgba32(0,0,0,255));
+            var image = new Image<Rgba32>(Configuration.Default, size.Width, size.Height, new Rgba32(0, 0, 0, 255));
             var count = 0;
             foreach (var layer in generator.Layers)
             {
@@ -44,7 +44,7 @@ namespace Content.Client.Parallax
 
         private void _loadConfig(TomlTable config)
         {
-            foreach (var layerArray in ((TomlTableArray)config.Get("layers")).Items)
+            foreach (var layerArray in ((TomlTableArray) config.Get("layers")).Items)
             {
                 switch (((TomlValue<string>) layerArray.Get("type")).Value)
                 {
@@ -98,7 +98,7 @@ namespace Content.Client.Parallax
 
                 if (table.TryGetValue("seed", out tomlObject))
                 {
-                    Seed = (uint) ((TomlValue<int>) tomlObject).Value;
+                    Seed = (uint) ((TomlValue<long>) tomlObject).Value;
                 }
 
                 if (table.TryGetValue("persistence", out tomlObject))
@@ -118,7 +118,7 @@ namespace Content.Client.Parallax
 
                 if (table.TryGetValue("octaves", out tomlObject))
                 {
-                    Octaves = (uint) ((TomlValue<int>) tomlObject).Value;
+                    Octaves = (uint) ((TomlValue<long>) tomlObject).Value;
                 }
 
                 if (table.TryGetValue("threshold", out tomlObject))
@@ -225,12 +225,12 @@ namespace Content.Client.Parallax
             {
                 if (table.TryGetValue("seed", out var tomlObject))
                 {
-                    Seed = ((TomlValue<int>) tomlObject).Value;
+                    Seed = (int) ((TomlValue<long>) tomlObject).Value;
                 }
 
                 if (table.TryGetValue("count", out tomlObject))
                 {
-                    PointCount = ((TomlValue<int>) tomlObject).Value;
+                    PointCount = (int) ((TomlValue<long>) tomlObject).Value;
                 }
 
                 if (table.TryGetValue("sourcefactor", out tomlObject))
@@ -255,7 +255,7 @@ namespace Content.Client.Parallax
 
                 if (table.TryGetValue("pointsize", out tomlObject))
                 {
-                    PointSize = ((TomlValue<int>) tomlObject).Value;
+                    PointSize = (int) ((TomlValue<long>) tomlObject).Value;
                 }
 
                 // Noise mask stuff.
@@ -266,7 +266,7 @@ namespace Content.Client.Parallax
 
                 if (table.TryGetValue("maskseed", out tomlObject))
                 {
-                    MaskSeed = (uint) ((TomlValue<int>) tomlObject).Value;
+                    MaskSeed = (uint) ((TomlValue<long>) tomlObject).Value;
                 }
 
                 if (table.TryGetValue("maskpersistence", out tomlObject))
@@ -286,7 +286,7 @@ namespace Content.Client.Parallax
 
                 if (table.TryGetValue("maskoctaves", out tomlObject))
                 {
-                    MaskOctaves = (uint) ((TomlValue<int>) tomlObject).Value;
+                    MaskOctaves = (uint) ((TomlValue<long>) tomlObject).Value;
                 }
 
                 if (table.TryGetValue("maskthreshold", out tomlObject))
@@ -318,7 +318,7 @@ namespace Content.Client.Parallax
             public override void Apply(Image<Rgba32> bitmap)
             {
                 // Temporary buffer so we don't mess up blending.
-                using (var buffer = new Image<Rgba32>(Configuration.Default, bitmap.Width, bitmap.Height, new Rgba32(0,0,0,0)))
+                using (var buffer = new Image<Rgba32>(Configuration.Default, bitmap.Width, bitmap.Height, new Rgba32(0, 0, 0, 0)))
                 {
                     if (Masked)
                     {
