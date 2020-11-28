@@ -15,22 +15,19 @@ namespace Content.Server.Objectives
         [ViewVariables]
         public string ID { get; private set; }
 
-        [ViewVariables(VVAccess.ReadWrite)]
+        [ViewVariables]
         public string Issuer { get; private set; }
 
         [ViewVariables]
         public float Probability { get; private set; }
 
         [ViewVariables]
-        public IReadOnlyList<IObjectiveCondition> Conditions => _conditions;
-        [ViewVariables]
-        public IReadOnlyList<IObjectiveRequirement> Requirements => _requirements;
-
-        [ViewVariables]
-        public float Difficulty => _difficultyOverride ?? _conditions.Sum(c => c.GetDifficulty());
+        public float Difficulty => _difficultyOverride ?? _conditions.Sum(c => c.Difficulty);
 
         private List<IObjectiveCondition> _conditions = new List<IObjectiveCondition>();
         private List<IObjectiveRequirement> _requirements = new List<IObjectiveRequirement>();
+
+        public IReadOnlyList<IObjectiveCondition> Conditions => _conditions;
 
         [ViewVariables(VVAccess.ReadWrite)]
         private float? _difficultyOverride = null;
@@ -55,6 +52,11 @@ namespace Content.Server.Objectives
             ser.DataField(this, x => x._conditions, "conditions", new List<IObjectiveCondition>());
             ser.DataField(this, x => x._requirements, "requirements", new List<IObjectiveRequirement>());
             ser.DataField(this, x => x._difficultyOverride, "difficultyOverride", null);
+        }
+
+        public Objective GetObjective(Mind mind)
+        {
+            return new Objective(this, mind);
         }
     }
 }

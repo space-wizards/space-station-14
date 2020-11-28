@@ -1,8 +1,8 @@
-﻿using Content.Server.Mobs;
+﻿#nullable enable
+using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
 using Content.Shared.GameObjects.Components.Damage;
 using JetBrains.Annotations;
-using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Conditions
@@ -10,23 +10,25 @@ namespace Content.Server.Objectives.Conditions
     [UsedImplicitly]
     public class DieCondition : IObjectiveCondition
     {
-        public void ExposeData(ObjectSerializer serializer){}
+        private Mind? mind;
 
-        public string GetTitle() => "Die a glorius death";
-
-        public string GetDescription() => "Die.";
-
-        public SpriteSpecifier GetIcon() => new SpriteSpecifier.Rsi(new ResourcePath("Mobs/Ghosts/ghost_human.rsi"), "icon");
-
-        public float GetProgress(Mind mind)
+        public IObjectiveCondition GetAssigned(Mind mind)
         {
-            return mind.OwnedEntity != null &&
-                   mind.OwnedEntity.TryGetComponent<IDamageableComponent>(out var damageableComponent) &&
-                   damageableComponent.CurrentState == DamageState.Dead
-                ? 0f
-                : 1f;
+            return new DieCondition {mind = mind};
         }
 
-        public float GetDifficulty() => 1f;
+        public string Title => "Die a glorius death";
+
+        public string Description => "Die.";
+
+        public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Mobs/Ghosts/ghost_human.rsi"), "icon");
+
+        public float Progress => mind?.OwnedEntity != null &&
+                                 mind.OwnedEntity.TryGetComponent<IDamageableComponent>(out var damageableComponent) &&
+                                    damageableComponent.CurrentState == DamageState.Dead
+                                    ? 0f
+                                    : 1f;
+
+        public float Difficulty => 1f;
     }
 }

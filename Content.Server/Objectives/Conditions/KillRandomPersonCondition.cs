@@ -17,7 +17,7 @@ namespace Content.Server.Objectives.Conditions
     [UsedImplicitly]
     public class KillRandomPersonCondition : KillPersonCondition
     {
-        public KillRandomPersonCondition()
+        public override IObjectiveCondition GetAssigned(Mind mind)
         {
             var entityMgr = IoCManager.Resolve<IEntityManager>();
             var allHumans = entityMgr.ComponentManager.EntityQuery<MindComponent>().Where(mc =>
@@ -27,7 +27,7 @@ namespace Content.Server.Objectives.Conditions
                        entity.TryGetComponent<IDamageableComponent>(out var damageableComponent) &&
                        damageableComponent.CurrentState == DamageState.Alive;
             }).Select(mc => mc.Mind).ToList();
-            Target = IoCManager.Resolve<IRobustRandom>().Pick(allHumans);
+            return new KillRandomPersonCondition {Target = IoCManager.Resolve<IRobustRandom>().Pick(allHumans)};
         }
     }
 }
