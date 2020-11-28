@@ -26,8 +26,8 @@ namespace Content.Server.Objectives.Conditions
         public float Progress => mind?.OwnedEntity != null &&
                                  mind.OwnedEntity.TryGetComponent<IDamageableComponent>(out var damageableComponent) &&
                                     damageableComponent.CurrentState == DamageState.Dead
-                                    ? 0f
-                                    : 1f;
+                                    ? 1f
+                                    : 0f;
 
         public float Difficulty => 1f;
     }
