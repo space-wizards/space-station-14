@@ -34,11 +34,13 @@ namespace Content.Server.GameObjects.Components.Atmos
     {
         public override string Name => "GasCanister";
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public string Label = "Gas Canister";
+        private const int MaxLabelLength = 32;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool ValveOpened = false;
+        public string Label { get; set; } = "Gas Canister";
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool ValveOpened { get; set; } = false;
 
         /// <summary>
         /// What <see cref="GasMixture"/> the canister contains.
@@ -60,7 +62,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         private const float DefaultVolume = 10;
 
-        [ViewVariables(VVAccess.ReadWrite)] public float ReleasePressure;
+        [ViewVariables(VVAccess.ReadWrite)] public float ReleasePressure { get; set; }
 
         /// <summary>
         /// The user interface bound to the canister.
@@ -110,6 +112,10 @@ namespace Content.Server.GameObjects.Components.Atmos
             if (Owner.TryGetComponent<IPhysicsComponent>(out var physics))
             {
                 physics.AnchoredChanged -= AnchorUpdate;
+            }
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage -= OnUiReceiveMessage;
             }
             DisconnectFromPort();
         }
@@ -187,8 +193,8 @@ namespace Content.Server.GameObjects.Components.Atmos
             if (obj.Message is CanisterLabelChangedMessage canLabelMessage)
             {
                 var newLabel = canLabelMessage.NewLabel;
-                if (newLabel.Length > 500)
-                    newLabel = newLabel.Substring(0, 500);
+                if (newLabel.Length > MaxLabelLength)
+                    newLabel = newLabel.Substring(0, MaxLabelLength);
                 Label = newLabel;
                 Owner.Name = Label;
                 UpdateUserInterface();
