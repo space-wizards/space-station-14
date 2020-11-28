@@ -50,6 +50,13 @@ namespace Content.Shared.Actions
         public BehaviorType BehaviorType { get; private set; }
 
         /// <summary>
+        /// For targetpoint or targetentity actions, if this is true the action will remain
+        /// selected after it is used, so it can be continuously re-used. If this is false,
+        /// the action will be deselected after one use.
+        /// </summary>
+        public bool Repeat { get; private set; }
+
+        /// <summary>
         /// Tags that can be used to filter to this item in action menu.
         /// </summary>
         public IEnumerable<string> SearchTags { get; private set; }
@@ -107,6 +114,14 @@ namespace Content.Shared.Actions
             if (BehaviorType == BehaviorType.None)
             {
                 Logger.ErrorS("action", "Missing behaviorType for action with name {0}", Name);
+            }
+
+            serializer.DataField(this, x => x.Repeat, "repeat", false);
+            if (BehaviorType != BehaviorType.TargetEntity && BehaviorType != BehaviorType.TargetPoint)
+            {
+                Logger.ErrorS("action", " action named {0} used repeat: true, but this is only supported for" +
+                                        " TargetEntity and TargetPoint behaviorType and its behaviorType is {1}",
+                    Name, BehaviorType);
             }
 
             serializer.DataReadFunction("searchTags", new List<string>(),

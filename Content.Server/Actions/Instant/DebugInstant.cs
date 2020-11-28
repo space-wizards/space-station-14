@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Server.Utility;
 using Content.Shared.Actions;
+using JetBrains.Annotations;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 
@@ -9,7 +10,7 @@ namespace Content.Server.Actions.Instant
     /// <summary>
     /// Just shows a popup message.
     /// </summary>
-    [Serializable]
+    [UsedImplicitly]
     public class DebugInstant : IInstantAction
     {
         public string Message { get; private set; }

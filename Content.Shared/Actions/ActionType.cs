@@ -8,8 +8,9 @@
         Error,
         DebugInstant,
         DebugToggle,
-        DebugTargetPointLocal,
-        DebugTargetPointMap,
-        DebugTargetEntity
+        DebugTargetPoint,
+        DebugTargetPointRepeat,
+        DebugTargetEntity,
+        DebugTargetEntityRepeat
     }
 }

@@ -20,6 +20,10 @@ namespace Content.Client.UserInterface.Controls
     /// </summary>
     public class ActionSlot : ContainerButton
     {
+        // shorter than default tooltip delay so user can more easily
+        // see what actions they've been given
+        private const float CustomTooltipDelay = 0.5f;
+
         private static readonly string GrantedColor = "#7b7e9e";
         private static readonly string RevokedColor = "#950000";
 
@@ -85,6 +89,7 @@ namespace Content.Client.UserInterface.Controls
             CustomMinimumSize = (64, 64);
 
             SizeFlagsVertical = SizeFlags.None;
+            TooltipDelay = CustomTooltipDelay;
 
             _number = new RichTextLabel
             {

@@ -1,9 +1,11 @@
 ﻿using Content.Server.Utility;
 using Content.Shared.Actions;
+using JetBrains.Annotations;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Actions.Toggle
 {
+    [UsedImplicitly]
     public class DebugToggle : IToggleAction
     {
         public string MessageOn { get; private set; }

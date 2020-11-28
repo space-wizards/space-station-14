@@ -10,6 +10,10 @@ namespace Content.Client.UserInterface.Controls
 {
     public class AlertControl : BaseButton
     {
+        // shorter than default tooltip delay so user can more easily
+        // see what alerts they have
+        private const float CustomTooltipDelay = 0.5f;
+
         public AlertPrototype Alert { get; }
 
         /// <summary>
@@ -32,6 +36,7 @@ namespace Content.Client.UserInterface.Controls
         /// <param name="resourceCache">resourceCache to use to load alert icon textures</param>
         public AlertControl(AlertPrototype alert, short? severity, IResourceCache resourceCache)
         {
+            TooltipDelay = CustomTooltipDelay;
             _resourceCache = resourceCache;
             Alert = alert;
             _severity = severity;

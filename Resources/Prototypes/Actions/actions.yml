@@ -24,28 +24,28 @@
     messageOff: Toggled off!
 
 - type: action
-  actionType: DebugTargetPointLocal
+  actionType: DebugTargetPoint
   icon: Interface/Alerts/Human/human4.png
-  name: "[color=red]Debug Target Local Position[/color]"
+  name: "[color=red]Debug Target Position[/color]"
   description: "This is a [color=red]debug message[/color]."
   searchTags:
     - target
     - debug
   behaviorType: TargetPoint
-  behavior: !type:DebugTargetPoint
-    mapPos: false
+  behavior: !type:DebugTargetPoint { }
 
 - type: action
-  actionType: DebugTargetPointMap
-  icon: Interface/Alerts/Human/human5.png
-  name: "[color=red]Debug Target Map Position[/color]"
+  actionType: DebugTargetPointRepeat
+  icon: Interface/Alerts/Human/human2.png
+  name: "[color=red]Repeating Debug Target Position[/color]"
   description: "This is a [color=red]debug message[/color]."
   searchTags:
-    - debug
     - target
+    - debug
+    - repeat
   behaviorType: TargetPoint
-  behavior: !type:DebugTargetPoint
-    mapPos: true
+  repeat: true
+  behavior: !type:DebugTargetPoint { }
 
 - type: action
   actionType: DebugTargetEntity
@@ -56,5 +56,18 @@
     - debug
     - target
   behaviorType: TargetEntity
+  behavior: !type:DebugTargetEntity { }
+
+- type: action
+  actionType: DebugTargetEntityRepeat
+  icon: Interface/Alerts/Human/human5.png
+  name: "[color=red]Repeating Debug Target Entity[/color]"
+  description: "This is a [color=red]debug message[/color]."
+  searchTags:
+    - target
+    - debug
+    - repeat
+  behaviorType: TargetEntity
+  repeat: true
   behavior: !type:DebugTargetEntity { }
 

@@ -542,7 +542,10 @@ namespace Content.Client.GameObjects.Components.Mobs
                 // send our action to the server, we chose our target
                 SendNetworkMessage(new PerformTargetPointActionMessage(_selectingTargetFor.Action.ActionType,
                     args.Coordinates));
-                StopTargeting();
+                if (!_selectingTargetFor.Action.Repeat)
+                {
+                    StopTargeting();
+                }
                 return true;
             }
             if (_selectingTargetFor.Action.BehaviorType == BehaviorType.TargetEntity)
@@ -553,7 +556,10 @@ namespace Content.Client.GameObjects.Components.Mobs
                     // send our action to the server, we chose our target
                     SendNetworkMessage(new PerformTargetEntityActionMessage(_selectingTargetFor.Action.ActionType,
                         args.EntityUid));
-                    StopTargeting();
+                    if (!_selectingTargetFor.Action.Repeat)
+                    {
+                        StopTargeting();
+                    }
                     return true;
                 }
             }
