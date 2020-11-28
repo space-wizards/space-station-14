@@ -2,6 +2,3 @@
 	path = RobustToolbox
 	url = https://github.com/space-wizards/RobustToolbox.git
 	branch = master
-[submodule "RobustToolboxSubmodule"]
-	path = RobustToolboxSubmodule
-	url = ../../space-wizards/RobustToolbox

@@ -40,10 +40,6 @@
   metabolism:
     - !type:DefaultDrink
       rate: 1
-    - !type:DefaultMedicine
-      rate: 1
-      healFactor: 1 
-      healType: Brute 
   tileReactions:
     - !type:ExtinguishTileReaction {}
     - !type:SpillIfPuddlePresentTileReaction {}
