@@ -49,7 +49,7 @@ namespace Content.Client.GameObjects.Components.Atmos
                                     {
                                         Children =
                                         {
-                                            new Label(){ Text = "Label" },
+                                            new Label(){ Text = Loc.GetString("Label") },
                                             (LabelInput = new LineEdit() { Text = Name, Editable = false,
                                                 CustomMinimumSize = new Vector2(200, 30)}),
                                             (EditLabelBtn = new Button()),
@@ -95,8 +95,8 @@ namespace Content.Client.GameObjects.Components.Atmos
                                 {
                                     Children =
                                     {
-                                        new Label { Text = "Valve" },
-                                        (ToggleValve = new CheckButton() { Text = "Open" })
+                                        new Label { Text = Loc.GetString("Valve") },
+                                        (ToggleValve = new CheckButton() { Text = Loc.GetString("Open") })
                                     }
                                 }
                             },
