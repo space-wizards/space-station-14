@@ -12,7 +12,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Tests.Shared.Alert
 {
     [TestFixture, TestOf(typeof(AlertManager))]
-    public class AlertManagerTests : RobustUnitTest
+    public class AlertManagerTests : ContentUnitTest
     {
         const string PROTOTYPES = @"
 - type: alert
@@ -28,9 +28,7 @@ namespace Content.Tests.Shared.Alert
         public void TestAlertManager()
         {
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            prototypeManager.RegisterType(typeof(AlertPrototype));
             prototypeManager.LoadFromStream(new StringReader(PROTOTYPES));
-            IoCManager.RegisterInstance<AlertManager>(new AlertManager());
             var alertManager = IoCManager.Resolve<AlertManager>();
             alertManager.Initialize();
 

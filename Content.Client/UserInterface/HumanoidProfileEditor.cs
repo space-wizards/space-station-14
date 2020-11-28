@@ -25,7 +25,7 @@ namespace Content.Client.UserInterface
 {
     public partial class HumanoidProfileEditor : Control
     {
-        private static readonly StyleBoxFlat HighlightedStyle = new StyleBoxFlat
+        private static readonly StyleBoxFlat HighlightedStyle = new()
         {
             BackgroundColor = new Color(47, 47, 53),
             ContentMarginTopOverride = 10,

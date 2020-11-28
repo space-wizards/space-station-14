@@ -32,7 +32,9 @@ namespace Content.Client.GameObjects.Components.Interactable
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            if (!(curState is MultiToolComponentState tool)) return;
+            base.HandleComponentState(curState, nextState);
+
+            if (curState is not MultiToolComponentState tool) return;
 
             _behavior = tool.Quality;
             _uiUpdateNeeded = true;

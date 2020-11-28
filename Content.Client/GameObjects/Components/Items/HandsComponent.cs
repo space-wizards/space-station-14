@@ -21,7 +21,7 @@ namespace Content.Client.GameObjects.Components.Items
 
         private HandsGui? _gui;
 
-        private readonly List<Hand> _hands = new List<Hand>();
+        private readonly List<Hand> _hands = new();
 
         [ViewVariables] public IReadOnlyList<Hand> Hands => _hands;
 

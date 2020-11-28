@@ -18,7 +18,7 @@ namespace Content.Client.GameObjects.EntitySystems
         [Dependency] private readonly IMapManager _mapManager = default!;
 
         private readonly Dictionary<GridId, AtmosDebugOverlayMessage> _tileData =
-            new Dictionary<GridId, AtmosDebugOverlayMessage>();
+            new();
 
         public override void Initialize()
         {

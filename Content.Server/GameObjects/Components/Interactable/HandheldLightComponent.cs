@@ -3,8 +3,10 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Items.Clothing;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power;
+using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
@@ -164,7 +166,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             if (Owner.TryGetComponent(out ClothingComponent? clothing))
             {
-                clothing.ClothingEquippedPrefix = on ? "On" : "Off";
+                clothing.ClothingEquippedPrefix = on ? "on" : "off";
             }
 
             if (Owner.TryGetComponent(out ItemComponent? item))
@@ -225,6 +227,26 @@ namespace Content.Server.GameObjects.Components.Interactable
         public override ComponentState GetComponentState()
         {
             return new HandheldLightComponentState(GetLevel());
+        }
+
+        [Verb]
+        public sealed class ToggleLightVerb : Verb<HandheldLightComponent>
+        {
+            protected override void GetData(IEntity user, HandheldLightComponent component, VerbData data)
+            {
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
+                data.Text = Loc.GetString("Toggle light");
+            }
+
+            protected override void Activate(IEntity user, HandheldLightComponent component)
+            {
+                component.ToggleStatus(user);
+            }
         }
     }
 }

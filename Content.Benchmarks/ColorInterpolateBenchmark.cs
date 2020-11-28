@@ -105,7 +105,7 @@ namespace Content.Benchmarks
         [MethodImpl(AggressiveOpt)]
         public static Color InterpolateSimple(Color a, Color b, float lambda)
         {
-            return new Color(
+            return new(
                 a.R + (b.R - a.R) * lambda,
                 a.G + (b.G - a.G) * lambda,
                 a.B + (b.G - a.B) * lambda,

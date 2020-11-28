@@ -9,14 +9,14 @@ namespace Content.Client.GameObjects.Components.Research
     [ComponentReference(typeof(SharedMaterialStorageComponent))]
     public class MaterialStorageComponent : SharedMaterialStorageComponent
     {
-        protected override Dictionary<string, int> Storage { get; set; } = new Dictionary<string, int>();
+        protected override Dictionary<string, int> Storage { get; set; } = new();
 
         public event Action OnMaterialStorageChanged;
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
             base.HandleComponentState(curState, nextState);
-            if (!(curState is MaterialStorageState state)) return;
+            if (curState is not MaterialStorageState state) return;
             Storage = state.Storage;
             OnMaterialStorageChanged?.Invoke();
         }

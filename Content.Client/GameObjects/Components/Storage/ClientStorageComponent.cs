@@ -25,7 +25,7 @@ namespace Content.Client.GameObjects.Components.Storage
     [RegisterComponent]
     public class ClientStorageComponent : SharedStorageComponent, IDraggable
     {
-        private List<IEntity> _storedEntities = new List<IEntity>();
+        private List<IEntity> _storedEntities = new();
         private int StorageSizeUsed;
         private int StorageCapacityMax;
         private StorageWindow Window;
@@ -50,7 +50,7 @@ namespace Content.Client.GameObjects.Components.Storage
         {
             base.HandleComponentState(curState, nextState);
 
-            if (!(curState is StorageComponentState state))
+            if (curState is not StorageComponentState state)
             {
                 return;
             }
@@ -138,8 +138,8 @@ namespace Content.Client.GameObjects.Components.Storage
             private readonly Label _information;
             public ClientStorageComponent StorageEntity;
 
-            private readonly StyleBoxFlat _hoveredBox = new StyleBoxFlat { BackgroundColor = Color.Black.WithAlpha(0.35f) };
-            private readonly StyleBoxFlat _unHoveredBox = new StyleBoxFlat { BackgroundColor = Color.Black.WithAlpha(0.0f) };
+            private readonly StyleBoxFlat _hoveredBox = new() { BackgroundColor = Color.Black.WithAlpha(0.35f) };
+            private readonly StyleBoxFlat _unHoveredBox = new() { BackgroundColor = Color.Black.WithAlpha(0.0f) };
 
             protected override Vector2? CustomSize => (180, 320);
 
@@ -278,19 +278,6 @@ namespace Content.Client.GameObjects.Components.Storage
                 var control = (EntityButton) args.Button.Parent;
                 args.Button.Pressed = false;
                 StorageEntity.Interact(control.EntityUid);
-            }
-
-            /// <summary>
-            /// Function assigned to button that adds items to the storage entity.
-            /// </summary>
-            private void OnAddItemButtonPressed(BaseButton.ButtonEventArgs args)
-            {
-                var controlledEntity = IoCManager.Resolve<IPlayerManager>().LocalPlayer.ControlledEntity;
-
-                if (controlledEntity.TryGetComponent(out HandsComponent hands))
-                {
-                    StorageEntity.SendNetworkMessage(new InsertEntityMessage());
-                }
             }
         }
 

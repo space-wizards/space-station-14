@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         [ViewVariables]
         private TimeSpan _lastExitAttempt;
 
-        public static readonly Regex TagRegex = new Regex("^[a-zA-Z0-9, ]*$", RegexOptions.Compiled);
+        public static readonly Regex TagRegex = new("^[a-zA-Z0-9, ]*$", RegexOptions.Compiled);
 
         /// <summary>
         ///     The current pressure of this disposal unit.
@@ -101,7 +101,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         [ViewVariables] public IReadOnlyList<IEntity> ContainedEntities => _container.ContainedEntities;
 
         [ViewVariables]
-        private readonly List<string> _targetList = new List<string>();
+        private readonly List<string> _targetList = new();
 
         [ViewVariables]
         private string _target = "";
