@@ -25,6 +25,14 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         void Update(float frameTime);
 
         bool DisruptPower(TimeSpan disruptionLength, TimeSpan disruptionCooldown);
+
+        bool Disrupted { get; }
+
+        TimeSpan RemainingDisruption { get; }
+
+        bool DisruptionOnCooldown { get; }
+
+        TimeSpan RemainingDisruptionCooldown { get; }
     }
 
     [NodeGroup(NodeGroupID.Apc)]
@@ -37,22 +45,22 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         private readonly Dictionary<PowerProviderComponent, List<PowerReceiverComponent>> _providerReceivers = new Dictionary<PowerProviderComponent, List<PowerReceiverComponent>>();
 
         [ViewVariables]
-        public TimeSpan DisruptionEnd { get; private set; } = new();
+        private TimeSpan DisruptionEnd { get; set; } = new();
 
         [ViewVariables]
-        private bool Disrupted => _gameTiming.CurTime <= DisruptionEnd;
+        public bool Disrupted => _gameTiming.CurTime <= DisruptionEnd;
 
         [ViewVariables]
-        private TimeSpan RemainingDisruption => DisruptionEnd - _gameTiming.CurTime;
+        public TimeSpan RemainingDisruption => DisruptionEnd - _gameTiming.CurTime;
 
         [ViewVariables]
-        public TimeSpan DisruptionCooldownEnd { get; private set; } = new();
+        private TimeSpan DisruptionCooldownEnd { get;  set; } = new();
 
         [ViewVariables]
-        private bool DisruptionOnCooldown => _gameTiming.CurTime <= DisruptionCooldownEnd;
+        public bool DisruptionOnCooldown => _gameTiming.CurTime <= DisruptionCooldownEnd;
 
         [ViewVariables]
-        private TimeSpan RemainingDisruptionCooldown => DisruptionCooldownEnd - _gameTiming.CurTime;
+        public TimeSpan RemainingDisruptionCooldown => DisruptionCooldownEnd - _gameTiming.CurTime;
 
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -203,6 +211,10 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         private class NullApcNet : IApcNet
         {
+            public bool Disrupted => false;
+            public TimeSpan RemainingDisruption => TimeSpan.FromSeconds(0);
+            public bool DisruptionOnCooldown => false;
+            public TimeSpan RemainingDisruptionCooldown => TimeSpan.FromSeconds(0);
             public void AddApc(ApcComponent apc) { }
             public void AddPowerProvider(PowerProviderComponent provider) { }
             public void RemoveApc(ApcComponent apc) { }

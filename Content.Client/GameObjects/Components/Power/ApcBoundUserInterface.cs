@@ -14,6 +14,7 @@ namespace Content.Client.GameObjects.Components.Power
     {
         private ApcWindow _window;
         private BaseButton _breakerButton;
+        private BaseButton _cycleButton;
         private Label _externalPowerStateLabel;
         private ProgressBar _chargeBar;
 
@@ -28,8 +29,8 @@ namespace Content.Client.GameObjects.Components.Power
             _breakerButton = _window.BreakerButton;
             _breakerButton.OnPressed += _ => SendMessage(new ApcToggleMainBreakerMessage());
 
-            _breakerButton = _window.CycleButton;
-            _breakerButton.OnPressed += _ => SendMessage(new ApcCyclePowerMessage());
+            _cycleButton = _window.CycleButton;
+            _cycleButton.OnPressed += _ => SendMessage(new ApcCyclePowerMessage());
 
             _externalPowerStateLabel = _window.ExternalPowerStateLabel;
             _chargeBar = _window.ChargeBar;
@@ -44,6 +45,16 @@ namespace Content.Client.GameObjects.Components.Power
             base.UpdateState(state);
 
             var castState = (ApcBoundInterfaceState) state;
+
+            _window.CyclingLabel.Text = "Power cycling: " + (castState.Disrupted ? "Yes" : "No") + ".";
+            if (castState.Disrupted)
+            {
+                _window.CyclingLabel.Text += "\nRemaining disruption: " + Math.Round(castState.RemainingDisruption.TotalSeconds, 0) + "s.";
+            }
+            if (castState.DisruptionOnCoolDown)
+            {
+                _window.CyclingLabel.Text += "\nDisruption cooldown: " + Math.Round(castState.RemainingDisruptionCooldown.TotalSeconds, 0) + "s.";
+            }
 
             _breakerButton.Pressed = castState.MainBreaker;
             switch (castState.ApcExternalPower)
@@ -121,6 +132,7 @@ namespace Content.Client.GameObjects.Components.Power
         private class ApcWindow : SS14Window
         {
             public Button BreakerButton { get; set; }
+            public Label CyclingLabel { get; set; }
             public Button CycleButton { get; set; }
             public Label ExternalPowerStateLabel { get; set; }
             public ProgressBar ChargeBar { get; set; }
@@ -141,12 +153,11 @@ namespace Content.Client.GameObjects.Components.Power
                 breaker.AddChild(BreakerButton);
                 rows.AddChild(breaker);
 
-                var cycle = new HBoxContainer();
-                var cycleLabel = new Label { Text = "Power Cycle: " };
-                CycleButton = new CheckButton { Text = "Cycle" };
-                cycle.AddChild(cycleLabel);
-                cycle.AddChild(CycleButton);
-                rows.AddChild(cycle);
+                CyclingLabel = new Label { Text = "Power Cycling: "};
+                rows.AddChild(CyclingLabel);
+                CycleButton = new CheckButton { Text = "Cycle Power" };
+                rows.AddChild(CycleButton);
+                //add disruption & disruption cooldown info
 
                 var externalStatus = new HBoxContainer();
                 var externalStatusLabel = new Label {Text = "External Power: "};

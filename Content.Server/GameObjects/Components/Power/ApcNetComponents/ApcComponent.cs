@@ -35,23 +35,19 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         public TimeSpan DisruptionCooldown { get; private set; }
 
-        private ApcChargeState _lastChargeState;
+        private TimeSpan _lastUiStateUpdate = new();
 
-        private TimeSpan _lastChargeStateChange;
+        private ApcChargeState _lastChargeState;
 
         private ApcExternalPowerState _lastExternalPowerState;
 
-        private TimeSpan _lastExternalPowerStateChange;
-
         private float _lastCharge;
-
-        private TimeSpan _lastChargeChange;
 
         private bool _uiDirty = true;
 
         private const float HighPowerThreshold = 0.9f;
 
-        private const int VisualsChangeDelay = 1;
+        private TimeSpan _uiStateUpdateCooldown = TimeSpan.FromSeconds(1);
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ApcUiKey.Key);
 
@@ -95,28 +91,32 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
             {
                 MainBreakerEnabled = !MainBreakerEnabled;
                 _uiDirty = true;
-                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+                SwitchSound();
             }
             else if (serverMsg.Message is ApcCyclePowerMessage)
             {
-                if (Owner.TryGetComponent<NodeContainerComponent>(out var nodeContainer))
-                {
-                    var apcNet = nodeContainer.Nodes.Select(node => node.NodeGroup).OfType<IApcNet>().FirstOrDefault();
-                    if (apcNet != null)
-                    {
-                        apcNet.DisruptPower(DisruptionLength, DisruptionCooldown);
-                    }
-                }
+                Net.DisruptPower(DisruptionLength, DisruptionCooldown);
+                _uiDirty = true;
+                UpdateBoundUiState();
+                SwitchSound();
             }
+        }
+
+        private void SwitchSound()
+        {
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         public void Update()
         {
+            var curTime = _gameTiming.CurTime;
+            if (_lastUiStateUpdate + _uiStateUpdateCooldown >= curTime)
+                return;
+
             var newState = CalcChargeState();
-            if (newState != _lastChargeState && _lastChargeStateChange + TimeSpan.FromSeconds(VisualsChangeDelay) < _gameTiming.CurTime)
+            if (newState != _lastChargeState)
             {
                 _lastChargeState = newState;
-                _lastChargeStateChange = _gameTiming.CurTime;
 
                 if (Owner.TryGetComponent(out AppearanceComponent? appearance))
                 {
@@ -127,26 +127,44 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
             Owner.TryGetComponent(out BatteryComponent? battery);
 
             var newCharge = battery?.CurrentCharge;
-            if (newCharge != null && newCharge != _lastCharge && _lastChargeChange + TimeSpan.FromSeconds(VisualsChangeDelay) < _gameTiming.CurTime)
+            if (newCharge != null && newCharge != _lastCharge )
             {
                 _lastCharge = newCharge.Value;
-                _lastChargeChange = _gameTiming.CurTime;
                 _uiDirty = true;
             }
 
             var extPowerState = CalcExtPowerState();
-            if (extPowerState != _lastExternalPowerState && _lastExternalPowerStateChange + TimeSpan.FromSeconds(VisualsChangeDelay) < _gameTiming.CurTime)
+            if (extPowerState != _lastExternalPowerState)
             {
                 _lastExternalPowerState = extPowerState;
-                _lastExternalPowerStateChange = _gameTiming.CurTime;
                 _uiDirty = true;
             }
 
-            if (_uiDirty && battery != null && newCharge != null)
+            if (Net.Disrupted || Net.DisruptionOnCooldown)
             {
-                UserInterface?.SetState(new ApcBoundInterfaceState(MainBreakerEnabled, extPowerState, newCharge.Value / battery.MaxCharge));
-                _uiDirty = false;
+                _uiDirty = true;
             }
+
+            if (_uiDirty)
+            {
+                UpdateBoundUiState();
+                _uiDirty = false;
+                _lastUiStateUpdate = curTime;
+            }
+        }
+
+        private void UpdateBoundUiState()
+        {
+            if (!Owner.TryGetComponent<BatteryComponent>(out var battery))
+                return;
+
+            UserInterface?.SetState(new ApcBoundInterfaceState(
+                MainBreakerEnabled,
+                CalcExtPowerState(),
+                battery.CurrentCharge / battery.MaxCharge,
+                Net.Disrupted, Net.RemainingDisruption,
+                Net.DisruptionOnCooldown,
+                Net.RemainingDisruptionCooldown));
         }
 
         private ApcChargeState CalcChargeState()

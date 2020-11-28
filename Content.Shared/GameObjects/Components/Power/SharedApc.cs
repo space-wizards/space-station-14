@@ -35,12 +35,20 @@ namespace Content.Shared.GameObjects.Components.Power
         public readonly bool MainBreaker;
         public readonly ApcExternalPowerState ApcExternalPower;
         public readonly float Charge;
+        public readonly bool Disrupted;
+        public readonly TimeSpan RemainingDisruption;
+        public readonly bool DisruptionOnCoolDown;
+        public readonly TimeSpan RemainingDisruptionCooldown;
 
-        public ApcBoundInterfaceState(bool mainBreaker, ApcExternalPowerState apcExternalPower, float charge)
+        public ApcBoundInterfaceState(bool mainBreaker, ApcExternalPowerState apcExternalPower, float charge, bool disrupted, TimeSpan remainingDisruption, bool disruptionOnCoolDown, TimeSpan remainingDisruptionCooldown)
         {
             MainBreaker = mainBreaker;
             ApcExternalPower = apcExternalPower;
             Charge = charge;
+            Disrupted = disrupted;
+            RemainingDisruption = remainingDisruption;
+            DisruptionOnCoolDown = disruptionOnCoolDown;
+            RemainingDisruptionCooldown = remainingDisruptionCooldown;
         }
     }
 
