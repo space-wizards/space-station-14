@@ -519,24 +519,25 @@ namespace Content.Client.Arcade
         {
             var globalPlacementText = globalPlacement == null ? "-" : $"#{globalPlacement}";
             var localPlacementText = localPlacement == null ? "-" : $"#{localPlacement}";
-            _finalScoreLabel.Text = Loc.GetString("Global") + $": {globalPlacementText}\n" + Loc.GetString("Local") + $": {localPlacementText}\n" + Loc.GetString("Points") + $": {amount}";
+            _finalScoreLabel.Text =
+                Loc.GetString($"Global: {globalPlacementText}\nLocal: {localPlacementText}\nPoints: {amount}");
         }
 
         public void UpdatePoints(int points)
         {
-            _pointsLabel.Text = Loc.GetString("Points") + $": {points}";
+            _pointsLabel.Text = Loc.GetString($"Points: {points}");
         }
 
         public void UpdateLevel(int level)
         {
-            _levelLabel.Text = Loc.GetString("Level") + $" {level + 1}";
+            _levelLabel.Text = Loc.GetString($"Level {level + 1}");
         }
 
         public void UpdateHighscores(List<BlockGameMessages.HighScoreEntry> localHighscores,
             List<BlockGameMessages.HighScoreEntry> globalHighscores)
         {
-            var localHighscoreText = Loc.GetString("Station") + ":\n";
-            var globalHighscoreText = Loc.GetString("Nanotrasen") + ":\n";
+            var localHighscoreText = Loc.GetString("Station:\n");
+            var globalHighscoreText = Loc.GetString("Nanotrasen:\n");
             for (int i = 0; i < 5; i++)
             {
                 localHighscoreText += $"#{i + 1} " + (localHighscores.Count > i
