@@ -307,7 +307,7 @@ namespace Content.Server.GameTicking
                     return;
                 }
             }
-            OnRunLevelChanged += preset.OnRunLevelChanged;
+            preset.OnGameStarted();
 
             _roundStartTimeSpan = IoCManager.Resolve<IGameTiming>().RealTime;
             _sendStatusToAll();

@@ -16,10 +16,6 @@ namespace Content.Server.GameTicking
         public virtual bool DisallowLateJoin => false;
         public Dictionary<NetUserId, HumanoidCharacterProfile> readyProfiles;
 
-        public void OnRunLevelChanged(GameRunLevelChangedEventArgs eventArgs)
-        {
-            if(eventArgs.NewRunLevel == GameRunLevel.InRound) OnGameStarted();
-        }
         public virtual void OnGameStarted() { }
     }
 }
