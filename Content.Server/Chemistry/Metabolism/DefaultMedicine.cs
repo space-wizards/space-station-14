@@ -38,7 +38,7 @@ namespace Content.Server.Chemistry.Metabolism
         {
             var metabolismAmount = MetabolismRate * tickTime;
 
-            if (solutionEntity.TryGetComponent(out IDamageableComponent health))
+            if (solutionEntity.TryGetComponent(out DamageableComponent health))
 
                 health.ChangeDamage(healType, -(int) (metabolismAmount.Float() * healFactor), true);
 
