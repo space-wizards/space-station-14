@@ -46,14 +46,18 @@ namespace Content.Client.GameObjects.Components.Power
 
             var castState = (ApcBoundInterfaceState) state;
 
+            _window.CycleButton.Disabled = false;
             _window.CyclingLabel.Text = "Power cycling: " + (castState.Disrupted ? "Yes" : "No") + ".";
+
             if (castState.Disrupted)
             {
                 _window.CyclingLabel.Text += "\nRemaining disruption: " + Math.Round(castState.RemainingDisruption.TotalSeconds, 0) + "s.";
+                _window.CycleButton.Disabled = true;
             }
             if (castState.DisruptionOnCoolDown)
             {
                 _window.CyclingLabel.Text += "\nDisruption cooldown: " + Math.Round(castState.RemainingDisruptionCooldown.TotalSeconds, 0) + "s.";
+                _window.CycleButton.Disabled = true;
             }
 
             _breakerButton.Pressed = castState.MainBreaker;

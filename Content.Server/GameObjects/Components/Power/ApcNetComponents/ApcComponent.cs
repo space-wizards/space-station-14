@@ -56,8 +56,8 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(this, x => DisruptionLength, "disruptionLength", TimeSpan.FromSeconds(5));
-            serializer.DataField(this, x => DisruptionCooldown, "disruptionCooldown", TimeSpan.FromSeconds(5));
+            serializer.DataField(this, x => DisruptionLength, "disruptionLength", TimeSpan.FromSeconds(10));
+            serializer.DataField(this, x => DisruptionCooldown, "disruptionCooldown", TimeSpan.FromSeconds(50));
         }
 
         public override void Initialize()
