@@ -100,7 +100,7 @@ namespace Content.Client.GameObjects.Components.Mobs
                 Logger.ErrorS("alert", "no alertOrder prototype found, alerts will be in random order");
             }
 
-            _ui = new AlertsUI(IoCManager.Resolve<IClyde>());
+            _ui = new AlertsUI();
             var uiManager = IoCManager.Resolve<IUserInterfaceManager>();
             uiManager.StateRoot.AddChild(_ui);
 

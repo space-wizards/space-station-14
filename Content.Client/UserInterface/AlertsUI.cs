@@ -5,6 +5,7 @@ using Robust.Client.Interfaces.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Client.UserInterface
@@ -18,9 +19,13 @@ namespace Content.Client.UserInterface
 
         private readonly IClyde _clyde;
 
-        public AlertsUI(IClyde clyde)
+        public AlertsUI()
         {
-            _clyde = clyde;
+            LayoutContainer.SetGrowHorizontal(this, LayoutContainer.GrowDirection.Begin);
+            LayoutContainer.SetAnchorAndMarginPreset(this, LayoutContainer.LayoutPreset.TopRight, margin: 10);
+            LayoutContainer.SetMarginTop(this, 250);
+
+            _clyde = IoCManager.Resolve<IClyde>();
             var panelContainer = new PanelContainer
             {
                 StyleClasses = {StyleNano.StyleClassTransparentBorderedWindowPanel},
@@ -30,15 +35,12 @@ namespace Content.Client.UserInterface
 
             Grid = new GridContainer
             {
-                MaxHeight = CalcMaxHeight(clyde.ScreenSize),
+                MaxHeight = CalcMaxHeight(_clyde.ScreenSize),
                 ExpandBackwards = true
             };
             panelContainer.AddChild(Grid);
-            clyde.OnWindowResized += ClydeOnOnWindowResized;
+            _clyde.OnWindowResized += ClydeOnOnWindowResized;
 
-            LayoutContainer.SetGrowHorizontal(this, LayoutContainer.GrowDirection.Begin);
-            LayoutContainer.SetAnchorAndMarginPreset(this, LayoutContainer.LayoutPreset.TopRight, margin: 10);
-            LayoutContainer.SetMarginTop(this, 250);
         }
 
         protected override void UIScaleChanged()

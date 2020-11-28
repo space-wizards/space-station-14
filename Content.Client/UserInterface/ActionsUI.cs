@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Utility;
-using Content.Shared.Actions;
+using Robust.Client.Interfaces.Graphics;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -11,7 +11,7 @@ using Robust.Client.Utility;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
+using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 
 namespace Content.Client.UserInterface
@@ -31,13 +31,14 @@ namespace Content.Client.UserInterface
         private readonly ActionSlot[] _slots;
 
         private readonly VBoxContainer _hotbarContainer;
-        private readonly VBoxContainer _slotContainer;
+        private readonly GridContainer _slotContainer;
 
         private readonly TextureButton _lockButton;
         private readonly TextureButton _settingsButton;
         private readonly TextureButton _previousHotbarButton;
         private readonly Label _loadoutNumber;
         private readonly TextureButton _nextHotbarButton;
+        private readonly IClyde _clyde;
 
         private readonly TextureRect _dragShadow;
         private readonly DragDropHelper<ActionSlot> _dragDropHelper;
@@ -61,6 +62,11 @@ namespace Content.Client.UserInterface
             Action<BaseButton.ButtonEventArgs> onNextHotbarPressed, Action<BaseButton.ButtonEventArgs> onPreviousHotbarPressed,
             Action<BaseButton.ButtonEventArgs> onSettingsButtonPressed)
         {
+            LayoutContainer.SetGrowHorizontal(this, LayoutContainer.GrowDirection.End);
+            LayoutContainer.SetAnchorAndMarginPreset(this, LayoutContainer.LayoutPreset.TopLeft, margin: 10);
+            LayoutContainer.SetMarginTop(this, 100);
+
+            _clyde = IoCManager.Resolve<IClyde>();
             _onShowTooltip = onShowTooltip;
             _onHideTooltip = onHideTooltip;
             _onPressAction = onPressAction;
@@ -69,14 +75,15 @@ namespace Content.Client.UserInterface
             _onPreviousHotbarPressed = onPreviousHotbarPressed;
             _onSettingsButtonPressed = onSettingsButtonPressed;
 
-            SizeFlagsHorizontal = SizeFlags.FillExpand;
+            SizeFlagsHorizontal = SizeFlags.None;
             SizeFlagsVertical = SizeFlags.FillExpand;
 
             var resourceCache = IoCManager.Resolve<IResourceCache>();
 
             _hotbarContainer = new VBoxContainer
             {
-                SeparationOverride = 3
+                SeparationOverride = 3,
+                SizeFlagsHorizontal = SizeFlags.None
             };
             AddChild(_hotbarContainer);
 
@@ -107,8 +114,13 @@ namespace Content.Client.UserInterface
             settingsContainer.AddChild(_settingsButton);
             settingsContainer.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 1 });
 
-            _slotContainer = new VBoxContainer();
+            // this allows a 2 column layout if window gets too small
+            _slotContainer = new GridContainer
+            {
+                MaxHeight = CalcMaxHeight(_clyde.ScreenSize)
+            };
             _hotbarContainer.AddChild(_slotContainer);
+
 
             var loadoutContainer = new HBoxContainer
             {
@@ -158,8 +170,7 @@ namespace Content.Client.UserInterface
 
             for (byte i = 1; i <= ClientActionsComponent.Slots; i++)
             {
-                var slot = new ActionSlot(i);
-                slot.EnableAllKeybinds = true;
+                var slot = new ActionSlot(i) {EnableAllKeybinds = true};
                 slot.OnShowTooltip += onShowTooltip;
                 slot.OnHideTooltip += onHideTooltip;
                 slot.OnButtonDown += ActionSlotOnButtonDown;
@@ -170,6 +181,7 @@ namespace Content.Client.UserInterface
             }
 
             _dragDropHelper = new DragDropHelper<ActionSlot>(OnBeginActionDrag, OnContinueActionDrag, OnEndActionDrag);
+            _clyde.OnWindowResized += ClydeOnOnWindowResized;
         }
 
         protected override void Dispose(bool disposing)
@@ -178,12 +190,43 @@ namespace Content.Client.UserInterface
             _nextHotbarButton.OnPressed -= _onNextHotbarPressed;
             _previousHotbarButton.OnPressed -= _onPreviousHotbarPressed;
             _settingsButton.OnPressed -= _onSettingsButtonPressed;
+            _clyde.OnWindowResized -= ClydeOnOnWindowResized;
             foreach (var slot in _slots)
             {
                 slot.OnShowTooltip -= _onShowTooltip;
                 slot.OnHideTooltip -= _onHideTooltip;
                 slot.OnPressed -= _onPressAction;
             }
+        }
+
+        private float CalcMaxHeight(Vector2i screenSize)
+        {
+            // it looks bad to have an uneven number of slots in the columns,
+            // so we either do a single column or 2 equal sized columns
+            if (((screenSize.Y) / UIScale) < 950)
+            {
+                // 2 column
+                return 400;
+            }
+            else
+            {
+                // 1 column
+                return 900;
+            }
+        }
+
+        protected override void UIScaleChanged()
+        {
+            _slotContainer.MaxHeight = CalcMaxHeight(_clyde.ScreenSize);
+            base.UIScaleChanged();
+        }
+
+        private void ClydeOnOnWindowResized(WindowResizedEventArgs obj)
+        {
+            // TODO: Can rework this once https://github.com/space-wizards/RobustToolbox/issues/1392 is done,
+            // this is here because there isn't currently a good way to allow the grid to adjust its height based
+            // on constraints, otherwise we would use anchors to lay it out
+            _slotContainer.MaxHeight = CalcMaxHeight(obj.NewSize);
         }
 
         private bool OnBeginActionDrag()

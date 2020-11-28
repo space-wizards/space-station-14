@@ -136,9 +136,6 @@ namespace Content.Client.GameObjects.Components.Mobs
                 PreviousHotbar, HandleOpenActionMenu);
             _menu = new ActionMenu(ActionOnOnShowTooltip, ActionOnOnHideTooltip, this, ActionMenuItemSelected,
                 ActionMenuItemDragDropped);
-            LayoutContainer.SetGrowHorizontal(_ui, LayoutContainer.GrowDirection.End);
-            LayoutContainer.SetAnchorAndMarginPreset(_ui, LayoutContainer.LayoutPreset.TopLeft, margin: 10);
-            LayoutContainer.SetMarginTop(_ui, 100);
 
             var uiManager = IoCManager.Resolve<IUserInterfaceManager>();
             uiManager.StateRoot.AddChild(_ui);
