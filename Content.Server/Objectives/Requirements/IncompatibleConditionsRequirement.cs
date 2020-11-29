@@ -21,7 +21,7 @@ namespace Content.Server.Objectives.Requirements
                 {
                     foreach (var incompatibleCondition in _incompatibleConditions)
                     {
-                        if (incompatibleCondition == condition.GetType().ToString()) return false;
+                        if (incompatibleCondition == condition.GetType().Name) return false;
                     }
                 }
             }
