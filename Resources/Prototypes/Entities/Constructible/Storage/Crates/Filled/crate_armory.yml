@@ -23,3 +23,16 @@
         amount: 3
       - name: ShellShotgun
         amount: 18
+
+- type: entity
+  id: CrateArmoryRussianSurplus
+  name: russian surplus crate
+  parent: CrateWeaponSecure
+  description: "Hello Comrade, we have the most modern russian military equipment the black market can offer, for the right price of course. Sadly we couldnt remove the lock so it requires Armory access to open."
+  components:
+  - type: StorageFill
+    contents:
+      - name: ShotgunGladstone
+        amount: 3
+      - name: ShellShotgun
+        amount: 18
