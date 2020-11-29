@@ -119,7 +119,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                     hitEntities.Add(entity);
                 }
             }
-            OnHittingEntities(hitEntities);
+            OnHittingEntities?.Invoke(hitEntities);
 
             if(!OnHitEntities(hitEntities, eventArgs)) return false;
 
@@ -170,7 +170,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             {
                 damageComponent.ChangeDamage(DamageType, Damage, false, Owner);
             }
-            OnHittingEntities(new IEntity[] { target });
+            OnHittingEntities?.Invoke(new IEntity[] { target });
 
             var targets = new[] {target};
 

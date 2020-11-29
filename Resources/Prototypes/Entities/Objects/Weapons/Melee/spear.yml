@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   name: spear
   parent: BaseItem
   id: Spear
@@ -6,21 +6,17 @@
   - type: Sprite
     sprite: Objects/Weapons/Melee/spear.rsi
     state: spear
-
   - type: MeleeWeapon
     range: 1.5
     arcwidth: 0
     arc: spear
-
   - type: Item
     size: 24
     sprite: Objects/Weapons/Melee/spear.rsi
     prefix: inhand
-
   - type: Construction
     graph: spear
     node: spear
-
   - type: ItemCooldown
 
 - type: MeleeWeaponAnimation
@@ -29,3 +25,12 @@
   length: 0.10
   speed: 6
   arcType: Poke
+
+- type: entity
+  name: poisonable spear
+  parent: Spear
+  id: PoisonableSpear
+  components:
+  - type: MeleeChemicalInjector
+  - type: SolutionContainer
+    maxVol: 5

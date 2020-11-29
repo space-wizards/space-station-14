@@ -28,6 +28,7 @@
             "Wrench",
             "Crowbar",
             "MeleeWeapon",
+            "MeleeChemicalInjector",
             "Dice",
             "Construction",
             "Door",
