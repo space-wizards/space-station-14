@@ -1,14 +1,9 @@
-﻿namespace Content.Server.GameObjects.Components.MachineLinking
-{
-    public interface ISignalReceiver
-    {
-        void TriggerSignal(SignalState state);
-    }
+﻿using System;
 
-    public enum SignalState
+namespace Content.Server.GameObjects.Components.MachineLinking
+{
+    public interface ISignalReceiver<in T>
     {
-        On,
-        Off,
-        Toggle
+        void TriggerSignal(T signal);
     }
 }

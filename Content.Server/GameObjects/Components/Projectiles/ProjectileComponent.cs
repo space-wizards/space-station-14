@@ -60,6 +60,8 @@ namespace Content.Server.GameObjects.Components.Projectiles
             Dirty();
         }
 
+        private bool _internalDeleteOnCollide;
+
         /// <summary>
         /// Applies the damage when our projectile collides with its victim
         /// </summary>
@@ -74,12 +76,12 @@ namespace Content.Server.GameObjects.Components.Projectiles
             // This is so entities that shouldn't get a collision are ignored.
             if (entity.TryGetComponent(out IPhysicsComponent otherPhysics) && otherPhysics.Hard == false)
             {
-                _deleteOnCollide = false;
+                _internalDeleteOnCollide = false;
                 return;
             }
             else
             {
-                _deleteOnCollide = true;
+                _internalDeleteOnCollide = true;
             }
 
             if (_soundHitSpecies != null && entity.HasComponent<IDamageableComponent>())
@@ -112,7 +114,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
         void ICollideBehavior.PostCollide(int collideCount)
         {
-            if (collideCount > 0 && DeleteOnCollide) Owner.Delete();
+            if (collideCount > 0 && DeleteOnCollide && _internalDeleteOnCollide) Owner.Delete();
         }
 
         public override ComponentState GetComponentState()

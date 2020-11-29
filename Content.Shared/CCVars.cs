@@ -7,6 +7,24 @@ namespace Content.Shared
     [CVarDefs]
     public sealed class CCVars : CVars
     {
+        /*
+         * Status
+         */
+
+        public static readonly CVarDef<string> StatusMoMMIUrl =
+            CVarDef.Create<string>("status.mommiurl", null);
+
+        public static readonly CVarDef<string> StatusMoMMIPassword =
+            CVarDef.Create<string>("status.mommipassword", null);
+
+
+        /*
+         * Game
+         */
+
+        public static readonly CVarDef<bool>
+            EventsEnabled = CVarDef.Create("events.enabled", false, CVar.ARCHIVE | CVar.SERVERONLY);
+
         public static readonly CVarDef<bool>
             GameLobbyEnabled = CVarDef.Create("game.lobbyenabled", false, CVar.ARCHIVE);
 
@@ -28,11 +46,36 @@ namespace Content.Shared
         public static readonly CVarDef<int>
             GameMaxCharacterSlots = CVarDef.Create("game.maxcharacterslots", 10, CVar.ARCHIVE | CVar.SERVERONLY);
 
+        public static readonly CVarDef<string>
+            GameMap = CVarDef.Create("game.map", "Maps/saltern.yml", CVar.SERVERONLY);
+
         /// <summary>
         ///     When enabled, guests will be assigned permanent UIDs and will have their preferences stored.
         /// </summary>
         public static readonly CVarDef<bool>
             GamePersistGuests = CVarDef.Create("game.persistguests", true, CVar.ARCHIVE | CVar.SERVERONLY);
+
+        public static readonly CVarDef<int> GameSuspicionMinPlayers =
+            CVarDef.Create("game.suspicion_min_players", 5);
+
+        public static readonly CVarDef<int> GameSuspicionMinTraitors =
+            CVarDef.Create("game.suspicion_min_traitors", 2);
+
+        public static readonly CVarDef<int> GameSuspicionPlayersPerTraitor =
+            CVarDef.Create("game.suspicion_players_per_traitor", 5);
+
+        public static readonly CVarDef<int> GameSuspicionStartingBalance =
+            CVarDef.Create("game.suspicion_starting_balance", 20);
+
+        public static readonly CVarDef<bool> GameDiagonalMovement =
+            CVarDef.Create("game.diagonalmovement", true, CVar.ARCHIVE);
+
+        /*
+         * Console
+         */
+
+        public static readonly CVarDef<bool>
+            ConsoleLoginLocal = CVarDef.Create("console.loginlocal", true, CVar.ARCHIVE | CVar.SERVERONLY);
 
 
         /*
@@ -59,5 +102,106 @@ namespace Content.Shared
 
         public static readonly CVarDef<string> DatabasePgPassword =
             CVarDef.Create("database.pg_password", "", CVar.SERVERONLY);
+
+
+        /*
+         * Outline
+         */
+
+        public static readonly CVarDef<bool> OutlineEnabled =
+            CVarDef.Create("outline.enabled", true, CVar.CLIENTONLY);
+
+
+        /*
+         * Parallax
+         */
+
+        public static readonly CVarDef<bool> ParallaxEnabled =
+            CVarDef.Create("parallax.enabled", true);
+
+        public static readonly CVarDef<bool> ParallaxDebug =
+            CVarDef.Create("parallax.debug", true);
+
+
+        /*
+         * AI
+         */
+
+        public static readonly CVarDef<int> AIMaxUpdates =
+            CVarDef.Create("ai.maxupdates", 64);
+
+
+        /*
+         * Net
+         */
+
+        public static readonly CVarDef<float> NetAtmosDebugOverlayTickRate =
+            CVarDef.Create("net.atmosdbgoverlaytickrate", 3.0f);
+
+        public static readonly CVarDef<float> NetGasOverlayTickRate =
+            CVarDef.Create("net.gasoverlaytickrate", 3.0f);
+
+        /*
+         * Admin stuff
+         */
+
+        public static readonly CVarDef<bool> AdminAnnounceLogin =
+            CVarDef.Create("admin.announce_login", true, CVar.SERVERONLY);
+
+        public static readonly CVarDef<bool> AdminAnnounceLogout =
+            CVarDef.Create("admin.announce_logout", true, CVar.SERVERONLY);
+
+        /*
+         * Atmos
+         */
+
+        /// <summary>
+        ///     Whether gas differences will move entities.
+        /// </summary>
+        public static readonly CVarDef<bool> SpaceWind =
+            CVarDef.Create("atmos.space_wind", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Whether monstermos tile equalization is enabled.
+        /// </summary>
+        public static readonly CVarDef<bool> MonstermosEqualization =
+            CVarDef.Create("atmos.monstermos_equalization", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Maximum time in milliseconds that atmos can take processing.
+        /// </summary>
+        public static readonly CVarDef<float> AtmosMaxProcessTime =
+            CVarDef.Create("atmos.max_process_time", 5f, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Atmos tickrate in TPS. Atmos processing will happen every 1/TPS seconds.
+        /// </summary>
+        public static readonly CVarDef<float> AtmosTickRate =
+            CVarDef.Create("atmos.tickrate", 26f, CVar.SERVERONLY);
+
+        public static readonly CVarDef<bool> ExcitedGroupsSpaceIsAllConsuming =
+            CVarDef.Create("atmos.excited_groups_space_is_all_consuming", false, CVar.SERVERONLY);
+
+        /*
+         * MIDI instruments
+         */
+
+        public static readonly CVarDef<int> MaxMidiEventsPerSecond =
+            CVarDef.Create("midi.max_events_per_second", 1000, CVar.REPLICATED | CVar.SERVER);
+
+        public static readonly CVarDef<int> MaxMidiEventsPerBatch =
+            CVarDef.Create("midi.max_events_per_batch", 60, CVar.REPLICATED | CVar.SERVER);
+
+        public static readonly CVarDef<int> MaxMidiBatchesDropped =
+            CVarDef.Create("midi.max_batches_dropped", 1, CVar.SERVERONLY);
+
+        public static readonly CVarDef<int> MaxMidiLaggedBatches =
+            CVarDef.Create("midi.max_lagged_batches", 8, CVar.SERVERONLY);
+
+        /*
+         * Branding stuff
+         */
+
+        public static readonly CVarDef<bool> BrandingSteam = CVarDef.Create("branding.steam", false, CVar.CLIENTONLY);
     }
 }

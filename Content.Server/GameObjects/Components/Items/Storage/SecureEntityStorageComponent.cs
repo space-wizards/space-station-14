@@ -69,15 +69,14 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             base.Activate(eventArgs);
         }
 
-        protected override void TryOpenStorage(IEntity user)
+        public override bool CanOpen(IEntity user, bool silent = false)
         {
             if (Locked)
             {
                 Owner.PopupMessage(user, "It's locked!");
-                return;
+                return false;
             }
-
-            base.TryOpenStorage(user);
+            return base.CanOpen(user, silent);
         }
 
         protected override void OpenVerbGetData(IEntity user, EntityStorageComponent component, VerbData data)

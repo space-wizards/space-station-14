@@ -15,7 +15,7 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
 {
     public sealed class EquipMelee : UtilityAction
     {
-        private IEntity _entity;
+        private readonly IEntity _entity;
 
         public EquipMelee(IEntity owner, IEntity entity, float weight) : base(owner)
         {

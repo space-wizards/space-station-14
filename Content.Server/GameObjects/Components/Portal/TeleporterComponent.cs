@@ -8,6 +8,7 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
@@ -125,14 +126,14 @@ namespace Content.Server.GameObjects.Components.Portal
                 return;
             }
 
-            Timer.Spawn(TimeSpan.FromSeconds(_chargeTime), () => Teleport(user, mapCoords.Position));
+            Owner.SpawnTimer(TimeSpan.FromSeconds(_chargeTime), () => Teleport(user, mapCoords.Position));
             StartCooldown();
         }
 
         public void StartCooldown()
         {
             SetState(ItemTeleporterState.Cooldown);
-            Timer.Spawn(TimeSpan.FromSeconds(_chargeTime + _cooldown), () => SetState(ItemTeleporterState.Off));
+            Owner.SpawnTimer(TimeSpan.FromSeconds(_chargeTime + _cooldown), () => SetState(ItemTeleporterState.Off));
             if (_cooldownSound != null)
             {
                 var soundPlayer = EntitySystem.Get<AudioSystem>();
@@ -212,7 +213,7 @@ namespace Content.Server.GameObjects.Components.Portal
             }
 
             // Seemed easier to just start the cd timer at the same time
-            Timer.Spawn(TimeSpan.FromSeconds(_chargeTime), () => Teleport(user, targetVector));
+            Owner.SpawnTimer(TimeSpan.FromSeconds(_chargeTime), () => Teleport(user, targetVector));
             StartCooldown();
         }
 

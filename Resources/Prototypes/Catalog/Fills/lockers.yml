@@ -1,26 +1,11 @@
 - type: entity
-  id: LockerJanitor
-  parent: WardrobeMixed
-  name: "custodial closet"
-  description: "It's a storage unit for janitorial clothes and gear."
-  components:
-  - type: StorageFill
-    contents:
-      - name: MopItem
-      - name: MopBucket
-      - name: WetFloorSign
-        amount: 3
-      - name: TrashBag
-        amount: 2
-
-- type: entity
   id: LockerToolFilled
   parent: LockerTool
   suffix: Filled
   components:
   - type: StorageFill
     contents:
-      - name: OuterclothingHazard
+      - name: ClothingOuterVestHazard
         prob: 0.4
       - name: FlashlightLantern
         prob: 0.7
@@ -36,11 +21,11 @@
         prob: 0.7
       - name: Multitool
         prob: 0.2
-      - name: UtilityBeltClothing
+      - name: ClothingBeltUtility
         prob: 0.2
-      - name: GlovesYellow
+      - name: ClothingHandsGlovesColorYellow
         prob: 0.05
-      - name: HatHardhatRed
+      - name: ClothingHeadHatHardhatRed
         prob: 0.4
       - name: ApcExtensionCableStack
         prob: 0.3
@@ -58,19 +43,14 @@
     contents:
       - name: ToolboxEmergencyFilled
         prob: 0.4
-      - name: BreathMaskClothing
+      - name: ClothingMaskBreath
         prob: 0.4
-      - name: BreathMaskClothing
+      - name: ClothingMaskBreath
         prob: 0.25
-      # TODO: uncomment when we actually have these items.
-      #- name: TankOxygenSmallFilled
-      #  prob: 0.4s
-      #- name: TankOxygenSmallFilled
-      #  prob: 0.25
-      #- name: MedkitOxygenFilled
-      #  prob: 0.25
-      #- name: TankOxygenFilled
-      #  prob: 0.2
+      - name: EmergencyOxygenTankFilled
+        prob: 0.4
+      - name: OxygenTankFilled
+        prob: 0.2
 
 - type: entity
   id: LockerBoozeFilled
@@ -96,6 +76,13 @@
   id: LockerChiefEngineerFilled
   suffix: Filled
   parent: LockerChiefEngineer
+  components:
+  - type: StorageFill
+    contents:
+      - name: ClothingHeadHelmetHardsuitEngineeringWhite
+      - name: ClothingOuterHardsuitEngineeringWhite
+      - name: ClothingMaskBreath
+      - name: OxygenTankFilled
 
 - type: entity
   id: LockerElectricalSuppliesFilled
@@ -111,11 +98,25 @@
   id: LockerAtmosphericsFilled
   suffix: Filled
   parent: LockerAtmospherics
+  components:
+  - type: StorageFill
+    contents:
+      - name: ClothingHeadHelmetHardsuitAtmos
+      - name: ClothingOuterHardsuitAtmos
+      - name: ClothingMaskBreath
+      - name: OxygenTankFilled
 
 - type: entity
   id: LockerEngineerFilled
   suffix: Filled
   parent: LockerEngineer
+  components:
+  - type: StorageFill
+    contents:
+      - name: ClothingHeadHelmetHardsuitEngineering
+      - name: ClothingOuterHardsuitEngineering
+      - name: ClothingMaskBreath
+      - name: OxygenTankFilled
 
 - type: entity
   id: LockerBotanistFilled
@@ -131,6 +132,11 @@
   id: LockerMedicalFilled
   suffix: Filled
   parent: LockerMedical
+  components:
+  - type: StorageFill
+    contents:
+      - name: ClothingHandsGlovesLatex
+        prob: 0.4
 
 - type: entity
   id: LockerChemistryFilled
@@ -162,6 +168,7 @@
   suffix: Filled
   parent: LockerSecurity
 
+# Before adding to this - See https://github.com/space-wizards/space-station-14/pull/2427#issuecomment-718152557
 - type: entity
   id: LockerDetectiveFilled
   suffix: Filled
@@ -176,11 +183,26 @@
   id: LockerChefFilled
   suffix: Filled
   parent: LockerChef
+  components:
+  - type: StorageFill
+    contents:
+      - name: CrowbarRed
+      - name: FoodContainerMonkeyCubeBox
+      - name: SprayBottleWater
+      - name: ReagentContainerFlour
 
 - type: entity
   id: LockerJanitorFilled
   suffix: Filled
   parent: LockerJanitor
+  components:
+  - type: StorageFill
+    contents:
+      - name: MopItem
+      - name: WetFloorSign
+        amount: 3
+      - name: TrashBag
+        amount: 2
 
 - type: entity
   id: LockerLegalFilled
@@ -216,6 +238,11 @@
   id: WardrobeMedicalDoctorFilled
   suffix: Filled
   parent: WardrobeMedicalDoctor
+  components:
+  - type: StorageFill
+    contents:
+      - name: ClothingHandsGlovesLatex
+        prob: 0.4
 
 - type: entity
   id: WardrobeRoboticsFilled
@@ -286,11 +313,23 @@
   id: LockerRadiationSuitFilled
   parent: LockerRadiationSuit
   suffix: Filled
+# at time of writing, rad suits do nothing, let's not get anyone's hopes up
+#  components:
+#  - type: StorageFill
+#    contents:
+#      - name: OuterclothingRadSuit
 
 - type: entity
   id: LockerFireFilled
   parent: LockerFire
   suffix: Filled
+  components:
+    - type: StorageFill
+      contents:
+        - name: RedOxygenTankFilled
+          prob: 0.6
+        - name: ClothingOuterSuitFire
+          prob: 0.75
 
 - type: entity
   id: WardrobePajama

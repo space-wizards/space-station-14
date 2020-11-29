@@ -32,7 +32,7 @@ namespace Content.Server.Preferences
 
         // Cache player prefs on the server so we don't need as much async hell related to them.
         private readonly Dictionary<NetUserId, PlayerPrefData> _cachedPlayerPrefs =
-            new Dictionary<NetUserId, PlayerPrefData>();
+            new();
 
         private int MaxCharacterSlots => _cfg.GetCVar(CCVars.GameMaxCharacterSlots);
 
@@ -142,7 +142,8 @@ namespace Content.Server.Preferences
             int? nextSlot = null;
             if (curPrefs.SelectedCharacterIndex == slot)
             {
-                var (ns, profile) = curPrefs.Characters.FirstOrDefault(p => p.Key != message.Slot);
+                // That ! on the end is because Rider doesn't like .NET 5.
+                var (ns, profile) = curPrefs.Characters.FirstOrDefault(p => p.Key != message.Slot)!;
                 if (profile == null)
                 {
                     // Only slot left, can't delete.

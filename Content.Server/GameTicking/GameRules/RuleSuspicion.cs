@@ -6,6 +6,7 @@ using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs.Roles.Suspicion;
 using Content.Server.Players;
+using Content.Shared;
 using Content.Shared.GameObjects.Components.Damage;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
@@ -32,7 +33,7 @@ namespace Content.Server.GameTicking.GameRules
         [Dependency] private readonly IGameTicker _gameTicker = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
 
-        private readonly CancellationTokenSource _checkTimerCancel = new CancellationTokenSource();
+        private readonly CancellationTokenSource _checkTimerCancel = new();
 
         public override void Added()
         {
@@ -58,7 +59,7 @@ namespace Content.Server.GameTicking.GameRules
 
         private void _checkWinConditions()
         {
-            if (!_cfg.GetCVar<bool>("game.enablewin"))
+            if (!_cfg.GetCVar(CCVars.GameLobbyEnableWin))
                 return;
 
             var traitorsAlive = 0;

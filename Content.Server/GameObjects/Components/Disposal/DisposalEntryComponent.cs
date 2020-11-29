@@ -33,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             return TryInsert(holderComponent);
         }
 
-        private bool TryInsert(DisposalHolderComponent holder)
+        public bool TryInsert(DisposalHolderComponent holder)
         {
             if (!Contents.Insert(holder.Owner))
             {

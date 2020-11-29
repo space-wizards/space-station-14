@@ -62,40 +62,6 @@
       yellow: "#ffa500"
 
 - type: entity
-  name: welding tool
-  parent: BaseItem
-  id: Welder
-  description: 'Melts anything as long as it''s fueled, don''t forget your eye protection!'
-  components:
-  - type: Sprite
-    sprite: Objects/Tools/welder.rsi
-    layers:
-    - state: welder
-    - state: welder_flame
-      shader: unshaded
-      visible: false
-  - type: Item
-    size: 10
-    sprite: Objects/Tools/welder.rsi
-    HeldPrefix: off
-  - type: ItemCooldown
-  - type: MeleeWeapon
-  - type: ItemStatus
-  - type: SolutionContainer
-    maxVol: 100
-    caps: AddTo, NoExamine
-    contents:
-      reagents:
-        - ReagentId: chem.WeldingFuel
-          Quantity: 100
-  - type: Welder
-    weldSoundCollection: Welder
-  - type: PointLight
-    enabled: false
-    radius: 1.5
-    color: orange
-
-- type: entity
   name: wrench
   parent: BaseItem
   id: Wrench

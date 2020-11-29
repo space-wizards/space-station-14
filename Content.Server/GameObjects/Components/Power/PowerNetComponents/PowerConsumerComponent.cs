@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
@@ -33,6 +34,8 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         public int ReceivedPower { get => _receivedPower; set => SetReceivedPower(value); }
         private int _receivedPower;
 
+        public event EventHandler<ReceivedPowerChangedEventArgs> OnReceivedPowerChanged;
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -60,7 +63,9 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         private void SetReceivedPower(int newReceivedPower)
         {
             Debug.Assert(newReceivedPower >= 0 && newReceivedPower <= DrawRate);
+            if(_receivedPower == newReceivedPower) return;
             _receivedPower = newReceivedPower;
+            OnReceivedPowerChanged?.Invoke(this, new ReceivedPowerChangedEventArgs(_drawRate, _receivedPower));
         }
 
         private void SetPriority(Priority newPriority)
@@ -74,5 +79,17 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
     {
         First,
         Last,
+    }
+
+    public class ReceivedPowerChangedEventArgs : EventArgs
+    {
+        public readonly int DrawRate;
+        public readonly int ReceivedPower;
+
+        public ReceivedPowerChangedEventArgs(int drawRate, int receivedPower)
+        {
+            DrawRate = drawRate;
+            ReceivedPower = receivedPower;
+        }
     }
 }

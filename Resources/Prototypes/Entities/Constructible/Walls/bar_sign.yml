@@ -5,11 +5,14 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.45, -0.95, 0.45, 1"
+        layer: [ Passable ]
   - type: Sprite
     drawdepth: WallTops
     sprite: Constructible/Misc/barsign.rsi
     state: empty
-
   - type: PowerReceiver
   - type: BarSign
 
@@ -25,7 +28,6 @@
     drawdepth: WallTops
     sprite: Constructible/Misc/sylphs.rsi
     state: sylph
-
   - type: PowerReceiver
   - type: BarSign
 
@@ -44,3 +46,10 @@
   components:
   - type: BarSign
     current: CyberSylph
+  - type: Physics
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.45, -0.95, 0.95, 1.5"
+        layer: [ Passable ]
+  - type: Sprite
+    drawdepth: Ghosts

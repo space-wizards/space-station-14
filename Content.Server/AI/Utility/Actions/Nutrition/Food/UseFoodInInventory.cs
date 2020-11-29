@@ -15,7 +15,7 @@ namespace Content.Server.AI.Utility.Actions.Nutrition.Food
 {
     public sealed class UseFoodInInventory : UtilityAction
     {
-        private IEntity _entity;
+        private readonly IEntity _entity;
 
         public UseFoodInInventory(IEntity owner, IEntity entity, float weight) : base(owner)
         {
@@ -28,7 +28,7 @@ namespace Content.Server.AI.Utility.Actions.Nutrition.Food
             ActionOperators = new Queue<AiOperator>(new AiOperator[]
             {
                 new EquipEntityOperator(Owner, _entity),
-                new UseFoodInInventoryOperator(Owner, _entity), 
+                new UseFoodInInventoryOperator(Owner, _entity),
             });
         }
 
@@ -36,8 +36,8 @@ namespace Content.Server.AI.Utility.Actions.Nutrition.Food
         {
             base.UpdateBlackboard(context);
             context.GetState<TargetEntityState>().SetValue(_entity);
-        }      
-        
+        }
+
         protected override IReadOnlyCollection<Func<float>> GetConsiderations(Blackboard context)
         {
             var considerationsManager = IoCManager.Resolve<ConsiderationsManager>();

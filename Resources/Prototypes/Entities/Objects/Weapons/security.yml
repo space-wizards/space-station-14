@@ -1,8 +1,8 @@
 - type: entity
   name: stun baton
+  description: A stun baton for incapacitating people with.
   parent: BaseItem
   id: Stunbaton
-  description: A melee weapon which delivers an incapacitating shock, knocking them to the ground or at least disorientating them.
   components:
     - type: Sprite
       sprite: Objects/Weapons/Melee/stunbaton.rsi
@@ -15,6 +15,10 @@
       range: 0.75
       arcwidth: 0
       arc: default
+
+    - type: PowerCellSlot
+      slotSize: Medium
+      startingCellType: PowerCellMediumHigh
 
     - type: Item
       size: 10

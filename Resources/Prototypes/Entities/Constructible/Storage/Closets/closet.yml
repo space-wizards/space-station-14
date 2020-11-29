@@ -13,9 +13,6 @@
     - state: welded
       visible: false
       map: ["enum.StorageVisualLayers.Welded"]
-  - type: Icon
-    sprite: Constructible/Structures/closet.rsi
-    state: generic_icon
   - type: Clickable
   - type: MovedByPressure
   - type: DamageOnHighSpeedImpact

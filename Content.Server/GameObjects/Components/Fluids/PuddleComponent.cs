@@ -14,6 +14,7 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -49,8 +50,6 @@ namespace Content.Server.GameObjects.Components.Fluids
 
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-
         public override string Name => "Puddle";
 
         private CancellationTokenSource _evaporationToken;
@@ -254,7 +253,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             _evaporationToken = new CancellationTokenSource();
 
             // KYS to evaporate
-            Timer.Spawn(TimeSpan.FromSeconds(_evaporateTime), Evaporate, _evaporationToken.Token);
+            Owner.SpawnTimer(TimeSpan.FromSeconds(_evaporateTime), Evaporate, _evaporationToken.Token);
         }
 
         private void UpdateSlip()
@@ -398,7 +397,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             if (puddle == default)
             {
                 var grid = _snapGrid.DirectionToGrid(direction);
-                puddle = () => _entityManager.SpawnEntity(Owner.Prototype.ID, grid).GetComponent<PuddleComponent>();
+                puddle = () => Owner.EntityManager.SpawnEntity(Owner.Prototype.ID, grid).GetComponent<PuddleComponent>();
             }
 
             return true;

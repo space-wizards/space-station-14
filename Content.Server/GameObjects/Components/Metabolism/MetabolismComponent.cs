@@ -31,7 +31,6 @@ namespace Content.Server.GameObjects.Components.Metabolism
     public class MetabolismComponent : Component
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         [ComponentDependency] private readonly IBody? _body = default!;
 
@@ -44,11 +43,11 @@ namespace Content.Server.GameObjects.Components.Metabolism
 
         [ViewVariables(VVAccess.ReadWrite)] private int _suffocationDamage;
 
-        [ViewVariables] public Dictionary<Gas, float> NeedsGases { get; set; } = new Dictionary<Gas, float>();
+        [ViewVariables] public Dictionary<Gas, float> NeedsGases { get; set; } = new();
 
-        [ViewVariables] public Dictionary<Gas, float> ProducesGases { get; set; } = new Dictionary<Gas, float>();
+        [ViewVariables] public Dictionary<Gas, float> ProducesGases { get; set; } = new();
 
-        [ViewVariables] public Dictionary<Gas, float> DeficitGases { get; set; } = new Dictionary<Gas, float>();
+        [ViewVariables] public Dictionary<Gas, float> DeficitGases { get; set; } = new();
 
         /// <summary>
         /// Heat generated due to metabolism. It's generated via metabolism
@@ -192,7 +191,7 @@ namespace Content.Server.GameObjects.Components.Metabolism
                 return;
             }
 
-            var lungs = _body.GetMechanismBehaviors<LungBehaviorComponent>().ToArray();
+            var lungs = _body.GetMechanismBehaviors<LungBehavior>().ToArray();
 
             var needs = NeedsAndDeficit(frameTime);
             var used = 0f;
@@ -294,7 +293,7 @@ namespace Content.Server.GameObjects.Components.Metabolism
                 }
 
                 // creadth: sweating does not help in airless environment
-                if (Owner.Transform.Coordinates.TryGetTileAir(out _, _entityManager))
+                if (Owner.Transform.Coordinates.TryGetTileAir(out _, Owner.EntityManager))
                 {
                     temperatureComponent.RemoveHeat(Math.Min(targetHeat, SweatHeatRegulation));
                 }

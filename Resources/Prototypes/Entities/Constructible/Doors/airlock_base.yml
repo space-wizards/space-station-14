@@ -74,7 +74,6 @@
   - type: Sprite
     sprite: Constructible/Structures/Doors/airlock_glass.rsi
 
-
 - type: entity
   parent: Airlock
   id: AirlockMaint

@@ -42,7 +42,7 @@ namespace Content.Client.GameObjects.Components.Disposal
         {
             base.UpdateState(state);
 
-            if (!(state is DisposalTaggerUserInterfaceState cast))
+            if (state is not DisposalTaggerUserInterfaceState cast)
             {
                 return;
             }

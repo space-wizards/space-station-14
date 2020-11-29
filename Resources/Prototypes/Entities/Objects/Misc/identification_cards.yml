@@ -64,6 +64,20 @@
 
 - type: entity
   parent: IDCardStandard
+  id: WardenIDCard
+  name: warden ID card
+  components:
+    - type: Sprite
+      layers:
+        - state: default
+        - state: assigned
+        - state: idwarden
+
+    - type: PresetIdCard
+      job: Warden
+
+- type: entity
+  parent: IDCardStandard
   id: EngineeringIDCard
   name: engineer ID card
   components:
@@ -103,6 +117,20 @@
 
   - type: PresetIdCard
     job: CargoTechnician
+
+- type: entity
+  parent: IDCardStandard
+  id: QuartermasterIDCard
+  name: quartermaster ID card
+  components:
+    - type: Sprite
+      layers:
+        - state: default
+        - state: assigned
+        - state: idquartermaster
+
+    - type: PresetIdCard
+      job: Quartermaster
 
 - type: entity
   parent: IDCardStandard
@@ -148,6 +176,20 @@
 
 - type: entity
   parent: IDCardStandard
+  id: ChaplainIDCard
+  name: chaplain ID card
+  components:
+    - type: Sprite
+      layers:
+        - state: default
+        - state: assigned
+        - state: idchaplain
+
+    - type: PresetIdCard
+      job: Chaplain
+
+- type: entity
+  parent: IDCardStandard
   id: JanitorIDCard
   name: janitor ID card
   components:
@@ -187,6 +229,21 @@
 
   - type: PresetIdCard
     job: Chef
+
+- type: entity
+  parent: IDCardStandard
+  id: BotanistIDCard
+  name: botanist ID card
+  components:
+    - type: Sprite
+      layers:
+        - state: default
+        - state: assigned
+        - state: idbotanist
+
+    - type: PresetIdCard
+      job: Botanist
+
 
 - type: entity
   parent: IDCardStandard

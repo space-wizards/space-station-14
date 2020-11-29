@@ -11,10 +11,15 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Utility;
+using Content.Shared.GameObjects.Components.Pulling;
 using static Content.Shared.GameObjects.EntitySystems.SharedInteractionSystem;
 
 namespace Content.Shared.Physics.Pull
 {
+    /// <summary>
+    /// This is applied upon a Pullable object when that object is being pulled.
+    /// It lives only to serve that Pullable object.
+    /// </summary>
     public class PullController : VirtualController
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -24,13 +29,15 @@ namespace Content.Shared.Physics.Pull
 
         private const float StopMoveThreshold = 0.25f;
 
-        private IPhysicsComponent? _puller;
-
-        public bool GettingPulled => _puller != null;
+        /// <summary>
+        /// The managing SharedPullableComponent of this PullController.
+        /// MUST BE SET! If you go attaching PullControllers yourself, YOU ARE DOING IT WRONG.
+        /// If you get a crash based on such, then, well, see previous note.
+        /// This is set by the SharedPullableComponent attaching the PullController.
+        /// </summary>
+        public SharedPullableComponent Manager = default!;
 
         private EntityCoordinates? _movingTo;
-
-        public IPhysicsComponent? Puller => _puller;
 
         public EntityCoordinates? MovingTo
         {
@@ -47,20 +54,9 @@ namespace Content.Shared.Physics.Pull
             }
         }
 
-        private float DistanceBeforeStopPull()
-        {
-            if (_puller == null)
-            {
-                return 0;
-            }
-
-            var aabbSize =  _puller.AABB.Size;
-
-            return (aabbSize.X > aabbSize.Y ? aabbSize.X : aabbSize.Y) + 0.15f;
-        }
-
         private bool PullerMovingTowardsPulled()
         {
+            var _puller = Manager.PullerPhysics;
             if (_puller == null)
             {
                 return false;
@@ -83,82 +79,14 @@ namespace Content.Shared.Physics.Pull
             var ray = new CollisionRay(origin, velocity, (int) CollisionGroup.AllMask);
             bool Predicate(IEntity e) => e != ControlledComponent.Owner;
             var rayResults =
-                _physicsManager.IntersectRayWithPredicate(mapId, ray, DistanceBeforeStopPull() * 2, Predicate);
+                _physicsManager.IntersectRayWithPredicate(mapId, ray, DistBeforeStopPull, Predicate);
 
             return rayResults.Any();
         }
 
-        public bool StartPull(IEntity entity)
-        {
-            DebugTools.AssertNotNull(entity);
-
-            if (!entity.TryGetComponent(out IPhysicsComponent? physics))
-            {
-                return false;
-            }
-
-            return StartPull(physics);
-        }
-
-        public bool StartPull(IPhysicsComponent puller)
-        {
-            DebugTools.AssertNotNull(puller);
-
-            if (_puller == puller)
-            {
-                return false;
-            }
-
-            if (ControlledComponent == null)
-            {
-                return false;
-            }
-
-            _puller = puller;
-
-            var message = new PullStartedMessage(this, _puller, ControlledComponent);
-
-            _puller.Owner.SendMessage(null, message);
-            ControlledComponent.Owner.SendMessage(null, message);
-
-            _puller.Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
-
-            ControlledComponent.WakeBody();
-
-            return true;
-        }
-
-        public bool StopPull()
-        {
-            var oldPuller = _puller;
-
-            if (oldPuller == null)
-            {
-                return false;
-            }
-
-            _puller = null;
-
-            if (ControlledComponent == null)
-            {
-                return false;
-            }
-
-            var message = new PullStoppedMessage(oldPuller, ControlledComponent);
-
-            oldPuller.Owner.SendMessage(null, message);
-            ControlledComponent.Owner.SendMessage(null, message);
-
-            oldPuller.Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
-
-            ControlledComponent.WakeBody();
-            ControlledComponent.TryRemoveController<PullController>();
-
-            return true;
-        }
-
         public bool TryMoveTo(EntityCoordinates from, EntityCoordinates to)
         {
+            var _puller = Manager.PullerPhysics;
             if (_puller == null || ControlledComponent == null)
             {
                 return false;
@@ -197,6 +125,7 @@ namespace Content.Shared.Physics.Pull
 
         public override void UpdateBeforeProcessing()
         {
+            var _puller = Manager.PullerPhysics;
             if (_puller == null || ControlledComponent == null)
             {
                 return;
@@ -204,7 +133,7 @@ namespace Content.Shared.Physics.Pull
 
             if (!_puller.Owner.IsInSameOrNoContainer(ControlledComponent.Owner))
             {
-                StopPull();
+                Manager.Puller = null;
                 return;
             }
 
@@ -212,20 +141,30 @@ namespace Content.Shared.Physics.Pull
 
             if (distance.Length > DistBeforeStopPull)
             {
-                StopPull();
+                Manager.Puller = null;
             }
             else if (MovingTo.HasValue)
             {
                 var diff = MovingTo.Value.Position - ControlledComponent.Owner.Transform.Coordinates.Position;
                 LinearVelocity = diff.Normalized * 5;
             }
-            else if (distance.Length > DistanceBeforeStopPull() && !PullerMovingTowardsPulled())
-            {
-                LinearVelocity = distance.Normalized * _puller.LinearVelocity.Length * 1.5f;
-            }
             else
             {
-                LinearVelocity = Vector2.Zero;
+                if (PullerMovingTowardsPulled())
+                {
+                    LinearVelocity = Vector2.Zero;
+                    return;
+                }
+
+                var distanceAbs = Vector2.Abs(distance);
+                var totalAabb = _puller.AABB.Size + ControlledComponent.AABB.Size / 2;
+                if (distanceAbs.X < totalAabb.X && distanceAbs.Y < totalAabb.Y)
+                {
+                    LinearVelocity = Vector2.Zero;
+                    return;
+                }
+
+                LinearVelocity = distance.Normalized * _puller.LinearVelocity.Length * 1.5f;
             }
         }
 
@@ -243,6 +182,12 @@ namespace Content.Shared.Physics.Pull
                 ControlledComponent.Owner.Transform.Coordinates.Position.EqualsApprox(MovingTo.Value.Position, 0.01))
             {
                 MovingTo = null;
+            }
+
+            if (LinearVelocity != Vector2.Zero)
+            {
+                var angle = LinearVelocity.ToAngle();
+                ControlledComponent.Owner.Transform.LocalRotation = angle;
             }
         }
     }

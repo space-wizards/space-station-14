@@ -11,6 +11,7 @@
    - type: Physics
      shapes:
        - !type:PhysShapeAabb
+         layer: [MobMask]
          mask:
            - Impassable
            - MobImpassable

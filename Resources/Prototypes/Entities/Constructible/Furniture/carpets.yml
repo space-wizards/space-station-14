@@ -7,7 +7,7 @@
   components:
   - type: Clickable
   - type: Sprite
-    drawdepth: FloorTiles
+    drawdepth: BelowFloor
   - type: Icon
     state: full
   - type: SnapGrid
