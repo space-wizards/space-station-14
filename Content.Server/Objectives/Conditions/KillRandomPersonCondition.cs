@@ -25,7 +25,8 @@ namespace Content.Server.Objectives.Conditions
                 var entity = mc.Mind?.OwnedEntity;
                 return entity != null &&
                        entity.TryGetComponent<IDamageableComponent>(out var damageableComponent) &&
-                       damageableComponent.CurrentState == DamageState.Alive;
+                       damageableComponent.CurrentState == DamageState.Alive
+                       && mc.Mind != mind;
             }).Select(mc => mc.Mind).ToList();
             return new KillRandomPersonCondition {Target = IoCManager.Resolve<IRobustRandom>().Pick(allHumans)};
         }

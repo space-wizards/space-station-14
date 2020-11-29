@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System;
 using Content.Server.GameObjects.Components.ContainerExt;
 using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
@@ -68,5 +69,23 @@ namespace Content.Server.Objectives.Conditions
 
 
         public float Difficulty => 1f;
+
+        public bool Equals(IObjectiveCondition? other)
+        {
+            return other is StealCondition stealCondition && Equals(_mind, stealCondition._mind) && _prototypeId == stealCondition._prototypeId && _amount == stealCondition._amount;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((StealCondition) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(_mind, _prototypeId, _amount);
+        }
     }
 }

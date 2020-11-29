@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Objectives
 {
-    public class Objective
+    public class Objective : IEquatable<Objective>
     {
         [ViewVariables]
         public readonly Mind Mind;
@@ -23,6 +24,33 @@ namespace Content.Server.Objectives
             {
                 _conditions.Add(condition.GetAssigned(mind));
             }
+        }
+
+        public bool Equals(Objective other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            if (!Equals(Mind, other.Mind) || !Equals(Prototype, other.Prototype)) return false;
+            if (_conditions.Count != other._conditions.Count) return false;
+            for (int i = 0; i < _conditions.Count; i++)
+            {
+                if (!_conditions[i].Equals(other._conditions[i])) return false;
+            }
+
+            return true;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != GetType()) return false;
+            return Equals((Objective) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Mind, Prototype, _conditions);
         }
     }
 }

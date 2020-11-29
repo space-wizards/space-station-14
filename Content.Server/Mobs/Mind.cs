@@ -156,11 +156,16 @@ namespace Content.Server.Mobs
         /// <summary>
         /// Adds an objective to this mind.
         /// </summary>
-        public bool TryAddObjective(ObjectivePrototype objective)
+        public bool TryAddObjective(ObjectivePrototype objectivePrototype)
         {
-            if (!objective.CanBeAssigned(this))
+            if (!objectivePrototype.CanBeAssigned(this))
                 return false;
-            _objectives.Add(objective.GetObjective(this));
+            if (!objectivePrototype.IsCompatible(_objectives.Select(o => o.Prototype).ToList()))
+                return false;
+            var objective = objectivePrototype.GetObjective(this);
+            if (_objectives.Any(o => objective.Equals(o)))
+                return false;
+            _objectives.Add(objective);
             return true;
         }
 

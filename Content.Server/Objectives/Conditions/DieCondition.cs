@@ -30,5 +30,23 @@ namespace Content.Server.Objectives.Conditions
                                     : 0f;
 
         public float Difficulty => 1f;
+
+        public bool Equals(IObjectiveCondition? other)
+        {
+            return other is DieCondition condition && Equals(mind, condition.mind);
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((DieCondition) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return (mind != null ? mind.GetHashCode() : 0);
+        }
     }
 }

@@ -6,6 +6,8 @@
   conditions:
     - !type:StealCondition
       prototype: CaptainIDCard
+  incompatible:
+    - DieObjective
 
 - type: objective
   id: KillRandomObjective
@@ -14,6 +16,7 @@
     - !type:TraitorRequirement {}
   conditions:
     - !type:KillRandomPersonCondition {}
+  canBeDuplicate: true
 
 - type: objective
   id: StayAliveObjective
@@ -22,6 +25,8 @@
     - !type:TraitorRequirement {}
   conditions:
     - !type:StayAliveCondition {}
+  incompatible:
+    - DieObjective
 
 - type: objective
   id: DieObjective
@@ -30,3 +35,5 @@
     - !type:TraitorRequirement {}
   conditions:
     - !type:DieCondition {}
+  incompatible:
+    - StayAliveObjective

@@ -26,5 +26,23 @@ namespace Content.Server.Objectives.Conditions
                                     : 0f;
 
         public float Difficulty => 2f;
+
+        public bool Equals(IObjectiveCondition? other)
+        {
+            return other is KillPersonCondition kpc && Equals(Target, kpc.Target);
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((KillPersonCondition) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return (Target != null ? Target.GetHashCode() : 0);
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System;
 using Content.Server.Mobs;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
@@ -6,7 +7,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Interfaces
 {
-    public interface IObjectiveCondition : IExposeData
+    public interface IObjectiveCondition : IExposeData, IEquatable<IObjectiveCondition>
     {
         /// <summary>
         /// Returns a copy of the IObjectiveCondition which is assigned to the mind.

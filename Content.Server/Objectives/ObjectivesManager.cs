@@ -15,30 +15,41 @@ namespace Content.Server.Objectives
         [Dependency] private IPrototypeManager _prototypeManager = default!;
         [Dependency] private IRobustRandom _random = default!;
 
-        public ObjectivePrototype[] GetAllPossibleObjectives(Mind mind)
+        public List<ObjectivePrototype> GetAllPossibleObjectives(Mind mind)
         {
-            return _prototypeManager.EnumeratePrototypes<ObjectivePrototype>().Where(objectivePrototype => objectivePrototype.CanBeAssigned(mind)).ToArray();
+            return _prototypeManager.EnumeratePrototypes<ObjectivePrototype>().Where(objectivePrototype => objectivePrototype.CanBeAssigned(mind)).ToList();
         }
 
-        public ObjectivePrototype[] GetRandomObjectives(Mind mind, float maxDifficulty = 3)
+        public ObjectivePrototype[] GetRandomObjectives(Mind mind, float maxDifficulty)
         {
             var objectives = GetAllPossibleObjectives(mind);
 
             //to prevent endless loops
-            if(objectives.Length == 0 || objectives.Sum(o => o.Difficulty) == 0f) return objectives;
+            if(objectives.Sum(o => o.Difficulty) == 0f) return objectives.ToArray();
 
             var result = new List<ObjectivePrototype>();
             var currentDifficulty = 0f;
             _random.Shuffle(objectives);
-            while (currentDifficulty < maxDifficulty)
+            while (currentDifficulty < maxDifficulty && objectives.Count > 0)
             {
+                var incompatible = new List<ObjectivePrototype>();
                 foreach (var objective in objectives)
                 {
+                    if (!objective.IsCompatible(result))
+                    {
+                        incompatible.Add(objective);
+                        continue;
+                    }
                     if (!_random.Prob(objective.Probability)) continue;
 
                     result.Add(objective);
                     currentDifficulty += objective.Difficulty;
                     if (currentDifficulty >= maxDifficulty) break;
+                }
+
+                foreach (var objectivePrototype in incompatible)
+                {
+                    objectives.Remove(objectivePrototype);
                 }
             }
 

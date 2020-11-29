@@ -1,5 +1,5 @@
-﻿using Content.Server.Interfaces.Chat;
-using Microsoft.EntityFrameworkCore.Internal;
+﻿using System;
+using Content.Server.Interfaces.Chat;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
@@ -18,7 +18,7 @@ namespace Content.Server.Mobs.Roles.Traitor
         {
             var chatMgr = IoCManager.Resolve<IChatManager>();
             chatMgr.DispatchServerMessage(Mind.Session, Loc.GetString("Hello Agent!"));
-            chatMgr.DispatchServerMessage(Mind.Session, Loc.GetString("Your codewords are: {0}", codewords.Join()));
+            chatMgr.DispatchServerMessage(Mind.Session, Loc.GetString("Your codewords are: {0}", string.Join(", ",codewords)));
         }
     }
 }

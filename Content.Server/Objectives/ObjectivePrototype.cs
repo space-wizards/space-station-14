@@ -27,7 +27,16 @@ namespace Content.Server.Objectives
         private List<IObjectiveCondition> _conditions = new();
         private List<IObjectiveRequirement> _requirements = new();
 
+        private List<string> _incompatibleObjectives = new();
+
+        [ViewVariables]
         public IReadOnlyList<IObjectiveCondition> Conditions => _conditions;
+
+        [ViewVariables]
+        public IReadOnlyList<string> IncompatibleObjectives => _incompatibleObjectives;
+
+        [ViewVariables]
+        public bool CanBeDuplicateAssignment { get; private set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
         private float? _difficultyOverride = null;
@@ -37,6 +46,19 @@ namespace Content.Server.Objectives
             foreach (var requirement in _requirements)
             {
                 if (!requirement.CanBeAssigned(mind)) return false;
+            }
+            return true;
+        }
+
+        public bool IsCompatible(List<ObjectivePrototype> prototypes)
+        {
+            foreach (var prototype in prototypes)
+            {
+                if (!CanBeDuplicateAssignment && prototype.ID == ID) return false;
+                foreach (var incompatibleObjective in _incompatibleObjectives)
+                {
+                    if (prototype.ID == incompatibleObjective) return false;
+                }
             }
 
             return true;
@@ -52,11 +74,13 @@ namespace Content.Server.Objectives
             ser.DataField(this, x => x._conditions, "conditions", new List<IObjectiveCondition>());
             ser.DataField(this, x => x._requirements, "requirements", new List<IObjectiveRequirement>());
             ser.DataField(this, x => x._difficultyOverride, "difficultyOverride", null);
+            ser.DataField(this, x=> x._incompatibleObjectives, "incompatible", new List<string>());
+            ser.DataField(this, x => x.CanBeDuplicateAssignment, "canBeDuplicate", false);
         }
 
         public Objective GetObjective(Mind mind)
         {
-            return new Objective(this, mind);
+            return new(this, mind);
         }
     }
 }
