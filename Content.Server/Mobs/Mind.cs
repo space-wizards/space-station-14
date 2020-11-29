@@ -160,8 +160,6 @@ namespace Content.Server.Mobs
         {
             if (!objectivePrototype.CanBeAssigned(this))
                 return false;
-            if (!objectivePrototype.IsCompatible(_objectives.Select(o => o.Prototype).ToList()))
-                return false;
             var objective = objectivePrototype.GetObjective(this);
             if (_objectives.Any(o => objective.Equals(o)))
                 return false;

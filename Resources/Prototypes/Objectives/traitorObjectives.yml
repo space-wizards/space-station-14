@@ -3,11 +3,12 @@
   issuer: The Syndicate
   requirements:
     - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - DieCondition
   conditions:
     - !type:StealCondition
       prototype: CaptainIDCard
-  incompatible:
-    - DieObjective
 
 - type: objective
   id: KillRandomObjective
@@ -23,17 +24,19 @@
   issuer: The Syndicate
   requirements:
     - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+        conditions:
+          - DieCondition
   conditions:
     - !type:StayAliveCondition {}
-  incompatible:
-    - DieObjective
 
 - type: objective
   id: DieObjective
   issuer: The Syndicate
   requirements:
     - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - StayAliveCondition
   conditions:
     - !type:DieCondition {}
-  incompatible:
-    - StayAliveObjective

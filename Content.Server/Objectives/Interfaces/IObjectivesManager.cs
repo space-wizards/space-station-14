@@ -11,8 +11,8 @@ namespace Content.Server.Objectives.Interfaces
         List<ObjectivePrototype> GetAllPossibleObjectives(Mind mind);
 
         /// <summary>
-        /// Returns a randomly picked (no pop) collection of objectives the provided mind is valid for.
+        /// Returns a randomly picked objective the provided mind is valid for.
         /// </summary>
-        ObjectivePrototype[] GetRandomObjectives(Mind mind, float maxDifficulty = 10f);
+        ObjectivePrototype GetRandomObjective(Mind mind);
     }
 }

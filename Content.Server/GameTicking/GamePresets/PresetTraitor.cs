@@ -38,6 +38,8 @@ namespace Content.Server.GameTicking.GamePresets
         private int MaxTraitors => 4;
         private int CodewordCount => 2;
         private int StartingTC => 20;
+        private float MaxDifficulty => 4f;
+        private int MaxPicks => 20;
 
         private string[] Codewords => new[] {"cold", "winter", "radiator", "average", "furious"};
         private List<TraitorRole> _traitors = new ();
@@ -150,10 +152,13 @@ namespace Content.Server.GameTicking.GamePresets
             foreach (var traitor in _traitors)
             {
                 //give traitors their objectives
-                var objectives = objectivesMgr.GetRandomObjectives(traitor.Mind);
-                foreach (var objective in objectives)
+                var difficulty = 0f;
+                for (var pick = 0; pick < MaxPicks && MaxDifficulty > difficulty; pick++)
                 {
-                    traitor.Mind.TryAddObjective(objective);
+                    var objective = objectivesMgr.GetRandomObjective(traitor.Mind);
+                    if (objective == null) continue;
+                    if (traitor.Mind.TryAddObjective(objective))
+                        difficulty += objective.Difficulty;
                 }
             }
         }
