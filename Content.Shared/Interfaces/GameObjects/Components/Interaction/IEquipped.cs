@@ -8,9 +8,11 @@ namespace Content.Shared.Interfaces.GameObjects.Components
 {
     /// <summary>
     ///     This interface gives components behavior when their owner is put in a non-hand inventory slot,
-    ///     regardless of where it came from.
-    ///     This DOES NOT fire when putting the owner into a hand slot (<see cref="IHandEquipped"/>), but
-    ///     it would fire when moving the owner from a hand slot into a non-hand slot (along with <see cref="IHandUnequipped"/>).
+    ///     regardless of where it came from.  This includes moving the owner from a hand slot into a non-hand slot
+    ///     (which would also fire <see cref="IUnequippedHand"/>).
+    ///
+    ///     This DOES NOT fire when putting the owner into a hand slot (<see cref="IEquippedHand"/>), nor
+    ///     does it fire when putting the owner into held/equipped storage.
     /// </summary>
     public interface IEquipped
     {

@@ -8,9 +8,11 @@ namespace Content.Shared.Interfaces.GameObjects.Components
 {
     /// <summary>
     ///     This interface gives components behavior when their owner is removed from a non-hand inventory slot,
-    ///     regardless of where it's going to.
-    ///     This DOES NOT fire when removing the owner from a hand slot <see cref="IHandUnequipped"/>.
-    ///     However, it does fire when moving the owner from a non-hand slot into a hand slot.
+    ///     regardless of where it's going to. This includes moving the owner from a non-hand slot into a hand slot
+    ///     (which would also fire <see cref="IEquippedHand"/>).
+    ///
+    ///     This DOES NOT fire when removing the owner from a hand slot (<see cref="IUnequippedHand"/>), nor
+    ///     does it fire when removing the owner from held/equipped storage.
     /// </summary>
     public interface IUnequipped
     {

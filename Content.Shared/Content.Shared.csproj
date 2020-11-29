@@ -33,5 +33,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="GameObjects\Components\Mobs\GrantedActions.cs" />
+    <Compile Remove="GameObjects\Components\Items\DebugEquipComponent.cs" />
   </ItemGroup>
 </Project>
