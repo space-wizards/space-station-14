@@ -2,7 +2,9 @@ using System.Collections.Generic;
 using System.Reflection;
 using Content.Client;
 using Content.Server;
+using Content.Server.Database;
 using Robust.UnitTesting;
+using Robust.Shared.IoC;
 
 namespace Content.Tests
 {
@@ -15,6 +17,7 @@ namespace Content.Tests
             if (Project == UnitTestProject.Server)
             {
                 ServerContentIoC.Register();
+                IoCManager.Register<IServerDbManager, TestingServerDbManager>(overwrite: true);
             }
             else if (Project == UnitTestProject.Client)
             {

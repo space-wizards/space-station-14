@@ -28,7 +28,7 @@ using System.Transactions;
 
 namespace Content.Server.Database
 {
-    public sealed class ServerDbManager : IServerDbManager
+    public class ServerDbManager : IServerDbManager
     {
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IResourceManager _res = default!;
@@ -47,22 +47,25 @@ namespace Content.Server.Database
                 builder.AddProvider(_msLogProvider);
             });
 
+            ServerDbContext = CreateDbContext();
+
+            ServerDbContext.Database.Migrate();
+        }
+
+        protected virtual ServerDbContext CreateDbContext()
+        {
             var engine = _cfg.GetCVar(CCVars.DatabaseEngine).ToLower();
             switch (engine)
             {
                 case "sqlite":
                     var options = CreateSqliteOptions();
-                    ServerDbContext = new SqliteServerDbContext(options);
-                    break;
+                    return new SqliteServerDbContext(options);
                 case "postgres":
                     options = CreatePostgresOptions();
-                    ServerDbContext = new PostgresServerDbContext(options);
-                    break;
+                    return new PostgresServerDbContext(options);
                 default:
                     throw new InvalidDataException("Unknown database engine {engine}.");
             }
-
-            ServerDbContext.Database.Migrate();
         }
 
         public async Task<PlayerPreferences> InitPrefsAsync(NetUserId userId, ICharacterProfile defaultProfile)
