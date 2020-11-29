@@ -10,8 +10,8 @@ using Robust.Shared.Serialization;
 namespace Content.Server.Chemistry.Metabolism
 {
     /// <summary>
-    /// Default metabolism for medicine reagents. Attempts to find a IDamegableComponent on the target,
-    /// and to update it's thirst values.
+    /// Default metabolism for medicine reagents. Attempts to find a DamegableComponent on the target,
+    /// and to update it's damage values.
     /// </summary>
     class DefaultMedicine : IMetabolizable
     {
@@ -33,7 +33,7 @@ namespace Content.Server.Chemistry.Metabolism
             serializer.DataField(ref _healType, "healType", DamageClass.Brute);
         }
 
-        //Remove reagent at set rate, heal damage if a IDamageableComponent can be found
+        //Remove reagent at set rate, heal damage if a DamageableComponent can be found
         ReagentUnit IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime)
         {
             var metabolismAmount = MetabolismRate * tickTime;
