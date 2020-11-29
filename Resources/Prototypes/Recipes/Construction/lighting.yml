@@ -1,0 +1,14 @@
+﻿- type: construction
+  name: wall light
+  id: LightTubeFixture
+  graph: LightTubeFixture
+  startNode: start
+  targetNode: lightFixture
+  category: Structures
+  description: A wall light fixture. Use light tubes.
+  icon:
+    sprite: Constructible/Lighting/light_tube.rsi
+    state: empty
+  objectType: Structure
+  placementMode: AlignWallProper
+  canRotate: true

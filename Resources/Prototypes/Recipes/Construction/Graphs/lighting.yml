@@ -1,0 +1,27 @@
+﻿- type: constructionGraph
+  id: LightTubeFixture
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: lightFixture
+          steps:
+            - material: Metal
+              amount: 2
+              doAfter: 2.0
+    - node: lightFixture
+      entity: PoweredlightEmpty
+      edges:
+        - to: start
+          conditions:
+            - !type:ContainerEmpty
+              container: "light_bulb"
+          steps:
+            - tool: Screwing
+              doAfter: 2.0
+          completed:
+            - !type:SpawnPrototype
+              prototype: SteelSheet1
+              amount: 2
+            - !type:DeleteEntity {}         
+
