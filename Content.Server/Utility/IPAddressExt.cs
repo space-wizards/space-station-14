@@ -6,9 +6,9 @@ using System.Net.Sockets;
 
 namespace Content.Server.Utility
 {
+    // Taken from https://stackoverflow.com/a/56461160/4678631
     public static class IPAddressExt
     {
-        // Taken from https://stackoverflow.com/a/56461160/4678631
         public static bool IsInSubnet(this IPAddress address, string subnetMask)
         {
             var slashIdx = subnetMask.IndexOf("/", StringComparison.Ordinal);
@@ -20,15 +20,18 @@ namespace Content.Server.Utility
 
             // First parse the address of the netmask before the prefix length.
             var maskAddress = IPAddress.Parse(subnetMask.Substring(0, slashIdx));
+            // Now find out how long the prefix is.
+            int maskLength = int.Parse(subnetMask[(slashIdx + 1)..]);
 
+            return IsInSubnet(address, maskAddress, maskLength);
+        }
+
+        public static bool IsInSubnet(this IPAddress address, IPAddress maskAddress, int maskLength) {
             if (maskAddress.AddressFamily != address.AddressFamily)
             {
                 // We got something like an IPV4-Address for an IPv6-Mask. This is not valid.
                 return false;
             }
-
-            // Now find out how long the prefix is.
-            int maskLength = int.Parse(subnetMask.Substring(slashIdx + 1));
 
             if (maskAddress.AddressFamily == AddressFamily.InterNetwork)
             {

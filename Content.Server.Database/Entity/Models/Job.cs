@@ -1,10 +1,10 @@
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Content.Shared.Preferences;
+
 namespace Content.Server.Database.Entity.Models
 {
-    using System.ComponentModel.DataAnnotations.Schema;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Metadata.Builders;
-    using Content.Shared.Preferences;
-
     [Table("job")]
     public class Job : IEntityTypeConfiguration<Job>
     {

@@ -3,6 +3,7 @@ namespace Content.Server.Database.Entity.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Linq;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -21,15 +22,16 @@ namespace Content.Server.Database.Entity.Models
         [Column("user_id")]
         public Guid UserId { get; set; }
 
-        [Column("selected_character_slot")]
-        public int SelectedCharacterSlot { get; set; }
-
         public ICollection<Profile> Profiles { get; set; } = null!;
 
         public void Configure(EntityTypeBuilder<Preference> builder)
         {
             builder.HasIndex(p => p.UserId)
                 .IsUnique();
+
+            builder.HasMany(p => p.Profiles)
+                .WithOne(p => p.Preference)
+                .HasForeignKey(p => p.PreferenceId);
         }
     }
 }

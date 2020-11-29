@@ -1,13 +1,13 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Content.Shared.Preferences;
+
 namespace Content.Server.Database.Entity.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Metadata.Builders;
-    using Content.Shared.Preferences;
-
     [Table("profile")]
     public class Profile : IEntityTypeConfiguration<Profile>
     {
@@ -42,7 +42,7 @@ namespace Content.Server.Database.Entity.Models
         public string SkinColor { get; set; } = null!;
 
         public ICollection<Job> Jobs { get; set; } = null!;
-        public List<Antag> Antags { get; set; } = null!;
+        public ICollection<Antag> Antags { get; set; } = null!;
 
         [Column("pref_unavailable")]
         public PreferenceUnavailableMode PreferenceUnavailable { get; set; }

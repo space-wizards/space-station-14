@@ -10,6 +10,8 @@ namespace Content.Server.Database.Entity
 
     public abstract class ServerDbContext : DbContext
     {
+        public ServerDbContext() {
+        }
         public ServerDbContext(DbContextOptions<ServerDbContext> options) : base(options)
         {
         }
@@ -30,7 +32,7 @@ namespace Content.Server.Database.Entity
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
 
-            if (!Database.IsNpgsql())
+            if (Database.IsSqlite())
             {
                 var converter = new ValueConverter<(IPAddress, int), string>(
                     v => InetToString(v.Item1, v.Item2),
@@ -47,7 +49,11 @@ namespace Content.Server.Database.Entity
                     .Entity<ServerBan>()
                     .Property(e => e.Address)
                     .HasColumnType("inet");
-                //"timestamp with time zone"
+
+                modelBuilder
+                    .Entity<ConnectionLog>()
+                    .HasCheckConstraint("AddressNotIPv6MappedIPv4",
+                        "NOT inet '::ffff:0.0.0.0/96' >>= address");
             }
         }
 

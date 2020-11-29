@@ -16,13 +16,13 @@ namespace Content.Server.Database.Entity.Models
         public Guid UserId { get; set; }
 
         [Column("first_seen_time")]
-        public DateTimeOffset FirstSeenTime { get; set; }
+        public DateTime FirstSeenTime { get; set; }
 
         [Column("last_seen_user_name")]
         public string LastSeenUserName { get; set; } = null!;
 
         [Column("last_seen_time")]
-        public DateTimeOffset LastSeenTime { get; set; }
+        public DateTime LastSeenTime { get; set; }
 
         [Column("last_seen_address")]
         public IPAddress LastSeenAddress { get; set; } = null!;

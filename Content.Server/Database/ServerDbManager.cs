@@ -16,64 +16,25 @@ using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using MSLogLevel = Microsoft.Extensions.Logging.LogLevel;
 using LogLevel = Robust.Shared.Log.LogLevel;
+using Content.Server.Database.Entity;
+using Content.Server.Database.Entity.Models;
+using Content.Server.Utility;
+using System.Linq;
+using System.Collections.Generic;
+using Robust.Shared.Maths;
+using System.Transactions;
 
 #nullable enable
 
 namespace Content.Server.Database
 {
-    public interface IServerDbManager
-    {
-        void Init();
-
-        // Preferences
-        Task<PlayerPreferences> InitPrefsAsync(NetUserId userId, ICharacterProfile defaultProfile);
-        Task SaveSelectedCharacterIndexAsync(NetUserId userId, int index);
-
-        Task SaveCharacterSlotAsync(NetUserId userId, ICharacterProfile? profile, int slot);
-
-        // Single method for two operations for transaction.
-        Task DeleteSlotAndSetSelectedIndex(NetUserId userId, int deleteSlot, int newSlot);
-        Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId);
-
-        // Username assignment (for guest accounts, so they persist GUID)
-        Task AssignUserIdAsync(string name, NetUserId userId);
-        Task<NetUserId?> GetAssignedUserIdAsync(string name);
-
-        // Ban stuff
-        Task<ServerBanDef?> GetServerBanAsync(IPAddress? address, NetUserId? userId);
-        Task AddServerBanAsync(ServerBanDef serverBan);
-
-        // Player records
-        Task UpdatePlayerRecordAsync(NetUserId userId, string userName, IPAddress address);
-        Task<PlayerRecord?> GetPlayerRecordByUserName(string userName, CancellationToken cancel = default);
-        Task<PlayerRecord?> GetPlayerRecordByUserId(NetUserId userId, CancellationToken cancel = default);
-
-        // Connection log
-        Task AddConnectionLogAsync(NetUserId userId, string userName, IPAddress address);
-
-        // Admins
-        Task<Admin?> GetAdminDataForAsync(NetUserId userId, CancellationToken cancel = default);
-        Task<AdminRank?> GetAdminRankAsync(int id, CancellationToken cancel = default);
-
-        Task<((Admin, string? lastUserName)[] admins, AdminRank[])> GetAllAdminAndRanksAsync(
-            CancellationToken cancel = default);
-
-        Task RemoveAdminAsync(NetUserId userId, CancellationToken cancel = default);
-        Task AddAdminAsync(Admin admin, CancellationToken cancel = default);
-        Task UpdateAdminAsync(Admin admin, CancellationToken cancel = default);
-
-        Task RemoveAdminRankAsync(int rankId, CancellationToken cancel = default);
-        Task AddAdminRankAsync(AdminRank rank, CancellationToken cancel = default);
-        Task UpdateAdminRankAsync(AdminRank rank, CancellationToken cancel = default);
-    }
-
     public sealed class ServerDbManager : IServerDbManager
     {
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IResourceManager _res = default!;
         [Dependency] private readonly ILogManager _logMgr = default!;
 
-        private ServerDbBase _db = default!;
+        private ServerDbContext ServerDbContext = default!;
         private LoggingProvider _msLogProvider = default!;
         private ILoggerFactory _msLoggerFactory = default!;
 
@@ -91,126 +52,315 @@ namespace Content.Server.Database
             {
                 case "sqlite":
                     var options = CreateSqliteOptions();
-                    _db = new ServerDbSqlite(options);
+                    ServerDbContext = new SqliteServerDbContext(options);
                     break;
                 case "postgres":
                     options = CreatePostgresOptions();
-                    _db = new ServerDbPostgres(options);
+                    ServerDbContext = new PostgresServerDbContext(options);
                     break;
                 default:
                     throw new InvalidDataException("Unknown database engine {engine}.");
             }
+
+            ServerDbContext.Database.Migrate();
         }
 
-        public Task<PlayerPreferences> InitPrefsAsync(NetUserId userId, ICharacterProfile defaultProfile)
+        public async Task<PlayerPreferences> InitPrefsAsync(NetUserId userId, ICharacterProfile defaultProfile)
         {
-            return _db.InitPrefsAsync(userId, defaultProfile);
+
+            var profile = ((HumanoidCharacterProfile) defaultProfile).ConvertProfile(0);
+
+            var prefs = new Preference
+            {
+                UserId = userId.UserId
+            };
+
+            ServerDbContext.Set<PreferenceProfile>()
+                .Add(new PreferenceProfile {
+                    Preference = prefs,
+                    Profile = profile
+                });
+
+            prefs.Profiles = new List<Profile> { profile };
+
+            ServerDbContext.Preferences.Add(prefs);
+
+            await ServerDbContext.SaveChangesAsync();
+
+            return new PlayerPreferences(new[] {new KeyValuePair<int, ICharacterProfile>(0, defaultProfile)}, 0);
         }
 
-        public Task SaveSelectedCharacterIndexAsync(NetUserId userId, int index)
+        public async Task SaveSelectedCharacterIndexAsync(NetUserId userId, int index)
         {
-            return _db.SaveSelectedCharacterIndexAsync(userId, index);
+            var selected = await ServerDbContext.Set<PreferenceProfile>()
+                .Include(p => p.Preference)
+                .Where(p => p.Preference.UserId == userId)
+                .SingleOrDefaultAsync();
+
+            var profile = await ServerDbContext.Profiles
+                .Where(p => p.Slot == index && p.PreferenceId == selected.PreferenceId)
+                .SingleAsync();
+
+            ServerDbContext.Add(new PreferenceProfile {
+                PreferenceId = selected.PreferenceId,
+                ProfileId = profile.Id
+            });
+
+            await ServerDbContext.SaveChangesAsync();
         }
 
-        public Task SaveCharacterSlotAsync(NetUserId userId, ICharacterProfile? profile, int slot)
+        public async Task SaveCharacterSlotAsync(NetUserId userId, ICharacterProfile? profile, int slot)
         {
-            return _db.SaveCharacterSlotAsync(userId, profile, slot);
+            if (profile is null)
+            {
+                ServerDbContext.Preferences
+                    .Single(p => p.UserId == userId.UserId)
+                    .Profiles.ToList()
+                    .RemoveAll(h => h.Slot == slot);
+                await ServerDbContext.SaveChangesAsync();
+                return;
+            }
+
+            if (profile is not HumanoidCharacterProfile humanoid)
+            {
+                // TODO: Handle other ICharacterProfile implementations properly
+                throw new NotImplementedException();
+            }
+
+            Profile entity = humanoid.ConvertProfile(slot);
+
+            var prefs = await ServerDbContext
+                .Preferences
+                .Include(p => p.Profiles)
+                .SingleAsync(p => p.UserId == userId.UserId);
+
+            var oldProfile = prefs
+                .Profiles
+                .SingleOrDefault(h => h.Slot == entity.Slot);
+
+            if (oldProfile is not null)
+            {
+                prefs.Profiles.Remove(oldProfile);
+            }
+
+            prefs.Profiles.Add(entity);
+            await ServerDbContext.SaveChangesAsync();
         }
 
-        public Task DeleteSlotAndSetSelectedIndex(NetUserId userId, int deleteSlot, int newSlot)
+        public async Task DeleteSlotAndSetSelectedIndex(NetUserId userId, int deleteSlot, int newSlot)
         {
-            return _db.DeleteSlotAndSetSelectedIndex(userId, deleteSlot, newSlot);
+            ServerDbContext.Preferences
+                .Single(p => p.UserId == userId)
+                .Profiles.ToList()
+                .RemoveAll(h => h.Slot == deleteSlot); // Does that work..?
+            var prefs = await ServerDbContext.Preferences
+                .SingleAsync(p => p.UserId == userId.UserId);
+
+            await SaveSelectedCharacterIndexAsync(userId, newSlot);
+
+            await ServerDbContext.SaveChangesAsync();
         }
 
-        public Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId)
+        public async Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId)
         {
-            return _db.GetPlayerPreferencesAsync(userId);
+            var prefs = await ServerDbContext
+                .Preferences
+                .Include(p => p.Profiles).ThenInclude(h => h.Jobs)
+                .Include(p => p.Profiles).ThenInclude(h => h.Antags)
+                .SingleOrDefaultAsync(p => p.UserId == userId.UserId);
+
+            if (prefs is null) return null;
+
+            var selected = await ServerDbContext.Set<PreferenceProfile>()
+                .Where(p => p.PreferenceId == prefs.Id)
+                .Select(p => p.Profile.Slot)
+                .SingleAsync();
+
+            var maxSlot = prefs.Profiles.Max(p => p.Slot) + 1;
+            var profiles = new Dictionary<int, ICharacterProfile>(maxSlot);
+            foreach (var profile in prefs.Profiles)
+            {
+                profiles[profile.Slot] = profile.ConvertProfile();
+            }
+
+            return new PlayerPreferences(profiles, selected);
         }
 
-        public Task AssignUserIdAsync(string name, NetUserId userId)
+        public async Task AssignUserIdAsync(string name, NetUserId userId)
         {
-            return _db.AssignUserIdAsync(name, userId);
+            ServerDbContext.AssignedUsers.Add(new AssignedUser
+            {
+                UserId = userId,
+                UserName = name
+            });
+
+            await ServerDbContext.SaveChangesAsync();
         }
 
-        public Task<NetUserId?> GetAssignedUserIdAsync(string name)
+        public async Task<NetUserId?> GetAssignedUserIdAsync(string name)
         {
-            return _db.GetAssignedUserIdAsync(name);
+            var assigned = await ServerDbContext.AssignedUsers.SingleOrDefaultAsync(p => p.UserName == name);
+            return (NetUserId?) assigned?.UserId;
         }
 
-        public Task<ServerBanDef?> GetServerBanAsync(IPAddress? address, NetUserId? userId)
+        public async Task<ServerBan?> GetServerBanAsync(IPAddress? address, NetUserId? userId)
         {
-            return _db.GetServerBanAsync(address, userId);
+            // SQLite can't do the net masking stuff we need to match IP address ranges.
+            // So just pull down the whole list of IP bans into memory too.
+            var bans = await ServerDbContext.Bans
+                //.Where(p => p.UserId == userId || p.UserId == null)
+                .Include(p => p.Unban)
+                .Where(p => p.Unban == null && (p.ExpirationTime == null || p.ExpirationTime.Value > DateTime.UtcNow))
+                .ToListAsync();
+
+            foreach (var ban in bans)
+            {
+                if (address is {} && ban.Address is {} && address.IsInSubnet(ban.Address.Value.Item1, ban.Address.Value.Item2))
+                {
+                    return ban;
+                }
+
+                if (userId is {} id && ban.UserId == id.UserId)
+                {
+                    return ban;
+                }
+            }
+
+            return null;
         }
 
-        public Task AddServerBanAsync(ServerBanDef serverBan)
+        public async Task AddServerBanAsync(ServerBan serverBan)
         {
-            return _db.AddServerBanAsync(serverBan);
+            ServerDbContext.Bans.Add(serverBan);
+
+            await ServerDbContext.SaveChangesAsync();
         }
 
-        public Task UpdatePlayerRecordAsync(NetUserId userId, string userName, IPAddress address)
+        public async Task UpdatePlayerRecordAsync(NetUserId userId, string userName, IPAddress address)
         {
-            return _db.UpdatePlayerRecord(userId, userName, address);
+            var record = await ServerDbContext.Players.SingleOrDefaultAsync(p => p.UserId == userId.UserId);
+            if (record == null)
+            {
+                ServerDbContext.Players.Add(record = new Player
+                {
+                    FirstSeenTime = DateTime.UtcNow,
+                    UserId = userId.UserId,
+                });
+            }
+
+            record.LastSeenTime = DateTime.UtcNow;
+            record.LastSeenAddress = address;
+            record.LastSeenUserName = userName;
+
+            await ServerDbContext.SaveChangesAsync();
         }
 
-        public Task<PlayerRecord?> GetPlayerRecordByUserName(string userName, CancellationToken cancel = default)
+        public async Task<Player?> GetPlayerRecordByUserName(string userName, CancellationToken cancel = default)
         {
-            return _db.GetPlayerRecordByUserName(userName, cancel);
+            return await ServerDbContext.Players
+                .OrderByDescending(p => p.LastSeenTime)
+                .FirstOrDefaultAsync(p => p.LastSeenUserName == userName, cancel);
         }
 
-        public Task<PlayerRecord?> GetPlayerRecordByUserId(NetUserId userId, CancellationToken cancel = default)
+        public async Task<Player?> GetPlayerRecordByUserId(NetUserId userId, CancellationToken cancel = default)
         {
-            return _db.GetPlayerRecordByUserId(userId, cancel);
+            return await ServerDbContext.Players
+                .SingleOrDefaultAsync(p => p.UserId == userId.UserId, cancel);
         }
 
-        public Task AddConnectionLogAsync(NetUserId userId, string userName, IPAddress address)
+        public async Task AddConnectionLogAsync(NetUserId userId, string userName, IPAddress address)
         {
-            return _db.AddConnectionLogAsync(userId, userName, address);
+            ServerDbContext.ConnectionLogs.Add(new ConnectionLog
+            {
+                Address = address,
+                Time = DateTime.UtcNow,
+                UserId = userId.UserId,
+                UserName = userName
+            });
+
+            await ServerDbContext.SaveChangesAsync();
         }
 
-        public Task<Admin?> GetAdminDataForAsync(NetUserId userId, CancellationToken cancel = default)
+        public async Task<Admin?> GetAdminDataForAsync(NetUserId userId, CancellationToken cancel = default)
         {
-            return _db.GetAdminDataForAsync(userId, cancel);
+            return await ServerDbContext.Admins
+                .Include(p => p.Flags)
+                .Include(p => p.AdminRank)
+                .ThenInclude(p => p!.Flags)
+                .SingleOrDefaultAsync(p => p.UserId == userId.UserId, cancel);
         }
 
-        public Task<AdminRank?> GetAdminRankAsync(int id, CancellationToken cancel = default)
+        public async Task<AdminRank?> GetAdminRankAsync(int id, CancellationToken cancel = default)
         {
-            return _db.GetAdminRankDataForAsync(id, cancel);
+            return await ServerDbContext.AdminRanks
+                .Include(r => r.Flags)
+                .SingleOrDefaultAsync(r => r.Id == id, cancel);
         }
 
-        public Task<((Admin, string? lastUserName)[] admins, AdminRank[])> GetAllAdminAndRanksAsync(
+        public async Task<((Admin, string? lastUserName)[] admins, AdminRank[])> GetAllAdminAndRanksAsync(
             CancellationToken cancel = default)
         {
-            return _db.GetAllAdminAndRanksAsync(cancel);
+            var admins = await ServerDbContext.Admins
+                .Include(a => a.Flags)
+                .GroupJoin(ServerDbContext.Players, a => a.UserId, p => p.UserId, (a, grouping) => new {a, grouping})
+                .SelectMany(t => t.grouping.DefaultIfEmpty(), (t, p) => new {t.a, p!.LastSeenUserName})
+                .ToArrayAsync(cancel);
+
+            var adminRanks = await ServerDbContext.AdminRanks.Include(a => a.Flags).ToArrayAsync(cancel);
+
+            return (admins.Select(p => (p.a, p.LastSeenUserName)).ToArray(), adminRanks)!;
         }
 
-        public Task RemoveAdminAsync(NetUserId userId, CancellationToken cancel = default)
+        public async Task RemoveAdminAsync(NetUserId userId, CancellationToken cancel = default)
         {
-            return _db.RemoveAdminAsync(userId, cancel);
+            var admin = await ServerDbContext.Admins.SingleAsync(a => a.UserId == userId.UserId, cancel);
+            ServerDbContext.Admins.Remove(admin);
+
+            await ServerDbContext.SaveChangesAsync(cancel);
         }
 
-        public Task AddAdminAsync(Admin admin, CancellationToken cancel = default)
+        public async Task AddAdminAsync(Admin admin, CancellationToken cancel = default)
         {
-            return _db.AddAdminAsync(admin, cancel);
+            ServerDbContext.Admins.Add(admin);
+
+            await ServerDbContext.SaveChangesAsync(cancel);
         }
 
-        public Task UpdateAdminAsync(Admin admin, CancellationToken cancel = default)
+        public async Task UpdateAdminAsync(Admin admin, CancellationToken cancel = default)
         {
-            return _db.UpdateAdminAsync(admin, cancel);
+            var existing = await ServerDbContext.Admins.Include(a => a.Flags).SingleAsync(a => a.UserId == admin.UserId, cancel);
+            existing.Flags = admin.Flags;
+            existing.Title = admin.Title;
+            existing.AdminRankId = admin.AdminRankId;
+
+            await ServerDbContext.SaveChangesAsync(cancel);
         }
 
-        public Task RemoveAdminRankAsync(int rankId, CancellationToken cancel = default)
+        public async Task RemoveAdminRankAsync(int rankId, CancellationToken cancel = default)
         {
-            return _db.RemoveAdminRankAsync(rankId, cancel);
+            var admin = await ServerDbContext.AdminRanks.SingleAsync(a => a.Id == rankId, cancel);
+            ServerDbContext.AdminRanks.Remove(admin);
+
+            await ServerDbContext.SaveChangesAsync(cancel);
         }
 
-        public Task AddAdminRankAsync(AdminRank rank, CancellationToken cancel = default)
+        public async Task AddAdminRankAsync(AdminRank rank, CancellationToken cancel = default)
         {
-            return _db.AddAdminRankAsync(rank, cancel);
+            ServerDbContext.AdminRanks.Add(rank);
+
+            await ServerDbContext.SaveChangesAsync(cancel);
         }
 
-        public Task UpdateAdminRankAsync(AdminRank rank, CancellationToken cancel = default)
+        public async Task UpdateAdminRankAsync(AdminRank rank, CancellationToken cancel = default)
         {
-            return _db.UpdateAdminRankAsync(rank, cancel);
+            var existing = await ServerDbContext.AdminRanks
+                .Include(r => r.Flags)
+                .SingleAsync(a => a.Id == rank.Id, cancel);
+
+            existing.Flags = rank.Flags;
+            existing.Name = rank.Name;
+
+            await ServerDbContext.SaveChangesAsync(cancel);
         }
 
         private DbContextOptions<ServerDbContext> CreatePostgresOptions()
@@ -324,5 +474,51 @@ namespace Content.Server.Database
                 return null!;
             }
         }
+    }
+
+    public interface IServerDbManager
+    {
+        void Init();
+
+        // Preferences
+        Task<PlayerPreferences> InitPrefsAsync(NetUserId userId, ICharacterProfile defaultProfile);
+        Task SaveSelectedCharacterIndexAsync(NetUserId userId, int index);
+
+        Task SaveCharacterSlotAsync(NetUserId userId, ICharacterProfile? profile, int slot);
+
+        // Single method for two operations for transaction.
+        Task DeleteSlotAndSetSelectedIndex(NetUserId userId, int deleteSlot, int newSlot);
+        Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId);
+
+        // Username assignment (for guest accounts, so they persist GUID)
+        Task AssignUserIdAsync(string name, NetUserId userId);
+        Task<NetUserId?> GetAssignedUserIdAsync(string name);
+
+        // Ban stuff
+        Task<ServerBan?> GetServerBanAsync(IPAddress? address, NetUserId? userId);
+        Task AddServerBanAsync(ServerBan serverBan);
+
+        // Player records
+        Task UpdatePlayerRecordAsync(NetUserId userId, string userName, IPAddress address);
+        Task<Player?> GetPlayerRecordByUserName(string userName, CancellationToken cancel = default);
+        Task<Player?> GetPlayerRecordByUserId(NetUserId userId, CancellationToken cancel = default);
+
+        // Connection log
+        Task AddConnectionLogAsync(NetUserId userId, string userName, IPAddress address);
+
+        // Admins
+        Task<Admin?> GetAdminDataForAsync(NetUserId userId, CancellationToken cancel = default);
+        Task<AdminRank?> GetAdminRankAsync(int id, CancellationToken cancel = default);
+
+        Task<((Admin, string? lastUserName)[] admins, AdminRank[])> GetAllAdminAndRanksAsync(
+            CancellationToken cancel = default);
+
+        Task RemoveAdminAsync(NetUserId userId, CancellationToken cancel = default);
+        Task AddAdminAsync(Admin admin, CancellationToken cancel = default);
+        Task UpdateAdminAsync(Admin admin, CancellationToken cancel = default);
+
+        Task RemoveAdminRankAsync(int rankId, CancellationToken cancel = default);
+        Task AddAdminRankAsync(AdminRank rank, CancellationToken cancel = default);
+        Task UpdateAdminRankAsync(AdminRank rank, CancellationToken cancel = default);
     }
 }

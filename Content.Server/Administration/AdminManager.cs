@@ -325,7 +325,7 @@ namespace Content.Server.Administration
             {
                 var dbData = await _dbManager.GetAdminDataForAsync(session.UserId);
 
-                if (dbData == null)
+                if (dbData is null)
                 {
                     // Not an admin!
                     return null;

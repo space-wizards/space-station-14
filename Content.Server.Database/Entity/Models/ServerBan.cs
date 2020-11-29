@@ -19,10 +19,10 @@ namespace Content.Server.Database.Entity.Models
         public (IPAddress, int)? Address { get; set; }
 
         [Column("ban_time")]
-        public DateTimeOffset BanTime { get; set; }
+        public DateTime BanTime { get; set; }
 
         [Column("expiration_time")]
-        public DateTimeOffset? ExpirationTime { get; set; }
+        public DateTime? ExpirationTime { get; set; }
 
         [Column("reason")]
         public string Reason { get; set; } = null!;

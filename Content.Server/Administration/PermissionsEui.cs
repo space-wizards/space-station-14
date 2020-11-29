@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Database;
+using Content.Server.Database.Entity.Models;
 using Content.Server.Eui;
 using Content.Shared.Administration;
 using Content.Shared.Eui;
@@ -10,7 +11,6 @@ using Robust.Server.Interfaces.Player;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Network;
-using DbAdminRank = Content.Server.Database.AdminRank;
 using static Content.Shared.Administration.PermissionsEuiMsg;
 
 #nullable enable
@@ -26,7 +26,7 @@ namespace Content.Server.Administration
         private bool _isLoading;
 
         private readonly List<(Admin a, string? lastUserName)> _admins = new List<(Admin, string? lastUserName)>();
-        private readonly List<DbAdminRank> _adminRanks = new();
+        private readonly List<Database.Entity.Models.AdminRank> _adminRanks = new();
 
         public PermissionsEui()
         {
@@ -76,7 +76,7 @@ namespace Content.Server.Administration
                     NegFlags = AdminFlagsHelper.NamesToFlags(p.a.Flags.Where(f => f.Negative).Select(f => f.Flag)),
                     Title = p.a.Title,
                     RankId = p.a.AdminRankId,
-                    UserId = new NetUserId(p.a.UserId),
+                    UserId = (NetUserId) p.a.UserId,
                     UserName = p.lastUserName
                 }).ToArray(),
 
@@ -144,7 +144,7 @@ namespace Content.Server.Administration
         private async Task HandleRemoveAdminRank(RemoveAdminRank rr)
         {
             var rank = await _db.GetAdminRankAsync(rr.Id);
-            if (rank == null)
+            if (rank is null)
             {
                 return;
             }
@@ -163,7 +163,7 @@ namespace Content.Server.Administration
         private async Task HandleUpdateAdminRank(UpdateAdminRank ur)
         {
             var rank = await _db.GetAdminRankAsync(ur.Id);
-            if (rank == null)
+            if (rank is null)
             {
                 return;
             }
@@ -199,7 +199,7 @@ namespace Content.Server.Administration
                 return;
             }
 
-            var rank = new DbAdminRank
+            var rank = new Database.Entity.Models.AdminRank
             {
                 Name = ar.Name,
                 Flags = GenRankFlagList(ar.Flags)
@@ -317,7 +317,7 @@ namespace Content.Server.Administration
                     return;
                 }
 
-                userId = dbPlayer.UserId;
+                userId = (NetUserId) dbPlayer.UserId;
                 name = ca.UserNameOrId;
             }
 
@@ -450,7 +450,7 @@ namespace Content.Server.Administration
             return UserAdminFlagCheck(totalFlags);
         }
 
-        private bool CanTouchRank(DbAdminRank rank)
+        private bool CanTouchRank(Database.Entity.Models.AdminRank rank)
         {
             var rankFlags = AdminFlagsHelper.NamesToFlags(rank.Flags.Select(f => f.Flag));
 

@@ -18,8 +18,8 @@ namespace Content.Server.Database.Entity.Models
         [Column("user_name")]
         public string UserName { get; set; } = null!;
 
-        [Column("time", TypeName = "timestamp with time zone")]
-        public DateTimeOffset Time { get; set; }
+        [Column("time")]
+        public DateTime Time { get; set; }
 
         [Column("address")]
         public IPAddress Address { get; set; } = null!;
@@ -27,9 +27,6 @@ namespace Content.Server.Database.Entity.Models
         public void Configure(EntityTypeBuilder<ConnectionLog> builder)
         {
             builder.HasIndex(p => p.UserId);
-
-            builder.HasCheckConstraint("AddressNotIPv6MappedIPv4",
-                    "NOT inet '::ffff:0.0.0.0/96' >>= address");
         }
     }
 }

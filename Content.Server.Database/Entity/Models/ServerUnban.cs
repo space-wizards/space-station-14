@@ -20,7 +20,7 @@ namespace Content.Server.Database.Entity.Models
         public Guid? UnbanningAdmin { get; set; }
 
         [Column("unban_time")]
-        public DateTimeOffset UnbanTime { get; set; }
+        public DateTime UnbanTime { get; set; }
 
         public void Configure(EntityTypeBuilder<ServerUnban> builder)
         {

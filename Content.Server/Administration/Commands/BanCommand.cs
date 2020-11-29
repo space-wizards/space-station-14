@@ -1,5 +1,6 @@
 ﻿using System;
 using Content.Server.Database;
+using Content.Server.Database.Entity.Models;
 using Content.Shared.Administration;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
@@ -41,18 +42,32 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            DateTimeOffset? expires = null;
-            if (duration > 0)
-            {
-                expires = DateTimeOffset.Now + TimeSpan.FromMinutes(duration);
-            }
+            DateTime banTime = DateTime.UtcNow;
 
-            await dbMan.AddServerBanAsync(new ServerBanDef(targetUid, null, DateTimeOffset.Now, expires, reason, player?.UserId));
+            var ban = new ServerBan {
+                UserId = targetUid,
+                Address = null,
+                BanTime = banTime,
+                ExpirationTime = duration > 0 ? banTime + TimeSpan.FromMinutes(duration) : null,
+                Reason = reason,
+                BanningAdmin = player?.UserId
+            };
+            await dbMan.AddServerBanAsync(ban);
 
             if (plyMgr.TryGetSessionById(targetUid, out var targetPlayer))
             {
-                targetPlayer.ConnectedClient.Disconnect("You've been banned. Tough shit.");
+                var expiresDescrption = "This is a permanent ban.";
+                if (ban.ExpirationTime is {} expireTime)
+                {
+                    var durationTime = expireTime - ban.BanTime;
+                    expiresDescrption = $"This ban is for {durationTime.TotalMinutes:N0} minutes and will expire at {expireTime:f} UTC.";
+                }
+                targetPlayer.ConnectedClient.Disconnect(
+                    $@"You, or another user of this computer or connection, are banned from playing here." +
+                    $"The ban reason is: \"{ban.Reason}\"\n{expiresDescrption}"
+                );
             }
+            shell.SendText(player, "Ban added.");
         }
     }
 }
