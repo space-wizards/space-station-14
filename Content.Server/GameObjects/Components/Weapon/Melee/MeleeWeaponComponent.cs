@@ -55,6 +55,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         [ViewVariables(VVAccess.ReadWrite)]
         public bool ClickAttackEffect { get; set; }
 
+        /// <summary>
+        ///     Returns the set of entities hit by a melee attack.
+        /// </summary>
+        public Action<IEnumerable<IEntity>> OnHittingEntities;
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -114,6 +119,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                     hitEntities.Add(entity);
                 }
             }
+            OnHittingEntities(hitEntities);
 
             if(!OnHitEntities(hitEntities, eventArgs)) return false;
 
@@ -164,6 +170,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             {
                 damageComponent.ChangeDamage(DamageType, Damage, false, Owner);
             }
+            OnHittingEntities(new IEntity[] { target });
 
             var targets = new[] {target};
 
