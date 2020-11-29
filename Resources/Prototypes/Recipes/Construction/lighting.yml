@@ -12,6 +12,9 @@
   objectType: Structure
   placementMode: AlignWallProper
   canRotate: true
+  canBuildInImpassable: true
+  conditions:
+  - !type:WallInTile {}
 
 - type: construction
   name: small wall light
@@ -27,3 +30,7 @@
   objectType: Structure
   placementMode: AlignWallProper
   canRotate: true
+  canBuildInImpassable: true
+  conditions:
+  - !type:WallInTile {}
+

@@ -34,6 +34,7 @@
   - type: IconSmooth
     key: walls
     base: solid
+  - type: Wall
 
 - type: entity
   id: brick_wall
