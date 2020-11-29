@@ -41,6 +41,15 @@
     resistances: metallicResistances
 
 - type: entity
+  id: PoweredlightEmpty
+  parent: Poweredlight
+  components:
+  - type: Sprite
+    state: empty
+  - type: PoweredLight
+    hasLampOnSpawn: False
+
+- type: entity
   name: small light
   id: PoweredSmallLight
   parent: WallLight
@@ -63,6 +72,15 @@
   - type: Destructible
     deadThreshold: 25
     resistances: metallicResistances
+
+- type: entity
+  id: PoweredSmallLightEmpty
+  parent: PoweredSmallLight
+  components:
+  - type: Sprite
+    state: empty
+  - type: PoweredLight
+    hasLampOnSpawn: False
 
 - type: entity
   name: unpowered small light
