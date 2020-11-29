@@ -17,5 +17,7 @@ namespace Content.Server.GameTicking
         public Dictionary<NetUserId, HumanoidCharacterProfile> readyProfiles;
 
         public virtual void OnGameStarted() { }
+
+        public virtual string GetRoundEndDescription() => "";
     }
 }

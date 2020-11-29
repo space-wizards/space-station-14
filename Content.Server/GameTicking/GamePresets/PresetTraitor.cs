@@ -40,7 +40,7 @@ namespace Content.Server.GameTicking.GamePresets
         private int StartingTC => 20;
 
         private string[] Codewords => new[] {"cold", "winter", "radiator", "average", "furious"};
-        private List<TraitorRole> _traitors = new List<TraitorRole>();
+        private List<TraitorRole> _traitors = new ();
 
         public override bool Start(IReadOnlyList<IPlayerSession> readyPlayers, bool force = false)
         {
@@ -156,6 +156,39 @@ namespace Content.Server.GameTicking.GamePresets
                     traitor.Mind.TryAddObjective(objective);
                 }
             }
+        }
+
+        public override string GetRoundEndDescription()
+        {
+            var result =
+                $"There {(_traitors.Count > 1 ? "were" : "was")} {_traitors.Count} traitor{(_traitors.Count > 1 ? "s" : "")}.";
+            foreach (var traitor in _traitors)
+            {
+                result += $"\n{traitor.Mind.Session.Name} was a traitor";
+                var objectives = traitor.Mind.AllObjectives.ToArray();
+                if (objectives.Length == 0)
+                {
+                    result += ".\n";
+                    continue;
+                }
+
+                result += " and had the following objectives:";
+                foreach (var objectiveGroup in objectives.GroupBy(o => o.Prototype.Issuer))
+                {
+                    result += $"\n[color=#87cefa]{objectiveGroup.Key}[/color]";
+                    foreach (var objective in objectiveGroup)
+                    {
+                        foreach (var condition in objective.Conditions)
+                        {
+                            var progress = condition.Progress;
+                            result +=
+                                $"\n- {condition.Title} | {(progress > 0.99f ? "[color=green]Success![/color]" : $"[color=red]Failed![/color] ({(int) (progress * 100)}%)")}";
+                        }
+                    }
+                }
+            }
+
+            return result;
         }
     }
 }

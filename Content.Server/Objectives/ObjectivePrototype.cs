@@ -59,6 +59,11 @@ namespace Content.Server.Objectives
                 {
                     if (prototype.ID == incompatibleObjective) return false;
                 }
+
+                foreach (var incompatibleObjective in prototype._incompatibleObjectives)
+                {
+                    if (ID == incompatibleObjective) return false;
+                }
             }
 
             return true;
