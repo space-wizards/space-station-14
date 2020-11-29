@@ -5,8 +5,8 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Construction
-    graph: LightTubeFixture
-    node: lightFixture
+    graph: lightFixture
+    node: tubeLight
   - type: Physics
     shapes:
     - !type:PhysShapeAabb
@@ -53,9 +53,28 @@
     hasLampOnSpawn: False
 
 - type: entity
+  name: unpowered small light
+  id: SmallLight
+  parent: WallLight
+  components:
+    - type: Sprite
+      sprite: Constructible/Lighting/light_small.rsi
+      state: on
+    - type: PointLight
+      energy: 1.0
+      enabled: true
+      offset: "-0.5, 0"
+    - type: Destructible
+      deadThreshold: 25
+      resistances: metallicResistances
+    - type: Construction
+      graph: lightFixture
+      node: bulbLight
+
+- type: entity
   name: small light
   id: PoweredSmallLight
-  parent: WallLight
+  parent: SmallLight
   components:
   - type: Sprite
     sprite: Constructible/Lighting/light_small.rsi
@@ -84,19 +103,3 @@
     state: empty
   - type: PoweredLight
     hasLampOnSpawn: False
-
-- type: entity
-  name: unpowered small light
-  id: SmallLight
-  parent: WallLight
-  components:
-    - type: Sprite
-      sprite: Constructible/Lighting/light_small.rsi
-      state: on
-    - type: PointLight
-      energy: 1.0
-      enabled: true
-      offset: "-0.5, 0"
-    - type: Destructible
-      deadThreshold: 25
-      resistances: metallicResistances
