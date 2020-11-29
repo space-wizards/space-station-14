@@ -47,10 +47,10 @@ namespace Content.Server.GameTicking.GamePresets
 
         public override bool Start(IReadOnlyList<IPlayerSession> readyPlayers, bool force = false)
         {
-            MinPlayers = _cfg.GetCVar(CCVars.GameSuspicionMinPlayers);
-            MinTraitors = _cfg.GetCVar(CCVars.GameSuspicionMinTraitors);
-            PlayersPerTraitor = _cfg.GetCVar(CCVars.GameSuspicionPlayersPerTraitor);
-            TraitorStartingBalance = _cfg.GetCVar(CCVars.GameSuspicionStartingBalance);
+            MinPlayers = _cfg.GetCVar(CCVars.SuspicionMinPlayers);
+            MinTraitors = _cfg.GetCVar(CCVars.SuspicionMinTraitors);
+            PlayersPerTraitor = _cfg.GetCVar(CCVars.SuspicionPlayersPerTraitor);
+            TraitorStartingBalance = _cfg.GetCVar(CCVars.SuspicionStartingBalance);
 
             if (!force && readyPlayers.Count < MinPlayers)
             {

@@ -10,9 +10,12 @@ using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs.Roles.Traitor;
 using Content.Server.Objectives.Interfaces;
 using Content.Server.Players;
+using Content.Shared;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.PDA;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared;
+using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -27,23 +30,32 @@ namespace Content.Server.GameTicking.GamePresets
         [Dependency] private readonly IGameTicker _gameticker = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         public override string ModeTitle => "Traitor";
 
         //make these cvars
-        private int MinPlayers => 2;
-        private int TraitorPerPlayers => 5;
-        private int MaxTraitors => 4;
-        private int CodewordCount => 2;
-        private int StartingTC => 20;
-        private float MaxDifficulty => 4f;
-        private int MaxPicks => 20;
+        private int MinPlayers { get; set; }
+        private int PlayersPerTraitor { get; set; }
+        private int MaxTraitors { get; set; }
+        private int CodewordCount { get; set; }
+        private int StartingBalance { get; set; }
+        private float MaxDifficulty { get; set; }
+        private int MaxPicks { get; set; }
 
         private string[] Codewords => new[] {"cold", "winter", "radiator", "average", "furious"};
         private readonly List<TraitorRole> _traitors = new ();
 
         public override bool Start(IReadOnlyList<IPlayerSession> readyPlayers, bool force = false)
         {
+            MinPlayers = _cfg.GetCVar(CCVars.TraitorMinPlayers);
+            PlayersPerTraitor = _cfg.GetCVar(CCVars.TraitorPlayersPerTraitor);
+            MaxTraitors = _cfg.GetCVar(CCVars.TraitorMaxTraitors);
+            CodewordCount = _cfg.GetCVar(CCVars.TraitorCodewordCount);
+            StartingBalance = _cfg.GetCVar(CCVars.TraitorStartingBalance);
+            MaxDifficulty = _cfg.GetCVar(CCVars.TraitorMaxDifficulty);
+            MaxPicks = _cfg.GetCVar(CCVars.TraitorMaxPicks);
+
             if (!force && readyPlayers.Count < MinPlayers)
             {
                 _chatManager.DispatchServerAnnouncement($"Not enough players readied up for the game! There were {readyPlayers.Count} players readied up out of {MinPlayers} needed.");
@@ -72,7 +84,7 @@ namespace Content.Server.GameTicking.GamePresets
                 }
             }
 
-            var numTraitors = MathHelper.Clamp(readyPlayers.Count / TraitorPerPlayers,
+            var numTraitors = MathHelper.Clamp(readyPlayers.Count / PlayersPerTraitor,
                 1, MaxTraitors);
 
             for (var i = 0; i < numTraitors; i++)
@@ -105,7 +117,7 @@ namespace Content.Server.GameTicking.GamePresets
                 // creadth: we need to create uplink for the antag.
                 // PDA should be in place already, so we just need to
                 // initiate uplink account.
-                var uplinkAccount = new UplinkAccount(mind.OwnedEntity.Uid, StartingTC);
+                var uplinkAccount = new UplinkAccount(mind.OwnedEntity.Uid, StartingBalance);
                 var inventory = mind.OwnedEntity.GetComponent<InventoryComponent>();
                 if (!inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent pdaItem))
                 {
