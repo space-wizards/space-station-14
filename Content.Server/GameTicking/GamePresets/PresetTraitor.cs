@@ -163,8 +163,9 @@ namespace Content.Server.GameTicking.GamePresets
 
         public override string GetRoundEndDescription()
         {
-            var result =
-                $"There {(_traitors.Count > 1 ? "were" : "was")} {_traitors.Count} traitor{(_traitors.Count > 1 ? "s" : "")}.";
+            var traitorCount = _traitors.Count;
+            var result = Loc.GetString("There {0} {1} {2}.", Loc.GetPluralString("was", "were", traitorCount),
+                traitorCount, Loc.GetPluralString("traitor", "traitors", traitorCount));
             foreach (var traitor in _traitors)
             {
                 result += Loc.GetString("\n{0} was a traitor",traitor.Mind.Session.Name);
