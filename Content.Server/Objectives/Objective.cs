@@ -28,11 +28,11 @@ namespace Content.Server.Objectives
 
         public bool Equals(Objective other)
         {
-            if (ReferenceEquals(null, other)) return false;
+            if (other is null) return false;
             if (ReferenceEquals(this, other)) return true;
             if (!Equals(Mind, other.Mind) || !Equals(Prototype, other.Prototype)) return false;
             if (_conditions.Count != other._conditions.Count) return false;
-            for (int i = 0; i < _conditions.Count; i++)
+            for (var i = 0; i < _conditions.Count; i++)
             {
                 if (!_conditions[i].Equals(other._conditions[i])) return false;
             }
