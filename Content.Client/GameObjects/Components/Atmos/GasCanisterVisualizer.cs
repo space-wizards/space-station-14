@@ -20,10 +20,7 @@ namespace Content.Client.GameObjects.Components.Atmos
         private enum VisualLayers
         {
             ConnectedToPort = 1,
-            Pressure0 = 2,
-            Pressure1 = 3,
-            Pressure2 = 4,
-            Pressure3 = 5,
+            PressureLight = 2
         }
 
         public override void LoadData(YamlMappingNode node)
@@ -51,15 +48,11 @@ namespace Content.Client.GameObjects.Components.Atmos
 
                 sprite.LayerSetVisible((int) VisualLayers.ConnectedToPort, false);
 
-                for (int i = 0; i < _statePressure.Length; i++)
-                {
-                    int layerIdx = ((int) VisualLayers.Pressure0) + i;
-                    sprite.AddLayer(
-                        new SpriteSpecifier.Rsi(new ResourcePath(_sprite), _statePressure[i]),
-                        layerIdx);
+                sprite.AddLayer(
+                    new SpriteSpecifier.Rsi(new ResourcePath(_sprite), _statePressure[0]),
+                    (int) VisualLayers.PressureLight);
 
-                    sprite.LayerSetVisible(layerIdx, false);
-                }
+                sprite.LayerSetShader((int) VisualLayers.PressureLight, "unshaded");
             }
         }
 
@@ -85,8 +78,8 @@ namespace Content.Client.GameObjects.Components.Atmos
 
             // Update the visuals : Canister lights
             if (component.TryGetData(GasCanisterVisuals.PressureState, out int pressureState))
-                for (int i = 0; i < _statePressure.Length; i++)
-                    sprite.LayerSetVisible(((int) VisualLayers.Pressure0) + i, pressureState == i);
+                if ((pressureState >= 0) && (pressureState < _statePressure.Length))
+                    sprite.LayerSetState((int) VisualLayers.PressureLight, _statePressure[pressureState]);
         }
     }
 }
