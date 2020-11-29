@@ -28,11 +28,23 @@ namespace Content.Server.Commands
 
             var components = new List<Type>();
             var componentFactory = IoCManager.Resolve<IComponentFactory>();
+            var invalidArgs = new List<string>();
 
             foreach (var arg in args)
             {
-                var registration = componentFactory.GetRegistration(arg);
+                if (!componentFactory.TryGetRegistration(arg, out var registration))
+                {
+                    invalidArgs.Add(arg);
+                    continue;
+                }
+
                 components.Add(registration.Type);
+            }
+
+            if (invalidArgs.Count > 0)
+            {
+                shell.SendText(player, $"No component found for component names: {string.Join(", ", invalidArgs)}");
+                return;
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
