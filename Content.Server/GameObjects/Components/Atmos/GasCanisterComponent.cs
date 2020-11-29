@@ -31,7 +31,8 @@ namespace Content.Server.GameObjects.Components.Atmos
     /// Component that manages gas mixtures temperature, pressure and output.
     /// </summary>
     [RegisterComponent]
-    public class GasCanisterComponent : Component, IGasMixtureHolder, IInteractHand
+    [ComponentReference(typeof(IActivate))]
+    public class GasCanisterComponent : Component, IGasMixtureHolder, IActivate
     {
         public override string Name => "GasCanister";
 
@@ -156,26 +157,12 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         #endregion
 
-        /// <summary>
-        /// Manages what happens when an actor interacts with an empty hand on the canister
-        /// </summary>
-        /// <param name="eventArgs"></param>
-        /// <returns>True if the interaction has succeded</returns>
-        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
-            {
-                return false;
-            }
-            // Duplicated code here, not sure how else to get actor inside to make UserInterface happy.
+                return;
 
-            if (IsValidInteraction(eventArgs))
-            {
-                UserInterface?.Open(actor.playerSession);
-                return true;
-            }
-
-            return false;
+            UserInterface?.Open(actor.playerSession);
         }
 
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
@@ -286,35 +273,6 @@ namespace Content.Server.GameObjects.Components.Atmos
         }
 
         #region Check methods
-
-        /// <summary>
-        /// Check if the actor has the ability to do such thing
-        /// </summary>
-        /// <param name="eventArgs"></param>
-        /// <returns>True if the actor can interact</returns>
-        bool IsValidInteraction(ITargetedInteractEventArgs eventArgs)
-        {
-            if (!ActionBlockerSystem.CanInteract(eventArgs.User))
-            {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't do that!"));
-                return false;
-            }
-
-            if (ContainerHelpers.IsInContainer(eventArgs.User))
-            {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't reach there!"));
-                return false;
-            }
-            // This popup message doesn't appear on clicks, even when code was seperate. Unsure why.
-
-            if (!eventArgs.User.HasComponent<IHandsComponent>())
-            {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("You have no hands!"));
-                return false;
-            }
-
-            return true;
-        }
 
         private bool PlayerCanUse(IEntity? player)
         {
