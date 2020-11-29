@@ -12,23 +12,21 @@ using Content.Server.Objectives.Interfaces;
 using Content.Server.Players;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.PDA;
-using Content.Shared.Roles;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.GamePresets
 {
     public class PresetTraitor : GamePreset
     {
-        [Dependency] private IGameTicker _gameticker = default!;
-        [Dependency] private IChatManager _chatManager = default!;
-        [Dependency] private IPrototypeManager _prototypeManager = default!;
-        [Dependency] private IRobustRandom _random = default!;
+        [Dependency] private readonly IGameTicker _gameticker = default!;
+        [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         public override string ModeTitle => "Traitor";
 
@@ -42,7 +40,7 @@ namespace Content.Server.GameTicking.GamePresets
         private int MaxPicks => 20;
 
         private string[] Codewords => new[] {"cold", "winter", "radiator", "average", "furious"};
-        private List<TraitorRole> _traitors = new ();
+        private readonly List<TraitorRole> _traitors = new ();
 
         public override bool Start(IReadOnlyList<IPlayerSession> readyPlayers, bool force = false)
         {
@@ -54,7 +52,7 @@ namespace Content.Server.GameTicking.GamePresets
 
             if (readyPlayers.Count == 0)
             {
-                _chatManager.DispatchServerAnnouncement("No players readied up! Can't start Suspicion.");
+                _chatManager.DispatchServerAnnouncement("No players readied up! Can't start Traitor.");
                 return false;
             }
 
@@ -169,7 +167,7 @@ namespace Content.Server.GameTicking.GamePresets
                 $"There {(_traitors.Count > 1 ? "were" : "was")} {_traitors.Count} traitor{(_traitors.Count > 1 ? "s" : "")}.";
             foreach (var traitor in _traitors)
             {
-                result += $"\n{traitor.Mind.Session.Name} was a traitor";
+                result += Loc.GetString("\n{0} was a traitor",traitor.Mind.Session.Name);
                 var objectives = traitor.Mind.AllObjectives.ToArray();
                 if (objectives.Length == 0)
                 {
@@ -177,17 +175,17 @@ namespace Content.Server.GameTicking.GamePresets
                     continue;
                 }
 
-                result += " and had the following objectives:";
+                result += Loc.GetString(" and had the following objectives:");
                 foreach (var objectiveGroup in objectives.GroupBy(o => o.Prototype.Issuer))
                 {
-                    result += $"\n[color=#87cefa]{objectiveGroup.Key}[/color]";
+                    result += Loc.GetString("\n[color=#87cefa]{0}[/color]", objectiveGroup.Key);
                     foreach (var objective in objectiveGroup)
                     {
                         foreach (var condition in objective.Conditions)
                         {
                             var progress = condition.Progress;
                             result +=
-                                $"\n- {condition.Title} | {(progress > 0.99f ? "[color=green]Success![/color]" : $"[color=red]Failed![/color] ({(int) (progress * 100)}%)")}";
+                                Loc.GetString("\n- {0} | {1}", condition.Title, (progress > 0.99f ? Loc.GetString("[color=green]Success![/color]") : Loc.GetString("[color=red]Failed![/color] ({0}%)", (int) (progress * 100))));
                         }
                     }
                 }

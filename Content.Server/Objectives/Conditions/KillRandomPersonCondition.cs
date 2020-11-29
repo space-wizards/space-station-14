@@ -4,13 +4,10 @@ using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
 using Content.Shared.GameObjects.Components.Damage;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Conditions
 {

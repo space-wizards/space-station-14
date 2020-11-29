@@ -61,9 +61,9 @@ namespace Content.Server.Objectives
             ser.DataField(this, x => x.ID, "id", string.Empty);
             ser.DataField(this, x => x.Issuer, "issuer", "Unknown");
             ser.DataField(this, x => x.Probability, "prob", 0.3f);
-            ser.DataField(this, x => x._conditions, "conditions", new List<IObjectiveCondition>());
-            ser.DataField(this, x => x._requirements, "requirements", new List<IObjectiveRequirement>());
-            ser.DataField(this, x => x._difficultyOverride, "difficultyOverride", null);
+            ser.DataField(ref _conditions, "conditions", new List<IObjectiveCondition>());
+            ser.DataField(ref _requirements, "requirements", new List<IObjectiveRequirement>());
+            ser.DataField(ref _difficultyOverride, "difficultyOverride", null);
             ser.DataField(this, x => x.CanBeDuplicateAssignment, "canBeDuplicate", false);
         }
 

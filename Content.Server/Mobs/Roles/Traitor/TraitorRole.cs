@@ -1,5 +1,4 @@
-﻿using System;
-using Content.Server.Interfaces.Chat;
+﻿using Content.Server.Interfaces.Chat;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 

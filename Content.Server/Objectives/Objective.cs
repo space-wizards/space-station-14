@@ -12,7 +12,7 @@ namespace Content.Server.Objectives
         public readonly Mind Mind;
         [ViewVariables]
         public readonly ObjectivePrototype Prototype;
-        private List<IObjectiveCondition> _conditions = new List<IObjectiveCondition>();
+        private readonly List<IObjectiveCondition> _conditions = new();
         [ViewVariables]
         public IReadOnlyList<IObjectiveCondition> Conditions => _conditions;
 

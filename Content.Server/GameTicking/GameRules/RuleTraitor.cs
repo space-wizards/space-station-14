@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Threading;
-using Content.Server.GameObjects.Components.Suspicion;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
-using Content.Server.Mobs.Roles.Suspicion;
 using Content.Server.Mobs.Roles.Traitor;
 using Content.Server.Players;
 using Content.Shared;
@@ -110,9 +107,7 @@ namespace Content.Server.GameTicking.GameRules
 
             _gameTicker.EndRound(text);
 
-            var restartDelay = 10; //todo make longer
-
-            //todo show gameendpanel
+            var restartDelay = 120;
 
             _chatManager.DispatchServerAnnouncement(Loc.GetString("Restarting in {0} seconds.", restartDelay));
             _checkTimerCancel.Cancel();

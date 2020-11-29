@@ -34,8 +34,8 @@ namespace Content.Server.Objectives.Conditions
 
         public void ExposeData(ObjectSerializer serializer)
         {
-            serializer.DataField(this, x => x._prototypeId, "prototype", "");
-            serializer.DataField(this, x => x._amount, "amount", 1);
+            serializer.DataField(ref _prototypeId, "prototype", "");
+            serializer.DataField(ref _amount, "amount", 1);
 
             if (_amount < 1)
             {
@@ -72,7 +72,9 @@ namespace Content.Server.Objectives.Conditions
 
         public bool Equals(IObjectiveCondition? other)
         {
-            return other is StealCondition stealCondition && Equals(_mind, stealCondition._mind) && _prototypeId == stealCondition._prototypeId && _amount == stealCondition._amount;
+            return other is StealCondition stealCondition &&
+                   Equals(_mind, stealCondition._mind) &&
+                   _prototypeId == stealCondition._prototypeId && _amount == stealCondition._amount;
         }
 
         public override bool Equals(object? obj)

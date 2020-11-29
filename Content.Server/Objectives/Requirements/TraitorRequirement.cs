@@ -1,5 +1,4 @@
 ﻿using Content.Server.Mobs;
-using Content.Server.Mobs.Roles.Suspicion;
 using Content.Server.Mobs.Roles.Traitor;
 using Content.Server.Objectives.Interfaces;
 using JetBrains.Annotations;

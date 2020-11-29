@@ -3,6 +3,7 @@ using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
 using Content.Shared.GameObjects.Components.Damage;
 using JetBrains.Annotations;
+using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Conditions
@@ -10,21 +11,21 @@ namespace Content.Server.Objectives.Conditions
     [UsedImplicitly]
     public class DieCondition : IObjectiveCondition
     {
-        private Mind? mind;
+        private Mind? _mind;
 
         public IObjectiveCondition GetAssigned(Mind mind)
         {
-            return new DieCondition {mind = mind};
+            return new DieCondition {_mind = mind};
         }
 
-        public string Title => "Die a glorius death";
+        public string Title => Loc.GetString("Die a glorius death");
 
-        public string Description => "Die.";
+        public string Description => Loc.GetString("Die.");
 
         public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Mobs/Ghosts/ghost_human.rsi"), "icon");
 
-        public float Progress => mind?.OwnedEntity != null &&
-                                 mind.OwnedEntity.TryGetComponent<IDamageableComponent>(out var damageableComponent) &&
+        public float Progress => _mind?.OwnedEntity != null &&
+                                 _mind.OwnedEntity.TryGetComponent<IDamageableComponent>(out var damageableComponent) &&
                                     damageableComponent.CurrentState != DamageState.Dead
                                     ? 0f
                                     : 1f;
@@ -33,7 +34,7 @@ namespace Content.Server.Objectives.Conditions
 
         public bool Equals(IObjectiveCondition? other)
         {
-            return other is DieCondition condition && Equals(mind, condition.mind);
+            return other is DieCondition condition && Equals(_mind, condition._mind);
         }
 
         public override bool Equals(object? obj)
@@ -46,7 +47,7 @@ namespace Content.Server.Objectives.Conditions
 
         public override int GetHashCode()
         {
-            return (mind != null ? mind.GetHashCode() : 0);
+            return (_mind != null ? _mind.GetHashCode() : 0);
         }
     }
 }
