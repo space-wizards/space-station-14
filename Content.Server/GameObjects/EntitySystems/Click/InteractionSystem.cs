@@ -114,11 +114,9 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         }
 
         /// <summary>
-        /// Activates the Activate behavior of an object
+        /// Activates the IActivate behavior of an object
         /// Verifies that the user is capable of doing the use interaction first
         /// </summary>
-        /// <param name="user"></param>
-        /// <param name="used"></param>
         public void TryInteractionActivate(IEntity user, IEntity used)
         {
             if (user != null && used != null && ActionBlockerSystem.CanUse(user))
@@ -505,7 +503,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         }
 
         /// <summary>
-        /// Activates the Use behavior of an object
+        /// Activates the IUse behaviors of an entity
         /// Verifies that the user is capable of doing the use interaction first
         /// </summary>
         /// <param name="user"></param>
@@ -519,8 +517,8 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         }
 
         /// <summary>
-        /// Activates/Uses an object in control/possession of a user
-        /// If the item has the IUse interface on one of its components we use the object in our hand
+        /// Activates the IUse behaviors of an entity without first checking
+        /// if the user is capable of doing the use interaction.
         /// </summary>
         public void UseInteraction(IEntity user, IEntity used)
         {

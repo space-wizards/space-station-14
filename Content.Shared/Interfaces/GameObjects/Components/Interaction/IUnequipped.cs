@@ -7,7 +7,10 @@ using Robust.Shared.Interfaces.GameObjects;
 namespace Content.Shared.Interfaces.GameObjects.Components
 {
     /// <summary>
-    ///     This interface gives components behavior when their owner is removed from an inventory slot.
+    ///     This interface gives components behavior when their owner is removed from a non-hand inventory slot,
+    ///     regardless of where it's going to.
+    ///     This DOES NOT fire when removing the owner from a hand slot <see cref="IHandUnequipped"/>.
+    ///     However, it does fire when moving the owner from a non-hand slot into a hand slot.
     /// </summary>
     public interface IUnequipped
     {
