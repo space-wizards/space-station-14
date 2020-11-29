@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Utility;
+using Robust.Client.Graphics;
 using Robust.Client.Interfaces.Graphics;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -39,10 +40,17 @@ namespace Content.Client.UserInterface
         private readonly Label _loadoutNumber;
         private readonly TextureButton _nextHotbarButton;
         private readonly IClyde _clyde;
+        private readonly Texture _lockTexture;
+        private readonly Texture _unlockTexture;
 
         private readonly TextureRect _dragShadow;
         private readonly DragDropHelper<ActionSlot> _dragDropHelper;
         public bool IsDragging => _dragDropHelper.IsDragging;
+        /// <summary>
+        /// Whether the bar is currently locked by the user. This is intended to prevent drag / drop
+        /// and right click clearing slots. Anything else is still doable.
+        /// </summary>
+        public bool Locked { get; private set; }
 
         /// <summary>
         /// All the action slots in order.
@@ -94,13 +102,16 @@ namespace Content.Client.UserInterface
             _hotbarContainer.AddChild(settingsContainer);
 
             settingsContainer.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 1 });
+            _lockTexture = resourceCache.GetTexture("/Textures/Interface/Nano/lock.svg.png");
+            _unlockTexture = resourceCache.GetTexture("/Textures/Interface/Nano/lock_open.svg.png");
             _lockButton = new TextureButton
             {
-                TextureNormal = resourceCache.GetTexture("/Textures/Interface/Nano/lock.svg.png"),
+                TextureNormal = _unlockTexture,
                 SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
                 SizeFlagsVertical = SizeFlags.ShrinkCenter,
                 SizeFlagsStretchRatio = 1
             };
+            _lockButton.OnPressed += OnLockPressed;
             settingsContainer.AddChild(_lockButton);
             settingsContainer.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 2 });
             _settingsButton = new TextureButton
@@ -229,10 +240,17 @@ namespace Content.Client.UserInterface
             _slotContainer.MaxHeight = CalcMaxHeight(obj.NewSize);
         }
 
+        private void OnLockPressed(BaseButton.ButtonEventArgs obj)
+        {
+            Locked = !Locked;
+            _lockButton.TextureNormal = Locked ? _lockTexture : _unlockTexture;
+        }
+
+
         private bool OnBeginActionDrag()
         {
             // only initiate the drag if the slot has an action in it
-            if (_dragDropHelper.Dragged.Action == null) return false;
+            if (Locked || _dragDropHelper.Dragged.Action == null) return false;
 
             _dragShadow.Texture = _dragDropHelper.Dragged.Action.Icon.Frame0();
             // don't make visible until frameupdate, otherwise it'll flicker
@@ -243,7 +261,7 @@ namespace Content.Client.UserInterface
         private bool OnContinueActionDrag(float frameTime)
         {
             // stop if there's no action in the slot
-            if (_dragDropHelper.Dragged.Action == null) return false;
+            if (Locked || _dragDropHelper.Dragged.Action == null) return false;
 
             // keep dragged entity centered under mouse
             LayoutContainer.SetPosition(_dragShadow, UserInterfaceManager.MousePositionScaled - (32, 32));
@@ -259,7 +277,7 @@ namespace Content.Client.UserInterface
 
         private void ActionSlotOnButtonDown(BaseButton.ButtonEventArgs args)
         {
-            if (args.Event.Function != EngineKeyFunctions.Use) return;
+            if (Locked || args.Event.Function != EngineKeyFunctions.Use) return;
             _dragDropHelper.MouseDown(args.Button as ActionSlot);
         }
 
@@ -267,7 +285,7 @@ namespace Content.Client.UserInterface
         {
             // note the buttonup only fires on the control that was originally
             // pressed to initiate the drag, NOT the one we are currently hovering
-            if (args.Event.Function != EngineKeyFunctions.Use) return;
+            if (Locked || args.Event.Function != EngineKeyFunctions.Use) return;
 
             if (UserInterfaceManager.CurrentlyHovered != null &&
                 UserInterfaceManager.CurrentlyHovered is ActionSlot targetSlot)

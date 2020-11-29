@@ -423,6 +423,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             if (args.Event.Function == EngineKeyFunctions.UIRightClick)
             {
                 // right click to clear the action
+                if (_ui.Locked) return;
                 _manuallyClearedActions.Add(actionSlot.Action.ActionType);
 
                 ClearSlot(_selectedHotbar, actionSlot.SlotIndex);
