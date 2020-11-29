@@ -92,7 +92,7 @@ namespace Content.Client.UserInterface
 
         private static SpriteView MakeSpriteView(IEntity entity, Direction direction)
         {
-            return new SpriteView
+            return new()
             {
                 Sprite = entity.GetComponent<ISpriteComponent>(),
                 OverrideDirection = direction,
@@ -111,7 +111,7 @@ namespace Content.Client.UserInterface
             {
                 _loaded.Visible = true;
                 _unloaded.Visible = false;
-                if (!(_preferencesManager.Preferences.SelectedCharacter is HumanoidCharacterProfile selectedCharacter))
+                if (_preferencesManager.Preferences.SelectedCharacter is not HumanoidCharacterProfile selectedCharacter)
                 {
                     _summaryLabel.Text = string.Empty;
                 }

@@ -9,7 +9,7 @@ namespace Content.Server.GameObjects.EntitySystems
     public class WireHackingSystem : EntitySystem, IResettingEntitySystem
     {
         [ViewVariables] private readonly Dictionary<string, WireLayout> _layouts =
-            new Dictionary<string, WireLayout>();
+            new();
 
         public bool TryGetLayout(string id, out WireLayout layout)
         {

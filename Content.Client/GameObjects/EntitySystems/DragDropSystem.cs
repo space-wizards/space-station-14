@@ -51,7 +51,7 @@ namespace Content.Client.GameObjects.EntitySystems
         // entity performing the drag action
         private IEntity _dragger;
         private IEntity _draggedEntity;
-        private readonly List<IDraggable> _draggables = new List<IDraggable>();
+        private readonly List<IDraggable> _draggables = new();
         private IEntity _dragShadow;
         private DragState _state;
         // time since mouse down over the dragged entity
@@ -71,7 +71,7 @@ namespace Content.Client.GameObjects.EntitySystems
         private SharedInteractionSystem _interactionSystem;
         private InputSystem _inputSystem;
 
-        private readonly List<SpriteComponent> _highlightedSprites = new List<SpriteComponent>();
+        private readonly List<SpriteComponent> _highlightedSprites = new();
 
         private enum DragState
         {

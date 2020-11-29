@@ -11,6 +11,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 
@@ -18,10 +19,10 @@ namespace Content.Client.Arcade
 {
     public class BlockGameMenu : SS14Window
     {
-        private static readonly Color OverlayBackgroundColor = new Color(74,74,81,180);
-        private static readonly Color OverlayShadowColor = new Color(0,0,0,83);
+        private static readonly Color OverlayBackgroundColor = new(74,74,81,180);
+        private static readonly Color OverlayShadowColor = new(0,0,0,83);
 
-        private static readonly Vector2 BlockSize = new Vector2(15,15);
+        private static readonly Vector2 BlockSize = new(15,15);
 
         private readonly BlockGameBoundUserInterface _owner;
 
@@ -55,7 +56,7 @@ namespace Content.Client.Arcade
 
         public BlockGameMenu(BlockGameBoundUserInterface owner)
         {
-            Title = "Nanotrasen Block Game";
+            Title = Loc.GetString("Nanotrasen Block Game");
             _owner = owner;
 
             var resourceCache = IoCManager.Resolve<IResourceCache>();
@@ -115,7 +116,7 @@ namespace Content.Client.Arcade
                 SizeFlagsVertical = SizeFlags.ShrinkCenter
             };
 
-            menuContainer.AddChild(new Label{Text = "Highscores"});
+            menuContainer.AddChild(new Label{Text = Loc.GetString("Highscores")});
             menuContainer.AddChild(new Control{CustomMinimumSize = new Vector2(1,10)});
 
             var highScoreBox = new HBoxContainer();
@@ -135,7 +136,7 @@ namespace Content.Client.Arcade
             menuContainer.AddChild(new Control{CustomMinimumSize = new Vector2(1,10)});
             _highscoreBackButton = new Button
             {
-                Text = "Back",
+                Text = Loc.GetString("Back"),
                 TextAlign = Label.AlignMode.Center
             };
             _highscoreBackButton.OnPressed += (e) => _owner.SendAction(BlockGamePlayerAction.Pause);
@@ -180,7 +181,7 @@ namespace Content.Client.Arcade
                 SizeFlagsVertical = SizeFlags.ShrinkCenter
             };
 
-            menuContainer.AddChild(new Label{Text = "Gameover!",Align = Label.AlignMode.Center});
+            menuContainer.AddChild(new Label{Text = Loc.GetString("Gameover!"),Align = Label.AlignMode.Center});
             menuContainer.AddChild(new Control{CustomMinimumSize = new Vector2(1,10)});
 
 
@@ -190,7 +191,7 @@ namespace Content.Client.Arcade
 
             _finalNewGameButton = new Button
             {
-                Text = "New Game",
+                Text = Loc.GetString("New Game"),
                 TextAlign = Label.AlignMode.Center
             };
             _finalNewGameButton.OnPressed += (e) =>
@@ -241,7 +242,7 @@ namespace Content.Client.Arcade
 
             _newGameButton = new Button
             {
-                Text = "New Game",
+                Text = Loc.GetString("New Game"),
                 TextAlign = Label.AlignMode.Center
             };
             _newGameButton.OnPressed += (e) =>
@@ -253,7 +254,7 @@ namespace Content.Client.Arcade
 
             _scoreBoardButton = new Button
             {
-                Text = "Scoreboard",
+                Text = Loc.GetString("Scoreboard"),
                 TextAlign = Label.AlignMode.Center
             };
             _scoreBoardButton.OnPressed += (e) => _owner.SendAction(BlockGamePlayerAction.ShowHighscores);
@@ -263,7 +264,7 @@ namespace Content.Client.Arcade
 
             _unpauseButton = new Button
             {
-                Text = "Unpause",
+                Text = Loc.GetString("Unpause"),
                 TextAlign = Label.AlignMode.Center,
                 Visible = false
             };
@@ -341,7 +342,7 @@ namespace Content.Client.Arcade
 
             _pauseButton = new Button
             {
-                Text = "Pause",
+                Text = Loc.GetString("Pause"),
                 TextAlign = Label.AlignMode.Center
             };
             _pauseButton.OnPressed += (e) => TryPause();
@@ -413,7 +414,7 @@ namespace Content.Client.Arcade
             nextBlockPanel.AddChild(nextCenterContainer);
             grid.AddChild(nextBlockPanel);
 
-            grid.AddChild(new Label{Text = "Next", Align = Label.AlignMode.Center});
+            grid.AddChild(new Label{Text = Loc.GetString("Next"), Align = Label.AlignMode.Center});
 
             return grid;
         }
@@ -451,7 +452,7 @@ namespace Content.Client.Arcade
             holdBlockPanel.AddChild(holdCenterContainer);
             grid.AddChild(holdBlockPanel);
 
-            grid.AddChild(new Label{Text = "Hold", Align = Label.AlignMode.Center});
+            grid.AddChild(new Label{Text = Loc.GetString("Hold"), Align = Label.AlignMode.Center});
 
             return grid;
         }
@@ -518,24 +519,24 @@ namespace Content.Client.Arcade
         {
             var globalPlacementText = globalPlacement == null ? "-" : $"#{globalPlacement}";
             var localPlacementText = localPlacement == null ? "-" : $"#{localPlacement}";
-            _finalScoreLabel.Text = $"Global: {globalPlacementText}\nLocal: {localPlacementText}\nPoints: {amount}";
+            _finalScoreLabel.Text = Loc.GetString("Global") + $": {globalPlacementText}\n" + Loc.GetString("Local") + $": {localPlacementText}\n" + Loc.GetString("Points") + $": {amount}";
         }
 
         public void UpdatePoints(int points)
         {
-            _pointsLabel.Text = $"Points: {points}";
+            _pointsLabel.Text = Loc.GetString("Points") + $": {points}";
         }
 
         public void UpdateLevel(int level)
         {
-            _levelLabel.Text = $"Level {level + 1}";
+            _levelLabel.Text = Loc.GetString("Level") + $" {level + 1}";
         }
 
         public void UpdateHighscores(List<BlockGameMessages.HighScoreEntry> localHighscores,
             List<BlockGameMessages.HighScoreEntry> globalHighscores)
         {
-            var localHighscoreText = "Station:\n";
-            var globalHighscoreText = "Nanotrasen:\n";
+            var localHighscoreText = Loc.GetString("Station") + ":\n";
+            var globalHighscoreText = Loc.GetString("Nanotrasen") + ":\n";
             for (int i = 0; i < 5; i++)
             {
                 localHighscoreText += $"#{i + 1} " + (localHighscores.Count > i

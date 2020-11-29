@@ -32,7 +32,7 @@ namespace Content.Server.GameObjects.Components.Atmos
     public class FlammableComponent : SharedFlammableComponent, ICollideBehavior, IFireAct, IReagentReaction
     {
         private bool _resisting = false;
-        private readonly List<EntityUid> _collided = new List<EntityUid>();
+        private readonly List<EntityUid> _collided = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool OnFire { get; private set; }

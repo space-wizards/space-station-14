@@ -12,7 +12,7 @@ namespace Content.Client.GameObjects.Components
     [UsedImplicitly]
     public class FlashLightVisualizer : AppearanceVisualizer
     {
-        private readonly Animation _radiatingLightAnimation = new Animation
+        private readonly Animation _radiatingLightAnimation = new()
         {
             Length = TimeSpan.FromSeconds(1),
             AnimationTracks =
@@ -32,7 +32,7 @@ namespace Content.Client.GameObjects.Components
             }
         };
 
-        private readonly Animation _blinkingLightAnimation = new Animation
+        private readonly Animation _blinkingLightAnimation = new()
         {
             Length = TimeSpan.FromSeconds(1),
             AnimationTracks =

@@ -23,7 +23,7 @@ namespace Content.Server.Atmos
     {
         private readonly AtmosphereSystem _atmosphereSystem;
 
-        public static GasMixture SpaceGas => new GasMixture() {Volume = 2500f, Immutable = true, Temperature = Atmospherics.TCMB};
+        public static GasMixture SpaceGas => new() {Volume = 2500f, Immutable = true, Temperature = Atmospherics.TCMB};
 
         // This must always have a length that is a multiple of 4 for SIMD acceleration.
         [ViewVariables]
@@ -44,7 +44,7 @@ namespace Content.Server.Atmos
         public float LastShare { get; private set; } = 0;
 
         [ViewVariables]
-        public readonly Dictionary<GasReaction, float> ReactionResults = new Dictionary<GasReaction, float>()
+        public readonly Dictionary<GasReaction, float> ReactionResults = new()
         {
             // We initialize the dictionary here.
             { GasReaction.Fire, 0f }
@@ -120,8 +120,8 @@ namespace Content.Server.Atmos
         public GasMixture(AtmosphereSystem? atmosphereSystem)
         {
             _atmosphereSystem = atmosphereSystem ?? EntitySystem.Get<AtmosphereSystem>();
-            _moles = new float[MathHelper.NextMultipleOf(Atmospherics.TotalNumberOfGases, 4)];
-            _molesArchived = new float[_moles.Length];
+            _moles = new float[Atmospherics.AdjustedNumberOfGases];
+            _molesArchived = new float[Atmospherics.AdjustedNumberOfGases];
         }
 
         public GasMixture(float volume, AtmosphereSystem? atmosphereSystem = null): this(atmosphereSystem)
@@ -221,6 +221,15 @@ namespace Content.Server.Atmos
             NumericsHelpers.Multiply(removed._moles, ratio);
             if (!Immutable)
                 NumericsHelpers.Sub(_moles, removed._moles);
+
+            for (var i = 0; i < _moles.Length; i++)
+            {
+                if (_moles[i] < Atmospherics.GasMinMoles)
+                    _moles[i] = 0;
+
+                if (removed._moles[i] < Atmospherics.GasMinMoles)
+                    removed._moles[i] = 0;
+            }
 
             return removed;
         }
@@ -508,19 +517,17 @@ namespace Content.Server.Atmos
 
         public void ExposeData(ObjectSerializer serializer)
         {
-            var length = MathHelper.NextMultipleOf(Atmospherics.TotalNumberOfGases, 4);
-
             serializer.DataField(this, x => Immutable, "immutable", false);
             serializer.DataField(this, x => Volume, "volume", 0f);
             serializer.DataField(this, x => LastShare, "lastShare", 0f);
             serializer.DataField(this, x => TemperatureArchived, "temperatureArchived", 0f);
-            serializer.DataField(ref _moles, "moles", new float[length]);
-            serializer.DataField(ref _molesArchived, "molesArchived", new float[length]);
+            serializer.DataField(ref _moles, "moles", new float[Atmospherics.AdjustedNumberOfGases]);
+            serializer.DataField(ref _molesArchived, "molesArchived", new float[Atmospherics.AdjustedNumberOfGases]);
             serializer.DataField(ref _temperature, "temperature", Atmospherics.TCMB);
 
             // The arrays MUST have a specific length.
-            Array.Resize(ref _moles, length);
-            Array.Resize(ref _molesArchived, length);
+            Array.Resize(ref _moles, Atmospherics.AdjustedNumberOfGases);
+            Array.Resize(ref _molesArchived, Atmospherics.AdjustedNumberOfGases);
         }
 
         public override bool Equals(object? obj)

@@ -21,11 +21,11 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        private readonly Dictionary<byte, PanelContainer> _doAfterControls = new Dictionary<byte, PanelContainer>();
-        private readonly Dictionary<byte, DoAfterBar> _doAfterBars = new Dictionary<byte, DoAfterBar>();
+        private readonly Dictionary<byte, PanelContainer> _doAfterControls = new();
+        private readonly Dictionary<byte, DoAfterBar> _doAfterBars = new();
 
         // We'll store cancellations for a little bit just so we can flash the graphic to indicate it's cancelled
-        private readonly Dictionary<byte, TimeSpan> _cancelledDoAfters = new Dictionary<byte, TimeSpan>();
+        private readonly Dictionary<byte, TimeSpan> _cancelledDoAfters = new();
 
         public IEntity? AttachedEntity { get; set; }
         private ScreenCoordinates _playerPosition;

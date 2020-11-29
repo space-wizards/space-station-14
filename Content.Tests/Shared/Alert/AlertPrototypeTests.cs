@@ -11,7 +11,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Tests.Shared.Alert
 {
     [TestFixture, TestOf(typeof(AlertPrototype))]
-    public class AlertPrototypeTests : RobustUnitTest
+    public class AlertPrototypeTests : ContentUnitTest
     {
         private const string PROTOTYPE = @"- type: alert
   alertType: HumanHealth

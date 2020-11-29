@@ -209,9 +209,13 @@
             "CrematoriumEntityStorage",
             "RandomArcade",
             "RandomSpriteState",
+            "ReagentGrinder",
+            "Grindable",
+            "Juiceable",
             "WelderRefinable",
             "ConveyorAssembly",
             "TwoWayLever",
+            "FirelockElectronics",
         };
     }
 }

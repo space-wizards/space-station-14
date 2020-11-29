@@ -44,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         private bool _storageInitialCalculated;
         private int _storageUsed;
         private int _storageCapacityMax;
-        public readonly HashSet<IPlayerSession> SubscribedSessions = new HashSet<IPlayerSession>();
+        public readonly HashSet<IPlayerSession> SubscribedSessions = new();
 
         [ViewVariables]
         public override IReadOnlyList<IEntity>? StoredEntities => _storage?.ContainedEntities;
@@ -411,7 +411,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 }
                 case CloseStorageUIMessage _:
                 {
-                    if (!(session is IPlayerSession playerSession))
+                    if (session is not IPlayerSession playerSession)
                     {
                         break;
                     }

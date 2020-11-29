@@ -47,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         ///     A list of tags attached to the content, used for sorting
         /// </summary>
         [ViewVariables]
-        public HashSet<string> Tags { get; set; } = new HashSet<string>();
+        public HashSet<string> Tags { get; set; } = new();
 
         private bool CanInsert(IEntity entity)
         {

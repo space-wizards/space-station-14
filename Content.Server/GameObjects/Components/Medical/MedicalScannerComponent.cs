@@ -42,7 +42,7 @@ namespace Content.Server.GameObjects.Components.Medical
         private TimeSpan _lastInternalOpenAttempt;
 
         private ContainerSlot _bodyContainer = default!;
-        private readonly Vector2 _ejectOffset = new Vector2(0f, 0f);
+        private readonly Vector2 _ejectOffset = new(0f, 0f);
 
         [ViewVariables]
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
@@ -95,7 +95,7 @@ namespace Content.Server.GameObjects.Components.Medical
         }
 
         private static readonly MedicalScannerBoundUserInterfaceState EmptyUIState =
-            new MedicalScannerBoundUserInterfaceState(
+            new(
                 null,
                 new Dictionary<DamageClass, int>(),
                 new Dictionary<DamageType, int>(),
@@ -258,7 +258,7 @@ namespace Content.Server.GameObjects.Components.Medical
 
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
-            if (!(obj.Message is UiButtonPressedMessage message)) return;
+            if (obj.Message is not UiButtonPressedMessage message) return;
 
             switch (message.Button)
             {
