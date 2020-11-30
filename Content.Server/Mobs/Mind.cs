@@ -161,7 +161,7 @@ namespace Content.Server.Mobs
             if (!objectivePrototype.CanBeAssigned(this))
                 return false;
             var objective = objectivePrototype.GetObjective(this);
-            if (_objectives.<span class="x x-first x-last">Contains(</span>objective))
+            if (_objectives.Contains(objective))
                 return false;
             _objectives.Add(objective);
             return true;
