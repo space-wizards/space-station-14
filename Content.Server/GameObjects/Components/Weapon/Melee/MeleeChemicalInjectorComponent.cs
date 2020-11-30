@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(this, x => TransferAmount, "transferAmount", ReagentUnit.New(1));
+            serializer.DataField(this, x => x.TransferAmount, "transferAmount", ReagentUnit.New(1));
             serializer.DataField(ref _transferEfficiency, "transferEfficiency", 1f);
         }
 
