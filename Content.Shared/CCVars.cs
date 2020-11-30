@@ -88,7 +88,7 @@ namespace Content.Shared
             CVarDef.Create("traitor.players_per_traitor", 5);
 
         public static readonly CVarDef<int> TraitorCodewordCount =
-            CVarDef.Create("traitor.codeword_count", 2);
+            CVarDef.Create("traitor.codeword_count", 4);
 
         public static readonly CVarDef<int> TraitorStartingBalance =
             CVarDef.Create("traitor.starting_balance", 20);

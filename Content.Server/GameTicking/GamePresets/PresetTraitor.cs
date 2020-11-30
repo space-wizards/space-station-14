@@ -10,17 +10,18 @@ using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs.Roles.Traitor;
 using Content.Server.Objectives.Interfaces;
 using Content.Server.Players;
+using Content.Server.Prototypes;
 using Content.Shared;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.PDA;
 using Robust.Server.Interfaces.Player;
-using Robust.Shared;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.GamePresets
@@ -31,6 +32,7 @@ namespace Content.Server.GameTicking.GamePresets
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override string ModeTitle => "Traitor";
 
@@ -43,7 +45,6 @@ namespace Content.Server.GameTicking.GamePresets
         private float MaxDifficulty { get; set; }
         private int MaxPicks { get; set; }
 
-        private string[] Codewords => new[] {"cold", "winter", "radiator", "average", "furious"};
         private readonly List<TraitorRole> _traitors = new ();
 
         public override bool Start(IReadOnlyList<IPlayerSession> readyPlayers, bool force = false)
@@ -139,10 +140,13 @@ namespace Content.Server.GameTicking.GamePresets
                 pdaComponent.InitUplinkAccount(uplinkAccount);
             }
 
-            var codewordPool = new List<string>(Codewords);
-            var finalCodewordCount = Math.Min(CodewordCount, Codewords.Length);
-            string[] codewords = new string[finalCodewordCount];
-            for (int i = 0; i < finalCodewordCount; i++)
+            var adjectives = _prototypeManager.Index<DatasetPrototype>("adjectives").Values;
+            var verbs = _prototypeManager.Index<DatasetPrototype>("verbs").Values;
+
+            var codewordPool = adjectives.Concat(verbs).ToList();
+            var finalCodewordCount = Math.Min(CodewordCount, codewordPool.Count);
+            var codewords = new string[finalCodewordCount];
+            for (var i = 0; i < finalCodewordCount; i++)
             {
                 codewords[i] = _random.PickAndTake(codewordPool);
             }
