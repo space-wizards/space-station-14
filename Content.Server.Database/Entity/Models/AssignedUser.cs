@@ -5,7 +5,7 @@ namespace Content.Server.Database.Entity.Models
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    [Table("assigned_user")]
+    [Table("assigned_user_id")]
     public class AssignedUser : IEntityTypeConfiguration<AssignedUser>
     {
         [Column("assigned_user_id_id")] public int Id { get; set; }
