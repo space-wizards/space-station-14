@@ -520,17 +520,17 @@ namespace Content.Client.Arcade
             var globalPlacementText = globalPlacement == null ? "-" : $"#{globalPlacement}";
             var localPlacementText = localPlacement == null ? "-" : $"#{localPlacement}";
             _finalScoreLabel.Text =
-                Loc.GetString($"Global: {globalPlacementText}\nLocal: {localPlacementText}\nPoints: {amount}");
+                Loc.GetString("Global: {0}\nLocal: {1}\nPoints: {2}", globalPlacementText, localPlacementText, amount);
         }
 
         public void UpdatePoints(int points)
         {
-            _pointsLabel.Text = Loc.GetString($"Points: {points}");
+            _pointsLabel.Text = Loc.GetString("Points: {0}", points);
         }
 
         public void UpdateLevel(int level)
         {
-            _levelLabel.Text = Loc.GetString($"Level {level + 1}");
+            _levelLabel.Text = Loc.GetString("Level {0}", level + 1);
         }
 
         public void UpdateHighscores(List<BlockGameMessages.HighScoreEntry> localHighscores,
