@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Shared.GameObjects.Components.Items;
 using JetBrains.Annotations;
 using Robust.Shared.Serialization;
 
@@ -26,7 +27,7 @@ namespace Content.Shared.GameObjects.Components.Inventory
         ///     Uniquely identifies a single slot in an inventory.
         /// </summary>
         [Serializable, NetSerializable]
-        public enum Slots
+        public enum Slots : byte
         {
             NONE = 0,
             HEAD,
@@ -148,6 +149,76 @@ namespace Content.Shared.GameObjects.Components.Inventory
             "Hands_left",
             "Hands_right",
         };
+    }
 
+    // TODO: remove if i end up not using it for actions stuff
+    /// <summary>
+    /// Identifies an inventory or hand slot (irrespective of a particular entity).
+    /// Properly implements hashcode / equals.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public struct SlotRef
+    {
+        /// <summary>
+        /// A SlotRef which references no particular slot.
+        /// </summary>
+        public static readonly SlotRef None = new SlotRef(true, byte.MaxValue);
+
+        /// <summary>
+        /// True if this references no particular slot.
+        /// </summary>
+        public bool IsNone => this.Equals(None);
+
+        public bool IsHandSlot { get; }
+        // when isHandSlot is true, this is the handslot index
+        // when it's false, this is the Slot enum value.
+        private readonly byte _id;
+
+        private SlotRef(bool isHandSlot, byte id)
+        {
+            IsHandSlot = isHandSlot;
+            _id = id;
+        }
+
+        public static SlotRef ForHandSlot(SharedHand hand)
+        {
+            // if someone has more hands than byte.MaxValue then they DESERVE
+            // the overflow
+            return new SlotRef(true, (byte) hand.Index);
+        }
+
+        public static SlotRef ForSlot(EquipmentSlotDefines.Slots slot)
+        {
+            return new SlotRef(false, (byte) slot);
+        }
+
+
+        public bool Equals(SlotRef other)
+        {
+            return _id == other._id && IsHandSlot == other.IsHandSlot;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is SlotRef other && Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(_id, IsHandSlot);
+        }
+
+        public override string ToString()
+        {
+            if (IsNone)
+            {
+                return "None";
+            }
+            if (IsHandSlot)
+            {
+                return $"hand slot {_id}";
+            }
+            return $"slot {((EquipmentSlotDefines.Slots) _id).ToString()}";
+        }
     }
 }

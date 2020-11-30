@@ -47,11 +47,6 @@ namespace Content.Server.GameObjects.Components.Mobs
             base.OnRemove();
         }
 
-        public override ComponentState GetComponentState()
-        {
-            return new AlertsComponentState(CreateAlertStatesArray());
-        }
-
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession session = null)
         {
             base.HandleNetworkMessage(message, netChannel, session);

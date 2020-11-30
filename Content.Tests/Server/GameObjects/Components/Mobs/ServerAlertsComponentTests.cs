@@ -1,14 +1,10 @@
 ﻿using System.IO;
-using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.Utility;
 using NUnit.Framework;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.Tests.Server.GameObjects.Components.Mobs

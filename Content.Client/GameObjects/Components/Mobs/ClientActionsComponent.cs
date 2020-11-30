@@ -274,7 +274,7 @@ namespace Content.Client.GameObjects.Components.Mobs
                     continue;
                 }
 
-                if (!TryGetActionState((ActionType) assignedActionType, out var actionState) || !actionState.Value.Granted)
+                if (!TryGetActionBindings((ActionType) assignedActionType, out var actionState) || !actionState.Value.Granted)
                 {
                     // action is currently revoked
 
@@ -447,7 +447,7 @@ namespace Content.Client.GameObjects.Components.Mobs
                 case BehaviorType.Toggle:
                     // for toggle actions, we immediately tell the server we're toggling it.
                     // Predictively toggle it on as well
-                    if (TryGetActionState(actionSlot.Action.ActionType, out var actionState))
+                    if (TryGetActionBindings(actionSlot.Action.ActionType, out var actionState))
                     {
                         actionSlot.ToggledOn = !actionState.Value.ToggledOn;
                         // TODO: This flickers when toggling on due to ResetPredictedEntities being
@@ -684,7 +684,7 @@ namespace Content.Client.GameObjects.Components.Mobs
                 var assignedActionType = _slots[_selectedHotbar, actionSlot.SlotIndex];
                 if (!assignedActionType.HasValue) continue;
 
-                if (TryGetActionState((ActionType) assignedActionType, out var actionState))
+                if (TryGetActionBindings((ActionType) assignedActionType, out var actionState))
                 {
                     actionSlot.UpdateCooldown(actionState.Value.Cooldown, GameTiming.CurTime);
                 }

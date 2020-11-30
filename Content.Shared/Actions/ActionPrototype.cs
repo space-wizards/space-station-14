@@ -24,6 +24,17 @@ namespace Content.Shared.Actions
         public ActionType ActionType { get; private set; }
 
         /// <summary>
+        /// if true, indicates that this action is provided by an item (only
+        /// usable when the item is in inventory / held). If false, it's bound to the entity it is granted to (owner bound).
+        /// </summary>
+        public bool ItemBound { get; private set; }
+        /// <summary>
+        /// Opposite of ItemBound - indicates this action is granted directly to an owner entity and not
+        /// an equipped / held item.
+        /// </summary>
+        public bool OwnerBound => !ItemBound;
+
+        /// <summary>
         /// Icon representing this action in the UI.
         /// </summary>
         [ViewVariables]
@@ -106,6 +117,7 @@ namespace Content.Shared.Actions
             {
                 Logger.ErrorS("action", "missing or invalid actionType for action with name {0}", Name);
             }
+            serializer.DataField(this, x => x.ItemBound, "itemBound", false);
 
             // client needs to know what type of behavior it is even if the actual implementation is only
             // on server side. If we wanted to avoid this we'd need to always add a shared or clientside interface

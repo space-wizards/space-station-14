@@ -38,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             var player = session.AttachedEntity;
             if (player != Owner) return;
 
-            if (!TryGetActionState(performMsg.ActionType, out var actionState) || !actionState.Value.Granted)
+            if (!TryGetActionBindings(performMsg.ActionType, out var actionState) || !actionState.Value.Granted)
             {
                 Logger.DebugS("action", "user {0} attempted to use" +
                                         " action {1} which is not granted to them", player.Name,

@@ -35,18 +35,12 @@ namespace Content.Shared.GameObjects.Components.Mobs
                 return;
             }
 
-            _alerts.Clear();
-            foreach (var alertState in state.Alerts)
-            {
-                if (AlertManager.TryGet(alertState.AlertType, out var alert))
-                {
-                    _alerts[alert.AlertKey] = alertState;
-                }
-                else
-                {
-                    Logger.ErrorS("alert", "unrecognized alertType {0}", alertState.AlertType);
-                }
-            }
+            _alerts = state.Alerts;
+        }
+
+        public override ComponentState GetComponentState()
+        {
+            return new AlertsComponentState(_alerts);
         }
 
         /// <returns>true iff an alert of the indicated alert category is currently showing</returns>
@@ -76,25 +70,6 @@ namespace Content.Shared.GameObjects.Components.Mobs
         protected IEnumerable<AlertState> EnumerateAlertStates()
         {
             return _alerts.Values;
-        }
-
-
-        /// <summary>
-        /// Creates a new array containing all of the current alert states.
-        /// </summary>
-        /// <returns></returns>
-        protected AlertState[] CreateAlertStatesArray()
-        {
-            if (_alerts.Count == 0) return NoAlerts;
-            var states = new AlertState[_alerts.Count];
-            // because I don't trust LINQ
-            var idx = 0;
-            foreach (var alertData in _alerts.Values)
-            {
-                states[idx++] = alertData;
-            }
-
-            return states;
         }
 
         protected bool TryGetAlertState(AlertKey key, out AlertState alertState)
@@ -190,9 +165,9 @@ namespace Content.Shared.GameObjects.Components.Mobs
     [Serializable, NetSerializable]
     public class AlertsComponentState : ComponentState
     {
-        public AlertState[] Alerts;
+        public Dictionary<AlertKey, AlertState> Alerts;
 
-        public AlertsComponentState(AlertState[] alerts) : base(ContentNetIDs.ALERTS)
+        public AlertsComponentState(Dictionary<AlertKey, AlertState> alerts) : base(ContentNetIDs.ALERTS)
         {
             Alerts = alerts;
         }
@@ -216,7 +191,6 @@ namespace Content.Shared.GameObjects.Components.Mobs
     [Serializable, NetSerializable]
     public struct AlertState
     {
-        public AlertType AlertType;
         public short? Severity;
         public ValueTuple<TimeSpan, TimeSpan>? Cooldown;
     }
