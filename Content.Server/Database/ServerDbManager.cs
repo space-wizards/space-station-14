@@ -95,20 +95,26 @@ namespace Content.Server.Database
 
         public async Task SaveSelectedCharacterIndexAsync(NetUserId userId, int index)
         {
+            var preference = await ServerDbContext.Set<Preference>()
+                .Where(p => p.UserId == userId)
+                .SingleAsync();
+
             var selected = await ServerDbContext.Set<PreferenceProfile>()
-                .Include(p => p.Preference)
-                .Where(p => p.Preference.UserId == userId)
+                .Where(p => p.PreferenceId == preference.Id)
                 .SingleOrDefaultAsync();
 
             var profile = await ServerDbContext.Profiles
-                .Where(p => p.Slot == index && p.PreferenceId == selected.PreferenceId)
-                .SingleAsync();
+                .Where(p => p.Slot == index && p.PreferenceId == preference.Id)
+                .SingleOrDefaultAsync();
 
-            ServerDbContext.Remove(selected);
-            ServerDbContext.Add(new PreferenceProfile {
-                PreferenceId = selected.PreferenceId,
-                ProfileId = profile.Id
-            });
+            if (selected != null)
+                ServerDbContext.Remove(selected);
+
+            if (profile != null)
+                ServerDbContext.Add(new PreferenceProfile {
+                    PreferenceId = preference.Id,
+                    ProfileId = profile.Id
+                });
 
             await ServerDbContext.SaveChangesAsync();
         }
