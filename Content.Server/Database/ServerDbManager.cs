@@ -14,6 +14,7 @@ using Robust.Shared.Interfaces.Log;
 using Robust.Shared.Interfaces.Resources;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
+using Robust.Shared.Log;
 using MSLogLevel = Microsoft.Extensions.Logging.LogLevel;
 using LogLevel = Robust.Shared.Log.LogLevel;
 using Content.Server.Database.Entity;
@@ -77,10 +78,22 @@ namespace Content.Server.Database
             };
             ((HumanoidCharacterProfile) defaultProfile).ConvertProfile(profile);
 
-            var prefs = new Preference
+            var prefs = await ServerDbContext.Preferences
+                .Where(p => p.UserId == userId)
+                .SingleOrDefaultAsync();
+
+            // To explain: The code later will return null if it encounters preferences and no profiles.
+            // This is because the preferences are corrupt, and the DB code doesn't have access to the function to create a new profile.
+            // In this case, a Preference object already exists but is safe to reuse.
+            if (prefs is null)
             {
-                UserId = userId.UserId
-            };
+                prefs = new Preference
+                {
+                    UserId = userId.UserId
+                };
+                ServerDbContext.Preferences.Add(prefs);
+                Logger.WarningS("c.s.db.serverdbmanager", "Reinitializing preferences[{0}] (user {1}) - this only happens in erroneous situations.", prefs.Id, userId);
+            }
 
             ServerDbContext.Set<PreferenceProfile>()
                 .Add(new PreferenceProfile {
@@ -89,8 +102,6 @@ namespace Content.Server.Database
                 });
 
             prefs.Profiles = new List<Profile> { profile };
-
-            ServerDbContext.Preferences.Add(prefs);
 
             await ServerDbContext.SaveChangesAsync();
 
@@ -212,6 +223,7 @@ namespace Content.Server.Database
                 else
                 {
                     // By returning null, this should cause re-initialization which will fix the situation.
+                    Logger.WarningS("c.s.db.serverdbmanager", "Had to reinitialize preferences[{0}] (user {1}) because it existed but had no profiles.", prefs.Id, userId);
                     return null;
                 }
             }
