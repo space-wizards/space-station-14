@@ -48,7 +48,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         private TimeSpan DisruptionEnd { get; set; } = new();
 
         [ViewVariables]
-        public bool Disrupted => _gameTiming.CurTime <= DisruptionEnd;
+        public bool Disrupted => _gameTiming.CurTime < DisruptionEnd;
 
         [ViewVariables]
         public TimeSpan RemainingDisruption => DisruptionEnd - _gameTiming.CurTime;
@@ -57,7 +57,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         private TimeSpan DisruptionCooldownEnd { get;  set; } = new();
 
         [ViewVariables]
-        public bool DisruptionOnCooldown => _gameTiming.CurTime <= DisruptionCooldownEnd;
+        public bool DisruptionOnCooldown => _gameTiming.CurTime < DisruptionCooldownEnd;
 
         [ViewVariables]
         public TimeSpan RemainingDisruptionCooldown => DisruptionCooldownEnd - _gameTiming.CurTime;
