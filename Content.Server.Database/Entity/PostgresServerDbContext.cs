@@ -8,6 +8,9 @@
 
     public sealed class PostgresServerDbContext : ServerDbContext
     {
+        public PostgresServerDbContext()
+        {
+        }
         public PostgresServerDbContext(DbContextOptions<ServerDbContext> options) : base(options)
         {
         }
