@@ -42,7 +42,7 @@ namespace Content.Server.Objectives.Conditions
 
         public override int GetHashCode()
         {
-            return (Target != null ? Target.GetHashCode() : 0);
+            return Target?.GetHashCode() ?? 0;
         }
     }
 }
