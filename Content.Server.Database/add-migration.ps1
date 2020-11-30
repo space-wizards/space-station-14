@@ -1,10 +1,10 @@
-﻿#!/usr/bin/env pwsh
+#!/usr/bin/env pwsh
 
 param([String]$name)
 
 if ($name -eq "")
 {
-    Write-Error "must specify migration name"
+    Write-Error "Must specify migration name"
     exit
 }
 
