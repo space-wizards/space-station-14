@@ -202,6 +202,13 @@ namespace Content.Server.Database
 
             if (prefs is null) return null;
 
+            if (prefs.Profiles.Count == 0)
+            {
+                // By returning null, this should cause re-initialization which will fix the situation.
+                Logger.WarningS("c.s.db.serverdbmanager", "Had to reinitialize preferences[{0}] (user {1}) because it existed but had no profiles.", prefs.Id, userId);
+                return null;
+            }
+
             var selected = await ServerDbContext.Set<PreferenceProfile>()
                 .Where(p => p.PreferenceId == prefs.Id)
                 .Select(p => p.Profile.Slot)
@@ -215,18 +222,7 @@ namespace Content.Server.Database
             }
 
             if (!profiles.ContainsKey(selected))
-            {
-                if (profiles.Count > 0)
-                {
-                    selected = profiles.First().Key;
-                }
-                else
-                {
-                    // By returning null, this should cause re-initialization which will fix the situation.
-                    Logger.WarningS("c.s.db.serverdbmanager", "Had to reinitialize preferences[{0}] (user {1}) because it existed but had no profiles.", prefs.Id, userId);
-                    return null;
-                }
-            }
+                selected = profiles.First().Key;
 
             return new PlayerPreferences(profiles, selected);
         }

@@ -83,6 +83,28 @@ namespace Content.Tests.Server.Preferences
             Assert.That(!prefs.Characters.Any(p => p.Key != 0));
         }
 
+        /// <summary>
+        /// The API, or database interference, allows deleting all character slots.
+        /// In particular this could happen if someone did a global wipe of all profiles.
+        /// In this case, it would be nice if the game recovered.
+        /// </summary>
+        [Test]
+        public async Task TestDeliberatelyBreakConsistencyAndRecover()
+        {
+            var db = GetAndInitDb();
+            var username = new NetUserId(new Guid("bad21c00-1929-4100-b57c-e6352237ce05"));
+            // Initialize account
+            await db.InitPrefsAsync(username, HumanoidCharacterProfile.Default());
+            // Oh no, they somehow got the server to delete their only slot
+            await db.SaveCharacterSlotAsync(username, null, 0);
+            // Database returns null to get content to reinitialize
+            Assert.That(await db.GetPlayerPreferencesAsync(username) == null);
+            // Requested reinitialize happens
+            await db.InitPrefsAsync(username, HumanoidCharacterProfile.Default());
+            // Consistency fixed
+            Assert.That(await db.GetPlayerPreferencesAsync(username) != null);
+        }
+
         private static NetUserId NewUserId()
         {
             return new(Guid.NewGuid());
