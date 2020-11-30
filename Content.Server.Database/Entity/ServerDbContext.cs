@@ -18,6 +18,8 @@ namespace Content.Server.Database.Entity
 
         public DbSet<Preference> Preferences { get; set; } = null!;
         public DbSet<Profile> Profiles { get; set; } = null!;
+
+        public DbSet<PreferenceProfile> PreferenceProfiles { get; set; } = null!;
         public DbSet<AssignedUser> AssignedUsers { get; set; } = null!;
         public DbSet<Admin> Admins { get; set; } = null!;
         public DbSet<AdminRank> AdminRanks { get; set; } = null!;

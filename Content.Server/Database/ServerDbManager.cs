@@ -95,7 +95,7 @@ namespace Content.Server.Database
                 Logger.WarningS("c.s.db.serverdbmanager", "Reinitializing preferences[{0}] (user {1}) - this only happens in erroneous situations.", prefs.Id, userId);
             }
 
-            ServerDbContext.Set<PreferenceProfile>()
+            ServerDbContext.PreferenceProfiles
                 .Add(new PreferenceProfile {
                     Preference = prefs,
                     Profile = profile
@@ -110,11 +110,11 @@ namespace Content.Server.Database
 
         public async Task SaveSelectedCharacterIndexAsync(NetUserId userId, int index)
         {
-            var preference = await ServerDbContext.Set<Preference>()
+            var preference = await ServerDbContext.Preferences
                 .Where(p => p.UserId == userId)
                 .SingleAsync();
 
-            var selected = await ServerDbContext.Set<PreferenceProfile>()
+            var selected = await ServerDbContext.PreferenceProfiles
                 .Where(p => p.PreferenceId == preference.Id)
                 .SingleOrDefaultAsync();
 
@@ -209,7 +209,7 @@ namespace Content.Server.Database
                 return null;
             }
 
-            var selected = await ServerDbContext.Set<PreferenceProfile>()
+            var selected = await ServerDbContext.PreferenceProfiles
                 .Where(p => p.PreferenceId == prefs.Id)
                 .Select(p => p.Profile.Slot)
                 .SingleOrDefaultAsync();
