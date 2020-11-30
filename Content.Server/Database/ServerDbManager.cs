@@ -14,6 +14,7 @@ using Robust.Shared.Interfaces.Log;
 using Robust.Shared.Interfaces.Resources;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
+using Robust.Shared.Log;
 using MSLogLevel = Microsoft.Extensions.Logging.LogLevel;
 using LogLevel = Robust.Shared.Log.LogLevel;
 using Content.Server.Database.Entity;
@@ -28,7 +29,7 @@ using System.Transactions;
 
 namespace Content.Server.Database
 {
-    public sealed class ServerDbManager : IServerDbManager
+    public class ServerDbManager : IServerDbManager
     {
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IResourceManager _res = default!;
@@ -47,33 +48,52 @@ namespace Content.Server.Database
                 builder.AddProvider(_msLogProvider);
             });
 
+            ServerDbContext = CreateDbContext();
+
+            ServerDbContext.Database.Migrate();
+        }
+
+        protected virtual ServerDbContext CreateDbContext()
+        {
             var engine = _cfg.GetCVar(CCVars.DatabaseEngine).ToLower();
             switch (engine)
             {
                 case "sqlite":
                     var options = CreateSqliteOptions();
-                    ServerDbContext = new SqliteServerDbContext(options);
-                    break;
+                    return new SqliteServerDbContext(options);
                 case "postgres":
                     options = CreatePostgresOptions();
-                    ServerDbContext = new PostgresServerDbContext(options);
-                    break;
+                    return new PostgresServerDbContext(options);
                 default:
                     throw new InvalidDataException("Unknown database engine {engine}.");
             }
-
-            ServerDbContext.Database.Migrate();
         }
 
         public async Task<PlayerPreferences> InitPrefsAsync(NetUserId userId, ICharacterProfile defaultProfile)
         {
 
-            var profile = ((HumanoidCharacterProfile) defaultProfile).ConvertProfile(0);
-
-            var prefs = new Preference
+            var profile = new Profile
             {
-                UserId = userId.UserId
+                Slot = 0
             };
+            ((HumanoidCharacterProfile) defaultProfile).ConvertProfile(profile);
+
+            var prefs = await ServerDbContext.Preferences
+                .Where(p => p.UserId == userId)
+                .SingleOrDefaultAsync();
+
+            // To explain: The code later will return null if it encounters preferences and no profiles.
+            // This is because the preferences are corrupt, and the DB code doesn't have access to the function to create a new profile.
+            // In this case, a Preference object already exists but is safe to reuse.
+            if (prefs is null)
+            {
+                prefs = new Preference
+                {
+                    UserId = userId.UserId
+                };
+                ServerDbContext.Preferences.Add(prefs);
+                Logger.WarningS("c.s.db.serverdbmanager", "Reinitializing preferences[{0}] (user {1}) - this only happens in erroneous situations.", prefs.Id, userId);
+            }
 
             ServerDbContext.Set<PreferenceProfile>()
                 .Add(new PreferenceProfile {
@@ -83,8 +103,6 @@ namespace Content.Server.Database
 
             prefs.Profiles = new List<Profile> { profile };
 
-            ServerDbContext.Preferences.Add(prefs);
-
             await ServerDbContext.SaveChangesAsync();
 
             return new PlayerPreferences(new[] {new KeyValuePair<int, ICharacterProfile>(0, defaultProfile)}, 0);
@@ -92,19 +110,26 @@ namespace Content.Server.Database
 
         public async Task SaveSelectedCharacterIndexAsync(NetUserId userId, int index)
         {
+            var preference = await ServerDbContext.Set<Preference>()
+                .Where(p => p.UserId == userId)
+                .SingleAsync();
+
             var selected = await ServerDbContext.Set<PreferenceProfile>()
-                .Include(p => p.Preference)
-                .Where(p => p.Preference.UserId == userId)
+                .Where(p => p.PreferenceId == preference.Id)
                 .SingleOrDefaultAsync();
 
             var profile = await ServerDbContext.Profiles
-                .Where(p => p.Slot == index && p.PreferenceId == selected.PreferenceId)
-                .SingleAsync();
+                .Where(p => p.Slot == index && p.PreferenceId == preference.Id)
+                .SingleOrDefaultAsync();
 
-            ServerDbContext.Add(new PreferenceProfile {
-                PreferenceId = selected.PreferenceId,
-                ProfileId = profile.Id
-            });
+            if (selected != null)
+                ServerDbContext.Remove(selected);
+
+            if (profile != null)
+                ServerDbContext.Add(new PreferenceProfile {
+                    PreferenceId = preference.Id,
+                    ProfileId = profile.Id
+                });
 
             await ServerDbContext.SaveChangesAsync();
         }
@@ -113,10 +138,12 @@ namespace Content.Server.Database
         {
             if (profile is null)
             {
-                ServerDbContext.Preferences
+                var profilesToDelete = ServerDbContext.Preferences
                     .Single(p => p.UserId == userId.UserId)
-                    .Profiles.ToList()
-                    .RemoveAll(h => h.Slot == slot);
+                    .Profiles
+                    .Where(h => h.Slot == slot);
+                ServerDbContext.RemoveRange(profilesToDelete);
+
                 await ServerDbContext.SaveChangesAsync();
                 return;
             }
@@ -127,32 +154,36 @@ namespace Content.Server.Database
                 throw new NotImplementedException();
             }
 
-            Profile entity = humanoid.ConvertProfile(slot);
-
             var prefs = await ServerDbContext
                 .Preferences
                 .Include(p => p.Profiles)
                 .SingleAsync(p => p.UserId == userId.UserId);
 
-            var oldProfile = prefs
+            var entity = prefs
                 .Profiles
-                .SingleOrDefault(h => h.Slot == entity.Slot);
+                .SingleOrDefault(h => h.Slot == slot);
 
-            if (oldProfile is not null)
+            if (entity is null)
             {
-                prefs.Profiles.Remove(oldProfile);
+                entity = new Profile
+                {
+                    Slot = slot
+                };
+                prefs.Profiles.Add(entity);
             }
 
-            prefs.Profiles.Add(entity);
+            humanoid.ConvertProfile(entity);
             await ServerDbContext.SaveChangesAsync();
         }
 
         public async Task DeleteSlotAndSetSelectedIndex(NetUserId userId, int deleteSlot, int newSlot)
         {
-            ServerDbContext.Preferences
-                .Single(p => p.UserId == userId)
-                .Profiles.ToList()
-                .RemoveAll(h => h.Slot == deleteSlot); // Does that work..?
+            var profilesToDelete = ServerDbContext.Preferences
+                .Single(p => p.UserId == userId.UserId)
+                .Profiles
+                .Where(h => h.Slot == deleteSlot);
+            ServerDbContext.RemoveRange(profilesToDelete);
+
             var prefs = await ServerDbContext.Preferences
                 .SingleAsync(p => p.UserId == userId.UserId);
 
@@ -171,10 +202,17 @@ namespace Content.Server.Database
 
             if (prefs is null) return null;
 
+            if (prefs.Profiles.Count == 0)
+            {
+                // By returning null, this should cause re-initialization which will fix the situation.
+                Logger.WarningS("c.s.db.serverdbmanager", "Had to reinitialize preferences[{0}] (user {1}) because it existed but had no profiles.", prefs.Id, userId);
+                return null;
+            }
+
             var selected = await ServerDbContext.Set<PreferenceProfile>()
                 .Where(p => p.PreferenceId == prefs.Id)
                 .Select(p => p.Profile.Slot)
-                .SingleAsync();
+                .SingleOrDefaultAsync();
 
             var maxSlot = prefs.Profiles.Max(p => p.Slot) + 1;
             var profiles = new Dictionary<int, ICharacterProfile>(maxSlot);
@@ -182,6 +220,9 @@ namespace Content.Server.Database
             {
                 profiles[profile.Slot] = profile.ConvertProfile();
             }
+
+            if (!profiles.ContainsKey(selected))
+                selected = profiles.First().Key;
 
             return new PlayerPreferences(profiles, selected);
         }
