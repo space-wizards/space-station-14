@@ -104,6 +104,7 @@ namespace Content.Server.Database
                 .Where(p => p.Slot == index && p.PreferenceId == selected.PreferenceId)
                 .SingleAsync();
 
+            ServerDbContext.Remove(selected);
             ServerDbContext.Add(new PreferenceProfile {
                 PreferenceId = selected.PreferenceId,
                 ProfileId = profile.Id
@@ -116,10 +117,12 @@ namespace Content.Server.Database
         {
             if (profile is null)
             {
-                ServerDbContext.Preferences
+                var profilesToDelete = ServerDbContext.Preferences
                     .Single(p => p.UserId == userId.UserId)
-                    .Profiles.ToList()
-                    .RemoveAll(h => h.Slot == slot);
+                    .Profiles
+                    .Where(h => h.Slot == slot);
+                ServerDbContext.RemoveRange(profilesToDelete);
+
                 await ServerDbContext.SaveChangesAsync();
                 return;
             }
@@ -152,10 +155,12 @@ namespace Content.Server.Database
 
         public async Task DeleteSlotAndSetSelectedIndex(NetUserId userId, int deleteSlot, int newSlot)
         {
-            ServerDbContext.Preferences
-                .Single(p => p.UserId == userId)
-                .Profiles.ToList()
-                .RemoveAll(h => h.Slot == deleteSlot); // Does that work..?
+            var profilesToDelete = ServerDbContext.Preferences
+                .Single(p => p.UserId == userId.UserId)
+                .Profiles
+                .Where(h => h.Slot == deleteSlot);
+            ServerDbContext.RemoveRange(profilesToDelete);
+
             var prefs = await ServerDbContext.Preferences
                 .SingleAsync(p => p.UserId == userId.UserId);
 
@@ -177,7 +182,7 @@ namespace Content.Server.Database
             var selected = await ServerDbContext.Set<PreferenceProfile>()
                 .Where(p => p.PreferenceId == prefs.Id)
                 .Select(p => p.Profile.Slot)
-                .SingleAsync();
+                .SingleOrDefaultAsync();
 
             var maxSlot = prefs.Profiles.Max(p => p.Slot) + 1;
             var profiles = new Dictionary<int, ICharacterProfile>(maxSlot);
