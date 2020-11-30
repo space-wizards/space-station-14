@@ -21,6 +21,7 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.ComponentDependencies;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
@@ -276,6 +277,22 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             BuckledTo = strap;
 
+            if (Owner.TryGetComponent(out PhysicsComponent? characterPhysComp))
+            {
+                if (characterPhysComp != null)
+                {
+                    if(to.TryGetComponent(out PhysicsComponent? bucklePhysComp))
+                    {
+                        if (bucklePhysComp != null && bucklePhysComp.Hard)
+                        {
+                            characterPhysComp.Hard = false;
+                        }
+                            
+                    }
+                        
+                }
+            }
+
             ReAttach(strap);
             UpdateBuckleStatus();
 
@@ -333,6 +350,14 @@ namespace Content.Server.GameObjects.Components.Buckle
             }
 
             BuckledTo = null;
+
+            if (Owner.TryGetComponent(out PhysicsComponent? characterPhysComp))
+            {
+                if (characterPhysComp != null)
+                {
+                    characterPhysComp.Hard = true;
+                }
+            }
 
             if (Owner.Transform.Parent == oldBuckledTo.Owner.Transform)
             {
