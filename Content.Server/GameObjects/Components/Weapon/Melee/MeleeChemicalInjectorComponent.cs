@@ -2,11 +2,9 @@
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Shared.Chemistry;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System;
-using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {
@@ -35,12 +33,19 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         {
             base.Initialize();
             var meleeWeapon = Owner.EnsureComponent<MeleeWeaponComponent>();
-            meleeWeapon.OnHittingEntities += OnMeleeHit;
+            Owner.EntityManager.EventBus.SubscribeEvent<MeleeHitEvent>(EventSource.Local, this, OnMeleeHit);
             _solutionContainer = Owner.EnsureComponent<SolutionContainerComponent>();
         }
 
-        private void OnMeleeHit(IEnumerable<IEntity> hitEntities)
+        public override void OnRemove()
         {
+            base.OnRemove();
+            Owner.EntityManager.EventBus.UnsubscribeEvent<MeleeHitEvent>(EventSource.Local, this);
+        }
+
+        private void OnMeleeHit(MeleeHitEvent hitEvent)
+        {
+            var hitEntities = hitEvent.HitEntities;
             foreach (var entity in hitEntities)
             {
                 if (!entity.TryGetComponent<BloodstreamComponent>(out var bloodstream))

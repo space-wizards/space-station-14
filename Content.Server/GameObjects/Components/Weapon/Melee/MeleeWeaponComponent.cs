@@ -55,11 +55,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         [ViewVariables(VVAccess.ReadWrite)]
         public bool ClickAttackEffect { get; set; }
 
-        /// <summary>
-        ///     Returns the set of entities hit by a melee attack.
-        /// </summary>
-        public Action<IEnumerable<IEntity>> OnHittingEntities;
-
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -88,7 +83,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             var curTime = _gameTiming.CurTime;
 
-            if(curTime < _cooldownEnd)
+            if (curTime < _cooldownEnd)
                 return true;
 
             var location = eventArgs.User.Transform.Coordinates;
@@ -100,7 +95,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             var audioSystem = EntitySystem.Get<AudioSystem>();
             if (entities.Count != 0)
             {
-                audioSystem.PlayFromEntity( _hitSound, entities.First());
+                audioSystem.PlayFromEntity(_hitSound, entities.First());
             }
             else
             {
@@ -119,9 +114,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                     hitEntities.Add(entity);
                 }
             }
-            OnHittingEntities?.Invoke(hitEntities);
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new MeleeHitEvent(hitEntities));
 
-            if(!OnHitEntities(hitEntities, eventArgs)) return false;
+            if (!OnHitEntities(hitEntities, eventArgs)) return false;
 
             if (Arc != null)
             {
@@ -147,7 +142,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             var curTime = _gameTiming.CurTime;
 
-            if(curTime < _cooldownEnd || !eventArgs.Target.IsValid())
+            if (curTime < _cooldownEnd || !eventArgs.Target.IsValid())
                 return true;
 
             var target = eventArgs.TargetEntity;
@@ -158,7 +153,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             var audioSystem = EntitySystem.Get<AudioSystem>();
             if (target != null)
             {
-                audioSystem.PlayFromEntity( _hitSound, target);
+                audioSystem.PlayFromEntity(_hitSound, target);
             }
             else
             {
@@ -170,9 +165,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             {
                 damageComponent.ChangeDamage(DamageType, Damage, false, Owner);
             }
-            OnHittingEntities?.Invoke(new IEntity[] { target });
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new MeleeHitEvent(new List<IEntity> { target }));
 
-            var targets = new[] {target};
+            var targets = new[] { target };
 
             if (!OnHitEntities(targets, eventArgs))
                 return false;
@@ -216,6 +211,16 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             }
 
             return resSet;
+        }
+    }
+
+    public class MeleeHitEvent : EntitySystemMessage
+    {
+        public readonly List<IEntity> HitEntities;
+
+        public MeleeHitEvent(List<IEntity> hitEntities)
+        {
+            HitEntities = hitEntities;
         }
     }
 }
