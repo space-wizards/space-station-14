@@ -5,6 +5,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System;
+using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {
@@ -16,6 +17,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         [ViewVariables(VVAccess.ReadWrite)]
         public ReagentUnit TransferAmount { get; set; }
 
+        [ViewVariables(VVAccess.ReadWrite)]
         public float TransferEfficiency { get => _transferEfficiency; set => _transferEfficiency = Math.Clamp(value, 0, 1); }
         private float _transferEfficiency;
 
@@ -46,14 +48,22 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         private void OnMeleeHit(MeleeHitEvent hitEvent)
         {
             var hitEntities = hitEvent.HitEntities;
+            var hitBloodstreams = new List<BloodstreamComponent>();
             foreach (var entity in hitEntities)
             {
-                if (!entity.TryGetComponent<BloodstreamComponent>(out var bloodstream))
-                    return;
-                var removedSolution = _solutionContainer.Solution.SplitSolution(TransferAmount);
-                var removedVolume = removedSolution.TotalVolume;
-                var solutionToInject = removedSolution.SplitSolution(removedVolume * TransferEfficiency);
-                bloodstream.TryTransferSolution(solutionToInject);
+                if (entity.TryGetComponent<BloodstreamComponent>(out var bloodstream))
+                    hitBloodstreams.Add(bloodstream);
+            }
+
+            var removedSolution = _solutionContainer.Solution.SplitSolution(TransferAmount * hitBloodstreams.Count);
+            var removedVol = removedSolution.TotalVolume;
+            var solutionToInject = removedSolution.SplitSolution(removedVol * TransferEfficiency);
+            var volPerBloodstream = solutionToInject.TotalVolume * (1 / hitBloodstreams.Count);
+
+            foreach (var bloodstream in hitBloodstreams)
+            {
+                var individualInjection = solutionToInject.SplitSolution(volPerBloodstream);
+                bloodstream.TryTransferSolution(individualInjection);
             }
         }
     }
