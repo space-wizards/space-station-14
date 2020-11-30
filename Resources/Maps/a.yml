@@ -22664,10 +22664,8 @@ entities:
     pos: -5.5120974,-7.5
     rot: 1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11998.838
+  - startingCharge: 11999.336
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 1244
   type: Poweredlight
   components:
@@ -32404,10 +32402,8 @@ entities:
     pos: 9.5,27.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.004
+  - startingCharge: 11999.419
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2511
   type: SalternApc
   components:
@@ -32415,10 +32411,8 @@ entities:
     pos: -2.5,27.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11998.34
+  - startingCharge: 11999.004
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2512
   type: SalternApc
   components:
@@ -32426,10 +32420,8 @@ entities:
     pos: 9.5,22.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11998.34
+  - startingCharge: 11999.419
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2513
   type: SalternApc
   components:
@@ -32437,10 +32429,8 @@ entities:
     pos: 24.5,14.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11998.672
+  - startingCharge: 11999.336
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2514
   type: SalternApc
   components:
@@ -32448,10 +32438,8 @@ entities:
     pos: 28.5,14.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.004
+  - startingCharge: 11999.502
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2515
   type: SalternApc
   components:
@@ -32459,10 +32447,8 @@ entities:
     pos: 47.5,-1.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11983.002
+  - startingCharge: 11991.501
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2516
   type: SalternApc
   components:
@@ -32470,10 +32456,8 @@ entities:
     pos: 31.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11998.506
+  - startingCharge: 11999.087
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2517
   type: SalternApc
   components:
@@ -32481,10 +32465,8 @@ entities:
     pos: 43.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11998.506
+  - startingCharge: 11999.419
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2518
   type: SalternApc
   components:
@@ -32492,10 +32474,8 @@ entities:
     pos: 12.5,13.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11998.008
+  - startingCharge: 11999.004
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2519
   type: SalternApc
   components:
@@ -32503,10 +32483,8 @@ entities:
     pos: 7.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11998.174
+  - startingCharge: 11999.17
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2520
   type: SalternApc
   components:
@@ -32514,10 +32492,8 @@ entities:
     pos: 22.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11997.676
+  - startingCharge: 11999.004
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2521
   type: SalternApc
   components:
@@ -32525,10 +32501,8 @@ entities:
     pos: 16.5,2.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11998.838
+  - startingCharge: 11999.17
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2522
   type: PoweredSmallLight
   components:
@@ -32549,10 +32523,8 @@ entities:
     pos: -3.5,15.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11998.838
+  - startingCharge: 11999.336
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2524
   type: SalternApc
   components:
@@ -32560,10 +32532,8 @@ entities:
     pos: -28.5,12.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11998.672
+  - startingCharge: 11999.336
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2525
   type: SalternApc
   components:
@@ -32571,10 +32541,8 @@ entities:
     pos: -39.5,11.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11998.672
+  - startingCharge: 11999.336
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2526
   type: SalternApc
   components:
@@ -32582,10 +32550,8 @@ entities:
     pos: -11.5,2.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11996.348
+  - startingCharge: 11998.423
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2527
   type: Table
   components:
@@ -32600,10 +32566,8 @@ entities:
     pos: -20.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.336
+  - startingCharge: 11999.668
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2529
   type: ApcExtensionCable
   components:
@@ -32627,10 +32591,8 @@ entities:
     pos: -1.5,-18.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11998.174
+  - startingCharge: 11999.17
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2532
   type: SalternApc
   components:
@@ -32638,10 +32600,8 @@ entities:
     pos: -9.75476,-21.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11992.338
+  - startingCharge: 11996.003
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2533
   type: SalternApc
   components:
@@ -32649,10 +32609,8 @@ entities:
     pos: -14.5,-16.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.17
+  - startingCharge: 11999.751
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2534
   type: ApcExtensionCable
   components:
@@ -32894,10 +32852,8 @@ entities:
     pos: -16.302551,15.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.668
+  - startingCharge: 11999.834
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2561
   type: ApcExtensionCable
   components:
@@ -35009,10 +34965,8 @@ entities:
     pos: -14.5,-8.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11998.506
+  - startingCharge: 11999.087
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2796
   type: ApcExtensionCable
   components:
@@ -42423,7 +42377,7 @@ entities:
     pos: 42.5,-0.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3999870
+  - startingCharge: 3999931
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -42436,7 +42390,7 @@ entities:
     pos: 27.5,13.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3999870
+  - startingCharge: 3999931
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -42449,7 +42403,7 @@ entities:
     pos: 11.5,24.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3999870
+  - startingCharge: 3999931
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -42462,7 +42416,7 @@ entities:
     pos: 21.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3999870
+  - startingCharge: 3999931
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -42475,7 +42429,7 @@ entities:
     pos: -15.5,16.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3999870
+  - startingCharge: 3999931
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -42488,7 +42442,7 @@ entities:
     pos: -0.5,-22.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3999870
+  - startingCharge: 3999931
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -42510,7 +42464,7 @@ entities:
     pos: 0.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3999870
+  - startingCharge: 3999931
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -42523,7 +42477,7 @@ entities:
     pos: -21.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3999870
+  - startingCharge: 3999931
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -42536,7 +42490,7 @@ entities:
     pos: -32.5,7.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3999870
+  - startingCharge: 3999931
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -45230,10 +45184,8 @@ entities:
     pos: -12.5,12.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11998.174
+  - startingCharge: 11999.087
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 3928
   type: EmergencyLight
   components:
@@ -46816,10 +46768,8 @@ entities:
     pos: -30.517641,-3.5
     rot: 3.141592653589793 rad
     type: Transform
-  - startingCharge: 11998.34
+  - startingCharge: 11999.17
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 4118
   type: Bed
   components:
@@ -48097,85 +48047,5 @@ entities:
   - containers:
       storagebase:
         type: Robust.Server.GameObjects.Components.Container.Container
-    type: ContainerContainer
-- uid: 4270
-  type: CarpetBlue
-  components:
-  - parent: 855
-    pos: 8.5,20.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 4271
-  type: CarpetBlue
-  components:
-  - parent: 855
-    pos: 8.5,19.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 4272
-  type: CarpetBlue
-  components:
-  - parent: 855
-    pos: 8.5,18.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 4273
-  type: CarpetBlue
-  components:
-  - parent: 855
-    pos: 8.5,17.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 4274
-  type: CarpetBlue
-  components:
-  - parent: 855
-    pos: 9.5,20.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 4275
-  type: CarpetBlue
-  components:
-  - parent: 855
-    pos: 9.5,19.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 4276
-  type: CarpetBlue
-  components:
-  - parent: 855
-    pos: 9.5,18.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 4277
-  type: CarpetBlue
-  components:
-  - parent: 855
-    pos: 9.5,17.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 4278
-  type: LampGold
-  components:
-  - parent: 855
-    pos: 9.434699,18.224125
-    rot: -1.5707963267948966 rad
-    type: Transform
-  - containers:
-      cellslot_cell_container:
-        type: Content.Server.GameObjects.ContainerSlot
-    type: ContainerContainer
-- uid: 4279
-  type: Poweredlight
-  components:
-  - parent: 855
-    pos: -8.5,23
-    rot: -1.5707963267948966 rad
-    type: Transform
-  - powerLoad: 0
-    type: PowerReceiver
-  - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 ...
