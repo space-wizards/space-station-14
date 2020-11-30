@@ -71,7 +71,11 @@ namespace Content.Server.Database
         public async Task<PlayerPreferences> InitPrefsAsync(NetUserId userId, ICharacterProfile defaultProfile)
         {
 
-            var profile = ((HumanoidCharacterProfile) defaultProfile).ConvertProfile(0);
+            var profile = new Profile
+            {
+                Slot = 0
+            };
+            ((HumanoidCharacterProfile) defaultProfile).ConvertProfile(profile);
 
             var prefs = new Preference
             {
@@ -139,23 +143,25 @@ namespace Content.Server.Database
                 throw new NotImplementedException();
             }
 
-            Profile entity = humanoid.ConvertProfile(slot);
-
             var prefs = await ServerDbContext
                 .Preferences
                 .Include(p => p.Profiles)
                 .SingleAsync(p => p.UserId == userId.UserId);
 
-            var oldProfile = prefs
+            var entity = prefs
                 .Profiles
-                .SingleOrDefault(h => h.Slot == entity.Slot);
+                .SingleOrDefault(h => h.Slot == slot);
 
-            if (oldProfile is not null)
+            if (entity is null)
             {
-                prefs.Profiles.Remove(oldProfile);
+                entity = new Profile
+                {
+                    Slot = slot
+                };
+                prefs.Profiles.Add(entity);
             }
 
-            prefs.Profiles.Add(entity);
+            humanoid.ConvertProfile(entity);
             await ServerDbContext.SaveChangesAsync();
         }
 
@@ -195,6 +201,19 @@ namespace Content.Server.Database
             foreach (var profile in prefs.Profiles)
             {
                 profiles[profile.Slot] = profile.ConvertProfile();
+            }
+
+            if (!profiles.ContainsKey(selected))
+            {
+                if (profiles.Count > 0)
+                {
+                    selected = profiles.First().Key;
+                }
+                else
+                {
+                    // By returning null, this should cause re-initialization which will fix the situation.
+                    return null;
+                }
             }
 
             return new PlayerPreferences(profiles, selected);

@@ -8,33 +8,27 @@ namespace Content.Server.Database
 
     public static class ProfileConversionExtension
     {
-        public static Profile ConvertProfile(this HumanoidCharacterProfile humanoidProfile, int slot)
+        public static void ConvertProfile(this HumanoidCharacterProfile humanoidProfile, Profile target)
         {
             var appearance = (HumanoidCharacterAppearance) humanoidProfile.CharacterAppearance;
 
-            var entity = new Profile
-            {
-                CharacterName = humanoidProfile.Name,
-                Age = humanoidProfile.Age,
-                Sex = humanoidProfile.Sex.ToString(),
-                HairName = appearance.HairStyleName,
-                HairColor = appearance.HairColor.ToHex(),
-                FacialHairName = appearance.FacialHairStyleName,
-                FacialHairColor = appearance.FacialHairColor.ToHex(),
-                EyeColor = appearance.EyeColor.ToHex(),
-                SkinColor = appearance.SkinColor.ToHex(),
-                Slot = slot,
-                PreferenceUnavailable = humanoidProfile.PreferenceUnavailable,
-                Jobs = humanoidProfile.JobPriorities
-                    .Where(j => j.Value != JobPriority.Never)
-                    .Select(j => new Job {JobName = j.Key, Priority = j.Value})
-                    .ToList(),
-                Antags = humanoidProfile.AntagPreferences
-                    .Select(a => new Antag {AntagName = a})
-                    .ToList(),
-            };
-
-            return entity;
+            target.CharacterName = humanoidProfile.Name;
+            target.Age = humanoidProfile.Age;
+            target.Sex = humanoidProfile.Sex.ToString();
+            target.HairName = appearance.HairStyleName;
+            target.HairColor = appearance.HairColor.ToHex();
+            target.FacialHairName = appearance.FacialHairStyleName;
+            target.FacialHairColor = appearance.FacialHairColor.ToHex();
+            target.EyeColor = appearance.EyeColor.ToHex();
+            target.SkinColor = appearance.SkinColor.ToHex();
+            target.PreferenceUnavailable = humanoidProfile.PreferenceUnavailable;
+            target.Jobs = humanoidProfile.JobPriorities
+                .Where(j => j.Value != JobPriority.Never)
+                .Select(j => new Job {JobName = j.Key, Priority = j.Value})
+                .ToList();
+            target.Antags = humanoidProfile.AntagPreferences
+                .Select(a => new Antag {AntagName = a})
+                .ToList();
         }
 
         public static HumanoidCharacterProfile ConvertProfile(this Profile profile)
