@@ -18,6 +18,11 @@
     graph: spear
     node: spear
   - type: ItemCooldown
+  - type: MeleeChemicalInjector
+  - type: SolutionContainer
+    maxVol: 5
+    caps: AddTo, RemoveFrom, FitsInDispenser
+  - type: Pourable
 
 - type: MeleeWeaponAnimation
   id: spear
@@ -25,12 +30,3 @@
   length: 0.10
   speed: 6
   arcType: Poke
-
-- type: entity
-  name: poisonable spear
-  parent: Spear
-  id: PoisonableSpear
-  components:
-  - type: MeleeChemicalInjector
-  - type: SolutionContainer
-    maxVol: 5
