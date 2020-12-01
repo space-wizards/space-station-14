@@ -27,10 +27,10 @@ namespace Content.Client.UserInterface.Permissions
         [Dependency] private readonly IClientAdminManager _adminManager = default!;
 
         private readonly Menu _menu;
-        private readonly List<SS14Window> _subWindows = new List<SS14Window>();
+        private readonly List<SS14Window> _subWindows = new();
 
         private Dictionary<int, PermissionsEuiState.AdminRankData> _ranks =
-            new Dictionary<int, PermissionsEuiState.AdminRankData>();
+            new();
 
         public PermissionsEui()
         {
@@ -348,7 +348,7 @@ namespace Content.Client.UserInterface.Permissions
             public readonly Button? RemoveButton;
 
             public readonly Dictionary<AdminFlags, (Button inherit, Button sub, Button plus)> FlagButtons
-                = new Dictionary<AdminFlags, (Button, Button, Button)>();
+                = new();
 
             public EditAdminWindow(PermissionsEui ui, PermissionsEuiState.AdminData? data)
             {
@@ -519,7 +519,7 @@ namespace Content.Client.UserInterface.Permissions
             public readonly LineEdit NameEdit;
             public readonly Button SaveButton;
             public readonly Button? RemoveButton;
-            public readonly Dictionary<AdminFlags, CheckBox> FlagCheckBoxes = new Dictionary<AdminFlags, CheckBox>();
+            public readonly Dictionary<AdminFlags, CheckBox> FlagCheckBoxes = new();
 
             public EditAdminRankWindow(PermissionsEui ui, KeyValuePair<int, PermissionsEuiState.AdminRankData>? data)
             {

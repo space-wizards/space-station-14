@@ -25,10 +25,13 @@
   description: A small piece of glass. It looks sharp, you wouldn't want to step on it barefoot.
   parent: ShardBase
   components:
-  - type: Sprite
-    color: "#bbeeff"
-  - type: Item
-    color: "#bbeeff"
+    - type: Sprite
+      color: "#bbeeff"
+    - type: Item
+      color: "#bbeeff"
+    - type: WelderRefinable
+      refineResult:
+      - GlassStack
 
 - type: entity
   id: ShardGlassReinforced
@@ -36,11 +39,14 @@
   description: A small piece of reinforced glass. It looks sharp, you wouldn't want to step on it barefoot.
   parent: ShardBase
   components:
-  - type: Sprite
-    color: "#96cdef"
-  - type: Item
-    color: "#96cdef"
-
+    - type: Sprite
+      color: "#96cdef"
+    - type: Item
+      color: "#96cdef"
+    - type: WelderRefinable
+      refineResult:
+      - GlassStack
+      - MetalStack
 - type: entity
   id: ShardGlassPhoron
   name: phoron glass shard
@@ -51,3 +57,7 @@
       color: "#f3b489"
     - type: Item
       color: "#f3b489"
+    - type: WelderRefinable
+      refineResult:
+      - GlassStack
+      - PhoronStack

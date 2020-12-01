@@ -53,11 +53,11 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(inventory.HasSlot(Slots.INNERCLOTHING));
                 Assert.That(inventory.HasSlot(Slots.IDCARD));
 
-                Assert.That(inventory.SpawnItemInSlot(Slots.INNERCLOTHING, "UniformJanitor", true));
+                Assert.That(inventory.SpawnItemInSlot(Slots.INNERCLOTHING, "ClothingUniformJumpsuitJanitor", true));
 
                 // Do we actually have the uniform equipped?
                 Assert.That(inventory.TryGetSlotItem(Slots.INNERCLOTHING, out ItemComponent uniform));
-                Assert.That(uniform.Owner.Prototype != null && uniform.Owner.Prototype.ID == "UniformJanitor");
+                Assert.That(uniform.Owner.Prototype != null && uniform.Owner.Prototype.ID == "ClothingUniformJumpsuitJanitor");
 
                 stun.Stun(1f);
 

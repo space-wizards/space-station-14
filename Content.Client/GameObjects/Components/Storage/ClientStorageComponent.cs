@@ -25,7 +25,9 @@ namespace Content.Client.GameObjects.Components.Storage
     [RegisterComponent]
     public class ClientStorageComponent : SharedStorageComponent, IDraggable
     {
-        private List<IEntity> _storedEntities = new List<IEntity>();
+
+        private List<IEntity> _storedEntities = new();
+
         private int StorageSizeUsed;
         private int StorageCapacityMax;
         private StorageWindow Window;
@@ -50,7 +52,7 @@ namespace Content.Client.GameObjects.Components.Storage
         {
             base.HandleComponentState(curState, nextState);
 
-            if (!(curState is StorageComponentState state))
+            if (curState is not StorageComponentState state)
             {
                 return;
             }
@@ -134,12 +136,12 @@ namespace Content.Client.GameObjects.Components.Storage
         private class StorageWindow : SS14Window
         {
             private Control VSplitContainer;
-            private VBoxContainer EntityList;
-            private Label Information;
+            private readonly VBoxContainer _entityList;
+            private readonly Label _information;
             public ClientStorageComponent StorageEntity;
 
-            private StyleBoxFlat _HoveredBox = new StyleBoxFlat { BackgroundColor = Color.Black.WithAlpha(0.35f) };
-            private StyleBoxFlat _unHoveredBox = new StyleBoxFlat { BackgroundColor = Color.Black.WithAlpha(0.0f) };
+            private readonly StyleBoxFlat _hoveredBox = new() { BackgroundColor = Color.Black.WithAlpha(0.35f) };
+            private readonly StyleBoxFlat _unHoveredBox = new() { BackgroundColor = Color.Black.WithAlpha(0.0f) };
 
             protected override Vector2? CustomSize => (180, 320);
 
@@ -179,12 +181,12 @@ namespace Content.Client.GameObjects.Components.Storage
                     MouseFilter = MouseFilterMode.Ignore,
                 };
                 containerButton.AddChild(VSplitContainer);
-                Information = new Label
+                _information = new Label
                 {
                     Text = "Items: 0 Volume: 0/0 Stuff",
                     SizeFlagsVertical = SizeFlags.ShrinkCenter
                 };
-                VSplitContainer.AddChild(Information);
+                VSplitContainer.AddChild(_information);
 
                 var listScrollContainer = new ScrollContainer
                 {
@@ -193,18 +195,18 @@ namespace Content.Client.GameObjects.Components.Storage
                     HScrollEnabled = true,
                     VScrollEnabled = true,
                 };
-                EntityList = new VBoxContainer
+                _entityList = new VBoxContainer
                 {
                     SizeFlagsHorizontal = SizeFlags.FillExpand
                 };
-                listScrollContainer.AddChild(EntityList);
+                listScrollContainer.AddChild(_entityList);
                 VSplitContainer.AddChild(listScrollContainer);
 
                 Contents.AddChild(containerButton);
 
                 listScrollContainer.OnMouseEntered += args =>
                 {
-                    innerContainerButton.PanelOverride = _HoveredBox;
+                    innerContainerButton.PanelOverride = _hoveredBox;
                 };
 
                 listScrollContainer.OnMouseExited += args =>
@@ -224,7 +226,7 @@ namespace Content.Client.GameObjects.Components.Storage
             /// </summary>
             public void BuildEntityList()
             {
-                EntityList.DisposeAllChildren();
+                _entityList.DisposeAllChildren();
 
                 var storageList = StorageEntity.StoredEntities;
 
@@ -254,18 +256,18 @@ namespace Content.Client.GameObjects.Components.Storage
                         button.EntitySpriteView.Sprite = sprite;
                     }
 
-                    EntityList.AddChild(button);
+                    _entityList.AddChild(button);
                 }
 
                 //Sets information about entire storage container current capacity
                 if (StorageEntity.StorageCapacityMax != 0)
                 {
-                    Information.Text = String.Format("Items: {0}, Stored: {1}/{2}", storageList.Count,
+                    _information.Text = String.Format("Items: {0}, Stored: {1}/{2}", storageList.Count,
                         StorageEntity.StorageSizeUsed, StorageEntity.StorageCapacityMax);
                 }
                 else
                 {
-                    Information.Text = String.Format("Items: {0}", storageList.Count);
+                    _information.Text = String.Format("Items: {0}", storageList.Count);
                 }
             }
 
@@ -278,19 +280,6 @@ namespace Content.Client.GameObjects.Components.Storage
                 var control = (EntityButton) args.Button.Parent;
                 args.Button.Pressed = false;
                 StorageEntity.Interact(control.EntityUid);
-            }
-
-            /// <summary>
-            /// Function assigned to button that adds items to the storage entity.
-            /// </summary>
-            private void OnAddItemButtonPressed(BaseButton.ButtonEventArgs args)
-            {
-                var controlledEntity = IoCManager.Resolve<IPlayerManager>().LocalPlayer.ControlledEntity;
-
-                if (controlledEntity.TryGetComponent(out HandsComponent hands))
-                {
-                    StorageEntity.SendNetworkMessage(new InsertEntityMessage());
-                }
             }
         }
 

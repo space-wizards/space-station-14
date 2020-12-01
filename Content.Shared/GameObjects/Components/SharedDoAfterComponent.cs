@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -59,7 +59,9 @@ namespace Content.Shared.GameObjects.Components
 
         public bool BreakOnTargetMove { get; }
 
-        public ClientDoAfter(byte id, EntityCoordinates userGrid, EntityCoordinates targetGrid, TimeSpan startTime, float delay, bool breakOnUserMove, bool breakOnTargetMove, EntityUid targetUid = default)
+        public float MovementThreshold { get; }
+
+        public ClientDoAfter(byte id, EntityCoordinates userGrid, EntityCoordinates targetGrid, TimeSpan startTime, float delay, bool breakOnUserMove, bool breakOnTargetMove, float movementThreshold, EntityUid targetUid = default)
         {
             ID = id;
             UserGrid = userGrid;
@@ -68,6 +70,7 @@ namespace Content.Shared.GameObjects.Components
             Delay = delay;
             BreakOnUserMove = breakOnUserMove;
             BreakOnTargetMove = breakOnTargetMove;
+            MovementThreshold = movementThreshold;
             TargetUid = targetUid;
         }
     }

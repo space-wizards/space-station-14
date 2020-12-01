@@ -26,18 +26,20 @@ namespace Content.Server.GameObjects.Components.Arcade
     [ComponentReference(typeof(IActivate))]
     public class BlockGameArcadeComponent : Component, IActivate
     {
-        [Dependency] private IRobustRandom _random = null!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         public override string Name => "BlockGameArcade";
         public override uint? NetID => ContentNetIDs.BLOCKGAME_ARCADE;
-        [ComponentDependency] private PowerReceiverComponent? _powerReceiverComponent = default!;
+
+        [ComponentDependency] private readonly PowerReceiverComponent? _powerReceiverComponent = default!;
+
         private bool Powered => _powerReceiverComponent?.Powered ?? false;
         private BoundUserInterface? UserInterface => Owner.GetUIOrNull(BlockGameUiKey.Key);
 
         private BlockGame? _game;
 
         private IPlayerSession? _player;
-        private List<IPlayerSession> _spectators = new List<IPlayerSession>();
+        private readonly List<IPlayerSession> _spectators = new();
 
         public void Activate(ActivateEventArgs eventArgs)
         {
@@ -162,9 +164,9 @@ namespace Content.Server.GameObjects.Components.Arcade
         {
             //note: field is 10(0 -> 9) wide and 20(0 -> 19) high
 
-            private BlockGameArcadeComponent _component;
+            private readonly BlockGameArcadeComponent _component;
 
-            private List<BlockGameBlock> _field = new List<BlockGameBlock>();
+            private readonly List<BlockGameBlock> _field = new();
 
             private BlockGamePiece _currentPiece;
 
@@ -536,35 +538,45 @@ namespace Content.Server.GameObjects.Components.Arcade
 
             public void ProcessInput(BlockGamePlayerAction action)
             {
+                if (_running)
+                {
+                    switch (action)
+                    {
+                        case BlockGamePlayerAction.StartLeft:
+                            _leftPressed = true;
+                            break;
+                        case BlockGamePlayerAction.StartRight:
+                            _rightPressed = true;
+                            break;
+                        case BlockGamePlayerAction.Rotate:
+                            TrySetRotation(Next(_currentRotation, false));
+                            break;
+                        case BlockGamePlayerAction.CounterRotate:
+                            TrySetRotation(Next(_currentRotation, true));
+                            break;
+                        case BlockGamePlayerAction.SoftdropStart:
+                            _softDropPressed = true;
+                            if (_accumulatedFieldFrameTime > Speed) _accumulatedFieldFrameTime = Speed; //to prevent jumps
+                            break;
+                        case BlockGamePlayerAction.Harddrop:
+                            PerformHarddrop();
+                            break;
+                        case BlockGamePlayerAction.Hold:
+                            HoldPiece();
+                            break;
+                    }
+                }
+
                 switch (action)
                 {
-                    case BlockGamePlayerAction.StartLeft:
-                        _leftPressed = true;
-                        break;
                     case BlockGamePlayerAction.EndLeft:
                         _leftPressed = false;
-                        break;
-                    case BlockGamePlayerAction.StartRight:
-                        _rightPressed = true;
                         break;
                     case BlockGamePlayerAction.EndRight:
                         _rightPressed = false;
                         break;
-                    case BlockGamePlayerAction.Rotate:
-                        TrySetRotation(Next(_currentRotation, false));
-                        break;
-                    case BlockGamePlayerAction.CounterRotate:
-                        TrySetRotation(Next(_currentRotation, true));
-                        break;
-                    case BlockGamePlayerAction.SoftdropStart:
-                        _softDropPressed = true;
-                        if (_accumulatedFieldFrameTime > Speed) _accumulatedFieldFrameTime = Speed; //to prevent jumps
-                        break;
                     case BlockGamePlayerAction.SoftdropEnd:
                         _softDropPressed = false;
-                        break;
-                    case BlockGamePlayerAction.Harddrop:
-                        PerformHarddrop();
                         break;
                     case BlockGamePlayerAction.Pause:
                         _running = false;
@@ -576,9 +588,6 @@ namespace Content.Server.GameObjects.Components.Arcade
                             _running = true;
                             _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Game));
                         }
-                        break;
-                    case BlockGamePlayerAction.Hold:
-                        HoldPiece();
                         break;
                     case BlockGamePlayerAction.ShowHighscores:
                         _running = false;
@@ -731,7 +740,7 @@ namespace Content.Server.GameObjects.Components.Arcade
 
             private readonly BlockGamePieceType[] _allBlockGamePieces;
 
-            private List<BlockGamePieceType> _blockGamePiecesBuffer = new List<BlockGamePieceType>();
+            private List<BlockGamePieceType> _blockGamePiecesBuffer = new();
 
             private BlockGamePiece GetRandomBlockGamePiece(IRobustRandom random)
             {

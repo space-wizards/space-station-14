@@ -123,7 +123,7 @@ namespace Content.Shared.Arcade
 
             public int CompareTo(object? obj)
             {
-                if (!(obj is HighScoreEntry entry)) return 0;
+                if (obj is not HighScoreEntry entry) return 0;
                 return Score.CompareTo(entry.Score);
             }
         }

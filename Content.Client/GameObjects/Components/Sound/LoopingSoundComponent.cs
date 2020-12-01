@@ -21,7 +21,7 @@ namespace Content.Client.GameObjects.Components.Sound
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 
-        private readonly Dictionary<ScheduledSound, IPlayingAudioStream> _audioStreams = new Dictionary<ScheduledSound, IPlayingAudioStream>();
+        private readonly Dictionary<ScheduledSound, IPlayingAudioStream> _audioStreams = new();
         private AudioSystem _audioSystem;
 
         public override void StopAllSounds()

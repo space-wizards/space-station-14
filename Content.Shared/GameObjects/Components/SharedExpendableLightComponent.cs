@@ -64,17 +64,17 @@ namespace Content.Shared.GameObjects.Components
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(this, x => TurnOnBehaviourID, "turnOnBehaviourID", string.Empty);
-            serializer.DataField(this, x => FadeOutBehaviourID, "fadeOutBehaviourID", string.Empty);
-            serializer.DataField(this, x => GlowDuration, "glowDuration", 60 * 15f);
-            serializer.DataField(this, x => FadeOutDuration, "fadeOutDuration", 60 * 5f);
-            serializer.DataField(this, x => SpentName, "spentName", string.Empty);
-            serializer.DataField(this, x => SpentDesc, "spentDesc", string.Empty);
-            serializer.DataField(this, x => IconStateLit, "iconStateOn", string.Empty);
-            serializer.DataField(this, x => IconStateSpent, "iconStateSpent", string.Empty);
-            serializer.DataField(this, x => LitSound, "litSound", string.Empty);
-            serializer.DataField(this, x => LoopedSound, "loopedSound", string.Empty);
-            serializer.DataField(this, x => DieSound, "dieSound", string.Empty);
+            serializer.DataField(this, x => x.TurnOnBehaviourID, "turnOnBehaviourID", string.Empty);
+            serializer.DataField(this, x => x.FadeOutBehaviourID, "fadeOutBehaviourID", string.Empty);
+            serializer.DataField(this, x => x.GlowDuration, "glowDuration", 60 * 15f);
+            serializer.DataField(this, x => x.FadeOutDuration, "fadeOutDuration", 60 * 5f);
+            serializer.DataField(this, x => x.SpentName, "spentName", string.Empty);
+            serializer.DataField(this, x => x.SpentDesc, "spentDesc", string.Empty);
+            serializer.DataField(this, x => x.IconStateLit, "iconStateOn", string.Empty);
+            serializer.DataField(this, x => x.IconStateSpent, "iconStateSpent", string.Empty);
+            serializer.DataField(this, x => x.LitSound, "litSound", string.Empty);
+            serializer.DataField(this, x => x.LoopedSound, "loopedSound", string.Empty);
+            serializer.DataField(this, x => x.DieSound, "dieSound", string.Empty);
         }
     }
 }

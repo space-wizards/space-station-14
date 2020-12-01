@@ -88,27 +88,27 @@ namespace Content.Shared.Preferences
 
         public HumanoidCharacterProfile WithName(string name)
         {
-            return new HumanoidCharacterProfile(name, Age, Sex, Appearance, _jobPriorities, PreferenceUnavailable, _antagPreferences);
+            return new(name, Age, Sex, Appearance, _jobPriorities, PreferenceUnavailable, _antagPreferences);
         }
 
         public HumanoidCharacterProfile WithAge(int age)
         {
-            return new HumanoidCharacterProfile(Name, Math.Clamp(age, MinimumAge, MaximumAge), Sex, Appearance, _jobPriorities, PreferenceUnavailable, _antagPreferences);
+            return new(Name, Math.Clamp(age, MinimumAge, MaximumAge), Sex, Appearance, _jobPriorities, PreferenceUnavailable, _antagPreferences);
         }
 
         public HumanoidCharacterProfile WithSex(Sex sex)
         {
-            return new HumanoidCharacterProfile(Name, Age, sex, Appearance, _jobPriorities, PreferenceUnavailable, _antagPreferences);
+            return new(Name, Age, sex, Appearance, _jobPriorities, PreferenceUnavailable, _antagPreferences);
         }
 
         public HumanoidCharacterProfile WithCharacterAppearance(HumanoidCharacterAppearance appearance)
         {
-            return new HumanoidCharacterProfile(Name, Age, Sex, appearance, _jobPriorities, PreferenceUnavailable, _antagPreferences);
+            return new(Name, Age, Sex, appearance, _jobPriorities, PreferenceUnavailable, _antagPreferences);
         }
 
         public HumanoidCharacterProfile WithJobPriorities(IReadOnlyDictionary<string, JobPriority> jobPriorities)
         {
-            return new HumanoidCharacterProfile(
+            return new(
                 Name,
                 Age,
                 Sex,
@@ -135,12 +135,12 @@ namespace Content.Shared.Preferences
 
         public HumanoidCharacterProfile WithPreferenceUnavailable(PreferenceUnavailableMode mode)
         {
-            return new HumanoidCharacterProfile(Name, Age, Sex, Appearance, _jobPriorities, mode, _antagPreferences);
+            return new(Name, Age, Sex, Appearance, _jobPriorities, mode, _antagPreferences);
         }
 
         public HumanoidCharacterProfile WithAntagPreferences(IReadOnlyList<string> antagPreferences)
         {
-            return new HumanoidCharacterProfile(
+            return new(
                 Name,
                 Age,
                 Sex,
@@ -236,7 +236,7 @@ namespace Content.Shared.Preferences
 
         public bool MemberwiseEquals(ICharacterProfile maybeOther)
         {
-            if (!(maybeOther is HumanoidCharacterProfile other)) return false;
+            if (maybeOther is not HumanoidCharacterProfile other) return false;
             if (Name != other.Name) return false;
             if (Age != other.Age) return false;
             if (Sex != other.Sex) return false;

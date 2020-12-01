@@ -258,8 +258,8 @@ namespace Content.Client.UserInterface
 
     public class LobbyPlayerList : Control
     {
-        private ScrollContainer _scroll;
-        private VBoxContainer _vBox;
+        private readonly ScrollContainer _scroll;
+        private readonly VBoxContainer _vBox;
 
         public LobbyPlayerList()
         {

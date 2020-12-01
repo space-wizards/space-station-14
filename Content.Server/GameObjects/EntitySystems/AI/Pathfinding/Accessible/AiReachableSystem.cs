@@ -45,7 +45,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         /// <summary>
         /// Queued region updates
         /// </summary>
-        private HashSet<PathfindingChunk> _queuedUpdates = new HashSet<PathfindingChunk>();
+        private readonly HashSet<PathfindingChunk> _queuedUpdates = new();
 
         // Oh god the nesting. Shouldn't need to go beyond this
         /// <summary>
@@ -53,8 +53,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         /// Regions are groups of nodes with the same profile (for pathfinding purposes)
         /// i.e. same collision, not-space, same access, etc.
         /// </summary>
-        private Dictionary<GridId, Dictionary<PathfindingChunk, HashSet<PathfindingRegion>>> _regions =
-            new Dictionary<GridId, Dictionary<PathfindingChunk, HashSet<PathfindingRegion>>>();
+        private readonly Dictionary<GridId, Dictionary<PathfindingChunk, HashSet<PathfindingRegion>>> _regions =
+            new();
 
         /// <summary>
         /// Minimum time for the cached reachable regions to be stored
@@ -70,10 +70,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
 
         // Also, didn't use a dictionary because there didn't seem to be a clean way to do the lookup
         // Plus this way we can check if everything is equal except for vision so an entity with a lower vision radius can use an entity with a higher vision radius' cached result
-        private Dictionary<ReachableArgs, Dictionary<PathfindingRegion, (TimeSpan CacheTime, HashSet<PathfindingRegion> Regions)>> _cachedAccessible =
-            new Dictionary<ReachableArgs, Dictionary<PathfindingRegion, (TimeSpan, HashSet<PathfindingRegion>)>>();
+        private readonly Dictionary<ReachableArgs, Dictionary<PathfindingRegion, (TimeSpan CacheTime, HashSet<PathfindingRegion> Regions)>> _cachedAccessible =
+            new();
 
-        private readonly List<PathfindingRegion> _queuedCacheDeletions = new List<PathfindingRegion>();
+        private readonly List<PathfindingRegion> _queuedCacheDeletions = new();
 
 #if DEBUG
         private int _runningCacheIdx = 0;

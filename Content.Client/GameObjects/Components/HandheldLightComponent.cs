@@ -25,7 +25,9 @@ namespace Content.Client.GameObjects.Components
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            if (!(curState is HandheldLightComponentState cast))
+            base.HandleComponentState(curState, nextState);
+
+            if (curState is not HandheldLightComponentState cast)
                 return;
 
             _level = cast.Charge;
@@ -40,12 +42,12 @@ namespace Content.Client.GameObjects.Components
 
             private float _timer;
 
-            private static readonly StyleBoxFlat _styleBoxLit = new StyleBoxFlat
+            private static readonly StyleBoxFlat _styleBoxLit = new()
             {
                 BackgroundColor = Color.Green
             };
 
-            private static readonly StyleBoxFlat _styleBoxUnlit = new StyleBoxFlat
+            private static readonly StyleBoxFlat _styleBoxUnlit = new()
             {
                 BackgroundColor = Color.Black
             };

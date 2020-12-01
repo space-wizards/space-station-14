@@ -32,21 +32,21 @@ namespace Content.Shared.Arcade
     public static class BlockGameVector2Extensions{
         public static BlockGameBlock ToBlockGameBlock(this Vector2i vector2, BlockGameBlock.BlockGameBlockColor gameBlockColor)
         {
-            return new BlockGameBlock(vector2, gameBlockColor);
+            return new(vector2, gameBlockColor);
         }
 
         public static Vector2i AddToX(this Vector2i vector2, int amount)
         {
-            return new Vector2i(vector2.X + amount, vector2.Y);
+            return new(vector2.X + amount, vector2.Y);
         }
         public static Vector2i AddToY(this Vector2i vector2, int amount)
         {
-            return new Vector2i(vector2.X, vector2.Y + amount);
+            return new(vector2.X, vector2.Y + amount);
         }
 
         public static Vector2i Rotate90DegreesAsOffset(this Vector2i vector)
         {
-            return new Vector2i(-vector.Y, vector.X);
+            return new(-vector.Y, vector.X);
         }
 
     }

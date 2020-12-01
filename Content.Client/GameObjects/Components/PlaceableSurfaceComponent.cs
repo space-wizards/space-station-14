@@ -30,7 +30,7 @@ namespace Content.Client.GameObjects.Components
         {
             base.HandleComponentState(curState, nextState);
 
-            if (!(curState is PlaceableSurfaceComponentState state))
+            if (curState is not PlaceableSurfaceComponentState state)
             {
                 return;
             }

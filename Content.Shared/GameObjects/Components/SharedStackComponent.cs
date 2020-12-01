@@ -97,7 +97,7 @@ namespace Content.Shared.GameObjects.Components
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            if (!(curState is StackComponentState cast))
+            if (curState is not StackComponentState cast)
             {
                 return;
             }
@@ -125,6 +125,7 @@ namespace Content.Shared.GameObjects.Components
     {
         Metal,
         Glass,
+        ReinforcedGlass,
         Plasteel,
         Cable,
         Wood,
@@ -139,6 +140,7 @@ namespace Content.Shared.GameObjects.Components
         FloorTileCarpet,
         FloorTileWhite,
         FloorTileDark,
-        FloorTileWood
+        FloorTileWood,
+        MetalRod
     }
 }
