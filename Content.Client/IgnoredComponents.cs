@@ -216,6 +216,7 @@
             "ConveyorAssembly",
             "TwoWayLever",
             "FirelockElectronics",
+            "ChemicalInjectionProjectile",
         };
     }
 }
