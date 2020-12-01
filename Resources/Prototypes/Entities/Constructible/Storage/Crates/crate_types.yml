@@ -23,7 +23,7 @@
 
 - type: entity
   id: CratePlastic
-  name: plastic crate
+  name: plastic crat
   parent: CrateGeneric
   components:
   - type: Sprite
