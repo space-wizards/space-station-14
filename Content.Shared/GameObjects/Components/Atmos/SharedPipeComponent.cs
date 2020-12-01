@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.GameObjects.Components.Atmos
 {
     [Serializable, NetSerializable]
-    public enum PipeVisuals
+    public enum PipeVisuals : byte
     {
         VisualState
     }
@@ -55,7 +55,7 @@ namespace Content.Shared.GameObjects.Components.Atmos
         All = -1,
     }
 
-    public enum PipeShape
+    public enum PipeShape : byte
     {
         Half,
         Straight,
@@ -64,7 +64,7 @@ namespace Content.Shared.GameObjects.Components.Atmos
         Fourway
     }
 
-    public enum ConduitLayer
+    public enum ConduitLayer : byte
     {
         One = 1,
         Two = 2,

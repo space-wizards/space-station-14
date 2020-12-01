@@ -117,7 +117,7 @@ namespace Content.Server.Database
         [Column("priority")] public DbJobPriority Priority { get; set; }
     }
 
-    public enum DbJobPriority
+    public enum DbJobPriority : byte
     {
         // These enum values HAVE to match the ones in JobPriority in Shared.
         Never = 0,
@@ -136,7 +136,7 @@ namespace Content.Server.Database
         [Column("antag_name")] public string AntagName { get; set; } = null!;
     }
 
-    public enum DbPreferenceUnavailableMode
+    public enum DbPreferenceUnavailableMode : byte
     {
         // These enum values HAVE to match the ones in PreferenceUnavailableMode in Shared.
         StayInLobby = 0,

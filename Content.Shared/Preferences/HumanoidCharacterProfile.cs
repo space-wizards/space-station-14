@@ -182,7 +182,7 @@ namespace Content.Shared.Preferences
             {
                 Sex.Male => Sex.Male,
                 Sex.Female => Sex.Female,
-                _ => Sex.Male // Invalid enum values.
+                _ => Sex.Male // Invalid enum values. : byte
             };
 
             string name;

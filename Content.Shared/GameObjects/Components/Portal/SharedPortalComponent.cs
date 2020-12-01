@@ -21,13 +21,13 @@ namespace Content.Shared.GameObjects.Components.Portal
     }
 
     [Serializable, NetSerializable]
-    public enum PortalVisuals
+    public enum PortalVisuals : byte
     {
         State
     }
 
     [Serializable, NetSerializable]
-    public enum PortalState
+    public enum PortalState : byte
     {
         RecentlyTeleported,
         Pending,

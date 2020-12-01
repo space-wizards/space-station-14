@@ -96,7 +96,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry.ChemMaster
         }
 
         [Serializable, NetSerializable]
-        public enum ChemMasterUiKey
+        public enum ChemMasterUiKey : byte
         {
             Key
         }
@@ -104,7 +104,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry.ChemMaster
         /// <summary>
         /// Used in <see cref="UiButtonPressedMessage"/> to specify which button was pressed.
         /// </summary>
-        public enum UiAction
+        public enum UiAction : byte
         {
             Eject,
             Transfer,

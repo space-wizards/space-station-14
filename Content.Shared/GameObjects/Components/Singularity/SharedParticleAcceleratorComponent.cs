@@ -5,13 +5,13 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.GameObjects.Components
 {
     [NetSerializable, Serializable]
-    public enum ParticleAcceleratorVisuals
+    public enum ParticleAcceleratorVisuals : byte
     {
         VisualState
     }
 
     [NetSerializable, Serializable]
-    public enum ParticleAcceleratorVisualState
+    public enum ParticleAcceleratorVisualState : byte
     {
         //Open, //no prefix
         //Wired, //w prefix
@@ -24,7 +24,7 @@ namespace Content.Shared.GameObjects.Components
     }
 
     [NetSerializable, Serializable]
-    public enum ParticleAcceleratorPowerState
+    public enum ParticleAcceleratorPowerState : byte
     {
         Standby = ParticleAcceleratorVisualState.Powered,
         Level0 = ParticleAcceleratorVisualState.Level0,
@@ -33,14 +33,14 @@ namespace Content.Shared.GameObjects.Components
         Level3 = ParticleAcceleratorVisualState.Level3
     }
 
-    public enum ParticleAcceleratorVisualLayers
+    public enum ParticleAcceleratorVisualLayers : byte
     {
         Base,
         Unlit
     }
 
     [Serializable, NetSerializable]
-    public enum ParticleAcceleratorWireStatus
+    public enum ParticleAcceleratorWireStatus : byte
     {
         Power,
         Keyboard,
@@ -118,7 +118,7 @@ namespace Content.Shared.GameObjects.Components
     }
 
     [NetSerializable, Serializable]
-    public enum ParticleAcceleratorControlBoxUiKey
+    public enum ParticleAcceleratorControlBoxUiKey : byte
     {
         Key
     }

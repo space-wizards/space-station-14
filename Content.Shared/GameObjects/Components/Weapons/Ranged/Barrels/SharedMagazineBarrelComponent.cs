@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels
 {
     [Serializable, NetSerializable]
-    public enum AmmoVisuals
+    public enum AmmoVisuals : byte
     {
         AmmoCount,
         AmmoMax,
@@ -13,13 +13,13 @@ namespace Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels
     }
 
     [Serializable, NetSerializable]
-    public enum MagazineBarrelVisuals
+    public enum MagazineBarrelVisuals : byte
     {
         MagLoaded
     }
 
     [Serializable, NetSerializable]
-    public enum BarrelBoltVisuals
+    public enum BarrelBoltVisuals : byte
     {
         BoltOpen,
     }

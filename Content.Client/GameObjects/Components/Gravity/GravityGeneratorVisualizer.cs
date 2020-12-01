@@ -60,7 +60,7 @@ namespace Content.Client.GameObjects.Components.Gravity
             }
         }
 
-        public enum GravityGeneratorVisualLayers
+        public enum GravityGeneratorVisualLayers : byte
         {
             Base,
             Core

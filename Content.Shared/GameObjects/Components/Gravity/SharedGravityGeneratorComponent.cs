@@ -49,21 +49,21 @@ namespace Content.Shared.GameObjects.Components.Gravity
         }
 
         [Serializable, NetSerializable]
-        public enum GravityGeneratorUiKey
+        public enum GravityGeneratorUiKey : byte
         {
             Key
         }
     }
 
     [Serializable, NetSerializable]
-    public enum GravityGeneratorVisuals
+    public enum GravityGeneratorVisuals : byte
     {
         State,
         CoreVisible
     }
 
     [Serializable, NetSerializable]
-    public enum GravityGeneratorStatus
+    public enum GravityGeneratorStatus : byte
     {
         Broken,
         Unpowered,

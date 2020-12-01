@@ -1,6 +1,6 @@
 namespace Content.Server.GameObjects.Components.Kitchen
 {
-    public enum MicrowaveSuccessState
+    public enum MicrowaveSuccessState : byte
     {
         RecipePass,
         RecipeFail,

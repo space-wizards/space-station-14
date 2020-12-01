@@ -10,7 +10,7 @@ namespace Content.Shared.GameObjects.Components.Pointing
     }
 
     [Serializable, NetSerializable]
-    public enum RoguePointingArrowVisuals
+    public enum RoguePointingArrowVisuals : byte
     {
         Rotation
     }

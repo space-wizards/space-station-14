@@ -7,7 +7,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
     ///     Zones the player can target for attacks.
     /// </summary>
     [Serializable, NetSerializable]
-    public enum TargetingZone
+    public enum TargetingZone : byte
     {
         /// <summary>
         ///     Torso/arm area.

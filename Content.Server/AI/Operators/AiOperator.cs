@@ -47,7 +47,7 @@ namespace Content.Server.AI.Operators
         public abstract Outcome Execute(float frameTime);
     }
 
-    public enum Outcome
+    public enum Outcome : byte
     {
         Success,
         Continuing,

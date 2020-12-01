@@ -47,7 +47,7 @@ namespace Content.Shared.GameObjects.Components.Research
         }
 
         [NetSerializable, Serializable]
-        public enum ResearchClientUiKey
+        public enum ResearchClientUiKey : byte
         {
             Key,
         }

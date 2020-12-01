@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.GameObjects.Components.Power
 {
     [Serializable, NetSerializable]
-    public enum LatheVisualState
+    public enum LatheVisualState : byte
     {
         Idle,
         Producing,

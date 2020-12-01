@@ -124,7 +124,7 @@ namespace Content.Shared.GameObjects.Components.Research
         }
 
         [NetSerializable, Serializable]
-        public enum LatheUiKey
+        public enum LatheUiKey : byte
         {
             Key,
         }

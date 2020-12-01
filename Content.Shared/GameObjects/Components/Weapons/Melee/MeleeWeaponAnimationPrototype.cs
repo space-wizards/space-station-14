@@ -54,7 +54,7 @@ namespace Content.Shared.GameObjects.Components.Weapons.Melee
         }
     }
 
-    public enum WeaponArcType
+    public enum WeaponArcType : byte
     {
         Slash,
         Poke,

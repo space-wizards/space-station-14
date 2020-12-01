@@ -9,13 +9,13 @@ namespace Content.Shared.GameObjects.Components.Power.AME
         public override string Name => "AMEShield";
 
         [Serializable, NetSerializable]
-        public enum AMEShieldVisuals
+        public enum AMEShieldVisuals : byte
         {
             Core,
             CoreState
         }
 
-        public enum AMECoreState
+        public enum AMECoreState : byte
         {
             Off,
             Weak,

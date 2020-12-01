@@ -80,7 +80,7 @@ namespace Content.Shared.GameObjects.Components.Instruments
     }
 
     [NetSerializable, Serializable]
-    public enum InstrumentUiKey
+    public enum InstrumentUiKey : byte
     {
         Key,
     }

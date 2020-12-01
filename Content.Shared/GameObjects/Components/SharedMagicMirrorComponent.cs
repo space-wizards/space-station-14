@@ -11,7 +11,7 @@ namespace Content.Shared.GameObjects.Components
         public override string Name => "MagicMirror";
 
         [Serializable, NetSerializable]
-        public enum MagicMirrorUiKey
+        public enum MagicMirrorUiKey : byte
         {
             Key
         }

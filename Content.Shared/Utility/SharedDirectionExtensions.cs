@@ -48,7 +48,7 @@ namespace Content.Shared.Utility
         /// <summary>
         ///     Gets tiles in random directions from the given one.
         /// </summary>
-        /// <returns>An enumerable of the adjacent tiles.</returns>
+        /// <returns>An enumerable of the adjacent tiles.</returns> : byte
         public static IEnumerable<TileRef> AdjacentTilesRandom(this TileRef tile, bool ignoreSpace = false)
         {
             return tile.GridPosition().AdjacentTilesRandom(ignoreSpace);
@@ -57,7 +57,7 @@ namespace Content.Shared.Utility
         /// <summary>
         ///     Gets tiles in random directions from the given one.
         /// </summary>
-        /// <returns>An enumerable of the adjacent tiles.</returns>
+        /// <returns>An enumerable of the adjacent tiles.</returns> : byte
         public static IEnumerable<TileRef> AdjacentTilesRandom(this EntityCoordinates coordinates, bool ignoreSpace = false)
         {
             foreach (var direction in RandomDirections())

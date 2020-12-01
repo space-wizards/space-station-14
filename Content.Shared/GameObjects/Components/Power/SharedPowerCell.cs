@@ -9,7 +9,7 @@ namespace Content.Shared.GameObjects.Components.Power
     }
 
     [Serializable, NetSerializable]
-    public enum PowerCellVisuals
+    public enum PowerCellVisuals : byte
     {
         ChargeLevel
     }

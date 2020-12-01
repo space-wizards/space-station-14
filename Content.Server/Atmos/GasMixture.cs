@@ -421,7 +421,7 @@ namespace Content.Server.Atmos
             return sharerTemperature;
         }
 
-        public enum GasCompareResult
+        public enum GasCompareResult : sbyte
         {
             NoExchange = -2,
             TemperatureExchange = -1,

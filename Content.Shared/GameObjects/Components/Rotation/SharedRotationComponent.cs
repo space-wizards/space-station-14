@@ -4,13 +4,13 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.GameObjects.Components.Rotation
 {
     [Serializable, NetSerializable]
-    public enum RotationVisuals
+    public enum RotationVisuals : byte
     {
         RotationState
     }
 
     [Serializable, NetSerializable]
-    public enum RotationState
+    public enum RotationState : byte
     {
         /// <summary>
         ///     Standing up

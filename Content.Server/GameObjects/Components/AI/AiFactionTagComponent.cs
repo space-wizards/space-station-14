@@ -37,7 +37,7 @@ namespace Content.Server.GameObjects.Components.AI
     }
 
     [Flags]
-    public enum Faction
+    public enum Faction : byte
     {
         None = 0,
         NanoTransen = 1 << 0,

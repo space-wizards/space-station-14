@@ -143,7 +143,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             }
         }
 
-        public enum Wires
+        public enum Wires : byte
         {
             /// <summary>
             /// Disables Max Health&Mana for both Enemy and Player.

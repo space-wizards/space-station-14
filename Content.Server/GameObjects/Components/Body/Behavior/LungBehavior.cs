@@ -221,7 +221,7 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
         }
     }
 
-    public enum LungStatus
+    public enum LungStatus : byte
     {
         None = 0,
         Inhaling,

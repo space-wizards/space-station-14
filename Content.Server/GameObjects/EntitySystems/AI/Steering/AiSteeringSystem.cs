@@ -704,7 +704,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         #endregion
     }
 
-    public enum SteeringStatus
+    public enum SteeringStatus : byte
     {
         Pending,
         NoPath,

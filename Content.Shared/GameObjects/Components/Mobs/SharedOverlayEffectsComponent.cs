@@ -110,7 +110,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         }
     }
 
-    public enum SharedOverlayID
+    public enum SharedOverlayID : byte
     {
         GradientCircleMaskOverlay,
         CircleMaskOverlay,

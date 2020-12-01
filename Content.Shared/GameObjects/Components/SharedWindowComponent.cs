@@ -10,7 +10,7 @@ namespace Content.Shared.GameObjects.Components
     }
 
     [Serializable, NetSerializable]
-    public enum WindowVisuals
+    public enum WindowVisuals : byte
     {
         Damage
     }

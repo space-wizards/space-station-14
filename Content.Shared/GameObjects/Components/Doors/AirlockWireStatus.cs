@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.GameObjects.Components.Doors
 {
     [Serializable, NetSerializable]
-    public enum AirlockWireStatus
+    public enum AirlockWireStatus : byte
     {
         PowerIndicator,
         BoltIndicator,

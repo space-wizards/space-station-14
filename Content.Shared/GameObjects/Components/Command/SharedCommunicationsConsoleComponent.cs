@@ -42,7 +42,7 @@ namespace Content.Shared.GameObjects.Components.Command
     }
 
     [Serializable, NetSerializable]
-    public enum CommunicationsConsoleUiKey
+    public enum CommunicationsConsoleUiKey : byte
     {
         Key
     }

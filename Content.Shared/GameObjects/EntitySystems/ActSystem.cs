@@ -101,7 +101,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         }
     }
 
-    public enum ExplosionSeverity
+    public enum ExplosionSeverity : byte
     {
         Light,
         Heavy,

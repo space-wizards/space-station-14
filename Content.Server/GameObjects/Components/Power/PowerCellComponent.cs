@@ -64,7 +64,7 @@ namespace Content.Server.GameObjects.Components.Power
         }
     }
 
-    public enum PowerCellSize
+    public enum PowerCellSize : byte
     {
         Small,
         Medium,

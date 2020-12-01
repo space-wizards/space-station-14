@@ -133,7 +133,7 @@ namespace Content.Server.AI.Utility.Considerations
     /// <summary>
     /// Preset response curves for considerations
     /// </summary>
-    public enum PresetCurve
+    public enum PresetCurve : byte
     {
         Distance,
         Nutrition,

@@ -5,14 +5,14 @@ namespace Content.Shared.GameObjects.Components.Atmos
 {
     [NetSerializable]
     [Serializable]
-    public enum GasAnalyzerVisuals
+    public enum GasAnalyzerVisuals : byte
     {
         VisualState,
     }
 
     [NetSerializable]
     [Serializable]
-    public enum GasAnalyzerVisualState
+    public enum GasAnalyzerVisualState : byte
     {
         Off,
         Working,

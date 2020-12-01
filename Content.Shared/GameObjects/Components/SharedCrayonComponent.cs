@@ -18,7 +18,7 @@ namespace Content.Shared.GameObjects.Components
         protected string _color;
 
         [Serializable, NetSerializable]
-        public enum CrayonUiKey
+        public enum CrayonUiKey : byte
         {
             Key,
         }
@@ -35,7 +35,7 @@ namespace Content.Shared.GameObjects.Components
     }
 
     [Serializable, NetSerializable]
-    public enum CrayonVisuals
+    public enum CrayonVisuals : byte
     {
         State,
         Color,

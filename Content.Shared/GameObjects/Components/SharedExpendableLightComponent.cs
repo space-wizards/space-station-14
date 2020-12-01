@@ -6,13 +6,13 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.GameObjects.Components
 {
     [Serializable, NetSerializable]
-    public enum ExpendableLightVisuals
+    public enum ExpendableLightVisuals : byte
     {
         State
     }
 
     [Serializable, NetSerializable]
-    public enum ExpendableLightState
+    public enum ExpendableLightState : byte
     {
         BrandNew,
         Lit,

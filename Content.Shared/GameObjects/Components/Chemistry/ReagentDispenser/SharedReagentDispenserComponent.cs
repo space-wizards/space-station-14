@@ -73,7 +73,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser
         }
 
         [Serializable, NetSerializable]
-        public enum ReagentDispenserUiKey
+        public enum ReagentDispenserUiKey : byte
         {
             Key
         }
@@ -81,7 +81,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser
         /// <summary>
         /// Used in <see cref="UiButtonPressedMessage"/> to specify which button was pressed.
         /// </summary>
-        public enum UiButton
+        public enum UiButton : byte
         {
             Eject,
             Clear,

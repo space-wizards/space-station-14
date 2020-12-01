@@ -12,7 +12,7 @@ namespace Content.Shared.GameObjects.Components
         public override uint? NetID => ContentNetIDs.GAS_ANALYZER;
 
         [Serializable, NetSerializable]
-        public enum GasAnalyzerUiKey
+        public enum GasAnalyzerUiKey : byte
         {
             Key,
         }
@@ -61,7 +61,7 @@ namespace Content.Shared.GameObjects.Components
         }
 
         [Serializable, NetSerializable]
-        public enum GasAnalyzerDanger
+        public enum GasAnalyzerDanger : byte
         {
             Nominal,
             Warning,

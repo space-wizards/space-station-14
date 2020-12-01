@@ -71,7 +71,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         }
     }
 
-    public enum DamageStateVisualLayers
+    public enum DamageStateVisualLayers : byte
     {
         Base
     }

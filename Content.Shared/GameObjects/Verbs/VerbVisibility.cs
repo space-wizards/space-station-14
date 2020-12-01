@@ -3,7 +3,7 @@ namespace Content.Shared.GameObjects.Verbs
     /// <summary>
     /// Possible states of visibility for the verb in the right click menu.
     /// </summary>
-    public enum VerbVisibility
+    public enum VerbVisibility : byte
     {
         /// <summary>
         /// The verb will be listed in the right click menu.

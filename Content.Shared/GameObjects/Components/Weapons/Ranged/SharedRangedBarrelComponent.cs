@@ -19,7 +19,7 @@ namespace Content.Shared.GameObjects.Components.Weapons.Ranged
     }
 
     [Flags]
-    public enum FireRateSelector
+    public enum FireRateSelector : byte
     {
         Safety = 0,
         Single = 1 << 0,

@@ -41,7 +41,7 @@ namespace Content.Server.GameObjects.Components.Items.RCD
 
 
         ///Enum to store the different mode states for clarity.
-        private enum RcdMode
+        private enum RcdMode : byte
         {
             Floors,
             Walls,

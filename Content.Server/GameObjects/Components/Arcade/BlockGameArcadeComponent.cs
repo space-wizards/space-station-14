@@ -698,7 +698,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                 return result;
             }
 
-            private enum BlockGamePieceType
+            private enum BlockGamePieceType : byte
             {
                 I,
                 L,
@@ -709,7 +709,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                 O
             }
 
-            private enum BlockGamePieceRotation
+            private enum BlockGamePieceRotation : byte
             {
                 North,
                 East,

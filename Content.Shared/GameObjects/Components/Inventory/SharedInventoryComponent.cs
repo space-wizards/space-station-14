@@ -73,7 +73,7 @@ namespace Content.Shared.GameObjects.Components.Inventory
                 Updatetype = updatetype;
             }
 
-            public enum ClientInventoryUpdate
+            public enum ClientInventoryUpdate : byte
             {
                 Equip = 0,
                 Use = 1,

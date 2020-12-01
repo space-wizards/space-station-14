@@ -7,7 +7,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
     ///     Determines whether two <see cref="IBodyPart"/>s can connect.
     /// </summary>
     [Serializable, NetSerializable]
-    public enum BodyPartCompatibility
+    public enum BodyPartCompatibility : byte
     {
         Universal = 0,
         Biological,

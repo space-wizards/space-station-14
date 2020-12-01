@@ -14,7 +14,7 @@ namespace Content.Shared.GameObjects.Components.Damage
     ///     as inanimate objects don't go into crit.
     /// </summary>
     [Serializable, NetSerializable]
-    public enum DamageState
+    public enum DamageState : byte
     {
         Invalid = 0,
         Alive,

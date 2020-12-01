@@ -202,7 +202,7 @@ namespace Content.Client.GameObjects.Components.VendingMachines
             }
         }
 
-        public enum VendingMachineVisualLayers
+        public enum VendingMachineVisualLayers : byte
         {
             // Off / Broken. The other layers will overlay this if the machine is on.
             Unlit,

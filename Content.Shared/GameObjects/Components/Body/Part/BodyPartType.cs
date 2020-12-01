@@ -7,7 +7,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
     ///     Defines the type of a <see cref="IBodyPart"/>.
     /// </summary>
     [Serializable, NetSerializable]
-    public enum BodyPartType
+    public enum BodyPartType : byte
     {
         Other = 0,
         Torso,

@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.GameObjects.Components.Atmos.GasTank
 {
     [Serializable, NetSerializable]
-    public enum SharedGasTankUiKey
+    public enum SharedGasTankUiKey : byte
     {
         Key
     }

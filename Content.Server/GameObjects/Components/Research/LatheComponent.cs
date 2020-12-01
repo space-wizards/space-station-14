@@ -226,7 +226,7 @@ namespace Content.Server.GameObjects.Components.Research
             return queue;
         }
 
-        protected enum LatheState
+        protected enum LatheState : byte
         {
             Base,
             Inserting,

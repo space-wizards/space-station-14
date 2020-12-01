@@ -201,7 +201,7 @@ namespace Content.Server.GameObjects.EntitySystems.JobQueues
         }
     }
 
-    public enum JobStatus
+    public enum JobStatus : byte
     {
         /// <summary>
         ///     Job has been created and has not been ran yet.

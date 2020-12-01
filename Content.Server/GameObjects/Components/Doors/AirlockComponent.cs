@@ -238,7 +238,7 @@ namespace Content.Server.GameObjects.Components.Doors
             }
         }
 
-        private enum Wires
+        private enum Wires : byte
         {
             /// <summary>
             /// Pulsing turns off power for <see cref="AirlockComponent.PowerWiresTimeout"/>.

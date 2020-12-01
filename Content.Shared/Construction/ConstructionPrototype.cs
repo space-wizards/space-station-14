@@ -81,7 +81,7 @@ namespace Content.Shared.Construction
         }
     }
 
-    public enum ConstructionType
+    public enum ConstructionType : byte
     {
         Structure,
         Item,

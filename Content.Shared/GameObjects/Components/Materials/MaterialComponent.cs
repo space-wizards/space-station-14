@@ -79,7 +79,7 @@ namespace Content.Shared.GameObjects.Components.Materials
         }
     }
 
-    public enum MaterialKeys
+    public enum MaterialKeys : byte
     {
         Stack,
     }

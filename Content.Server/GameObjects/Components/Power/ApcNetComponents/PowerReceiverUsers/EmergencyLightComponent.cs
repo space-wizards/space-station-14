@@ -166,7 +166,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             message.AddMarkup(Loc.GetString($"The battery indicator displays: {BatteryStateText[State]}."));
         }
 
-        public enum EmergencyLightState
+        public enum EmergencyLightState : byte
         {
             Charging,
             Full,

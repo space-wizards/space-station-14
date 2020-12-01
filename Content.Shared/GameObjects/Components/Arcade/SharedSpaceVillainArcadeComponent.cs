@@ -11,7 +11,7 @@ namespace Content.Shared.GameObjects.Components.Arcade
         public override uint? NetID => ContentNetIDs.SPACE_VILLAIN_ARCADE;
 
         [Serializable, NetSerializable]
-        public enum Indicators
+        public enum Indicators : byte
         {
             /// <summary>
             /// Blinks when any invincible flag is set
@@ -24,7 +24,7 @@ namespace Content.Shared.GameObjects.Components.Arcade
         }
 
         [Serializable, NetSerializable]
-        public enum PlayerAction
+        public enum PlayerAction : byte
         {
             Attack,
             Heal,
@@ -34,7 +34,7 @@ namespace Content.Shared.GameObjects.Components.Arcade
         }
 
         [Serializable, NetSerializable]
-        public enum SpaceVillainArcadeVisualState
+        public enum SpaceVillainArcadeVisualState : byte
         {
             Normal,
             Off,
@@ -44,7 +44,7 @@ namespace Content.Shared.GameObjects.Components.Arcade
         }
 
         [Serializable, NetSerializable]
-        public enum SpaceVillainArcadeUiKey
+        public enum SpaceVillainArcadeUiKey : byte
         {
             Key,
         }

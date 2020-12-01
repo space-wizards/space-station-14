@@ -5,7 +5,7 @@ namespace Content.Shared.GameObjects.Components.Doors
 {
     [NetSerializable]
     [Serializable]
-    public enum DoorVisuals
+    public enum DoorVisuals : byte
     {
         VisualState,
         Powered,
@@ -14,7 +14,7 @@ namespace Content.Shared.GameObjects.Components.Doors
 
     [NetSerializable]
     [Serializable]
-    public enum DoorVisualState
+    public enum DoorVisualState : byte
     {
         Closed,
         Opening,

@@ -165,7 +165,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
         }
     }
 
-    public enum BallisticCaliber
+    public enum BallisticCaliber : byte
     {
         Unspecified = 0,
         A357, // Placeholder?

@@ -10,7 +10,7 @@ namespace Content.Shared.GameObjects.Components
     }
 
     [Serializable, NetSerializable]
-    public enum ComputerVisuals
+    public enum ComputerVisuals : byte
     {
         // Bool
         Powered,

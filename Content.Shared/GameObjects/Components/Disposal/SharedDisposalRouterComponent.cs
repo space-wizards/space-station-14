@@ -41,13 +41,13 @@ namespace Content.Shared.GameObjects.Components.Disposal
         }
 
         [Serializable, NetSerializable]
-        public enum UiAction
+        public enum UiAction : byte
         {
             Ok
         }
 
         [Serializable, NetSerializable]
-        public enum DisposalRouterUiKey
+        public enum DisposalRouterUiKey : byte
         {
             Key
         }

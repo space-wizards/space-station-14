@@ -7,7 +7,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Damage
 {
     [Serializable, NetSerializable]
-    public enum DamageType
+    public enum DamageType : byte
     {
         Blunt,
         Slash,

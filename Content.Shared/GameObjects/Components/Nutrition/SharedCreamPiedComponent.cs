@@ -10,7 +10,7 @@ namespace Content.Shared.GameObjects.Components.Nutrition
     }
 
     [Serializable, NetSerializable]
-    public enum CreamPiedVisuals
+    public enum CreamPiedVisuals : byte
     {
         Creamed,
     }

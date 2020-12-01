@@ -15,14 +15,14 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers
 {
-    public enum LightBulbState
+    public enum LightBulbState : byte
     {
         Normal,
         Broken,
         Burned,
     }
 
-    public enum LightBulbType
+    public enum LightBulbType : byte
     {
         Bulb,
         Tube,

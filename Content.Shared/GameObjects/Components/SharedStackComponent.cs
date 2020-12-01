@@ -121,7 +121,7 @@ namespace Content.Shared.GameObjects.Components
         }
     }
 
-    public enum StackType
+    public enum StackType : byte
     {
         Metal,
         Glass,

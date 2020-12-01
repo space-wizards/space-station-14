@@ -10,13 +10,13 @@ namespace Content.Shared.GameObjects.Components
         public override string Name => "AcceptCloning";
 
         [Serializable, NetSerializable]
-        public enum AcceptCloningUiKey
+        public enum AcceptCloningUiKey : byte
         {
             Key
         }
 
         [Serializable, NetSerializable]
-        public enum UiButton
+        public enum UiButton : byte
         {
             Accept
         }

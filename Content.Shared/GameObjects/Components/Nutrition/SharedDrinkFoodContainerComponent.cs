@@ -9,7 +9,7 @@ namespace Content.Shared.GameObjects.Components.Nutrition
     }
 
     [NetSerializable, Serializable]
-    public enum FoodContainerVisualMode
+    public enum FoodContainerVisualMode : byte
     {
         /// <summary>
         /// Discrete: 50 eggs in a carton -> down to 25, will show 12/12 until it gets below max
@@ -20,7 +20,7 @@ namespace Content.Shared.GameObjects.Components.Nutrition
     }
 
     [NetSerializable, Serializable]
-    public enum FoodContainerVisuals
+    public enum FoodContainerVisuals : byte
     {
         Capacity,
         Current,

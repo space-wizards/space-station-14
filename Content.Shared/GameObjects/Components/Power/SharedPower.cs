@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.GameObjects.Components.Power
 {
     [Serializable, NetSerializable]
-    public enum ChargeState
+    public enum ChargeState : byte
     {
         Still,
         Charging,

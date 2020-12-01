@@ -38,19 +38,19 @@ namespace Content.Shared.GameObjects.Components.Medical
         }
 
         [Serializable, NetSerializable]
-        public enum MedicalScannerUiKey
+        public enum MedicalScannerUiKey : byte
         {
             Key
         }
 
         [Serializable, NetSerializable]
-        public enum MedicalScannerVisuals
+        public enum MedicalScannerVisuals : byte
         {
             Status
         }
 
         [Serializable, NetSerializable]
-        public enum MedicalScannerStatus
+        public enum MedicalScannerStatus : byte
         {
             Off,
             Open,
@@ -61,7 +61,7 @@ namespace Content.Shared.GameObjects.Components.Medical
         }
 
         [Serializable, NetSerializable]
-        public enum UiButton
+        public enum UiButton : byte
         {
             ScanDNA,
         }

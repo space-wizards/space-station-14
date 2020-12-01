@@ -44,13 +44,13 @@ namespace Content.Shared.GameObjects.Components
         }
 
         [Serializable, NetSerializable]
-        public enum PaperUiKey
+        public enum PaperUiKey : byte
         {
             Key
         }
 
         [Serializable, NetSerializable]
-        public enum PaperAction
+        public enum PaperAction : byte
         {
             Read,
             Write,

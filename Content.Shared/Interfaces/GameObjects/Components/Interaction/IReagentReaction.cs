@@ -2,7 +2,7 @@
 
 namespace Content.Shared.Interfaces.GameObjects.Components
 {
-    public enum ReactionMethod
+    public enum ReactionMethod : byte
     {
         Touch,
         Injection,

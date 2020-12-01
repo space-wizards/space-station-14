@@ -5,14 +5,14 @@ namespace Content.Shared.GameObjects.Components.Trigger
 {
     [NetSerializable]
     [Serializable]
-    public enum TriggerVisuals
+    public enum TriggerVisuals : byte
     {
         VisualState,
     }
 
     [NetSerializable]
     [Serializable]
-    public enum TriggerVisualState
+    public enum TriggerVisualState : byte
     {
         Primed,
         Unprimed,

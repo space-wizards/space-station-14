@@ -32,7 +32,7 @@ namespace Content.Shared.GameObjects.Components.GUI
         public abstract bool Drop(DragDropEventArgs args);
 
         [NetSerializable, Serializable]
-        public enum StrippingUiKey
+        public enum StrippingUiKey : byte
         {
             Key,
         }

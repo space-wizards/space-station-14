@@ -60,7 +60,7 @@ namespace Content.Shared.GameObjects.Components
         }
 
         [Serializable, NetSerializable]
-        public enum ConfigurationUiKey
+        public enum ConfigurationUiKey : byte
         {
             Key
         }

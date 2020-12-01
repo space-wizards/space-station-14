@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Markers
         }
     }
 
-    public enum SpawnPointType
+    public enum SpawnPointType : byte
     {
         Unset = 0,
         LateJoin,

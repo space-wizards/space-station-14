@@ -75,7 +75,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         }
     }
 
-    public enum Priority
+    public enum Priority : byte
     {
         First,
         Last,

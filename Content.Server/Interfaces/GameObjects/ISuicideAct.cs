@@ -8,7 +8,7 @@ namespace Content.Server.Interfaces.GameObjects
         public SuicideKind Suicide(IEntity victim, IChatManager chat);
     }
 
-    public enum SuicideKind
+    public enum SuicideKind : byte
     {
         Special, //Doesn't damage the mob, used for "weird" suicides like gibbing
 

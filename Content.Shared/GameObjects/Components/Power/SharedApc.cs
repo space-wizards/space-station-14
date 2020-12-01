@@ -5,13 +5,13 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.GameObjects.Components.Power
 {
     [Serializable, NetSerializable]
-    public enum ApcVisuals
+    public enum ApcVisuals : byte
     {
         ChargeState
     }
 
     [Serializable, NetSerializable]
-    public enum ApcChargeState
+    public enum ApcChargeState : byte
     {
         /// <summary>
         ///     APC does not have enough power to charge cell (if necessary) and keep powering the area.
@@ -49,7 +49,7 @@ namespace Content.Shared.GameObjects.Components.Power
     { 
     }
 
-    public enum ApcExternalPowerState
+    public enum ApcExternalPowerState : byte
     {
         None,
         Low,
@@ -57,7 +57,7 @@ namespace Content.Shared.GameObjects.Components.Power
     }
 
     [NetSerializable, Serializable]
-    public enum ApcUiKey
+    public enum ApcUiKey : byte
     {
         Key,
     }

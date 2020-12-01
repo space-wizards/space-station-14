@@ -5,7 +5,7 @@ namespace Content.Shared.GameObjects.Components.Damage
 {
     [Flags]
     [Serializable, NetSerializable]
-    public enum DamageFlag
+    public enum DamageFlag : byte
     {
         None = 0,
         Invulnerable = 1 << 0

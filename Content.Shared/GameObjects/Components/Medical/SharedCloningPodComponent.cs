@@ -28,19 +28,19 @@ namespace Content.Shared.GameObjects.Components.Medical
 
 
         [Serializable, NetSerializable]
-        public enum CloningPodUIKey
+        public enum CloningPodUIKey : byte
         {
             Key
         }
 
         [Serializable, NetSerializable]
-        public enum CloningPodVisuals
+        public enum CloningPodVisuals : byte
         {
             Status
         }
 
         [Serializable, NetSerializable]
-        public enum CloningPodStatus
+        public enum CloningPodStatus : byte
         {
             Idle,
             Cloning,
@@ -49,7 +49,7 @@ namespace Content.Shared.GameObjects.Components.Medical
         }
 
         [Serializable, NetSerializable]
-        public enum UiButton
+        public enum UiButton : byte
         {
             Clone,
             Eject

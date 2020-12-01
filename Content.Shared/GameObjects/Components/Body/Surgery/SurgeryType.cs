@@ -8,7 +8,7 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
     /// </summary>
     // TODO BODY Move this to YAML?
     [Serializable, NetSerializable]
-    public enum SurgeryType
+    public enum SurgeryType : byte
     {
         None = 0,
         Incision,

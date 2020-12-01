@@ -59,7 +59,7 @@ namespace Content.Shared.GameObjects.Components.Power
     }
 
     [Serializable, NetSerializable]
-    public enum SolarControlConsoleUiKey
+    public enum SolarControlConsoleUiKey : byte
     {
         Key
     }

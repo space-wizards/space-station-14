@@ -1041,7 +1041,7 @@ The current game mode is: [color=white]{0}[/color].
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
     }
 
-    public enum GameRunLevel
+    public enum GameRunLevel : byte
     {
         PreRoundLobby = 0,
         InRound = 1,

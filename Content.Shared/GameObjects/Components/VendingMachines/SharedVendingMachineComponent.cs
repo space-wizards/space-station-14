@@ -16,13 +16,13 @@ namespace Content.Shared.GameObjects.Components.VendingMachines
         public List<VendingMachineInventoryEntry> Inventory = new List<VendingMachineInventoryEntry>();
 
         [Serializable, NetSerializable]
-        public enum VendingMachineVisuals
+        public enum VendingMachineVisuals : byte
         {
             VisualState,
         }
 
         [Serializable, NetSerializable]
-        public enum VendingMachineVisualState
+        public enum VendingMachineVisualState : byte
         {
             Normal,
             Off,
@@ -42,7 +42,7 @@ namespace Content.Shared.GameObjects.Components.VendingMachines
         }
 
         [Serializable, NetSerializable]
-        public enum VendingMachineUiKey
+        public enum VendingMachineUiKey : byte
         {
             Key,
         }

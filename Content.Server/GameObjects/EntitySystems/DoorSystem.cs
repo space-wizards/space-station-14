@@ -18,7 +18,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <summary>
         /// How door access should be handled.
         /// </summary>
-        public enum AccessTypes
+        public enum AccessTypes : byte
         {
             /// <summary> ID based door access. </summary>
             Id,

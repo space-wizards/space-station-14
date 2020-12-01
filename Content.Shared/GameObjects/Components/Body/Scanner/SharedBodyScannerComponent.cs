@@ -12,7 +12,7 @@ namespace Content.Shared.GameObjects.Components.Body.Scanner
     }
 
     [Serializable, NetSerializable]
-    public enum BodyScannerUiKey
+    public enum BodyScannerUiKey : byte
     {
         Key
     }

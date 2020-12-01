@@ -693,7 +693,7 @@ namespace Content.Server.GameObjects.Components.PA
             // That would be silly.
         }
 
-        public enum ParticleAcceleratorControlBoxWires
+        public enum ParticleAcceleratorControlBoxWires : byte
         {
             /// <summary>
             /// Pulse toggles Power. Cut permanently turns off until Mend.

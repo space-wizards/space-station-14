@@ -248,7 +248,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             TrySetVisualState(VendingMachineVisualState.Broken);
         }
 
-        public enum Wires
+        public enum Wires : byte
         {
             /// <summary>
             /// Shoots a random item when pulsed.

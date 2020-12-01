@@ -464,7 +464,7 @@ namespace Content.Server.GameObjects.Components.Doors
             }
         }
 
-        public enum DoorState
+        public enum DoorState : byte
         {
             Closed,
             Open,

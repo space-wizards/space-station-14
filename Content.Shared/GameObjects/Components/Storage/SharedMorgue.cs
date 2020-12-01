@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.GameObjects.Components.Morgue
 {
     [Serializable, NetSerializable]
-    public enum MorgueVisuals
+    public enum MorgueVisuals : byte
     {
         Open,
         HasContents,
@@ -13,13 +13,13 @@ namespace Content.Shared.GameObjects.Components.Morgue
     }
 
     [Serializable, NetSerializable]
-    public enum CrematoriumVisuals
+    public enum CrematoriumVisuals : byte
     {
         Burning,
     }
 
     [Serializable, NetSerializable]
-    public enum BodyBagVisuals
+    public enum BodyBagVisuals : byte
     {
         Label,
     }

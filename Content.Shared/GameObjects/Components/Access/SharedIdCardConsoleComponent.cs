@@ -10,7 +10,7 @@ namespace Content.Shared.GameObjects.Components.Access
     {
         public override string Name => "IdCardConsole";
 
-        public enum UiButton
+        public enum UiButton : byte
         {
             PrivilegedId,
             TargetId,
@@ -73,7 +73,7 @@ namespace Content.Shared.GameObjects.Components.Access
         }
 
         [Serializable, NetSerializable]
-        public enum IdCardConsoleUiKey
+        public enum IdCardConsoleUiKey : byte
         {
             Key,
         }

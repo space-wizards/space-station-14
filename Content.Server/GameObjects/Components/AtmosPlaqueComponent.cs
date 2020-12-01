@@ -97,7 +97,7 @@ namespace Content.Server.GameObjects.Components
             serializer.DataField(ref _type, "plaqueType", PlaqueType.Unset);
         }
 
-        public enum PlaqueType
+        public enum PlaqueType : byte
         {
             Unset = 0,
             Zumos,

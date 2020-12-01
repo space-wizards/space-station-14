@@ -11,7 +11,7 @@ namespace Content.Shared.GameObjects.Components.Research
         public override uint? NetID => ContentNetIDs.RESEARCH_CONSOLE;
 
         [NetSerializable, Serializable]
-        public enum ResearchConsoleUiKey
+        public enum ResearchConsoleUiKey : byte
         {
             Key,
         }

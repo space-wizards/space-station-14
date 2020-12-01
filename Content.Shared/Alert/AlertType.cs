@@ -3,7 +3,7 @@
     /// <summary>
     /// Every category of alert. Corresponds to category field in alert prototypes defined in YML
     /// </summary>
-    public enum AlertCategory
+    public enum AlertCategory : byte
     {
         Pressure,
         Temperature,
@@ -17,7 +17,7 @@
     /// <summary>
     /// Every kind of alert. Corresponds to alertType field in alert prototypes defined in YML
     /// </summary>
-    public enum AlertType
+    public enum AlertType : byte
     {
         Error,
         LowPressure,

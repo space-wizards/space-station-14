@@ -8,7 +8,7 @@ namespace Content.Shared.Chemistry
     /// </summary>
     [Flags]
     [Serializable, NetSerializable]
-    public enum SolutionContainerCaps
+    public enum SolutionContainerCaps : byte
     {
         None = 0, 
 

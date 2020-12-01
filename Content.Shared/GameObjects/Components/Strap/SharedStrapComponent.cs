@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Strap
 {
-    public enum StrapPosition
+    public enum StrapPosition : byte
     {
         /// <summary>
         /// (Default) Makes no change to the buckled mob
@@ -45,7 +45,7 @@ namespace Content.Shared.GameObjects.Components.Strap
     }
 
     [Serializable, NetSerializable]
-    public enum StrapVisuals
+    public enum StrapVisuals : byte
     {
         RotationAngle
     }

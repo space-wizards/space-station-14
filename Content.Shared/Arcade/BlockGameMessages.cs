@@ -30,7 +30,7 @@ namespace Content.Shared.Arcade
             }
         }
 
-        public enum BlockGameVisualType
+        public enum BlockGameVisualType : byte
         {
             GameField,
             HoldBlock,
@@ -88,7 +88,7 @@ namespace Content.Shared.Arcade
         }
 
         [Serializable, NetSerializable]
-        public enum BlockGameScreen
+        public enum BlockGameScreen : byte
         {
             Game,
             Pause,

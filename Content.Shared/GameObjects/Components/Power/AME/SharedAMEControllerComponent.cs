@@ -44,12 +44,12 @@ namespace Content.Shared.GameObjects.Components.Power.AME
         }
 
         [Serializable, NetSerializable]
-        public enum AMEControllerUiKey
+        public enum AMEControllerUiKey : byte
         {
             Key
         }
 
-        public enum UiButton
+        public enum UiButton : byte
         {
             Eject,
             ToggleInjection,
@@ -59,7 +59,7 @@ namespace Content.Shared.GameObjects.Components.Power.AME
         }
 
         [Serializable, NetSerializable]
-        public enum AMEControllerVisuals
+        public enum AMEControllerVisuals : byte
         {
             DisplayState,
         }

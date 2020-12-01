@@ -17,7 +17,7 @@ namespace Content.Shared.Arcade
         }
 
         [Serializable, NetSerializable]
-        public enum BlockGameBlockColor
+        public enum BlockGameBlockColor : byte
         {
             Red,
             Orange,

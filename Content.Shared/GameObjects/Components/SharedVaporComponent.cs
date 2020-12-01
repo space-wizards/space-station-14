@@ -11,7 +11,7 @@ namespace Content.Shared.GameObjects.Components
     }
 
     [Serializable, NetSerializable]
-    public enum VaporVisuals
+    public enum VaporVisuals : byte
     {
         Rotation,
         Color,

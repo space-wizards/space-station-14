@@ -82,7 +82,7 @@ namespace Content.Server.StationEvents
         }
     }
 
-    public enum StationEventWeight
+    public enum StationEventWeight : byte
     {
         VeryLow = 0,
         Low = 5,

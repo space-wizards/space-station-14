@@ -7,7 +7,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Damage
 {
     [Serializable, NetSerializable]
-    public enum DamageClass
+    public enum DamageClass : byte
     {
         Brute,
         Burn,

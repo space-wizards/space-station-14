@@ -7,7 +7,7 @@ namespace Content.Shared.GameObjects.Components.Nutrition
     {
         // TODO: Remove maybe? Add visualizer for food
         [Serializable, NetSerializable]
-        public enum FoodVisuals
+        public enum FoodVisuals : byte
         {
             Visual,
             MaxUses,

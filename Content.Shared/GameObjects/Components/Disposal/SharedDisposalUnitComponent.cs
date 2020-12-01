@@ -24,7 +24,7 @@ namespace Content.Shared.GameObjects.Components.Disposal
             physics.Anchored;
 
         [Serializable, NetSerializable]
-        public enum Visuals
+        public enum Visuals : byte
         {
             VisualState,
             Handle,
@@ -32,7 +32,7 @@ namespace Content.Shared.GameObjects.Components.Disposal
         }
 
         [Serializable, NetSerializable]
-        public enum VisualState
+        public enum VisualState : byte
         {
             UnAnchored,
             Anchored,
@@ -41,14 +41,14 @@ namespace Content.Shared.GameObjects.Components.Disposal
         }
 
         [Serializable, NetSerializable]
-        public enum HandleState
+        public enum HandleState : byte
         {
             Normal,
             Engaged
         }
 
         [Serializable, NetSerializable]
-        public enum LightState
+        public enum LightState : byte
         {
             Off,
             Charging,
@@ -57,7 +57,7 @@ namespace Content.Shared.GameObjects.Components.Disposal
         }
 
         [Serializable, NetSerializable]
-        public enum UiButton
+        public enum UiButton : byte
         {
             Eject,
             Engage,
@@ -65,7 +65,7 @@ namespace Content.Shared.GameObjects.Components.Disposal
         }
 
         [Serializable, NetSerializable]
-        public enum PressureState
+        public enum PressureState : byte
         {
             Ready,
             Pressurizing
@@ -156,7 +156,7 @@ namespace Content.Shared.GameObjects.Components.Disposal
         }
 
         [Serializable, NetSerializable]
-        public enum DisposalUnitUiKey
+        public enum DisposalUnitUiKey : byte
         {
             Key
         }

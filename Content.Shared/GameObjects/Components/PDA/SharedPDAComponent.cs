@@ -113,14 +113,14 @@ namespace Content.Shared.GameObjects.Components.PDA
     }
 
     [Serializable, NetSerializable]
-    public enum PDAVisuals
+    public enum PDAVisuals : byte
     {
         FlashlightLit,
         IDCardInserted
     }
 
     [Serializable, NetSerializable]
-    public enum PDAUiKey
+    public enum PDAUiKey : byte
     {
         Key
     }

@@ -152,7 +152,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         [ViewVariables]
         private ProcessState _state = ProcessState.TileEqualize;
 
-        private enum ProcessState
+        private enum ProcessState : byte
         {
             TileEqualize,
             ActiveTiles,

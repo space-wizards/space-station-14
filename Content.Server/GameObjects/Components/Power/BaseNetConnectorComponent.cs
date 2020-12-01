@@ -104,7 +104,7 @@ namespace Content.Server.GameObjects.Components.Power
         }
     }
 
-    public enum Voltage
+    public enum Voltage : byte
     {
         High = NodeGroupID.HVPower,
         Medium = NodeGroupID.MVPower,

@@ -141,7 +141,7 @@ namespace Content.Shared.GameObjects.Components.Storage
 
     [NetSerializable]
     [Serializable]
-    public enum StorageVisuals
+    public enum StorageVisuals : byte
     {
         Open,
         CanWeld,

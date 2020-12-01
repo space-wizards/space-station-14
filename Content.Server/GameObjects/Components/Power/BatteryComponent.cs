@@ -128,7 +128,7 @@ namespace Content.Server.GameObjects.Components.Power
         }
     }
 
-    public enum BatteryState
+    public enum BatteryState : byte
     {
         Full,
         PartlyFull,

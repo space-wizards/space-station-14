@@ -535,7 +535,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
     }
 
     [Flags]
-    public enum MagazineType
+    public enum MagazineType : ushort
     {
 
         Unspecified = 0,

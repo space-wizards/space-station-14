@@ -7,7 +7,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
     ///     Defines the symmetry of a <see cref="IBodyPart"/>.
     /// </summary>
     [Serializable, NetSerializable]
-    public enum BodyPartSymmetry
+    public enum BodyPartSymmetry : byte
     {
         None = 0,
         Left,

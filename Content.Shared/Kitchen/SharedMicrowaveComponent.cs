@@ -86,14 +86,14 @@ namespace Content.Shared.Kitchen
     }
 
     [Serializable, NetSerializable]
-    public enum MicrowaveVisualState
+    public enum MicrowaveVisualState : byte
     {
         Idle,
         Cooking
     }
 
     [NetSerializable, Serializable]
-    public enum MicrowaveUiKey
+    public enum MicrowaveUiKey : byte
     {
         Key
     }

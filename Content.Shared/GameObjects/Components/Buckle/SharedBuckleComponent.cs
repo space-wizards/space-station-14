@@ -61,7 +61,7 @@ namespace Content.Shared.GameObjects.Components.Buckle
     }
 
     [Serializable, NetSerializable]
-    public enum BuckleVisuals
+    public enum BuckleVisuals : byte
     {
         Buckled
     }

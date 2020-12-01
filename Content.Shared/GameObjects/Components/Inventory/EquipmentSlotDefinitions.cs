@@ -26,7 +26,7 @@ namespace Content.Shared.GameObjects.Components.Inventory
         ///     Uniquely identifies a single slot in an inventory.
         /// </summary>
         [Serializable, NetSerializable]
-        public enum Slots
+        public enum Slots : byte
         {
             NONE = 0,
             HEAD,
@@ -55,7 +55,7 @@ namespace Content.Shared.GameObjects.Components.Inventory
         /// </summary>
         [Serializable, NetSerializable]
         [Flags]
-        public enum SlotFlags
+        public enum SlotFlags : ushort
         {
             NONE = 0,
             PREVENTEQUIP = 1 << 0,

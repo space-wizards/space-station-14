@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
     /// <summary>
     /// Enum for the storage capacity of various containers
     /// </summary>
-    public enum ReferenceSizes
+    public enum ReferenceSizes : ushort
     {
         Wallet = 4,
         Pocket = 12,

@@ -73,7 +73,7 @@ namespace Content.Shared.GameObjects.Components.Cargo
         }
 
         [NetSerializable, Serializable]
-        public enum CargoConsoleUiKey
+        public enum CargoConsoleUiKey : byte
         {
             Key
         }

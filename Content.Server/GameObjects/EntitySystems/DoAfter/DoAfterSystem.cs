@@ -89,7 +89,7 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
         }
     }
 
-    public enum DoAfterStatus
+    public enum DoAfterStatus : byte
     {
         Running,
         Cancelled,

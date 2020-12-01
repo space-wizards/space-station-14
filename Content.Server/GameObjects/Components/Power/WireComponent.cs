@@ -50,7 +50,7 @@ namespace Content.Server.GameObjects.Components.Power
         }
     }
 
-    public enum WireType
+    public enum WireType : byte
     {
         HighVoltage,
         MediumVoltage,

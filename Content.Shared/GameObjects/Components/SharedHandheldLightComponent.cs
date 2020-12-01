@@ -26,13 +26,13 @@ namespace Content.Shared.GameObjects.Components
     }
 
     [Serializable, NetSerializable]
-    public enum HandheldLightVisuals
+    public enum HandheldLightVisuals : byte
     {
         Power
     }
 
     [Serializable, NetSerializable]
-    public enum HandheldLightPowerStates
+    public enum HandheldLightPowerStates : byte
     {
         FullPower,
         LowPower,

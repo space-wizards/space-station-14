@@ -44,7 +44,7 @@ namespace Content.Benchmarks
             _dependencyCollection.InjectDependencies(new TestDummy(), true);
         }
 
-        public enum InjectMode
+        public enum InjectMode : byte
         {
             Reflection,
             DynamicMethod

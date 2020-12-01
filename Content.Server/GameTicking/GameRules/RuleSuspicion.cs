@@ -105,7 +105,7 @@ namespace Content.Server.GameTicking.GameRules
             }
         }
 
-        private enum Victory
+        private enum Victory : byte
         {
             Stalemate,
             Innocents,

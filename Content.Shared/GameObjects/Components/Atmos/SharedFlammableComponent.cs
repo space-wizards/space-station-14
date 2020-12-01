@@ -10,7 +10,7 @@ namespace Content.Shared.GameObjects.Components.Atmos
     }
 
     [Serializable, NetSerializable]
-    public enum FireVisuals
+    public enum FireVisuals : byte
     {
         OnFire,
         FireStacks,

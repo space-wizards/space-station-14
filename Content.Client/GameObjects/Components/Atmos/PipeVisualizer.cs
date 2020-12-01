@@ -66,7 +66,7 @@ namespace Content.Client.GameObjects.Components.Atmos
             return stateId;
         }
 
-        private enum Layer
+        private enum Layer : byte
         {
             PipeBase,
         }

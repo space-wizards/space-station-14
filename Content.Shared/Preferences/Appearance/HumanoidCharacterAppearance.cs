@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Preferences.Appearance
 {
     [Serializable, NetSerializable]
-    public enum HumanoidVisualLayers
+    public enum HumanoidVisualLayers : byte
     {
         Hair,
         FacialHair,

@@ -39,7 +39,7 @@ namespace Content.Server.GameObjects.Components.PA
         }
     }
 
-    public enum ParticleAcceleratorEmitterType
+    public enum ParticleAcceleratorEmitterType : byte
     {
         Left,
         Center,

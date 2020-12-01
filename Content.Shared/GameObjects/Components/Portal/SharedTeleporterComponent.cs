@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Portal
 {
-    public enum ItemTeleporterState
+    public enum ItemTeleporterState : byte
     {
         Off,
         Charging,
@@ -13,7 +13,7 @@ namespace Content.Shared.GameObjects.Components.Portal
         Cooldown,
     }
 
-    public enum TeleporterType
+    public enum TeleporterType : byte
     {
         Directed,
         Random,
@@ -22,14 +22,14 @@ namespace Content.Shared.GameObjects.Components.Portal
 
     [NetSerializable]
     [Serializable]
-    public enum TeleporterVisuals
+    public enum TeleporterVisuals : byte
     {
         VisualState,
     }
 
     [NetSerializable]
     [Serializable]
-    public enum TeleporterVisualState
+    public enum TeleporterVisualState : byte
     {
         Ready,
         Charging,

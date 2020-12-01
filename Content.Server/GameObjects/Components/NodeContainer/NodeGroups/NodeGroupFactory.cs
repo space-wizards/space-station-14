@@ -56,7 +56,7 @@
         }
     }
 
-    public enum NodeGroupID
+    public enum NodeGroupID : byte
     {
         Default,
         HVPower,
