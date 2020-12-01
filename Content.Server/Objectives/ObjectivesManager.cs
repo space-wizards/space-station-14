@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
@@ -15,39 +16,24 @@ namespace Content.Server.Objectives
         [Dependency] private IPrototypeManager _prototypeManager = default!;
         [Dependency] private IRobustRandom _random = default!;
 
-        public ObjectivePrototype[] GetAllPossibleObjectives(Mind mind)
+        public List<ObjectivePrototype> GetAllPossibleObjectives(Mind mind)
         {
-            return _prototypeManager.EnumeratePrototypes<ObjectivePrototype>().Where(objectivePrototype => objectivePrototype.CanBeAssigned(mind)).ToArray();
+            return _prototypeManager.EnumeratePrototypes<ObjectivePrototype>().Where(objectivePrototype => objectivePrototype.CanBeAssigned(mind)).ToList();
         }
 
-        public ObjectivePrototype[] GetRandomObjectives(Mind mind, float maxDifficulty = 3)
+        public ObjectivePrototype? GetRandomObjective(Mind mind)
         {
             var objectives = GetAllPossibleObjectives(mind);
+            _random.Shuffle(objectives);
 
             //to prevent endless loops
-            if(objectives.Length == 0 || objectives.Sum(o => o.Difficulty) == 0f) return objectives;
-
-            var result = new List<ObjectivePrototype>();
-            var currentDifficulty = 0f;
-            _random.Shuffle(objectives);
-            while (currentDifficulty < maxDifficulty)
+            foreach (var objective in objectives)
             {
-                foreach (var objective in objectives)
-                {
-                    if (!_random.Prob(objective.Probability)) continue;
-
-                    result.Add(objective);
-                    currentDifficulty += objective.Difficulty;
-                    if (currentDifficulty >= maxDifficulty) break;
-                }
+                if (!_random.Prob(objective.Probability)) continue;
+                return objective;
             }
 
-            if (currentDifficulty > maxDifficulty) //will almost always happen
-            {
-                result.Pop();
-            }
-
-            return result.ToArray();
+            return null;
         }
     }
 }

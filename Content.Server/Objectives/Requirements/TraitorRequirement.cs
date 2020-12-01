@@ -1,17 +1,19 @@
 ﻿using Content.Server.Mobs;
-using Content.Server.Mobs.Roles.Suspicion;
+using Content.Server.Mobs.Roles.Traitor;
 using Content.Server.Objectives.Interfaces;
+using JetBrains.Annotations;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Objectives.Requirements
 {
-    public class SuspicionTraitorRequirement : IObjectiveRequirement
+    [UsedImplicitly]
+    public class TraitorRequirement : IObjectiveRequirement
     {
         public void ExposeData(ObjectSerializer serializer){}
 
         public bool CanBeAssigned(Mind mind)
         {
-            return mind.HasRole<SuspicionTraitorRole>();
+            return mind.HasRole<TraitorRole>();
         }
     }
 }

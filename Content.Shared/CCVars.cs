@@ -55,20 +55,49 @@ namespace Content.Shared
         public static readonly CVarDef<bool>
             GamePersistGuests = CVarDef.Create("game.persistguests", true, CVar.ARCHIVE | CVar.SERVERONLY);
 
-        public static readonly CVarDef<int> GameSuspicionMinPlayers =
-            CVarDef.Create("game.suspicion_min_players", 5);
-
-        public static readonly CVarDef<int> GameSuspicionMinTraitors =
-            CVarDef.Create("game.suspicion_min_traitors", 2);
-
-        public static readonly CVarDef<int> GameSuspicionPlayersPerTraitor =
-            CVarDef.Create("game.suspicion_players_per_traitor", 5);
-
-        public static readonly CVarDef<int> GameSuspicionStartingBalance =
-            CVarDef.Create("game.suspicion_starting_balance", 20);
-
         public static readonly CVarDef<bool> GameDiagonalMovement =
             CVarDef.Create("game.diagonalmovement", true, CVar.ARCHIVE);
+
+        /*
+         * Suspicion
+         */
+
+        public static readonly CVarDef<int> SuspicionMinPlayers =
+            CVarDef.Create("suspicion.min_players", 5);
+
+        public static readonly CVarDef<int> SuspicionMinTraitors =
+            CVarDef.Create("suspicion.min_traitors", 2);
+
+        public static readonly CVarDef<int> SuspicionPlayersPerTraitor =
+            CVarDef.Create("suspicion.players_per_traitor", 5);
+
+        public static readonly CVarDef<int> SuspicionStartingBalance =
+            CVarDef.Create("suspicion.starting_balance", 20);
+
+        /*
+         * Traitor
+         */
+
+        public static readonly CVarDef<int> TraitorMinPlayers =
+            CVarDef.Create("traitor.min_players", 5);
+
+        public static readonly CVarDef<int> TraitorMaxTraitors =
+            CVarDef.Create("traitor.max_traitors", 4);
+
+        public static readonly CVarDef<int> TraitorPlayersPerTraitor =
+            CVarDef.Create("traitor.players_per_traitor", 5);
+
+        public static readonly CVarDef<int> TraitorCodewordCount =
+            CVarDef.Create("traitor.codeword_count", 4);
+
+        public static readonly CVarDef<int> TraitorStartingBalance =
+            CVarDef.Create("traitor.starting_balance", 20);
+
+        public static readonly CVarDef<int> TraitorMaxDifficulty =
+            CVarDef.Create("traitor.max_difficulty", 4);
+
+        public static readonly CVarDef<int> TraitorMaxPicks =
+            CVarDef.Create("traitor.max_picks", 20);
 
         /*
          * Console

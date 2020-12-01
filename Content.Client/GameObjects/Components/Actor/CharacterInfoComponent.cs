@@ -43,8 +43,6 @@ namespace Content.Client.GameObjects.Components.Actor
         {
             base.HandleNetworkMessage(message, netChannel, session);
 
-            if(session?.AttachedEntity != Owner) return;
-
             switch (message)
             {
                 case CharacterInfoMessage characterInfoMessage:

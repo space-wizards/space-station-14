@@ -1,4 +1,5 @@
-﻿using Content.Server.Mobs;
+﻿using System.Collections.Generic;
+using Content.Server.Mobs;
 
 namespace Content.Server.Objectives.Interfaces
 {
@@ -7,11 +8,11 @@ namespace Content.Server.Objectives.Interfaces
         /// <summary>
         /// Returns all objectives the provided mind is valid for.
         /// </summary>
-        ObjectivePrototype[] GetAllPossibleObjectives(Mind mind);
+        IReadOnlyList<ObjectivePrototype> GetAllPossibleObjectives(Mind mind);
 
         /// <summary>
-        /// Returns a randomly picked (no pop) collection of objectives the provided mind is valid for.
+        /// Returns a randomly picked objective the provided mind is valid for.
         /// </summary>
-        ObjectivePrototype[] GetRandomObjectives(Mind mind, float maxDifficulty = 3f);
+        ObjectivePrototype GetRandomObjective(Mind mind);
     }
 }
