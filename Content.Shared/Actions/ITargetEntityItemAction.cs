@@ -6,18 +6,18 @@ using Robust.Shared.Map;
 namespace Content.Shared.Actions
 {
     /// <summary>
-    /// Action which is used on a targeted entity.
+    /// Item action which is used on a targeted entity.
     /// </summary>
-    public interface ITargetEntityAction : IActionBehavior
+    public interface ITargetEntityItemAction : IActionBehavior
     {
         /// <summary>
         /// Invoked when the target entity action should be performed.
         /// Implementation should perform the server side logic of the action.
         /// </summary>
-        void DoTargetEntityAction(TargetEntityActionEventArgs args);
+        void DoTargetEntityAction(TargetEntityItemActionEventArgs args);
     }
 
-    public class TargetEntityActionEventArgs : EventArgs
+    public class TargetEntityItemActionEventArgs : EventArgs
     {
         /// <summary>
         /// Entity performing the action.
@@ -29,10 +29,16 @@ namespace Content.Shared.Actions
         /// </summary>
         public readonly IEntity Target;
 
-        public TargetEntityActionEventArgs(IEntity performer, IEntity target)
+        /// <summary>
+        /// Item being used to perform the action.
+        /// </summary>
+        public readonly IEntity Item;
+
+        public TargetEntityItemActionEventArgs(IEntity performer, IEntity target, IEntity item)
         {
             Performer = performer;
             Target = target;
+            Item = item;
         }
     }
 }

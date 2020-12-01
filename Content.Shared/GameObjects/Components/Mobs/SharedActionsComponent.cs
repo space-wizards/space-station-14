@@ -19,19 +19,17 @@ namespace Content.Shared.GameObjects.Components.Mobs
     /// Manages the actions available to an entity.
     /// Should only be used for player-controlled entities.
     ///
-    /// Actions can be granted and revoked, and have an associated cooldown and toggle status (only
-    /// used for toggle-able actions). Even revoked actions can have state (so you can, for example,
-    /// see whether you've toggled your flashlight on even when you're stunned and cannot actually
-    /// change it).
+    /// Actions are granted directly to the owner entity. Item actions are granted via a particular item which
+    /// must be in the owner's inventory (the action is revoked when item leaves the owner's inventory).
     ///
-    /// In addition to granting an action directly to the owner entity,
-    /// actions can be "bound" to an item if they are configured with itemBound: true,
-    /// such that the action is only usable when the item is in a hand or equip slot. A given
-    /// action type can be bound to multiple items in inventory.
+    /// Actions can still have an associated state even when revoked. For example, a flashlight toggle action
+    /// may be unusable while the player is stunned, but this component will still have an entry for the action
+    /// so the user can see whether it's currently toggled on or off.
     ///
-    /// Note that item-bound action cooldowns are currently only tied to the player, not the item
-    /// (but they are still preserved if the item is dropped and picked up). Eventually
-    /// we may want some item-bound actions to live on the item itself.
+    /// Note that cooldowns in both cases are tracked on the owner, not the item. Dropping and picking up an
+    /// item which has item actions on a cooldown will preserve the cooldowns only for that player. If another
+    /// player picks up the item, this new player will have no cooldowns. Eventually we may want
+    /// some item actions tracked on the item itself.
     /// </summary>
     public abstract class SharedActionsComponent : Component
     {
@@ -45,26 +43,33 @@ namespace Content.Shared.GameObjects.Components.Mobs
         public override string Name => "ActionsUI";
         public override uint? NetID => ContentNetIDs.ACTIONS;
 
-        /// <summary>
-        /// Holds all the currently granted and revoked actions and their associated states.
-        /// We maintain the following invariants:
-        ///
-        /// 1. _ownerBound only contains actiontypes whose corresponding ActionPrototype is not ItemBound,
-        /// and _itemBoundActions only contains actiontypes whose corresponding ActionPrototype is ItemBound.
-        /// 2. Owner bound actions are removed if they are at the initial state (revoked, no cooldown, toggled off).
-        /// 3. Item bound actions are removed when they leave inventory when they have no cooldown or after their cooldown has
-        /// expired for a long enough time. This ensures a player can't clear their cooldowns by dropping and picking up an item,
-        /// while also allowing players to still see their item-bound actions for equipped items even when they are
-        /// temporarily revoked by some effect.
-        /// 4. There are no empty dictionaries in itemBoundActions.
-        /// </summary>
+
+        // entries are removed from this if they are at the initial state (not enabled, no cooldown, toggled off).
+        // a system runs which periodically removes cooldowns from entries when they are revoked and their
+        // cooldowns have expired for a long enough time, also removing the entry if it is then at initial state.
+        // This helps to keep our component state smaller.
         [ViewVariables]
-        private Dictionary<ActionType, ActionState> _ownerBoundActions = new Dictionary<ActionType, ActionState>();
-        private Dictionary<ActionType, Dictionary<EntityUid, ActionState>> _itemBoundActions = new Dictionary<ActionType, Dictionary<EntityUid, ActionState>>();
+        private Dictionary<ActionType, ActionState> _actions = new Dictionary<ActionType, ActionState>();
+
+        // Holds item action states. Item actions are only added to this when granted, and are removed
+        // when revoked or when they leave inventory. If they had a cooldown when revoked,
+        // those cooldowns are tracked in _itemActionCooldowns data structure to be restored in the event the item
+        // re-enters their inventory. This ensures a player can't clear their cooldowns by dropping and picking up an item.
+        // We also ensure the values in this dictionary are never empty.
+        [ViewVariables]
+        private Dictionary<ItemActionType, Dictionary<EntityUid, ActionState>> _itemActions =
+            new Dictionary<ItemActionType, Dictionary<EntityUid, ActionState>>();
+
+        // this holds cooldowns for revoked item actions that had a cooldown when they were revoked.
+        // they are used to restore cooldowns when the item re-enters inventory
+        // these are not part of component state and thus not synced to the client.
+        // A system runs periodically to evict entries from this when their cooldowns have expired for a long enough time.
+        private Dictionary<ItemActionType, Dictionary<EntityUid, (TimeSpan start, TimeSpan end)>> _itemActionCooldowns =
+            new Dictionary<ItemActionType, Dictionary<EntityUid, (TimeSpan start, TimeSpan end)>>();
 
         public override ComponentState GetComponentState()
         {
-            return new ActionComponentState(_ownerBoundActions, _itemBoundActions);
+            return new ActionComponentState(_actions, _itemActions);
         }
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
@@ -75,88 +80,98 @@ namespace Content.Shared.GameObjects.Components.Mobs
             {
                 return;
             }
-            _ownerBoundActions = state.OwnerBound;
-            _itemBoundActions = state.ItemBound;
+            _actions = state.Actions;
+            _itemActions = state.ItemActions;
         }
 
         /// <summary>
-        /// Gets the action states associated with the specified action type, if it has any.
-        /// A given action type can have one owner bound action state or multiple item bound action states,
-        /// but not both.
+        /// Gets the action state associated with the specified action type, if it has any.
         /// </summary>
-        /// <param name="ownerBoundState">owner bound action state when BindingType is returned as OwnerBound</param>
-        /// <param name="itemBoundState">map from item ID to action state when BindingType is returned as ItemBound</param>
-        /// <returns>the type of bindings that were retrieved, Nonexistent if there are no
-        /// bindings at all for this action type.</returns>
-        public BindingType TryGetActionStates(ActionType actionType, out ActionState ownerBoundState,
-            out IReadOnlyDictionary<EntityUid, ActionState> itemBoundState)
+        /// <returns>false if not found for this action type (this means the action of this
+        /// type is not granted and has no cooldown</returns>
+        public bool TryGetActionState(ActionType actionType, out ActionState actionState)
         {
-            if (_ownerBoundActions.TryGetValue(actionType, out ownerBoundState))
-            {
-                itemBoundState = null;
-                return BindingType.OwnerBound;
-            }
-            if (_itemBoundActions.TryGetValue(actionType, out var rawItemBoundState))
-            {
-                itemBoundState = rawItemBoundState;
-                return BindingType.ItemBound;
-            }
-
-            itemBoundState = null;
-            return BindingType.Nonexistent;
+            return _actions.TryGetValue(actionType, out actionState);
         }
 
         /// <summary>
-        /// Gets all action types that are bound to either the owner or an item.
+        /// Gets the item action states associated with the specified item action type, if it has any.
         /// </summary>
-        protected IEnumerable<ActionType> EnumerateBoundActions()
+        /// <returns>false if no states found for this item action type</returns>
+        public bool TryGetItemActionStates(ItemActionType actionType, out IReadOnlyDictionary<EntityUid, ActionState> itemActionStates)
         {
-            return _ownerBoundActions.Keys.Concat(_itemBoundActions.Keys);
+            if (_itemActions.TryGetValue(actionType, out var actualItemActionStates))
+            {
+                itemActionStates = actualItemActionStates;
+                return true;
+            }
+
+            itemActionStates = null;
+            return false;
         }
 
         /// <summary>
-        /// Grants the entity the ability to perform the action, bound to this entity, optionally overriding its
-        /// current state with specified values. This will fail if the action prototype for this ActionType
-        /// is ItemBound.
+        /// Gets the item action state associated with the specified item action type for the specified item, if it has any.
+        /// </summary>
+        /// <returns>false if no state found for this item action type for this item</returns>
+        public bool TryGetItemActionState(ItemActionType actionType, EntityUid item, out ActionState actionState)
+        {
+            if (_itemActions.TryGetValue(actionType, out var actualItemActionStates))
+            {
+                return actualItemActionStates.TryGetValue(item, out actionState);
+            }
+
+            actionState = default;
+            return false;
+        }
+
+        /// <summary>
+        /// Gets all action types that have non-initial state (granted, have a cooldown, or toggled on).
+        /// </summary>
+        protected IEnumerable<ActionType> EnumerateActions()
+        {
+            return _actions.Keys;
+        }
+
+        /// <summary>
+        /// Gets all item action types for items that are currently in inventory.
+        /// </summary>
+        protected IEnumerable<ItemActionType> EnumerateItemActions()
+        {
+            return _itemActions.Keys;
+        }
+
+        /// <summary>
+        /// Grants the entity the ability to perform the action, optionally overriding its
+        /// current state with specified values.
         ///
         /// Even if the action was already granted, if the action had any state (cooldown, toggle) prior to this method
         /// being called, it will be preserved, with specific fields optionally overridden by any of the provided
         /// non-null arguments.
         /// </summary>
-        /// <param name="toggleOn">When null, preserves the current toggle status of the action.
+        /// <param name="toggleOn">When null, preserves the current toggle status of the action, defaulting
+        /// to false if action has no current state.
         /// When non-null, action will be shown toggled to this value</param>
-        /// <param name="cooldown"> When null, preserves the current cooldown status of the action.
+        /// <param name="cooldown"> When null, preserves the current cooldown status of the action, defaulting
+        /// to no cooldown if action has no current state.
         /// When non-null, action cooldown will be set to this value.</param>
-        public void GrantOwnerBoundAction(ActionType actionType, bool? toggleOn = null,
+        public void Grant(ActionType actionType, bool? toggleOn = null,
             (TimeSpan start, TimeSpan end)? cooldown = null)
         {
-            if (!ActionManager.TryGet(actionType, out var action))
-            {
-                Logger.WarningS("action", "unknown actionType {0}", actionType);
-                return;
-            }
-
-            if (action.ItemBound)
-            {
-                Logger.WarningS("action", "trying to grant action {0} bound to owner, but this action is " +
-                                          "item bound. The action must have itemBound: false in order to be granted bound to owner", actionType);
-                return;
-            }
-
             var dirty = false;
-            if (_ownerBoundActions.TryGetValue(actionType, out var actionState))
+            if (_actions.TryGetValue(actionType, out var actionState))
             {
                 // this method is for granting the action, so ensure it's now granted,
                 // preserving existing state
-                if (!actionState.Granted)
+                if (!actionState.Enabled)
                 {
                     dirty = true;
-                    actionState.Granted = true;
+                    actionState.Enabled = true;
                 }
             }
             else
             {
-                // no bindings at all for this action, create it anew
+                // no state at all for this action, create it anew
                 dirty = true;
                 actionState = new ActionState(true, toggleOn ?? false);
             }
@@ -175,71 +190,91 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
             if (!dirty) return;
 
-            _ownerBoundActions[actionType] = actionState;
+            _actions[actionType] = actionState;
             AfterGrantAction();
             Dirty();
         }
 
         /// <summary>
-        /// Grants the entity the ability to perform the action bound to a specific item, optionally overriding its
-        /// current state with specified values. This will fail if the action prototype for this ActionType
-        /// is OwnerBound.
+        /// Grants the entity the knowledge of the item action for the specified item in their inventory, optionally overriding its
+        /// current state with specified values. No effect if item is not in inventory. When the item is removed
+        /// from inventory, this action will be automatically revoked.
         ///
-        /// Even if the action was already granted, if the action had any state (cooldown, toggle) prior to this method
+        /// Unlike a normal action, this does not necessarily allow
+        /// the entity to perform the action, unless enabled = true. For example, you may want to set enabled = false
+        /// if the item has the ability to perform the action but there is something temporarily preventing
+        /// it from being performed. This way the player knows the item has the action but they must do something
+        /// in order to be able to enable it.
+        ///
+        /// Even if the action was already granted, if the action had any state (enabled, cooldown, toggle) prior to this method
         /// being called, it will be preserved, with specific fields optionally overridden by any of the provided
         /// non-null arguments.
         /// </summary>
-        /// <param name="toggleOn">When null, preserves the current toggle status of the action.
+        /// <param name="enabled">When null, preserves the current enable status of the action, defaulting
+        /// to true if action has no current state.
+        /// When non-null, indicates whether the entity is able to perform the action</param>
+        /// <param name="toggleOn">When null, preserves the current toggle status of the action, defaulting
+        /// to false if action has no current state.
         /// When non-null, action will be shown toggled to this value</param>
-        /// <param name="cooldown"> When null, preserves the current cooldown status of the action.
-        /// When non-null, action cooldown will be set to this value.</param>
-        public void GrantBoundAction(ActionType actionType, IEntity boundItem, bool? toggleOn = null,
+        /// <param name="cooldown"> When null, preserves the current cooldown status of the action, defaulting
+        /// to no cooldown if action has no current state.
+        /// When non-null, action cooldown will be set to this value. Note that this cooldown
+        /// is tracked on the owner. If the player drops and picks up the item
+        /// they will still have the cooldown, but if another player picks up the item that other player
+        /// will see no cooldown.</param>
+        public void Grant(ItemActionType actionType, IEntity item, bool? enabled = null, bool? toggleOn = null,
             (TimeSpan start, TimeSpan end)? cooldown = null)
         {
-            if (boundItem == null)
+            if (item == null)
             {
-                Logger.WarningS("action", "cannot bind action {0} to null item", actionType);
+                Logger.WarningS("action", "cannot grant item action {0} to {1} for null item", actionType,
+                    Owner.Name);
                 return;
             }
 
-            if (!ActionManager.TryGet(actionType, out var action))
+            if (!IsEquipped(item))
             {
-                Logger.WarningS("action", "unknown actionType {0}", actionType);
+                Logger.WarningS("action", "cannot grant item action {0} to {1} for item {2} " +
+                                          " because it is not in the owner's inventory", actionType, Owner.Name, item.Name);
                 return;
             }
 
-            if (action.OwnerBound)
-            {
-                Logger.WarningS("action", "trying to grant action {0} as item bound, but this action is " +
-                                          "owner bound. The action must have itemBound: true to be able to grant it bound to an item.", actionType);
-                return;
-            }
             var dirty = false;
             // this will be overwritten if we find the value in our dict, otherwise
             // we will use this as our new action state.
-            var actionState = new ActionState(true, toggleOn ?? false);
-            if (_itemBoundActions.TryGetValue(actionType, out var itemBindings))
+            var actionState = new ActionState(enabled ?? true, toggleOn ?? false);
+            // retrieve cooldown for the above state if we had a saved one (this will only be used if there
+            // was no existing action state)
+            if (_itemActionCooldowns.TryGetValue(actionType, out var itemCooldowns))
             {
-                // we already have some bindings for this action
-                // look up the binding of this action to this item, creating it if we don't have one
-                if (!itemBindings.TryGetValue(boundItem.Uid, out actionState))
+                // we no longer need it to be saved since we are granting this action.
+                if (itemCooldowns.Remove(item.Uid, out var savedCooldown))
                 {
-                    // didn't exist for this item, we will create the binding
-                    dirty = true;
+                    actionState.Cooldown = savedCooldown;
                 }
+            }
 
-                // this method is for granting the action, so ensure it's now granted
-                if (!actionState.Granted)
+            if (_itemActions.TryGetValue(actionType, out var itemStates))
+            {
+                // we already have some states for this item action
+                // look up the state for this item, creating it if we don't have one
+                if (!itemStates.TryGetValue(item.Uid, out actionState))
                 {
+                    // didn't exist for this item, we will use the state created above
                     dirty = true;
-                    actionState.Granted = true;
                 }
             }
             else
             {
-                // no bindings at all for this action, create it anew
+                // no state at all for this item action, create it anew as well as the state
                 dirty = true;
-                itemBindings = new Dictionary<EntityUid, ActionState>();
+                itemStates = new Dictionary<EntityUid, ActionState>();
+            }
+
+            if (enabled.HasValue && enabled != actionState.Enabled)
+            {
+                dirty = true;
+                actionState.Enabled = true;
             }
 
             if (cooldown.HasValue && actionState.Cooldown != cooldown)
@@ -256,55 +291,65 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
             if (!dirty) return;
 
-            itemBindings[boundItem.Uid] = actionState;
-            _itemBoundActions[actionType] = itemBindings;
+            itemStates[item.Uid] = actionState;
+            _itemActions[actionType] = itemStates;
             AfterGrantAction();
             Dirty();
         }
 
         /// <summary>
-        /// Grants the entity the ability to perform the action, bound to this entity, resetting its state
-        /// to its initial state and settings its state based on supplied parameters. This will fail if the
-        /// action prototype for this ActionType is ItemBound.
+        /// Grants the entity the ability to perform the action, resetting its state
+        /// to its initial state and settings its state based on supplied parameters.
         ///
         /// Even if the action was already granted, if the action had any state (cooldown, toggle) prior to this method
         /// being called, it will be reset to initial (no cooldown, toggled off).
         /// </summary>
         /// <param name="toggleOn">action will be shown toggled to this value</param>
         /// <param name="cooldown">action cooldown will be set to this value (by default the cooldown is cleared).</param>
-        public void GrantOwnerBoundActionFromInitialState(ActionType actionType, bool toggleOn = false,
+        public void GrantFromInitialState(ActionType actionType, bool toggleOn = false,
             (TimeSpan start, TimeSpan end)? cooldown = null)
         {
-            _ownerBoundActions.Remove(actionType);
-            GrantOwnerBoundAction(actionType, toggleOn, cooldown);
+            _actions.Remove(actionType);
+            Grant(actionType, toggleOn, cooldown);
         }
 
         /// <summary>
-        /// Grants the entity the ability to perform the action bound to an item, resetting its state
-        /// to its initial state and settings its state based on supplied parameters. This will fail if the
-        /// action prototype for this ActionType is not ItemBound.
+        /// Grants the entity the knowledge of the item action for the specified item in their inventory, resetting its state
+        /// to its initial state and settings its state based on supplied parameters. No effect if item is not in inventory.
+        /// When the item is removed from inventory, this action will be automatically revoked.
+        ///
+        /// Unlike a normal action, this does not necessarily allow
+        /// the entity to perform the action, unless enabled = true. For example, you may want to set enabled = false
+        /// if the item has the ability to perform the action but there is something temporarily preventing
+        /// it from being performed. This way the player knows the item has the action but they must do something
+        /// in order to be able to enable it.
         ///
         /// Even if the action was already granted, if the action had any state (cooldown, toggle) prior to this method
         /// being called, it will be reset to initial (no cooldown, toggled off).
         /// </summary>
+        /// <param name="enabled">whether the entity is able to perform the action</param>
         /// <param name="toggleOn">action will be shown toggled to this value</param>
-        /// <param name="cooldown">action cooldown will be set to this value (by default the cooldown is cleared).</param>
-        public void GrantBoundActionFromInitialState(ActionType actionType, IEntity boundItem, bool toggleOn = false,
+        /// <param name="cooldown">action cooldown will be set to this value (by default the cooldown is cleared).
+        /// Note that this cooldown is tracked on the owner.
+        /// If the player drops and picks up the item
+        /// they will still have the cooldown, but if another player picks up the item that other player
+        /// will see no cooldown.</param>
+        public void GrantFromInitialState(ItemActionType actionType, IEntity item, bool enabled = true, bool toggleOn = false,
             (TimeSpan start, TimeSpan end)? cooldown = null)
         {
-            if (_itemBoundActions.TryGetValue(actionType, out var actionBindings))
+            if (_itemActions.TryGetValue(actionType, out var itemStates))
             {
-                actionBindings.Remove(boundItem.Uid);
-                if (actionBindings.Count == 0)
+                itemStates.Remove(item.Uid);
+                if (itemStates.Count == 0)
                 {
-                    _itemBoundActions.Remove(actionType);
+                    _itemActions.Remove(actionType);
                 }
             }
-            GrantBoundAction(actionType, boundItem, toggleOn, cooldown);
+            Grant(actionType, item, enabled, toggleOn, cooldown);
         }
 
         /// <summary>
-        /// Sets the cooldown for the owner bound action. Actions on cooldown cannot be used.
+        /// Sets the cooldown for the action. Actions on cooldown cannot be used.
         ///
         /// This will work even if the action is revoked -
         /// for example if there's an ability with a cooldown which is temporarily unusable due
@@ -313,7 +358,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         ///
         /// Setting cooldown to null clears it.
         /// </summary>
-        public void CooldownOwnerBoundAction(ActionType actionType, (TimeSpan start, TimeSpan end)? cooldown)
+        public void Cooldown(ActionType actionType, (TimeSpan start, TimeSpan end)? cooldown)
         {
             if (_actions.TryGetValue(actionType, out var actionState))
             {
@@ -326,29 +371,97 @@ namespace Content.Shared.GameObjects.Components.Mobs
                 // the cooldown has a value
                 if (!cooldown.HasValue) return;
 
-                actionState = new ActionState(actionType);
+                actionState = new ActionState();
                 actionState.Cooldown = cooldown;
             }
 
-            _actions[actionType] = actionState;
+            if (actionState.IsAtInitialState)
+            {
+                // if the cooldown was cleared and action is now at initial state, we no
+                // longer need to track it.
+                _actions.Remove(actionType);
+            }
+            else
+            {
+                _actions[actionType] = actionState;
+            }
+
             AfterCooldownAction();
             Dirty();
+        }
+
+        /// <summary>
+        /// Sets the cooldown for the item action. This will work even if
+        /// the item is revoked or not in inventory. Actions on cooldown cannot be used.
+        ///
+        /// Note that this cooldown is tracked on the owner.
+        /// If the player drops and picks up the item
+        /// they will still have the cooldown, but if another player picks up the item that other player
+        /// will see no cooldown.
+        ///
+        /// This will work even if the action is not enabled -
+        /// for example if there's an item action with a cooldown which is temporarily unusable due
+        /// to the player being stunned, the cooldown will still tick down even while the player
+        /// is stunned.
+        ///
+        /// Setting cooldown to null clears it.
+        /// </summary>
+        public void Cooldown(ItemActionType actionType, EntityUid item, (TimeSpan start, TimeSpan end)? cooldown)
+        {
+            // if it's not here it's revoked or not in inventory, simply save the cooldown for when the
+            // action is later granted
+            if (!TryGetItemActionState(actionType, item, out var actionState))
+            {
+                if (!_itemActionCooldowns.TryGetValue(actionType, out var itemCooldowns))
+                {
+                    itemCooldowns = new Dictionary<EntityUid, (TimeSpan start, TimeSpan end)>();
+                    _itemActionCooldowns[actionType] = itemCooldowns;
+                }
+
+                if (!cooldown.HasValue)
+                {
+                    // clear existing cooldown (we don't save nulls in there so simply remove the entry)
+                    itemCooldowns.Remove(item);
+                    if (itemCooldowns.Count == 0)
+                    {
+                        _itemActionCooldowns.Remove(actionType);
+                    }
+                }
+                else
+                {
+                    itemCooldowns[item] = cooldown.Value;
+                }
+
+                return;
+            }
+
+            actionState.Cooldown = cooldown;
+            // note we can be sure the below keys exist, due to the above call to TryGetItemActionState
+            _itemActions[actionType][item] = actionState;
+            AfterCooldownAction();
+            Dirty();
+        }
+
+        /// <see cref="Cooldown"/>
+        public void Cooldown(ItemActionType actionType, IEntity item, (TimeSpan start, TimeSpan end)? cooldown)
+        {
+            Cooldown(actionType, item.Uid, cooldown);
         }
 
         /// <summary>
         /// Revokes the ability to perform the action for this entity. Current state
         /// of the action (toggle / cooldown) is preserved.
         /// </summary>
-        public void RevokeAction(ActionType actionType)
+        public void Revoke(ActionType actionType)
         {
             if (!_actions.TryGetValue(actionType, out var actionState)) return;
 
-            if (!actionState.Granted) return;
+            if (!actionState.Enabled) return;
 
-            actionState.Granted = false;
+            actionState.Enabled = false;
 
             // don't store it anymore if its at its initial state.
-            if (actionState.IsAtInitialState())
+            if (actionState.IsAtInitialState)
             {
                 _actions.Remove(actionType);
             }
@@ -361,12 +474,62 @@ namespace Content.Shared.GameObjects.Components.Mobs
             Dirty();
         }
 
+        public void SetEnabled(ItemActionType actionType, EntityUid item, bool enabled)
+        {
+            // TODO: Implement (can we just call Grant()?)
+        }
+
+        /// <see cref="SetEnabled"/>
+        public void SetEnabled(ItemActionType actionType, IEntity item, bool enabled)
+        {
+            SetEnabled(actionType, item.Uid, enabled);
+        }
+
+        /// <summary>
+        /// Revokes the knowledge of the item action for the specified item from this entity. Current
+        /// cooldown amount will be preserved and restored if this action is later granted.
+        ///
+        /// This is different from disabling the item - the knowledge of the action is removed entirely,
+        /// so the user would no longer see a hotbar action icon for this particular item's action
+        /// (though they would still see the icon for the action itself, it would just show
+        /// as disabled and not have an item icon).
+        /// </summary>
+        public void Revoke(ItemActionType actionType, EntityUid item)
+        {
+            // TODO: implement
+            if (!_actions.TryGetValue(actionType, out var actionState)) return;
+
+            if (!actionState.Enabled) return;
+
+            actionState.Enabled = false;
+
+            // don't store it anymore if its at its initial state.
+            if (actionState.IsAtInitialState)
+            {
+                _actions.Remove(actionType);
+            }
+            else
+            {
+                _actions[actionType] = actionState;
+            }
+
+            AfterRevokeAction();
+            Dirty();
+        }
+
+        /// <see cref="Revoke"/>
+        public void Revoke(ItemActionType actionType, IEntity item)
+        {
+            Revoke(actionType, item.Uid);
+        }
+
         /// <summary>
         /// Toggles the action to the specified value. Works even if the action is on cooldown
         /// or revoked.
         /// </summary>
         public void ToggleAction(ActionType actionType, bool toggleOn)
         {
+            // TODO: Can we just call grant?
             if (!ActionManager.TryGet(actionType, out var action))
             {
                 Logger.WarningS("action", "unrecognized actionType {0}", actionType);
@@ -404,6 +567,22 @@ namespace Content.Shared.GameObjects.Components.Mobs
             Dirty();
         }
 
+        public void ToggleAction(ItemActionType actionType, EntityUid item, bool toggleOn)
+        {
+            // TODO: implement, Can we just call grant?
+        }
+
+        /// <see cref="ToggleAction"/>
+        public void ToggleAction(ItemActionType actionType, IEntity item, bool toggleOn)
+        {
+            ToggleAction(actionType, item.Uid, toggleOn);
+        }
+
+        /// <summary>
+        /// Implementation must determine if the given item is currently in player's hand or equip slots
+        /// </summary>
+        protected abstract bool IsEquipped(IEntity item);
+
         /// <summary>
         /// Invoked after granting an action prior to dirtying the component
         /// </summary>
@@ -425,46 +604,42 @@ namespace Content.Shared.GameObjects.Components.Mobs
         protected virtual void AfterToggleAction() { }
     }
 
-    public enum BindingType
-    {
-        Nonexistent,
-        OwnerBound,
-        ItemBound
-    }
-
     [Serializable, NetSerializable]
     public class ActionComponentState : ComponentState
     {
-        public Dictionary<ActionType, ActionState> OwnerBound;
-        public Dictionary<ActionType, Dictionary<EntityUid, ActionState>> ItemBound;
+        public Dictionary<ActionType, ActionState> Actions;
+        public Dictionary<ItemActionType, Dictionary<EntityUid, ActionState>> ItemActions;
 
-        public ActionComponentState(Dictionary<ActionType, ActionState> ownerBound,
-            Dictionary<ActionType, Dictionary<EntityUid, ActionState>> itemBound) : base(ContentNetIDs.ACTIONS)
+        public ActionComponentState(Dictionary<ActionType, ActionState> actions,
+            Dictionary<ItemActionType, Dictionary<EntityUid, ActionState>> itemActions) : base(ContentNetIDs.ACTIONS)
         {
-            OwnerBound = ownerBound;
-            ItemBound = itemBound;
+            Actions = actions;
+            ItemActions = itemActions;
         }
     }
 
     [Serializable, NetSerializable]
     public struct ActionState
     {
-        public bool Granted;
+        /// <summary>
+        /// False if this action is not currently allowed to be performed.
+        /// </summary>
+        public bool Enabled;
         /// <summary>
         /// Only used for toggle actions, indicates whether it's currently toggled on or off
         /// TODO: Eventually this should probably be a byte so we it can toggle through multiple states.
         /// </summary>
         public bool ToggledOn;
         public ValueTuple<TimeSpan, TimeSpan>? Cooldown;
-        public bool IsAtInitialState => !Granted && !ToggledOn && !Cooldown.HasValue;
+        public bool IsAtInitialState => !Enabled && !ToggledOn && !Cooldown.HasValue;
 
         /// <summary>
         /// Creates an action state for the indicated type, defaulting to the
         /// initial state.
         /// </summary>
-        public ActionState(bool granted = false, bool toggledOn = false, ValueTuple<TimeSpan, TimeSpan>? cooldown = null)
+        public ActionState(bool enabled = false, bool toggledOn = false, ValueTuple<TimeSpan, TimeSpan>? cooldown = null)
         {
-            Granted = granted;
+            Enabled = enabled;
             ToggledOn = toggledOn;
             Cooldown = cooldown;
         }

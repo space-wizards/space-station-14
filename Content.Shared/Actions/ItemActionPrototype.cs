@@ -1,59 +1,58 @@
 ﻿using Content.Shared.Interfaces;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using YamlDotNet.RepresentationModel;
-using Robust.Shared.Log;
 
 namespace Content.Shared.Actions
 {
     /// <summary>
-    /// An action which is granted directly to an entity (such as an innate ability
-    /// or skill).
+    /// An action which is granted to an entity via an item (such as toggling a flashlight).
     /// </summary>
-    [Prototype("action")]
-    public class ActionPrototype : BaseActionPrototype
+    [Prototype("itemAction")]
+    public class ItemActionPrototype : BaseActionPrototype
     {
         /// <summary>
-        /// Type of action, no 2 action prototypes should have the same one.
+        /// Type of item action, no 2 itemAction prototypes should have the same one.
         /// </summary>
-        public ActionType ActionType { get; private set; }
+        public ItemActionType ActionType { get; private set; }
 
         /// <summary>
-        /// The IInstantAction that should be invoked when performing this
+        /// The IInstantItemAction that should be invoked when performing this
         /// action. Null if this is not an Instant ActionBehaviorType.
         /// Will be null on client side if the behavior is not in Content.Client.
         /// </summary>
-        public IInstantAction InstantAction { get; private set; }
+        public IInstantItemAction InstantAction { get; private set; }
 
         /// <summary>
-        /// The IToggleAction that should be invoked when performing this
+        /// The IToggleItemAction that should be invoked when performing this
         /// action. Null if this is not a Toggle ActionBehaviorType.
         /// Will be null on client side if the behavior is not in Content.Client.
         /// </summary>
-        public IToggleAction ToggleAction { get; private set; }
+        public IToggleItemAction ToggleAction { get; private set; }
 
         /// <summary>
-        /// The ITargetEntityAction that should be invoked when performing this
+        /// The ITargetEntityItemAction that should be invoked when performing this
         /// action. Null if this is not a TargetEntity ActionBehaviorType.
         /// Will be null on client side if the behavior is not in Content.Client.
         /// </summary>
-        public ITargetEntityAction TargetEntityAction { get; private set; }
+        public ITargetEntityItemAction TargetEntityAction { get; private set; }
 
         /// <summary>
-        /// The ITargetPointAction that should be invoked when performing this
+        /// The ITargetPointItemAction that should be invoked when performing this
         /// action. Null if this is not a TargetPoint ActionBehaviorType.
         /// Will be null on client side if the behavior is not in Content.Client.
         /// </summary>
-        public ITargetPointAction TargetPointAction { get; private set; }
+        public ITargetPointItemAction TargetPointAction { get; private set; }
 
         public new void LoadFrom(YamlMappingNode mapping)
         {
             base.LoadFrom(mapping);
             var serializer = YamlObjectSerializer.NewReader(mapping);
 
-            serializer.DataField(this, x => x.ActionType, "actionType", ActionType.Error);
-            if (ActionType == ActionType.Error)
+            serializer.DataField(this, x => x.ActionType, "actionType", ItemActionType.Error);
+            if (ActionType == ItemActionType.Error)
             {
                 Logger.ErrorS("action", "missing or invalid actionType for action with name {0}", Name);
             }
@@ -68,27 +67,27 @@ namespace Content.Shared.Actions
                 BehaviorType = BehaviorType.None;
                 Logger.ErrorS("action", "missing or invalid behavior for action with name {0}", Name);
             }
-            else if (behavior is IInstantAction instantAction)
+            else if (behavior is IInstantItemAction instantAction)
             {
-                ValidateBehaviorType(BehaviorType.Instant, typeof(IInstantAction));
+                ValidateBehaviorType(BehaviorType.Instant, typeof(IInstantItemAction));
                 BehaviorType = BehaviorType.Instant;
                 InstantAction = instantAction;
             }
-            else if (behavior is IToggleAction toggleAction)
+            else if (behavior is IToggleItemAction toggleAction)
             {
-                ValidateBehaviorType(BehaviorType.Toggle, typeof(IToggleAction));
+                ValidateBehaviorType(BehaviorType.Toggle, typeof(IToggleItemAction));
                 BehaviorType = BehaviorType.Toggle;
                 ToggleAction = toggleAction;
             }
-            else if (behavior is ITargetEntityAction targetEntity)
+            else if (behavior is ITargetEntityItemAction targetEntity)
             {
-                ValidateBehaviorType(BehaviorType.TargetEntity, typeof(ITargetEntityAction));
+                ValidateBehaviorType(BehaviorType.TargetEntity, typeof(ITargetEntityItemAction));
                 BehaviorType = BehaviorType.TargetEntity;
                 TargetEntityAction = targetEntity;
             }
-            else if (behavior is ITargetPointAction targetPointAction)
+            else if (behavior is ITargetPointItemAction targetPointAction)
             {
-                ValidateBehaviorType(BehaviorType.TargetPoint, typeof(ITargetPointAction));
+                ValidateBehaviorType(BehaviorType.TargetPoint, typeof(ITargetPointItemAction));
                 BehaviorType = BehaviorType.TargetPoint;
                 TargetPointAction = targetPointAction;
             }
@@ -97,7 +96,6 @@ namespace Content.Shared.Actions
                 BehaviorType = BehaviorType.None;
                 Logger.ErrorS("action", "unrecognized behavior type for action with name {0}", Name);
             }
-
         }
     }
 }

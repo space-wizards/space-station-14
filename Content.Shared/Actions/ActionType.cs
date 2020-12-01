@@ -13,4 +13,13 @@
         DebugTargetEntity,
         DebugTargetEntityRepeat
     }
+
+    /// <summary>
+    /// Every possible item action. Corresponds to actionType in itemAction prototypes.
+    /// </summary>
+    public enum ItemActionType : byte
+    {
+        Error,
+        DebugInstant,
+    }
 }

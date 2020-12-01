@@ -1,23 +1,24 @@
 ﻿using System;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
-using Robust.Shared.Map;
 
 namespace Content.Shared.Actions
 {
     /// <summary>
-    /// Action which is used on a targeted entity.
+    /// Item action which does something immediately when used and has
+    /// no target.
     /// </summary>
-    public interface ITargetEntityAction : IActionBehavior
+    public interface IInstantItemAction : IActionBehavior
     {
+
         /// <summary>
-        /// Invoked when the target entity action should be performed.
+        /// Invoked when the instant action should be performed.
         /// Implementation should perform the server side logic of the action.
         /// </summary>
-        void DoTargetEntityAction(TargetEntityActionEventArgs args);
+        void DoInstantAction(InstantItemActionEventArgs args);
     }
 
-    public class TargetEntityActionEventArgs : EventArgs
+    public class InstantItemActionEventArgs : EventArgs
     {
         /// <summary>
         /// Entity performing the action.
@@ -25,14 +26,14 @@ namespace Content.Shared.Actions
         public readonly IEntity Performer;
 
         /// <summary>
-        /// Entity being targeted
+        /// Item being used to perform the action.
         /// </summary>
-        public readonly IEntity Target;
+        public readonly IEntity Item;
 
-        public TargetEntityActionEventArgs(IEntity performer, IEntity target)
+        public InstantItemActionEventArgs(IEntity performer, IEntity item)
         {
             Performer = performer;
-            Target = target;
+            Item = item;
         }
     }
 }

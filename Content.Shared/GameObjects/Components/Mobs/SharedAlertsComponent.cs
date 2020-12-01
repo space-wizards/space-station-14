@@ -90,14 +90,14 @@ namespace Content.Shared.GameObjects.Components.Mobs
             if (AlertManager.TryGet(alertType, out var alert))
             {
                 if (_alerts.TryGetValue(alert.AlertKey, out var alertStateCallback) &&
-                    alertStateCallback.AlertType == alertType &&
+                    alert.AlertType == alertType &&
                     alertStateCallback.Severity == severity && alertStateCallback.Cooldown == cooldown)
                 {
                     return;
                 }
 
                 _alerts[alert.AlertKey] = new AlertState
-                    {Cooldown = cooldown, AlertType = alertType, Severity = severity};
+                    {Cooldown = cooldown, Severity = severity};
 
                 AfterShowAlert();
 
