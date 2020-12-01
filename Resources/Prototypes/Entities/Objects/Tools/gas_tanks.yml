@@ -132,7 +132,6 @@
     - type: Clothing
       sprite: Objects/Tanks/emergency.rsi
       Slots:
-        - Back
         - Pocket
         - Belt
 
@@ -168,7 +167,6 @@
     - type: Clothing
       sprite: Objects/Tanks/emergency_yellow.rsi
       Slots:
-        - Back
         - Pocket
         - Belt
 
@@ -204,7 +202,6 @@
     - type: Clothing
       sprite: Objects/Tanks/emergency_double.rsi
       Slots:
-        - Back
         - Pocket
         - Belt
 
@@ -282,8 +279,9 @@
         temperature: 293.15
     - type: Clothing
       sprite: Objects/Tanks/phoron.rsi
-      Slots: [] # no straps
-
+      Slots:
+        - Belt
+        
 - type: entity
   id: PhoronTankFilled
   parent: PhoronTank

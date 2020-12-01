@@ -11,6 +11,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos
@@ -177,6 +178,9 @@ namespace Content.Server.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetMoles(int gasId, float quantity)
         {
+            if (float.IsInfinity(quantity) || float.IsNaN(quantity) || float.IsNegative(quantity))
+                throw new ArgumentException($"Invalid quantity \"{quantity}\" specified!", nameof(quantity));
+
             if (!Immutable)
                 _moles[gasId] = quantity;
         }
@@ -191,7 +195,17 @@ namespace Content.Server.Atmos
         public void AdjustMoles(int gasId, float quantity)
         {
             if (!Immutable)
+            {
+                if (float.IsInfinity(quantity) || float.IsNaN(quantity))
+                    throw new ArgumentException($"Invalid quantity \"{quantity}\" specified!", nameof(quantity));
+
                 _moles[gasId] += quantity;
+
+                var moles = _moles[gasId];
+
+                if (float.IsInfinity(moles) || float.IsNaN(moles) || float.IsNegative(moles))
+                    throw new Exception($"Invalid mole quantity \"{moles}\" in gas Id {gasId} after adjusting moles with \"{quantity}\"!");
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -209,11 +223,14 @@ namespace Content.Server.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GasMixture RemoveRatio(float ratio)
         {
-            if(ratio <= 0)
-                return new GasMixture(Volume, _atmosphereSystem);
-
-            if (ratio > 1)
-                ratio = 1;
+            switch (ratio)
+            {
+                case <= 0:
+                    return new GasMixture(Volume, _atmosphereSystem){Temperature = Temperature};
+                case > 1:
+                    ratio = 1;
+                    break;
+            }
 
             var removed = new GasMixture(_atmosphereSystem) {Volume = Volume, Temperature = Temperature};
 
@@ -224,10 +241,12 @@ namespace Content.Server.Atmos
 
             for (var i = 0; i < _moles.Length; i++)
             {
-                if (_moles[i] < Atmospherics.GasMinMoles)
+                var moles = _moles[i];
+                var otherMoles = removed._moles[i];
+                if (moles < Atmospherics.GasMinMoles || float.IsNaN(moles))
                     _moles[i] = 0;
 
-                if (removed._moles[i] < Atmospherics.GasMinMoles)
+                if (otherMoles < Atmospherics.GasMinMoles || float.IsNaN(otherMoles))
                     removed._moles[i] = 0;
             }
 
@@ -269,7 +288,7 @@ namespace Content.Server.Atmos
                 if (!(MathF.Abs(delta) >= Atmospherics.GasMinMoles)) continue;
                 if (absTemperatureDelta > Atmospherics.MinimumTemperatureDeltaToConsider)
                 {
-                    var gasHeatCapacity = delta * _atmosphereSystem.GetGas(i).SpecificHeat;
+                    var gasHeatCapacity = delta * _atmosphereSystem.GasSpecificHeats[i];
                     if (delta > 0)
                     {
                         heatCapacityToSharer += gasHeatCapacity;
