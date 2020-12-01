@@ -16,14 +16,14 @@ namespace Content.Server.Objectives
         [Dependency] private IPrototypeManager _prototypeManager = default!;
         [Dependency] private IRobustRandom _random = default!;
 
-        public List<ObjectivePrototype> GetAllPossibleObjectives(Mind mind)
+        public IEnumerable<ObjectivePrototype> GetAllPossibleObjectives(Mind mind)
         {
-            return _prototypeManager.EnumeratePrototypes<ObjectivePrototype>().Where(objectivePrototype => objectivePrototype.CanBeAssigned(mind)).ToList();
+            return _prototypeManager.EnumeratePrototypes<ObjectivePrototype>().Where(objectivePrototype => objectivePrototype.CanBeAssigned(mind));
         }
 
         public ObjectivePrototype? GetRandomObjective(Mind mind)
         {
-            var objectives = GetAllPossibleObjectives(mind);
+            var objectives = GetAllPossibleObjectives(mind).ToList();
             _random.Shuffle(objectives);
 
             //to prevent endless loops

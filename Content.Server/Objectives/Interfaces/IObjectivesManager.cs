@@ -8,7 +8,7 @@ namespace Content.Server.Objectives.Interfaces
         /// <summary>
         /// Returns all objectives the provided mind is valid for.
         /// </summary>
-        IReadOnlyList<ObjectivePrototype> GetAllPossibleObjectives(Mind mind);
+        IEnumerable<ObjectivePrototype> GetAllPossibleObjectives(Mind mind);
 
         /// <summary>
         /// Returns a randomly picked objective the provided mind is valid for.

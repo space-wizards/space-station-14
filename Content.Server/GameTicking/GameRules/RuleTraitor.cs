@@ -20,9 +20,6 @@ namespace Content.Server.GameTicking.GameRules
     public class RuleTraitor : GameRule
     {
         [Dependency] private readonly IChatManager _chatManager = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IGameTicker _gameTicker = default!;
-        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         public override void Added()
         {
