@@ -2,6 +2,8 @@
   id: KitchenSpike
   name: meat spike
   description: A spike for collecting meat from animals.
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Clickable
   - type: InteractionOutline
