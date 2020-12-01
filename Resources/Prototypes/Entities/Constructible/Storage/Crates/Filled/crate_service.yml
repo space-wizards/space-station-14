@@ -1,0 +1,31 @@
+- type: entity
+  id: CrateServiceJanitorialSupplies
+  name: janitorial supplies crate
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - name: MopItem
+        amount: 1
+      - name: MopBucket
+        amount: 1
+      - name: Bucket
+        amount: 3
+      - name: WetFloorSign
+        amount: 2
+      - name: Soap
+        amount: 1
+      - name: SprayBottleSpaceCleaner
+        amount: 2
+
+- type: entity
+  id: CrateServiceReplacementLights
+  name: replacement lights crate
+  parent: CrateGenericonimo
+  components:
+  - type: StorageFill
+    contents:
+      - name: LightTube
+        amount: 5
+      - name: LightBulb
+        amount: 5

@@ -1,5 +1,6 @@
-﻿- type: entity
+- type: entity
   id: CrateGeneric
+  abstract: true
   name: crate
   description: A large container for items.
   components:
@@ -10,6 +11,9 @@
     - state: crate
     - state: crate_door
       map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.StorageVisualLayers.Welded"]
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
@@ -17,7 +21,7 @@
     anchored: false
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.4, -0.4, 0.4, 0.4"
+      bounds: "-0.4, -0.4, 0.29, 0.4"
       mask:
       - Impassable
       - MobImpassable
@@ -28,8 +32,8 @@
       - MobImpassable
       - SmallImpassable
   - type: EntityStorage
-    capacity: 60
-    CanWeldShut: false
+    Capacity: 500
+    CanWeldShut: true
   - type: PlaceableSurface
   - type: Destructible
     deadThreshold: 100
@@ -41,4 +45,5 @@
       state_open: crate_open
       state_closed: crate_door
   - type: LoopingSound
+  - type: Anchorable
   - type: Pullable
