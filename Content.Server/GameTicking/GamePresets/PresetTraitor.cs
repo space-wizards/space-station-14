@@ -90,7 +90,7 @@ namespace Content.Server.GameTicking.GamePresets
             for (var i = 0; i < numTraitors; i++)
             {
                 IPlayerSession traitor;
-                if(prefList.Count == 0)
+                if(prefList.Count < numTraitors)
                 {
                     if (list.Count == 0)
                     {

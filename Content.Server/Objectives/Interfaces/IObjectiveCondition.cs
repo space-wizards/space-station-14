@@ -32,7 +32,7 @@ namespace Content.Server.Objectives.Interfaces
         SpriteSpecifier Icon { get; }
 
         /// <summary>
-        /// Returns the current progress of the condition in %.
+        /// Returns the current progress of the condition in % from 0 to 1.
         /// </summary>
         /// <returns>Current progress in %.</returns>
         float Progress { get; }
