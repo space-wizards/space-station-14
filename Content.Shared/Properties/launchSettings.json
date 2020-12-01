@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "Content.Shared": {
+      "commandName": "Project"
+    },
+    "Content.Server": {
+      "commandName": "Executable",
+      "executablePath": "D:\\HeavyFiles\\SS14code\\space-station-14\\bin\\Content.Server\\Content.Server.exe"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+- type: entity
+  name: Batonchick
+  parent: FoodBase
+  id: FoodCandyProto
+  description: Soy-based sugary dictatorial opression in every bite!
+  components:
+  - type: Food
+    trash: TrashRaisins
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: chem.Nutriment
+        Quantity: 12
+  - type: Sprite
+    sprite: Objects/Consumable/Food/4no_raisins.rsi
+  - type: Grindable
+  - type: Item
+    sprite: Objects/Consumable/Food/4no_raisins.rsi
