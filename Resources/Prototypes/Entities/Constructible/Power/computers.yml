@@ -140,57 +140,6 @@
       screen: power_monitor
 
 - type: entity
-  id: ComputerSupplyOrdering
-  parent: ComputerBase
-  name: Cargo ordering computer
-  description: Used to order supplies, approve requests, and control the shuttle.
-  components:
-  - type: Appearance
-    visuals:
-    - type: ComputerVisualizer
-      key: tech_key
-      screen: supply
-  - type: CargoConsole
-  - type: CargoOrderDatabase
-  - type: GalacticMarket
-    static: true
-    products:
-      - cargo.dice
-      - cargo.Medkit
-      - cargo.flashlight
-      - cargo.lightblub
-      - cargo.fireextinguisher
-      - cargo.pen
-      - cargo.bikehorn
-      - cargo.cleaver
-      - cargo.fueltank
-      - cargo.medscanner
-      - cargo.glass
-      - cargo.cable
-  - type: UserInterface
-    interfaces:
-    - key: enum.CargoConsoleUiKey.Key
-      type: CargoConsoleBoundUserInterface
-  - type: Computer
-    board: SupplyComputerCircuitboard
-
-- type: entity
-  id: ComputerSupplyRequest
-  parent: ComputerSupplyOrdering
-  name: cargo request computer
-  description: Used to request supplies from cargo.
-  components:
-  - type: Appearance
-    visuals:
-    - type: ComputerVisualizer
-      key: tech_key
-      screen: request
-  - type: CargoConsole
-    requestOnly: true
-  - type: Computer
-    board: SupplyRequestComputerCircuitboard
-
-- type: entity
   id: ComputerMedicalRecords
   parent: ComputerBase
   name: medical records computer
