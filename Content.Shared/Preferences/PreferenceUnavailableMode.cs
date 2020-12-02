@@ -3,7 +3,7 @@ namespace Content.Shared.Preferences
     /// <summary>
     ///     Specifies behavior when none of the jobs you want are available at round start.
     /// </summary>
-    public enum PreferenceUnavailableMode : byte
+    public enum PreferenceUnavailableMode
     {
         // These enum values HAVE to match the ones in DbPreferenceUnavailableMode in Server.Database.
 
