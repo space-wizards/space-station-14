@@ -20,3 +20,5 @@
     outerclothing: ClothingOuterCoatLab
     idcard: SciencePDA
     ears: ClothingHeadsetScience
+  innerclothingskirt: ClothingUniformJumpskirtScientist
+
