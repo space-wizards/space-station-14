@@ -27,6 +27,7 @@ using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -69,6 +70,7 @@ namespace Content.Server.GameObjects.Components.Buckle
         public Vector2 BuckleOffset { get; private set; }
 
         private StrapComponent? _buckledTo;
+        public override EntityUid EntityBuckledTo { get;  set; }
 
         /// <summary>
         ///     The strap that this component is buckled to.
@@ -275,6 +277,7 @@ namespace Content.Server.GameObjects.Components.Buckle
             AppearanceComponent?.SetData(BuckleVisuals.Buckled, true);
 
             BuckledTo = strap;
+            EntityBuckledTo = BuckledTo.Owner.Uid;
 
             ReAttach(strap);
             UpdateBuckleStatus();
@@ -428,12 +431,22 @@ namespace Content.Server.GameObjects.Components.Buckle
                 drawDepth = BuckledTo.SpriteComponent.DrawDepth - 1;
             }
 
-            return new BuckleComponentState(Buckled, drawDepth);
+            return new BuckleComponentState(Buckled, drawDepth, EntityBuckledTo);
         }
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
             return TryUnbuckle(eventArgs.User);
+        }
+
+        public override bool PreventCollide(IPhysBody collidedwith)
+        {
+            if (Buckled && collidedwith.Entity.Uid == EntityBuckledTo)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>

@@ -3,12 +3,14 @@ using Content.Shared.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Buckle
 {
-    public abstract class SharedBuckleComponent : Component, IActionBlocker, IEffectBlocker, IDraggable
+    public abstract class SharedBuckleComponent : Component, IActionBlocker, IEffectBlocker, IDraggable, ICollideSpecial
     {
         public sealed override string Name => "Buckle";
 
@@ -18,8 +20,11 @@ namespace Content.Shared.GameObjects.Components.Buckle
         ///     True if the entity is buckled, false otherwise.
         /// </summary>
         public abstract bool Buckled { get; }
+        public virtual EntityUid EntityBuckledTo { get; set; }
 
         public abstract bool TryBuckle(IEntity user, IEntity to);
+
+        public abstract bool PreventCollide(IPhysBody collidedwith);
 
         bool IActionBlocker.CanMove()
         {
@@ -44,19 +49,21 @@ namespace Content.Shared.GameObjects.Components.Buckle
         public bool Drop(DragDropEventArgs args)
         {
             return TryBuckle(args.User, args.Target);
-        }
+        }  
     }
 
     [Serializable, NetSerializable]
     public sealed class BuckleComponentState : ComponentState
     {
-        public BuckleComponentState(bool buckled, int? drawDepth) : base(ContentNetIDs.BUCKLE)
+        public BuckleComponentState(bool buckled, int? drawDepth, EntityUid entityBuckledTo) : base(ContentNetIDs.BUCKLE)
         {
             Buckled = buckled;
             DrawDepth = drawDepth;
+            EntityBuckledTo = entityBuckledTo;
         }
 
         public bool Buckled { get; }
+        public EntityUid EntityBuckledTo { get; }
         public int? DrawDepth;
     }
 
