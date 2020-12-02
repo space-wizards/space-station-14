@@ -24,7 +24,7 @@
           steps:
             - component: ComputerBoard
               store: board
-              name: a computer circuit board
+              name: any computer circuit board
               icon:
                 sprite: "Constructible/Misc/module.rsi"
                 state: "id_mod"
@@ -99,6 +99,10 @@
         - to: missingWires
           conditions:
             - !type:EntityAnchored { }
+          completed:
+            - !type:SpawnPrototype
+              prototype: ApcExtensionCableStack1
+              amount: 5
           steps:
             - tool: Cutting
 

@@ -1,6 +1,6 @@
 ﻿namespace Content.Server.Construction
 {
-    public enum MachinePart
+    public enum MachinePart : byte
     {
         Capacitor,
         ScanningModule,
