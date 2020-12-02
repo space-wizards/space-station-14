@@ -20,9 +20,7 @@ namespace Content.Client.UserInterface
             private readonly Slider MasterVolumeSlider;
             private readonly Button ResetButton;
 
-            private const string SOUND_TEST_PATH = "/Audio/Machines/Keyboard.ogg";
-
-            public AudioControl(IConfigurationManager cfg, Robust.Client.Interfaces.Graphics.IClydeAudio clydeAudio)
+            public AudioControl(IConfigurationManager cfg, IClydeAudio clydeAudio)
             {
                 _cfg = cfg;
                 _clydeAudio = clydeAudio;
@@ -114,7 +112,7 @@ namespace Content.Client.UserInterface
                 });
 
                 MasterVolumeSlider.Value = _cfg.GetCVar(CVars.AudioMasterVolume) * 100.0f;
-                MasterVolumeLabel.Text = string.Format("{0:0}%", MasterVolumeSlider.Value);
+                MasterVolumeLabel.Text = string.Format(Loc.GetString("{0:0}%"), MasterVolumeSlider.Value);
 
                 ApplyButton.OnPressed += OnApplyButtonPressed;
                 ResetButton.OnPressed += OnResetButtonPressed;
@@ -124,9 +122,17 @@ namespace Content.Client.UserInterface
                 UpdateChanges();
             }
 
+            protected override void Dispose(bool disposing)
+            {
+                ApplyButton.OnPressed -= OnApplyButtonPressed;
+                ResetButton.OnPressed -= OnResetButtonPressed;
+                MasterVolumeSlider.OnValueChanged -= OnMasterVolumeSliderChanged;
+                base.Dispose(disposing);
+            }
+
             private void OnMasterVolumeSliderChanged(Range range)
             {
-                MasterVolumeLabel.Text = string.Format("{0:0}%", MasterVolumeSlider.Value);
+                MasterVolumeLabel.Text = string.Format(Loc.GetString("{0:0}%"), MasterVolumeSlider.Value);
                 _clydeAudio.SetMasterVolume(MasterVolumeSlider.Value / 100.0f);
                 UpdateChanges();
             }
@@ -141,7 +147,7 @@ namespace Content.Client.UserInterface
             private void OnResetButtonPressed(BaseButton.ButtonEventArgs args)
             {
                 MasterVolumeSlider.Value = _cfg.GetCVar(CVars.AudioMasterVolume) * 100.0f;
-                MasterVolumeLabel.Text = string.Format("{0:0}%", MasterVolumeSlider.Value);
+                MasterVolumeLabel.Text = string.Format(Loc.GetString("{0:0}%"), MasterVolumeSlider.Value);
                 UpdateChanges();
             }
 
