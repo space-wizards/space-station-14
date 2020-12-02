@@ -1,7 +1,9 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
@@ -28,18 +30,12 @@ namespace Content.Client.GameObjects.Components.Mobs
         private Vector2 _currentKick;
         private float _lastKickTime;
 
-        private EyeComponent _eye;
+        [ComponentDependency]
+        private readonly EyeComponent? _eye;
 
         // Basically I needed a way to chain this effect for the attack lunge animation.
         // Sorry!
         public Vector2 BaseOffset { get; set; }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            _eye = Owner.GetComponent<EyeComponent>();
-        }
 
         public override void Kick(Vector2 recoil)
         {
@@ -62,7 +58,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             _updateEye();
         }
 
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, channel, session);
 
@@ -86,7 +82,7 @@ namespace Content.Client.GameObjects.Components.Mobs
 
             // Continually restore camera to 0.
             var normalized = _currentKick.Normalized;
-            _lastKickTime += frameTime;     
+            _lastKickTime += frameTime;
             var restoreRate = MathHelper.Lerp(RestoreRateMin, RestoreRateMax, Math.Min(1, _lastKickTime/RestoreRateRamp));
             var restore = normalized * restoreRate * frameTime;
             var (x, y) = _currentKick - restore;
@@ -107,7 +103,7 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         private void _updateEye()
         {
-            _eye.Offset = BaseOffset + _currentKick;
+            if (_eye != null) _eye.Offset = BaseOffset + _currentKick;
         }
     }
 }

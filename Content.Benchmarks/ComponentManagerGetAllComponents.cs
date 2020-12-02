@@ -13,7 +13,7 @@ namespace Content.Benchmarks
 {
     public class ComponentManagerGetAllComponents
     {
-        private readonly List<IEntity> _entities = new List<IEntity>();
+        private readonly List<IEntity> _entities = new();
 
         private IComponentManager _componentManager;
 

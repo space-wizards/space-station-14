@@ -22,7 +22,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
 
         private readonly Dictionary<Slots, List<ItemSlotButton>> _inventoryButtons
-            = new Dictionary<Slots, List<ItemSlotButton>>();
+            = new();
 
         private ItemSlotButton _hudButtonPocket1;
         private ItemSlotButton _hudButtonPocket2;

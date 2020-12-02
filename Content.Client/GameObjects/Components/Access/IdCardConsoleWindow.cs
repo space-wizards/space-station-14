@@ -29,7 +29,7 @@ namespace Content.Client.GameObjects.Components.Access
 
         private readonly IdCardConsoleBoundUserInterface _owner;
 
-        private readonly Dictionary<string, Button> _accessButtons = new Dictionary<string, Button>();
+        private readonly Dictionary<string, Button> _accessButtons = new();
 
         private string _lastFullName;
         private string _lastJobTitle;

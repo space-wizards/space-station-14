@@ -27,7 +27,7 @@ namespace Content.Shared.Construction.ConstructionConditions
             if (tileFound == null)
                 return false;
 
-            var tile = TurfHelpers.GetContentTileDefinition(tileFound.Value.Tile);
+            var tile = tileFound.Value.Tile.GetContentTileDefinition();
             foreach (var targetTile in TargetTiles)
             {
                 if (tile.Name == targetTile) {

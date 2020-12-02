@@ -144,19 +144,12 @@ namespace Content.Server.Atmos
         public string Help => "addgas <X> <Y> <GridId> <Gas> <moles>";
         public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
         {
-            var gasId = -1;
-            var gas = (Gas) (-1);
             if (args.Length < 5) return;
             if(!int.TryParse(args[0], out var x)
                || !int.TryParse(args[1], out var y)
                || !int.TryParse(args[2], out var id)
-               || !(int.TryParse(args[3], out gasId) || Enum.TryParse(args[3], true, out gas))
+               || !(AtmosCommandUtils.TryParseGasID(args[3], out var gasId))
                || !float.TryParse(args[4], out var moles)) return;
-
-            if (gas != (Gas) (-1))
-            {
-                gasId = (int)gas;
-            }
 
             var gridId = new GridId(id);
 
@@ -198,14 +191,7 @@ namespace Content.Server.Atmos
                 return;
             }
 
-            if (gasId != -1)
-            {
-                tile.Air.AdjustMoles(gasId, moles);
-                gam.Invalidate(indices);
-                return;
-            }
-
-            tile.Air.AdjustMoles(gas, moles);
+            tile.Air.AdjustMoles(gasId, moles);
             gam.Invalidate(indices);
         }
     }
@@ -218,15 +204,10 @@ namespace Content.Server.Atmos
         public string Help => "fillgas <GridId> <Gas> <moles>";
         public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
         {
-            var gasId = -1;
-            var gas = (Gas) (-1);
             if (args.Length < 3) return;
             if(!int.TryParse(args[0], out var id)
-               || !(int.TryParse(args[1], out gasId) || Enum.TryParse(args[1], true, out gas))
+               || !(AtmosCommandUtils.TryParseGasID(args[1], out var gasId))
                || !float.TryParse(args[2], out var moles)) return;
-
-            if (gas != (Gas) (-1))
-                gasId = (int)gas;
 
             var gridId = new GridId(id);
 
@@ -256,14 +237,7 @@ namespace Content.Server.Atmos
 
             foreach (var tile in gam)
             {
-                if (gasId != -1)
-                {
-                    tile.Air?.AdjustMoles(gasId, moles);
-                    gam.Invalidate(tile.GridIndices);
-                    continue;
-                }
-
-                tile.Air?.AdjustMoles(gas, moles);
+                tile.Air?.AdjustMoles(gasId, moles);
                 gam.Invalidate(tile.GridIndices);
             }
         }

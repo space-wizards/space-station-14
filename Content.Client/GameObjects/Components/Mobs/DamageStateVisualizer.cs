@@ -14,7 +14,7 @@ namespace Content.Client.GameObjects.Components.Mobs
     public sealed class DamageStateVisualizer : AppearanceVisualizer
     {
         private DamageState _data = DamageState.Alive;
-        private readonly Dictionary<DamageState, string> _stateMap = new Dictionary<DamageState, string>();
+        private readonly Dictionary<DamageState, string> _stateMap = new();
         private int? _originalDrawDepth;
 
         public override void LoadData(YamlMappingNode node)

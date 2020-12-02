@@ -21,7 +21,7 @@ namespace Content.Client.GameObjects.EntitySystems
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
 
-        private readonly Queue<IEntity> _dirtyEntities = new Queue<IEntity>();
+        private readonly Queue<IEntity> _dirtyEntities = new();
 
         private int _generation;
 

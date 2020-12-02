@@ -481,7 +481,7 @@ namespace Content.Client.GameObjects.Components.Wires
 
         private sealed class StatusLight : Control
         {
-            private static readonly Animation _blinkingFast = new Animation
+            private static readonly Animation _blinkingFast = new()
             {
                 Length = TimeSpan.FromSeconds(0.2),
                 AnimationTracks =
@@ -500,7 +500,7 @@ namespace Content.Client.GameObjects.Components.Wires
                 }
             };
 
-            private static readonly Animation _blinkingSlow = new Animation
+            private static readonly Animation _blinkingSlow = new()
             {
                 Length = TimeSpan.FromSeconds(0.8),
                 AnimationTracks =
