@@ -1,5 +1,5 @@
 ﻿#nullable enable
-using Content.Server.Observer;
+using Content.Server.Commands.Observer;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Damage;

@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using Content.Server.Administration;
+using Content.Server.GameObjects.Components.Disposal;
 using Content.Shared.Administration;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
@@ -8,7 +9,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
-namespace Content.Server.GameObjects.Components.Disposal
+namespace Content.Server.Commands.Disposal
 {
     [AdminCommand(AdminFlags.Debug)]
     public class TubeConnectionsCommand : IClientCommand

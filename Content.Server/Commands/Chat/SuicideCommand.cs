@@ -1,15 +1,14 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Linq;
 using Content.Server.Administration;
+using Content.Server.Commands.Observer;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects;
-using Content.Server.Observer;
 using Content.Server.Players;
 using Content.Server.Utility;
-using Content.Shared.Administration;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.Interfaces;
@@ -20,108 +19,8 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
-namespace Content.Server.Chat
+namespace Content.Server.Commands.Chat
 {
-    [AnyCommand]
-    internal class SayCommand : IClientCommand
-    {
-        public string Command => "say";
-        public string Description => "Send chat messages to the local channel or a specified radio channel.";
-        public string Help => "say <text>";
-
-        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
-        {
-            if (player.Status != SessionStatus.InGame || !player.AttachedEntityUid.HasValue)
-                return;
-
-            if (args.Length < 1)
-                return;
-
-            var message = string.Join(" ", args).Trim();
-            if (string.IsNullOrEmpty(message))
-                return;
-
-            var chat = IoCManager.Resolve<IChatManager>();
-
-            if (player.AttachedEntity.HasComponent<GhostComponent>())
-                chat.SendDeadChat(player, message);
-            else
-            {
-                var mindComponent = player.ContentData().Mind;
-                chat.EntitySay(mindComponent.OwnedEntity, message);
-            }
-
-        }
-    }
-
-    [AnyCommand]
-    internal class MeCommand : IClientCommand
-    {
-        public string Command => "me";
-        public string Description => "Perform an action.";
-        public string Help => "me <text>";
-
-        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
-        {
-            if (player.Status != SessionStatus.InGame || !player.AttachedEntityUid.HasValue)
-                return;
-
-            if (args.Length < 1)
-                return;
-
-            var action = string.Join(" ", args).Trim();
-            if (string.IsNullOrEmpty(action))
-                return;
-
-            var chat = IoCManager.Resolve<IChatManager>();
-
-            var mindComponent = player.ContentData().Mind;
-            chat.EntityMe(mindComponent.OwnedEntity, action);
-        }
-    }
-
-    [AnyCommand]
-    internal class OOCCommand : IClientCommand
-    {
-        public string Command => "ooc";
-        public string Description => "Send Out Of Character chat messages.";
-        public string Help => "ooc <text>";
-
-        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
-        {
-            if (args.Length < 1)
-                return;
-
-            var message = string.Join(" ", args).Trim();
-            if (string.IsNullOrEmpty(message))
-                return;
-
-            var chat = IoCManager.Resolve<IChatManager>();
-            chat.SendOOC(player, message);
-        }
-    }
-
-    [AdminCommand(AdminFlags.Admin)]
-    internal class AdminChatCommand : IClientCommand
-    {
-        public string Command => "asay";
-        public string Description => "Send chat messages to the private admin chat channel.";
-        public string Help => "asay <text>";
-
-        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
-        {
-            if (args.Length < 1)
-                return;
-
-            var message = string.Join(" ", args).Trim();
-            if (string.IsNullOrEmpty(message))
-                return;
-
-            var chat = IoCManager.Resolve<IChatManager>();
-            chat.SendAdminChat(player, message);
-        }
-    }
-
     [AnyCommand]
     internal class SuicideCommand : IClientCommand
     {
@@ -136,7 +35,7 @@ namespace Content.Server.Chat
 
         private void DealDamage(ISuicideAct suicide, IChatManager chat, IDamageableComponent damageableComponent, IEntity source, IEntity target)
         {
-            SuicideKind kind = suicide.Suicide(target, chat);
+            var kind = suicide.Suicide(target, chat);
             if (kind != SuicideKind.Special)
             {
                 damageableComponent.ChangeDamage(kind switch
@@ -158,23 +57,37 @@ namespace Content.Server.Chat
             }
         }
 
-        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
         {
+            if (player == null)
+            {
+                shell.SendText(player, "You cannot run this command from the server.");
+                return;
+            }
+
             if (player.Status != SessionStatus.InGame)
                 return;
 
             var chat = IoCManager.Resolve<IChatManager>();
-            var owner = player.ContentData().Mind.OwnedMob.Owner;
+            var owner = player.ContentData()?.Mind?.OwnedMob.Owner;
+
+            if (owner == null)
+            {
+                shell.SendText(player, "You don't have a mind!");
+                return;
+            }
+
             var dmgComponent = owner.GetComponent<IDamageableComponent>();
             //TODO: needs to check if the mob is actually alive
-            //TODO: maybe set a suicided flag to prevent ressurection?
+            //TODO: maybe set a suicided flag to prevent resurrection?
 
             // Held item suicide
             var handsComponent = owner.GetComponent<HandsComponent>();
             var itemComponent = handsComponent.GetActiveHand;
             if (itemComponent != null)
             {
-                ISuicideAct suicide = itemComponent.Owner.GetAllComponents<ISuicideAct>().FirstOrDefault();
+                var suicide = itemComponent.Owner.GetAllComponents<ISuicideAct>().FirstOrDefault();
+
                 if (suicide != null)
                 {
                     DealDamage(suicide, chat, dmgComponent, itemComponent.Owner, owner);
@@ -182,8 +95,9 @@ namespace Content.Server.Chat
                 }
             }
             // Get all entities in range of the suicider
-            var entities = owner.EntityManager.GetEntitiesInRange(owner, 1, true);
-            if (entities.Count() > 0)
+            var entities = owner.EntityManager.GetEntitiesInRange(owner, 1, true).ToArray();
+
+            if (entities.Length > 0)
             {
                 foreach (var entity in entities)
                 {
