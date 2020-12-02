@@ -1,6 +1,6 @@
 namespace Content.Shared.Preferences
 {
-    public enum Sex : byte
+    public enum Sex
     {
         Male,
         Female
