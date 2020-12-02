@@ -34,7 +34,7 @@ namespace Content.Client.UserInterface
 
             var header = new NanoHeading
             {
-                Text = Loc.GetString("Character setup")
+                Text = Loc.GetString("Character")
             };
 
             CharacterSetupButton = new Button
