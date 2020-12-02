@@ -48,19 +48,19 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         public IEntity User { get; }
 
         /// <summary>
-        ///     Item that was equipped.
+        ///     Item that was unequipped.
         /// </summary>
-        public IEntity Equipped { get; }
+        public IEntity Unequipped { get; }
 
         /// <summary>
         ///     Slot where the item was removed from.
         /// </summary>
         public EquipmentSlotDefines.Slots Slot { get; }
 
-        public UnequippedMessage(IEntity user, IEntity equipped, EquipmentSlotDefines.Slots slot)
+        public UnequippedMessage(IEntity user, IEntity unequipped, EquipmentSlotDefines.Slots slot)
         {
             User = user;
-            Equipped = equipped;
+            Unequipped = unequipped;
             Slot = slot;
         }
     }

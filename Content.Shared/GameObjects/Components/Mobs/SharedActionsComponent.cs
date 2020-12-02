@@ -33,6 +33,8 @@ namespace Content.Shared.GameObjects.Components.Mobs
     /// </summary>
     public abstract class SharedActionsComponent : Component
     {
+        private static readonly TimeSpan CooldownExpiryThreshold = TimeSpan.FromSeconds(10);
+
         private static readonly ActionState[] NoActions = new ActionState[0];
 
         [Dependency]
@@ -57,15 +59,15 @@ namespace Content.Shared.GameObjects.Components.Mobs
         // re-enters their inventory. This ensures a player can't clear their cooldowns by dropping and picking up an item.
         // We also ensure the values in this dictionary are never empty.
         [ViewVariables]
-        private Dictionary<ItemActionType, Dictionary<EntityUid, ActionState>> _itemActions =
-            new Dictionary<ItemActionType, Dictionary<EntityUid, ActionState>>();
+        private Dictionary<EntityUid, Dictionary<ItemActionType, ActionState>> _itemActions =
+            new Dictionary<EntityUid, Dictionary<ItemActionType, ActionState>>();
 
         // this holds cooldowns for revoked item actions that had a cooldown when they were revoked.
         // they are used to restore cooldowns when the item re-enters inventory
         // these are not part of component state and thus not synced to the client.
         // A system runs periodically to evict entries from this when their cooldowns have expired for a long enough time.
-        private Dictionary<ItemActionType, Dictionary<EntityUid, (TimeSpan start, TimeSpan end)>> _itemActionCooldowns =
-            new Dictionary<ItemActionType, Dictionary<EntityUid, (TimeSpan start, TimeSpan end)>>();
+        private Dictionary<(EntityUid item, ItemActionType actionType), (TimeSpan start, TimeSpan end)> _itemActionCooldowns =
+            new Dictionary<(EntityUid item, ItemActionType actionType), (TimeSpan start, TimeSpan end)>();
 
         public override ComponentState GetComponentState()
         {
@@ -95,13 +97,13 @@ namespace Content.Shared.GameObjects.Components.Mobs
         }
 
         /// <summary>
-        /// Gets the item action states associated with the specified item action type if it has been granted
+        /// Gets the item action states associated with the specified item if any have been granted
         /// and not yet revoked.
         /// </summary>
         /// <returns>false if no states found for this item action type.</returns>
-        public bool TryGetItemActionStates(ItemActionType actionType, out IReadOnlyDictionary<EntityUid, ActionState> itemActionStates)
+        public bool TryGetItemActionStates(EntityUid item, out IReadOnlyDictionary<ItemActionType, ActionState> itemActionStates)
         {
-            if (_itemActions.TryGetValue(actionType, out var actualItemActionStates))
+            if (_itemActions.TryGetValue(item, out var actualItemActionStates))
             {
                 itemActionStates = actualItemActionStates;
                 return true;
@@ -111,19 +113,32 @@ namespace Content.Shared.GameObjects.Components.Mobs
             return false;
         }
 
+        /// <see cref="TryGetItemActionStates"/>
+        public bool TryGetItemActionStates(IEntity item,
+            out IReadOnlyDictionary<ItemActionType, ActionState> itemActionStates)
+        {
+            return TryGetItemActionStates(item.Uid, out itemActionStates);
+        }
+
         /// <summary>
         /// Gets the item action state associated with the specified item action type for the specified item, if it has any.
         /// </summary>
         /// <returns>false if no state found for this item action type for this item</returns>
         public bool TryGetItemActionState(ItemActionType actionType, EntityUid item, out ActionState actionState)
         {
-            if (_itemActions.TryGetValue(actionType, out var actualItemActionStates))
+            if (_itemActions.TryGetValue(item, out var actualItemActionStates))
             {
-                return actualItemActionStates.TryGetValue(item, out actionState);
+                return actualItemActionStates.TryGetValue(actionType, out actionState);
             }
 
             actionState = default;
             return false;
+        }
+
+        /// <see cref="TryGetItemActionState"/>
+        public bool TryGetItemActionState(ItemActionType actionType, IEntity item, out ActionState actionState)
+        {
+            return TryGetItemActionState(actionType, item.Uid, out actionState);
         }
 
         /// <summary>
@@ -135,9 +150,10 @@ namespace Content.Shared.GameObjects.Components.Mobs
         }
 
         /// <summary>
-        /// Gets all item action types for items that are currently in inventory.
+        /// Gets all items that have actions currently granted (that are not revoked
+        /// and still in inventory).
         /// </summary>
-        protected IEnumerable<ItemActionType> EnumerateItemActions()
+        protected IEnumerable<EntityUid> EnumerateItemActions()
         {
             return _itemActions.Keys;
         }
@@ -201,22 +217,17 @@ namespace Content.Shared.GameObjects.Components.Mobs
             var actionState = new ActionState(enabled ?? true, toggleOn ?? false);
             // retrieve cooldown for the above state if we had a saved one (this will only be used if there
             // was no existing action state)
-            if (_itemActionCooldowns.TryGetValue(actionType, out var itemCooldowns))
+            if (_itemActionCooldowns.Remove((item, actionType), out var savedCooldown))
             {
                 // we no longer need it to be saved since we are granting this action.
-                if (itemCooldowns.Remove(item, out var savedCooldown))
-                {
-                    actionState.Cooldown = savedCooldown;
-                }
-
-                if (itemCooldowns.Count == 0) _itemActionCooldowns.Remove(actionType);
+                actionState.Cooldown = savedCooldown;
             }
 
-            if (_itemActions.TryGetValue(actionType, out var itemStates))
+            if (_itemActions.TryGetValue(item, out var itemStates))
             {
-                // we already have some states for this item action
-                // look up the state for this item, creating it if we don't have one
-                if (!itemStates.TryGetValue(item, out actionState))
+                // we already have some states for this item
+                // look up the state for this type, creating it if we don't have one
+                if (!itemStates.TryGetValue(actionType, out actionState))
                 {
                     // didn't exist for this item, we will use the state created above
                     if (!createIfNeeded) return;
@@ -228,7 +239,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
                 // no state at all for this item action, create it anew as well as the state
                 if (!createIfNeeded) return;
                 dirty = true;
-                itemStates = new Dictionary<EntityUid, ActionState>();
+                itemStates = new Dictionary<ItemActionType, ActionState>();
             }
 
             if (enabled.HasValue && enabled != actionState.Enabled)
@@ -251,8 +262,8 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
             if (!dirty) return;
 
-            itemStates[item] = actionState;
-            _itemActions[actionType] = itemStates;
+            itemStates[actionType] = actionState;
+            _itemActions[item] = itemStates;
             AfterActionChanged();
             Dirty();
         }
@@ -265,12 +276,6 @@ namespace Content.Shared.GameObjects.Components.Mobs
             bool? enabled = null, bool? toggleOn = null,
             (TimeSpan start, TimeSpan end)? cooldown = null)
         {
-            if (item == null)
-            {
-                Logger.WarningS("action", "cannot grant item action {0} to {1} for null item", actionType,
-                    Owner.Name);
-                return;
-            }
             CreateOrUpdate(actionType, item.Uid, createIfNeeded, enabled, toggleOn, cooldown);
         }
 
@@ -367,12 +372,12 @@ namespace Content.Shared.GameObjects.Components.Mobs
         public void GrantFromInitialState(ItemActionType actionType, IEntity item, bool enabled = true, bool toggleOn = false,
             (TimeSpan start, TimeSpan end)? cooldown = null)
         {
-            if (_itemActions.TryGetValue(actionType, out var itemStates))
+            if (_itemActions.TryGetValue(item.Uid, out var itemStates))
             {
-                itemStates.Remove(item.Uid);
+                itemStates.Remove(actionType);
                 if (itemStates.Count == 0)
                 {
-                    _itemActions.Remove(actionType);
+                    _itemActions.Remove(item.Uid);
                 }
             }
             Grant(actionType, item, enabled, toggleOn, cooldown);
@@ -415,24 +420,19 @@ namespace Content.Shared.GameObjects.Components.Mobs
             // action is later granted
             if (!TryGetItemActionState(actionType, item, out var actionState))
             {
-                if (!_itemActionCooldowns.TryGetValue(actionType, out var itemCooldowns))
+                if (_itemActionCooldowns.TryGetValue((item, actionType), out var savedCooldown))
                 {
-                    itemCooldowns = new Dictionary<EntityUid, (TimeSpan start, TimeSpan end)>();
-                    _itemActionCooldowns[actionType] = itemCooldowns;
+                    cooldown = savedCooldown;
                 }
 
                 if (!cooldown.HasValue)
                 {
                     // clear existing cooldown (we don't save nulls in there so simply remove the entry)
-                    itemCooldowns.Remove(item);
-                    if (itemCooldowns.Count == 0)
-                    {
-                        _itemActionCooldowns.Remove(actionType);
-                    }
+                    _itemActionCooldowns.Remove((item, actionType));
                 }
                 else
                 {
-                    itemCooldowns[item] = cooldown.Value;
+                    _itemActionCooldowns[(item, actionType)] = cooldown.Value;
                 }
 
                 return;
@@ -440,7 +440,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
             actionState.Cooldown = cooldown;
             // note we can be sure the below keys exist, due to the above call to TryGetItemActionState
-            _itemActions[actionType][item] = actionState;
+            _itemActions[item][actionType] = actionState;
             AfterActionChanged();
             Dirty();
         }
@@ -492,6 +492,25 @@ namespace Content.Shared.GameObjects.Components.Mobs
             Dirty();
         }
 
+        private bool Revoke(ItemActionType actionType, EntityUid item, Dictionary<ItemActionType, ActionState> itemStates,
+            ActionState actionState)
+        {
+            var savedCooldown = actionState.Cooldown;
+
+            if (savedCooldown.HasValue)
+            {
+                _itemActionCooldowns[(item, actionType)] = savedCooldown.Value;
+            }
+
+            var removed = itemStates.Remove(actionType);
+            if (itemStates.Count == 0)
+            {
+                _itemActions.Remove(item);
+            }
+
+            return removed;
+        }
+
         /// <summary>
         /// Revokes the knowledge of the item action for the specified item from this entity. Current
         /// cooldown amount will be preserved and restored if this action is later granted.
@@ -503,29 +522,11 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// </summary>
         public void Revoke(ItemActionType actionType, EntityUid item)
         {
-            if (!_itemActions.TryGetValue(actionType, out var itemStates)) return;
+            if (!_itemActions.TryGetValue(item, out var itemStates)) return;
 
-            if (!itemStates.TryGetValue(item, out var actionState)) return;
+            if (!itemStates.TryGetValue(actionType, out var actionState)) return;
 
-            var savedCooldown = actionState.Cooldown;
-
-            if (savedCooldown.HasValue)
-            {
-                if (!_itemActionCooldowns.TryGetValue(actionType, out var itemCooldowns))
-                {
-                    itemCooldowns = new Dictionary<EntityUid, (TimeSpan start, TimeSpan end)>();
-                    _itemActionCooldowns[actionType] = itemCooldowns;
-                }
-
-                itemCooldowns[item] = savedCooldown.Value;
-            }
-
-            itemStates.Remove(item);
-            if (itemStates.Count == 0)
-            {
-                _itemActions.Remove(actionType);
-            }
-
+            if (!Revoke(actionType, item, itemStates, actionState)) return;
             AfterActionChanged();
             Dirty();
         }
@@ -534,6 +535,30 @@ namespace Content.Shared.GameObjects.Components.Mobs
         public void Revoke(ItemActionType actionType, IEntity item)
         {
             Revoke(actionType, item.Uid);
+        }
+
+        /// <see cref="Revoke"/> applied to all actions currently granted for the item
+        public void Revoke(EntityUid item)
+        {
+            // do it all in a single batch rather than revoking and calling action changed / dirty after each
+            var removed = false;
+            if (_itemActions.TryGetValue(item, out var itemStates))
+            {
+                foreach (var stateEntry in itemStates)
+                {
+                    removed |= Revoke(stateEntry.Key, item, itemStates, stateEntry.Value);
+                }
+            }
+
+            if (!removed) return;
+            AfterActionChanged();
+            Dirty();
+        }
+
+        /// <see cref="Revoke"/> applied to all actions currently granted for the item
+        public void Revoke(IEntity item)
+        {
+            Revoke(item.Uid);
         }
 
         /// <summary>
@@ -561,6 +586,58 @@ namespace Content.Shared.GameObjects.Components.Mobs
         }
 
         /// <summary>
+        /// Clears any cooldowns which have expired beyond the predefined threshold.
+        /// As we track cooldowns for items regardless of whether they're granted / revoked,
+        /// this should be run periodically to ensure we don't have unbounded growth of
+        /// our saved cooldown data.
+        /// </summary>
+        public void ExpireCooldowns()
+        {
+            // item actions - only clear saved cooldowns
+            var toRemove = new List<(EntityUid item, ItemActionType actionType)>();
+            foreach (var itemActionCooldown in _itemActionCooldowns)
+            {
+                var expiryTime = GameTiming.CurTime - itemActionCooldown.Value.end;
+                if (expiryTime > CooldownExpiryThreshold)
+                {
+                    toRemove.Add(itemActionCooldown.Key);
+                }
+            }
+
+            foreach (var remove in toRemove)
+            {
+                _itemActionCooldowns.Remove(remove);
+            }
+
+            // actions - only clear cooldowns and remove associated action state
+            // if the action is at initial state
+            var actionTypesToRemove = new List<ActionType>();
+            foreach (var actionState in _actions)
+            {
+                // ignore it unless we may be able to delete it due to
+                // clearing the cooldown
+                if (actionState.Value.IsAtInitialStateExceptCooldown)
+                {
+                    if (!actionState.Value.Cooldown.HasValue)
+                    {
+                        actionTypesToRemove.Add(actionState.Key);
+                        continue;
+                    }
+                    var expiryTime = GameTiming.CurTime - actionState.Value.Cooldown.Value.Item2;
+                    if (expiryTime > CooldownExpiryThreshold)
+                    {
+                        actionTypesToRemove.Add(actionState.Key);
+                    }
+                }
+            }
+
+            foreach (var remove in actionTypesToRemove)
+            {
+                _actions.Remove(remove);
+            }
+        }
+
+        /// <summary>
         /// Implementation must determine if the given item is currently in player's hand or equip slots
         /// </summary>
         protected abstract bool IsEquipped(EntityUid item);
@@ -575,10 +652,10 @@ namespace Content.Shared.GameObjects.Components.Mobs
     public class ActionComponentState : ComponentState
     {
         public Dictionary<ActionType, ActionState> Actions;
-        public Dictionary<ItemActionType, Dictionary<EntityUid, ActionState>> ItemActions;
+        public Dictionary<EntityUid, Dictionary<ItemActionType, ActionState>> ItemActions;
 
         public ActionComponentState(Dictionary<ActionType, ActionState> actions,
-            Dictionary<ItemActionType, Dictionary<EntityUid, ActionState>> itemActions) : base(ContentNetIDs.ACTIONS)
+            Dictionary<EntityUid, Dictionary<ItemActionType, ActionState>> itemActions) : base(ContentNetIDs.ACTIONS)
         {
             Actions = actions;
             ItemActions = itemActions;
@@ -598,7 +675,8 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// </summary>
         public bool ToggledOn;
         public ValueTuple<TimeSpan, TimeSpan>? Cooldown;
-        public bool IsAtInitialState => !Enabled && !ToggledOn && !Cooldown.HasValue;
+        public bool IsAtInitialState => IsAtInitialStateExceptCooldown && !Cooldown.HasValue;
+        public bool IsAtInitialStateExceptCooldown => !Enabled && !ToggledOn;
 
         /// <summary>
         /// Creates an action state for the indicated type, defaulting to the

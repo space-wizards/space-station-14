@@ -46,19 +46,19 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         public IEntity User { get; }
 
         /// <summary>
-        ///     Item that was equipped.
+        ///     Item that was unequipped.
         /// </summary>
-        public IEntity Equipped { get; }
+        public IEntity Unequipped { get; }
 
         /// <summary>
         ///     Hand the item is removed from.
         /// </summary>
         public SharedHand Hand { get; }
 
-        public UnequippedHandMessage(IEntity user, IEntity equipped, SharedHand hand)
+        public UnequippedHandMessage(IEntity user, IEntity unequipped, SharedHand hand)
         {
             User = user;
-            Equipped = equipped;
+            Unequipped = unequipped;
             Hand = hand;
         }
     }
