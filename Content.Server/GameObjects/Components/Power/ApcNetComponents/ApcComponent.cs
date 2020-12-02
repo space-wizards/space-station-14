@@ -56,6 +56,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
             Owner.EnsureComponent<BatteryComponent>();
             Owner.EnsureComponent<PowerConsumerComponent>();
+            Owner.EnsureComponentWarn<ServerUserInterfaceComponent>();
 
             if (UserInterface != null)
             {
