@@ -224,14 +224,14 @@ namespace Content.Client.UserInterface
                 {
                     var panel = HighlightedContainer();
                     var hBox = new HBoxContainer();
-                    var genderLabel = new Label { Text = Loc.GetString("Gender:") };
+                    var genderLabel = new Label { Text = Loc.GetString("Pronouns:") };
 
                     _genderButton = new OptionButton();
 
-                    _genderButton.AddItem(Loc.GetString("Male"), (int) Gender.Male);
-                    _genderButton.AddItem(Loc.GetString("Female"), (int) Gender.Female);
-                    _genderButton.AddItem(Loc.GetString("Epicene"), (int) Gender.Epicene);
-                    _genderButton.AddItem(Loc.GetString("Neuter"), (int) Gender.Neuter);
+                    _genderButton.AddItem(Loc.GetString("He / Him"), (int) Gender.Male);
+                    _genderButton.AddItem(Loc.GetString("She / Her"), (int) Gender.Female);
+                    _genderButton.AddItem(Loc.GetString("They / Them"), (int) Gender.Epicene);
+                    _genderButton.AddItem(Loc.GetString("It / It"), (int) Gender.Neuter);
 
                     _genderButton.OnItemSelected += args =>
                     {

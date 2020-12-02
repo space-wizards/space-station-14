@@ -11,6 +11,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Localization.Macros;
+using Robust.Shared.Localization;
 
 namespace Content.Shared.Preferences
 {
@@ -18,7 +19,7 @@ namespace Content.Shared.Preferences
     /// Character profile. Looks immutable, but uses non-immutable semantics internally for serialization/code sanity purposes.
     /// </summary>
     [Serializable, NetSerializable]
-    public class HumanoidCharacterProfile : ICharacterProfile
+    public class HumanoidCharacterProfile : ICharacterProfile, IGenderable
     {
         private readonly Dictionary<string, JobPriority> _jobPriorities;
         private readonly List<string> _antagPreferences;
@@ -271,7 +272,7 @@ namespace Content.Shared.Preferences
         }
 
         public string Summary =>
-            $"{Name}, {Age} years old human. Their gender is {Sex.ToString().ToLower()}.";
+            Loc.GetString("{0}, {1} years old human. {2:Their} pronouns are {2:they}/{2:them}.", Name, Age, this);
 
         public bool MemberwiseEquals(ICharacterProfile maybeOther)
         {
