@@ -25,8 +25,8 @@ namespace Content.IntegrationTests.Tests
   - type: Stunnable
 
 - type: entity
-  name: InventoryJumpsuitDummy
-  id: InventoryJumpsuitDummy
+  name: InventoryJumpsuitJanitorDummy
+  id: InventoryJumpsuitJanitorDummy
   components:
   - type: Clothing
     Slots: [innerclothing]
@@ -68,11 +68,11 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(inventory.HasSlot(Slots.INNERCLOTHING));
                 Assert.That(inventory.HasSlot(Slots.IDCARD));
 
-                Assert.That(inventory.SpawnItemInSlot(Slots.INNERCLOTHING, "InventoryJumpsuitDummy", true));
+                Assert.That(inventory.SpawnItemInSlot(Slots.INNERCLOTHING, "InventoryJumpsuitJanitorDummy", true));
 
                 // Do we actually have the uniform equipped?
                 Assert.That(inventory.TryGetSlotItem(Slots.INNERCLOTHING, out ItemComponent uniform));
-                Assert.That(uniform.Owner.Prototype != null && uniform.Owner.Prototype.ID == "InventoryJumpsuitDummy");
+                Assert.That(uniform.Owner.Prototype != null && uniform.Owner.Prototype.ID == "InventoryJumpsuitJanitorDummy");
 
                 stun.Stun(1f);
 
