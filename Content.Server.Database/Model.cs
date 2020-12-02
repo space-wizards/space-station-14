@@ -136,7 +136,7 @@ namespace Content.Server.Database
         [Column("antag_name")] public string AntagName { get; set; } = null!;
     }
 
-    public enum DbPreferenceUnavailableMode : byte
+    public enum DbPreferenceUnavailableMode
     {
         // These enum values HAVE to match the ones in PreferenceUnavailableMode in Shared.
         StayInLobby = 0,
