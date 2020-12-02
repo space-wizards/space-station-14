@@ -696,7 +696,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
         }
 
-        protected override void AfterGrantAction()
+        protected override void AfterActionChanged()
         {
             UpdateUI();
         }
