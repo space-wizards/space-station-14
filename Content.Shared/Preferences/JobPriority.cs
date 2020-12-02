@@ -1,6 +1,6 @@
 namespace Content.Shared.Preferences
 {
-    public enum JobPriority : byte
+    public enum JobPriority
     {
         // These enum values HAVE to match the ones in DbJobPriority in Server.Database.
         Never = 0,
