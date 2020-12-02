@@ -7,7 +7,7 @@
     contents:
       - name: HatBombsuit
         amount: 1
-      - name: OldGasMaskClothing
+      - name: ClothingMaskGas
         amount: 1
       - name: Screwdriver
         amount: 1
@@ -15,7 +15,7 @@
         amount: 1
       - name: Multitool
         amount: 1
-      - name: OuterclothingBombsuit
+      - name: ClothingOuterSuitBomb
         amount: 1
 
 - type: entity
@@ -29,14 +29,14 @@
         amount: 2
       - name: FireExtinguisher
         amount: 2
-      - name: HatHardhatRed
+      - name: ClothingHeadHatHardhatRed
         amount: 2
-      - name: OldGasMaskClothing
+      - name: ClothingMaskGas
         amount: 2
-      - name: OuterclothingFiresuit
+      - name: ClothingOuterSuitFire
         amount: 2
-#      - name: RedOxygenTank
-#        amount: 2
+      - name: RedOxygenTank
+        amount: 2
 
 - type: entity
   id: CrateEmergencyInternals
@@ -45,16 +45,14 @@
   components:
   - type: StorageFill
     contents:
-      - name: OldGasMaskClothing
+      - name: ClothingMaskGas
         amount: 3
-      - name: BreathMaskClothing
+      - name: ClothingMaskBreath
         amount: 3
-#      - SmallOxygenTank
-#      - SmallOxygenTank
-#      - SmallOxygenTank
-#      - AirTank
-#      - AirTank
-#      - AirTank
+      - name: OxygenTankFilled
+        amount: 3
+      - name: EmergencyOxygenTankFilled
+        amount: 3
 
 - type: entity
   id: CrateEmergencyRadiation
@@ -63,9 +61,9 @@
   components:
   - type: StorageFill
     contents:
-      - name: OuterclothingRad
+      - name: ClothingOuterSuitRad
         amount: 2
-      - name: HatRad
+      - name: ClothingHeadHatHoodRad
         amount: 2
       - name: GeigerCounter
         amount: 2

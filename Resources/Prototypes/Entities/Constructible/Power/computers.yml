@@ -140,22 +140,6 @@
       screen: power_monitor
 
 - type: entity
-  id: ComputerSupplyRequest
-  parent: ComputerSupplyOrdering
-  name: cargo request computer
-  description: Used to request supplies from cargo.
-  components:
-  - type: Appearance
-    visuals:
-    - type: ComputerVisualizer
-      key: tech_key
-      screen: request
-  - type: CargoConsole
-    requestOnly: true
-  - type: Computer
-    board: SupplyRequestComputerCircuitboard
-
-- type: entity
   id: ComputerMedicalRecords
   parent: ComputerBase
   name: medical records computer

@@ -4,7 +4,7 @@
   parent: CrateGeneric
   components:
   - type: Sprite
-    sprite: Constructible/Structures/Crates/generic.rsi
+    sprite: Constructible/Storage/Crates/generic.rsi
     layers:
     - state: crate
     - state: crate_door
@@ -13,7 +13,7 @@
       visible: false
       map: ["enum.StorageVisualLayers.Welded"]
   - type: Icon
-    sprite: Constructible/Structures/Crates/generic.rsi
+    sprite: Constructible/Storage/Crates/generic.rsi
     state: crate_icon
   - type: Appearance
     visuals:
@@ -27,7 +27,7 @@
   parent: CrateGeneric
   components:
   - type: Sprite
-    sprite: Constructible/Structures/Crates/plastic.rsi
+    sprite: Constructible/Storage/Crates/plastic.rsi
     layers:
     - state: plasticcrate
     - state: plasticcrate_door
@@ -36,7 +36,7 @@
       visible: false
       map: ["enum.StorageVisualLayers.Welded"]
   - type: Icon
-    sprite: Constructible/Structures/Crates/plastic.rsi
+    sprite: Constructible/Storage/Crates/plastic.rsi
     state: plasticcrate_icon
   - type: Appearance
     visuals:
@@ -50,7 +50,7 @@
   parent: CrateGeneric
   components:
   - type: Sprite
-    sprite: Constructible/Structures/Crates/freezer.rsi
+    sprite: Constructible/Storage/Crates/freezer.rsi
     layers:
     - state: freezer
     - state: freezer_door
@@ -59,7 +59,7 @@
       visible: false
       map: ["enum.StorageVisualLayers.Welded"]
   - type: Icon
-    sprite: Constructible/Structures/Crates/freezer.rsi
+    sprite: Constructible/Storage/Crates/freezer.rsi
     state: freezer_icon
   - type: Appearance
     visuals:
@@ -73,7 +73,7 @@
   parent: CrateGeneric
   components:
   - type: Sprite
-    sprite: Constructible/Structures/Crates/hydro.rsi
+    sprite: Constructible/Storage/Crates/hydro.rsi
     layers:
     - state: hydrocrate
     - state: hydrocrate_door
@@ -82,7 +82,7 @@
       visible: false
       map: ["enum.StorageVisualLayers.Welded"]
   - type: Icon
-    sprite: Constructible/Structures/Crates/hydro.rsi
+    sprite: Constructible/Storage/Crates/hydro.rsi
     state: hydrocrate_icon
   - type: Appearance
     visuals:
@@ -96,7 +96,7 @@
   parent: CrateGeneric
   components:
   - type: Sprite
-    sprite: Constructible/Structures/Crates/medical.rsi
+    sprite: Constructible/Storage/Crates/medical.rsi
     layers:
     - state: medicalcrate
     - state: medicalcrate_door
@@ -105,7 +105,7 @@
       visible: false
       map: ["enum.StorageVisualLayers.Welded"]
   - type: Icon
-    sprite: Constructible/Structures/Crates/medical.rsi
+    sprite: Constructible/Storage/Crates/medical.rsi
     state: medicalcrate_icon
   - type: Appearance
     visuals:
@@ -120,7 +120,7 @@
   parent: CrateGeneric
   components:
   - type: Sprite
-    sprite: Constructible/Structures/Crates/radiation.rsi
+    sprite: Constructible/Storage/Crates/radiation.rsi
     layers:
     - state: radiationcrate
     - state: radiationcrate_door
@@ -129,7 +129,7 @@
       visible: false
       map: ["enum.StorageVisualLayers.Welded"]
   - type: Icon
-    sprite: Constructible/Structures/Crates/radiation.rsi
+    sprite: Constructible/Storage/Crates/radiation.rsi
     state: radiationcrate_icon
   - type: Appearance
     visuals:
@@ -143,7 +143,7 @@
   parent: CrateGeneric
   components:
   - type: Sprite
-    sprite: Constructible/Structures/Crates/o2.rsi
+    sprite: Constructible/Storage/Crates/o2.rsi
     layers:
     - state: o2crate
     - state: o2crate_door
@@ -152,7 +152,7 @@
       visible: false
       map: ["enum.StorageVisualLayers.Welded"]
   - type: Icon
-    sprite: Constructible/Structures/Crates/o2.rsi
+    sprite: Constructible/Storage/Crates/o2.rsi
     state: o2crate_icon
   - type: Appearance
     visuals:
@@ -166,7 +166,7 @@
   parent: CrateGeneric
   components:
   - type: Sprite
-    sprite: Constructible/Structures/Crates/electricalcrate.rsi
+    sprite: Constructible/Storage/Crates/electricalcrate.rsi
     layers:
     - state: electricalcrate
     - state: electricalcrate_door
@@ -175,7 +175,7 @@
       visible: false
       map: ["enum.StorageVisualLayers.Welded"]
   - type: Icon
-    sprite: Constructible/Structures/Crates/electricalcrate.rsi
+    sprite: Constructible/Storage/Crates/electricalcrate.rsi
     state: electricalcrate_icon
   - type: Appearance
     visuals:
@@ -189,7 +189,7 @@
   parent: CrateGeneric
   components:
   - type: Sprite
-    sprite: Constructible/Structures/Crates/engicrate.rsi
+    sprite: Constructible/Storage/Crates/engicrate.rsi
     layers:
     - state: engicrate
     - state: engicrate_door
@@ -198,7 +198,7 @@
       visible: false
       map: ["enum.StorageVisualLayers.Welded"]
   - type: Icon
-    sprite: Constructible/Structures/Crates/engicrate.rsi
+    sprite: Constructible/Storage/Crates/engicrate.rsi
     state: engicrate_icon
   - type: Appearance
     visuals:
@@ -212,7 +212,7 @@
   parent: CrateGeneric
   components:
   - type: Sprite
-    sprite: Constructible/Structures/Crates/scicrate.rsi
+    sprite: Constructible/Storage/Crates/scicrate.rsi
     layers:
     - state: scicrate
     - state: scicrate_door
@@ -221,7 +221,7 @@
       visible: false
       map: ["enum.StorageVisualLayers.Welded"]
   - type: Icon
-    sprite: Constructible/Structures/Crates/scicrate.rsi
+    sprite: Constructible/Storage/Crates/scicrate.rsi
     state: scicrate_icon
   - type: Appearance
     visuals:
@@ -235,7 +235,7 @@
   parent: CrateGeneric
   components:
   - type: Sprite
-    sprite: Constructible/Structures/Crates/surgerycrate.rsi
+    sprite: Constructible/Storage/Crates/surgerycrate.rsi
     layers:
     - state: surgerycrate
     - state: surgerycrate_door
@@ -244,7 +244,7 @@
       visible: false
       map: ["enum.StorageVisualLayers.Welded"]
   - type: Icon
-    sprite: Constructible/Structures/Crates/surgerycrate.rsi
+    sprite: Constructible/Storage/Crates/surgerycrate.rsi
     state: surgerycrate_icon
   - type: Appearance
     visuals:
@@ -262,7 +262,7 @@
   - type: AccessReader
   - type: SecureEntityStorage
   - type: Sprite
-    sprite: Constructible/Structures/Crates/sec_gear.rsi
+    sprite: Constructible/Storage/Crates/sec_gear.rsi
     layers:
     - state: secgearcrate
     - state: secgearcrate_door
@@ -274,7 +274,7 @@
       map: ["enum.StorageVisualLayers.Lock"]
       shader: unshaded
   - type: Icon
-    sprite: Constructible/Structures/Crates/sec_gear.rsi
+    sprite: Constructible/Storage/Crates/sec_gear.rsi
     state: secgearcrate_icon
   - type: Appearance
     visuals:
@@ -290,7 +290,7 @@
   - type: AccessReader
   - type: SecureEntityStorage
   - type: Sprite
-    sprite: Constructible/Structures/Crates/engicrate_secure.rsi
+    sprite: Constructible/Storage/Crates/engicrate_secure.rsi
     layers:
     - state: engicratesecure
     - state: engicratesecure_door
@@ -302,7 +302,7 @@
       map: ["enum.StorageVisualLayers.Lock"]
       shader: unshaded
   - type: Icon
-    sprite: Constructible/Structures/Crates/engicrate_secure.rsi
+    sprite: Constructible/Storage/Crates/engicrate_secure.rsi
     state: engicratesecure_icon
   - type: Appearance
     visuals:
@@ -318,7 +318,7 @@
   - type: AccessReader
   - type: SecureEntityStorage
   - type: Sprite
-    sprite: Constructible/Structures/Crates/medicalcrate_secure.rsi
+    sprite: Constructible/Storage/Crates/medicalcrate_secure.rsi
     layers:
     - state: medicalcratesecure
     - state: medicalcratesecure_door
@@ -330,7 +330,7 @@
       map: ["enum.StorageVisualLayers.Lock"]
       shader: unshaded
   - type: Icon
-    sprite: Constructible/Structures/Crates/medicalcrate_secure.rsi
+    sprite: Constructible/Storage/Crates/medicalcrate_secure.rsi
     state: medicalcratesecure_icon
   - type: Appearance
     visuals:
@@ -346,7 +346,7 @@
   - type: AccessReader
   - type: SecureEntityStorage
   - type: Sprite
-    sprite: Constructible/Structures/Crates/privatecrate_secure.rsi
+    sprite: Constructible/Storage/Crates/privatecrate_secure.rsi
     layers:
     - state: privatecrate
     - state: privatecrate_door
@@ -358,7 +358,7 @@
       map: ["enum.StorageVisualLayers.Lock"]
       shader: unshaded
   - type: Icon
-    sprite: Constructible/Structures/Crates/privatecrate_secure.rsi
+    sprite: Constructible/Storage/Crates/privatecrate_secure.rsi
     state: privatecrate_icon
   - type: Appearance
     visuals:
@@ -374,7 +374,7 @@
   - type: AccessReader
   - type: SecureEntityStorage
   - type: Sprite
-    sprite: Constructible/Structures/Crates/scicrate_secure.rsi
+    sprite: Constructible/Storage/Crates/scicrate_secure.rsi
     layers:
     - state: scicratesecure
     - state: scicratesecure_door
@@ -386,7 +386,7 @@
       map: ["enum.StorageVisualLayers.Lock"]
       shader: unshaded
   - type: Icon
-    sprite: Constructible/Structures/Crates/scicrate_secure.rsi
+    sprite: Constructible/Storage/Crates/scicrate_secure.rsi
     state: scicratesecure_icon
   - type: Appearance
     visuals:
@@ -402,7 +402,7 @@
   - type: AccessReader
   - type: SecureEntityStorage
   - type: Sprite
-    sprite: Constructible/Structures/Crates/phoron.rsi
+    sprite: Constructible/Storage/Crates/phoron.rsi
     layers:
     - state: phoroncrate
     - state: phoroncrate_door
@@ -414,7 +414,7 @@
       map: ["enum.StorageVisualLayers.Lock"]
       shader: unshaded
   - type: Icon
-    sprite: Constructible/Structures/Crates/phoron.rsi
+    sprite: Constructible/Storage/Crates/phoron.rsi
     state: phoroncrate_icon
   - type: Appearance
     visuals:
@@ -430,7 +430,7 @@
   - type: AccessReader
   - type: SecureEntityStorage
   - type: Sprite
-    sprite: Constructible/Structures/Crates/secure.rsi
+    sprite: Constructible/Storage/Crates/secure.rsi
     layers:
     - state: securecrate
     - state: securecrate_door
@@ -442,7 +442,7 @@
       map: ["enum.StorageVisualLayers.Lock"]
       shader: unshaded
   - type: Icon
-    sprite: Constructible/Structures/Crates/secure.rsi
+    sprite: Constructible/Storage/Crates/secure.rsi
     state: securecrate_icon
   - type: Appearance
     visuals:
@@ -458,7 +458,7 @@
   - type: AccessReader
   - type: SecureEntityStorage
   - type: Sprite
-    sprite: Constructible/Structures/Crates/hydro_secure.rsi
+    sprite: Constructible/Storage/Crates/hydro_secure.rsi
     layers:
     - state: hydrocratesecure
     - state: hydrocratesecure_door
@@ -470,7 +470,7 @@
       map: ["enum.StorageVisualLayers.Lock"]
       shader: unshaded
   - type: Icon
-    sprite: Constructible/Structures/Crates/hydro_secure.rsi
+    sprite: Constructible/Storage/Crates/hydro_secure.rsi
     state: hydrocratesecure_icon
   - type: Appearance
     visuals:
@@ -486,7 +486,7 @@
   - type: AccessReader
   - type: SecureEntityStorage
   - type: Sprite
-    sprite: Constructible/Structures/Crates/weapon.rsi
+    sprite: Constructible/Storage/Crates/weapon.rsi
     layers:
     - state: weaponcrate
     - state: weaponcrate_door
@@ -495,7 +495,7 @@
       map: ["enum.StorageVisualLayers.Lock"]
       shader: unshaded
   - type: Icon
-    sprite: Constructible/Structures/Crates/weapon.rsi
+    sprite: Constructible/Storage/Crates/weapon.rsi
     state: weaponcrate_icon
   - type: Appearance
     visuals:
@@ -511,7 +511,7 @@
   parent: CrateGeneric
   components:
   - type: Sprite
-    sprite: Constructible/Structures/Crates/plastic.rsi
+    sprite: Constructible/Storage/Crates/plastic.rsi
     layers:
     - state: plasticcrate
     - state: plasticcrate_door
@@ -520,7 +520,7 @@
       visible: false
       map: ["enum.StorageVisualLayers.Welded"]
   - type: Icon
-    sprite: Constructible/Structures/Crates/plastic.rsi
+    sprite: Constructible/Storage/Crates/plastic.rsi
     state: plasticcrate_icon
   - type: Appearance
     visuals:

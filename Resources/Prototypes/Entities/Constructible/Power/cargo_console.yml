@@ -18,6 +18,9 @@
       - cargo.emergencyfire
       - cargo.emergencyinternals
       - cargo.emergencyradiation
+      - cargo.hydroponics
+      - cargo.hydroponicsseeds
+      - cargo.hydroponicsseedsexotic
   - type: UserInterface
     interfaces:
     - key: enum.CargoConsoleUiKey.Key
