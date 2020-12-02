@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration;
@@ -16,6 +17,7 @@ using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Body
 {
@@ -183,14 +185,14 @@ namespace Content.Server.GameObjects.Components.Body
                 return;
             }
 
-            var hand = body.Parts.FirstOrDefault(x => x.Value.PartType == BodyPartType.Hand);
-            if (hand.Value.Equals(default))
+            var (_, hand) = body.Parts.FirstOrDefault(x => x.Value.PartType == BodyPartType.Hand);
+            if (hand == null)
             {
                 shell.SendText(player, "You have no hands.");
             }
             else
             {
-                body.RemovePart(hand.Value);
+                body.RemovePart(hand);
             }
         }
     }
