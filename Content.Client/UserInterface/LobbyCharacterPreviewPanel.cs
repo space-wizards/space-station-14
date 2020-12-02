@@ -34,7 +34,7 @@ namespace Content.Client.UserInterface
 
             var header = new NanoHeading
             {
-                Text = Loc.GetString("Character setup")
+                Text = Loc.GetString("Character")
             };
 
             CharacterSetupButton = new Button
@@ -133,7 +133,7 @@ namespace Content.Client.UserInterface
 
             var inventory = dummy.GetComponent<ClientInventoryComponent>();
 
-            var highPriorityJob = profile.JobPriorities.SingleOrDefault(p => p.Value == JobPriority.High).Key;
+            var highPriorityJob = profile.JobPriorities.FirstOrDefault(p => p.Value == JobPriority.High).Key;
 
             var job = protoMan.Index<JobPrototype>(highPriorityJob ?? SharedGameTicker.OverflowJob);
             var gear = protoMan.Index<StartingGearPrototype>(job.StartingGear);
