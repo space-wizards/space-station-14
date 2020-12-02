@@ -568,17 +568,17 @@ namespace Content.Server.GameTicking
             return Paused;
         }
 
-        private IEntity _spawnPlayerMob(Job job, bool lateJoin = true)
+        private IEntity _spawnPlayerMob(Job job, ClothingPreference clothing, bool lateJoin = true)
         {
             EntityCoordinates coordinates = lateJoin ? GetLateJoinSpawnPoint() : GetJobSpawnPoint(job.Prototype.ID);
             var entity = _entityManager.SpawnEntity(PlayerPrototypeName, coordinates);
             var startingGear = _prototypeManager.Index<StartingGearPrototype>(job.StartingGear);
-            EquipStartingGear(entity, startingGear);
+            EquipStartingGear(entity, startingGear, clothing);
 
             return entity;
         }
 
-        public void EquipStartingGear(IEntity entity, StartingGearPrototype startingGear)
+        public void EquipStartingGear(IEntity entity, StartingGearPrototype startingGear, ClothingPreference clothing)
         {
             if (entity.TryGetComponent(out InventoryComponent inventory))
             {
@@ -586,7 +586,10 @@ namespace Content.Server.GameTicking
 
                 foreach (var (slot, equipmentStr) in gear)
                 {
-                    var equipmentEntity = _entityManager.SpawnEntity(equipmentStr, entity.Transform.Coordinates);
+                    var equipmentStrModified = equipmentStr;
+                    if (slot == Slots.INNERCLOTHING)
+                        equipmentStrModified = startingGear.GetInnerClothing(clothing);
+                    var equipmentEntity = _entityManager.SpawnEntity(equipmentStrModified, entity.Transform.Coordinates);
                     inventory.Equip(slot, equipmentEntity.GetComponent<ItemComponent>());
                 }
             }
@@ -873,7 +876,7 @@ namespace Content.Server.GameTicking
             var job = new Job(data.Mind, jobPrototype);
             data.Mind.AddRole(job);
 
-            var mob = _spawnPlayerMob(job, lateJoin);
+            var mob = _spawnPlayerMob(job, character.Clothing, lateJoin);
             data.Mind.TransferTo(mob);
             ApplyCharacterProfile(mob, character);
 

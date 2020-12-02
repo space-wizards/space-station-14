@@ -5,6 +5,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using YamlDotNet.RepresentationModel;
+using Content.Shared.Preferences;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Shared.Roles
@@ -52,6 +53,18 @@ namespace Content.Shared.Roles
             }, type => type.Value);
 
             serializer.DataField(ref _innerClothingSkirt, "innerclothingskirt", string.Empty);
+        }
+
+        public string GetInnerClothing(ClothingPreference clothing)
+        {
+            if ((clothing == ClothingPreference.Jumpskirt) && (InnerClothingSkirt != ""))
+            {
+                return InnerClothingSkirt;
+            }
+            else
+            {
+                return Equipment[Slots.INNERCLOTHING];
+            }
         }
     }
 }
