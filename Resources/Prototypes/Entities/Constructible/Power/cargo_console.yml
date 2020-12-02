@@ -21,6 +21,12 @@
       - cargo.hydroponics
       - cargo.hydroponicsseeds
       - cargo.hydroponicsseedsexotic
+      - cargo.servicejanitorial
+      - cargo.servicelightsreplacement
+      - cargo.funplushies
+      - cargo.funartsupplies
+      - cargo.funinstruments
+      - 
   - type: UserInterface
     interfaces:
     - key: enum.CargoConsoleUiKey.Key

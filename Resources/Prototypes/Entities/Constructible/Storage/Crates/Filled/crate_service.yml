@@ -1,6 +1,7 @@
 - type: entity
   id: CrateServiceJanitorialSupplies
   name: janitorial supplies crate
+  description: Fight back against dirt and grime with Nanotrasen's Janitorial Essentials(tm)! Contains three buckets, caution signs, and cleaner grenades. Also has a single mop, broom, spray cleaner, rag, and trash bag.
   parent: CratePlastic
   components:
   - type: StorageFill
@@ -21,11 +22,12 @@
 - type: entity
   id: CrateServiceReplacementLights
   name: replacement lights crate
+  description: May the light of Aether shine upon this station! Or at least, the light of forty two light tubes and twenty one light bulbs.
   parent: CrateGenericonimo
   components:
   - type: StorageFill
     contents:
-      - name: LightTube
+      - name: BoxLighttube
         amount: 5
-      - name: LightBulb
+      - name: BoxLightbulb
         amount: 5
