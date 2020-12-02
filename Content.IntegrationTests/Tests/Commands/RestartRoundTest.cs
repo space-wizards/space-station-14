@@ -18,7 +18,7 @@ namespace Content.IntegrationTests.Tests.Commands
         [TestCase(false)]
         public async Task RestartRoundAfterStart(bool lobbyEnabled)
         {
-            var server = StartServer();
+            var (_, server) = await StartConnectedServerClientPair();
 
             await server.WaitIdleAsync();
 
