@@ -13,9 +13,10 @@ namespace Content.Server.GameTicking.GameRules
         [Dependency] private readonly IGameTicker _gameTicker = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
 
-        private readonly CancellationTokenSource _timerCancel = new();
+        private CancellationTokenSource _timerCancel = new();
 
         public TimeSpan RoundMaxTime { get; set; }
+        public TimeSpan RoundEndDelay { get; set; } = TimeSpan.FromSeconds(10);
 
         public override void Added()
         {
@@ -35,6 +36,7 @@ namespace Content.Server.GameTicking.GameRules
         public void RestartTimer()
         {
             _timerCancel.Cancel();
+            _timerCancel = new CancellationTokenSource();
             Timer.Spawn(RoundMaxTime, TimerFired, _timerCancel.Token);
         }
 
@@ -47,11 +49,9 @@ namespace Content.Server.GameTicking.GameRules
         {
             _gameTicker.EndRound("Time has run out!");
 
-            var restartDelay = 10;
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("Restarting in {0} seconds.", (int) RoundEndDelay.TotalSeconds));
 
-            _chatManager.DispatchServerAnnouncement(Loc.GetString("Restarting in {0} seconds.", restartDelay));
-
-            Timer.Spawn(TimeSpan.FromSeconds(restartDelay), () => _gameTicker.RestartRound());
+            Timer.Spawn(RoundEndDelay, () => _gameTicker.RestartRound());
         }
 
         private void RunLevelChanged(GameRunLevelChangedEventArgs args)
