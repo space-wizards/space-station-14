@@ -164,14 +164,30 @@ namespace Content.Client.UserInterface
                         Text = Loc.GetString("Male"),
                         Group = sexButtonGroup
                     };
-                    _sexMaleButton.OnPressed += args => { SetSex(Sex.Male); };
+                    _sexMaleButton.OnPressed += args =>
+                    {
+                        SetSex(Sex.Male);
+                        if (Profile.Gender == Gender.Female)
+                        {
+                            SetGender(Gender.Male);
+                            UpdateGenderControls();
+                        }
+                    };
 
                     _sexFemaleButton = new Button
                     {
                         Text = Loc.GetString("Female"),
                         Group = sexButtonGroup
                     };
-                    _sexFemaleButton.OnPressed += args => { SetSex(Sex.Female); };
+                    _sexFemaleButton.OnPressed += args =>
+                    {
+                        SetSex(Sex.Female);
+                        if (Profile.Gender == Gender.Male)
+                        {
+                            SetGender(Gender.Female);
+                            UpdateGenderControls();
+                        }
+                    };
 
                     hBox.AddChild(sexLabel);
                     hBox.AddChild(_sexMaleButton);
