@@ -51,6 +51,9 @@
       map: ["enum.AutolatheVisualLayers.BaseUnlit"]
     - state: autolathe_panel
       map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+  - type: Construction
+    graph: machine
+    node: machine
   - type: Machine
     board: AutolatheMachineCircuitboard
   - type: Wires

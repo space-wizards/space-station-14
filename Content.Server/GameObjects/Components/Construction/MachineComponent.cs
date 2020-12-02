@@ -118,6 +118,17 @@ namespace Content.Server.GameObjects.Components.Construction
                 if (!partContainer.Insert(s))
                     throw new Exception($"Couldn't insert machine material of type {stackType} to machine with prototype {Owner.Prototype?.ID ?? "N/A"}");
             }
+
+            foreach (var (compName, amount) in machineBoard.ComponentRequirements)
+            {
+                for (var i = 0; i < amount; i++)
+                {
+                    var c = entityManager.SpawnEntity(machineBoard.ComponentDefaults[compName], Owner.Transform.Coordinates);
+
+                    if(!partContainer.Insert(c))
+                        throw new Exception($"Couldn't insert machine component part with default prototype '{compName}' to machine with prototype {Owner.Prototype?.ID ?? "N/A"}");
+                }
+            }
         }
 
         public void MapInit()

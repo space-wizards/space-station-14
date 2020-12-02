@@ -57,8 +57,7 @@
           conditions:
             - !type:EntityAnchored { }
           completed:
-            - !type:EmptyContainer
-              container: board
+            - !type:EmptyAllContainers {}
             - !type:SpriteStateChange
               state: 0
           steps:

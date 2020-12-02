@@ -92,11 +92,23 @@ namespace Content.Server.GameObjects.Components.Construction
             RegenerateProgress();
         }
 
+        private void ResetProgressAndRequirements(MachineBoardComponent machineBoard)
+        {
+            _requirements = machineBoard.Requirements;
+            _materialRequirements = machineBoard.MaterialRequirements;
+            _componentRequirements = machineBoard.ComponentRequirements;
+            _progress = new Dictionary<MachinePart, int>();
+            _materialProgress = new Dictionary<StackType, int>();
+            _componentProgress = new Dictionary<string, int>();
+        }
+
         public void RegenerateProgress()
         {
+            SpriteComponent sprite;
+
             if (!HasBoard)
             {
-                if (Owner.TryGetComponent<SpriteComponent>(out var sprite))
+                if (Owner.TryGetComponent(out sprite))
                 {
                     sprite.LayerSetState(0, "box_1");
                 }
@@ -111,9 +123,17 @@ namespace Content.Server.GameObjects.Components.Construction
                 return;
             }
 
-            _progress = new Dictionary<MachinePart, int>();
-            _materialProgress = new Dictionary<StackType, int>();
-            _componentProgress = new Dictionary<string, int>();
+            var board = _boardContainer.ContainedEntities[0];
+
+            if (!board.TryGetComponent<MachineBoardComponent>(out var machineBoard))
+                return;
+
+            if (Owner.TryGetComponent(out sprite))
+            {
+                sprite.LayerSetState(0, "box_2");
+            }
+
+            ResetProgressAndRequirements(machineBoard);
 
             foreach (var part in _partContainer.ContainedEntities)
             {
@@ -168,12 +188,7 @@ namespace Content.Server.GameObjects.Components.Construction
                     _boardContainer.Insert(eventArgs.Using);
 
                     // Setup requirements and progress...
-                    _requirements = machineBoard.Requirements;
-                    _materialRequirements = machineBoard.MaterialRequirements;
-                    _componentRequirements = machineBoard.ComponentRequirements;
-                    _progress = new Dictionary<MachinePart, int>();
-                    _materialProgress = new Dictionary<StackType, int>();
-                    _componentProgress = new Dictionary<string, int>();
+                    ResetProgressAndRequirements(machineBoard);
 
                     foreach (var (machinePart, _) in _requirements)
                     {
