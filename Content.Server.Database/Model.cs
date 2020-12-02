@@ -117,7 +117,7 @@ namespace Content.Server.Database
         [Column("priority")] public DbJobPriority Priority { get; set; }
     }
 
-    public enum DbJobPriority : byte
+    public enum DbJobPriority
     {
         // These enum values HAVE to match the ones in JobPriority in Shared.
         Never = 0,
