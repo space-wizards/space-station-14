@@ -49,6 +49,8 @@
     - state: autolathe_unlit
       shader: unshaded
       map: ["enum.AutolatheVisualLayers.BaseUnlit"]
+    - state: autolathe_panel
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
   - type: Machine
     board: AutolatheMachineCircuitboard
   - type: Wires
@@ -91,10 +93,12 @@
       map: ["enum.ProtolatheVisualLayers.BaseUnlit"]
     - state: protolathe
       map: ["enum.ProtolatheVisualLayers.AnimationLayer"]
+    - state: protolathe_panel
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
   - type: ResearchClient
   - type: Wires
-      BoardName: "Protolathe"
-      LayoutId: Protolathe
+    BoardName: "Protolathe"
+    LayoutId: Protolathe
   - type: TechnologyDatabase
   - type: ProtolatheDatabase
     protolatherecipes:

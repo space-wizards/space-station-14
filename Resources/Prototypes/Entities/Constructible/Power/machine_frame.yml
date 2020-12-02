@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: UnfinishedMachineFrame
   name: machine frame
-  prefix: Unfinished
+  suffix: Unfinished
   placement:
     mode: SnapgridCenter
   components:
@@ -35,7 +35,7 @@
 - type: entity
   id: MachineFrame
   name: machine frame
-  prefix: Ready
+  suffix: Ready
   placement:
     mode: SnapgridCenter
   components:

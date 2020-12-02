@@ -3,11 +3,14 @@ using System.Threading.Tasks;
 using Content.Server.Construction;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Construction
@@ -15,6 +18,8 @@ namespace Content.Server.GameObjects.Components.Construction
     [RegisterComponent]
     public class MachineFrameComponent : Component, IInteractUsing
     {
+        [Dependency] private IComponentFactory _componentFactory = default!;
+
         public const string PartContainer = "machine_parts";
         public const string BoardContainer = "machine_board";
 
@@ -40,6 +45,12 @@ namespace Content.Server.GameObjects.Components.Construction
                         return false;
                 }
 
+                foreach (var (compName, amount) in _componentRequirements)
+                {
+                    if (_componentProgress[compName] < amount)
+                        return false;
+                }
+
                 return true;
             }
         }
@@ -54,10 +65,16 @@ namespace Content.Server.GameObjects.Components.Construction
         private IReadOnlyDictionary<StackType, int> _materialRequirements;
 
         [ViewVariables]
+        private IReadOnlyDictionary<string, int> _componentRequirements;
+
+        [ViewVariables]
         private Dictionary<MachinePart, int> _progress;
 
         [ViewVariables]
         private Dictionary<StackType, int> _materialProgress;
+
+        [ViewVariables]
+        private Dictionary<string, int> _componentProgress;
 
         [ViewVariables]
         private Container _boardContainer;
@@ -86,14 +103,18 @@ namespace Content.Server.GameObjects.Components.Construction
 
                 _requirements = null;
                 _materialRequirements = null;
+                _componentRequirements = null;
                 _progress = null;
                 _materialProgress = null;
+                _componentProgress = null;
 
                 return;
             }
 
             _progress = new Dictionary<MachinePart, int>();
             _materialProgress = new Dictionary<StackType, int>();
+            _componentProgress = new Dictionary<string, int>();
+
             foreach (var part in _partContainer.ContainedEntities)
             {
                 if (part.TryGetComponent<MachinePartComponent>(out var machinePart))
@@ -108,18 +129,32 @@ namespace Content.Server.GameObjects.Components.Construction
                         _progress[machinePart.PartType]++;
                 }
 
-                if (!part.TryGetComponent<StackComponent>(out var stack))
-                    continue;
+                if (part.TryGetComponent<StackComponent>(out var stack))
+                {
+                    var type = (StackType) stack.StackType;
+                    // Check this is part of the requirements...
+                    if (!_materialRequirements.ContainsKey(type))
+                        continue;
 
-                var type = (StackType)stack.StackType;
-                // Check this is part of the requirements...
-                if (!_materialRequirements.ContainsKey(type))
-                    continue;
+                    if (!_materialProgress.ContainsKey(type))
+                        _materialProgress[type] = 1;
+                    else
+                        _materialProgress[type]++;
+                }
 
-                if (!_materialProgress.ContainsKey(type))
-                    _materialProgress[type] = 1;
-                else
-                    _materialProgress[type]++;
+                // I have many regrets.
+                foreach (var (compName, amount) in _componentRequirements)
+                {
+                    var registration = _componentFactory.GetRegistration(compName);
+
+                    if (!part.HasComponent(registration.Type))
+                        continue;
+
+                    if (!_componentProgress.ContainsKey(compName))
+                        _componentProgress[compName] = 1;
+                    else
+                        _componentProgress[compName]++;
+                }
             }
         }
 
@@ -135,8 +170,10 @@ namespace Content.Server.GameObjects.Components.Construction
                     // Setup requirements and progress...
                     _requirements = machineBoard.Requirements;
                     _materialRequirements = machineBoard.MaterialRequirements;
+                    _componentRequirements = machineBoard.ComponentRequirements;
                     _progress = new Dictionary<MachinePart, int>();
                     _materialProgress = new Dictionary<StackType, int>();
+                    _componentProgress = new Dictionary<string, int>();
 
                     foreach (var (machinePart, _) in _requirements)
                     {
@@ -146,6 +183,11 @@ namespace Content.Server.GameObjects.Components.Construction
                     foreach (var (stackType, _) in _materialRequirements)
                     {
                         _materialProgress[stackType] = 0;
+                    }
+
+                    foreach (var (compName, _) in _componentRequirements)
+                    {
+                        _componentProgress[compName] = 0;
                     }
 
                     if (Owner.TryGetComponent<SpriteComponent>(out var sprite))
@@ -193,6 +235,21 @@ namespace Content.Server.GameObjects.Components.Construction
                         return false;
 
                     _materialProgress[type] += needed;
+                    return true;
+                }
+
+                foreach (var (compName, amount) in _componentRequirements)
+                {
+                    if (_componentProgress[compName] >= amount)
+                        continue;
+
+                    var registration = _componentFactory.GetRegistration(compName);
+
+                    if (!eventArgs.Using.HasComponent(registration.Type))
+                        continue;
+
+                    if (!eventArgs.Using.TryRemoveFromContainer() || !_partContainer.Insert(eventArgs.Using)) continue;
+                    _componentProgress[compName]++;
                     return true;
                 }
             }
