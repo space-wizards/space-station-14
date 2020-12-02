@@ -41,7 +41,6 @@ namespace Content.Shared.GameObjects.Components.Mobs
         {
             Sex.Female => Gender.Female,
             Sex.Male => Gender.Male,
-            Sex.Classified => Gender.Neuter,
             _ => Gender.Epicene,
         };
 

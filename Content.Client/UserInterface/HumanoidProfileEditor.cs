@@ -17,6 +17,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Robust.Shared.Localization.Macros;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +41,8 @@ namespace Content.Client.UserInterface
         private readonly Button _saveButton;
         private readonly Button _sexFemaleButton;
         private readonly Button _sexMaleButton;
-        private readonly Button _sexClassifiedButton;
+        private readonly OptionButton _genderButton;
+        private readonly OptionButton _clothingButton;
         private readonly HairStylePicker _hairPicker;
         private readonly FacialHairStylePicker _facialHairPicker;
         private readonly List<JobPrioritySelector> _jobPriorities;
@@ -171,18 +173,9 @@ namespace Content.Client.UserInterface
                     };
                     _sexFemaleButton.OnPressed += args => { SetSex(Sex.Female); };
 
-                    _sexClassifiedButton = new Button
-                    {
-                        /* DUR WHAT IF I PUT ATTACK HELICOPTER HERE DUR HUR AHUHRUHWUIDHAEILUBFOWEL(*&RFH#W*(OBFD&*/
-                        Text = Loc.GetString("Classified"),
-                        Group = sexButtonGroup
-                    };
-                    _sexClassifiedButton.OnPressed += args => { SetSex(Sex.Classified); };
-
                     hBox.AddChild(sexLabel);
                     hBox.AddChild(_sexMaleButton);
                     hBox.AddChild(_sexFemaleButton);
-                    hBox.AddChild(_sexClassifiedButton);
                     panel.AddChild(hBox);
                     sexAndAgeRow.AddChild(panel);
                 }
@@ -209,6 +202,34 @@ namespace Content.Client.UserInterface
                 }
 
                 #endregion Age
+
+                #region Gender
+
+                {
+                    var panel = HighlightedContainer();
+                    var hBox = new HBoxContainer();
+                    var genderLabel = new Label { Text = Loc.GetString("Gender:") };
+
+                    _genderButton = new OptionButton();
+
+                    _genderButton.AddItem(Loc.GetString("Male"), (int) Gender.Male);
+                    _genderButton.AddItem(Loc.GetString("Female"), (int) Gender.Female);
+                    _genderButton.AddItem(Loc.GetString("Epicene"), (int) Gender.Epicene);
+                    _genderButton.AddItem(Loc.GetString("Neuter"), (int) Gender.Neuter);
+
+                    _genderButton.OnItemSelected += args =>
+                    {
+                        _genderButton.SelectId(args.Id);
+                        SetGender((Gender) args.Id);
+                    };
+
+                    hBox.AddChild(genderLabel);
+                    hBox.AddChild(_genderButton);
+                    panel.AddChild(hBox);
+                    sexAndAgeRow.AddChild(panel);
+                }
+
+                #endregion Gender
 
                 #region Hair
 
@@ -267,6 +288,32 @@ namespace Content.Client.UserInterface
                 }
 
                 #endregion Hair
+
+                #region Clothing
+
+                {
+                    var panel = HighlightedContainer();
+                    var hBox = new HBoxContainer();
+                    var clothingLabel = new Label { Text = Loc.GetString("Clothing:") };
+
+                    _clothingButton = new OptionButton();
+
+                    _clothingButton.AddItem(Loc.GetString("Jumpsuit"), (int) ClothingPreference.Jumpsuit);
+                    _clothingButton.AddItem(Loc.GetString("Jumpskirt"), (int) ClothingPreference.Jumpskirt);
+
+                    _clothingButton.OnItemSelected += args =>
+                    {
+                        _clothingButton.SelectId(args.Id);
+                        SetClothing((ClothingPreference) args.Id);
+                    };
+
+                    hBox.AddChild(clothingLabel);
+                    hBox.AddChild(_clothingButton);
+                    panel.AddChild(hBox);
+                    appearanceVBox.AddChild(panel);
+                }
+
+                #endregion Clothing
             }
 
             #endregion
@@ -537,9 +584,21 @@ namespace Content.Client.UserInterface
             IsDirty = true;
         }
 
+        private void SetGender(Gender newGender)
+        {
+            Profile = Profile?.WithGender(newGender);
+            IsDirty = true;
+        }
+
         private void SetName(string newName)
         {
             Profile = Profile?.WithName(newName);
+            IsDirty = true;
+        }
+
+        private void SetClothing(ClothingPreference newClothing)
+        {
+            Profile = Profile?.WithClothingPreference(newClothing);
             IsDirty = true;
         }
 
@@ -587,6 +646,16 @@ namespace Content.Client.UserInterface
                 _sexFemaleButton.Pressed = true;
         }
 
+        private void UpdateGenderControls()
+        {
+            _genderButton.SelectId((int) Profile.Gender);
+        }
+
+        private void UpdateClothingControls()
+        {
+            _clothingButton.SelectId((int) Profile.Clothing);
+        }
+
         private void UpdateHairPickers()
         {
             _hairPicker.SetData(
@@ -616,6 +685,8 @@ namespace Content.Client.UserInterface
             if (Profile is null) return;
             UpdateNameEdit();
             UpdateSexControls();
+            UpdateGenderControls();
+            UpdateClothingControls();
             UpdateAgeEdit();
             UpdateHairPickers();
             UpdateSaveButton();
