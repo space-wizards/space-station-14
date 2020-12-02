@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -67,14 +68,13 @@ namespace Content.Server.GameTicking
         public const float PresetFailedCooldownIncrease = 30f;
         private const string PlayerPrototypeName = "HumanMob_Content";
         private const string ObserverPrototypeName = "MobObserver";
-        private const string MapFile = "Maps/saltern.yml";
         private static TimeSpan _roundStartTimeSpan;
 
-        [ViewVariables] private readonly List<GameRule> _gameRules = new List<GameRule>();
-        [ViewVariables] private readonly List<ManifestEntry> _manifest = new List<ManifestEntry>();
+        [ViewVariables] private readonly List<GameRule> _gameRules = new();
+        [ViewVariables] private readonly List<ManifestEntry> _manifest = new();
 
         [ViewVariables]
-        private readonly Dictionary<IPlayerSession, PlayerStatus> _playersInLobby = new Dictionary<IPlayerSession, PlayerStatus>();
+        private readonly Dictionary<IPlayerSession, PlayerStatus> _playersInLobby = new();
 
         [ViewVariables] private bool _initialized;
 
@@ -88,7 +88,7 @@ namespace Content.Server.GameTicking
 
         [ViewVariables] private bool DisallowLateJoin { get; set; } = false;
 
-        [ViewVariables] private bool LobbyEnabled => _configurationManager.GetCVar<bool>("game.lobbyenabled");
+        [ViewVariables] private bool LobbyEnabled => _configurationManager.GetCVar(CCVars.GameLobbyEnabled);
 
         [ViewVariables] private bool _updateOnRoundEnd;
         private CancellationTokenSource _updateShutdownCts;
@@ -115,19 +115,26 @@ namespace Content.Server.GameTicking
             }
         }
 
+        [ViewVariables]
+        public GamePreset Preset
+        {
+            get => _preset == null ? MakeGamePreset(null) : _preset;
+            set => _preset = value;
+        }
+
+        private GamePreset _preset;
+
         public event Action<GameRunLevelChangedEventArgs> OnRunLevelChanged;
         public event Action<GameRuleAddedEventArgs> OnRuleAdded;
 
         private TimeSpan LobbyDuration =>
-            TimeSpan.FromSeconds(_configurationManager.GetCVar<int>("game.lobbyduration"));
+            TimeSpan.FromSeconds(_configurationManager.GetCVar(CCVars.GameLobbyDuration));
 
         public override void Initialize()
         {
             base.Initialize();
 
             DebugTools.Assert(!_initialized);
-
-            PresetSuspicion.RegisterCVars(_configurationManager);
 
             _netManager.RegisterNetMessage<MsgTickerJoinLobby>(nameof(MsgTickerJoinLobby));
             _netManager.RegisterNetMessage<MsgTickerJoinGame>(nameof(MsgTickerJoinGame));
@@ -280,18 +287,18 @@ namespace Content.Server.GameTicking
             }
 
             // Time to start the preset.
-            var preset = MakeGamePreset(profiles);
+            Preset = MakeGamePreset(profiles);
 
-            DisallowLateJoin |= preset.DisallowLateJoin;
+            DisallowLateJoin |= Preset.DisallowLateJoin;
 
-            if (!preset.Start(assignedJobs.Keys.ToList(), force))
+            if (!Preset.Start(assignedJobs.Keys.ToList(), force))
             {
-                if (_configurationManager.GetCVar<bool>("game.fallbackenabled"))
+                if (_configurationManager.GetCVar(CCVars.GameLobbyFallbackEnabled))
                 {
-                    SetStartPreset(_configurationManager.GetCVar<string>("game.fallbackpreset"));
+                    SetStartPreset(_configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset));
                     var newPreset = MakeGamePreset(profiles);
                     _chatManager.DispatchServerAnnouncement(
-                        $"Failed to start {preset.ModeTitle} mode! Defaulting to {newPreset.ModeTitle}...");
+                        $"Failed to start {Preset.ModeTitle} mode! Defaulting to {newPreset.ModeTitle}...");
                     if (!newPreset.Start(readyPlayers, force))
                     {
                         throw new ApplicationException("Fallback preset failed to start!");
@@ -299,15 +306,17 @@ namespace Content.Server.GameTicking
 
                     DisallowLateJoin = false;
                     DisallowLateJoin |= newPreset.DisallowLateJoin;
+                    Preset = newPreset;
                 }
                 else
                 {
-                    SendServerMessage($"Failed to start {preset.ModeTitle} mode! Restarting round...");
+                    SendServerMessage($"Failed to start {Preset.ModeTitle} mode! Restarting round...");
                     RestartRound();
                     DelayStart(TimeSpan.FromSeconds(PresetFailedCooldownIncrease));
                     return;
                 }
             }
+            Preset.OnGameStarted();
 
             _roundStartTimeSpan = IoCManager.Resolve<IGameTiming>().RealTime;
             _sendStatusToAll();
@@ -344,8 +353,8 @@ namespace Content.Server.GameTicking
 
             //Tell every client the round has ended.
             var roundEndMessage = _netManager.CreateNetMessage<MsgRoundEndMessage>();
-            roundEndMessage.GamemodeTitle = MakeGamePreset(null).ModeTitle;
-            roundEndMessage.RoundEndText = roundEndText;
+            roundEndMessage.GamemodeTitle = Preset.ModeTitle;
+            roundEndMessage.RoundEndText = roundEndText + $"\n{Preset.GetRoundEndDescription()}";
 
             //Get the timespan of the round.
             roundEndMessage.RoundDuration = IoCManager.Resolve<IGameTiming>().RealTime.Subtract(_roundStartTimeSpan);
@@ -474,6 +483,7 @@ namespace Content.Server.GameTicking
                 "sandbox" => typeof(PresetSandbox),
                 "deathmatch" => typeof(PresetDeathMatch),
                 "suspicion" => typeof(PresetSuspicion),
+                "traitor" => typeof(PresetTraitor),
                 _ => default
             };
 
@@ -700,11 +710,16 @@ namespace Content.Server.GameTicking
             DisallowLateJoin = false;
         }
 
+        private string GetMap()
+        {
+            return _configurationManager.GetCVar(CCVars.GameMap);
+        }
+
         private void _preRoundSetup()
         {
             DefaultMap = _mapManager.CreateMap();
             var startTime = _gameTiming.RealTime;
-            var grid = _mapLoader.LoadBlueprint(DefaultMap, MapFile);
+            var grid = _mapLoader.LoadBlueprint(DefaultMap, GetMap());
 
             DefaultGridId = grid.Index;
             _spawnPoint = grid.ToCoordinates();
@@ -1000,8 +1015,8 @@ namespace Content.Server.GameTicking
 
         private string GetInfoText()
         {
-            var gmTitle = MakeGamePreset(null).ModeTitle;
-            var desc = MakeGamePreset(null).Description;
+            var gmTitle = Preset.ModeTitle;
+            var desc = Preset.Description;
             return Loc.GetString(@"Hi and welcome to [color=white]Space Station 14![/color]
 
 The current game mode is: [color=white]{0}[/color].
@@ -1022,15 +1037,15 @@ The current game mode is: [color=white]{0}[/color].
             return preset;
         }
 
-        [Dependency] private IEntityManager _entityManager = default!;
-        [Dependency] private IMapManager _mapManager = default!;
-        [Dependency] private IMapLoader _mapLoader = default!;
-        [Dependency] private IGameTiming _gameTiming = default!;
-        [Dependency] private IConfigurationManager _configurationManager = default!;
-        [Dependency] private IChatManager _chatManager = default!;
-        [Dependency] private IServerNetManager _netManager = default!;
-        [Dependency] private IDynamicTypeFactory _dynamicTypeFactory = default!;
-        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IMapLoader _mapLoader = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+        [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly IServerNetManager _netManager = default!;
+        [Dependency] private readonly IDynamicTypeFactory _dynamicTypeFactory = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly IServerPreferencesManager _prefsManager = default!;
         [Dependency] private readonly IBaseServer _baseServer = default!;

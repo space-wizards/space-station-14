@@ -55,7 +55,7 @@ namespace Content.Server.GameObjects.Components.GUI
             }
         }
 
-        [ViewVariables] private readonly List<Hand> _hands = new List<Hand>();
+        [ViewVariables] private readonly List<Hand> _hands = new();
 
         public IEnumerable<string> Hands => _hands.Select(h => h.Name);
 
@@ -277,7 +277,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 spriteComponent.RenderOrder = item.Owner.EntityManager.CurrentTick.Value;
             }
 
-            if (ContainerHelpers.TryGetContainer(Owner, out var container))
+            if (Owner.TryGetContainer(out var container))
             {
                 container.Insert(item.Owner);
             }
@@ -568,7 +568,7 @@ namespace Content.Server.GameObjects.Components.GUI
             }
         }
 
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
+        public override async void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, channel, session);
 
@@ -609,7 +609,7 @@ namespace Content.Server.GameObjects.Components.GUI
                         var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
                         if (used != null)
                         {
-                                _ = interactionSystem.Interaction(Owner, used, hand.Entity,
+                                await interactionSystem.Interaction(Owner, used, hand.Entity,
                                     EntityCoordinates.Invalid);
                         }
                         else
@@ -744,7 +744,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public SharedHand ToShared(int index, HandLocation location)
         {
-            return new SharedHand(index, Name, Entity?.Uid, location, Enabled);
+            return new(index, Name, Entity?.Uid, location, Enabled);
         }
     }
 

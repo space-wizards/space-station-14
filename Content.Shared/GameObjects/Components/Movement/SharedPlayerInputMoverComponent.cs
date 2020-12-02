@@ -139,7 +139,7 @@ namespace Content.Shared.GameObjects.Components.Movement
         ///     Whether or not the player can move diagonally.
         /// </summary>
         [ViewVariables]
-        public bool DiagonalMovementEnabled => _configurationManager.GetCVar<bool>("game.diagonalmovement");
+        public bool DiagonalMovementEnabled => _configurationManager.GetCVar<bool>(CCVars.GameDiagonalMovement);
 
         /// <inheritdoc />
         public override void OnAdd()

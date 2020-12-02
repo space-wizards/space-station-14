@@ -34,10 +34,10 @@ namespace Content.Client.GameObjects.Components.Power
             base.OnChangeData(component);
 
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
-            if (component.TryGetData(PowerCellVisuals.ChargeLevel, out float fraction))
+            if (component.TryGetData(PowerCellVisuals.ChargeLevel, out byte level))
             {
-                int level = ContentHelpers.RoundToNearestLevels(fraction, 1, 4) * 25;
-                sprite.LayerSetState(Layers.Charge, $"{_prefix}_{level}");
+                var adjustedLevel = level * 25;
+                sprite.LayerSetState(Layers.Charge, $"{_prefix}_{adjustedLevel}");
             }
         }
 

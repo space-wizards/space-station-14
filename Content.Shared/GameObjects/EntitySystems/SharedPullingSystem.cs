@@ -23,7 +23,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         ///     A mapping of pullers to the entity that they are pulling.
         /// </summary>
         private readonly Dictionary<IEntity, IEntity> _pullers =
-            new Dictionary<IEntity, IEntity>();
+            new();
 
         public override void Initialize()
         {

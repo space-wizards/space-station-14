@@ -58,7 +58,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             Ignored predicate = entity => entity == examiner || entity == examined;
 
-            if (ContainerHelpers.TryGetContainer(examiner, out var container))
+            if (examiner.TryGetContainer(out var container))
             {
                 predicate += entity => entity == container.Owner;
             }

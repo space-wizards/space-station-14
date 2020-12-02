@@ -11,7 +11,7 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     internal sealed class StorageSystem : EntitySystem
     {
-        private readonly List<IPlayerSession> _sessionCache = new List<IPlayerSession>();
+        private readonly List<IPlayerSession> _sessionCache = new();
 
         /// <inheritdoc />
         public override void Initialize()

@@ -11,7 +11,7 @@ namespace Content.Server.Chemistry.Metabolism
     /// Default metabolism for drink reagents. Attempts to find a ThirstComponent on the target,
     /// and to update it's thirst values.
     /// </summary>
-    class DefaultDrink : IMetabolizable
+    public class DefaultDrink : IMetabolizable
     {
         //Rate of metabolism in units / second
         private ReagentUnit _metabolismRate;

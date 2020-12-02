@@ -322,7 +322,6 @@ namespace Content.Shared.GameTicking
 
                     AllPlayersEndInfo.Add(readPlayerData);
                 }
-
             }
 
             public override void WriteToBuffer(NetOutgoingMessage buffer)

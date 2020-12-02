@@ -174,9 +174,10 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
                 return;
             }
 
+            // TODO BODY Mechanism description
             var message =
                 Loc.GetString(
-                    $"{mechanism.Name}\nHealth: {mechanism.CurrentDurability}/{mechanism.MaxDurability}\n{mechanism.Description}");
+                    $"{mechanism.Name}\nHealth: {mechanism.CurrentDurability}/{mechanism.MaxDurability}");
 
             MechanismInfoLabel.SetMessage(message);
         }

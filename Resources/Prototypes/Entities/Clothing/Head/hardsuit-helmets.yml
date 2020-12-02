@@ -1,158 +1,163 @@
 - type: entity
-  parent: HatBase
-  id: HelmetHardsuitBase
-  name: base hardsuit helmet
-  abstract: true
-  components:
-    - type: PressureProtection
-      highPressureMultiplier: 0.75
-      lowPressureMultiplier: 100
-
-- type: entity
-  parent: HelmetHardsuitBase
-  id: HatHardsuitOld
-  name: old hardsuit helmet
-  description: An old helmet from a hardsuit. Still functional, for now.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/hardsuit-old.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/hardsuit-old.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.85
-    lowPressureMultiplier: 45
-
-
-- type: entity
-  parent: HelmetHardsuitBase
-  id: HelmetHardsuitAtmos
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitAtmos
   name: atmos hardsuit helmet
   description: A special hardsuit helmet designed for working in low-pressure, high thermal environments.
   components:
   - type: Sprite
-    sprite: Clothing/Head/hardsuit-atmos.rsi
-
+    sprite: Clothing/Head/Hardsuits/atmospherics.rsi
   - type: Clothing
-    sprite: Clothing/Head/hardsuit-atmos.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.5
-    lowPressureMultiplier: 100
+    sprite: Clothing/Head/Hardsuits/atmospherics.rsi
 
 - type: entity
-  parent: HelmetHardsuitBase
-  id: HelmetHardsuitEngineering
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitCap
+  name: captain's hardsuit helmet
+  description: Special hardsuit helmet, made for the captain of the station.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/capspace.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/capspace.rsi
+
+- type: entity
+  parent: HatBase
+  id: ClothingHeadHelmetHardsuitDeathsquad
+  name: deathsquad
+  description: A robust helmet for special operations.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/deathsquad.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/deathsquad.rsi
+
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitEngineering
   name: engineering hardsuit helmet
   description: An engineering hardsuit helmet designed for working in low-pressure, high radioactive environments.
   components:
   - type: Sprite
-    sprite: Clothing/Head/hardsuit-engineering.rsi
-
+    sprite: Clothing/Head/Hardsuits/engineering.rsi
   - type: Clothing
-    sprite: Clothing/Head/hardsuit-engineering.rsi
+    sprite: Clothing/Head/Hardsuits/engineering.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.65
+    highPressureMultiplier: 0.40
     lowPressureMultiplier: 100
 
 - type: entity
-  parent: HelmetHardsuitBase
-  id: HelmetHardsuitHazard
-  name: hazard hardsuit helmet
-  description: Robust hardsuit helmet made for dangerous and hazardous situations.
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitEngineeringWhite
+  name: CE hardsuit helmet
+  description: Special hardsuit helmet, made for the chief engineer of the station.
   components:
   - type: Sprite
-    sprite: Clothing/Head/hardsuit-hazardhardsuit.rsi
-
+    sprite: Clothing/Head/Hardsuits/engineering-white.rsi
   - type: Clothing
-    sprite: Clothing/Head/hardsuit-hazardhardsuit.rsi
+    sprite: Clothing/Head/Hardsuits/engineering-white.rsi
 
 - type: entity
-  parent: HelmetHardsuitBase
-  id: HelmetHardsuitMedical
+  parent: HatBase
+  id: ClothingHeadHelmetIHSVoidHelm
+  name: IHS voidhelm
+  description: A robust, tactical IHS helmet.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/ihsvoid.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/ihsvoid.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.60
+    lowPressureMultiplier: 100
+
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitMedical
   name: medical hardsuit helmet
   description: Lightweight medical hardsuit helmet that doesn't restrict your head movements.
   components:
   - type: Sprite
-    sprite: Clothing/Head/hardsuit-medical.rsi
-
+    sprite: Clothing/Head/Hardsuits/medical.rsi
   - type: Clothing
-    sprite: Clothing/Head/hardsuit-medical.rsi
+    sprite: Clothing/Head/Hardsuits/medical.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.80
     lowPressureMultiplier: 55
 
 - type: entity
-  parent: HelmetHardsuitBase
-  id: HelmetHardsuitMining
-  name: mining hardsuit helmet
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitRd
+  name: rd hardsuit helmet
+  description: Lightweight hardsuit helmet that doesn't restrict your head movements.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/rd.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/rd.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.80
+    lowPressureMultiplier: 55
+
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitSalvage
+  name: salvage hardsuit helmet
   description: A special helmet designed for work in a hazardous, low pressure environment. Has reinforced plating for wildlife encounters and dual floodlights.
   components:
   - type: Sprite
-    sprite: Clothing/Head/hardsuit-mining.rsi
-
+    sprite: Clothing/Head/Hardsuits/salvage.rsi
   - type: Clothing
-    sprite: Clothing/Head/hardsuit-mining.rsi
+    sprite: Clothing/Head/Hardsuits/salvage.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.70
     lowPressureMultiplier: 100
 
 - type: entity
-  parent: HelmetHardsuitBase
-  id: HelmetHardsuitSecurity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitSecurity
   name: security hardsuit helmet
   description: Armored hardsuit helmet for security needs.
   components:
   - type: Sprite
-    sprite: Clothing/Head/hardsuit-sectg.rsi
-
+    sprite: Clothing/Head/Hardsuits/security.rsi
   - type: Clothing
-    sprite: Clothing/Head/hardsuit-sectg.rsi
+    sprite: Clothing/Head/Hardsuits/security.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.70
     lowPressureMultiplier: 100
 
 - type: entity
-  parent: HelmetHardsuitBase
-  id: HelmetHardsuitSyndie
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitSecurityRed
+  name: hos hardsuit helmet
+  description: Red armored hardsuit helmet for security needs. Belongs to the HoS.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/security-red.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/security-red.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.60
+    lowPressureMultiplier: 100
+
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitSyndie
   name: blood red hardsuit helmet
   description: An advanced red hardsuit helmet designed for work in special operations.
   components:
   - type: Sprite
-    sprite: Clothing/Head/hardsuit-syndie.rsi
-    state: icon
-
+    sprite: Clothing/Head/Hardsuits/syndicate.rsi
   - type: Clothing
-    sprite: Clothing/Head/hardsuit-syndie.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.45
-    lowPressureMultiplier: 100
+    sprite: Clothing/Head/Hardsuits/syndicate.rsi
 
 - type: entity
-  parent: HelmetHardsuitBase
-  id: HelmetHardsuitCE
-  name: CE hardsuit helmet
-  description: Special hardsuit helmet, made for the chief engineer of the station.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/hardsuit-white.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/hardsuit-white.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.5
-    lowPressureMultiplier: 100
-
-- type: entity
-  parent: HelmetHardsuitBase
-  id: HelmetHardsuitWizard
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitWizard
   name: wizard hardsuit helmet
   description: A bizarre gem-encrusted helmet that radiates magical energies.
   components:
   - type: Sprite
-    sprite: Clothing/Head/hardsuit-wiz.rsi
-
+    sprite: Clothing/Head/Hardsuits/wizard.rsi
   - type: Clothing
-    sprite: Clothing/Head/hardsuit-wiz.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.45
-    lowPressureMultiplier: 100
+    sprite: Clothing/Head/Hardsuits/wizard.rsi

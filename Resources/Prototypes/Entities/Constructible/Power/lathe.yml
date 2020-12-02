@@ -102,6 +102,7 @@
       - CableStack
       - Crowbar
       - Multitool
+      - ConveyorAssembly
   - type: UserInterface
     interfaces:
     - key: enum.LatheUiKey.Key

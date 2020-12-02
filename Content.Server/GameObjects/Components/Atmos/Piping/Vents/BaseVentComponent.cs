@@ -18,7 +18,6 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Vents
     /// </summary>
     public abstract class BaseVentComponent : PipeNetDeviceComponent
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         [ViewVariables]
         private PipeNode _ventInlet;
@@ -65,7 +64,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Vents
             if (!VentEnabled)
                 return;
 
-            var tileAtmos = Owner.Transform.Coordinates.GetTileAtmosphere(_entityManager);
+            var tileAtmos = Owner.Transform.Coordinates.GetTileAtmosphere(Owner.EntityManager);
             if (tileAtmos == null)
                 return;
             VentGas(_ventInlet.Air, tileAtmos.Air);

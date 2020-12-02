@@ -153,7 +153,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             }
 
             if (!target.TryGetComponent(out IBody body) ||
-                !body.TryGetMechanismBehaviors<StomachBehaviorComponent>(out var stomachs))
+                !body.TryGetMechanismBehaviors<StomachBehavior>(out var stomachs))
             {
                 return false;
             }

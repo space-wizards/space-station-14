@@ -8,6 +8,11 @@ namespace Content.Shared.GameObjects.Components.Body.Part
     /// </summary>
     public interface IBodyPartRemoved
     {
+        /// <summary>
+        ///     Called when a <see cref="IBodyPart"/> is removed from the
+        ///     entity owning this component.
+        /// </summary>
+        /// <param name="args">Information about the part that was removed.</param>
         void BodyPartRemoved(BodyPartRemovedEventArgs args);
     }
 
@@ -19,8 +24,14 @@ namespace Content.Shared.GameObjects.Components.Body.Part
             Slot = slot;
         }
 
+        /// <summary>
+        ///     The part that was removed.
+        /// </summary>
         public IBodyPart Part { get; }
 
+        /// <summary>
+        ///     The slot that <see cref="Part"/> was removed from.
+        /// </summary>
         public string Slot { get; }
     }
 }

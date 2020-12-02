@@ -13,6 +13,13 @@ namespace Content.Client.UserInterface.Stylesheets
 {
     public sealed class StyleNano : StyleBase
     {
+        public const string StyleClassBorderedWindowPanel = "BorderedWindowPanel";
+        public const string StyleClassTransparentBorderedWindowPanel = "TransparentBorderedWindowPanel";
+        public const string StyleClassTooltipPanel = "tooltipBox";
+        public const string StyleClassTooltipAlertTitle = "tooltipAlertTitle";
+        public const string StyleClassTooltipAlertDescription = "tooltipAlertDesc";
+        public const string StyleClassTooltipAlertCooldown = "tooltipAlertCooldown";
+
         public const string StyleClassSliderRed = "Red";
         public const string StyleClassSliderGreen = "Green";
         public const string StyleClassSliderBlue = "Blue";
@@ -55,6 +62,7 @@ namespace Content.Client.UserInterface.Stylesheets
             var notoSansDisplayBold14 = resCache.GetFont("/Fonts/NotoSansDisplay/NotoSansDisplay-Bold.ttf", 14);
             var notoSans16 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 16);
             var notoSansBold16 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Bold.ttf", 16);
+            var notoSansBold18 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Bold.ttf", 18);
             var notoSansBold20 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Bold.ttf", 20);
             var textureCloseButton = resCache.GetTexture("/Textures/Interface/Nano/cross.svg.png");
             var windowHeaderTex = resCache.GetTexture("/Textures/Interface/Nano/window_header.png");
@@ -72,6 +80,20 @@ namespace Content.Client.UserInterface.Stylesheets
             };
             windowBackground.SetPatchMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
             windowBackground.SetExpandMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
+
+            var borderedWindowBackgroundTex = resCache.GetTexture("/Textures/Interface/Nano/window_background_bordered.png");
+            var borderedWindowBackground = new StyleBoxTexture
+            {
+                Texture = borderedWindowBackgroundTex,
+            };
+            borderedWindowBackground.SetPatchMargin(StyleBox.Margin.All, 2);
+
+            var borderedTransparentWindowBackgroundTex = resCache.GetTexture("/Textures/Interface/Nano/transparent_window_background_bordered.png");
+            var borderedTransparentWindowBackground = new StyleBoxTexture
+            {
+                Texture = borderedTransparentWindowBackgroundTex,
+            };
+            borderedTransparentWindowBackground.SetPatchMargin(StyleBox.Margin.All, 2);
 
             var textureInvertedTriangle = resCache.GetTexture("/Textures/Interface/Nano/inverted_triangle.svg.png");
 
@@ -147,7 +169,7 @@ namespace Content.Client.UserInterface.Stylesheets
                 Texture = tooltipTexture,
             };
             tooltipBox.SetPatchMargin(StyleBox.Margin.All, 2);
-            tooltipBox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
+            tooltipBox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 7);
 
             // Placeholder
             var placeholderTexture = resCache.GetTexture("/Textures/Interface/Nano/placeholder.png");
@@ -244,6 +266,19 @@ namespace Content.Client.UserInterface.Stylesheets
                     new[]
                     {
                         new StyleProperty(PanelContainer.StylePropertyPanel, windowBackground),
+                    }),
+                // bordered window background
+                new StyleRule(
+                    new SelectorElement(null, new[] {StyleClassBorderedWindowPanel}, null, null),
+                    new[]
+                    {
+                        new StyleProperty(PanelContainer.StylePropertyPanel, borderedWindowBackground),
+                    }),
+                new StyleRule(
+                    new SelectorElement(null, new[] {StyleClassTransparentBorderedWindowPanel}, null, null),
+                    new[]
+                    {
+                        new StyleProperty(PanelContainer.StylePropertyPanel, borderedTransparentWindowBackground),
                     }),
                 // Window header.
                 new StyleRule(
@@ -464,7 +499,7 @@ namespace Content.Client.UserInterface.Stylesheets
                     new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
                 }),
 
-                new StyleRule(new SelectorElement(typeof(PanelContainer), new[] {"tooltipBox"}, null, null), new[]
+                new StyleRule(new SelectorElement(typeof(PanelContainer), new [] { StyleClassTooltipPanel }, null, null), new[]
                 {
                     new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
                 }),
@@ -480,6 +515,20 @@ namespace Content.Client.UserInterface.Stylesheets
                     new[]
                 {
                     new StyleProperty("font", notoSansItalic12),
+                }),
+
+                // alert tooltip
+                new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassTooltipAlertTitle}, null, null), new[]
+                {
+                    new StyleProperty("font", notoSansBold18)
+                }),
+                new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassTooltipAlertDescription}, null, null), new[]
+                {
+                    new StyleProperty("font", notoSans16)
+                }),
+                new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassTooltipAlertCooldown}, null, null), new[]
+                {
+                    new StyleProperty("font", notoSans16)
                 }),
 
                 // Entity tooltip

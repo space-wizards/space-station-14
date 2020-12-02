@@ -42,6 +42,8 @@
   requiredPoints: 1000
   requiredTechnologies:
     - BasicResearch
+  unlockedRecipes:
+    - ConveyorAssembly
 
 - type: technology
   name: material sheet printing
