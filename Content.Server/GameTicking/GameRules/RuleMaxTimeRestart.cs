@@ -15,7 +15,7 @@ namespace Content.Server.GameTicking.GameRules
 
         private CancellationTokenSource _timerCancel = new();
 
-        public TimeSpan RoundMaxTime { get; set; }
+        public TimeSpan RoundMaxTime { get; set; } = TimeSpan.FromMinutes(5);
         public TimeSpan RoundEndDelay { get; set; } = TimeSpan.FromSeconds(10);
 
         public override void Added()
