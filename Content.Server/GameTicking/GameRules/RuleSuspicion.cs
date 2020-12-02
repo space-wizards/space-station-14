@@ -34,9 +34,15 @@ namespace Content.Server.GameTicking.GameRules
         [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         private readonly CancellationTokenSource _checkTimerCancel = new();
+        private CancellationTokenSource _maxTimerCancel = new();
+
+        public TimeSpan RoundMaxTime { get; set; } = TimeSpan.FromSeconds(CCVars.SuspicionMaxTimeSeconds.DefaultValue);
+        public TimeSpan RoundEndDelay { get; set; } = TimeSpan.FromSeconds(10);
 
         public override void Added()
         {
+            RoundMaxTime = TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.SuspicionMaxTimeSeconds));
+
             _chatManager.DispatchServerAnnouncement(Loc.GetString("There are traitors on the station! Find them, and kill them!"));
 
             bool Predicate(IPlayerSession session) => session.ContentData()?.Mind?.HasRole<SuspicionTraitorRole>() ?? false;
@@ -45,19 +51,56 @@ namespace Content.Server.GameTicking.GameRules
 
             EntitySystem.Get<DoorSystem>().AccessType = DoorSystem.AccessTypes.AllowAllNoExternal;
 
-            Timer.SpawnRepeating(DeadCheckDelay, _checkWinConditions, _checkTimerCancel.Token);
+            Timer.SpawnRepeating(DeadCheckDelay, CheckWinConditions, _checkTimerCancel.Token);
+
+            _gameTicker.OnRunLevelChanged += RunLevelChanged;
         }
 
         public override void Removed()
         {
             base.Removed();
 
+            _gameTicker.OnRunLevelChanged -= RunLevelChanged;
+
             EntitySystem.Get<DoorSystem>().AccessType = DoorSystem.AccessTypes.Id;
 
             _checkTimerCancel.Cancel();
         }
 
-        private void _checkWinConditions()
+        public void RestartTimer()
+        {
+            _maxTimerCancel.Cancel();
+            _maxTimerCancel = new CancellationTokenSource();
+            Timer.Spawn(RoundMaxTime, TimerFired, _maxTimerCancel.Token);
+        }
+
+        public void StopTimer()
+        {
+            _maxTimerCancel.Cancel();
+        }
+
+        private void TimerFired()
+        {
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("Time has run out for the traitors!"));
+
+            EndRound(Victory.Innocents);
+        }
+
+        private void RunLevelChanged(GameRunLevelChangedEventArgs args)
+        {
+            switch (args.NewRunLevel)
+            {
+                case GameRunLevel.InRound:
+                    RestartTimer();
+                    break;
+                case GameRunLevel.PreRoundLobby:
+                case GameRunLevel.PostRound:
+                    StopTimer();
+                    break;
+            }
+        }
+
+        private void CheckWinConditions()
         {
             if (!_cfg.GetCVar(CCVars.GameLobbyEnableWin))
                 return;
@@ -131,12 +174,10 @@ namespace Content.Server.GameTicking.GameRules
 
             _gameTicker.EndRound(text);
 
-            var restartDelay = 10;
-
-            _chatManager.DispatchServerAnnouncement(Loc.GetString("Restarting in {0} seconds.", restartDelay));
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("Restarting in {0} seconds.", (int) RoundEndDelay.TotalSeconds));
             _checkTimerCancel.Cancel();
 
-            Timer.Spawn(TimeSpan.FromSeconds(restartDelay), () => _gameTicker.RestartRound());
+            Timer.Spawn(RoundEndDelay, () => _gameTicker.RestartRound());
         }
     }
 }
