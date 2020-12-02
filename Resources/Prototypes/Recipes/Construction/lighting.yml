@@ -10,7 +10,7 @@
     sprite: Constructible/Lighting/light_tube.rsi
     state: empty
   objectType: Structure
-  placementMode: AlignWallProper
+  placementMode: PlaceFree
   canRotate: true
   canBuildInImpassable: true
   conditions:
@@ -28,7 +28,7 @@
     sprite: Constructible/Lighting/light_small.rsi
     state: empty
   objectType: Structure
-  placementMode: AlignWallProper
+  placementMode: PlaceFree
   canRotate: true
   canBuildInImpassable: true
   conditions:
