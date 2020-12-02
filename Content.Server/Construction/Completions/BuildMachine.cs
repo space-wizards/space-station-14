@@ -109,6 +109,11 @@ namespace Content.Server.Construction.Completions
                 construction.AddContainer(MachineFrameComponent.PartContainer);
             }
 
+            if (machine.TryGetComponent(out MachineComponent? machineComp))
+            {
+                machineComp.RefreshParts();
+            }
+
             entity.Delete();
         }
 
