@@ -1,21 +1,27 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces;
+using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Body;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
+using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Disposal
 {
     // TODO: Add gas
     [RegisterComponent]
-    public class DisposalHolderComponent : Component
+    public class DisposalHolderComponent : Component, IGasMixtureHolder
     {
         public override string Name => "DisposalHolder";
 
@@ -48,6 +54,28 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// </summary>
         [ViewVariables]
         public HashSet<string> Tags { get; set; } = new();
+
+        [ViewVariables] public GasMixture Air { get; set; } = default!;
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+
+            serializer.DataField(this, x => x.Air, "air", new GasMixture(Atmospherics.CellVolume));
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            _contents = ContainerManagerComponent.Ensure<Container>(nameof(DisposalHolderComponent), Owner);
+        }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+            ExitDisposals();
+        }
 
         private bool CanInsert(IEntity entity)
         {
@@ -118,6 +146,17 @@ namespace Content.Server.GameObjects.Components.Disposal
                 }
             }
 
+            if (Owner.Transform.Coordinates.TryGetTileAtmosphere(out var tileAtmos) &&
+                tileAtmos.Air != null)
+            {
+                tileAtmos.Air.Merge(Air);
+                Air.Clear();
+
+                EntitySystem.Get<AtmosphereSystem>()
+                    .GetGridAtmosphere(Owner.Transform.GridID)?
+                    .Invalidate(tileAtmos.GridIndices);
+            }
+
             Owner.Delete();
         }
 
@@ -158,19 +197,6 @@ namespace Content.Server.GameObjects.Components.Disposal
                     break;
                 }
             }
-        }
-
-        public override void OnRemove()
-        {
-            base.OnRemove();
-            ExitDisposals();
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            _contents = ContainerManagerComponent.Ensure<Container>(nameof(DisposalHolderComponent), Owner);
         }
     }
 }
