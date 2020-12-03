@@ -6,6 +6,7 @@
   abstract: true
   components:
     - type: Sprite
+      netsync: false
       sprite: Constructible/Misc/stock_parts.rsi
     - type: MachinePart
       rating: 1
