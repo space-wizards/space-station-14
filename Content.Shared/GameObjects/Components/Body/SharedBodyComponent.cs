@@ -200,7 +200,6 @@ namespace Content.Shared.GameObjects.Components.Body
 
             if (slotName == null)
             {
-                slotName = null;
                 return false;
             }
 
