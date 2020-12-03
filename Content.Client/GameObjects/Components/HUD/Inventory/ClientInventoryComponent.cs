@@ -69,6 +69,11 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             }
         }
 
+        public override bool IsEquipped(IEntity item)
+        {
+            return item != null && _slots.Values.Any(e => e == item);
+        }
+
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
             base.HandleComponentState(curState, nextState);

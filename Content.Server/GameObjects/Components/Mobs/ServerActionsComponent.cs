@@ -23,10 +23,6 @@ namespace Content.Server.GameObjects.Components.Mobs
     [ComponentReference(typeof(SharedActionsComponent))]
     public sealed class ServerActionsComponent : SharedActionsComponent
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly HandsComponent _handsComponent = default!;
-        [Dependency] private readonly InventoryComponent _inventoryComponent = default!;
-
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession session = null)
         {
             base.HandleNetworkMessage(message, netChannel, session);
@@ -121,7 +117,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
                     if (ActionBlockerSystem.CanChangeDirection(player))
                     {
-                        var diff = msg.Target.ToMapPos(_entityManager) - player.Transform.MapPosition.Position;
+                        var diff = msg.Target.ToMapPos(EntityManager) - player.Transform.MapPosition.Position;
                         if (diff.LengthSquared > 0.01f)
                         {
                             player.Transform.LocalRotation = new Angle(diff);
@@ -139,7 +135,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                         return;
                     }
 
-                    if (!_entityManager.TryGetEntity(msg.Target, out var entity))
+                    if (!EntityManager.TryGetEntity(msg.Target, out var entity))
                     {
                         Logger.DebugS("action", "user {0} attempted to" +
                                                 " perform target entity action {1} but could not find entity with " +
@@ -202,7 +198,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                 return;
             }
 
-            if (!_entityManager.TryGetEntity(performMsg.Item, out var item))
+            if (!EntityManager.TryGetEntity(performMsg.Item, out var item))
             {
                 Logger.DebugS("action", "user {0} attempted to" +
                                         " perform action {1} but the item for this action ({2}) could not be found", player.Name,
@@ -258,7 +254,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
                     if (ActionBlockerSystem.CanChangeDirection(player))
                     {
-                        var diff = msg.Target.ToMapPos(_entityManager) - player.Transform.MapPosition.Position;
+                        var diff = msg.Target.ToMapPos(EntityManager) - player.Transform.MapPosition.Position;
                         if (diff.LengthSquared > 0.01f)
                         {
                             player.Transform.LocalRotation = new Angle(diff);
@@ -276,7 +272,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                         return;
                     }
 
-                    if (!_entityManager.TryGetEntity(msg.Target, out var entity))
+                    if (!EntityManager.TryGetEntity(msg.Target, out var entity))
                     {
                         Logger.DebugS("action", "user {0} attempted to" +
                                                 " perform target entity action {1} but could not find entity with " +
@@ -296,13 +292,6 @@ namespace Content.Server.GameObjects.Components.Mobs
                     action.TargetEntityAction.DoTargetEntityAction(new TargetEntityItemActionEventArgs(player, entity, item));
                     break;
             }
-        }
-
-        protected override bool IsEquipped(EntityUid item)
-        {
-            if (!_entityManager.TryGetEntity(item, out var itemEntity)) return false;
-
-            return _handsComponent.IsHolding(itemEntity) || _inventoryComponent.IsEquipped(itemEntity);
         }
     }
 

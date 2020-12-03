@@ -82,7 +82,7 @@ namespace Content.Server.GameObjects.Components.GUI
             }
         }
 
-        public bool IsHolding(IEntity entity)
+        public override bool IsHolding(IEntity entity)
         {
             foreach (var hand in _hands)
             {

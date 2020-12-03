@@ -65,13 +65,14 @@ namespace Content.Client.GameObjects.Components.Mobs
 
 
         // the slots and assignments fields hold client's assignments (what action goes in what slot),
-        // which are completely client side and independent of what actions they've actually been granted.
+        // which are completely client side and independent of what actions they've actually been granted and
+        // what item the action is actually for.
 
         /// <summary>
         /// x = hotbar number, y = slot of that hotbar (index 0 corresponds to the one labeled "1",
         /// index 9 corresponds to the one labeled "0"). Essentially the inverse of _assignments.
         /// </summary>
-        private ActionType?[,] _slots = new ActionType?[Hotbars, Slots];
+        private readonly ActionAssignment?[,] _slots = new ActionAssignment?[Hotbars, Slots];
 
         /// <summary>
         /// Hotbar and slot assignment for each action type (slot index 0 corresponds to the one labeled "1",
@@ -80,13 +81,14 @@ namespace Content.Client.GameObjects.Components.Mobs
         /// it can still be assigned to a slot. Essentially the inverse of _slots.
         /// There will be no entry if there is no assignment (no empty lists in this dict)
         /// </summary>
-        private Dictionary<ActionType, List<(byte Hotbar, byte Slot)>> _assignments = new Dictionary<ActionType, List<(byte Hotbar, byte Slot)>>();
+        private readonly Dictionary<ActionAssignment, List<(byte Hotbar, byte Slot)>> _assignments =
+            new Dictionary<ActionAssignment, List<(byte Hotbar, byte Slot)>>();
 
         /// <summary>
         /// Actions which have been manually cleared by the user, thus should not
         /// auto-populate.
         /// </summary>
-        private HashSet<ActionType> _manuallyClearedActions = new HashSet<ActionType>();
+        private HashSet<ActionAssignment> _manuallyClearedActions = new HashSet<ActionAssignment>();
 
         // index of currently displayed hotbar
         private byte _selectedHotbar = 0;
@@ -247,6 +249,16 @@ namespace Content.Client.GameObjects.Components.Mobs
             // We fill their current hotbar first, rolling over to the next open slot on the next hotbar.
             foreach (var actionState in EnumerateActionStates())
             {
+                if (actionState.Value.Enabled && !_assignments.ContainsKey(ActionAssignment.For(actionState.Key)))
+                {
+                    // don't auto populate stuff which the user has manually cleared
+                    if (_manuallyClearedActions.Contains(ActionAssignment.For(actionState.Key))) continue;
+                    AutoPopulate(ActionAssignment.For(actionState.Key));
+                }
+            }
+
+            foreach (var actionState in EnumerateItemActions())
+            {
                 if (actionState.Granted && !_assignments.ContainsKey(actionState.ActionType))
                 {
                     // don't auto populate stuff which the user has manually cleared
@@ -355,7 +367,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         /// starting from the currently selected hotbar.
         /// Does not update any UI elements, only updates the assignment data structures.
         /// </summary>
-        private void AutoPopulate(ActionType actionType)
+        private void AutoPopulate(ActionAssignment actionType)
         {
             for (byte hotbarOffset = 0; hotbarOffset < Hotbars; hotbarOffset++)
             {
@@ -376,7 +388,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         /// <param name="hotbar">hotbar whose slot is being assigned</param>
         /// <param name="slot">slot of the hotbar to assign to (0 = the slot labeled 1, 9 = the slot labeled 0)</param>
         /// <param name="actionType">action to assign to the slot</param>
-        private void AssignSlot(byte hotbar, byte slot, ActionType actionType)
+        private void AssignSlot(byte hotbar, byte slot, ActionAssignment actionType)
         {
             _slots[hotbar, slot] = actionType;
             if (_assignments.TryGetValue(actionType, out var slotList))
@@ -701,19 +713,41 @@ namespace Content.Client.GameObjects.Components.Mobs
             UpdateUI();
         }
 
-        protected override void AfterCooldownAction()
+        private struct ActionAssignment
         {
-            UpdateUI();
-        }
+            private readonly ActionType? ActionType;
+            private readonly ItemActionType? ItemActionType;
 
-        protected override void AfterRevokeAction()
-        {
-            UpdateUI();
-        }
+            private ActionAssignment(ActionType? actionType, ItemActionType? itemActionType)
+            {
+                ActionType = actionType;
+                ItemActionType = itemActionType;
+            }
 
-        protected override void AfterToggleAction()
-        {
-            UpdateUI();
+            public static ActionAssignment For(ActionType actionType)
+            {
+                return new ActionAssignment(actionType, null);
+            }
+
+            public static ActionAssignment For(ItemActionType actionType)
+            {
+                return new ActionAssignment(null, actionType);
+            }
+
+            public bool Equals(ActionAssignment other)
+            {
+                return ActionType == other.ActionType && ItemActionType == other.ItemActionType;
+            }
+
+            public override bool Equals(object obj)
+            {
+                return obj is ActionAssignment other && Equals(other);
+            }
+
+            public override int GetHashCode()
+            {
+                return HashCode.Combine(ActionType, ItemActionType);
+            }
         }
     }
 }

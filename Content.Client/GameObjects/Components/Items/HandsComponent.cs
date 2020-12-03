@@ -31,6 +31,18 @@ namespace Content.Client.GameObjects.Components.Items
 
         [ViewVariables] public IEntity? ActiveHand => GetEntity(ActiveIndex);
 
+        public override bool IsHolding(IEntity entity)
+        {
+            foreach (var hand in _hands)
+            {
+                if (hand.Entity == entity)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private void AddHand(Hand hand)
         {
             _hands.Insert(hand.Index, hand);

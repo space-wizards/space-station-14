@@ -27,15 +27,17 @@ namespace Content.Client.UserInterface
     /// </summary>
     public class ActionMenu : SS14Window
     {
+        private static readonly string ItemTag = "item";
+        private static readonly string NotItemTag = "not item";
         private static readonly Regex NonAlphanumeric = new Regex(@"\W", RegexOptions.Compiled);
         private static readonly Regex Whitespace = new Regex(@"\s+", RegexOptions.Compiled);
         private static readonly int MinSearchLength = 3;
-        private static ActionPrototype[] EmptyActionList = new ActionPrototype[0];
+        private static BaseActionPrototype[] EmptyActionList = new ActionPrototype[0];
 
 
 
         // parallel list of actions currently selectable in itemList
-        private ActionPrototype[] _actionList;
+        private BaseActionPrototype[] _actionList;
 
         private readonly ActionManager _actionManager;
         private readonly ClientActionsComponent _actionsComponent;
@@ -121,10 +123,13 @@ namespace Content.Client.UserInterface
 
             // populate filters from search tags
             var searchTags = _actionManager.EnumerateActions()
-                .SelectMany(a => a.SearchTags)
-                .Distinct()
-                .OrderBy(tag => tag);
-            foreach (var tag in searchTags)
+                .SelectMany(a => a.SearchTags).ToList();
+
+            // special one to filter to only include item actions
+            searchTags.Add(ItemTag);
+            searchTags.Add(NotItemTag);
+
+            foreach (var tag in searchTags.Distinct().OrderBy(tag => tag))
             {
                 _filterButton.AddItem( CultureInfo.CurrentCulture.TextInfo.ToTitleCase(tag), tag);
             }
@@ -275,24 +280,24 @@ namespace Content.Client.UserInterface
             }
         }
 
-        private bool MatchesSearchCriteria(ActionPrototype action, string search,
+        private bool MatchesSearchCriteria(BaseActionPrototype action, string search,
             IReadOnlyList<string> tags)
         {
             // check tag match first - each action must contain all tags currently selected.
             // if no tags selected, don't check tags
-            if (tags.Count > 0 && tags.Any(tag => !action.SearchTags.Contains(tag)))
+            if (tags.Count > 0 && tags.Any(tag => !ActionMatchesTag(action, tag)))
             {
                 return false;
             }
 
-            if (Standardize(action.ActionType.ToString()).Contains(search))
+            if (Standardize(ActionTypeString(action)).Contains(search))
             {
                 return true;
             }
 
             // allows matching by typing spaces between the enum case changes, like "xeno spit" if the
             // actiontype is "XenoSpit"
-            if (Standardize(action.ActionType.ToString(), true).Contains(search))
+            if (Standardize(ActionTypeString(action), true).Contains(search))
             {
                 return true;
             }
@@ -304,6 +309,33 @@ namespace Content.Client.UserInterface
 
             return false;
 
+        }
+
+        private string ActionTypeString(BaseActionPrototype baseActionPrototype)
+        {
+            if (baseActionPrototype is ActionPrototype actionPrototype)
+            {
+                return actionPrototype.ActionType.ToString();
+            }
+            if (baseActionPrototype is ItemActionPrototype itemActionPrototype)
+            {
+                return itemActionPrototype.ActionType.ToString();
+            }
+            throw new InvalidOperationException();
+        }
+
+        private static bool ActionMatchesTag(BaseActionPrototype action, string tag)
+        {
+            if (tag == ItemTag)
+            {
+                return action is ItemActionPrototype;
+            }
+
+            if (tag == NotItemTag)
+            {
+                return action is ActionPrototype;
+            }
+            return action.SearchTags.Contains(tag);
         }
 
 
@@ -344,7 +376,7 @@ namespace Content.Client.UserInterface
             return newText.ToString();
         }
 
-        private void PopulateActions(IEnumerable<ActionPrototype> actions)
+        private void PopulateActions(IEnumerable<BaseActionPrototype> actions)
         {
             ClearList();
 
@@ -353,7 +385,7 @@ namespace Content.Client.UserInterface
             {
                 var actionItem = new ActionMenuItem(action);
                 _resultsGrid.Children.Add(actionItem);
-                actionItem.SetActionState(_actionsComponent.IsGranted(action.ActionType));
+                actionItem.SetActionState(IsGranted(action));
 
                 actionItem.OnButtonDown += OnItemButtonDown;
                 actionItem.OnButtonUp += OnItemButtonUp;
@@ -361,6 +393,21 @@ namespace Content.Client.UserInterface
                 actionItem.OnShowTooltip += _onShowTooltip;
                 actionItem.OnHideTooltip += _onHideTooltip;
             }
+        }
+
+        private bool IsGranted(BaseActionPrototype baseActionPrototype)
+        {
+            if (baseActionPrototype is ActionPrototype actionPrototype)
+            {
+                return _actionsComponent.IsGranted(actionPrototype.ActionType);
+            }
+
+            if (baseActionPrototype is ItemActionPrototype itemActionPrototype)
+            {
+                return _actionsComponent.IsGranted(itemActionPrototype.ActionType);
+            }
+
+            return false;
         }
 
         private void ClearList()
@@ -383,7 +430,7 @@ namespace Content.Client.UserInterface
             foreach (var actionItem in _resultsGrid.Children)
             {
                 var actionMenuItem = (actionItem as ActionMenuItem);
-                actionMenuItem.SetActionState(_actionsComponent.IsGranted(actionMenuItem.Action.ActionType));
+                actionMenuItem.SetActionState(IsGranted(actionMenuItem.Action));
             }
         }
 
@@ -396,9 +443,9 @@ namespace Content.Client.UserInterface
 
     public class ActionMenuItemSelectedEventArgs : EventArgs
     {
-        public readonly ActionPrototype Action;
+        public readonly BaseActionPrototype Action;
 
-        public ActionMenuItemSelectedEventArgs(ActionPrototype action)
+        public ActionMenuItemSelectedEventArgs(BaseActionPrototype action)
         {
             Action = action;
         }

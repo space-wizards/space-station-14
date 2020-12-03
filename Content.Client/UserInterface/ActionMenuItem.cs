@@ -15,9 +15,9 @@ namespace Content.Client.UserInterface
         private const float CustomTooltipDelay = 0.2f;
 
         private readonly TextureRect _icon;
-        public ActionPrototype Action { get; private set; }
+        public BaseActionPrototype Action { get; private set; }
 
-        public ActionMenuItem(ActionPrototype action)
+        public ActionMenuItem(BaseActionPrototype action)
         {
             Action = action;
 

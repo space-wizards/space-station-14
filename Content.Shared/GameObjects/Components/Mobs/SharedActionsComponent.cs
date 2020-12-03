@@ -41,6 +41,12 @@ namespace Content.Shared.GameObjects.Components.Mobs
         protected readonly ActionManager ActionManager = default!;
         [Dependency]
         protected readonly IGameTiming GameTiming = default!;
+        [Dependency]
+        protected readonly IEntityManager EntityManager = default!;
+        [Dependency]
+        private readonly SharedHandsComponent _handsComponent = default!;
+        [Dependency]
+        private readonly SharedInventoryComponent _inventoryComponent = default!;
 
         public override string Name => "ActionsUI";
         public override uint? NetID => ContentNetIDs.ACTIONS;
@@ -135,6 +141,24 @@ namespace Content.Shared.GameObjects.Components.Mobs
             return false;
         }
 
+        public bool IsGranted(ActionType actionType)
+        {
+            if (TryGetActionState(actionType, out var actionState))
+            {
+                return actionState.Enabled;
+            }
+
+            return false;
+        }
+
+        /// <returns>true if the action is granted and enabled for any item. This
+        /// has to traverse the entire item state dictionary so please avoid frequent calls.</returns>
+        public bool IsGranted(ItemActionType actionType)
+        {
+            return _itemActions.Values.SelectMany(vals => vals)
+                .Any(state => state.Key == actionType && state.Value.Enabled);
+        }
+
         /// <see cref="TryGetItemActionState"/>
         public bool TryGetItemActionState(ItemActionType actionType, IEntity item, out ActionState actionState)
         {
@@ -144,9 +168,9 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// <summary>
         /// Gets all action types that have non-initial state (granted, have a cooldown, or toggled on).
         /// </summary>
-        protected IEnumerable<ActionType> EnumerateActions()
+        protected IEnumerable<KeyValuePair<ActionType, ActionState>> EnumerateActionStates()
         {
-            return _actions.Keys;
+            return _actions;
         }
 
         /// <summary>
@@ -656,10 +680,19 @@ namespace Content.Shared.GameObjects.Components.Mobs
             return false;
         }
 
-        /// <summary>
-        /// Implementation must determine if the given item is currently in player's hand or equip slots
-        /// </summary>
-        protected abstract bool IsEquipped(EntityUid item);
+        /// <returns>true if the item is in any hand or top-level inventory slot (not inside a container)</returns>
+        public bool IsEquipped(EntityUid item)
+        {
+            if (!EntityManager.TryGetEntity(item, out var itemEntity)) return false;
+
+            return IsEquipped(itemEntity);
+        }
+
+        /// <returns>true if the item is in any hand or top-level inventory slot (not inside a container)</returns>
+        public bool IsEquipped(IEntity item)
+        {
+            return _handsComponent.IsHolding(item) || _inventoryComponent.IsEquipped(item);
+        }
 
         /// <summary>
         /// Invoked after a change has been made to an action state in this component.

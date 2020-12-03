@@ -42,14 +42,10 @@ namespace Content.Shared.Actions
             }
         }
 
-        public IEnumerable<ActionPrototype> EnumerateActions()
+        /// <returns>all action prototypes of all types</returns>
+        public IEnumerable<BaseActionPrototype> EnumerateActions()
         {
-            return _typeToAction.Values;
-        }
-
-        public IEnumerable<ItemActionPrototype> EnumerateItemActions()
-        {
-            return _typeToItemAction.Values;
+            return _typeToAction.Values.Concat<BaseActionPrototype>(_typeToItemAction.Values);
         }
 
 
