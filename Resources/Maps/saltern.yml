@@ -1,6 +1,6 @@
 meta:
   format: 2
-  name: Saltern
+  name: DemoStation
   author: Space-Wizards
   postmapinit: false
 tilemap:
@@ -20842,6 +20842,8 @@ entities:
   - parent: 855
     pos: -5.5,-12.5
     type: Transform
+  - deadThreshold: 100
+    type: BreakableConstruction
   - recipes:
     - Brutepack
     - Ointment
@@ -20856,6 +20858,20 @@ entities:
     - Crowbar
     - Multitool
     type: LatheDatabase
+  - containers:
+      machine_board:
+        entities:
+        - 4279
+        type: Robust.Server.GameObjects.Components.Container.Container
+      machine_parts:
+        entities:
+        - 4280
+        - 4281
+        - 4282
+        - 4283
+        - 4284
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
 - uid: 1048
   type: ChairOfficeLight
   components:
@@ -42416,7 +42432,7 @@ entities:
     pos: 42.5,-0.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3999952
+  - startingCharge: 3999907
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -42429,7 +42445,7 @@ entities:
     pos: 27.5,13.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3999952
+  - startingCharge: 3999907
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -42442,7 +42458,7 @@ entities:
     pos: 11.5,24.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3999952
+  - startingCharge: 3999907
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -42455,7 +42471,7 @@ entities:
     pos: 21.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3999952
+  - startingCharge: 3999907
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -42468,7 +42484,7 @@ entities:
     pos: -15.5,16.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3999952
+  - startingCharge: 3999907
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -42481,7 +42497,7 @@ entities:
     pos: -0.5,-22.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3999952
+  - startingCharge: 3999907
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -42503,7 +42519,7 @@ entities:
     pos: 0.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3999952
+  - startingCharge: 3999907
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -42516,7 +42532,7 @@ entities:
     pos: -21.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3999952
+  - startingCharge: 3999907
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -42529,7 +42545,7 @@ entities:
     pos: -32.5,7.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3999952
+  - startingCharge: 3999907
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -48171,5 +48187,35 @@ entities:
   - parent: 855
     pos: -10.5,0.5
     rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4279
+  type: AutolatheMachineCircuitboard
+  components:
+  - parent: 1047
+    type: Transform
+- uid: 4280
+  type: MatterBinStockPart
+  components:
+  - parent: 1047
+    type: Transform
+- uid: 4281
+  type: MatterBinStockPart
+  components:
+  - parent: 1047
+    type: Transform
+- uid: 4282
+  type: MatterBinStockPart
+  components:
+  - parent: 1047
+    type: Transform
+- uid: 4283
+  type: MicroManipulatorStockPart
+  components:
+  - parent: 1047
+    type: Transform
+- uid: 4284
+  type: GlassSheet1
+  components:
+  - parent: 1047
     type: Transform
 ...
