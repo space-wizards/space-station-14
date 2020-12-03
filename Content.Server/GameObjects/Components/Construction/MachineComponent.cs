@@ -5,6 +5,7 @@ using Content.Server.Construction;
 using Content.Server.Interfaces.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.Interfaces.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
@@ -70,22 +71,14 @@ namespace Content.Server.GameObjects.Components.Construction
             var entityManager = Owner.EntityManager;
 
             // First, we clean up the containers...
-            if (existedBoard && boardContainer.ContainedEntities.Count != 0)
+            if (existedBoard)
             {
-                foreach (var ent in boardContainer.ContainedEntities.ToArray())
-                {
-                    boardContainer.ForceRemove(ent);
-                    ent.Delete();
-                }
+                boardContainer.CleanContainer();
             }
 
             if (existedParts)
             {
-                foreach (var ent in partContainer.ContainedEntities.ToArray())
-                {
-                    partContainer.ForceRemove(ent);
-                    ent.Delete();
-                }
+                partContainer.CleanContainer();
             }
 
             var board = entityManager.SpawnEntity(BoardPrototype, Owner.Transform.Coordinates);

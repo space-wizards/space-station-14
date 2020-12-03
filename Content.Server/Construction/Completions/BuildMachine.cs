@@ -6,6 +6,7 @@ using Content.Server.GameObjects.Components.Construction;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.Components.Container;
+using Robust.Shared.Containers;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Log;
@@ -67,22 +68,12 @@ namespace Content.Server.Construction.Completions
             var machine = entityManager.SpawnEntity(boardComponent.Prototype, entity.Transform.Coordinates);
             machine.Transform.LocalRotation = entity.Transform.LocalRotation;
 
-            // Cleanup method for containers.
-            static void CleanContainer(IContainer cont)
-            {
-                foreach (var ent in cont.ContainedEntities.ToArray())
-                {
-                    cont.ForceRemove(ent);
-                    ent.Delete();
-                }
-            }
-
             var boardContainer = ContainerManagerComponent.Ensure<Container>(MachineFrameComponent.BoardContainer, machine, out var existed);
 
             if (existed)
             {
                 // Clean that up...
-                CleanContainer(boardContainer);
+                boardContainer.CleanContainer();
             }
 
             var partContainer = ContainerManagerComponent.Ensure<Container>(MachineFrameComponent.PartContainer, machine, out existed);
@@ -90,7 +81,7 @@ namespace Content.Server.Construction.Completions
             if (existed)
             {
                 // Clean that up, too...
-                CleanContainer(partContainer);
+                partContainer.CleanContainer();
             }
 
             boardContainer.Insert(board);
