@@ -2,6 +2,7 @@
   name: spear
   parent: BaseItem
   id: Spear
+  description: Definition of a Classic. Keeping murder affordable since 200,000 BCE.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/spear.rsi

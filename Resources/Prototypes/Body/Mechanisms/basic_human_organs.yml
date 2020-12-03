@@ -77,6 +77,8 @@
     - !type:StomachBehavior
       max_volume: 250
       digestionDelay: 20
+  - type: SolutionContainer
+    maxVol: 250
 
 - type: entity
   id: LiverHuman
