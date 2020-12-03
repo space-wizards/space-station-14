@@ -278,6 +278,7 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             BuckledTo = strap;
             EntityBuckledTo = BuckledTo.Owner.Uid;
+            DontCollide = true;
 
             ReAttach(strap);
             UpdateBuckleStatus();
@@ -439,11 +440,23 @@ namespace Content.Server.GameObjects.Components.Buckle
             return TryUnbuckle(eventArgs.User);
         }
 
+        public void Update()
+        {
+            if (Buckled)
+               return;
+
+            if (!IsOnStrapEntityThisFrame && DontCollide)
+                DontCollide = false;
+
+            IsOnStrapEntityThisFrame = false;
+        }
+        
         public override bool PreventCollide(IPhysBody collidedwith)
         {
-            if (Buckled && collidedwith.Entity.Uid == EntityBuckledTo)
+            if (collidedwith.Entity.Uid == EntityBuckledTo)
             {
-                return true;
+                IsOnStrapEntityThisFrame = true;
+                return Buckled || DontCollide;
             }
 
             return false;

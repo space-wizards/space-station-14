@@ -52,9 +52,10 @@ namespace Content.Client.GameObjects.Components.Buckle
 
         public override bool PreventCollide(IPhysBody collidedwith)
         {
-            if (Buckled && collidedwith.Entity.Uid == EntityBuckledTo)
+            if (collidedwith.Entity.Uid == EntityBuckledTo)
             {
-                return true;
+                IsOnStrapEntityThisFrame = true;
+                return Buckled || DontCollide;
             }
 
             return false;

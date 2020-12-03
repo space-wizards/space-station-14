@@ -22,6 +22,9 @@ namespace Content.Shared.GameObjects.Components.Buckle
         public abstract bool Buckled { get; }
         public virtual EntityUid EntityBuckledTo { get; set; }
 
+        public virtual bool IsOnStrapEntityThisFrame { get; set; }
+        public virtual bool DontCollide { get; set; } = false;
+
         public abstract bool TryBuckle(IEntity user, IEntity to);
 
         public abstract bool PreventCollide(IPhysBody collidedwith);
