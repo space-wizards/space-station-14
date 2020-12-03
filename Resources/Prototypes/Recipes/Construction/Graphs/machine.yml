@@ -3,6 +3,10 @@
   start: start
   graph:
     - node: start
+      actions:
+        - !type:SpawnPrototype
+          prototype: SteelSheet1
+        - !type:DeleteEntity {}
       edges:
         - to: missingWires
           completed:
@@ -18,6 +22,7 @@
       actions:
         - !type:SpriteStateChange
           state: "box_0"
+        - !type:EmptyAllContainers {}
       edges:
         - to: machineFrame
           conditions:

@@ -37,7 +37,7 @@ namespace Content.Server.Construction.Conditions
             }
 
             if (machineFrame.IsComplete) return false;
-            
+
             message.AddMarkup(Loc.GetString("Requires:\n"));
             foreach (var (part, required) in machineFrame.Requirements)
             {

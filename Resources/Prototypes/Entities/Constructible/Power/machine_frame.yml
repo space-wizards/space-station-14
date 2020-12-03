@@ -28,6 +28,8 @@
     - type: Construction
       graph: machine
       node: missingWires
+    - type: BreakableConstruction
+      node: start
     - type: Sprite
       sprite: "Constructible/Misc/stock_parts.rsi"
       state: "box_0"
@@ -62,6 +64,8 @@
     - type: Construction
       graph: machine
       node: machineFrame
+    - type: BreakableConstruction
+      node: missingWires
     - type: MachineFrame
     - type: Sprite
       netsync: false
