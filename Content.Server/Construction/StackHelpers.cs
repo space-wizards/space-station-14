@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
@@ -12,7 +13,7 @@ namespace Content.Server.Construction
         /// <summary>
         ///     Spawns a stack of a specified type given an amount.
         /// </summary>
-        public static IEntity SpawnStack(StackType stack, int amount, EntityCoordinates coordinates, IEntityManager entityManager = null)
+        public static IEntity SpawnStack(StackType stack, int amount, EntityCoordinates coordinates, IEntityManager? entityManager = null)
         {
             entityManager ??= IoCManager.Resolve<IEntityManager>();
 
