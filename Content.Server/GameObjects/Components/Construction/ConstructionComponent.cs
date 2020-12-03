@@ -48,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Construction
         private ConstructionGraphNode? _target = null;
 
         [ViewVariables]
-        public ConstructionGraphPrototype GraphPrototype { get; private set; } = null!;
+        public ConstructionGraphPrototype? GraphPrototype { get; private set; }
 
         [ViewVariables]
         public ConstructionGraphNode? Node { get; private set; } = null;
@@ -93,7 +93,7 @@ namespace Content.Server.GameObjects.Components.Construction
         /// </summary>
         public void SetNewTarget(string node)
         {
-            if (GraphPrototype.Nodes.TryGetValue(node, out var target))
+            if (GraphPrototype != null && GraphPrototype.Nodes.TryGetValue(node, out var target))
             {
                 Target = target;
             }
@@ -109,7 +109,7 @@ namespace Content.Server.GameObjects.Components.Construction
         public void UpdateTarget()
         {
             // Can't pathfind without a target or no node.
-            if (Target == null || Node == null) return;
+            if (Target == null || Node == null || GraphPrototype == null) return;
 
             // If we're at our target, stop pathfinding.
             if (Target == Node)
@@ -172,7 +172,7 @@ namespace Content.Server.GameObjects.Components.Construction
         {
             EdgeStep = 0;
 
-            if (Node == null) return false;
+            if (Node == null || GraphPrototype == null) return false;
 
             foreach (var edge in Node.Edges)
             {
@@ -357,7 +357,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
         private async Task<bool> HandleCompletion(ConstructionGraphEdge edge, IEntity user)
         {
-            if (edge.Steps.Count != EdgeStep)
+            if (edge.Steps.Count != EdgeStep || GraphPrototype == null)
             {
                 return false;
             }
@@ -412,7 +412,8 @@ namespace Content.Server.GameObjects.Components.Construction
 
         private async Task<bool> HandleEntityChange(ConstructionGraphNode node, IEntity? user = null)
         {
-            if (node.Entity == Owner.Prototype?.ID || string.IsNullOrEmpty(node.Entity)) return false;
+            if (node.Entity == Owner.Prototype?.ID || string.IsNullOrEmpty(node.Entity)
+            || GraphPrototype == null) return false;
 
             var entity = Owner.EntityManager.SpawnEntity(node.Entity, Owner.Transform.Coordinates);
 
@@ -421,7 +422,7 @@ namespace Content.Server.GameObjects.Components.Construction
             if (entity.TryGetComponent(out ConstructionComponent? construction))
             {
                 if(construction.GraphPrototype != GraphPrototype)
-                    throw new Exception($"New entity {node.Entity}'s graph {construction.GraphPrototype.ID} isn't the same as our graph {GraphPrototype.ID} on node {node.Name}!");
+                    throw new Exception($"New entity {node.Entity}'s graph {construction.GraphPrototype?.ID ?? null} isn't the same as our graph {GraphPrototype.ID} on node {node.Name}!");
 
                 construction.Node = node;
                 construction.Target = Target;
@@ -513,6 +514,8 @@ namespace Content.Server.GameObjects.Components.Construction
 
         public async Task ChangeNode(string node)
         {
+            if (GraphPrototype == null) return;
+
             var graphNode = GraphPrototype.Nodes[node];
 
             if (_handling && _handlingTask?.Task != null)
