@@ -33,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(this, x => Air, "gasMixture", new GasMixture(DefaultVolume));
+            serializer.DataField(this, x => x.Air, "gasMixture", new GasMixture(DefaultVolume));
         }
 
         public override void Initialize()
