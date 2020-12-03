@@ -24,9 +24,14 @@ namespace Content.Server.GameObjects.Components.Atmos
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
+<<<<<<< HEAD
             serializer.DataField(this, x => x.Enabled, "enabled", true);
             serializer.DataField(this, x => PressureResistance, "pressureResistance", 1f);
             serializer.DataField(this, x => MoveResist, "moveResist", 100f);
+=======
+            serializer.DataField(this, x => x.PressureResistance, "pressureResistance", 1f);
+            serializer.DataField(this, x => x.MoveResist, "moveResist", 100f);
+>>>>>>> serializer
         }
     }
 
