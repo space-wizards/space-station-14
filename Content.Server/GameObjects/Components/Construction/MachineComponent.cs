@@ -70,15 +70,11 @@ namespace Content.Server.GameObjects.Components.Construction
 
             var entityManager = Owner.EntityManager;
 
-            // First, we clean up the containers...
-            if (existedBoard)
+            if (existedBoard || existedParts)
             {
-                boardContainer.CleanContainer();
-            }
-
-            if (existedParts)
-            {
-                partContainer.CleanContainer();
+                // We're done here, let's suppose all containers are correct just so we don't screw SaveLoadSave.
+                if (boardContainer.ContainedEntities.Count > 0)
+                    return;
             }
 
             var board = entityManager.SpawnEntity(BoardPrototype, Owner.Transform.Coordinates);
