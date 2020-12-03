@@ -74,6 +74,9 @@ namespace Content.Shared
         public static readonly CVarDef<int> SuspicionStartingBalance =
             CVarDef.Create("suspicion.starting_balance", 20);
 
+        public static readonly CVarDef<int> SuspicionMaxTimeSeconds =
+            CVarDef.Create("suspicion.max_time_seconds", 300);
+
         /*
          * Traitor
          */
