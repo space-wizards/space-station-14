@@ -51,7 +51,7 @@ namespace Content.Server.GameObjects.Components.Construction
         public ConstructionGraphPrototype GraphPrototype { get; private set; } = null!;
 
         [ViewVariables]
-        public ConstructionGraphNode Node { get; private set; } = null!;
+        public ConstructionGraphNode? Node { get; private set; } = null;
 
         [ViewVariables]
         public ConstructionGraphEdge? Edge { get; private set; } = null;
@@ -108,8 +108,8 @@ namespace Content.Server.GameObjects.Components.Construction
 
         public void UpdateTarget()
         {
-            // Can't pathfind without a target.
-            if (Target == null) return;
+            // Can't pathfind without a target or no node.
+            if (Target == null || Node == null) return;
 
             // If we're at our target, stop pathfinding.
             if (Target == Node)
@@ -171,6 +171,8 @@ namespace Content.Server.GameObjects.Components.Construction
         private async Task<bool> HandleNode(InteractUsingEventArgs eventArgs)
         {
             EdgeStep = 0;
+
+            if (Node == null) return false;
 
             foreach (var edge in Node.Edges)
             {
@@ -497,6 +499,8 @@ namespace Content.Server.GameObjects.Components.Construction
         protected override void Startup()
         {
             base.Startup();
+
+            if (Node == null) return;
 
             foreach (var action in Node.Actions)
             {
