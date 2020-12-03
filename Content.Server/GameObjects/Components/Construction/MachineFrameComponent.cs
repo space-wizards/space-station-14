@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Construction;
 using Content.Server.GameObjects.Components.Stack;
@@ -31,24 +32,24 @@ namespace Content.Server.GameObjects.Components.Construction
         {
             get
             {
-                if (!HasBoard || _requirements == null || _materialRequirements == null)
+                if (!HasBoard || Requirements == null || MaterialRequirements == null)
                     return false;
 
-                foreach (var (part, amount) in _requirements)
+                foreach (var (part, amount) in Requirements)
                 {
                     if (_progress[part] < amount)
                         return false;
                 }
 
-                foreach (var (type, amount) in _materialRequirements)
+                foreach (var (type, amount) in MaterialRequirements)
                 {
                     if (_materialProgress[type] < amount)
                         return false;
                 }
 
-                foreach (var (compName, amount) in _componentRequirements)
+                foreach (var (compName, info) in ComponentRequirements)
                 {
-                    if (_componentProgress[compName] < amount)
+                    if (_componentProgress[compName] < info.Amount)
                         return false;
                 }
 
@@ -58,15 +59,6 @@ namespace Content.Server.GameObjects.Components.Construction
 
         [ViewVariables]
         public bool HasBoard => _boardContainer?.ContainedEntities.Count != 0;
-
-        [ViewVariables]
-        private IReadOnlyDictionary<MachinePart, int> _requirements;
-
-        [ViewVariables]
-        private IReadOnlyDictionary<StackType, int> _materialRequirements;
-
-        [ViewVariables]
-        private IReadOnlyDictionary<string, int> _componentRequirements;
 
         [ViewVariables]
         private Dictionary<MachinePart, int> _progress;
@@ -83,6 +75,19 @@ namespace Content.Server.GameObjects.Components.Construction
         [ViewVariables]
         private Container _partContainer;
 
+        [ViewVariables]
+        public IReadOnlyDictionary<MachinePart, int> Requirements { get; private set; }
+
+        [ViewVariables]
+        public IReadOnlyDictionary<StackType, int> MaterialRequirements { get; private set; }
+
+        [ViewVariables]
+        public IReadOnlyDictionary<string, ComponentPartInfo> ComponentRequirements { get; private set; }
+
+        public IReadOnlyDictionary<MachinePart, int> Progress => _progress;
+        public IReadOnlyDictionary<StackType, int> MaterialProgress => _materialProgress;
+        public IReadOnlyDictionary<string, int> ComponentProgress => _componentProgress;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -96,28 +101,34 @@ namespace Content.Server.GameObjects.Components.Construction
             base.Startup();
 
             RegenerateProgress();
+
+            if (Owner.TryGetComponent<ConstructionComponent>(out var construction))
+            {
+                // Attempt to set pathfinding to the machine node...
+                construction.SetNewTarget("machine");
+            }
         }
 
         private void ResetProgressAndRequirements(MachineBoardComponent machineBoard)
         {
-            _requirements = machineBoard.Requirements;
-            _materialRequirements = machineBoard.MaterialRequirements;
-            _componentRequirements = machineBoard.ComponentRequirements;
+            Requirements = machineBoard.Requirements;
+            MaterialRequirements = machineBoard.MaterialRequirements;
+            ComponentRequirements = machineBoard.ComponentRequirements;
             _progress = new Dictionary<MachinePart, int>();
             _materialProgress = new Dictionary<StackType, int>();
             _componentProgress = new Dictionary<string, int>();
 
-            foreach (var (machinePart, _) in _requirements)
+            foreach (var (machinePart, _) in Requirements)
             {
                 _progress[machinePart] = 0;
             }
 
-            foreach (var (stackType, _) in _materialRequirements)
+            foreach (var (stackType, _) in MaterialRequirements)
             {
                 _materialProgress[stackType] = 0;
             }
 
-            foreach (var (compName, _) in _componentRequirements)
+            foreach (var (compName, _) in ComponentRequirements)
             {
                 _componentProgress[compName] = 0;
             }
@@ -134,9 +145,9 @@ namespace Content.Server.GameObjects.Components.Construction
                     appearance.SetData(MachineFrameVisuals.State, 1);
                 }
 
-                _requirements = null;
-                _materialRequirements = null;
-                _componentRequirements = null;
+                Requirements = null;
+                MaterialRequirements = null;
+                ComponentRequirements = null;
                 _progress = null;
                 _materialProgress = null;
                 _componentProgress = null;
@@ -161,7 +172,7 @@ namespace Content.Server.GameObjects.Components.Construction
                 if (part.TryGetComponent<MachinePartComponent>(out var machinePart))
                 {
                     // Check this is part of the requirements...
-                    if (!_requirements.ContainsKey(machinePart.PartType))
+                    if (!Requirements.ContainsKey(machinePart.PartType))
                         continue;
 
                     if (!_progress.ContainsKey(machinePart.PartType))
@@ -174,7 +185,7 @@ namespace Content.Server.GameObjects.Components.Construction
                 {
                     var type = (StackType) stack.StackType;
                     // Check this is part of the requirements...
-                    if (!_materialRequirements.ContainsKey(type))
+                    if (!MaterialRequirements.ContainsKey(type))
                         continue;
 
                     if (!_materialProgress.ContainsKey(type))
@@ -184,7 +195,7 @@ namespace Content.Server.GameObjects.Components.Construction
                 }
 
                 // I have many regrets.
-                foreach (var (compName, amount) in _componentRequirements)
+                foreach (var (compName, amount) in ComponentRequirements)
                 {
                     var registration = _componentFactory.GetRegistration(compName);
 
@@ -229,10 +240,10 @@ namespace Content.Server.GameObjects.Components.Construction
             {
                 if (eventArgs.Using.TryGetComponent<MachinePartComponent>(out var machinePart))
                 {
-                    if (!_requirements.ContainsKey(machinePart.PartType))
+                    if (!Requirements.ContainsKey(machinePart.PartType))
                         return false;
 
-                    if (_progress[machinePart.PartType] != _requirements[machinePart.PartType]
+                    if (_progress[machinePart.PartType] != Requirements[machinePart.PartType]
                     && eventArgs.Using.TryRemoveFromContainer() && _partContainer.Insert(eventArgs.Using))
                     {
                         _progress[machinePart.PartType]++;
@@ -243,13 +254,13 @@ namespace Content.Server.GameObjects.Components.Construction
                 if (eventArgs.Using.TryGetComponent<StackComponent>(out var stack))
                 {
                     var type = (StackType) stack.StackType;
-                    if (!_materialRequirements.ContainsKey(type))
+                    if (!MaterialRequirements.ContainsKey(type))
                         return false;
 
-                    if (_materialProgress[type] == _materialRequirements[type])
+                    if (_materialProgress[type] == MaterialRequirements[type])
                         return false;
 
-                    var needed = _materialRequirements[type] - _materialProgress[type];
+                    var needed = MaterialRequirements[type] - _materialProgress[type];
                     var count = stack.Count;
 
                     if (count < needed && stack.Split(count, Owner.Transform.Coordinates, out var newStack))
@@ -268,9 +279,9 @@ namespace Content.Server.GameObjects.Components.Construction
                     return true;
                 }
 
-                foreach (var (compName, amount) in _componentRequirements)
+                foreach (var (compName, info) in ComponentRequirements)
                 {
-                    if (_componentProgress[compName] >= amount)
+                    if (_componentProgress[compName] >= info.Amount)
                         continue;
 
                     var registration = _componentFactory.GetRegistration(compName);

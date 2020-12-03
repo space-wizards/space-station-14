@@ -88,6 +88,17 @@ namespace Content.Server.GameObjects.Components.Construction
             serializer.DataField(ref _startingNodeIdentifier, "node", string.Empty);
         }
 
+        /// <summary>
+        ///     Attempts to set a new pathfinding target.
+        /// </summary>
+        public void SetNewTarget(string node)
+        {
+            if (GraphPrototype.Nodes.TryGetValue(node, out var target))
+            {
+                Target = target;
+            }
+        }
+
         public void ClearTarget()
         {
             _target = null;
@@ -523,21 +534,28 @@ namespace Content.Server.GameObjects.Components.Construction
 
             if (Edge == null && TargetNextEdge != null)
             {
+                var preventStepExamine = false;
+
                 foreach (var condition in TargetNextEdge.Conditions)
                 {
-                    condition.DoExamine(Owner, message, inDetailsRange);
+                    preventStepExamine |= condition.DoExamine(Owner, message, inDetailsRange);
                 }
 
-                TargetNextEdge.Steps[0].DoExamine(message, inDetailsRange);
+                if(!preventStepExamine)
+                    TargetNextEdge.Steps[0].DoExamine(message, inDetailsRange);
                 return;
             }
 
             if (Edge != null)
             {
+                var preventStepExamine = false;
+
                 foreach (var condition in Edge.Conditions)
                 {
-                    condition.DoExamine(Owner, message, inDetailsRange);
+                    preventStepExamine |= condition.DoExamine(Owner, message, inDetailsRange);
                 }
+
+                if (preventStepExamine) return;
             }
 
             if (_edgeNestedStepProgress == null)

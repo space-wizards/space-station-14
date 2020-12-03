@@ -3,7 +3,9 @@ using Content.Server.GameObjects.Components.Construction;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Construction.Conditions
 {
@@ -21,6 +23,50 @@ namespace Content.Server.Construction.Conditions
                 return false;
 
             return machineFrame.IsComplete;
+        }
+
+        public bool DoExamine(IEntity entity, FormattedMessage message, bool inDetailsRange)
+        {
+            if (!entity.TryGetComponent<MachineFrameComponent>(out var machineFrame))
+                return false;
+
+            if (!machineFrame.HasBoard)
+            {
+                message.AddMarkup(Loc.GetString("Insert [color=cyan]any machine circuit board[/color]."));
+                return true;
+            }
+
+            if (machineFrame.IsComplete) return false;
+            
+            message.AddMarkup(Loc.GetString("Requires:\n"));
+            foreach (var (part, required) in machineFrame.Requirements)
+            {
+                var amount = required - machineFrame.Progress[part];
+
+                if(amount == 0) continue;
+
+                message.AddMarkup(Loc.GetString("[color=yellow]{0}x[/color] [color=green]{1}[/color]\n", amount, Loc.GetString(part.ToString())));
+            }
+
+            foreach (var (material, required) in machineFrame.MaterialRequirements)
+            {
+                var amount = required - machineFrame.MaterialProgress[material];
+
+                if(amount == 0) continue;
+
+                message.AddMarkup(Loc.GetString("[color=yellow]{0}x[/color] [color=green]{1}[/color]\n", amount, Loc.GetString(material.ToString())));
+            }
+
+            foreach (var (compName, info) in machineFrame.ComponentRequirements)
+            {
+                var amount = info.Amount - machineFrame.ComponentProgress[compName];
+
+                if(amount == 0) continue;
+
+                message.AddMarkup(Loc.GetString("[color=yellow]{0}x[/color] [color=green]{1}[/color]\n", info.Amount, Loc.GetString(info.ExamineName)));
+            }
+
+            return true;
         }
     }
 }
