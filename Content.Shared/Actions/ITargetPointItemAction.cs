@@ -14,7 +14,7 @@ namespace Content.Shared.Actions
         /// Invoked when the target point action should be performed.
         /// Implementation should perform the server side logic of the action.
         /// </summary>
-        void DoTargetPointAction(ITargetPointItemAction args);
+        void DoTargetPointAction(TargetPointItemActionEventArgs args);
     }
 
     public class TargetPointItemActionEventArgs : EventArgs

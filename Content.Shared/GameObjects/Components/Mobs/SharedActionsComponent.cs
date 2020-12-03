@@ -276,6 +276,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
             bool? enabled = null, bool? toggleOn = null,
             (TimeSpan start, TimeSpan end)? cooldown = null)
         {
+            if (IsNullItem(item)) return;
             CreateOrUpdate(actionType, item.Uid, createIfNeeded, enabled, toggleOn, cooldown);
         }
 
@@ -372,6 +373,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         public void GrantFromInitialState(ItemActionType actionType, IEntity item, bool enabled = true, bool toggleOn = false,
             (TimeSpan start, TimeSpan end)? cooldown = null)
         {
+            if (IsNullItem(item)) return;
             if (_itemActions.TryGetValue(item.Uid, out var itemStates))
             {
                 itemStates.Remove(actionType);
@@ -448,6 +450,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// <see cref="Cooldown"/>
         public void Cooldown(ItemActionType actionType, IEntity item, (TimeSpan start, TimeSpan end)? cooldown)
         {
+            if (IsNullItem(item)) return;
             Cooldown(actionType, item.Uid, cooldown);
         }
 
@@ -463,6 +466,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// <see cref="SetEnabled"/>
         public void SetEnabled(ItemActionType actionType, IEntity item, bool enabled)
         {
+            if (IsNullItem(item)) return;
             SetEnabled(actionType, item.Uid, enabled);
         }
 
@@ -534,6 +538,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// <see cref="Revoke"/>
         public void Revoke(ItemActionType actionType, IEntity item)
         {
+            if (IsNullItem(item)) return;
             Revoke(actionType, item.Uid);
         }
 
@@ -558,6 +563,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// <see cref="Revoke"/> applied to all actions currently granted for the item
         public void Revoke(IEntity item)
         {
+            if (IsNullItem(item)) return;
             Revoke(item.Uid);
         }
 
@@ -582,6 +588,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// <see cref="ToggleAction"/>
         public void ToggleAction(ItemActionType actionType, IEntity item, bool toggleOn)
         {
+            if (IsNullItem(item)) return;
             ToggleAction(actionType, item.Uid, toggleOn);
         }
 
@@ -635,6 +642,18 @@ namespace Content.Shared.GameObjects.Components.Mobs
             {
                 _actions.Remove(remove);
             }
+        }
+
+        private bool IsNullItem(IEntity item)
+        {
+            if (item == null)
+            {
+                Logger.WarningS("action", "tried to modify item action state" +
+                                          " for null item");
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -712,6 +731,20 @@ namespace Content.Shared.GameObjects.Components.Mobs
         }
     }
 
+    [Serializable, NetSerializable]
+    public abstract class PerformItemActionMessage : ComponentMessage
+    {
+        public readonly ItemActionType ActionType;
+        public readonly EntityUid Item;
+
+        public PerformItemActionMessage(ItemActionType actionType, EntityUid item)
+        {
+            Directed = true;
+            ActionType = actionType;
+            Item = item;
+        }
+    }
+
     /// <summary>
     /// A message that tells server we want to run the instant action logic.
     /// </summary>
@@ -719,6 +752,17 @@ namespace Content.Shared.GameObjects.Components.Mobs
     public class PerformInstantActionMessage : PerformActionMessage
     {
         public PerformInstantActionMessage(ActionType actionType) : base(actionType)
+        {
+        }
+    }
+
+    /// <summary>
+    /// A message that tells server we want to run the instant action logic.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public class PerformInstantItemActionMessage : PerformItemActionMessage
+    {
+        public PerformInstantItemActionMessage(ItemActionType actionType, EntityUid item) : base(actionType, item)
         {
         }
     }
@@ -735,6 +779,23 @@ namespace Content.Shared.GameObjects.Components.Mobs
         public readonly bool ToggleOn;
 
         public PerformToggleActionMessage(ActionType actionType, bool toggleOn) : base(actionType)
+        {
+            ToggleOn = toggleOn;
+        }
+    }
+
+    /// <summary>
+    /// A message that tells server we want to toggle the indicated action.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public class PerformToggleItemActionMessage : PerformItemActionMessage
+    {
+        /// <summary>
+        /// True if we are trying to toggle the action on, false if trying to toggle it off.
+        /// </summary>
+        public readonly bool ToggleOn;
+
+        public PerformToggleItemActionMessage(ItemActionType actionType, EntityUid item, bool toggleOn) : base(actionType, item)
         {
             ToggleOn = toggleOn;
         }
@@ -758,6 +819,23 @@ namespace Content.Shared.GameObjects.Components.Mobs
     }
 
     /// <summary>
+    /// A message that tells server we want to target the provided point with a particular action.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public class PerformTargetPointItemActionMessage : PerformItemActionMessage
+    {
+        /// <summary>
+        /// Targeted local coordinates
+        /// </summary>
+        public readonly EntityCoordinates Target;
+
+        public PerformTargetPointItemActionMessage(ItemActionType actionType, EntityUid item, EntityCoordinates target) : base(actionType, item)
+        {
+            Target = target;
+        }
+    }
+
+    /// <summary>
     /// A message that tells server we want to target the provided entity with a particular action.
     /// </summary>
     [Serializable, NetSerializable]
@@ -769,6 +847,23 @@ namespace Content.Shared.GameObjects.Components.Mobs
         public readonly EntityUid Target;
 
         public PerformTargetEntityActionMessage(ActionType actionType, EntityUid target) : base(actionType)
+        {
+            Target = target;
+        }
+    }
+
+    /// <summary>
+    /// A message that tells server we want to target the provided entity with a particular action.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public class PerformTargetEntityItemActionMessage : PerformItemActionMessage
+    {
+        /// <summary>
+        /// Targeted entity
+        /// </summary>
+        public readonly EntityUid Target;
+
+        public PerformTargetEntityItemActionMessage(ItemActionType actionType, EntityUid item, EntityUid target) : base(actionType, item)
         {
             Target = target;
         }

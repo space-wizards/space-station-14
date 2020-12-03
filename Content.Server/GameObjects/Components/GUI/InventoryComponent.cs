@@ -572,5 +572,21 @@ namespace Content.Server.GameObjects.Components.GUI
                 }
             }
         }
+
+        /// <returns>true if the item is equipped to an equip slot (NOT inside an equipped container
+        /// like inside a backpack)</returns>
+        public bool IsEquipped(IEntity item)
+        {
+            foreach (var containerSlot in _slotContainers.Values)
+            {
+                // we don't want a recursive check here
+                if (containerSlot.Contains(item))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }
