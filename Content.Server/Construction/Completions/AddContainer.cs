@@ -13,10 +13,10 @@ namespace Content.Server.Construction.Completions
     {
         public void ExposeData(ObjectSerializer serializer)
         {
-            serializer.DataField(this, x => x.Container, "container", string.Empty);
+            serializer.DataField(this, x => x.Container, "container", null);
         }
 
-        public string Container { get; private set; } = string.Empty;
+        public string? Container { get; private set; } = null;
 
         public async Task PerformAction(IEntity entity, IEntity? user)
         {
