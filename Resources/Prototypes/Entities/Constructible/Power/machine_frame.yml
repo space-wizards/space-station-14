@@ -64,5 +64,9 @@
       node: machineFrame
     - type: MachineFrame
     - type: Sprite
+      netsync: false
       sprite: "Constructible/Misc/stock_parts.rsi"
       state: "box_1"
+    - type: Appearance
+      visuals:
+      - type: MachineFrameVisualizer

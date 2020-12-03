@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Content.Server.Construction;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.Components.Construction;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -88,6 +89,11 @@ namespace Content.Server.GameObjects.Components.Construction
 
             _boardContainer = ContainerManagerComponent.Ensure<Container>(BoardContainer, Owner);
             _partContainer = ContainerManagerComponent.Ensure<Container>(PartContainer, Owner);
+        }
+
+        protected override void Startup()
+        {
+            base.Startup();
 
             RegenerateProgress();
         }
@@ -100,17 +106,32 @@ namespace Content.Server.GameObjects.Components.Construction
             _progress = new Dictionary<MachinePart, int>();
             _materialProgress = new Dictionary<StackType, int>();
             _componentProgress = new Dictionary<string, int>();
+
+            foreach (var (machinePart, _) in _requirements)
+            {
+                _progress[machinePart] = 0;
+            }
+
+            foreach (var (stackType, _) in _materialRequirements)
+            {
+                _materialProgress[stackType] = 0;
+            }
+
+            foreach (var (compName, _) in _componentRequirements)
+            {
+                _componentProgress[compName] = 0;
+            }
         }
 
         public void RegenerateProgress()
         {
-            SpriteComponent sprite;
+            AppearanceComponent appearance;
 
             if (!HasBoard)
             {
-                if (Owner.TryGetComponent(out sprite))
+                if (Owner.TryGetComponent(out appearance))
                 {
-                    sprite.LayerSetState(0, "box_1");
+                    appearance.SetData(MachineFrameVisuals.State, 1);
                 }
 
                 _requirements = null;
@@ -128,9 +149,9 @@ namespace Content.Server.GameObjects.Components.Construction
             if (!board.TryGetComponent<MachineBoardComponent>(out var machineBoard))
                 return;
 
-            if (Owner.TryGetComponent(out sprite))
+            if (Owner.TryGetComponent(out appearance))
             {
-                sprite.LayerSetState(0, "box_2");
+                appearance.SetData(MachineFrameVisuals.State, 2);
             }
 
             ResetProgressAndRequirements(machineBoard);
@@ -190,24 +211,15 @@ namespace Content.Server.GameObjects.Components.Construction
                     // Setup requirements and progress...
                     ResetProgressAndRequirements(machineBoard);
 
-                    foreach (var (machinePart, _) in _requirements)
+                    if (Owner.TryGetComponent<AppearanceComponent>(out var appearance))
                     {
-                        _progress[machinePart] = 0;
+                        appearance.SetData(MachineFrameVisuals.State, 2);
                     }
 
-                    foreach (var (stackType, _) in _materialRequirements)
+                    if (Owner.TryGetComponent(out ConstructionComponent construction))
                     {
-                        _materialProgress[stackType] = 0;
-                    }
-
-                    foreach (var (compName, _) in _componentRequirements)
-                    {
-                        _componentProgress[compName] = 0;
-                    }
-
-                    if (Owner.TryGetComponent<SpriteComponent>(out var sprite))
-                    {
-                        sprite.LayerSetState(0, "box_2");
+                        // So prying the components off works correctly.
+                        construction.ResetEdge();
                     }
 
                     return true;
@@ -240,13 +252,16 @@ namespace Content.Server.GameObjects.Components.Construction
                     var needed = _materialRequirements[type] - _materialProgress[type];
                     var count = stack.Count;
 
-                    if (count < needed && stack.Use(count))
+                    if (count < needed && stack.Split(count, Owner.Transform.Coordinates, out var newStack))
                     {
                         _materialProgress[type] += count;
                         return true;
                     }
 
-                    if (!stack.Use(needed))
+                    if (!stack.Split(needed, Owner.Transform.Coordinates, out newStack))
+                        return false;
+
+                    if(!_partContainer.Insert(newStack))
                         return false;
 
                     _materialProgress[type] += needed;

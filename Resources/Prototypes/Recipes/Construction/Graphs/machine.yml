@@ -65,8 +65,6 @@
               completed:
                 - !type:EmptyAllContainers {}
                 - !type:MachineFrameRegenerateProgress {}
-                - !type:SpriteStateChange
-                  state: "box_1"
             - tool: Cutting
               doAfter: 0.25
 

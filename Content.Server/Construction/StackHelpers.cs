@@ -54,7 +54,7 @@ namespace Content.Server.Construction
 
             var stackComponent = ent.GetComponent<StackComponent>();
 
-            stackComponent.Count = Math.Max(amount, stackComponent.MaxCount);
+            stackComponent.Count = Math.Min(amount, stackComponent.MaxCount);
 
             return ent;
         }

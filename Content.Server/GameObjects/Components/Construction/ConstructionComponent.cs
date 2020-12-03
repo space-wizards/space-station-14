@@ -133,7 +133,7 @@ namespace Content.Server.GameObjects.Components.Construction
             }
 
             // Let's set the next target edge.
-            if (Edge == null && TargetNextEdge == null)
+            if (Edge == null && TargetNextEdge == null && TargetPathfinding != null)
                 TargetNextEdge = Node.GetEdge(TargetPathfinding.Peek().Name);
         }
 
@@ -380,6 +380,16 @@ namespace Content.Server.GameObjects.Components.Construction
             return true;
         }
 
+        public void ResetEdge()
+        {
+            _edgeNestedStepProgress = null;
+            TargetNextEdge = null;
+            Edge = null;
+            EdgeStep = 0;
+
+            UpdateTarget();
+        }
+
         private async Task<bool> HandleEdge(InteractUsingEventArgs eventArgs)
         {
             if (Edge == null || EdgeStep >= Edge.Steps.Count) return false;
@@ -461,14 +471,6 @@ namespace Content.Server.GameObjects.Components.Construction
                 if (GraphPrototype.Nodes.TryGetValue(_startingNodeIdentifier, out var node))
                 {
                     Node = node;
-
-                    foreach (var action in Node.Actions)
-                    {
-                        action.PerformAction(Owner, null);
-
-                        if (Owner.Deleted)
-                            return;
-                    }
                 }
                 else
                 {
@@ -478,6 +480,19 @@ namespace Content.Server.GameObjects.Components.Construction
             else
             {
                 Logger.Error($"Couldn't find prototype {_graphIdentifier} in construction component!");
+            }
+        }
+
+        protected override void Startup()
+        {
+            base.Startup();
+
+            foreach (var action in Node.Actions)
+            {
+                action.PerformAction(Owner, null);
+
+                if (Owner.Deleted)
+                    return;
             }
         }
 
