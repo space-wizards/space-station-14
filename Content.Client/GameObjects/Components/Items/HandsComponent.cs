@@ -33,6 +33,7 @@ namespace Content.Client.GameObjects.Components.Items
 
         private void AddHand(Hand hand)
         {
+            _sprite?.LayerMapReserveBlank($"hand-{hand.Name}");
             _hands.Insert(hand.Index, hand);
         }
 
