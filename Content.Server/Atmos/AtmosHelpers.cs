@@ -75,5 +75,20 @@ namespace Content.Server.Atmos
             atmosSystem.GetGridAtmosphere(transform.GridID).Invalidate(tileAtmos.GridIndices);
             return true;
         }
+
+        public static bool InvalidateTileAir(this EntityCoordinates coordinates, AtmosphereSystem? atmosSystem = null, IEntityManager? entityManager = null)
+        {
+            atmosSystem ??= EntitySystem.Get<AtmosphereSystem>();
+            entityManager ??= IoCManager.Resolve<IEntityManager>();
+
+            if (!coordinates.TryGetTileAtmosphere(out var tileAtmos))
+            {
+                return false;
+            }
+
+            var gridId = coordinates.GetGridId(entityManager);
+            atmosSystem.GetGridAtmosphere(gridId).Invalidate(tileAtmos.GridIndices);
+            return true;
+        }
     }
 }
