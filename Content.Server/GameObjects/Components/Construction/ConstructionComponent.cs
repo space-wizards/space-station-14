@@ -28,7 +28,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Construction
 {
     [RegisterComponent]
-    public class ConstructionComponent : Component, IExamine, IInteractUsing
+    public partial class ConstructionComponent : Component, IExamine, IInteractUsing
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -80,6 +80,9 @@ namespace Content.Server.GameObjects.Components.Construction
         [ViewVariables]
         public int EdgeStep { get; private set; } = 0;
 
+        [ViewVariables]
+        public string DeconstructionNodeIdentifier { get; private set; } = "start";
+
         /// <inheritdoc />
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -88,6 +91,7 @@ namespace Content.Server.GameObjects.Components.Construction
             serializer.DataField(ref _graphIdentifier, "graph", string.Empty);
             serializer.DataField(ref _startingNodeIdentifier, "node", string.Empty);
             serializer.DataField(ref _startingTargetNodeIdentifier, "defaultTarget", string.Empty);
+            serializer.DataField(this, x => x.DeconstructionNodeIdentifier, "deconstructionTarget", "start");
         }
 
         /// <summary>
