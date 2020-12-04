@@ -17,7 +17,7 @@ namespace Content.Server.Atmos
 
             var gridAtmos = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(coordinates.GetGridId(entityManager));
 
-            return gridAtmos?.GetTile(coordinates);
+            return gridAtmos.GetTile(coordinates);
         }
 
         public static GasMixture? GetTileAir(this EntityCoordinates coordinates, IEntityManager? entityManager = null)
@@ -41,7 +41,7 @@ namespace Content.Server.Atmos
         {
             var gridAtmos = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(gridId);
 
-            return gridAtmos?.GetTile(indices);
+            return gridAtmos.GetTile(indices);
         }
 
         public static GasMixture? GetTileAir(this Vector2i indices, GridId gridId)
