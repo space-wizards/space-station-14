@@ -41,7 +41,7 @@ namespace Content.Client.GameObjects.Components.Power
             }
         }
 
-        private enum Layers
+        private enum Layers : byte
         {
             Charge
         }

@@ -85,7 +85,7 @@ namespace Content.Client.GameObjects.Components.Storage
         }
     }
 
-    public enum StorageVisualLayers
+    public enum StorageVisualLayers : byte
     {
         Door,
         Welded,
