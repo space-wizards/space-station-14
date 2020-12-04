@@ -3,10 +3,13 @@ using System;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Actions;
 using OpenToolkit.Mathematics;
+using Robust.Client.GameObjects;
+using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
 using Robust.Shared.Input;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
 
@@ -15,8 +18,8 @@ namespace Content.Client.UserInterface.Controls
     /// <summary>
     /// A slot in the action hotbar.
     /// Note that this should never be Disabled internally, it always needs to be clickable regardless
-    /// of whether the action is revoked (so actions can still be dragged / unassigned).
-    /// Thus any event handlers should check if the action is granted.
+    /// of whether the action is disabled (so actions can still be dragged / unassigned).
+    /// Thus any event handlers should check if the action is enabled.
     /// </summary>
     public class ActionSlot : ContainerButton
     {
@@ -24,20 +27,30 @@ namespace Content.Client.UserInterface.Controls
         // see what actions they've been given
         private const float CustomTooltipDelay = 0.5f;
 
-        private static readonly string GrantedColor = "#7b7e9e";
-        private static readonly string RevokedColor = "#950000";
+        private static readonly string EnabledColor = "#7b7e9e";
+        private static readonly string DisabledColor = "#950000";
 
         /// <summary>
         /// Current action in this slot.
         /// </summary>
-        public ActionPrototype? Action { get; private set; }
+        public BaseActionPrototype? Action { get; private set; }
 
         /// <summary>
-        /// Whether the action in this slot is currently shown as granted (enabled).
+        /// true if there is an action or itemaction assigned to the slot
         /// </summary>
-        public bool Granted { get; private set; }
+        public bool HasAssignment => Action != null;
 
-        private bool _toggledOn;
+        /// <summary>
+        /// Whether the action in this slot is currently shown as usable.
+        /// Not to be confused with Control.Disabled.
+        /// </summary>
+        public bool ActionEnabled { get; private set; }
+
+        /// <summary>
+        /// Item the action is provided by, only valid if Action is an ItemActionPrototype. May be null
+        /// if the item action is not yet tied to an item.
+        /// </summary>
+        public IEntity? Item { get; private set; }
 
         /// <summary>
         /// Separate from Pressed, if true, this button will be displayed as pressed
@@ -75,7 +88,10 @@ namespace Content.Client.UserInterface.Controls
 
         private readonly RichTextLabel _number;
         private readonly TextureRect _icon;
+        private readonly SpriteView _itemSpriteView;
         private readonly CooldownGraphic _cooldownGraphic;
+
+        private bool _toggledOn;
 
         /// <summary>
         /// Creates an action slot for the specified number
@@ -104,6 +120,13 @@ namespace Content.Client.UserInterface.Controls
                 Stretch = TextureRect.StretchMode.Scale,
                 Visible = false
             };
+            _itemSpriteView = new SpriteView
+            {
+                SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
+                SizeFlagsVertical = SizeFlags.ShrinkEnd,
+                CustomMinimumSize = (16, 16),
+                Visible = false
+            };
             _cooldownGraphic = new CooldownGraphic();
 
             // padding to the left of the number to shift it right
@@ -119,7 +142,22 @@ namespace Content.Client.UserInterface.Controls
                 SizeFlagsVertical = SizeFlags.Fill
             });
             paddingBox.AddChild(_number);
+            // padding to the left of the item icon
+            // TODO: which corner do we want it im
+            var paddingBoxItemIcon = new HBoxContainer()
+            {
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                SizeFlagsVertical = SizeFlags.FillExpand,
+                CustomMinimumSize = (64, 64)
+            };
+            paddingBoxItemIcon.AddChild(new Control()
+            {
+                CustomMinimumSize = (48, 48),
+                SizeFlagsVertical = SizeFlags.Fill
+            });
+            paddingBoxItemIcon.AddChild(_itemSpriteView);
             AddChild(paddingBox);
+            AddChild(paddingBoxItemIcon);
             AddChild(_icon);
             AddChild(_cooldownGraphic);
 
@@ -163,17 +201,78 @@ namespace Content.Client.UserInterface.Controls
         /// Updates the action assigned to this slot.
         /// </summary>
         /// <param name="action">action to assign</param>
-        public void Assign(ActionPrototype action)
+        /// <param name="actionEnabled">whether action should initially appear enable or disabled</param>
+        public void Assign(ActionPrototype action, bool actionEnabled)
         {
             // already assigned
-            if (Action != null && Action.ActionType == action.ActionType) return;
+            if (Action != null && Action == action) return;
 
             Action = action;
+            Item = null;
             _icon.Texture = Action.Icon.Frame0();
             _icon.Visible = true;
+            _itemSpriteView.Visible = false;
+            _itemSpriteView.Sprite = null;
             Pressed = false;
             ToggledOn = false;
-            Granted = true;
+            ActionEnabled = actionEnabled;
+            DrawModeChanged();
+            _number.SetMessage(SlotNumberLabel());
+        }
+
+        /// <summary>
+        /// Updates the item action assigned to this slot. The action will always be shown as disabled
+        /// until it is tied to a specific item.
+        /// </summary>
+        /// <param name="action">action to assign</param>
+        public void Assign(ItemActionPrototype action)
+        {
+            // already assigned
+            if (Action != null && Action == action && Item == null) return;
+
+            Action = action;
+            Item = null;
+            _icon.Texture = action.Icon.Frame0();
+            _icon.Visible = true;
+            _itemSpriteView.Visible = false;
+            _itemSpriteView.Sprite = null;
+            Pressed = false;
+            ToggledOn = false;
+            ActionEnabled = false;
+            DrawModeChanged();
+            _number.SetMessage(SlotNumberLabel());
+        }
+
+        /// <summary>
+        /// Updates the item action assigned to this slot, tied to a specific item.
+        /// </summary>
+        /// <param name="action">action to assign</param>
+        /// <param name="item">item the action is provided by</param>
+        /// <param name="actionEnabled">whether action should initially appear enable or disabled</param>
+        public void Assign(ItemActionPrototype action, IEntity item, bool actionEnabled)
+        {
+            // already assigned
+            if (Action != null && Action == action && Item == item) return;
+
+            Action = action;
+            Item = item;
+            Action = null;
+            _icon.Texture = action.Icon.Frame0();
+            _icon.Visible = true;
+            if (Item.TryGetComponent<ISpriteComponent>(out var spriteComponent))
+            {
+                _itemSpriteView.Sprite = spriteComponent;
+                _itemSpriteView.Visible = true;
+            }
+            else
+            {
+                _itemSpriteView.Visible = false;
+                _itemSpriteView.Sprite = null;
+            }
+
+            Pressed = false;
+            ToggledOn = false;
+            ActionEnabled = false;
             DrawModeChanged();
             _number.SetMessage(SlotNumberLabel());
         }
@@ -183,10 +282,13 @@ namespace Content.Client.UserInterface.Controls
         /// </summary>
         public void Clear()
         {
-            if (Action == null) return;
+            if (!HasAssignment) return;
             Action = null;
+            Item = null;
             _icon.Texture = null;
             _icon.Visible = false;
+            _itemSpriteView.Visible = false;
+            _itemSpriteView.Sprite = null;
             ToggledOn = false;
             Pressed = false;
             DrawModeChanged();
@@ -195,25 +297,26 @@ namespace Content.Client.UserInterface.Controls
         }
 
         /// <summary>
-        /// Display the action in this slot (if there is one) as granted
+        /// Display the action in this slot (if there is one) as enabled
         /// </summary>
-        public void Grant()
+        public void EnableAction()
         {
-            if (Action == null || Granted) return;
+            if (ActionEnabled || !HasAssignment) return;
 
-            Granted = true;
+            ActionEnabled = true;
             DrawModeChanged();
             _number.SetMessage(SlotNumberLabel());
         }
 
         /// <summary>
-        /// Display the action in this slot (if there is one) as revoked
+        /// Display the action in this slot (if there is one) as disabled.
+        /// The slot is still clickable.
         /// </summary>
-        public void Revoke()
+        public void DisableAction()
         {
-            if (Action == null || !Granted) return;
+            if (!ActionEnabled || !HasAssignment) return;
 
-            Granted = false;
+            ActionEnabled = false;
             DrawModeChanged();
             _number.SetMessage(SlotNumberLabel());
             UpdateCooldown(null, TimeSpan.Zero);
@@ -223,24 +326,25 @@ namespace Content.Client.UserInterface.Controls
         {
             if (SlotNumber > 10) return FormattedMessage.FromMarkup("");
             var number = SlotNumber == 10 ? "0" : SlotNumber.ToString();
-            var color = (Granted || Action == null) ? GrantedColor : RevokedColor;
+            var color = (ActionEnabled || !HasAssignment) ? EnabledColor : DisabledColor;
             return FormattedMessage.FromMarkup("[color=" + color + "]" + number + "[/color]");
         }
+
 
         protected override void DrawModeChanged()
         {
             base.DrawModeChanged();
-            // when there's no action or its on cooldown or revoked, it should
+            // when there's no action or its on cooldown or disabled, it should
             // not appear as if it's interactable (no mouseover or press style)
-            if (Action == null)
+            if (!HasAssignment)
             {
                 SetOnlyStylePseudoClass(StylePseudoClassNormal);
             }
-            else if (_cooldownGraphic.Visible && Granted)
+            else if (_cooldownGraphic.Visible && ActionEnabled)
             {
                 SetOnlyStylePseudoClass(ToggledOn ? StylePseudoClassPressed : StylePseudoClassNormal);
             }
-            else if (!Granted)
+            else if (!ActionEnabled)
             {
                 SetOnlyStylePseudoClass(ToggledOn ? StylePseudoClassPressed : StylePseudoClassDisabled);
             }
@@ -270,5 +374,6 @@ namespace Content.Client.UserInterface.Controls
             }
 
         }
+
     }
 }

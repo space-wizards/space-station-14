@@ -244,76 +244,213 @@ namespace Content.Client.GameObjects.Components.Mobs
 
             _menu?.UpdateUI();
 
+
+            //  if we have any item action assignments that were tied to an item, but they
+            // are no longer present in the action states, we must remove their association with the item
+            // TODO: Might want to maintain the list of ItemActionWithItem assignments in a separate dict so we don't need
+            // to iterate the entire assignment dictionary here
+            foreach (var assignment in _assignments)
+            {
+                if (assignment.Key.Assignment == Assignment.ItemActionWithItem &&
+                    !TryGetItemActionState(assignment.Key.ItemActionType.Value, assignment.Key.Item.Value, out var actionState))
+                {
+                    foreach (var assignmentToSlot in assignment.Value)
+                    {
+                        AssignSlot(assignmentToSlot.Hotbar, assignmentToSlot.Slot,
+                            ActionAssignment.For(assignment.Key.ItemActionType.Value));
+                    }
+                }
+            }
+
             // if we've been granted any actions which have no assignment to any hotbar, we must auto-populate them
             // into the hotbar so the user knows about them.
             // We fill their current hotbar first, rolling over to the next open slot on the next hotbar.
             foreach (var actionState in EnumerateActionStates())
             {
-                if (actionState.Value.Enabled && !_assignments.ContainsKey(ActionAssignment.For(actionState.Key)))
+                var assignment = ActionAssignment.For(actionState.Key);
+                if (actionState.Value.Enabled && !_assignments.ContainsKey(assignment))
                 {
                     // don't auto populate stuff which the user has manually cleared
-                    if (_manuallyClearedActions.Contains(ActionAssignment.For(actionState.Key))) continue;
-                    AutoPopulate(ActionAssignment.For(actionState.Key));
+                    if (_manuallyClearedActions.Contains(assignment)) continue;
+                    AutoPopulate(assignment);
                 }
             }
 
-            foreach (var actionState in EnumerateItemActions())
+            foreach (var itemActions in EnumerateItemActions())
             {
-                if (actionState.Granted && !_assignments.ContainsKey(actionState.ActionType))
+                foreach (var itemActionState in itemActions.Value)
                 {
-                    // don't auto populate stuff which the user has manually cleared
-                    if (_manuallyClearedActions.Contains(actionState.ActionType)) continue;
-                    AutoPopulate(actionState.ActionType);
+                    // unlike regular actions, we DO actually show user their new item action even when it's disabled.
+                    // this allows them to instantly see when an action may be possible that is provided by an item but
+                    // something is preventing it
+                    // Note that we are checking if there is an explicit assignment for this item action + item,
+                    // we will determine during auto-population if we should tie the item to an existing "item action only"
+                    // assignment
+                    var assignment = ActionAssignment.For(itemActionState.Key, itemActions.Key);
+                    if (!_assignments.ContainsKey(assignment))
+                    {
+                        // don't auto populate stuff which the user has manually cleared
+                        if (_manuallyClearedActions.Contains(assignment)) continue;
+                        AutoPopulate(assignment);
+                    }
                 }
             }
+
 
             // now update the controls of only the current selected hotbar.
             foreach (var actionSlot in _ui.Slots)
             {
                 var assignedActionType = _slots[_selectedHotbar, actionSlot.SlotIndex];
-                if (assignedActionType == null)
+                if (!assignedActionType.HasValue)
                 {
                     actionSlot.Clear();
                     continue;
                 }
-                if (ActionManager.TryGet((ActionType) assignedActionType, out var action))
-                {
-                    actionSlot.Assign(action);
-                }
-                else
-                {
-                    Logger.WarningS("action", "unrecognized actionType {0}", assignedActionType);
-                    continue;
-                }
 
-                if (!TryGetActionBindings((ActionType) assignedActionType, out var actionState) || !actionState.Value.Granted)
+                switch (assignedActionType.Value.Assignment)
                 {
-                    // action is currently revoked
-
-                    // just revoked an action we were trying to target with, stop targeting
-                    if (_selectingTargetFor?.Action != null && _selectingTargetFor.Action.ActionType == assignedActionType)
+                    case Assignment.Action:
                     {
-                        StopTargeting();
-                    }
-                    actionSlot.Revoke();
-                }
-                else
-                {
-                    // action is currently granted
-                    actionSlot.Grant();
+                        if (!assignedActionType.Value.ActionType.HasValue)
+                        {
+                            // should never happen
+                            actionSlot.Clear();
+                            continue;
+                        }
+                        var actionType = assignedActionType.Value.ActionType.Value;
+                        if (ActionManager.TryGet(actionType, out var action))
+                        {
+                            actionSlot.Assign(action, true);
+                        }
+                        else
+                        {
+                            Logger.WarningS("action", "unrecognized actionType {0}", assignedActionType);
+                            actionSlot.Clear();
+                            continue;
+                        }
 
-                    // if we are targeting with an action now on cooldown, stop targeting
-                    if (_selectingTargetFor?.Action != null && _selectingTargetFor.Action.ActionType == assignedActionType &&
-                        actionState.Value.IsOnCooldown(GameTiming))
+                        if (!TryGetActionState(actionType, out var actionState) || !actionState.Enabled)
+                        {
+                            // action is currently disabled
+
+                            // just revoked an action we were trying to target with, stop targeting
+                            if (_selectingTargetFor?.Action != null && _selectingTargetFor.Action == action)
+                            {
+                                StopTargeting();
+                            }
+                            actionSlot.DisableAction();
+                        }
+                        else
+                        {
+                            // action is currently granted
+                            actionSlot.EnableAction();
+
+                            // if we are targeting with an action now on cooldown, stop targeting
+                            if (_selectingTargetFor?.Action != null && _selectingTargetFor.Action == action &&
+                                actionState.IsOnCooldown(GameTiming))
+                            {
+                                StopTargeting();
+                            }
+                        }
+
+                        // check if we need to toggle it
+                        if (action.BehaviorType == BehaviorType.Toggle)
+                        {
+                            actionSlot.ToggledOn = actionState.ToggledOn;
+                        }
+                        break;
+                    }
+                    case Assignment.ItemActionWithoutItem:
                     {
-                        StopTargeting();
-                    }
-                }
+                        if (!assignedActionType.Value.ItemActionType.HasValue)
+                        {
+                            // should never happen
+                            actionSlot.Clear();
+                            continue;
+                        }
 
-                // check if we need to toggle it
-                if (action.BehaviorType == BehaviorType.Toggle)
-                {
-                    actionSlot.ToggledOn = actionState?.ToggledOn ?? false;
+                        var actionType = assignedActionType.Value.ItemActionType.Value;
+                        if (ActionManager.TryGet(actionType, out var action))
+                        {
+                            actionSlot.Assign(action);
+                        }
+                        else
+                        {
+                            Logger.WarningS("action", "unrecognized actionType {0}", assignedActionType);
+                            actionSlot.Clear();
+                            continue;
+                        }
+                        break;
+                    }
+                    case Assignment.ItemActionWithItem:
+                    {
+                        if (!assignedActionType.Value.ItemActionType.HasValue || !assignedActionType.Value.Item.HasValue)
+                        {
+                            // should never happen
+                            actionSlot.Clear();
+                            continue;
+                        }
+                        var actionType = assignedActionType.Value.ItemActionType.Value;
+                        var item = EntityManager.GetEntity(assignedActionType.Value.Item.Value);
+                        if (ActionManager.TryGet(actionType, out var action))
+                        {
+                            actionSlot.Assign(action, item, true);
+                        }
+                        else
+                        {
+                            Logger.WarningS("action", "unrecognized actionType {0}", assignedActionType);
+                            actionSlot.Clear();
+                            continue;
+                        }
+
+                        if (!TryGetItemActionState(actionType, item.Uid, out var actionState))
+                        {
+                            // action is no longer tied to an item, this should never happen as we
+                            // check this at the start of this method. But just to be safe
+                            // we will restore our assignment here to the correct state
+                            AssignSlot(_selectedHotbar, actionSlot.SlotIndex,
+                                ActionAssignment.For(assignedActionType.Value.ItemActionType.Value));
+                            actionSlot.Assign(action);
+                            continue;
+                        }
+
+                        if (!actionState.Enabled)
+                        {
+                            // just disabled an action we were trying to target with, stop targeting
+                            if (_selectingTargetFor?.Action != null && _selectingTargetFor.Action == action)
+                            {
+                                StopTargeting();
+                            }
+                            actionSlot.DisableAction();
+                        }
+                        else
+                        {
+                            // action is currently granted
+                            actionSlot.EnableAction();
+
+                            // if we are targeting with an action now on cooldown, stop targeting
+                            if (_selectingTargetFor?.Action != null && _selectingTargetFor.Action == action &&
+                                _selectingTargetFor.Item == item &&
+                                actionState.IsOnCooldown(GameTiming))
+                            {
+                                StopTargeting();
+                            }
+                        }
+
+                        // check if we need to toggle it
+                        if (action.BehaviorType == BehaviorType.Toggle)
+                        {
+                            actionSlot.ToggledOn = actionState.ToggledOn;
+                        }
+                        break;
+                    }
+                    default:
+                    {
+                        Logger.WarningS("action", "unexpected Assignment type {0}",
+                            assignedActionType.Value.Assignment);
+                        actionSlot.Clear();
+                        break;
+                    }
                 }
             }
         }
@@ -357,7 +494,19 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         private void ActionMenuItemSelected(ActionMenuItemSelectedEventArgs args)
         {
-            AutoPopulate(args.Action.ActionType);
+            switch (args.Action)
+            {
+                case ActionPrototype actionPrototype:
+                    AutoPopulate(ActionAssignment.For(actionPrototype.ActionType));
+                    break;
+                case ItemActionPrototype itemActionPrototype:
+                    AutoPopulate(ActionAssignment.For(itemActionPrototype.ActionType));
+                    break;
+                default:
+                    Logger.WarningS("action", "unexpected action prototype {0}", args.Action);
+                    break;
+            }
+
             UpdateUI();
         }
 
@@ -367,15 +516,28 @@ namespace Content.Client.GameObjects.Components.Mobs
         /// starting from the currently selected hotbar.
         /// Does not update any UI elements, only updates the assignment data structures.
         /// </summary>
-        private void AutoPopulate(ActionAssignment actionType)
+        private void AutoPopulate(ActionAssignment toAssign)
         {
             for (byte hotbarOffset = 0; hotbarOffset < Hotbars; hotbarOffset++)
             {
                 for (byte slot = 0; slot < Slots; slot++)
                 {
                     var hotbar = (byte) ((_selectedHotbar + hotbarOffset) % Hotbars);
-                    if (_slots[hotbar, slot] != null) continue;
-                    AssignSlot(hotbar, slot, actionType);
+                    var slotAssignment = _slots[hotbar, slot];
+                    if (slotAssignment.HasValue)
+                    {
+                        // if the assignment in this slot is an item action without an associated item,
+                        // then tie it to the current item if we are trying to auto populate an item action.
+                        if (toAssign.Assignment == Assignment.ItemActionWithItem &&
+                            slotAssignment.Value.Assignment == Assignment.ItemActionWithoutItem)
+                        {
+                            AssignSlot(hotbar, slot, toAssign);
+                            return;
+                        }
+                        continue;
+                    }
+                    // slot's empty, assign
+                    AssignSlot(hotbar, slot, toAssign);
                     return;
                 }
             }
@@ -412,16 +574,16 @@ namespace Content.Client.GameObjects.Components.Mobs
             // remove this particular assignment from our data structures
             // (keeping in mind something can be assigned multiple slots)
             var currentAction = _slots[hotbar, slot];
-            if (currentAction == null) return;
-            var assignmentList = _assignments[(ActionType) currentAction];
+            if (!currentAction.HasValue) return;
+            var assignmentList = _assignments[currentAction.Value];
             assignmentList = assignmentList.Where(a => a.Hotbar != _selectedHotbar || a.Slot != slot).ToList();
             if (assignmentList.Count == 0)
             {
-                _assignments.Remove((ActionType) currentAction);
+                _assignments.Remove(currentAction.Value);
             }
             else
             {
-                _assignments[(ActionType) currentAction] = assignmentList;
+                _assignments[currentAction.Value] = assignmentList;
             }
             _slots[_selectedHotbar, slot] = null;
         }
@@ -430,14 +592,17 @@ namespace Content.Client.GameObjects.Components.Mobs
         {
             if (_ui.IsDragging) return;
             if (!(args.Button is ActionSlot actionSlot)) return;
-            if (actionSlot.Action == null) return;
+            if (!actionSlot.HasAssignment) return;
 
             if (args.Event.Function == EngineKeyFunctions.UIRightClick)
             {
                 // right click to clear the action
                 if (_ui.Locked) return;
-                _manuallyClearedActions.Add(actionSlot.Action.ActionType);
-
+                // should always be true
+                if (_slots[_selectedHotbar, actionSlot.SlotIndex].HasValue)
+                {
+                    _manuallyClearedActions.Add(_slots[_selectedHotbar, actionSlot.SlotIndex].Value);
+                }
                 ClearSlot(_selectedHotbar, actionSlot.SlotIndex);
 
                 StopTargeting();
@@ -448,31 +613,45 @@ namespace Content.Client.GameObjects.Components.Mobs
             if (args.Event.Function != EngineKeyFunctions.Use && args.Event.Function != EngineKeyFunctions.UIClick) return;
 
             // no left-click interaction with it on cooldown or revoked
-            if (!actionSlot.Granted || actionSlot.IsOnCooldown) return;
+            if (!actionSlot.ActionEnabled || actionSlot.IsOnCooldown) return;
 
-            switch (actionSlot.Action.BehaviorType)
+            switch (actionSlot.Action)
+            {
+                case ActionPrototype actionPrototype:
+                    HandleActionPress(actionSlot, actionPrototype);
+                    break;
+                case ItemActionPrototype itemActionPrototype:
+                    HandleItemActionPress(actionSlot, itemActionPrototype);
+                    break;
+            }
+        }
+
+        private void HandleActionPress(ActionSlot actionSlot, ActionPrototype action)
+        {
+            switch (action.BehaviorType)
             {
                 case BehaviorType.Instant:
                     // for instant actions, we immediately tell the server we're doing it
-                    SendNetworkMessage(new PerformInstantActionMessage(actionSlot.Action.ActionType));
+                    SendNetworkMessage(new PerformInstantActionMessage(action.ActionType));
                     break;
                 case BehaviorType.Toggle:
                     // for toggle actions, we immediately tell the server we're toggling it.
                     // Predictively toggle it on as well
-                    if (TryGetActionBindings(actionSlot.Action.ActionType, out var actionState))
+                    if (TryGetActionState(action.ActionType, out var actionState))
                     {
-                        actionSlot.ToggledOn = !actionState.Value.ToggledOn;
+                        actionSlot.ToggledOn = !actionState.ToggledOn;
                         // TODO: This flickers when toggling on due to ResetPredictedEntities being
                         // called with an older (toggled off) state from the server.
-                        ToggleAction(actionSlot.Action.ActionType, !actionState.Value.ToggledOn);
-                        SendNetworkMessage(new PerformToggleActionMessage(actionSlot.Action.ActionType, !actionState.Value.ToggledOn));
-
+                        ToggleAction(action.ActionType, !actionState.ToggledOn);
+                        SendNetworkMessage(new PerformToggleActionMessage(action.ActionType,
+                            !actionState.ToggledOn));
                     }
                     else
                     {
                         Logger.WarningS("action", "attempted to toggle action {0} which has" +
-                                                  " unknown state", actionSlot.Action.ActionType);
+                                                  " unknown state", action.ActionType);
                     }
+
                     break;
                 case BehaviorType.TargetPoint:
                 case BehaviorType.TargetEntity:
@@ -486,10 +665,60 @@ namespace Content.Client.GameObjects.Components.Mobs
                         StopTargeting();
                         break;
                     }
+
                     StartTargeting(actionSlot);
                     break;
                 default:
-                    Logger.WarningS("action", "unhandled action press for action {0}", actionSlot.Action.ActionType);
+                    Logger.WarningS("action", "unhandled action press for action {0}", action.ActionType);
+                    break;
+            }
+        }
+
+         private void HandleItemActionPress(ActionSlot actionSlot, ItemActionPrototype action)
+        {
+            if (actionSlot.Item == null) return;
+            switch (action.BehaviorType)
+            {
+                case BehaviorType.Instant:
+                    // for instant actions, we immediately tell the server we're doing it
+                    SendNetworkMessage(new PerformInstantItemActionMessage(action.ActionType, actionSlot.Item.Uid));
+                    break;
+                case BehaviorType.Toggle:
+                    // for toggle actions, we immediately tell the server we're toggling it.
+                    // Predictively toggle it on as well
+                    if (TryGetItemActionState(action.ActionType, actionSlot.Item.Uid, out var actionState))
+                    {
+                        actionSlot.ToggledOn = !actionState.ToggledOn;
+                        // TODO: This flickers when toggling on due to ResetPredictedEntities being
+                        // called with an older (toggled off) state from the server.
+                        ToggleAction(action.ActionType, actionSlot.Item.Uid, !actionState.ToggledOn);
+                        SendNetworkMessage(new PerformToggleItemActionMessage(action.ActionType,
+                            actionSlot.Item.Uid, !actionState.ToggledOn));
+                    }
+                    else
+                    {
+                        Logger.WarningS("action", "attempted to toggle item action {0} which has" +
+                                                  " unknown state", action.ActionType);
+                    }
+
+                    break;
+                case BehaviorType.TargetPoint:
+                case BehaviorType.TargetEntity:
+                    // for target actions, we go into "select target" mode, we don't
+                    // message the server until we actually pick our target.
+
+                    // if we're clicking the same thing we're already targeting for, then we simply cancel
+                    // targeting
+                    if (_selectingTargetFor == actionSlot)
+                    {
+                        StopTargeting();
+                        break;
+                    }
+
+                    StartTargeting(actionSlot);
+                    break;
+                default:
+                    Logger.WarningS("action", "unhandled action press for item action {0}", action.ActionType);
                     break;
             }
         }
@@ -497,17 +726,18 @@ namespace Content.Client.GameObjects.Components.Mobs
         private void OnActionSlotDragDrop(ActionSlotDragDropEventArgs obj)
         {
             // swap the 2 slots
-            var fromAction = obj.FromSlot.Action;
             var fromIdx = obj.FromSlot.SlotIndex;
-            var toAction = obj.ToSlot.Action;
+            var fromAssignment = _slots[_selectedHotbar, fromIdx];
             var toIdx = obj.ToSlot.SlotIndex;
+            var toAssignment = _slots[_selectedHotbar, toIdx];
 
             if (fromIdx == toIdx) return;
+            if (!fromAssignment.HasValue) return;
 
-            AssignSlot(_selectedHotbar, toIdx, fromAction.ActionType);
-            if (toAction != null)
+            AssignSlot(_selectedHotbar, toIdx, fromAssignment.Value);
+            if (toAssignment.HasValue)
             {
-                AssignSlot(_selectedHotbar, fromIdx, toAction.ActionType);
+                AssignSlot(_selectedHotbar, fromIdx, toAssignment.Value);
             }
             else
             {
@@ -519,8 +749,17 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         private void ActionMenuItemDragDropped(ActionMenuItemDragDropEventArgs obj)
         {
-            // assign the dragged action to the target slot
-            AssignSlot(_selectedHotbar, obj.ToSlot.SlotIndex, obj.ActionMenuItem.Action.ActionType);
+            switch (obj.ActionMenuItem.Action)
+            {
+                // assign the dragged action to the target slot
+                case ActionPrototype actionPrototype:
+                    AssignSlot(_selectedHotbar, obj.ToSlot.SlotIndex, ActionAssignment.For(actionPrototype.ActionType));
+                    break;
+                case ItemActionPrototype itemActionPrototype:
+                    AssignSlot(_selectedHotbar, obj.ToSlot.SlotIndex, ActionAssignment.For(itemActionPrototype.ActionType));
+                    break;
+            }
+
             UpdateUI();
         }
 
@@ -551,29 +790,85 @@ namespace Content.Client.GameObjects.Components.Mobs
                 (_selectingTargetFor.Action.BehaviorType != BehaviorType.TargetEntity &&
                 _selectingTargetFor.Action.BehaviorType != BehaviorType.TargetPoint)) return false;
 
+            switch (_selectingTargetFor.Action)
+            {
+                case ActionPrototype actionPrototype:
+                    return HandleTargetingOnUse(args, actionPrototype);
+                case ItemActionPrototype itemActionPrototype:
+                    return HandleTargetingOnUse(args, itemActionPrototype);
+                default:
+                    StopTargeting();
+                    return false;
+            }
+        }
+
+        private bool HandleTargetingOnUse(PointerInputCmdHandler.PointerInputCmdArgs args,
+            ActionPrototype action)
+        {
             if (_selectingTargetFor.Action.BehaviorType == BehaviorType.TargetPoint)
             {
                 // send our action to the server, we chose our target
-                SendNetworkMessage(new PerformTargetPointActionMessage(_selectingTargetFor.Action.ActionType,
+                SendNetworkMessage(new PerformTargetPointActionMessage(action.ActionType,
                     args.Coordinates));
                 if (!_selectingTargetFor.Action.Repeat)
                 {
                     StopTargeting();
                 }
+
                 return true;
             }
+
             if (_selectingTargetFor.Action.BehaviorType == BehaviorType.TargetEntity)
             {
                 // target the currently hovered entity, if there is one
                 if (args.EntityUid != EntityUid.Invalid)
                 {
                     // send our action to the server, we chose our target
-                    SendNetworkMessage(new PerformTargetEntityActionMessage(_selectingTargetFor.Action.ActionType,
+                    SendNetworkMessage(new PerformTargetEntityActionMessage(action.ActionType,
                         args.EntityUid));
                     if (!_selectingTargetFor.Action.Repeat)
                     {
                         StopTargeting();
                     }
+
+                    return true;
+                }
+            }
+
+            StopTargeting();
+            return false;
+        }
+
+        private bool HandleTargetingOnUse(PointerInputCmdHandler.PointerInputCmdArgs args, ItemActionPrototype action)
+        {
+            if (_selectingTargetFor.Item == null) return false;
+            if (_selectingTargetFor.Action.BehaviorType == BehaviorType.TargetPoint)
+            {
+                // send our action to the server, we chose our target
+                SendNetworkMessage(new PerformTargetPointItemActionMessage(action.ActionType,
+                    _selectingTargetFor.Item.Uid, args.Coordinates));
+                if (!_selectingTargetFor.Action.Repeat)
+                {
+                    StopTargeting();
+                }
+
+                return true;
+            }
+
+            if (_selectingTargetFor.Action.BehaviorType == BehaviorType.TargetEntity)
+            {
+                // target the currently hovered entity, if there is one
+                if (args.EntityUid != EntityUid.Invalid)
+                {
+                    // send our action to the server, we chose our target
+                    SendNetworkMessage(new PerformTargetEntityItemActionMessage(action.ActionType,
+                        _selectingTargetFor.Item.Uid,
+                        args.EntityUid));
+                    if (!_selectingTargetFor.Action.Repeat)
+                    {
+                        StopTargeting();
+                    }
+
                     return true;
                 }
             }
@@ -609,7 +904,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             // this can come from an ActionSlot or an ActionMenuItem depending on if its for the
             // action hotbar or the action menu
 
-            ActionPrototype action = null;
+            BaseActionPrototype action = null;
             var totalCooldownDuration = TimeSpan.Zero;
             var cooldownRemaining = TimeSpan.Zero;
             if (sender is ActionSlot actionSlot)
@@ -696,10 +991,27 @@ namespace Content.Client.GameObjects.Components.Mobs
                 var assignedActionType = _slots[_selectedHotbar, actionSlot.SlotIndex];
                 if (!assignedActionType.HasValue) continue;
 
-                if (TryGetActionBindings((ActionType) assignedActionType, out var actionState))
+                switch (assignedActionType.Value.Assignment)
                 {
-                    actionSlot.UpdateCooldown(actionState.Value.Cooldown, GameTiming.CurTime);
+                    case Assignment.Action:
+                    {
+                        if (TryGetActionState(assignedActionType.Value.ActionType.Value, out var actionState))
+                        {
+                            actionSlot.UpdateCooldown(actionState.Cooldown, GameTiming.CurTime);
+                        }
+                        break;
+                    }
+                    case Assignment.ItemActionWithItem:
+                    {
+                        if (TryGetItemActionState(assignedActionType.Value.ItemActionType.Value,
+                            assignedActionType.Value.Item.Value, out var actionState))
+                        {
+                            actionSlot.UpdateCooldown(actionState.Cooldown, GameTiming.CurTime);
+                        }
+                        break;
+                    }
                 }
+
                 if (_showingTooltipFor == actionSlot)
                 {
                     UpdateTooltipCooldown(actionSlot.CooldownRemaining, actionSlot.TotalDuration);
@@ -713,30 +1025,50 @@ namespace Content.Client.GameObjects.Components.Mobs
             UpdateUI();
         }
 
+        /// <summary>
+        /// An action can be assigned to a slot in 3 forms;
+        /// 1. Assign a regular action to a slot.
+        /// 2. Assign an item action type, not tied to an item, to a slot. This will become
+        ///     tied to an item as soon as an item with the action is equipped.
+        /// 3. Assign an item action type tied to a specific item, to a slot. This will become
+        ///     untied from the item as soon as an item with the action is unequipped.
+        ///    Users can never manually assign type 3 as it would make the action window unusable. But
+        ///     they can drag type 3 between slots to reassign.
+        /// </summary>
         private struct ActionAssignment
         {
-            private readonly ActionType? ActionType;
-            private readonly ItemActionType? ItemActionType;
+            public readonly ActionType? ActionType;
+            public readonly ItemActionType? ItemActionType;
+            public readonly EntityUid? Item;
 
-            private ActionAssignment(ActionType? actionType, ItemActionType? itemActionType)
+            public Assignment Assignment => ActionType.HasValue ? Assignment.Action :
+                Item.HasValue ? Assignment.ItemActionWithItem : Assignment.ItemActionWithoutItem;
+
+            private ActionAssignment(ActionType? actionType, ItemActionType? itemActionType, EntityUid? item)
             {
                 ActionType = actionType;
                 ItemActionType = itemActionType;
+                Item = item;
             }
 
             public static ActionAssignment For(ActionType actionType)
             {
-                return new ActionAssignment(actionType, null);
+                return new ActionAssignment(actionType, null, null);
             }
 
             public static ActionAssignment For(ItemActionType actionType)
             {
-                return new ActionAssignment(null, actionType);
+                return new ActionAssignment(null, actionType, null);
+            }
+
+            public static ActionAssignment For(ItemActionType actionType, EntityUid item)
+            {
+                return new ActionAssignment(null, actionType, item);
             }
 
             public bool Equals(ActionAssignment other)
             {
-                return ActionType == other.ActionType && ItemActionType == other.ItemActionType;
+                return ActionType == other.ActionType && ItemActionType == other.ItemActionType && Nullable.Equals(Item, other.Item);
             }
 
             public override bool Equals(object obj)
@@ -746,8 +1078,15 @@ namespace Content.Client.GameObjects.Components.Mobs
 
             public override int GetHashCode()
             {
-                return HashCode.Combine(ActionType, ItemActionType);
+                return HashCode.Combine(ActionType, ItemActionType, Item);
             }
+        }
+
+        private enum Assignment
+        {
+            Action,
+            ItemActionWithoutItem,
+            ItemActionWithItem
         }
     }
 }

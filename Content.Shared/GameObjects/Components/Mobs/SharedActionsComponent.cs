@@ -177,9 +177,9 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// Gets all items that have actions currently granted (that are not revoked
         /// and still in inventory).
         /// </summary>
-        protected IEnumerable<EntityUid> EnumerateItemActions()
+        protected IEnumerable<KeyValuePair<EntityUid,Dictionary<ItemActionType, ActionState>>> EnumerateItemActions()
         {
-            return _itemActions.Keys;
+            return _itemActions;
         }
 
         /// <summary>
