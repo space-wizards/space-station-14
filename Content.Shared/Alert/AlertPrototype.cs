@@ -153,7 +153,7 @@ namespace Content.Shared.Alert
     [Serializable, NetSerializable]
     public struct AlertKey
     {
-        private readonly AlertType? _alertType;
+        public readonly AlertType? AlertType;
         private readonly AlertCategory? _alertCategory;
 
         /// NOTE: if the alert has a category you must pass the category for this to work
@@ -165,18 +165,18 @@ namespace Content.Shared.Alert
             if (alertCategory != null)
             {
                 _alertCategory = alertCategory;
-                _alertType = null;
+                AlertType = null;
             }
             else
             {
                 _alertCategory = null;
-                _alertType = alertType;
+                AlertType = alertType;
             }
         }
 
         public bool Equals(AlertKey other)
         {
-            return _alertType == other._alertType && _alertCategory == other._alertCategory;
+            return AlertType == other.AlertType && _alertCategory == other._alertCategory;
         }
 
         public override bool Equals(object obj)
@@ -186,11 +186,12 @@ namespace Content.Shared.Alert
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(_alertType, _alertCategory);
+            return HashCode.Combine(AlertType, _alertCategory);
         }
 
         /// <param name="category">alert category, must not be null</param>
-        /// <returns>An alert key for the provided alert category</returns>
+        /// <returns>An alert key for the provided alert category. This must only be used for
+        /// queries and never storage, as it is lacking an alert type.</returns>
         public static AlertKey ForCategory(AlertCategory category)
         {
             return new AlertKey(null, category);

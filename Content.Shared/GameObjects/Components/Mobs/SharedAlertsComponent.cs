@@ -67,9 +67,9 @@ namespace Content.Shared.GameObjects.Components.Mobs
             return _alerts.ContainsKey(alertKey);
         }
 
-        protected IEnumerable<AlertState> EnumerateAlertStates()
+        protected IEnumerable<KeyValuePair<AlertKey, AlertState>> EnumerateAlertStates()
         {
-            return _alerts.Values;
+            return _alerts;
         }
 
         protected bool TryGetAlertState(AlertKey key, out AlertState alertState)

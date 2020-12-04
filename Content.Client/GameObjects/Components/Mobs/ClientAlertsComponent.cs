@@ -184,11 +184,19 @@ namespace Content.Client.GameObjects.Components.Mobs
             // may need to updated,
             // also there may be some new alerts we need to show.
             // further, we need to ensure they are ordered w.r.t their configured order
-            foreach (var alertStatus in EnumerateAlertStates())
+            foreach (var alertEntry in EnumerateAlertStates())
             {
-                if (!AlertManager.TryGet(alertStatus.AlertType, out var newAlert))
+                if (!alertEntry.Key.AlertType.HasValue)
                 {
-                    Logger.ErrorS("alert", "Unrecognized alertType {0}", alertStatus.AlertType);
+                    Logger.WarningS("alert", "found alertkey without alerttype," +
+                                             " alert keys should never be stored without an alerttype set: {0}", alertEntry.Key);
+                    continue;
+                }
+                var alertType = alertEntry.Key.AlertType.Value;
+                var alertStatus = alertEntry.Value;
+                if (!AlertManager.TryGet(alertType, out var newAlert))
+                {
+                    Logger.ErrorS("alert", "Unrecognized alertType {0}", alertType);
                     continue;
                 }
 

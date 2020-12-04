@@ -51,17 +51,17 @@ namespace Content.Tests.Server.GameObjects.Components.Mobs
             alertsComponent.ShowAlert(AlertType.LowPressure);
             var alertState = alertsComponent.GetComponentState() as AlertsComponentState;
             Assert.NotNull(alertState);
-            Assert.That(alertState.Alerts.Length, Is.EqualTo(1));
-            Assert.That(alertState.Alerts[0], Is.EqualTo(new AlertState{AlertType = lowpressure.AlertType}));
+            Assert.That(alertState.Alerts.Count, Is.EqualTo(1));
+            Assert.That(alertState.Alerts.ContainsKey(lowpressure.AlertKey));
 
             alertsComponent.ShowAlert(AlertType.HighPressure);
             alertState = alertsComponent.GetComponentState() as AlertsComponentState;
-            Assert.That(alertState.Alerts.Length, Is.EqualTo(1));
-            Assert.That(alertState.Alerts[0], Is.EqualTo(new AlertState{AlertType = highpressure.AlertType}));
+            Assert.That(alertState.Alerts.Count, Is.EqualTo(1));
+            Assert.That(alertState.Alerts.ContainsKey(highpressure.AlertKey));
 
             alertsComponent.ClearAlertCategory(AlertCategory.Pressure);
             alertState = alertsComponent.GetComponentState() as AlertsComponentState;
-            Assert.That(alertState.Alerts.Length, Is.EqualTo(0));
+            Assert.That(alertState.Alerts.Count, Is.EqualTo(0));
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Content.Server.Actions.TargetEntity
         {
         }
 
-        public void DoTargetEntityAction(TargetEntitytActionEventArgs args)
+        public void DoTargetEntityAction(TargetEntityActionEventArgs args)
         {
             args.Performer.PopupMessageEveryone("Clicked " +
                                                 args.Target.Name);
