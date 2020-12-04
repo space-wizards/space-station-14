@@ -49,6 +49,18 @@
     - state: autolathe_unlit
       shader: unshaded
       map: ["enum.AutolatheVisualLayers.BaseUnlit"]
+    - state: autolathe_panel
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+  - type: Construction
+    graph: machine
+    node: machine
+  - type: BreakableConstruction
+    node: machineFrame
+  - type: Machine
+    board: AutolatheMachineCircuitboard
+  - type: Wires
+    BoardName: "Autolathe"
+    LayoutId: Autolathe
   - type: LatheDatabase
     static: true
     recipes:
@@ -68,6 +80,7 @@
   - type: Appearance
     visuals:
     - type: AutolatheVisualizer
+    - type: WiresVisualizer
 
 - type: entity
   parent: BaseLathe
@@ -85,7 +98,12 @@
       map: ["enum.ProtolatheVisualLayers.BaseUnlit"]
     - state: protolathe
       map: ["enum.ProtolatheVisualLayers.AnimationLayer"]
+    - state: protolathe_panel
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
   - type: ResearchClient
+  - type: Wires
+    BoardName: "Protolathe"
+    LayoutId: Protolathe
   - type: TechnologyDatabase
   - type: ProtolatheDatabase
     protolatherecipes:
@@ -112,3 +130,4 @@
   - type: Appearance
     visuals:
     - type: ProtolatheVisualizer
+    - type: WiresVisualizer

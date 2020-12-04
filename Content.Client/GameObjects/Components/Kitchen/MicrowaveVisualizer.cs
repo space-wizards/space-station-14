@@ -53,7 +53,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
             sprite.LayerSetVisible(MicrowaveVisualizerLayers.BaseUnlit, glowingPartsVisible);
         }
 
-        private enum MicrowaveVisualizerLayers
+        private enum MicrowaveVisualizerLayers : byte
         {
             Base,
             BaseUnlit

@@ -1,0 +1,23 @@
+﻿- type: entity
+  id: BaseMachineCircuitboard
+  parent: BaseItem
+  name: machine board
+  abstract: true
+  components:
+    - type: MachineBoard
+    - type: Sprite
+      sprite: Constructible/Misc/module.rsi
+      state: id_mod
+
+- type: entity
+  id: AutolatheMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: Autolathe (Machine Board)
+  components:
+    - type: MachineBoard
+      prototype: Autolathe
+      requirements:
+        MatterBin: 3
+        Manipulator: 1
+      materialRequirements:
+        Glass: 1

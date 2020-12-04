@@ -30,9 +30,9 @@ namespace Content.Server.GameObjects.Components.Markers
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(this, x => RarePrototypes, "rarePrototypes", new List<string>());
-            serializer.DataField(this, x => RareChance, "rareChance", 0.05f);
-            serializer.DataField(this, x => Offset, "offset", 0.2f);
+            serializer.DataField(this, x => x.RarePrototypes, "rarePrototypes", new List<string>());
+            serializer.DataField(this, x => x.RareChance, "rareChance", 0.05f);
+            serializer.DataField(this, x => x.Offset, "offset", 0.2f);
         }
         public override void Spawn()
         {
