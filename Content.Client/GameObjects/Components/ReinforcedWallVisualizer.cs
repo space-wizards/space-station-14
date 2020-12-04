@@ -35,7 +35,7 @@ namespace Content.Client.GameObjects.Components
         }
     }
 
-    public enum ReinforcedWallVisualLayers
+    public enum ReinforcedWallVisualLayers : byte
     {
         Deconstruction,
     }

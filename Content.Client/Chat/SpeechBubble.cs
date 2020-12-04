@@ -12,7 +12,7 @@ namespace Content.Client.Chat
 {
     public abstract class SpeechBubble : Control
     {
-        public enum SpeechType
+        public enum SpeechType : byte
         {
             Emote,
             Say

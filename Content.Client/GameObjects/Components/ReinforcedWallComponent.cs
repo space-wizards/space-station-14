@@ -51,7 +51,7 @@ namespace Content.Client.GameObjects.Components
             Sprite.LayerSetState(ReinforcedCornerLayers.NW, $"{_reinforcedStateBase}{(int) cornerNW}");
         }
 
-        public enum ReinforcedCornerLayers
+        public enum ReinforcedCornerLayers : byte
         {
             SE,
             NE,

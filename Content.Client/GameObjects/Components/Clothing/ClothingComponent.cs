@@ -91,7 +91,7 @@ namespace Content.Client.GameObjects.Components.Clothing
         }
     }
 
-    public enum FemaleClothingMask
+    public enum FemaleClothingMask : byte
     {
         NoMask = 0,
         UniformFull,
