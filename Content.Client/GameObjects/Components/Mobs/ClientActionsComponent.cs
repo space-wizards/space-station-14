@@ -598,7 +598,36 @@ namespace Content.Client.GameObjects.Components.Mobs
                     _assignments.AssignSlot(_selectedHotbar, obj.ToSlot.SlotIndex, ActionAssignment.For(actionPrototype.ActionType));
                     break;
                 case ItemActionPrototype itemActionPrototype:
-                    _assignments.AssignSlot(_selectedHotbar, obj.ToSlot.SlotIndex, ActionAssignment.For(itemActionPrototype.ActionType));
+                    // the action menu doesn't show us if the action has an associated item,
+                    // so when we perform the assignment, we should check if we currently have an unassigned state
+                    // for this item and assign it tied to that item if so, otherwise assign it "itemless"
+
+                    // this is not particularly efficient but we don't maintain an index from
+                    // item action type to its action states, and this method should be pretty infrequent so it's probably fine
+                    var assigned = false;
+                    foreach (var (item, itemStates) in EnumerateItemActions())
+                    {
+                        foreach (var (actionType, _) in itemStates)
+                        {
+                            if (actionType != itemActionPrototype.ActionType) continue;
+                            var assignment = ActionAssignment.For(actionType, item);
+                            if (_assignments.HasAssignment(assignment)) continue;
+                            // no assignment for this state, assign tied to the item
+                            assigned = true;
+                            _assignments.AssignSlot(_selectedHotbar, obj.ToSlot.SlotIndex, assignment);
+                            break;
+                        }
+
+                        if (assigned)
+                        {
+                            break;
+                        }
+                    }
+
+                    if (!assigned)
+                    {
+                        _assignments.AssignSlot(_selectedHotbar, obj.ToSlot.SlotIndex, ActionAssignment.For(itemActionPrototype.ActionType));
+                    }
                     break;
             }
 

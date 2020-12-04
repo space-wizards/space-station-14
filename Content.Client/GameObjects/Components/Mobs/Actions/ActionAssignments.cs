@@ -244,5 +244,11 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
         /// Gets the assignment to the indicated slot if there is one.
         /// </summary>
         public ActionAssignment? this[in byte hotbar, in byte slot] => _slots[hotbar, slot];
+
+        /// <returns>true if we have the assignment assigned to some slot</returns>
+        public bool HasAssignment(ActionAssignment assignment)
+        {
+            return _assignments.ContainsKey(assignment);
+        }
     }
 }
