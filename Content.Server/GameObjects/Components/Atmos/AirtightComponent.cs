@@ -1,14 +1,10 @@
 ﻿#nullable enable
-using System;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Atmos;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -30,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         [ViewVariables]
         private int _currentAirBlockedDirection;
         private bool _airBlocked = true;
-        private bool _fixVacuum = false;
+        private bool _fixVacuum;
 
         [ViewVariables]
         private bool _rotateAirBlocked = true;
@@ -147,7 +143,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             UpdatePosition(_lastPosition.Item1, _lastPosition.Item2);
 
             if (_fixVacuum)
-                _atmosphereSystem.GetGridAtmosphere(_lastPosition.Item1)?.FixVacuum(_lastPosition.Item2);
+                _atmosphereSystem.GetGridAtmosphere(_lastPosition.Item1).FixVacuum(_lastPosition.Item2);
         }
 
         private void OnTransformMove()
@@ -170,8 +166,6 @@ namespace Content.Server.GameObjects.Components.Atmos
         private void UpdatePosition(GridId gridId, Vector2i pos)
         {
             var gridAtmos = _atmosphereSystem.GetGridAtmosphere(gridId);
-
-            if (gridAtmos == null) return;
 
             gridAtmos.UpdateAdjacentBits(pos);
             gridAtmos.Invalidate(pos);

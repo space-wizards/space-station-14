@@ -3,29 +3,23 @@ using System;
 using Content.Server.Atmos;
 using Content.Server.Explosions;
 using Content.Server.GameObjects.Components.Body.Respiratory;
-using Content.Server.GameObjects.Components.GUI;
 using Content.Server.Interfaces;
 using Content.Server.Utility;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Atmos.GasTank;
-using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Utility;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.EntitySystemMessages;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -281,7 +275,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (_integrity <= 0)
                 {
                     var tileAtmos = Owner.Transform.Coordinates.GetTileAtmosphere();
-                    tileAtmos?.AssumeAir(Air);
+                    tileAtmos.AssumeAir(Air);
 
                     EntitySystem.Get<AudioSystem>().PlayAtCoords("Audio/Effects/spray.ogg", Owner.Transform.Coordinates,
                         AudioHelpers.WithVariation(0.125f));
@@ -299,9 +293,6 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (_integrity <= 0)
                 {
                     var tileAtmos = Owner.Transform.Coordinates.GetTileAtmosphere();
-                    if (tileAtmos == null)
-                        return;
-
                     var leakedGas = Air.RemoveRatio(0.25f);
                     tileAtmos.AssumeAir(leakedGas);
                 }
