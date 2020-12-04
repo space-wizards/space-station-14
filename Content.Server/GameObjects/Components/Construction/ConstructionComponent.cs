@@ -39,6 +39,7 @@ namespace Content.Server.GameObjects.Components.Construction
         private TaskCompletionSource<object>? _handlingTask = null;
         private string _graphIdentifier = string.Empty;
         private string _startingNodeIdentifier = string.Empty;
+        private string _startingTargetNodeIdentifier = string.Empty;
 
         [ViewVariables]
         private HashSet<string> _containers = new();
@@ -86,6 +87,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
             serializer.DataField(ref _graphIdentifier, "graph", string.Empty);
             serializer.DataField(ref _startingNodeIdentifier, "node", string.Empty);
+            serializer.DataField(ref _startingTargetNodeIdentifier, "defaultTarget", string.Empty);
         }
 
         /// <summary>
@@ -495,6 +497,9 @@ namespace Content.Server.GameObjects.Components.Construction
             {
                 Logger.Error($"Couldn't find prototype {_graphIdentifier} in construction component!");
             }
+
+            if (!string.IsNullOrEmpty(_startingTargetNodeIdentifier))
+                SetNewTarget(_startingTargetNodeIdentifier);
         }
 
         protected override void Startup()
