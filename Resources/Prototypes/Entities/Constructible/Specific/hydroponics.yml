@@ -50,8 +50,8 @@
       mass: 25
       hard: true
     - type: Anchorable
-    - type: Pullable
       snap: true
+    - type: Pullable
     - type: Sprite
       sprite: Constructible/Hydroponics/hydro_tools.rsi
       state: hydrotray3
