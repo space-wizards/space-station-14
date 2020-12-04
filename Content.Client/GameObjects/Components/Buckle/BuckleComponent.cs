@@ -28,6 +28,7 @@ namespace Content.Client.GameObjects.Components.Buckle
 
             _buckled = buckle.Buckled;
             EntityBuckledTo = buckle.EntityBuckledTo;
+            DontCollide = buckle.DontCollide;
 
             if (!Owner.TryGetComponent(out SpriteComponent ownerSprite))
             {

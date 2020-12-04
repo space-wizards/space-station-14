@@ -430,8 +430,9 @@ namespace Content.Server.GameObjects.Components.Buckle
             {
                 drawDepth = BuckledTo.SpriteComponent.DrawDepth - 1;
             }
+            
 
-            return new BuckleComponentState(Buckled, drawDepth, EntityBuckledTo);
+            return new BuckleComponentState(Buckled, drawDepth, EntityBuckledTo, DontCollide);
         }
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
@@ -442,11 +443,16 @@ namespace Content.Server.GameObjects.Components.Buckle
 
         public void Update()
         {
-            if (!DontCollide)
+            if (!DontCollide || Body == null)
                 return;
 
+            Body.WakeBody();
+
             if (!IsOnStrapEntityThisFrame && DontCollide)
+            {
                 DontCollide = false;
+                Dirty();
+            }
 
             IsOnStrapEntityThisFrame = false;
         }

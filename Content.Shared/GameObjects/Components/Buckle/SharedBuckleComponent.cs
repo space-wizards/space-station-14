@@ -5,7 +5,6 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Log;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 
@@ -16,7 +15,7 @@ namespace Content.Shared.GameObjects.Components.Buckle
         public sealed override string Name => "Buckle";
 
         public sealed override uint? NetID => ContentNetIDs.BUCKLE;
-
+       
         /// <summary>
         ///     True if the entity is buckled, false otherwise.
         /// </summary>
@@ -24,12 +23,13 @@ namespace Content.Shared.GameObjects.Components.Buckle
         public virtual EntityUid EntityBuckledTo { get; set; }
 
         public virtual bool IsOnStrapEntityThisFrame { get; set; }
-        public virtual bool DontCollide { get; set; } = false;
+        public virtual bool DontCollide { get; set; }
         public abstract bool TryBuckle(IEntity user, IEntity to);
 
-         bool ICollideSpecial.PreventCollide(IPhysBody collidedwith)
+        protected IPhysicsComponent Body;
+
+        bool ICollideSpecial.PreventCollide(IPhysBody collidedwith)
         {
-            Logger.Debug(DontCollide.ToString());
             if (collidedwith.Entity.Uid == EntityBuckledTo)
             {
                 IsOnStrapEntityThisFrame = true;
@@ -42,6 +42,11 @@ namespace Content.Shared.GameObjects.Components.Buckle
         bool IActionBlocker.CanMove()
         {
             return !Buckled;
+        }
+        public override void Initialize()
+        {
+            base.Initialize();
+            Owner.TryGetComponent(out Body);
         }
 
         bool IActionBlocker.CanChangeDirection()
@@ -68,15 +73,17 @@ namespace Content.Shared.GameObjects.Components.Buckle
     [Serializable, NetSerializable]
     public sealed class BuckleComponentState : ComponentState
     {
-        public BuckleComponentState(bool buckled, int? drawDepth, EntityUid entityBuckledTo) : base(ContentNetIDs.BUCKLE)
+        public BuckleComponentState(bool buckled, int? drawDepth, EntityUid entityBuckledTo, bool dontCollide) : base(ContentNetIDs.BUCKLE)
         {
             Buckled = buckled;
             DrawDepth = drawDepth;
             EntityBuckledTo = entityBuckledTo;
+            DontCollide = dontCollide;
         }
 
         public bool Buckled { get; }
         public EntityUid EntityBuckledTo { get; }
+        public bool DontCollide { get; }
         public int? DrawDepth;
     }
 
