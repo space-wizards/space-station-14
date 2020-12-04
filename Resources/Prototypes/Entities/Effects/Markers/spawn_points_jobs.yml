@@ -98,17 +98,6 @@
   - type: Sprite
     state: Mime
 
-# Chaplain
-- type: entity
-  id: SpawnPointChaplain
-  parent: SpawnPointJobBase
-  name: spawn point (chaplain)
-  components:
-    - type: SpawnPoint
-      job_id: Chaplain
-    - type: Sprite
-      state: Chaplain
-
 # Janitor
 - type: entity
   id: SpawnPointJanitor
@@ -249,4 +238,3 @@
     job_id: SecurityOfficer
   - type: Sprite
     state: Security Officer
-
