@@ -67,7 +67,7 @@ namespace Content.Server.GameObjects.Components.Recycling
 
         private bool CanGib(IEntity entity)
         {
-            return entity.HasComponent<IDamageableComponent>() && !_safe && Powered;
+            return !_safe && Powered;
         }
 
         private bool CanRecycle(IEntity entity, [MaybeNullWhen(false)] out ConstructionPrototype prototype)
@@ -116,11 +116,6 @@ namespace Content.Server.GameObjects.Components.Recycling
                     if (!body.TryDropPart(part, out var dropped))
                     {
                         continue;
-                    }
-
-                    foreach (var drop in dropped)
-                    {
-                        drop.Owner.Delete();
                     }
                 }
             }
