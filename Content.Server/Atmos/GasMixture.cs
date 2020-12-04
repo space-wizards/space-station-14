@@ -536,10 +536,10 @@ namespace Content.Server.Atmos
 
         public void ExposeData(ObjectSerializer serializer)
         {
-            serializer.DataField(this, x => Immutable, "immutable", false);
-            serializer.DataField(this, x => Volume, "volume", 0f);
-            serializer.DataField(this, x => LastShare, "lastShare", 0f);
-            serializer.DataField(this, x => TemperatureArchived, "temperatureArchived", 0f);
+            serializer.DataField(this, x => x.Immutable, "immutable", false);
+            serializer.DataField(this, x => x.Volume, "volume", 0f);
+            serializer.DataField(this, x => x.LastShare, "lastShare", 0f);
+            serializer.DataField(this, x => x.TemperatureArchived, "temperatureArchived", 0f);
             serializer.DataField(ref _moles, "moles", new float[Atmospherics.AdjustedNumberOfGases]);
             serializer.DataField(ref _molesArchived, "molesArchived", new float[Atmospherics.AdjustedNumberOfGases]);
             serializer.DataField(ref _temperature, "temperature", Atmospherics.TCMB);
