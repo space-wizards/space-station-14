@@ -96,7 +96,7 @@ namespace Content.Client.GameObjects.Components
         }
 
     }
-    public enum RadiationCollectorVisualLayers
+    public enum RadiationCollectorVisualLayers : byte
     {
         Main
     }

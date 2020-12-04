@@ -53,11 +53,11 @@ namespace Content.Server.GameObjects.Components.Markers
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(this, x => Prototypes, "prototypes", new List<string>());
-            serializer.DataField(this, x => Chance, "chance", 1.0f);
-            serializer.DataField(this, x => IntervalSeconds, "intervalSeconds", 60);
-            serializer.DataField(this, x => MinimumEntitiesSpawned, "minimumEntitiesSpawned", 1);
-            serializer.DataField(this, x => MaximumEntitiesSpawned, "maximumEntitiesSpawned", 1);
+            serializer.DataField(this, x => x.Prototypes, "prototypes", new List<string>());
+            serializer.DataField(this, x => x.Chance, "chance", 1.0f);
+            serializer.DataField(this, x => x.IntervalSeconds, "intervalSeconds", 60);
+            serializer.DataField(this, x => x.MinimumEntitiesSpawned, "minimumEntitiesSpawned", 1);
+            serializer.DataField(this, x => x.MaximumEntitiesSpawned, "maximumEntitiesSpawned", 1);
 
             if(MinimumEntitiesSpawned > MaximumEntitiesSpawned)
                 throw new ArgumentException("MaximumEntitiesSpawned can't be lower than MinimumEntitiesSpawned!");

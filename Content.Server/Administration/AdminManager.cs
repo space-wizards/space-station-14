@@ -267,9 +267,7 @@ namespace Content.Server.Administration
             }
             else if (e.NewStatus == SessionStatus.Disconnected)
             {
-                _admins.Remove(e.Session);
-
-                if (_cfg.GetCVar(CCVars.AdminAnnounceLogout))
+                if (_admins.Remove(e.Session) && _cfg.GetCVar(CCVars.AdminAnnounceLogout))
                 {
                     _chat.SendAdminAnnouncement(Loc.GetString("Admin logout: {0}", e.Session.Name));
                 }
