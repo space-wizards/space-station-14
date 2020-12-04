@@ -275,7 +275,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (_integrity <= 0)
                 {
                     var tileAtmos = Owner.Transform.Coordinates.GetTileAtmosphere();
-                    tileAtmos.AssumeAir(Air);
+                    tileAtmos?.AssumeAir(Air);
 
                     EntitySystem.Get<AudioSystem>().PlayAtCoords("Audio/Effects/spray.ogg", Owner.Transform.Coordinates,
                         AudioHelpers.WithVariation(0.125f));
@@ -293,6 +293,9 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (_integrity <= 0)
                 {
                     var tileAtmos = Owner.Transform.Coordinates.GetTileAtmosphere();
+                    if (tileAtmos == null)
+                        return;
+
                     var leakedGas = Air.RemoveRatio(0.25f);
                     tileAtmos.AssumeAir(leakedGas);
                 }
