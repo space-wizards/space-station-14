@@ -1,7 +1,7 @@
 - type: vendingMachineInventory
   id: Getmore Chocolate Corp
   name: Getmore Chocolate Corp
-  animationDuration: 1.1
+  animationDuration: 0.5
   spriteName: snack
   startingInventory:
     FoodSpaceTwinkie: 8
