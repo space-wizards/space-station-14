@@ -212,6 +212,7 @@
             "RandomArcade",
             "RandomSpriteState",
             "DebugEquip",
+            "ItemActions",
         };
     }
 }

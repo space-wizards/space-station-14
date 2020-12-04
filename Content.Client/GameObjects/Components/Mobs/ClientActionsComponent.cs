@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Client.GameObjects.Components.Mobs.Actions;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Actions;
 using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.EntitySystems;
@@ -21,7 +21,6 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Utility;
@@ -34,9 +33,9 @@ namespace Content.Client.GameObjects.Components.Mobs
     [ComponentReference(typeof(SharedActionsComponent))]
     public sealed class ClientActionsComponent : SharedActionsComponent
     {
-        private static readonly float TooltipTextMaxWidth = 350;
         public static readonly byte Hotbars = 10;
         public static readonly byte Slots = 10;
+        private static readonly float TooltipTextMaxWidth = 350;
 
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
@@ -56,39 +55,14 @@ namespace Content.Client.GameObjects.Components.Mobs
         // tracks the action slot we are currently selecting a target for
         private ActionSlot _selectingTargetFor;
 
+        private readonly ActionAssignments _assignments = new ActionAssignments(Hotbars, Slots);
+
         /// <summary>
         /// Allows calculating if we need to act due to this component being controlled by the current mob
         /// TODO: should be revisited after space-wizards/RobustToolbox#1255
         /// </summary>
         [ViewVariables]
         private bool CurrentlyControlled => _playerManager.LocalPlayer != null && _playerManager.LocalPlayer.ControlledEntity == Owner;
-
-
-        // the slots and assignments fields hold client's assignments (what action goes in what slot),
-        // which are completely client side and independent of what actions they've actually been granted and
-        // what item the action is actually for.
-
-        /// <summary>
-        /// x = hotbar number, y = slot of that hotbar (index 0 corresponds to the one labeled "1",
-        /// index 9 corresponds to the one labeled "0"). Essentially the inverse of _assignments.
-        /// </summary>
-        private readonly ActionAssignment?[,] _slots = new ActionAssignment?[Hotbars, Slots];
-
-        /// <summary>
-        /// Hotbar and slot assignment for each action type (slot index 0 corresponds to the one labeled "1",
-        /// slot index 9 corresponds to the one labeled "0"). The key corresponds to an index in the _slots array.
-        /// The value is a list because actions can be assigned to multiple slots. Even if an action type has not been granted,
-        /// it can still be assigned to a slot. Essentially the inverse of _slots.
-        /// There will be no entry if there is no assignment (no empty lists in this dict)
-        /// </summary>
-        private readonly Dictionary<ActionAssignment, List<(byte Hotbar, byte Slot)>> _assignments =
-            new Dictionary<ActionAssignment, List<(byte Hotbar, byte Slot)>>();
-
-        /// <summary>
-        /// Actions which have been manually cleared by the user, thus should not
-        /// auto-populate.
-        /// </summary>
-        private HashSet<ActionAssignment> _manuallyClearedActions = new HashSet<ActionAssignment>();
 
         // index of currently displayed hotbar
         private byte _selectedHotbar = 0;
@@ -244,63 +218,12 @@ namespace Content.Client.GameObjects.Components.Mobs
 
             _menu?.UpdateUI();
 
-
-            //  if we have any item action assignments that were tied to an item, but they
-            // are no longer present in the action states, we must remove their association with the item
-            // TODO: Might want to maintain the list of ItemActionWithItem assignments in a separate dict so we don't need
-            // to iterate the entire assignment dictionary here
-            foreach (var assignment in _assignments)
-            {
-                if (assignment.Key.Assignment == Assignment.ItemActionWithItem &&
-                    !TryGetItemActionState(assignment.Key.ItemActionType.Value, assignment.Key.Item.Value, out var actionState))
-                {
-                    foreach (var assignmentToSlot in assignment.Value)
-                    {
-                        AssignSlot(assignmentToSlot.Hotbar, assignmentToSlot.Slot,
-                            ActionAssignment.For(assignment.Key.ItemActionType.Value));
-                    }
-                }
-            }
-
-            // if we've been granted any actions which have no assignment to any hotbar, we must auto-populate them
-            // into the hotbar so the user knows about them.
-            // We fill their current hotbar first, rolling over to the next open slot on the next hotbar.
-            foreach (var actionState in EnumerateActionStates())
-            {
-                var assignment = ActionAssignment.For(actionState.Key);
-                if (actionState.Value.Enabled && !_assignments.ContainsKey(assignment))
-                {
-                    // don't auto populate stuff which the user has manually cleared
-                    if (_manuallyClearedActions.Contains(assignment)) continue;
-                    AutoPopulate(assignment);
-                }
-            }
-
-            foreach (var itemActions in EnumerateItemActions())
-            {
-                foreach (var itemActionState in itemActions.Value)
-                {
-                    // unlike regular actions, we DO actually show user their new item action even when it's disabled.
-                    // this allows them to instantly see when an action may be possible that is provided by an item but
-                    // something is preventing it
-                    // Note that we are checking if there is an explicit assignment for this item action + item,
-                    // we will determine during auto-population if we should tie the item to an existing "item action only"
-                    // assignment
-                    var assignment = ActionAssignment.For(itemActionState.Key, itemActions.Key);
-                    if (!_assignments.ContainsKey(assignment))
-                    {
-                        // don't auto populate stuff which the user has manually cleared
-                        if (_manuallyClearedActions.Contains(assignment)) continue;
-                        AutoPopulate(assignment);
-                    }
-                }
-            }
-
+            _assignments.Reconcile(_selectedHotbar, EnumerateActionStates(), EnumerateItemActions());
 
             // now update the controls of only the current selected hotbar.
             foreach (var actionSlot in _ui.Slots)
             {
-                var assignedActionType = _slots[_selectedHotbar, actionSlot.SlotIndex];
+                var assignedActionType = _assignments[_selectedHotbar, actionSlot.SlotIndex];
                 if (!assignedActionType.HasValue)
                 {
                     actionSlot.Clear();
@@ -408,7 +331,9 @@ namespace Content.Client.GameObjects.Components.Mobs
                             // action is no longer tied to an item, this should never happen as we
                             // check this at the start of this method. But just to be safe
                             // we will restore our assignment here to the correct state
-                            AssignSlot(_selectedHotbar, actionSlot.SlotIndex,
+                            Logger.WarningS("action", "coding error, expected actionType {0} to have" +
+                                                      " a state but it didn't", assignedActionType);
+                            _assignments.AssignSlot(_selectedHotbar, actionSlot.SlotIndex,
                                 ActionAssignment.For(assignedActionType.Value.ItemActionType.Value));
                             actionSlot.Assign(action);
                             continue;
@@ -497,10 +422,10 @@ namespace Content.Client.GameObjects.Components.Mobs
             switch (args.Action)
             {
                 case ActionPrototype actionPrototype:
-                    AutoPopulate(ActionAssignment.For(actionPrototype.ActionType));
+                    _assignments.AutoPopulate(ActionAssignment.For(actionPrototype.ActionType), _selectedHotbar);
                     break;
                 case ItemActionPrototype itemActionPrototype:
-                    AutoPopulate(ActionAssignment.For(itemActionPrototype.ActionType));
+                    _assignments.AutoPopulate(ActionAssignment.For(itemActionPrototype.ActionType), _selectedHotbar);
                     break;
                 default:
                     Logger.WarningS("action", "unexpected action prototype {0}", args.Action);
@@ -508,84 +433,6 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
 
             UpdateUI();
-        }
-
-
-        /// <summary>
-        /// Finds the next open slot the action can go in and assigns it there,
-        /// starting from the currently selected hotbar.
-        /// Does not update any UI elements, only updates the assignment data structures.
-        /// </summary>
-        private void AutoPopulate(ActionAssignment toAssign)
-        {
-            for (byte hotbarOffset = 0; hotbarOffset < Hotbars; hotbarOffset++)
-            {
-                for (byte slot = 0; slot < Slots; slot++)
-                {
-                    var hotbar = (byte) ((_selectedHotbar + hotbarOffset) % Hotbars);
-                    var slotAssignment = _slots[hotbar, slot];
-                    if (slotAssignment.HasValue)
-                    {
-                        // if the assignment in this slot is an item action without an associated item,
-                        // then tie it to the current item if we are trying to auto populate an item action.
-                        if (toAssign.Assignment == Assignment.ItemActionWithItem &&
-                            slotAssignment.Value.Assignment == Assignment.ItemActionWithoutItem)
-                        {
-                            AssignSlot(hotbar, slot, toAssign);
-                            return;
-                        }
-                        continue;
-                    }
-                    // slot's empty, assign
-                    AssignSlot(hotbar, slot, toAssign);
-                    return;
-                }
-            }
-            // there was no empty slot
-        }
-
-        /// <summary>
-        /// Assigns the indicated hotbar slot to the specified action type.
-        /// </summary>
-        /// <param name="hotbar">hotbar whose slot is being assigned</param>
-        /// <param name="slot">slot of the hotbar to assign to (0 = the slot labeled 1, 9 = the slot labeled 0)</param>
-        /// <param name="actionType">action to assign to the slot</param>
-        private void AssignSlot(byte hotbar, byte slot, ActionAssignment actionType)
-        {
-            _slots[hotbar, slot] = actionType;
-            if (_assignments.TryGetValue(actionType, out var slotList))
-            {
-                slotList.Add((hotbar, slot));
-            }
-            else
-            {
-                var newList = new List<(byte Hotbar, byte Slot)> {(hotbar, slot)};
-                _assignments[actionType] = newList;
-            }
-        }
-
-        /// <summary>
-        /// Clear the assignment to the indicated slot.
-        /// </summary>
-        /// <param name="hotbar">hotbar whose slot is being cleared</param>
-        /// <param name="slot">slot of the hotbar to clear (0 = the slot labeled 1, 9 = the slot labeled 0)</param>
-        private void ClearSlot(byte hotbar, byte slot)
-        {
-            // remove this particular assignment from our data structures
-            // (keeping in mind something can be assigned multiple slots)
-            var currentAction = _slots[hotbar, slot];
-            if (!currentAction.HasValue) return;
-            var assignmentList = _assignments[currentAction.Value];
-            assignmentList = assignmentList.Where(a => a.Hotbar != _selectedHotbar || a.Slot != slot).ToList();
-            if (assignmentList.Count == 0)
-            {
-                _assignments.Remove(currentAction.Value);
-            }
-            else
-            {
-                _assignments[currentAction.Value] = assignmentList;
-            }
-            _slots[_selectedHotbar, slot] = null;
         }
 
         private void OnActionPress(BaseButton.ButtonEventArgs args)
@@ -598,12 +445,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             {
                 // right click to clear the action
                 if (_ui.Locked) return;
-                // should always be true
-                if (_slots[_selectedHotbar, actionSlot.SlotIndex].HasValue)
-                {
-                    _manuallyClearedActions.Add(_slots[_selectedHotbar, actionSlot.SlotIndex].Value);
-                }
-                ClearSlot(_selectedHotbar, actionSlot.SlotIndex);
+                _assignments.ClearSlot(_selectedHotbar, actionSlot.SlotIndex, true);
 
                 StopTargeting();
                 actionSlot.Clear();
@@ -727,21 +569,21 @@ namespace Content.Client.GameObjects.Components.Mobs
         {
             // swap the 2 slots
             var fromIdx = obj.FromSlot.SlotIndex;
-            var fromAssignment = _slots[_selectedHotbar, fromIdx];
+            var fromAssignment = _assignments[_selectedHotbar, fromIdx];
             var toIdx = obj.ToSlot.SlotIndex;
-            var toAssignment = _slots[_selectedHotbar, toIdx];
+            var toAssignment = _assignments[_selectedHotbar, toIdx];
 
             if (fromIdx == toIdx) return;
             if (!fromAssignment.HasValue) return;
 
-            AssignSlot(_selectedHotbar, toIdx, fromAssignment.Value);
+            _assignments.AssignSlot(_selectedHotbar, toIdx, fromAssignment.Value);
             if (toAssignment.HasValue)
             {
-                AssignSlot(_selectedHotbar, fromIdx, toAssignment.Value);
+                _assignments.AssignSlot(_selectedHotbar, fromIdx, toAssignment.Value);
             }
             else
             {
-                ClearSlot(_selectedHotbar, fromIdx);
+                _assignments.ClearSlot(_selectedHotbar, fromIdx, false);
             }
 
             UpdateUI();
@@ -753,10 +595,10 @@ namespace Content.Client.GameObjects.Components.Mobs
             {
                 // assign the dragged action to the target slot
                 case ActionPrototype actionPrototype:
-                    AssignSlot(_selectedHotbar, obj.ToSlot.SlotIndex, ActionAssignment.For(actionPrototype.ActionType));
+                    _assignments.AssignSlot(_selectedHotbar, obj.ToSlot.SlotIndex, ActionAssignment.For(actionPrototype.ActionType));
                     break;
                 case ItemActionPrototype itemActionPrototype:
-                    AssignSlot(_selectedHotbar, obj.ToSlot.SlotIndex, ActionAssignment.For(itemActionPrototype.ActionType));
+                    _assignments.AssignSlot(_selectedHotbar, obj.ToSlot.SlotIndex, ActionAssignment.For(itemActionPrototype.ActionType));
                     break;
             }
 
@@ -988,7 +830,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             if (_ui == null) return;
             foreach (var actionSlot in _ui.Slots)
             {
-                var assignedActionType = _slots[_selectedHotbar, actionSlot.SlotIndex];
+                var assignedActionType = _assignments[_selectedHotbar, actionSlot.SlotIndex];
                 if (!assignedActionType.HasValue) continue;
 
                 switch (assignedActionType.Value.Assignment)
@@ -1016,77 +858,12 @@ namespace Content.Client.GameObjects.Components.Mobs
                 {
                     UpdateTooltipCooldown(actionSlot.CooldownRemaining, actionSlot.TotalDuration);
                 }
-
             }
         }
 
         protected override void AfterActionChanged()
         {
             UpdateUI();
-        }
-
-        /// <summary>
-        /// An action can be assigned to a slot in 3 forms;
-        /// 1. Assign a regular action to a slot.
-        /// 2. Assign an item action type, not tied to an item, to a slot. This will become
-        ///     tied to an item as soon as an item with the action is equipped.
-        /// 3. Assign an item action type tied to a specific item, to a slot. This will become
-        ///     untied from the item as soon as an item with the action is unequipped.
-        ///    Users can never manually assign type 3 as it would make the action window unusable. But
-        ///     they can drag type 3 between slots to reassign.
-        /// </summary>
-        private struct ActionAssignment
-        {
-            public readonly ActionType? ActionType;
-            public readonly ItemActionType? ItemActionType;
-            public readonly EntityUid? Item;
-
-            public Assignment Assignment => ActionType.HasValue ? Assignment.Action :
-                Item.HasValue ? Assignment.ItemActionWithItem : Assignment.ItemActionWithoutItem;
-
-            private ActionAssignment(ActionType? actionType, ItemActionType? itemActionType, EntityUid? item)
-            {
-                ActionType = actionType;
-                ItemActionType = itemActionType;
-                Item = item;
-            }
-
-            public static ActionAssignment For(ActionType actionType)
-            {
-                return new ActionAssignment(actionType, null, null);
-            }
-
-            public static ActionAssignment For(ItemActionType actionType)
-            {
-                return new ActionAssignment(null, actionType, null);
-            }
-
-            public static ActionAssignment For(ItemActionType actionType, EntityUid item)
-            {
-                return new ActionAssignment(null, actionType, item);
-            }
-
-            public bool Equals(ActionAssignment other)
-            {
-                return ActionType == other.ActionType && ItemActionType == other.ItemActionType && Nullable.Equals(Item, other.Item);
-            }
-
-            public override bool Equals(object obj)
-            {
-                return obj is ActionAssignment other && Equals(other);
-            }
-
-            public override int GetHashCode()
-            {
-                return HashCode.Combine(ActionType, ItemActionType, Item);
-            }
-        }
-
-        private enum Assignment
-        {
-            Action,
-            ItemActionWithoutItem,
-            ItemActionWithItem
         }
     }
 }

@@ -124,7 +124,6 @@ namespace Content.Client.UserInterface.Controls
             {
                 SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
                 SizeFlagsVertical = SizeFlags.ShrinkEnd,
-                CustomMinimumSize = (16, 16),
                 Visible = false
             };
             _cooldownGraphic = new CooldownGraphic();
@@ -152,14 +151,14 @@ namespace Content.Client.UserInterface.Controls
             };
             paddingBoxItemIcon.AddChild(new Control()
             {
-                CustomMinimumSize = (48, 48),
+                CustomMinimumSize = (32, 32),
                 SizeFlagsVertical = SizeFlags.Fill
             });
             paddingBoxItemIcon.AddChild(_itemSpriteView);
-            AddChild(paddingBox);
-            AddChild(paddingBoxItemIcon);
             AddChild(_icon);
             AddChild(_cooldownGraphic);
+            AddChild(paddingBox);
+            AddChild(paddingBoxItemIcon);
 
             UpdateCooldown(null, TimeSpan.Zero);
 
@@ -256,7 +255,6 @@ namespace Content.Client.UserInterface.Controls
 
             Action = action;
             Item = item;
-            Action = null;
             _icon.Texture = action.Icon.Frame0();
             _icon.Visible = true;
             if (Item.TryGetComponent<ISpriteComponent>(out var spriteComponent))

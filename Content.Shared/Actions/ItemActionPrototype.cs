@@ -46,7 +46,7 @@ namespace Content.Shared.Actions
         /// </summary>
         public ITargetPointItemAction TargetPointAction { get; private set; }
 
-        public new void LoadFrom(YamlMappingNode mapping)
+        public override void LoadFrom(YamlMappingNode mapping)
         {
             base.LoadFrom(mapping);
             var serializer = YamlObjectSerializer.NewReader(mapping);

@@ -30,6 +30,7 @@ namespace Content.Server.GameObjects.Components.GUI
     [RegisterComponent]
     [ComponentReference(typeof(IHandsComponent))]
     [ComponentReference(typeof(ISharedHandsComponent))]
+    [ComponentReference(typeof(SharedHandsComponent))]
     public class HandsComponent : SharedHandsComponent, IHandsComponent, IBodyPartAdded, IBodyPartRemoved
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;

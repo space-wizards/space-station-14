@@ -43,10 +43,8 @@ namespace Content.Shared.GameObjects.Components.Mobs
         protected readonly IGameTiming GameTiming = default!;
         [Dependency]
         protected readonly IEntityManager EntityManager = default!;
-        [Dependency]
-        private readonly SharedHandsComponent _handsComponent = default!;
-        [Dependency]
-        private readonly SharedInventoryComponent _inventoryComponent = default!;
+        private SharedHandsComponent _handsComponent;
+        private SharedInventoryComponent _inventoryComponent;
 
         public override string Name => "ActionsUI";
         public override uint? NetID => ContentNetIDs.ACTIONS;
@@ -74,6 +72,13 @@ namespace Content.Shared.GameObjects.Components.Mobs
         // A system runs periodically to evict entries from this when their cooldowns have expired for a long enough time.
         private Dictionary<(EntityUid item, ItemActionType actionType), (TimeSpan start, TimeSpan end)> _itemActionCooldowns =
             new Dictionary<(EntityUid item, ItemActionType actionType), (TimeSpan start, TimeSpan end)>();
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            _handsComponent = Owner.GetComponent<SharedHandsComponent>();
+            _inventoryComponent = Owner.GetComponent<SharedInventoryComponent>();
+        }
 
         public override ComponentState GetComponentState()
         {

@@ -21,5 +21,10 @@
     {
         Error,
         DebugInstant,
+        DebugToggle,
+        DebugTargetPoint,
+        DebugTargetPointRepeat,
+        DebugTargetEntity,
+        DebugTargetEntityRepeat
     }
 }

@@ -25,6 +25,7 @@ using static Content.Shared.GameObjects.Components.Inventory.SharedInventoryComp
 namespace Content.Server.GameObjects.Components.GUI
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedInventoryComponent))]
     public class InventoryComponent : SharedInventoryComponent, IExAct, IEffectBlocker, IPressureProtection
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;

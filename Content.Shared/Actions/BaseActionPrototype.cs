@@ -55,7 +55,7 @@ namespace Content.Shared.Actions
         /// </summary>
         public IEnumerable<string> SearchTags { get; private set; }
 
-        public void LoadFrom(YamlMappingNode mapping)
+        public virtual void LoadFrom(YamlMappingNode mapping)
         {
             var serializer = YamlObjectSerializer.NewReader(mapping);
 
