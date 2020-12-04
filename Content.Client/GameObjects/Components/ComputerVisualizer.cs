@@ -85,7 +85,7 @@ namespace Content.Client.GameObjects.Components
             }
         }
 
-        public enum Layers
+        public enum Layers : byte
         {
             Body,
             Screen,

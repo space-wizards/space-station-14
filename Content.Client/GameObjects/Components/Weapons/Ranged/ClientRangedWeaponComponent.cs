@@ -5,8 +5,8 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.GameObjects.Components.Weapons.Ranged
 {
-    // Yeah I put it all in the same enum, don't judge me
-    public enum RangedBarrelVisualLayers
+    // Yeah I put it all in the same enum, don't judge me : byte
+    public enum RangedBarrelVisualLayers : byte
     {
         Base,
         BaseUnshaded,

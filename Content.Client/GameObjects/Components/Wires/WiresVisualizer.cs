@@ -21,7 +21,7 @@ namespace Content.Client.GameObjects.Components.Wires
             }
         }
 
-        public enum WiresVisualLayers
+        public enum WiresVisualLayers : byte
         {
             MaintenancePanel,
         }

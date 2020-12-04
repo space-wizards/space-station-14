@@ -55,7 +55,7 @@ namespace Content.Client.GameObjects.Components.Power
             }
         }
 
-        enum Layers
+        enum Layers : byte
         {
             ChargeState,
             Lock,

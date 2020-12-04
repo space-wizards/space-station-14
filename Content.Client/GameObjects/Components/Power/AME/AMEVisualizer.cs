@@ -52,7 +52,7 @@ namespace Content.Client.GameObjects.Components.Power.AME
         }
     }
 
-    enum Layers
+    enum Layers : byte
     {
         Core,
         CoreState,
