@@ -9,7 +9,7 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     internal sealed class EmergencyLightSystem : EntitySystem
     {
-        private readonly List<EmergencyLightComponent> _activeLights = new List<EmergencyLightComponent>();
+        private readonly List<EmergencyLightComponent> _activeLights = new();
 
         public override void Initialize()
         {

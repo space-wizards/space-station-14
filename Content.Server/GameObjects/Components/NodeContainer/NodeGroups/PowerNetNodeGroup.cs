@@ -32,16 +32,16 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         [Dependency] private readonly IPowerNetManager _powerNetManager = default!;
 
         [ViewVariables]
-        private readonly List<PowerSupplierComponent> _suppliers = new List<PowerSupplierComponent>();
+        private readonly List<PowerSupplierComponent> _suppliers = new();
 
         [ViewVariables]
         private int _totalSupply = 0;
 
         [ViewVariables]
-        private readonly Dictionary<Priority, List<PowerConsumerComponent>> _consumersByPriority = new Dictionary<Priority, List<PowerConsumerComponent>>();
+        private readonly Dictionary<Priority, List<PowerConsumerComponent>> _consumersByPriority = new();
 
         [ViewVariables]
-        private readonly Dictionary<Priority, int> _drawByPriority = new Dictionary<Priority, int>();
+        private readonly Dictionary<Priority, int> _drawByPriority = new();
 
         public static readonly IPowerNet NullNet = new NullPowerNet();
 

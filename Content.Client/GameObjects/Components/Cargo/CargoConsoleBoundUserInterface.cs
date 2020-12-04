@@ -63,7 +63,7 @@ namespace Content.Client.GameObjects.Components.Cargo
             };
             _menu.OnItemSelected += (args) =>
             {
-                if (!(args.Button.Parent is CargoProductRow row))
+                if (args.Button.Parent is not CargoProductRow row)
                     return;
                 _product = row.Product;
                 _orderMenu.Requester.Text = null;
@@ -87,7 +87,7 @@ namespace Content.Client.GameObjects.Components.Cargo
         {
             base.UpdateState(state);
 
-            if (!(state is CargoConsoleInterfaceState cState))
+            if (state is not CargoConsoleInterfaceState cState)
                 return;
             if (RequestOnly != cState.RequestOnly)
             {
@@ -121,14 +121,14 @@ namespace Content.Client.GameObjects.Components.Cargo
 
         internal void RemoveOrder(BaseButton.ButtonEventArgs args)
         {
-            if (!(args.Button.Parent.Parent is CargoOrderRow row))
+            if (args.Button.Parent.Parent is not CargoOrderRow row)
                 return;
             SendMessage(new SharedCargoConsoleComponent.CargoConsoleRemoveOrderMessage(row.Order.OrderNumber));
         }
 
         internal void ApproveOrder(BaseButton.ButtonEventArgs args)
         {
-            if (!(args.Button.Parent.Parent is CargoOrderRow row))
+            if (args.Button.Parent.Parent is not CargoOrderRow row)
                 return;
             if (ShuttleCapacity.CurrentCapacity == ShuttleCapacity.MaxCapacity)
                 return;

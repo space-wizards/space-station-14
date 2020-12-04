@@ -33,7 +33,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
         public StationEvent CurrentEvent { get; private set; }
         public IReadOnlyCollection<StationEvent> StationEvents => _stationEvents;
 
-        private readonly List<StationEvent> _stationEvents = new List<StationEvent>();
+        private readonly List<StationEvent> _stationEvents = new();
 
         private const float MinimumTimeUntilFirstEvent = 300;
 

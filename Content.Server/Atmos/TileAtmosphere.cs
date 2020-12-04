@@ -36,7 +36,7 @@ namespace Content.Server.Atmos
         private readonly GridTileLookupSystem _gridTileLookupSystem = default!;
 
 
-        private static readonly TileAtmosphereComparer Comparer = new TileAtmosphereComparer();
+        private static readonly TileAtmosphereComparer Comparer = new();
 
         [ViewVariables] private int _archivedCycle;
         [ViewVariables] private int _currentCycle;
@@ -636,7 +636,7 @@ namespace Content.Server.Atmos
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void ProcessCell(int fireCount)
+        public void ProcessCell(int fireCount, bool spaceWind = true)
         {
             // Can't process a tile without air
             if (Air == null)
@@ -708,14 +708,16 @@ namespace Content.Server.Atmos
                 {
                     var difference = Air.Share(enemyTile.Air, adjacentTileLength);
 
-                    // Space wind!
-                    if (difference > 0)
+                    if (spaceWind)
                     {
-                        ConsiderPressureDifference(enemyTile, difference);
-                    }
-                    else
-                    {
-                        enemyTile.ConsiderPressureDifference(this, -difference);
+                        if (difference > 0)
+                        {
+                            ConsiderPressureDifference(enemyTile, difference);
+                        }
+                        else
+                        {
+                            enemyTile.ConsiderPressureDifference(this, -difference);
+                        }
                     }
 
                     LastShareCheck();

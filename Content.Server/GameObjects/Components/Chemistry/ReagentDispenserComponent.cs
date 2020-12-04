@@ -14,6 +14,7 @@ using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.GameObjects.Verbs;
+using JetBrains.Annotations;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.GameObjects.EntitySystems;
@@ -48,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         [ViewVariables] private bool HasBeaker => _beakerContainer.ContainedEntity != null;
         [ViewVariables] private ReagentUnit _dispenseAmount = ReagentUnit.New(10);
-        [ViewVariables] private SolutionContainerComponent? Solution => _beakerContainer.ContainedEntity.GetComponent<SolutionContainerComponent>();
+        [UsedImplicitly] [ViewVariables] private SolutionContainerComponent? Solution => _beakerContainer.ContainedEntity.GetComponent<SolutionContainerComponent>();
 
         [ViewVariables] private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 

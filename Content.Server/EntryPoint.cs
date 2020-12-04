@@ -64,6 +64,7 @@ namespace Content.Server
 
             var logManager = IoCManager.Resolve<ILogManager>();
             logManager.GetSawmill("Storage").Level = LogLevel.Info;
+            logManager.GetSawmill("db.ef").Level = LogLevel.Info;
 
             IoCManager.Resolve<IConnectionManager>().Initialize();
             IoCManager.Resolve<IServerDbManager>().Init();

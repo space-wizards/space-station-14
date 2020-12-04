@@ -31,7 +31,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         /// <summary>
         /// A list of overlay containers representing the current overlays applied
         /// </summary>
-        private List<OverlayContainer> _currentEffects = new List<OverlayContainer>();
+        private List<OverlayContainer> _currentEffects = new();
 
         [ViewVariables(VVAccess.ReadOnly)]
         public List<OverlayContainer> ActiveOverlays
@@ -141,23 +141,11 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         private void UpdateOverlayConfiguration(OverlayContainer container, Overlay overlay)
         {
-            var configurableTypes = overlay.GetType()
-                .GetInterfaces()
-                .Where(type =>
-                    type.IsGenericType
-                    && type.GetGenericTypeDefinition() == typeof(IConfigurable<>)
-                    && container.Parameters.Exists(p => p.GetType() == type.GenericTypeArguments.First()))
-                .ToList();
-
-            if (configurableTypes.Count > 0)
+            if (overlay is IConfigurableOverlay configurable)
             {
-                foreach (var type in configurableTypes)
+                foreach (var param in container.Parameters)
                 {
-                    var method = type.GetMethod(nameof(IConfigurable<object>.Configure));
-                    var parameter = container.Parameters
-                        .First(p => p.GetType() == type.GenericTypeArguments.First());
-
-                    method!.Invoke(overlay, new []{ parameter });
+                    configurable.Configure(param);
                 }
             }
         }
@@ -169,7 +157,7 @@ namespace Content.Client.GameObjects.Components.Mobs
 
             if (overlayType != null)
             {
-                overlay = Activator.CreateInstance(overlayType) as Overlay;
+                overlay = IoCManager.Resolve<IDynamicTypeFactory>().CreateInstance<Overlay>(overlayType);
                 UpdateOverlayConfiguration(container, overlay);
                 return true;
             }

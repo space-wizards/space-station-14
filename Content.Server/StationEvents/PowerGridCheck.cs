@@ -28,7 +28,7 @@ namespace Content.Server.StationEvents
 
         private CancellationTokenSource _announceCancelToken;
 
-        private List<IEntity> _powered = new List<IEntity>();
+        private readonly List<IEntity> _powered = new List<IEntity>();
 
         public override void Setup()
         {

@@ -177,7 +177,7 @@ namespace Content.IntegrationTests.Tests
                         }, "Component '{0}' threw an exception.",
                         component.Name);
 
-                    server.RunTicks(10);
+                    server.RunTicks(2);
 
                     entityManager.DeleteEntity(entity.Uid);
                 }
@@ -307,7 +307,7 @@ namespace Content.IntegrationTests.Tests
                             component.Name);
                     }
 
-                    server.RunTicks(48); // Run one full second on the server
+                    server.RunTicks(2);
 
                     entityManager.DeleteEntity(entity.Uid);
                 }

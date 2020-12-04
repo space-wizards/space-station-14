@@ -106,6 +106,17 @@
 
 - type: entity
   parent: ClothingBackpack
+  id: ClothingBackpackScience
+  name: science backpack
+  description: A backpack specially designed to repel stains and hazardous liquids.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/science.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Backpacks/science.rsi
+
+- type: entity
+  parent: ClothingBackpack
   id: ClothingBackpackHolding
   name: bag of holding
   description: A backpack that opens into a localized pocket of bluespace.

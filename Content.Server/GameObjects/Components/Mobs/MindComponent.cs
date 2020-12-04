@@ -82,7 +82,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         private void OnUiAcceptCloningMessage(ServerBoundUserInterfaceMessage obj)
         {
-            if (!(obj.Message is SharedAcceptCloningComponent.UiButtonPressedMessage message)) return;
+            if (obj.Message is not SharedAcceptCloningComponent.UiButtonPressedMessage) return;
             if (Mind != null)
             {
                 Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new GhostComponent.GhostReturnMessage(Mind));
