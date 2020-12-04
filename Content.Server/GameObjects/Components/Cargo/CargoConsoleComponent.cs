@@ -66,15 +66,8 @@ namespace Content.Server.GameObjects.Components.Cargo
         {
             base.Initialize();
 
-            if (!Owner.EnsureComponent(out GalacticMarketComponent _))
-            {
-                Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition} had no {nameof(GalacticMarketComponent)}");
-            }
-
-            if (!Owner.EnsureComponent(out CargoOrderDatabaseComponent _))
-            {
-                Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition} had no {nameof(GalacticMarketComponent)}");
-            }
+            Owner.EnsureComponentWarn(out GalacticMarketComponent _);
+            Owner.EnsureComponentWarn(out CargoOrderDatabaseComponent _);
 
             if (UserInterface != null)
             {

@@ -1,15 +1,10 @@
 ﻿#nullable enable
-using System;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Atmos;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
@@ -85,10 +80,9 @@ namespace Content.Server.GameObjects.Components.Atmos
             // Using the SnapGrid is critical for performance, and thus if it is absent the component
             // will not be airtight. A warning is much easier to track down than the object magically
             // not being airtight, so log one if the SnapGrid component is missing.
-            if (!Owner.EnsureComponent(out SnapGridComponent _))
-                Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition} didn't have a {nameof(SnapGridComponent)}");
+            Owner.EnsureComponentWarn(out SnapGridComponent _);
 
-            if(_fixAirBlockedDirectionInitialize)
+            if (_fixAirBlockedDirectionInitialize)
                 RotateEvent(new RotateEvent(Owner, Angle.Zero, Owner.Transform.LocalRotation));
 
             UpdatePosition();
