@@ -50,7 +50,6 @@ namespace Content.Server.GameObjects.Components.Buckle
         /// </summary>
         [ViewVariables]
         private float _range;
-
         /// <summary>
         ///     The amount of time that must pass for this entity to
         ///     be able to unbuckle after recently buckling.
@@ -440,26 +439,16 @@ namespace Content.Server.GameObjects.Components.Buckle
             return TryUnbuckle(eventArgs.User);
         }
 
+
         public void Update()
         {
-            if (Buckled)
-               return;
+            if (!DontCollide)
+                return;
 
             if (!IsOnStrapEntityThisFrame && DontCollide)
                 DontCollide = false;
 
             IsOnStrapEntityThisFrame = false;
-        }
-        
-        public override bool PreventCollide(IPhysBody collidedwith)
-        {
-            if (collidedwith.Entity.Uid == EntityBuckledTo)
-            {
-                IsOnStrapEntityThisFrame = true;
-                return Buckled || DontCollide;
-            }
-
-            return false;
         }
 
         /// <summary>

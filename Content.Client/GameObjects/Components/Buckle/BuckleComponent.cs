@@ -2,7 +2,6 @@
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Physics;
 
 namespace Content.Client.GameObjects.Components.Buckle
 {
@@ -47,18 +46,6 @@ namespace Content.Client.GameObjects.Components.Buckle
                 ownerSprite.DrawDepth = _originalDrawDepth.Value;
                 _originalDrawDepth = null;
             }
-
-        }
-
-        public override bool PreventCollide(IPhysBody collidedwith)
-        {
-            if (collidedwith.Entity.Uid == EntityBuckledTo)
-            {
-                IsOnStrapEntityThisFrame = true;
-                return Buckled || DontCollide;
-            }
-
-            return false;
         }
     }
 }

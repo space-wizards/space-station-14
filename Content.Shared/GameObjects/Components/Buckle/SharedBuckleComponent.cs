@@ -5,6 +5,7 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Log;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 
@@ -24,10 +25,19 @@ namespace Content.Shared.GameObjects.Components.Buckle
 
         public virtual bool IsOnStrapEntityThisFrame { get; set; }
         public virtual bool DontCollide { get; set; } = false;
-
         public abstract bool TryBuckle(IEntity user, IEntity to);
 
-        public abstract bool PreventCollide(IPhysBody collidedwith);
+         bool ICollideSpecial.PreventCollide(IPhysBody collidedwith)
+        {
+            Logger.Debug(DontCollide.ToString());
+            if (collidedwith.Entity.Uid == EntityBuckledTo)
+            {
+                IsOnStrapEntityThisFrame = true;
+                return Buckled || DontCollide;
+            }
+
+            return false;
+        }
 
         bool IActionBlocker.CanMove()
         {
