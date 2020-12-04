@@ -42,14 +42,14 @@ namespace Content.Server.Commands.Body
                 return;
             }
 
-            var hand = body.Parts.FirstOrDefault(x => x.Value.PartType == BodyPartType.Hand);
-            if (hand.Value.Equals(default))
+            var (_, hand) = body.Parts.FirstOrDefault(x => x.Value.PartType == BodyPartType.Hand);
+            if (hand == null)
             {
                 shell.SendText(player, "You have no hands.");
             }
             else
             {
-                body.RemovePart(hand.Value);
+                body.RemovePart(hand);
             }
         }
     }
