@@ -48,8 +48,7 @@ namespace Content.Server.StationEvents
             {
                 var diceRolled = robustRandom.Next(0, posEventTarget.Length);
                 var selected = posEventTarget[diceRolled];
-                var salt = AccessHelper.DoorSector.Medical;
-                accessHelper.TryGetDepartmentDoorNames(salt, out var access);
+                accessHelper.TryGetDepartmentDoorNames(selected, out var access);
                 _eventTargets.Concat(access);
                 posEventTarget.Take(diceRolled);
             }
