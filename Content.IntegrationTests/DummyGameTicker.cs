@@ -70,7 +70,7 @@ namespace Content.IntegrationTests
         public EntityCoordinates GetJobSpawnPoint(string jobId) => EntityCoordinates.Invalid;
         public EntityCoordinates GetObserverSpawnPoint() => EntityCoordinates.Invalid;
 
-        public void EquipStartingGear(IEntity entity, StartingGearPrototype startingGear, ClothingPreference clothing)
+        public void EquipStartingGear(IEntity entity, StartingGearPrototype startingGear, HumanoidCharacterProfile profile)
         {
         }
 

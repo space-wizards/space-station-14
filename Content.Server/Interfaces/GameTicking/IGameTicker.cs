@@ -47,7 +47,7 @@ namespace Content.Server.Interfaces.GameTicking
         EntityCoordinates GetJobSpawnPoint(string jobId);
         EntityCoordinates GetObserverSpawnPoint();
 
-        void EquipStartingGear(IEntity entity, StartingGearPrototype startingGear, ClothingPreference clothing);
+        void EquipStartingGear(IEntity entity, StartingGearPrototype startingGear, HumanoidCharacterProfile profile);
 
         // GameRule system.
         T AddGameRule<T>() where T : GameRule, new();

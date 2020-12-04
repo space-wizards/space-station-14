@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,24 +14,21 @@ namespace Content.Shared.Roles
     [Prototype("startingGear")]
     public class StartingGearPrototype : IPrototype, IIndexedPrototype
     {
-        private string _id;
-        private Dictionary<Slots, string> _equipment;
-        private string _innerClothingSkirt;
+        private string _id = default!;
+        private Dictionary<Slots, string> _equipment = default!;
+
+        /// <summary>
+        /// if empty, there is no skirt override - instead the uniform provided in equipment is added.
+        /// </summary>
+        private string _innerClothingSkirt = default!;
 
         public IReadOnlyDictionary<string, string> Inhand => _inHand;
         /// <summary>
         /// hand index, item prototype
         /// </summary>
-        private Dictionary<string, string> _inHand;
+        private Dictionary<string, string> _inHand = default!;
 
         [ViewVariables] public string ID => _id;
-
-        [ViewVariables] public IReadOnlyDictionary<Slots, string> Equipment => _equipment;
-
-        /// <summary>
-        /// if empty, there is no skirt override - instead the uniform provided in equipment is added.
-        /// </summary>
-        [ViewVariables] public string InnerClothingSkirt => _innerClothingSkirt;
 
         public void LoadFrom(YamlMappingNode mapping)
         {
@@ -55,15 +53,21 @@ namespace Content.Shared.Roles
             serializer.DataField(ref _innerClothingSkirt, "innerclothingskirt", string.Empty);
         }
 
-        public string GetInnerClothing(ClothingPreference clothing)
+        public string GetGear(Slots slot, HumanoidCharacterProfile? profile)
         {
-            if ((clothing == ClothingPreference.Jumpskirt) && (InnerClothingSkirt != ""))
+            if (profile != null)
             {
-                return InnerClothingSkirt;
+                if ((slot == Slots.INNERCLOTHING) && (profile.Clothing == ClothingPreference.Jumpskirt) && (_innerClothingSkirt != ""))
+                    return _innerClothingSkirt;
+            }
+
+            if (_equipment.ContainsKey(slot))
+            {
+                return _equipment[slot];
             }
             else
             {
-                return Equipment[Slots.INNERCLOTHING];
+                return "";
             }
         }
     }

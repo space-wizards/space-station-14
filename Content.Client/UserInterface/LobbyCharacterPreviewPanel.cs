@@ -141,16 +141,15 @@ namespace Content.Client.UserInterface
 
             inventory.ClearAllSlotVisuals();
 
-            foreach (var (slot, itemType) in gear.Equipment)
+            foreach (var slot in AllSlots)
             {
-                var itemTypeModified = itemType;
-                if (slot == Slots.INNERCLOTHING)
-                    itemTypeModified = gear.GetInnerClothing(profile.Clothing);
-                var item = entityMan.SpawnEntity(itemTypeModified, MapCoordinates.Nullspace);
-
-                inventory.SetSlotVisuals(slot, item);
-
-                item.Delete();
+                var itemType = gear.GetGear(slot, profile);
+                if (itemType != "")
+                {
+                    var item = entityMan.SpawnEntity(itemType, MapCoordinates.Nullspace);
+                    inventory.SetSlotVisuals(slot, item);
+                    item.Delete();
+                }
             }
         }
     }
