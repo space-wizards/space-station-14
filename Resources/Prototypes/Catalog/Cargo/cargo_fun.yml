@@ -23,13 +23,13 @@
   group: market
 
 - type: cargoProduct
-  name: "art supplies"
+  name: "plushie crate"
   id: cargo.funplushies
-  description: "A buncha soft plushies. Throw them around and then wonder "
+  description: "A buncha soft plushies. Throw them around and then wonder how you're gonna explain this purchase to NT"
   icon:
     sprite: Objects/Fun/toys.rsi
     state: plushie_h
   product: CrateFunPlushie
-  cost: 1000
+  cost: 5000
   category: Fun
   group: market
