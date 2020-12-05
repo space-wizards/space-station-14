@@ -236,7 +236,7 @@ namespace Content.Server.Atmos
             }
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void EqualizePressureInZone(int cycleNum)
         {
             if (Air == null || (_tileAtmosInfo.LastCycle >= cycleNum)) return; // Already done.
@@ -427,7 +427,7 @@ namespace Content.Server.Atmos
                             if (!tile._adjacentBits.IsFlagSet(direction)) continue;
                             var tile2 = tile._adjacentTiles[k];
                             if (giver._tileAtmosInfo.MoleDelta <= 0) break; // We're done here now. Let's not do more work than needed.
-                            if (tile2._tileAtmosInfo.LastQueueCycle != queueCycle) continue;
+                            if (tile2 == null || tile2._tileAtmosInfo.LastQueueCycle != queueCycle) continue;
                             if (tile2._tileAtmosInfo.LastSlowQueueCycle == queueCycleSlow) continue;
 
                             queue[queueLength++] = tile2;
@@ -496,7 +496,7 @@ namespace Content.Server.Atmos
                             var tile2 = tile._adjacentTiles[k];
 
                             if (taker._tileAtmosInfo.MoleDelta >= 0) break; // We're done here now. Let's not do more work than needed.
-                            if (tile2._tileAtmosInfo.LastQueueCycle != queueCycle) continue;
+                            if (tile2 == null || tile2._tileAtmosInfo.LastQueueCycle != queueCycle) continue;
                             if (tile2._tileAtmosInfo.LastSlowQueueCycle == queueCycleSlow) continue;
                             queue[queueLength++] = tile2;
                             tile2._tileAtmosInfo.LastSlowQueueCycle = queueCycleSlow;

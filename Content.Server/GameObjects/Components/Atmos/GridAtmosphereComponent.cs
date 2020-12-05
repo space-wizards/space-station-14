@@ -585,8 +585,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             while (_currentRunTiles.Count > 0)
             {
                 var tile = _currentRunTiles.Dequeue();
-                // ReSharper disable once ConstantConditionalAccessQualifier
-                tile?.EqualizePressureInZone(UpdateCounter);
+                tile.EqualizePressureInZone(UpdateCounter);
 
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
