@@ -24,7 +24,7 @@ namespace Content.Shared.Actions
         /// </summary>
         public readonly IEntity Performer;
         /// <summary>
-        /// True if the toggle is being toggled on, false if being toggled off
+        /// True if the toggle was toggled on, false if it was toggled off
         /// </summary>
         public readonly bool ToggledOn;
         /// <summary>
