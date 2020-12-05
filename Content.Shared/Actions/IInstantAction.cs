@@ -18,16 +18,10 @@ namespace Content.Shared.Actions
         void DoInstantAction(InstantActionEventArgs args);
     }
 
-    public class InstantActionEventArgs : EventArgs
+    public class InstantActionEventArgs : ActionEventArgs
     {
-        /// <summary>
-        /// Entity performing the action.
-        /// </summary>
-        public readonly IEntity Performer;
-
-        public InstantActionEventArgs(IEntity performer)
+        public InstantActionEventArgs(IEntity performer, ActionType actionType) : base(performer, actionType)
         {
-            Performer = performer;
         }
     }
 }

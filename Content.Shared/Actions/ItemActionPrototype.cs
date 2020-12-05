@@ -65,7 +65,7 @@ namespace Content.Shared.Actions
             // TODO: Split this class into server/client after RobustToolbox#1405
             if (IoCManager.Resolve<IModuleManager>().IsClientModule) return;
 
-            IActionBehavior behavior = null;
+            IItemActionBehavior behavior = null;
             serializer.DataField(ref behavior, "behavior", null);
             if (behavior == null)
             {

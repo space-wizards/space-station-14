@@ -874,6 +874,7 @@ namespace Content.Client.GameObjects.Components.Mobs
                 _actionRequirements.SetMessage(FormattedMessage.FromMarkup("[color=#635c5c]" +
                                                                            action.Requires +
                                                                            "[/color]"));
+                _actionRequirements.Visible = true;
             }
             else
             {
@@ -930,6 +931,10 @@ namespace Content.Client.GameObjects.Components.Mobs
                         {
                             actionSlot.UpdateCooldown(actionState.Cooldown, GameTiming.CurTime);
                         }
+                        else
+                        {
+                            actionSlot.UpdateCooldown(null, GameTiming.CurTime);
+                        }
                         break;
                     }
                     case Assignment.ItemActionWithItem:
@@ -939,6 +944,15 @@ namespace Content.Client.GameObjects.Components.Mobs
                         {
                             actionSlot.UpdateCooldown(actionState.Cooldown, GameTiming.CurTime);
                         }
+                        else
+                        {
+                            actionSlot.UpdateCooldown(null, GameTiming.CurTime);
+                        }
+                        break;
+                    }
+                    default:
+                    {
+                        actionSlot.UpdateCooldown(null, GameTiming.CurTime);
                         break;
                     }
                 }

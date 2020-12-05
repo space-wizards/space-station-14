@@ -8,7 +8,7 @@ namespace Content.Shared.Actions
     /// <summary>
     /// Item action which is used on a targeted entity.
     /// </summary>
-    public interface ITargetEntityItemAction : IActionBehavior
+    public interface ITargetEntityItemAction : IItemActionBehavior
     {
         /// <summary>
         /// Invoked when the target entity action should be performed.
@@ -17,28 +17,18 @@ namespace Content.Shared.Actions
         void DoTargetEntityAction(TargetEntityItemActionEventArgs args);
     }
 
-    public class TargetEntityItemActionEventArgs : EventArgs
+    public class TargetEntityItemActionEventArgs : ItemActionEventArgs
     {
-        /// <summary>
-        /// Entity performing the action.
-        /// </summary>
-        public readonly IEntity Performer;
-
         /// <summary>
         /// Entity being targeted
         /// </summary>
         public readonly IEntity Target;
 
-        /// <summary>
-        /// Item being used to perform the action.
-        /// </summary>
-        public readonly IEntity Item;
-
-        public TargetEntityItemActionEventArgs(IEntity performer, IEntity target, IEntity item)
+        public TargetEntityItemActionEventArgs(IEntity performer, IEntity target, IEntity item,
+            ItemActionType actionType) : base(performer, item, actionType)
         {
-            Performer = performer;
             Target = target;
-            Item = item;
+
         }
     }
 }

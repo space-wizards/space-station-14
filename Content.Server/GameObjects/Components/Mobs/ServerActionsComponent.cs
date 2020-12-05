@@ -82,7 +82,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                         return;
                     }
 
-                    action.InstantAction.DoInstantAction(new InstantActionEventArgs(player));
+                    action.InstantAction.DoInstantAction(new InstantActionEventArgs(player, action.ActionType));
 
                     break;
                 case PerformToggleActionMessage msg:
@@ -104,7 +104,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
                     ToggleAction(action.ActionType, msg.ToggleOn);
 
-                    action.ToggleAction.DoToggleAction(new ToggleActionEventArgs(player, msg.ToggleOn));
+                    action.ToggleAction.DoToggleAction(new ToggleActionEventArgs(player, action.ActionType, msg.ToggleOn));
                     break;
                 case PerformTargetPointActionMessage msg:
                     if (action.TargetPointAction == null)
@@ -124,7 +124,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                         }
                     }
 
-                    action.TargetPointAction.DoTargetPointAction(new TargetPointActionEventArgs(player, msg.Target));
+                    action.TargetPointAction.DoTargetPointAction(new TargetPointActionEventArgs(player, msg.Target, action.ActionType));
                     break;
                 case PerformTargetEntityActionMessage msg:
                     if (action.TargetEntityAction == null)
@@ -152,7 +152,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                         }
                     }
 
-                    action.TargetEntityAction.DoTargetEntityAction(new TargetEntityActionEventArgs(player, entity));
+                    action.TargetEntityAction.DoTargetEntityAction(new TargetEntityActionEventArgs(player, action.ActionType, entity));
                     break;
             }
         }
@@ -219,7 +219,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                         return;
                     }
 
-                    action.InstantAction.DoInstantAction(new InstantItemActionEventArgs(player, item));
+                    action.InstantAction.DoInstantAction(new InstantItemActionEventArgs(player, item, action.ActionType));
 
                     break;
                 case PerformToggleItemActionMessage msg:
@@ -241,7 +241,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
                     ToggleAction(action.ActionType, item,  msg.ToggleOn);
 
-                    action.ToggleAction.DoToggleAction(new ToggleItemActionEventArgs(player, msg.ToggleOn, item));
+                    action.ToggleAction.DoToggleAction(new ToggleItemActionEventArgs(player, msg.ToggleOn, item, action.ActionType));
                     break;
                 case PerformTargetPointItemActionMessage msg:
                     if (action.TargetPointAction == null)
@@ -261,7 +261,8 @@ namespace Content.Server.GameObjects.Components.Mobs
                         }
                     }
 
-                    action.TargetPointAction.DoTargetPointAction(new TargetPointItemActionEventArgs(player, msg.Target, item));
+                    action.TargetPointAction.DoTargetPointAction(
+                        new TargetPointItemActionEventArgs(player, msg.Target, item, action.ActionType));
                     break;
                 case PerformTargetEntityItemActionMessage msg:
                     if (action.TargetEntityAction == null)
@@ -289,7 +290,8 @@ namespace Content.Server.GameObjects.Components.Mobs
                         }
                     }
 
-                    action.TargetEntityAction.DoTargetEntityAction(new TargetEntityItemActionEventArgs(player, entity, item));
+                    action.TargetEntityAction.DoTargetEntityAction(
+                        new TargetEntityItemActionEventArgs(player, entity, item, action.ActionType));
                     break;
             }
         }

@@ -5,7 +5,7 @@
   iconStyle: BigItem
   name: "Toggle Internals"
   description: "Breathe from the equipped gas tank."
-  requires: "Requires equipped [color=green]breath mask[/color] and [color=green]gas tank[/color]"
+  requires: "Requires equipped breath mask and gas tank"
   filters:
     - common
     - atmos
@@ -29,6 +29,7 @@
   behaviorType: Instant
   behavior: !type:DebugInstant
     message: Instant action was used!
+    cooldown: 10
 
 - type: itemAction
   actionType: DebugToggle

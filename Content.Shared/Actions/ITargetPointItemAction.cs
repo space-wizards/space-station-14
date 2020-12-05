@@ -8,7 +8,7 @@ namespace Content.Shared.Actions
     /// Item action which requires the user to select a target point, which
     /// does not necessarily have an entity on it.
     /// </summary>
-    public interface ITargetPointItemAction : IActionBehavior
+    public interface ITargetPointItemAction : IItemActionBehavior
     {
         /// <summary>
         /// Invoked when the target point action should be performed.
@@ -17,28 +17,17 @@ namespace Content.Shared.Actions
         void DoTargetPointAction(TargetPointItemActionEventArgs args);
     }
 
-    public class TargetPointItemActionEventArgs : EventArgs
+    public class TargetPointItemActionEventArgs : ItemActionEventArgs
     {
-        /// <summary>
-        /// Entity performing the action.
-        /// </summary>
-        public readonly IEntity Performer;
-
         /// <summary>
         /// Local coordinates of the targeted position.
         /// </summary>
         public readonly EntityCoordinates Target;
 
-        /// <summary>
-        /// Item being used to perform the action.
-        /// </summary>
-        public readonly IEntity Item;
-
-        public TargetPointItemActionEventArgs(IEntity performer, EntityCoordinates target, IEntity item)
+        public TargetPointItemActionEventArgs(IEntity performer, EntityCoordinates target, IEntity item,
+            ItemActionType actionType) : base(performer, item, actionType)
         {
-            Performer = performer;
             Target = target;
-            Item = item;
         }
     }
 }

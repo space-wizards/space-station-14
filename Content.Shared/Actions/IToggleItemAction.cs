@@ -7,7 +7,7 @@ namespace Content.Shared.Actions
     /// <summary>
     /// Item action which can be toggled on and off
     /// </summary>
-    public interface IToggleItemAction : IActionBehavior
+    public interface IToggleItemAction : IItemActionBehavior
     {
         /// <summary>
         /// Invoked after the action is toggled on/off.
@@ -17,12 +17,8 @@ namespace Content.Shared.Actions
         void DoToggleAction(ToggleItemActionEventArgs args);
     }
 
-    public class ToggleItemActionEventArgs : EventArgs
+    public class ToggleItemActionEventArgs : ItemActionEventArgs
     {
-        /// <summary>
-        /// Entity performing the action.
-        /// </summary>
-        public readonly IEntity Performer;
         /// <summary>
         /// True if the toggle was toggled on, false if it was toggled off
         /// </summary>
@@ -31,16 +27,11 @@ namespace Content.Shared.Actions
         /// Opposite of ToggledOn
         /// </summary>
         public bool ToggledOff => !ToggledOn;
-        /// <summary>
-        /// Item being used to perform the action.
-        /// </summary>
-        public readonly IEntity Item;
 
-        public ToggleItemActionEventArgs(IEntity performer, bool toggledOn, IEntity item)
+        public ToggleItemActionEventArgs(IEntity performer, bool toggledOn, IEntity item,
+            ItemActionType actionType) : base(performer, item, actionType)
         {
-            Performer = performer;
             ToggledOn = toggledOn;
-            Item = item;
         }
     }
 }

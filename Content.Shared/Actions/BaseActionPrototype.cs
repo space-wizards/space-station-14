@@ -43,7 +43,8 @@ namespace Content.Shared.Actions
         public FormattedMessage Description { get; private set; }
 
         /// <summary>
-        /// Requirements message to show in UI. Does NOT accept formatting.
+        /// Requirements message to show in UI. Accepts formatting, but generally should be avoided
+        /// so the requirements message isn't too prominent in the tooltip.
         /// </summary>
         public string Requires { get; private set; }
 

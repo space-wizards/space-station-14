@@ -17,12 +17,8 @@ namespace Content.Shared.Actions
         void DoToggleAction(ToggleActionEventArgs args);
     }
 
-    public class ToggleActionEventArgs : EventArgs
+    public class ToggleActionEventArgs : ActionEventArgs
     {
-        /// <summary>
-        /// Entity performing the action.
-        /// </summary>
-        public readonly IEntity Performer;
         /// <summary>
         /// True if the toggle was toggled on, false if it was toggled off
         /// </summary>
@@ -32,9 +28,8 @@ namespace Content.Shared.Actions
         /// </summary>
         public bool ToggledOff => !ToggledOn;
 
-        public ToggleActionEventArgs(IEntity performer, bool toggledOn)
+        public ToggleActionEventArgs(IEntity performer, ActionType actionType, bool toggledOn) : base(performer, actionType)
         {
-            Performer = performer;
             ToggledOn = toggledOn;
         }
     }

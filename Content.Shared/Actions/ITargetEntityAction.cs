@@ -17,21 +17,16 @@ namespace Content.Shared.Actions
         void DoTargetEntityAction(TargetEntityActionEventArgs args);
     }
 
-    public class TargetEntityActionEventArgs : EventArgs
+    public class TargetEntityActionEventArgs : ActionEventArgs
     {
-        /// <summary>
-        /// Entity performing the action.
-        /// </summary>
-        public readonly IEntity Performer;
-
         /// <summary>
         /// Entity being targeted
         /// </summary>
         public readonly IEntity Target;
 
-        public TargetEntityActionEventArgs(IEntity performer, IEntity target)
+        public TargetEntityActionEventArgs(IEntity performer, ActionType actionType, IEntity target) :
+            base(performer, actionType)
         {
-            Performer = performer;
             Target = target;
         }
     }

@@ -8,7 +8,7 @@ namespace Content.Shared.Actions
     /// Item action which does something immediately when used and has
     /// no target.
     /// </summary>
-    public interface IInstantItemAction : IActionBehavior
+    public interface IInstantItemAction : IItemActionBehavior
     {
 
         /// <summary>
@@ -18,22 +18,11 @@ namespace Content.Shared.Actions
         void DoInstantAction(InstantItemActionEventArgs args);
     }
 
-    public class InstantItemActionEventArgs : EventArgs
+    public class InstantItemActionEventArgs : ItemActionEventArgs
     {
-        /// <summary>
-        /// Entity performing the action.
-        /// </summary>
-        public readonly IEntity Performer;
-
-        /// <summary>
-        /// Item being used to perform the action.
-        /// </summary>
-        public readonly IEntity Item;
-
-        public InstantItemActionEventArgs(IEntity performer, IEntity item)
+        public InstantItemActionEventArgs(IEntity performer, IEntity item, ItemActionType actionType) :
+            base(performer, item, actionType)
         {
-            Performer = performer;
-            Item = item;
         }
     }
 }

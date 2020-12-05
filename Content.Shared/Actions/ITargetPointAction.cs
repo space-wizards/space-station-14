@@ -17,21 +17,16 @@ namespace Content.Shared.Actions
         void DoTargetPointAction(TargetPointActionEventArgs args);
     }
 
-    public class TargetPointActionEventArgs : EventArgs
+    public class TargetPointActionEventArgs : ActionEventArgs
     {
-        /// <summary>
-        /// Entity performing the action.
-        /// </summary>
-        public readonly IEntity Performer;
-
         /// <summary>
         /// Local coordinates of the targeted position.
         /// </summary>
         public readonly EntityCoordinates Target;
 
-        public TargetPointActionEventArgs(IEntity performer, EntityCoordinates target)
+        public TargetPointActionEventArgs(IEntity performer, EntityCoordinates target, ActionType actionType)
+            : base(performer, actionType)
         {
-            Performer = performer;
             Target = target;
         }
     }

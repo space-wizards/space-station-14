@@ -201,7 +201,7 @@ namespace Content.Client.UserInterface.Controls
         /// <param name="curTime">current game time</param>
         public void UpdateCooldown((TimeSpan Start, TimeSpan End)? alertCooldown, in TimeSpan curTime)
         {
-            if (!alertCooldown.HasValue)
+            if (!alertCooldown.HasValue || (Action is ItemActionPrototype itemAction && Item == null))
             {
                 _cooldownGraphic.Progress = 0;
                 _cooldownGraphic.Visible = false;
