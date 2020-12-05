@@ -21,3 +21,6 @@
   - type: AiFactionTag
     factions:
     - NanoTransen
+  - type: InnateActions
+    actions:
+      - HumanScream

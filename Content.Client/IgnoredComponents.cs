@@ -213,6 +213,7 @@
             "RandomSpriteState",
             "DebugEquip",
             "ItemActions",
+            "InnateActions",
         };
     }
 }

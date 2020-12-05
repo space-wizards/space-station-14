@@ -864,12 +864,21 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
 
             _actionName.SetMessage(action.Name);
-            _actionDescription.SetMessage(action.Description);
+            if (!string.IsNullOrWhiteSpace(action.Description.ToString()))
+            {
+                _actionDescription.SetMessage(action.Description);
+                _actionDescription.Visible = true;
+            }
+            else
+            {
+                _actionDescription.Visible = false;
+            }
+
             // check for a cooldown
             _tooltipCooldownSecs = -1;
             UpdateTooltipCooldown(cooldownRemaining, totalCooldownDuration);
             //check for requirements message
-            if (action.Requires != null)
+            if (!string.IsNullOrWhiteSpace(action.Requires))
             {
                 _actionRequirements.SetMessage(FormattedMessage.FromMarkup("[color=#635c5c]" +
                                                                            action.Requires +

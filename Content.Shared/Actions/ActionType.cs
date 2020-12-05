@@ -6,6 +6,7 @@
     public enum ActionType : byte
     {
         Error,
+        HumanScream,
         DebugInstant,
         DebugToggle,
         DebugTargetPoint,
