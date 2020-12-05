@@ -29,6 +29,8 @@ namespace Content.Client.UserInterface
         private readonly Action<BaseButton.ButtonEventArgs> _onNextHotbarPressed;
         private readonly Action<BaseButton.ButtonEventArgs> _onPreviousHotbarPressed;
         private readonly Action<BaseButton.ButtonEventArgs> _onSettingsButtonPressed;
+        private readonly Action<GUIMouseHoverEventArgs> _onMouseEnteredAction;
+        private readonly Action<GUIMouseHoverEventArgs> _onMouseExitedAction;
         private readonly ActionSlot[] _slots;
 
         private readonly VBoxContainer _hotbarContainer;
@@ -62,11 +64,14 @@ namespace Content.Client.UserInterface
         /// <param name="onPressAction">OnPressed handler to assign to each action slot</param>
         /// <param name="onDragDropAction">invoked when dragging and dropping an action from
         /// one slot to another.</param>
+        /// <param name="onMouseEnteredAction">OnMouseEntered handler to assign to each action slot</param>
+        /// <param name="onMouseExitedAction">OnMouseExited handler to assign to each action slot</param>
         /// <param name="onNextHotbarPressed">invoked when pressing the next hotbar button</param>
         /// <param name="onPreviousHotbarPressed">invoked when pressing the previous hotbar button</param>
         /// <param name="onSettingsButtonPressed">invoked when pressing the settings button</param>
         public ActionsUI(EventHandler onShowTooltip, EventHandler onHideTooltip, Action<BaseButton.ButtonEventArgs> onPressAction,
-            Action<ActionSlotDragDropEventArgs> onDragDropAction,
+            Action<ActionSlotDragDropEventArgs> onDragDropAction, Action<GUIMouseHoverEventArgs> onMouseEnteredAction,
+            Action<GUIMouseHoverEventArgs> onMouseExitedAction,
             Action<BaseButton.ButtonEventArgs> onNextHotbarPressed, Action<BaseButton.ButtonEventArgs> onPreviousHotbarPressed,
             Action<BaseButton.ButtonEventArgs> onSettingsButtonPressed)
         {
@@ -79,6 +84,8 @@ namespace Content.Client.UserInterface
             _onHideTooltip = onHideTooltip;
             _onPressAction = onPressAction;
             _onDragDropAction = onDragDropAction;
+            _onMouseEnteredAction = onMouseEnteredAction;
+            _onMouseExitedAction = onMouseExitedAction;
             _onNextHotbarPressed = onNextHotbarPressed;
             _onPreviousHotbarPressed = onPreviousHotbarPressed;
             _onSettingsButtonPressed = onSettingsButtonPressed;
@@ -187,6 +194,8 @@ namespace Content.Client.UserInterface
                 slot.OnButtonDown += ActionSlotOnButtonDown;
                 slot.OnButtonUp += ActionSlotOnButtonUp;
                 slot.OnPressed += _onPressAction;
+                slot.OnMouseEntered += _onMouseEnteredAction;
+                slot.OnMouseExited += _onMouseExitedAction;
                 _slotContainer.AddChild(slot);
                 _slots[i - 1] = slot;
             }
@@ -207,6 +216,8 @@ namespace Content.Client.UserInterface
                 slot.OnShowTooltip -= _onShowTooltip;
                 slot.OnHideTooltip -= _onHideTooltip;
                 slot.OnPressed -= _onPressAction;
+                slot.OnMouseEntered -= _onMouseEnteredAction;
+                slot.OnMouseExited -= _onMouseExitedAction;
             }
         }
 

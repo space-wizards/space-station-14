@@ -23,6 +23,8 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
     {
         private readonly Dictionary<Slots, IEntity> _slots = new Dictionary<Slots, IEntity>();
 
+        public IReadOnlyDictionary<Slots, IEntity> AllSlots => _slots;
+
         [ViewVariables]
         public InventoryInterfaceController InterfaceController { get; private set; }
 

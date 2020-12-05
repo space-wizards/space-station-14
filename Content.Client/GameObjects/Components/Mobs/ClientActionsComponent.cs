@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using Content.Client.GameObjects.Components.HUD.Inventory;
+using Content.Client.GameObjects.Components.Items;
 using Content.Client.GameObjects.Components.Mobs.Actions;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.UserInterface;
@@ -40,6 +41,8 @@ namespace Content.Client.GameObjects.Components.Mobs
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        private HandsComponent _handsComponent;
+        private ClientInventoryComponent _inventoryComponent;
 
         private ActionsUI _ui;
         private ActionMenu _menu;
@@ -50,6 +53,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         private RichTextLabel _actionRequirements;
         private bool _tooltipReady;
         private ActionSlot _showingTooltipFor;
+        private List<ItemSlotButton> _highlightingItemSlots = new List<ItemSlotButton>();
         // so we don't call it every frame and only update the text each second that ticks
         private int _tooltipCooldownSecs = -1;
         // tracks the action slot we are currently selecting a target for
@@ -107,7 +111,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
 
             _ui = new ActionsUI(ActionOnOnShowTooltip, ActionOnOnHideTooltip, OnActionPress,
-                OnActionSlotDragDrop,
+                OnActionSlotDragDrop, OnMouseEnteredAction, OnMouseExitedAction,
                 NextHotbar,
                 PreviousHotbar, HandleOpenActionMenu);
             _menu = new ActionMenu(ActionOnOnShowTooltip, ActionOnOnHideTooltip, this, ActionMenuItemSelected,
@@ -115,6 +119,9 @@ namespace Content.Client.GameObjects.Components.Mobs
 
             var uiManager = IoCManager.Resolve<IUserInterfaceManager>();
             uiManager.StateRoot.AddChild(_ui);
+
+            _inventoryComponent = Owner.GetComponent<ClientInventoryComponent>();
+            _handsComponent = Owner.GetComponent<HandsComponent>();
 
             _tooltip = new PanelContainer
             {
@@ -632,6 +639,59 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
 
             UpdateUI();
+        }
+
+        private void OnMouseEnteredAction(GUIMouseHoverEventArgs args)
+        {
+            // highlight the inventory slot associated with this if it's an item action
+            // tied to an item
+            if (!(args.SourceControl is ActionSlot actionSlot)) return;
+            if (!(actionSlot.Action is ItemActionPrototype itemActionPrototype)) return;
+            if (actionSlot.Item == null) return;
+
+            StopHighlightingItemSlots();
+
+            // figure out if it's in hand or inventory and highlight it
+            foreach (var hand in _handsComponent.Hands)
+            {
+                if (hand.Entity == actionSlot.Item && hand.Button != null)
+                {
+                    _highlightingItemSlots.Add(hand.Button);
+                    hand.Button.Highlight(true);
+                    return;
+                }
+            }
+
+            foreach (var slot in _inventoryComponent.AllSlots)
+            {
+                if (slot.Value == actionSlot.Item)
+                {
+                    if (_inventoryComponent.InterfaceController == null) return;
+                    foreach (var itemSlotButton in
+                        _inventoryComponent.InterfaceController.GetItemSlotButtons(slot.Key))
+                    {
+                        _highlightingItemSlots.Add(itemSlotButton);
+                        itemSlotButton.Highlight(true);
+                    }
+                    return;
+                }
+            }
+
+        }
+
+        private void OnMouseExitedAction(GUIMouseHoverEventArgs args)
+        {
+            StopHighlightingItemSlots();
+        }
+
+        private void StopHighlightingItemSlots()
+        {
+            if (_highlightingItemSlots == null) return;
+            foreach (var itemSlot in _highlightingItemSlots)
+            {
+                itemSlot.Highlight(false);
+            }
+            _highlightingItemSlots.Clear();
         }
 
         /// <summary>
