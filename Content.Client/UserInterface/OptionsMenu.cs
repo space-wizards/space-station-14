@@ -1,4 +1,5 @@
-﻿using Robust.Client.UserInterface.Controls;
+﻿using Robust.Client.Interfaces.Graphics;
+using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.IoC;
@@ -12,6 +13,7 @@ namespace Content.Client.UserInterface
     public sealed partial class OptionsMenu : SS14Window
     {
         [Dependency] private readonly IConfigurationManager _configManager = default!;
+        [Dependency] private readonly IClydeAudio _clydeAudio = default!;
 
         protected override Vector2? CustomSize => (800, 450);
 
@@ -31,7 +33,7 @@ namespace Content.Client.UserInterface
                 {
                     (graphicsControl = new GraphicsControl(_configManager)),
                     (rebindControl = new KeyRebindControl()),
-                    (audioControl = new AudioControl(_configManager)),
+                    (audioControl = new AudioControl(_configManager, _clydeAudio)),
                 }
             };
 
