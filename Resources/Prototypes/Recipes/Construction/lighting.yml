@@ -14,7 +14,7 @@
   canRotate: true
   canBuildInImpassable: true
   conditions:
-  - !type:WallInTile {}
+  - !type:WallmountCondition {}
 
 - type: construction
   name: small wall light
@@ -32,5 +32,5 @@
   canRotate: true
   canBuildInImpassable: true
   conditions:
-  - !type:WallInTile {}
+  - !type:WallmountCondition {}
 
