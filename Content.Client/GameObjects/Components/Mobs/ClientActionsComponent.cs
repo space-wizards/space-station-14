@@ -225,7 +225,7 @@ namespace Content.Client.GameObjects.Components.Mobs
 
             _menu?.UpdateUI();
 
-            _assignments.Reconcile(_selectedHotbar, EnumerateActionStates(), EnumerateItemActions());
+            _assignments.Reconcile(_selectedHotbar, ActionStates(), ItemActionStates());
 
             // now update the controls of only the current selected hotbar.
             foreach (var actionSlot in _ui.Slots)
@@ -612,7 +612,7 @@ namespace Content.Client.GameObjects.Components.Mobs
                     // this is not particularly efficient but we don't maintain an index from
                     // item action type to its action states, and this method should be pretty infrequent so it's probably fine
                     var assigned = false;
-                    foreach (var (item, itemStates) in EnumerateItemActions())
+                    foreach (var (item, itemStates) in ItemActionStates())
                     {
                         foreach (var (actionType, _) in itemStates)
                         {

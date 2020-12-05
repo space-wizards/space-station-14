@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Client.GameObjects.Components.Mobs.Actions
 {
@@ -34,7 +35,9 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
         /// Actions which have been manually cleared by the user, thus should not
         /// auto-populate.
         /// </summary>
-        private HashSet<ActionAssignment> _preventAutoPopulate = new HashSet<ActionAssignment>();
+        private HashSet<ActionType> _preventAutoPopulate = new HashSet<ActionType>();
+        private Dictionary<EntityUid,HashSet<ItemActionType>> _preventAutoPopulateItem =
+            new Dictionary<EntityUid, HashSet<ItemActionType>>();
 
         private readonly byte _numHotbars;
         private readonly byte _numSlots;
@@ -53,11 +56,9 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
         /// automatically (unless they've been manually cleared). Item-based actions
         /// which no longer have an associated state will be decoupled from their item.
         /// </summary>
-        public void Reconcile(byte currentHotbar, IEnumerable<KeyValuePair<ActionType, ActionState>> actionStates,
-            IEnumerable<KeyValuePair<EntityUid, Dictionary<ItemActionType, ActionState>>> itemActionStates)
+        public void Reconcile(byte currentHotbar, IReadOnlyDictionary<ActionType, ActionState> actionStates,
+            IReadOnlyDictionary<EntityUid,Dictionary<ItemActionType, ActionState>> itemActionStates)
         {
-            // TODO: Do this all in a single pass without TryGetItemActionState
-
             // if we've been granted any actions which have no assignment to any hotbar, we must auto-populate them
             // into the hotbar so the user knows about them.
             // We fill their current hotbar first, rolling over to the next open slot on the next hotbar.
@@ -66,55 +67,70 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
                 var assignment = ActionAssignment.For(actionState.Key);
                 if (actionState.Value.Enabled && !_assignments.ContainsKey(assignment))
                 {
-                    // don't auto populate stuff which the user has manually cleared
-                    if (_preventAutoPopulate.Contains(assignment)) continue;
-                    AutoPopulate(assignment, currentHotbar);
+                    AutoPopulate(assignment, currentHotbar, false);
                 }
             }
 
 
-            // we need to track which current item action assignments we had
-            // which no longer have an associated item so we can dissociate them from the item.
-            // This starts populated with all current assignments and we remove from
-            // it as we discover which states we currently have (no state = no item tied to the action)
-            var assignmentsWithoutItem = new HashSet<ActionAssignment>(_assignments.Keys);
 
-            foreach (var itemActions in itemActionStates)
+            foreach (var (item, itemStates) in itemActionStates)
             {
-                foreach (var itemActionState in itemActions.Value)
+                foreach (var itemActionState in itemStates)
                 {
-                    assignmentsWithoutItem.Remove(ActionAssignment.For(itemActionState.Key, itemActions.Key));
                     // unlike regular actions, we DO actually show user their new item action even when it's disabled.
                     // this allows them to instantly see when an action may be possible that is provided by an item but
                     // something is preventing it
                     // Note that we are checking if there is an explicit assignment for this item action + item,
                     // we will determine during auto-population if we should tie the item to an existing "item action only"
                     // assignment
-                    var assignment = ActionAssignment.For(itemActionState.Key, itemActions.Key);
+                    var assignment = ActionAssignment.For(itemActionState.Key, item);
                     if (!_assignments.ContainsKey(assignment))
                     {
-                        // don't auto populate stuff which the user has manually cleared
-                        if (_preventAutoPopulate.Contains(assignment)) continue;
-                        AutoPopulate(assignment, currentHotbar);
+                        AutoPopulate(assignment, currentHotbar, false);
                     }
                 }
             }
 
-            foreach (var assignmentWithoutItem in assignmentsWithoutItem)
+            // We need to figure out which current item action assignments we had
+            // which once had an associated item but have been revoked (based on our newly provided action states)
+            // so we can dissociate them from the item. If the provided action states do not
+            // have a state for this action type + item, we can assume that the action has been revoked for that item.
+            //
+            // Additionally, we must find items which have no action states at all in our newly provided states so
+            // we can assume their item was unequipped and reset them to allow auto-population.
+            var assignmentsWithoutItem = new List<KeyValuePair<ActionAssignment,List<(byte Hotbar, byte Slot)>>>();
+            foreach (var assignmentEntry in _assignments)
             {
-                // we have this assignment currently tied to an item,
-                // but we didn't get a state for this action back from the server
-                // so we should remove the association from the item in our assignment
-                if (assignmentWithoutItem.Assignment == Assignment.ItemActionWithItem)
+                if (assignmentEntry.Key.Assignment == Assignment.ItemActionWithItem)
                 {
-                    if (_assignments.TryGetValue(assignmentWithoutItem, out var assignments))
+                    // we have this assignment currently tied to an item,
+                    // check if it no longer has an associated item in our dict of states
+                    if (itemActionStates.TryGetValue(assignmentEntry.Key.Item.Value, out var states))
                     {
-                        foreach (var assignment in assignments)
+                        if (states.ContainsKey(assignmentEntry.Key.ItemActionType.Value))
                         {
-                            AssignSlot(assignment.Hotbar, assignment.Slot,
-                                ActionAssignment.For(assignmentWithoutItem.ItemActionType.Value));
+                            // we have a state for this item + action type so we won't
+                            // remove the item from the assignment
+                            continue;
                         }
                     }
+                    else
+                    {
+                        // no assignments at all for this item, we can assume it was unequipped and
+                        // reset its auto populate prevention
+                        _preventAutoPopulateItem.Remove(assignmentEntry.Key.Item.Value);
+                    }
+                    assignmentsWithoutItem.Add(assignmentEntry);
+                }
+            }
+
+            // reassign without the item for each assignment we found that no longer has an associated item
+            foreach (var (assignment, slots) in assignmentsWithoutItem)
+            {
+                foreach (var (hotbar, slot) in slots)
+                {
+                    AssignSlot(hotbar, slot,
+                        ActionAssignment.For(assignment.ItemActionType.Value));
                 }
             }
         }
@@ -147,19 +163,35 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
         /// <param name="slot">slot of the hotbar to clear (0 = the slot labeled 1, 9 = the slot labeled 0)</param>
         /// <param name="preventAutoPopulate">if true, the action assigned to this slot
         /// will be prevented from being auto-populated in the future when it is newly granted.
-        /// NOTE: Currently not applied to item actions.</param>
+        /// Item actions will automatically be allowed to auto populate again
+        /// when their associated item are unequipped. This ensures that items that are newly
+        /// picked up will always present their actions to the user even if they had earlier been cleared.
+        /// </param>
         public void ClearSlot(byte hotbar, byte slot, bool preventAutoPopulate)
         {
             // remove this particular assignment from our data structures
             // (keeping in mind something can be assigned multiple slots)
             var currentAction = _slots[hotbar, slot];
             if (!currentAction.HasValue) return;
-            // TODO: currently not preventing auto populate for item action assignments because
-            // then it makes it harder to see when you got new actions due to picking up
-            // an item
-            if (preventAutoPopulate && currentAction.Value.Assignment == Assignment.Action)
+            if (preventAutoPopulate)
             {
-                _preventAutoPopulate.Add(currentAction.Value);
+                switch (currentAction.Value.Assignment)
+                {
+                    case Assignment.Action:
+                        _preventAutoPopulate.Add(currentAction.Value.ActionType.Value);
+                        break;
+                    case Assignment.ItemActionWithItem:
+                    {
+                        if (!_preventAutoPopulateItem.TryGetValue(currentAction.Value.Item.Value, out var actionTypes))
+                        {
+                            actionTypes = new HashSet<ItemActionType>();
+                            _preventAutoPopulateItem[currentAction.Value.Item.Value] = actionTypes;
+                        }
+
+                        actionTypes.Add(currentAction.Value.ItemActionType.Value);
+                        break;
+                    }
+                }
             }
             var assignmentList = _assignments[currentAction.Value];
             assignmentList = assignmentList.Where(a => a.Hotbar != hotbar || a.Slot != slot).ToList();
@@ -179,8 +211,13 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
         /// starting from the currently selected hotbar.
         /// Does not update any UI elements, only updates the assignment data structures.
         /// </summary>
-        public void AutoPopulate(ActionAssignment toAssign, byte currentHotbar)
+        /// <param name="force">if true, will force the assignment to occur
+        /// regardless of whether this assignment has been prevented from auto population
+        /// via ClearSlot's preventAutoPopulate parameter. If false, will have no effect
+        /// if this assignment has been prevented from auto population.</param>
+        public void AutoPopulate(ActionAssignment toAssign, byte currentHotbar, bool force = true)
         {
+            if (ShouldPreventAutoPopulate(toAssign, force)) return;
             // if the assignment to make is an item action with an associated item,
             // then first look for currently assigned item actions without an item, to replace with this
             // assignment
@@ -238,6 +275,19 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
                 }
             }
             // there was no empty slot
+        }
+
+        private bool ShouldPreventAutoPopulate(ActionAssignment assignment, bool force)
+        {
+            if (force) return false;
+
+            return assignment.Assignment switch
+            {
+                Assignment.Action => _preventAutoPopulate.Contains(assignment.ActionType.Value),
+                Assignment.ItemActionWithItem => _preventAutoPopulateItem.TryGetValue(assignment.Item.Value,
+                    out var itemActionTypes) && itemActionTypes.Contains(assignment.ItemActionType.Value),
+                _ => false
+            };
         }
 
         /// <summary>

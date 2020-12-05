@@ -173,7 +173,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// <summary>
         /// Gets all action types that have non-initial state (granted, have a cooldown, or toggled on).
         /// </summary>
-        protected IEnumerable<KeyValuePair<ActionType, ActionState>> EnumerateActionStates()
+        protected IReadOnlyDictionary<ActionType, ActionState> ActionStates()
         {
             return _actions;
         }
@@ -182,8 +182,9 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// Gets all items that have actions currently granted (that are not revoked
         /// and still in inventory).
         /// Map from item uid -> (action type -> associated action state)
+        /// PLEASE DO NOT MODIFY THE INNER DICTIONARY! I CANNOT CAST IT TO IReadOnlyDictionary!
         /// </summary>
-        protected IEnumerable<KeyValuePair<EntityUid,Dictionary<ItemActionType, ActionState>>> EnumerateItemActions()
+        protected IReadOnlyDictionary<EntityUid,Dictionary<ItemActionType, ActionState>> ItemActionStates()
         {
             return _itemActions;
         }
