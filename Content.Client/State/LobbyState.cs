@@ -44,12 +44,17 @@ namespace Content.Client.State
             _characterSetup = new CharacterSetupGui(_entityManager, _resourceCache, _preferencesManager,
                 _prototypeManager);
             LayoutContainer.SetAnchorPreset(_characterSetup, LayoutContainer.LayoutPreset.Wide);
+
             _characterSetup.CloseButton.OnPressed += args =>
+            {
+                _userInterfaceManager.StateRoot.AddChild(_lobby);
+                _userInterfaceManager.StateRoot.RemoveChild(_characterSetup);
+            };
+
+            _characterSetup.SaveButton.OnPressed += args =>
             {
                 _characterSetup.Save();
                 _lobby.CharacterPreview.UpdateUI();
-                _userInterfaceManager.StateRoot.AddChild(_lobby);
-                _userInterfaceManager.StateRoot.RemoveChild(_characterSetup);
             };
 
             _lobby = new LobbyGui(_entityManager, _resourceCache, _preferencesManager);
@@ -92,7 +97,7 @@ namespace Content.Client.State
             };
 
             _lobby.LeaveButton.OnPressed += args => _console.ProcessCommand("disconnect");
-            _lobby.CreditsButton.OnPressed += args => new CreditsWindow().Open();
+            _lobby.OptionsButton.OnPressed += args => new OptionsMenu().Open();
 
             UpdatePlayerList();
 

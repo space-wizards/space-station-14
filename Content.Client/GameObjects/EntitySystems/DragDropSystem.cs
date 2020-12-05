@@ -73,7 +73,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private readonly List<SpriteComponent> _highlightedSprites = new();
 
-        private enum DragState
+        private enum DragState : byte
         {
             NotDragging,
             // not dragging yet, waiting to see

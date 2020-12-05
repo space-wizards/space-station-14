@@ -17,6 +17,7 @@
   - type: Pourable
     transferAmount: 5.0
   - type: Spillable
+  - type: GlassBeaker
 
 - type: entity
   name: large beaker
@@ -37,6 +38,7 @@
   - type: Pourable
     transferAmount: 5.0
   - type: Spillable
+  - type: GlassBeaker
 
 - type: entity
   name: dropper

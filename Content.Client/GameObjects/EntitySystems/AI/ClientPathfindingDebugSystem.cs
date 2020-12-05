@@ -497,7 +497,8 @@ namespace Content.Client.GameObjects.EntitySystems.AI
     }
 
     [Flags]
-    public enum PathfindingDebugMode {
+    public enum PathfindingDebugMode : byte
+    {
         None = 0,
         Route = 1 << 0,
         Graph = 1 << 1,
