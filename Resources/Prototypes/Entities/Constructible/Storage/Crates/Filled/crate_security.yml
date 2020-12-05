@@ -6,7 +6,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: OuterclothingHmarmorvest
+      - name: ClothingOuterArmorBulletproof
         amount: 3
 
 - type: entity
@@ -17,7 +17,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: HatHelmet
+      - name: ClothingHeadHelmetHelmet
         amount: 3
 
 - type: entity
@@ -29,7 +29,7 @@
     contents:
       - name: TaserGun
         amount: 3
-      - name: StunBaton
+      - name: Stunbaton
         amount: 3
       - name: BoxFlashbang
         amount: 1
@@ -55,9 +55,9 @@
   components:
   - type: StorageFill
     contents:
-      - name: OuterclothingRiot
+      - name: ClothingOuterArmorRiot
         amount: 2
-      - name: HatLightRiot
+      - name: ClothingHeadHelmetRiot
         amount: 2
       - name: ShotgunGladstone
         amount: 2

@@ -4,9 +4,9 @@
   parent: CrateMedical
   components:
   - type: StorageFill
-    contents:
-      - name: Defibrillator
-        amount: 1
+#    contents:
+#      - name: Defibrillator
+#        amount: 1
 
 - type: entity
   id: CrateMedicalSupplies
@@ -39,7 +39,7 @@
         amount: 1
       - name: Hemostat
         amount: 1
-      - name: MaskSterile
+      - name: ClothingMaskSterile
         amount: 1
       - name: PlushieSmug
         amount: 1
@@ -51,17 +51,17 @@
   components:
   - type: StorageFill
     contents:
-      - name: UniformScrubsGreen
+      - name: UniformScrubsColorGreen
         amount: 1
-      - name: UniformScrubsPurple
+      - name: UniformScrubsColorPurple
         amount: 1
-      - name: UniformScrubsBlue
+      - name: UniformScrubsColorBlue
         amount: 1
-      - name: HatBandblue
+      - name: HatBandBlue
         amount: 1
-      - name: HatBandorange
+      - name: HatBandRed
         amount: 1
-      - name: HatBandgreen
+      - name: HatBandGreen
         amount: 1
-      - name: MaskSterile
+      - name: ClothingMaskSterile
         amount: 3

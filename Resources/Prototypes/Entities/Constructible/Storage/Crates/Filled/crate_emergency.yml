@@ -5,7 +5,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: HatBombsuit
+      - name: ClothingHeadHelmetBombSuit
         amount: 1
       - name: ClothingMaskGas
         amount: 1
@@ -65,8 +65,9 @@
         amount: 2
       - name: ClothingHeadHatHoodRad
         amount: 2
-      - name: GeigerCounter
-        amount: 2
-      - DrinkVodkaBottleFull
+#     - name: GeigerCounter
+#        amount: 2
+      - name: DrinkVodkaBottleFull
+        amount: 1
       - name: DrinkShotGlass
         amount: 2

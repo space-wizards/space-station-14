@@ -7,15 +7,15 @@
     contents:
       - name: ClothingBeltUtility
         amount: 2
-      - name: MesonGlasses
+      - name: ClothingEyesGlassesMeson
         amount: 2
-      - name: HatHardhatYellow
+      - name: ClothingHeadHatHardhatYellow
         amount: 2
-      - name: HatWelding
+      - name: ClothingHeadHatWeldingMaskFlame # Replace with regular welding mask when we have it.
         amount: 2
-#      - name: ThatOneOrangeVest
-#        amount: 3
-      - name: GlovesYellow
+      - name: ClothingOuterVestHazard
+        amount: 3
+      - name: ClothingHandsGlovesColorYellow
         amount: 2
 
 - type: entity
