@@ -1,8 +1,10 @@
 ﻿using System;
 using Content.Server.Actions;
+using Content.Server.Administration;
 using Content.Server.Commands;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Shared.Actions;
+using Content.Shared.Administration;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Console;
@@ -297,6 +299,7 @@ namespace Content.Server.GameObjects.Components.Mobs
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public sealed class GrantAction : IClientCommand
     {
         public string Command => "grantaction";
@@ -337,6 +340,7 @@ namespace Content.Server.GameObjects.Components.Mobs
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public sealed class RevokeAction : IClientCommand
     {
         public string Command => "revokeaction";
@@ -378,6 +382,7 @@ namespace Content.Server.GameObjects.Components.Mobs
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public sealed class CooldownAction : IClientCommand
     {
         public string Command => "coolaction";

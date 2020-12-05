@@ -95,35 +95,23 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
             // which once had an associated item but have been revoked (based on our newly provided action states)
             // so we can dissociate them from the item. If the provided action states do not
             // have a state for this action type + item, we can assume that the action has been revoked for that item.
-            //
-            // Additionally, we must find items which have no action states at all in our newly provided states so
-            // we can assume their item was unequipped and reset them to allow auto-population.
             var assignmentsWithoutItem = new List<KeyValuePair<ActionAssignment,List<(byte Hotbar, byte Slot)>>>();
             foreach (var assignmentEntry in _assignments)
             {
-                if (assignmentEntry.Key.Assignment == Assignment.ItemActionWithItem)
+                if (assignmentEntry.Key.Assignment != Assignment.ItemActionWithItem) continue;
+                // we have this assignment currently tied to an item,
+                // check if it no longer has an associated item in our dict of states
+                if (itemActionStates.TryGetValue(assignmentEntry.Key.Item.Value, out var states))
                 {
-                    // we have this assignment currently tied to an item,
-                    // check if it no longer has an associated item in our dict of states
-                    if (itemActionStates.TryGetValue(assignmentEntry.Key.Item.Value, out var states))
+                    if (states.ContainsKey(assignmentEntry.Key.ItemActionType.Value))
                     {
-                        if (states.ContainsKey(assignmentEntry.Key.ItemActionType.Value))
-                        {
-                            // we have a state for this item + action type so we won't
-                            // remove the item from the assignment
-                            continue;
-                        }
+                        // we have a state for this item + action type so we won't
+                        // remove the item from the assignment
+                        continue;
                     }
-                    else
-                    {
-                        // no assignments at all for this item, we can assume it was unequipped and
-                        // reset its auto populate prevention
-                        _preventAutoPopulateItem.Remove(assignmentEntry.Key.Item.Value);
-                    }
-                    assignmentsWithoutItem.Add(assignmentEntry);
                 }
+                assignmentsWithoutItem.Add(assignmentEntry);
             }
-
             // reassign without the item for each assignment we found that no longer has an associated item
             foreach (var (assignment, slots) in assignmentsWithoutItem)
             {
@@ -132,6 +120,14 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
                     AssignSlot(hotbar, slot,
                         ActionAssignment.For(assignment.ItemActionType.Value));
                 }
+            }
+
+            // Additionally, we must find items which have no action states at all in our newly provided states so
+            // we can assume their item was unequipped and reset them to allow auto-population.
+            var itemsWithoutState = _preventAutoPopulateItem.Keys.Where(item => !itemActionStates.ContainsKey(item));
+            foreach (var toRemove in itemsWithoutState)
+            {
+                _preventAutoPopulateItem.Remove(toRemove);
             }
         }
 
