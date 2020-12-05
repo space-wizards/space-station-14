@@ -58,9 +58,14 @@ namespace Content.Shared.Actions
         public bool Repeat { get; private set; }
 
         /// <summary>
-        /// Tags that can be used to filter to this item in action menu.
+        /// Filters that can be used to filter this item in action menu.
         /// </summary>
-        public IEnumerable<string> SearchTags { get; private set; }
+        public IEnumerable<string> Filters { get; private set; }
+
+        /// <summary>
+        /// Keywords that can be used to search this item in action menu.
+        /// </summary>
+        public IEnumerable<string> Keywords { get; private set; }
 
         public virtual void LoadFrom(YamlMappingNode mapping)
         {
@@ -98,10 +103,16 @@ namespace Content.Shared.Actions
                     Name, BehaviorType);
             }
 
-            serializer.DataReadFunction("searchTags", new List<string>(),
+            serializer.DataReadFunction("filters", new List<string>(),
                 rawTags =>
                 {
-                    SearchTags = rawTags.Select(rawTag => rawTag.Trim()).ToList();
+                    Filters = rawTags.Select(rawTag => rawTag.Trim()).ToList();
+                });
+
+            serializer.DataReadFunction("keywords", new List<string>(),
+                rawTags =>
+                {
+                    Keywords = rawTags.Select(rawTag => rawTag.Trim()).ToList();
                 });
         }
 

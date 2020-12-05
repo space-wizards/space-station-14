@@ -4,7 +4,7 @@
   name: "[color=red]Debug Instant[/color]"
   description: "This is a [color=red]debug message[/color]."
   requires: "Requires blah blah"
-  searchTags:
+  filters:
     - debug
     - instant
   behaviorType: Instant
@@ -17,7 +17,7 @@
   name: "[color=red]Debug Toggle[/color]"
   description: "This is a [color=red]debug message[/color]."
   requires: "Requires blah blah"
-  searchTags:
+  filters:
     - debug
     - toggle
   behaviorType: Toggle
@@ -30,7 +30,7 @@
   icon: Interface/Alerts/Human/human4.png
   name: "[color=red]Debug Target Position[/color]"
   description: "This is a [color=red]debug message[/color]."
-  searchTags:
+  filters:
     - target
     - debug
   behaviorType: TargetPoint
@@ -41,7 +41,7 @@
   icon: Interface/Alerts/Human/human2.png
   name: "[color=red]Repeating Debug Target Position[/color]"
   description: "This is a [color=red]debug message[/color]."
-  searchTags:
+  filters:
     - target
     - debug
     - repeat
@@ -54,7 +54,7 @@
   icon: Interface/Alerts/Human/human6.png
   name: "[color=red]Debug Target Entity[/color]"
   description: "This is a [color=red]debug message[/color]."
-  searchTags:
+  filters:
     - debug
     - target
   behaviorType: TargetEntity
@@ -65,7 +65,7 @@
   icon: Interface/Alerts/Human/human5.png
   name: "[color=red]Repeating Debug Target Entity[/color]"
   description: "This is a [color=red]debug message[/color]."
-  searchTags:
+  filters:
     - target
     - debug
     - repeat

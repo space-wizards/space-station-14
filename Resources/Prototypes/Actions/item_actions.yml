@@ -5,8 +5,13 @@
   name: "Toggle Internals"
   description: "Breathe from the equipped gas tank."
   requires: "Requires equipped [color=green]breath mask[/color] and [color=green]gas tank[/color]"
-  searchTags:
+  filters:
     - common
+    - atmos
+  keywords:
+    - gas
+    - tank
+    - breath
   behaviorType: Toggle
   behavior: !type:ToggleInternalsAction { }
 
@@ -16,7 +21,7 @@
   name: "[color=red]Debug Item Instant[/color]"
   description: "This is a [color=red]debug message[/color]."
   requires: "Requires blah blah"
-  searchTags:
+  filters:
     - debug
     - instant
   behaviorType: Instant
@@ -29,7 +34,7 @@
   name: "[color=red]Debug Item Toggle[/color]"
   description: "This is a [color=red]debug message[/color]."
   requires: "Requires blah blah"
-  searchTags:
+  filters:
     - debug
     - toggle
   behaviorType: Toggle
@@ -42,7 +47,7 @@
   icon: Interface/Alerts/Human/human4.png
   name: "[color=red]Debug Item Target Position[/color]"
   description: "This is a [color=red]debug message[/color]."
-  searchTags:
+  filters:
     - target
     - debug
   behaviorType: TargetPoint
@@ -53,7 +58,7 @@
   icon: Interface/Alerts/Human/human2.png
   name: "[color=red]Repeating Debug Item Target Position[/color]"
   description: "This is a [color=red]debug message[/color]."
-  searchTags:
+  filters:
     - target
     - debug
     - repeat
@@ -66,7 +71,7 @@
   icon: Interface/Alerts/Human/human6.png
   name: "[color=red]Debug Item Target Entity[/color]"
   description: "This is a [color=red]debug message[/color]."
-  searchTags:
+  filters:
     - debug
     - target
   behaviorType: TargetEntity
@@ -77,7 +82,7 @@
   icon: Interface/Alerts/Human/human5.png
   name: "[color=red]Repeating Debug Item Target Entity[/color]"
   description: "This is a [color=red]debug message[/color]."
-  searchTags:
+  filters:
     - target
     - debug
     - repeat
