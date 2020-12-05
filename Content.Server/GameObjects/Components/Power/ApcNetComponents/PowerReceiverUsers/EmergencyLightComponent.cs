@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -142,10 +140,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         {
             base.Initialize();
 
-            if (!Owner.EnsureComponent(out PowerReceiverComponent receiver))
-            {
-                Logger.Warning($"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(PowerReceiverComponent)}");
-            }
+            Owner.EnsureComponentWarn(out PowerReceiverComponent receiver);
 
             receiver.OnPowerStateChanged += UpdateState;
             State = EmergencyLightState.Charging;

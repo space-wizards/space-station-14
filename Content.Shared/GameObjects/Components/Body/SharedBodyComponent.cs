@@ -196,17 +196,15 @@ namespace Content.Shared.GameObjects.Components.Body
         {
             DebugTools.AssertNotNull(part);
 
-            var pair = _parts.FirstOrDefault(kvPair => kvPair.Value == part);
+            (slotName, _) = _parts.FirstOrDefault(kvPair => kvPair.Value == part);
 
-            if (pair.Equals(default))
+            if (slotName == null)
             {
-                slotName = null;
                 return false;
             }
 
-            if (RemovePart(pair.Key))
+            if (RemovePart(slotName))
             {
-                slotName = pair.Key;
                 return true;
             }
 
@@ -310,10 +308,9 @@ namespace Content.Shared.GameObjects.Components.Body
         {
             // We enforce that there is only one of each value in the dictionary,
             // so we can iterate through the dictionary values to get the key from there.
-            var pair = Parts.FirstOrDefault(x => x.Value == part);
-            slot = pair.Key;
+            (slot, _) = Parts.FirstOrDefault(x => x.Value == part);
 
-            return !pair.Equals(default);
+            return slot != null;
         }
 
         public bool TryGetSlotType(string slot, out BodyPartType result)

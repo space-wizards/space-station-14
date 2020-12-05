@@ -167,7 +167,7 @@ namespace Content.Client.GameObjects.Components.Doors
         }
     }
 
-    public enum DoorVisualLayers
+    public enum DoorVisualLayers : byte
     {
         Base,
         BaseUnlit,

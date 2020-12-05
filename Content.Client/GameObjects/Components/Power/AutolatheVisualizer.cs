@@ -114,7 +114,7 @@ namespace Content.Client.GameObjects.Components.Power
             var glowingPartsVisible = !(component.TryGetData(PowerDeviceVisuals.Powered, out bool powered) && !powered);
             sprite.LayerSetVisible(AutolatheVisualLayers.BaseUnlit, glowingPartsVisible);
         }
-        public enum AutolatheVisualLayers
+        public enum AutolatheVisualLayers : byte
         {
             Base,
             BaseUnlit

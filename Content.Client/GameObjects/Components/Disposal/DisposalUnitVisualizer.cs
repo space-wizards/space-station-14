@@ -154,7 +154,7 @@ namespace Content.Client.GameObjects.Components.Disposal
         }
     }
 
-    public enum DisposalUnitVisualLayers
+    public enum DisposalUnitVisualLayers : byte
     {
         Base,
         Handle,

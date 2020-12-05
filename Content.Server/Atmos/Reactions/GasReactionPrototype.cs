@@ -58,11 +58,11 @@ namespace Content.Server.Atmos.Reactions
         {
             var serializer = YamlObjectSerializer.NewReader(mapping);
 
-            serializer.DataField(this, x => ID, "id", string.Empty);
-            serializer.DataField(this, x => Priority, "priority", 100);
-            serializer.DataField(this, x => MinimumRequirements, "minimumRequirements", new float[Atmospherics.TotalNumberOfGases]);
-            serializer.DataField(this, x => MinimumTemperatureRequirement, "minimumTemperature", Atmospherics.TCMB);
-            serializer.DataField(this, x => MinimumEnergyRequirement, "minimumEnergy", 0f);
+            serializer.DataField(this, x => x.ID, "id", string.Empty);
+            serializer.DataField(this, x => x.Priority, "priority", 100);
+            serializer.DataField(this, x => x.MinimumRequirements, "minimumRequirements", new float[Atmospherics.TotalNumberOfGases]);
+            serializer.DataField(this, x => x.MinimumTemperatureRequirement, "minimumTemperature", Atmospherics.TCMB);
+            serializer.DataField(this, x => x.MinimumEnergyRequirement, "minimumEnergy", 0f);
             serializer.DataField(ref _effects, "effects", new List<IGasReactionEffect>());
         }
 

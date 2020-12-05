@@ -69,7 +69,7 @@ namespace Content.Client.GameObjects.Components.Trigger
             }
         }
     }
-    public enum TriggerVisualLayers
+    public enum TriggerVisualLayers : byte
     {
         Base
     }

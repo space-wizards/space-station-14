@@ -91,7 +91,7 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(this, x => SlipSound, "slipSound", "/Audio/Effects/slip.ogg");
+            serializer.DataField(this, x => x.SlipSound, "slipSound", "/Audio/Effects/slip.ogg");
         }
 
         protected override void OnSlip()
