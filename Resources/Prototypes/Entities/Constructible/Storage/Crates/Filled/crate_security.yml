@@ -1,0 +1,84 @@
+- type: entity
+  id: CrateSecurityArmor
+  name: armor crate
+  parent: CrateSecgear
+  description: "Three vests of well-rounded, decently-protective armor. Requires Security access to open."
+  components:
+  - type: StorageFill
+    contents:
+      - name: ClothingOuterArmorBulletproof
+        amount: 3
+
+- type: entity
+  id: CrateSecurityHelmet
+  name: helmet crate
+  parent: CrateSecgear
+  description: "Contains three standard-issue brain buckets. Requires Security access to open."
+  components:
+  - type: StorageFill
+    contents:
+      - name: ClothingHeadHelmetHelmet
+        amount: 3
+
+- type: entity
+  id: CrateSecurityNonlethal
+  name: nonlethals crate
+  parent: CrateSecgear
+  components:
+  - type: StorageFill
+    contents:
+      - name: TaserGun
+        amount: 3
+      - name: Stunbaton
+        amount: 3
+      - name: BoxFlashbang
+        amount: 1
+      - name: Flash
+        amount: 3
+#      - Pepperspray
+#      - GrenadeTeargas
+
+- type: entity
+  id: CrateSecurityLaser
+  name: lasers crate
+  parent: CrateSecgear
+  components:
+  - type: StorageFill
+    contents:
+      - name: LaserGun
+        amount: 3
+
+- type: entity
+  id: CrateSecurityRiot
+  name: swat crate
+  parent: CrateSecgear
+  components:
+  - type: StorageFill
+    contents:
+      - name: ClothingOuterArmorRiot
+        amount: 2
+      - name: ClothingHeadHelmetRiot
+        amount: 2
+      - name: ShotgunGladstone
+        amount: 2
+      - name: ShellShotgunBeanbag
+        amount: 12
+#      - ShieldRiot
+#      - SecGasmask
+
+- type: entity
+  id: CrateSecuritySupplies
+  name: security supplies crate
+  parent: CrateSecgear
+  components:
+  - type: StorageFill
+    contents:
+      - name: BoxHandcuff
+        amount: 1
+      - name: BoxSechud
+        amount: 1
+#      - SecBelt
+#      - SecGasmask
+#      - SpacelawBook
+
+# Cosmetic Crates
