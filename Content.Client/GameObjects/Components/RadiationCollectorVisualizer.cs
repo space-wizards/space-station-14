@@ -57,8 +57,7 @@ namespace Content.Client.GameObjects.Components
 
         public override void OnChangeData(AppearanceComponent component)
         {
-            if (component.Owner.Deleted)
-                return;
+            base.OnChangeData(component);
 
             if (!component.Owner.TryGetComponent<ISpriteComponent>(out var sprite)) return;
             if (!component.Owner.TryGetComponent<AnimationPlayerComponent>(out var animPlayer)) return;
@@ -97,7 +96,7 @@ namespace Content.Client.GameObjects.Components
         }
 
     }
-    public enum RadiationCollectorVisualLayers
+    public enum RadiationCollectorVisualLayers : byte
     {
         Main
     }

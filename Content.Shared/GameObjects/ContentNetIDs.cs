@@ -84,7 +84,9 @@
         public const uint PULLABLE = 1078;
         public const uint GAS_TANK = 1079;
         public const uint SINGULARITY = 1080;
-        public const uint ACTIONS = 1081;
+        public const uint CHARACTERINFO = 1081;
+        public const uint REAGENT_GRINDER = 1082;
+        public const uint ACTIONS = 1083;
 
         // Net IDs for integration tests.
         public const uint PREDICTION_TEST = 10001;

@@ -277,7 +277,7 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
             Clockwise = 4,
         }
 
-        public enum CornerLayers
+        public enum CornerLayers : byte
         {
             SE,
             NE,
@@ -290,7 +290,7 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
     ///     Controls the mode with which icon smoothing is calculated.
     /// </summary>
     [PublicAPI]
-    public enum IconSmoothingMode
+    public enum IconSmoothingMode : byte
     {
         /// <summary>
         ///     Each icon is made up of 4 corners, each of which can get a different state depending on

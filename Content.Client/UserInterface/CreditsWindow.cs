@@ -3,24 +3,27 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Content.Client.UserInterface.Stylesheets;
-using Newtonsoft.Json;
+using Content.Shared;
 using Robust.Client.Credits;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
+using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.UserInterface
 {
     public sealed class CreditsWindow : SS14Window
     {
         [Dependency] private readonly IResourceCache _resourceManager = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
-        private static readonly Dictionary<string, int> PatronTierPriority = new Dictionary<string, int>
+        private static readonly Dictionary<string, int> PatronTierPriority = new()
         {
             ["Nuclear Operative"] = 1,
             ["Syndicate Agent"] = 2,
@@ -82,14 +85,22 @@ namespace Content.Client.UserInterface
             var margin = new MarginContainer {MarginLeftOverride = 2, MarginTopOverride = 2};
             var vBox = new VBoxContainer();
             margin.AddChild(vBox);
-            var patrons = ReadJson<PatronEntry[]>("/Credits/Patrons.json");
+            var patrons = LoadPatrons();
 
-            Button patronButton;
-            vBox.AddChild(patronButton = new Button
+            // Do not show "become a patron" button on Steam builds
+            // since Patreon violates Valve's rules about alternative storefronts.
+            if (!_cfg.GetCVar(CCVars.BrandingSteam))
             {
-                Text = "Become a Patron",
-                SizeFlagsHorizontal = SizeFlags.ShrinkCenter
-            });
+                Button patronButton;
+                vBox.AddChild(patronButton = new Button
+                {
+                    Text = "Become a Patron",
+                    SizeFlagsHorizontal = SizeFlags.ShrinkCenter
+                });
+
+                patronButton.OnPressed +=
+                    _ => IoCManager.Resolve<IUriOpener>().OpenUri(UILinks.Patreon);
+            }
 
             var first = true;
             foreach (var tier in patrons.GroupBy(p => p.Tier).OrderBy(p => PatronTierPriority[p.Key]))
@@ -111,10 +122,18 @@ namespace Content.Client.UserInterface
             }
 
 
-            patronButton.OnPressed +=
-                _ => IoCManager.Resolve<IUriOpener>().OpenUri(UILinks.Patreon);
 
             patronsList.AddChild(margin);
+        }
+
+        private IEnumerable<PatronEntry> LoadPatrons()
+        {
+            var yamlStream = _resourceManager.ContentFileReadYaml(new ResourcePath("/Credits/Patrons.yml"));
+            var sequence = (YamlSequenceNode) yamlStream.Documents[0].RootNode;
+
+            return sequence
+                .Cast<YamlMappingNode>()
+                .Select(m => new PatronEntry(m["Name"].AsString(), m["Tier"].AsString()));
         }
 
         private void PopulateCredits(Control contributorsList)
@@ -141,6 +160,7 @@ namespace Content.Client.UserInterface
             });
 
             var first = true;
+
             void AddSection(string title, string path, bool markup = false)
             {
                 if (!first)
@@ -190,29 +210,16 @@ namespace Content.Client.UserInterface
             }
         }
 
-        private T ReadJson<T>(string path)
-        {
-            var serializer = new JsonSerializer();
-
-            using var stream = _resourceManager.ContentFileRead(path);
-            using var streamReader = new StreamReader(stream);
-            using var jsonTextReader = new JsonTextReader(streamReader);
-
-            return serializer.Deserialize<T>(jsonTextReader)!;
-        }
-
-        [JsonObject(ItemRequired = Required.Always)]
         private sealed class PatronEntry
         {
-            public string Name { get; set; } = default!;
-            public string Tier { get; set; } = default!;
-        }
+            public string Name { get; }
+            public string Tier { get; }
 
-        [JsonObject(ItemRequired = Required.Always)]
-        private sealed class OpenSourceLicense
-        {
-            public string Name { get; set; } = default!;
-            public string License { get; set; } = default!;
+            public PatronEntry(string name, string tier)
+            {
+                Name = name;
+                Tier = tier;
+            }
         }
     }
 }

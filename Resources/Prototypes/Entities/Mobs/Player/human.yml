@@ -20,7 +20,7 @@
   - type: HumanInventoryController
   - type: AiFactionTag
     factions:
-    - NanoTransen
+    - NanoTrasen
   - type: InnateActions
     actions:
       - HumanScream

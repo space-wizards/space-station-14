@@ -1,0 +1,71 @@
+- type: cargoProduct
+  name: "armor crate"
+  id: cargo.securityarmor
+  description: "Three vests of well-rounded, decently-protective armor. Requires Security access to open."
+  icon:
+    sprite: Clothing/OuterClothing/Vests/oldarmor.rsi
+    state: armor
+  product: CrateSecurityArmor
+  cost: 1500
+  category: Security
+  group: market
+
+- type: cargoProduct
+  name: "helmet crate"
+  id: cargo.securityhelmet
+  description: "Contains three standard-issue brain buckets. Requires Security access to open."
+  icon:
+    sprite: Clothing/Head/Helmets/security.rsi
+    state: icon
+  product: CrateSecurityHelmet
+  cost: 1000
+  category: Security
+  group: market
+
+- type: cargoProduct
+  name: "non-lethals crate"
+  id: cargo.securitynonlethal
+  description: "Stamina-draining disabler weapons. Requires Security access to open."
+  icon:
+    sprite: Objects/Weapons/Guns/Battery/taser.rsi
+    state: icon
+  product: CrateSecurityNonlethal
+  cost: 1500
+  category: Security
+  group: market
+
+- type: cargoProduct
+  name: "Lasers Crate"
+  id: cargo.securitylaser
+  description: "Contains three lethal, high-energy laser guns. Requires Security access to open."
+  icon:
+    sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
+    state: icon
+  product: CrateSecurityLaser
+  cost: 2000
+  category: Security
+  group: market
+
+- type: cargoProduct
+  name: "riot crate"
+  id: cargo.securityriot
+  description: "Contains two sets of heavy body armor and helmets and 2 shotguns with 6 rounds of beanbag shells each. Requires Armory access to open."
+  icon:
+    sprite: Clothing/OuterClothing/Armor/riot.rsi
+    state: icon
+  product: CrateSecurityRiot
+  cost: 10000
+  category: Security
+  group: market
+
+- type: cargoProduct
+  name: "security supplies crate"
+  id: cargo.securitysupplies
+  description: "Contains various supplies for the station's Security team. Requires Security access to open."
+  icon:
+    sprite: Objects/Storage/boxes.rsi
+    state: box_security
+  product: CrateSecuritySupplies
+  cost: 1500
+  category: Security
+  group: market

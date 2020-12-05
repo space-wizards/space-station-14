@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Graphics.Shaders;
@@ -14,8 +14,8 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
     public sealed class DoAfterBar : Control
     {
         private IGameTiming _gameTiming = default!;
-        
-        private ShaderInstance _shader;
+
+        private readonly ShaderInstance _shader;
 
         /// <summary>
         ///     Set from 0.0f to 1.0f to reflect bar progress
@@ -40,13 +40,13 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
                 {
                     return;
                 }
-                
+
                 _cancelled = value;
                 if (_cancelled)
                 {
                     _gameTiming = IoCManager.Resolve<IGameTiming>();
                     _lastFlash = _gameTiming.CurTime;
-                }   
+                }
             }
         }
 
@@ -87,7 +87,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
                     _lastFlash = _gameTiming.CurTime;
                     _flash = !_flash;
                 }
-            } 
+            }
         }
 
         protected override void Draw(DrawingHandleScreen handle)
@@ -105,16 +105,10 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
                 }
 
                 color = new Color(1.0f, 0.0f, 0.0f, _flash ? 1.0f : 0.0f);
-            }
-            else if (Ratio >= 1.0f)
-            {
-                color = new Color(0f, 1f, 0f);
-            }
+			}
             else
             {
-                // lerp
-                var hue = (5f / 18f) * Ratio;
-                color = Color.FromHsv((hue, 1f, 0.75f, 1f));
+                color = DoAfterHelpers.GetProgressColor(Ratio);
             }
 
             handle.UseShader(_shader);
@@ -126,6 +120,20 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
             leftOffset + (int) (XPixelDiff * Ratio),
             -2);
             handle.DrawRect(box, color);
+        }
+    }
+
+    public static class DoAfterHelpers
+    {
+        public static Color GetProgressColor(float progress)
+        {
+            if (progress >= 1.0f)
+            {
+                return new Color(0f, 1f, 0f);
+            }
+            // lerp
+            var hue = (5f / 18f) * progress;
+            return Color.FromHsv((hue, 1f, 0.75f, 1f));
         }
     }
 }

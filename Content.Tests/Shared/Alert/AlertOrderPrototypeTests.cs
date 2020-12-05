@@ -10,7 +10,7 @@ using Robust.UnitTesting;
 namespace Content.Tests.Shared.Alert
 {
     [TestFixture, TestOf(typeof(AlertOrderPrototype))]
-    public class AlertOrderPrototypeTests : RobustUnitTest
+    public class AlertOrderPrototypeTests : ContentUnitTest
     {
         const string PROTOTYPES = @"
 - type: alertOrder
@@ -64,8 +64,6 @@ namespace Content.Tests.Shared.Alert
         public void TestAlertOrderPrototype()
         {
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            prototypeManager.RegisterType(typeof(AlertPrototype));
-            prototypeManager.RegisterType(typeof(AlertOrderPrototype));
             prototypeManager.LoadFromStream(new StringReader(PROTOTYPES));
 
             var alertOrder = prototypeManager.EnumeratePrototypes<AlertOrderPrototype>().FirstOrDefault();

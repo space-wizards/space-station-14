@@ -56,7 +56,7 @@ namespace Content.Server.GameObjects.Components.GUI
             }
         }
 
-        [ViewVariables] private readonly List<Hand> _hands = new List<Hand>();
+        [ViewVariables] private readonly List<Hand> _hands = new();
 
         public IEnumerable<string> Hands => _hands.Select(h => h.Name);
 
@@ -285,7 +285,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 spriteComponent.RenderOrder = item.Owner.EntityManager.CurrentTick.Value;
             }
 
-            if (ContainerHelpers.TryGetContainer(Owner, out var container))
+            if (Owner.TryGetContainer(out var container))
             {
                 container.Insert(item.Owner);
             }
@@ -765,7 +765,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public SharedHand ToShared(int index, HandLocation location)
         {
-            return new SharedHand(index, Name, Entity?.Uid, location, Enabled);
+            return new(index, Name, Entity?.Uid, location, Enabled);
         }
     }
 

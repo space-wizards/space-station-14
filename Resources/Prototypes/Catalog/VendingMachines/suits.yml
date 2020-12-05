@@ -4,12 +4,11 @@
   description: A vending machine containing jumpsuits and dress garments.
   spriteName: suits
   startingInventory:
-    UniformJanitor: 3
-    UniformColorGrey: 3
-    UniformEngineering: 3
-    UniformAssistant: 3
-    UniformClown: 3
-    UniformSec: 3
-    UniformChef: 3
-    UniformCaptain: 3
+    ClothingUniformJumpsuitJanitor: 3
+    ClothingUniformJumpsuitColorGrey: 3
+    ClothingUniformJumpsuitEngineering: 3
+    ClothingUniformJumpsuitClown: 3
+    ClothingUniformJumpsuitSec: 3
+    ClothingUniformJumpsuitChef: 3
+    ClothingUniformJumpsuitCaptain: 3
 

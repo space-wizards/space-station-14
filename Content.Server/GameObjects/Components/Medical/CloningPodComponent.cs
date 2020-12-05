@@ -32,7 +32,6 @@ namespace Content.Server.GameObjects.Components.Medical
     public class CloningPodComponent : SharedCloningPodComponent, IActivate
     {
         [Dependency] private readonly IServerPreferencesManager _prefsManager = null!;
-        [Dependency] private readonly IEntityManager _entityManager = null!;
         [Dependency] private readonly IPlayerManager _playerManager = null!;
 
         [ViewVariables]
@@ -148,7 +147,7 @@ namespace Content.Server.GameObjects.Components.Medical
 
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
-            if (!(obj.Message is CloningPodUiButtonPressedMessage message)) return;
+            if (obj.Message is not CloningPodUiButtonPressedMessage message) return;
 
             switch (message.Button)
             {
@@ -169,7 +168,7 @@ namespace Content.Server.GameObjects.Components.Medical
                     if (!dead) return;
 
 
-                    var mob = _entityManager.SpawnEntity("HumanMob_Content", Owner.Transform.MapPosition);
+                    var mob = Owner.EntityManager.SpawnEntity("HumanMob_Content", Owner.Transform.MapPosition);
                     var client = _playerManager.GetSessionByUserId(mind.UserId!.Value);
                     var profile = GetPlayerProfileAsync(client.UserId);
                     mob.GetComponent<HumanoidAppearanceComponent>().UpdateFromProfile(profile);

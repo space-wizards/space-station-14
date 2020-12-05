@@ -110,7 +110,7 @@ namespace Content.Client.GameObjects.Components.Power
             var glowingPartsVisible = !(component.TryGetData(PowerDeviceVisuals.Powered, out bool powered) && !powered);
             sprite.LayerSetVisible(ProtolatheVisualLayers.BaseUnlit, glowingPartsVisible);
         }
-        public enum ProtolatheVisualLayers
+        public enum ProtolatheVisualLayers : byte
         {
             Base,
             BaseUnlit,

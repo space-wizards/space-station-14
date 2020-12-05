@@ -45,8 +45,8 @@ namespace Content.Client.GameObjects.Components.Mobs
         private bool _tooltipReady;
 
         [ViewVariables]
-        private Dictionary<AlertKey, AlertControl> _alertControls
-            = new Dictionary<AlertKey, AlertControl>();
+        private readonly Dictionary<AlertKey, AlertControl> _alertControls
+            = new();
 
         /// <summary>
         /// Allows calculating if we need to act due to this component being controlled by the current mob
@@ -79,7 +79,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         {
             base.HandleComponentState(curState, nextState);
 
-            if (!(curState is AlertsComponentState))
+            if (curState is not AlertsComponentState state)
             {
                 return;
             }

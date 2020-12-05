@@ -23,8 +23,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         public override string Name => "AlertsUI";
         public override uint? NetID => ContentNetIDs.ALERTS;
 
-        [ViewVariables]
-        private Dictionary<AlertKey, AlertState> _alerts = new Dictionary<AlertKey, AlertState>();
+        [ViewVariables] private Dictionary<AlertKey, AlertState> _alerts = new();
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {

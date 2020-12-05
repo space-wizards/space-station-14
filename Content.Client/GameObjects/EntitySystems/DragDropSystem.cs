@@ -32,6 +32,7 @@ namespace Content.Client.GameObjects.EntitySystems
     {
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -49,7 +50,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         // entity performing the drag action
         private IEntity _dragger;
-        private readonly List<IDraggable> _draggables = new List<IDraggable>();
+        private readonly List<IDraggable> _draggables = new();
         private IEntity _dragShadow;
         // time since mouse down over the dragged entity
         private float _mouseDownTime;
@@ -68,7 +69,7 @@ namespace Content.Client.GameObjects.EntitySystems
         private SharedInteractionSystem _interactionSystem;
         private InputSystem _inputSystem;
 
-        private List<SpriteComponent> highlightedSprites = new List<SpriteComponent>();
+        private readonly List<SpriteComponent> _highlightedSprites = new();
 
         public override void Initialize()
         {
@@ -122,7 +123,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
             // possibly initiating a drag
             // check if the clicked entity is draggable
-            if (_entityManager.TryGetEntity(args.EntityUid, out var entity))
+            if (EntityManager.TryGetEntity(args.EntityUid, out var entity))
             {
                 // check if the entity is reachable
                 if (!_interactionSystem.InRangeUnobstructed(dragger, entity))
@@ -304,6 +305,41 @@ namespace Content.Client.GameObjects.EntitySystems
             return false;
         }
 
+        private void StartDragging()
+        {
+            // this is checked elsewhere but adding this as a failsafe
+            if (_draggedEntity == null || _draggedEntity.Deleted)
+            {
+                Logger.Error("Programming error. Cannot initiate drag, no dragged entity or entity" +
+                               " was deleted.");
+                return;
+            }
+
+            if (_draggedEntity.TryGetComponent<SpriteComponent>(out var draggedSprite))
+            {
+                _state = DragState.Dragging;
+                // pop up drag shadow under mouse
+                var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
+                _dragShadow = _entityManager.SpawnEntity("dragshadow", mousePos);
+                var dragSprite = _dragShadow.GetComponent<SpriteComponent>();
+                dragSprite.CopyFrom(draggedSprite);
+                dragSprite.RenderOrder = EntityManager.CurrentTick.Value;
+                dragSprite.Color = dragSprite.Color.WithAlpha(0.7f);
+                // keep it on top of everything
+                dragSprite.DrawDepth = (int) DrawDepth.Overlays;
+                if (dragSprite.Directional)
+                {
+                    _dragShadow.Transform.WorldRotation = _draggedEntity.Transform.WorldRotation;
+                }
+
+                HighlightTargets();
+            }
+            else
+            {
+                Logger.Warning("Unable to display drag shadow for {0} because it" +
+                               " has no sprite component.", _draggedEntity.Name);
+            }
+        }
 
         private void HighlightTargets()
         {
@@ -342,7 +378,7 @@ namespace Content.Client.GameObjects.EntitySystems
                         var inRange = _interactionSystem.InRangeUnobstructed(_dragger, pvsEntity);
                         inRangeSprite.PostShader = inRange ? _dropTargetInRangeShader : _dropTargetOutOfRangeShader;
                         inRangeSprite.RenderOrder = EntityManager.CurrentTick.Value;
-                        highlightedSprites.Add(inRangeSprite);
+                        _highlightedSprites.Add(inRangeSprite);
                     }
                 }
             }
@@ -350,12 +386,12 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void RemoveHighlights()
         {
-            foreach (var highlightedSprite in highlightedSprites)
+            foreach (var highlightedSprite in _highlightedSprites)
             {
                 highlightedSprite.PostShader = null;
                 highlightedSprite.RenderOrder = 0;
             }
-            highlightedSprites.Clear();
+            _highlightedSprites.Clear();
         }
 
         public override void Update(float frameTime)

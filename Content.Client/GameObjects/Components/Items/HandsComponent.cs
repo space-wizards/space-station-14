@@ -22,7 +22,7 @@ namespace Content.Client.GameObjects.Components.Items
 
         private HandsGui? _gui;
 
-        private readonly List<Hand> _hands = new List<Hand>();
+        private readonly List<Hand> _hands = new();
 
         [ViewVariables] public IReadOnlyList<Hand> Hands => _hands;
 
@@ -46,6 +46,7 @@ namespace Content.Client.GameObjects.Components.Items
 
         private void AddHand(Hand hand)
         {
+            _sprite?.LayerMapReserveBlank($"hand-{hand.Name}");
             _hands.Insert(hand.Index, hand);
         }
 

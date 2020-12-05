@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Headset
 
         private RadioSystem _radioSystem = default!;
 
-        private List<int> _channels = new List<int>();
+        private List<int> _channels = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
         private int BroadcastFrequency { get; set; }
@@ -65,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Headset
 
         public void Receive(string message, int channel, IEntity source)
         {
-            if (ContainerHelpers.TryGetContainer(Owner, out var container))
+            if (Owner.TryGetContainer(out var container))
             {
                 if (!container.Owner.TryGetComponent(out IActorComponent actor))
                     return;

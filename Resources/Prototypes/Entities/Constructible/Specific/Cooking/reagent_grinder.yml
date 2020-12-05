@@ -1,0 +1,35 @@
+- type: entity
+  id: KitchenReagentGrinder
+  name: reagent grinder
+  suffix: grinder/juicer
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: SnapGrid
+    offset: Center
+  - type: ReagentGrinder
+  - type: UserInterface
+    interfaces:
+    - key: enum.ReagentGrinderUiKey.Key
+      type: ReagentGrinderBoundUserInterface
+  - type: Appearance
+    visuals:
+    - type: ReagentGrinderVisualizer
+  - type: Clickable
+  - type: InteractionOutline
+  - type: PowerReceiver
+  - type: LoopingSound
+  - type: Physics
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.35,-0.08,0.25,0.15"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+  - type: Sprite
+    netsync: false
+    sprite: Constructible/Power/juicer.rsi
+    state: juicer0
+    drawdepth: Items

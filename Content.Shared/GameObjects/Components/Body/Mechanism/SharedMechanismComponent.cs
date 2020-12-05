@@ -18,12 +18,12 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
     {
         public override string Name => "Mechanism";
 
-        protected readonly Dictionary<int, object> OptionsCache = new Dictionary<int, object>();
+        protected readonly Dictionary<int, object> OptionsCache = new();
         protected IBody? BodyCache;
         protected int IdHash;
         protected IEntity? PerformerCache;
         private IBodyPart? _part;
-        private readonly Dictionary<Type, IMechanismBehavior> _behaviors = new Dictionary<Type, IMechanismBehavior>();
+        private readonly Dictionary<Type, IMechanismBehavior> _behaviors = new();
 
         public IBody? Body => Part?.Body;
 
@@ -68,16 +68,13 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
 
         public IReadOnlyDictionary<Type, IMechanismBehavior> Behaviors => _behaviors;
 
-        public string Description { get; set; } = string.Empty;
-
-        public string ExamineMessage { get; set; } = string.Empty;
-
         public int MaxDurability { get; set; }
 
         public int CurrentDurability { get; set; }
 
         public int DestroyThreshold { get; set; }
 
+        // TODO BODY: Surgery description and adding a message to the examine tooltip of the entity that owns this mechanism
         // TODO BODY
         public int Resistance { get; set; }
 
@@ -89,10 +86,6 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-
-            serializer.DataField(this, m => m.Description, "description", string.Empty);
-
-            serializer.DataField(this, m => m.ExamineMessage, "examineMessage", string.Empty);
 
             serializer.DataField(this, m => m.MaxDurability, "maxDurability", 10);
 
@@ -165,8 +158,7 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
                 return true;
             }
 
-            behavior = new T();
-            IoCManager.InjectDependencies(behavior);
+            behavior = IoCManager.Resolve<IDynamicTypeFactory>().CreateInstance<T>();
             _behaviors.Add(typeof(T), behavior);
             behavior.Initialize(this);
             behavior.Startup();

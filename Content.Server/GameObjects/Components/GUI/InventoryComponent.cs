@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects.Components.GUI
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
         [ViewVariables]
-        private readonly Dictionary<Slots, ContainerSlot> _slotContainers = new Dictionary<Slots, ContainerSlot>();
+        private readonly Dictionary<Slots, ContainerSlot> _slotContainers = new();
 
         private KeyValuePair<Slots, (EntityUid entity, bool fits)>? _hoverEntity;
 
@@ -297,7 +297,7 @@ namespace Content.Server.GameObjects.Components.GUI
             }
 
             // TODO: The item should be dropped to the container our owner is in, if any.
-            ContainerHelpers.AttachParentToContainerOrGrid(entity.Transform);
+            entity.Transform.AttachParentToContainerOrGrid();
 
             _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedInteraction(Owner, entity, slot);
 
@@ -322,7 +322,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
             var itemTransform = entity.Transform;
 
-            ContainerHelpers.AttachParentToContainerOrGrid(itemTransform);
+            itemTransform.AttachParentToContainerOrGrid();
 
             _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedInteraction(Owner, item.Owner, slot);
 
@@ -416,7 +416,7 @@ namespace Content.Server.GameObjects.Components.GUI
             // make sure this is one of our containers.
             // Technically the correct way would be to enumerate the possible slot names
             // comparing with this container, but I might as well put the dictionary to good use.
-            if (!(container is ContainerSlot slot) || !_slotContainers.ContainsValue(slot))
+            if (container is not ContainerSlot slot || !_slotContainers.ContainsValue(slot))
                 return;
 
             if (entity.TryGetComponent(out ItemComponent itemComp))

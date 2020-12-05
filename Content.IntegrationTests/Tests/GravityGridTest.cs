@@ -17,10 +17,19 @@ namespace Content.IntegrationTests.Tests
     [TestOf(typeof(GravityGeneratorComponent))]
     public class GravityGridTest : ContentIntegrationTest
     {
+        private const string PROTOTYPES = @"
+- type: entity
+  name: GravityGeneratorDummy
+  id: GravityGeneratorDummy
+  components:
+  - type: GravityGenerator
+  - type: PowerReceiver
+";
         [Test]
         public async Task Test()
         {
-            var server = StartServerDummyTicker();
+            var options = new ServerIntegrationOptions{ExtraPrototypes = PROTOTYPES};
+            var server = StartServerDummyTicker(options);
 
             IEntity generator = null;
 
@@ -38,7 +47,7 @@ namespace Content.IntegrationTests.Tests
 
                 var entityMan = IoCManager.Resolve<IEntityManager>();
 
-                generator = entityMan.SpawnEntity("GravityGenerator", grid2.ToCoordinates());
+                generator = entityMan.SpawnEntity("GravityGeneratorDummy", grid2.ToCoordinates());
                 Assert.That(generator.HasComponent<GravityGeneratorComponent>());
                 Assert.That(generator.HasComponent<PowerReceiverComponent>());
                 var generatorComponent = generator.GetComponent<GravityGeneratorComponent>();

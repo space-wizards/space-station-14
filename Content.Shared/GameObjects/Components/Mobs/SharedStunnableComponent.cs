@@ -44,7 +44,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
         private string _stunAlertId;
 
-        protected CancellationTokenSource StatusRemoveCancellation = new CancellationTokenSource();
+        protected CancellationTokenSource StatusRemoveCancellation = new();
 
         [ViewVariables] protected float WalkModifierOverride = 0f;
         [ViewVariables] protected float RunModifierOverride = 0f;

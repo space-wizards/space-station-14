@@ -192,7 +192,7 @@ namespace Content.Shared.Alert
         /// queries and never storage, as it is lacking an alert type.</returns>
         public static AlertKey ForCategory(AlertCategory category)
         {
-            return new AlertKey(null, category);
+            return new(null, category);
         }
     }
 }

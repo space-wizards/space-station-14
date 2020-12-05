@@ -36,7 +36,7 @@ namespace Content.Server.GameObjects.Components.Doors
         /// </summary>
         private static readonly TimeSpan PowerWiresTimeout = TimeSpan.FromSeconds(5.0);
 
-        private CancellationTokenSource _powerWiresPulsedTimerCancel = new CancellationTokenSource();
+        private CancellationTokenSource _powerWiresPulsedTimerCancel = new();
 
         private bool _powerWiresPulsed;
 

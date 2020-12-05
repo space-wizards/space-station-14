@@ -7,606 +7,203 @@
   "states": [
     {
       "name": "abductor",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "abductor_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "abductor_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "agentbox",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "alien",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "alien_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "alien_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "alien_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "armory",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "armory_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "armory_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "armory_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "atmos",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "atmos_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "atmos_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "atmos_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "atmos_wardrobe_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "atmos_wardrobe_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "bio",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "bio_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "bio_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "bio_jan",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "bio_jan_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "bio_jan_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "bio_jan_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "bio_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "bio_sec",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "bio_sec_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "bio_sec_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "bio_sec_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "bio_viro",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "bio_viro_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "bio_viro_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "bio_viro_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "black_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "black_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "blue_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "blue_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "bomb",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "bomb_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "bomb_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "bomb_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "cabinet",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "cabinet_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "cabinet_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "cabinet_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "cap",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "cap_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "cap_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "cap_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "cardboard",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "cardboard_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "cardboard_special",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "cargo",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "cargo_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "cargo_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "cargo_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "ce",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "ce_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "ce_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "ce_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "chemical_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "chemical_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "cmo",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "cmo_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "cmo_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "cmo_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "cursed",
@@ -640,12 +237,7 @@
     },
     {
       "name": "cursed_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "cursed_whole",
@@ -694,903 +286,295 @@
     },
     {
       "name": "decursed_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "ecase",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "ecase_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "ecase_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "egun",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "emergency",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "emergency_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "emergency_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "emergency_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "eng",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "eng_elec_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "eng_elec_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "eng_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "eng_rad_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "eng_rad_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "eng_secure",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "eng_secure_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "eng_secure_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "eng_secure_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "eng_tool_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "eng_tool_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "eng_weld_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "eng_weld_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "fire",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "fire_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "fire_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "fire_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "freezer",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "freezer_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "freezer_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "freezer_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "generic",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "generic_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "generic_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "generic_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "green_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "green_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "grey_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "grey_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "hop",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "hop_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "hop_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "hop_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "hos",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "hos_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "hos_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "hos_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "hydro",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "hydro_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "hydro_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "hydro_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "locked",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "med",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "med_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "med_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "med_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "med_secure",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "med_secure_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "med_secure_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "med_secure_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "metalbox",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "metalbox_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "mining",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "mining_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "mining_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "mining_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "mixed_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "mixed_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "oldcloset",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "orange_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "orange_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "pink_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "pink_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "qm",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "qm_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "qm_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "qm_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "rd",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "rd_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "rd_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "rd_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "red_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "red_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "science",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "science_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "science_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "science_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "sec",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "sec_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "sec_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "sec_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "secure",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "secure_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "secure_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "secure_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "shotgun",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "shotguncase_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "shotguncase",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "shotguncase_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "shotguncase_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "sparking",
@@ -1606,165 +590,55 @@
     },
     {
       "name": "syndicate",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "syndicate_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "syndicate_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "syndicate_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "tac",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "tac_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "tac_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "tac_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "unlocked",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "warden",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "warden_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "warden_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "warden_open",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "welded",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "white_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "white_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "yellow_door",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "yellow_icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     }
   ]
 }

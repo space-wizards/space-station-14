@@ -71,42 +71,42 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public override void Update(float frameTime) { }
 
-        public override bool ProcessTileEqualize(bool resumed = false)
+        public override bool ProcessTileEqualize(bool resumed = false, float lagCheck = 5f)
         {
             return false;
         }
 
-        public override bool ProcessActiveTiles(bool resumed = false)
+        public override bool ProcessActiveTiles(bool resumed = false, float lagCheck = 5f)
         {
             return false;
         }
 
-        public override bool ProcessExcitedGroups(bool resumed = false)
+        public override bool ProcessExcitedGroups(bool resumed = false, float lagCheck = 5f)
         {
             return false;
         }
 
-        public override bool ProcessHighPressureDelta(bool resumed = false)
+        public override bool ProcessHighPressureDelta(bool resumed = false, float lagCheck = 5f)
         {
             return false;
         }
 
-        protected override bool ProcessHotspots(bool resumed = false)
+        protected override bool ProcessHotspots(bool resumed = false, float lagCheck = 5f)
         {
             return false;
         }
 
-        protected override bool ProcessSuperconductivity(bool resumed = false)
+        protected override bool ProcessSuperconductivity(bool resumed = false, float lagCheck = 5f)
         {
             return false;
         }
 
-        protected override bool ProcessPipeNets(bool resumed = false)
+        protected override bool ProcessPipeNets(bool resumed = false, float lagCheck = 5f)
         {
             return false;
         }
 
-        protected override bool ProcessPipeNetDevices(bool resumed = false)
+        protected override bool ProcessPipeNetDevices(bool resumed = false, float lagCheck = 5f)
         {
             return false;
         }

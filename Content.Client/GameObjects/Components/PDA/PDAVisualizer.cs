@@ -17,7 +17,7 @@ namespace Content.Client.GameObjects.Components.PDA
         /// </summary>
         private string _state;
 
-        private enum PDAVisualLayers
+        private enum PDAVisualLayers : byte
         {
             Base,
             Flashlight,
@@ -49,10 +49,7 @@ namespace Content.Client.GameObjects.Components.PDA
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
-            if (component.Owner.Deleted)
-            {
-                return;
-            }
+
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
             sprite.LayerSetVisible(PDAVisualLayers.Flashlight, false);
             if (component.TryGetData(PDAVisuals.FlashlightLit, out bool isScreenLit))

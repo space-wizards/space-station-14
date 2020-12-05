@@ -115,7 +115,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             _container.Insert(handcuff);
             CanStillInteract = _hands.Hands.Count() > CuffedHandCount;
 
-            OnCuffedStateChanged.Invoke();
+            OnCuffedStateChanged?.Invoke();
             UpdateAlert();
             UpdateHeldItems();
             Dirty();

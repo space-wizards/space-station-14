@@ -16,7 +16,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timers;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -83,7 +82,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         private void OnUiAcceptCloningMessage(ServerBoundUserInterfaceMessage obj)
         {
-            if (!(obj.Message is SharedAcceptCloningComponent.UiButtonPressedMessage message)) return;
+            if (obj.Message is not SharedAcceptCloningComponent.UiButtonPressedMessage) return;
             if (Mind != null)
             {
                 Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new GhostComponent.GhostReturnMessage(Mind));

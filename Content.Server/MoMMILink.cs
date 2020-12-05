@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Shared;
-using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Robust.Server.Interfaces.ServerStatus;
 using Robust.Server.ServerStatus;
@@ -24,7 +23,7 @@ namespace Content.Server
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly ITaskManager _taskManager = default!;
 
-        private readonly HttpClient _httpClient = new HttpClient();
+        private readonly HttpClient _httpClient = new();
 
         void IPostInjectInit.PostInject()
         {
@@ -74,9 +73,9 @@ namespace Content.Server
             }
         }
 
-        private bool _handleChatPost(HttpMethod method, HttpRequest request, HttpResponse response)
+        private bool _handleChatPost(HttpMethod method, HttpListenerRequest request, HttpListenerResponse response)
         {
-            if (method != HttpMethod.Post || request.Path != "/ooc")
+            if (method != HttpMethod.Post || request.Url!.AbsolutePath != "/ooc")
             {
                 return false;
             }
