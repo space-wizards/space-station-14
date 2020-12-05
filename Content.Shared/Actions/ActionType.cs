@@ -21,6 +21,7 @@
     {
         Error,
         ToggleInternals,
+        ToggleLight,
         DebugInstant,
         DebugToggle,
         DebugTargetPoint,

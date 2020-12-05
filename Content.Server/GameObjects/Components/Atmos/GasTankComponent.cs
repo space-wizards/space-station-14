@@ -14,6 +14,7 @@ using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
+using JetBrains.Annotations;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
@@ -390,6 +391,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
         }
 
+        [UsedImplicitly]
         public class ToggleInternalsAction : IToggleItemAction
         {
             public void ExposeData(ObjectSerializer serializer) {}

@@ -60,7 +60,7 @@ namespace Content.Shared.Actions
                 Logger.ErrorS("action", "missing or invalid actionType for action with name {0}", Name);
             }
 
-            serializer.DataField(this, x => x.IconStyle, "iconStyle", ItemActionIconStyle.BigAction);
+            serializer.DataField(this, x => x.IconStyle, "iconStyle", ItemActionIconStyle.BigItem);
 
             // TODO: Split this class into server/client after RobustToolbox#1405
             if (IoCManager.Resolve<IModuleManager>().IsClientModule) return;
@@ -110,13 +110,13 @@ namespace Content.Shared.Actions
     public enum ItemActionIconStyle
     {
         /// <summary>
+        /// The default - the item icon will be big with a small action icon in the corner
+        /// </summary>
+        BigItem,
+        /// <summary>
         /// The action icon will be big with a small item icon in the corner
         /// </summary>
         BigAction,
-        /// <summary>
-        /// The item icon will be big with a small action icon in the corner
-        /// </summary>
-        BigItem,
         /// <summary>
         /// BigAction but no item icon will be shown in the corner.
         /// </summary>

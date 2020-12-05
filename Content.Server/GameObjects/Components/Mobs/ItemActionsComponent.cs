@@ -12,12 +12,13 @@ using Robust.Shared.Serialization;
 namespace Content.Server.GameObjects.Components.Mobs
 {
     /// <summary>
-    /// Should be used only on items. Manages actions provided by an item.
+    /// Should be used only on items. This is not required in order to give an item
+    /// actions, it's just one way to do it (the other way is by explicitly calling
+    /// SharedActionsComponent methods on the user from a different component on your item).
     ///
     /// Currently all it does is grant specific item actions when picked up (they will
-    /// be revoked automatically by SharedActionsComponent when dropped). Eventually it could be
-    /// used to support more complex use cases or scrapped entirely if a better design for item
-    /// actions is worked out.
+    /// be revoked automatically by SharedActionsComponent when dropped). This could possibly evolve
+    /// to make it easier to use for granting item actions.
     /// </summary>
     [RegisterComponent]
     public class ItemActionsComponent : Component, IEquippedHand, IEquipped

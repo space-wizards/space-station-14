@@ -2,7 +2,6 @@
   actionType: ToggleInternals
   icon: Interface/Actions/internal0.png
   iconOn: Interface/Actions/internal1.png
-  iconStyle: BigItem
   name: "Toggle Internals"
   description: "Breathe from the equipped gas tank."
   requires: "Requires equipped breath mask and gas tank"
@@ -17,6 +16,20 @@
   behavior: !type:ToggleInternalsAction { }
 
 - type: itemAction
+  actionType: ToggleLight
+  icon: Objects/Tools/flashlight.rsi/lantern_off.png
+  iconOn: Objects/Tools/flashlight.rsi/lantern_on.png
+  name: "Toggle Light"
+  description: "Turn the light on."
+  filters:
+    - tools
+  keywords:
+    - lantern
+    - lamp
+  behaviorType: Toggle
+  behavior: !type:ToggleLightAction { }
+
+- type: itemAction
   actionType: DebugInstant
   icon: Interface/Alerts/Human/human1.png
   iconStyle: BigAction
@@ -25,7 +38,6 @@
   requires: "Requires blah blah"
   filters:
     - debug
-    - instant
   behaviorType: Instant
   behavior: !type:DebugInstant
     message: Instant action was used!
@@ -40,7 +52,6 @@
   requires: "Requires blah blah"
   filters:
     - debug
-    - toggle
   behaviorType: Toggle
   behavior: !type:DebugToggle
     messageOn: Toggled on!
@@ -53,32 +64,30 @@
   name: "[color=red]Debug Item Target Position[/color]"
   description: "This is a [color=red]debug message[/color]."
   filters:
-    - target
     - debug
   behaviorType: TargetPoint
   behavior: !type:DebugTargetPoint { }
 
 - type: itemAction
   actionType: DebugTargetPointRepeat
+  iconStyle: BigAction
   icon: Interface/Alerts/Human/human2.png
   name: "[color=red]Repeating Debug Item Target Position[/color]"
   description: "This is a [color=red]debug message[/color]."
   filters:
-    - target
     - debug
-    - repeat
   behaviorType: TargetPoint
   repeat: true
   behavior: !type:DebugTargetPoint { }
 
 - type: itemAction
   actionType: DebugTargetEntity
+  iconStyle: BigAction
   icon: Interface/Alerts/Human/human6.png
   name: "[color=red]Debug Item Target Entity[/color]"
   description: "This is a [color=red]debug message[/color]."
   filters:
     - debug
-    - target
   behaviorType: TargetEntity
   behavior: !type:DebugTargetEntity { }
 
@@ -88,9 +97,7 @@
   name: "[color=red]Repeating Debug Item Target Entity[/color]"
   description: "This is a [color=red]debug message[/color]."
   filters:
-    - target
     - debug
-    - repeat
   behaviorType: TargetEntity
   repeat: true
   behavior: !type:DebugTargetEntity { }

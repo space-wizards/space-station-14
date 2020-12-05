@@ -6,7 +6,6 @@
   requires: "Requires blah blah"
   filters:
     - debug
-    - instant
   behaviorType: Instant
   behavior: !type:DebugInstant
     message: Instant action was used!
@@ -19,7 +18,6 @@
   requires: "Requires blah blah"
   filters:
     - debug
-    - toggle
   behaviorType: Toggle
   behavior: !type:DebugToggle
     messageOn: Toggled on!
@@ -31,7 +29,6 @@
   name: "[color=red]Debug Target Position[/color]"
   description: "This is a [color=red]debug message[/color]."
   filters:
-    - target
     - debug
   behaviorType: TargetPoint
   behavior: !type:DebugTargetPoint { }
@@ -42,9 +39,7 @@
   name: "[color=red]Repeating Debug Target Position[/color]"
   description: "This is a [color=red]debug message[/color]."
   filters:
-    - target
     - debug
-    - repeat
   behaviorType: TargetPoint
   repeat: true
   behavior: !type:DebugTargetPoint { }
@@ -56,7 +51,6 @@
   description: "This is a [color=red]debug message[/color]."
   filters:
     - debug
-    - target
   behaviorType: TargetEntity
   behavior: !type:DebugTargetEntity { }
 
@@ -66,9 +60,7 @@
   name: "[color=red]Repeating Debug Target Entity[/color]"
   description: "This is a [color=red]debug message[/color]."
   filters:
-    - target
     - debug
-    - repeat
   behaviorType: TargetEntity
   repeat: true
   behavior: !type:DebugTargetEntity { }

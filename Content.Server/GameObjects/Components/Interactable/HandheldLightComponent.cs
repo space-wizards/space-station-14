@@ -1,15 +1,20 @@
 ﻿#nullable enable
 using System.Threading.Tasks;
+using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.Items.Clothing;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power;
+using Content.Shared.Actions;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
+using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -25,7 +30,8 @@ namespace Content.Server.GameObjects.Components.Interactable
     ///     Component that represents a powered handheld light source which can be toggled on and off.
     /// </summary>
     [RegisterComponent]
-    internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IInteractUsing
+    internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IInteractUsing,
+        IEquipped, IEquippedHand
     {
         [ViewVariables(VVAccess.ReadWrite)] public float Wattage { get; set; } = 10f;
         [ViewVariables] private PowerCellSlotComponent _cellSlot = default!;
@@ -110,6 +116,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             SetState(false);
             Activated = false;
+            UpdateLightAction();
 
             if (makeNoise)
             {
@@ -130,6 +137,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             {
                 if (TurnOnFailSound != null) EntitySystem.Get<AudioSystem>().PlayFromEntity(TurnOnFailSound, Owner);
                 Owner.PopupMessage(user, Loc.GetString("Cell missing..."));
+                UpdateLightAction();
                 return false;
             }
 
@@ -140,10 +148,12 @@ namespace Content.Server.GameObjects.Components.Interactable
             {
                 if (TurnOnFailSound != null) EntitySystem.Get<AudioSystem>().PlayFromEntity(TurnOnFailSound, Owner);
                 Owner.PopupMessage(user, Loc.GetString("Dead cell..."));
+                UpdateLightAction();
                 return false;
             }
 
             Activated = true;
+            UpdateLightAction();
             SetState(true);
 
             if (TurnOnSound != null) EntitySystem.Get<AudioSystem>().PlayFromEntity(TurnOnSound, Owner);
@@ -171,6 +181,13 @@ namespace Content.Server.GameObjects.Components.Interactable
             {
                 item.EquippedPrefix = on ? "on" : "off";
             }
+        }
+
+        private void UpdateLightAction()
+        {
+            if (!ContainerHelpers.TryGetContainer(Owner, out var container)) return;
+            if (!container.Owner.TryGetComponent<SharedActionsComponent>(out var actionsComponent)) return;
+            actionsComponent.Grant(ItemActionType.ToggleLight, Owner, true, Activated);
         }
 
         public void OnUpdate(float frameTime)
@@ -222,9 +239,41 @@ namespace Content.Server.GameObjects.Components.Interactable
             return (byte?) ContentHelpers.RoundToNearestLevels(currentCharge / Cell.MaxCharge * 255, 255, StatusLevels);
         }
 
+        public void Equipped(EquippedEventArgs eventArgs)
+        {
+            UpdateLightActionOnEquip(eventArgs.User);
+        }
+
+        public void EquippedHand(EquippedHandEventArgs eventArgs)
+        {
+            UpdateLightActionOnEquip(eventArgs.User);
+        }
+
+        private void UpdateLightActionOnEquip(IEntity performer)
+        {
+            if (!performer.TryGetComponent<SharedActionsComponent>(out var actionsComponent)) return;
+            actionsComponent.GrantFromInitialState(ItemActionType.ToggleLight, Owner, true, Activated);
+        }
+
         public override ComponentState GetComponentState()
         {
             return new HandheldLightComponentState(GetLevel());
         }
+
+        [UsedImplicitly]
+        public class ToggleLightAction : IToggleItemAction
+        {
+            public void ExposeData(ObjectSerializer serializer) {}
+
+            public void DoToggleAction(ToggleItemActionEventArgs args)
+            {
+                if (!args.Item.TryGetComponent<HandheldLightComponent>(out var lightComponent)) return;
+                if (lightComponent.Activated != args.ToggledOn)
+                {
+                    lightComponent.ToggleStatus(args.Performer);
+                }
+            }
+        }
+
     }
 }
