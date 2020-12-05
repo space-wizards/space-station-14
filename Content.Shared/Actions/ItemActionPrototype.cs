@@ -18,6 +18,9 @@ namespace Content.Shared.Actions
         /// </summary>
         public ItemActionType ActionType { get; private set; }
 
+        /// <see cref="ItemActionIconStyle"/>
+        public ItemActionIconStyle IconStyle { get; private set; }
+
         /// <summary>
         /// The IInstantItemAction that should be invoked when performing this
         /// action. Null if this is not an Instant ActionBehaviorType.
@@ -56,6 +59,8 @@ namespace Content.Shared.Actions
             {
                 Logger.ErrorS("action", "missing or invalid actionType for action with name {0}", Name);
             }
+
+            serializer.DataField(this, x => x.IconStyle, "iconStyle", ItemActionIconStyle.BigAction);
 
             // TODO: Split this class into server/client after RobustToolbox#1405
             if (IoCManager.Resolve<IModuleManager>().IsClientModule) return;
@@ -97,5 +102,24 @@ namespace Content.Shared.Actions
                 Logger.ErrorS("action", "unrecognized behavior type for action with name {0}", Name);
             }
         }
+    }
+
+    /// <summary>
+    /// Determines how the action icon appears in the hotbar for item actions.
+    /// </summary>
+    public enum ItemActionIconStyle
+    {
+        /// <summary>
+        /// The action icon will be big with a small item icon in the corner
+        /// </summary>
+        BigAction,
+        /// <summary>
+        /// The item icon will be big with a small action icon in the corner
+        /// </summary>
+        BigItem,
+        /// <summary>
+        /// BigAction but no item icon will be shown in the corner.
+        /// </summary>
+        NoItem
     }
 }

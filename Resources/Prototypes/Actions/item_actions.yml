@@ -2,6 +2,7 @@
   actionType: ToggleInternals
   icon: Interface/Actions/internal0.png
   iconOn: Interface/Actions/internal1.png
+  iconStyle: BigItem
   name: "Toggle Internals"
   description: "Breathe from the equipped gas tank."
   requires: "Requires equipped [color=green]breath mask[/color] and [color=green]gas tank[/color]"
@@ -18,6 +19,7 @@
 - type: itemAction
   actionType: DebugInstant
   icon: Interface/Alerts/Human/human1.png
+  iconStyle: BigAction
   name: "[color=red]Debug Item Instant[/color]"
   description: "This is a [color=red]debug message[/color]."
   requires: "Requires blah blah"
@@ -30,6 +32,7 @@
 
 - type: itemAction
   actionType: DebugToggle
+  iconStyle: BigItem
   icon: Interface/Alerts/Human/human3.png
   name: "[color=red]Debug Item Toggle[/color]"
   description: "This is a [color=red]debug message[/color]."
@@ -44,6 +47,7 @@
 
 - type: itemAction
   actionType: DebugTargetPoint
+  iconStyle: NoItem
   icon: Interface/Alerts/Human/human4.png
   name: "[color=red]Debug Item Target Position[/color]"
   description: "This is a [color=red]debug message[/color]."

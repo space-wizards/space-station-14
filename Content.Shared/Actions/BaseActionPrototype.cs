@@ -30,6 +30,8 @@ namespace Content.Shared.Actions
         [ViewVariables]
         public SpriteSpecifier IconOn { get; private set; }
 
+
+
         /// <summary>
         /// Name to show in UI. Accepts formatting.
         /// </summary>

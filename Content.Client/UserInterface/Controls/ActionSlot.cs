@@ -1,9 +1,11 @@
 ﻿#nullable enable
 using System;
+using System.ComponentModel;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Actions;
 using OpenToolkit.Mathematics;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -65,7 +67,7 @@ namespace Content.Client.UserInterface.Controls
             {
                 if (_toggledOn == value) return;
                 _toggledOn = value;
-                UpdateIcon();
+                UpdateIcons();
                 DrawModeChanged();
             }
 
@@ -90,8 +92,10 @@ namespace Content.Client.UserInterface.Controls
         public bool IsOnCooldown => CooldownRemaining != TimeSpan.Zero;
 
         private readonly RichTextLabel _number;
-        private readonly TextureRect _icon;
-        private readonly SpriteView _itemSpriteView;
+        private readonly TextureRect _bigActionIcon;
+        private readonly TextureRect _smallActionIcon;
+        private readonly SpriteView _smallItemSpriteView;
+        private readonly SpriteView _bigItemSpriteView;
         private readonly CooldownGraphic _cooldownGraphic;
 
         private bool _toggledOn;
@@ -116,19 +120,34 @@ namespace Content.Client.UserInterface.Controls
             };
             _number.SetMessage(SlotNumberLabel());
 
-            _icon = new TextureRect
+            _bigActionIcon = new TextureRect
             {
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                 SizeFlagsVertical = SizeFlags.FillExpand,
                 Stretch = TextureRect.StretchMode.Scale,
                 Visible = false
             };
-            _itemSpriteView = new SpriteView
+            _bigItemSpriteView = new SpriteView
+            {
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                SizeFlagsVertical = SizeFlags.FillExpand,
+                Scale = (2,2),
+                Visible = false
+            };
+            _smallActionIcon = new TextureRect
+            {
+                SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
+                SizeFlagsVertical = SizeFlags.ShrinkEnd,
+                Stretch = TextureRect.StretchMode.Scale,
+                Visible = false
+            };
+            _smallItemSpriteView = new SpriteView
             {
                 SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
                 SizeFlagsVertical = SizeFlags.ShrinkEnd,
                 Visible = false
             };
+
             _cooldownGraphic = new CooldownGraphic();
 
             // padding to the left of the number to shift it right
@@ -144,8 +163,8 @@ namespace Content.Client.UserInterface.Controls
                 SizeFlagsVertical = SizeFlags.Fill
             });
             paddingBox.AddChild(_number);
-            // padding to the left of the item icon
-            // TODO: which corner do we want it im
+
+            // padding to the left of the small icon
             var paddingBoxItemIcon = new HBoxContainer()
             {
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
@@ -157,8 +176,16 @@ namespace Content.Client.UserInterface.Controls
                 CustomMinimumSize = (32, 32),
                 SizeFlagsVertical = SizeFlags.Fill
             });
-            paddingBoxItemIcon.AddChild(_itemSpriteView);
-            AddChild(_icon);
+            paddingBoxItemIcon.AddChild(new Control
+            {
+                Children =
+                {
+                    _smallActionIcon,
+                    _smallItemSpriteView
+                }
+            });
+            AddChild(_bigActionIcon);
+            AddChild(_bigItemSpriteView);
             AddChild(_cooldownGraphic);
             AddChild(paddingBox);
             AddChild(paddingBoxItemIcon);
@@ -211,14 +238,10 @@ namespace Content.Client.UserInterface.Controls
 
             Action = action;
             Item = null;
-            _icon.Texture = Action.Icon.Frame0();
-            _icon.Visible = true;
-            _itemSpriteView.Visible = false;
-            _itemSpriteView.Sprite = null;
             Pressed = false;
             ToggledOn = false;
             ActionEnabled = actionEnabled;
-            UpdateIcon();
+            UpdateIcons();
             DrawModeChanged();
             _number.SetMessage(SlotNumberLabel());
         }
@@ -235,12 +258,10 @@ namespace Content.Client.UserInterface.Controls
 
             Action = action;
             Item = null;
-            _itemSpriteView.Visible = false;
-            _itemSpriteView.Sprite = null;
             Pressed = false;
             ToggledOn = false;
             ActionEnabled = false;
-            UpdateIcon();
+            UpdateIcons();
             DrawModeChanged();
             _number.SetMessage(SlotNumberLabel());
         }
@@ -258,21 +279,10 @@ namespace Content.Client.UserInterface.Controls
 
             Action = action;
             Item = item;
-            if (Item.TryGetComponent<ISpriteComponent>(out var spriteComponent))
-            {
-                _itemSpriteView.Sprite = spriteComponent;
-                _itemSpriteView.Visible = true;
-            }
-            else
-            {
-                _itemSpriteView.Visible = false;
-                _itemSpriteView.Sprite = null;
-            }
-
             Pressed = false;
             ToggledOn = false;
             ActionEnabled = false;
-            UpdateIcon();
+            UpdateIcons();
             DrawModeChanged();
             _number.SetMessage(SlotNumberLabel());
         }
@@ -285,11 +295,9 @@ namespace Content.Client.UserInterface.Controls
             if (!HasAssignment) return;
             Action = null;
             Item = null;
-            _itemSpriteView.Visible = false;
-            _itemSpriteView.Sprite = null;
             ToggledOn = false;
             Pressed = false;
-            UpdateIcon();
+            UpdateIcons();
             DrawModeChanged();
             UpdateCooldown(null, TimeSpan.Zero);
             _number.SetMessage(SlotNumberLabel());
@@ -329,22 +337,113 @@ namespace Content.Client.UserInterface.Controls
             return FormattedMessage.FromMarkup("[color=" + color + "]" + number + "[/color]");
         }
 
-        private void UpdateIcon()
+        private void UpdateIcons()
         {
             if (!HasAssignment)
             {
-                _icon.Texture = null;
-                _icon.Visible = false;
+                SetActionIcon(null);
+                SetItemIcon(null);
+                return;
             }
+
             if (HasToggleSprite && ToggledOn && Action != null)
             {
-                _icon.Texture = Action.IconOn.Frame0();
-                _icon.Visible = true;
+                SetActionIcon(Action.IconOn.Frame0());
             }
             else if (Action != null)
             {
-                _icon.Texture = Action.Icon.Frame0();
-                _icon.Visible = true;
+                SetActionIcon(Action.Icon.Frame0());
+            }
+
+            if (Item != null)
+            {
+                SetItemIcon(Item.TryGetComponent<ISpriteComponent>(out var spriteComponent) ? spriteComponent : null);
+            }
+            else
+            {
+                SetItemIcon(null);
+            }
+        }
+
+        private void SetActionIcon(Texture? texture)
+        {
+            if (texture == null || !HasAssignment)
+            {
+                _bigActionIcon.Texture = null;
+                _bigActionIcon.Visible = false;
+                _smallActionIcon.Texture = null;
+                _smallActionIcon.Visible = false;
+            }
+            else
+            {
+                if (Action is ItemActionPrototype actionPrototype && actionPrototype.IconStyle == ItemActionIconStyle.BigItem)
+                {
+                    _bigActionIcon.Texture = null;
+                    _bigActionIcon.Visible = false;
+                    _smallActionIcon.Texture = texture;
+                    _smallActionIcon.Visible = true;
+                }
+                else
+                {
+                    _bigActionIcon.Texture = texture;
+                    _bigActionIcon.Visible = true;
+                    _smallActionIcon.Texture = null;
+                    _smallActionIcon.Visible = false;
+                }
+
+            }
+        }
+
+        private void SetItemIcon(ISpriteComponent? sprite)
+        {
+            if (sprite == null || !HasAssignment)
+            {
+                _bigItemSpriteView.Visible = false;
+                _bigItemSpriteView.Sprite = null;
+                _smallItemSpriteView.Visible = false;
+                _smallItemSpriteView.Sprite = null;
+            }
+            else
+            {
+                if (Action is ItemActionPrototype actionPrototype)
+                {
+                    switch (actionPrototype.IconStyle)
+                    {
+                        case ItemActionIconStyle.BigItem:
+                        {
+                            _bigItemSpriteView.Visible = true;
+                            _bigItemSpriteView.Sprite = sprite;
+                            _smallItemSpriteView.Visible = false;
+                            _smallItemSpriteView.Sprite = null;
+                            break;
+                        }
+                        case ItemActionIconStyle.BigAction:
+                        {
+                            _bigItemSpriteView.Visible = false;
+                            _bigItemSpriteView.Sprite = null;
+                            _smallItemSpriteView.Visible = true;
+                            _smallItemSpriteView.Sprite = sprite;
+                            break;
+                        }
+                        case ItemActionIconStyle.NoItem:
+                        {
+                            _bigItemSpriteView.Visible = false;
+                            _bigItemSpriteView.Sprite = null;
+                            _smallItemSpriteView.Visible = false;
+                            _smallItemSpriteView.Sprite = null;
+                            break;
+                        }
+                    }
+
+                }
+                else
+                {
+                    _bigItemSpriteView.Visible = false;
+                    _bigItemSpriteView.Sprite = null;
+                    _smallItemSpriteView.Visible = false;
+                    _smallItemSpriteView.Sprite = null;
+                }
+
             }
         }
 
