@@ -22,11 +22,24 @@ namespace Content.Shared.Construction.ConstructionConditions
             if (invalidDirection)
                 return false;
 
-            // check that player builds inside wall
-            var wallEnity = location.GetEntitiesInTile(true)
-                .FirstOrDefault((e) => e.HasComponent<SharedWallComponent>());
-            if (wallEnity == null)
-                return false;
+            if (direction != Direction.North)
+            {
+                // check that building inside wall
+                var wallEnity = location.GetEntitiesInTile(true)
+                    .FirstOrDefault((e) => e.HasComponent<SharedWallComponent>());
+                if (wallEnity == null)
+                    return false;
+            }
+            else
+            {
+                // north is exception because of world projection
+                // wallmount wil be build one tile above the wall
+                var belowLocation = location.Offset(Direction.South);
+                var wallEnity = belowLocation.GetEntitiesInTile(true)
+                    .FirstOrDefault((e) => e.HasComponent<SharedWallComponent>());
+                if (wallEnity == null)
+                    return false;
+            }
 
             // check that building doesn't facing adjacent wall
             var dirLocation = location.Offset(direction);

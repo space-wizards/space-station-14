@@ -8,9 +8,9 @@
   description: A wall light fixture. Use light tubes.
   icon:
     sprite: Constructible/Lighting/light_tube.rsi
-    state: empty
+    state: off
   objectType: Structure
-  placementMode: PlaceFree
+  placementMode: SnapgridBorder
   canRotate: true
   canBuildInImpassable: true
   conditions:
@@ -26,9 +26,9 @@
   description: A wall light fixture. Use light bulbs.
   icon:
     sprite: Constructible/Lighting/light_small.rsi
-    state: empty
+    state: off
   objectType: Structure
-  placementMode: PlaceFree
+  placementMode: SnapgridBorder
   canRotate: true
   canBuildInImpassable: true
   conditions:
