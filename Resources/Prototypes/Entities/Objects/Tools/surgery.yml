@@ -15,7 +15,7 @@
   name: scalpel
   parent: BaseSurgeryTool
   id: Scalpel
-  desc: A surgical tool used to make incisions into flesh.
+  description: A surgical tool used to make incisions into flesh.
   components:
   - type: SurgeryTool
     surgeryType: Incision

@@ -216,6 +216,10 @@
             "ConveyorAssembly",
             "TwoWayLever",
             "FirelockElectronics",
+            "Machine",
+            "MachinePart",
+            "MachineFrame",
+            "MachineBoard"
         };
     }
 }

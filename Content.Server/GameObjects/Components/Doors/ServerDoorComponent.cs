@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Doors
         [ViewVariables(VVAccess.ReadWrite)]
         protected float CloseSpeed = AutoCloseDelay;
 
-        private readonly CancellationTokenSource _cancellationTokenSource = new();
+        private CancellationTokenSource? _cancellationTokenSource;
 
         protected virtual TimeSpan CloseTimeOne => TimeSpan.FromSeconds(0.3f);
         protected virtual TimeSpan CloseTimeTwo => TimeSpan.FromSeconds(0.9f);
@@ -259,6 +259,9 @@ namespace Content.Server.GameObjects.Components.Doors
                 occluder.Enabled = false;
             }
 
+            _cancellationTokenSource?.Cancel();
+            _cancellationTokenSource = new();
+
             Owner.SpawnTimer(OpenTimeOne, async () =>
             {
                 if (Owner.TryGetComponent(out AirtightComponent? airtight))
@@ -412,6 +415,9 @@ namespace Content.Server.GameObjects.Components.Doors
                 occluder.Enabled = true;
             }
 
+            _cancellationTokenSource?.Cancel();
+            _cancellationTokenSource = new();
+
             Owner.SpawnTimer(CloseTimeOne, async () =>
             {
                 if (shouldCheckCrush && _canCrush)
@@ -444,6 +450,8 @@ namespace Content.Server.GameObjects.Components.Doors
             if (State == DoorState.Open || _isWeldedShut)
                 return;
 
+            _cancellationTokenSource?.Cancel();
+            _cancellationTokenSource = new();
             SetAppearance(DoorVisualState.Deny);
             Owner.SpawnTimer(DenyTime, () =>
             {

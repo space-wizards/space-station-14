@@ -295,7 +295,7 @@ namespace Content.Client.State
             _disconnected.Visible = page == Page.Disconnected;
         }
 
-        private enum Page
+        private enum Page : byte
         {
             Connecting,
             ConnectFailed,

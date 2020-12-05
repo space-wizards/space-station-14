@@ -1,0 +1,58 @@
+- type: entity
+  id: ComputerSupplyOrdering
+  parent: ComputerBase
+  name: Cargo ordering computer
+  description: Used to order supplies, approve requests, and control the shuttle.
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: tech_key
+      screen: supply
+  - type: CargoConsole
+  - type: CargoOrderDatabase
+  - type: GalacticMarket
+    static: true
+    products:
+      - cargo.emergencyexplosive
+      - cargo.emergencyfire
+      - cargo.emergencyinternals
+      - cargo.emergencyradiation
+      - cargo.armorysmg
+      - cargo.armoryshotgun
+      - cargo.securityarmor
+      - cargo.securityriot
+      - cargo.securitylaser
+      - cargo.securityhelmet
+      - cargo.securitysupplies
+      - cargo.securitynonlethal
+      - cargo.hydroponics
+      - cargo.hydroponicsseeds
+      - cargo.hydroponicsseedsexotic
+      - cargo.servicejanitorial
+      - cargo.servicelightsreplacement
+      - cargo.funplushies
+      - cargo.funartsupplies
+      - cargo.funinstruments
+  - type: UserInterface
+    interfaces:
+    - key: enum.CargoConsoleUiKey.Key
+      type: CargoConsoleBoundUserInterface
+  - type: Computer
+    board: SupplyComputerCircuitboard
+
+- type: entity
+  id: ComputerSupplyRequest
+  parent: ComputerSupplyOrdering
+  name: cargo request computer
+  description: Used to request supplies from cargo.
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: tech_key
+      screen: request
+  - type: CargoConsole
+    requestOnly: true
+  - type: Computer
+    board: SupplyRequestComputerCircuitboard

@@ -1,0 +1,23 @@
+- type: cargoProduct
+  name: "smg crate"
+  id: cargo.armorysmg
+  description: "Contains three high-powered, semiautomatic rifles with six mags. Requires Armory access to open."
+  icon:
+    sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
+    state: icon
+  product: CrateArmorySMG
+  cost: 8000
+  category: Armory
+  group: market
+
+- type: cargoProduct
+  name: "shotgun crate"
+  id: cargo.armoryshotgun
+  description: "For when the enemy absolutely needs to be replaced with lead. Contains three Gladstone Combat Shotguns, and some standard shotgun shells. Requires Armory access to open."
+  icon:
+    sprite: Objects/Weapons/Guns/Shotguns/gladstone.rsi
+    state: icon
+  product: CrateArmoryShotgun
+  cost: 8000
+  category: Armory
+  group: market

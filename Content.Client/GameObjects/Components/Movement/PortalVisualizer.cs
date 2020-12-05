@@ -48,7 +48,7 @@ namespace Content.Client.GameObjects.Components.Movement
             }
         }
 
-        enum Layers
+        enum Layers : byte
         {
             Portal
         }

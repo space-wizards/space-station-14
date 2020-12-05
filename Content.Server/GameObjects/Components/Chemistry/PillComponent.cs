@@ -4,7 +4,6 @@ using Content.Server.GameObjects.Components.Nutrition;
 using Content.Server.GameObjects.Components.Utensil;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
@@ -14,7 +13,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -52,10 +50,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             base.Initialize();
 
-            if (!Owner.EnsureComponent(out _contents))
-            {
-                Logger.Error($"Prototype {Owner.Prototype?.ID} had a {nameof(PillComponent)} without a {nameof(SolutionContainerComponent)}!");
-            }
+            Owner.EnsureComponentWarn(out _contents);
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)

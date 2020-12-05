@@ -2,6 +2,8 @@
   id: LockerGeneric
   name: closet
   description: A standard-issue Nanotrasen storage unit.
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Sprite
     netsync: false
@@ -47,6 +49,3 @@
   - type: LoopingSound
   - type: Anchorable
   - type: Pullable
-  placement:
-    snap:
-    - Wall

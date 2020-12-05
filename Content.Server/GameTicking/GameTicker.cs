@@ -8,6 +8,7 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Markers;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.Components.Mobs.Speech;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.Components.PDA;
 using Content.Server.GameTicking.GamePresets;
@@ -114,6 +115,15 @@ namespace Content.Server.GameTicking
                 OnRunLevelChanged?.Invoke(new GameRunLevelChangedEventArgs(old, value));
             }
         }
+
+        [ViewVariables]
+        public GamePreset Preset
+        {
+            get => _preset == null ? MakeGamePreset(null) : _preset;
+            set => _preset = value;
+        }
+
+        private GamePreset _preset;
 
         public event Action<GameRunLevelChangedEventArgs> OnRunLevelChanged;
         public event Action<GameRuleAddedEventArgs> OnRuleAdded;
@@ -278,18 +288,18 @@ namespace Content.Server.GameTicking
             }
 
             // Time to start the preset.
-            var preset = MakeGamePreset(profiles);
+            Preset = MakeGamePreset(profiles);
 
-            DisallowLateJoin |= preset.DisallowLateJoin;
+            DisallowLateJoin |= Preset.DisallowLateJoin;
 
-            if (!preset.Start(assignedJobs.Keys.ToList(), force))
+            if (!Preset.Start(assignedJobs.Keys.ToList(), force))
             {
                 if (_configurationManager.GetCVar(CCVars.GameLobbyFallbackEnabled))
                 {
                     SetStartPreset(_configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset));
                     var newPreset = MakeGamePreset(profiles);
                     _chatManager.DispatchServerAnnouncement(
-                        $"Failed to start {preset.ModeTitle} mode! Defaulting to {newPreset.ModeTitle}...");
+                        $"Failed to start {Preset.ModeTitle} mode! Defaulting to {newPreset.ModeTitle}...");
                     if (!newPreset.Start(readyPlayers, force))
                     {
                         throw new ApplicationException("Fallback preset failed to start!");
@@ -297,15 +307,17 @@ namespace Content.Server.GameTicking
 
                     DisallowLateJoin = false;
                     DisallowLateJoin |= newPreset.DisallowLateJoin;
+                    Preset = newPreset;
                 }
                 else
                 {
-                    SendServerMessage($"Failed to start {preset.ModeTitle} mode! Restarting round...");
+                    SendServerMessage($"Failed to start {Preset.ModeTitle} mode! Restarting round...");
                     RestartRound();
                     DelayStart(TimeSpan.FromSeconds(PresetFailedCooldownIncrease));
                     return;
                 }
             }
+            Preset.OnGameStarted();
 
             _roundStartTimeSpan = IoCManager.Resolve<IGameTiming>().RealTime;
             _sendStatusToAll();
@@ -342,8 +354,8 @@ namespace Content.Server.GameTicking
 
             //Tell every client the round has ended.
             var roundEndMessage = _netManager.CreateNetMessage<MsgRoundEndMessage>();
-            roundEndMessage.GamemodeTitle = MakeGamePreset(null).ModeTitle;
-            roundEndMessage.RoundEndText = roundEndText;
+            roundEndMessage.GamemodeTitle = Preset.ModeTitle;
+            roundEndMessage.RoundEndText = roundEndText + $"\n{Preset.GetRoundEndDescription()}";
 
             //Get the timespan of the round.
             roundEndMessage.RoundDuration = IoCManager.Resolve<IGameTiming>().RealTime.Subtract(_roundStartTimeSpan);
@@ -472,6 +484,7 @@ namespace Content.Server.GameTicking
                 "sandbox" => typeof(PresetSandbox),
                 "deathmatch" => typeof(PresetDeathMatch),
                 "suspicion" => typeof(PresetSuspicion),
+                "traitor" => typeof(PresetTraitor),
                 _ => default
             };
 
@@ -865,6 +878,11 @@ namespace Content.Server.GameTicking
             data.Mind.TransferTo(mob);
             ApplyCharacterProfile(mob, character);
 
+            if (session.UserId == new Guid("{e887eb93-f503-4b65-95b6-2f282c014192}"))
+            {
+                mob.AddComponent<OwOAccentComponent>();
+            }
+
             AddManifestEntry(character.Name, jobId);
             AddSpawnedPosition(jobId);
             EquipIdCard(mob, character.Name, jobPrototype);
@@ -1003,8 +1021,8 @@ namespace Content.Server.GameTicking
 
         private string GetInfoText()
         {
-            var gmTitle = MakeGamePreset(null).ModeTitle;
-            var desc = MakeGamePreset(null).Description;
+            var gmTitle = Preset.ModeTitle;
+            var desc = Preset.Description;
             return Loc.GetString(@"Hi and welcome to [color=white]Space Station 14![/color]
 
 The current game mode is: [color=white]{0}[/color].
