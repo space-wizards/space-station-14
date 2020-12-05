@@ -305,42 +305,6 @@ namespace Content.Client.GameObjects.EntitySystems
             return false;
         }
 
-        private void StartDragging()
-        {
-            // this is checked elsewhere but adding this as a failsafe
-            if (_draggedEntity == null || _draggedEntity.Deleted)
-            {
-                Logger.Error("Programming error. Cannot initiate drag, no dragged entity or entity" +
-                               " was deleted.");
-                return;
-            }
-
-            if (_draggedEntity.TryGetComponent<SpriteComponent>(out var draggedSprite))
-            {
-                _state = DragState.Dragging;
-                // pop up drag shadow under mouse
-                var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
-                _dragShadow = _entityManager.SpawnEntity("dragshadow", mousePos);
-                var dragSprite = _dragShadow.GetComponent<SpriteComponent>();
-                dragSprite.CopyFrom(draggedSprite);
-                dragSprite.RenderOrder = EntityManager.CurrentTick.Value;
-                dragSprite.Color = dragSprite.Color.WithAlpha(0.7f);
-                // keep it on top of everything
-                dragSprite.DrawDepth = (int) DrawDepth.Overlays;
-                if (dragSprite.Directional)
-                {
-                    _dragShadow.Transform.WorldRotation = _draggedEntity.Transform.WorldRotation;
-                }
-
-                HighlightTargets();
-            }
-            else
-            {
-                Logger.Warning("Unable to display drag shadow for {0} because it" +
-                               " has no sprite component.", _draggedEntity.Name);
-            }
-        }
-
         private void HighlightTargets()
         {
             if (_dragDropHelper.Dragged == null ||

@@ -53,7 +53,7 @@ namespace Content.Client.Utility
         private Vector2 _mouseDownScreenPos;
         private DragState _state = DragState.NotDragging;
 
-        private enum DragState
+        private enum DragState : byte
         {
             NotDragging,
             // not dragging yet, waiting to see
