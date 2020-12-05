@@ -64,7 +64,7 @@
   name: giant smug plushie
   parent: BaseItem
   id: PlushieSmug
-  description: It's smug aura compells you to perform surgery with a slightly higher degree of skill.
+  description: Its smug aura compells you to perform surgery with a slightly higher degree of skill.
   components:
   - type: Toys
   - type: LoopingSound

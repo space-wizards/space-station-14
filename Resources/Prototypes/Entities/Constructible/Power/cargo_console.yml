@@ -34,7 +34,6 @@
       - cargo.funplushies
       - cargo.funartsupplies
       - cargo.funinstruments
-      -
   - type: UserInterface
     interfaces:
     - key: enum.CargoConsoleUiKey.Key
