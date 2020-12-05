@@ -347,6 +347,21 @@ namespace Content.Client.UserInterface
             {
                 return action is ActionPrototype;
             }
+
+            if (tag == InstantActionTag)
+            {
+                return action.BehaviorType == BehaviorType.Instant;
+            }
+            if (tag == TargetActionTag)
+            {
+                return action.BehaviorType == BehaviorType.TargetEntity ||
+                       action.BehaviorType == BehaviorType.TargetPoint;
+            }
+            if (tag == ToggleActionTag)
+            {
+                return action.BehaviorType == BehaviorType.Toggle;
+            }
+
             return action.Filters.Contains(tag);
         }
 
