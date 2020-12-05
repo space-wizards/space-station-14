@@ -1,10 +1,7 @@
 ﻿#nullable enable
 using System;
-using System.ComponentModel;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Actions;
-using OpenToolkit.Mathematics;
-using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.UserInterface;
@@ -13,6 +10,7 @@ using Robust.Client.Utility;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Controls

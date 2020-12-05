@@ -37,7 +37,7 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
 
         public bool Equals(ActionAssignment other)
         {
-            return ActionType == other.ActionType && ItemActionType == other.ItemActionType && Nullable.Equals(Item, other.Item);
+            return ActionType == other.ActionType && ItemActionType == other.ItemActionType && Equals(Item, other.Item);
         }
 
         public override bool Equals(object obj)
