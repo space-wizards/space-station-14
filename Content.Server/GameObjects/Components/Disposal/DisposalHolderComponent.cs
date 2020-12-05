@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Body;
@@ -11,7 +10,6 @@ using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
@@ -149,12 +147,8 @@ namespace Content.Server.GameObjects.Components.Disposal
             if (Owner.Transform.Coordinates.TryGetTileAtmosphere(out var tileAtmos) &&
                 tileAtmos.Air != null)
             {
-                tileAtmos.Air.Merge(Air);
+                tileAtmos.AssumeAir(Air);
                 Air.Clear();
-
-                EntitySystem.Get<AtmosphereSystem>()
-                    .GetGridAtmosphere(Owner.Transform.GridID)?
-                    .Invalidate(tileAtmos.GridIndices);
             }
 
             Owner.Delete();
