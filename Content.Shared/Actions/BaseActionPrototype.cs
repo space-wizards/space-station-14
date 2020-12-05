@@ -24,6 +24,13 @@ namespace Content.Shared.Actions
         public SpriteSpecifier Icon { get; private set; }
 
         /// <summary>
+        /// For toggle actions only, icon to show when toggled on. If omitted,
+        /// the action will simply be highlighted when turned on.
+        /// </summary>
+        [ViewVariables]
+        public SpriteSpecifier IconOn { get; private set; }
+
+        /// <summary>
         /// Name to show in UI. Accepts formatting.
         /// </summary>
         public FormattedMessage Name { get; private set; }
@@ -66,6 +73,7 @@ namespace Content.Shared.Actions
 
             serializer.DataField(this, x => x.Requires,"requires", null);
             serializer.DataField(this, x => x.Icon,"icon", SpriteSpecifier.Invalid);
+            serializer.DataField(this, x => x.IconOn,"iconOn", SpriteSpecifier.Invalid);
 
             // client needs to know what type of behavior it is even if the actual implementation is only
             // on server side. If we wanted to avoid this we'd need to always add a shared or clientside interface
@@ -74,6 +82,12 @@ namespace Content.Shared.Actions
             if (BehaviorType == BehaviorType.None)
             {
                 Logger.ErrorS("action", "Missing behaviorType for action with name {0}", Name);
+            }
+
+            if (BehaviorType != BehaviorType.Toggle && IconOn != SpriteSpecifier.Invalid)
+            {
+                Logger.ErrorS("action", "for action {0}, iconOn was specified but behavior" +
+                                        " type was {1}. iconOn is only supported for Toggle behavior type.", Name);
             }
 
             serializer.DataField(this, x => x.Repeat, "repeat", false);

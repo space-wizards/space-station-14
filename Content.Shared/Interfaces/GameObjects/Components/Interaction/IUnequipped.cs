@@ -19,15 +19,13 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         void Unequipped(UnequippedEventArgs eventArgs);
     }
 
-    public class UnequippedEventArgs : EventArgs
+    public class UnequippedEventArgs : UserEventArgs
     {
-        public UnequippedEventArgs(IEntity user, EquipmentSlotDefines.Slots slot)
+        public UnequippedEventArgs(IEntity user, EquipmentSlotDefines.Slots slot) : base(user)
         {
-            User = user;
             Slot = slot;
         }
 
-        public IEntity User { get; }
         public EquipmentSlotDefines.Slots Slot { get; }
     }
 

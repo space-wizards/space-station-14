@@ -40,6 +40,8 @@ namespace Content.Client.UserInterface.Controls
         /// </summary>
         public bool HasAssignment => Action != null;
 
+        private bool HasToggleSprite => Action != null && Action.IconOn != SpriteSpecifier.Invalid;
+
         /// <summary>
         /// Whether the action in this slot is currently shown as usable.
         /// Not to be confused with Control.Disabled.
@@ -63,6 +65,7 @@ namespace Content.Client.UserInterface.Controls
             {
                 if (_toggledOn == value) return;
                 _toggledOn = value;
+                UpdateIcon();
                 DrawModeChanged();
             }
 
@@ -215,6 +218,7 @@ namespace Content.Client.UserInterface.Controls
             Pressed = false;
             ToggledOn = false;
             ActionEnabled = actionEnabled;
+            UpdateIcon();
             DrawModeChanged();
             _number.SetMessage(SlotNumberLabel());
         }
@@ -231,13 +235,12 @@ namespace Content.Client.UserInterface.Controls
 
             Action = action;
             Item = null;
-            _icon.Texture = action.Icon.Frame0();
-            _icon.Visible = true;
             _itemSpriteView.Visible = false;
             _itemSpriteView.Sprite = null;
             Pressed = false;
             ToggledOn = false;
             ActionEnabled = false;
+            UpdateIcon();
             DrawModeChanged();
             _number.SetMessage(SlotNumberLabel());
         }
@@ -255,8 +258,6 @@ namespace Content.Client.UserInterface.Controls
 
             Action = action;
             Item = item;
-            _icon.Texture = action.Icon.Frame0();
-            _icon.Visible = true;
             if (Item.TryGetComponent<ISpriteComponent>(out var spriteComponent))
             {
                 _itemSpriteView.Sprite = spriteComponent;
@@ -271,6 +272,7 @@ namespace Content.Client.UserInterface.Controls
             Pressed = false;
             ToggledOn = false;
             ActionEnabled = false;
+            UpdateIcon();
             DrawModeChanged();
             _number.SetMessage(SlotNumberLabel());
         }
@@ -283,12 +285,11 @@ namespace Content.Client.UserInterface.Controls
             if (!HasAssignment) return;
             Action = null;
             Item = null;
-            _icon.Texture = null;
-            _icon.Visible = false;
             _itemSpriteView.Visible = false;
             _itemSpriteView.Sprite = null;
             ToggledOn = false;
             Pressed = false;
+            UpdateIcon();
             DrawModeChanged();
             UpdateCooldown(null, TimeSpan.Zero);
             _number.SetMessage(SlotNumberLabel());
@@ -328,6 +329,25 @@ namespace Content.Client.UserInterface.Controls
             return FormattedMessage.FromMarkup("[color=" + color + "]" + number + "[/color]");
         }
 
+        private void UpdateIcon()
+        {
+            if (!HasAssignment)
+            {
+                _icon.Texture = null;
+                _icon.Visible = false;
+            }
+            if (HasToggleSprite && ToggledOn && Action != null)
+            {
+                _icon.Texture = Action.IconOn.Frame0();
+                _icon.Visible = true;
+            }
+            else if (Action != null)
+            {
+                _icon.Texture = Action.Icon.Frame0();
+                _icon.Visible = true;
+            }
+        }
+
 
         protected override void DrawModeChanged()
         {
@@ -340,11 +360,11 @@ namespace Content.Client.UserInterface.Controls
             }
             else if (_cooldownGraphic.Visible && ActionEnabled)
             {
-                SetOnlyStylePseudoClass(ToggledOn ? StylePseudoClassPressed : StylePseudoClassNormal);
+                SetOnlyStylePseudoClass((ToggledOn && !HasToggleSprite) ? StylePseudoClassPressed : StylePseudoClassNormal);
             }
             else if (!ActionEnabled)
             {
-                SetOnlyStylePseudoClass(ToggledOn ? StylePseudoClassPressed : StylePseudoClassDisabled);
+                SetOnlyStylePseudoClass((ToggledOn && !HasToggleSprite) ? StylePseudoClassPressed : StylePseudoClassDisabled);
             }
             else if (DrawMode != DrawModeEnum.Hover && ToggledOn)
             {

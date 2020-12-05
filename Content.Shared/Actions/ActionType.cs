@@ -20,6 +20,7 @@
     public enum ItemActionType : byte
     {
         Error,
+        ToggleInternals,
         DebugInstant,
         DebugToggle,
         DebugTargetPoint,

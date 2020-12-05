@@ -19,15 +19,23 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         void Equipped(EquippedEventArgs eventArgs);
     }
 
-    public class EquippedEventArgs : EventArgs
+    public abstract class UserEventArgs : EventArgs
     {
-        public EquippedEventArgs(IEntity user, EquipmentSlotDefines.Slots slot)
+        public IEntity User { get; }
+
+        protected UserEventArgs(IEntity user)
         {
             User = user;
+        }
+    }
+
+    public class EquippedEventArgs : UserEventArgs
+    {
+        public EquippedEventArgs(IEntity user, EquipmentSlotDefines.Slots slot) : base(user)
+        {
             Slot = slot;
         }
 
-        public IEntity User { get; }
         public EquipmentSlotDefines.Slots Slot { get; }
     }
 

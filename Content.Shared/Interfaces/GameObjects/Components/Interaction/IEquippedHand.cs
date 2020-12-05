@@ -18,15 +18,13 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         void EquippedHand(EquippedHandEventArgs eventArgs);
     }
 
-    public class EquippedHandEventArgs : EventArgs
+    public class EquippedHandEventArgs : UserEventArgs
     {
-        public EquippedHandEventArgs(IEntity user, SharedHand hand)
+        public EquippedHandEventArgs(IEntity user, SharedHand hand) : base(user)
         {
-            User = user;
             Hand = hand;
         }
 
-        public IEntity User { get; }
         public SharedHand Hand { get; }
     }
 

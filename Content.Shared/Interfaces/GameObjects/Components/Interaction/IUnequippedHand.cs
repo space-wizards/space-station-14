@@ -17,15 +17,13 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         void UnequippedHand(UnequippedHandEventArgs eventArgs);
     }
 
-    public class UnequippedHandEventArgs : EventArgs
+    public class UnequippedHandEventArgs : UserEventArgs
     {
-        public UnequippedHandEventArgs(IEntity user, SharedHand hand)
+        public UnequippedHandEventArgs(IEntity user, SharedHand hand) : base(user)
         {
-            User = user;
             Hand = hand;
         }
 
-        public IEntity User { get; }
         public SharedHand Hand { get; }
     }
 

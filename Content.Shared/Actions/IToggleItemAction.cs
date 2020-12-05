@@ -10,7 +10,7 @@ namespace Content.Shared.Actions
     public interface IToggleItemAction : IActionBehavior
     {
         /// <summary>
-        /// Invoked when the action is being toggled on/off.
+        /// Invoked after the action is toggled on/off.
         /// Implementation should perform the server side logic of whatever
         /// happens when it is toggled on / off.
         /// </summary>

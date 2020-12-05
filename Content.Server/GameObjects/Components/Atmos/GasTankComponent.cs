@@ -3,29 +3,26 @@ using System;
 using Content.Server.Atmos;
 using Content.Server.Explosions;
 using Content.Server.GameObjects.Components.Body.Respiratory;
-using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Interfaces;
 using Content.Server.Utility;
+using Content.Shared.Actions;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Atmos.GasTank;
-using Content.Shared.GameObjects.Components.Inventory;
+using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Utility;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.EntitySystemMessages;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -34,7 +31,8 @@ namespace Content.Server.GameObjects.Components.Atmos
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class GasTankComponent : SharedGasTankComponent, IExamine, IGasMixtureHolder, IUse, IDropped, IActivate
+    public class GasTankComponent : SharedGasTankComponent, IExamine, IGasMixtureHolder, IUse, IDropped, IActivate,
+        IEquipped, IEquippedHand
     {
     	  private const float MaxExplosionRange = 14f;
         private const float DefaultOutputPressure = Atmospherics.OneAtmosphere;
@@ -197,14 +195,28 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         private void UpdateUserInterface(bool initialUpdate = false)
         {
+            var internals = GetInternalsComponent();
             _userInterface?.SetState(
                 new GasTankBoundUserInterfaceState
                 {
                     TankPressure = Air?.Pressure ?? 0,
                     OutputPressure = initialUpdate ? OutputPressure : (float?) null,
                     InternalsConnected = IsConnected,
-                    CanConnectInternals = IsFunctional && GetInternalsComponent() != null
+                    CanConnectInternals = IsFunctional && internals != null
                 });
+
+            if (internals == null) return;
+            var user = internals.Owner;
+            if (!user.TryGetComponent<ServerActionsComponent>(out var actionsComponent)) return;
+
+            if (IsFunctional)
+            {
+                actionsComponent.Grant(ItemActionType.ToggleInternals, Owner, true, IsConnected);
+            }
+            else
+            {
+                actionsComponent.Grant(ItemActionType.ToggleInternals, Owner, false, IsConnected);
+            }
         }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
@@ -316,6 +328,37 @@ namespace Content.Server.GameObjects.Components.Atmos
                 _integrity++;
         }
 
+        public void Dropped(DroppedEventArgs eventArgs)
+        {
+            DisconnectFromInternals(eventArgs.User);
+        }
+
+        public void Equipped(EquippedEventArgs eventArgs)
+        {
+            UpdateInternalsActionOnEquip(eventArgs.User);
+        }
+
+        public void EquippedHand(EquippedHandEventArgs eventArgs)
+        {
+            UpdateInternalsActionOnEquip(eventArgs.User);
+        }
+
+        private void UpdateInternalsActionOnEquip(IEntity user)
+        {
+            // show the action as disabled unless the user is currently able to toggle it on
+            if (!user.TryGetComponent<ServerActionsComponent>(out var actionsComponent)) return;
+            if (!user.TryGetComponent<InternalsComponent>(out var internalsComponent)) return;
+
+            if (IsFunctional)
+            {
+                actionsComponent.GrantFromInitialState(ItemActionType.ToggleInternals, Owner);
+            }
+            else
+            {
+                actionsComponent.GrantFromInitialState(ItemActionType.ToggleInternals, Owner, false);
+            }
+        }
+
         /// <summary>
         /// Open interaction window
         /// </summary>
@@ -347,9 +390,15 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
         }
 
-        public void Dropped(DroppedEventArgs eventArgs)
+        public class ToggleInternalsAction : IToggleItemAction
         {
-            DisconnectFromInternals(eventArgs.User);
+            public void ExposeData(ObjectSerializer serializer) {}
+
+            public void DoToggleAction(ToggleItemActionEventArgs args)
+            {
+                if (!args.Item.TryGetComponent<GasTankComponent>(out var gasTankComponent)) return;
+                gasTankComponent.ToggleInternals();
+            }
         }
     }
 }
