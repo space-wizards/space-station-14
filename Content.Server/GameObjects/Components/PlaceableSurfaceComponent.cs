@@ -3,6 +3,7 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -13,6 +14,8 @@ namespace Content.Server.GameObjects.Components
     public class PlaceableSurfaceComponent : SharedPlaceableSurfaceComponent, IInteractUsing
     {
         private bool _isPlaceable;
+        private bool _placeCentered;
+        private Vector2 _positionOffset;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public override bool IsPlaceable
@@ -31,6 +34,39 @@ namespace Content.Server.GameObjects.Components
             }
         }
 
+        public override bool PlaceCentered
+        {
+            get => _placeCentered;
+            set
+            {
+                if (_placeCentered == value)
+                {
+                    return;
+                }
+
+                _placeCentered = value;
+
+                Dirty();
+            }
+        }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public override Vector2 PositionOffset
+        {
+            get => _positionOffset;
+            set
+            {
+                if (_positionOffset == value)
+                {
+                    return;
+                }
+
+                _positionOffset = value;
+
+                Dirty();
+            }
+        }
+
         [ViewVariables]
         int IInteractUsing.Priority => -10;
 
@@ -39,6 +75,8 @@ namespace Content.Server.GameObjects.Components
             base.ExposeData(serializer);
 
             serializer.DataField(ref _isPlaceable, "IsPlaceable", true);
+            serializer.DataField(ref _placeCentered, "PlaceCentered", false);
+            serializer.DataField(ref _positionOffset, "PositionOffset", Vector2.Zero);
         }
 
         public override ComponentState GetComponentState()
@@ -56,7 +94,10 @@ namespace Content.Server.GameObjects.Components
                 return false;
             }
             handComponent.Drop(eventArgs.Using);
-            eventArgs.Using.Transform.WorldPosition = eventArgs.ClickLocation.Position;
+            if (_placeCentered)
+                eventArgs.Using.Transform.WorldPosition = eventArgs.Target.Transform.WorldPosition + _positionOffset;
+            else
+                eventArgs.Using.Transform.WorldPosition = eventArgs.ClickLocation.Position;
             return true;
         }
     }
