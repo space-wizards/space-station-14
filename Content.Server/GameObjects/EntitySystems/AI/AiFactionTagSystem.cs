@@ -19,19 +19,19 @@ namespace Content.Server.GameObjects.EntitySystems.AI
 
         private readonly Dictionary<Faction, Faction> _hostileFactions = new()
         {
-            {Faction.NanoTransen,
+            {Faction.NanoTrasen,
                 Faction.SimpleHostile | Faction.Syndicate | Faction.Xeno},
             {Faction.SimpleHostile,
-                Faction.NanoTransen | Faction.Syndicate
+                Faction.NanoTrasen | Faction.Syndicate
             },
             // What makes a man turn neutral?
             {Faction.SimpleNeutral,
                 Faction.None
             },
             {Faction.Syndicate,
-                Faction.NanoTransen | Faction.SimpleHostile | Faction.Xeno},
+                Faction.NanoTrasen | Faction.SimpleHostile | Faction.Xeno},
             {Faction.Xeno,
-                Faction.NanoTransen | Faction.Syndicate},
+                Faction.NanoTrasen | Faction.Syndicate},
         };
 
         public Faction GetFactions(IEntity entity) =>
