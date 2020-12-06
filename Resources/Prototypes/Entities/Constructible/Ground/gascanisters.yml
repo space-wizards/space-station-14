@@ -60,6 +60,25 @@
           - VaultImpassable
           - SmallImpassable
 
+# Filled canisters, contain 1871.71051 moles each
+
+- type: entity
+  parent: GasCanister
+  id: AirCanister
+  name: Air Canister
+  components:
+  - type: Sprite
+    layers:
+    - sprite: Constructible/Atmos/canister.rsi
+      state: grey
+  - type: GasCanister
+    gasMixture:
+      volume: 1000
+      moles:
+        - 393.0592071 # oxygen 21%
+        - 1478.6513029 # nitrogen 79%
+      temperature: 293.15
+
 
 
 - type: entity
@@ -73,9 +92,9 @@
       state: blue
   - type: GasCanister
     gasMixture:
-      volume: 10
+      volume: 1000
       moles:
-        - 100
+        - 1871.71051 # oxygen
       temperature: 293.15
 
 
@@ -91,10 +110,10 @@
           state: orange
     - type: GasCanister
       gasMixture:
-        volume: 10
+        volume: 1000
         moles:
-          - 0
-          - 0
-          - 0
-          - 100
+          - 0 # oxygen
+          - 0 # nitrogen
+          - 0 # carbon dioxide
+          - 1871.71051 # phoron
         temperature: 293.15
