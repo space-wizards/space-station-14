@@ -35,10 +35,12 @@
     Capacity: 500
     CanWeldShut: true
   - type: PlaceableSurface
-  - type: Destructible
-    deadThreshold: 100
+  - type: Damageable
     resistances: metallicResistances
-
+  - type: Destructible
+    thresholds:
+      100:
+        Acts: ["Destruction"]
   - type: Appearance
     visuals:
     - type: StorageVisualizer

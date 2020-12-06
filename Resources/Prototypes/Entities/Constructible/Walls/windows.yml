@@ -29,12 +29,14 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 15
-    destroySoundCollection: WindowBreak
-    spawnOnDestroy:
-      ShardGlass:
-        Min: 1
-        Max: 2
+    thresholds:
+      15:
+        SoundCollection: WindowBreak
+        Spawn:
+          ShardGlass:
+            Min: 1
+            Max: 2
+        Acts: ["Destruction"]
   - type: SnapGrid
     offset: Center
   - type: Airtight
@@ -62,11 +64,14 @@
   - type: Destructible
     resistances: metallicResistances
   - type: Destructible
-    threshold: 75
-    spawnOnDestroy:
-      ShardGlassReinforced:
-        Min: 1
-        Max: 2
+    thresholds:
+      75:
+        SoundCollection: WindowBreak
+        Spawn:
+          ShardGlassReinforced:
+            Min: 1
+            Max: 2
+        Acts: ["Destruction"]
   - type: Window
     base: rwindow
     maxDamage: 75
@@ -87,11 +92,14 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    deadThreshold: 100
-    spawnOnDestroy:
-      ShardGlassPhoron:
-        Min: 1
-        Max: 2
+    thresholds:
+      100:
+        SoundCollection: WindowBreak
+        Spawn:
+          ShardGlassPhoron:
+            Min: 1
+            Max: 2
+        Acts: ["Destruction"]
     resistances: metallicResistances
   - type: Window
     base: pwindow

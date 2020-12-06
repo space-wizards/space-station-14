@@ -85,7 +85,7 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
         {
             base.HandleComponentState(curState, nextState);
 
-            if (!(curState is MobStateComponentState state))
+            if (curState is not MobStateComponentState state)
             {
                 return;
             }
