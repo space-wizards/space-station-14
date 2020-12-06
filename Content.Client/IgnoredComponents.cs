@@ -217,6 +217,10 @@
             "TwoWayLever",
             "FirelockElectronics",
             "ChemicalInjectionProjectile",
+            "Machine",
+            "MachinePart",
+            "MachineFrame",
+            "MachineBoard"
         };
     }
 }

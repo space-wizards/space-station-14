@@ -69,7 +69,7 @@ namespace Content.Client.GameObjects.Components.Storage
         }
     }
 
-    public enum CrematoriumVisualLayers
+    public enum CrematoriumVisualLayers : byte
     {
         Base,
         Light,

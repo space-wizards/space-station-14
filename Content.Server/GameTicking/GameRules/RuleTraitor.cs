@@ -1,19 +1,12 @@
-﻿using System;
-using System.Threading;
-using Content.Server.Interfaces.Chat;
-using Content.Server.Interfaces.GameTicking;
+﻿using Content.Server.Interfaces.Chat;
 using Content.Server.Mobs.Roles.Traitor;
 using Content.Server.Players;
-using Content.Shared;
-using Content.Shared.GameObjects.Components.Damage;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameTicking.GameRules
 {

@@ -32,7 +32,7 @@ namespace Content.Client.GameObjects.Components.CloningPod
             }
         }
 
-        public enum CloningPodVisualLayers
+        public enum CloningPodVisualLayers : byte
         {
             Machine,
         }

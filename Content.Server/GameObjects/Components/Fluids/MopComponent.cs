@@ -8,7 +8,6 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Fluids
@@ -59,10 +58,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         {
             base.Initialize();
 
-            if (!Owner.EnsureComponent(out SolutionContainerComponent _))
-            {
-                Logger.Warning($"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(SolutionContainerComponent)}");
-            }
+            Owner.EnsureComponentWarn(out SolutionContainerComponent _);
         }
 
         void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)

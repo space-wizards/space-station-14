@@ -74,6 +74,9 @@ namespace Content.Shared
         public static readonly CVarDef<int> SuspicionStartingBalance =
             CVarDef.Create("suspicion.starting_balance", 20);
 
+        public static readonly CVarDef<int> SuspicionMaxTimeSeconds =
+            CVarDef.Create("suspicion.max_time_seconds", 300);
+
         /*
          * Traitor
          */
@@ -146,10 +149,10 @@ namespace Content.Shared
          */
 
         public static readonly CVarDef<bool> ParallaxEnabled =
-            CVarDef.Create("parallax.enabled", true);
+            CVarDef.Create("parallax.enabled", true, CVar.CLIENTONLY);
 
         public static readonly CVarDef<bool> ParallaxDebug =
-            CVarDef.Create("parallax.debug", true);
+            CVarDef.Create("parallax.debug", false, CVar.CLIENTONLY);
 
 
         /*
