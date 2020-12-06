@@ -7,6 +7,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {
@@ -51,6 +52,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 if (entity.TryGetComponent<BloodstreamComponent>(out var bloodstream))
                     hitBloodstreams.Add(bloodstream);
             }
+
+            if (!hitBloodstreams.Any())
+                return;
 
             var removedSolution = solutionContainer.Solution.SplitSolution(TransferAmount * hitBloodstreams.Count);
             var removedVol = removedSolution.TotalVolume;
