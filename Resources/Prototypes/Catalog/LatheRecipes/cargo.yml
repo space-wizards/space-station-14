@@ -1,0 +1,10 @@
+﻿- type: latheRecipe
+  id: ConveyorAssembly
+  icon:
+    sprite: Constructible/Power/conveyor.rsi
+    state: conveyor_loose
+  result: ConveyorBeltAssembly
+  completetime: 1000
+  materials:
+    steel: 1000
+    glass: 50

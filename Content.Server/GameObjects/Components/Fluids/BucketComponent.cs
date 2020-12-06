@@ -49,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         public override void Initialize()
         {
             base.Initialize();
-            Owner.EnsureComponent<SolutionContainerComponent>();
+            Owner.EnsureComponentWarn<SolutionContainerComponent>();
         }
 
         private bool TryGiveToMop(MopComponent mopComponent)

@@ -26,7 +26,7 @@ namespace Content.Shared.GameObjects.Components.Inventory
     {
         public override string InterfaceControllerTypeName => "HumanInventoryInterfaceController";
 
-        private static readonly Dictionary<Slots, int> _slotDrawingOrder = new Dictionary<Slots, int>
+        private static readonly Dictionary<Slots, int> _slotDrawingOrder = new()
         {
             {Slots.POCKET1, 13},
             {Slots.POCKET2, 12},

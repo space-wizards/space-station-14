@@ -11,8 +11,6 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 {
     public class ExamineSystem : ExamineSystemShared
     {
-        [Dependency] private IEntityManager _entityManager = default!;
-
         private static readonly FormattedMessage _entityNotFoundMessage;
 
         static ExamineSystem()
@@ -38,7 +36,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             var channel = player.ConnectedClient;
 
             if (playerEnt == null
-                || !_entityManager.TryGetEntity(request.EntityUid, out var entity)
+                || !EntityManager.TryGetEntity(request.EntityUid, out var entity)
                 || !CanExamine(playerEnt, entity))
             {
                 RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(

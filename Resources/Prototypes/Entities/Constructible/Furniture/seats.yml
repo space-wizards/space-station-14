@@ -3,6 +3,8 @@
   id: SeatBase
   abstract: true
   description: You sit in this. Either by will or force.
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Clickable
   - type: InteractionOutline

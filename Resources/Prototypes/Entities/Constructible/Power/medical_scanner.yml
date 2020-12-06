@@ -2,6 +2,8 @@
   id: MedicalScanner
   name: medical scanner
   description: A bulky medical scanner.
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Sprite
     netsync: false
@@ -12,7 +14,6 @@
     - state: scanner_terminal_blue
       map: ["enum.MedicalScannerVisualLayers.Terminal"]
   - type: PowerReceiver
-
   - type: Anchorable
   - type: Clickable
   - type: InteractionOutline

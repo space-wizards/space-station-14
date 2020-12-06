@@ -8,7 +8,7 @@ namespace Content.Server.AI.Operators.Combat.Melee
 {
     public sealed class UnarmedCombatOperator : AiOperator
     {
-        private float _burstTime;
+        private readonly float _burstTime;
         private float _elapsedTime;
 
         private readonly IEntity _owner;

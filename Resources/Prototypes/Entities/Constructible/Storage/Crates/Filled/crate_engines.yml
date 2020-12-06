@@ -1,0 +1,23 @@
+- type: entity
+  id: CrateEngineeringAME
+  name:  ame crate
+  parent: CrateRadiation
+  components:
+  - type: StorageFill
+    contents:
+      - name: Multitool
+        amount: 1
+      - name: AMEPart
+        amount: 9
+      - name: AMEJar
+        amount: 1
+
+- type: entity
+  id: CrateEngineeringGenerator
+  name: generator crate
+  parent: CrateEngineering
+  components:
+  - type: StorageFill
+    contents:
+      - name: DebugGenerator
+        amount: 1

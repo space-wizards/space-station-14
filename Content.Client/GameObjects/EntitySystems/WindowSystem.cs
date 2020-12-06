@@ -10,7 +10,7 @@ namespace Content.Client.GameObjects.EntitySystems
     [UsedImplicitly]
     public sealed class WindowSystem : EntitySystem
     {
-        private readonly Queue<IEntity> _dirtyEntities = new Queue<IEntity>();
+        private readonly Queue<IEntity> _dirtyEntities = new();
 
         public override void Initialize()
         {

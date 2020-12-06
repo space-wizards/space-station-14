@@ -36,7 +36,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             public void ExposeData(ObjectSerializer serializer)
             {
-                serializer.DataField(this, x => Behavior, "behavior", ToolQuality.None);
+                serializer.DataField(this, x => x.Behavior, "behavior", ToolQuality.None);
                 serializer.DataField(ref _state, "state", string.Empty);
                 serializer.DataField(ref _sprite, "sprite", string.Empty);
                 serializer.DataField(ref _texture, "texture", string.Empty);

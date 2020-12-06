@@ -46,10 +46,7 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             base.Initialize();
 
-            if (!Owner.EnsureComponent(out PhysicsComponent _))
-            {
-                Logger.Warning($"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(PhysicsComponent)}");
-            }
+            Owner.EnsureComponentWarn(out PhysicsComponent _);
 
             _doAfterSystem = EntitySystem.Get<DoAfterSystem>();
         }

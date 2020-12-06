@@ -33,20 +33,20 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-
+        
         public IReadOnlyDictionary<GridId, Dictionary<Vector2i, PathfindingChunk>> Graph => _graph;
-        private readonly Dictionary<GridId, Dictionary<Vector2i, PathfindingChunk>> _graph = new Dictionary<GridId, Dictionary<Vector2i, PathfindingChunk>>();
+        private readonly Dictionary<GridId, Dictionary<Vector2i, PathfindingChunk>> _graph = new();
 
-        private readonly PathfindingJobQueue _pathfindingQueue = new PathfindingJobQueue();
+        private readonly PathfindingJobQueue _pathfindingQueue = new();
 
         // Queued pathfinding graph updates
-        private readonly Queue<CollisionChangeMessage> _collidableUpdateQueue = new Queue<CollisionChangeMessage>();
-        private readonly Queue<MoveEvent> _moveUpdateQueue = new Queue<MoveEvent>();
-        private readonly Queue<AccessReaderChangeMessage> _accessReaderUpdateQueue = new Queue<AccessReaderChangeMessage>();
-        private readonly Queue<TileRef> _tileUpdateQueue = new Queue<TileRef>();
+        private readonly Queue<CollisionChangeMessage> _collidableUpdateQueue = new();
+        private readonly Queue<MoveEvent> _moveUpdateQueue = new();
+        private readonly Queue<AccessReaderChangeMessage> _accessReaderUpdateQueue = new();
+        private readonly Queue<TileRef> _tileUpdateQueue = new();
 
         // Need to store previously known entity positions for collidables for when they move
-        private readonly Dictionary<IEntity, PathfindingNode> _lastKnownPositions = new Dictionary<IEntity, PathfindingNode>();
+        private readonly Dictionary<IEntity, PathfindingNode> _lastKnownPositions = new();
 
         public const int TrackedCollisionLayers = (int)
             (CollisionGroup.Impassable |
@@ -361,7 +361,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         // Also look at increasing tile cost the more physics entities are on it
         public bool CanTraverse(IEntity entity, EntityCoordinates coordinates)
         {
-            var gridId = coordinates.GetGridId(_entityManager);
+            var gridId = coordinates.GetGridId(EntityManager);
             var tile = _mapManager.GetGrid(gridId).GetTileRef(coordinates);
             var node = GetNode(tile);
             return CanTraverse(entity, node);

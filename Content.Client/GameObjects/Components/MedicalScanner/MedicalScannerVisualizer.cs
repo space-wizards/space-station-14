@@ -48,7 +48,7 @@ namespace Content.Client.GameObjects.Components.MedicalScanner
             }
         }
 
-        public enum MedicalScannerVisualLayers
+        public enum MedicalScannerVisualLayers : byte
         {
             Machine,
             Terminal,

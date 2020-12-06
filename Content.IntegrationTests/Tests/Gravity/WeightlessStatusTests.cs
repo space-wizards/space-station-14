@@ -20,10 +20,18 @@ namespace Content.IntegrationTests.Tests.Gravity
     [TestOf(typeof(GravityGeneratorComponent))]
     public class WeightlessStatusTests : ContentIntegrationTest
     {
+        private const string PROTOTYPES = @"
+- type: entity
+  name: HumanDummy
+  id: HumanDummy
+  components:
+  - type: AlertsUI
+";
         [Test]
         public async Task WeightlessStatusTest()
         {
-            var server = StartServer();
+            var options = new ServerIntegrationOptions{ExtraPrototypes = PROTOTYPES};
+            var server = StartServer(options);
 
             await server.WaitIdleAsync();
 
@@ -56,7 +64,7 @@ namespace Content.IntegrationTests.Tests.Gravity
 
                 pauseManager.DoMapInitialize(mapId);
 
-                human = entityManager.SpawnEntity("HumanMob_Content", coordinates);
+                human = entityManager.SpawnEntity("HumanDummy", coordinates);
 
                 Assert.True(human.TryGetComponent(out alerts));
             });

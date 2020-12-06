@@ -18,9 +18,9 @@ namespace Content.Server.GameObjects.Components.Atmos
             return true;
         }
 
-        public override TileAtmosphere? GetTile(Vector2i indices, bool createSpace = true)
+        public override TileAtmosphere GetTile(Vector2i indices, bool createSpace = true)
         {
-            return new TileAtmosphere(this, GridId.Invalid, indices, new GasMixture(2500, AtmosphereSystem), true);
+            return new(this, GridId.Invalid, indices, new GasMixture(2500, AtmosphereSystem), true);
         }
 
         protected override IEnumerable<AirtightComponent> GetObstructingComponents(Vector2i indices)

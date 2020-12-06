@@ -34,7 +34,7 @@
     spawnOnDestroy:
       ShardGlass:
         Min: 1
-        Max: 3
+        Max: 2
   - type: SnapGrid
     offset: Center
   - type: Airtight
@@ -59,9 +59,14 @@
   - type: Icon
     sprite: Constructible/Structures/Windows/reinforced_window.rsi
   - type: Damageable
+  - type: Destructible
     resistances: metallicResistances
   - type: Destructible
     threshold: 75
+    spawnOnDestroy:
+      ShardGlassReinforced:
+        Min: 1
+        Max: 2
   - type: Window
     base: rwindow
     maxDamage: 75
@@ -82,7 +87,12 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 100
+    deadThreshold: 100
+    spawnOnDestroy:
+      ShardGlassPhoron:
+        Min: 1
+        Max: 2
+    resistances: metallicResistances
   - type: Window
     base: pwindow
     maxDamage: 100

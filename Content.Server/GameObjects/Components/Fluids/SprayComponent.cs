@@ -75,11 +75,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         {
             base.Initialize();
 
-            if (!Owner.EnsureComponent(out SolutionContainerComponent _))
-            {
-                Logger.Warning(
-                    $"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(SolutionContainerComponent)}");
-            }
+            Owner.EnsureComponentWarn(out SolutionContainerComponent _);
 
             if (_hasSafety)
             {

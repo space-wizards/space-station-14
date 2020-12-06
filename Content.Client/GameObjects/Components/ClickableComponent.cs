@@ -130,7 +130,7 @@ namespace Content.Client.GameObjects.Components
             [ViewVariables] public Box2 East;
             [ViewVariables] public Box2 West;
 
-            public static DirBoundData Default { get; } = new DirBoundData();
+            public static DirBoundData Default { get; } = new();
 
             public void ExposeData(ObjectSerializer serializer)
             {

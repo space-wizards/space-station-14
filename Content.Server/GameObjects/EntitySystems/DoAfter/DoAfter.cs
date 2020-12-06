@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 using System;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
@@ -32,8 +32,8 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
         public DoAfterStatus Status => AsTask.IsCompletedSuccessfully ? AsTask.Result : DoAfterStatus.Running;
 
         // NeedHand
-        private string? _activeHand;
-        private ItemComponent? _activeItem;
+        private readonly string? _activeHand;
+        private readonly ItemComponent? _activeItem;
 
         public DoAfter(DoAfterEventArgs eventArgs)
         {
@@ -118,12 +118,14 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
             }
 
             // TODO :Handle inertia in space.
-            if (EventArgs.BreakOnUserMove && EventArgs.User.Transform.Coordinates != UserGrid)
+            if (EventArgs.BreakOnUserMove && !EventArgs.User.Transform.Coordinates.InRange(
+                EventArgs.User.EntityManager, UserGrid, EventArgs.MovementThreshold))
             {
                 return true;
             }
 
-            if (EventArgs.BreakOnTargetMove && EventArgs.Target!.Transform.Coordinates != TargetGrid)
+            if (EventArgs.BreakOnTargetMove && !EventArgs.Target!.Transform.Coordinates.InRange(
+                EventArgs.User.EntityManager, TargetGrid, EventArgs.MovementThreshold))
             {
                 return true;
             }

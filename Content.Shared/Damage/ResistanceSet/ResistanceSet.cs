@@ -16,7 +16,7 @@ namespace Content.Shared.Damage.ResistanceSet
     {
         [ViewVariables]
         private Dictionary<DamageType, ResistanceSetSettings> _resistances =
-            new Dictionary<DamageType, ResistanceSetSettings>();
+            new();
 
         public ResistanceSet()
         {

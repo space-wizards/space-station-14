@@ -22,7 +22,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels.Visualize
         }
     }
 
-    public enum AmmoVisualLayers
+    public enum AmmoVisualLayers : byte
     {
         Base,
     }

@@ -157,11 +157,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         {
             base.OnAdd();
 
-            if (!Owner.EnsureComponent(out ServerRangedWeaponComponent rangedWeaponComponent))
-            {
-                Logger.Warning(
-                    $"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(ServerRangedWeaponComponent)}");
-            }
+            Owner.EnsureComponentWarn(out ServerRangedWeaponComponent rangedWeaponComponent);
 
             rangedWeaponComponent.Barrel ??= this;
             rangedWeaponComponent.FireHandler += Fire;

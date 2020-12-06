@@ -55,7 +55,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         private float _currentThirst;
 
         [ViewVariables(VVAccess.ReadOnly)]
-        public Dictionary<ThirstThreshold, float> ThirstThresholds { get; } = new Dictionary<ThirstThreshold, float>
+        public Dictionary<ThirstThreshold, float> ThirstThresholds { get; } = new()
         {
             {ThirstThreshold.OverHydrated, 600.0f},
             {ThirstThreshold.Okay, 450.0f},
@@ -64,7 +64,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             {ThirstThreshold.Dead, 0.0f},
         };
 
-        public static readonly Dictionary<ThirstThreshold, AlertType> ThirstThresholdAlertTypes = new Dictionary<ThirstThreshold, AlertType>
+        public static readonly Dictionary<ThirstThreshold, AlertType> ThirstThresholdAlertTypes = new()
         {
             {ThirstThreshold.OverHydrated, AlertType.Overhydrated},
             {ThirstThreshold.Thirsty, AlertType.Thirsty},

@@ -1,4 +1,4 @@
-using Robust.Client.UserInterface;
+﻿using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -23,14 +23,22 @@ namespace Content.Client.UserInterface
 
             var uriOpener = IoCManager.Resolve<IUriOpener>();
 
-            var discordButton = new Button {Text = Loc.GetString("Join us on Discord!")};
+            var discordButton = new Button {Text = Loc.GetString("Discord")};
             discordButton.OnPressed += args => uriOpener.OpenUri(UILinks.Discord);
 
             var websiteButton = new Button {Text = Loc.GetString("Website")};
             websiteButton.OnPressed += args => uriOpener.OpenUri(UILinks.Website);
 
+            var reportButton = new Button { Text = Loc.GetString("Report Bugs") };
+            reportButton.OnPressed += args => uriOpener.OpenUri(UILinks.BugReport);
+
+            var creditsButton = new Button { Text = Loc.GetString("Credits") };
+            creditsButton.OnPressed += args => new CreditsWindow().Open();
+
             buttons.AddChild(discordButton);
             buttons.AddChild(websiteButton);
+            buttons.AddChild(reportButton);
+            buttons.AddChild(creditsButton);
         }
 
         public void SetInfoBlob(string markup)

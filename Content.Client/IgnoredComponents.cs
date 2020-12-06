@@ -35,7 +35,6 @@
             "Smes",
             "LightBulb",
             "Healing",
-            "Catwalk",
             "RangedMagazine",
             "Ammo",
             "HitscanWeaponCapacitor",
@@ -135,7 +134,6 @@
             "DisposalBend",
             "Recycler",
             "Conveyor",
-            "ConveyorSwitch",
             "Flippable",
             "Airtight",
             "MovedByPressure",
@@ -211,6 +209,17 @@
             "CrematoriumEntityStorage",
             "RandomArcade",
             "RandomSpriteState",
+            "ReagentGrinder",
+            "Grindable",
+            "Juiceable",
+            "WelderRefinable",
+            "ConveyorAssembly",
+            "TwoWayLever",
+            "FirelockElectronics",
+            "Machine",
+            "MachinePart",
+            "MachineFrame",
+            "MachineBoard"
         };
     }
 }

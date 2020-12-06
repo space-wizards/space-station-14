@@ -1,0 +1,31 @@
+- type: entity
+  parent: Clothing
+  id: ClothingHeadBase
+  abstract: true
+  components:
+  - type: Clothing
+    Slots:
+    - Helmet
+  - type: Sprite
+    state: icon
+
+- type: entity
+  parent: Clothing
+  id: HatBase
+  abstract: true
+  components:
+  - type: Clothing
+    Slots:
+    - Helmet
+  - type: Sprite
+    state: icon
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHardsuitBase
+  name: base hardsuit helmet
+  abstract: true
+  components:
+    - type: PressureProtection
+      highPressureMultiplier: 0.5
+      lowPressureMultiplier: 100

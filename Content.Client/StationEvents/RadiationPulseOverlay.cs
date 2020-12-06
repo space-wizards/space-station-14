@@ -29,18 +29,18 @@ namespace Content.Client.StationEvents
         /// <summary>
         /// Current color of a pulse
         /// </summary>
-        private readonly Dictionary<IEntity, Color> _colors = new Dictionary<IEntity, Color>();
+        private readonly Dictionary<IEntity, Color> _colors = new();
 
         /// <summary>
         /// Whether our alpha is increasing or decreasing and at what time does it flip (or stop)
         /// </summary>
         private readonly Dictionary<IEntity, (bool EasingIn, TimeSpan TransitionTime)> _transitions =
-                     new Dictionary<IEntity, (bool EasingIn, TimeSpan TransitionTime)>();
+                     new();
 
         /// <summary>
         /// How much the alpha changes per second for each pulse
         /// </summary>
-        private readonly Dictionary<IEntity, float> _alphaRateOfChange = new Dictionary<IEntity, float>();
+        private readonly Dictionary<IEntity, float> _alphaRateOfChange = new();
 
         private TimeSpan _lastTick;
 

@@ -2,6 +2,8 @@
   name: pilot chair
   description: The driver seat of a prestigious battle cruiser.
   id: PilotSeatChair
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Sprite
     sprite: Constructible/Misc/furniture.rsi

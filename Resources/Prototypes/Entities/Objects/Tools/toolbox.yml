@@ -31,7 +31,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: BreathMaskClothing
+      - name: ClothingMaskBreath
         amount: 2
       - name: FoodChocolateBar
       - name: FlashlightLantern
@@ -79,7 +79,7 @@
       - name: Wirecutter
       - name: ApcExtensionCableStack
       - name: MVWireStack
-      - name: GlovesYellow
+      - name: ClothingHandsGlovesColorYellow
         prob: 0.05
         orGroup: GlovesOrWires
       - name: HVWireStack
