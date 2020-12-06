@@ -18,7 +18,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 {
     [RegisterComponent]
     [ComponentReference(typeof(IHotItem))]
-    public class MatchstickComponent : Component, IHotItem, IUse, IInteractUsing
+    public class MatchstickComponent : Component, IHotItem, IInteractUsing, IAfterInteract
     {
         public override string Name => "Matchstick";
 
@@ -32,7 +32,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         /// <summary>
         /// Sound played when you ignite the matchstick.
         /// </summary>
-        private string _igniteSound = "";
+        private string? _igniteSound;
 
         /// <summary>
         /// Point light component.
@@ -91,18 +91,6 @@ namespace Content.Server.GameObjects.Components.Interactable
             return CurrentState == MatchstickState.Lit;
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
-        {
-            if (eventArgs.User.TryGetComponent(out HandsComponent? hands)
-                && HandsContainMatchBoxOrBurningItem(hands)
-                && CurrentState == MatchstickState.Unlit)
-            {
-                Ignite(eventArgs.User);
-                return true;
-            }
-
-            return false;
-        }
 
         private void Ignite(IEntity user)
         {
@@ -118,27 +106,6 @@ namespace Content.Server.GameObjects.Components.Interactable
             Owner.SpawnTimer(_duration * 1000, () => CurrentState = MatchstickState.Burnt);
         }
 
-        private bool HandsContainMatchBoxOrBurningItem(HandsComponent hands)
-        {
-            foreach (var item in hands.GetAllHeldItems())
-            {
-                // Don't allow self interaction
-                if (item.Owner == Owner)
-                {
-                    continue;
-                }
-
-                if (item.Owner.TryGetComponent<MatchboxComponent>(out _)
-                    || item.Owner.TryGetComponent<IHotItem>(out var hotItem)
-                    && hotItem.IsCurrentlyHot())
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (eventArgs.Target.TryGetComponent<IHotItem>(out var hotItem)
@@ -150,6 +117,14 @@ namespace Content.Server.GameObjects.Components.Interactable
             }
 
             return false;
+        }
+
+        public void AfterInteract(AfterInteractEventArgs eventArgs)
+        {
+            if (eventArgs.Target.TryGetComponent<MatchboxComponent>(out _))
+            {
+                Ignite(eventArgs.User);
+            }
         }
     }
 }
