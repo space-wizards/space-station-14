@@ -8,9 +8,9 @@ using Robust.Shared.Interfaces.GameObjects;
 namespace Content.Shared.Interfaces.GameObjects.Components
 {
     /// <summary>
-    ///     This interface gives components behavior when their owner is put in a hand inventory slot,
+    ///     This interface gives components behavior when their entity is put in a hand inventory slot,
     ///     even if it came from another hand slot (which would also fire <see cref="IUnequippedHand"/>).
-    ///     This includes moving the owner from a non-hand slot into a hand slot
+    ///     This includes moving the entity from a non-hand slot into a hand slot
     ///     (which would also fire <see cref="IUnequipped"/>).
     /// </summary>
     public interface IEquippedHand

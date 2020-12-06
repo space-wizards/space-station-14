@@ -8,7 +8,7 @@ using Robust.Shared.Map;
 namespace Content.Shared.Interfaces.GameObjects.Components
 {
     /// <summary>
-    /// This interface gives components behavior when their owner is clicked on by a user with an object in their hand
+    /// This interface gives components behavior when their entity is clicked on by a user with an object in their hand
     /// who is in range and has unobstructed reach of the target entity (allows inside blockers). This includes
     /// clicking on an object in the world as well as clicking on an object in inventory.
     /// </summary>

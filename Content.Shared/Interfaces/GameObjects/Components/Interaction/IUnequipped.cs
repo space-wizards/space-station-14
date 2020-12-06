@@ -7,12 +7,12 @@ using Robust.Shared.Interfaces.GameObjects;
 namespace Content.Shared.Interfaces.GameObjects.Components
 {
     /// <summary>
-    ///     This interface gives components behavior when their owner is removed from a non-hand inventory slot,
-    ///     regardless of where it's going to. This includes moving the owner from a non-hand slot into a hand slot
+    ///     This interface gives components behavior when their entity is removed from a non-hand inventory slot,
+    ///     regardless of where it's going to. This includes moving the entity from a non-hand slot into a hand slot
     ///     (which would also fire <see cref="IEquippedHand"/>).
     ///
-    ///     This DOES NOT fire when removing the owner from a hand slot (<see cref="IUnequippedHand"/>), nor
-    ///     does it fire when removing the owner from held/equipped storage.
+    ///     This DOES NOT fire when removing the entity from a hand slot (<see cref="IUnequippedHand"/>), nor
+    ///     does it fire when removing the entity from held/equipped storage.
     /// </summary>
     public interface IUnequipped
     {
