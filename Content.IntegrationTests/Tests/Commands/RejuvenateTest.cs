@@ -24,6 +24,11 @@ namespace Content.IntegrationTests.Tests.Commands
     damagePrototype: biologicalDamageContainer
     criticalThreshold: 100
     deadThreshold: 200
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      100: !type:CriticalMobState {}
+      200: !type:DeadMobState {}
 ";
 
         [Test]
