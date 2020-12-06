@@ -61,21 +61,6 @@
     delay: 1.0
 
 - type: entity
-  name: giant smug plushie
-  parent: BaseItem
-  id: PlushieSmug
-  description: Its smug aura compells you to perform surgery with a slightly higher degree of skill.
-  components:
-  - type: Toys
-  - type: LoopingSound
-  - type: Sprite
-    sprite: Objects/Fun/toys.rsi
-    state: giantsmugplushie
-  - type: ItemCooldown
-  - type: UseDelay
-    delay: 1.0
-
-- type: entity
   name: carp plushie
   parent: BaseItem
   id: PlushieCarp
