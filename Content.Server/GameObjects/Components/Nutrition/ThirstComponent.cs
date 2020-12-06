@@ -190,7 +190,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             if (!Owner.TryGetComponent(out IDamageableComponent damageable))
                 return;
 
-            if (!Owner.TryGetComponent(out SharedMobStateComponent mobState))
+            if (!Owner.TryGetComponent(out IMobStateComponent mobState))
                 return;
 
             if (!mobState.IsDead())

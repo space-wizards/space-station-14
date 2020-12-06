@@ -138,6 +138,11 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
             return CurrentState?.IsDead() ?? false;
         }
 
+        public bool IsConscious()
+        {
+            return CurrentState?.IsConscious() ?? false;
+        }
+
         public bool IsIncapacitated()
         {
             return CurrentState?.IsIncapacitated() ?? false;

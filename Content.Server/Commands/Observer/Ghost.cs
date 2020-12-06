@@ -32,12 +32,12 @@ namespace Content.Server.Commands.Observer
             }
 
             var mind = player.ContentData()?.Mind;
+
             if (mind == null)
             {
                 shell.SendText(player, "You can't ghost here!");
                 return;
             }
-
 
             var playerEntity = player.AttachedEntity;
 
@@ -53,7 +53,7 @@ namespace Content.Server.Commands.Observer
             var position = playerEntity?.Transform.Coordinates ?? IoCManager.Resolve<IGameTicker>().GetObserverSpawnPoint();
             var canReturn = false;
 
-            if (playerEntity != null && CanReturn && playerEntity.TryGetComponent(out SharedMobStateComponent? mobState))
+            if (playerEntity != null && CanReturn && playerEntity.TryGetComponent(out IMobStateComponent? mobState))
             {
                 if (mobState.IsDead())
                 {

@@ -46,7 +46,7 @@ namespace Content.Server.StationEvents
                 if (inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.BELT, out ItemComponent? item)
                     && item?.Owner.Prototype?.ID == "UtilityBeltClothingFilledEvent") return;
                 if (playerEntity.TryGetComponent(out IDamageableComponent? damageable) &&
-                    playerEntity.TryGetComponent(out SharedMobStateComponent? mobState) &&
+                    playerEntity.TryGetComponent(out IMobStateComponent? mobState) &&
                     mobState.IsDead())
                 {
                     return;

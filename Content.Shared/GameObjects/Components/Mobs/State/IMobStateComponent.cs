@@ -14,6 +14,8 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
 
         bool IsDead();
 
+        bool IsConscious();
+
         bool IsIncapacitated();
 
         (IMobState state, int threshold)? GetEarliestIncapacitatedState(int minimumDamage);
@@ -22,5 +24,7 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
             int minimumDamage,
             [NotNullWhen(true)] out IMobState? state,
             out int threshold);
+
+        void UpdateState(int damage, bool syncing = false);
     }
 }

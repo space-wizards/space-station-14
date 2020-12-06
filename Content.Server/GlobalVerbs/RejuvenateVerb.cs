@@ -61,7 +61,7 @@ namespace Content.Server.GlobalVerbs
                 damage.Heal();
             }
 
-            if (target.TryGetComponent(out SharedMobStateComponent mobState))
+            if (target.TryGetComponent(out IMobStateComponent mobState))
             {
                 mobState.UpdateState(0);
             }

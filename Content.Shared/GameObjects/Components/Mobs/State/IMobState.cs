@@ -18,6 +18,13 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
         bool IsDead();
 
         /// <summary>
+        ///     Checks if the mob is in an alive or critical state.
+        ///     See <see cref="IsAlive"/> and <see cref="IsCritical"/>.
+        /// </summary>
+        /// <returns>true if it is, false otherwise.</returns>
+        bool IsConscious();
+
+        /// <summary>
         ///     Checks if the mob is in a critical or dead state.
         ///     See <see cref="IsCritical"/> and <see cref="IsDead"/>.
         /// </summary>

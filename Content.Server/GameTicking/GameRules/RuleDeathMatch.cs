@@ -66,7 +66,7 @@ namespace Content.Server.GameTicking.GameRules
             {
                 var playerEntity = playerSession.AttachedEntity;
                 if (playerEntity == null
-                    || !playerEntity.TryGetComponent(out SharedMobStateComponent state))
+                    || !playerEntity.TryGetComponent(out IMobStateComponent state))
                 {
                     continue;
                 }

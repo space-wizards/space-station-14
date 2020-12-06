@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System;
 using Content.Server.Commands.Observer;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
@@ -6,8 +7,10 @@ using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Components.Movement;
 using Robust.Server.GameObjects.Components.Container;
+using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Players;
 
@@ -80,7 +83,9 @@ namespace Content.Server.GameObjects.Components.Body
             if (Owner.TryGetComponent(out IMobStateComponent? mobState) &&
                 mobState.IsDead())
             {
-                new Ghost().Execute(null, (IPlayerSession) session, null);
+                var shell = IoCManager.Resolve<IConsoleShell>();
+
+                new Ghost().Execute(shell, (IPlayerSession) session, Array.Empty<string>());
             }
         }
     }

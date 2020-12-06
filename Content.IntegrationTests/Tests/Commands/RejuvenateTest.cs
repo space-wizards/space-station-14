@@ -44,26 +44,33 @@ namespace Content.IntegrationTests.Tests.Commands
 
                 // Sanity check
                 Assert.True(human.TryGetComponent(out IDamageableComponent damageable));
-                Assert.True(human.TryGetComponent(out SharedMobStateComponent mobState));
-                Assert.That(mobState.IsAlive);
+                Assert.True(human.TryGetComponent(out IMobStateComponent mobState));
+                Assert.That(mobState.IsAlive, Is.True);
                 Assert.That(mobState.IsCritical, Is.False);
                 Assert.That(mobState.IsDead, Is.False);
+                Assert.That(mobState.IsConscious, Is.True);
+                Assert.That(mobState.IsIncapacitated, Is.False);
 
                 // Kill the entity
                 damageable.ChangeDamage(DamageClass.Brute, 10000000, true);
 
                 // Check that it is dead
                 Assert.That(mobState.IsAlive, Is.False);
-                Assert.That(mobState.IsClientSide, Is.False);
-                Assert.That(mobState.IsDead);
+                Assert.That(mobState.IsCritical, Is.False);
+                Assert.That(mobState.IsDead, Is.True);
+                Assert.That(mobState.IsConscious, Is.False);
+                Assert.That(mobState.IsIncapacitated, Is.True);
 
                 // Rejuvenate them
                 RejuvenateVerb.PerformRejuvenate(human);
 
                 // Check that it is alive and with no damage
-                Assert.That(mobState.IsAlive);
+                Assert.That(mobState.IsAlive, Is.True);
                 Assert.That(mobState.IsCritical, Is.False);
                 Assert.That(mobState.IsDead, Is.False);
+                Assert.That(mobState.IsConscious, Is.True);
+                Assert.That(mobState.IsIncapacitated, Is.False);
+
                 Assert.That(damageable.TotalDamage, Is.Zero);
             });
         }
