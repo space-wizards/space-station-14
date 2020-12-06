@@ -276,7 +276,7 @@ entities:
   components:
   - parent: 216
     pos: 7.5,26
-    rot: 1.5707963267948966 rad
+    rot: -1.5707963267948966 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -305,7 +305,7 @@ entities:
   components:
   - parent: 216
     pos: 11,24.5
-    rot: 3.141592653589793 rad
+    rot: 0 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -368,6 +368,7 @@ entities:
   type: PoweredSmallLight
   components:
   - parent: 216
+    rot: 3.141592653589793 rad
     pos: 18,17.5
     type: Transform
   - color: '#FFFFFFFF'
@@ -3795,6 +3796,7 @@ entities:
   type: PoweredSmallLight
   components:
   - parent: 216
+    rot: 3.141592653589793 rad
     pos: 5,-9.5
     type: Transform
   - color: '#FFFFFFFF'
