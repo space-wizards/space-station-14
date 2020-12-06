@@ -14,8 +14,6 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
 
         bool IsDead();
 
-        bool IsConscious();
-
         bool IsIncapacitated();
 
         (IMobState state, int threshold)? GetEarliestIncapacitatedState(int minimumDamage);

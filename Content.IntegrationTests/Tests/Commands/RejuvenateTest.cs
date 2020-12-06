@@ -15,7 +15,7 @@ namespace Content.IntegrationTests.Tests.Commands
     [TestOf(typeof(RejuvenateVerb))]
     public class RejuvenateTest : ContentIntegrationTest
     {
-        private const string PROTOTYPES = @"
+        private const string Prototypes = @"
 - type: entity
   name: DamageableDummy
   id: DamageableDummy
@@ -29,7 +29,7 @@ namespace Content.IntegrationTests.Tests.Commands
         [Test]
         public async Task RejuvenateDeadTest()
         {
-            var options = new ServerIntegrationOptions{ExtraPrototypes = PROTOTYPES};
+            var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
             await server.WaitAssertion(() =>
@@ -48,7 +48,6 @@ namespace Content.IntegrationTests.Tests.Commands
                 Assert.That(mobState.IsAlive, Is.True);
                 Assert.That(mobState.IsCritical, Is.False);
                 Assert.That(mobState.IsDead, Is.False);
-                Assert.That(mobState.IsConscious, Is.True);
                 Assert.That(mobState.IsIncapacitated, Is.False);
 
                 // Kill the entity
@@ -58,7 +57,6 @@ namespace Content.IntegrationTests.Tests.Commands
                 Assert.That(mobState.IsAlive, Is.False);
                 Assert.That(mobState.IsCritical, Is.False);
                 Assert.That(mobState.IsDead, Is.True);
-                Assert.That(mobState.IsConscious, Is.False);
                 Assert.That(mobState.IsIncapacitated, Is.True);
 
                 // Rejuvenate them
@@ -68,7 +66,6 @@ namespace Content.IntegrationTests.Tests.Commands
                 Assert.That(mobState.IsAlive, Is.True);
                 Assert.That(mobState.IsCritical, Is.False);
                 Assert.That(mobState.IsDead, Is.False);
-                Assert.That(mobState.IsConscious, Is.True);
                 Assert.That(mobState.IsIncapacitated, Is.False);
 
                 Assert.That(damageable.TotalDamage, Is.Zero);

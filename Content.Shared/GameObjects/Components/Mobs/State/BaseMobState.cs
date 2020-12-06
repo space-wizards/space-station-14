@@ -22,11 +22,6 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
             return DamageState == DamageState.Dead;
         }
 
-        public virtual bool IsConscious()
-        {
-            return IsAlive() || IsCritical();
-        }
-
         public virtual bool IsIncapacitated()
         {
             return IsCritical() || IsDead();
