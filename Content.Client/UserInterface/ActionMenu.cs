@@ -32,12 +32,11 @@ namespace Content.Client.UserInterface
         private static readonly string InstantActionTag = "instant";
         private static readonly string ToggleActionTag = "toggle";
         private static readonly string TargetActionTag = "target";
+        private static readonly string AllActionsTag = "all";
         private static readonly Regex NonAlphanumeric = new Regex(@"\W", RegexOptions.Compiled);
         private static readonly Regex Whitespace = new Regex(@"\s+", RegexOptions.Compiled);
         private static readonly int MinSearchLength = 3;
         private static BaseActionPrototype[] EmptyActionList = new ActionPrototype[0];
-
-
 
         // parallel list of actions currently selectable in itemList
         private BaseActionPrototype[] _actionList;
@@ -134,6 +133,7 @@ namespace Content.Client.UserInterface
             filterTags.Add(InstantActionTag);
             filterTags.Add(ToggleActionTag);
             filterTags.Add(TargetActionTag);
+            filterTags.Add(AllActionsTag);
 
             foreach (var tag in filterTags.Distinct().OrderBy(tag => tag))
             {
@@ -338,6 +338,11 @@ namespace Content.Client.UserInterface
 
         private static bool ActionMatchesFilterTag(BaseActionPrototype action, string tag)
         {
+            if (tag == AllActionsTag)
+            {
+                return true;
+            }
+
             if (tag == ItemTag)
             {
                 return action is ItemActionPrototype;
