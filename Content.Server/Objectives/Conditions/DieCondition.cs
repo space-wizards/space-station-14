@@ -1,7 +1,6 @@
 ﻿#nullable enable
 using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
-using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using JetBrains.Annotations;
 using Robust.Shared.Localization;
@@ -25,12 +24,12 @@ namespace Content.Server.Objectives.Conditions
 
         public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Mobs/Ghosts/ghost_human.rsi"), "icon");
 
-        public float Progress =>
-            _mind?.OwnedEntity != null &&
-            _mind.OwnedEntity.TryGetComponent<IMobStateComponent>(out var mobState) &&
-            !mobState.IsDead()
-                ? 0f
-                : 1f;
+        public float Progress => _mind?
+            .OwnedEntity?
+            .GetComponentOrNull<IMobStateComponent>()?
+            .IsDead() ?? false
+            ? 0f
+            : 1f;
 
         public float Difficulty => 1f;
 
