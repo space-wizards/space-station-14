@@ -114,7 +114,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                     hitEntities.Add(entity);
                 }
             }
-            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new MeleeHitEvent(hitEntities));
+            SendMessage(new MeleeHitMessage(hitEntities));
 
             if (!OnHitEntities(hitEntities, eventArgs)) return false;
 
@@ -165,7 +165,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             {
                 damageComponent.ChangeDamage(DamageType, Damage, false, Owner);
             }
-            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new MeleeHitEvent(new List<IEntity> { target }));
+            SendMessage(new MeleeHitMessage(new List<IEntity> { target }));
 
             var targets = new[] { target };
 
@@ -214,11 +214,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         }
     }
 
-    public class MeleeHitEvent : EntitySystemMessage
+    public class MeleeHitMessage : ComponentMessage
     {
         public readonly List<IEntity> HitEntities;
 
-        public MeleeHitEvent(List<IEntity> hitEntities)
+        public MeleeHitMessage(List<IEntity> hitEntities)
         {
             HitEntities = hitEntities;
         }

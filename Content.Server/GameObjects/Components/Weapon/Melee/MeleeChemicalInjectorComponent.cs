@@ -2,6 +2,7 @@
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Shared.Chemistry;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System;
@@ -21,9 +22,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         public float TransferEfficiency { get => _transferEfficiency; set => _transferEfficiency = Math.Clamp(value, 0, 1); }
         private float _transferEfficiency;
 
-        [ViewVariables]
-        private SolutionContainerComponent _solutionContainer;
-
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -31,23 +29,22 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             serializer.DataField(ref _transferEfficiency, "transferEfficiency", 1f);
         }
 
-        public override void Initialize()
+        public override void HandleMessage(ComponentMessage message, IComponent component)
         {
-            base.Initialize();
-            var meleeWeapon = Owner.EnsureComponent<MeleeWeaponComponent>();
-            Owner.EntityManager.EventBus.SubscribeEvent<MeleeHitEvent>(EventSource.Local, this, OnMeleeHit);
-            _solutionContainer = Owner.EnsureComponent<SolutionContainerComponent>();
+            base.HandleMessage(message, component);
+            switch (message)
+            {
+                case MeleeHitMessage meleeHit:
+                    InjectEntities(meleeHit.HitEntities);
+                    break;
+            }
         }
 
-        public override void OnRemove()
+        private void InjectEntities(List<IEntity> hitEntities)
         {
-            base.OnRemove();
-            Owner.EntityManager.EventBus.UnsubscribeEvent<MeleeHitEvent>(EventSource.Local, this);
-        }
+            if (!Owner.TryGetComponent<SolutionContainerComponent>(out var solutionContainer))
+                return;
 
-        private void OnMeleeHit(MeleeHitEvent hitEvent)
-        {
-            var hitEntities = hitEvent.HitEntities;
             var hitBloodstreams = new List<BloodstreamComponent>();
             foreach (var entity in hitEntities)
             {
@@ -55,7 +52,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                     hitBloodstreams.Add(bloodstream);
             }
 
-            var removedSolution = _solutionContainer.Solution.SplitSolution(TransferAmount * hitBloodstreams.Count);
+            var removedSolution = solutionContainer.Solution.SplitSolution(TransferAmount * hitBloodstreams.Count);
             var removedVol = removedSolution.TotalVolume;
             var solutionToInject = removedSolution.SplitSolution(removedVol * TransferEfficiency);
             var volPerBloodstream = solutionToInject.TotalVolume * (1 / hitBloodstreams.Count);
