@@ -24,7 +24,6 @@ using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timers;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.SharedWiresComponent;
@@ -221,6 +220,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
         {
             EntitySystem.Get<AudioSystem>().PlayFromEntity(_soundDeny, Owner, AudioParams.Default.WithVolume(-2f));
 
+            // Play the Deny animation
             TrySetVisualState(VendingMachineVisualState.Deny);
             //TODO: This duration should be a distinct value specific to the deny animation
             Owner.SpawnTimer(_animationDuration, () =>
