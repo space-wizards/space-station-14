@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Shared.Audio;
+using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -17,8 +18,10 @@ namespace Content.Server.GameObjects.Components.Interactable
 {
     [RegisterComponent]
     [ComponentReference(typeof(IHotItem))]
-    public class MatchstickComponent : SharedMatchstickComponent, IHotItem, IUse, IInteractUsing
+    public class MatchstickComponent : Component, IHotItem, IUse, IInteractUsing
     {
+        public override string Name => "Matchstick";
+
         private MatchstickState _currentState;
 
         /// <summary>

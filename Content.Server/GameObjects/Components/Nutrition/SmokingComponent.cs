@@ -2,6 +2,7 @@
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Clothing;
 using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.Nutrition;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -29,9 +30,11 @@ namespace Content.Server.GameObjects.Components.Nutrition
     /// TODO: E-cigarettes
     /// </summary>
     [RegisterComponent]
-    public class CigSmokingComponent : SharedSmokingComponent, IInteractUsing, IHotItem
+    public class SmokingComponent : Component, IInteractUsing, IHotItem
     {
-        private SmokingStates _currentState;
+        public override string Name => "Smoking";
+
+        private SharedSmokingStates _currentState;
         private ClothingComponent _clothingComponent;
 
         /// <summary>
@@ -65,7 +68,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         private float _temperature;
 
         [ViewVariables]
-        public SmokingStates CurrentState
+        public SharedSmokingStates CurrentState
         {
             get => _currentState;
             private set
@@ -74,7 +77,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
                 switch (_currentState)
                 {
-                    case SmokingStates.Lit:
+                    case SharedSmokingStates.Lit:
                         _clothingComponent.EquippedPrefix = "lit";
                         _clothingComponent.ClothingEquippedPrefix = "lit";
                         break;
@@ -96,7 +99,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             base.Initialize();
 
             Owner.TryGetComponent(out _clothingComponent);
-            _currentState = SmokingStates.Unlit;
+            _currentState = SharedSmokingStates.Unlit;
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -112,14 +115,14 @@ namespace Content.Server.GameObjects.Components.Nutrition
         {
             if (eventArgs.Using.TryGetComponent(out IHotItem lighter)
                 && lighter.IsCurrentlyHot()
-                && CurrentState == SmokingStates.Unlit
+                && CurrentState == SharedSmokingStates.Unlit
                 && Owner.TryGetComponent<ClothingComponent>(out _clothingComponent)
                 && IsItemEquippedInSlot(_clothingComponent, eventArgs.User, EquipmentSlotDefines.Slots.MASK)
             )
             {
-                CurrentState = SmokingStates.Lit;
+                CurrentState = SharedSmokingStates.Lit;
                 // TODO More complex handling of cigar consumption
-                Owner.SpawnTimer(_duration * 1000, () => CurrentState = SmokingStates.Burnt);
+                Owner.SpawnTimer(_duration * 1000, () => CurrentState = SharedSmokingStates.Burnt);
                 return true;
             }
 
@@ -135,7 +138,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         public bool IsCurrentlyHot()
         {
-            return !_electric && _currentState == SmokingStates.Lit;
+            return !_electric && _currentState == SharedSmokingStates.Lit;
         }
     }
 }

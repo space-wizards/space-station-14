@@ -1,4 +1,5 @@
-﻿using Content.Shared.GameObjects.Components.Nutrition;
+﻿using Content.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.Components.Nutrition;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
@@ -13,22 +14,22 @@ namespace Content.Client.GameObjects.Components.Nutrition
         {
             base.OnChangeData(component);
 
-            if (component.TryGetData<SmokingStates>(SmokingVisuals.Smoking, out var smoking))
+            if (component.TryGetData<SharedSmokingStates>(SmokingVisuals.Smoking, out var smoking))
             {
                 SetSmoking(component, smoking);
             }
         }
 
-        private void SetSmoking(AppearanceComponent component, SmokingStates smoking)
+        private void SetSmoking(AppearanceComponent component, SharedSmokingStates smoking)
         {
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
 
             switch (smoking)
             {
-                case SmokingStates.Lit:
+                case SharedSmokingStates.Lit:
                     sprite.LayerSetState(0, "lit-icon");
                     break;
-                case SmokingStates.Burnt:
+                case SharedSmokingStates.Burnt:
                     sprite.LayerSetState(0, "burnt-icon");
                     break;
                 default:

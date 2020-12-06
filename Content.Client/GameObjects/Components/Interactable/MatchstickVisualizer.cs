@@ -1,4 +1,5 @@
-﻿using Content.Shared.GameObjects.Components.Interactable;
+﻿using Content.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.Components.Interactable;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
