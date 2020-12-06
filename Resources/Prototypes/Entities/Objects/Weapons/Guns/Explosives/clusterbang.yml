@@ -2,25 +2,30 @@
   name: Clusterbang
   description: Can be used only with flashbangs. Explodes several times.
   parent: BaseItem
-  id: ClusterBang
+  id: Clusterbang
   components:
   - type: Sprite
-    sprite: Objects/Devices/pda.rsi
+    sprite: Objects/Weapons/Grenades/clusterbang.rsi/
     netsync: false
-    state: pda
+    state: empty
   - type: ClusterFlash
+  - type: Appearance
+    visuals:
+    - type: ClusterFlashVisualizer
+      state: empty
 
 - type: entity
   name: Clusterbang
   suffix: Full
-  description: Can be used only with flashbangs. Explodes several times.
-  parent: BaseItem
-  id: ClusterBangFull
+  parent: Clusterbang
+  id: ClusterbangFull
   components:
   - type: Sprite
-    sprite: Objects/Devices/pda.rsi
-    netsync: false
-    state: pda
+    state: three
   - type: ClusterFlash
     startFull: true
+  - type: Appearance
+    visuals:
+    - type: ClusterFlashVisualizer
+      state: three
 

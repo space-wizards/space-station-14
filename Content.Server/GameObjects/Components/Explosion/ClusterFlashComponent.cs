@@ -10,14 +10,15 @@ using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 using System;
+using Robust.Server.GameObjects;
+using Content.Shared.GameObjects.Components.Explosion;
+using Content.Server.Throw;
+using Robust.Shared.Map;
 
 namespace Content.Server.GameObjects.Components.Explosives
 {
     [RegisterComponent]
-    public class ClusterFlashComponent : Component, IInteractUsing, IUse{
-
-        public override string Name => "ClusterFlash";
-
+    public class ClusterFlashComponent : SharedClusterFlashComponent, IInteractUsing, IUse{
         private Container? _grenadesContainer;
         private int _maxGrenadesNum;
         private bool _startFull;
@@ -27,6 +28,7 @@ namespace Content.Server.GameObjects.Components.Explosives
                 return false;
             }
             _grenadesContainer.Insert(args.Using);
+            UpdateAppearance();
             return true;
         }
 
@@ -51,27 +53,27 @@ namespace Content.Server.GameObjects.Components.Explosives
             if (_grenadesContainer == null){
                 return false;
             }
-            int counter;
-            int delay;
-            for (counter = 0, delay = 1500; counter != _grenadesContainer.ContainedEntities.Count; counter++){
-                Timer.Spawn(delay, () =>{
-                    try{
-                        if (_grenadesContainer.ContainedEntities[0].TryGetComponent<FlashExplosiveComponent>(out var grenadeFlashComponent)){
-                            grenadeFlashComponent.Explode();
-                        }
-                    }
-                    catch{
-                        Logger.Log(LogLevel.Error, "Can't create explosion in SeveralFlashExplosive");
-                    }
-                });
-                if (_grenadesContainer.ContainedEntities[0].TryGetComponent<FlashExplosiveComponent>(out var grenadeFlashComponent)){
-                    delay += Convert.ToInt32(grenadeFlashComponent.Duration * 1000);
+            var delay = 3500;
+            while (_grenadesContainer.ContainedEntities.Count > 0){
+                IEntity grenade = _grenadesContainer.ContainedEntities[0];
+                if (!_grenadesContainer.Remove(grenade)){
+                    continue;
                 }
+                Random rnd = new Random();
+                float x = rnd.Next(3);
+                float y = rnd.Next(3);
+                if (rnd.Next(1) == 1){
+                    x *= -1;
+                }
+                if (rnd.Next(1) == 1){
+                    y *= -1;
+                }
+                var target = new EntityCoordinates(Owner.Uid, x, y);
+                var player = new EntityCoordinates(Owner.Uid, 0, 0);
+                grenade.Throw(2, target, player, throwSourceEnt: Owner);
+                delay += rnd.Next(400);
+                UpdateAppearance();
             }
-            delay += 100;
-            Timer.Spawn(delay, () =>{
-                Owner.Delete();
-            });
             return true;
         }
 
@@ -82,6 +84,17 @@ namespace Content.Server.GameObjects.Components.Explosives
             for (int x = 0; x != _maxGrenadesNum; x++){
                 IEntity grenade = Owner.EntityManager.SpawnEntity("GrenadeFlashBang", Owner.Transform.Coordinates);
                 _grenadesContainer.Insert(grenade);
+            }
+            UpdateAppearance();
+        }
+
+        private void UpdateAppearance(){
+            if (_grenadesContainer == null){
+                return;
+            }
+            if (Owner.TryGetComponent<AppearanceComponent>(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(ClusterFlashVisuals.GrenadesCounter, _grenadesContainer.ContainedEntities.Count);
             }
         }
     }
