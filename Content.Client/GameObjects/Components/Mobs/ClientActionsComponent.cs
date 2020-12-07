@@ -477,11 +477,16 @@ namespace Content.Client.GameObjects.Components.Mobs
                     if (TryGetActionState(action.ActionType, out var actionState))
                     {
                         actionSlot.ToggledOn = !actionState.ToggledOn;
-                        // TODO: This flickers when toggling on due to ResetPredictedEntities being
-                        // called with an older (toggled off) state from the server.
                         ToggleAction(action.ActionType, !actionState.ToggledOn);
-                        SendNetworkMessage(new PerformToggleActionMessage(action.ActionType,
-                            !actionState.ToggledOn));
+                        if (actionState.ToggledOn)
+                        {
+                            SendNetworkMessage(new PerformToggleOffActionMessage(action.ActionType));
+                        }
+                        else
+                        {
+                            SendNetworkMessage(new PerformToggleOnActionMessage(action.ActionType));
+                        }
+
                     }
                     else
                     {
@@ -526,11 +531,15 @@ namespace Content.Client.GameObjects.Components.Mobs
                     if (TryGetItemActionState(action.ActionType, actionSlot.Item.Uid, out var actionState))
                     {
                         actionSlot.ToggledOn = !actionState.ToggledOn;
-                        // TODO: This flickers when toggling on due to ResetPredictedEntities being
-                        // called with an older (toggled off) state from the server.
                         ToggleAction(action.ActionType, actionSlot.Item.Uid, !actionState.ToggledOn);
-                        SendNetworkMessage(new PerformToggleItemActionMessage(action.ActionType,
-                            actionSlot.Item.Uid, !actionState.ToggledOn));
+                        if (actionState.ToggledOn)
+                        {
+                            SendNetworkMessage(new PerformToggleOffItemActionMessage(action.ActionType, actionSlot.Item.Uid));
+                        }
+                        else
+                        {
+                            SendNetworkMessage(new PerformToggleOnItemActionMessage(action.ActionType, actionSlot.Item.Uid));
+                        }
                     }
                     else
                     {

@@ -780,37 +780,39 @@ namespace Content.Shared.GameObjects.Components.Mobs
     }
 
     /// <summary>
-    /// A message that tells server we want to toggle the indicated action.
+    /// A message that tells server we want to toggle on the indicated action.
     /// </summary>
     [Serializable, NetSerializable]
-    public class PerformToggleActionMessage : PerformActionMessage
+    public class PerformToggleOnActionMessage : PerformActionMessage
     {
-        /// <summary>
-        /// True if we are trying to toggle the action on, false if trying to toggle it off.
-        /// </summary>
-        public readonly bool ToggleOn;
-
-        public PerformToggleActionMessage(ActionType actionType, bool toggleOn) : base(actionType)
-        {
-            ToggleOn = toggleOn;
-        }
+        public PerformToggleOnActionMessage(ActionType actionType) : base(actionType) { }
     }
 
     /// <summary>
-    /// A message that tells server we want to toggle the indicated action.
+    /// A message that tells server we want to toggle off the indicated action.
     /// </summary>
     [Serializable, NetSerializable]
-    public class PerformToggleItemActionMessage : PerformItemActionMessage
+    public class PerformToggleOffActionMessage : PerformActionMessage
     {
-        /// <summary>
-        /// True if we are trying to toggle the action on, false if trying to toggle it off.
-        /// </summary>
-        public readonly bool ToggleOn;
+        public PerformToggleOffActionMessage(ActionType actionType) : base(actionType) { }
+    }
 
-        public PerformToggleItemActionMessage(ItemActionType actionType, EntityUid item, bool toggleOn) : base(actionType, item)
-        {
-            ToggleOn = toggleOn;
-        }
+    /// <summary>
+    /// A message that tells server we want to toggle on the indicated action.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public class PerformToggleOnItemActionMessage : PerformItemActionMessage
+    {
+        public PerformToggleOnItemActionMessage(ItemActionType actionType, EntityUid item) : base(actionType, item) { }
+    }
+
+    /// <summary>
+    /// A message that tells server we want to toggle off the indicated action.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public class PerformToggleOffItemActionMessage : PerformItemActionMessage
+    {
+        public PerformToggleOffItemActionMessage(ItemActionType actionType, EntityUid item) : base(actionType, item) { }
     }
 
     /// <summary>

@@ -74,7 +74,6 @@ namespace Content.Server.GameObjects.Components.Mobs
             switch (performMsg)
             {
                 case PerformInstantActionMessage msg:
-                {
                     if (action.InstantAction == null)
                     {
                         Logger.DebugS("action", "user {0} attempted to" +
@@ -87,33 +86,13 @@ namespace Content.Server.GameObjects.Components.Mobs
                     action.InstantAction.DoInstantAction(new InstantActionEventArgs(player, action.ActionType));
 
                     break;
-                }
-                case PerformToggleActionMessage msg:
-                {
-                    if (action.ToggleAction == null)
-                    {
-                        Logger.DebugS("action", "user {0} attempted to" +
-                                                " perform action {1} as a toggle action, but it isn't one", player.Name,
-                            msg.ActionType);
-                        return;
-                    }
-
-                    if (msg.ToggleOn == actionState.ToggledOn)
-                    {
-                        Logger.DebugS("action", "user {0} attempted to" +
-                                                " toggle action {1} to {2}, but it is already toggled {2}", player.Name,
-                            msg.ActionType, actionState.ToggledOn ? "on" : "off");
-                        return;
-                    }
-
-                    ToggleAction(action.ActionType, msg.ToggleOn);
-
-                    action.ToggleAction.DoToggleAction(new ToggleActionEventArgs(player, action.ActionType,
-                        msg.ToggleOn));
+                case PerformToggleOnActionMessage:
+                    HandleToggleAction(action, player, true, actionState);
                     break;
-                }
+                case PerformToggleOffActionMessage:
+                    HandleToggleAction(action, player, false, actionState);
+                    break;
                 case PerformTargetPointActionMessage msg:
-                {
                     if (action.TargetPointAction == null)
                     {
                         Logger.DebugS("action", "user {0} attempted to" +
@@ -127,9 +106,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                     action.TargetPointAction.DoTargetPointAction(
                         new TargetPointActionEventArgs(player, msg.Target, action.ActionType));
                     break;
-                }
                 case PerformTargetEntityActionMessage msg:
-                {
                     if (action.TargetEntityAction == null)
                     {
                         Logger.DebugS("action", "user {0} attempted to" +
@@ -152,8 +129,32 @@ namespace Content.Server.GameObjects.Components.Mobs
                     action.TargetEntityAction.DoTargetEntityAction(
                         new TargetEntityActionEventArgs(player, action.ActionType, entity));
                     break;
-                }
             }
+        }
+
+        private void HandleToggleAction(ActionPrototype action, IEntity player, bool on,
+            ActionState actionState)
+        {
+            if (action.ToggleAction == null)
+            {
+                Logger.DebugS("action", "user {0} attempted to" +
+                                        " perform action {1} as a toggle action, but it isn't one", player.Name,
+                    action.ActionType);
+                return;
+            }
+
+            if (on == actionState.ToggledOn)
+            {
+                Logger.DebugS("action", "user {0} attempted to" +
+                                        " toggle action {1} to {2}, but it is already toggled {2}", player.Name,
+                    action.ActionType, actionState.ToggledOn ? "on" : "off");
+                return;
+            }
+
+            ToggleAction(action.ActionType, on);
+
+            action.ToggleAction.DoToggleAction(new ToggleActionEventArgs(player, action.ActionType,
+                on));
         }
 
         private void HandlePerformItemActionMessage(PerformItemActionMessage performMsg, ICommonSession session)
@@ -220,26 +221,11 @@ namespace Content.Server.GameObjects.Components.Mobs
                     action.InstantAction.DoInstantAction(new InstantItemActionEventArgs(player, item, action.ActionType));
 
                     break;
-                case PerformToggleItemActionMessage msg:
-                    if (action.ToggleAction == null)
-                    {
-                        Logger.DebugS("action", "user {0} attempted to" +
-                                                " perform action {1} as a toggle item action, but it isn't one", player.Name,
-                            msg.ActionType);
-                        return;
-                    }
-
-                    if (msg.ToggleOn == actionState.ToggledOn)
-                    {
-                        Logger.DebugS("action", "user {0} attempted to" +
-                                                " toggle item action {1} to {2}, but it is already toggled {2}", player.Name,
-                            msg.ActionType, actionState.ToggledOn ? "on" : "off");
-                        return;
-                    }
-
-                    ToggleAction(action.ActionType, item,  msg.ToggleOn);
-
-                    action.ToggleAction.DoToggleAction(new ToggleItemActionEventArgs(player, msg.ToggleOn, item, action.ActionType));
+                case PerformToggleOnItemActionMessage msg:
+                    HandleToggleItemAction(action, player, true, actionState, item);
+                    break;
+                case PerformToggleOffItemActionMessage msg:
+                    HandleToggleItemAction(action, player, false, actionState, item);
                     break;
                 case PerformTargetPointItemActionMessage msg:
                     if (action.TargetPointAction == null)
@@ -278,6 +264,30 @@ namespace Content.Server.GameObjects.Components.Mobs
                         new TargetEntityItemActionEventArgs(player, entity, item, action.ActionType));
                     break;
             }
+        }
+
+        private void HandleToggleItemAction(ItemActionPrototype action, IEntity player, bool on,
+            ActionState actionState, IEntity item)
+        {
+            if (action.ToggleAction == null)
+            {
+                Logger.DebugS("action", "user {0} attempted to" +
+                                        " perform action {1} as a toggle item action, but it isn't one", player.Name,
+                    action.ActionType);
+                return;
+            }
+
+            if (on == actionState.ToggledOn)
+            {
+                Logger.DebugS("action", "user {0} attempted to" +
+                                        " toggle item action {1} to {2}, but it is already toggled {2}", player.Name,
+                    action.ActionType, actionState.ToggledOn ? "on" : "off");
+                return;
+            }
+
+            ToggleAction(action.ActionType, item, on);
+
+            action.ToggleAction.DoToggleAction(new ToggleItemActionEventArgs(player, on, item, action.ActionType));
         }
 
         private bool CheckRangeAndSetFacing(EntityCoordinates target, IEntity player)
