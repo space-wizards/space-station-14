@@ -14,7 +14,6 @@ namespace Content.Client.UserInterface
         // quickly explore what each action is
         private const float CustomTooltipDelay = 0.2f;
 
-        private readonly TextureRect _icon;
         public BaseActionPrototype Action { get; private set; }
 
         public ActionMenuItem(BaseActionPrototype action)
@@ -24,14 +23,13 @@ namespace Content.Client.UserInterface
             CustomMinimumSize = (64, 64);
             SizeFlagsVertical = SizeFlags.None;
 
-            _icon = new TextureRect
+            AddChild(new TextureRect
             {
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                 SizeFlagsVertical = SizeFlags.FillExpand,
                 Stretch = TextureRect.StretchMode.Scale,
                 Texture = action.Icon.Frame0()
-            };
-            AddChild(_icon);
+            });
 
             TooltipDelay = CustomTooltipDelay;
         }

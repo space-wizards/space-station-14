@@ -9,14 +9,12 @@ using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.Actions;
-using JetBrains.Annotations;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Utility;
 using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 
 namespace Content.Client.UserInterface
@@ -239,7 +237,8 @@ namespace Content.Client.UserInterface
 
         private void OnItemPressed(BaseButton.ButtonEventArgs args)
         {
-            _onItemSelected?.Invoke(new ActionMenuItemSelectedEventArgs((args.Button as ActionMenuItem).Action));
+            if (args.Button is not ActionMenuItem actionMenuItem) return;
+            _onItemSelected?.Invoke(new ActionMenuItemSelectedEventArgs(actionMenuItem.Action));
         }
 
         private void OnClearButtonPressed(BaseButton.ButtonEventArgs args)
@@ -385,10 +384,13 @@ namespace Content.Client.UserInterface
             for (int i = 1; i < text.Length; i++)
             {
                 if (char.IsUpper(text[i]))
+                {
                     if ((text[i - 1] != ' ' && !char.IsUpper(text[i - 1])) ||
                         (preserveAcronyms && char.IsUpper(text[i - 1]) &&
                          i < text.Length - 1 && !char.IsUpper(text[i + 1])))
                         newText.Append(' ');
+                }
+
                 newText.Append(text[i]);
             }
             return newText.ToString();
@@ -433,7 +435,7 @@ namespace Content.Client.UserInterface
             // TODO: Not sure if this unsub is needed if children are all being cleared
             foreach (var actionItem in _resultsGrid.Children)
             {
-                (actionItem as ActionMenuItem).OnPressed -= OnItemPressed;
+                ((ActionMenuItem) actionItem).OnPressed -= OnItemPressed;
             }
             _resultsGrid.Children.Clear();
             _actionList = EmptyActionList;
@@ -447,7 +449,7 @@ namespace Content.Client.UserInterface
         {
             foreach (var actionItem in _resultsGrid.Children)
             {
-                var actionMenuItem = (actionItem as ActionMenuItem);
+                var actionMenuItem = ((ActionMenuItem) actionItem);
                 actionMenuItem.SetActionState(IsGranted(actionMenuItem.Action));
             }
         }

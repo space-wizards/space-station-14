@@ -1,8 +1,6 @@
-﻿using System;
-using Robust.Client.Interfaces.Input;
+﻿using Robust.Client.Interfaces.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
-using Robust.Shared.Timing;
 
 namespace Content.Client.Utility
 {
@@ -122,7 +120,6 @@ namespace Content.Client.Utility
         /// <summary>
         /// Should be invoked by using class every FrameUpdate or Update.
         /// </summary>
-        /// <param name="args"></param>
         public void Update(float frameTime)
         {
             switch (_state)

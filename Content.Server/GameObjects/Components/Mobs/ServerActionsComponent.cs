@@ -4,9 +4,7 @@ using Content.Shared.Actions;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
-using Robust.Shared;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
@@ -221,10 +219,10 @@ namespace Content.Server.GameObjects.Components.Mobs
                     action.InstantAction.DoInstantAction(new InstantItemActionEventArgs(player, item, action.ActionType));
 
                     break;
-                case PerformToggleOnItemActionMessage msg:
+                case PerformToggleOnItemActionMessage:
                     HandleToggleItemAction(action, player, true, actionState, item);
                     break;
-                case PerformToggleOffItemActionMessage msg:
+                case PerformToggleOffItemActionMessage:
                     HandleToggleItemAction(action, player, false, actionState, item);
                     break;
                 case PerformTargetPointItemActionMessage msg:

@@ -3,7 +3,6 @@ using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Client.GameObjects.Components.Mobs.Actions
 {

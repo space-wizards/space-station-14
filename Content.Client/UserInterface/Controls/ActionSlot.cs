@@ -200,7 +200,7 @@ namespace Content.Client.UserInterface.Controls
         /// <param name="curTime">current game time</param>
         public void UpdateCooldown((TimeSpan Start, TimeSpan End)? alertCooldown, in TimeSpan curTime)
         {
-            if (!alertCooldown.HasValue || (Action is ItemActionPrototype itemAction && Item == null))
+            if (!alertCooldown.HasValue || (Action is ItemActionPrototype && Item == null))
             {
                 _cooldownGraphic.Progress = 0;
                 _cooldownGraphic.Visible = false;
@@ -375,7 +375,7 @@ namespace Content.Client.UserInterface.Controls
             }
             else
             {
-                if (Action is ItemActionPrototype actionPrototype && actionPrototype.IconStyle == ItemActionIconStyle.BigItem)
+                if (Action is ItemActionPrototype {IconStyle: ItemActionIconStyle.BigItem})
                 {
                     _bigActionIcon.Texture = null;
                     _bigActionIcon.Visible = false;

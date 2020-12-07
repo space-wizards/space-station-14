@@ -33,7 +33,6 @@ namespace Content.Client.UserInterface
         private readonly Action<GUIMouseHoverEventArgs> _onMouseExitedAction;
         private readonly ActionSlot[] _slots;
 
-        private readonly VBoxContainer _hotbarContainer;
         private readonly GridContainer _slotContainer;
 
         private readonly TextureButton _lockButton;
@@ -95,18 +94,18 @@ namespace Content.Client.UserInterface
 
             var resourceCache = IoCManager.Resolve<IResourceCache>();
 
-            _hotbarContainer = new VBoxContainer
+            var hotbarContainer = new VBoxContainer
             {
                 SeparationOverride = 3,
                 SizeFlagsHorizontal = SizeFlags.None
             };
-            AddChild(_hotbarContainer);
+            AddChild(hotbarContainer);
 
             var settingsContainer = new HBoxContainer
             {
                 SizeFlagsHorizontal = SizeFlags.FillExpand
             };
-            _hotbarContainer.AddChild(settingsContainer);
+            hotbarContainer.AddChild(settingsContainer);
 
             settingsContainer.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 1 });
             _lockTexture = resourceCache.GetTexture("/Textures/Interface/Nano/lock.svg.png");
@@ -137,14 +136,14 @@ namespace Content.Client.UserInterface
             {
                 MaxHeight = CalcMaxHeight(_clyde.ScreenSize)
             };
-            _hotbarContainer.AddChild(_slotContainer);
+            hotbarContainer.AddChild(_slotContainer);
 
 
             var loadoutContainer = new HBoxContainer
             {
                 SizeFlagsHorizontal = SizeFlags.FillExpand
             };
-            _hotbarContainer.AddChild(loadoutContainer);
+            hotbarContainer.AddChild(loadoutContainer);
 
             loadoutContainer.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 1 });
             _previousHotbarButton = new TextureButton

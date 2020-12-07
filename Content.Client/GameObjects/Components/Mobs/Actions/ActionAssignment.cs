@@ -9,7 +9,7 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
         private readonly ActionType _actionType;
         private readonly ItemActionType _itemActionType;
         private readonly EntityUid _item;
-        public Assignment Assignment { get; private set; }
+        public Assignment Assignment { get; private init; }
 
         private ActionAssignment(Assignment assignment, ActionType actionType, ItemActionType itemActionType, EntityUid item)
         {

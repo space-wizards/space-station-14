@@ -19,7 +19,7 @@ namespace Content.Client.UserInterface.Controls
         /// <summary>
         /// Total duration of the cooldown in seconds. Null if no duration / cooldown.
         /// </summary>
-        public int? TotalDuration { get; set; }
+        public int? TotalDuration { get; private set; }
 
         private short? _severity;
         private readonly TextureRect _icon;

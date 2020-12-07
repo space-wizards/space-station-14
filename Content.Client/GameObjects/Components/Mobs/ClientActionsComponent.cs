@@ -69,7 +69,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         private bool CurrentlyControlled => _playerManager.LocalPlayer != null && _playerManager.LocalPlayer.ControlledEntity == Owner;
 
         // index of currently displayed hotbar
-        private byte _selectedHotbar = 0;
+        private byte _selectedHotbar;
 
         protected override void Shutdown()
         {
@@ -310,7 +310,6 @@ namespace Content.Client.GameObjects.Components.Mobs
             {
                 Logger.WarningS("action", "unrecognized actionType {0}", assignedActionType);
                 actionSlot.Clear();
-                return;
             }
         }
 
@@ -380,7 +379,7 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         private void PreviousHotbar(BaseButton.ButtonEventArgs args)
         {
-            int newBar = _selectedHotbar == 0 ? Hotbars - 1 : _selectedHotbar - 1;
+            var newBar = _selectedHotbar == 0 ? Hotbars - 1 : _selectedHotbar - 1;
             ChangeHotbar((byte) newBar);
         }
 
@@ -473,7 +472,7 @@ namespace Content.Client.GameObjects.Components.Mobs
                     break;
                 case BehaviorType.Toggle:
                     // for toggle actions, we immediately tell the server we're toggling it.
-                    // Predictively toggle it on as well
+                    // Predictive toggle it on as well
                     if (TryGetActionState(action.ActionType, out var actionState))
                     {
                         actionSlot.ToggledOn = !actionState.ToggledOn;
@@ -527,7 +526,7 @@ namespace Content.Client.GameObjects.Components.Mobs
                     break;
                 case BehaviorType.Toggle:
                     // for toggle actions, we immediately tell the server we're toggling it.
-                    // Predictively toggle it on as well
+                    // Predictive toggle it on as well
                     if (TryGetItemActionState(action.ActionType, actionSlot.Item.Uid, out var actionState))
                     {
                         actionSlot.ToggledOn = !actionState.ToggledOn;
@@ -680,7 +679,6 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         private void StopHighlightingItemSlots()
         {
-            if (_highlightingItemSlots == null) return;
             foreach (var itemSlot in _highlightingItemSlots)
             {
                 itemSlot.Highlight(false);
