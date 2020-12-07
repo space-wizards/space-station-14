@@ -98,7 +98,10 @@ namespace Content.Server.GameTicking.GamePresets
                 }
                 else if (!mobState.IsDead())
                 {
-                    return false;
+                    if (entity.HasComponent<HandsComponent>())
+                    {
+                        return false;
+                    }
                 }
             }
             var session = mind.Session;
