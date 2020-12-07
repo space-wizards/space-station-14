@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Atmos;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
@@ -36,6 +37,23 @@ namespace Content.Server.Atmos
         {
             // ReSharper disable once ConditionIsAlwaysTrueOrFalse
             return !Equals(air = coordinates.GetTileAir(entityManager)!, default);
+        }
+
+        public static bool IsTileAirProbablySafe(this EntityCoordinates coordinates)
+        {
+            // Note that oxygen mix isn't checked, but survival boxes make that not necessary.
+            var air = coordinates.GetTileAir();
+            if (air == null)
+                return false;
+            if (air.Pressure <= Atmospherics.WarningLowPressure)
+                return false;
+            if (air.Pressure >= Atmospherics.WarningHighPressure)
+                return false;
+            if (air.Temperature <= 260)
+                return false;
+            if (air.Temperature >= 360)
+                return false;
+            return true;
         }
 
         public static TileAtmosphere GetTileAtmosphere(this Vector2i indices, GridId gridId)
