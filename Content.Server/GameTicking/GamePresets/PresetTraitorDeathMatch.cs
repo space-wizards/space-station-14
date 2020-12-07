@@ -37,6 +37,7 @@ namespace Content.Server.GameTicking.GamePresets
         public override bool Start(IReadOnlyList<IPlayerSession> readyPlayers, bool force = false)
         {
             // For now, don't setup anything for scoring/termination.
+            _gameTicker.AddGameRule<RuleTraitorDeathMatch>();
             return true;
         }
 

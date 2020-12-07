@@ -1,0 +1,9 @@
+{
+    "version":1,
+    "size":{"x":32,"y":32},
+    "states":[
+        {"name":"redemption","directions":1,"delays":[[1.0]]}
+    ],
+    "license": "https://github.com/space-wizards/space-station-14/blob/a4882cb83afe0731de2f0c6e87681b0ab278462c/LICENSE.TXT",
+    "copyright": "Quickly drawn as a temporary placeholder (UPDATE THIS IF REPLACED WITH THE REAL SPRITE)"
+}
