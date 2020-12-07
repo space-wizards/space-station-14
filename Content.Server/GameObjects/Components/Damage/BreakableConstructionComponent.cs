@@ -1,7 +1,5 @@
 ﻿#nullable enable
-using System;
 using Content.Server.GameObjects.Components.Construction;
-using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
@@ -10,11 +8,8 @@ using Robust.Shared.Serialization;
 namespace Content.Server.GameObjects.Components.Damage
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IDamageableComponent))]
-    public class BreakableConstructionComponent : RuinableComponent
+    public class BreakableConstructionComponent : Component, IDestroyAct
     {
-        private ActSystem _actSystem = default!;
-
         public override string Name => "BreakableConstruction";
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -24,20 +19,16 @@ namespace Content.Server.GameObjects.Components.Damage
             serializer.DataField(this, x => x.Node, "node", string.Empty);
         }
 
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            _actSystem = EntitySystem.Get<ActSystem>();
-        }
-
         public string Node { get; private set; } = string.Empty;
 
-        protected override async void DestructionBehavior()
+        async void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
         {
-            if (Owner.Deleted || !Owner.TryGetComponent(out ConstructionComponent? construction) || string.IsNullOrEmpty(Node)) return;
-
-            _actSystem.HandleBreakage(Owner);
+            if (Owner.Deleted ||
+                !Owner.TryGetComponent(out ConstructionComponent? construction) ||
+                string.IsNullOrEmpty(Node))
+            {
+                return;
+            }
 
             await construction.ChangeNode(Node);
         }

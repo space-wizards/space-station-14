@@ -4,6 +4,7 @@ using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.Utility;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Gravity;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.EntitySystems;
@@ -108,8 +109,11 @@ namespace Content.Server.GameObjects.Components.Gravity
                 return false;
 
             // Repair generator
-            var breakable = Owner.GetComponent<BreakableComponent>();
-            breakable.FixAllDamage();
+            if (Owner.TryGetComponent(out IDamageableComponent? damageable))
+            {
+                damageable.Heal();
+            }
+
             _intact = true;
 
             Owner.PopupMessage(eventArgs.User,

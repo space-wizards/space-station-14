@@ -28,9 +28,12 @@
       - SmallImpassable
   - type: SnapGrid
     offset: Center
-  - type: Breakable
-    deadThreshold: 50
+  - type: Damageable
     resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+      50:
+        Acts: ["Breakage"]
   - type: UserInterface
     interfaces:
     - key: enum.VendingMachineUiKey.Key

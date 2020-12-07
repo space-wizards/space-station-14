@@ -30,9 +30,12 @@
     position: Stand
   - type: Anchorable
   - type: Pullable
-  - type: Destructible
-    deadThreshold: 50
+  - type: Damageable
     resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+      50:
+        Acts: ["Destruction"]
 
 - type: entity
   name: chair

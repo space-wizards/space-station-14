@@ -142,8 +142,6 @@
     centerSlot: torso
   - type: Damageable
     damagePrototype: biologicalDamageContainer
-    criticalThreshold: 100
-    deadThreshold: 200
   - type: Metabolism
     metabolismHeat: 5000
     radiatedHeat: 400
@@ -158,7 +156,11 @@
       Oxygen: 0.00045572916
       CarbonDioxide: 0.00015190972
   - type: Internals
-  - type: MobStateManager
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      100: !type:CriticalMobState {}
+      200: !type:DeadMobState {}
   - type: HeatResistance
   - type: Appearance
     visuals:
@@ -304,9 +306,11 @@
       centerSlot: torso
     - type: Damageable
       damagePrototype: biologicalDamageContainer
-      criticalThreshold: 100
-      deadThreshold: 200
-    - type: MobStateManager
+    - type: MobState
+      thresholds:
+        0: !type:NormalMobState {}
+        100: !type:CriticalMobState {}
+        200: !type:DeadMobState {}
     - type: Appearance
       visuals:
       - type: RotationVisualizer
