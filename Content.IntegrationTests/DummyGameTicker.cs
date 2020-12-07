@@ -4,6 +4,7 @@ using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.Roles;
 using Robust.Server.Interfaces.Player;
+using Robust.Server.Interfaces.Console;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
@@ -46,6 +47,10 @@ namespace Content.IntegrationTests
         }
 
         public void Respawn(IPlayerSession targetPlayer)
+        {
+        }
+
+        public void OnGhostAttempt(IConsoleShell shell, IPlayerSession session, bool canReturnGlobal)
         {
         }
 

@@ -31,6 +31,7 @@ using Robust.Server.Interfaces.Maps;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Server.ServerStatus;
+using Robust.Server.Interfaces.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Configuration;
@@ -438,6 +439,11 @@ namespace Content.Server.GameTicking
             DisallowLateJoin = disallowLateJoin;
             UpdateLateJoinStatus();
             UpdateJobsAvailable();
+        }
+
+        public void OnGhostAttempt(IConsoleShell shell, IPlayerSession session, bool canReturnGlobal)
+        {
+            Preset.OnGhostAttempt(shell, session, canReturnGlobal);
         }
 
         public T AddGameRule<T>() where T : GameRule, new()
