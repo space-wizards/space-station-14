@@ -12,6 +12,7 @@ using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.Chemistry;
@@ -355,8 +356,8 @@ namespace Content.Server.GameObjects.Components.Metabolism
         /// </param>
         public void Update(float frameTime)
         {
-            if (!Owner.TryGetComponent<IDamageableComponent>(out var damageable) ||
-                damageable.CurrentState == DamageState.Dead)
+            if (!Owner.TryGetComponent<IMobStateComponent>(out var state) ||
+                state.IsDead())
             {
                 return;
             }

@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
             AsTask = Tcs.Task;
         }
 
-        public void HandleDamage(HealthChangedEventArgs args)
+        public void HandleDamage(DamageChangedEventArgs args)
         {
             _tookDamage = true;
         }

@@ -4,29 +4,25 @@ using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Mobs.State
 {
-    public class DeadState : SharedDeadState
+    public class CriticalMobState : SharedCriticalMobState
     {
         public override void EnterState(IEntity entity)
         {
+            base.EnterState(entity);
+
             if (entity.TryGetComponent(out AppearanceComponent appearance))
             {
-                appearance.SetData(DamageStateVisuals.State, DamageState.Dead);
+                appearance.SetData(DamageStateVisuals.State, DamageState.Critical);
             }
 
-            if (entity.TryGetComponent(out ServerAlertsComponent status))
+            if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlay))
             {
-                status.ShowAlert(AlertType.HumanDead);
-            }
-
-            if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlayComponent))
-            {
-                overlayComponent.AddOverlay(SharedOverlayID.CircleMaskOverlay);
+                overlay.AddOverlay(SharedOverlayID.GradientCircleMaskOverlay);
             }
 
             if (entity.TryGetComponent(out StunnableComponent stun))
@@ -35,26 +31,16 @@ namespace Content.Server.GameObjects.Components.Mobs.State
             }
 
             EntitySystem.Get<StandingStateSystem>().Down(entity);
-
-            if (entity.TryGetComponent(out IPhysicsComponent physics))
-            {
-                physics.CanCollide = false;
-            }
         }
 
         public override void ExitState(IEntity entity)
         {
-            if (entity.TryGetComponent(out IPhysicsComponent physics))
-            {
-                physics.CanCollide = true;
-            }
+            base.ExitState(entity);
 
             if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlay))
             {
                 overlay.ClearOverlays();
             }
         }
-
-        public override void UpdateState(IEntity entity) { }
     }
 }
