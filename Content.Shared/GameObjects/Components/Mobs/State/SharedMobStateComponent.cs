@@ -228,16 +228,12 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
 
         public void UpdateState(int damage, bool syncing = false)
         {
-            if (!TryGetState(damage, out var state, out var threshold))
+            if (!TryGetState(damage, out var newState, out var threshold))
             {
                 return;
             }
 
-            var old = CurrentState;
-            CurrentState = state;
-            CurrentThreshold = damage;
-
-            UpdateState(old, (state, threshold));
+            UpdateState(CurrentState, (newState, threshold));
 
             if (!syncing)
             {
@@ -247,19 +243,32 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
 
         private void UpdateState(IMobState? old, (IMobState state, int threshold)? current)
         {
+            if (!current.HasValue)
+            {
+                old?.ExitState(Owner);
+                return;
+            }
+
+            var (state, threshold) = current.Value;
+
+            CurrentThreshold = threshold;
+
+            if (state == old)
+            {
+                state.UpdateState(Owner, threshold);
+                return;
+            }
+
             old?.ExitState(Owner);
 
-            if (current.HasValue)
-            {
-                var (state, threshold) = current.Value;
+            CurrentState = state;
 
-                state.EnterState(Owner);
-                state.UpdateState(Owner, threshold);
+            state.EnterState(Owner);
+            state.UpdateState(Owner, threshold);
 
-                var message = new MobStateChangedMessage(this, old, state);
+            var message = new MobStateChangedMessage(this, old, state);
 
-                SendMessage(message);
-            }
+            SendMessage(message);
         }
 
         bool IActionBlocker.CanInteract()
