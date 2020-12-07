@@ -203,7 +203,17 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
                 cornerNW |= CornerFill.Diagonal;
             }
 
-            return (cornerNE, cornerNW, cornerSW, cornerSE);
+            switch (Owner.Transform.WorldRotation.GetCardinalDir())
+            {
+                case Direction.North:
+                    return (cornerSW, cornerSE, cornerNE, cornerNW);
+                case Direction.West:
+                    return (cornerSE, cornerNE, cornerNW, cornerSW);
+                case Direction.South:
+                    return (cornerNE, cornerNW, cornerSW, cornerSE);
+                default:
+                    return (cornerNW, cornerSW, cornerSE, cornerNE);
+            }
         }
 
         /// <inheritdoc />
@@ -267,7 +277,7 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
             Clockwise = 4,
         }
 
-        public enum CornerLayers
+        public enum CornerLayers : byte
         {
             SE,
             NE,
@@ -280,7 +290,7 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
     ///     Controls the mode with which icon smoothing is calculated.
     /// </summary>
     [PublicAPI]
-    public enum IconSmoothingMode
+    public enum IconSmoothingMode : byte
     {
         /// <summary>
         ///     Each icon is made up of 4 corners, each of which can get a different state depending on

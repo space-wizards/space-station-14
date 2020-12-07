@@ -6,14 +6,17 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.Components.Mobs.State;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Disposal;
 using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
@@ -27,6 +30,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -139,7 +143,9 @@ namespace Content.Server.GameObjects.Components.Disposal
             if (!entity.TryGetComponent(out IPhysicsComponent? physics) ||
                 !physics.CanCollide)
             {
-                return false;
+                if (!(entity.TryGetComponent(out IMobStateComponent? state) && state.IsDead())) {
+                    return false;
+                }
             }
 
             if (!entity.HasComponent<ItemComponent>() &&
@@ -160,7 +166,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             _automaticEngageToken = new CancellationTokenSource();
 
-            Timer.Spawn(_automaticEngageTime, () =>
+            Owner.SpawnTimer(_automaticEngageTime, () =>
             {
                 if (!TryFlush())
                 {
@@ -255,7 +261,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             if (Engaged && CanFlush())
             {
-                Timer.Spawn(_flushDelay, () => TryFlush());
+                Owner.SpawnTimer(_flushDelay, () => TryFlush());
             }
         }
 
@@ -375,7 +381,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return;
             }
 
-            if (!(obj.Message is UiButtonPressedMessage message))
+            if (obj.Message is not UiButtonPressedMessage message)
             {
                 return;
             }
@@ -617,7 +623,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-            if (ContainerHelpers.IsInContainer(eventArgs.User))
+            if (eventArgs.User.IsInContainer())
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't reach there!"));
                 return false;
@@ -674,12 +680,12 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         bool IDragDropOn.CanDragDropOn(DragDropEventArgs eventArgs)
         {
-            return CanInsert(eventArgs.Dropped);
+            return CanInsert(eventArgs.Dragged);
         }
 
         bool IDragDropOn.DragDropOn(DragDropEventArgs eventArgs)
         {
-            _ = TryInsert(eventArgs.Dropped, eventArgs.User);
+            _ = TryInsert(eventArgs.Dragged, eventArgs.User);
             return true;
         }
 

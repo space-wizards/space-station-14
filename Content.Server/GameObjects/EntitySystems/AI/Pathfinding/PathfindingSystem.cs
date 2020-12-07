@@ -5,6 +5,7 @@ using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
 using Content.Server.GameObjects.EntitySystems.JobQueues.Queues;
+using Content.Shared.GameTicking;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
@@ -28,24 +29,24 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
     /// This system handles pathfinding graph updates as well as dispatches to the pathfinder
     /// (90% of what it's doing is graph updates so not much point splitting the 2 roles)
     /// </summary>
-    public class PathfindingSystem : EntitySystem
+    public class PathfindingSystem : EntitySystem, IResettingEntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-
+        
         public IReadOnlyDictionary<GridId, Dictionary<Vector2i, PathfindingChunk>> Graph => _graph;
-        private readonly Dictionary<GridId, Dictionary<Vector2i, PathfindingChunk>> _graph = new Dictionary<GridId, Dictionary<Vector2i, PathfindingChunk>>();
+        private readonly Dictionary<GridId, Dictionary<Vector2i, PathfindingChunk>> _graph = new();
 
-        private readonly PathfindingJobQueue _pathfindingQueue = new PathfindingJobQueue();
+        private readonly PathfindingJobQueue _pathfindingQueue = new();
 
         // Queued pathfinding graph updates
-        private readonly Queue<CollisionChangeMessage> _collidableUpdateQueue = new Queue<CollisionChangeMessage>();
-        private readonly Queue<MoveEvent> _moveUpdateQueue = new Queue<MoveEvent>();
-        private readonly Queue<AccessReaderChangeMessage> _accessReaderUpdateQueue = new Queue<AccessReaderChangeMessage>();
-        private readonly Queue<TileRef> _tileUpdateQueue = new Queue<TileRef>();
+        private readonly Queue<CollisionChangeMessage> _collidableUpdateQueue = new();
+        private readonly Queue<MoveEvent> _moveUpdateQueue = new();
+        private readonly Queue<AccessReaderChangeMessage> _accessReaderUpdateQueue = new();
+        private readonly Queue<TileRef> _tileUpdateQueue = new();
 
         // Need to store previously known entity positions for collidables for when they move
-        private readonly Dictionary<IEntity, PathfindingNode> _lastKnownPositions = new Dictionary<IEntity, PathfindingNode>();
+        private readonly Dictionary<IEntity, PathfindingNode> _lastKnownPositions = new();
 
         public const int TrackedCollisionLayers = (int)
             (CollisionGroup.Impassable |
@@ -230,16 +231,6 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             node.UpdateTile(tile);
         }
 
-        public void ResettingCleanup()
-        {
-            _graph.Clear();
-            _collidableUpdateQueue.Clear();
-            _moveUpdateQueue.Clear();
-            _accessReaderUpdateQueue.Clear();
-            _tileUpdateQueue.Clear();
-            _lastKnownPositions.Clear();
-        }
-
         private void HandleGridRemoval(GridId gridId)
         {
             if (_graph.ContainsKey(gridId))
@@ -337,9 +328,16 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
                 return;
             }
 
+            var newGridId = moveEvent.NewPosition.GetGridId(_entityManager);
+            if (newGridId == GridId.Invalid)
+            {
+                HandleEntityRemove(moveEvent.Sender);
+                return;
+            }
+
             // The pathfinding graph is tile-based so first we'll check if they're on a different tile and if we need to update.
             // If you get entities bigger than 1 tile wide you'll need some other system so god help you.
-            var newTile = _mapManager.GetGrid(moveEvent.NewPosition.GetGridId(_entityManager)).GetTileRef(moveEvent.NewPosition);
+            var newTile = _mapManager.GetGrid(newGridId).GetTileRef(moveEvent.NewPosition);
 
             if (oldNode == null || oldNode.TileRef == newTile)
             {
@@ -363,7 +361,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         // Also look at increasing tile cost the more physics entities are on it
         public bool CanTraverse(IEntity entity, EntityCoordinates coordinates)
         {
-            var gridId = coordinates.GetGridId(_entityManager);
+            var gridId = coordinates.GetGridId(EntityManager);
             var tile = _mapManager.GetGrid(gridId).GetTileRef(coordinates);
             var node = GetNode(tile);
             return CanTraverse(entity, node);
@@ -388,6 +386,16 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             }
 
             return true;
+        }
+
+        public void Reset()
+        {
+            _graph.Clear();
+            _collidableUpdateQueue.Clear();
+            _moveUpdateQueue.Clear();
+            _accessReaderUpdateQueue.Clear();
+            _tileUpdateQueue.Clear();
+            _lastKnownPositions.Clear();
         }
     }
 }

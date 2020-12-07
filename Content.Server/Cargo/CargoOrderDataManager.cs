@@ -6,8 +6,8 @@ namespace Content.Server.Cargo
 {
     public class CargoOrderDataManager : ICargoOrderDataManager
     {
-        private readonly Dictionary<int, CargoOrderDatabase> _accounts = new Dictionary<int, CargoOrderDatabase>();
-        private readonly List<CargoOrderDatabaseComponent> _components = new List<CargoOrderDatabaseComponent>();
+        private readonly Dictionary<int, CargoOrderDatabase> _accounts = new();
+        private readonly List<CargoOrderDatabaseComponent> _components = new();
 
         public CargoOrderDataManager()
         {

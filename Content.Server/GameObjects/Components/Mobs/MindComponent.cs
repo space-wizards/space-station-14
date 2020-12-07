@@ -6,16 +6,17 @@ using Content.Server.Mobs;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timers;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -82,8 +83,11 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         private void OnUiAcceptCloningMessage(ServerBoundUserInterfaceMessage obj)
         {
-            if (!(obj.Message is SharedAcceptCloningComponent.UiButtonPressedMessage message)) return;
-            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new GhostComponent.GhostReturnMessage(Mind));
+            if (obj.Message is not SharedAcceptCloningComponent.UiButtonPressedMessage) return;
+            if (Mind != null)
+            {
+                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new GhostComponent.GhostReturnMessage(Mind));
+            }
         }
 
         public override void OnRemove()
@@ -132,7 +136,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                 else
                 {
                     var spawnPosition = Owner.Transform.Coordinates;
-                    Timer.Spawn(0, () =>
+                    Owner.SpawnTimer(0, () =>
                     {
                         // Async this so that we don't throw if the grid we're on is being deleted.
                         var mapMan = IoCManager.Resolve<IMapManager>();
@@ -171,8 +175,8 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
 
             var dead =
-                Owner.TryGetComponent<IDamageableComponent>(out var damageable) &&
-                damageable.CurrentState == DamageState.Dead;
+                Owner.TryGetComponent<IMobStateComponent>(out var state) &&
+                state.IsDead();
 
             if (!HasMind)
             {

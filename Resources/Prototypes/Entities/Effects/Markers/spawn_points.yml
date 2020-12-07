@@ -13,7 +13,7 @@
   - type: Marker
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
   placement:
     mode: AlignTileAny
 

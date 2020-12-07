@@ -82,7 +82,7 @@
   name: x-ray cannon
   parent: BaseItem
   id: XrayCannon
-  description: Blah blah blah
+  description: Blah blah blah...
   components:
   - type: Sprite
     netsync: false

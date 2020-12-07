@@ -17,6 +17,7 @@
   - type: Pourable
     transferAmount: 5.0
   - type: Spillable
+  - type: GlassBeaker
 
 - type: entity
   name: large beaker
@@ -37,6 +38,7 @@
   - type: Pourable
     transferAmount: 5.0
   - type: Spillable
+  - type: GlassBeaker
 
 - type: entity
   name: dropper
@@ -59,7 +61,7 @@
 - type: entity
   name: syringe
   parent: BaseItem
-  description: Used to draw blood samples from mobs, or to inject them with reagents
+  description: Used to draw blood samples from mobs, or to inject them with reagents.
   id: Syringe
   components:
   - type: Sprite

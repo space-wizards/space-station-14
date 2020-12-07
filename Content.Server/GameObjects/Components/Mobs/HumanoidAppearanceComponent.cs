@@ -16,7 +16,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             {
                 base.Appearance = value;
 
-                if (Owner.TryGetBody(out var body))
+                if (Owner.TryGetComponent(out IBody body))
                 {
                     foreach (var part in body.Parts.Values)
                     {
@@ -35,7 +35,7 @@ namespace Content.Server.GameObjects.Components.Mobs
         {
             base.Startup();
 
-            if (Appearance != null && Owner.TryGetBody(out var body))
+            if (Appearance != null && Owner.TryGetComponent(out IBody body))
             {
                 foreach (var part in body.Parts.Values)
                 {

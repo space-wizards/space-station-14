@@ -9,7 +9,6 @@
     layers:
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
-
   - type: Item
     size: 5
   - type: OnUseTimerTrigger
@@ -19,8 +18,11 @@
     heavyImpactRange: 2
     lightImpactRange: 4
     flashRange: 7
+  - type: Damageable
   - type: Destructible
-    deadThreshold: 10
+    thresholds:
+      10:
+        Acts: ["Destruction"]
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer
@@ -37,14 +39,16 @@
     layers:
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
-
   - type: Item
     size: 5
   - type: OnUseTimerTrigger
     delay: 3.5
   - type: FlashExplosive
+  - type: Damageable
   - type: Destructible
-    deadThreshold: 10
+    thresholds:
+      10:
+        Acts: ["Destruction"]
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer
@@ -61,7 +65,6 @@
     layers:
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
-
   - type: Item
     size: 5
   - type: OnUseTimerTrigger
@@ -71,8 +74,11 @@
     heavyImpactRange: 5
     lightImpactRange: 7
     flashRange: 10
+  - type: Damageable
   - type: Destructible
-    deadThreshold: 10
+    thresholds:
+      10:
+        Acts: ["Destruction"]
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer
@@ -89,7 +95,6 @@
     layers:
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
-
   - type: Item
     size: 5
   - type: OnUseTimerTrigger
@@ -98,8 +103,11 @@
     devastationRange: 25
     heavyImpactRange: 25
     flashRange: 50
+  - type: Damageable
   - type: Destructible
-    thresholdvalue: 50
+    thresholds:
+      50:
+        Acts: ["Destruction"]
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer

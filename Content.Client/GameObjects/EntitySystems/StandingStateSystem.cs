@@ -24,12 +24,6 @@ namespace Content.Client.GameObjects.EntitySystems
                 appearance.SetData(RotationVisuals.RotationState, newState);
             }
 
-            if (playSound)
-            {
-                var file = AudioHelpers.GetRandomFileFromSoundCollection("bodyfall");
-                Get<AudioSystem>().Play(file, entity, AudioHelpers.WithVariation(0.25f));
-            }
-
             return true;
         }
 

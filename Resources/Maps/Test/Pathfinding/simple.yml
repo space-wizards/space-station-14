@@ -93,7 +93,7 @@ entities:
   - shapes:
     - !type:PhysShapeGrid
       grid: 0
-    type: Collidable
+    type: Physics
 - uid: 1
   type: wall_light
   components:
@@ -103,7 +103,7 @@ entities:
     type: Transform
   - shapes:
     - !type:PhysShapeAabb {}
-    type: Collidable
+    type: Physics
 - uid: 2
   type: wall_light
   components:
@@ -113,7 +113,7 @@ entities:
     type: Transform
   - shapes:
     - !type:PhysShapeAabb {}
-    type: Collidable
+    type: Physics
 - uid: 3
   type: wall_light
   components:
@@ -123,7 +123,7 @@ entities:
     type: Transform
   - shapes:
     - !type:PhysShapeAabb {}
-    type: Collidable
+    type: Physics
 - uid: 4
   type: wall_light
   components:
@@ -133,7 +133,7 @@ entities:
     type: Transform
   - shapes:
     - !type:PhysShapeAabb {}
-    type: Collidable
+    type: Physics
 - uid: 5
   type: wall_light
   components:
@@ -143,7 +143,7 @@ entities:
     type: Transform
   - shapes:
     - !type:PhysShapeAabb {}
-    type: Collidable
+    type: Physics
 - uid: 6
   type: wall_light
   components:
@@ -153,7 +153,7 @@ entities:
     type: Transform
   - shapes:
     - !type:PhysShapeAabb {}
-    type: Collidable
+    type: Physics
 - uid: 7
   type: wall_light
   components:
@@ -163,7 +163,7 @@ entities:
     type: Transform
   - shapes:
     - !type:PhysShapeAabb {}
-    type: Collidable
+    type: Physics
 - uid: 8
   type: wall_light
   components:
@@ -173,7 +173,7 @@ entities:
     type: Transform
   - shapes:
     - !type:PhysShapeAabb {}
-    type: Collidable
+    type: Physics
 - uid: 9
   type: wall_light
   components:
@@ -183,7 +183,7 @@ entities:
     type: Transform
   - shapes:
     - !type:PhysShapeAabb {}
-    type: Collidable
+    type: Physics
 - uid: 10
   type: wall_light
   components:
@@ -193,7 +193,7 @@ entities:
     type: Transform
   - shapes:
     - !type:PhysShapeAabb {}
-    type: Collidable
+    type: Physics
 - uid: 11
   type: wall_light
   components:
@@ -203,7 +203,7 @@ entities:
     type: Transform
   - shapes:
     - !type:PhysShapeAabb {}
-    type: Collidable
+    type: Physics
 - uid: 12
   type: wall_light
   components:
@@ -213,7 +213,7 @@ entities:
     type: Transform
   - shapes:
     - !type:PhysShapeAabb {}
-    type: Collidable
+    type: Physics
 - uid: 13
   type: wall_light
   components:
@@ -223,7 +223,7 @@ entities:
     type: Transform
   - shapes:
     - !type:PhysShapeAabb {}
-    type: Collidable
+    type: Physics
 - uid: 14
   type: wall_light
   components:
@@ -233,7 +233,7 @@ entities:
     type: Transform
   - shapes:
     - !type:PhysShapeAabb {}
-    type: Collidable
+    type: Physics
 - uid: 15
   type: wall_light
   components:
@@ -243,7 +243,7 @@ entities:
     type: Transform
   - shapes:
     - !type:PhysShapeAabb {}
-    type: Collidable
+    type: Physics
 - uid: 16
   type: wall_light
   components:
@@ -253,7 +253,7 @@ entities:
     type: Transform
   - shapes:
     - !type:PhysShapeAabb {}
-    type: Collidable
+    type: Physics
 - uid: 17
   type: wall_light
   components:
@@ -263,7 +263,7 @@ entities:
     type: Transform
   - shapes:
     - !type:PhysShapeAabb {}
-    type: Collidable
+    type: Physics
 - uid: 18
   type: wall_light
   components:
@@ -273,5 +273,5 @@ entities:
     type: Transform
   - shapes:
     - !type:PhysShapeAabb {}
-    type: Collidable
+    type: Physics
 ...

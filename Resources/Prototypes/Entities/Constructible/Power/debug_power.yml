@@ -11,7 +11,7 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.5, -0.5, 0.5, 0.5"
@@ -27,9 +27,12 @@
       nodeGroupID: HVPower
   - type: PowerConsumer
     drawRate: 50
-  - type: Breakable
-    deadThreshold: 100
+  - type: Damageable
     resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+      100:
+        Acts: ["Breakage"]
   - type: Anchorable
 
 - type: entity
@@ -40,7 +43,7 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.5, -0.5, 0.5, 0.5"
@@ -67,7 +70,7 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.5, -0.5, 0.5, 0.5"
@@ -109,7 +112,7 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.5, -0.5, 0.5, 0.5"

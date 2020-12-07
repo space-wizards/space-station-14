@@ -1,8 +1,12 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Content.Server.AI.Utility.AiLogic;
+using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Movement;
+using Content.Shared.GameObjects.Components.Mobs.State;
+using Content.Shared;
+using Content.Shared.Administration;
 using Content.Shared.GameObjects.Components.Movement;
 using JetBrains.Annotations;
 using Robust.Server.AI;
@@ -26,15 +30,17 @@ namespace Content.Server.GameObjects.EntitySystems.AI
         [Dependency] private readonly IDynamicTypeFactory _typeFactory = default!;
         [Dependency] private readonly IReflectionManager _reflectionManager = default!;
 
-        private readonly Dictionary<string, Type> _processorTypes = new Dictionary<string, Type>();
+        private readonly Dictionary<string, Type> _processorTypes = new();
 
         /// <summary>
         ///     To avoid iterating over dead AI continuously they can wake and sleep themselves when necessary.
         /// </summary>
-        private readonly HashSet<AiLogicProcessor> _awakeAi = new HashSet<AiLogicProcessor>();
+        private readonly HashSet<AiLogicProcessor> _awakeAi = new();
 
         // To avoid modifying awakeAi while iterating over it.
-        private readonly List<SleepAiMessage> _queuedSleepMessages = new List<SleepAiMessage>();
+        private readonly List<SleepAiMessage> _queuedSleepMessages = new();
+
+        private readonly List<MobStateChangedMessage> _queuedMobStateMessages = new();
 
         public bool IsAwake(AiLogicProcessor processor) => _awakeAi.Contains(processor);
 
@@ -42,10 +48,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI
         public override void Initialize()
         {
             base.Initialize();
-            _configurationManager.RegisterCVar("ai.maxupdates", 64);
             SubscribeLocalEvent<SleepAiMessage>(HandleAiSleep);
+            SubscribeLocalEvent<MobStateChangedMessage>(MobStateChanged);
 
-            var processors = _reflectionManager.GetAllChildren<AiLogicProcessor>();
+            var processors = _reflectionManager.GetAllChildren<UtilityAi>();
             foreach (var processor in processors)
             {
                 var att = (AiLogicProcessorAttribute) Attribute.GetCustomAttribute(processor, typeof(AiLogicProcessorAttribute))!;
@@ -58,9 +64,21 @@ namespace Content.Server.GameObjects.EntitySystems.AI
         /// <inheritdoc />
         public override void Update(float frameTime)
         {
-            var cvarMaxUpdates = _configurationManager.GetCVar<int>("ai.maxupdates");
+            var cvarMaxUpdates = _configurationManager.GetCVar(CCVars.AIMaxUpdates);
             if (cvarMaxUpdates <= 0)
                 return;
+
+            foreach (var message in _queuedMobStateMessages)
+            {
+                if (!message.Entity.TryGetComponent(out AiControllerComponent? controller))
+                {
+                    continue;
+                }
+
+                controller.Processor?.MobStateChanged(message);
+            }
+
+            _queuedMobStateMessages.Clear();
 
             foreach (var message in _queuedSleepMessages)
             {
@@ -75,7 +93,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI
                         break;
                     case false:
                         _awakeAi.Add(message.Processor);
-                        
+
                         if (_awakeAi.Count > cvarMaxUpdates)
                         {
                             Logger.Warning($"AI limit exceeded: {_awakeAi.Count} / {cvarMaxUpdates}");
@@ -101,7 +119,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI
                     toRemove.Add(processor);
                     continue;
                 }
-                
+
                 processor.Update(frameTime);
                 count++;
             }
@@ -115,6 +133,16 @@ namespace Content.Server.GameObjects.EntitySystems.AI
         private void HandleAiSleep(SleepAiMessage message)
         {
             _queuedSleepMessages.Add(message);
+        }
+
+        private void MobStateChanged(MobStateChangedMessage message)
+        {
+            if (!message.Entity.HasComponent<AiControllerComponent>())
+            {
+                return;
+            }
+
+            _queuedMobStateMessages.Add(message);
         }
 
         /// <summary>
@@ -131,11 +159,11 @@ namespace Content.Server.GameObjects.EntitySystems.AI
             _awakeAi.Add(controller.Processor);
         }
 
-        private AiLogicProcessor CreateProcessor(string name)
+        private UtilityAi CreateProcessor(string name)
         {
             if (_processorTypes.TryGetValue(name, out var type))
             {
-                return (AiLogicProcessor)_typeFactory.CreateInstance(type);
+                return (UtilityAi)_typeFactory.CreateInstance(type);
             }
 
             // processor needs to inherit AiLogicProcessor, and needs an AiLogicProcessorAttribute to define the YAML name
@@ -143,49 +171,5 @@ namespace Content.Server.GameObjects.EntitySystems.AI
         }
 
         public bool ProcessorTypeExists(string name) => _processorTypes.ContainsKey(name);
-
-
-        private class AddAiCommand : IClientCommand
-        {
-            public string Command => "addai";
-            public string Description => "Add an ai component with a given processor to an entity.";
-            public string Help => "Usage: addai <processorId> <entityId>"
-                                + "\n    processorId: Class that inherits AiLogicProcessor and has an AiLogicProcessor attribute."
-                                + "\n    entityID: Uid of entity to add the AiControllerComponent to. Open its VV menu to find this.";
-
-            public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
-            {
-                if(args.Length != 2)
-                {
-                    shell.SendText(player, "Wrong number of args.");
-                    return;
-                }
-
-                var processorId = args[0];
-                var entId = new EntityUid(int.Parse(args[1]));
-                var ent = IoCManager.Resolve<IEntityManager>().GetEntity(entId);
-                var aiSystem = Get<AiSystem>();
-
-                if (!aiSystem.ProcessorTypeExists(processorId))
-                {
-                    shell.SendText(player, "Invalid processor type. Processor must inherit AiLogicProcessor and have an AiLogicProcessor attribute.");
-                    return;
-                }
-                if (ent.HasComponent<AiControllerComponent>())
-                {
-                    shell.SendText(player, "Entity already has an AI component.");
-                    return;
-                }
-
-                if (ent.HasComponent<IMoverComponent>())
-                {
-                    ent.RemoveComponent<IMoverComponent>();
-                }
-
-                var comp = ent.AddComponent<AiControllerComponent>();
-                comp.LogicName = processorId;
-                shell.SendText(player, "AI component added.");
-            }
-        }
     }
 }

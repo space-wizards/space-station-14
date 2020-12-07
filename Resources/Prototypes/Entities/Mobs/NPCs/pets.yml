@@ -20,7 +20,7 @@
     baseSprintSpeed : 5
   - type: InteractionOutline
   - type: Clickable
-  - type: Collidable
+  - type: Physics
     anchored: false
     mass: 50
     shapes:
@@ -35,9 +35,11 @@
       - Opaque
       - MobImpassable
   - type: Damageable
-    criticalThreshold: 50
-    deadThreshold: 100
-  - type: MobStateManager
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      50: !type:CriticalMobState {}
+      100: !type:DeadMobState {}
   - type: HeatResistance
   - type: CombatMode
   - type: Teleportable
@@ -60,7 +62,7 @@
   name: corgi
   parent: PetBaseMob_Content
   id: CorgiMob_Content
-  description:
+  description: Finally, a space corgi!
   drawdepth: Mobs
   suffix: AI
   components:
@@ -70,7 +72,7 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: corgi
-  - type: Collidable
+  - type: Physics
     mass: 10
     shapes:
     - !type:PhysShapeAabb
@@ -94,7 +96,7 @@
   name: ian
   parent: PetBaseMob_Content
   id: IanMob_Content
-  description:
+  description: Favorite pet corgi.
   drawdepth: Mobs
   suffix: AI
   components:
@@ -104,7 +106,7 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: ian
-  - type: Collidable
+  - type: Physics
     mass: 10
     shapes:
     - !type:PhysShapeAabb
@@ -128,7 +130,7 @@
   name: cat
   parent: PetBaseMob_Content
   id: CatMob_Content
-  description:
+  description: Feline pet, very funny.
   drawdepth: Mobs
   suffix: AI
   components:
@@ -138,7 +140,7 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: cat
-  - type: Collidable
+  - type: Physics
     mass: 10
     shapes:
     - !type:PhysShapeAabb
@@ -162,7 +164,7 @@
   name: calico cat
   parent: PetBaseMob_Content
   id: CatCalicoMob_Content
-  description:
+  description: Feline pet, very funny.
   drawdepth: Mobs
   suffix: AI
   components:
@@ -173,7 +175,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: cat2
 
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.50,-0.25,0.30,0.25"
@@ -196,7 +198,7 @@
   name: sloth
   parent: PetBaseMob_Content
   id: SlothMob_Content
-  description:
+  description: Very slow animal. For people with low energy.
   drawdepth: Mobs
   suffix: AI
   components:
@@ -209,7 +211,7 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: sloth
-  - type: Collidable
+  - type: Physics
     mass: 10
     shapes:
     - !type:PhysShapeAabb

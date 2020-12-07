@@ -3,6 +3,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using Content.Client.GameObjects.Components;
 using Content.Client.Utility;
+using Content.Shared;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Interfaces.GameObjects;
 using Robust.Client.Interfaces.Graphics.ClientEye;
@@ -71,7 +72,7 @@ namespace Content.Client.State
             }
 
             InteractionOutlineComponent outline;
-            if(!ConfigurationManager.GetCVar<bool>("outline.enabled"))
+            if(!ConfigurationManager.GetCVar(CCVars.OutlineEnabled))
             {
                 if(entityToClick != null && entityToClick.TryGetComponent(out outline))
                 {
@@ -209,11 +210,11 @@ namespace Content.Client.State
             var mousePosWorld = EyeManager.ScreenToMap(args.PointerLocation);
             var entityToClick = GetEntityUnderPosition(mousePosWorld);
 
-            if (!MapManager.TryFindGridAt(mousePosWorld, out var grid))
-                grid = MapManager.GetDefaultGrid(mousePosWorld.MapId);
+            var coordinates = MapManager.TryFindGridAt(mousePosWorld, out var grid) ? grid.MapToGrid(mousePosWorld) :
+                EntityCoordinates.FromMap(EntityManager, MapManager, mousePosWorld);
 
             var message = new FullInputCmdMessage(Timing.CurTick, Timing.TickFraction, funcId, args.State,
-                grid.MapToGrid(mousePosWorld), args.PointerLocation,
+                coordinates , args.PointerLocation,
                 entityToClick?.Uid ?? EntityUid.Invalid);
 
             // client side command handlers will always be sent the local player session.

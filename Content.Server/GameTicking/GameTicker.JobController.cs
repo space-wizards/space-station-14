@@ -17,7 +17,7 @@ namespace Content.Server.GameTicking
     public partial class GameTicker
     {
         [ViewVariables]
-        private readonly Dictionary<string, int> _spawnedPositions = new Dictionary<string, int>();
+        private readonly Dictionary<string, int> _spawnedPositions = new();
 
         private Dictionary<IPlayerSession, string> AssignJobs(List<IPlayerSession> available,
             Dictionary<NetUserId, HumanoidCharacterProfile> profiles)
@@ -195,6 +195,12 @@ namespace Content.Server.GameTicking
         private void AddSpawnedPosition(string jobId)
         {
             _spawnedPositions[jobId] = _spawnedPositions.GetValueOrDefault(jobId, 0) + 1;
+        }
+
+        private void UpdateJobsAvailable()
+        {
+            var lobbyPlayers = _playersInLobby.Keys.Select(p => p.ConnectedClient).ToList();
+            _netManager.ServerSendToMany(GetJobsAvailable(), lobbyPlayers);
         }
     }
 }

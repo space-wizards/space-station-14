@@ -2,7 +2,7 @@
   name: butcher's cleaver
   parent: BaseItem
   id: ButchCleaver
-  desc: A huge thing used for chopping and chopping up meat. This includes clowns and clown-by-products.
+  description: A huge blade used for chopping and chopping up meat. This includes clowns and clown-by-products.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/cleaver.rsi

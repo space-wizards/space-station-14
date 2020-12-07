@@ -1,0 +1,82 @@
+﻿- type: constructionGraph
+  id: Tables
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: TableFrame
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: MetalRod
+              amount: 2
+              doAfter: 1
+
+    - node: PokerTable
+      entity: TableCarpet
+
+    - node: TableFrame
+      entity: TableFrame
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+                prototype: MetalRod
+                amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+
+        - to: MetalTable
+          steps:
+            - material: Metal
+              amount: 1
+              doAfter: 1
+
+        - to: ReinforcedTable
+          steps:
+            - material: Plasteel
+              amount: 1
+              doAfter: 1
+
+        - to: GlassTable
+          steps:
+            - material: Glass
+              amount: 1
+              doAfter: 1
+
+        - to: WoodTable
+          steps:
+            - material: Wood
+              amount: 1
+              doAfter: 1
+
+        - to: RGlassTable
+          steps:
+            - material: ReinforcedGlass
+              amount: 1
+              doAfter: 1
+
+
+
+    - node: MetalTable
+      entity: TableMetal
+
+    - node: ReinforcedTable
+      entity: TableR
+
+    - node: GlassTable
+      entity: TableGlass
+
+    - node: WoodTable
+      entity: TableWood
+      edges:
+        - to: PokerTable
+          steps:
+            - material: Wood
+              amount: 1
+              doAfter: 1
+
+    - node: RGlassTable
+      entity: TableGlassR

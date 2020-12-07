@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from cev-eris at commit https://github.com/discordia-space/CEV-Eris/commit/b63634bc17efe2f09cf06ef0e9a90d24d37f6203",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "substation",
+      "directions": 1
+    },
+    {
+      "name": "full",
+      "directions": 1
+    },
+    {
+      "name": "charging",
+      "directions": 1
+    },
+    {
+      "name": "dead",
+      "directions": 1
+    },
+    {
+      "name": "screen",
+      "directions": 1,
+      "delays": [
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      ]
+    }
+  ]
+}

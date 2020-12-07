@@ -60,9 +60,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(this, x => MaxVolume, "maxVol", ReagentUnit.New(0));
-            serializer.DataField(this, x => Solution, "contents", new Solution());
-            serializer.DataField(this, x => Capabilities, "caps", SolutionContainerCaps.AddTo | SolutionContainerCaps.RemoveFrom);
+            serializer.DataField(this, x => x.MaxVolume, "maxVol", ReagentUnit.New(0));
+            serializer.DataField(this, x => x.Solution, "contents", new Solution());
+            serializer.DataField(this, x => x.Capabilities, "caps", SolutionContainerCaps.AddTo | SolutionContainerCaps.RemoveFrom);
             serializer.DataField(ref _fillInitState, "fillingState", string.Empty);
             serializer.DataField(ref _fillInitSteps, "fillingSteps", 7);
         }

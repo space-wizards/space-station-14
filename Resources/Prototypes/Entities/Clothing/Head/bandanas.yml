@@ -1,0 +1,87 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: HatBandBlack
+  name: black bandana
+  description: A black bandana to make you look cool.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Bandanas/black.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Bandanas/black.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: HatBandBlue
+  name: blue bandana
+  description: A blue bandana to make you look cool.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Bandanas/blue.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Bandanas/blue.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: HatBandBotany
+  name: botany bandana
+  description: A botany bandana to make you look cool, made from natural fibers.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Bandanas/botany.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Bandanas/botany.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: HatBandGold
+  name: gold bandana
+  description: A gold bandana to make you look cool.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Bandanas/gold.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Bandanas/gold.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: HatBandGreen
+  name: green bandana
+  description: A green bandana to make you look cool.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Bandanas/green.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Bandanas/green.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: HatBandGrey
+  name: grey bandana
+  description: A grey bandana to make you look cool.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Bandanas/grey.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Bandanas/grey.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: HatBandRed
+  name: red bandana
+  description: A red bandana to make you look cool.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Bandanas/red.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Bandanas/red.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: HatBandSkull
+  name: skull bandana
+  description: A bandana with a skull to make you look even cooler.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Bandanas/skull.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Bandanas/skull.rsi

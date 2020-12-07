@@ -1,0 +1,28 @@
+﻿- type: entity
+  id: SeedExtractor
+  name: seed extractor
+  description: Extracts seeds from produce.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Sprite
+      sprite: Constructible/Hydroponics/hydro_tools.rsi
+      state: sextractor
+    - type: Physics
+      mass: 25
+      anchored: true
+      shapes:
+        - !type:PhysShapeAabb
+          bounds: "-0.4,-0.25,0.4,0.25"
+          layer:
+            - Opaque
+            - Impassable
+            - MobImpassable
+            - VaultImpassable
+    - type: SnapGrid
+      offset: Center
+    - type: Anchorable
+    - type: SeedExtractor
+    - type: PowerReceiver

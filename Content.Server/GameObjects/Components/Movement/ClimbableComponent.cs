@@ -46,10 +46,7 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             base.Initialize();
 
-            if (!Owner.EnsureComponent(out PhysicsComponent _))
-            {
-                Logger.Warning($"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(PhysicsComponent)}");
-            }
+            Owner.EnsureComponentWarn(out PhysicsComponent _);
 
             _doAfterSystem = EntitySystem.Get<DoAfterSystem>();
         }
@@ -67,10 +64,10 @@ namespace Content.Server.GameObjects.Components.Movement
             string reason;
             bool canVault;
 
-            if (eventArgs.User == eventArgs.Dropped)
+            if (eventArgs.User == eventArgs.Dragged)
                 canVault = CanVault(eventArgs.User, eventArgs.Target, out reason);
             else
-                canVault = CanVault(eventArgs.User, eventArgs.Dropped, eventArgs.Target, out reason);
+                canVault = CanVault(eventArgs.User, eventArgs.Dragged, eventArgs.Target, out reason);
 
             if (!canVault)
                 eventArgs.User.PopupMessage(reason);
@@ -154,13 +151,13 @@ namespace Content.Server.GameObjects.Components.Movement
 
         bool IDragDropOn.DragDropOn(DragDropEventArgs eventArgs)
         {
-            if (eventArgs.User == eventArgs.Dropped)
+            if (eventArgs.User == eventArgs.Dragged)
             {
                 TryClimb(eventArgs.User);
             }
             else
             {
-                TryMoveEntity(eventArgs.User, eventArgs.Dropped);
+                TryMoveEntity(eventArgs.User, eventArgs.Dragged);
             }
 
             return true;

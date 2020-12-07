@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Nutrition;
 using Robust.Shared.GameObjects;
@@ -53,7 +55,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         private float _currentThirst;
 
         [ViewVariables(VVAccess.ReadOnly)]
-        public Dictionary<ThirstThreshold, float> ThirstThresholds { get; } = new Dictionary<ThirstThreshold, float>
+        public Dictionary<ThirstThreshold, float> ThirstThresholds { get; } = new()
         {
             {ThirstThreshold.OverHydrated, 600.0f},
             {ThirstThreshold.Okay, 450.0f},
@@ -62,11 +64,11 @@ namespace Content.Server.GameObjects.Components.Nutrition
             {ThirstThreshold.Dead, 0.0f},
         };
 
-        public static readonly Dictionary<ThirstThreshold, string> ThirstThresholdImages = new Dictionary<ThirstThreshold, string>
+        public static readonly Dictionary<ThirstThreshold, AlertType> ThirstThresholdAlertTypes = new()
         {
-            {ThirstThreshold.OverHydrated, "/Textures/Interface/StatusEffects/Thirst/OverHydrated.png"},
-            {ThirstThreshold.Thirsty, "/Textures/Interface/StatusEffects/Thirst/Thirsty.png"},
-            {ThirstThreshold.Parched, "/Textures/Interface/StatusEffects/Thirst/Parched.png"},
+            {ThirstThreshold.OverHydrated, AlertType.Overhydrated},
+            {ThirstThreshold.Thirsty, AlertType.Thirsty},
+            {ThirstThreshold.Parched, AlertType.Parched},
         };
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -87,15 +89,15 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 }
 
                 // Update UI
-                Owner.TryGetComponent(out ServerStatusEffectsComponent statusEffectsComponent);
+                Owner.TryGetComponent(out ServerAlertsComponent alertsComponent);
 
-                if (ThirstThresholdImages.TryGetValue(_currentThirstThreshold, out var statusTexture))
+                if (ThirstThresholdAlertTypes.TryGetValue(_currentThirstThreshold, out var alertId))
                 {
-                    statusEffectsComponent?.ChangeStatusEffectIcon(StatusEffect.Thirst, statusTexture);
+                    alertsComponent?.ShowAlert(alertId);
                 }
                 else
                 {
-                    statusEffectsComponent?.RemoveStatusEffect(StatusEffect.Thirst);
+                    alertsComponent?.ClearAlertCategory(AlertCategory.Thirst);
                 }
 
                 switch (_currentThirstThreshold)
@@ -182,18 +184,20 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 Dirty();
             }
 
-            if (_currentThirstThreshold == ThirstThreshold.Dead)
+            if (_currentThirstThreshold != ThirstThreshold.Dead)
+                return;
+
+            if (!Owner.TryGetComponent(out IDamageableComponent damageable))
+                return;
+
+            if (!Owner.TryGetComponent(out IMobStateComponent mobState))
+                return;
+
+            if (!mobState.IsDead())
             {
-                if (Owner.TryGetComponent(out IDamageableComponent damageable))
-                {
-                    if (damageable.CurrentState != DamageState.Dead)
-                    {
-                        damageable.ChangeDamage(DamageType.Blunt, 2, true, null);
-                    }
-                }
+                damageable.ChangeDamage(DamageType.Blunt, 2, true);
             }
         }
-
 
         public void ResetThirst()
         {
@@ -207,5 +211,4 @@ namespace Content.Server.GameObjects.Components.Nutrition
             return new ThirstComponentState(_currentThirstThreshold);
         }
     }
-
 }

@@ -2,15 +2,22 @@
   id: BaseLathe
   name: "lathe"
   abstract: true
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
     mass: 25
     anchored: true
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.4,-0.25,0.4,0.25"
+      bounds: "-0.4,-0.4,0.4,0.4"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
       layer:
       - Opaque
       - Impassable
@@ -21,6 +28,7 @@
   - type: Lathe
   - type: MaterialStorage
   - type: Anchorable
+  - type: Pullable
   - type: UserInterface
     interfaces:
     - key: enum.LatheUiKey.Key
@@ -41,18 +49,18 @@
     - state: autolathe_unlit
       shader: unshaded
       map: ["enum.AutolatheVisualLayers.BaseUnlit"]
-
-  - type: Collidable
-    shapes:
-    - !type:PhysShapeAabb
-      layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-  - type: SnapGrid
-    offset: Center
-  - type: Lathe
+    - state: autolathe_panel
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+  - type: Construction
+    graph: machine
+    node: machine
+  - type: BreakableConstruction
+    node: machineFrame
+  - type: Machine
+    board: AutolatheMachineCircuitboard
+  - type: Wires
+    BoardName: "Autolathe"
+    LayoutId: Autolathe
   - type: LatheDatabase
     static: true
     recipes:
@@ -72,6 +80,7 @@
   - type: Appearance
     visuals:
     - type: AutolatheVisualizer
+    - type: WiresVisualizer
 
 - type: entity
   parent: BaseLathe
@@ -89,18 +98,19 @@
       map: ["enum.ProtolatheVisualLayers.BaseUnlit"]
     - state: protolathe
       map: ["enum.ProtolatheVisualLayers.AnimationLayer"]
-
-  - type: Collidable
-    shapes:
-    - !type:PhysShapeAabb
-      layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-  - type: SnapGrid
-    offset: Center
+    - state: protolathe_panel
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
   - type: ResearchClient
+  - type: Construction
+    graph: machine
+    node: machine
+  - type: BreakableConstruction
+    node: machineFrame
+  - type: Machine
+    board: ProtolatheMachineCircuitboard
+  - type: Wires
+    BoardName: "Protolathe"
+    LayoutId: Protolathe
   - type: TechnologyDatabase
   - type: ProtolatheDatabase
     protolatherecipes:
@@ -117,6 +127,7 @@
       - CableStack
       - Crowbar
       - Multitool
+      - ConveyorAssembly
   - type: UserInterface
     interfaces:
     - key: enum.LatheUiKey.Key
@@ -126,3 +137,4 @@
   - type: Appearance
     visuals:
     - type: ProtolatheVisualizer
+    - type: WiresVisualizer

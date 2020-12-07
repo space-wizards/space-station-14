@@ -10,7 +10,7 @@
   - type: InteractionOutline
   - type: Sprite
     sprite: Constructible/Misc/bookshelf.rsi
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       layer:
@@ -19,11 +19,17 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
-  - type: Destructible
-    deadThreshold: 30
-    destroySound: /Audio/Effects/woodhit.ogg
-    spawnOnDestroy: WoodPlank
+  - type: Damageable
     resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+      30:
+        Sound: /Audio/Effects/woodhit.ogg
+        Spawn:
+          WoodPlank:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]
   - type: Occluder
     sizeX: 32
     sizeY: 32

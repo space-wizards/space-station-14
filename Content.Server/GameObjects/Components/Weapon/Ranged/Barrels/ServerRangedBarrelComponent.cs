@@ -54,7 +54,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         private TimeSpan _lastFire;
 
         public abstract IEntity PeekAmmo();
-        public abstract IEntity TakeProjectile(EntityCoordinates spawnAtGrid, MapCoordinates spawnAtMap);
+        public abstract IEntity TakeProjectile(EntityCoordinates spawnAt);
 
         // Recoil / spray control
         private Angle _minAngle;
@@ -157,11 +157,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         {
             base.OnAdd();
 
-            if (!Owner.EnsureComponent(out ServerRangedWeaponComponent rangedWeaponComponent))
-            {
-                Logger.Warning(
-                    $"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(ServerRangedWeaponComponent)}");
-            }
+            Owner.EnsureComponentWarn(out ServerRangedWeaponComponent rangedWeaponComponent);
 
             rangedWeaponComponent.Barrel ??= this;
             rangedWeaponComponent.FireHandler += Fire;
@@ -230,7 +226,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
 
             var ammo = PeekAmmo();
-            var projectile = TakeProjectile(shooter.Transform.Coordinates, shooter.Transform.MapPosition);
+            var projectile = TakeProjectile(shooter.Transform.Coordinates);
             if (projectile == null)
             {
                 soundSystem.PlayAtCoords(_soundEmpty, Owner.Transform.Coordinates);
@@ -375,7 +371,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 else
                 {
                     projectile =
-                        Owner.EntityManager.SpawnEntity(baseProjectile.Prototype.ID, Owner.Transform.MapPosition);
+                        Owner.EntityManager.SpawnEntity(baseProjectile.Prototype.ID, baseProjectile.Transform.Coordinates);
                 }
 
                 Angle projectileAngle;
@@ -391,7 +387,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
                 var physics = projectile.GetComponent<IPhysicsComponent>();
                 physics.Status = BodyStatus.InAir;
-                projectile.Transform.WorldPosition = Owner.Transform.MapPosition.Position;
 
                 var projectileComponent = projectile.GetComponent<ProjectileComponent>();
                 projectileComponent.IgnoreEntity(shooter);

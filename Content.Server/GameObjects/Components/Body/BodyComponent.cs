@@ -1,12 +1,16 @@
 ﻿#nullable enable
-using Content.Server.Observer;
+using System;
+using Content.Server.Commands.Observer;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Components.Movement;
 using Robust.Server.GameObjects.Components.Container;
+using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Players;
 
@@ -17,32 +21,33 @@ namespace Content.Server.GameObjects.Components.Body
     [ComponentReference(typeof(IBody))]
     public class BodyComponent : SharedBodyComponent, IRelayMoveInput
     {
-        private Container _container = default!;
+        private Container _partContainer = default!;
 
         protected override bool CanAddPart(string slot, IBodyPart part)
         {
-            return base.CanAddPart(slot, part) && _container.CanInsert(part.Owner);
+            return base.CanAddPart(slot, part) &&
+                   _partContainer.CanInsert(part.Owner);
         }
 
         protected override void OnAddPart(string slot, IBodyPart part)
         {
             base.OnAddPart(slot, part);
 
-            _container.Insert(part.Owner);
+            _partContainer.Insert(part.Owner);
         }
 
         protected override void OnRemovePart(string slot, IBodyPart part)
         {
             base.OnRemovePart(slot, part);
 
-            _container.ForceRemove(part.Owner);
+            _partContainer.ForceRemove(part.Owner);
         }
 
         public override void Initialize()
         {
             base.Initialize();
 
-            _container = ContainerManagerComponent.Ensure<Container>($"{Name}-{nameof(BodyComponent)}", Owner);
+            _partContainer = ContainerManagerComponent.Ensure<Container>($"{Name}-{nameof(BodyComponent)}", Owner);
 
             foreach (var (slot, partId) in PartIds)
             {
@@ -75,10 +80,12 @@ namespace Content.Server.GameObjects.Components.Body
 
         void IRelayMoveInput.MoveInputPressed(ICommonSession session)
         {
-            if (Owner.TryGetComponent(out IDamageableComponent? damageable) &&
-                damageable.CurrentState == DamageState.Dead)
+            if (Owner.TryGetComponent(out IMobStateComponent? mobState) &&
+                mobState.IsDead())
             {
-                new Ghost().Execute(null, (IPlayerSession) session, null);
+                var shell = IoCManager.Resolve<IConsoleShell>();
+
+                new Ghost().Execute(shell, (IPlayerSession) session, Array.Empty<string>());
             }
         }
     }

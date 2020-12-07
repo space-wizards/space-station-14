@@ -26,10 +26,10 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
     public class ApcNetNodeGroup : BaseNetConnectorNodeGroup<BaseApcNetComponent, IApcNet>, IApcNet
     {
         [ViewVariables]
-        private readonly Dictionary<ApcComponent, BatteryComponent> _apcBatteries = new Dictionary<ApcComponent, BatteryComponent>();
+        private readonly Dictionary<ApcComponent, BatteryComponent> _apcBatteries = new();
 
         [ViewVariables]
-        private readonly Dictionary<PowerProviderComponent, List<PowerReceiverComponent>> _providerReceivers = new Dictionary<PowerProviderComponent, List<PowerReceiverComponent>>();
+        private readonly Dictionary<PowerProviderComponent, List<PowerReceiverComponent>> _providerReceivers = new();
 
         //Debug property
         [ViewVariables]
@@ -90,17 +90,20 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             {
                 if (!apc.MainBreakerEnabled)
                     continue;
-                
+
                 totalCharge += battery.CurrentCharge;
                 totalMaxCharge += battery.MaxCharge;
             }
-            var availablePowerFraction = totalCharge / totalMaxCharge;
-            foreach (var receiver in _providerReceivers.SelectMany(kvp => kvp.Value))
-            {
-                if (!receiver.NeedsPower || receiver.PowerDisabled)
-                    continue;
 
-                receiver.HasApcPower = TryUsePower(receiver.Load * frameTime);
+            foreach (var (_, receivers) in _providerReceivers)
+            {
+                foreach (var receiver in receivers)
+                {
+                    if (!receiver.NeedsPower || receiver.PowerDisabled)
+                        continue;
+
+                    receiver.HasApcPower = TryUsePower(receiver.Load * frameTime);
+                }
             }
         }
 
@@ -110,7 +113,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             {
                 if (!apc.MainBreakerEnabled)
                     continue;
-                
+
                 if (battery.TryUseCharge(neededCharge)) //simplification - all power needed must come from one battery
                 {
                     return true;

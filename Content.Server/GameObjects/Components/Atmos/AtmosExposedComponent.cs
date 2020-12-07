@@ -1,6 +1,9 @@
-﻿using Content.Server.Atmos;
+﻿#nullable enable
+using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Temperature;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.ComponentDependencies;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
@@ -13,29 +16,31 @@ namespace Content.Server.GameObjects.Components.Atmos
     {
         public override string Name => "AtmosExposed";
 
+        [ViewVariables]
+        [ComponentDependency] private readonly TemperatureComponent? _temperatureComponent = null;
+
+        [ViewVariables]
+        [ComponentDependency] private readonly BarotraumaComponent? _barotraumaComponent = null;
+
+        [ViewVariables]
+        [ComponentDependency] private readonly FlammableComponent? _flammableComponent = null;
+
         public void Update(TileAtmosphere tile, float frameDelta)
         {
-            if (Owner.TryGetComponent<TemperatureComponent>(out var temperatureComponent))
+            if (_temperatureComponent != null)
             {
                 if (tile.Air != null)
                 {
-                    var temperatureDelta = tile.Air.Temperature - temperatureComponent.CurrentTemperature;
-                    var heat = temperatureDelta * (tile.Air.HeatCapacity * temperatureComponent.HeatCapacity / (tile.Air.HeatCapacity + temperatureComponent.HeatCapacity));
-                    temperatureComponent.ReceiveHeat(heat);
+                    var temperatureDelta = tile.Air.Temperature - _temperatureComponent.CurrentTemperature;
+                    var heat = temperatureDelta * (tile.Air.HeatCapacity * _temperatureComponent.HeatCapacity / (tile.Air.HeatCapacity + _temperatureComponent.HeatCapacity));
+                    _temperatureComponent.ReceiveHeat(heat);
                 }
-                temperatureComponent.Update();
+                _temperatureComponent.Update();
             }
 
-            if (Owner.TryGetComponent<BarotraumaComponent>(out var barotraumaComponent))
-            {
-                barotraumaComponent.Update(tile.Air?.Pressure ?? 0);
-            }
+            _barotraumaComponent?.Update(tile.Air?.Pressure ?? 0);
 
-            if (Owner.TryGetComponent<FlammableComponent>(out var flammableComponent))
-            {
-                flammableComponent.Update(tile);
-            }
+            _flammableComponent?.Update(tile);
         }
-
     }
 }

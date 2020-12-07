@@ -13,8 +13,8 @@ namespace Content.Shared.Construction
     [Serializable]
     public class ConstructionGraphNode
     {
-        private List<IGraphAction> _actions = new List<IGraphAction>();
-        private List<ConstructionGraphEdge> _edges = new List<ConstructionGraphEdge>();
+        private List<IGraphAction> _actions = new();
+        private List<ConstructionGraphEdge> _edges = new();
 
         [ViewVariables]
         public string Name { get; private set; }

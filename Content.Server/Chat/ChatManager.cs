@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components;
+using Content.Server.Administration;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Headset;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -12,7 +12,6 @@ using Content.Shared.Chat;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects.Systems;
@@ -47,7 +46,7 @@ namespace Content.Server.Chat
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IMoMMILink _mommiLink = default!;
-        [Dependency] private readonly IConGroupController _conGroupController = default!;
+        [Dependency] private readonly IAdminManager _adminManager = default!;
 
         public void Initialize()
         {
@@ -125,7 +124,7 @@ namespace Content.Server.Chat
 
                 // Capitalize first letter
                 message = message[0].ToString().ToUpper() +
-                          message.Remove(0,1);
+                          message.Remove(0, 1);
 
                 if (source.TryGetComponent(out InventoryComponent inventory) &&
                     inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.EARS, out ItemComponent item) &&
@@ -142,7 +141,7 @@ namespace Content.Server.Chat
             {
                 // Capitalize first letter
                 message = message[0].ToString().ToUpper() +
-                          message.Remove(0,1);
+                          message.Remove(0, 1);
             }
 
             var listeners = EntitySystem.Get<ListeningSystem>();
@@ -212,7 +211,9 @@ namespace Content.Server.Chat
                 return;
             }
 
-            var clients = _playerManager.GetPlayersBy(x => x.AttachedEntity != null && x.AttachedEntity.HasComponent<GhostComponent>()).Select(p => p.ConnectedClient);;
+            var clients = _playerManager
+                .GetPlayersBy(x => x.AttachedEntity != null && x.AttachedEntity.HasComponent<GhostComponent>())
+                .Select(p => p.ConnectedClient);
 
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Dead;
@@ -231,18 +232,26 @@ namespace Content.Server.Chat
                 return;
             }
 
-            if (!_conGroupController.CanCommand(player, "asay"))
-            {
-                SendOOC(player, message);
-                return;
-            }
-            var clients = _playerManager.GetPlayersBy(x => _conGroupController.CanCommand(x, "asay")).Select(p => p.ConnectedClient);;
+            var clients = _adminManager.ActiveAdmins.Select(p => p.ConnectedClient);
 
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
 
             msg.Channel = ChatChannel.AdminChat;
             msg.Message = message;
             msg.MessageWrap = $"{Loc.GetString("ADMIN")}: {player.Name}: {{0}}";
+            _netManager.ServerSendToMany(msg, clients.ToList());
+        }
+
+        public void SendAdminAnnouncement(string message)
+        {
+            var clients = _adminManager.ActiveAdmins.Select(p => p.ConnectedClient);
+
+            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
+
+            msg.Channel = ChatChannel.AdminChat;
+            msg.Message = message;
+            msg.MessageWrap = $"{Loc.GetString("ADMIN")}: {{0}}";
+
             _netManager.ServerSendToMany(msg, clients.ToList());
         }
 

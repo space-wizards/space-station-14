@@ -6,24 +6,20 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Damage;
 using JetBrains.Annotations;
-using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.IoC;
 
 namespace Content.Server.GameObjects.EntitySystems.DoAfter
 {
     [UsedImplicitly]
     public sealed class DoAfterSystem : EntitySystem
     {
-        [Dependency] private readonly IPauseManager _pauseManager = default!;
-
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
 
             foreach (var comp in ComponentManager.EntityQuery<DoAfterComponent>())
             {
-                if (_pauseManager.IsGridPaused(comp.Owner.Transform.GridID)) continue;
+                if (comp.Owner.Paused) continue;
 
                 var cancelled = new List<DoAfter>(0);
                 var finished = new List<DoAfter>(0);

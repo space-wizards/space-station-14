@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Shared;
+using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -17,11 +18,9 @@ namespace Content.Tests.Server.Preferences
     [TestFixture]
     public class ServerDbSqliteTests : RobustUnitTest
     {
-        private const int MaxCharacterSlots = 10;
-
         private static HumanoidCharacterProfile CharlieCharlieson()
         {
-            return new HumanoidCharacterProfile(
+            return new(
                 "Charlie Charlieson",
                 21,
                 Sex.Male,
@@ -86,7 +85,7 @@ namespace Content.Tests.Server.Preferences
 
         private static NetUserId NewUserId()
         {
-            return new NetUserId(Guid.NewGuid());
+            return new(Guid.NewGuid());
         }
     }
 }

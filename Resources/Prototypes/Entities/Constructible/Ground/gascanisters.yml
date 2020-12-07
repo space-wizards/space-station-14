@@ -6,12 +6,15 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
   - type: SnapGrid
     offset: Center
   - type: Sprite
+  - type: Damageable
   - type: Destructible
-    thresholdvalue: 100
+    thresholds:
+      100:
+        Acts: ["Destruction"]
   - type: GasCanister
   - type: Anchorable
   - type: Pullable
@@ -24,4 +27,3 @@
   - type: Sprite
     sprite: "Constructible/Power/apc.rsi"
     state: apc0
-    

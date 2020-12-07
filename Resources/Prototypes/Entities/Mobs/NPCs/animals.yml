@@ -25,7 +25,7 @@
       state: monkey
       sprite: Mobs/Animals/monkey.rsi
   - type: Clickable
-  - type: Collidable
+  - type: Physics
     anchored: false
     mass: 50
     shapes:
@@ -40,9 +40,11 @@
       - Opaque
       - MobImpassable
   - type: Damageable
-    criticalThreshold: 50
-    deadThreshold: 100
-  - type: MobStateManager
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      50: !type:CriticalMobState {}
+      100: !type:DeadMobState {}
   - type: HeatResistance
   - type: CombatMode
   - type: Teleportable
@@ -77,7 +79,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: crawling
       sprite: Mobs/Animals/gorilla.rsi
-  - type: Collidable
+  - type: Physics
     anchored: false
     mass: 90
     shapes:
@@ -112,7 +114,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: chicken-0
       sprite: Mobs/Animals/chicken.rsi
-  - type: Collidable
+  - type: Physics
     anchored: false
     mass: 20
     shapes:
@@ -150,7 +152,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: butterfly
       sprite: Mobs/Animals/butterfly.rsi
-  - type: Collidable
+  - type: Physics
     anchored: false
     mass: 5
     shapes:
@@ -198,7 +200,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: bat
       sprite: Mobs/Animals/bat.rsi
-  - type: Collidable
+  - type: Physics
     anchored: false
     mass: 5
     shapes:
@@ -237,7 +239,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: 0
       sprite: Mobs/Animals/bee.rsi
-  - type: Collidable
+  - type: Physics
     anchored: false
     mass: 5
     shapes:
@@ -272,7 +274,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: goat
       sprite: Mobs/Animals/goat.rsi
-  - type: Collidable
+  - type: Physics
     anchored: false
     mass: 20
     shapes:
@@ -308,7 +310,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: goose
       sprite: Mobs/Animals/goose.rsi
-  - type: Collidable
+  - type: Physics
     anchored: false
     mass: 20
     shapes:
@@ -347,7 +349,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: parrot
       sprite: Mobs/Animals/parrot.rsi
-  - type: Collidable
+  - type: Physics
     anchored: false
     mass: 20
     shapes:
@@ -382,7 +384,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: snake
       sprite: Mobs/Animals/snake.rsi
-  - type: Collidable
+  - type: Physics
     anchored: false
     mass: 10
     shapes:
@@ -420,7 +422,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: tarantula
       sprite: Mobs/Animals/spider.rsi
-  - type: Collidable
+  - type: Physics
     anchored: false
     mass: 10
     shapes:
@@ -455,7 +457,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: crab
       sprite: Mobs/Animals/crab.rsi
-  - type: Collidable
+  - type: Physics
     anchored: false
     mass: 10
     shapes:
@@ -490,7 +492,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: penguin
       sprite: Mobs/Animals/penguin.rsi
-  - type: Collidable
+  - type: Physics
     anchored: false
     mass: 10
     shapes:

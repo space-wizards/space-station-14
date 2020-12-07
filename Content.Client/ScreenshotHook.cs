@@ -15,7 +15,7 @@ namespace Content.Client
 {
     internal class ScreenshotHook : IScreenshotHook
     {
-        private static readonly ResourcePath BaseScreenshotPath = new ResourcePath("/Screenshots");
+        private static readonly ResourcePath BaseScreenshotPath = new("/Screenshots");
 
         [Dependency] private readonly IInputManager _inputManager = default;
         [Dependency] private readonly IClyde _clyde = default;

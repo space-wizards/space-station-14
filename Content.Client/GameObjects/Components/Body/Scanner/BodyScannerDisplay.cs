@@ -19,7 +19,7 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
         private IEntity? _currentEntity;
         private IBodyPart? _currentBodyPart;
 
-        private IBody? CurrentBody => _currentEntity?.GetBody();
+        private IBody? CurrentBody => _currentEntity?.GetComponentOrNull<IBody>();
 
         public BodyScannerDisplay(BodyScannerBoundUserInterface owner)
         {
@@ -144,11 +144,10 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
         {
             BodyPartLabel.Text = $"{Loc.GetString(slotName)}: {Loc.GetString(part.Owner.Name)}";
 
-            // TODO BODY Make dead not be the destroy threshold for a body part
-            if (part.Owner.TryGetComponent(out IDamageableComponent? damageable) &&
-                damageable.TryHealth(DamageState.Critical, out var health))
+            // TODO BODY Part damage
+            if (part.Owner.TryGetComponent(out IDamageableComponent? damageable))
             {
-                BodyPartHealth.Text = $"{health.current} / {health.max}";
+                BodyPartHealth.Text = Loc.GetString("{0} damage", damageable.TotalDamage);
             }
 
             MechanismList.Clear();
@@ -174,9 +173,10 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
                 return;
             }
 
+            // TODO BODY Mechanism description
             var message =
                 Loc.GetString(
-                    $"{mechanism.Name}\nHealth: {mechanism.CurrentDurability}/{mechanism.MaxDurability}\n{mechanism.Description}");
+                    $"{mechanism.Name}\nHealth: {mechanism.CurrentDurability}/{mechanism.MaxDurability}");
 
             MechanismInfoLabel.SetMessage(message);
         }

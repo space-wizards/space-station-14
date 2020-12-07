@@ -67,17 +67,15 @@ namespace Content.Server.GameObjects.Components.Fluids
             set => _sprayVelocity = value;
         }
 
+        public string SpraySound => _spraySound;
+
         public ReagentUnit CurrentVolume => Owner.GetComponentOrNull<SolutionContainerComponent>()?.CurrentVolume ?? ReagentUnit.Zero;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            if (!Owner.EnsureComponent(out SolutionContainerComponent _))
-            {
-                Logger.Warning(
-                    $"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(SolutionContainerComponent)}");
-            }
+            Owner.EnsureComponentWarn(out SolutionContainerComponent _);
 
             if (_hasSafety)
             {

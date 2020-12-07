@@ -2,6 +2,8 @@
   id: LockerGeneric
   name: closet
   description: A standard-issue Nanotrasen storage unit.
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Sprite
     netsync: false
@@ -13,13 +15,12 @@
     - state: welded
       visible: false
       map: ["enum.StorageVisualLayers.Welded"]
-
   - type: Clickable
   - type: MovedByPressure
   - type: DamageOnHighSpeedImpact
     soundHit: /Audio/Effects/bang.ogg
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
     mass: 25
     anchored: false
     shapes:
@@ -37,9 +38,12 @@
       - SmallImpassable
   - type: EntityStorage
   - type: PlaceableSurface
-  - type: Destructible
-    deadThreshold: 100
+  - type: Damageable
     resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+      100:
+        Acts: ["Destruction"]
   - type: Appearance
     visuals:
     - type: StorageVisualizer
@@ -48,6 +52,3 @@
   - type: LoopingSound
   - type: Anchorable
   - type: Pullable
-  placement:
-    snap:
-    - Wall
