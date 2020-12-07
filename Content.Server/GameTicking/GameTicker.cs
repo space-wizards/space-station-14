@@ -887,6 +887,8 @@ namespace Content.Server.GameTicking
             AddSpawnedPosition(jobId);
             EquipIdCard(mob, character.Name, jobPrototype);
             jobPrototype.Special?.AfterEquip(mob);
+
+            Preset.OnSpawnPlayerCompleted(session, mob, lateJoin);
         }
 
         private void EquipIdCard(IEntity mob, string characterName, JobPrototype jobPrototype)

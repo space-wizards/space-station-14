@@ -2,6 +2,7 @@
 using Content.Shared.Preferences;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Network;
+using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameTicking
 {
@@ -17,6 +18,11 @@ namespace Content.Server.GameTicking
         public Dictionary<NetUserId, HumanoidCharacterProfile> readyProfiles;
 
         public virtual void OnGameStarted() { }
+
+        /// <summary>
+        /// Called when a player is spawned in (this includes, but is not limited to, before Start)
+        /// </summary>
+        public virtual void OnSpawnPlayerCompleted(IPlayerSession session, IEntity mob, bool lateJoin) { }
 
         public virtual string GetRoundEndDescription() => "";
     }
