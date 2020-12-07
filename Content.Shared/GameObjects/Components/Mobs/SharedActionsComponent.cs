@@ -1,10 +1,13 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.Items;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -35,16 +38,14 @@ namespace Content.Shared.GameObjects.Components.Mobs
     {
         private static readonly TimeSpan CooldownExpiryThreshold = TimeSpan.FromSeconds(10);
 
-        private static readonly ActionState[] NoActions = new ActionState[0];
-
         [Dependency]
         protected readonly ActionManager ActionManager = default!;
         [Dependency]
         protected readonly IGameTiming GameTiming = default!;
         [Dependency]
         protected readonly IEntityManager EntityManager = default!;
-        private SharedHandsComponent _handsComponent;
-        private SharedInventoryComponent _inventoryComponent;
+        [ComponentDependency] private readonly SharedHandsComponent? _handsComponent = null;
+        [ComponentDependency] private readonly SharedInventoryComponent? _inventoryComponent = null;
 
         public override string Name => "ActionsUI";
         public override uint? NetID => ContentNetIDs.ACTIONS;
@@ -64,28 +65,21 @@ namespace Content.Shared.GameObjects.Components.Mobs
         // We also ensure the values in this dictionary are never empty.
         [ViewVariables]
         private Dictionary<EntityUid, Dictionary<ItemActionType, ActionState>> _itemActions =
-            new Dictionary<EntityUid, Dictionary<ItemActionType, ActionState>>();
+            new();
 
         // this holds cooldowns for revoked item actions that had a cooldown when they were revoked.
         // they are used to restore cooldowns when the item re-enters inventory
         // these are not part of component state and thus not synced to the client.
         // A system runs periodically to evict entries from this when their cooldowns have expired for a long enough time.
         private Dictionary<(EntityUid item, ItemActionType actionType), (TimeSpan start, TimeSpan end)> _itemActionCooldowns =
-            new Dictionary<(EntityUid item, ItemActionType actionType), (TimeSpan start, TimeSpan end)>();
-
-        public override void Initialize()
-        {
-            base.Initialize();
-            _handsComponent = Owner.GetComponent<SharedHandsComponent>();
-            _inventoryComponent = Owner.GetComponent<SharedInventoryComponent>();
-        }
+            new();
 
         public override ComponentState GetComponentState()
         {
             return new ActionComponentState(_actions, _itemActions);
         }
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
 
@@ -112,7 +106,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// and not yet revoked.
         /// </summary>
         /// <returns>false if no states found for this item action type.</returns>
-        public bool TryGetItemActionStates(EntityUid item, out IReadOnlyDictionary<ItemActionType, ActionState> itemActionStates)
+        public bool TryGetItemActionStates(EntityUid item, [NotNullWhen((true))] out IReadOnlyDictionary<ItemActionType, ActionState>? itemActionStates)
         {
             if (_itemActions.TryGetValue(item, out var actualItemActionStates))
             {
@@ -126,7 +120,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
         /// <see cref="TryGetItemActionStates"/>
         public bool TryGetItemActionStates(IEntity item,
-            out IReadOnlyDictionary<ItemActionType, ActionState> itemActionStates)
+            [NotNullWhen((true))] out IReadOnlyDictionary<ItemActionType, ActionState>? itemActionStates)
         {
             return TryGetItemActionStates(item.Uid, out itemActionStates);
         }
@@ -698,7 +692,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// <returns>true if the item is in any hand or top-level inventory slot (not inside a container)</returns>
         public bool IsEquipped(IEntity item)
         {
-            return _handsComponent.IsHolding(item) || _inventoryComponent.IsEquipped(item);
+            return _handsComponent!.IsHolding(item) || _inventoryComponent!.IsEquipped(item);
         }
 
         /// <summary>

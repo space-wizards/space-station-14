@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.GameObjects;
@@ -55,7 +56,7 @@ namespace Content.Server.Commands
         /// Checks if attached entity is null, returning false and sending a message
         /// to performer if not.
         /// </summary>
-        public static bool ValidateAttachedEntity(IConsoleShell shell, IPlayerSession performer, IEntity attachedEntity)
+        public static bool ValidateAttachedEntity(IConsoleShell shell, IPlayerSession performer, [NotNullWhen(true)] IEntity attachedEntity)
         {
             if (attachedEntity != null) return true;
             shell.SendText(performer, "User has no attached entity.");

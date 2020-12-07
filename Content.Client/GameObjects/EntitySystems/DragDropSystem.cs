@@ -11,7 +11,6 @@ using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Graphics.Shaders;
 using Robust.Client.Interfaces.Graphics.ClientEye;
-using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.State;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
@@ -19,7 +18,6 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.GameObjects.EntitySystems
@@ -31,8 +29,6 @@ namespace Content.Client.GameObjects.EntitySystems
     public class DragDropSystem : EntitySystem
     {
         [Dependency] private readonly IStateManager _stateManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -174,7 +170,7 @@ namespace Content.Client.GameObjects.EntitySystems
             {
                 // pop up drag shadow under mouse
                 var mousePos = _eyeManager.ScreenToMap(_dragDropHelper.MouseScreenPosition);
-                _dragShadow = _entityManager.SpawnEntity("dragshadow", mousePos);
+                _dragShadow = EntityManager.SpawnEntity("dragshadow", mousePos);
                 var dragSprite = _dragShadow.GetComponent<SpriteComponent>();
                 dragSprite.CopyFrom(draggedSprite);
                 dragSprite.RenderOrder = EntityManager.CurrentTick.Value;
@@ -230,7 +226,7 @@ namespace Content.Client.GameObjects.EntitySystems
             RemoveHighlights();
             if (_dragShadow != null)
             {
-                _entityManager.DeleteEntity(_dragShadow);
+                EntityManager.DeleteEntity(_dragShadow);
             }
 
             _dragShadow = null;

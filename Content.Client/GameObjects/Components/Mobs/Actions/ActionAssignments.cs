@@ -35,9 +35,8 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
         /// Actions which have been manually cleared by the user, thus should not
         /// auto-populate.
         /// </summary>
-        private HashSet<ActionType> _preventAutoPopulate = new HashSet<ActionType>();
-        private Dictionary<EntityUid,HashSet<ItemActionType>> _preventAutoPopulateItem =
-            new Dictionary<EntityUid, HashSet<ItemActionType>>();
+        private readonly HashSet<ActionType> _preventAutoPopulate = new();
+        private readonly Dictionary<EntityUid, HashSet<ItemActionType>> _preventAutoPopulateItem = new();
 
         private readonly byte _numHotbars;
         private readonly byte _numSlots;
@@ -98,12 +97,13 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
             var assignmentsWithoutItem = new List<KeyValuePair<ActionAssignment,List<(byte Hotbar, byte Slot)>>>();
             foreach (var assignmentEntry in _assignments)
             {
-                if (assignmentEntry.Key.Assignment != Assignment.ItemActionWithItem) continue;
+                if (!assignmentEntry.Key.TryGetItemActionWithItem(out var actionType, out var item)) continue;
+
                 // we have this assignment currently tied to an item,
                 // check if it no longer has an associated item in our dict of states
-                if (itemActionStates.TryGetValue(assignmentEntry.Key.Item.Value, out var states))
+                if (itemActionStates.TryGetValue(item, out var states))
                 {
-                    if (states.ContainsKey(assignmentEntry.Key.ItemActionType.Value))
+                    if (states.ContainsKey(actionType))
                     {
                         // we have a state for this item + action type so we won't
                         // remove the item from the assignment
@@ -117,8 +117,9 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
             {
                 foreach (var (hotbar, slot) in slots)
                 {
+                    if (!assignment.TryGetItemActionWithItem(out var actionType, out _)) continue;
                     AssignSlot(hotbar, slot,
-                        ActionAssignment.For(assignment.ItemActionType.Value));
+                        ActionAssignment.For(actionType));
                 }
             }
 
@@ -171,22 +172,21 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
             if (!currentAction.HasValue) return;
             if (preventAutoPopulate)
             {
-                switch (currentAction.Value.Assignment)
-                {
-                    case Assignment.Action:
-                        _preventAutoPopulate.Add(currentAction.Value.ActionType.Value);
-                        break;
-                    case Assignment.ItemActionWithItem:
-                    {
-                        if (!_preventAutoPopulateItem.TryGetValue(currentAction.Value.Item.Value, out var actionTypes))
-                        {
-                            actionTypes = new HashSet<ItemActionType>();
-                            _preventAutoPopulateItem[currentAction.Value.Item.Value] = actionTypes;
-                        }
+                var assignment = currentAction.Value;
 
-                        actionTypes.Add(currentAction.Value.ItemActionType.Value);
-                        break;
+                if (assignment.TryGetAction(out var actionType))
+                {
+                    _preventAutoPopulate.Add(actionType);
+                }
+                else if (assignment.TryGetItemActionWithItem(out var itemActionType, out var item))
+                {
+                    if (!_preventAutoPopulateItem.TryGetValue(item, out var actionTypes))
+                    {
+                        actionTypes = new HashSet<ItemActionType>();
+                        _preventAutoPopulateItem[item] = actionTypes;
                     }
+
+                    actionTypes.Add(itemActionType);
                 }
             }
             var assignmentList = _assignments[currentAction.Value];
@@ -217,9 +217,9 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
             // if the assignment to make is an item action with an associated item,
             // then first look for currently assigned item actions without an item, to replace with this
             // assignment
-            if (toAssign.Assignment == Assignment.ItemActionWithItem)
+            if (toAssign.TryGetItemActionWithItem(out var actionType, out var _))
             {
-                if (_assignments.TryGetValue(ActionAssignment.For(toAssign.ItemActionType.Value),
+                if (_assignments.TryGetValue(ActionAssignment.For(actionType),
                     out var possibilities))
                 {
                     // use the closest assignment to current hotbar
@@ -277,13 +277,18 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
         {
             if (force) return false;
 
-            return assignment.Assignment switch
+            if (assignment.TryGetAction(out var actionType))
             {
-                Assignment.Action => _preventAutoPopulate.Contains(assignment.ActionType.Value),
-                Assignment.ItemActionWithItem => _preventAutoPopulateItem.TryGetValue(assignment.Item.Value,
-                    out var itemActionTypes) && itemActionTypes.Contains(assignment.ItemActionType.Value),
-                _ => false
-            };
+                return _preventAutoPopulate.Contains(actionType);
+            }
+
+            if (assignment.TryGetItemActionWithItem(out var itemActionType, out var item))
+            {
+                return _preventAutoPopulateItem.TryGetValue(item,
+                    out var itemActionTypes) && itemActionTypes.Contains(itemActionType);
+            }
+
+            return false;
         }
 
         /// <summary>

@@ -9,30 +9,15 @@
     "states": [
         {
             "name": "internal0",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "directions": 1
         },
         {
             "name": "internal1",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "directions": 1
         },
         {
             "name": "scream",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "directions": 1
         }
     ]
 }

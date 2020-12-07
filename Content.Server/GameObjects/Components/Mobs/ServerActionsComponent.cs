@@ -1,8 +1,7 @@
-﻿using System;
-using Content.Server.Actions;
+﻿#nullable enable
+using System;
 using Content.Server.Administration;
 using Content.Server.Commands;
-using Content.Server.GameObjects.Components.GUI;
 using Content.Shared.Actions;
 using Content.Shared.Administration;
 using Content.Shared.GameObjects.Components.Mobs;
@@ -10,14 +9,12 @@ using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
-using Robust.Shared.Timing;
 
 namespace Content.Server.GameObjects.Components.Mobs
 {
@@ -25,7 +22,7 @@ namespace Content.Server.GameObjects.Components.Mobs
     [ComponentReference(typeof(SharedActionsComponent))]
     public sealed class ServerActionsComponent : SharedActionsComponent
     {
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession session = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, netChannel, session);
 
@@ -317,7 +314,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             if (!CommandUtils.ValidateAttachedEntity(shell, player, attachedEntity)) return;
 
 
-            if (!attachedEntity.TryGetComponent(out ServerActionsComponent actionsComponent))
+            if (!attachedEntity.TryGetComponent(out ServerActionsComponent? actionsComponent))
             {
                 shell.SendText(player, "user has no actions component");
                 return;
@@ -358,7 +355,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
             if (!CommandUtils.ValidateAttachedEntity(shell, player, attachedEntity)) return;
 
-            if (!attachedEntity.TryGetComponent(out ServerActionsComponent actionsComponent))
+            if (!attachedEntity.TryGetComponent(out ServerActionsComponent? actionsComponent))
             {
                 shell.SendText(player, "user has no actions component");
                 return;
@@ -400,7 +397,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
             if (!CommandUtils.ValidateAttachedEntity(shell, player, attachedEntity)) return;
 
-            if (!attachedEntity.TryGetComponent(out ServerActionsComponent actionsComponent))
+            if (!attachedEntity.TryGetComponent(out ServerActionsComponent? actionsComponent))
             {
                 shell.SendText(player, "user has no actions component");
                 return;
