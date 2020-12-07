@@ -100,7 +100,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 return;
             }
 
-            status.ShowAlert(AlertType.Fire);
+            status?.ShowAlert(AlertType.Fire);
 
             if (FireStacks > 0)
             {
