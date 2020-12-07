@@ -39,7 +39,9 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 50
+    thresholds:
+      50:
+        Acts: [ "Destruction" ]
 
 - type: entity
   name: small light
@@ -64,7 +66,9 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 25
+    thresholds:
+      25:
+        Acts: [ "Destruction" ]
 
 - type: entity
   name: unpowered small light
@@ -81,4 +85,6 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 25
+    thresholds:
+      25:
+        Acts: [ "Destruction" ]

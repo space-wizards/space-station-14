@@ -31,11 +31,13 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 50
-    spawnOnDestroy:
-      SteelSheet1:
-        Min: 1
-        Max: 1
+    thresholds:
+      50:
+        Spawn:
+          SteelSheet1:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]
   - type: SnapGrid
     offset: Edge
   placement:

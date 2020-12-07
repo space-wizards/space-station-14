@@ -61,7 +61,6 @@
   - type: Icon
     sprite: Constructible/Structures/Windows/reinforced_window.rsi
   - type: Damageable
-  - type: Destructible
     resistances: metallicResistances
   - type: Destructible
     thresholds:

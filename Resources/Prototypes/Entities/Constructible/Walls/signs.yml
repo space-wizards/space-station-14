@@ -11,7 +11,9 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 5
+    thresholds:
+      5:
+        Acts: [ "Destruction" ]
   - type: Sprite
     drawdepth: WallTops
     sprite: Constructible/Misc/decals.rsi

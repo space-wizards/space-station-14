@@ -47,11 +47,13 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 300
-    spawnOnDestroy:
-      Girder:
-        Min: 1
-        Max: 1
+    thresholds:
+      300:
+        Spawn:
+          Girder:
+            Min: 1
+            Max: 1
+        Acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: brick
@@ -68,11 +70,13 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 300
-    spawnOnDestroy:
-      Girder:
-        Min: 1
-        Max: 1
+    thresholds:
+      300:
+        Spawn:
+          Girder:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     base: clock
@@ -89,11 +93,13 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 300
-    spawnOnDestroy:
-      Girder:
-        Min: 1
-        Max: 1
+    thresholds:
+      300:
+        Spawn:
+          Girder:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     base: clown
@@ -111,11 +117,13 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 300
-    spawnOnDestroy:
-      Girder:
-        Min: 1
-        Max: 1
+    thresholds:
+      300:
+        Spawn:
+          Girder:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     base: cult
@@ -132,11 +140,13 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 300
-    spawnOnDestroy:
-      Girder:
-        Min: 1
-        Max: 1
+    thresholds:
+      300:
+        Spawn:
+          Girder:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     base: debug
@@ -153,11 +163,13 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 300
-    spawnOnDestroy:
-      Girder:
-        Min: 1
-        Max: 1
+    thresholds:
+      300:
+        Spawn:
+          Girder:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     base: diamond
@@ -175,11 +187,13 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 300
-    spawnOnDestroy:
-      Girder:
-        Min: 1
-        Max: 1
+    thresholds:
+      300:
+        Spawn:
+          Girder:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     base: gold
@@ -196,11 +210,13 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 300
-    spawnOnDestroy:
-      Girder:
-        Min: 1
-        Max: 1
+    thresholds:
+      300:
+        Spawn:
+          Girder:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     base: ice
@@ -217,11 +233,13 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 300
-    spawnOnDestroy:
-      Girder:
-        Min: 1
-        Max: 1
+    thresholds:
+      300:
+        Spawn:
+          Girder:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     base: metal
@@ -238,11 +256,13 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 300
-    spawnOnDestroy:
-      Girder:
-        Min: 1
-        Max: 1
+    thresholds:
+      300:
+        Spawn:
+          Girder:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     base: plasma
@@ -259,11 +279,13 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 300
-    spawnOnDestroy:
-      Girder:
-        Min: 1
-        Max: 1
+    thresholds:
+      300:
+        Spawn:
+          Girder:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     base: plastic
@@ -285,7 +307,9 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 600
+    thresholds:
+      600:
+        Acts: ["Destruction"]
   - type: BreakableConstruction
     node: girder
   - type: ReinforcedWall
@@ -309,11 +333,13 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 1000
-    spawnOnDestroy:
-      Girder:
-        Min: 1
-        Max: 1
+    thresholds:
+      1000:
+        Spawn:
+          Girder:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     base: riveted
@@ -330,11 +356,13 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 300
-    spawnOnDestroy:
-      Girder:
-        Min: 1
-        Max: 1
+    thresholds:
+      300:
+        Spawn:
+          Girder:
+            Min: 1
+            Max: 1
+        Acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: sandstone
@@ -351,11 +379,13 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 300
-    spawnOnDestroy:
-      Girder:
-        Min: 1
-        Max: 1
+    thresholds:
+      300:
+        Spawn:
+          Girder:
+            Min: 1
+            Max: 1
+        Acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: silver
@@ -376,7 +406,9 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 300
+    thresholds:
+      300:
+        Acts: [ "Destruction" ]
   - type: BreakableConstruction
     node: girder
     destroySound: /Audio/Effects/metalbreak.ogg
@@ -396,11 +428,13 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 300
-    spawnOnDestroy:
-      Girder:
-        Min: 1
-        Max: 1
+    thresholds:
+      300:
+        Spawn:
+          Girder:
+            Min: 1
+            Max: 1
+        Acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: uranium
@@ -417,11 +451,13 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
-    threshold: 300
-    spawnOnDestroy:
-      Girder:
-        Min: 1
-        Max: 1
+    thresholds:
+      300:
+        Spawn:
+          Girder:
+            Min: 1
+            Max: 1
+        Acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: wood
