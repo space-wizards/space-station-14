@@ -40,7 +40,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI
         // To avoid modifying awakeAi while iterating over it.
         private readonly List<SleepAiMessage> _queuedSleepMessages = new();
 
-        private readonly List<MobStateChangedMessage> _queuedMobStateMessages = new List<MobStateChangedMessage>();
+        private readonly List<MobStateChangedMessage> _queuedMobStateMessages = new();
 
         public bool IsAwake(AiLogicProcessor processor) => _awakeAi.Contains(processor);
 

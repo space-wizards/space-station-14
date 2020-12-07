@@ -26,7 +26,11 @@ namespace Content.Server.GameObjects.Components.Destructible
         public override string Name => "Destructible";
 
         [ViewVariables]
-        private SortedDictionary<int, Threshold> _lowestToHighestThresholds = new SortedDictionary<int, Threshold>();
+        private SortedDictionary<int, Threshold> _lowestToHighestThresholds = new();
+
+        [ViewVariables] private int PreviousTotalDamage { get; set; }
+
+        public IReadOnlyDictionary<int, Threshold> LowestToHighestThresholds => _lowestToHighestThresholds;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -63,17 +67,27 @@ namespace Content.Server.GameObjects.Components.Destructible
                     {
                         if (threshold.Triggered)
                         {
-                            continue;
+                            if (threshold.TriggersOnce)
+                            {
+                                continue;
+                            }
+
+                            if (PreviousTotalDamage >= damage)
+                            {
+                                continue;
+                            }
                         }
 
                         if (msg.Damageable.TotalDamage >= damage)
                         {
-                            var thresholdMessage = new DestructibleThresholdReachedMessage(this, threshold, msg.Damageable.TotalDamage);
+                            var thresholdMessage = new DestructibleThresholdReachedMessage(this, threshold, msg.Damageable.TotalDamage, damage);
                             SendMessage(thresholdMessage);
 
                             threshold.Trigger(Owner, _random, _actSystem);
                         }
                     }
+
+                    PreviousTotalDamage = msg.Damageable.TotalDamage;
 
                     break;
                 }

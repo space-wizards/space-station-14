@@ -42,6 +42,14 @@ namespace Content.Server.GameObjects.Components.Destructible
         /// </summary>
         [ViewVariables] public bool Triggered;
 
+        /// <summary>
+        ///     Whether or not this threshold only triggers once.
+        ///     If false, it will trigger again once the entity is healed
+        ///     and then damaged to reach this threshold once again.
+        ///     It will not repeatedly trigger as damage rises beyond that.
+        /// </summary>
+        [ViewVariables] public bool TriggersOnce;
+
         public void ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(ref Spawn, "Spawn", null);
@@ -49,6 +57,7 @@ namespace Content.Server.GameObjects.Components.Destructible
             serializer.DataField(ref SoundCollection, "SoundCollection", string.Empty);
             serializer.DataField(ref Acts, "Acts", 0, WithFormat.Flags<ActsFlags>());
             serializer.DataField(ref Triggered, "Triggered", false);
+            serializer.DataField(ref TriggersOnce, "TriggersOnce", false);
         }
 
         /// <summary>
@@ -61,7 +70,6 @@ namespace Content.Server.GameObjects.Components.Destructible
         /// <param name="actSystem">
         ///     An instance of <see cref="ActSystem"/> to call acts on, if relevant.
         /// </param>
-        /// <param name="thresholdAmount">The amount of damage that triggered this threshold.</param>
         public void Trigger(IEntity owner, IRobustRandom random, ActSystem actSystem)
         {
             Triggered = true;
