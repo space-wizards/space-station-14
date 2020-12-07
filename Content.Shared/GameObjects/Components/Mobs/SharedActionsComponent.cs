@@ -47,8 +47,15 @@ namespace Content.Shared.GameObjects.Components.Mobs
         [ComponentDependency] private readonly SharedHandsComponent? _handsComponent = null;
         [ComponentDependency] private readonly SharedInventoryComponent? _inventoryComponent = null;
 
-        public override string Name => "ActionsUI";
+        public override string Name => "Actions";
         public override uint? NetID => ContentNetIDs.ACTIONS;
+
+        /// <summary>
+        /// Actions granted to this entity as soon as they spawn, regardless
+        /// of the status of the entity.
+        /// </summary>
+        public IEnumerable<ActionType> InnateActions => _innateActions ?? Enumerable.Empty<ActionType>();
+        private List<ActionType>? _innateActions;
 
 
         // entries are removed from this if they are at the initial state (not enabled, no cooldown, toggled off).
@@ -73,6 +80,20 @@ namespace Content.Shared.GameObjects.Components.Mobs
         // A system runs periodically to evict entries from this when their cooldowns have expired for a long enough time.
         private Dictionary<(EntityUid item, ItemActionType actionType), (TimeSpan start, TimeSpan end)> _itemActionCooldowns =
             new();
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+            serializer.DataField(ref _innateActions,"innateActions", null);
+        }
+        protected override void Startup()
+        {
+            foreach (var actionType in InnateActions)
+            {
+                Grant(actionType);
+            }
+        }
+
 
         public override ComponentState GetComponentState()
         {

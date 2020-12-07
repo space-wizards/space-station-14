@@ -10,8 +10,10 @@
     show_examine_info: true
   - type: Input
     context: "human"
-  - type: AlertsUI
-  - type: ActionsUI
+  - type: Alerts
+  - type: Actions
+    innateActions:
+      - HumanScream
   - type: OverlayEffectsUI
   - type: Eye
     zoom: 0.5, 0.5
@@ -21,6 +23,3 @@
   - type: AiFactionTag
     factions:
     - NanoTrasen
-  - type: InnateActions
-    actions:
-      - HumanScream

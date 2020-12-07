@@ -42,9 +42,8 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 var actionsComponent = playerEnt.GetComponent<ServerActionsComponent>();
 
                 // player should begin with their innate actions granted
-                var innateComponent = playerEnt.GetComponent<InnateActionsComponent>();
-                innateActions.AddRange(innateComponent.Actions);
-                foreach (var innateAction in innateComponent.Actions)
+                innateActions.AddRange(actionsComponent.InnateActions);
+                foreach (var innateAction in actionsComponent.InnateActions)
                 {
                     Assert.That(actionsComponent.TryGetActionState(innateAction, out var innateState));
                     Assert.That(innateState.Enabled);

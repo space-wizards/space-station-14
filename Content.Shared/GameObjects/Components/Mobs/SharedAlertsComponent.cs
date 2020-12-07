@@ -18,7 +18,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         [Dependency]
         protected readonly AlertManager AlertManager = default!;
 
-        public override string Name => "AlertsUI";
+        public override string Name => "Alerts";
         public override uint? NetID => ContentNetIDs.ALERTS;
 
         [ViewVariables] private Dictionary<AlertKey, AlertState> _alerts = new();
