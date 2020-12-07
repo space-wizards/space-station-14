@@ -9,6 +9,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
@@ -330,7 +331,7 @@ namespace Content.Client.UserInterface.Controls
         private FormattedMessage SlotNumberLabel()
         {
             if (SlotNumber > 10) return FormattedMessage.FromMarkup("");
-            var number = SlotNumber == 10 ? "0" : SlotNumber.ToString();
+            var number = Loc.GetString(SlotNumber == 10 ? "0" : SlotNumber.ToString());
             var color = (ActionEnabled || !HasAssignment) ? EnabledColor : DisabledColor;
             return FormattedMessage.FromMarkup("[color=" + color + "]" + number + "[/color]");
         }

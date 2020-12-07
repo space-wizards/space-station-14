@@ -27,23 +27,22 @@ namespace Content.Client.UserInterface
     /// </summary>
     public class ActionMenu : SS14Window
     {
-        private static readonly string ItemTag = "item";
-        private static readonly string NotItemTag = "not item";
-        private static readonly string InstantActionTag = "instant";
-        private static readonly string ToggleActionTag = "toggle";
-        private static readonly string TargetActionTag = "target";
-        private static readonly string AllActionsTag = "all";
+        private const string ItemTag = "item";
+        private const string NotItemTag = "not item";
+        private const string InstantActionTag = "instant";
+        private const string ToggleActionTag = "toggle";
+        private const string TargetActionTag = "target";
+        private const string AllActionsTag = "all";
+        private const int MinSearchLength = 3;
         private static readonly Regex NonAlphanumeric = new Regex(@"\W", RegexOptions.Compiled);
         private static readonly Regex Whitespace = new Regex(@"\s+", RegexOptions.Compiled);
-        private static readonly int MinSearchLength = 3;
-        private static BaseActionPrototype[] EmptyActionList = new ActionPrototype[0];
+        private static readonly BaseActionPrototype[] EmptyActionList = Array.Empty<BaseActionPrototype>();
 
         // parallel list of actions currently selectable in itemList
         private BaseActionPrototype[] _actionList;
 
         private readonly ActionManager _actionManager;
         private readonly ClientActionsComponent _actionsComponent;
-        private readonly VBoxContainer _mainVBox;
         private readonly LineEdit _searchBar;
         private readonly MultiselectOptionButton<string> _filterButton;
         private readonly Label _filterLabel;
@@ -78,7 +77,7 @@ namespace Content.Client.UserInterface
             Title = Loc.GetString("Actions");
             CustomMinimumSize = (300, 300);
 
-            Contents.AddChild(_mainVBox = new VBoxContainer
+            Contents.AddChild(new VBoxContainer
             {
                 Children =
                 {
@@ -124,8 +123,11 @@ namespace Content.Client.UserInterface
             _filterButton.OnItemSelected += OnFilterItemSelected;
 
             // populate filters from search tags
-            var filterTags = _actionManager.EnumerateActions()
-                .SelectMany(a => a.Filters).ToList();
+            var filterTags = new List<string>();
+            foreach (var action in _actionManager.EnumerateActions())
+            {
+                filterTags.AddRange(action.Filters);
+            }
 
             // special one to filter to only include item actions
             filterTags.Add(ItemTag);
@@ -220,8 +222,7 @@ namespace Content.Client.UserInterface
             // pressed to initiate the drag, NOT the one we are currently hovering
             if (args.Event.Function != EngineKeyFunctions.UIClick) return;
 
-            if (UserInterfaceManager.CurrentlyHovered != null &&
-                UserInterfaceManager.CurrentlyHovered is ActionSlot targetSlot)
+            if (UserInterfaceManager.CurrentlyHovered is ActionSlot targetSlot)
             {
                 if (!_dragDropHelper.IsDragging || _dragDropHelper.Dragged?.Action == null)
                 {
@@ -281,8 +282,7 @@ namespace Content.Client.UserInterface
             else
             {
                 _filterLabel.Visible = true;
-                _filterLabel.Text = Loc.GetString("Filters") + ": " +
-                                    string.Join(", ", _filterButton.SelectedLabels);
+                _filterLabel.Text = Loc.GetString("Filters: {0}", string.Join(", ", _filterButton.SelectedLabels));
             }
         }
 
@@ -338,36 +338,17 @@ namespace Content.Client.UserInterface
 
         private static bool ActionMatchesFilterTag(BaseActionPrototype action, string tag)
         {
-            if (tag == AllActionsTag)
+            return tag switch
             {
-                return true;
-            }
-
-            if (tag == ItemTag)
-            {
-                return action is ItemActionPrototype;
-            }
-
-            if (tag == NotItemTag)
-            {
-                return action is ActionPrototype;
-            }
-
-            if (tag == InstantActionTag)
-            {
-                return action.BehaviorType == BehaviorType.Instant;
-            }
-            if (tag == TargetActionTag)
-            {
-                return action.BehaviorType == BehaviorType.TargetEntity ||
-                       action.BehaviorType == BehaviorType.TargetPoint;
-            }
-            if (tag == ToggleActionTag)
-            {
-                return action.BehaviorType == BehaviorType.Toggle;
-            }
-
-            return action.Filters.Contains(tag);
+                AllActionsTag => true,
+                ItemTag => action is ItemActionPrototype,
+                NotItemTag => action is ActionPrototype,
+                InstantActionTag => action.BehaviorType == BehaviorType.Instant,
+                TargetActionTag => action.BehaviorType == BehaviorType.TargetEntity ||
+                                   action.BehaviorType == BehaviorType.TargetPoint,
+                ToggleActionTag => action.BehaviorType == BehaviorType.Toggle,
+                _ => action.Filters.Contains(tag)
+            };
         }
 
 

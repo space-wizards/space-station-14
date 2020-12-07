@@ -9,7 +9,7 @@ namespace Content.Server.Alert.Click
     /// Resist fire
     /// </summary>
     [UsedImplicitly]
-    public class Resist : IAlertClick
+    public class ResistFire : IAlertClick
     {
         public void ExposeData(ObjectSerializer serializer) { }
 

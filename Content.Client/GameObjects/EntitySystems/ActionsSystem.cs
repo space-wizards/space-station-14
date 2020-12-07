@@ -18,7 +18,7 @@ namespace Content.Client.GameObjects.EntitySystems
             if (!_gameTiming.IsFirstTimePredicted)
                 return;
 
-            foreach (var actionsComponent in EntityManager.ComponentManager.EntityQuery<ClientActionsComponent>())
+            foreach (var actionsComponent in EntityManager.ComponentManager.EntityQuery<ClientActionsComponent>(false))
             {
                 actionsComponent.FrameUpdate(frameTime);
             }

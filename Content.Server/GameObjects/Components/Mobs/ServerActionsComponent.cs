@@ -1,18 +1,17 @@
 ﻿#nullable enable
 using System;
-using Content.Server.Administration;
-using Content.Server.Commands;
 using Content.Shared.Actions;
-using Content.Shared.Administration;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.Console;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Interfaces.GameObjects;
+using Robust.Shared;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.Configuration;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 
@@ -22,6 +21,8 @@ namespace Content.Server.GameObjects.Components.Mobs
     [ComponentReference(typeof(SharedActionsComponent))]
     public sealed class ServerActionsComponent : SharedActionsComponent
     {
+        [Dependency] private readonly IServerEntityManager _entityManager = default!;
+
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, netChannel, session);
@@ -73,10 +74,12 @@ namespace Content.Server.GameObjects.Components.Mobs
             switch (performMsg)
             {
                 case PerformInstantActionMessage msg:
+                {
                     if (action.InstantAction == null)
                     {
                         Logger.DebugS("action", "user {0} attempted to" +
-                                                " perform action {1} as an instant action, but it isn't one", player.Name,
+                                                " perform action {1} as an instant action, but it isn't one",
+                            player.Name,
                             msg.ActionType);
                         return;
                     }
@@ -84,7 +87,9 @@ namespace Content.Server.GameObjects.Components.Mobs
                     action.InstantAction.DoInstantAction(new InstantActionEventArgs(player, action.ActionType));
 
                     break;
+                }
                 case PerformToggleActionMessage msg:
+                {
                     if (action.ToggleAction == null)
                     {
                         Logger.DebugS("action", "user {0} attempted to" +
@@ -103,33 +108,33 @@ namespace Content.Server.GameObjects.Components.Mobs
 
                     ToggleAction(action.ActionType, msg.ToggleOn);
 
-                    action.ToggleAction.DoToggleAction(new ToggleActionEventArgs(player, action.ActionType, msg.ToggleOn));
+                    action.ToggleAction.DoToggleAction(new ToggleActionEventArgs(player, action.ActionType,
+                        msg.ToggleOn));
                     break;
+                }
                 case PerformTargetPointActionMessage msg:
+                {
                     if (action.TargetPointAction == null)
                     {
                         Logger.DebugS("action", "user {0} attempted to" +
-                                                " perform action {1} as a target point action, but it isn't one", player.Name,
-                            msg.ActionType);
+                                                " perform action {1} as a target point action, but it isn't one",
+                            player.Name, msg.ActionType);
                         return;
                     }
 
-                    if (ActionBlockerSystem.CanChangeDirection(player))
-                    {
-                        var diff = msg.Target.ToMapPos(EntityManager) - player.Transform.MapPosition.Position;
-                        if (diff.LengthSquared > 0.01f)
-                        {
-                            player.Transform.LocalRotation = new Angle(diff);
-                        }
-                    }
+                    if (!CheckRangeAndSetFacing(msg.Target, player)) return;
 
-                    action.TargetPointAction.DoTargetPointAction(new TargetPointActionEventArgs(player, msg.Target, action.ActionType));
+                    action.TargetPointAction.DoTargetPointAction(
+                        new TargetPointActionEventArgs(player, msg.Target, action.ActionType));
                     break;
+                }
                 case PerformTargetEntityActionMessage msg:
+                {
                     if (action.TargetEntityAction == null)
                     {
                         Logger.DebugS("action", "user {0} attempted to" +
-                                                " perform action {1} as a target entity action, but it isn't one", player.Name,
+                                                " perform action {1} as a target entity action, but it isn't one",
+                            player.Name,
                             msg.ActionType);
                         return;
                     }
@@ -142,20 +147,14 @@ namespace Content.Server.GameObjects.Components.Mobs
                         return;
                     }
 
-                    if (ActionBlockerSystem.CanChangeDirection(player))
-                    {
-                        var diff = entity.Transform.MapPosition.Position - player.Transform.MapPosition.Position;
-                        if (diff.LengthSquared > 0.01f)
-                        {
-                            player.Transform.LocalRotation = new Angle(diff);
-                        }
-                    }
+                    if (!CheckRangeAndSetFacing(entity.Transform.Coordinates, player)) return;
 
-                    action.TargetEntityAction.DoTargetEntityAction(new TargetEntityActionEventArgs(player, action.ActionType, entity));
+                    action.TargetEntityAction.DoTargetEntityAction(
+                        new TargetEntityActionEventArgs(player, action.ActionType, entity));
                     break;
+                }
             }
         }
-
 
         private void HandlePerformItemActionMessage(PerformItemActionMessage performMsg, ICommonSession session)
         {
@@ -251,14 +250,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                         return;
                     }
 
-                    if (ActionBlockerSystem.CanChangeDirection(player))
-                    {
-                        var diff = msg.Target.ToMapPos(EntityManager) - player.Transform.MapPosition.Position;
-                        if (diff.LengthSquared > 0.01f)
-                        {
-                            player.Transform.LocalRotation = new Angle(diff);
-                        }
-                    }
+                    if (!CheckRangeAndSetFacing(msg.Target, player)) return;
 
                     action.TargetPointAction.DoTargetPointAction(
                         new TargetPointItemActionEventArgs(player, msg.Target, item, action.ActionType));
@@ -280,154 +272,38 @@ namespace Content.Server.GameObjects.Components.Mobs
                         return;
                     }
 
-                    if (ActionBlockerSystem.CanChangeDirection(player))
-                    {
-                        var diff = entity.Transform.MapPosition.Position - player.Transform.MapPosition.Position;
-                        if (diff.LengthSquared > 0.01f)
-                        {
-                            player.Transform.LocalRotation = new Angle(diff);
-                        }
-                    }
+                    if (!CheckRangeAndSetFacing(entity.Transform.Coordinates, player)) return;
 
                     action.TargetEntityAction.DoTargetEntityAction(
                         new TargetEntityItemActionEventArgs(player, entity, item, action.ActionType));
                     break;
             }
         }
-    }
 
-    [AdminCommand(AdminFlags.Debug)]
-    public sealed class GrantAction : IClientCommand
-    {
-        public string Command => "grantaction";
-        public string Description => "Grants an action to a player, defaulting to current player";
-        public string Help => "grantaction <actionType> <name or userID, omit for current player>";
-        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        private bool CheckRangeAndSetFacing(EntityCoordinates target, IEntity player)
         {
-            var attachedEntity = player.AttachedEntity;
-            if (args.Length > 1)
+            // ensure it's within their clickable range
+            var targetWorldPos = target.ToMapPos(EntityManager);
+            var rangeBox = new Box2(player.Transform.WorldPosition, player.Transform.WorldPosition)
+                .Enlarged(_entityManager.MaxUpdateRange);
+            if (!rangeBox.Contains(targetWorldPos))
             {
-                var target = args[1];
-                if (!Commands.CommandUtils.TryGetAttachedEntityByUsernameOrId(shell, target, player, out attachedEntity)) return;
+                Logger.DebugS("action", "user {0} attempted to" +
+                                        " perform target action further than allowed range",
+                    player.Name);
+                return false;
             }
 
-            if (!CommandUtils.ValidateAttachedEntity(shell, player, attachedEntity)) return;
+            if (!ActionBlockerSystem.CanChangeDirection(player)) return true;
 
-
-            if (!attachedEntity.TryGetComponent(out ServerActionsComponent? actionsComponent))
+            // don't set facing unless they clicked far enough away
+            var diff = targetWorldPos - player.Transform.WorldPosition;
+            if (diff.LengthSquared > 0.01f)
             {
-                shell.SendText(player, "user has no actions component");
-                return;
+                player.Transform.LocalRotation = new Angle(diff);
             }
 
-            var actionTypeRaw = args[0];
-            if (!Enum.TryParse<ActionType>(actionTypeRaw, out var actionType))
-            {
-                shell.SendText(player, "unrecognized ActionType enum value, please" +
-                                       " ensure you used correct casing: " + actionTypeRaw);
-                return;
-            }
-            var actionMgr = IoCManager.Resolve<ActionManager>();
-            if (!actionMgr.TryGet(actionType, out var action))
-            {
-                shell.SendText(player, "unrecognized actionType " + actionType);
-                return;
-            }
-            actionsComponent.Grant(action.ActionType);
-        }
-    }
-
-    [AdminCommand(AdminFlags.Debug)]
-    public sealed class RevokeAction : IClientCommand
-    {
-        public string Command => "revokeaction";
-        public string Description => "Revokes an action from a player, defaulting to current player";
-        public string Help => "revokeaction <actionType> <name or userID, omit for current player>";
-
-        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
-        {
-            var attachedEntity = player.AttachedEntity;
-            if (args.Length > 1)
-            {
-                var target = args[1];
-                if (!CommandUtils.TryGetAttachedEntityByUsernameOrId(shell, target, player, out attachedEntity)) return;
-            }
-
-            if (!CommandUtils.ValidateAttachedEntity(shell, player, attachedEntity)) return;
-
-            if (!attachedEntity.TryGetComponent(out ServerActionsComponent? actionsComponent))
-            {
-                shell.SendText(player, "user has no actions component");
-                return;
-            }
-
-            var actionTypeRaw = args[0];
-            if (!Enum.TryParse<ActionType>(actionTypeRaw, out var actionType))
-            {
-                shell.SendText(player, "unrecognized ActionType enum value, please" +
-                                       " ensure you used correct casing: " + actionTypeRaw);
-                return;
-            }
-            var actionMgr = IoCManager.Resolve<ActionManager>();
-            if (!actionMgr.TryGet(actionType, out var action))
-            {
-                shell.SendText(player, "unrecognized actionType " + actionType);
-                return;
-            }
-
-            actionsComponent.Revoke(action.ActionType);
-        }
-    }
-
-    [AdminCommand(AdminFlags.Debug)]
-    public sealed class CooldownAction : IClientCommand
-    {
-        public string Command => "coolaction";
-        public string Description => "Sets a cooldown on an action for a player, defaulting to current player";
-        public string Help => "coolaction <actionType> <seconds> <name or userID, omit for current player>";
-
-        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
-        {
-            var attachedEntity = player.AttachedEntity;
-            if (args.Length > 2)
-            {
-                var target = args[2];
-                if (!CommandUtils.TryGetAttachedEntityByUsernameOrId(shell, target, player, out attachedEntity)) return;
-            }
-
-            if (!CommandUtils.ValidateAttachedEntity(shell, player, attachedEntity)) return;
-
-            if (!attachedEntity.TryGetComponent(out ServerActionsComponent? actionsComponent))
-            {
-                shell.SendText(player, "user has no actions component");
-                return;
-            }
-
-            var actionTypeRaw = args[0];
-            if (!Enum.TryParse<ActionType>(actionTypeRaw, out var actionType))
-            {
-                shell.SendText(player, "unrecognized ActionType enum value, please" +
-                                       " ensure you used correct casing: " + actionTypeRaw);
-                return;
-            }
-            var actionMgr = IoCManager.Resolve<ActionManager>();
-
-            if (!actionMgr.TryGet(actionType, out var action))
-            {
-                shell.SendText(player, "unrecognized actionType " + actionType);
-                return;
-            }
-
-            var cooldownStart = IoCManager.Resolve<IGameTiming>().CurTime;
-            if (!uint.TryParse(args[1], out var seconds))
-            {
-                shell.SendText(player, "cannot parse seconds: " + args[1]);
-                return;
-            }
-
-            var cooldownEnd = cooldownStart.Add(TimeSpan.FromSeconds(seconds));
-
-            actionsComponent.Cooldown(action.ActionType, (cooldownStart, cooldownEnd));
+            return true;
         }
     }
 }

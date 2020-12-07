@@ -36,9 +36,9 @@ namespace Content.Server.Actions
         {
             _random = IoCManager.Resolve<IRobustRandom>();
 
-            serializer.DataField(ref _male, "male", new List<string>());
-            serializer.DataField(ref _female, "female", new List<string>());
-            serializer.DataField(ref _wilhelm, "wilhelm", string.Empty);
+            serializer.DataField(ref _male, "male", null);
+            serializer.DataField(ref _female, "female", null);
+            serializer.DataField(ref _wilhelm, "wilhelm", null);
             serializer.DataField(ref _cooldown, "cooldown", 10);
 
         }
@@ -58,10 +58,12 @@ namespace Content.Server.Actions
                 switch (humanoid.Sex)
                 {
                     case Sex.Male:
+                        if (_male == null) break;
                         EntitySystem.Get<AudioSystem>().PlayFromEntity(_random.Pick(_male), args.Performer,
                             AudioHelpers.WithVariation(Variation).WithVolume(Volume));
                         break;
                     case Sex.Female:
+                        if (_female == null) break;
                         EntitySystem.Get<AudioSystem>().PlayFromEntity(_random.Pick(_female), args.Performer,
                             AudioHelpers.WithVariation(Variation).WithVolume(Volume));
                         break;

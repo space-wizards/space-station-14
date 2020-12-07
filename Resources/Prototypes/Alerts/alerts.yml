@@ -36,7 +36,7 @@
 - type: alert
   alertType: Fire
   icon: /Textures/Interface/Alerts/Fire/fire.png
-  onClick: !type:Resist  { }
+  onClick: !type:ResistFire  { }
   name: "[color=red]On Fire[/color]"
   description: "You're [color=red]on fire[/color]. Click the alert to stop, drop and roll to put the fire out or move to a vacuum area."
 

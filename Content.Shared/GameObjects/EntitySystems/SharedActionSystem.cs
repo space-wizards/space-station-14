@@ -13,7 +13,6 @@ namespace Content.Shared.GameObjects.EntitySystems
     {
         private const float CooldownCheckIntervalSeconds = 10;
         private float _timeSinceCooldownCheck;
-        private TypeEntityQuery<SharedActionsComponent> _actionComponentQuery;
 
         public override void Initialize()
         {
@@ -21,7 +20,6 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             SubscribeLocalEvent<UnequippedMessage>(OnUnequip);
             SubscribeLocalEvent<UnequippedHandMessage>(OnHandUnequip);
-            _actionComponentQuery = new TypeEntityQuery<SharedActionsComponent>();
         }
 
         public override void Update(float frameTime)
@@ -31,11 +29,11 @@ namespace Content.Shared.GameObjects.EntitySystems
             _timeSinceCooldownCheck += frameTime;
             if (_timeSinceCooldownCheck < CooldownCheckIntervalSeconds) return;
 
-            foreach (var entity in EntityManager.GetEntities(_actionComponentQuery))
+            foreach (var comp in ComponentManager.EntityQuery<SharedActionsComponent>(false))
             {
-                entity.GetComponent<SharedActionsComponent>().ExpireCooldowns();
+                comp.ExpireCooldowns();
             }
-            _timeSinceCooldownCheck = 0;
+            _timeSinceCooldownCheck -= CooldownCheckIntervalSeconds;
         }
 
         private void OnHandUnequip(UnequippedHandMessage ev)

@@ -67,39 +67,36 @@ namespace Content.Shared.Actions
 
             IItemActionBehavior behavior = null;
             serializer.DataField(ref behavior, "behavior", null);
-            if (behavior == null)
+            switch (behavior)
             {
-                BehaviorType = BehaviorType.None;
-                Logger.ErrorS("action", "missing or invalid behavior for action with name {0}", Name);
-            }
-            else if (behavior is IInstantItemAction instantAction)
-            {
-                ValidateBehaviorType(BehaviorType.Instant, typeof(IInstantItemAction));
-                BehaviorType = BehaviorType.Instant;
-                InstantAction = instantAction;
-            }
-            else if (behavior is IToggleItemAction toggleAction)
-            {
-                ValidateBehaviorType(BehaviorType.Toggle, typeof(IToggleItemAction));
-                BehaviorType = BehaviorType.Toggle;
-                ToggleAction = toggleAction;
-            }
-            else if (behavior is ITargetEntityItemAction targetEntity)
-            {
-                ValidateBehaviorType(BehaviorType.TargetEntity, typeof(ITargetEntityItemAction));
-                BehaviorType = BehaviorType.TargetEntity;
-                TargetEntityAction = targetEntity;
-            }
-            else if (behavior is ITargetPointItemAction targetPointAction)
-            {
-                ValidateBehaviorType(BehaviorType.TargetPoint, typeof(ITargetPointItemAction));
-                BehaviorType = BehaviorType.TargetPoint;
-                TargetPointAction = targetPointAction;
-            }
-            else
-            {
-                BehaviorType = BehaviorType.None;
-                Logger.ErrorS("action", "unrecognized behavior type for action with name {0}", Name);
+                case null:
+                    BehaviorType = BehaviorType.None;
+                    Logger.ErrorS("action", "missing or invalid behavior for action with name {0}", Name);
+                    break;
+                case IInstantItemAction instantAction:
+                    ValidateBehaviorType(BehaviorType.Instant, typeof(IInstantItemAction));
+                    BehaviorType = BehaviorType.Instant;
+                    InstantAction = instantAction;
+                    break;
+                case IToggleItemAction toggleAction:
+                    ValidateBehaviorType(BehaviorType.Toggle, typeof(IToggleItemAction));
+                    BehaviorType = BehaviorType.Toggle;
+                    ToggleAction = toggleAction;
+                    break;
+                case ITargetEntityItemAction targetEntity:
+                    ValidateBehaviorType(BehaviorType.TargetEntity, typeof(ITargetEntityItemAction));
+                    BehaviorType = BehaviorType.TargetEntity;
+                    TargetEntityAction = targetEntity;
+                    break;
+                case ITargetPointItemAction targetPointAction:
+                    ValidateBehaviorType(BehaviorType.TargetPoint, typeof(ITargetPointItemAction));
+                    BehaviorType = BehaviorType.TargetPoint;
+                    TargetPointAction = targetPointAction;
+                    break;
+                default:
+                    BehaviorType = BehaviorType.None;
+                    Logger.ErrorS("action", "unrecognized behavior type for action with name {0}", Name);
+                    break;
             }
         }
     }
@@ -107,7 +104,7 @@ namespace Content.Shared.Actions
     /// <summary>
     /// Determines how the action icon appears in the hotbar for item actions.
     /// </summary>
-    public enum ItemActionIconStyle
+    public enum ItemActionIconStyle : byte
     {
         /// <summary>
         /// The default - the item icon will be big with a small action icon in the corner

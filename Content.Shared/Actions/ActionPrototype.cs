@@ -63,39 +63,36 @@ namespace Content.Shared.Actions
 
             IActionBehavior behavior = null;
             serializer.DataField(ref behavior, "behavior", null);
-            if (behavior == null)
+            switch (behavior)
             {
-                BehaviorType = BehaviorType.None;
-                Logger.ErrorS("action", "missing or invalid behavior for action with name {0}", Name);
-            }
-            else if (behavior is IInstantAction instantAction)
-            {
-                ValidateBehaviorType(BehaviorType.Instant, typeof(IInstantAction));
-                BehaviorType = BehaviorType.Instant;
-                InstantAction = instantAction;
-            }
-            else if (behavior is IToggleAction toggleAction)
-            {
-                ValidateBehaviorType(BehaviorType.Toggle, typeof(IToggleAction));
-                BehaviorType = BehaviorType.Toggle;
-                ToggleAction = toggleAction;
-            }
-            else if (behavior is ITargetEntityAction targetEntity)
-            {
-                ValidateBehaviorType(BehaviorType.TargetEntity, typeof(ITargetEntityAction));
-                BehaviorType = BehaviorType.TargetEntity;
-                TargetEntityAction = targetEntity;
-            }
-            else if (behavior is ITargetPointAction targetPointAction)
-            {
-                ValidateBehaviorType(BehaviorType.TargetPoint, typeof(ITargetPointAction));
-                BehaviorType = BehaviorType.TargetPoint;
-                TargetPointAction = targetPointAction;
-            }
-            else
-            {
-                BehaviorType = BehaviorType.None;
-                Logger.ErrorS("action", "unrecognized behavior type for action with name {0}", Name);
+                case null:
+                    BehaviorType = BehaviorType.None;
+                    Logger.ErrorS("action", "missing or invalid behavior for action with name {0}", Name);
+                    break;
+                case IInstantAction instantAction:
+                    ValidateBehaviorType(BehaviorType.Instant, typeof(IInstantAction));
+                    BehaviorType = BehaviorType.Instant;
+                    InstantAction = instantAction;
+                    break;
+                case IToggleAction toggleAction:
+                    ValidateBehaviorType(BehaviorType.Toggle, typeof(IToggleAction));
+                    BehaviorType = BehaviorType.Toggle;
+                    ToggleAction = toggleAction;
+                    break;
+                case ITargetEntityAction targetEntity:
+                    ValidateBehaviorType(BehaviorType.TargetEntity, typeof(ITargetEntityAction));
+                    BehaviorType = BehaviorType.TargetEntity;
+                    TargetEntityAction = targetEntity;
+                    break;
+                case ITargetPointAction targetPointAction:
+                    ValidateBehaviorType(BehaviorType.TargetPoint, typeof(ITargetPointAction));
+                    BehaviorType = BehaviorType.TargetPoint;
+                    TargetPointAction = targetPointAction;
+                    break;
+                default:
+                    BehaviorType = BehaviorType.None;
+                    Logger.ErrorS("action", "unrecognized behavior type for action with name {0}", Name);
+                    break;
             }
 
         }

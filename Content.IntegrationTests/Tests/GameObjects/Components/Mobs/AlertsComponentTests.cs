@@ -8,9 +8,6 @@ using Content.Shared.Alert;
 using NUnit.Framework;
 using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.IoC;
-using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
 {

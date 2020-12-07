@@ -95,7 +95,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         {
             base.HandleComponentState(curState, nextState);
 
-            if (!(curState is ActionComponentState))
+            if (curState is not ActionComponentState)
             {
                 return;
             }
@@ -112,8 +112,7 @@ namespace Content.Client.GameObjects.Components.Mobs
 
             _ui = new ActionsUI(ActionOnOnShowTooltip, ActionOnOnHideTooltip, OnActionPress,
                 OnActionSlotDragDrop, OnMouseEnteredAction, OnMouseExitedAction,
-                NextHotbar,
-                PreviousHotbar, HandleOpenActionMenu);
+                NextHotbar, PreviousHotbar, HandleOpenActionMenu);
             _menu = new ActionMenu(ActionOnOnShowTooltip, ActionOnOnHideTooltip, this, ActionMenuItemSelected,
                 ActionMenuItemDragDropped);
 
@@ -434,7 +433,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         {
             if (_ui == null) return;
             if (_ui.IsDragging) return;
-            if (!(args.Button is ActionSlot actionSlot)) return;
+            if (args.Button is not ActionSlot actionSlot) return;
             if (!actionSlot.HasAssignment) return;
 
             if (args.Event.Function == EngineKeyFunctions.UIRightClick)
@@ -634,8 +633,8 @@ namespace Content.Client.GameObjects.Components.Mobs
         {
             // highlight the inventory slot associated with this if it's an item action
             // tied to an item
-            if (!(args.SourceControl is ActionSlot actionSlot)) return;
-            if (!(actionSlot.Action is ItemActionPrototype)) return;
+            if (args.SourceControl is not ActionSlot actionSlot) return;
+            if (actionSlot.Action is not ItemActionPrototype) return;
             if (actionSlot.Item == null) return;
 
             StopHighlightingItemSlots();
@@ -911,6 +910,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             // cooldown we have no need to actively tick down, we can always calculate current
             // cooldown amount as-needed (for example when switching toolbars).
             if (_ui == null) return;
+            var curTime = GameTiming.CurTime;
             foreach (var actionSlot in _ui.Slots)
             {
                 var assignedActionType = _assignments[_selectedHotbar, actionSlot.SlotIndex];
@@ -920,18 +920,18 @@ namespace Content.Client.GameObjects.Components.Mobs
                 {
                     actionSlot.UpdateCooldown(
                         TryGetActionState(actionType, out var actionState) ? actionState.Cooldown : null,
-                        GameTiming.CurTime);
+                        curTime);
                 }
                 else if (assignedActionType.Value.TryGetItemActionWithItem(out var itemActionType, out var item))
                 {
                     actionSlot.UpdateCooldown(TryGetItemActionState(itemActionType,
                         item, out var actionState)
                         ? actionState.Cooldown
-                        : null, GameTiming.CurTime);
+                        : null, curTime);
                 }
                 else
                 {
-                    actionSlot.UpdateCooldown(null, GameTiming.CurTime);
+                    actionSlot.UpdateCooldown(null, curTime);
                 }
 
                 if (_showingTooltipFor == actionSlot)

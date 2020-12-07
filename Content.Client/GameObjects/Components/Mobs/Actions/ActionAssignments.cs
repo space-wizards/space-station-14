@@ -154,7 +154,7 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
         }
 
         /// <summary>
-        /// Clear the assignment to the indicated slot.
+        /// Clear the assignment from the indicated slot.
         /// </summary>
         /// <param name="hotbar">hotbar whose slot is being cleared</param>
         /// <param name="slot">slot of the hotbar to clear (0 = the slot labeled 1, 9 = the slot labeled 0)</param>

@@ -83,7 +83,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         {
             base.HandleComponentState(curState, nextState);
 
-            if (!(curState is ActionComponentState state))
+            if (curState is not ActionComponentState state)
             {
                 return;
             }
@@ -301,7 +301,6 @@ namespace Content.Shared.GameObjects.Components.Mobs
             bool? enabled = null, bool? toggleOn = null,
             (TimeSpan start, TimeSpan end)? cooldown = null)
         {
-            if (IsNullItem(item)) return;
             CreateOrUpdate(actionType, item.Uid, createIfNeeded, enabled, toggleOn, cooldown);
         }
 
@@ -398,7 +397,6 @@ namespace Content.Shared.GameObjects.Components.Mobs
         public void GrantFromInitialState(ItemActionType actionType, IEntity item, bool enabled = true, bool toggleOn = false,
             (TimeSpan start, TimeSpan end)? cooldown = null)
         {
-            if (IsNullItem(item)) return;
             if (_itemActions.TryGetValue(item.Uid, out var itemStates))
             {
                 itemStates.Remove(actionType);
@@ -475,7 +473,6 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// <see cref="Cooldown"/>
         public void Cooldown(ItemActionType actionType, IEntity item, (TimeSpan start, TimeSpan end)? cooldown)
         {
-            if (IsNullItem(item)) return;
             Cooldown(actionType, item.Uid, cooldown);
         }
 
@@ -491,7 +488,6 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// <see cref="SetEnabled"/>
         public void SetEnabled(ItemActionType actionType, IEntity item, bool enabled)
         {
-            if (IsNullItem(item)) return;
             SetEnabled(actionType, item.Uid, enabled);
         }
 
@@ -563,7 +559,6 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// <see cref="Revoke"/>
         public void Revoke(ItemActionType actionType, IEntity item)
         {
-            if (IsNullItem(item)) return;
             Revoke(actionType, item.Uid);
         }
 
@@ -588,7 +583,6 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// <see cref="Revoke"/> applied to all actions currently granted for the item
         public void Revoke(IEntity item)
         {
-            if (IsNullItem(item)) return;
             Revoke(item.Uid);
         }
 
@@ -613,7 +607,6 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// <see cref="ToggleAction"/>
         public void ToggleAction(ItemActionType actionType, IEntity item, bool toggleOn)
         {
-            if (IsNullItem(item)) return;
             ToggleAction(actionType, item.Uid, toggleOn);
         }
 
@@ -627,12 +620,11 @@ namespace Content.Shared.GameObjects.Components.Mobs
         {
             // item actions - only clear saved cooldowns
             var toRemove = new List<(EntityUid item, ItemActionType actionType)>();
-            foreach (var itemActionCooldown in _itemActionCooldowns)
+            foreach (var (action, cooldown) in _itemActionCooldowns)
             {
-                var expiryTime = GameTiming.CurTime - itemActionCooldown.Value.end;
-                if (expiryTime > CooldownExpiryThreshold)
+                if ((GameTiming.CurTime - cooldown.end) > CooldownExpiryThreshold)
                 {
-                    toRemove.Add(itemActionCooldown.Key);
+                    toRemove.Add(action);
                 }
             }
 
@@ -644,22 +636,20 @@ namespace Content.Shared.GameObjects.Components.Mobs
             // actions - only clear cooldowns and remove associated action state
             // if the action is at initial state
             var actionTypesToRemove = new List<ActionType>();
-            foreach (var actionState in _actions)
+            foreach (var (actionType, actionState) in _actions)
             {
                 // ignore it unless we may be able to delete it due to
                 // clearing the cooldown
-                if (actionState.Value.IsAtInitialStateExceptCooldown)
+                if (!actionState.IsAtInitialStateExceptCooldown) continue;
+                if (!actionState.Cooldown.HasValue)
                 {
-                    if (!actionState.Value.Cooldown.HasValue)
-                    {
-                        actionTypesToRemove.Add(actionState.Key);
-                        continue;
-                    }
-                    var expiryTime = GameTiming.CurTime - actionState.Value.Cooldown.Value.Item2;
-                    if (expiryTime > CooldownExpiryThreshold)
-                    {
-                        actionTypesToRemove.Add(actionState.Key);
-                    }
+                    actionTypesToRemove.Add(actionType);
+                    continue;
+                }
+                var expiryTime = GameTiming.CurTime - actionState.Cooldown.Value.Item2;
+                if (expiryTime > CooldownExpiryThreshold)
+                {
+                    actionTypesToRemove.Add(actionType);
                 }
             }
 
@@ -667,18 +657,6 @@ namespace Content.Shared.GameObjects.Components.Mobs
             {
                 _actions.Remove(remove);
             }
-        }
-
-        private bool IsNullItem(IEntity item)
-        {
-            if (item == null)
-            {
-                Logger.WarningS("action", "tried to modify item action state" +
-                                          " for null item");
-                return true;
-            }
-
-            return false;
         }
 
         /// <returns>true if the item is in any hand or top-level inventory slot (not inside a container)</returns>

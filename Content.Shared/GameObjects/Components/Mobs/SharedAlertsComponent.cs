@@ -15,8 +15,6 @@ namespace Content.Shared.GameObjects.Components.Mobs
     /// </summary>
     public abstract class SharedAlertsComponent : Component
     {
-        private static readonly AlertState[] NoAlerts = new AlertState[0];
-
         [Dependency]
         protected readonly AlertManager AlertManager = default!;
 
@@ -29,7 +27,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         {
             base.HandleComponentState(curState, nextState);
 
-            if (!(curState is AlertsComponentState state))
+            if (curState is not AlertsComponentState state)
             {
                 return;
             }
