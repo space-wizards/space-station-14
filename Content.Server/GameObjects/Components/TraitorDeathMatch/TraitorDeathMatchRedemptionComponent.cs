@@ -11,7 +11,7 @@ using Content.Server.Mobs.Roles;
 using Content.Server.Mobs.Roles.Suspicion;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.Components.Suspicion;
+using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -34,22 +34,63 @@ namespace Content.Server.GameObjects.Components.TraitorDeathMatch
 
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            var itemEntity = eventArgs.User.GetComponent<HandsComponent>().GetActiveHand?.Owner;
-
-            if (itemEntity == null)
+            if (!eventArgs.User.TryGetComponent<InventoryComponent>(out var userInv))
             {
-                eventArgs.User.PopupMessage(Loc.GetString("You have no active hand!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("No inventory! How'd you manage that?"));
                 return false;
             }
 
-            if (!itemEntity.TryGetComponent<PDAComponent>(out var pda))
+            if (!eventArgs.Using.TryGetComponent<PDAComponent>(out var victimPDA))
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("It must be a PDA!"));
                 return false;
             }
 
-            pda.Owner.Delete();
-            Owner.PopupMessage(eventArgs.User, Loc.GetString("TODO: ACTION"));
+            var userPDAEntity = userInv.GetSlotItem(EquipmentSlotDefines.Slots.IDCARD)?.Owner;
+            PDAComponent? userPDA = null;
+
+            if (userPDAEntity != null)
+                if (userPDAEntity.TryGetComponent<PDAComponent>(out var userPDAComponent))
+                    userPDA = userPDAComponent;
+
+            if (userPDA == null)
+            {
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("You must have your own PDA in your PDA slot."));
+                return false;
+            }
+
+            // We have finally determined both PDA components. FINALLY.
+
+            var userAccount = userPDA.SyndicateUplinkAccount;
+            var victimAccount = victimPDA.SyndicateUplinkAccount;
+
+            if (userAccount == null)
+            {
+                // This shouldn't even BE POSSIBLE in the actual mode this is meant for.
+                // Advanced Syndicate anti-tampering technology.
+                // Owner.PopupMessage(eventArgs.User, Loc.GetString("Tampering detected."));
+                // if (eventArgs.User.TryGetComponent<DamagableComponent>(out var userDamagable))
+                //     userDamagable.ChangeDamage(DamageType.Shock, 9001, true, null);
+                // ...So apparently, "it probably shouldn't kill people for a mistake".
+                // :(
+                // Give boring error message instead.
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("Your own PDA does not have an uplink account."));
+                return false;
+            }
+
+            if (victimAccount == null)
+            {
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("The PDA you're trying to redeem does not have an uplink account."));
+                return false;
+            }
+
+            var transferAmount = victimAccount.Balance;
+            victimAccount.ModifyAccountBalance(0);
+            userAccount.ModifyAccountBalance(userAccount.Balance + transferAmount);
+
+            victimPDA.Owner.Delete();
+
+            Owner.PopupMessage(eventArgs.User, Loc.GetString("You received {0} TC.", transferAmount));
             return true;
         }
     }

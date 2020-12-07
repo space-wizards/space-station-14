@@ -12,6 +12,7 @@ using Content.Server.GameObjects.Components.Markers;
 using Content.Server.Mobs.Roles.Traitor;
 using Content.Server.Players;
 using Content.Server.Atmos;
+using Content.Server.Mobs;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Inventory;
@@ -27,6 +28,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Configuration;
+using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Log;
 
 namespace Content.Server.GameTicking.GamePresets
@@ -38,6 +40,7 @@ namespace Content.Server.GameTicking.GamePresets
         [Dependency] private readonly IGameTicker _gameTicker = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public string PDAPrototypeName => "CaptainPDA";
         public string BeltPrototypeName => "ClothingBeltJanitorFilled";
@@ -101,45 +104,11 @@ namespace Content.Server.GameTicking.GamePresets
             _allOriginalNames[uplinkAccount] = mind.OwnedEntity.Name;
 
             // Finally, it would be preferrable if they spawned as far away from other players as reasonably possible.
-
-            // Collate people to avoid...
-            var existingPlayerPoints = new List<EntityCoordinates>();
-            foreach (var player in _playerManager.GetAllPlayers())
+            if (FindAnyIsolatedSpawnLocation(mind, out var bestTarget))
             {
-                var avoidMeMind = session.Data.ContentData()?.Mind;
-                if ((avoidMeMind == null) || (avoidMeMind == mind))
-                    continue;
-                if (mind.OwnedEntity == null)
-                    continue;
-                existingPlayerPoints.Add(mind.OwnedEntity.Transform.Coordinates);
+                mind.OwnedEntity.Transform.Coordinates = bestTarget;
             }
-
-            // Iterate over each possible spawn point, comparing to the existing player points.
-            // On failure, the returned target is the location that we're already at.
-            var bestTarget = mind.OwnedEntity.Transform.Coordinates;
-            var bestTargetDistanceFromNearest = -1.0f;
-            bool foundAnySpawns = false;
-            foreach (var entity in _entityManager.GetEntities(new TypeEntityQuery(typeof(SpawnPointComponent))))
-            {
-                if (!entity.Transform.Coordinates.IsTileAirProbablySafe())
-                    continue;
-                foundAnySpawns = true;
-                var distanceFromNearest = float.PositiveInfinity;
-                foreach (var existing in existingPlayerPoints)
-                {
-                    if (entity.Transform.Coordinates.TryDistance(_entityManager, existing, out var dist))
-                    {
-                        distanceFromNearest = Math.Min(distanceFromNearest, dist);
-                    }
-                }
-                if (bestTargetDistanceFromNearest < distanceFromNearest)
-                {
-                    bestTarget = entity.Transform.Coordinates;
-                    bestTargetDistanceFromNearest = distanceFromNearest;
-                }
-            }
-
-            if (!foundAnySpawns)
+            else
             {
                 // The station is too drained of air to safely continue.
                 if (_safeToEndRound)
@@ -150,9 +119,49 @@ namespace Content.Server.GameTicking.GamePresets
                     _safeToEndRound = false;
                 }
             }
+        }
 
-            // Teleport them.
-            mind.OwnedEntity.Transform.Coordinates = bestTarget;
+        // It would be nice if this function were moved to some generic helpers class.
+        private bool FindAnyIsolatedSpawnLocation(Mind ignoreMe, out EntityCoordinates bestTarget)
+        {
+            // Collate people to avoid...
+            var existingPlayerPoints = new List<EntityCoordinates>();
+            foreach (var player in _playerManager.GetAllPlayers())
+            {
+                var avoidMeMind = player.Data.ContentData()?.Mind;
+                if ((avoidMeMind == null) || (avoidMeMind == ignoreMe))
+                    continue;
+                if (avoidMeMind.OwnedEntity == null)
+                    continue;
+                existingPlayerPoints.Add(avoidMeMind.OwnedEntity.Transform.Coordinates);
+            }
+
+            // Iterate over each possible spawn point, comparing to the existing player points.
+            // On failure, the returned target is the location that we're already at.
+            var bestTargetDistanceFromNearest = -1.0f;
+            // Need the random shuffle or it stuffs the first person into Atmospherics pretty reliably
+            var ents = new List<IEntity>(_entityManager.GetEntities(new TypeEntityQuery(typeof(SpawnPointComponent))));
+            _robustRandom.Shuffle(ents);
+            var foundATarget = false;
+            bestTarget = EntityCoordinates.Invalid;
+            foreach (var entity in ents)
+            {
+                if (!entity.Transform.Coordinates.IsTileAirProbablySafe())
+                    continue;
+                var distanceFromNearest = float.PositiveInfinity;
+                foreach (var existing in existingPlayerPoints)
+                {
+                    if (entity.Transform.Coordinates.TryDistance(_entityManager, existing, out var dist))
+                        distanceFromNearest = Math.Min(distanceFromNearest, dist);
+                }
+                if (bestTargetDistanceFromNearest < distanceFromNearest)
+                {
+                    bestTarget = entity.Transform.Coordinates;
+                    bestTargetDistanceFromNearest = distanceFromNearest;
+                    foundATarget = true;
+                }
+            }
+            return foundATarget;
         }
 
         public override bool OnGhostAttempt(Mind mind, bool canReturnGlobal)
