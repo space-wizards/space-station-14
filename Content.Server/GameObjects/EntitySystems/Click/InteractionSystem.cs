@@ -624,11 +624,13 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
             foreach (var comp in thrown.GetAllComponents<IThrowCollide>().ToArray())
             {
+                if (thrown.Deleted) break;
                 comp.DoHit(eventArgs);
             }
 
             foreach (var comp in target.GetAllComponents<IThrowCollide>().ToArray())
             {
+                if (target.Deleted) break;
                 comp.HitBy(eventArgs);
             }
         }
