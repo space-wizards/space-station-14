@@ -1121,7 +1121,7 @@ namespace Content.Server.Atmos
 
         public bool AssumeAir(GasMixture giver)
         {
-            if (giver == null || Air == null) return false;
+            if (Air == null) return false;
 
             Air.Merge(giver);
 
