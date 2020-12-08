@@ -37,9 +37,11 @@
       - Opaque
       - MobImpassable
   - type: Damageable
-    criticalThreshold: 150
-    deadThreshold: 200
-  - type: MobStateManager
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      150: !type:CriticalMobState {}
+      200: !type:DeadMobState {}
   - type: Metabolism
   - type: HeatResistance
   - type: CombatMode

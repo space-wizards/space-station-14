@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Reactions;
 using Content.Server.GameObjects.Components.Atmos;
-using Content.Server.GameObjects.EntitySystems.Atmos;
 using Content.Server.Interfaces;
 using Content.Server.Utility;
 using Content.Shared.Atmos;
@@ -14,7 +13,6 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.EntitySystems.TileLookup;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -238,7 +236,7 @@ namespace Content.Server.Atmos
             }
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void EqualizePressureInZone(int cycleNum)
         {
             if (Air == null || (_tileAtmosInfo.LastCycle >= cycleNum)) return; // Already done.
@@ -429,7 +427,7 @@ namespace Content.Server.Atmos
                             if (!tile._adjacentBits.IsFlagSet(direction)) continue;
                             var tile2 = tile._adjacentTiles[k];
                             if (giver._tileAtmosInfo.MoleDelta <= 0) break; // We're done here now. Let's not do more work than needed.
-                            if (tile2._tileAtmosInfo.LastQueueCycle != queueCycle) continue;
+                            if (tile2 == null || tile2._tileAtmosInfo.LastQueueCycle != queueCycle) continue;
                             if (tile2._tileAtmosInfo.LastSlowQueueCycle == queueCycleSlow) continue;
 
                             queue[queueLength++] = tile2;
@@ -498,7 +496,7 @@ namespace Content.Server.Atmos
                             var tile2 = tile._adjacentTiles[k];
 
                             if (taker._tileAtmosInfo.MoleDelta >= 0) break; // We're done here now. Let's not do more work than needed.
-                            if (tile2._tileAtmosInfo.LastQueueCycle != queueCycle) continue;
+                            if (tile2 == null || tile2._tileAtmosInfo.LastQueueCycle != queueCycle) continue;
                             if (tile2._tileAtmosInfo.LastSlowQueueCycle == queueCycleSlow) continue;
                             queue[queueLength++] = tile2;
                             tile2._tileAtmosInfo.LastSlowQueueCycle = queueCycleSlow;
@@ -1123,7 +1121,7 @@ namespace Content.Server.Atmos
 
         public bool AssumeAir(GasMixture giver)
         {
-            if (giver == null || Air == null) return false;
+            if (Air == null) return false;
 
             Air.Merge(giver);
 

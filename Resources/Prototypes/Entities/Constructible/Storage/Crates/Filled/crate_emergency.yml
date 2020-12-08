@@ -1,0 +1,73 @@
+- type: entity
+  id: CrateEmergencyExplosive
+  name: bomb suit crate
+  parent: CrateSecgear
+  components:
+  - type: StorageFill
+    contents:
+      - name: ClothingHeadHelmetBombSuit
+        amount: 1
+      - name: ClothingMaskGas
+        amount: 1
+      - name: Screwdriver
+        amount: 1
+      - name: Wirecutter
+        amount: 1
+      - name: Multitool
+        amount: 1
+      - name: ClothingOuterSuitBomb
+        amount: 1
+
+- type: entity
+  id: CrateEmergencyFire
+  name: firefighting crate
+  parent: CrateGenericonimo
+  components:
+  - type: StorageFill
+    contents:
+      - name: FlashlightLantern
+        amount: 2
+      - name: FireExtinguisher
+        amount: 2
+      - name: ClothingHeadHatHardhatRed
+        amount: 2
+      - name: ClothingMaskGas
+        amount: 2
+      - name: ClothingOuterSuitFire
+        amount: 2
+      - name: RedOxygenTank
+        amount: 2
+
+- type: entity
+  id: CrateEmergencyInternals
+  name: internals crate
+  parent: CrateInternals
+  components:
+  - type: StorageFill
+    contents:
+      - name: ClothingMaskGas
+        amount: 3
+      - name: ClothingMaskBreath
+        amount: 3
+      - name: OxygenTankFilled
+        amount: 3
+      - name: EmergencyOxygenTankFilled
+        amount: 3
+
+- type: entity
+  id: CrateEmergencyRadiation
+  name: radiation protection crate
+  parent: CrateRadiation
+  components:
+  - type: StorageFill
+    contents:
+      - name: ClothingOuterSuitRad
+        amount: 2
+      - name: ClothingHeadHatHoodRad
+        amount: 2
+#     - name: GeigerCounter
+#        amount: 2
+      - name: DrinkVodkaBottleFull
+        amount: 1
+      - name: DrinkShotGlass
+        amount: 2

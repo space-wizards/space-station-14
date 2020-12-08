@@ -11,7 +11,6 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos
@@ -42,7 +41,7 @@ namespace Content.Server.Atmos
         public bool Immutable { get; private set; }
 
         [ViewVariables]
-        public float LastShare { get; private set; } = 0;
+        public float LastShare { get; private set; }
 
         [ViewVariables]
         public readonly Dictionary<GasReaction, float> ReactionResults = new()
@@ -148,7 +147,7 @@ namespace Content.Server.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Merge(GasMixture giver)
         {
-            if (Immutable || giver == null) return;
+            if (Immutable) return;
 
             if (MathF.Abs(Temperature - giver.Temperature) > Atmospherics.MinimumTemperatureDeltaToConsider)
             {

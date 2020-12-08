@@ -7,6 +7,7 @@ using Content.Server.Mobs;
 using Content.Server.Mobs.Roles;
 using Content.Server.Mobs.Roles.Suspicion;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Components.Suspicion;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
@@ -60,8 +61,8 @@ namespace Content.Server.GameObjects.Components.Suspicion
 
         public bool IsDead()
         {
-            return Owner.TryGetComponent(out IDamageableComponent? damageable) &&
-                   damageable.CurrentState == DamageState.Dead;
+            return Owner.TryGetComponent(out IMobStateComponent? state) &&
+                   state.IsDead();
         }
 
         public bool IsInnocent()

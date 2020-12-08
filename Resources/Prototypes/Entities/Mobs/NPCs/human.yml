@@ -12,7 +12,7 @@
     startingGear: AssistantGear
   - type: AiFactionTag
     factions:
-    - NanoTransen
+    - NanoTrasen
 
 - type: entity
   save: false

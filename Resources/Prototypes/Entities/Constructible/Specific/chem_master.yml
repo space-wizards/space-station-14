@@ -32,12 +32,15 @@
       - VaultImpassable
   - type: SnapGrid
     offset: Center
+  - type: Damageable
   - type: Destructible
-    deadThreshold: 50
-    spawnOnDestroy:
-      chem_master_broken:
-        Min: 1
-        Max: 1
+    thresholds:
+      50:
+        Spawn:
+          chem_master_broken:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]
   - type: UserInterface
     interfaces:
     - key: enum.ChemMasterUiKey.Key
@@ -75,12 +78,15 @@
       - VaultImpassable
   - type: SnapGrid
     offset: Center
+  - type: Damageable
   - type: Destructible
-    deadThreshold: 25
-    spawnOnDestroy:
-      SteelSheet1:
-        Min: 1
-        Max: 1
+    thresholds:
+      25:
+        Spawn:
+          SteelSheet1:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]
   - type: UserInterface
     interfaces:
     - key: enum.ChemMasterUiKey.Key

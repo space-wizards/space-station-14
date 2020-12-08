@@ -106,7 +106,7 @@ namespace Content.Server.GameObjects.Components.Doors
         /// <summary>
         ///     Whether something is currently using a welder on this so DoAfter isn't spammed.
         /// </summary>
-        private bool _beingWelded = false;
+        private bool _beingWelded;
 
         [ViewVariables(VVAccess.ReadWrite)]
         private bool _canCrush = true;
@@ -346,13 +346,10 @@ namespace Content.Server.GameObjects.Components.Doors
 
             var gridAtmosphere = atmosphereSystem.GetGridAtmosphere(Owner.Transform.GridID);
 
-            if (gridAtmosphere == null)
-                return false;
-
             var minMoles = float.MaxValue;
             var maxMoles = 0f;
 
-            foreach (var (direction, adjacent) in gridAtmosphere.GetAdjacentTiles(tileAtmos.GridIndices))
+            foreach (var (_, adjacent) in gridAtmosphere.GetAdjacentTiles(tileAtmos.GridIndices))
             {
                 var moles = adjacent.Air.TotalMoles;
                 if (moles < minMoles)
@@ -376,10 +373,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
             var gridAtmosphere = atmosphereSystem.GetGridAtmosphere(Owner.Transform.GridID);
 
-            if (gridAtmosphere == null)
-                return false;
-
-            foreach (var (direction, adjacent) in gridAtmosphere.GetAdjacentTiles(tileAtmos.GridIndices))
+            foreach (var (_, adjacent) in gridAtmosphere.GetAdjacentTiles(tileAtmos.GridIndices))
             {
                 if (adjacent.Hotspot.Valid)
                     return true;

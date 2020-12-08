@@ -26,19 +26,23 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
-  - type: Destructible
-    deadThreshold: 15
+  - type: Damageable
     resistances: metallicResistances
-    destroySoundCollection: WindowBreak
-    spawnOnDestroy:
-      ShardGlass:
-        Min: 1
-        Max: 2
+  - type: Destructible
+    thresholds:
+      15:
+        SoundCollection: WindowBreak
+        Spawn:
+          ShardGlass:
+            Min: 1
+            Max: 2
+        Acts: ["Destruction"]
   - type: SnapGrid
     offset: Center
   - type: Airtight
   - type: Window
     base: window
+    maxDamage: 15
   - type: Construction
     graph: window
     node: window
@@ -56,15 +60,20 @@
     sprite: Constructible/Structures/Windows/reinforced_window.rsi
   - type: Icon
     sprite: Constructible/Structures/Windows/reinforced_window.rsi
-  - type: Destructible
-    deadThreshold: 75
-    spawnOnDestroy:
-      ShardGlassReinforced:
-        Min: 1
-        Max: 2
+  - type: Damageable
     resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+      75:
+        SoundCollection: WindowBreak
+        Spawn:
+          ShardGlassReinforced:
+            Min: 1
+            Max: 2
+        Acts: ["Destruction"]
   - type: Window
     base: rwindow
+    maxDamage: 75
   - type: Construction
     graph: window
     node: reinforcedWindow
@@ -79,15 +88,21 @@
     sprite: Constructible/Structures/Windows/phoron_window.rsi
   - type: Icon
     sprite: Constructible/Structures/Windows/phoron_window.rsi
+  - type: Damageable
+    resistances: metallicResistances
   - type: Destructible
-    deadThreshold: 100
-    spawnOnDestroy:
-      ShardGlassPhoron:
-        Min: 1
-        Max: 2
+    thresholds:
+      100:
+        SoundCollection: WindowBreak
+        Spawn:
+          ShardGlassPhoron:
+            Min: 1
+            Max: 2
+        Acts: ["Destruction"]
     resistances: metallicResistances
   - type: Window
     base: pwindow
+    maxDamage: 100
   - type: Construction
     graph: window
     node: phoronWindow
