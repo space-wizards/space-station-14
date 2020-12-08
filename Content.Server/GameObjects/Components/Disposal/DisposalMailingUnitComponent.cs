@@ -588,7 +588,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 "entryDelay",
                 0.5f,
                 seconds => _entryDelay = seconds,
-                () => (int) _entryDelay);
+                () => _entryDelay);
 
             serializer.DataField(ref _tag, "Tag", "");
         }
