@@ -5,14 +5,15 @@
   id: Clusterbang
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Grenades/clusterbang.rsi/
+    sprite: Objects/Weapons/Grenades/clusterbang.rsi
     netsync: false
-    state: empty
+    state: base-0
   - type: ClusterFlash
   - type: Appearance
     visuals:
     - type: ClusterFlashVisualizer
-      state: empty
+      state: base
+      levels: 3
 
 - type: entity
   name: Clusterbang
@@ -21,11 +22,12 @@
   id: ClusterbangFull
   components:
   - type: Sprite
-    state: three
+    state: base-3
   - type: ClusterFlash
-    startFull: true
+    fillPrototype: GrenadeFlashBang
   - type: Appearance
     visuals:
     - type: ClusterFlashVisualizer
-      state: three
+      state: base
+      levels: 3
 
