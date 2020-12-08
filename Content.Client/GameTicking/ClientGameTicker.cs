@@ -22,7 +22,7 @@ namespace Content.Client.GameTicking
         [Dependency] private readonly IStateManager _stateManager = default!;
 
         [ViewVariables] private bool _initialized;
-        private readonly List<string> _jobsAvailable = new List<string>();
+        private readonly List<string> _jobsAvailable = new();
 
         [ViewVariables] public bool AreWeReady { get; private set; }
         [ViewVariables] public bool IsGameStarted { get; private set; }

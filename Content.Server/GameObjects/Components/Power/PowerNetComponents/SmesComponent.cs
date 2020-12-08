@@ -36,7 +36,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
             base.Initialize();
 
             Owner.EnsureComponent<BatteryComponent>();
-            Owner.EnsureComponent<AppearanceComponent>();
+            Owner.EnsureComponentWarn<AppearanceComponent>();
         }
 
         public void OnUpdate()

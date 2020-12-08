@@ -23,7 +23,7 @@ namespace Content.Server.Atmos
     {
         private readonly AtmosphereSystem _atmosphereSystem;
 
-        public static GasMixture SpaceGas => new GasMixture() {Volume = 2500f, Immutable = true, Temperature = Atmospherics.TCMB};
+        public static GasMixture SpaceGas => new() {Volume = 2500f, Immutable = true, Temperature = Atmospherics.TCMB};
 
         // This must always have a length that is a multiple of 4 for SIMD acceleration.
         [ViewVariables]
@@ -41,10 +41,10 @@ namespace Content.Server.Atmos
         public bool Immutable { get; private set; }
 
         [ViewVariables]
-        public float LastShare { get; private set; } = 0;
+        public float LastShare { get; private set; }
 
         [ViewVariables]
-        public readonly Dictionary<GasReaction, float> ReactionResults = new Dictionary<GasReaction, float>()
+        public readonly Dictionary<GasReaction, float> ReactionResults = new()
         {
             // We initialize the dictionary here.
             { GasReaction.Fire, 0f }
@@ -120,8 +120,8 @@ namespace Content.Server.Atmos
         public GasMixture(AtmosphereSystem? atmosphereSystem)
         {
             _atmosphereSystem = atmosphereSystem ?? EntitySystem.Get<AtmosphereSystem>();
-            _moles = new float[MathHelper.NextMultipleOf(Atmospherics.TotalNumberOfGases, 4)];
-            _molesArchived = new float[_moles.Length];
+            _moles = new float[Atmospherics.AdjustedNumberOfGases];
+            _molesArchived = new float[Atmospherics.AdjustedNumberOfGases];
         }
 
         public GasMixture(float volume, AtmosphereSystem? atmosphereSystem = null): this(atmosphereSystem)
@@ -147,7 +147,7 @@ namespace Content.Server.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Merge(GasMixture giver)
         {
-            if (Immutable || giver == null) return;
+            if (Immutable) return;
 
             if (MathF.Abs(Temperature - giver.Temperature) > Atmospherics.MinimumTemperatureDeltaToConsider)
             {
@@ -177,6 +177,9 @@ namespace Content.Server.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetMoles(int gasId, float quantity)
         {
+            if (float.IsInfinity(quantity) || float.IsNaN(quantity) || float.IsNegative(quantity))
+                throw new ArgumentException($"Invalid quantity \"{quantity}\" specified!", nameof(quantity));
+
             if (!Immutable)
                 _moles[gasId] = quantity;
         }
@@ -191,7 +194,17 @@ namespace Content.Server.Atmos
         public void AdjustMoles(int gasId, float quantity)
         {
             if (!Immutable)
+            {
+                if (float.IsInfinity(quantity) || float.IsNaN(quantity))
+                    throw new ArgumentException($"Invalid quantity \"{quantity}\" specified!", nameof(quantity));
+
                 _moles[gasId] += quantity;
+
+                var moles = _moles[gasId];
+
+                if (float.IsInfinity(moles) || float.IsNaN(moles) || float.IsNegative(moles))
+                    throw new Exception($"Invalid mole quantity \"{moles}\" in gas Id {gasId} after adjusting moles with \"{quantity}\"!");
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -209,11 +222,14 @@ namespace Content.Server.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GasMixture RemoveRatio(float ratio)
         {
-            if(ratio <= 0)
-                return new GasMixture(Volume, _atmosphereSystem);
-
-            if (ratio > 1)
-                ratio = 1;
+            switch (ratio)
+            {
+                case <= 0:
+                    return new GasMixture(Volume, _atmosphereSystem){Temperature = Temperature};
+                case > 1:
+                    ratio = 1;
+                    break;
+            }
 
             var removed = new GasMixture(_atmosphereSystem) {Volume = Volume, Temperature = Temperature};
 
@@ -221,6 +237,17 @@ namespace Content.Server.Atmos
             NumericsHelpers.Multiply(removed._moles, ratio);
             if (!Immutable)
                 NumericsHelpers.Sub(_moles, removed._moles);
+
+            for (var i = 0; i < _moles.Length; i++)
+            {
+                var moles = _moles[i];
+                var otherMoles = removed._moles[i];
+                if (moles < Atmospherics.GasMinMoles || float.IsNaN(moles))
+                    _moles[i] = 0;
+
+                if (otherMoles < Atmospherics.GasMinMoles || float.IsNaN(otherMoles))
+                    removed._moles[i] = 0;
+            }
 
             return removed;
         }
@@ -260,7 +287,7 @@ namespace Content.Server.Atmos
                 if (!(MathF.Abs(delta) >= Atmospherics.GasMinMoles)) continue;
                 if (absTemperatureDelta > Atmospherics.MinimumTemperatureDeltaToConsider)
                 {
-                    var gasHeatCapacity = delta * _atmosphereSystem.GetGas(i).SpecificHeat;
+                    var gasHeatCapacity = delta * _atmosphereSystem.GasSpecificHeats[i];
                     if (delta > 0)
                     {
                         heatCapacityToSharer += gasHeatCapacity;
@@ -509,19 +536,17 @@ namespace Content.Server.Atmos
 
         public void ExposeData(ObjectSerializer serializer)
         {
-            var length = MathHelper.NextMultipleOf(Atmospherics.TotalNumberOfGases, 4);
-
-            serializer.DataField(this, x => Immutable, "immutable", false);
-            serializer.DataField(this, x => Volume, "volume", 0f);
-            serializer.DataField(this, x => LastShare, "lastShare", 0f);
-            serializer.DataField(this, x => TemperatureArchived, "temperatureArchived", 0f);
-            serializer.DataField(ref _moles, "moles", new float[length]);
-            serializer.DataField(ref _molesArchived, "molesArchived", new float[length]);
+            serializer.DataField(this, x => x.Immutable, "immutable", false);
+            serializer.DataField(this, x => x.Volume, "volume", 0f);
+            serializer.DataField(this, x => x.LastShare, "lastShare", 0f);
+            serializer.DataField(this, x => x.TemperatureArchived, "temperatureArchived", 0f);
+            serializer.DataField(ref _moles, "moles", new float[Atmospherics.AdjustedNumberOfGases]);
+            serializer.DataField(ref _molesArchived, "molesArchived", new float[Atmospherics.AdjustedNumberOfGases]);
             serializer.DataField(ref _temperature, "temperature", Atmospherics.TCMB);
 
             // The arrays MUST have a specific length.
-            Array.Resize(ref _moles, length);
-            Array.Resize(ref _molesArchived, length);
+            Array.Resize(ref _moles, Atmospherics.AdjustedNumberOfGases);
+            Array.Resize(ref _molesArchived, Atmospherics.AdjustedNumberOfGases);
         }
 
         public override bool Equals(object? obj)

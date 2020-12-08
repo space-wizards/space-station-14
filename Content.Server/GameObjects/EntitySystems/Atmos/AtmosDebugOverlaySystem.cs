@@ -30,7 +30,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
         ///     To modify it see <see cref="AddObserver"/> and
         ///     <see cref="RemoveObserver"/>.
         /// </summary>
-        private readonly HashSet<IPlayerSession> _playerObservers = new HashSet<IPlayerSession>();
+        private readonly HashSet<IPlayerSession> _playerObservers = new();
 
         /// <summary>
         ///     Overlay update ticks per second.
@@ -104,7 +104,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
             var gases = new float[Atmospherics.TotalNumberOfGases];
             if (tile?.Air == null)
             {
-                return new AtmosDebugOverlayData(0, gases, AtmosDirection.Invalid, false);
+                return new AtmosDebugOverlayData(0, gases, AtmosDirection.Invalid, false, tile?.BlockedAirflow ?? AtmosDirection.Invalid);
             }
             else
             {
@@ -112,7 +112,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
                 {
                     gases[i] = tile.Air.GetMoles(i);
                 }
-                return new AtmosDebugOverlayData(tile.Air.Temperature, gases, tile.PressureDirectionForDebugOverlay, tile.ExcitedGroup != null);
+                return new AtmosDebugOverlayData(tile.Air.Temperature, gases, tile.PressureDirectionForDebugOverlay, tile.ExcitedGroup != null, tile.BlockedAirflow);
             }
         }
 

@@ -81,16 +81,17 @@ namespace Content.Client.GameObjects.Components.Clothing
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
-            if (curState == null)
+            if (curState is not ClothingComponentState state)
+            {
                 return;
+            }
 
-            var clothingComponentState = (ClothingComponentState)curState;
-            ClothingEquippedPrefix = clothingComponentState.ClothingEquippedPrefix;
-            EquippedPrefix = clothingComponentState.EquippedPrefix;
+            ClothingEquippedPrefix = state.ClothingEquippedPrefix;
+            EquippedPrefix = state.EquippedPrefix;
         }
     }
 
-    public enum FemaleClothingMask
+    public enum FemaleClothingMask : byte
     {
         NoMask = 0,
         UniformFull,

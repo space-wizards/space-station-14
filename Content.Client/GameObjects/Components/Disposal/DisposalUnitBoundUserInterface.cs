@@ -41,7 +41,7 @@ namespace Content.Client.GameObjects.Components.Disposal
         {
             base.UpdateState(state);
 
-            if (!(state is DisposalUnitBoundUserInterfaceState cast))
+            if (state is not DisposalUnitBoundUserInterfaceState cast)
             {
                 return;
             }

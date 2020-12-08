@@ -26,7 +26,6 @@ using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -124,8 +123,7 @@ namespace Content.Server.GameObjects.Components.Botany
         {
             base.Initialize();
 
-            if(!Owner.EnsureComponent<SolutionContainerComponent>(out var solution))
-                Logger.Warning($"Entity {Owner} with a PlantHolderComponent did not have a SolutionContainerComponent.");
+            Owner.EnsureComponentWarn<SolutionContainerComponent>();
         }
 
         public override void ExposeData(ObjectSerializer serializer)

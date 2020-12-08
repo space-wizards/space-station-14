@@ -7,6 +7,7 @@ using Content.Server.Mobs;
 using Content.Server.Mobs.Roles;
 using Content.Server.Mobs.Roles.Suspicion;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Components.Suspicion;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
@@ -24,7 +25,7 @@ namespace Content.Server.GameObjects.Components.Suspicion
     public class SuspicionRoleComponent : SharedSuspicionRoleComponent, IExamine
     {
         private Role? _role;
-        private readonly HashSet<SuspicionRoleComponent> _allies = new HashSet<SuspicionRoleComponent>();
+        private readonly HashSet<SuspicionRoleComponent> _allies = new();
 
         [ViewVariables]
         public Role? Role
@@ -60,8 +61,8 @@ namespace Content.Server.GameObjects.Components.Suspicion
 
         public bool IsDead()
         {
-            return Owner.TryGetComponent(out IDamageableComponent? damageable) &&
-                   damageable.CurrentState == DamageState.Dead;
+            return Owner.TryGetComponent(out IMobStateComponent? state) &&
+                   state.IsDead();
         }
 
         public bool IsInnocent()
@@ -215,8 +216,8 @@ namespace Content.Server.GameObjects.Components.Suspicion
         {
             base.HandleMessage(message, component);
 
-            if (!(message is RoleMessage msg) ||
-                !(msg.Role is SuspicionRole role))
+            if (message is not RoleMessage msg ||
+                msg.Role is not SuspicionRole role)
             {
                 return;
             }

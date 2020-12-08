@@ -27,16 +27,21 @@ namespace Content.Server.Construction.Conditions
             return doorComponent.IsWeldedShut == Welded;
         }
 
-        public void DoExamine(IEntity entity, FormattedMessage message, bool inDetailsRange)
+        public bool DoExamine(IEntity entity, FormattedMessage message, bool inDetailsRange)
         {
-            if (!entity.TryGetComponent(out ServerDoorComponent doorComponent)) return;
+            if (!entity.TryGetComponent(out ServerDoorComponent doorComponent)) return false;
 
             if (doorComponent.State == ServerDoorComponent.DoorState.Closed && Welded)
-                message.AddMarkup(Loc.GetString("First, weld the door.\n"));
-            else if (doorComponent.IsWeldedShut && !Welded)
             {
-                message.AddMarkup(Loc.GetString("First, unweld the door.\n"));
+                message.AddMarkup(Loc.GetString("First, weld the door.\n"));
+                return true;
             }
+
+            if (!doorComponent.IsWeldedShut || Welded) return false;
+
+            message.AddMarkup(Loc.GetString("First, unweld the door.\n"));
+            return true;
+
         }
     }
 }

@@ -75,7 +75,7 @@ namespace Content.IntegrationTests
 
         public T AddGameRule<T>() where T : GameRule, new()
         {
-            return new T();
+            return new();
         }
 
         public bool HasGameRule(Type type)
@@ -120,7 +120,7 @@ namespace Content.IntegrationTests
 
         public Dictionary<string, int> GetAvailablePositions()
         {
-            return new Dictionary<string, int>();
+            return new();
         }
     }
 }

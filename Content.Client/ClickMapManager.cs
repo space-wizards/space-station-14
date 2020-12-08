@@ -22,10 +22,10 @@ namespace Content.Client
         [Dependency] private readonly IResourceCache _resourceCache = default!;
 
         [ViewVariables]
-        private readonly Dictionary<Texture, ClickMap> _textureMaps = new Dictionary<Texture, ClickMap>();
+        private readonly Dictionary<Texture, ClickMap> _textureMaps = new();
 
         [ViewVariables] private readonly Dictionary<RSI, RsiClickMapData> _rsiMaps =
-            new Dictionary<RSI, RsiClickMapData>();
+            new();
 
         public void PostInject()
         {

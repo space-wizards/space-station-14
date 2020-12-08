@@ -140,7 +140,7 @@ namespace Content.Shared.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsFlagSet(this AtmosDirection direction, AtmosDirection other)
         {
-            return (direction & other) != 0;
+            return (direction & other) == other;
         }
     }
 

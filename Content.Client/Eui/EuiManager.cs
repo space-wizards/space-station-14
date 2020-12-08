@@ -15,7 +15,7 @@ namespace Content.Client.Eui
         [Dependency] private readonly IReflectionManager _refl = default!;
         [Dependency] private readonly IDynamicTypeFactory _dtf = default!;
 
-        private readonly Dictionary<uint, EuiData> _openUis = new Dictionary<uint, EuiData>();
+        private readonly Dictionary<uint, EuiData> _openUis = new();
 
         public void Initialize()
         {

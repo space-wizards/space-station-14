@@ -80,6 +80,7 @@ namespace Content.Client
             prototypes.RegisterIgnore("seed"); // Seeds prototypes are server-only.
             prototypes.RegisterIgnore("barSign");
             prototypes.RegisterIgnore("objective");
+            prototypes.RegisterIgnore("dataset");
 
             ClientContentIoC.Register();
 

@@ -31,7 +31,7 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
         {
             base.UpdateState(state);
 
-            if (!(state is BodyScannerUIState scannerState))
+            if (state is not BodyScannerUIState scannerState)
             {
                 return;
             }

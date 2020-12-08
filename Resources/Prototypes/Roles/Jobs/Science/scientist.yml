@@ -15,7 +15,7 @@
   id: ScientistGear
   equipment:
     innerclothing: ClothingUniformJumpsuitScientist
-    backpack: ClothingBackpackFilled
+    backpack: ClothingBackpackScienceFilled
     shoes: ClothingShoesColorWhite
     outerclothing: ClothingOuterCoatLab
     idcard: SciencePDA

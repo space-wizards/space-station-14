@@ -19,7 +19,7 @@ namespace Content.Server.GameObjects.Components.Mobs
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public List<OverlayContainer> ActiveOverlays { get; } = new List<OverlayContainer>();
+        public List<OverlayContainer> ActiveOverlays { get; } = new();
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession session = null)
         {

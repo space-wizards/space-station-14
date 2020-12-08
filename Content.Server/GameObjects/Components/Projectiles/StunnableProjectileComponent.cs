@@ -32,11 +32,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
         {
             base.Initialize();
 
-            if (!Owner.EnsureComponent(out ProjectileComponent _))
-            {
-                Logger.Warning(
-                    $"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(ProjectileComponent)}");
-            }
+            Owner.EnsureComponentWarn(out ProjectileComponent _);
         }
 
         void ICollideBehavior.CollideWith(IEntity entity)
