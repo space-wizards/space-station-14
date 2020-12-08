@@ -8,9 +8,9 @@ namespace Content.Server.GameObjects.Components.Body
         BodyPartType Part { get; }
     }
 
-    public class BodyHealthChangeParams : HealthChangeParams, IBodyHealthChangeParams
+    public class BodyDamageChangeParams : DamageChangeParams, IBodyHealthChangeParams
     {
-        public BodyHealthChangeParams(BodyPartType part)
+        public BodyDamageChangeParams(BodyPartType part)
         {
             Part = part;
         }

@@ -20,8 +20,8 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(this, x => HighPressureMultiplier, "highPressureMultiplier", 1f);
-            serializer.DataField(this, x => LowPressureMultiplier, "lowPressureMultiplier", 1f);
+            serializer.DataField(this, x => x.HighPressureMultiplier, "highPressureMultiplier", 1f);
+            serializer.DataField(this, x => x.LowPressureMultiplier, "lowPressureMultiplier", 1f);
         }
     }
 }

@@ -19,9 +19,12 @@
       pipeRSI: Constructible/Atmos/pipe.rsi
     - type: SiphonVisualizer
       siphonRSI: Constructible/Atmos/scrubber.rsi
-  - type: Destructible
-    thresholdvalue: 100
+  - type: Damageable
     resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+      100:
+        Acts: ["Destruction"]
 
 - type: entity
   parent: ScrubberBase
