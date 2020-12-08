@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable annotations
+using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -49,7 +50,7 @@ namespace Content.Server.Atmos
         private static int _soundCooldown;
 
         [ViewVariables]
-        public TileAtmosphere PressureSpecificTarget { get; set; }
+        public TileAtmosphere? PressureSpecificTarget { get; set; }
 
         [ViewVariables]
         public float PressureDifference { get; set; }
@@ -103,8 +104,12 @@ namespace Content.Server.Atmos
         [ViewVariables]
         public ExcitedGroup ExcitedGroup { get; set; }
 
+        /// <summary>
+        /// The air in this tile. If null, this tile is completely airblocked.
+        /// This can be immutable if the tile is spaced.
+        /// </summary>
         [ViewVariables]
-        public GasMixture Air { get; set; }
+        public GasMixture? Air { get; set; }
 
         [ViewVariables, UsedImplicitly]
         private int _blockedAirflow => (int)BlockedAirflow;
