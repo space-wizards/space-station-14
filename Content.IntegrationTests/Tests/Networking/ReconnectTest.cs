@@ -37,7 +37,7 @@ namespace Content.IntegrationTests.Tests.Networking
             // Reconnect.
             client.SetConnectTarget(server);
 
-            client.Post(() => IoCManager.Resolve<IClientNetManager>().ClientConnect(null, 0, null));
+            await client.WaitPost(() => IoCManager.Resolve<IClientNetManager>().ClientConnect(null, 0, null));
 
             // Run some ticks for the handshake to complete and such.
             await RunTicksSync(client, server, 10);
