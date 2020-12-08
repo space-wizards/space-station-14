@@ -217,6 +217,7 @@
             "ConveyorAssembly",
             "TwoWayLever",
             "FirelockElectronics",
+            "ChemicalInjectionProjectile",
             "Machine",
             "MachinePart",
             "MachineFrame",
