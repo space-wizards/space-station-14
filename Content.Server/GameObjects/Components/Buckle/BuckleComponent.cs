@@ -69,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Buckle
         public Vector2 BuckleOffset { get; private set; }
 
         private StrapComponent? _buckledTo;
-        public override EntityUid EntityBuckledTo { get;  set; }
+        
 
         /// <summary>
         ///     The strap that this component is buckled to.
@@ -451,6 +451,7 @@ namespace Content.Server.GameObjects.Components.Buckle
             if (!IsOnStrapEntityThisFrame && DontCollide)
             {
                 DontCollide = false;
+                TryUnbuckle(Owner);
                 Dirty();
             }
 

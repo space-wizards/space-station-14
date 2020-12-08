@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var comp in ComponentManager.EntityQuery<BuckleComponent>())
+            foreach (var comp in ComponentManager.EntityQuery<BuckleComponent>(false))
             {
                 comp.Update();
             }

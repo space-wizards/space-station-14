@@ -20,10 +20,10 @@ namespace Content.Shared.GameObjects.Components.Buckle
         ///     True if the entity is buckled, false otherwise.
         /// </summary>
         public abstract bool Buckled { get; }
-        public virtual EntityUid EntityBuckledTo { get; set; }
+        public  EntityUid? EntityBuckledTo { get; set; }
 
-        public virtual bool IsOnStrapEntityThisFrame { get; set; }
-        public virtual bool DontCollide { get; set; }
+        public  bool IsOnStrapEntityThisFrame { get; set; }
+        public  bool DontCollide { get; set; }
         public abstract bool TryBuckle(IEntity user, IEntity to);
 
         protected IPhysicsComponent Body;
@@ -73,7 +73,7 @@ namespace Content.Shared.GameObjects.Components.Buckle
     [Serializable, NetSerializable]
     public sealed class BuckleComponentState : ComponentState
     {
-        public BuckleComponentState(bool buckled, int? drawDepth, EntityUid entityBuckledTo, bool dontCollide) : base(ContentNetIDs.BUCKLE)
+        public BuckleComponentState(bool buckled, int? drawDepth, EntityUid? entityBuckledTo, bool dontCollide) : base(ContentNetIDs.BUCKLE)
         {
             Buckled = buckled;
             DrawDepth = drawDepth;
@@ -82,7 +82,7 @@ namespace Content.Shared.GameObjects.Components.Buckle
         }
 
         public bool Buckled { get; }
-        public EntityUid EntityBuckledTo { get; }
+        public EntityUid? EntityBuckledTo { get; }
         public bool DontCollide { get; }
         public int? DrawDepth;
     }
