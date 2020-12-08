@@ -65,15 +65,7 @@ namespace Content.Server.Atmos
 
         public static bool InvalidateTileAir(this ITransformComponent transform, AtmosphereSystem? atmosSystem = null)
         {
-            atmosSystem ??= EntitySystem.Get<AtmosphereSystem>();
-
-            if (!transform.Coordinates.TryGetTileAtmosphere(out var tileAtmos))
-            {
-                return false;
-            }
-
-            atmosSystem.GetGridAtmosphere(transform.GridID).Invalidate(tileAtmos.GridIndices);
-            return true;
+            return InvalidateTileAir(transform.Coordinates, atmosSystem);
         }
 
         public static bool InvalidateTileAir(this EntityCoordinates coordinates, AtmosphereSystem? atmosSystem = null, IEntityManager? entityManager = null)
@@ -86,8 +78,7 @@ namespace Content.Server.Atmos
                 return false;
             }
 
-            var gridId = coordinates.GetGridId(entityManager);
-            atmosSystem.GetGridAtmosphere(gridId).Invalidate(tileAtmos.GridIndices);
+            tileAtmos.Invalidate();
             return true;
         }
     }

@@ -1177,6 +1177,14 @@ namespace Content.Server.Atmos
             }
         }
 
+        /// <summary>
+        ///     Calls <see cref="GridAtmosphereComponent.Invalidate"/> on this tile atmosphere's position.
+        /// </summary>
+        public void Invalidate()
+        {
+            _gridAtmosphereComponent.Invalidate(GridIndices);
+        }
+
         private void LastShareCheck()
         {
             var lastShare = Air.LastShare;
