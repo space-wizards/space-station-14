@@ -313,17 +313,11 @@ namespace Content.Server.GameObjects.Components.Atmos
                 var tileAtmosphere = Owner.Transform.Coordinates.GetTileAtmosphere();
                 if (tileAtmosphere != null)
                 {
-                    // Get the GridAtmosphere
-                    var gridId = Owner.Transform.Coordinates.GetGridId(Owner.EntityManager);
-                    var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
-                    var gridAtmosphere = atmosphereSystem.GetGridAtmosphere(gridId);
-                    // This shouldn't be null, and is only checked as a failsafe because it could theoretically still be null anyway.
-                    // Releasing gas without invalidation is more dangerous than failing to release.
-                    // Also, if tileAtmosphere.Air is null, then we're airblocked, so DON'T release
-                    if ((gridAtmosphere != null) && (tileAtmosphere.Air != null))
+                    // If tileAtmosphere.Air is null, then we're airblocked, so DON'T release
+                    if (tileAtmosphere.Air != null)
                     {
                         Air.ReleaseGasTo(tileAtmosphere.Air, ReleasePressure);
-                        gridAtmosphere.Invalidate(tileAtmosphere.GridIndices);
+                        tileAtmosphere.Invalidate();
                     }
                 }
                 else
