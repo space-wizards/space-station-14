@@ -103,7 +103,8 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
 
                 CurrentEvent?.Shutdown();
                 CurrentEvent = stationEvent;
-                stationEvent.Initialize();
+                _chat.SendAdminAnnouncement(Loc.GetString("Running event manualy: ") + CurrentEvent.Name);
+                stationEvent.Startup();
                 return Loc.GetString("Running event ") + stationEvent.Name;
             }
 
@@ -112,7 +113,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
         }
 
         /// <summary>
-        /// Randomly run a valid event immediately, ignoring earlieststart
+        /// Randomly run a valid event <b>immediately</b>, ignoring earlieststart
         /// </summary>
         /// <returns></returns>
         public string RunRandomEvent()
@@ -126,7 +127,8 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
 
             CurrentEvent?.Shutdown();
             CurrentEvent = randomEvent;
-            CurrentEvent.Initialize();
+            _chat.SendAdminAnnouncement(Loc.GetString("Running event immediately: ") + CurrentEvent.Name);
+            CurrentEvent.Startup();
 
             return Loc.GetString("Running ") + randomEvent.Name;
         }
@@ -260,7 +262,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
                 // add a 10 second delay before running (select and run)
                 // broadcast to dchat (once the event starts)
                 _chat.SendAdminAnnouncement(Loc.GetString("Running event: ") + CurrentEvent.Name);
-                CurrentEvent.Initialize();
+                CurrentEvent.Startup();
             }
         }
 

@@ -23,7 +23,7 @@ namespace Content.IntegrationTests.Tests.StationEvents
 
                 foreach (var stationEvent in stationEventsSystem.StationEvents)
                 {
-                    stationEvent.Initialize();
+                    stationEvent.Startup();
                     stationEvent.Update(dummyFrameTime);
                     stationEvent.Shutdown();
                     Assert.That(stationEvent.Occurrences == 1);

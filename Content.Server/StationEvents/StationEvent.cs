@@ -97,9 +97,9 @@ namespace Content.Server.StationEvents
         // No "Ended" as this assumes the end properly kicks off.
 
         /// <summary>
-        /// Called before Start(). Allows you to Initialize your events, such as randomly setting variables.
+        /// Called before Start(). Allows you to setup your events, such as randomly setting variables.
         /// </summary>
-        public virtual void Initialize()
+        public virtual void Startup()
         {
             Running = true;
             Occurrences += 1;

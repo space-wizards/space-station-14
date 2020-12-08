@@ -1,7 +1,6 @@
 ﻿#nullable enable
 using JetBrains.Annotations;
 using Content.Server.GameObjects.EntitySystems.StationEvents;
-using Content.Shared.Network.NetMessages;
 using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.StationEvents

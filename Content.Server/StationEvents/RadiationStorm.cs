@@ -41,9 +41,9 @@ namespace Content.Server.StationEvents
             _timeUntilPulse = _robustRandom.NextFloat() * (MaxPulseDelay - MinPulseDelay) + MinPulseDelay;
         }
 
-        public override void Initialize()
+        public override void Startup()
         {
-            base.Initialize();
+            base.Startup();
             EndWhen = _robustRandom.Next(30, 80) + StartAfter; // We want to be forgiving about the radstorm.
         }
         

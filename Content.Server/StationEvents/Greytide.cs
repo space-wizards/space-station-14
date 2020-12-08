@@ -29,9 +29,9 @@ namespace Content.Server.StationEvents
         // Access IDs the event will target
         private readonly List<string> _eventTargets = new List<string>();
 
-        public override void Initialize()
+        public override void Startup()
         {
-            base.Initialize();
+            base.Startup();
             var robustRandom = IoCManager.Resolve<IRobustRandom>();
             AnnounceWhen = robustRandom.Next(50, 60);
             EndWhen = robustRandom.Next(20, 30);

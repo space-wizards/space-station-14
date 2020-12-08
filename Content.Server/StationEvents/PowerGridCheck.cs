@@ -30,9 +30,9 @@ namespace Content.Server.StationEvents
 
         private readonly List<IEntity> _powered = new List<IEntity>();
 
-        public override void Initialize()
+        public override void Startup()
         {
-            base.Initialize();
+            base.Startup();
             EndWhen = IoCManager.Resolve<IRobustRandom>().Next(60, 120);
         }
 

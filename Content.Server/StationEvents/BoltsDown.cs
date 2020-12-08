@@ -25,9 +25,9 @@ namespace Content.Server.StationEvents
             "Our cybersecurity team has dealt with the problem and restarted all the airlocks bolts in the station. Have a nice shift.");
         protected override string EndAudio => "/Audio/Effects/alert.ogg";
 
-        public override void Initialize()
+        public override void Startup()
         {
-            base.Initialize();
+            base.Startup();
             EndWhen = IoCManager.Resolve<IRobustRandom>().Next(120, 180);
         }
 
