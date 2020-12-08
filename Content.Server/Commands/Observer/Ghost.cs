@@ -1,4 +1,5 @@
-﻿using Content.Server.Administration;
+﻿#nullable enable
+using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.GameTicking;
@@ -6,6 +7,7 @@ using Content.Server.Players;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.GameObjects;
@@ -21,25 +23,25 @@ namespace Content.Server.Commands.Observer
         public string Help => "ghost";
         public bool CanReturn { get; set; } = true;
 
-        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
         {
             if (player == null)
             {
-                shell.SendText((IPlayerSession) null, "Nah");
+                shell.SendText(player, "Nah");
                 return;
             }
 
-            var mind = player.ContentData().Mind;
+            var mind = player.ContentData()?.Mind;
+
             if (mind == null)
             {
                 shell.SendText(player, "You can't ghost here!");
                 return;
             }
 
-            var canReturn = player.AttachedEntity != null && CanReturn;
-            var name = player.AttachedEntity?.Name ?? player.Name;
+            var playerEntity = player.AttachedEntity;
 
-            if (player.AttachedEntity != null && player.AttachedEntity.HasComponent<GhostComponent>())
+            if (playerEntity != null && playerEntity.HasComponent<GhostComponent>())
                 return;
 
             if (mind.VisitingEntity != null)
@@ -48,22 +50,28 @@ namespace Content.Server.Commands.Observer
                 mind.VisitingEntity.Delete();
             }
 
-            var position = player.AttachedEntity?.Transform.Coordinates ?? IoCManager.Resolve<IGameTicker>().GetObserverSpawnPoint();
+            var position = playerEntity?.Transform.Coordinates ?? IoCManager.Resolve<IGameTicker>().GetObserverSpawnPoint();
+            var canReturn = false;
 
-            if (canReturn && player.AttachedEntity.TryGetComponent(out IDamageableComponent damageable))
+            if (playerEntity != null && CanReturn && playerEntity.TryGetComponent(out IMobStateComponent? mobState))
             {
-                switch (damageable.CurrentState)
+                if (mobState.IsDead())
                 {
-                    case DamageState.Dead:
-                        canReturn = true;
-                        break;
-                    case DamageState.Critical:
-                        canReturn = true;
-                        damageable.ChangeDamage(DamageType.Asphyxiation, 100, true, null); //todo: what if they dont breathe lol
-                        break;
-                    default:
-                        canReturn = false;
-                        break;
+                    canReturn = true;
+                }
+                else if (mobState.IsCritical())
+                {
+                    canReturn = true;
+
+                    if (playerEntity.TryGetComponent(out IDamageableComponent? damageable))
+                    {
+                        //todo: what if they dont breathe lol
+                        damageable.ChangeDamage(DamageType.Asphyxiation, 100, true);
+                    }
+                }
+                else
+                {
+                    canReturn = false;
                 }
             }
 
@@ -74,9 +82,10 @@ namespace Content.Server.Commands.Observer
             var ghostComponent = ghost.GetComponent<GhostComponent>();
             ghostComponent.CanReturnToBody = canReturn;
 
-            if (player.AttachedEntity.TryGetComponent(out ServerOverlayEffectsComponent overlayComponent))
+            if (playerEntity != null &&
+                playerEntity.TryGetComponent(out ServerOverlayEffectsComponent? overlayComponent))
             {
-                overlayComponent?.RemoveOverlay(SharedOverlayID.CircleMaskOverlay);
+                overlayComponent.RemoveOverlay(SharedOverlayID.CircleMaskOverlay);
             }
 
             if (canReturn)

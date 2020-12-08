@@ -18,9 +18,12 @@
     drawdepth: BelowFloor
   - type: IconSmooth
     mode: CardinalFlags
-  - type: Destructible
-    thresholdvalue: 100
+  - type: Damageable
     resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+      100:
+        Acts: ["Destruction"]
   - type: SubFloorHide
 
 - type: entity
@@ -47,11 +50,13 @@
     wireDroppedOnCutPrototype: HVWireStack1
     wireType: HighVoltage
   - type: Destructible
-    resistances: metallicResistances
-    spawnOnDestroy:
-      HVWireStack1:
-        Min: 1
-        Max: 1
+    thresholds:
+      100:
+        Spawn:
+          HVWireStack1:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]
 
 - type: entity
   parent: WireBase
@@ -79,11 +84,13 @@
     wireDroppedOnCutPrototype: MVWireStack1
     wireType: MediumVoltage
   - type: Destructible
-    resistances: metallicResistances
-    spawnOnDestroy:
-      MVWireStack1:
-        Min: 1
-        Max: 1
+    thresholds:
+      100:
+        Spawn:
+          MVWireStack1:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]
 
 - type: entity
   parent: WireBase
@@ -113,8 +120,10 @@
     wireDroppedOnCutPrototype: ApcExtensionCableStack1
     wireType: Apc
   - type: Destructible
-    resistances: metallicResistances
-    spawnOnDestroy:
-      ApcExtensionCableStack1:
-        Min: 1
-        Max: 1
+    thresholds:
+      100:
+        Spawn:
+          ApcExtensionCableStack1:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]

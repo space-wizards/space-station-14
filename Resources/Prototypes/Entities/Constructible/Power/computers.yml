@@ -94,6 +94,12 @@
   - type: PowerReceiver
   - type: Anchorable
   - type: Pullable
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+      100:
+        Acts: ["Destruction"]
   - type: BreakableConstruction
     node: monitorBroken
   - type: Sprite

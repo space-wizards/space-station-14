@@ -5,7 +5,7 @@
     "y": 32
   },
   "license": "CCBYSA3",
-  "copyright": "https://github.com/tgstation/tgstation, smug plushie by memager",
+  "copyright": "https://github.com/tgstation/tgstation",
   "states": [
     {
       "name": "carpplush",
@@ -361,15 +361,6 @@
     },
     {
       "name": "seraphprize",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "giantsmugplushie",
       "directions": 1,
       "delays": [
         [

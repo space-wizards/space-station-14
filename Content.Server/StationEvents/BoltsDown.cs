@@ -5,6 +5,7 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Audio;
@@ -40,17 +41,23 @@ namespace Content.Server.StationEvents
             var playerManager = IoCManager.Resolve<IPlayerManager>();
             foreach (var player in playerManager.GetAllPlayers())
             {
-                if (player.AttachedEntity == null || !player.AttachedEntity.TryGetComponent(out InventoryComponent? inventory)) return;
+                var playerEntity = player.AttachedEntity;
+                if (playerEntity == null || !playerEntity.TryGetComponent(out InventoryComponent? inventory)) return;
                 if (inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.BELT, out ItemComponent? item)
                     && item?.Owner.Prototype?.ID == "UtilityBeltClothingFilledEvent") return;
-                if (player.AttachedEntity.TryGetComponent<IDamageableComponent>(out var damageable)
-                && damageable.CurrentState == DamageState.Dead) return;
+                if (playerEntity.TryGetComponent(out IDamageableComponent? damageable) &&
+                    playerEntity.TryGetComponent(out IMobStateComponent? mobState) &&
+                    mobState.IsDead())
+                {
+                    return;
+                }
 
                 var entityManager = IoCManager.Resolve<IEntityManager>();
-                var playerPos = player.AttachedEntity.Transform.Coordinates;
+                var playerPos = playerEntity.Transform.Coordinates;
                 entityManager.SpawnEntity("UtilityBeltClothingFilledEvent", playerPos);
             }
         }
+
         public override void Shutdown()
         {
             base.Shutdown();
@@ -59,6 +66,7 @@ namespace Content.Server.StationEvents
             var componentManager = IoCManager.Resolve<IComponentManager>();
             foreach (var component in componentManager.EntityQuery<AirlockComponent>()) component.BoltsDown = false;
         }
+
         public override void Update(float frameTime)
         {
             if (!Running)
