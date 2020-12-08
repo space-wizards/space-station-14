@@ -154,9 +154,8 @@ namespace Content.Client.GameObjects.Components.Atmos
             get { return _pressureChange; }
             set
             {
-                string prefix = value.Equals(Math.Abs(value)) ? "+" : "-";
-                Text = prefix + Math.Abs(value);
                 _pressureChange = value;
+                Text = (value >= 0) ? ("+" + value) : value.ToString();
             }
         }
 
