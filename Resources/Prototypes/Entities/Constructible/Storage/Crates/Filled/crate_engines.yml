@@ -1,15 +1,34 @@
 - type: entity
-  id: CrateEngineeringAME
-  name:  ame crate
-  parent: CrateRadiation
+  id: CrateEngineeringAMEShielding
+  name: packaged antimatter reactor crate
+  description: "9 parts for the main body of an antimatter reactor, or for expanding an existing one."
+  parent: CrateEngineeringSecure
   components:
   - type: StorageFill
     contents:
-      - name: Multitool
-        amount: 1
       - name: AMEPart
         amount: 9
+
+- type: entity
+  id: CrateEngineeringAMEJar
+  name: antimatter containment jar crate
+  description: "3 antimatter jars, for fuelling an antimatter reactor."
+  parent: CrateEngineeringSecure
+  components:
+  - type: StorageFill
+    contents:
       - name: AMEJar
+        amount: 3
+
+- type: entity
+  id: CrateEngineeringAMEControl
+  name: antimatter control unit crate
+  description: "The control unit of an antimatter reactor."
+  parent: CrateEngineeringSecure
+  components:
+  - type: StorageFill
+    contents:
+      - name: AMEControllerUnanchored
         amount: 1
 
 - type: entity

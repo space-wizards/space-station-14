@@ -31,6 +31,9 @@
       - cargo.hydroponicsseedsexotic
       - cargo.servicejanitorial
       - cargo.servicelightsreplacement
+      - cargo.enginesameshielding
+      - cargo.enginesamejar
+      - cargo.enginesamecontrol
       - cargo.funplushies
       - cargo.funartsupplies
       - cargo.funinstruments
