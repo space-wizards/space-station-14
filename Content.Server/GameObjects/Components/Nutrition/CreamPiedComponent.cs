@@ -52,7 +52,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         public void HitBy(ThrowCollideEventArgs eventArgs)
         {
-            if (!eventArgs.Thrown.TryGetComponent(out CreamPieComponent creamPie) || CreamPied) return;
+            if (!eventArgs.Thrown.HasComponent<CreamPieComponent>() || CreamPied) return;
 
             CreamPied = true;
             Owner.PopupMessage(Loc.GetString("You have been creamed by {0:theName}!", eventArgs.Thrown));
