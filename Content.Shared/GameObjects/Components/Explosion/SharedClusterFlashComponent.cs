@@ -5,15 +5,10 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Explosion
 {
-    public class SharedClusterFlashComponent : Component
-    {
-        public override string Name => "ClusterFlash";
-
-    }
-
     [Serializable, NetSerializable]
-    public enum ClusterFlashVisuals
+    public enum ClusterFlashVisuals : byte
     {
-        GrenadesCounter
+        GrenadesCounter,
+        GrenadesMax,
     }
 }

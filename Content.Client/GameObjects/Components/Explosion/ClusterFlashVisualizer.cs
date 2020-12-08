@@ -1,8 +1,8 @@
 using Content.Shared.GameObjects.Components.Explosion;
+using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -12,56 +12,44 @@ namespace Content.Client.GameObjects.Components.Explosion
     // ReSharper disable once InconsistentNaming
     public class ClusterFlashVisualizer : AppearanceVisualizer
     {
+        private int _levels;
         private string _state;
 
-        private enum ClusterFlashVisualLayers
-        {
-            Base
-        }
         public override void LoadData(YamlMappingNode node)
         {
             base.LoadData(node);
-            if (node.TryGetNode("state", out var child))
+            if (node.TryGetNode("state", out var state))
             {
-                _state = child.AsString();
+                _state = state.AsString();
+            }
+
+            if (node.TryGetNode("levels", out var levels))
+            {
+                _levels = levels.AsInt();
             }
         }
-
-        public override void InitializeEntity(IEntity entity)
-        {
-            base.InitializeEntity(entity);
-            var sprite = entity.GetComponent<ISpriteComponent>();
-
-            sprite.LayerMapSet(ClusterFlashVisualLayers.Base, sprite.AddLayerState(_state));
-        }
-
 
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
 
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
-            if (component.TryGetData(ClusterFlashVisuals.GrenadesCounter, out int grenadesCounter))
+            if (!component.TryGetData(ClusterFlashVisuals.GrenadesMax, out byte max))
             {
-                switch (grenadesCounter){
-                    case 0:
-                        sprite.LayerSetState(ClusterFlashVisualLayers.Base, "empty");
-                        break;
-                    case 1:
-                        sprite.LayerSetState(ClusterFlashVisualLayers.Base, "one");
-                        break;
-                    case 2:
-                        sprite.LayerSetState(ClusterFlashVisualLayers.Base, "two");
-                        break;
-                    case 3:
-                        sprite.LayerSetState(ClusterFlashVisualLayers.Base, "three");
-                        break;
-                    default:
-                        sprite.LayerSetState(ClusterFlashVisualLayers.Base, "three");
-                        break;
-                }
+                max = 3;
+            }
+
+            if (component.TryGetData(ClusterFlashVisuals.GrenadesCounter, out byte grenadesCounter))
+            {
+                var level = ContentHelpers.RoundToLevels(grenadesCounter, max, _levels);
+
+                sprite.LayerSetState(ClusterFlashVisualLayers.Base, $"{_state}-{level}");
             }
         }
 
+        private enum ClusterFlashVisualLayers : byte
+        {
+            Base
+        }
     }
 }

@@ -3,30 +3,62 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Server.GameObjects.Components.Explosion;
 using Robust.Shared.GameObjects;
 using System.Threading.Tasks;
-using Robust.Shared.Timers;
-using Robust.Shared.ViewVariables;
-using Robust.Shared.Log;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 using System;
+using System.Diagnostics.CodeAnalysis;
+using Content.Server.Throw;
 using Robust.Server.GameObjects;
 using Content.Shared.GameObjects.Components.Explosion;
-using Content.Server.Throw;
+using Content.Shared.Physics;
+using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Components.Timers;
+using Robust.Shared.Interfaces.Random;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
+using Robust.Shared.Random;
 
 namespace Content.Server.GameObjects.Components.Explosives
 {
     [RegisterComponent]
-    public class ClusterFlashComponent : SharedClusterFlashComponent, IInteractUsing, IUse{
-        private Container? _grenadesContainer;
-        private int _maxGrenadesNum;
-        private bool _startFull;
+    public sealed class ClusterFlashComponent : Component, IInteractUsing, IUse
+    {
+        public override string Name => "ClusterFlash";
 
-        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args){
-            if (_grenadesContainer == null || _grenadesContainer.ContainedEntities.Count >= _maxGrenadesNum || !args.Using.HasComponent<FlashExplosiveComponent>()){
+        private Container _grenadesContainer = default!;
+
+        /// <summary>
+        ///     What we fill our prototype with if we want to pre-spawn with grenades.
+        /// </summary>
+        private string? _fillPrototype;
+
+        /// <summary>
+        ///     Maximum grenades in the container.
+        /// </summary>
+        private byte _maxGrenades;
+
+        /// <summary>
+        ///     If we have a pre-fill how many more can we spawn.
+        /// </summary>
+        private byte _unspawnedCount;
+
+        /// <summary>
+        ///     How long until our grenades are shot out and armed.
+        /// </summary>
+        private float _delay;
+
+        /// <summary>
+        ///     Max distance grenades can be thrown.
+        /// </summary>
+        private float _throwDistance;
+
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
+        {
+            if (_grenadesContainer.ContainedEntities.Count + _unspawnedCount >= _maxGrenades || !args.Using.HasComponent<FlashExplosiveComponent>())
                 return false;
-            }
+
             _grenadesContainer.Insert(args.Using);
             UpdateAppearance();
             return true;
@@ -36,66 +68,79 @@ namespace Content.Server.GameObjects.Components.Explosives
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref _startFull, "startFull", false);
-            serializer.DataField(ref _maxGrenadesNum, "maxGrenadesCount", 4);
+            serializer.DataField(this, x => x._fillPrototype, "fillPrototype", null);
+            serializer.DataField(this, x => x._maxGrenades, "maxGrenadesCount", 4);
+            serializer.DataField(this, x => x._delay, "delay", 1.0f);
+            serializer.DataField(this, x => x._throwDistance, "distance", 5.0f);
         }
-        public override void Initialize(){
+
+        public override void Initialize()
+        {
             base.Initialize();
 
-            _grenadesContainer = ContainerManagerComponent.Ensure<Container>("clusterFlash", Owner);
+            _grenadesContainer = ContainerManagerComponent.Ensure<Container>("cluster-flash", Owner);
 
-            if (_startFull){
-                FillContainer();
-            }
+            if (_fillPrototype != null)
+                _unspawnedCount += (byte) Math.Max(0, _maxGrenades - _grenadesContainer.ContainedEntities.Count);
+
         }
 
-        bool IUse.UseEntity(UseEntityEventArgs eventArgs){
-            if (_grenadesContainer == null){
-                return false;
-            }
-            var delay = 3500;
-            while (_grenadesContainer.ContainedEntities.Count > 0){
-                IEntity grenade = _grenadesContainer.ContainedEntities[0];
-                if (!_grenadesContainer.Remove(grenade)){
-                    continue;
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
+        {
+            Owner.SpawnTimer((int) (_delay * 1000), () =>
+            {
+                if (Owner.Deleted)
+                    return;
+
+                var random = IoCManager.Resolve<IRobustRandom>();
+                var worldPos = Owner.Transform.WorldPosition;
+
+                while (TryGetGrenade(out var grenade))
+                {
+                    // Okay ThrowHelper is actually disgusting and so is this
+                    var angle = Angle.FromDegrees(random.Next(359));
+                    var distance = random.Next() * _throwDistance;
+                    var target = new EntityCoordinates(grenade.Uid, worldPos + angle.ToVec() * distance);
+
+                    grenade.Throw(10f, target, Owner.Transform.Coordinates);
                 }
-                Random rnd = new Random();
-                float x = rnd.Next(3);
-                float y = rnd.Next(3);
-                if (rnd.Next(1) == 1){
-                    x *= -1;
-                }
-                if (rnd.Next(1) == 1){
-                    y *= -1;
-                }
-                var target = new EntityCoordinates(Owner.Uid, x, y);
-                var player = new EntityCoordinates(Owner.Uid, 0, 0);
-                grenade.Throw(2, target, player, throwSourceEnt: Owner);
-                delay += rnd.Next(400);
-                UpdateAppearance();
-            }
+
+                Owner.Delete();
+            });
             return true;
         }
 
-        private void FillContainer(){
-            if (_grenadesContainer == null){
-                return;
+        private bool TryGetGrenade([NotNullWhen(true)] out IEntity? grenade)
+        {
+            grenade = null;
+
+            if (_unspawnedCount > 0)
+            {
+                _unspawnedCount--;
+                grenade = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.Coordinates);
+                return true;
             }
-            for (int x = 0; x != _maxGrenadesNum; x++){
-                IEntity grenade = Owner.EntityManager.SpawnEntity("GrenadeFlashBang", Owner.Transform.Coordinates);
-                _grenadesContainer.Insert(grenade);
+
+            if (_grenadesContainer.ContainedEntities.Count > 0)
+            {
+                grenade = _grenadesContainer.ContainedEntities[0];
+
+                // This shouldn't happen but you never know.
+                if (!_grenadesContainer.Remove(grenade))
+                    return false;
+
+                return true;
             }
-            UpdateAppearance();
+
+            return false;
         }
 
-        private void UpdateAppearance(){
-            if (_grenadesContainer == null){
-                return;
-            }
-            if (Owner.TryGetComponent<AppearanceComponent>(out AppearanceComponent? appearance))
-            {
-                appearance.SetData(ClusterFlashVisuals.GrenadesCounter, _grenadesContainer.ContainedEntities.Count);
-            }
+        private void UpdateAppearance()
+        {
+            if (!Owner.TryGetComponent(out AppearanceComponent? appearance)) return;
+
+            appearance.SetData(ClusterFlashVisuals.GrenadesCounter, _grenadesContainer.ContainedEntities.Count);
+            appearance.SetData(ClusterFlashVisuals.GrenadesMax, _maxGrenades);
         }
     }
 }
