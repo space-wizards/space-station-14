@@ -25,9 +25,9 @@ namespace Content.Server.StationEvents
             "Our cybersecurity team has dealt with the problem and restarted all the airlocks bolts in the station. Have a nice shift.");
         protected override string EndAudio => "/Audio/Effects/alert.ogg";
 
-        public override void Setup()
+        public override void Initialize()
         {
-            base.Setup();
+            base.Initialize();
             EndWhen = IoCManager.Resolve<IRobustRandom>().Next(120, 180);
         }
 
@@ -50,11 +50,11 @@ namespace Content.Server.StationEvents
                 entityManager.SpawnEntity("UtilityBeltClothingFilledEvent", playerPos);
             }
         }
-        public override void End()
+        public override void Shutdown()
         {
             var componentManager = IoCManager.Resolve<IComponentManager>();
             foreach (var component in componentManager.EntityQuery<AirlockComponent>()) component.BoltsDown = false;
-            base.End();
+            base.Shutdown();
         }
     }
 }

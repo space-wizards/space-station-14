@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using Content.Server.GameTicking;
-using Content.Server.Interfaces.GameTicking;
 using Content.Server.StationEvents;
+using Content.Server.Interfaces.GameTicking;
+using Content.Server.Interfaces.Chat;
 using Content.Shared;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
@@ -29,6 +30,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IGameTicker _gameTicker = default!;
+        [Dependency] private readonly IChatManager _chat = default!;
 
         public StationEvent CurrentEvent { get; private set; }
         public IReadOnlyCollection<StationEvent> StationEvents => _stationEvents;
@@ -58,7 +60,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
                 }
 
                 _enabled = value;
-                CurrentEvent?.End();
+                CurrentEvent?.Shutdown();
                 CurrentEvent = null;
             }
         }
@@ -99,9 +101,9 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
                     continue;
                 }
 
-                CurrentEvent?.End();
+                CurrentEvent?.Shutdown();
                 CurrentEvent = stationEvent;
-                stationEvent.Setup();
+                stationEvent.Initialize();
                 return Loc.GetString("Running event ") + stationEvent.Name;
             }
 
@@ -122,9 +124,9 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
                 return Loc.GetString("No valid events available");
             }
 
-            CurrentEvent?.End();
+            CurrentEvent?.Shutdown();
             CurrentEvent = randomEvent;
-            CurrentEvent.Setup();
+            CurrentEvent.Initialize();
 
             return Loc.GetString("Running ") + randomEvent.Name;
         }
@@ -153,7 +155,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
             else
             {
                 resultText = Loc.GetString("Stopped event ") + CurrentEvent.Name;
-                CurrentEvent.End();
+                CurrentEvent.Shutdown();
                 CurrentEvent = null;
             }
 
@@ -230,7 +232,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
                 // Shutdown the event and set the timer for the next event
                 if (!CurrentEvent.Running)
                 {
-                    CurrentEvent.End();
+                    CurrentEvent.Shutdown();
                     CurrentEvent = null;
                     ResetTimer();
                 }
@@ -253,7 +255,12 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
             else
             {
                 CurrentEvent = stationEvent;
-                CurrentEvent.Setup();
+                // todo:
+                // make this text have a button that can cancel the event
+                // add a 10 second delay before running (select and run)
+                // broadcast to dchat (once the event starts)
+                _chat.SendAdminAnnouncement(Loc.GetString("Running event: ") + CurrentEvent.Name);
+                CurrentEvent.Initialize();
             }
         }
 
@@ -356,15 +363,16 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
 
         public override void Shutdown()
         {
+            // should we shutdown the event before calling the parent shutdown?
+            CurrentEvent?.Shutdown();
             base.Shutdown();
-            CurrentEvent?.End();
         }
 
         public void Reset()
         {
             if (CurrentEvent != null && CurrentEvent.Running)
             {
-                CurrentEvent.End();
+                CurrentEvent.Shutdown();
                 CurrentEvent = null;
             }
 

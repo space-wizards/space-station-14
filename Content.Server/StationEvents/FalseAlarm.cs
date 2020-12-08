@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using JetBrains.Annotations;
 using Content.Server.GameObjects.EntitySystems.StationEvents;
+using Content.Shared.Network.NetMessages;
 using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.StationEvents
@@ -10,7 +11,7 @@ namespace Content.Server.StationEvents
     {
         public override string Name => "FalseAlarm";
         public override StationEventWeight Weight => StationEventWeight.High;
-        public override bool Fakeable => false;
+        //public override bool Fakeable => false;
         protected override float EndWhen => 1.0f;
         public override int? MaxOccurrences => 5;
 
@@ -22,7 +23,7 @@ namespace Content.Server.StationEvents
             var stationEventSystem = EntitySystem.Get<StationEventSystem>();
             var randomEvent = stationEventSystem.PickRandomEvent();
 
-            if (randomEvent.Fakeable)
+            if (randomEvent.GetType() != GetType())
             {
                 randomEvent.Announce();
             }

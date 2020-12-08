@@ -23,9 +23,9 @@ namespace Content.IntegrationTests.Tests.StationEvents
 
                 foreach (var stationEvent in stationEventsSystem.StationEvents)
                 {
-                    stationEvent.Setup();
+                    stationEvent.Initialize();
                     stationEvent.Update(dummyFrameTime);
-                    stationEvent.End();
+                    stationEvent.Shutdown();
                     Assert.That(stationEvent.Occurrences == 1);
                 }
 

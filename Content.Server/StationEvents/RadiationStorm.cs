@@ -41,9 +41,9 @@ namespace Content.Server.StationEvents
             _timeUntilPulse = _robustRandom.NextFloat() * (MaxPulseDelay - MinPulseDelay) + MinPulseDelay;
         }
 
-        public override void Setup()
+        public override void Initialize()
         {
-            base.Setup();
+            base.Initialize();
             EndWhen = _robustRandom.Next(30, 80) + StartAfter; // We want to be forgiving about the radstorm.
         }
         
@@ -59,7 +59,7 @@ namespace Content.Server.StationEvents
             }
         }
 
-        public override void End()
+        public override void Shutdown()
         {
             // IOC uninject?
             _entityManager = null;
@@ -71,7 +71,7 @@ namespace Content.Server.StationEvents
             {
                 overlay.RemoveOverlay(SharedOverlayID.RadiationPulseOverlay);
             }
-            base.End();
+            base.Shutdown();
         }
 
         public override void Tick(float frameTime)

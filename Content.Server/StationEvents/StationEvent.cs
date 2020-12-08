@@ -27,7 +27,7 @@ namespace Content.Server.StationEvents
         /// <summary>
         /// What should be said in chat when the event starts (if anything).
         /// </summary>
-        protected virtual string? StartAnnouncement { get; } = null;
+        protected virtual string? StartAnnouncement { get; set; } = null;
 
         /// <summary>
         /// What should be said in chat when the event end (if anything).
@@ -47,7 +47,8 @@ namespace Content.Server.StationEvents
         /// <summary>
         /// Can the false alarm fake this event?
         /// </summary>
-        public virtual bool Fakeable { get; } = true;
+        /// UNUSED! Will be used once we have more events.
+        //public virtual bool Fakeable { get; } = true;
 
         /// <summary>
         /// In minutes, when is the first time this event can start
@@ -96,9 +97,9 @@ namespace Content.Server.StationEvents
         // No "Ended" as this assumes the end properly kicks off.
 
         /// <summary>
-        /// Called before Start(). Allows you to setup your events, such as randomly setting variables.
+        /// Called before Start(). Allows you to Initialize your events, such as randomly setting variables.
         /// </summary>
-        public virtual void Setup()
+        public virtual void Initialize()
         {
             Running = true;
             Occurrences += 1;
@@ -128,7 +129,7 @@ namespace Content.Server.StationEvents
         /// <summary>
         /// Called once when the station event ends
         /// </summary>
-        public virtual void End()
+        public virtual void Shutdown()
         {
             if (EndAnnouncement != null)
             {
@@ -181,7 +182,7 @@ namespace Content.Server.StationEvents
 
             if (ActiveFor >= EndWhen && ActiveFor >= AnnounceWhen && ActiveFor >= StartAfter)
             {
-                End();
+                Shutdown();
                 Started = false;
                 Announced = false;
                 return;

@@ -30,9 +30,9 @@ namespace Content.Server.StationEvents
 
         private readonly List<IEntity> _powered = new List<IEntity>();
 
-        public override void Setup()
+        public override void Initialize()
         {
-            base.Setup();
+            base.Initialize();
             EndWhen = IoCManager.Resolve<IRobustRandom>().Next(60, 120);
         }
 
@@ -47,7 +47,7 @@ namespace Content.Server.StationEvents
             }
         }
 
-        public override void End()
+        public override void Shutdown()
         {
             foreach (var entity in _powered)
             {
@@ -66,7 +66,7 @@ namespace Content.Server.StationEvents
                 EntitySystem.Get<AudioSystem>().PlayGlobal("/Audio/Announcements/power_on.ogg");
             }, _announceCancelToken.Token);
             _powered.Clear();
-            base.End();
+            base.Shutdown();
         }
     }
 }

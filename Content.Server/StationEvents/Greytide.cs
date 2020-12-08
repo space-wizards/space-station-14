@@ -18,7 +18,6 @@ namespace Content.Server.StationEvents
         public override string Name => "Greytide";
         protected override string StartAnnouncement => Loc.GetString(
             "Gr3y.T1d3 virus detected in the station's door subroutines. Severity level of[severity]. Recommend station AI involvement.");
-        // [station_name()] => "the station's"
         public override StationEventWeight Weight => StationEventWeight.Low;
         public override int MinimumPlayers => 5;
         public override int? MaxOccurrences => 2;
@@ -27,14 +26,12 @@ namespace Content.Server.StationEvents
 
         private int _severity = 1;
 
-        // Access-like for airlocks, because we don't have areas
+        // Access IDs the event will target
+        private readonly List<string> _eventTargets = new List<string>();
 
-
-        private List<string> _eventTargets = new List<string> { }; // Access IDs the event will target
-
-        public override void Setup()
+        public override void Initialize()
         {
-            base.Setup();
+            base.Initialize();
             var robustRandom = IoCManager.Resolve<IRobustRandom>();
             AnnounceWhen = robustRandom.Next(50, 60);
             EndWhen = robustRandom.Next(20, 30);
@@ -43,28 +40,43 @@ namespace Content.Server.StationEvents
             var accessHelper = new AccessHelper();
             // possible event target(s)
 
-            var posEventTarget = new[] {AccessHelper.DoorSector.Security, AccessHelper.DoorSector.Command };
+            var posEventTarget = new[] {
+                AccessHelper.DoorSector.Security, AccessHelper.DoorSector.Command,
+                AccessHelper.DoorSector.Engine, AccessHelper.DoorSector.Medical,
+                AccessHelper.DoorSector.Science, AccessHelper.DoorSector.Cargo };
+
+            // severity == department count
             for (int i = 0; i < _severity; i++)
             {
                 var diceRolled = robustRandom.Next(0, posEventTarget.Length);
                 var selected = posEventTarget[diceRolled];
+                // try to get the selected 
                 accessHelper.TryGetDepartmentDoorNames(selected, out var access);
                 _eventTargets.Concat(access);
                 posEventTarget.Take(diceRolled);
             }
-            accessHelper = null;
         }
 
         public override void Start()
         {
-            // bannanabread. Flicker lights here for spooks
+            // todo: Flicker lights here for spooks
             return;
         }
-        public override void End()
+
+        public override void Announce()
+        {
+            // special announcement. todo: station name
+            StartAnnouncement = "Gr3y.T1d3 virus detected in the station's door subroutines. Severity level of " + _severity + ". Recommend station AI involvement.";
+            base.Announce();
+        }
+
+        public override void Shutdown()
         {
             var componentManager = IoCManager.Resolve<IComponentManager>();
             // apc manager, blow the lights
+
             // secure lockers, open it up
+
             // unbolt, open, bolt airlocks
             foreach (var airlock in componentManager.EntityQuery<AirlockComponent>())
             {
@@ -86,6 +98,7 @@ namespace Content.Server.StationEvents
                 airlock.BoltsDown = true;
             }
             // finish all prison timers
+            // no prison timers on ss14 <b>yet</b>.
         }
     }
 }
