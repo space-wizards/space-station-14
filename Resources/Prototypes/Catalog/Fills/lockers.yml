@@ -53,6 +53,32 @@
         prob: 0.2
 
 - type: entity
+  id: LockerEmergencyFilledRegular
+  parent: LockerEmergency
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - name: ClothingMaskBreath
+      - name: EmergencyOxygenTankFilled
+      - name: ToolboxEmergencyFilled
+        prob: 0.25
+
+- type: entity
+  id: LockerEmergencyFilledDouble
+  parent: LockerEmergency
+  suffix: Filled 2X
+  components:
+  - type: StorageFill
+    contents:
+      - name: ClothingMaskBreath
+        amount: 2
+      - name: EmergencyOxygenTankFilled
+        amount: 2
+      - name: ToolboxEmergencyFilled
+        prob: 0.25
+
+- type: entity
   id: LockerBoozeFilled
   suffix: Filled
   parent: LockerBooze
