@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   id: PelletShotgunSlug
   name: pellet (.50 slug)
   abstract: true
@@ -76,3 +76,24 @@
   - type: Projectile
     damages:
       Blunt: 1
+
+- type: entity
+  id: PelletShotgunTranquilizer
+  name: pellet (.50 tranquilizer)
+  abstract: true
+  parent: BulletBasePractice
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/buckshot.rsi
+    state: base
+  - type: Projectile
+    damages:
+      Blunt: 1
+  - type: SolutionContainer
+    maxVol: 10
+    contents:
+      reagents:
+      - ReagentId: chem.H2O
+        Quantity: 10
+    caps: RemoveFrom
+  - type: ChemicalInjectionProjectile
