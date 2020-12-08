@@ -76,21 +76,7 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
 
         public void Transfer(GasMixture from, GasMixture to, float ratio)
         {
-            var removed = from.RemoveRatio(ratio);
-            var toOld = to.Gases.ToArray();
-
-            to.Merge(removed);
-
-            for (var gas = 0; gas < Atmospherics.TotalNumberOfGases; gas++)
-            {
-                var newAmount = to.GetMoles(gas);
-                var oldAmount = toOld[gas];
-                var delta = newAmount - oldAmount;
-
-                removed.AdjustMoles(gas, -delta);
-            }
-
-            from.Merge(removed);
+            to.Merge(from.RemoveRatio(ratio));
         }
 
         public void ToBloodstream(GasMixture mixture)
@@ -152,11 +138,14 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
 
         public void Inhale(float frameTime)
         {
-            if (Body != null && Body.Owner.TryGetComponent(out InternalsComponent? internals)
-                             && internals.BreathToolEntity != null && internals.GasTankEntity != null
-                             && internals.BreathToolEntity.TryGetComponent(out BreathToolComponent? breathTool)
-                             && breathTool.IsFunctional && internals.GasTankEntity.TryGetComponent(out GasTankComponent? gasTank)
-                             && gasTank.Air != null)
+            if (Body != null &&
+                Body.Owner.TryGetComponent(out InternalsComponent? internals) &&
+                internals.BreathToolEntity != null &&
+                internals.GasTankEntity != null &&
+                internals.BreathToolEntity.TryGetComponent(out BreathToolComponent? breathTool) &&
+                breathTool.IsFunctional &&
+                internals.GasTankEntity.TryGetComponent(out GasTankComponent? gasTank) &&
+                gasTank.Air != null)
             {
                 Inhale(frameTime, gasTank.RemoveAirVolume(Atmospherics.BreathVolume));
                 return;
@@ -204,20 +193,7 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
             bloodstream.PumpToxins(Air);
 
             var lungRemoved = Air.RemoveRatio(0.5f);
-            var toOld = to.Gases.ToArray();
-
             to.Merge(lungRemoved);
-
-            for (var gas = 0; gas < Atmospherics.TotalNumberOfGases; gas++)
-            {
-                var newAmount = to.GetMoles(gas);
-                var oldAmount = toOld[gas];
-                var delta = newAmount - oldAmount;
-
-                lungRemoved.AdjustMoles(gas, -delta);
-            }
-
-            Air.Merge(lungRemoved);
         }
     }
 

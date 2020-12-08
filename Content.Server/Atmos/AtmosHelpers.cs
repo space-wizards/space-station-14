@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -11,18 +12,18 @@ namespace Content.Server.Atmos
 {
     public static class AtmosHelpers
     {
-        public static TileAtmosphere? GetTileAtmosphere(this EntityCoordinates coordinates, IEntityManager? entityManager = null)
+        public static TileAtmosphere GetTileAtmosphere(this EntityCoordinates coordinates, IEntityManager? entityManager = null)
         {
             entityManager ??= IoCManager.Resolve<IEntityManager>();
 
             var gridAtmos = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(coordinates.GetGridId(entityManager));
 
-            return gridAtmos?.GetTile(coordinates);
+            return gridAtmos.GetTile(coordinates);
         }
 
         public static GasMixture? GetTileAir(this EntityCoordinates coordinates, IEntityManager? entityManager = null)
         {
-            return coordinates.GetTileAtmosphere(entityManager)?.Air;
+            return coordinates.GetTileAtmosphere(entityManager).Air;
         }
 
         public static bool TryGetTileAtmosphere(this EntityCoordinates coordinates, [MaybeNullWhen(false)] out TileAtmosphere atmosphere)
@@ -37,11 +38,11 @@ namespace Content.Server.Atmos
             return !Equals(air = coordinates.GetTileAir(entityManager)!, default);
         }
 
-        public static TileAtmosphere? GetTileAtmosphere(this Vector2i indices, GridId gridId)
+        public static TileAtmosphere GetTileAtmosphere(this Vector2i indices, GridId gridId)
         {
             var gridAtmos = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(gridId);
 
-            return gridAtmos?.GetTile(indices);
+            return gridAtmos.GetTile(indices);
         }
 
         public static GasMixture? GetTileAir(this Vector2i indices, GridId gridId)
@@ -60,6 +61,34 @@ namespace Content.Server.Atmos
         {
             // ReSharper disable once ConditionIsAlwaysTrueOrFalse
             return !Equals(air = indices.GetTileAir(gridId)!, default);
+        }
+
+        public static bool InvalidateTileAir(this ITransformComponent transform, AtmosphereSystem? atmosSystem = null)
+        {
+            atmosSystem ??= EntitySystem.Get<AtmosphereSystem>();
+
+            if (!transform.Coordinates.TryGetTileAtmosphere(out var tileAtmos))
+            {
+                return false;
+            }
+
+            atmosSystem.GetGridAtmosphere(transform.GridID).Invalidate(tileAtmos.GridIndices);
+            return true;
+        }
+
+        public static bool InvalidateTileAir(this EntityCoordinates coordinates, AtmosphereSystem? atmosSystem = null, IEntityManager? entityManager = null)
+        {
+            atmosSystem ??= EntitySystem.Get<AtmosphereSystem>();
+            entityManager ??= IoCManager.Resolve<IEntityManager>();
+
+            if (!coordinates.TryGetTileAtmosphere(out var tileAtmos))
+            {
+                return false;
+            }
+
+            var gridId = coordinates.GetGridId(entityManager);
+            atmosSystem.GetGridAtmosphere(gridId).Invalidate(tileAtmos.GridIndices);
+            return true;
         }
     }
 }

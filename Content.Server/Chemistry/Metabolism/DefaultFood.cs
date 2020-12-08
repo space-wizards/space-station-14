@@ -11,7 +11,7 @@ namespace Content.Server.Chemistry.Metabolism
     /// Default metabolism for food reagents. Attempts to find a HungerComponent on the target,
     /// and to update it's hunger values.
     /// </summary>
-    class DefaultFood : IMetabolizable
+    public class DefaultFood : IMetabolizable
     {
         //Rate of metabolism in units / second
         private ReagentUnit _metabolismRate;

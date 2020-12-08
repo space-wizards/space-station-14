@@ -7,7 +7,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Server.Chemistry.ReactionEffects
 {
-    class ExplosionReactionEffect : IReactionEffect
+    public class ExplosionReactionEffect : IReactionEffect
     {
         private float _devastationRange;
         private float _heavyImpactRange;

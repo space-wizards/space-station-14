@@ -26,10 +26,10 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
     public class ApcNetNodeGroup : BaseNetConnectorNodeGroup<BaseApcNetComponent, IApcNet>, IApcNet
     {
         [ViewVariables]
-        private readonly Dictionary<ApcComponent, BatteryComponent> _apcBatteries = new Dictionary<ApcComponent, BatteryComponent>();
+        private readonly Dictionary<ApcComponent, BatteryComponent> _apcBatteries = new();
 
         [ViewVariables]
-        private readonly Dictionary<PowerProviderComponent, List<PowerReceiverComponent>> _providerReceivers = new Dictionary<PowerProviderComponent, List<PowerReceiverComponent>>();
+        private readonly Dictionary<PowerProviderComponent, List<PowerReceiverComponent>> _providerReceivers = new();
 
         //Debug property
         [ViewVariables]

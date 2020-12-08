@@ -44,7 +44,7 @@ namespace Content.Client.GameObjects.Components.Fluids
         }
     }
 
-    public enum SprayVisualLayers
+    public enum SprayVisualLayers : byte
     {
         Base
     }

@@ -3,6 +3,8 @@
   id: SeatBase
   abstract: true
   description: You sit in this. Either by will or force.
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -28,9 +30,12 @@
     position: Stand
   - type: Anchorable
   - type: Pullable
-  - type: Destructible
-    deadThreshold: 50
+  - type: Damageable
     resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+      50:
+        Acts: ["Destruction"]
 
 - type: entity
   name: chair

@@ -10,7 +10,6 @@
             "SubFloorHide",
             "LowWall",
             "ReinforcedWall",
-            "CharacterInfo",
             "InteractionOutline",
             "MeleeWeaponArcAnimation",
             "AnimationsTest",

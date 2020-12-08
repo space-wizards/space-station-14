@@ -30,7 +30,7 @@ namespace Content.Client.GameObjects.Components.Storage
         {
             base.HandleComponentState(curState, nextState);
 
-            if (!(curState is StorableComponentState state))
+            if (curState is not StorableComponentState state)
             {
                 return;
             }

@@ -1,1 +1,0 @@
-{"version": 1, "size": {"x": 32, "y": 32}, "license": "CC-BY-SA-3.0", "copyright": "Taken from https://github.com/BeeStation/BeeStation-Hornet", "states": [{"name": "beret_hos", "directions": 1, "delays": [[1.0]]}, {"name": "equipped-HELMET", "directions": 4, "delays": [[1.0], [1.0], [1.0], [1.0]]}]}

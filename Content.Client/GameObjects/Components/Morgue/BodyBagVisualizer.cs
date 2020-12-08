@@ -23,7 +23,7 @@ namespace Content.Client.GameObjects.Components.Morgue
         }
     }
 
-    public enum BodyBagVisualLayers
+    public enum BodyBagVisualLayers : byte
     {
         Label,
     }
