@@ -75,19 +75,17 @@ namespace Content.Client.GameObjects.Components.Atmos
             // Obligatory check because bool isn't nullable
             if (_window == null) return;
 
-            if (_window.LabelInput.Editable)
+            if (_window.LabelInputEditable)
             {
                 if (_window.LabelInput.Text != _window.OldLabel)
                     SendMessage(new CanisterLabelChangedMessage(_window.LabelInput.Text));
 
-                _window.LabelInput.Editable = false;
-                _window.EditLabelBtn.Text = _window.EditLabelBtnStateEdit;
+                _window.LabelInputEditable = false;
             }
             else
             {
-                _window.LabelInput.Editable = true;
+                _window.LabelInputEditable = true;
                 _window.LabelInput.HasKeyboardFocus();
-                _window.EditLabelBtn.Text = _window.EditLabelBtnStateSubmit;
             }
         }
 

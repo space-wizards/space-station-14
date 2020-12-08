@@ -24,10 +24,15 @@ namespace Content.Client.GameObjects.Components.Atmos
         public readonly CheckButton ToggleValve;
         public readonly LineEdit LabelInput;
         public readonly Button EditLabelBtn;
-        public string OldLabel = "";
+        public string OldLabel { get; set; } = "";
 
-        public readonly string EditLabelBtnStateEdit = Loc.GetString("Edit");
-        public readonly string EditLabelBtnStateSubmit = Loc.GetString("OK");
+        public bool LabelInputEditable {
+            get => LabelInput.Editable;
+            set {
+                LabelInput.Editable = value;
+                EditLabelBtn.Text = value ? Loc.GetString("OK") : Loc.GetString("Edit");
+            }
+        }
 
         public List<ReleasePressureButton> ReleasePressureButtons { get; private set; }
 
@@ -111,6 +116,9 @@ namespace Content.Client.GameObjects.Components.Atmos
                 var btn = (ReleasePressureButton) control;
                 ReleasePressureButtons.Add(btn);
             }
+
+            // Reset the editable label
+            LabelInputEditable = false;
         }
 
 
@@ -120,8 +128,8 @@ namespace Content.Client.GameObjects.Components.Atmos
         /// <param name="state">The state the UI should reflect</param>
         public void UpdateState(GasCanisterBoundUserInterfaceState state)
         {
-            _pressure.Text = state.Volume + "kPa";
-            _releasePressure.Text = state.ReleasePressure + "kPa";
+            _pressure.Text = Loc.GetString("{0}kPa", state.Volume);
+            _releasePressure.Text = Loc.GetString("{0}kPa", state.ReleasePressure);
 
             // Update the canister label
             OldLabel = LabelInput.Text;
@@ -129,8 +137,7 @@ namespace Content.Client.GameObjects.Components.Atmos
             Title = state.Label;
 
             // Reset the editable label
-            LabelInput.Editable = false;
-            EditLabelBtn.Text = EditLabelBtnStateEdit;
+            LabelInputEditable = false;
 
             ToggleValve.Pressed = state.ValveOpened;
         }
