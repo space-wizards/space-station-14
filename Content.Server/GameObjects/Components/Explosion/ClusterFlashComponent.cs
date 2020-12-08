@@ -8,6 +8,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using Content.Server.GameObjects.Components.Trigger.TimerTrigger;
 using Content.Server.Throw;
 using Robust.Server.GameObjects;
 using Content.Shared.GameObjects.Components.Explosion;
@@ -19,6 +20,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Explosives
 {
@@ -32,12 +34,14 @@ namespace Content.Server.GameObjects.Components.Explosives
         /// <summary>
         ///     What we fill our prototype with if we want to pre-spawn with grenades.
         /// </summary>
+        [ViewVariables]
         private string? _fillPrototype;
 
         /// <summary>
         ///     Maximum grenades in the container.
         /// </summary>
-        private byte _maxGrenades;
+        [ViewVariables]
+        private int _maxGrenades;
 
         /// <summary>
         ///     If we have a pre-fill how many more can we spawn.
@@ -47,13 +51,21 @@ namespace Content.Server.GameObjects.Components.Explosives
         /// <summary>
         ///     How long until our grenades are shot out and armed.
         /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
         private float _delay;
 
         /// <summary>
         ///     Max distance grenades can be thrown.
         /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
         private float _throwDistance;
 
+        /// <summary>
+        ///     This is the end.
+        /// </summary>
+        private bool _countDown;
+
+        // I'm suss on this bit
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
         {
             if (_grenadesContainer.ContainedEntities.Count + _unspawnedCount >= _maxGrenades || !args.Using.HasComponent<FlashExplosiveComponent>())
@@ -69,7 +81,7 @@ namespace Content.Server.GameObjects.Components.Explosives
             base.ExposeData(serializer);
 
             serializer.DataField(this, x => x._fillPrototype, "fillPrototype", null);
-            serializer.DataField(this, x => x._maxGrenades, "maxGrenadesCount", 4);
+            serializer.DataField(this, x => x._maxGrenades, "maxGrenadesCount", 3);
             serializer.DataField(this, x => x._delay, "delay", 1.0f);
             serializer.DataField(this, x => x._throwDistance, "distance", 5.0f);
         }
@@ -89,11 +101,13 @@ namespace Content.Server.GameObjects.Components.Explosives
         {
             Owner.SpawnTimer((int) (_delay * 1000), () =>
             {
-                if (Owner.Deleted)
+                if (Owner.Deleted || _countDown)
                     return;
 
+                _countDown = true;
                 var random = IoCManager.Resolve<IRobustRandom>();
                 var worldPos = Owner.Transform.WorldPosition;
+                var delay = 0;
 
                 while (TryGetGrenade(out var grenade))
                 {
@@ -102,7 +116,20 @@ namespace Content.Server.GameObjects.Components.Explosives
                     var distance = random.Next() * _throwDistance;
                     var target = new EntityCoordinates(grenade.Uid, worldPos + angle.ToVec() * distance);
 
-                    grenade.Throw(10f, target, Owner.Transform.Coordinates);
+                    grenade.Throw(1f, target, Owner.Transform.Coordinates);
+
+                    grenade.SpawnTimer(delay, () =>
+                    {
+                        if (grenade.Deleted)
+                            return;
+
+                        if (grenade.TryGetComponent(out OnUseTimerTriggerComponent? useTimer))
+                        {
+                            useTimer.Trigger(eventArgs.User);
+                        }
+                    });
+
+                    delay += random.Next(100, 300);
                 }
 
                 Owner.Delete();
@@ -117,7 +144,7 @@ namespace Content.Server.GameObjects.Components.Explosives
             if (_unspawnedCount > 0)
             {
                 _unspawnedCount--;
-                grenade = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.Coordinates);
+                grenade = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.MapPosition);
                 return true;
             }
 

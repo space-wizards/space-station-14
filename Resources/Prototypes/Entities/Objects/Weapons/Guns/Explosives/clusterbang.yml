@@ -24,7 +24,7 @@
   - type: Sprite
     state: base-3
   - type: ClusterFlash
-    fillPrototype: GrenadeFlashbang
+    fillPrototype: GrenadeFlashBang
   - type: Appearance
     visuals:
     - type: ClusterFlashVisualizer

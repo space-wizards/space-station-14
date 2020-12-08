@@ -34,12 +34,12 @@ namespace Content.Client.GameObjects.Components.Explosion
             base.OnChangeData(component);
 
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
-            if (!component.TryGetData(ClusterFlashVisuals.GrenadesMax, out byte max))
+            if (!component.TryGetData(ClusterFlashVisuals.GrenadesMax, out int max))
             {
                 max = 3;
             }
 
-            if (component.TryGetData(ClusterFlashVisuals.GrenadesCounter, out byte grenadesCounter))
+            if (component.TryGetData(ClusterFlashVisuals.GrenadesCounter, out int grenadesCounter))
             {
                 var level = ContentHelpers.RoundToLevels(grenadesCounter, max, _levels);
 

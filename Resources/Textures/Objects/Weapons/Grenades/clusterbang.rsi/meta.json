@@ -8,19 +8,19 @@
     "copyright": "Suholinskiy-Mestechkin David",
     "states": [
         {
-            "name": "empty",
+            "name": "base-0",
             "directions": 1
         },
         {
-            "name": "one",
+            "name": "base-1",
             "directions": 1
         },
         {
-            "name": "two",
+            "name": "base-2",
             "directions": 1
         },
         {
-            "name": "three",
+            "name": "base-3",
             "directions": 1
         }
     ]
