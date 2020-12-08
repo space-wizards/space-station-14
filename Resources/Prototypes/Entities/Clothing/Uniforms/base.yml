@@ -1,0 +1,20 @@
+- type: entity
+  parent: Clothing
+  id: ClothingUniformBase
+  abstract: true
+  components:
+  - type: Sprite
+    state: icon
+  - type: Clothing
+    Slots: [innerclothing]
+
+- type: entity
+  parent: Clothing
+  id: ClothingUniformSkirtBase
+  abstract: true
+  components:
+  - type: Sprite
+    state: icon
+  - type: Clothing
+    Slots: [innerclothing]
+    femaleMask: UniformTop

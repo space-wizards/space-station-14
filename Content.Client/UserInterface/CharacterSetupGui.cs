@@ -27,6 +27,7 @@ namespace Content.Client.UserInterface
         private readonly HumanoidProfileEditor _humanoidProfileEditor;
         private readonly IClientPreferencesManager _preferencesManager;
         public readonly Button CloseButton;
+        public readonly Button SaveButton;
 
         public CharacterSetupGui(IEntityManager entityManager,
             IResourceCache resourceCache,
@@ -64,13 +65,6 @@ namespace Content.Client.UserInterface
 
             margin.AddChild(vBox);
 
-            CloseButton = new Button
-            {
-                SizeFlagsHorizontal = SizeFlags.Expand | SizeFlags.ShrinkEnd,
-                Text = Loc.GetString("Save and close"),
-                StyleClasses = {StyleNano.StyleClassButtonBig}
-            };
-
             var topHBox = new HBoxContainer
             {
                 CustomMinimumSize = (0, 40),
@@ -90,7 +84,18 @@ namespace Content.Client.UserInterface
                             }
                         }
                     },
-                    CloseButton
+                    (SaveButton = new Button
+                    {
+                        SizeFlagsHorizontal = SizeFlags.Expand | SizeFlags.ShrinkEnd,
+                        Text = Loc.GetString("Save"),
+                        StyleClasses = {StyleNano.StyleClassButtonBig},
+                    }),
+                    (CloseButton = new Button
+                    {
+                        SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
+                        Text = Loc.GetString("Close"),
+                        StyleClasses = {StyleNano.StyleClassButtonBig},
+                    })
                 }
             };
 

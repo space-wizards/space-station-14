@@ -20,7 +20,7 @@ namespace Content.Server.GameObjects.EntitySystems
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
 
-        private readonly Dictionary<GridId, List<ServerAlertsComponent>> _alerts = new Dictionary<GridId, List<ServerAlertsComponent>>();
+        private readonly Dictionary<GridId, List<ServerAlertsComponent>> _alerts = new();
 
         public override void Initialize()
         {

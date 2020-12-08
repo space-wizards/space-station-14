@@ -44,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         private bool _storageInitialCalculated;
         private int _storageUsed;
         private int _storageCapacityMax;
-        public readonly HashSet<IPlayerSession> SubscribedSessions = new HashSet<IPlayerSession>();
+        public readonly HashSet<IPlayerSession> SubscribedSessions = new();
 
         [ViewVariables]
         public override IReadOnlyList<IEntity>? StoredEntities => _storage?.ContainedEntities;
@@ -153,11 +153,11 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
             EnsureInitialCalculated();
 
-            Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) had entity (UID {message.Entity.Uid}) removed from it.");
+            Logger.DebugS(LoggerName, $"Storage (UID {Owner}) had entity (UID {message.Entity}) removed from it.");
 
             if (!message.Entity.TryGetComponent(out StorableComponent? storable))
             {
-                Logger.WarningS(LoggerName, $"Removed entity {message.Entity.Uid} without a StorableComponent from storage {Owner.Uid} at {Owner.Transform.MapPosition}");
+                Logger.WarningS(LoggerName, $"Removed entity {message.Entity} without a StorableComponent from storage {Owner} at {Owner.Transform.MapPosition}");
 
                 RecalculateStorageUsed();
                 return;
@@ -411,7 +411,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 }
                 case CloseStorageUIMessage _:
                 {
-                    if (!(session is IPlayerSession playerSession))
+                    if (session is not IPlayerSession playerSession)
                     {
                         break;
                     }

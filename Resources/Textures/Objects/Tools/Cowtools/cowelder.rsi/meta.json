@@ -1,0 +1,102 @@
+﻿{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/199fffd989d6f7fd6ea9c5188c875137df4f34b8 & from @trerri#0107",
+    "states": [
+        {
+            "name": "icon",
+            "directions": 1,
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "welder_flame",
+            "directions": 1,
+            "delays": [
+                [
+                    0.2,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "off-inhand-left",
+            "directions": 4,
+            "delays": [
+                [
+                    1
+                ],
+                [
+                    1
+                ],
+                [
+                    1
+                ],
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "off-inhand-right",
+            "directions": 4,
+            "delays": [
+                [
+                    1
+                ],
+                [
+                    1
+                ],
+                [
+                    1
+                ],
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "on-inhand-left",
+            "directions": 4,
+            "delays": [
+                [
+                    1
+                ],
+                [
+                    1
+                ],
+                [
+                    1
+                ],
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "on-inhand-right",
+            "directions": 4,
+            "delays": [
+                [
+                    1
+                ],
+                [
+                    1
+                ],
+                [
+                    1
+                ],
+                [
+                    1
+                ]
+            ]
+        }
+        ]
+    }

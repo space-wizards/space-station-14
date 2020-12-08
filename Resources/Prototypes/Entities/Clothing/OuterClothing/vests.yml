@@ -1,0 +1,65 @@
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterVestWebMerc
+  name: merc web vest
+  description: A high-quality armored vest made from a hard synthetic material. It is surprisingly flexible and light, despite formidable armor plating.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Vests/mercwebvest.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Vests/mercwebvest.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterVestWeb
+  name: web vest
+  description: A synthetic armor vest. This one has added webbing and ballistic plates.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Vests/webvest.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Vests/webvest.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterVestKevlar
+  name: kevlar vest
+  description: An armor vest made of synthetic fibers.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Vests/kevlar.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Vests/kevlar.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterVestDetective
+  name: detective's vest
+  description: A hard-boiled private investigator's grey trenchcoat.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Vests/detvest.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Vests/detvest.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterVestHazard
+  name: hazard
+  description: A high-visibility vest used in work zones.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Vests/hazard.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Vests/hazard.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterVest
+  name: vest
+  description: A thick vest with a rubbery, water-resistant shell.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Vests/vest.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Vests/vest.rsi

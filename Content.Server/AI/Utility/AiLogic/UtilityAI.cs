@@ -10,6 +10,7 @@ using Content.Server.GameObjects.EntitySystems.AI;
 using Content.Server.GameObjects.EntitySystems.AI.LoadBalancer;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Server.AI;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
@@ -31,8 +32,8 @@ namespace Content.Server.AI.Utility.AiLogic
         /// <summary>
         /// The sum of all BehaviorSets gives us what actions the AI can take
         /// </summary>
-        public Dictionary<Type, BehaviorSet> BehaviorSets { get; } = new Dictionary<Type, BehaviorSet>();
-        private readonly List<IAiUtility> _availableActions = new List<IAiUtility>();
+        public Dictionary<Type, BehaviorSet> BehaviorSets { get; } = new();
+        private readonly List<IAiUtility> _availableActions = new();
 
         /// <summary>
         /// The currently running action; most importantly are the operators.
@@ -130,28 +131,18 @@ namespace Content.Server.AI.Utility.AiLogic
             _planCooldownRemaining = PlanCooldown;
             _blackboard = new Blackboard(SelfEntity);
             _planner = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AiActionSystem>();
-            if (SelfEntity.TryGetComponent(out IDamageableComponent damageableComponent))
-            {
-                damageableComponent.HealthChangedEvent += DeathHandle;
-            }
         }
 
         public override void Shutdown()
         {
-            // TODO: If DamageableComponent removed still need to unsubscribe?
-            if (SelfEntity.TryGetComponent(out IDamageableComponent damageableComponent))
-            {
-                damageableComponent.HealthChangedEvent -= DeathHandle;
-            }
-
             var currentOp = CurrentAction?.ActionOperators.Peek();
             currentOp?.Shutdown(Outcome.Failed);
         }
 
-        private void DeathHandle(HealthChangedEventArgs eventArgs)
+        public void MobStateChanged(MobStateChangedMessage message)
         {
             var oldDeadState = _isDead;
-            _isDead = eventArgs.Damageable.CurrentState == DamageState.Dead || eventArgs.Damageable.CurrentState == DamageState.Critical;
+            _isDead = message.Component.IsIncapacitated();
 
             if (oldDeadState != _isDead)
             {

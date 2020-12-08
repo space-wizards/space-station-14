@@ -1,0 +1,86 @@
+- type: entity
+  id: CrateHydroponicsSeedsExotic
+  name: exotic seeds crate
+  parent: CrateHydroSecure
+  description: "Any entrepreneuring botanist's dream. Contains many different exotic seeds. Requires Hydroponics access to open."
+  components:
+  - type: StorageFill
+    contents:
+      - name: BananaSeeds
+        amount: 2
+      - name: EggySeeds
+        amount: 2
+      - name: TowercapSeeds
+        amount: 2
+#      - name: NettleSeeds
+#        amount: 2
+#      - name: RainbowBunchSeeds
+#        amount: 2
+#      - name: StrangeSeeds
+#        amount: 2
+#      - name: BunchaOfMyceliumSeeds
+#        amount: 2
+
+- type: entity
+  id: CrateHydroponicsTools
+  name: hydroponics equipment crate
+  parent: CrateHydroponics
+  description: "Supplies for growing a great garden! Contains some spray bottles of plant chemicals, a hatchet, a mini-hoe, scythe, as well as a pair of leather gloves and a botanist's apron."
+  components:
+  - type: StorageFill
+    contents:
+      - name: MiniHoe
+        amount: 1
+      - name: PlantBGoneSpray
+        amount: 1
+      - name: WeedSpray
+        amount: 1
+      - name: PestSpray
+        amount: 1
+      - name: Scythe
+        amount: 1
+      - name: Hatchet
+        amount: 1
+      - name: ClothingOuterApronBotanist
+        amount: 1
+      - name: ClothingHandsGlovesLeather
+        amount: 1
+
+- type: entity
+  id: CrateHydroponicsSeeds
+  name: seeds crate
+  parent: CrateHydroponics
+  description: "Big things have small beginnings. Contains nine different seeds."
+  components:
+  - type: StorageFill
+    contents:
+#      - name: ChiliSeeds
+#        amount: 1
+#      - name: CottonSeeds
+#        amount: 1
+#      - name: BerrySeeds
+#        amount: 1
+      - name: CornSeeds
+        amount: 1
+      - name: EggplantSeeds
+        amount: 1
+      - name: TomatoSeeds
+        amount: 1
+#      - name: SoybeanSeeds
+#        amount: 1
+      - name: WheatSeeds
+        amount: 1
+#      - name: RiceSeeds
+#        amount: 1
+      - name: CarrotSeeds
+        amount: 1
+#      - name: SunflowerSeeds
+#        amount: 1
+      - name: ChanterelleSeeds
+        amount: 1
+      - name: PotatoSeeds
+        amount: 1
+      - name: SugarcaneSeeds
+        amount: 1
+      - name: LemonSeeds
+        amount: 1

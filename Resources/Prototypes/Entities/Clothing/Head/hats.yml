@@ -1,1199 +1,362 @@
 - type: entity
-  parent: Clothing
-  id: HatBase
-  abstract: true
-  components:
-  - type: Clothing
-    Slots:
-    - Helmet
-  - type: Sprite
-    state: icon
-
-
-- type: entity
-  parent: HatBase
-  id: HatBandana
-  name: bandana
-  description: A bandana. You wear it on your head.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/bandana.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/bandana.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatBandblack
-  name: bandana black
-  description: A black bandana to make you look cool.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/bandblack.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/bandblack.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatBandblue
-  name: bandana blue
-  description: A blue bandana to make you look cool.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/bandblue.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/bandblue.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatBandbotany
-  name: bandana botany
-  description: A botany bandana to make you look cool, made from natural fibers.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/bandbotany.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/bandbotany.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatBandcamo
-  name: bandana camo
-  description: A camo bandana to make you look cool. No stealth bonus provided.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/bandcamo.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/bandcamo.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatBandgold
-  name: bandana gold
-  description: A gold bandana to make you look cool.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/bandgold.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/bandgold.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatBandgreen
-  name: bandana green
-  description: A green bandana to make you look cool.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/bandgreen.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/bandgreen.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatBandorange
-  name: bandana orange
-  description: An orange bandana to make you look cool.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/bandorange.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/bandorange.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatBandpurple
-  name: bandana purple
-  description: A purple bandana to make you look cool.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/bandpurple.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/bandpurple.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatBandred
-  name: bandana red
-  description: A red bandana to make you look cool.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/bandred.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/bandred.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatBandskull
-  name: bandana skull
-  description: A bandana with a skull to make you look even cooler.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/bandskull.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/bandskull.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatBearpelt
-  name: bear pelt
-  description: It's a cute bear pelt.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/bearpelt.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/bearpelt.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatBeaverHat
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeaverHat
   name: beaver hat
   description: 'Gentlemen?'
   components:
   - type: Sprite
-    sprite: Clothing/Head/beaver_hat.rsi
-
+    sprite: Clothing/Head/Hats/beaver_hat.rsi
   - type: Clothing
-    sprite: Clothing/Head/beaver_hat.rsi
+    sprite: Clothing/Head/Hats/beaver_hat.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatBeret
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeret
   name: beret
   description: A beret, an artists favorite headwear.
   components:
   - type: Sprite
-    sprite: Clothing/Head/beret.rsi
-
+    sprite: Clothing/Head/Hats/beret.rsi
   - type: Clothing
-    sprite: Clothing/Head/beret.rsi
+    sprite: Clothing/Head/Hats/beret.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatBeretEngineering
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeretEngineering
   name: beret engineering
   description: A beret with the engineering insignia emblazoned on it. For engineers that are more inclined towards style than safety.
   components:
   - type: Sprite
-    sprite: Clothing/Head/beret_engineering.rsi
-
+    sprite: Clothing/Head/Hats/beret_engineering.rsi
   - type: Clothing
-    sprite: Clothing/Head/beret_engineering.rsi
+    sprite: Clothing/Head/Hats/beret_engineering.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatBeretHoS
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeretHoS
   name: beret HoS
   description: A black beret with a commander's rank emblem. For officers that are more inclined towards style than safety.
   components:
   - type: Sprite
-    sprite: Clothing/Head/beret_hos.rsi
-    state: beret_hos
-
+    sprite: Clothing/Head/Hats/beret_hos.rsi
   - type: Clothing
-    sprite: Clothing/Head/beret_hos.rsi
+    sprite: Clothing/Head/Hats/beret_hos.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatBeretWarden
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeretWarden
   name: beret warden
-  description: A corporate red beret with a warden's rank emblem. For officers that are more inclined towards style than safety.
+  description: A corporate blue beret with a warden's rank emblem. For officers that are more inclined towards style than safety.
   components:
   - type: Sprite
-    sprite: Clothing/Head/beret_warden.rsi
-
+    sprite: Clothing/Head/Hats/beret_warden.rsi
   - type: Clothing
-    sprite: Clothing/Head/beret_warden.rsi
+    sprite: Clothing/Head/Hats/beret_warden.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatBluesoft
-  name: bluesoft
-  description: "It's a baseball hat in a tasteless blue colour."
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/bluesoft.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/bluesoft.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatBluesoftFlipped
-  name: bluesoft flipped
-  description: "It's a baseball hat in a tasteless blue colour. Flipped."
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/bluesoft_flipped.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/bluesoft_flipped.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatBoaterHat
-  name: boater hat
-  description: Stylish boater hat.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/boater_hat.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/boater_hat.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatBowler
-  name: bowler
-  description: Stylish bowler hat.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/bowler.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/bowler.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatBowlerHat
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBowlerHat
   name: bowler hat
   description: Stylish bowler hat.
   components:
   - type: Sprite
-    sprite: Clothing/Head/bowler_hat.rsi
-
+    sprite: Clothing/Head/Hats/bowler_hat.rsi
   - type: Clothing
-    sprite: Clothing/Head/bowler_hat.rsi
+    sprite: Clothing/Head/Hats/bowler_hat.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatBunny
-  name: bunny
-  description: Cute bunny ears.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/bunny.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/bunny.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatCake
-  name: cake hat
-  description: You put the cake on your head. Brilliant.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/cake.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/cake.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatPumpkin
-  name: pumpkin hat
-  description: A jack o' lantern! Believed to ward off evil spirits.
-  components:
-    - type: Sprite
-      sprite: Clothing/Head/pumpkin.rsi
-
-    - type: Clothing
-      sprite: Clothing/Head/pumpkin.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatCapcap
-  name: cap cap
-  description: An usual cap, nothing special about it.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/capcap.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/capcap.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatCapspace
-  name: cap space
-  description: A blue cap for patrolling the daily beat.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/capspace.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/capspace.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatCaptain
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCaptain
   name: captain
   description: It's good being the king.
   components:
   - type: Sprite
-    sprite: Clothing/Head/captain.rsi
-
+    sprite: Clothing/Head/Hats/captain.rsi
   - type: Clothing
-    sprite: Clothing/Head/captain.rsi
+    sprite: Clothing/Head/Hats/captain.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatCardborgH
-  name: cardborg h
-  description: A helmet made out of a box.
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCardborg
+  name: cardborg
+  description: A hat made out of a box.
   components:
   - type: Sprite
-    sprite: Clothing/Head/cardborg_h.rsi
-
+    sprite: Clothing/Head/Hats/cardborg_h.rsi
   - type: Clothing
-    sprite: Clothing/Head/cardborg_h.rsi
+    sprite: Clothing/Head/Hats/cardborg_h.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatCargosoft
-  name: cargosoft
-  description: "It's a baseball hat painted in Cargo colours."
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/cargosoft.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/cargosoft.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatCargosoftFlipped
-  name: cargosoft flipped
-  description: "It's a baseball hat painted in Cargo colours. Flipped."
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/cargosoft_flipped.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/cargosoft_flipped.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatCentcom
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCentcom
   name: centcom
   description: "It's good to be the emperor."
   components:
   - type: Sprite
-    sprite: Clothing/Head/centcom.rsi
-
+    sprite: Clothing/Head/Hats/centcom.rsi
   - type: Clothing
-    sprite: Clothing/Head/centcom.rsi
+    sprite: Clothing/Head/Hats/centcom.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatChefhat
+  parent: ClothingHeadBase
+  id: ClothingHeadHatChef
   name: chef hat
   description: "It's a hat used by chefs to keep hair out of your food. Judging by the food in the mess, they don't work."
   components:
   - type: Sprite
-    sprite: Clothing/Head/chefhat.rsi
-
+    sprite: Clothing/Head/Hats/chefhat.rsi
   - type: Clothing
-    sprite: Clothing/Head/chefhat.rsi
+    sprite: Clothing/Head/Hats/chefhat.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatChickenhead
-  name: chicken head
-  description: "It's a chicken head. Bok bok bok!"
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/chickenhead.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/chickenhead.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatCorpsoft
-  name: corpsoft
-  description: A baseball bat in corporation colors.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/corpsoft.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/corpsoft.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatCorpsoftFlipped
-  name: corpsoft flipped
-  description: A baseball bat in corporation colors. Flipped.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/corpsoft_flipped.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/corpsoft_flipped.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatCosmonaut
-  name: cosmonaut
-  description: A cosmonaut helmet. Does not provide protection from vacuum.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/cosmonaut.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/cosmonaut.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatCowboy
-  name: cowboy
-  description: A cowboy hat, for a real cowboy.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/cowboy.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/cowboy.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatDeathsquad
-  name: deathsquad
-  description: A robust red helmet for special operations.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/deathsquad.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/deathsquad.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatFedoraBrown
+  parent: ClothingHeadBase
+  id: ClothingHeadHatFedoraBrown
   name:  brown fedora
   description: It's a brown fedora.
   components:
   - type: Sprite
-    sprite: Clothing/Head/brownfedora.rsi
-
+    sprite: Clothing/Head/Hats/brownfedora.rsi
   - type: Clothing
-    sprite: Clothing/Head/brownfedora.rsi
+    sprite: Clothing/Head/Hats/brownfedora.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatFedoraGrey
+  parent: ClothingHeadBase
+  id: ClothingHeadHatFedoraGrey
   name: grey fedora
   description: It's a grey fedora.
   components:
   - type: Sprite
-    sprite: Clothing/Head/greyfedora.rsi
-
+    sprite: Clothing/Head/Hats/greyfedora.rsi
   - type: Clothing
-    sprite: Clothing/Head/greyfedora.rsi
+    sprite: Clothing/Head/Hats/greyfedora.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatFez
+  parent: ClothingHeadBase
+  id: ClothingHeadHatFez
   name: fez
   description: A red fez.
   components:
   - type: Sprite
-    sprite: Clothing/Head/fez.rsi
-
+    sprite: Clothing/Head/Hats/fez.rsi
   - type: Clothing
-    sprite: Clothing/Head/fez.rsi
+    sprite: Clothing/Head/Hats/fez.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatGladiator
-  name: gladiator
-  description: "Are you not entertained?"
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/gladiator.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/gladiator.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatGreenbandana
-  name: greenbandana
-  description: A black bandana to make you look cool.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/greenbandana.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/greenbandana.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatGreensoft
-  name: greensoft
-  description: "It's a baseball hat in a tasteless green colour."
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/greensoft.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/greensoft.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatGreensoftFlipped
-  name: greensoft flipped
-  description: "It's a baseball hat in a tasteless green colour. Flipped."
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/greensoft_flipped.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/greensoft_flipped.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatGreysoft
-  name: greysoft
-  description: "It's a baseball hat in a tasteless grey colour."
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/greysoft.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/greysoft.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatGreysoftFlipped
-  name: greysoft flipped
-  description: "It's a baseball hat in a tasteless grey colour. Flipped."
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/greysoft_flipped.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/greysoft_flipped.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatHairflower
-  name: hairflower
-  description: A red rose for beautiful ladies.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/hairflower.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/hairflower.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatHeadslime
-  name: headslime
-  description: A green, sticky lime, you put it on your head.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/headslime.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/headslime.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatHelmet
-  name: helmet
-  description: A usual helmet.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/helmet.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/helmet.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatHelmetold
-  name: helmet old
-  description: An old usual helmet.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/helmetold.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/helmetold.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatHopcap
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHopcap
   name: hop cap
   description: A grand, stylish captain cap.
   components:
   - type: Sprite
-    sprite: Clothing/Head/hopcap.rsi
-
+    sprite: Clothing/Head/Hats/hopcap.rsi
   - type: Clothing
-    sprite: Clothing/Head/hopcap.rsi
+    sprite: Clothing/Head/Hats/hopcap.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatHoshat
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHoshat
   name: HoS hat
   description: "There's a new sheriff in station."
   components:
   - type: Sprite
-    sprite: Clothing/Head/hoshat.rsi
-
+    sprite: Clothing/Head/Hats/hoshat.rsi
   - type: Clothing
-    sprite: Clothing/Head/hoshat.rsi
+    sprite: Clothing/Head/Hats/hoshat.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatIhsvoidhelm
-  name: IHS voidhelm
-  description: A robust, tactical IHS helmet.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/ihsvoidhelm.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/ihsvoidhelm.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatIhsvoidhelmOn
-  name: IHS voidhelm (on)
-  description: A robust, tactical IHS helmet.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/ihsvoidhelm_on.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/ihsvoidhelm_on.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatWitch1
+  parent: ClothingHeadBase
+  id: ClothingHeadHatWitch1
   name: witch hat
   description: A witch hat.
   components:
   - type: Sprite
-    sprite: Clothing/Head/witchhat.rsi
-
+    sprite: Clothing/Head/Hats/witchhat.rsi
   - type: Clothing
-    sprite: Clothing/Head/witchhat.rsi
+    sprite: Clothing/Head/Hats/witchhat.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatWizardHelm
-  name: wizard helm
-  description: "Strange-looking helmet that most certainly belongs to a real magic user."
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/wizardhelm.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/wizardhelm.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatMimesoft
-  name: mimesoft
-  description: "It's a baseball hat in a tasteless white colour."
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/mimesoft.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/mimesoft.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatMimesoftFlipped
-  name: mimesoft flipped
-  description: It's a baseball hat in a tasteless white colour. Flipped.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/mimesoft_flipped.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/mimesoft_flipped.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatNursehat
-  name: nurse hat
-  description: A sterile nurse hat.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/nursehat.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/nursehat.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatOrangesoft
-  name: orangesoft
-  description: It's a baseball hat in a good-looking orange colour.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/orangesoft.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/orangesoft.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatOrangesoftFlipped
-  name: orangesoft flipped
-  description: It's a baseball hat in a good-looking orange colour. Flipped.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/orangesoft_flipped.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/orangesoft_flipped.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatOrangeBandana
-  name: orange bandana
-  description: An orange bandata with a yellow stripe.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/orange_bandana.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/orange_bandana.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatPaper
+  parent: ClothingHeadBase
+  id: ClothingHeadHatPaper
   name: paper
   description: A hat made of paper.
   components:
   - type: Sprite
-    sprite: Clothing/Head/paper.rsi
-
+    sprite: Clothing/Head/Hats/paper.rsi
   - type: Clothing
-    sprite: Clothing/Head/paper.rsi
-- type: entity
-  parent: HatBase
-  id: HatPhilosopherWig
-  name: philosopher wig
-  description: A bunch of hair that make you look like a philosopher.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/philosopher_wig.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/philosopher_wig.rsi
+    sprite: Clothing/Head/Hats/paper.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatPirate
+  parent: ClothingHeadBase
+  id: ClothingHeadHatPirate
   name: pirate
   description: 'Yo ho ho and a bottle of rum!'
   components:
   - type: Sprite
-    sprite: Clothing/Head/pirate.rsi
-
+    sprite: Clothing/Head/Hats/pirate.rsi
   - type: Clothing
-    sprite: Clothing/Head/pirate.rsi
+    sprite: Clothing/Head/Hats/pirate.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatPlaguedoctor
+  parent: ClothingHeadBase
+  id: ClothingHeadHatPlaguedoctor
   name: plague doctor
   description: These were once used by plague doctors.
   components:
   - type: Sprite
-    sprite: Clothing/Head/plaguedoctor.rsi
-
+    sprite: Clothing/Head/Hats/plaguedoctor.rsi
   - type: Clothing
-    sprite: Clothing/Head/plaguedoctor.rsi
+    sprite: Clothing/Head/Hats/plaguedoctor.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatPurplesoft
-  name: purple soft
-  description: It's a baseball hat in a tasteless purple colour.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/purplesoft.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/purplesoft.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatPurplesoftFlipped
-  name: purplesoft flipped
-  description: It's a baseball hat in a tasteless purple colour. Flipped.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/purplesoft_flipped.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/purplesoft_flipped.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatPwig
-  name: pwig
-  description: To be honest, those look ridiculous.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/pwig.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/pwig.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatRedsoft
-  name: redsoft
-  description: It's a baseball hat in a tasteless red colour.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/redsoft.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/redsoft.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatRedsoftFlipped
-  name: redsoft flipped
-  description: It's a baseball hat in a tasteless purple colour. Flipped.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/redsoft_flipped.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/redsoft_flipped.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatRedwizard
+  parent: ClothingHeadBase
+  id: ClothingHeadHatRedwizard
   name: red wizard
   description: Strange-looking red hat-wear that most certainly belongs to a real magic user.
   components:
   - type: Sprite
-    sprite: Clothing/Head/redwizard.rsi
-
+    sprite: Clothing/Head/Hats/redwizard.rsi
   - type: Clothing
-    sprite: Clothing/Head/redwizard.rsi
+    sprite: Clothing/Head/Hats/redwizard.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatRichard
-  name: richard
-  description: 'Do you like hurting other people?'
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/richard.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/richard.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatS-ninja
-  name: s-ninja
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/s-ninja.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/s-ninja.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatSantahat
+  parent: ClothingHeadBase
+  id: ClothingHeadHatSantahat
   name: santa hat
   description: "A festive hat worn by Santa Claus"
   components:
   - type: Sprite
-    sprite: Clothing/Head/santahat.rsi
-
+    sprite: Clothing/Head/Hats/santahat.rsi
   - type: Clothing
-    sprite: Clothing/Head/santahat.rsi
+    sprite: Clothing/Head/Hats/santahat.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatSecsoft
-  name: secsoft
-  description: It's a robust baseball hat in tasteful red colour.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/secsoft.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/secsoft.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatSecsoftFlipped
-  name: secsoft flipped
-  description: It's a robust baseball hat in tasteful red colour. Flipped.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/secsoft_flipped.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/secsoft_flipped.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatSombrero
+  parent: ClothingHeadBase
+  id: ClothingHeadHatSombrero
   name: sombrero
   description: "Perfectly for Space Mexico, si?"
   components:
   - type: Sprite
-    sprite: Clothing/Head/sombrero.rsi
-
+    sprite: Clothing/Head/Hats/sombrero.rsi
   - type: Clothing
-    sprite: Clothing/Head/sombrero.rsi
+    sprite: Clothing/Head/Hats/sombrero.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatSurgcapBlue
+  parent: ClothingHeadBase
+  id: ClothingHeadHatSurgcapBlue
   name: surgcap blue
   description: A blue cap surgeons wear during operations. Keeps their hair from tickling your internal organs.
   components:
   - type: Sprite
-    sprite: Clothing/Head/surgcap_blue.rsi
-
+    sprite: Clothing/Head/Hats/surgcap_blue.rsi
   - type: Clothing
-    sprite: Clothing/Head/surgcap_blue.rsi
+    sprite: Clothing/Head/Hats/surgcap_blue.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatSurgcapGreen
+  parent: ClothingHeadBase
+  id: ClothingHeadHatSurgcapGreen
   name: surgcap green
   description: A green cap surgeons wear during operations. Keeps their hair from tickling your internal organs.
   components:
   - type: Sprite
-    sprite: Clothing/Head/surgcap_green.rsi
-
+    sprite: Clothing/Head/Hats/surgcap_green.rsi
   - type: Clothing
-    sprite: Clothing/Head/surgcap_green.rsi
+    sprite: Clothing/Head/Hats/surgcap_green.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatSurgcapPurple
+  parent: ClothingHeadBase
+  id: ClothingHeadHatSurgcapPurple
   name: surgcap purple
   description: A purple cap surgeons wear during operations. Keeps their hair from tickling your internal organs.
   components:
   - type: Sprite
-    sprite: Clothing/Head/surgcap_purple.rsi
-
+    sprite: Clothing/Head/Hats/surgcap_purple.rsi
   - type: Clothing
-    sprite: Clothing/Head/surgcap_purple.rsi
+    sprite: Clothing/Head/Hats/surgcap_purple.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatSyndicate
-  name: syndicate
-  description: 'A stylish, robust syndicate helmet.'
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/syndicate.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/syndicate.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatThunderdome
-  name: thunderdome
-  description: 'Let the battle commence!'
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/thunderdome.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/thunderdome.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatTophat
+  parent: ClothingHeadBase
+  id: ClothingHeadHatTophat
   name: tophat
   description: A stylish black tophat.
   components:
   - type: Sprite
-    sprite: Clothing/Head/tophat.rsi
-
+    sprite: Clothing/Head/Hats/tophat.rsi
   - type: Clothing
-    sprite: Clothing/Head/tophat.rsi
+    sprite: Clothing/Head/Hats/tophat.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatUshankadown
-  name: ushanka (down)
+  parent: ClothingHeadBase
+  id: ClothingHeadHatUshanka
+  name: ushanka
   description: "Perfect for winter in Siberia, da?"
   components:
   - type: Sprite
-    sprite: Clothing/Head/ushankadown.rsi
-
+    sprite: Clothing/Head/Hats/ushanka.rsi
   - type: Clothing
-    sprite: Clothing/Head/ushankadown.rsi
+    sprite: Clothing/Head/Hats/ushanka.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatUshankaup
-  name: ushanka (up)
-  description: "Perfect for winter in Siberia, da?"
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/ushankaup.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/ushankaup.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatNightVis
-  name: night vision
-  description: Special night vision glasses, that provide vision in dark places.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/nightvis.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/nightvis.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatVioletwizard
+  parent: ClothingHeadBase
+  id: ClothingHeadHatVioletwizard
   name: violetwizard
   description: "Strange-looking violet hat-wear that most certainly belongs to a real magic user."
   components:
   - type: Sprite
-    sprite: Clothing/Head/violetwizard.rsi
-
+    sprite: Clothing/Head/Hats/violetwizard.rsi
   - type: Clothing
-    sprite: Clothing/Head/violetwizard.rsi
+    sprite: Clothing/Head/Hats/violetwizard.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatVoid
-  name: void
-  description: Robust red helmet for high-speed races.
+  parent: ClothingHeadBase
+  id: ClothingHeadHatWarden
+  name: warden's cap
+  description: A police officer's Hat. This hat emphasizes that you are THE LAW
   components:
   - type: Sprite
-    sprite: Clothing/Head/void.rsi
-
+    sprite: Clothing/Head/Hats/warden.rsi
   - type: Clothing
-    sprite: Clothing/Head/void.rsi
+    sprite: Clothing/Head/Hats/warden.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatWitch
+  parent: ClothingHeadBase
+  id: ClothingHeadHatWitch
   name: witch
   description: A witch hat.
   components:
   - type: Sprite
-    sprite: Clothing/Head/witch.rsi
-
+    sprite: Clothing/Head/Hats/witch.rsi
   - type: Clothing
-    sprite: Clothing/Head/witch.rsi
+    sprite: Clothing/Head/Hats/witch.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatWizard-fake
-  name: wizard-fake
+  parent: ClothingHeadBase
+  id: ClothingHeadHatWizardFake
+  name: wizardFake
   description: It has WIZZARD written across it in sequins. Comes with a cool beard.
   components:
   - type: Sprite
-    sprite: Clothing/Head/wizard-fake.rsi
-
+    sprite: Clothing/Head/Hats/wizard_fake.rsi
   - type: Clothing
-    sprite: Clothing/Head/wizard-fake.rsi
+    sprite: Clothing/Head/Hats/wizard_fake.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatWizard
-  name: wizard
+  parent: ClothingHeadBase
+  id: ClothingHeadHatWizard
+  name: wizard hat
   description: Strange-looking blue hat-wear that most certainly belongs to a powerful magic user.
   components:
   - type: Sprite
-    sprite: Clothing/Head/wizardhat.rsi
-
+    sprite: Clothing/Head/Hats/wizardhat.rsi
   - type: Clothing
-    sprite: Clothing/Head/wizardhat.rsi
+    sprite: Clothing/Head/Hats/wizardhat.rsi
 
 - type: entity
-  parent: HatBase
-  id: HatXenoMom
-  name: xeno matriarch
-  description: Hiss hiss hiss!
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/xenom.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/xenom.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatXeno
-  name: xenos
-  description: Hiss hiss hiss!
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/xenos.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/xenos.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatXmashat
-  name: xmashat
+  parent: ClothingHeadBase
+  id: ClothingHeadHatXmasCrown
+  name: xmas crown
   description: 'Happy Christmas!'
   components:
   - type: Sprite
-    sprite: Clothing/Head/xmashat.rsi
-
+    sprite: Clothing/Head/Hats/xmascrown.rsi
   - type: Clothing
-    sprite: Clothing/Head/xmashat.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatYellowsoft
-  name: yellowsoft
-  description: A yellow baseball hat.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/yellowsoft.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/yellowsoft.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatYellowsoftFlipped
-  name: yellowsoft flipped
-  description: A yellow flipped baseball hat.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/yellowsoft_flipped.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/yellowsoft_flipped.rsi
+    sprite: Clothing/Head/Hats/xmascrown.rsi

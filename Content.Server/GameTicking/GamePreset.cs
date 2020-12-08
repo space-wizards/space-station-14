@@ -15,5 +15,9 @@ namespace Content.Server.GameTicking
         public virtual string Description => "Secret!";
         public virtual bool DisallowLateJoin => false;
         public Dictionary<NetUserId, HumanoidCharacterProfile> readyProfiles;
+
+        public virtual void OnGameStarted() { }
+
+        public virtual string GetRoundEndDescription() => "";
     }
 }

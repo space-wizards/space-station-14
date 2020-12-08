@@ -13,7 +13,6 @@ using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.UnitTesting;
-using EntryPoint = Content.Client.EntryPoint;
 
 namespace Content.IntegrationTests
 {
@@ -23,10 +22,14 @@ namespace Content.IntegrationTests
         protected sealed override ClientIntegrationInstance StartClient(ClientIntegrationOptions options = null)
         {
             options ??= new ClientIntegrationOptions();
-
             // ReSharper disable once RedundantNameQualifier
-            options.ClientContentAssembly = typeof(EntryPoint).Assembly;
-            options.SharedContentAssembly = typeof(Shared.EntryPoint).Assembly;
+            options.ContentAssemblies = new[]
+            {
+                typeof(Shared.EntryPoint).Assembly,
+                typeof(Client.EntryPoint).Assembly,
+                typeof(ContentIntegrationTest).Assembly
+            };
+
             options.BeforeStart += () =>
             {
                 IoCManager.Resolve<IModLoader>().SetModuleBaseCallbacks(new ClientModuleTestingCallbacks
@@ -53,8 +56,12 @@ namespace Content.IntegrationTests
         protected override ServerIntegrationInstance StartServer(ServerIntegrationOptions options = null)
         {
             options ??= new ServerIntegrationOptions();
-            options.ServerContentAssembly = typeof(Server.EntryPoint).Assembly;
-            options.SharedContentAssembly = typeof(Shared.EntryPoint).Assembly;
+            options.ContentAssemblies = new[]
+            {
+                typeof(Shared.EntryPoint).Assembly,
+                typeof(Server.EntryPoint).Assembly,
+                typeof(ContentIntegrationTest).Assembly
+            };
             options.BeforeStart += () =>
             {
                 IoCManager.Resolve<IModLoader>().SetModuleBaseCallbacks(new ServerModuleTestingCallbacks
@@ -89,7 +96,9 @@ namespace Content.IntegrationTests
             return StartServer(options);
         }
 
-        protected async Task<(ClientIntegrationInstance client, ServerIntegrationInstance server)> StartConnectedServerClientPair(ClientIntegrationOptions clientOptions = null, ServerIntegrationOptions serverOptions = null)
+        protected async Task<(ClientIntegrationInstance client, ServerIntegrationInstance server)>
+            StartConnectedServerClientPair(ClientIntegrationOptions clientOptions = null,
+                ServerIntegrationOptions serverOptions = null)
         {
             var client = StartClient(clientOptions);
             var server = StartServer(serverOptions);
@@ -100,7 +109,9 @@ namespace Content.IntegrationTests
         }
 
 
-        protected async Task<(ClientIntegrationInstance client, ServerIntegrationInstance server)> StartConnectedServerDummyTickerClientPair(ClientIntegrationOptions clientOptions = null, ServerIntegrationOptions serverOptions = null)
+        protected async Task<(ClientIntegrationInstance client, ServerIntegrationInstance server)>
+            StartConnectedServerDummyTickerClientPair(ClientIntegrationOptions clientOptions = null,
+                ServerIntegrationOptions serverOptions = null)
         {
             var client = StartClient(clientOptions);
             var server = StartServerDummyTicker(serverOptions);
@@ -136,7 +147,8 @@ namespace Content.IntegrationTests
             return grid;
         }
 
-        protected async Task WaitUntil(IntegrationInstance instance, Func<bool> func, int maxTicks = 600, int tickStep = 1)
+        protected async Task WaitUntil(IntegrationInstance instance, Func<bool> func, int maxTicks = 600,
+            int tickStep = 1)
         {
             var ticksAwaited = 0;
             bool passed;
@@ -160,7 +172,8 @@ namespace Content.IntegrationTests
             Assert.That(passed);
         }
 
-        private static async Task StartConnectedPairShared(ClientIntegrationInstance client, ServerIntegrationInstance server)
+        private static async Task StartConnectedPairShared(ClientIntegrationInstance client,
+            ServerIntegrationInstance server)
         {
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 
@@ -174,7 +187,8 @@ namespace Content.IntegrationTests
         /// <summary>
         ///     Runs <paramref name="ticks"/> ticks on both server and client while keeping their main loop in sync.
         /// </summary>
-        protected static async Task RunTicksSync(ClientIntegrationInstance client, ServerIntegrationInstance server, int ticks)
+        protected static async Task RunTicksSync(ClientIntegrationInstance client, ServerIntegrationInstance server,
+            int ticks)
         {
             for (var i = 0; i < ticks; i++)
             {

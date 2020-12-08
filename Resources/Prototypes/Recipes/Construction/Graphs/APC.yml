@@ -1,0 +1,13 @@
+﻿- type: constructionGraph
+  id: apc
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: apc
+          steps:
+            - material: Metal
+              amount: 3
+
+    - node: apc
+      entity: BaseAPC

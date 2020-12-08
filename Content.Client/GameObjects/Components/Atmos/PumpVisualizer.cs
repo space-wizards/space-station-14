@@ -41,7 +41,7 @@ namespace Content.Client.GameObjects.Components.Atmos
             sprite.LayerSetVisible(pumpEnabledLayer, pumpVisualState.PumpEnabled);
         }
 
-        public enum Layer
+        public enum Layer : byte
         {
             PumpEnabled,
         }

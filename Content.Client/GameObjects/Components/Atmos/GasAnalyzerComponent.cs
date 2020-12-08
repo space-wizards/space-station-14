@@ -24,7 +24,7 @@ namespace Content.Client.GameObjects.Components.Atmos
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            if (!(curState is GasAnalyzerComponentState state))
+            if (curState is not GasAnalyzerComponentState state)
                 return;
 
             Danger = state.Danger;
