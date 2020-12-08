@@ -233,7 +233,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
         }
 
-        private void ToggleInternals()
+        internal void ToggleInternals()
         {
             if (IsConnected)
             {
@@ -391,17 +391,17 @@ namespace Content.Server.GameObjects.Components.Atmos
                 component.OpenInterface(actor.playerSession);
             }
         }
+    }
 
-        [UsedImplicitly]
-        public class ToggleInternalsAction : IToggleItemAction
+    [UsedImplicitly]
+    public class ToggleInternalsAction : IToggleItemAction
+    {
+        public void ExposeData(ObjectSerializer serializer) {}
+
+        public void DoToggleAction(ToggleItemActionEventArgs args)
         {
-            public void ExposeData(ObjectSerializer serializer) {}
-
-            public void DoToggleAction(ToggleItemActionEventArgs args)
-            {
-                if (!args.Item.TryGetComponent<GasTankComponent>(out var gasTankComponent)) return;
-                gasTankComponent.ToggleInternals();
-            }
+            if (!args.Item.TryGetComponent<GasTankComponent>(out var gasTankComponent)) return;
+            gasTankComponent.ToggleInternals();
         }
     }
 }

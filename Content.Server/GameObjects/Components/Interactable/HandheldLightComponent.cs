@@ -104,7 +104,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         ///     Illuminates the light if it is not active, extinguishes it if it is active.
         /// </summary>
         /// <returns>True if the light's status was toggled, false otherwise.</returns>
-        private bool ToggleStatus(IEntity user)
+        public bool ToggleStatus(IEntity user)
         {
             return Activated ? TurnOff() : TurnOn(user);
         }
@@ -281,21 +281,20 @@ namespace Content.Server.GameObjects.Components.Interactable
                 component.ToggleStatus(user);
             }
         }
+    }
 
-        [UsedImplicitly]
-        public class ToggleLightAction : IToggleItemAction
+    [UsedImplicitly]
+    public class ToggleLightAction : IToggleItemAction
+    {
+        public void ExposeData(ObjectSerializer serializer) {}
+
+        public void DoToggleAction(ToggleItemActionEventArgs args)
         {
-            public void ExposeData(ObjectSerializer serializer) {}
-
-            public void DoToggleAction(ToggleItemActionEventArgs args)
+            if (!args.Item.TryGetComponent<HandheldLightComponent>(out var lightComponent)) return;
+            if (lightComponent.Activated != args.ToggledOn)
             {
-                if (!args.Item.TryGetComponent<HandheldLightComponent>(out var lightComponent)) return;
-                if (lightComponent.Activated != args.ToggledOn)
-                {
-                    lightComponent.ToggleStatus(args.Performer);
-                }
+                lightComponent.ToggleStatus(args.Performer);
             }
         }
-
     }
 }
