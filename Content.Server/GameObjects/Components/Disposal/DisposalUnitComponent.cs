@@ -525,11 +525,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 seconds => _flushDelay = TimeSpan.FromSeconds(seconds),
                 () => (int) _flushDelay.TotalSeconds);
 
-            serializer.DataReadWriteFunction(
-                "entryDelay",
-                0.5f,
-                seconds => _entryDelay = seconds,
-                () => _entryDelay);
+            serializer.DataField(this, x => x._entryDelay, "entryDelay", 0.5f);
         }
 
         public override void Initialize()
