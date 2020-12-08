@@ -182,7 +182,7 @@ namespace Content.Client.GameObjects.EntitySystems
             _userInterfaceManager.ModalRoot.AddChild(_currentEntityList);
 
             var size = _currentEntityList.List.CombinedMinimumSize;
-            var box = UIBox2.FromDimensions(args.ScreenCoordinates.Position, size);
+            var box = UIBox2.FromDimensions(_userInterfaceManager.MousePositionScaled, size);
             _currentEntityList.Open(box);
 
             return true;
@@ -190,7 +190,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void OnContextButtonPressed(IEntity entity)
         {
-            OpenContextMenu(entity, new ScreenCoordinates(_inputManager.MouseScreenPosition));
+            OpenContextMenu(entity, new ScreenCoordinates(_userInterfaceManager.MousePositionScaled));
         }
 
         private void FillEntityPopup(VerbSystemMessages.VerbsResponseMessage msg)

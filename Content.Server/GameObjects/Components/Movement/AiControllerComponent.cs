@@ -1,9 +1,9 @@
 ﻿#nullable enable
+using Content.Server.AI.Utility.AiLogic;
 using Content.Server.GameObjects.EntitySystems.AI;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Roles;
-using Robust.Server.AI;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
@@ -38,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Movement
             }
         }
 
-        public AiLogicProcessor? Processor { get; set; }
+        public UtilityAi? Processor { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
         public string? StartingGearPrototype { get; set; }

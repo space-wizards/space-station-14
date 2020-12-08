@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Content.Server.Atmos;
@@ -264,7 +265,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                     var direction = (AtmosDirection) (1 << i);
                     var otherIndices = indices.Offset(direction.ToDirection());
                     var otherTile = GetTile(otherIndices);
-                    AddActiveTile(otherTile);
+                    if (otherTile != null) AddActiveTile(otherTile);
                 }
             }
 
@@ -298,7 +299,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void AddActiveTile(TileAtmosphere? tile)
+        public virtual void AddActiveTile(TileAtmosphere tile)
         {
             if (tile?.GridIndex != _gridId) return;
             tile.Excited = true;
@@ -307,9 +308,8 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void RemoveActiveTile(TileAtmosphere? tile, bool disposeGroup = true)
+        public virtual void RemoveActiveTile(TileAtmosphere tile, bool disposeGroup = true)
         {
-            if (tile == null) return;
             _activeTiles.Remove(tile);
             tile.Excited = false;
             if(disposeGroup)
@@ -320,7 +320,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void AddHotspotTile(TileAtmosphere? tile)
+        public virtual void AddHotspotTile(TileAtmosphere tile)
         {
             if (tile?.GridIndex != _gridId || tile?.Air == null) return;
             _hotspotTiles.Add(tile);
@@ -328,29 +328,27 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void RemoveHotspotTile(TileAtmosphere? tile)
+        public virtual void RemoveHotspotTile(TileAtmosphere tile)
         {
-            if (tile == null) return;
             _hotspotTiles.Remove(tile);
         }
 
-        public virtual void AddSuperconductivityTile(TileAtmosphere? tile)
+        public virtual void AddSuperconductivityTile(TileAtmosphere tile)
         {
             if (tile?.GridIndex != _gridId) return;
             _superconductivityTiles.Add(tile);
         }
 
-        public virtual void RemoveSuperconductivityTile(TileAtmosphere? tile)
+        public virtual void RemoveSuperconductivityTile(TileAtmosphere tile)
         {
-            if (tile == null) return;
             _superconductivityTiles.Remove(tile);
         }
 
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void AddHighPressureDelta(TileAtmosphere? tile)
+        public virtual void AddHighPressureDelta(TileAtmosphere tile)
         {
-            if (tile?.GridIndex != _gridId) return;
+            if (tile.GridIndex != _gridId) return;
             _highPressureDelta.Add(tile);
         }
 

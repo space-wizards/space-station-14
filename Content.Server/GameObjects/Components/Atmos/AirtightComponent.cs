@@ -81,10 +81,9 @@ namespace Content.Server.GameObjects.Components.Atmos
             // Using the SnapGrid is critical for performance, and thus if it is absent the component
             // will not be airtight. A warning is much easier to track down than the object magically
             // not being airtight, so log one if the SnapGrid component is missing.
-            if (!Owner.EnsureComponent(out SnapGridComponent _))
-                Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition} didn't have a {nameof(SnapGridComponent)}");
+            Owner.EnsureComponentWarn(out SnapGridComponent _);
 
-            if(_fixAirBlockedDirectionInitialize)
+            if (_fixAirBlockedDirectionInitialize)
                 RotateEvent(new RotateEvent(Owner, Angle.Zero, Owner.Transform.LocalRotation));
 
             UpdatePosition();

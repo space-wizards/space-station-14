@@ -101,6 +101,13 @@
     - state: protolathe_panel
       map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
   - type: ResearchClient
+  - type: Construction
+    graph: machine
+    node: machine
+  - type: BreakableConstruction
+    node: machineFrame
+  - type: Machine
+    board: ProtolatheMachineCircuitboard
   - type: Wires
     BoardName: "Protolathe"
     LayoutId: Protolathe

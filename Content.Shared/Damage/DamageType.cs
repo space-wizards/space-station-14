@@ -38,8 +38,7 @@ namespace Content.Shared.Damage
                 {DamageType.Radiation, DamageClass.Toxin},
                 {DamageType.Asphyxiation, DamageClass.Airloss},
                 {DamageType.Bloodloss, DamageClass.Airloss},
-                {DamageType.Cellular, DamageClass.Genetic }
-
+                {DamageType.Cellular, DamageClass.Genetic}
             }.ToImmutableDictionary();
 
         public static DamageClass ToClass(this DamageType type)

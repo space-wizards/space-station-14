@@ -8,6 +8,7 @@ using Content.Server.Mobs.Roles.Suspicion;
 using Content.Server.Players;
 using Content.Shared;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Audio;
@@ -111,13 +112,13 @@ namespace Content.Server.GameTicking.GameRules
             foreach (var playerSession in _playerManager.GetAllPlayers())
             {
                 if (playerSession.AttachedEntity == null
-                    || !playerSession.AttachedEntity.TryGetComponent(out IDamageableComponent damageable)
+                    || !playerSession.AttachedEntity.TryGetComponent(out IMobStateComponent mobState)
                     || !playerSession.AttachedEntity.HasComponent<SuspicionRoleComponent>())
                 {
                     continue;
                 }
 
-                if (damageable.CurrentState != DamageState.Alive)
+                if (!mobState.IsAlive())
                 {
                     continue;
                 }

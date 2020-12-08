@@ -1,5 +1,12 @@
 - type: vendingMachineInventory
   id: Getmore Chocolate Corp
   name: Getmore Chocolate Corp
-  description: A vending machine containing snacks.
+  animationDuration: 0.5
   spriteName: snack
+  startingInventory:
+    FoodSpaceTwinkie: 8
+    FoodCandy: 4
+    FoodSyndiCakes: 4
+    FoodCandyCorn: 4
+    FoodPopcorn: 4
+    Food4NoRaisins: 4

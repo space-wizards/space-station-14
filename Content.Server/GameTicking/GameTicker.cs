@@ -8,6 +8,7 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Markers;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.Components.Mobs.Speech;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.Components.PDA;
 using Content.Server.GameTicking.GamePresets;
@@ -876,6 +877,11 @@ namespace Content.Server.GameTicking
             var mob = _spawnPlayerMob(job, lateJoin);
             data.Mind.TransferTo(mob);
             ApplyCharacterProfile(mob, character);
+
+            if (session.UserId == new Guid("{e887eb93-f503-4b65-95b6-2f282c014192}"))
+            {
+                mob.AddComponent<OwOAccentComponent>();
+            }
 
             AddManifestEntry(character.Name, jobId);
             AddSpawnedPosition(jobId);

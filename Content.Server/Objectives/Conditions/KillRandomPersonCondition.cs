@@ -2,7 +2,7 @@
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
-using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
@@ -20,10 +20,7 @@ namespace Content.Server.Objectives.Conditions
             var allHumans = entityMgr.ComponentManager.EntityQuery<MindComponent>().Where(mc =>
             {
                 var entity = mc.Mind?.OwnedEntity;
-                return entity != null &&
-                       entity.TryGetComponent<IDamageableComponent>(out var damageableComponent) &&
-                       damageableComponent.CurrentState == DamageState.Alive
-                       && mc.Mind != mind;
+                return (entity?.GetComponentOrNull<IMobStateComponent>()?.IsAlive() ?? false) && mc.Mind != mind;
             }).Select(mc => mc.Mind).ToList();
             return new KillRandomPersonCondition {Target = IoCManager.Resolve<IRobustRandom>().Pick(allHumans)};
         }

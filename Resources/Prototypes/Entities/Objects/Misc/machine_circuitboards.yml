@@ -21,3 +21,19 @@
         Manipulator: 1
       materialRequirements:
         Glass: 1
+
+- type: entity
+  id: ProtolatheMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: Protolathe (Machine Board)
+  components:
+    - type: MachineBoard
+      prototype: Protolathe
+      requirements:
+        MatterBin: 2
+        Manipulator: 2
+      componentRequirements:
+        GlassBeaker:
+          Amount: 2
+          DefaultPrototype: Beaker
+          ExamineName: Glass Beaker

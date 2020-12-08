@@ -28,7 +28,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Construction
 {
     [RegisterComponent]
-    public class ConstructionComponent : Component, IExamine, IInteractUsing
+    public partial class ConstructionComponent : Component, IExamine, IInteractUsing
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -39,6 +39,7 @@ namespace Content.Server.GameObjects.Components.Construction
         private TaskCompletionSource<object>? _handlingTask = null;
         private string _graphIdentifier = string.Empty;
         private string _startingNodeIdentifier = string.Empty;
+        private string _startingTargetNodeIdentifier = string.Empty;
 
         [ViewVariables]
         private HashSet<string> _containers = new();
@@ -79,6 +80,9 @@ namespace Content.Server.GameObjects.Components.Construction
         [ViewVariables]
         public int EdgeStep { get; private set; } = 0;
 
+        [ViewVariables]
+        public string DeconstructionNodeIdentifier { get; private set; } = "start";
+
         /// <inheritdoc />
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -86,6 +90,8 @@ namespace Content.Server.GameObjects.Components.Construction
 
             serializer.DataField(ref _graphIdentifier, "graph", string.Empty);
             serializer.DataField(ref _startingNodeIdentifier, "node", string.Empty);
+            serializer.DataField(ref _startingTargetNodeIdentifier, "defaultTarget", string.Empty);
+            serializer.DataField(this, x => x.DeconstructionNodeIdentifier, "deconstructionTarget", "start");
         }
 
         /// <summary>
@@ -495,6 +501,9 @@ namespace Content.Server.GameObjects.Components.Construction
             {
                 Logger.Error($"Couldn't find prototype {_graphIdentifier} in construction component!");
             }
+
+            if (!string.IsNullOrEmpty(_startingTargetNodeIdentifier))
+                SetNewTarget(_startingTargetNodeIdentifier);
         }
 
         protected override void Startup()
