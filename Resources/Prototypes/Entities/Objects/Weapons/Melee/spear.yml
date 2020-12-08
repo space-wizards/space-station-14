@@ -21,7 +21,7 @@
   - type: MeleeChemicalInjector
   - type: SolutionContainer
     maxVol: 5
-    caps: AddTo, RemoveFrom, FitsInDispenser
+    caps: AddTo, RemoveFrom
   - type: Pourable
 
 - type: MeleeWeaponAnimation
