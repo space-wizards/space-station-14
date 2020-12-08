@@ -4,14 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Mobs.State;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.Components.Projectiles;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
+using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
+using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Disposal;
@@ -41,7 +43,6 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameObjects.Components.Disposal
 {
@@ -49,7 +50,7 @@ namespace Content.Server.GameObjects.Components.Disposal
     [ComponentReference(typeof(SharedDisposalUnitComponent))]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IInteractUsing))]
-    public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IActivate, IInteractUsing, IDragDropOn, IThrowCollide
+    public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IActivate, IInteractUsing, IDragDropOn, IThrowCollide, IGasMixtureHolder
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -132,6 +133,8 @@ namespace Content.Server.GameObjects.Components.Disposal
         ///     Store the translated state.
         /// </summary>
         private (PressureState State, string Localized) _locState;
+
+        public GasMixture Air { get; set; } = default!;
 
         public bool CanInsert(IEntity entity)
         {
@@ -283,13 +286,27 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
 
             var entryComponent = entry.GetComponent<DisposalEntryComponent>();
-            var entities = _container.ContainedEntities.ToList();
             foreach (var entity in _container.ContainedEntities.ToList())
             {
                 _container.Remove(entity);
             }
 
-            entryComponent.TryInsert(entities);
+            if (Owner.Transform.Coordinates.TryGetTileAtmosphere(out var tileAtmos) &&
+                tileAtmos.Air != null &&
+                tileAtmos.Air.Temperature > 0)
+            {
+                var tileAir = tileAtmos.Air;
+                var transferMoles = 0.1f * (0.05f * Atmospherics.OneAtmosphere * 1.01f - Air.Pressure) * Air.Volume / (tileAir.Temperature * Atmospherics.R);
+
+                Air = tileAir.Remove(transferMoles);
+
+                var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
+                atmosSystem
+                    .GetGridAtmosphere(Owner.Transform.GridID)?
+                    .Invalidate(tileAtmos.GridIndices);
+            }
+
+            entryComponent.TryInsert(this);
 
             _automaticEngageToken?.Cancel();
             _automaticEngageToken = null;
@@ -525,6 +542,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 seconds => _flushDelay = TimeSpan.FromSeconds(seconds),
                 () => (int) _flushDelay.TotalSeconds);
 
+            serializer.DataField(this, x => x.Air, "air", new GasMixture(Atmospherics.CellVolume));
             serializer.DataField(ref _entryDelay, "entryDelay", 0.5f);
         }
 
