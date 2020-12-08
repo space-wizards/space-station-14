@@ -35,7 +35,7 @@ namespace Content.IntegrationTests.Tests.Networking
 
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 
-            client.Post(() => IoCManager.Resolve<IClientConsole>().ProcessCommand("disconnect"));
+            await client.WaitPost(() => IoCManager.Resolve<IClientConsole>().ProcessCommand("disconnect"));
 
             // Run some ticks for the disconnect to complete and such.
             for (var i = 0; i < 5; i++)
