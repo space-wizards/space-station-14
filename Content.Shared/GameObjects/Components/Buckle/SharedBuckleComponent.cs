@@ -22,7 +22,7 @@ namespace Content.Shared.GameObjects.Components.Buckle
         public abstract bool Buckled { get; }
         public  EntityUid? EntityBuckledTo { get; set; }
 
-        public  bool IsOnStrapEntityThisFrame { get; set; }
+        public bool IsOnStrapEntityThisFrame { get; set; }
         public bool DontCollide { get; set; }
         public abstract bool TryBuckle(IEntity user, IEntity to);
 
