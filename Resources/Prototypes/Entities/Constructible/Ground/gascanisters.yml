@@ -21,8 +21,6 @@
   - type: UserInterface
   - type: Appearance
 
-
-
 - type: entity
   parent: GasCanisterBase
   id: GasCanister
@@ -80,8 +78,6 @@
         - 1478.6513029 # nitrogen 79%
       temperature: 293.15
 
-
-
 - type: entity
   parent: GasCanister
   id: OxygenCanister
@@ -96,8 +92,6 @@
       moles:
         - 1871.71051 # oxygen
       temperature: 293.15
-
-
 
 - type: entity
   parent: GasCanister
