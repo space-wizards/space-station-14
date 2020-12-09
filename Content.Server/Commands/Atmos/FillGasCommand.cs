@@ -55,7 +55,7 @@ namespace Content.Server.Commands.Atmos
             foreach (var tile in gam)
             {
                 tile.Air?.AdjustMoles(gasId, moles);
-                gam.Invalidate(tile.GridIndices);
+                tile.Invalidate();
             }
         }
     }
