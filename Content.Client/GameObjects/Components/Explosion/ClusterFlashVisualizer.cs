@@ -5,6 +5,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
+using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Client.GameObjects.Components.Explosion
 {
@@ -29,6 +30,14 @@ namespace Content.Client.GameObjects.Components.Explosion
             }
         }
 
+        public override void InitializeEntity(IEntity entity)
+        {
+            base.InitializeEntity(entity);
+            var sprite = entity.GetComponent<ISpriteComponent>();
+
+            sprite.LayerMapSet(ClusterFlashVisualLayers.Base, sprite.AddLayerState($"{_state}-0"));
+        }
+
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
@@ -41,7 +50,13 @@ namespace Content.Client.GameObjects.Components.Explosion
 
             if (component.TryGetData(ClusterFlashVisuals.GrenadesCounter, out int grenadesCounter))
             {
-                var level = ContentHelpers.RoundToLevels(grenadesCounter, max, _levels);
+                var level = 0;
+                if (grenadesCounter >= max){
+                    level = max;
+                }
+                else{
+                    level = grenadesCounter;
+                }
 
                 sprite.LayerSetState(ClusterFlashVisualLayers.Base, $"{_state}-{level}");
             }

@@ -43,6 +43,9 @@ namespace Content.Server.GameObjects.Components.Explosives
         [ViewVariables]
         private int _maxGrenades;
 
+        [ViewVariables]
+        private int _maxViewableGrenades;
+
         /// <summary>
         ///     If we have a pre-fill how many more can we spawn.
         /// </summary>
@@ -80,10 +83,11 @@ namespace Content.Server.GameObjects.Components.Explosives
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(this, x => x._fillPrototype, "fillPrototype", null);
-            serializer.DataField(this, x => x._maxGrenades, "maxGrenadesCount", 3);
-            serializer.DataField(this, x => x._delay, "delay", 1.0f);
-            serializer.DataField(this, x => x._throwDistance, "distance", 5.0f);
+            serializer.DataField(ref _fillPrototype, "fillPrototype", null);
+            serializer.DataField(ref _maxGrenades, "maxGrenadesCount", 4);
+            serializer.DataField(ref _delay, "delay", 1.0f);
+            serializer.DataField(ref _throwDistance, "distance", 3.0f);
+            serializer.DataField(ref _maxViewableGrenades, "maxView", 3);
         }
 
         public override void Initialize()
@@ -97,26 +101,38 @@ namespace Content.Server.GameObjects.Components.Explosives
 
         }
 
+        protected override void Startup()
+        {
+            base.Startup();
+
+            if (_fillPrototype != null)
+                FillContainer();
+        }
+
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             Owner.SpawnTimer((int) (_delay * 1000), () =>
             {
-                if (Owner.Deleted || _countDown)
+                if (Owner.Deleted || _countDown || (_grenadesContainer.ContainedEntities.Count <= 0 && _fillPrototype == null))
                     return;
 
                 _countDown = true;
                 var random = IoCManager.Resolve<IRobustRandom>();
                 var worldPos = Owner.Transform.WorldPosition;
-                var delay = 0;
-
+                var delay = 20;
+                var grenadesWasInserted = _grenadesContainer.ContainedEntities.Count;
                 while (TryGetGrenade(out var grenade))
                 {
+                    var segmentAngle = Convert.ToInt32(360 / grenadesWasInserted);
+                    var throwedCount = grenadesWasInserted - _grenadesContainer.ContainedEntities.Count;
+                    var angleMin = segmentAngle * throwedCount;
+                    var angleMax = segmentAngle * (throwedCount + 1);
                     // Okay ThrowHelper is actually disgusting and so is this
-                    var angle = Angle.FromDegrees(random.Next(359));
-                    var distance = random.Next() * _throwDistance;
-                    var target = new EntityCoordinates(grenade.Uid, worldPos + angle.ToVec() * distance);
+                    var angle = Angle.FromDegrees(random.Next(angleMin, angleMax));
+                    var distance = (float)random.NextDouble() * _throwDistance;
+                    var target = new EntityCoordinates(Owner.Uid, angle.ToVec().Normalized * distance);
 
-                    grenade.Throw(1f, target, Owner.Transform.Coordinates);
+                    grenade.Throw(1f, target, grenade.Transform.Coordinates);
 
                     grenade.SpawnTimer(delay, () =>
                     {
@@ -137,16 +153,16 @@ namespace Content.Server.GameObjects.Components.Explosives
             return true;
         }
 
+        private void FillContainer(){
+            for (int x = 0; x != _maxGrenades; x++){
+                var grenade = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.MapPosition);
+                _grenadesContainer.Insert(grenade);
+            }
+            UpdateAppearance();
+        }
         private bool TryGetGrenade([NotNullWhen(true)] out IEntity? grenade)
         {
             grenade = null;
-
-            if (_unspawnedCount > 0)
-            {
-                _unspawnedCount--;
-                grenade = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.MapPosition);
-                return true;
-            }
 
             if (_grenadesContainer.ContainedEntities.Count > 0)
             {
@@ -167,7 +183,7 @@ namespace Content.Server.GameObjects.Components.Explosives
             if (!Owner.TryGetComponent(out AppearanceComponent? appearance)) return;
 
             appearance.SetData(ClusterFlashVisuals.GrenadesCounter, _grenadesContainer.ContainedEntities.Count);
-            appearance.SetData(ClusterFlashVisuals.GrenadesMax, _maxGrenades);
+            appearance.SetData(ClusterFlashVisuals.GrenadesMax, _maxViewableGrenades);
         }
     }
 }
