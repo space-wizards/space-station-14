@@ -276,7 +276,7 @@ namespace Content.Server.GameObjects.Components.Buckle
             AppearanceComponent?.SetData(BuckleVisuals.Buckled, true);
 
             BuckledTo = strap;
-            EntityBuckledTo = BuckledTo.Owner.Uid;
+            LastEntityBuckledTo = BuckledTo.Owner.Uid;
             DontCollide = true;
 
             ReAttach(strap);
@@ -432,7 +432,7 @@ namespace Content.Server.GameObjects.Components.Buckle
             }
             
 
-            return new BuckleComponentState(Buckled, drawDepth, EntityBuckledTo, DontCollide);
+            return new BuckleComponentState(Buckled, drawDepth, LastEntityBuckledTo, DontCollide);
         }
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)

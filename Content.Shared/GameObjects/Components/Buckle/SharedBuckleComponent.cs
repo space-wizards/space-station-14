@@ -19,7 +19,7 @@ namespace Content.Shared.GameObjects.Components.Buckle
         ///     True if the entity is buckled, false otherwise.
         /// </summary>
         public abstract bool Buckled { get; }
-        public EntityUid? EntityBuckledTo { get; set; }
+        public EntityUid? LastEntityBuckledTo { get; set; }
 
         public bool IsOnStrapEntityThisFrame { get; set; }
         public bool DontCollide { get; set; }
@@ -29,7 +29,7 @@ namespace Content.Shared.GameObjects.Components.Buckle
 
         bool ICollideSpecial.PreventCollide(IPhysBody collidedwith)
         {
-            if (collidedwith.Entity.Uid == EntityBuckledTo)
+            if (collidedwith.Entity.Uid == LastEntityBuckledTo)
             {
                 IsOnStrapEntityThisFrame = true;
                 return Buckled || DontCollide;
@@ -72,16 +72,16 @@ namespace Content.Shared.GameObjects.Components.Buckle
     [Serializable, NetSerializable]
     public sealed class BuckleComponentState : ComponentState
     {
-        public BuckleComponentState(bool buckled, int? drawDepth, EntityUid? entityBuckledTo, bool dontCollide) : base(ContentNetIDs.BUCKLE)
+        public BuckleComponentState(bool buckled, int? drawDepth, EntityUid? lastEntityBuckledTo, bool dontCollide) : base(ContentNetIDs.BUCKLE)
         {
             Buckled = buckled;
             DrawDepth = drawDepth;
-            EntityBuckledTo = entityBuckledTo;
+            LastEntityBuckledTo = lastEntityBuckledTo;
             DontCollide = dontCollide;
         }
 
         public bool Buckled { get; }
-        public EntityUid? EntityBuckledTo { get; }
+        public EntityUid? LastEntityBuckledTo { get; }
         public bool DontCollide { get; }
         public int? DrawDepth;
     }
