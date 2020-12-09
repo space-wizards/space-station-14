@@ -44,9 +44,11 @@ namespace Content.Shared.Damage.DamageContainer
             }
 
             foreach (var supportedClass in _supportedClasses)
-            foreach (var supportedType in supportedClass.ToTypes())
             {
-                _supportedTypes.Add(supportedType);
+                foreach (var supportedType in supportedClass.ToTypes())
+                {
+                    _supportedTypes.Add(supportedType);
+                }
             }
 
             foreach (var originalType in _supportedTypes)
