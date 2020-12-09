@@ -66,8 +66,8 @@ namespace Content.Server.GameObjects.Components.Fluids
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var serverEntityManager = IoCManager.Resolve<IServerEntityManager>();
 
-            var gridId = coordinates.GetGridId(entityManager);
-            var mapGrid = mapManager.GetGrid(gridId);
+            if (!mapManager.TryGetGrid(coordinates.GetGridId(entityManager), out var mapGrid))
+                return null; // Let's not spill to space.
 
             // If space return early, let that spill go out into the void
             var tileRef = mapGrid.GetTileRef(coordinates);
@@ -78,13 +78,11 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             // Get normalized co-ordinate for spill location and spill it in the centre
             // TODO: Does SnapGrid or something else already do this?
-            var spillTileMapGrid = mapManager.GetGrid(gridId);
-            var spillTileRef = spillTileMapGrid.GetTileRef(coordinates).GridIndices;
-            var spillGridCoords = spillTileMapGrid.GridTileToLocal(spillTileRef);
+            var spillGridCoords = mapGrid.GridTileToLocal(tileRef.GridIndices);
 
             var spilt = false;
 
-            foreach (var spillEntity in entityManager.GetEntitiesAt(spillTileMapGrid.ParentMapId, spillGridCoords.Position))
+            foreach (var spillEntity in entityManager.GetEntitiesAt(mapGrid.ParentMapId, spillGridCoords.Position))
             {
                 if (!spillEntity.TryGetComponent(out PuddleComponent? puddleComponent))
                 {
@@ -167,7 +165,9 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             // Get normalized co-ordinate for spill location and spill it in the centre
             // TODO: Does SnapGrid or something else already do this?
-            var spillTileMapGrid = mapManager.GetGrid(gridId);
+            if (!mapManager.TryGetGrid(gridId, out var spillTileMapGrid))
+                return null; // Let's not spill to invalid grids.
+
             var spillGridCoords = spillTileMapGrid.GridTileToLocal(tileRef.GridIndices);
 
             var spilt = false;

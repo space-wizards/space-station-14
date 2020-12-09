@@ -1,8 +1,10 @@
 ﻿#nullable enable
 using System;
+using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.Atmos;
+using Content.Shared.Administration;
 using Content.Shared.Atmos;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
@@ -15,6 +17,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Server.Atmos
 {
+    [AdminCommand(AdminFlags.Debug)]
     public class AddAtmos : IClientCommand
     {
         public string Command => "addatmos";
@@ -65,6 +68,7 @@ namespace Content.Server.Atmos
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class AddUnsimulatedAtmos : IClientCommand
     {
         public string Command => "addunsimulatedatmos";
@@ -115,6 +119,7 @@ namespace Content.Server.Atmos
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class ListGases : IClientCommand
     {
         public string Command => "listgases";
@@ -131,6 +136,7 @@ namespace Content.Server.Atmos
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class AddGas : IClientCommand
     {
         public string Command => "addgas";
@@ -138,19 +144,12 @@ namespace Content.Server.Atmos
         public string Help => "addgas <X> <Y> <GridId> <Gas> <moles>";
         public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
         {
-            var gasId = -1;
-            var gas = (Gas) (-1);
             if (args.Length < 5) return;
             if(!int.TryParse(args[0], out var x)
                || !int.TryParse(args[1], out var y)
                || !int.TryParse(args[2], out var id)
-               || !(int.TryParse(args[3], out gasId) || Enum.TryParse(args[3], true, out gas))
+               || !(AtmosCommandUtils.TryParseGasID(args[3], out var gasId))
                || !float.TryParse(args[4], out var moles)) return;
-
-            if (gas != (Gas) (-1))
-            {
-                gasId = (int)gas;
-            }
 
             var gridId = new GridId(id);
 
@@ -192,18 +191,12 @@ namespace Content.Server.Atmos
                 return;
             }
 
-            if (gasId != -1)
-            {
-                tile.Air.AdjustMoles(gasId, moles);
-                gam.Invalidate(indices);
-                return;
-            }
-
-            tile.Air.AdjustMoles(gas, moles);
+            tile.Air.AdjustMoles(gasId, moles);
             gam.Invalidate(indices);
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class FillGas : IClientCommand
     {
         public string Command => "fillgas";
@@ -211,15 +204,10 @@ namespace Content.Server.Atmos
         public string Help => "fillgas <GridId> <Gas> <moles>";
         public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
         {
-            var gasId = -1;
-            var gas = (Gas) (-1);
             if (args.Length < 3) return;
             if(!int.TryParse(args[0], out var id)
-               || !(int.TryParse(args[1], out gasId) || Enum.TryParse(args[1], true, out gas))
+               || !(AtmosCommandUtils.TryParseGasID(args[1], out var gasId))
                || !float.TryParse(args[2], out var moles)) return;
-
-            if (gas != (Gas) (-1))
-                gasId = (int)gas;
 
             var gridId = new GridId(id);
 
@@ -249,19 +237,13 @@ namespace Content.Server.Atmos
 
             foreach (var tile in gam)
             {
-                if (gasId != -1)
-                {
-                    tile.Air?.AdjustMoles(gasId, moles);
-                    gam.Invalidate(tile.GridIndices);
-                    continue;
-                }
-
-                tile.Air?.AdjustMoles(gas, moles);
+                tile.Air?.AdjustMoles(gasId, moles);
                 gam.Invalidate(tile.GridIndices);
             }
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class RemoveGas : IClientCommand
     {
         public string Command => "removegas";
@@ -325,6 +307,7 @@ namespace Content.Server.Atmos
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class SetTemperature : IClientCommand
     {
         public string Command => "settemp";
@@ -389,6 +372,7 @@ namespace Content.Server.Atmos
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class SetAtmosTemperature : IClientCommand
     {
         public string Command => "setatmostemp";
@@ -448,6 +432,7 @@ namespace Content.Server.Atmos
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class DeleteGasCommand : IClientCommand
     {
         public string Command => "deletegas";
@@ -624,25 +609,27 @@ namespace Content.Server.Atmos
         }
     }
 
+    [AdminCommand(AdminFlags.Debug)]
     public class ShowAtmos : IClientCommand
     {
         public string Command => "showatmos";
-        public string Description => "Toggles seeing atmos debug overlay";
+        public string Description => "Toggles seeing atmos debug overlay.";
         public string Help => $"Usage: {Command}";
 
         public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
         {
-            if (player == null) return;
+            if (player == null)
+            {
+                shell.SendText(player, "You must be a player to use this command.");
+                return;
+            }
+
             var atmosDebug = EntitySystem.Get<AtmosDebugOverlaySystem>();
-            if (atmosDebug.PlayerObservers.Contains(player))
-            {
-                atmosDebug.PlayerObservers.Remove(player);
-                shell.SendText(player, $"Ok, disabled");
-            }
-            else
-            {
-                atmosDebug.PlayerObservers.Add(player);
-                shell.SendText(player, $"Ok, enabled");
-            }
+            var enabled = atmosDebug.ToggleObserver(player);
+
+            shell.SendText(player, enabled
+                ? "Enabled the atmospherics debug overlay."
+                : "Disabled the atmospherics debug overlay.");
         }
-    }}
+    }
+}

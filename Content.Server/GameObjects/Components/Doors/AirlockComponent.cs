@@ -13,6 +13,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
@@ -35,7 +36,7 @@ namespace Content.Server.GameObjects.Components.Doors
         /// </summary>
         private static readonly TimeSpan PowerWiresTimeout = TimeSpan.FromSeconds(5.0);
 
-        private CancellationTokenSource _powerWiresPulsedTimerCancel = new CancellationTokenSource();
+        private CancellationTokenSource _powerWiresPulsedTimerCancel = new();
 
         private bool _powerWiresPulsed;
 
@@ -310,7 +311,7 @@ namespace Content.Server.GameObjects.Components.Doors
                         PowerWiresPulsed = true;
                         _powerWiresPulsedTimerCancel.Cancel();
                         _powerWiresPulsedTimerCancel = new CancellationTokenSource();
-                        Timer.Spawn(PowerWiresTimeout,
+                        Owner.SpawnTimer(PowerWiresTimeout,
                             () => PowerWiresPulsed = false,
                             _powerWiresPulsedTimerCancel.Token);
                         break;

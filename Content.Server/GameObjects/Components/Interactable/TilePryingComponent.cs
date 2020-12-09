@@ -36,7 +36,9 @@ namespace Content.Server.GameObjects.Components.Interactable
             if (!Owner.TryGetComponent<ToolComponent>(out var tool) && _toolComponentNeeded)
                 return;
 
-            var mapGrid = _mapManager.GetGrid(clickLocation.GetGridId(Owner.EntityManager));
+            if (!_mapManager.TryGetGrid(clickLocation.GetGridId(Owner.EntityManager), out var mapGrid))
+                return;
+
             var tile = mapGrid.GetTileRef(clickLocation);
 
             var coordinates = mapGrid.GridTileToLocal(tile.GridIndices);

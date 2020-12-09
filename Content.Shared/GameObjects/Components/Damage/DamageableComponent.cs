@@ -40,7 +40,7 @@ namespace Content.Shared.GameObjects.Components.Damage
 
         [ViewVariables] private DamageContainer Damage { get; set; } = default!;
 
-        public Dictionary<DamageState, int> Thresholds { get; set; } = new Dictionary<DamageState, int>();
+        public Dictionary<DamageState, int> Thresholds { get; set; } = new();
 
         public virtual List<DamageState> SupportedDamageStates
         {

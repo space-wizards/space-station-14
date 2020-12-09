@@ -3,6 +3,7 @@ using Content.Client.GameObjects.Components.HUD.Inventory;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.Interfaces;
 using Content.Shared;
+using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Client.Interfaces.GameObjects.Components;
@@ -22,8 +23,8 @@ namespace Content.Client.UserInterface
         private readonly IClientPreferencesManager _preferencesManager;
         private IEntity _previewDummy;
         private readonly Label _summaryLabel;
-        private VBoxContainer _loaded;
-        private Label _unloaded;
+        private readonly VBoxContainer _loaded;
+        private readonly Label _unloaded;
 
         public LobbyCharacterPreviewPanel(IEntityManager entityManager,
             IClientPreferencesManager preferencesManager)
@@ -91,7 +92,7 @@ namespace Content.Client.UserInterface
 
         private static SpriteView MakeSpriteView(IEntity entity, Direction direction)
         {
-            return new SpriteView
+            return new()
             {
                 Sprite = entity.GetComponent<ISpriteComponent>(),
                 OverrideDirection = direction,
@@ -110,7 +111,7 @@ namespace Content.Client.UserInterface
             {
                 _loaded.Visible = true;
                 _unloaded.Visible = false;
-                if (!(_preferencesManager.Preferences.SelectedCharacter is HumanoidCharacterProfile selectedCharacter))
+                if (_preferencesManager.Preferences.SelectedCharacter is not HumanoidCharacterProfile selectedCharacter)
                 {
                     _summaryLabel.Text = string.Empty;
                 }

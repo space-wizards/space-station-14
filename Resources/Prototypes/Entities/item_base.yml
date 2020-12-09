@@ -9,7 +9,7 @@
   - type: InteractionOutline
   - type: MovedByPressure
   - type: DamageOnHighSpeedImpact
-  - type: Collidable
+  - type: Physics
     anchored: false
     mass: 5
     shapes:

@@ -18,6 +18,11 @@
   desc: A broad-spectrum anti-toxin, which treats toxin damage in the blood stream. Overdosing will cause vomiting, dizzyness and pain.
   physicalDesc: translucent
   color: "#3a1d8a"
+  plantMetabolism:
+    - !type:AdjustToxins
+      amount: -10
+    - !type:AdjustHealth
+      amount: 1
 
 - type: reagent
   id: chem.Arithrazine
@@ -39,6 +44,11 @@
   desc: Required for the proper function of cryogenics. Heals all standard types of damage very swiftly, but only works in temperatures under 170K (usually this means cryo cells). Can also slowly heal clone damage, such as caused by cloning or Slimes.
   physicalDesc: fizzy
   color: "#0091ff"
+  plantMetabolism:
+    - !type:AdjustToxins
+      amount: -3
+    - !type:AdjustHealth
+      amount: 3
 
 - type: reagent
   id: chem.Clonexadone
@@ -46,6 +56,11 @@
   desc: Heals standard damage in the same as Cryoxadone, with the same temperature requirement. Significantly more effective than the former at treating cellular damage, although both can be used simultaneously. Best used in cryo cells.
   physicalDesc: bubbly
   color: "#0666ff"
+  plantMetabolism:
+    - !type:AdjustToxins
+      amount: -5
+    - !type:AdjustHealth
+      amount: 5
 
 - type: reagent
   id: chem.Citalopram
@@ -235,6 +250,9 @@
   desc: A hallucinogenic compound that is illegal under space law. A synthetic drug derived from Mindbreaker toxin, it blocks some neurological signals to the respiratory system which causes choking.
   physicalDesc: strong-smelling
   color: "#5f959c"
+  plantMetabolism:
+    - !type:AdjustToxins
+      amount: 10
 
 - type: reagent
   id: chem.Impedrezene
@@ -263,6 +281,9 @@
   desc: A potent hallucinogenic compound that is illegal under space law. Formerly known as LSD.
   physicalDesc: opaque
   color: "#77b58e"
+  plantMetabolism:
+    - !type:AdjustToxins
+      amount: 10
 
 - type: reagent
   id: chem.Soporific

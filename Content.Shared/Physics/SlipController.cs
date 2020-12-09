@@ -1,5 +1,6 @@
-using Robust.Shared.Interfaces.Physics;
+﻿using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
+using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 
 namespace Content.Shared.Physics
@@ -24,6 +25,11 @@ namespace Content.Shared.Physics
 
             if (_physicsManager.IsWeightless(ControlledComponent.Owner.Transform.Coordinates))
             {
+                if (ControlledComponent.IsColliding(Vector2.Zero, false))
+                {
+                    Stop();
+                }
+
                 return;
             }
 

@@ -9,6 +9,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
@@ -16,15 +17,6 @@ namespace Content.Shared.Maps
 {
     public static class TurfHelpers
     {
-        /// <summary>
-        ///     Returns the content tile definition for a tile.
-        /// </summary>
-        public static ContentTileDefinition GetContentTileDefinition(this Tile tile)
-        {
-            var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
-            return (ContentTileDefinition)tileDefinitionManager[tile.TypeId];
-        }
-
         /// <summary>
         ///     Attempts to get the turf at map indices with grid id or null if no such turf is found.
         /// </summary>
@@ -54,10 +46,12 @@ namespace Content.Shared.Maps
             if (!coordinates.IsValid(entityManager))
                 return null;
 
+
             mapManager ??= IoCManager.Resolve<IMapManager>();
 
             if (!mapManager.TryGetGrid(coordinates.GetGridId(entityManager), out var grid))
                 return null;
+
 
             if (!grid.TryGetTileRef(coordinates, out var tile))
                 return null;
@@ -68,6 +62,39 @@ namespace Content.Shared.Maps
         public static bool TryGetTileRef(this EntityCoordinates coordinates, [NotNullWhen(true)] out TileRef? turf)
         {
             return (turf = coordinates.GetTileRef()) != null;
+        }
+
+        /// <summary>
+        ///     Returns the content tile definition for a tile.
+        /// </summary>
+        public static ContentTileDefinition GetContentTileDefinition(this Tile tile, ITileDefinitionManager? tileDefinitionManager = null)
+        {
+            tileDefinitionManager ??= IoCManager.Resolve<ITileDefinitionManager>();
+            return (ContentTileDefinition)tileDefinitionManager[tile.TypeId];
+        }
+
+        /// <summary>
+        ///     Returns whether a tile is considered space.
+        /// </summary>
+        public static bool IsSpace(this Tile tile, ITileDefinitionManager? tileDefinitionManager = null)
+        {
+            return tile.GetContentTileDefinition(tileDefinitionManager).IsSpace;
+        }
+
+        /// <summary>
+        ///     Returns the content tile definition for a tile ref.
+        /// </summary>
+        public static ContentTileDefinition GetContentTileDefinition(this TileRef tile, ITileDefinitionManager? tileDefinitionManager = null)
+        {
+            return tile.Tile.GetContentTileDefinition(tileDefinitionManager);
+        }
+
+        /// <summary>
+        ///     Returns whether a tile ref is considered space.
+        /// </summary>
+        public static bool IsSpace(this TileRef tile, ITileDefinitionManager? tileDefinitionManager = null)
+        {
+            return tile.Tile.IsSpace(tileDefinitionManager);
         }
 
         public static bool PryTile(this EntityCoordinates coordinates, IEntityManager? entityManager = null,
@@ -187,21 +214,17 @@ namespace Content.Shared.Maps
         private static Box2 GetWorldTileBox(TileRef turf)
         {
             var map = IoCManager.Resolve<IMapManager>();
-            var tileGrid = map.GetGrid(turf.GridIndex);
 
             // This is scaled to 90 % so it doesn't encompass walls on other tiles.
-            var tileBox = Box2.UnitCentered.Scale(tileGrid.TileSize).Scale(0.9f);
-            return tileBox.Translated(tileGrid.GridTileToWorldPos(turf.GridIndices));
-        }
+            var tileBox = Box2.UnitCentered.Scale(0.9f);
 
-        /// <summary>
-        /// Creates a box the size of a tile.
-        /// </summary>
-        private static Box2 GetTileBox(this TileRef turf)
-        {
-            var map = IoCManager.Resolve<IMapManager>();
-            var tileGrid = map.GetGrid(turf.GridIndex);
-            return Box2.UnitCentered.Scale(tileGrid.TileSize);
+            if (map.TryGetGrid(turf.GridIndex, out var tileGrid))
+            {
+                tileBox = tileBox.Scale(tileGrid.TileSize);
+                return tileBox.Translated(tileGrid.GridTileToWorldPos(turf.GridIndices));
+            }
+
+            return tileBox;
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Content.Shared.GameObjects.Verbs
 
         public static implicit operator VerbCategoryData((string name, string icon) tuple)
         {
-            return new VerbCategoryData(tuple.name, tuple.icon == null ? null : new SpriteSpecifier.Texture(new ResourcePath(tuple.icon)));
+            return new(tuple.name, tuple.icon == null ? null : new SpriteSpecifier.Texture(new ResourcePath(tuple.icon)));
         }
     }
 }

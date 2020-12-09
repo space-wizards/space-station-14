@@ -9,6 +9,7 @@ using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs.Roles.Suspicion;
 using Content.Server.Players;
+using Content.Shared;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.PDA;
 using Content.Shared.Roles;
@@ -44,20 +45,12 @@ namespace Content.Server.GameTicking.GamePresets
         private static string TraitorID = "SuspicionTraitor";
         private static string InnocentID = "SuspicionInnocent";
 
-        public static void RegisterCVars(IConfigurationManager cfg)
-        {
-            cfg.RegisterCVar("game.suspicion_min_players", 5);
-            cfg.RegisterCVar("game.suspicion_min_traitors", 2);
-            cfg.RegisterCVar("game.suspicion_players_per_traitor", 5);
-            cfg.RegisterCVar("game.suspicion_starting_balance", 20);
-        }
-
         public override bool Start(IReadOnlyList<IPlayerSession> readyPlayers, bool force = false)
         {
-            MinPlayers = _cfg.GetCVar<int>("game.suspicion_min_players");
-            MinTraitors = _cfg.GetCVar<int>("game.suspicion_min_traitors");
-            PlayersPerTraitor = _cfg.GetCVar<int>("game.suspicion_players_per_traitor");
-            TraitorStartingBalance = _cfg.GetCVar<int>("game.suspicion_starting_balance");
+            MinPlayers = _cfg.GetCVar(CCVars.GameSuspicionMinPlayers);
+            MinTraitors = _cfg.GetCVar(CCVars.GameSuspicionMinTraitors);
+            PlayersPerTraitor = _cfg.GetCVar(CCVars.GameSuspicionPlayersPerTraitor);
+            TraitorStartingBalance = _cfg.GetCVar(CCVars.GameSuspicionStartingBalance);
 
             if (!force && readyPlayers.Count < MinPlayers)
             {

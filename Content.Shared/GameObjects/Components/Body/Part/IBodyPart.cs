@@ -7,9 +7,13 @@ using Robust.Shared.Map;
 
 namespace Content.Shared.GameObjects.Components.Body.Part
 {
-    public interface IBodyPart : IHasBody, IBodyPartContainer
+    public interface IBodyPart : IComponent, IBodyPartContainer
     {
-        new IBody? Body { get; set; }
+        /// <summary>
+        ///     The <see cref="IBody"/> to which this <see cref="IBodyPart"/> is
+        ///     attached to.
+        /// </summary>
+        IBody? Body { get; set; }
 
         /// <summary>
         ///     <see cref="BodyPartType"/> that this <see cref="IBodyPart"/> is considered
@@ -19,14 +23,8 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         BodyPartType PartType { get; }
 
         /// <summary>
-        ///     Plural version of this <see cref="IBodyPart"/> name.
-        /// </summary>
-        public string Plural { get; }
-
-        /// <summary>
-        ///     Determines many things: how many mechanisms can be fit inside this
-        ///     <see cref="IBodyPart"/>, whether a body can fit through tiny crevices,
-        ///     etc.
+        ///     Determines how many mechanisms can be fit inside this
+        ///     <see cref="IBodyPart"/>.
         /// </summary>
         int Size { get; }
 
@@ -34,19 +32,21 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         /// <summary>
         ///     Collection of all <see cref="IMechanism"/>s currently inside this
         ///     <see cref="IBodyPart"/>.
-        ///     To add and remove from this list see <see cref="AddMechanism"/> and
+        ///     To add and remove from this list see <see cref="TryAddMechanism"/> and
         ///     <see cref="RemoveMechanism"/>
         /// </summary>
         IReadOnlyCollection<IMechanism> Mechanisms { get; }
 
         /// <summary>
-        /// If body part is vital
+        ///     Whether or not the owning <see cref="Body"/> will die if all
+        ///     <see cref="IBodyPart"/>s of this type are removed from it.
         /// </summary>
         public bool IsVital { get; }
 
+        /// <summary>
+        ///     The symmetry of this <see cref="IBodyPart"/>.
+        /// </summary>
         public BodyPartSymmetry Symmetry { get; }
-
-        bool Drop();
 
         /// <summary>
         ///     Checks if the given <see cref="SurgeryType"/> can be used on
@@ -77,6 +77,16 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         /// <returns>True if it can be added, false otherwise.</returns>
         bool CanAddMechanism(IMechanism mechanism);
 
+        /// <summary>
+        ///     Tries to add a <see cref="IMechanism"/> to this body.
+        /// </summary>
+        /// <param name="mechanism">The mechanism to add.</param>
+        /// <param name="force">
+        ///     Whether or not to check if the mechanism is compatible.
+        ///     Passing true does not guarantee it to be added, for example if
+        ///     it was already added before.
+        /// </param>
+        /// <returns>true if added, false otherwise even if it was already added.</returns>
         bool TryAddMechanism(IMechanism mechanism, bool force = false);
 
         /// <summary>

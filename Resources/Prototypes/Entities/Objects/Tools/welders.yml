@@ -1,0 +1,77 @@
+- type: entity
+  name: welding tool
+  parent: BaseItem
+  id: Welder
+  description: "Melts anything as long as it's fueled, don't forget your eye protection!"
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/welder.rsi
+    layers:
+    - state: icon
+    - state: welder_flame
+      shader: unshaded
+      visible: false
+  - type: Item
+    size: 10
+    sprite: Objects/Tools/welder.rsi
+    HeldPrefix: off
+  - type: ItemCooldown
+  - type: MeleeWeapon
+  - type: ItemStatus
+  - type: SolutionContainer
+    maxVol: 100
+    caps: AddTo, NoExamine
+    contents:
+      reagents:
+        - ReagentId: chem.WeldingFuel
+          Quantity: 100
+  - type: Welder
+    weldSoundCollection: Welder
+  - type: PointLight
+    enabled: false
+    radius: 1.5
+    color: orange
+
+- type: entity
+  name: experimental welding tool
+  parent: Welder
+  id: WelderExperimental
+  description: "An experimental welder capable of self-fuel generation and less harmful to the eyes."
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/welder_experimental.rsi
+  - type: Item
+    sprite: Objects/Tools/welder_experimental.rsi
+  - type: SolutionContainer
+    maxVol: 1000
+    caps: AddTo, NoExamine
+    contents:
+      reagents:
+        - ReagentId: chem.WeldingFuel
+          Quantity: 1000
+  - type: PointLight
+    enabled: false
+    radius: 1.5
+    color: lightblue
+
+- type: entity
+  name: emergency welding tool
+  parent: Welder
+  id: WelderMini
+  description: "A miniature welder used during emergencies."
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/welder_mini.rsi
+  - type: Item
+    sprite: Objects/Tools/welder_mini.rsi
+  - type: SolutionContainer
+    maxVol: 25
+    caps: AddTo, NoExamine
+    contents:
+      reagents:
+        - ReagentId: chem.WeldingFuel
+          Quantity: 25
+  - type: PointLight
+    enabled: false
+    radius: 1.0
+    color: orange

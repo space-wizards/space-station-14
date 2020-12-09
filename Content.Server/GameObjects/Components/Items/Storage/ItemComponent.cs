@@ -3,6 +3,7 @@ using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Throw;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -19,6 +20,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 {
     [RegisterComponent]
     [ComponentReference(typeof(StorableComponent))]
+    [ComponentReference(typeof(SharedStorableComponent))]
     [ComponentReference(typeof(IItemComponent))]
     public class ItemComponent : StorableComponent, IInteractHand, IExAct, IEquipped, IUnequipped, IItemComponent
     {
@@ -56,12 +58,12 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             }
         }
 
-        public void Equipped(EquippedEventArgs eventArgs)
+        public virtual void Equipped(EquippedEventArgs eventArgs)
         {
             EquippedToSlot();
         }
 
-        public void Unequipped(UnequippedEventArgs eventArgs)
+        public virtual void Unequipped(UnequippedEventArgs eventArgs)
         {
             RemovedFromSlot();
         }
@@ -109,7 +111,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             protected override void GetData(IEntity user, ItemComponent component, VerbData data)
             {
                 if (!ActionBlockerSystem.CanInteract(user) ||
-                    ContainerHelpers.IsInContainer(component.Owner) ||
+                    component.Owner.IsInContainer() ||
                     !component.CanPickup(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
@@ -154,7 +156,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                     break;
             }
 
-            ThrowHelper.Throw(Owner, throwForce, targetLocation, sourceLocation, true);
+            Owner.Throw(throwForce, targetLocation, sourceLocation, true);
         }
     }
 }

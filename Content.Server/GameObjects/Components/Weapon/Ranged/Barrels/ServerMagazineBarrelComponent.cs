@@ -200,8 +200,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 var magEntity = Owner.EntityManager.SpawnEntity(_magFillPrototype, Owner.Transform.Coordinates);
                 _magazineContainer.Insert(magEntity);
             }
-
             Dirty();
+        }
+
+        protected override void Startup()
+        {
             UpdateAppearance();
         }
 
@@ -210,7 +213,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             return BoltOpen ? null : _chamberContainer.ContainedEntity;
         }
 
-        public override IEntity TakeProjectile(EntityCoordinates spawnAtGrid, MapCoordinates spawnAtMap)
+        public override IEntity TakeProjectile(EntityCoordinates spawnAt)
         {
             if (BoltOpen)
             {
@@ -219,7 +222,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             var entity = _chamberContainer.ContainedEntity;
 
             Cycle();
-            return entity?.GetComponent<AmmoComponent>().TakeBullet(spawnAtGrid, spawnAtMap);
+            return entity?.GetComponent<AmmoComponent>().TakeBullet(spawnAt);
         }
 
         private void Cycle(bool manual = false)
@@ -242,7 +245,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     soundSystem.PlayAtCoords(_soundBoltOpen, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-5));
                 }
 
-                if (ContainerHelpers.TryGetContainer(Owner, out var container))
+                if (Owner.TryGetContainer(out var container))
                 {
                     Owner.PopupMessage(container.Owner, Loc.GetString("Bolt open"));
                 }

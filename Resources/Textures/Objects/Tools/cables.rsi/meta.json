@@ -222,6 +222,15 @@
           1
         ]
       ]
+    },
+    {
+      "name": "coilall-30",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
     }
   ]
 }

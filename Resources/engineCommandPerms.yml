@@ -1,0 +1,65 @@
+# Available to everybody
+- Commands:
+  - help
+  - list
+
+- Flags: FUN
+  Commands:
+  - addcomp
+  - rmcomp
+
+- Flags: DEBUG
+  Commands:
+  - delete
+  - lsgrid
+  - lsmap
+  - listplayers
+  - loc
+  - mem
+  - netaudit
+  - querymappaused
+  - showtime
+  - inrangeunoccluded
+
+- Flags: MAPPING
+  Commands:
+  - addmap
+  - loadbp
+  - loadmap
+  - pausemap
+  - querymappaused
+  - rmgrid
+  - rmmap
+  - mapinit
+  - savebp
+  - savemap
+  - tpgrid
+
+- Flags: ADMIN
+  Commands:
+  - delete
+  - kick
+  - listplayers
+  - tp
+  - tpto
+
+- Flags: SERVER
+  Commands:
+  - delete
+  - pausemap
+  - unpausemap
+  - restart
+  - shutdown
+
+- Flags: SPAWN
+  Commands:
+  - spawn
+
+- Flags: HOST
+  Commands:
+  - gc_mode
+  - gc
+  - loglevel
+  - saveconfig
+  - testlog
+  - sudo

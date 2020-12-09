@@ -34,10 +34,8 @@ namespace Content.Shared.Prototypes.Cargo
             {
                 if (_name.Trim().Length != 0)
                     return _name;
-                var protoMan = IoCManager.Resolve<IPrototypeManager>();
-                if (protoMan == null)
-                    return _name;
-                protoMan.TryIndex(_product, out EntityPrototype prototype);
+                EntityPrototype prototype = null;
+                IoCManager.Resolve<IPrototypeManager>()?.TryIndex(_product, out prototype);
                 if (prototype?.Name != null)
                     _name = prototype.Name;
                 return _name;
@@ -54,10 +52,8 @@ namespace Content.Shared.Prototypes.Cargo
             {
                 if (_description.Trim().Length != 0)
                     return _description;
-                var protoMan = IoCManager.Resolve<IPrototypeManager>();
-                if (protoMan == null)
-                    return _description;
-                protoMan.TryIndex(_product, out EntityPrototype prototype);
+                EntityPrototype prototype = null;
+                IoCManager.Resolve<IPrototypeManager>()?.TryIndex(_product, out prototype);
                 if (prototype?.Description != null)
                     _description = prototype.Description;
                 return _description;
@@ -93,6 +89,11 @@ namespace Content.Shared.Prototypes.Cargo
         /// </summary>
         [ViewVariables]
         public string Group => _group;
+
+        public CargoProductPrototype()
+        {
+            IoCManager.InjectDependencies(this);
+        }
 
         public void LoadFrom(YamlMappingNode mapping)
         {

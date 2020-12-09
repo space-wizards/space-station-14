@@ -5,7 +5,7 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       mask:

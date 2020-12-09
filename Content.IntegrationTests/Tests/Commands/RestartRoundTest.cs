@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
+using Content.Shared;
 using NUnit.Framework;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
@@ -31,7 +32,7 @@ namespace Content.IntegrationTests.Tests.Commands
 
             server.Assert(() =>
             {
-                configManager.SetCVar("game.lobbyenabled", lobbyEnabled);
+                configManager.SetCVar(CCVars.GameLobbyEnabled, lobbyEnabled);
 
                 Assert.That(gameTicker.RunLevel, Is.EqualTo(GameRunLevel.InRound));
 

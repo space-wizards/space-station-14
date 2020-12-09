@@ -8,18 +8,33 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
   - type: SnapGrid
     offset: Center
   - type: Destructible
     thresholdvalue: 100
   - type: Sprite
-    sprite: Constructible/Atmos/pipe.rsi
   - type: Appearance
     visuals:
     - type: PipeVisualizer
+      pipeRSI: Constructible/Atmos/pipe.rsi
   - type: Icon
     sprite: Constructible/Atmos/pipe.rsi
+
+#Note: The PipeDirection of the PipeNode should be the east-facing version, because the entity starts at an angle of 0 (east)
+
+- type: entity
+  parent: PipeBase
+  id: PipeHalf
+  suffix: Half
+  components:
+  - type: NodeContainer
+    nodes:
+    - !type:PipeNode
+      nodeGroupID: Pipe
+      pipeDirection: East
+  - type: Icon
+    state: pipeHalf2
 
 - type: entity
   parent: PipeBase
@@ -33,7 +48,7 @@
       pipeDirection: Lateral
   - type: Icon
     state: pipeStraight2
-    
+
 - type: entity
   parent: PipeBase
   id: PipeBend

@@ -42,7 +42,7 @@ namespace Content.Client.GameObjects.Components.Disposal
         {
             base.UpdateState(state);
 
-            if (!(state is DisposalRouterUserInterfaceState cast))
+            if (state is not DisposalRouterUserInterfaceState cast)
             {
                 return;
             }

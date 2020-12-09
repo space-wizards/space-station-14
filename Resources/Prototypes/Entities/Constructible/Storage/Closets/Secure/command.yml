@@ -7,7 +7,8 @@
     visuals:
     - type: StorageVisualizer
       state: cap
-
+  - type: AccessReader
+    access: [["Captain"]]
 
 - type: entity
   id: LockerHeadOfPersonnel
@@ -18,4 +19,5 @@
     visuals:
     - type: StorageVisualizer
       state: hop
-
+  - type: AccessReader
+    access: [["HeadOfPersonnel"]]

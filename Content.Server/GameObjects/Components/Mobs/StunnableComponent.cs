@@ -1,10 +1,12 @@
 ﻿using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Alert;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Interfaces.GameObjects.Components;
 using NFluidsynth;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -88,7 +90,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
 
             if (!StunStart.HasValue || !StunEnd.HasValue ||
-                !Owner.TryGetComponent(out ServerStatusEffectsComponent status))
+                !Owner.TryGetComponent(out ServerAlertsComponent status))
             {
                 return;
             }
@@ -101,7 +103,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
             if (progress >= length)
             {
-                Timer.Spawn(250, () => status.RemoveStatusEffect(StatusEffect.Stun), StatusRemoveCancellation.Token);
+                Owner.SpawnTimer(250, () => status.ClearAlert(AlertType.Stun), StatusRemoveCancellation.Token);
                 LastStun = null;
             }
         }

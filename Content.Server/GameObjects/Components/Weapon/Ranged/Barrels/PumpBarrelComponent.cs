@@ -148,7 +148,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             return _chamberContainer.ContainedEntity;
         }
 
-        public override IEntity TakeProjectile(EntityCoordinates spawnAtGrid, MapCoordinates spawnAtMap)
+        public override IEntity TakeProjectile(EntityCoordinates spawnAt)
         {
             var chamberEntity = _chamberContainer.ContainedEntity;
             if (!_manualCycle)
@@ -160,7 +160,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 Dirty();
             }
 
-            return chamberEntity?.GetComponent<AmmoComponent>().TakeBullet(spawnAtGrid, spawnAtMap);
+            return chamberEntity?.GetComponent<AmmoComponent>().TakeBullet(spawnAt);
         }
 
         private void Cycle(bool manual = false)

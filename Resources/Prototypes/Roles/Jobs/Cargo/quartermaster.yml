@@ -1,0 +1,23 @@
+- type: job
+  id: Quartermaster
+  name: "quartermaster"
+  positions: 1
+  spawnPositions: 1
+  startingGear: QuartermasterGear
+  department:
+  - Cargo
+  icon: "QuarterMaster"
+  access:
+  - Cargo
+  - Quartermaster
+  - Maintenance
+
+- type: startingGear
+  id: QuartermasterGear
+  equipment:
+    head: ClothingHeadHatCargosoft
+    innerclothing: ClothingUniformJumpsuitQM
+    backpack: ClothingBackpackFilled
+    shoes: ClothingShoesColorBrown
+    idcard: QuartermasterPDA
+    ears: ClothingHeadsetCargo

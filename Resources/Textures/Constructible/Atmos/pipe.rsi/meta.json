@@ -26,6 +26,24 @@
          ]
       },
       {
+         "name":"pipeHalf2",
+         "directions":4,
+         "delays":[
+            [
+               1.0
+            ],
+            [
+               1.0
+            ],
+            [
+               1.0
+            ],
+            [
+               1.0
+            ]
+         ]
+      },
+      {
          "name":"pipeBend2",
          "directions":4,
          "delays":[

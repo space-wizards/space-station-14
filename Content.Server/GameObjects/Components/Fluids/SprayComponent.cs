@@ -67,6 +67,8 @@ namespace Content.Server.GameObjects.Components.Fluids
             set => _sprayVelocity = value;
         }
 
+        public string SpraySound => _spraySound;
+
         public ReagentUnit CurrentVolume => Owner.GetComponentOrNull<SolutionContainerComponent>()?.CurrentVolume ?? ReagentUnit.Zero;
 
         public override void Initialize()

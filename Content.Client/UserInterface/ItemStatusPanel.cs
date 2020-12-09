@@ -20,7 +20,7 @@ namespace Content.Client.UserInterface
     public class ItemStatusPanel : Control
     {
         [ViewVariables]
-        private readonly List<(IItemStatus, Control)> _activeStatusComponents = new List<(IItemStatus, Control)>();
+        private readonly List<(IItemStatus, Control)> _activeStatusComponents = new();
 
         [ViewVariables]
         private readonly Label _itemNameLabel;

@@ -78,6 +78,15 @@
   color: "#808080"
   boilingPoint: -188.11
   meltingPoint: -219.67
+  plantMetabolism:
+    - !type:AdjustWater
+      amount: -0.5
+    - !type:AdjustToxins
+      amount: 25
+    - !type:AdjustWeeds
+      amount: -4
+    - !type:AdjustHealth
+      amount: -2
 
 - type: reagent
   id: chem.Si
@@ -96,6 +105,15 @@
   color: "#a2ff00"
   meltingPoint: -101.5
   boilingPoint: -34.04
+  plantMetabolism:
+    - !type:AdjustWater
+      amount: -0.5
+    - !type:AdjustToxins
+      amount: 15
+    - !type:AdjustWeeds
+      amount: -3
+    - !type:AdjustHealth
+      amount: -1
 
 - type: reagent
   id: chem.Li
@@ -123,6 +141,13 @@
   color: "#ede4e4"
   meltingPoint: 44.2
   boilingPoint: 280.5
+  plantMetabolism:
+    - !type:AdjustNutrition
+      amount: 0.1
+    - !type:AdjustWater
+      amount: -0.5
+    - !type:AdjustWeeds
+      amount: -2
 
 - type: reagent
   id: chem.K
@@ -141,6 +166,17 @@
   color: "#00ff04"
   meltingPoint: 700.0
   boilingPoint: 1737.0
+  customPlantMetabolism: 2
+  plantMetabolism:
+    - !type:AdjustMutationLevel
+      amount: 0.6
+    - !type:AdjustToxins
+      amount: 4
+    - !type:AdjustHealth
+      amount: -1.5
+    - !type:AdjustMutationMod
+      prob: 0.2
+      amount: 0.1
 
 - type: reagent
   id: chem.Na
