@@ -47,11 +47,6 @@ namespace Content.Server.GameObjects.Components.Explosives
         private int _maxViewableGrenades;
 
         /// <summary>
-        ///     If we have a pre-fill how many more can we spawn.
-        /// </summary>
-        private byte _unspawnedCount;
-
-        /// <summary>
         ///     How long until our grenades are shot out and armed.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
@@ -71,7 +66,7 @@ namespace Content.Server.GameObjects.Components.Explosives
         // I'm suss on this bit
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
         {
-            if (_grenadesContainer.ContainedEntities.Count + _unspawnedCount >= _maxGrenades || !args.Using.HasComponent<FlashExplosiveComponent>())
+            if (_grenadesContainer.ContainedEntities.Count >= _maxGrenades || !args.Using.HasComponent<FlashExplosiveComponent>())
                 return false;
 
             _grenadesContainer.Insert(args.Using);
@@ -95,9 +90,6 @@ namespace Content.Server.GameObjects.Components.Explosives
             base.Initialize();
 
             _grenadesContainer = ContainerManagerComponent.Ensure<Container>("cluster-flash", Owner);
-
-            if (_fillPrototype != null)
-                _unspawnedCount += (byte) Math.Max(0, _maxGrenades - _grenadesContainer.ContainedEntities.Count);
 
         }
 
@@ -145,7 +137,7 @@ namespace Content.Server.GameObjects.Components.Explosives
                         }
                     });
 
-                    delay += random.Next(100, 300);
+                    delay += random.Next(150, 300);
                 }
 
                 Owner.Delete();
