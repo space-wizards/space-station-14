@@ -1,5 +1,6 @@
 ﻿using System;
 using Content.Shared.GameObjects.Components.Trigger;
+using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.Components.Animations;
@@ -10,6 +11,7 @@ using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Trigger
 {
+    [UsedImplicitly]
     public class TimerTriggerVisualizer : AppearanceVisualizer
     {
         private const string AnimationKey = "priming_animation";
@@ -69,7 +71,7 @@ namespace Content.Client.GameObjects.Components.Trigger
             }
         }
     }
-    public enum TriggerVisualLayers
+    public enum TriggerVisualLayers : byte
     {
         Base
     }

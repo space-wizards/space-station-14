@@ -93,7 +93,7 @@ namespace Content.Client.GameObjects.Components.Botany
         }
     }
 
-    public enum PlantHolderLayers
+    public enum PlantHolderLayers : byte
     {
         Plant,
         HealthLight,

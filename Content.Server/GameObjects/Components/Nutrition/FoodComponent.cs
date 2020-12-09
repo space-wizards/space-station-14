@@ -88,7 +88,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public override void Initialize()
         {
             base.Initialize();
-            Owner.EnsureComponent<SolutionContainerComponent>();
+            Owner.EnsureComponentWarn<SolutionContainerComponent>();
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)

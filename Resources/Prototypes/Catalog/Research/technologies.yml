@@ -6,7 +6,7 @@
 - type: technology
   name: "basic research technology"
   id: BasicResearch
-  description: Nanotransen basic research technologies.
+  description: Nanotrasen basic research technologies.
   icon: Constructible/Power/server.rsi/server-on.png
   requiredPoints: 250
 

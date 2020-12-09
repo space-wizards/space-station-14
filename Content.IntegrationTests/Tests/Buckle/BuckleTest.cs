@@ -27,7 +27,6 @@ namespace Content.IntegrationTests.Tests.Buckle
   id: BuckleDummy
   components:
   - type: Buckle
-  - type: Transform
   - type: Hands
   - type: Body
     template: HumanoidTemplate

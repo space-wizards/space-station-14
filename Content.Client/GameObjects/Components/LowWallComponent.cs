@@ -217,7 +217,7 @@ namespace Content.Client.GameObjects.Components
         }
 
         [SuppressMessage("ReSharper", "InconsistentNaming")]
-        private enum OverCornerLayers
+        private enum OverCornerLayers : byte
         {
             SE,
             NE,

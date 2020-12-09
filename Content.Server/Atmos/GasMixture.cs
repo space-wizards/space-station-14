@@ -41,7 +41,7 @@ namespace Content.Server.Atmos
         public bool Immutable { get; private set; }
 
         [ViewVariables]
-        public float LastShare { get; private set; } = 0;
+        public float LastShare { get; private set; }
 
         [ViewVariables]
         public readonly Dictionary<GasReaction, float> ReactionResults = new()
@@ -147,7 +147,7 @@ namespace Content.Server.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Merge(GasMixture giver)
         {
-            if (Immutable || giver == null) return;
+            if (Immutable) return;
 
             if (MathF.Abs(Temperature - giver.Temperature) > Atmospherics.MinimumTemperatureDeltaToConsider)
             {
@@ -177,6 +177,9 @@ namespace Content.Server.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetMoles(int gasId, float quantity)
         {
+            if (float.IsInfinity(quantity) || float.IsNaN(quantity) || float.IsNegative(quantity))
+                throw new ArgumentException($"Invalid quantity \"{quantity}\" specified!", nameof(quantity));
+
             if (!Immutable)
                 _moles[gasId] = quantity;
         }
@@ -191,7 +194,17 @@ namespace Content.Server.Atmos
         public void AdjustMoles(int gasId, float quantity)
         {
             if (!Immutable)
+            {
+                if (float.IsInfinity(quantity) || float.IsNaN(quantity))
+                    throw new ArgumentException($"Invalid quantity \"{quantity}\" specified!", nameof(quantity));
+
                 _moles[gasId] += quantity;
+
+                var moles = _moles[gasId];
+
+                if (float.IsInfinity(moles) || float.IsNaN(moles) || float.IsNegative(moles))
+                    throw new Exception($"Invalid mole quantity \"{moles}\" in gas Id {gasId} after adjusting moles with \"{quantity}\"!");
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -209,11 +222,14 @@ namespace Content.Server.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GasMixture RemoveRatio(float ratio)
         {
-            if(ratio <= 0)
-                return new GasMixture(Volume, _atmosphereSystem);
-
-            if (ratio > 1)
-                ratio = 1;
+            switch (ratio)
+            {
+                case <= 0:
+                    return new GasMixture(Volume, _atmosphereSystem){Temperature = Temperature};
+                case > 1:
+                    ratio = 1;
+                    break;
+            }
 
             var removed = new GasMixture(_atmosphereSystem) {Volume = Volume, Temperature = Temperature};
 
@@ -224,10 +240,12 @@ namespace Content.Server.Atmos
 
             for (var i = 0; i < _moles.Length; i++)
             {
-                if (_moles[i] < Atmospherics.GasMinMoles)
+                var moles = _moles[i];
+                var otherMoles = removed._moles[i];
+                if (moles < Atmospherics.GasMinMoles || float.IsNaN(moles))
                     _moles[i] = 0;
 
-                if (removed._moles[i] < Atmospherics.GasMinMoles)
+                if (otherMoles < Atmospherics.GasMinMoles || float.IsNaN(otherMoles))
                     removed._moles[i] = 0;
             }
 
@@ -269,7 +287,7 @@ namespace Content.Server.Atmos
                 if (!(MathF.Abs(delta) >= Atmospherics.GasMinMoles)) continue;
                 if (absTemperatureDelta > Atmospherics.MinimumTemperatureDeltaToConsider)
                 {
-                    var gasHeatCapacity = delta * _atmosphereSystem.GetGas(i).SpecificHeat;
+                    var gasHeatCapacity = delta * _atmosphereSystem.GasSpecificHeats[i];
                     if (delta > 0)
                     {
                         heatCapacityToSharer += gasHeatCapacity;
@@ -434,15 +452,16 @@ namespace Content.Server.Atmos
 
         /// <summary>
         ///     Releases gas from this mixture to the output mixture.
+        ///     If the output mixture is null, then this is being released into space.
         ///     It can't transfer air to a mixture with higher pressure.
         /// </summary>
         /// <param name="outputAir"></param>
         /// <param name="targetPressure"></param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool ReleaseGasTo(GasMixture outputAir, float targetPressure)
+        public bool ReleaseGasTo(GasMixture? outputAir, float targetPressure)
         {
-            var outputStartingPressure = outputAir.Pressure;
+            var outputStartingPressure = outputAir?.Pressure ?? 0;
             var inputStartingPressure = Pressure;
 
             if (outputStartingPressure >= MathF.Min(targetPressure, inputStartingPressure - 10))
@@ -454,11 +473,11 @@ namespace Content.Server.Atmos
 
             // We calculate the necessary moles to transfer with the ideal gas law.
             var pressureDelta = MathF.Min(targetPressure - outputStartingPressure, (inputStartingPressure - outputStartingPressure) / 2f);
-            var transferMoles = pressureDelta * outputAir.Volume / (Temperature * Atmospherics.R);
+            var transferMoles = pressureDelta * (outputAir?.Volume ?? Atmospherics.CellVolume) / (Temperature * Atmospherics.R);
 
             // And now we transfer the gas.
             var removed = Remove(transferMoles);
-            outputAir.Merge(removed);
+            outputAir?.Merge(removed);
 
             return true;
 
@@ -517,10 +536,10 @@ namespace Content.Server.Atmos
 
         public void ExposeData(ObjectSerializer serializer)
         {
-            serializer.DataField(this, x => Immutable, "immutable", false);
-            serializer.DataField(this, x => Volume, "volume", 0f);
-            serializer.DataField(this, x => LastShare, "lastShare", 0f);
-            serializer.DataField(this, x => TemperatureArchived, "temperatureArchived", 0f);
+            serializer.DataField(this, x => x.Immutable, "immutable", false);
+            serializer.DataField(this, x => x.Volume, "volume", 0f);
+            serializer.DataField(this, x => x.LastShare, "lastShare", 0f);
+            serializer.DataField(this, x => x.TemperatureArchived, "temperatureArchived", 0f);
             serializer.DataField(ref _moles, "moles", new float[Atmospherics.AdjustedNumberOfGases]);
             serializer.DataField(ref _molesArchived, "molesArchived", new float[Atmospherics.AdjustedNumberOfGases]);
             serializer.DataField(ref _temperature, "temperature", Atmospherics.TCMB);

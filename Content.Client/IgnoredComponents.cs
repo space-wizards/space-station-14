@@ -28,6 +28,7 @@
             "Wrench",
             "Crowbar",
             "MeleeWeapon",
+            "MeleeChemicalInjector",
             "Dice",
             "Construction",
             "Door",
@@ -216,6 +217,11 @@
             "ConveyorAssembly",
             "TwoWayLever",
             "FirelockElectronics",
+            "ChemicalInjectionProjectile",
+            "Machine",
+            "MachinePart",
+            "MachineFrame",
+            "MachineBoard"
         };
     }
 }

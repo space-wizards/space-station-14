@@ -279,7 +279,7 @@ namespace Content.Server.GameObjects.Components.Power.AME
             var engineNodeGroup = nodeContainer?.Nodes
             .Select(node => node.NodeGroup)
             .OfType<AMENodeGroup>()
-            .First();
+            .FirstOrDefault();
 
             return engineNodeGroup;
         }

@@ -25,7 +25,6 @@ namespace Content.Client.GameObjects.EntitySystems
     [UsedImplicitly]
     internal sealed class ExamineSystem : ExamineSystemShared
     {
-        [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
@@ -72,7 +71,7 @@ namespace Content.Client.GameObjects.EntitySystems
             const float minWidth = 300;
             CloseTooltip();
 
-            var popupPos = _inputManager.MouseScreenPosition;
+            var popupPos = _userInterfaceManager.MousePositionScaled;
 
             // Actually open the tooltip.
             _examineTooltipOpen = new Popup();
