@@ -15,7 +15,6 @@ namespace Content.Shared.GameObjects.Components.Buckle
         public sealed override string Name => "Buckle";
 
         public sealed override uint? NetID => ContentNetIDs.BUCKLE;
-       
         /// <summary>
         ///     True if the entity is buckled, false otherwise.
         /// </summary>
