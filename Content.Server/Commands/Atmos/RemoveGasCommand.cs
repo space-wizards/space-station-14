@@ -73,7 +73,7 @@ namespace Content.Server.Commands.Atmos
             else
                 tile.Air.Remove(amount);
 
-            gam.Invalidate(indices);
+            tile.Invalidate();
         }
     }
 
