@@ -358,7 +358,7 @@ namespace Content.Shared.GameObjects.Components.Damage
                     {
                         // Say we were to distribute 2 healing between 3
                         // this will distribute 1 to each (and stop after 2 are given)
-                        healPerType = -1;
+                        healPerType = 1;
                     }
                     else
                     {
