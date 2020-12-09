@@ -4,8 +4,12 @@
   description: Put someone else's PDA into this to get telecrystals.
   components:
   - type: Sprite
-    sprite: Objects/Misc/traitordm.rsi
-    state: redemption
+    layers:
+      - sprite: Objects/Misc/traitordm.rsi
+        state: redemption
+      - sprite: Objects/Misc/traitordm.rsi
+        state: redemption-unshaded
+        shader: unshaded
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
