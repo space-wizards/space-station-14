@@ -120,8 +120,13 @@
   - type: SnapGrid
     offset: Center
   - type: Sprite
-    sprite: Constructible/Power/power.rsi
-    state: storage
+    sprite: Constructible/Power/substation.rsi
+    layers:
+    - state: substation
+    - state: screen
+      shader: unshaded
+    - state: full
+      shader: unshaded
   - type: Battery
     maxCharge: 1000
     startingCharge: 1000
@@ -227,8 +232,11 @@
     supply: 1500
   - type: SnapGrid
     offset: Center
-  - type: Breakable
-    deadThreshold: 100
+  - type: Damageable
     resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+      100:
+        Acts: ["Breakage"]
   - type: Anchorable
   - type: Pullable

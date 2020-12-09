@@ -160,7 +160,7 @@ namespace Content.Benchmarks
                 if (val == -1)
                     throw new EndOfStreamException();
 
-                a |= (uint) (val << i);
+                a |= (uint) val << i;
             }
 
             return a;
@@ -176,7 +176,7 @@ namespace Content.Benchmarks
                 if (val == -1)
                     throw new EndOfStreamException();
 
-                a |= (ulong) (val << i);
+                a |= (ulong) val << i;
             }
 
             return a;

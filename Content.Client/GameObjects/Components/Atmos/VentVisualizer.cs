@@ -64,7 +64,7 @@ namespace Content.Client.GameObjects.Components.Atmos
             sprite.LayerSetVisible(baseVentLayer, true);
         }
 
-        private enum Layer
+        private enum Layer : byte
         {
             VentBase,
         }

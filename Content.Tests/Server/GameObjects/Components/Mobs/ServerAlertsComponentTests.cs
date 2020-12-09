@@ -37,7 +37,6 @@ namespace Content.Tests.Server.GameObjects.Components.Mobs
             // in a unit test
 
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            prototypeManager.RegisterType(typeof(AlertPrototype));
             var factory = IoCManager.Resolve<IComponentFactory>();
             factory.Register<ServerAlertsComponent>();
             prototypeManager.LoadFromStream(new StringReader(PROTOTYPES));

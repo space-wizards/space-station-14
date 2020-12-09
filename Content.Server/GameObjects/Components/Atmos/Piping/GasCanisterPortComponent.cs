@@ -62,6 +62,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         public override void Update()
         {
             ConnectedCanister?.Air.Share(_gasPort.Air, 1);
+            ConnectedCanister?.AirWasUpdated();
         }
 
         public void ConnectGasCanister(GasCanisterComponent gasCanister)

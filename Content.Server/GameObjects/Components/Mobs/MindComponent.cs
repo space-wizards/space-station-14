@@ -6,6 +6,7 @@ using Content.Server.Mobs;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Shared.GameObjects;
@@ -82,7 +83,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         private void OnUiAcceptCloningMessage(ServerBoundUserInterfaceMessage obj)
         {
-            if (!(obj.Message is SharedAcceptCloningComponent.UiButtonPressedMessage message)) return;
+            if (obj.Message is not SharedAcceptCloningComponent.UiButtonPressedMessage) return;
             if (Mind != null)
             {
                 Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new GhostComponent.GhostReturnMessage(Mind));
@@ -174,8 +175,8 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
 
             var dead =
-                Owner.TryGetComponent<IDamageableComponent>(out var damageable) &&
-                damageable.CurrentState == DamageState.Dead;
+                Owner.TryGetComponent<IMobStateComponent>(out var state) &&
+                state.IsDead();
 
             if (!HasMind)
             {

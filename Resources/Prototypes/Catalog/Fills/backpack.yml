@@ -55,3 +55,21 @@
   - type: StorageFill
     contents:
       - name: BoxSurvival
+
+- type: entity
+  abstract: true
+  parent: ClothingBackpackScience
+  id: ClothingBackpackScienceFilled
+  components:
+  - type: StorageFill
+    contents:
+      - name: BoxSurvival
+
+- type: entity
+  abstract: true
+  parent: ClothingBackpackChemistry
+  id: ClothingBackpackChemistryFilled
+  components:
+  - type: StorageFill
+    contents:
+      - name: BoxSurvival

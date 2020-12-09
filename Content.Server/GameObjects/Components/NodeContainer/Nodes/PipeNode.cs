@@ -70,7 +70,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _pipeDirection, "pipeDirection", PipeDirection.None);
-            serializer.DataField(this, x => LocalAir, "gasMixture", new GasMixture(DefaultVolume));
+            serializer.DataField(this, x => x.LocalAir, "gasMixture", new GasMixture(DefaultVolume));
             serializer.DataField(ref _conduitLayer, "conduitLayer", ConduitLayer.Two);
         }
 

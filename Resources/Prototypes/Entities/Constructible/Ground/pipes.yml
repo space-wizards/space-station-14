@@ -11,8 +11,11 @@
   - type: Physics
   - type: SnapGrid
     offset: Center
+  - type: Damageable
   - type: Destructible
-    thresholdvalue: 100
+    thresholds:
+      100:
+        Acts: ["Destruction"]
   - type: Sprite
   - type: Appearance
     visuals:

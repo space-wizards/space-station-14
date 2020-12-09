@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Doors
         [ViewVariables(VVAccess.ReadWrite)]
         protected float CloseSpeed = AutoCloseDelay;
 
-        private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
+        private CancellationTokenSource? _cancellationTokenSource;
 
         protected virtual TimeSpan CloseTimeOne => TimeSpan.FromSeconds(0.3f);
         protected virtual TimeSpan CloseTimeTwo => TimeSpan.FromSeconds(0.9f);
@@ -106,7 +106,7 @@ namespace Content.Server.GameObjects.Components.Doors
         /// <summary>
         ///     Whether something is currently using a welder on this so DoAfter isn't spammed.
         /// </summary>
-        private bool _beingWelded = false;
+        private bool _beingWelded;
 
         [ViewVariables(VVAccess.ReadWrite)]
         private bool _canCrush = true;
@@ -259,6 +259,9 @@ namespace Content.Server.GameObjects.Components.Doors
                 occluder.Enabled = false;
             }
 
+            _cancellationTokenSource?.Cancel();
+            _cancellationTokenSource = new();
+
             Owner.SpawnTimer(OpenTimeOne, async () =>
             {
                 if (Owner.TryGetComponent(out AirtightComponent? airtight))
@@ -343,15 +346,13 @@ namespace Content.Server.GameObjects.Components.Doors
 
             var gridAtmosphere = atmosphereSystem.GetGridAtmosphere(Owner.Transform.GridID);
 
-            if (gridAtmosphere == null)
-                return false;
-
             var minMoles = float.MaxValue;
             var maxMoles = 0f;
 
-            foreach (var (direction, adjacent) in gridAtmosphere.GetAdjacentTiles(tileAtmos.GridIndices))
+            foreach (var (_, adjacent) in gridAtmosphere.GetAdjacentTiles(tileAtmos.GridIndices))
             {
-                var moles = adjacent.Air.TotalMoles;
+                // includeAirBlocked remains false, and therefore Air must be present
+                var moles = adjacent.Air!.TotalMoles;
                 if (moles < minMoles)
                     minMoles = moles;
                 if (moles > maxMoles)
@@ -373,10 +374,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
             var gridAtmosphere = atmosphereSystem.GetGridAtmosphere(Owner.Transform.GridID);
 
-            if (gridAtmosphere == null)
-                return false;
-
-            foreach (var (direction, adjacent) in gridAtmosphere.GetAdjacentTiles(tileAtmos.GridIndices))
+            foreach (var (_, adjacent) in gridAtmosphere.GetAdjacentTiles(tileAtmos.GridIndices))
             {
                 if (adjacent.Hotspot.Valid)
                     return true;
@@ -412,6 +410,9 @@ namespace Content.Server.GameObjects.Components.Doors
                 occluder.Enabled = true;
             }
 
+            _cancellationTokenSource?.Cancel();
+            _cancellationTokenSource = new();
+
             Owner.SpawnTimer(CloseTimeOne, async () =>
             {
                 if (shouldCheckCrush && _canCrush)
@@ -444,6 +445,8 @@ namespace Content.Server.GameObjects.Components.Doors
             if (State == DoorState.Open || _isWeldedShut)
                 return;
 
+            _cancellationTokenSource?.Cancel();
+            _cancellationTokenSource = new();
             SetAppearance(DoorVisualState.Deny);
             Owner.SpawnTimer(DenyTime, () =>
             {

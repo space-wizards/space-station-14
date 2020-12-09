@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Content.Shared.Chemistry;
 using Content.Shared.Kitchen;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Client.Graphics;
@@ -19,15 +20,16 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.GameObjects.Components.Kitchen
 {
-    public  class MicrowaveBoundUserInterface : BoundUserInterface
+    [UsedImplicitly]
+    public class MicrowaveBoundUserInterface : BoundUserInterface
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         private MicrowaveMenu _menu;
 
-        private readonly Dictionary<int, EntityUid> _solids = new Dictionary<int, EntityUid>();
-        private readonly Dictionary<int, Solution.ReagentQuantity> _reagents =new Dictionary<int, Solution.ReagentQuantity>();
+        private readonly Dictionary<int, EntityUid> _solids = new();
+        private readonly Dictionary<int, Solution.ReagentQuantity> _reagents =new();
 
         public MicrowaveBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner,uiKey)
         {
@@ -78,7 +80,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            if (!(state is MicrowaveUpdateUserInterfaceState cState))
+            if (state is not MicrowaveUpdateUserInterfaceState cState)
             {
                 return;
             }

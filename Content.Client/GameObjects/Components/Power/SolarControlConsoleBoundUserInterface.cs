@@ -1,5 +1,6 @@
 using System;
 using Content.Shared.GameObjects.Components.Power;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
@@ -12,12 +13,13 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.GameObjects.Components.Power
 {
+    [UsedImplicitly]
     public class SolarControlConsoleBoundUserInterface : BoundUserInterface
     {
         [Dependency] private readonly IGameTiming _gameTiming = default;
 
         private SolarControlWindow _window;
-        private SolarControlConsoleBoundInterfaceState _lastState = new SolarControlConsoleBoundInterfaceState(0, 0, 0, 0);
+        private SolarControlConsoleBoundInterfaceState _lastState = new(0, 0, 0, 0);
 
         protected override void Open()
         {
@@ -161,7 +163,7 @@ namespace Content.Client.GameObjects.Components.Power
             // This makes the display feel a lot smoother.
             private IGameTiming _gameTiming;
 
-            private SolarControlConsoleBoundInterfaceState _lastState = new SolarControlConsoleBoundInterfaceState(0, 0, 0, 0);
+            private SolarControlConsoleBoundInterfaceState _lastState = new(0, 0, 0, 0);
 
             private TimeSpan _lastStateTime = TimeSpan.Zero;
 

@@ -1,5 +1,4 @@
 #nullable enable
-using System.Drawing;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.Stylesheets;
@@ -13,6 +12,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Maths;
 using Robust.Shared.Players;
 
 namespace Content.Client.GameObjects.Components.Actor
@@ -42,8 +42,6 @@ namespace Content.Client.GameObjects.Components.Actor
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, netChannel, session);
-
-            if(session?.AttachedEntity != Owner) return;
 
             switch (message)
             {

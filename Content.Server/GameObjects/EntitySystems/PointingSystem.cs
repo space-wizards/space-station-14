@@ -40,7 +40,7 @@ namespace Content.Server.GameObjects.EntitySystems
         ///     A dictionary of players to the last time that they
         ///     pointed at something.
         /// </summary>
-        private readonly Dictionary<ICommonSession, TimeSpan> _pointers = new Dictionary<ICommonSession, TimeSpan>();
+        private readonly Dictionary<ICommonSession, TimeSpan> _pointers = new();
 
         private const float PointingRange = 15f;
 

@@ -355,7 +355,7 @@ namespace Content.Client.ParticleAccelerator
 
             PASegmentControl Segment(string name)
             {
-                return new PASegmentControl(this, resourceCache, name);
+                return new(this, resourceCache, name);
             }
         }
 

@@ -250,6 +250,7 @@
     - type: Construction
       graph: particleAcceleratorControlBox
       node: start
+      defaultTarget: completed
 
 - type: entity
   parent: ParticleAcceleratorBase
@@ -266,6 +267,7 @@
     - type: Construction
       graph: particleAcceleratorEmitterLeft
       node: start
+      defaultTarget: completed
 
 - type: entity
   parent: ParticleAcceleratorBase
@@ -282,6 +284,7 @@
     - type: Construction
       graph: particleAcceleratorEmitterCenter
       node: start
+      defaultTarget: completed
 
 - type: entity
   parent: ParticleAcceleratorBase
@@ -298,6 +301,7 @@
     - type: Construction
       graph: particleAcceleratorEmitterRight
       node: start
+      defaultTarget: completed
 
 - type: entity
   parent: ParticleAcceleratorBase
@@ -314,6 +318,7 @@
     - type: Construction
       graph: particleAcceleratorEndCap
       node: start
+      defaultTarget: completed
 
 - type: entity
   parent: ParticleAcceleratorBase
@@ -330,6 +335,7 @@
     - type: Construction
       graph: particleAcceleratorFuelChamber
       node: start
+      defaultTarget: completed
 
 - type: entity
   parent: ParticleAcceleratorBase
@@ -346,3 +352,5 @@
     - type: Construction
       graph: particleAcceleratorPowerBox
       node: start
+      defaultTarget: completed
+

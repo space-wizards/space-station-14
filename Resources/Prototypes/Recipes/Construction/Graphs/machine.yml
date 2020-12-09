@@ -1,0 +1,89 @@
+﻿- type: constructionGraph
+  id: machine
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:SpawnPrototype
+          prototype: SteelSheet1
+        - !type:DeleteEntity {}
+      edges:
+        - to: missingWires
+          completed:
+            - !type:SetAnchor
+              value: false
+          steps:
+            - material: Metal
+              amount: 5
+              doAfter: 2.5
+
+    - node: missingWires
+      entity: UnfinishedMachineFrame
+      actions:
+        - !type:SpriteStateChange
+          state: "box_0"
+        - !type:EmptyAllContainers {}
+      edges:
+        - to: machineFrame
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Cable
+        - to: start
+          conditions:
+            - !type:EntityAnchored
+              anchored: false
+          completed:
+            - !type:SpawnPrototype
+              prototype: SteelSheet1
+              amount: 5
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 2
+
+    - node: machineFrame
+      entity: MachineFrame
+      actions:
+        - !type:MachineFrameRegenerateProgress {}
+      edges:
+        - to: machine
+          conditions:
+            - !type:EntityAnchored {}
+            - !type:MachineFrameComplete {}
+          completed:
+            # Yes, this is snowflaked so we don't have to make an unique graph per machine. You're welcome.
+            - !type:BuildMachine {}
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+
+        - to: missingWires
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:SpawnPrototype
+              prototype: ApcExtensionCableStack1
+          steps:
+            - tool: Prying
+              doAfter: 2
+              completed:
+                - !type:EmptyAllContainers {}
+                - !type:MachineFrameRegenerateProgress {}
+            - tool: Cutting
+              doAfter: 0.25
+
+    - node: machine
+      actions:
+        - !type:AddContainer
+          container: machine_parts
+        - !type:AddContainer
+          container: machine_board
+      edges:
+        - to: machineFrame
+          conditions:
+            - !type:EntityAnchored {}
+            - !type:WirePanel {}
+          steps:
+            - tool: Prying
+              doAfter: 0.25

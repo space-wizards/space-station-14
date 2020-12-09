@@ -39,15 +39,15 @@ namespace Content.Server.GameObjects.Components.Damage
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(this, x => Damage, "damage", DamageType.Blunt);
-            serializer.DataField(this, x => MinimumSpeed, "minimumSpeed", 20f);
-            serializer.DataField(this, x => BaseDamage, "baseDamage", 5);
-            serializer.DataField(this, x => Factor, "factor", 1f);
-            serializer.DataField(this, x => SoundHit, "soundHit", "");
-            serializer.DataField(this, x => StunChance, "stunChance", 0.25f);
-            serializer.DataField(this, x => StunSeconds, "stunSeconds", 1f);
-            serializer.DataField(this, x => DamageCooldown, "damageCooldown", 2f);
-            serializer.DataField(this, x => StunMinimumDamage, "stunMinimumDamage", 10);
+            serializer.DataField(this, x => x.Damage, "damage", DamageType.Blunt);
+            serializer.DataField(this, x => x.MinimumSpeed, "minimumSpeed", 20f);
+            serializer.DataField(this, x => x.BaseDamage, "baseDamage", 5);
+            serializer.DataField(this, x => x.Factor, "factor", 1f);
+            serializer.DataField(this, x => x.SoundHit, "soundHit", "");
+            serializer.DataField(this, x => x.StunChance, "stunChance", 0.25f);
+            serializer.DataField(this, x => x.StunSeconds, "stunSeconds", 1f);
+            serializer.DataField(this, x => x.DamageCooldown, "damageCooldown", 2f);
+            serializer.DataField(this, x => x.StunMinimumDamage, "stunMinimumDamage", 10);
         }
 
         public void CollideWith(IEntity collidedWith)

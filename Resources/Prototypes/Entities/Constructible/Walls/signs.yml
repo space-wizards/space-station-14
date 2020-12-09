@@ -8,9 +8,12 @@
   - type: Physics
     shapes:
     - !type:PhysShapeAabb
-  - type: Destructible
-    thresholdvalue: 5
+  - type: Damageable
     resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+      5:
+        Acts: [ "Destruction" ]
   - type: Sprite
     drawdepth: WallTops
     sprite: Constructible/Misc/decals.rsi

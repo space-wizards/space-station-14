@@ -34,7 +34,7 @@ namespace Content.Client.UserInterface
 
             var header = new NanoHeading
             {
-                Text = Loc.GetString("Character setup")
+                Text = Loc.GetString("Character")
             };
 
             CharacterSetupButton = new Button
@@ -92,7 +92,7 @@ namespace Content.Client.UserInterface
 
         private static SpriteView MakeSpriteView(IEntity entity, Direction direction)
         {
-            return new SpriteView
+            return new()
             {
                 Sprite = entity.GetComponent<ISpriteComponent>(),
                 OverrideDirection = direction,
@@ -111,7 +111,7 @@ namespace Content.Client.UserInterface
             {
                 _loaded.Visible = true;
                 _unloaded.Visible = false;
-                if (!(_preferencesManager.Preferences.SelectedCharacter is HumanoidCharacterProfile selectedCharacter))
+                if (_preferencesManager.Preferences.SelectedCharacter is not HumanoidCharacterProfile selectedCharacter)
                 {
                     _summaryLabel.Text = string.Empty;
                 }
@@ -133,7 +133,7 @@ namespace Content.Client.UserInterface
 
             var inventory = dummy.GetComponent<ClientInventoryComponent>();
 
-            var highPriorityJob = profile.JobPriorities.SingleOrDefault(p => p.Value == JobPriority.High).Key;
+            var highPriorityJob = profile.JobPriorities.FirstOrDefault(p => p.Value == JobPriority.High).Key;
 
             var job = protoMan.Index<JobPrototype>(highPriorityJob ?? SharedGameTicker.OverflowJob);
             var gear = protoMan.Index<StartingGearPrototype>(job.StartingGear);
