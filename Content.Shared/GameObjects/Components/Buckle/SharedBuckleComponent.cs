@@ -20,7 +20,7 @@ namespace Content.Shared.GameObjects.Components.Buckle
         ///     True if the entity is buckled, false otherwise.
         /// </summary>
         public abstract bool Buckled { get; }
-        public  EntityUid? EntityBuckledTo { get; set; }
+        public EntityUid? EntityBuckledTo { get; set; }
 
         public bool IsOnStrapEntityThisFrame { get; set; }
         public bool DontCollide { get; set; }
