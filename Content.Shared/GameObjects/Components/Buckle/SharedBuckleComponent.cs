@@ -1,8 +1,10 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Content.Shared.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Physics;
@@ -25,7 +27,7 @@ namespace Content.Shared.GameObjects.Components.Buckle
         public bool DontCollide { get; set; }
         public abstract bool TryBuckle(IEntity user, IEntity to);
 
-        protected IPhysicsComponent Body;
+        [ComponentDependency] protected IPhysicsComponent? Body;
 
         bool ICollideSpecial.PreventCollide(IPhysBody collidedwith)
         {
