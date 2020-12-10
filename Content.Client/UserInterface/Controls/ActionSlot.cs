@@ -90,12 +90,13 @@ namespace Content.Client.UserInterface.Controls
             set
             {
                 _cooldown = value;
-                if (_tooltip != null)
+                if (SuppliedTooltip is ActionAlertTooltip actionAlertTooltip)
                 {
-                    _tooltip.Cooldown = value;
+                    actionAlertTooltip.Cooldown = value;
                 }
             }
         }
+        private (TimeSpan Start, TimeSpan End)? _cooldown;
 
         public bool IsOnCooldown => Cooldown.HasValue && _gameTiming.CurTime < Cooldown.Value.End;
 
@@ -106,9 +107,7 @@ namespace Content.Client.UserInterface.Controls
         private readonly SpriteView _smallItemSpriteView;
         private readonly SpriteView _bigItemSpriteView;
         private readonly CooldownGraphic _cooldownGraphic;
-        private ActionTooltip? _tooltip;
         private bool _toggledOn;
-        private (TimeSpan Start, TimeSpan End)? _cooldown;
 
         /// <summary>
         /// Creates an action slot for the specified number
@@ -121,11 +120,9 @@ namespace Content.Client.UserInterface.Controls
             SlotNumber = slotNumber;
 
             CustomMinimumSize = (64, 64);
-            OnShowTooltip += ShowTooltip;
-            OnHideTooltip += HideTooltip;
-
             SizeFlagsVertical = SizeFlags.None;
             TooltipDelay = CustomTooltipDelay;
+            TooltipSupplier = SupplyTooltip;
 
             _number = new RichTextLabel
             {
@@ -204,45 +201,10 @@ namespace Content.Client.UserInterface.Controls
             AddChild(paddingBoxItemIcon);
         }
 
-        private void HideTooltip(object? sender, EventArgs e)
+        private Control? SupplyTooltip(Control sender)
         {
-            HideTooltip();
-        }
-
-        private void HideTooltip()
-        {
-            if (_tooltip == null) return;
-
-            UserInterfaceManager.PopupRoot.RemoveChild(_tooltip);
-            _tooltip = null;
-        }
-
-        private void ShowTooltip(object? sender, EventArgs e)
-        {
-            if (Action == null) return;
-
-            _tooltip = new ActionTooltip(Action) {Cooldown = Cooldown};
-            UserInterfaceManager.PopupRoot.AddChild(_tooltip);
-            Tooltips.PositionTooltip(_tooltip!);
-        }
-
-        private void UpdateCooldownGraphic()
-        {
-            if (!Cooldown.HasValue)
-            {
-                _cooldownGraphic.Visible = false;
-                _cooldownGraphic.Progress = 0;
-                return;
-            }
-
-            var duration = Cooldown.Value.End - Cooldown.Value.Start;
-            var curTime = _gameTiming.CurTime;
-            var length = duration.TotalSeconds;
-            var progress = (curTime - Cooldown.Value.Start).TotalSeconds / length;
-            var ratio = (progress <= 1 ? (1 - progress) : (curTime - Cooldown.Value.End).TotalSeconds * -5);
-
-            _cooldownGraphic.Progress = MathHelper.Clamp((float)ratio, -1, 1);
-            _cooldownGraphic.Visible = ratio > -1f;
+            return Action == null ? null :
+                new ActionAlertTooltip(Action.Name, Action.Description, Action.Requires) {Cooldown = Cooldown};
         }
 
         /// <summary>
@@ -520,7 +482,21 @@ namespace Content.Client.UserInterface.Controls
         protected override void FrameUpdate(FrameEventArgs args)
         {
             base.FrameUpdate(args);
-            UpdateCooldownGraphic();
+            if (!Cooldown.HasValue)
+            {
+                _cooldownGraphic.Visible = false;
+                _cooldownGraphic.Progress = 0;
+                return;
+            }
+
+            var duration = Cooldown.Value.End - Cooldown.Value.Start;
+            var curTime = _gameTiming.CurTime;
+            var length = duration.TotalSeconds;
+            var progress = (curTime - Cooldown.Value.Start).TotalSeconds / length;
+            var ratio = (progress <= 1 ? (1 - progress) : (curTime - Cooldown.Value.End).TotalSeconds * -5);
+
+            _cooldownGraphic.Progress = MathHelper.Clamp((float)ratio, -1, 1);
+            _cooldownGraphic.Visible = ratio > -1f;
         }
     }
 }

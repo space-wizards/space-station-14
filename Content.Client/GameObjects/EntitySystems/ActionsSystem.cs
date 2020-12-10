@@ -10,7 +10,5 @@ namespace Content.Client.GameObjects.EntitySystems
     public class ActionsSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-
-        // TODO: probably will use this for bindings in ClientActionsComponent?
     }
 }

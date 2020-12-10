@@ -1,6 +1,5 @@
 ﻿#nullable enable
 
-using System;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Actions;
 using Robust.Client.UserInterface;
@@ -17,8 +16,6 @@ namespace Content.Client.UserInterface
         // shorter than default tooltip delay so user can
         // quickly explore what each action is
         private const float CustomTooltipDelay = 0.2f;
-
-        private ActionTooltip? _tooltip;
 
         public BaseActionPrototype Action { get; private set; }
 
@@ -38,28 +35,12 @@ namespace Content.Client.UserInterface
             });
 
             TooltipDelay = CustomTooltipDelay;
-            OnShowTooltip += ShowTooltip;
-            OnHideTooltip += HideTooltip;
+            TooltipSupplier = SupplyTooltip;
         }
 
-        private void HideTooltip(object? sender, EventArgs e)
+        private Control SupplyTooltip(Control? sender)
         {
-            HideTooltip();
-        }
-
-        private void HideTooltip()
-        {
-            if (_tooltip == null) return;
-
-            UserInterfaceManager.PopupRoot.RemoveChild(_tooltip);
-            _tooltip = null;
-        }
-
-        private void ShowTooltip(object? sender, EventArgs e)
-        {
-            _tooltip = new ActionTooltip(Action);
-            UserInterfaceManager.PopupRoot.AddChild(_tooltip);
-            Tooltips.PositionTooltip(_tooltip!);
+            return new ActionAlertTooltip(Action.Name, Action.Description, Action.Requires);
         }
 
         /// <summary>

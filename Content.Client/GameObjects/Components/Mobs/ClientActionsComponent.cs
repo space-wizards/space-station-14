@@ -102,8 +102,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             _menu = new ActionMenu(this, ActionMenuItemSelected,
                 ActionMenuItemDragDropped);
 
-            var uiManager = IoCManager.Resolve<IUserInterfaceManager>();
-            uiManager.StateRoot.AddChild(_ui);
+            IoCManager.Resolve<IUserInterfaceManager>().StateRoot.AddChild(_ui);
 
             // set up hotkeys for hotbar
             CommandBinds.Builder
@@ -141,7 +140,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         private PointerInputCmdHandler HandleHotbarKeybind(byte slot)
         {
             // delegate to the ActionsUI, simulating a click on it
-            return new PointerInputCmdHandler((in PointerInputCmdHandler.PointerInputCmdArgs args) =>
+            return new((in PointerInputCmdHandler.PointerInputCmdArgs args) =>
                 {
                     _ui?.HandleHotbarKeybind(slot, args);
                     return true;
@@ -153,9 +152,16 @@ namespace Content.Client.GameObjects.Components.Mobs
         {
             StopTargeting();
             CommandBinds.Unregister<ClientActionsComponent>();
-            _menu?.Dispose();
-            _ui?.Dispose();
-            _ui = null;
+            if (_menu != null)
+            {
+                _menu.Close();
+                _menu = null;
+            }
+            if (_ui != null)
+            {
+                IoCManager.Resolve<IUserInterfaceManager>().StateRoot.RemoveChild(_ui);
+                _ui = null;
+            }
         }
 
         /// <summary>
@@ -182,7 +188,6 @@ namespace Content.Client.GameObjects.Components.Mobs
                     continue;
                 }
 
-                // TODO: So much code dupe here. Maybe return a "generic" action which has handlers for the different types?
                 if (assignedActionType.Value.TryGetAction(out var actionType))
                 {
                     UpdateActionSlot(actionType, actionSlot, assignedActionType);

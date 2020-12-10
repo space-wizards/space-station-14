@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.Controls;
-using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.Graphics;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
-using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
@@ -20,7 +16,6 @@ using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Mobs
@@ -37,10 +32,6 @@ namespace Content.Client.GameObjects.Components.Mobs
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         private AlertsUI _ui;
-        private PanelContainer _tooltip;
-        private RichTextLabel _alertName;
-        private RichTextLabel _alertDescription;
-        private RichTextLabel _alertCooldown;
         private AlertOrderPrototype _alertOrder;
         private bool _tooltipReady;
 
@@ -100,39 +91,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
 
             _ui = new AlertsUI();
-            var uiManager = IoCManager.Resolve<IUserInterfaceManager>();
-            uiManager.StateRoot.AddChild(_ui);
-
-            _tooltip = new PanelContainer
-            {
-                Visible = false,
-                StyleClasses = { StyleNano.StyleClassTooltipPanel }
-            };
-            var tooltipVBox = new VBoxContainer
-            {
-                RectClipContent = true
-            };
-            _tooltip.AddChild(tooltipVBox);
-            _alertName = new RichTextLabel
-            {
-                MaxWidth = TooltipTextMaxWidth,
-                StyleClasses = { StyleNano.StyleClassTooltipAlertTitle }
-            };
-            tooltipVBox.AddChild(_alertName);
-            _alertDescription = new RichTextLabel
-            {
-                MaxWidth = TooltipTextMaxWidth,
-                StyleClasses = { StyleNano.StyleClassTooltipAlertDescription }
-            };
-            tooltipVBox.AddChild(_alertDescription);
-            _alertCooldown = new RichTextLabel
-            {
-                MaxWidth = TooltipTextMaxWidth,
-                StyleClasses = { StyleNano.StyleClassTooltipAlertCooldown }
-            };
-            tooltipVBox.AddChild(_alertCooldown);
-
-            uiManager.PopupRoot.AddChild(_tooltip);
+            IoCManager.Resolve<IUserInterfaceManager>().StateRoot.AddChild(_ui);
 
             UpdateAlertsControls();
         }
@@ -141,12 +100,14 @@ namespace Content.Client.GameObjects.Components.Mobs
         {
             foreach (var alertControl in _alertControls.Values)
             {
-                alertControl.OnShowTooltip -= AlertOnOnShowTooltip;
-                alertControl.OnHideTooltip -= AlertOnOnHideTooltip;
                 alertControl.OnPressed -= AlertControlOnPressed;
             }
-            _ui?.Dispose();
-            _ui = null;
+
+            if (_ui != null)
+            {
+                IoCManager.Resolve<IUserInterfaceManager>().StateRoot.RemoveChild(_ui);
+                _ui = null;
+            }
             _alertControls.Clear();
         }
 
@@ -171,28 +132,26 @@ namespace Content.Client.GameObjects.Components.Mobs
                     toRemove.Add(existingKey);
                 }
             }
-
             foreach (var alertKeyToRemove in toRemove)
             {
-                // remove and dispose the control
                 _alertControls.Remove(alertKeyToRemove, out var control);
-                control?.Dispose();
+                if (control == null) return;
+                _ui.Grid.Children.Remove(control);
             }
 
             // now we know that alertControls contains alerts that should still exist but
             // may need to updated,
             // also there may be some new alerts we need to show.
             // further, we need to ensure they are ordered w.r.t their configured order
-            foreach (var alertEntry in EnumerateAlertStates())
+            foreach (var (alertKey, alertState) in EnumerateAlertStates())
             {
-                if (!alertEntry.Key.AlertType.HasValue)
+                if (!alertKey.AlertType.HasValue)
                 {
                     Logger.WarningS("alert", "found alertkey without alerttype," +
-                                             " alert keys should never be stored without an alerttype set: {0}", alertEntry.Key);
+                                             " alert keys should never be stored without an alerttype set: {0}", alertKey);
                     continue;
                 }
-                var alertType = alertEntry.Key.AlertType.Value;
-                var alertStatus = alertEntry.Value;
+                var alertType = alertKey.AlertType.Value;
                 if (!AlertManager.TryGet(alertType, out var newAlert))
                 {
                     Logger.ErrorS("alert", "Unrecognized alertType {0}", alertType);
@@ -202,16 +161,20 @@ namespace Content.Client.GameObjects.Components.Mobs
                 if (_alertControls.TryGetValue(newAlert.AlertKey, out var existingAlertControl) &&
                     existingAlertControl.Alert.AlertType == newAlert.AlertType)
                 {
-                    // id is the same, simply update the existing control severity
-                    existingAlertControl.SetSeverity(alertStatus.Severity);
+                    // key is the same, simply update the existing control severity / cooldown
+                    existingAlertControl.SetSeverity(alertState.Severity);
+                    existingAlertControl.Cooldown = alertState.Cooldown;
                 }
                 else
                 {
-                    existingAlertControl?.Dispose();
+                    if (existingAlertControl != null)
+                    {
+                        _ui.Grid.Children.Remove(existingAlertControl);
+                    }
 
                     // this is a new alert + alert key or just a different alert with the same
                     // key, create the control and add it in the appropriate order
-                    var newAlertControl = CreateAlertControl(newAlert, alertStatus);
+                    var newAlertControl = CreateAlertControl(newAlert, alertState);
                     if (_alertOrder != null)
                     {
                         var added = false;
@@ -244,50 +207,17 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         private AlertControl CreateAlertControl(AlertPrototype alert, AlertState alertState)
         {
-
-            var alertControl = new AlertControl(alert, alertState.Severity, _resourceCache);
-            // show custom tooltip for the status control
-            alertControl.OnShowTooltip += AlertOnOnShowTooltip;
-            alertControl.OnHideTooltip += AlertOnOnHideTooltip;
-
+            var alertControl = new AlertControl(alert, alertState.Severity, _resourceCache)
+            {
+                Cooldown = alertState.Cooldown
+            };
             alertControl.OnPressed += AlertControlOnPressed;
-
             return alertControl;
         }
 
         private void AlertControlOnPressed(BaseButton.ButtonEventArgs args)
         {
             AlertPressed(args, args.Button as AlertControl);
-        }
-
-        private void AlertOnOnHideTooltip(object sender, EventArgs e)
-        {
-            _tooltipReady = false;
-            _tooltip.Visible = false;
-        }
-
-        private void AlertOnOnShowTooltip(object sender, EventArgs e)
-        {
-            var alertControl = (AlertControl) sender;
-            _alertName.SetMessage(alertControl.Alert.Name);
-            _alertDescription.SetMessage(alertControl.Alert.Description);
-            // check for a cooldown
-            if (alertControl.TotalDuration != null && alertControl.TotalDuration > 0)
-            {
-                _alertCooldown.SetMessage(FormattedMessage.FromMarkup("[color=#776a6a]" +
-                                                                      alertControl.TotalDuration +
-                                                                      " sec cooldown[/color]"));
-                _alertCooldown.Visible = true;
-            }
-            else
-            {
-                _alertCooldown.Visible = false;
-            }
-
-            Tooltips.PositionTooltip(_tooltip);
-            // if we set it visible here the size of the previous tooltip will flicker for a frame,
-            // so instead we wait until FrameUpdate to make it visible
-            _tooltipReady = true;
         }
 
         private void AlertPressed(BaseButton.ButtonEventArgs args, AlertControl alert)
@@ -298,30 +228,6 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
 
             SendNetworkMessage(new ClickAlertMessage(alert.Alert.AlertType));
-        }
-
-        public void FrameUpdate(float frameTime)
-        {
-            if (_tooltipReady)
-            {
-                _tooltipReady = false;
-                _tooltip.Visible = true;
-            }
-            foreach (var (alertKey, alertControl) in _alertControls)
-            {
-                // reconcile all alert controls with their current cooldowns
-                if (TryGetAlertState(alertKey, out var alertState))
-                {
-                    alertControl.UpdateCooldown(alertState.Cooldown, _gameTiming.CurTime);
-                }
-                else
-                {
-                    Logger.WarningS("alert", "coding error - no alert state for alert {0} " +
-                                             "even though we had an AlertControl for it, this" +
-                                             " should never happen", alertControl.Alert.AlertType);
-                }
-
-            }
         }
 
         protected override void AfterShowAlert()

@@ -11,7 +11,10 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface
 {
-    public class ActionTooltip : PanelContainer
+    /// <summary>
+    /// Tooltip for actions or alerts because they are very similar.
+    /// </summary>
+    public class ActionAlertTooltip : PanelContainer
     {
         private const float TooltipTextMaxWidth = 350;
 
@@ -23,7 +26,7 @@ namespace Content.Client.UserInterface
         /// </summary>
         public (TimeSpan Start, TimeSpan End)? Cooldown { get; set; }
 
-        public ActionTooltip(BaseActionPrototype action)
+        public ActionAlertTooltip(FormattedMessage name, FormattedMessage? desc, string? requires = null)
         {
             _gameTiming = IoCManager.Resolve<IGameTiming>();
 
@@ -31,22 +34,22 @@ namespace Content.Client.UserInterface
 
             VBoxContainer vbox;
             AddChild(vbox = new VBoxContainer {RectClipContent = true});
-            var name = new RichTextLabel
+            var nameLabel = new RichTextLabel
             {
                 MaxWidth = TooltipTextMaxWidth,
                 StyleClasses = {StyleNano.StyleClassTooltipActionTitle}
             };
-            name.SetMessage(action.Name);
-            vbox.AddChild(name);
+            nameLabel.SetMessage(name);
+            vbox.AddChild(nameLabel);
 
-            if (!string.IsNullOrWhiteSpace(action.Description.ToString()))
+            if (desc != null && !string.IsNullOrWhiteSpace(desc.ToString()))
             {
                 var description = new RichTextLabel
                 {
                     MaxWidth = TooltipTextMaxWidth,
                     StyleClasses = {StyleNano.StyleClassTooltipActionDescription}
                 };
-                description.SetMessage(action.Description);
+                description.SetMessage(desc);
                 vbox.AddChild(description);
             }
 
@@ -57,22 +60,23 @@ namespace Content.Client.UserInterface
                 Visible = false
             });
 
-            if (!string.IsNullOrWhiteSpace(action.Requires))
+            if (!string.IsNullOrWhiteSpace(requires))
             {
-                var requires = new RichTextLabel
+                var requiresLabel = new RichTextLabel
                 {
                     MaxWidth = TooltipTextMaxWidth,
                     StyleClasses = {StyleNano.StyleClassTooltipActionRequirements}
                 };
-                requires.SetMessage(FormattedMessage.FromMarkup("[color=#635c5c]" +
-                                                                action.Requires +
-                                                                "[/color]"));
-                vbox.AddChild(requires);
+                requiresLabel.SetMessage(FormattedMessage.FromMarkup("[color=#635c5c]" +
+                                                                     requires +
+                                                                     "[/color]"));
+                vbox.AddChild(requiresLabel);
             }
         }
 
-        private void UpdateCooldownLabel()
+        protected override void FrameUpdate(FrameEventArgs args)
         {
+            base.FrameUpdate(args);
             if (!Cooldown.HasValue)
             {
                 _cooldownLabel.Visible = false;
@@ -91,12 +95,6 @@ namespace Content.Client.UserInterface
             {
                 _cooldownLabel.Visible = false;
             }
-        }
-
-        protected override void FrameUpdate(FrameEventArgs args)
-        {
-            base.FrameUpdate(args);
-            UpdateCooldownLabel();
         }
     }
 }
