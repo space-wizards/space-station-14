@@ -9,6 +9,8 @@ using Content.Server.Mobs;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Medical;
+using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Preferences;
 using Robust.Server.GameObjects;
@@ -163,8 +165,8 @@ namespace Content.Server.GameObjects.Components.Medical
                     }
 
                     var dead =
-                        mind.OwnedEntity.TryGetComponent<IDamageableComponent>(out var damageable) &&
-                        damageable.CurrentState == DamageState.Dead;
+                        mind.OwnedEntity.TryGetComponent<IMobStateComponent>(out var state) &&
+                        state.IsDead();
                     if (!dead) return;
 
 

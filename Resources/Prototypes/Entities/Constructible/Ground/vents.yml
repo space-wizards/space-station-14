@@ -19,9 +19,12 @@
       pipeRSI: Constructible/Atmos/pipe.rsi
     - type: VentVisualizer
       ventRSI: Constructible/Atmos/vent.rsi
-  - type: Destructible
+  - type: Damageable
     resistances: metallicResistances
-    thresholdvalue: 100
+  - type: Destructible
+    thresholds:
+      100:
+        Acts: ["Destruction"]
 
 - type: entity
   parent: VentBase

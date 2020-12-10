@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
-using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 
@@ -18,12 +18,12 @@ namespace Content.Server.Objectives.Conditions
 
         public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Objects/Weapons/Guns/Pistols/mk58_wood.rsi"), "icon");
 
-        public float Progress => Target?.OwnedEntity != null &&
-                                 Target.OwnedEntity
-                                     .TryGetComponent<IDamageableComponent>(out var damageableComponent) &&
-                                 damageableComponent.CurrentState == DamageState.Dead
-                                    ? 1f
-                                    : 0f;
+        public float Progress => Target?
+            .OwnedEntity?
+            .GetComponentOrNull<IMobStateComponent>()?
+            .IsDead() ?? false
+            ? 1f
+            : 0f;
 
         public float Difficulty => 2f;
 
