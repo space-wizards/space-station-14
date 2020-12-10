@@ -27,11 +27,22 @@ namespace Content.Server.Commands.Observer
         {
             if (player == null)
             {
-                shell?.SendText((IPlayerSession?) null, "Nah");
+                shell?.SendText(player, "You have no session, you can't ghost.");
                 return;
             }
 
-            IoCManager.Resolve<IGameTicker>().OnGhostAttempt(shell, player, CanReturn);
+            var mind = player!.ContentData()?.Mind;
+            if (mind == null)
+            {
+                shell?.SendText(player, "You have no Mind, you can't ghost.");
+                return;
+            }
+
+            if (!IoCManager.Resolve<IGameTicker>().OnGhostAttempt(mind, CanReturn))
+            {
+                shell?.SendText(player, "You can't ghost right now.");
+                return;
+            }
         }
     }
 }

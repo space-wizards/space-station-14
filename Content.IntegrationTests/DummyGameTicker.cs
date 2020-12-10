@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.Roles;
+using Content.Server.Mobs;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Interfaces.Console;
 using Robust.Shared.Interfaces.GameObjects;
@@ -50,8 +51,9 @@ namespace Content.IntegrationTests
         {
         }
 
-        public void OnGhostAttempt(IConsoleShell shell, IPlayerSession session, bool canReturnGlobal)
+        public bool OnGhostAttempt(Mind mind, bool canReturnGlobal)
         {
+            return false;
         }
 
         public void MakeObserve(IPlayerSession player)

@@ -441,9 +441,9 @@ namespace Content.Server.GameTicking
             UpdateJobsAvailable();
         }
 
-        public void OnGhostAttempt(IConsoleShell shell, IPlayerSession session, bool canReturnGlobal)
+        public bool OnGhostAttempt(Mind mind, bool canReturnGlobal)
         {
-            Preset.OnGhostAttempt(shell, session, canReturnGlobal);
+            return Preset.OnGhostAttempt(mind, canReturnGlobal);
         }
 
         public T AddGameRule<T>() where T : GameRule, new()

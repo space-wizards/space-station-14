@@ -6,6 +6,7 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
+using Content.Server.Mobs;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
@@ -39,21 +40,12 @@ namespace Content.Server.GameTicking
         /// <summary>
         /// Called when a player attempts to ghost.
         /// </summary>
-        public virtual void OnGhostAttempt(IConsoleShell? shell, IPlayerSession player, bool canReturnGlobal)
+        public virtual bool OnGhostAttempt(Mind mind, bool canReturnGlobal)
         {
-            var mind = player.ContentData().Mind;
-            if (mind == null)
-            {
-                shell?.SendText(player, "You can't ghost here!");
-                return;
-            }
-
-            var name = player.AttachedEntity?.Name ?? player.Name;
-
-            var playerEntity = player.AttachedEntity;
+            var playerEntity = mind.OwnedEntity;
 
             if (playerEntity != null && playerEntity.HasComponent<GhostComponent>())
-                return;
+                return false;
 
             if (mind.VisitingEntity != null)
             {
@@ -103,6 +95,7 @@ namespace Content.Server.GameTicking
                 mind.Visit(ghost);
             else
                 mind.TransferTo(ghost);
+            return true;
         }
 
         public virtual string GetRoundEndDescription() => "";

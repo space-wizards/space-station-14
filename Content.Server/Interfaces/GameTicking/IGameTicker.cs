@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.GameTicking;
+using Content.Server.Mobs;
 using Content.Shared.Roles;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Interfaces.Console;
@@ -44,7 +45,7 @@ namespace Content.Server.Interfaces.GameTicking
         void ToggleDisallowLateJoin(bool disallowLateJoin);
 
         /// <summary>proxy to GamePreset (actual handler)</summary>
-        void OnGhostAttempt(IConsoleShell shell, IPlayerSession session, bool canReturnGlobal);
+        bool OnGhostAttempt(Mind mind, bool canReturnGlobal);
 
         EntityCoordinates GetLateJoinSpawnPoint();
         EntityCoordinates GetJobSpawnPoint(string jobId);
