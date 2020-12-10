@@ -102,7 +102,7 @@ namespace Content.Server.Atmos
         public Vector2i GridIndices { get; }
 
         [ViewVariables]
-        public ExcitedGroup ExcitedGroup { get; set; }
+        public ExcitedGroup? ExcitedGroup { get; set; }
 
         /// <summary>
         /// The air in this tile. If null, this tile is completely airblocked.
@@ -119,7 +119,7 @@ namespace Content.Server.Atmos
         [ViewVariables]
         public bool BlocksAllAir => BlockedAirflow == AtmosDirection.All;
 
-        public TileAtmosphere(GridAtmosphereComponent atmosphereComponent, GridId gridIndex, Vector2i gridIndices, GasMixture mixture = null, bool immutable = false)
+        public TileAtmosphere(GridAtmosphereComponent atmosphereComponent, GridId gridIndex, Vector2i gridIndices, GasMixture? mixture = null, bool immutable = false)
         {
             IoCManager.InjectDependencies(this);
             _gridAtmosphereComponent = atmosphereComponent;
