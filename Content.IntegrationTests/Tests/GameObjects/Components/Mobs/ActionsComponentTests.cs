@@ -111,7 +111,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                     else
                     {
                         Assert.That(asAction.ActionType, Is.EqualTo(ActionType.DebugInstant));
-                        Assert.That(slot.CooldownRemaining, Is.EqualTo(TimeSpan.Zero));
+                        Assert.That(slot.Cooldown, Is.Null);
                         expectEmpty = true;
                     }
                 }

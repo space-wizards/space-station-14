@@ -22,8 +22,6 @@ namespace Content.Client.UserInterface
     /// </summary>
     public sealed class ActionsUI : PanelContainer
     {
-        private readonly EventHandler _onShowTooltip;
-        private readonly EventHandler _onHideTooltip;
         private readonly Action<BaseButton.ButtonEventArgs> _onPressAction;
         private readonly Action<ActionSlotDragDropEventArgs> _onDragDropAction;
         private readonly Action<BaseButton.ButtonEventArgs> _onNextHotbarPressed;
@@ -58,8 +56,6 @@ namespace Content.Client.UserInterface
         /// </summary>
         public IEnumerable<ActionSlot> Slots => _slots;
 
-        /// <param name="onShowTooltip">OnShowTooltip handler to assign to each ActionSlot</param>
-        /// <param name="onHideTooltip">OnHideTooltip handler to assign to each ActionSlot</param>
         /// <param name="onPressAction">OnPressed handler to assign to each action slot</param>
         /// <param name="onDragDropAction">invoked when dragging and dropping an action from
         /// one slot to another.</param>
@@ -68,7 +64,7 @@ namespace Content.Client.UserInterface
         /// <param name="onNextHotbarPressed">invoked when pressing the next hotbar button</param>
         /// <param name="onPreviousHotbarPressed">invoked when pressing the previous hotbar button</param>
         /// <param name="onSettingsButtonPressed">invoked when pressing the settings button</param>
-        public ActionsUI(EventHandler onShowTooltip, EventHandler onHideTooltip, Action<BaseButton.ButtonEventArgs> onPressAction,
+        public ActionsUI(Action<BaseButton.ButtonEventArgs> onPressAction,
             Action<ActionSlotDragDropEventArgs> onDragDropAction, Action<GUIMouseHoverEventArgs> onMouseEnteredAction,
             Action<GUIMouseHoverEventArgs> onMouseExitedAction,
             Action<BaseButton.ButtonEventArgs> onNextHotbarPressed, Action<BaseButton.ButtonEventArgs> onPreviousHotbarPressed,
@@ -79,8 +75,6 @@ namespace Content.Client.UserInterface
             LayoutContainer.SetMarginTop(this, 100);
 
             _clyde = IoCManager.Resolve<IClyde>();
-            _onShowTooltip = onShowTooltip;
-            _onHideTooltip = onHideTooltip;
             _onPressAction = onPressAction;
             _onDragDropAction = onDragDropAction;
             _onMouseEnteredAction = onMouseEnteredAction;
@@ -188,8 +182,6 @@ namespace Content.Client.UserInterface
             for (byte i = 1; i <= ClientActionsComponent.Slots; i++)
             {
                 var slot = new ActionSlot(i) {EnableAllKeybinds = true};
-                slot.OnShowTooltip += onShowTooltip;
-                slot.OnHideTooltip += onHideTooltip;
                 slot.OnButtonDown += ActionSlotOnButtonDown;
                 slot.OnButtonUp += ActionSlotOnButtonUp;
                 slot.OnPressed += _onPressAction;
@@ -212,8 +204,6 @@ namespace Content.Client.UserInterface
             _clyde.OnWindowResized -= ClydeOnOnWindowResized;
             foreach (var slot in _slots)
             {
-                slot.OnShowTooltip -= _onShowTooltip;
-                slot.OnHideTooltip -= _onHideTooltip;
                 slot.OnPressed -= _onPressAction;
                 slot.OnMouseEntered -= _onMouseEnteredAction;
                 slot.OnMouseExited -= _onMouseExitedAction;

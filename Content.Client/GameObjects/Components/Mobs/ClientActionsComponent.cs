@@ -1,5 +1,4 @@
 ﻿#nullable enable
-using System;
 using System.Collections.Generic;
 using Content.Client.GameObjects.Components.HUD.Inventory;
 using Content.Client.GameObjects.Components.Items;
@@ -7,7 +6,6 @@ using Content.Client.GameObjects.Components.Mobs.Actions;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.Controls;
-using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Actions;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Input;
@@ -25,7 +23,6 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Mobs
@@ -37,7 +34,6 @@ namespace Content.Client.GameObjects.Components.Mobs
     {
         public const byte Hotbars = 10;
         public const byte Slots = 10;
-        private const float TooltipTextMaxWidth = 350;
 
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
@@ -46,16 +42,7 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         private ActionsUI? _ui;
         private ActionMenu? _menu;
-        private PanelContainer? _tooltip;
-        private RichTextLabel? _actionName;
-        private RichTextLabel? _actionDescription;
-        private RichTextLabel? _actionCooldown;
-        private RichTextLabel? _actionRequirements;
-        private bool _tooltipReady;
-        private ActionSlot? _showingTooltipFor;
         private readonly List<ItemSlotButton> _highlightingItemSlots = new();
-        // so we don't call it every frame and only update the text each second that ticks
-        private int _tooltipCooldownSecs = -1;
         // tracks the action slot we are currently selecting a target for
         private ActionSlot? _selectingTargetFor;
 
@@ -63,7 +50,6 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         /// <summary>
         /// Allows calculating if we need to act due to this component being controlled by the current mob
-        /// TODO: should be revisited after space-wizards/RobustToolbox#1255
         /// </summary>
         [ViewVariables]
         private bool CurrentlyControlled => _playerManager.LocalPlayer != null && _playerManager.LocalPlayer.ControlledEntity == Owner;
@@ -110,51 +96,14 @@ namespace Content.Client.GameObjects.Components.Mobs
                 return;
             }
 
-            _ui = new ActionsUI(ActionOnOnShowTooltip, ActionOnOnHideTooltip, OnActionPress,
+            _ui = new ActionsUI(OnActionPress,
                 OnActionSlotDragDrop, OnMouseEnteredAction, OnMouseExitedAction,
                 NextHotbar, PreviousHotbar, HandleOpenActionMenu);
-            _menu = new ActionMenu(ActionOnOnShowTooltip, ActionOnOnHideTooltip, this, ActionMenuItemSelected,
+            _menu = new ActionMenu(this, ActionMenuItemSelected,
                 ActionMenuItemDragDropped);
 
             var uiManager = IoCManager.Resolve<IUserInterfaceManager>();
             uiManager.StateRoot.AddChild(_ui);
-
-            _tooltip = new PanelContainer
-            {
-                Visible = false,
-                StyleClasses = { StyleNano.StyleClassTooltipPanel }
-            };
-            var tooltipVBox = new VBoxContainer
-            {
-                RectClipContent = true
-            };
-            _tooltip.AddChild(tooltipVBox);
-            _actionName = new RichTextLabel
-            {
-                MaxWidth = TooltipTextMaxWidth,
-                StyleClasses = { StyleNano.StyleClassTooltipActionTitle }
-            };
-            tooltipVBox.AddChild(_actionName);
-            _actionDescription = new RichTextLabel
-            {
-                MaxWidth = TooltipTextMaxWidth,
-                StyleClasses = { StyleNano.StyleClassTooltipActionDescription }
-            };
-            tooltipVBox.AddChild(_actionDescription);
-            _actionCooldown = new RichTextLabel
-            {
-                MaxWidth = TooltipTextMaxWidth,
-                StyleClasses = { StyleNano.StyleClassTooltipActionCooldown }
-            };
-            tooltipVBox.AddChild(_actionCooldown);
-            _actionRequirements = new RichTextLabel
-            {
-                MaxWidth = TooltipTextMaxWidth,
-                StyleClasses = { StyleNano.StyleClassTooltipActionRequirements }
-            };
-            tooltipVBox.AddChild(_actionRequirements);
-
-            uiManager.PopupRoot.AddChild(_tooltip);
 
             // set up hotkeys for hotbar
             CommandBinds.Builder
@@ -233,6 +182,7 @@ namespace Content.Client.GameObjects.Components.Mobs
                     continue;
                 }
 
+                // TODO: So much code dupe here. Maybe return a "generic" action which has handlers for the different types?
                 if (assignedActionType.Value.TryGetAction(out var actionType))
                 {
                     UpdateActionSlot(actionType, actionSlot, assignedActionType);
@@ -278,11 +228,13 @@ namespace Content.Client.GameObjects.Components.Mobs
                 }
 
                 actionSlot.DisableAction();
+                actionSlot.Cooldown = null;
             }
             else
             {
                 // action is currently granted
                 actionSlot.EnableAction();
+                actionSlot.Cooldown = actionState.Cooldown;
 
                 // if we are targeting with an action now on cooldown, stop targeting
                 if (_selectingTargetFor?.Action != null && _selectingTargetFor.Action == action &&
@@ -311,6 +263,7 @@ namespace Content.Client.GameObjects.Components.Mobs
                 Logger.WarningS("action", "unrecognized actionType {0}", assignedActionType);
                 actionSlot.Clear();
             }
+            actionSlot.Cooldown = null;
         }
 
         private void UpdateActionSlot(EntityUid item, ItemActionType itemActionType, ActionSlot actionSlot,
@@ -364,6 +317,7 @@ namespace Content.Client.GameObjects.Components.Mobs
                     StopTargeting();
                 }
             }
+            actionSlot.Cooldown = actionState.Cooldown;
 
             // check if we need to toggle it
             if (action.BehaviorType == BehaviorType.Toggle)
@@ -811,140 +765,6 @@ namespace Content.Client.GameObjects.Components.Mobs
                     _selectingTargetFor.ToggledOn = false;
                 }
                 _selectingTargetFor = null;
-            }
-        }
-
-        private void ActionOnOnHideTooltip(object? sender, EventArgs e)
-        {
-            _tooltipReady = false;
-            _tooltip!.Visible = false;
-            _showingTooltipFor = null;
-        }
-
-        private void ActionOnOnShowTooltip(object? sender, EventArgs e)
-        {
-            // this can come from an ActionSlot or an ActionMenuItem depending on if its for the
-            // action hotbar or the action menu
-
-            BaseActionPrototype? action;
-            var totalCooldownDuration = TimeSpan.Zero;
-            var cooldownRemaining = TimeSpan.Zero;
-            switch (sender)
-            {
-                case ActionSlot actionSlot:
-                    action = actionSlot.Action;
-                    totalCooldownDuration = actionSlot.TotalDuration;
-                    cooldownRemaining = actionSlot.CooldownRemaining;
-                    _showingTooltipFor = actionSlot;
-                    break;
-                case ActionMenuItem actionMenuItem:
-                    action = actionMenuItem.Action;
-                    // TODO: We can't report cooldowns in the action menu
-                    // because they are currently set on-demand.
-                    break;
-                default:
-                    // coding error, we got an unexpected sender
-                    throw new InvalidOperationException();
-            }
-
-            if (action == null)
-            {
-                _showingTooltipFor = null;
-                return;
-            }
-
-            _actionName?.SetMessage(action.Name);
-            if (!string.IsNullOrWhiteSpace(action.Description.ToString()))
-            {
-                _actionDescription?.SetMessage(action.Description);
-                _actionDescription!.Visible = true;
-            }
-            else
-            {
-                _actionDescription!.Visible = false;
-            }
-
-            // check for a cooldown
-            _tooltipCooldownSecs = -1;
-            UpdateTooltipCooldown(cooldownRemaining, totalCooldownDuration);
-            //check for requirements message
-            if (!string.IsNullOrWhiteSpace(action.Requires))
-            {
-                _actionRequirements?.SetMessage(FormattedMessage.FromMarkup("[color=#635c5c]" +
-                                                                           action.Requires +
-                                                                           "[/color]"));
-                _actionRequirements!.Visible = true;
-            }
-            else
-            {
-                _actionRequirements!.Visible = false;
-            }
-
-
-            Tooltips.PositionTooltip(_tooltip!);
-            // if we set it visible here the size of the previous tooltip will flicker for a frame,
-            // so instead we wait until FrameUpdate to make it visible
-            _tooltipReady = true;
-        }
-
-        private void UpdateTooltipCooldown(TimeSpan cooldownRemaining, TimeSpan totalDuration)
-        {
-            if (cooldownRemaining != TimeSpan.Zero)
-            {
-                if (cooldownRemaining.Seconds == _tooltipCooldownSecs) return;
-                _actionCooldown?.SetMessage(FormattedMessage.FromMarkup(
-                    $"[color=#a10505]{totalDuration.Seconds} sec cooldown ({cooldownRemaining.Seconds + 1} sec remaining)[/color]"));
-                _actionCooldown!.Visible = true;
-                _tooltipCooldownSecs = cooldownRemaining.Seconds;
-            }
-            else
-            {
-                _tooltipCooldownSecs = -1;
-                _actionCooldown!.Visible = false;
-            }
-        }
-
-        public void FrameUpdate(float frameTime)
-        {
-            if (_tooltipReady)
-            {
-                _tooltipReady = false;
-                _tooltip!.Visible = true;
-            }
-            // update the cooldowns for each currently displayed hotbar slot.
-            // note that we don't actually need to keep track of cooldowns for
-            // slots in other hotbars - since we store the precise start and end of each
-            // cooldown we have no need to actively tick down, we can always calculate current
-            // cooldown amount as-needed (for example when switching toolbars).
-            if (_ui == null) return;
-            var curTime = GameTiming.CurTime;
-            foreach (var actionSlot in _ui.Slots)
-            {
-                var assignedActionType = _assignments[_selectedHotbar, actionSlot.SlotIndex];
-                if (!assignedActionType.HasValue) continue;
-
-                if (assignedActionType.Value.TryGetAction(out var actionType))
-                {
-                    actionSlot.UpdateCooldown(
-                        TryGetActionState(actionType, out var actionState) ? actionState.Cooldown : null,
-                        curTime);
-                }
-                else if (assignedActionType.Value.TryGetItemActionWithItem(out var itemActionType, out var item))
-                {
-                    actionSlot.UpdateCooldown(TryGetItemActionState(itemActionType,
-                        item, out var actionState)
-                        ? actionState.Cooldown
-                        : null, curTime);
-                }
-                else
-                {
-                    actionSlot.UpdateCooldown(null, curTime);
-                }
-
-                if (_showingTooltipFor == actionSlot)
-                {
-                    UpdateTooltipCooldown(actionSlot.CooldownRemaining, actionSlot.TotalDuration);
-                }
             }
         }
 

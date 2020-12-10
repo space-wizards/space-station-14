@@ -9,9 +9,12 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Timing;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Controls
@@ -79,25 +82,33 @@ namespace Content.Client.UserInterface.Controls
         public byte SlotIndex => (byte) (SlotNumber - 1);
 
         /// <summary>
-        /// Total duration of the current cooldown in seconds. TimeSpan.Zero if no duration / cooldown.
+        /// Current cooldown displayed in this slot. Set to null to show no cooldown.
         /// </summary>
-        public TimeSpan TotalDuration { get; private set; }
-        /// <summary>
-        /// Remaining cooldown in seconds. TimeSpan.Zero if no cooldown or cooldown
-        /// is over.
-        /// </summary>
-        public TimeSpan CooldownRemaining { get; private set; }
+        public (TimeSpan Start, TimeSpan End)? Cooldown
+        {
+            get => _cooldown;
+            set
+            {
+                _cooldown = value;
+                if (_tooltip != null)
+                {
+                    _tooltip.Cooldown = value;
+                }
+            }
+        }
 
-        public bool IsOnCooldown => CooldownRemaining != TimeSpan.Zero;
+        public bool IsOnCooldown => Cooldown.HasValue && _gameTiming.CurTime < Cooldown.Value.End;
 
+        private readonly IGameTiming _gameTiming;
         private readonly RichTextLabel _number;
         private readonly TextureRect _bigActionIcon;
         private readonly TextureRect _smallActionIcon;
         private readonly SpriteView _smallItemSpriteView;
         private readonly SpriteView _bigItemSpriteView;
         private readonly CooldownGraphic _cooldownGraphic;
-
+        private ActionTooltip? _tooltip;
         private bool _toggledOn;
+        private (TimeSpan Start, TimeSpan End)? _cooldown;
 
         /// <summary>
         /// Creates an action slot for the specified number
@@ -106,9 +117,12 @@ namespace Content.Client.UserInterface.Controls
         /// greater than 10 will have a blank number</param>
         public ActionSlot(byte slotNumber)
         {
+            _gameTiming = IoCManager.Resolve<IGameTiming>();
             SlotNumber = slotNumber;
 
             CustomMinimumSize = (64, 64);
+            OnShowTooltip += ShowTooltip;
+            OnHideTooltip += HideTooltip;
 
             SizeFlagsVertical = SizeFlags.None;
             TooltipDelay = CustomTooltipDelay;
@@ -147,7 +161,7 @@ namespace Content.Client.UserInterface.Controls
                 Visible = false
             };
 
-            _cooldownGraphic = new CooldownGraphic();
+            _cooldownGraphic = new CooldownGraphic {Progress = 0, Visible = false};
 
             // padding to the left of the number to shift it right
             var paddingBox = new HBoxContainer()
@@ -188,41 +202,47 @@ namespace Content.Client.UserInterface.Controls
             AddChild(_cooldownGraphic);
             AddChild(paddingBox);
             AddChild(paddingBoxItemIcon);
-
-            UpdateCooldown(null, TimeSpan.Zero);
-
         }
 
-        /// <summary>
-        /// Updates the displayed cooldown amount, clearing cooldown if alertCooldown is null
-        /// </summary>
-        /// <param name="alertCooldown">cooldown start and end</param>
-        /// <param name="curTime">current game time</param>
-        public void UpdateCooldown((TimeSpan Start, TimeSpan End)? alertCooldown, in TimeSpan curTime)
+        private void HideTooltip(object? sender, EventArgs e)
         {
-            if (!alertCooldown.HasValue || (Action is ItemActionPrototype && Item == null))
+            HideTooltip();
+        }
+
+        private void HideTooltip()
+        {
+            if (_tooltip == null) return;
+
+            UserInterfaceManager.PopupRoot.RemoveChild(_tooltip);
+            _tooltip = null;
+        }
+
+        private void ShowTooltip(object? sender, EventArgs e)
+        {
+            if (Action == null) return;
+
+            _tooltip = new ActionTooltip(Action) {Cooldown = Cooldown};
+            UserInterfaceManager.PopupRoot.AddChild(_tooltip);
+            Tooltips.PositionTooltip(_tooltip!);
+        }
+
+        private void UpdateCooldownGraphic()
+        {
+            if (!Cooldown.HasValue)
             {
-                _cooldownGraphic.Progress = 0;
                 _cooldownGraphic.Visible = false;
-                TotalDuration = TimeSpan.Zero;
-                CooldownRemaining = TimeSpan.Zero;
+                _cooldownGraphic.Progress = 0;
+                return;
             }
-            else
-            {
 
-                var start = alertCooldown.Value.Start;
-                var end = alertCooldown.Value.End;
+            var duration = Cooldown.Value.End - Cooldown.Value.Start;
+            var curTime = _gameTiming.CurTime;
+            var length = duration.TotalSeconds;
+            var progress = (curTime - Cooldown.Value.Start).TotalSeconds / length;
+            var ratio = (progress <= 1 ? (1 - progress) : (curTime - Cooldown.Value.End).TotalSeconds * -5);
 
-                TotalDuration = end - start;
-                var length = TotalDuration.TotalSeconds;
-                var progress = (curTime - start).TotalSeconds / length;
-                var ratio = (progress <= 1 ? (1 - progress) : (curTime - end).TotalSeconds * -5);
-
-                CooldownRemaining = end > curTime ? (end - curTime) : TimeSpan.Zero;
-
-                _cooldownGraphic.Progress = MathHelper.Clamp((float)ratio, -1, 1);
-                _cooldownGraphic.Visible = ratio > -1f;
-            }
+            _cooldownGraphic.Progress = MathHelper.Clamp((float)ratio, -1, 1);
+            _cooldownGraphic.Visible = ratio > -1f;
         }
 
         /// <summary>
@@ -240,6 +260,8 @@ namespace Content.Client.UserInterface.Controls
             Pressed = false;
             ToggledOn = false;
             ActionEnabled = actionEnabled;
+            Cooldown = null;
+            HideTooltip();
             UpdateIcons();
             DrawModeChanged();
             _number.SetMessage(SlotNumberLabel());
@@ -260,6 +282,8 @@ namespace Content.Client.UserInterface.Controls
             Pressed = false;
             ToggledOn = false;
             ActionEnabled = false;
+            Cooldown = null;
+            HideTooltip();
             UpdateIcons();
             DrawModeChanged();
             _number.SetMessage(SlotNumberLabel());
@@ -281,6 +305,8 @@ namespace Content.Client.UserInterface.Controls
             Pressed = false;
             ToggledOn = false;
             ActionEnabled = false;
+            Cooldown = null;
+            HideTooltip();
             UpdateIcons();
             DrawModeChanged();
             _number.SetMessage(SlotNumberLabel());
@@ -296,9 +322,10 @@ namespace Content.Client.UserInterface.Controls
             Item = null;
             ToggledOn = false;
             Pressed = false;
+            Cooldown = null;
+            HideTooltip();
             UpdateIcons();
             DrawModeChanged();
-            UpdateCooldown(null, TimeSpan.Zero);
             _number.SetMessage(SlotNumberLabel());
         }
 
@@ -325,7 +352,6 @@ namespace Content.Client.UserInterface.Controls
             ActionEnabled = false;
             DrawModeChanged();
             _number.SetMessage(SlotNumberLabel());
-            UpdateCooldown(null, TimeSpan.Zero);
         }
 
         private FormattedMessage SlotNumberLabel()
@@ -491,5 +517,10 @@ namespace Content.Client.UserInterface.Controls
 
         }
 
+        protected override void FrameUpdate(FrameEventArgs args)
+        {
+            base.FrameUpdate(args);
+            UpdateCooldownGraphic();
+        }
     }
 }

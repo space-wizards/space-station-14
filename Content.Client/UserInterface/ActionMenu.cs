@@ -46,8 +46,6 @@ namespace Content.Client.UserInterface
         private readonly Label _filterLabel;
         private readonly Button _clearButton;
         private readonly GridContainer _resultsGrid;
-        private readonly EventHandler _onShowTooltip;
-        private readonly EventHandler _onHideTooltip;
         private readonly TextureRect _dragShadow;
         private readonly DragDropHelper<ActionMenuItem> _dragDropHelper;
 
@@ -55,19 +53,15 @@ namespace Content.Client.UserInterface
         private readonly Action<ActionMenuItemSelectedEventArgs> _onItemSelected;
         private readonly Action<ActionMenuItemDragDropEventArgs> _onItemDragDrop;
 
-        /// <param name="onShowTooltip">OnShowTooltip handler to assign to each ActionMenuItem</param>
-        /// <param name="onHideTooltip">OnHideTooltip handler to assign to each ActionMenuItem</param>
         /// <param name="actionsComponent">component to use to lookup action statuses</param>
         /// <param name="onItemSelected">invoked when an action item
         /// in the list is clicked</param>
         /// <param name="onItemDragDrop">invoked when an action item
         /// in the list is dragged and dropped onto a hotbar slot</param>
-        public ActionMenu(EventHandler onShowTooltip, EventHandler onHideTooltip, ClientActionsComponent actionsComponent,
+        public ActionMenu(ClientActionsComponent actionsComponent,
             Action<ActionMenuItemSelectedEventArgs> onItemSelected,
             Action<ActionMenuItemDragDropEventArgs> onItemDragDrop)
         {
-            _onShowTooltip = onShowTooltip;
-            _onHideTooltip = onHideTooltip;
             _actionsComponent = actionsComponent;
             _onItemSelected = onItemSelected;
             _onItemDragDrop = onItemDragDrop;
@@ -167,8 +161,6 @@ namespace Content.Client.UserInterface
                 actionMenuItem.OnButtonDown -= OnItemButtonDown;
                 actionMenuItem.OnButtonUp -= OnItemButtonUp;
                 actionMenuItem.OnPressed -= OnItemPressed;
-                actionMenuItem.OnShowTooltip -= _onShowTooltip;
-                actionMenuItem.OnHideTooltip -= _onHideTooltip;
             }
         }
 
@@ -410,8 +402,6 @@ namespace Content.Client.UserInterface
                 actionItem.OnButtonDown += OnItemButtonDown;
                 actionItem.OnButtonUp += OnItemButtonUp;
                 actionItem.OnPressed += OnItemPressed;
-                actionItem.OnShowTooltip += _onShowTooltip;
-                actionItem.OnHideTooltip += _onHideTooltip;
             }
         }
 

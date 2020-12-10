@@ -11,17 +11,6 @@ namespace Content.Client.GameObjects.EntitySystems
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        public override void FrameUpdate(float frameTime)
-        {
-            base.FrameUpdate(frameTime);
-
-            if (!_gameTiming.IsFirstTimePredicted)
-                return;
-
-            foreach (var actionsComponent in EntityManager.ComponentManager.EntityQuery<ClientActionsComponent>(false))
-            {
-                actionsComponent.FrameUpdate(frameTime);
-            }
-        }
+        // TODO: probably will use this for bindings in ClientActionsComponent?
     }
 }

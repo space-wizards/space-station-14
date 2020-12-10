@@ -50,7 +50,6 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         /// <summary>
         /// Allows calculating if we need to act due to this component being controlled by the current mob
-        /// TODO: should be revisited after space-wizards/RobustToolbox#1255
         /// </summary>
         [ViewVariables]
         private bool CurrentlyControlled => _playerManager.LocalPlayer != null && _playerManager.LocalPlayer.ControlledEntity == Owner;
