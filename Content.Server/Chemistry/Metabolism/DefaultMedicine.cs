@@ -29,7 +29,7 @@ namespace Content.Server.Chemistry.Metabolism
         void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(ref _metabolismRate, "rate", ReagentUnit.New(1));
-            serializer.DataField(ref _healingPerTick, "healingPerTick", -1f);
+            serializer.DataField(ref _healingPerTick, "healingPerTick", 1f);
             serializer.DataField(ref _healType, "healType", DamageClass.Brute);
         }
 
