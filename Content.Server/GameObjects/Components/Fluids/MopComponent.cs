@@ -17,7 +17,7 @@ namespace Content.Server.GameObjects.Components.Fluids
     /// For cleaning up puddles
     /// </summary>
     [RegisterComponent]
-    public class MopComponent : Component,
+    public class MopComponent : Component, IAfterInteract
 
     {
         public override string Name => "Mop";
