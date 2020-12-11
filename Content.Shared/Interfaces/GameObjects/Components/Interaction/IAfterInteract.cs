@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -15,7 +16,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// <summary>
         /// Called when we interact with nothing, or when we interact with an entity out of range that has no behavior
         /// </summary>
-        void AfterInteract(AfterInteractEventArgs eventArgs);
+        Task IAfterInteract(AfterInteractEventArgs eventArgs);
     }
 
     public class AfterInteractEventArgs : EventArgs
