@@ -8,6 +8,7 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.PDA;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Markers;
+using Content.Server.GameObjects.Components.TraitorDeathMatch;
 using Content.Server.Mobs;
 using Content.Server.Mobs.Roles.Traitor;
 using Content.Server.Players;
@@ -99,8 +100,13 @@ namespace Content.Server.GameTicking.GamePresets
 
             // Like normal traitors, they need access to a traitor account.
             var uplinkAccount = new UplinkAccount(mind.OwnedEntity.Uid, startingBalance);
-            newPDA.GetComponent<PDAComponent>().InitUplinkAccount(uplinkAccount);
+            var pdaComponent = newPDA.GetComponent<PDAComponent>();
+            pdaComponent.InitUplinkAccount(uplinkAccount);
             _allOriginalNames[uplinkAccount] = mind.OwnedEntity.Name;
+
+            // The PDA needs to be marked with the correct owner.
+            pdaComponent.SetPDAOwner(mind.OwnedEntity.Name);
+            newPDA.AddComponent<TraitorDeathMatchReliableOwnerTagComponent>().UserId = mind.UserId;
 
             // Finally, it would be preferrable if they spawned as far away from other players as reasonably possible.
             if (FindAnyIsolatedSpawnLocation(mind, out var bestTarget))

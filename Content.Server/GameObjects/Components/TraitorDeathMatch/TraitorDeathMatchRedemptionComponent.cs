@@ -40,9 +40,34 @@ namespace Content.Server.GameObjects.Components.TraitorDeathMatch
                 return false;
             }
 
+            if (!eventArgs.User.TryGetComponent<MindComponent>(out var userMindComponent))
+            {
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("You have no mind component! How'd you manage that?"));
+                return false;
+            }
+
+            var userMind = userMindComponent.Mind;
+            if (userMind == null)
+            {
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("You have no mind! How'd you manage that?"));
+                return false;
+            }
+
             if (!eventArgs.Using.TryGetComponent<PDAComponent>(out var victimPDA))
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("It must be a PDA!"));
+                return false;
+            }
+
+            if (!eventArgs.Using.TryGetComponent<TraitorDeathMatchReliableOwnerTagComponent>(out var victimPDAOwner))
+            {
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("This PDA isn't owned by anyone!"));
+                return false;
+            }
+
+            if (victimPDAOwner.UserId == userMind.UserId)
+            {
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't redeem your own PDA!"));
                 return false;
             }
 
@@ -84,7 +109,8 @@ namespace Content.Server.GameObjects.Components.TraitorDeathMatch
                 return false;
             }
 
-            var transferAmount = victimAccount.Balance;
+            // 4 is the per-PDA bonus amount.
+            var transferAmount = victimAccount.Balance + 4;
             victimAccount.ModifyAccountBalance(0);
             userAccount.ModifyAccountBalance(userAccount.Balance + transferAmount);
 
