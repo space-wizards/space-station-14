@@ -414,7 +414,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
             foreach (var afterInteract in afterInteracts)
             {
-                afterInteract.AfterInteract(afterInteractEventArgs);
+                afterInteract.IAfterInteract(afterInteractEventArgs);
             }
         }
 
@@ -466,7 +466,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
             foreach (var afterAttack in afterAttacks)
             {
-                afterAttack.AfterInteract(afterAttackEventArgs);
+                await afterAttack.IAfterInteract(afterAttackEventArgs);
             }
         }
 
@@ -799,7 +799,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             //See if we have a ranged attack interaction
             foreach (var afterAttack in afterAttacks)
             {
-                afterAttack.AfterInteract(afterAttackEventArgs);
+                afterAttack.IAfterInteract(afterAttackEventArgs);
             }
         }
 
