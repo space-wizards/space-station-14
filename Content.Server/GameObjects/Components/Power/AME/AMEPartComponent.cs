@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using System.Linq;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Interactable;
@@ -37,6 +38,11 @@ namespace Content.Server.GameObjects.Components.Power.AME
                 var mapGrid = _mapManager.GetGrid(args.ClickLocation.GetGridId(_serverEntityManager));
                 var tile = mapGrid.GetTileRef(args.ClickLocation);
                 var snapPos = mapGrid.SnapGridCellFor(args.ClickLocation, SnapGridOffset.Center);
+                if (mapGrid.GetSnapGridCell(snapPos, SnapGridOffset.Center).Where(sc => sc.Owner.HasComponent<AMEShieldComponent>()).Count() > 0)
+                {
+                    Owner.PopupMessage(args.User, Loc.GetString("Shielding is already there!"));
+                    return true;
+                }
 
                 var ent = _serverEntityManager.SpawnEntity("AMEShielding", mapGrid.GridTileToLocal(snapPos));
                 ent.Transform.LocalRotation = Owner.Transform.LocalRotation;
