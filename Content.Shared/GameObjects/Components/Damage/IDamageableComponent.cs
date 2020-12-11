@@ -71,6 +71,16 @@ namespace Content.Shared.GameObjects.Components.Damage
         bool TryGetDamage(DamageType type, out int damage);
 
         /// <summary>
+        ///     Gets the amount of damage of a class.
+        /// </summary>
+        /// <param name="class">The class to get the damage of.</param>
+        /// <param name="damage">The amount of damage of that class.</param>
+        /// <returns>
+        ///     True if the given <see cref="@class"/> is supported, false otherwise.
+        /// </returns>
+        bool TryGetDamage(DamageClass @class, out int damage);
+
+        /// <summary>
         ///     Changes the specified <see cref="DamageType"/>, applying
         ///     resistance values only if it is damage.
         /// </summary>

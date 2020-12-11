@@ -31,6 +31,7 @@ using Robust.Server.Interfaces.Maps;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Server.ServerStatus;
+using Robust.Server.Interfaces.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Configuration;
@@ -438,6 +439,11 @@ namespace Content.Server.GameTicking
             DisallowLateJoin = disallowLateJoin;
             UpdateLateJoinStatus();
             UpdateJobsAvailable();
+        }
+
+        public bool OnGhostAttempt(Mind mind, bool canReturnGlobal)
+        {
+            return Preset.OnGhostAttempt(mind, canReturnGlobal);
         }
 
         public T AddGameRule<T>() where T : GameRule, new()
@@ -887,6 +893,8 @@ namespace Content.Server.GameTicking
             AddSpawnedPosition(jobId);
             EquipIdCard(mob, character.Name, jobPrototype);
             jobPrototype.Special?.AfterEquip(mob);
+
+            Preset.OnSpawnPlayerCompleted(session, mob, lateJoin);
         }
 
         private void EquipIdCard(IEntity mob, string characterName, JobPrototype jobPrototype)
