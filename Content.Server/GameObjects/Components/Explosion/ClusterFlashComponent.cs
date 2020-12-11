@@ -105,12 +105,11 @@ namespace Content.Server.GameObjects.Components.Explosives
         {
             Owner.SpawnTimer((int) (_delay * 1000), () =>
             {
-                if (Owner.Deleted || _countDown || (_grenadesContainer.ContainedEntities.Count <= 0 && _fillPrototype == null))
+                if (Owner.Deleted || _countDown || ((_grenadesContainer.ContainedEntities.Count) <= 0 && (_fillPrototype == null)))
                     return;
 
                 _countDown = true;
                 var random = IoCManager.Resolve<IRobustRandom>();
-                var worldPos = Owner.Transform.WorldPosition;
                 var delay = 20;
                 var grenadesWasInserted = _grenadesContainer.ContainedEntities.Count;
                 while (TryGetGrenade(out var grenade))
