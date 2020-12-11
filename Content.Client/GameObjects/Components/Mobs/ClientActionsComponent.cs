@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using Content.Client.GameObjects.Components.HUD.Inventory;
 using Content.Client.GameObjects.Components.Items;
 using Content.Client.GameObjects.Components.Mobs.Actions;
-using Content.Client.GameObjects.EntitySystems;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Actions;
 using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.Input;
 using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Interfaces.UserInterface;
@@ -104,54 +102,12 @@ namespace Content.Client.GameObjects.Components.Mobs
 
             IoCManager.Resolve<IUserInterfaceManager>().StateRoot.AddChild(_ui);
 
-            // set up hotkeys for hotbar
-            CommandBinds.Builder
-                .Bind(ContentKeyFunctions.OpenActionsMenu,
-                    InputCmdHandler.FromDelegate(_ => ToggleActionsMenu()))
-                .Bind(ContentKeyFunctions.Hotbar1,
-                    HandleHotbarKeybind(0))
-                .Bind(ContentKeyFunctions.Hotbar2,
-                    HandleHotbarKeybind(1))
-                .Bind(ContentKeyFunctions.Hotbar3,
-                    HandleHotbarKeybind(2))
-                .Bind(ContentKeyFunctions.Hotbar4,
-                    HandleHotbarKeybind(3))
-                .Bind(ContentKeyFunctions.Hotbar5,
-                    HandleHotbarKeybind(4))
-                .Bind(ContentKeyFunctions.Hotbar6,
-                    HandleHotbarKeybind(5))
-                .Bind(ContentKeyFunctions.Hotbar7,
-                    HandleHotbarKeybind(6))
-                .Bind(ContentKeyFunctions.Hotbar8,
-                    HandleHotbarKeybind(7))
-                .Bind(ContentKeyFunctions.Hotbar9,
-                    HandleHotbarKeybind(8))
-                .Bind(ContentKeyFunctions.Hotbar0,
-                    HandleHotbarKeybind(9))
-                // when selecting a target, we intercept clicks in the game world, treating them as our target selection. We want to
-                // take priority before any other systems handle the click.
-                .BindBefore(EngineKeyFunctions.Use, new PointerInputCmdHandler(TargetingOnUse),
-                    typeof(ConstructionSystem), typeof(DragDropSystem))
-                .Register<ClientActionsComponent>();
-
             UpdateUI();
-        }
-
-        private PointerInputCmdHandler HandleHotbarKeybind(byte slot)
-        {
-            // delegate to the ActionsUI, simulating a click on it
-            return new((in PointerInputCmdHandler.PointerInputCmdArgs args) =>
-                {
-                    _ui?.HandleHotbarKeybind(slot, args);
-                    return true;
-                },
-                false);
         }
 
         private void PlayerDetached()
         {
             StopTargeting();
-            CommandBinds.Unregister<ClientActionsComponent>();
             if (_menu != null)
             {
                 _menu.Close();
@@ -162,6 +118,11 @@ namespace Content.Client.GameObjects.Components.Mobs
                 IoCManager.Resolve<IUserInterfaceManager>().StateRoot.RemoveChild(_ui);
                 _ui = null;
             }
+        }
+
+        public void HandleHotbarKeybind(byte slot, in PointerInputCmdHandler.PointerInputCmdArgs args)
+        {
+            _ui?.HandleHotbarKeybind(slot, args);
         }
 
         /// <summary>
@@ -356,7 +317,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             ToggleActionsMenu();
         }
 
-        private void ToggleActionsMenu()
+        public void ToggleActionsMenu()
         {
             if (_menu == null) return;
             if (_menu.IsOpen)
@@ -662,7 +623,11 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
         }
 
-        private bool TargetingOnUse(in PointerInputCmdHandler.PointerInputCmdArgs args)
+        /// <summary>
+        /// Handles clicks when selecting the target for an action. Only has an effect when currently
+        /// selecting a target.
+        /// </summary>
+        public bool TargetingOnUse(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
             // not currently predicted
             if (EntitySystem.Get<InputSystem>().Predicted) return false;
