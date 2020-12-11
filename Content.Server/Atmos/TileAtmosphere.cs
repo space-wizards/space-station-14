@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable annotations
+using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -49,7 +50,7 @@ namespace Content.Server.Atmos
         private static int _soundCooldown;
 
         [ViewVariables]
-        public TileAtmosphere PressureSpecificTarget { get; set; }
+        public TileAtmosphere? PressureSpecificTarget { get; set; }
 
         [ViewVariables]
         public float PressureDifference { get; set; }
@@ -101,10 +102,14 @@ namespace Content.Server.Atmos
         public Vector2i GridIndices { get; }
 
         [ViewVariables]
-        public ExcitedGroup ExcitedGroup { get; set; }
+        public ExcitedGroup? ExcitedGroup { get; set; }
 
+        /// <summary>
+        /// The air in this tile. If null, this tile is completely airblocked.
+        /// This can be immutable if the tile is spaced.
+        /// </summary>
         [ViewVariables]
-        public GasMixture Air { get; set; }
+        public GasMixture? Air { get; set; }
 
         [ViewVariables, UsedImplicitly]
         private int _blockedAirflow => (int)BlockedAirflow;
@@ -114,7 +119,7 @@ namespace Content.Server.Atmos
         [ViewVariables]
         public bool BlocksAllAir => BlockedAirflow == AtmosDirection.All;
 
-        public TileAtmosphere(GridAtmosphereComponent atmosphereComponent, GridId gridIndex, Vector2i gridIndices, GasMixture mixture = null, bool immutable = false)
+        public TileAtmosphere(GridAtmosphereComponent atmosphereComponent, GridId gridIndex, Vector2i gridIndices, GasMixture? mixture = null, bool immutable = false)
         {
             IoCManager.InjectDependencies(this);
             _gridAtmosphereComponent = atmosphereComponent;
@@ -1175,6 +1180,14 @@ namespace Content.Server.Atmos
             {
                 _adjacentBits &= ~direction;
             }
+        }
+
+        /// <summary>
+        ///     Calls <see cref="GridAtmosphereComponent.Invalidate"/> on this tile atmosphere's position.
+        /// </summary>
+        public void Invalidate()
+        {
+            _gridAtmosphereComponent.Invalidate(GridIndices);
         }
 
         private void LastShareCheck()

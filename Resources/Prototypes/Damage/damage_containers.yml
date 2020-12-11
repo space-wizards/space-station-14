@@ -1,4 +1,8 @@
 - type: damageContainer
+  id: allDamageContainer
+  supportAll: true
+
+- type: damageContainer
   id: biologicalDamageContainer
   supportedClasses:
   - Brute
