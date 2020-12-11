@@ -309,7 +309,7 @@ namespace Content.Shared.GameObjects.Components.Damage
                     // While we have healing left...
                     while (healingLeft < 0 && healThisCycle != 0)
                     {
-=======                 // Infinite loop fallback, if no healing was done in a cycle
+                        // Infinite loop fallback, if no healing was done in a cycle
                         // then exit
                         healThisCycle = 0;
 
