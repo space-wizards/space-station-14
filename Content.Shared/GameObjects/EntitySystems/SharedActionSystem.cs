@@ -29,7 +29,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             if (!ItemActionsEquippedEventArgs.TryCreateFrom(ev, out var itemActionsEquippedArgs))
                 return;
 
-            foreach (var itemActionsEquipped in ev.User.GetAllComponents<IItemActionsEquipped>())
+            foreach (var itemActionsEquipped in ev.Equipped.GetAllComponents<IItemActionsEquipped>())
             {
                 itemActionsEquipped.ItemActionsEquipped(itemActionsEquippedArgs);
             }
@@ -40,7 +40,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             if (!ItemActionsEquippedEventArgs.TryCreateFrom(ev, out var itemActionsEquippedArgs))
                 return;
 
-            foreach (var itemActionsEquipped in ev.User.GetAllComponents<IItemActionsEquipped>())
+            foreach (var itemActionsEquipped in ev.Equipped.GetAllComponents<IItemActionsEquipped>())
             {
                 itemActionsEquipped.ItemActionsEquipped(itemActionsEquippedArgs);
             }
