@@ -32,15 +32,17 @@ namespace Content.Server.Actions
 
         private IRobustRandom _random;
 
-        public void ExposeData(ObjectSerializer serializer)
+        public ScreamAction()
         {
             _random = IoCManager.Resolve<IRobustRandom>();
+        }
 
+        public void ExposeData(ObjectSerializer serializer)
+        {
             serializer.DataField(ref _male, "male", null);
             serializer.DataField(ref _female, "female", null);
             serializer.DataField(ref _wilhelm, "wilhelm", null);
             serializer.DataField(ref _cooldown, "cooldown", 10);
-
         }
 
         public void DoInstantAction(InstantActionEventArgs args)

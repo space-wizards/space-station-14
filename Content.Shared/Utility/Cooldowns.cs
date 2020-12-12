@@ -22,7 +22,7 @@ namespace Content.Shared.Utility
         /// <see cref="FromNow"/>
         public static (TimeSpan start, TimeSpan end) SecondsFromNow(double seconds, IGameTiming gameTiming = null)
         {
-            return FromNow(TimeSpan.FromSeconds(seconds));
+            return FromNow(TimeSpan.FromSeconds(seconds), gameTiming);
         }
     }
 }

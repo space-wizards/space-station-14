@@ -78,7 +78,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         // they are used to restore cooldowns when the item re-enters inventory
         // these are not part of component state and thus not synced to the client.
         // A system runs periodically to evict entries from this when their cooldowns have expired for a long enough time.
-        private Dictionary<(EntityUid item, ItemActionType actionType), (TimeSpan start, TimeSpan end)> _itemActionCooldowns =
+        private readonly Dictionary<(EntityUid item, ItemActionType actionType), (TimeSpan start, TimeSpan end)> _itemActionCooldowns =
             new();
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -139,7 +139,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
             return false;
         }
 
-        /// <see cref="TryGetItemActionStates"/>
+        /// <seealso cref="TryGetItemActionStates(Robust.Shared.GameObjects.EntityUid,out System.Collections.Generic.IReadOnlyDictionary{Content.Shared.Actions.ItemActionType,Content.Shared.GameObjects.Components.Mobs.ActionState}?)"/>
         public bool TryGetItemActionStates(IEntity item,
             [NotNullWhen((true))] out IReadOnlyDictionary<ItemActionType, ActionState>? itemActionStates)
         {
@@ -179,7 +179,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
                 .Any(state => state.Key == actionType && state.Value.Enabled);
         }
 
-        /// <see cref="TryGetItemActionState"/>
+        /// <seealso cref="TryGetItemActionState(Content.Shared.Actions.ItemActionType,Robust.Shared.GameObjects.EntityUid,out Content.Shared.GameObjects.Components.Mobs.ActionState)"/>
         public bool TryGetItemActionState(ItemActionType actionType, IEntity item, out ActionState actionState)
         {
             return TryGetItemActionState(actionType, item.Uid, out actionState);
@@ -491,7 +491,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
             Dirty();
         }
 
-        /// <see cref="Cooldown"/>
+        /// <seealso cref="Cooldown(Content.Shared.Actions.ActionType,System.Nullable{(System.TimeSpan start, System.TimeSpan end)})"/>
         public void Cooldown(ItemActionType actionType, IEntity item, (TimeSpan start, TimeSpan end)? cooldown)
         {
             Cooldown(actionType, item.Uid, cooldown);
@@ -506,7 +506,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
             CreateOrUpdate(actionType, item, false, enabled);
         }
 
-        /// <see cref="SetEnabled"/>
+        /// <seealso cref="SetEnabled(Content.Shared.Actions.ItemActionType,Robust.Shared.GameObjects.EntityUid,bool)"/>
         public void SetEnabled(ItemActionType actionType, IEntity item, bool enabled)
         {
             SetEnabled(actionType, item.Uid, enabled);
@@ -577,13 +577,13 @@ namespace Content.Shared.GameObjects.Components.Mobs
             Dirty();
         }
 
-        /// <see cref="Revoke"/>
+        /// <seealso cref="Revoke(Content.Shared.Actions.ActionType)"/>
         public void Revoke(ItemActionType actionType, IEntity item)
         {
             Revoke(actionType, item.Uid);
         }
 
-        /// <see cref="Revoke"/> applied to all actions currently granted for the item
+        /// <see cref="Revoke(Content.Shared.Actions.ActionType)"/> applied to all actions currently granted for the item
         public void Revoke(EntityUid item)
         {
             // do it all in a single batch rather than revoking and calling action changed / dirty after each
@@ -601,7 +601,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
             Dirty();
         }
 
-        /// <see cref="Revoke"/> applied to all actions currently granted for the item
+        /// <see cref="Revoke(Content.Shared.Actions.ActionType)"/> applied to all actions currently granted for the item
         public void Revoke(IEntity item)
         {
             Revoke(item.Uid);
@@ -625,7 +625,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
             CreateOrUpdate(actionType, item, false, toggleOn: toggleOn);
         }
 
-        /// <see cref="ToggleAction"/>
+        /// <seealso cref="ToggleAction(Content.Shared.Actions.ActionType,bool)"/>
         public void ToggleAction(ItemActionType actionType, IEntity item, bool toggleOn)
         {
             ToggleAction(actionType, item.Uid, toggleOn);
@@ -726,7 +726,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// TODO: Eventually this should probably be a byte so we it can toggle through multiple states.
         /// </summary>
         public bool ToggledOn;
-        public ValueTuple<TimeSpan, TimeSpan>? Cooldown;
+        public (TimeSpan start, TimeSpan end)? Cooldown;
         public bool IsAtInitialState => IsAtInitialStateExceptCooldown && !Cooldown.HasValue;
         public bool IsAtInitialStateExceptCooldown => !Enabled && !ToggledOn;
 
@@ -734,7 +734,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// Creates an action state for the indicated type, defaulting to the
         /// initial state.
         /// </summary>
-        public ActionState(bool enabled = false, bool toggledOn = false, ValueTuple<TimeSpan, TimeSpan>? cooldown = null)
+        public ActionState(bool enabled = false, bool toggledOn = false, (TimeSpan start, TimeSpan end)? cooldown = null)
         {
             Enabled = enabled;
             ToggledOn = toggledOn;

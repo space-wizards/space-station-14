@@ -30,17 +30,14 @@ namespace Content.Server.Actions
             args.Performer.PopupMessageEveryone(Message);
             if (Cooldown > 0)
             {
-                if (!args.Performer.TryGetComponent<SharedActionsComponent>(out var actionsComponent)) return;
-                var now = IoCManager.Resolve<IGameTiming>().CurTime;
-                actionsComponent.Cooldown(args.ActionType, args.Item, (now, now + TimeSpan.FromSeconds(Cooldown)));
+                args.PerformerActionsComponent.Cooldown(args.ActionType, args.Item, Cooldowns.SecondsFromNow(Cooldown));
             }
         }
 
         public void DoInstantAction(InstantActionEventArgs args)
         {
             args.Performer.PopupMessageEveryone(Message);
-            if (!args.Performer.TryGetComponent<SharedActionsComponent>(out var actionsComponent)) return;
-            actionsComponent.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(Cooldown));
+            args.PerformerActionsComponent.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(Cooldown));
         }
     }
 }

@@ -39,9 +39,6 @@ namespace Content.Server.Commands.Alerts
                 if (!CommandUtils.TryGetAttachedEntityByUsernameOrId(shell, target, player, out attachedEntity)) return;
             }
 
-            if (!CommandUtils.ValidateAttachedEntity(shell, player, attachedEntity))
-                return;
-
             if (!attachedEntity.TryGetComponent(out ServerAlertsComponent? alertsComponent))
             {
                 shell.SendText(player, "user has no alerts component");

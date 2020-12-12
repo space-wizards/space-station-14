@@ -1,4 +1,5 @@
 ﻿using System;
+using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
 
@@ -26,11 +27,21 @@ namespace Content.Shared.Actions
         /// Action being performed
         /// </summary>
         public readonly ActionType ActionType;
+        /// <summary>
+        /// Actions component of the performer.
+        /// </summary>
+        public readonly SharedActionsComponent PerformerActionsComponent;
 
         public ActionEventArgs(IEntity performer, ActionType actionType)
         {
             Performer = performer;
             ActionType = actionType;
+            if (!Performer.TryGetComponent(out PerformerActionsComponent))
+            {
+                throw new InvalidOperationException($"performer {performer.Name} tried to perform action {actionType} " +
+                                                    $" but the performer had no actions component," +
+                                                    " which should never occur");
+            }
         }
     }
 }

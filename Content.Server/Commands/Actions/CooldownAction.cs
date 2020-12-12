@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.Actions;
@@ -26,9 +27,8 @@ namespace Content.Server.Commands.Actions
                 if (!CommandUtils.TryGetAttachedEntityByUsernameOrId(shell, target, player, out attachedEntity)) return;
             }
 
-            if (!CommandUtils.ValidateAttachedEntity(shell, player, attachedEntity)) return;
-
-            if (!attachedEntity.TryGetComponent(out ServerActionsComponent actionsComponent))
+            if (attachedEntity == null) return;
+            if (!attachedEntity.TryGetComponent(out ServerActionsComponent? actionsComponent))
             {
                 shell.SendText(player, "user has no actions component");
                 return;
