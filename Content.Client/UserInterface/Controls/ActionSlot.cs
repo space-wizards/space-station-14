@@ -79,8 +79,8 @@ namespace Content.Client.UserInterface.Controls
         /// <summary>
         /// 1-10 corresponding to the number label on the slot (10 is labeled as 0)
         /// </summary>
-        public byte SlotNumber { get; private set; }
-        public byte SlotIndex => (byte) (SlotNumber - 1);
+        private byte SlotNumber => (byte) (SlotIndex + 1);
+        public byte SlotIndex { get; }
 
         /// <summary>
         /// Current cooldown displayed in this slot. Set to null to show no cooldown.
@@ -113,12 +113,11 @@ namespace Content.Client.UserInterface.Controls
         /// <summary>
         /// Creates an action slot for the specified number
         /// </summary>
-        /// <param name="slotNumber">slot this corresponds to, 1-10 (10 is labeled as 0). Any value
-        /// greater than 10 will have a blank number</param>
-        public ActionSlot(byte slotNumber)
+        /// <param name="slotIndex">slot index this corresponds to, 0-9 (0 labeled as 1, 8, labeled "9", 9 labeled as "0".</param>
+        public ActionSlot(byte slotIndex)
         {
             _gameTiming = IoCManager.Resolve<IGameTiming>();
-            SlotNumber = slotNumber;
+            SlotIndex = slotIndex;
 
             CustomMinimumSize = (64, 64);
             SizeFlagsVertical = SizeFlags.None;

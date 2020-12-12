@@ -177,11 +177,11 @@ namespace Content.Client.UserInterface
             UserInterfaceManager.PopupRoot.AddChild(_dragShadow);
             LayoutContainer.SetSize(_dragShadow, (64, 64));
 
-            for (byte i = 1; i <= ClientActionsComponent.Slots; i++)
+            for (byte i = 0; i < ClientActionsComponent.Slots; i++)
             {
                 var slot = new ActionSlot(i) {EnableAllKeybinds = true};
                 _slotContainer.AddChild(slot);
-                _slots[i - 1] = slot;
+                _slots[i] = slot;
             }
 
             _dragDropHelper = new DragDropHelper<ActionSlot>(OnBeginActionDrag, OnContinueActionDrag, OnEndActionDrag);
