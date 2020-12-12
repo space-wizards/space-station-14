@@ -33,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Interactable
     /// </summary>
     [RegisterComponent]
     internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IInteractUsing,
-        IEquipped, IEquippedHand
+        IItemActionsEquipped
     {
         [ViewVariables(VVAccess.ReadWrite)] public float Wattage { get; set; } = 10f;
         [ViewVariables] private PowerCellSlotComponent _cellSlot = default!;
@@ -241,20 +241,9 @@ namespace Content.Server.GameObjects.Components.Interactable
             return (byte?) ContentHelpers.RoundToNearestLevels(currentCharge / Cell.MaxCharge * 255, 255, StatusLevels);
         }
 
-        public void Equipped(EquippedEventArgs eventArgs)
+        public void ItemActionsEquipped(ItemActionsEquippedEventArgs args)
         {
-            UpdateLightActionOnEquip(eventArgs.User);
-        }
-
-        public void EquippedHand(EquippedHandEventArgs eventArgs)
-        {
-            UpdateLightActionOnEquip(eventArgs.User);
-        }
-
-        private void UpdateLightActionOnEquip(IEntity performer)
-        {
-            if (!performer.TryGetComponent<SharedActionsComponent>(out var actionsComponent)) return;
-            actionsComponent.GrantFromInitialState(ItemActionType.ToggleLight, Owner, true, Activated);
+            args.UserActionsComponent.GrantFromInitialState(ItemActionType.ToggleLight, Owner, true, Activated);
         }
 
         public override ComponentState GetComponentState()

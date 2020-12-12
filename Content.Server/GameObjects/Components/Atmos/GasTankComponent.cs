@@ -33,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Atmos
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     public class GasTankComponent : SharedGasTankComponent, IExamine, IGasMixtureHolder, IUse, IDropped, IActivate,
-        IEquipped, IEquippedHand
+        IItemActionsEquipped
     {
     	  private const float MaxExplosionRange = 14f;
         private const float DefaultOutputPressure = Atmospherics.OneAtmosphere;
@@ -335,30 +335,10 @@ namespace Content.Server.GameObjects.Components.Atmos
             DisconnectFromInternals(eventArgs.User);
         }
 
-        public void Equipped(EquippedEventArgs eventArgs)
+        public void ItemActionsEquipped(ItemActionsEquippedEventArgs args)
         {
-            UpdateInternalsActionOnEquip(eventArgs.User);
-        }
-
-        public void EquippedHand(EquippedHandEventArgs eventArgs)
-        {
-            UpdateInternalsActionOnEquip(eventArgs.User);
-        }
-
-        private void UpdateInternalsActionOnEquip(IEntity user)
-        {
-            // show the action as disabled unless the user is currently able to toggle it on
-            if (!user.TryGetComponent<ServerActionsComponent>(out var actionsComponent)) return;
-            if (!user.TryGetComponent<InternalsComponent>(out var internalsComponent)) return;
-
-            if (IsFunctional)
-            {
-                actionsComponent.GrantFromInitialState(ItemActionType.ToggleInternals, Owner);
-            }
-            else
-            {
-                actionsComponent.GrantFromInitialState(ItemActionType.ToggleInternals, Owner, false);
-            }
+            if (!args.User.HasComponent<InternalsComponent>()) return;
+            args.UserActionsComponent.GrantFromInitialState(ItemActionType.ToggleInternals, Owner, IsFunctional);
         }
 
         /// <summary>

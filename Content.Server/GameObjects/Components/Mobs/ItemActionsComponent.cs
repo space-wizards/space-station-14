@@ -11,7 +11,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 {
     /// <summary>
     /// Should be used only on items. This is not required in order to give an item
-    /// actions, it's just one way to do it (the other way is by explicitly calling
+    /// actions, it's just one way to do it (the other way is by implementing IItemActionsEquipped or explicitly calling
     /// SharedActionsComponent methods on the user from a different component on your item).
     ///
     /// Currently all it does is grant specific item actions when picked up (they will
@@ -24,16 +24,16 @@ namespace Content.Server.GameObjects.Components.Mobs
         public override string Name => "ItemActions";
 
         /// <summary>
-        /// List of ItemActionTypes that will be granted when this item is picked up.
+        /// List of ItemActionTypes that will be auto-granted when this item is picked up.
         /// </summary>
-        public IEnumerable<ItemActionType> Actions => _actions;
-        private List<ItemActionType> _actions;
+        public IEnumerable<ItemActionType> AutoGrantActions => _autoGrantActions;
+        private List<ItemActionType> _autoGrantActions;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref _actions,"actions", new List<ItemActionType>());
+            serializer.DataField(ref _autoGrantActions,"autoGrantActions", new List<ItemActionType>());
         }
 
         public void EquippedHand(EquippedHandEventArgs eventArgs)
@@ -49,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Mobs
         private void Grant(IEntity user)
         {
             if (!user.TryGetComponent<SharedActionsComponent>(out var actionsComponent)) return;
-            foreach (var actionType in Actions)
+            foreach (var actionType in AutoGrantActions)
             {
                 actionsComponent.Grant(actionType, Owner, true);
             }
