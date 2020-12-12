@@ -188,7 +188,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// <summary>
         /// Gets all action types that have non-initial state (granted, have a cooldown, or toggled on).
         /// </summary>
-        protected IReadOnlyDictionary<ActionType, ActionState> ActionStates()
+        public IReadOnlyDictionary<ActionType, ActionState> ActionStates()
         {
             return _actions;
         }
@@ -199,7 +199,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// Map from item uid -> (action type -> associated action state)
         /// PLEASE DO NOT MODIFY THE INNER DICTIONARY! I CANNOT CAST IT TO IReadOnlyDictionary!
         /// </summary>
-        protected IReadOnlyDictionary<EntityUid,Dictionary<ItemActionType, ActionState>> ItemActionStates()
+        public IReadOnlyDictionary<EntityUid,Dictionary<ItemActionType, ActionState>> ItemActionStates()
         {
             return _itemActions;
         }
@@ -252,7 +252,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         {
             if (!IsEquipped(item))
             {
-                Logger.WarningS("action", "cannot grant item action {0} to {1} for item {2} " +
+                Logger.ErrorS("action", "cannot grant item action {0} to {1} for item {2} " +
                                           " because it is not in the owner's inventory", actionType, Owner.Name, item);
                 return;
             }

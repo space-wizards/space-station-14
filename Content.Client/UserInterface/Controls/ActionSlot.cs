@@ -2,6 +2,7 @@
 using System;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Actions;
+using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Client.Graphics;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.UserInterface;
@@ -205,6 +206,21 @@ namespace Content.Client.UserInterface.Controls
         {
             return Action == null ? null :
                 new ActionAlertTooltip(Action.Name, Action.Description, Action.Requires) {Cooldown = Cooldown};
+        }
+
+        /// <summary>
+        /// Action attempt for performing the action in the slot
+        /// </summary>
+        public IActionAttempt? ActionAttempt()
+        {
+            IActionAttempt? attempt = Action switch
+            {
+                ActionPrototype actionPrototype => new ActionAttempt(actionPrototype),
+                ItemActionPrototype itemActionPrototype =>
+                    Item != null ? new ItemActionAttempt(itemActionPrototype, Item) : null,
+                _ => null
+            };
+            return attempt;
         }
 
         /// <summary>

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Content.Client.GameObjects.Components.Mobs;
+using Content.Client.GameObjects.Components.Mobs.Actions;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
@@ -15,6 +16,7 @@ using Robust.Client.Utility;
 using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Timing;
 
 namespace Content.Client.UserInterface
@@ -41,6 +43,7 @@ namespace Content.Client.UserInterface
 
         private readonly ActionManager _actionManager;
         private readonly ClientActionsComponent _actionsComponent;
+        private readonly ActionsUI _actionsUI;
         private readonly LineEdit _searchBar;
         private readonly MultiselectOptionButton<string> _filterButton;
         private readonly Label _filterLabel;
@@ -50,21 +53,10 @@ namespace Content.Client.UserInterface
         private readonly DragDropHelper<ActionMenuItem> _dragDropHelper;
 
 
-        private readonly Action<ActionMenuItemSelectedEventArgs> _onItemSelected;
-        private readonly Action<ActionMenuItemDragDropEventArgs> _onItemDragDrop;
-
-        /// <param name="actionsComponent">component to use to lookup action statuses</param>
-        /// <param name="onItemSelected">invoked when an action item
-        /// in the list is clicked</param>
-        /// <param name="onItemDragDrop">invoked when an action item
-        /// in the list is dragged and dropped onto a hotbar slot</param>
-        public ActionMenu(ClientActionsComponent actionsComponent,
-            Action<ActionMenuItemSelectedEventArgs> onItemSelected,
-            Action<ActionMenuItemDragDropEventArgs> onItemDragDrop)
+        public ActionMenu(ClientActionsComponent actionsComponent, ActionsUI actionsUI)
         {
             _actionsComponent = actionsComponent;
-            _onItemSelected = onItemSelected;
-            _onItemDragDrop = onItemDragDrop;
+            _actionsUI = actionsUI;
             _actionManager = IoCManager.Resolve<ActionManager>();
             Title = Loc.GetString("Actions");
             CustomMinimumSize = (300, 300);
@@ -110,10 +102,6 @@ namespace Content.Client.UserInterface
                 }
             });
 
-            _clearButton.OnPressed += OnClearButtonPressed;
-            _searchBar.OnTextChanged += OnSearchTextChanged;
-            _filterButton.OnItemSelected += OnFilterItemSelected;
-
             // populate filters from search tags
             var filterTags = new List<string>();
             foreach (var action in _actionManager.EnumerateActions())
@@ -148,9 +136,26 @@ namespace Content.Client.UserInterface
             _dragDropHelper = new DragDropHelper<ActionMenuItem>(OnBeginActionDrag, OnContinueActionDrag, OnEndActionDrag);
         }
 
-        protected override void Dispose(bool disposing)
+
+        protected override void EnteredTree()
         {
-            base.Dispose(disposing);
+            base.EnteredTree();
+            _clearButton.OnPressed += OnClearButtonPressed;
+            _searchBar.OnTextChanged += OnSearchTextChanged;
+            _filterButton.OnItemSelected += OnFilterItemSelected;
+
+            foreach (var actionMenuControl in _resultsGrid.Children)
+            {
+                var actionMenuItem = (actionMenuControl as ActionMenuItem);
+                actionMenuItem.OnButtonDown += OnItemButtonDown;
+                actionMenuItem.OnButtonUp += OnItemButtonUp;
+                actionMenuItem.OnPressed += OnItemPressed;
+            }
+        }
+
+        protected override void ExitedTree()
+        {
+            base.ExitedTree();
             _clearButton.OnPressed -= OnClearButtonPressed;
             _searchBar.OnTextChanged -= OnSearchTextChanged;
             _filterButton.OnItemSelected -= OnFilterItemSelected;
@@ -221,7 +226,47 @@ namespace Content.Client.UserInterface
                 }
 
                 // drag and drop
-                _onItemDragDrop?.Invoke(new ActionMenuItemDragDropEventArgs(_dragDropHelper.Dragged, targetSlot));
+                switch (_dragDropHelper.Dragged.Action)
+                {
+                    // assign the dragged action to the target slot
+                    case ActionPrototype actionPrototype:
+                        _actionsComponent.Assignments.AssignSlot(_actionsUI.SelectedHotbar, targetSlot.SlotIndex, ActionAssignment.For(actionPrototype.ActionType));
+                        break;
+                    case ItemActionPrototype itemActionPrototype:
+                        // the action menu doesn't show us if the action has an associated item,
+                        // so when we perform the assignment, we should check if we currently have an unassigned state
+                        // for this item and assign it tied to that item if so, otherwise assign it "itemless"
+
+                        // this is not particularly efficient but we don't maintain an index from
+                        // item action type to its action states, and this method should be pretty infrequent so it's probably fine
+                        var assigned = false;
+                        foreach (var (item, itemStates) in _actionsComponent.ItemActionStates())
+                        {
+                            foreach (var (actionType, _) in itemStates)
+                            {
+                                if (actionType != itemActionPrototype.ActionType) continue;
+                                var assignment = ActionAssignment.For(actionType, item);
+                                if (_actionsComponent.Assignments.HasAssignment(assignment)) continue;
+                                // no assignment for this state, assign tied to the item
+                                assigned = true;
+                                _actionsComponent.Assignments.AssignSlot(_actionsUI.SelectedHotbar, targetSlot.SlotIndex, assignment);
+                                break;
+                            }
+
+                            if (assigned)
+                            {
+                                break;
+                            }
+                        }
+
+                        if (!assigned)
+                        {
+                            _actionsComponent.Assignments.AssignSlot(_actionsUI.SelectedHotbar, targetSlot.SlotIndex, ActionAssignment.For(itemActionPrototype.ActionType));
+                        }
+                        break;
+                }
+
+                _actionsUI.UpdateUI();
             }
 
             _dragDropHelper.EndDrag();
@@ -230,7 +275,20 @@ namespace Content.Client.UserInterface
         private void OnItemPressed(BaseButton.ButtonEventArgs args)
         {
             if (args.Button is not ActionMenuItem actionMenuItem) return;
-            _onItemSelected?.Invoke(new ActionMenuItemSelectedEventArgs(actionMenuItem.Action));
+            switch (actionMenuItem.Action)
+            {
+                case ActionPrototype actionPrototype:
+                    _actionsComponent.Assignments.AutoPopulate(ActionAssignment.For(actionPrototype.ActionType), _actionsUI.SelectedHotbar);
+                    break;
+                case ItemActionPrototype itemActionPrototype:
+                    _actionsComponent.Assignments.AutoPopulate(ActionAssignment.For(itemActionPrototype.ActionType), _actionsUI.SelectedHotbar);
+                    break;
+                default:
+                    Logger.ErrorS("action", "unexpected action prototype {0}", actionMenuItem.Action);
+                    break;
+            }
+
+            _actionsUI.UpdateUI();
         }
 
         private void OnClearButtonPressed(BaseButton.ButtonEventArgs args)
@@ -373,7 +431,7 @@ namespace Content.Client.UserInterface
                 return string.Empty;
             var newText = new StringBuilder(text.Length * 2);
             newText.Append(text[0]);
-            for (int i = 1; i < text.Length; i++)
+            for (var i = 1; i < text.Length; i++)
             {
                 if (char.IsUpper(text[i]))
                 {
@@ -448,31 +506,6 @@ namespace Content.Client.UserInterface
         {
             base.Update(args);
             _dragDropHelper.Update(args.DeltaSeconds);
-        }
-    }
-
-    public class ActionMenuItemSelectedEventArgs : EventArgs
-    {
-        public readonly BaseActionPrototype Action;
-
-        public ActionMenuItemSelectedEventArgs(BaseActionPrototype action)
-        {
-            Action = action;
-        }
-    }
-
-    /// <summary>
-    /// Args for dragging and dropping an action menu item onto a hotbar slot.
-    /// </summary>
-    public class ActionMenuItemDragDropEventArgs : EventArgs
-    {
-        public readonly ActionMenuItem ActionMenuItem;
-        public readonly ActionSlot ToSlot;
-
-        public ActionMenuItemDragDropEventArgs(ActionMenuItem actionMenuItem, ActionSlot toSlot)
-        {
-            ActionMenuItem = actionMenuItem;
-            ToSlot = toSlot;
         }
     }
 }
