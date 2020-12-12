@@ -209,15 +209,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             if (internals == null) return;
             var user = internals.Owner;
             if (!user.TryGetComponent<ServerActionsComponent>(out var actionsComponent)) return;
-
-            if (IsFunctional)
-            {
-                actionsComponent.Grant(ItemActionType.ToggleInternals, Owner, true, IsConnected);
-            }
-            else
-            {
-                actionsComponent.Grant(ItemActionType.ToggleInternals, Owner, false, IsConnected);
-            }
+            actionsComponent.Grant(ItemActionType.ToggleInternals, Owner, IsFunctional, IsConnected);
         }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
@@ -235,6 +227,12 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         internal void ToggleInternals()
         {
+            if (!ActionBlockerSystem.CanUse(GetInternalsComponent()?.Owner))
+            {
+                // reset action toggle status if client mispredicted
+                UpdateUserInterface();
+                return;
+            }
             if (IsConnected)
             {
                 DisconnectFromInternals();
@@ -338,7 +336,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         public void ItemActionsEquipped(ItemActionsEquippedEventArgs args)
         {
             if (!args.User.HasComponent<InternalsComponent>()) return;
-            args.UserActionsComponent.GrantFromInitialState(ItemActionType.ToggleInternals, Owner, IsFunctional);
+            args.UserActionsComponent.GrantFromInitialState(ItemActionType.ToggleInternals, Owner, IsFunctional, IsConnected);
         }
 
         /// <summary>

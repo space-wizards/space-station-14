@@ -106,6 +106,12 @@ namespace Content.Server.GameObjects.Components.Interactable
         /// <returns>True if the light's status was toggled, false otherwise.</returns>
         public bool ToggleStatus(IEntity user)
         {
+            if (!ActionBlockerSystem.CanUse(user))
+            {
+                // if client mispredicted, need to reset the action toggle status
+                UpdateLightAction();
+                return false;
+            }
             return Activated ? TurnOff() : TurnOn(user);
         }
 
