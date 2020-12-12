@@ -16,6 +16,7 @@ namespace Content.Client.UserInterface.Stylesheets
     {
         public const string StyleClassBorderedWindowPanel = "BorderedWindowPanel";
         public const string StyleClassTransparentBorderedWindowPanel = "TransparentBorderedWindowPanel";
+        public const string StyleClassHotbarPanel = "HotbarPanel";
         public const string StyleClassTooltipPanel = "tooltipBox";
         public const string StyleClassTooltipAlertTitle = "tooltipAlertTitle";
         public const string StyleClassTooltipAlertDescription = "tooltipAlertDesc";
@@ -355,7 +356,7 @@ namespace Content.Client.UserInterface.Stylesheets
                         new StyleProperty(PanelContainer.StylePropertyPanel, borderedTransparentWindowBackground),
                     }),
                 // Hotbar background
-                new StyleRule(new SelectorElement(typeof(ActionsUI), null, null, null),
+                new StyleRule(new SelectorElement(typeof(PanelContainer), new[] {StyleClassHotbarPanel}, null, null),
                     new[]
                     {
                         new StyleProperty(PanelContainer.StylePropertyPanel, hotbarBackground),

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.GameObjects.Components.Mobs.Actions;
 using Content.Client.UserInterface.Controls;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.Actions;
 using Robust.Client.Graphics;
@@ -26,7 +27,7 @@ namespace Content.Client.UserInterface
     /// <summary>
     ///     The action hotbar on the left side of the screen.
     /// </summary>
-    public sealed class ActionsUI : PanelContainer
+    public sealed class ActionsUI : Container
     {
         private readonly ClientActionsComponent _actionsComponent;
         private readonly ActionManager _actionManager;
@@ -42,7 +43,6 @@ namespace Content.Client.UserInterface
         private readonly TextureButton _previousHotbarButton;
         private readonly Label _loadoutNumber;
         private readonly TextureButton _nextHotbarButton;
-        private readonly IClyde _clyde;
         private readonly Texture _lockTexture;
         private readonly Texture _unlockTexture;
 
@@ -81,22 +81,35 @@ namespace Content.Client.UserInterface
             _gameTiming = IoCManager.Resolve<IGameTiming>();
             _menu = new ActionMenu(_actionsComponent, this);
             LayoutContainer.SetGrowHorizontal(this, LayoutContainer.GrowDirection.End);
-            LayoutContainer.SetAnchorAndMarginPreset(this, LayoutContainer.LayoutPreset.TopLeft, margin: 10);
+            LayoutContainer.SetGrowVertical(this, LayoutContainer.GrowDirection.End);
+            LayoutContainer.SetAnchorTop(this, 0f);
+            LayoutContainer.SetAnchorBottom(this, 0.8f);
+            LayoutContainer.SetMarginLeft(this, 10);
             LayoutContainer.SetMarginTop(this, 100);
-
-            _clyde = IoCManager.Resolve<IClyde>();
 
             SizeFlagsHorizontal = SizeFlags.None;
             SizeFlagsVertical = SizeFlags.FillExpand;
 
             var resourceCache = IoCManager.Resolve<IResourceCache>();
 
+            // everything needs to go within an inner panel container so the panel resizes to fit the elements.
+            // Because ActionsUI is being anchored by layoutcontainer, the hotbar backing would appear too tall
+            // if ActionsUI was the panel container
+
+            var panelContainer = new PanelContainer()
+            {
+                StyleClasses = {StyleNano.StyleClassHotbarPanel},
+                SizeFlagsHorizontal = SizeFlags.None,
+                SizeFlagsVertical = SizeFlags.None
+            };
+            AddChild(panelContainer);
+
             var hotbarContainer = new VBoxContainer
             {
                 SeparationOverride = 3,
                 SizeFlagsHorizontal = SizeFlags.None
             };
-            AddChild(hotbarContainer);
+            panelContainer.AddChild(hotbarContainer);
 
             var settingsContainer = new HBoxContainer
             {
@@ -129,7 +142,7 @@ namespace Content.Client.UserInterface
             // this allows a 2 column layout if window gets too small
             _slotContainer = new GridContainer
             {
-                MaxHeight = CalcMaxHeight(_clyde.ScreenSize)
+                MaxHeight = CalcMaxHeight()
             };
             hotbarContainer.AddChild(_slotContainer);
 
@@ -194,7 +207,6 @@ namespace Content.Client.UserInterface
             _nextHotbarButton.OnPressed += NextHotbar;
             _previousHotbarButton.OnPressed += PreviousHotbar;
             _settingsButton.OnPressed += OnToggleActionsMenu;
-            _clyde.OnWindowResized += ClydeOnOnWindowResized;
             foreach (var slot in _slots)
             {
                 slot.OnButtonDown += ActionSlotOnButtonDown;
@@ -214,7 +226,6 @@ namespace Content.Client.UserInterface
             _nextHotbarButton.OnPressed -= NextHotbar;
             _previousHotbarButton.OnPressed -= PreviousHotbar;
             _settingsButton.OnPressed -= OnToggleActionsMenu;
-            _clyde.OnWindowResized -= ClydeOnOnWindowResized;
             foreach (var slot in _slots)
             {
                 slot.OnButtonDown -= ActionSlotOnButtonDown;
@@ -223,6 +234,44 @@ namespace Content.Client.UserInterface
                 slot.OnMouseEntered -= OnMouseEnteredAction;
                 slot.OnMouseExited -= OnMouseExitedAction;
             }
+        }
+
+        protected override Vector2 CalculateMinimumSize()
+        {
+            // allows us to shrink down to a 2-column layout minimum
+            return (10, 400);
+        }
+
+        protected override void Resized()
+        {
+            base.Resized();
+            _slotContainer.MaxHeight = CalcMaxHeight();
+        }
+
+        private float CalcMaxHeight()
+        {
+            // TODO: Can rework this once https://github.com/space-wizards/RobustToolbox/issues/1392 is done,
+            // this is here because there isn't currently a good way to allow the grid to adjust its height based
+            // on constraints, otherwise we would use anchors to lay it out
+
+            // it looks bad to have an uneven number of slots in the columns,
+            // so we either do a single column or 2 equal sized columns
+            if (Height < 650)
+            {
+                // 2 column
+                return 400;
+            }
+            else
+            {
+                // 1 column
+                return 900;
+            }
+        }
+
+        protected override void UIScaleChanged()
+        {
+            _slotContainer.MaxHeight = CalcMaxHeight();
+            base.UIScaleChanged();
         }
 
         /// <summary>
@@ -511,35 +560,6 @@ namespace Content.Client.UserInterface
             _actionsComponent.StopHighlightingItemSlots();
         }
 
-        private float CalcMaxHeight(Vector2i screenSize)
-        {
-            // it looks bad to have an uneven number of slots in the columns,
-            // so we either do a single column or 2 equal sized columns
-            if (((screenSize.Y) / UIScale) < 950)
-            {
-                // 2 column
-                return 400;
-            }
-            else
-            {
-                // 1 column
-                return 900;
-            }
-        }
-
-        protected override void UIScaleChanged()
-        {
-            _slotContainer.MaxHeight = CalcMaxHeight(_clyde.ScreenSize);
-            base.UIScaleChanged();
-        }
-
-        private void ClydeOnOnWindowResized(WindowResizedEventArgs obj)
-        {
-            // TODO: Can rework this once https://github.com/space-wizards/RobustToolbox/issues/1392 is done,
-            // this is here because there isn't currently a good way to allow the grid to adjust its height based
-            // on constraints, otherwise we would use anchors to lay it out
-            _slotContainer.MaxHeight = CalcMaxHeight(obj.NewSize);
-        }
 
         private void OnLockPressed(BaseButton.ButtonEventArgs obj)
         {
