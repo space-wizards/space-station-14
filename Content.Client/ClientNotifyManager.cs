@@ -24,7 +24,6 @@ namespace Content.Client
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
-        [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IClientNetManager _netManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
