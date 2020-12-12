@@ -82,7 +82,6 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 Assert.That(actionsUI, Is.Not.Null);
 
                 var expectedInnate = new HashSet<ActionType>(innateActions);
-                var expectedIdx = 0;
                 var expectEmpty = false;
                 expectedOrder.Clear();
                 foreach (var slot in actionsUI.Slots)

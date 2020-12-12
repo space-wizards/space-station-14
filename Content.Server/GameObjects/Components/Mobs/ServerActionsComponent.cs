@@ -25,31 +25,22 @@ namespace Content.Server.GameObjects.Components.Mobs
         {
             base.HandleNetworkMessage(message, netChannel, session);
 
+            if (message is not BasePerformActionMessage performActionMessage) return;
             if (session == null)
             {
                 throw new ArgumentNullException(nameof(session));
             }
 
-            if (message is PerformActionMessage performMsg)
-            {
-                HandlePerformActionMessage(performMsg, session);
-            }
-            else if (message is PerformItemActionMessage performItemActionMsg)
-            {
-                HandlePerformItemActionMessage(performItemActionMsg, session);
-            }
-        }
-
-        private void HandlePerformActionMessage(PerformActionMessage performMsg, ICommonSession session)
-        {
             var player = session.AttachedEntity;
             if (player != Owner) return;
+            var attempt = ActionAttempt(performActionMessage, session);
+            if (attempt == null) return;
 
-            if (!TryGetActionState(performMsg.ActionType, out var actionState) || !actionState.Enabled)
+            if (!attempt.TryGetActionState(this, out var actionState) || !actionState.Enabled)
             {
                 Logger.DebugS("action", "user {0} attempted to use" +
                                         " action {1} which is not granted to them", player.Name,
-                    performMsg.ActionType);
+                    attempt);
                 return;
             }
 
@@ -57,235 +48,113 @@ namespace Content.Server.GameObjects.Components.Mobs
             {
                 Logger.DebugS("action", "user {0} attempted to use" +
                                         " action {1} which is on cooldown", player.Name,
-                    performMsg.ActionType);
+                    attempt);
                 return;
             }
 
-            if (!ActionManager.TryGet(performMsg.ActionType, out var action))
+            switch (performActionMessage.BehaviorType)
             {
-                Logger.DebugS("action", "user {0} attempted to" +
-                                        " perform unrecognized action {1}", player.Name,
-                    performMsg.ActionType);
-                return;
-            }
-
-            switch (performMsg)
-            {
-                case PerformInstantActionMessage msg:
-                    if (action.InstantAction == null)
+                case BehaviorType.Instant:
+                    attempt.DoInstantAction(player);
+                    break;
+                case BehaviorType.Toggle:
+                    if (performActionMessage is not IToggleActionMessage toggleMsg) return;
+                    if (toggleMsg.ToggleOn == actionState.ToggledOn)
                     {
                         Logger.DebugS("action", "user {0} attempted to" +
-                                                " perform action {1} as an instant action, but it isn't one",
-                            player.Name,
-                            msg.ActionType);
+                                                " toggle action {1} to {2}, but it is already toggled {2}", player.Name,
+                            attempt.Action.Name, toggleMsg.ToggleOn);
                         return;
                     }
 
-                    action.InstantAction.DoInstantAction(new InstantActionEventArgs(player, action.ActionType));
-
+                    attempt.ToggleAction(this, toggleMsg.ToggleOn);
+                    attempt.DoToggleAction(player, toggleMsg.ToggleOn);
                     break;
-                case PerformToggleOnActionMessage:
-                    HandleToggleAction(action, player, true, actionState);
+                case BehaviorType.TargetPoint:
+                    if (performActionMessage is not ITargetPointActionMessage targetPointMsg) return;
+                    if (!CheckRangeAndSetFacing(targetPointMsg.Target, player)) return;
+                    attempt.DoTargetPointAction(player, targetPointMsg.Target);
                     break;
-                case PerformToggleOffActionMessage:
-                    HandleToggleAction(action, player, false, actionState);
-                    break;
-                case PerformTargetPointActionMessage msg:
-                    if (action.TargetPointAction == null)
-                    {
-                        Logger.DebugS("action", "user {0} attempted to" +
-                                                " perform action {1} as a target point action, but it isn't one",
-                            player.Name, msg.ActionType);
-                        return;
-                    }
-
-                    if (!CheckRangeAndSetFacing(msg.Target, player)) return;
-
-                    action.TargetPointAction.DoTargetPointAction(
-                        new TargetPointActionEventArgs(player, msg.Target, action.ActionType));
-                    break;
-                case PerformTargetEntityActionMessage msg:
-                    if (action.TargetEntityAction == null)
-                    {
-                        Logger.DebugS("action", "user {0} attempted to" +
-                                                " perform action {1} as a target entity action, but it isn't one",
-                            player.Name,
-                            msg.ActionType);
-                        return;
-                    }
-
-                    if (!EntityManager.TryGetEntity(msg.Target, out var entity))
+                case BehaviorType.TargetEntity:
+                    if (performActionMessage is not ITargetEntityActionMessage targetEntityMsg) return;
+                    if (!EntityManager.TryGetEntity(targetEntityMsg.Target, out var entity))
                     {
                         Logger.DebugS("action", "user {0} attempted to" +
                                                 " perform target entity action {1} but could not find entity with " +
-                                                "provided uid {2}", player.Name, msg.ActionType, msg.Target);
+                                                "provided uid {2}", player.Name, attempt.Action.Name,
+                            targetEntityMsg.Target);
                         return;
                     }
-
                     if (!CheckRangeAndSetFacing(entity.Transform.Coordinates, player)) return;
 
-                    action.TargetEntityAction.DoTargetEntityAction(
-                        new TargetEntityActionEventArgs(player, action.ActionType, entity));
+                    attempt.DoTargetEntityAction(player, entity);
                     break;
+                case BehaviorType.None:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
-        private void HandleToggleAction(ActionPrototype action, IEntity player, bool on,
-            ActionState actionState)
+        private IActionAttempt? ActionAttempt(BasePerformActionMessage message, ICommonSession session)
         {
-            if (action.ToggleAction == null)
+            IActionAttempt? attempt;
+            switch (message)
             {
-                Logger.DebugS("action", "user {0} attempted to" +
-                                        " perform action {1} as a toggle action, but it isn't one", player.Name,
-                    action.ActionType);
-                return;
-            }
-
-            if (on == actionState.ToggledOn)
-            {
-                Logger.DebugS("action", "user {0} attempted to" +
-                                        " toggle action {1} to {2}, but it is already toggled {2}", player.Name,
-                    action.ActionType, actionState.ToggledOn ? "on" : "off");
-                return;
-            }
-
-            ToggleAction(action.ActionType, on);
-
-            action.ToggleAction.DoToggleAction(new ToggleActionEventArgs(player, action.ActionType,
-                on));
-        }
-
-        private void HandlePerformItemActionMessage(PerformItemActionMessage performMsg, ICommonSession session)
-        {
-            var player = session.AttachedEntity;
-            if (player != Owner) return;
-
-            if (!TryGetItemActionState(performMsg.ActionType, performMsg.Item, out var actionState) || !actionState.Enabled)
-            {
-                Logger.DebugS("action", "user {0} attempted to use" +
-                                        " action {1} which is not granted to them", player.Name,
-                    performMsg.ActionType);
-                return;
-            }
-
-            if (actionState.IsOnCooldown(GameTiming))
-            {
-                Logger.DebugS("action", "user {0} attempted to use" +
-                                        " action {1} which is on cooldown", player.Name,
-                    performMsg.ActionType);
-                return;
-            }
-
-            if (!ActionManager.TryGet(performMsg.ActionType, out var action))
-            {
-                Logger.DebugS("action", "user {0} attempted to" +
-                                        " perform unrecognized action {1}", player.Name,
-                    performMsg.ActionType);
-                return;
-            }
-
-            // item must be in inventory
-            if (!IsEquipped(performMsg.Item))
-            {
-                Logger.DebugS("action", "user {0} attempted to" +
-                                        " perform action {1} but the item for this action ({2}) is not in inventory", player.Name,
-                    performMsg.ActionType, performMsg.Item);
-                // failsafe, ensure it's revoked (it should've been already)
-                Revoke(performMsg.Item);
-                return;
-            }
-
-            if (!EntityManager.TryGetEntity(performMsg.Item, out var item))
-            {
-                Logger.DebugS("action", "user {0} attempted to" +
-                                        " perform action {1} but the item for this action ({2}) could not be found", player.Name,
-                    performMsg.ActionType, performMsg.Item);
-                // failsafe, ensure it's revoked (it should've been already)
-                Revoke(performMsg.Item);
-                return;
-            }
-
-            switch (performMsg)
-            {
-                case PerformInstantItemActionMessage msg:
-                    if (action.InstantAction == null)
+                case PerformActionMessage performActionMessage:
+                    if (!ActionManager.TryGet(performActionMessage.ActionType, out var action))
                     {
-                        Logger.DebugS("action", "user {0} attempted to" +
-                                                " perform action {1} as an instant item action, but it isn't one", player.Name,
-                            msg.ActionType);
-                        return;
+                        Logger.DebugS("action", "user {0} attempted to perform" +
+                                                " unrecognized action {1}", session.AttachedEntity,
+                            performActionMessage.ActionType);
+                        return null;
+                    }
+                    attempt = new ActionAttempt(action);
+                    break;
+                case PerformItemActionMessage performItemActionMessage:
+                    if (!ActionManager.TryGet(performItemActionMessage.ActionType, out var itemAction))
+                    {
+                        Logger.DebugS("action", "user {0} attempted to perform" +
+                                                " unrecognized item action {1}",
+                            session.AttachedEntity, performItemActionMessage.ActionType);
+                        return null;
                     }
 
-                    action.InstantAction.DoInstantAction(new InstantItemActionEventArgs(player, item, action.ActionType));
-
-                    break;
-                case PerformToggleOnItemActionMessage:
-                    HandleToggleItemAction(action, player, true, actionState, item);
-                    break;
-                case PerformToggleOffItemActionMessage:
-                    HandleToggleItemAction(action, player, false, actionState, item);
-                    break;
-                case PerformTargetPointItemActionMessage msg:
-                    if (action.TargetPointAction == null)
+                    if (!EntityManager.TryGetEntity(performItemActionMessage.Item, out var item))
                     {
-                        Logger.DebugS("action", "user {0} attempted to" +
-                                                " perform action {1} as a target point item action, but it isn't one", player.Name,
-                            msg.ActionType);
-                        return;
+                        Logger.DebugS("action", "user {0} attempted to perform" +
+                                                " item action {1} for unknown item {2}",
+                            session.AttachedEntity, performItemActionMessage.ActionType, performItemActionMessage.Item);
+                        // failsafe, ensure it's revoked (it should've been already)
+                        Revoke(performItemActionMessage.Item);
+                        return null;
                     }
 
-                    if (!CheckRangeAndSetFacing(msg.Target, player)) return;
-
-                    action.TargetPointAction.DoTargetPointAction(
-                        new TargetPointItemActionEventArgs(player, msg.Target, item, action.ActionType));
-                    break;
-                case PerformTargetEntityItemActionMessage msg:
-                    if (action.TargetEntityAction == null)
+                    if (!IsEquipped(item))
                     {
-                        Logger.DebugS("action", "user {0} attempted to" +
-                                                " perform action {1} as a target entity action, but it isn't one", player.Name,
-                            msg.ActionType);
-                        return;
+                        Logger.DebugS("action", "user {0} attempted to perform" +
+                                                " item action {1} for item {2} which is not equipped",
+                            session.AttachedEntity, performItemActionMessage.ActionType, item);
+                        // failsafe, ensure it's revoked (it should've been already)
+                        Revoke(performItemActionMessage.Item);
+                        return null;
                     }
-
-                    if (!EntityManager.TryGetEntity(msg.Target, out var entity))
-                    {
-                        Logger.DebugS("action", "user {0} attempted to" +
-                                                " perform target entity action {1} but could not find entity with " +
-                                                "provided uid {2}", player.Name, msg.ActionType, msg.Target);
-                        return;
-                    }
-
-                    if (!CheckRangeAndSetFacing(entity.Transform.Coordinates, player)) return;
-
-                    action.TargetEntityAction.DoTargetEntityAction(
-                        new TargetEntityItemActionEventArgs(player, entity, item, action.ActionType));
+                    attempt = new ItemActionAttempt(itemAction, item);
                     break;
+                default:
+                    return null;
             }
-        }
 
-        private void HandleToggleItemAction(ItemActionPrototype action, IEntity player, bool on,
-            ActionState actionState, IEntity item)
-        {
-            if (action.ToggleAction == null)
+            if (message.BehaviorType != attempt.Action.BehaviorType)
             {
                 Logger.DebugS("action", "user {0} attempted to" +
-                                        " perform action {1} as a toggle item action, but it isn't one", player.Name,
-                    action.ActionType);
-                return;
+                                        " perform action {1} as a {2} behavior, but this action is actually a" +
+                                        " {3} behavior", session.AttachedEntity, attempt, message.BehaviorType,
+                    attempt.Action.BehaviorType);
+                return null;
             }
 
-            if (on == actionState.ToggledOn)
-            {
-                Logger.DebugS("action", "user {0} attempted to" +
-                                        " toggle item action {1} to {2}, but it is already toggled {2}", player.Name,
-                    action.ActionType, actionState.ToggledOn ? "on" : "off");
-                return;
-            }
-
-            ToggleAction(action.ActionType, item, on);
-
-            action.ToggleAction.DoToggleAction(new ToggleItemActionEventArgs(player, on, item, action.ActionType));
+            return attempt;
         }
 
         private bool CheckRangeAndSetFacing(EntityCoordinates target, IEntity player)

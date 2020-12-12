@@ -12,7 +12,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
@@ -25,15 +24,11 @@ namespace Content.Client.GameObjects.Components.Mobs
     [ComponentReference(typeof(SharedAlertsComponent))]
     public sealed class ClientAlertsComponent : SharedAlertsComponent
     {
-        private static readonly float TooltipTextMaxWidth = 265;
-
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         private AlertsUI _ui;
         private AlertOrderPrototype _alertOrder;
-        private bool _tooltipReady;
 
         [ViewVariables]
         private readonly Dictionary<AlertKey, AlertControl> _alertControls
@@ -69,7 +64,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         {
             base.HandleComponentState(curState, nextState);
 
-            if (curState is not AlertsComponentState state)
+            if (curState is not AlertsComponentState)
             {
                 return;
             }

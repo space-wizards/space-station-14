@@ -366,51 +366,34 @@ namespace Content.Client.GameObjects.Components.Mobs
                 return;
             }
 
-            if (args.Event.Function != EngineKeyFunctions.Use && args.Event.Function != EngineKeyFunctions.UIClick) return;
+            if (args.Event.Function != EngineKeyFunctions.Use &&
+                args.Event.Function != EngineKeyFunctions.UIClick) return;
 
             // no left-click interaction with it on cooldown or revoked
-            if (!actionSlot.ActionEnabled || actionSlot.IsOnCooldown) return;
+            if (!actionSlot.ActionEnabled || actionSlot.IsOnCooldown || actionSlot.Action == null) return;
 
-            switch (actionSlot.Action)
-            {
-                case ActionPrototype actionPrototype:
-                    HandleActionPress(actionSlot, actionPrototype);
-                    break;
-                case ItemActionPrototype itemActionPrototype:
-                    HandleItemActionPress(actionSlot, itemActionPrototype);
-                    break;
-            }
-        }
+            var attempt = ActionAttempt(actionSlot);
+            if (attempt == null) return;
 
-        private void HandleActionPress(ActionSlot actionSlot, ActionPrototype action)
-        {
-            switch (action.BehaviorType)
+            switch (attempt.Action.BehaviorType)
             {
                 case BehaviorType.Instant:
                     // for instant actions, we immediately tell the server we're doing it
-                    SendNetworkMessage(new PerformInstantActionMessage(action.ActionType));
+                    SendNetworkMessage(attempt.PerformInstantActionMessage());
                     break;
                 case BehaviorType.Toggle:
                     // for toggle actions, we immediately tell the server we're toggling it.
                     // Predictive toggle it on as well
-                    if (TryGetActionState(action.ActionType, out var actionState))
+                    if (attempt.TryGetActionState(this, out var actionState))
                     {
                         actionSlot.ToggledOn = !actionState.ToggledOn;
-                        ToggleAction(action.ActionType, !actionState.ToggledOn);
-                        if (actionState.ToggledOn)
-                        {
-                            SendNetworkMessage(new PerformToggleOffActionMessage(action.ActionType));
-                        }
-                        else
-                        {
-                            SendNetworkMessage(new PerformToggleOnActionMessage(action.ActionType));
-                        }
-
+                        attempt.ToggleAction(this, !actionState.ToggledOn);
+                        SendNetworkMessage(attempt.PerformToggleActionMessage(!actionState.ToggledOn));
                     }
                     else
                     {
-                        Logger.WarningS("action", "attempted to toggle action {0} which has" +
-                                                  " unknown state", action.ActionType);
+                        Logger.ErrorS("action", "attempted to toggle action {0} which has" +
+                                                  " unknown state", attempt);
                     }
 
                     break;
@@ -429,63 +412,78 @@ namespace Content.Client.GameObjects.Components.Mobs
 
                     StartTargeting(actionSlot);
                     break;
+                case BehaviorType.None:
+                    break;
                 default:
-                    Logger.WarningS("action", "unhandled action press for action {0}", action.ActionType);
+                    Logger.ErrorS("action", "unhandled action press for action {0}",
+                        attempt);
                     break;
             }
         }
 
-         private void HandleItemActionPress(ActionSlot actionSlot, ItemActionPrototype action)
+        /// <summary>
+        /// Handles clicks when selecting the target for an action. Only has an effect when currently
+        /// selecting a target.
+        /// </summary>
+        public bool TargetingOnUse(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
-            if (actionSlot.Item == null) return;
-            switch (action.BehaviorType)
+            // not currently predicted
+            if (EntitySystem.Get<InputSystem>().Predicted) return false;
+
+            // only do something for actual target-based actions
+            if (_selectingTargetFor?.Action == null ||
+                (_selectingTargetFor.Action.BehaviorType != BehaviorType.TargetEntity &&
+                _selectingTargetFor.Action.BehaviorType != BehaviorType.TargetPoint)) return false;
+
+            var attempt = ActionAttempt(_selectingTargetFor);
+            if (attempt == null)
             {
-                case BehaviorType.Instant:
-                    // for instant actions, we immediately tell the server we're doing it
-                    SendNetworkMessage(new PerformInstantItemActionMessage(action.ActionType, actionSlot.Item.Uid));
-                    break;
-                case BehaviorType.Toggle:
-                    // for toggle actions, we immediately tell the server we're toggling it.
-                    // Predictive toggle it on as well
-                    if (TryGetItemActionState(action.ActionType, actionSlot.Item.Uid, out var actionState))
-                    {
-                        actionSlot.ToggledOn = !actionState.ToggledOn;
-                        ToggleAction(action.ActionType, actionSlot.Item.Uid, !actionState.ToggledOn);
-                        if (actionState.ToggledOn)
-                        {
-                            SendNetworkMessage(new PerformToggleOffItemActionMessage(action.ActionType, actionSlot.Item.Uid));
-                        }
-                        else
-                        {
-                            SendNetworkMessage(new PerformToggleOnItemActionMessage(action.ActionType, actionSlot.Item.Uid));
-                        }
-                    }
-                    else
-                    {
-                        Logger.WarningS("action", "attempted to toggle item action {0} which has" +
-                                                  " unknown state", action.ActionType);
-                    }
+                StopTargeting();
+                return false;
+            }
 
-                    break;
+            switch (_selectingTargetFor.Action.BehaviorType)
+            {
                 case BehaviorType.TargetPoint:
-                case BehaviorType.TargetEntity:
-                    // for target actions, we go into "select target" mode, we don't
-                    // message the server until we actually pick our target.
-
-                    // if we're clicking the same thing we're already targeting for, then we simply cancel
-                    // targeting
-                    if (_selectingTargetFor == actionSlot)
+                {
+                    // send our action to the server, we chose our target
+                    SendNetworkMessage(attempt.PerformTargetPointActionMessage(args));
+                    if (!attempt.Action.Repeat)
                     {
                         StopTargeting();
-                        break;
                     }
-
-                    StartTargeting(actionSlot);
-                    break;
+                    return true;
+                }
+                // target the currently hovered entity, if there is one
+                case BehaviorType.TargetEntity when args.EntityUid != EntityUid.Invalid:
+                {
+                    // send our action to the server, we chose our target
+                    SendNetworkMessage(attempt.PerformTargetEntityActionMessage(args));
+                    if (!attempt.Action.Repeat)
+                    {
+                        StopTargeting();
+                    }
+                    return true;
+                }
                 default:
-                    Logger.WarningS("action", "unhandled action press for item action {0}", action.ActionType);
-                    break;
+                    StopTargeting();
+                    return false;
             }
+        }
+
+        /// <summary>
+        /// Action attempt for performing the action in the slot
+        /// </summary>
+        private static IActionAttempt? ActionAttempt(ActionSlot actionSlot)
+        {
+            IActionAttempt? attempt = actionSlot.Action switch
+            {
+                ActionPrototype actionPrototype => new ActionAttempt(actionPrototype),
+                ItemActionPrototype itemActionPrototype =>
+                    actionSlot.Item != null ? new ItemActionAttempt(itemActionPrototype, actionSlot.Item) : null,
+                _ => null
+            };
+            return attempt;
         }
 
         private void OnActionSlotDragDrop(ActionSlotDragDropEventArgs obj)
@@ -620,106 +618,6 @@ namespace Content.Client.GameObjects.Components.Mobs
             if (!actionSlot.ToggledOn)
             {
                 actionSlot.ToggledOn = true;
-            }
-        }
-
-        /// <summary>
-        /// Handles clicks when selecting the target for an action. Only has an effect when currently
-        /// selecting a target.
-        /// </summary>
-        public bool TargetingOnUse(in PointerInputCmdHandler.PointerInputCmdArgs args)
-        {
-            // not currently predicted
-            if (EntitySystem.Get<InputSystem>().Predicted) return false;
-
-            // only do something for actual target-based actions
-            if (_selectingTargetFor?.Action == null ||
-                (_selectingTargetFor.Action.BehaviorType != BehaviorType.TargetEntity &&
-                _selectingTargetFor.Action.BehaviorType != BehaviorType.TargetPoint)) return false;
-
-            switch (_selectingTargetFor.Action)
-            {
-                case ActionPrototype actionPrototype:
-                    return HandleTargetingOnUse(args, actionPrototype);
-                case ItemActionPrototype itemActionPrototype:
-                    return HandleTargetingOnUse(args, itemActionPrototype);
-                default:
-                    StopTargeting();
-                    return false;
-            }
-        }
-
-        private bool HandleTargetingOnUse(PointerInputCmdHandler.PointerInputCmdArgs args,
-            ActionPrototype action)
-        {
-            if (_selectingTargetFor?.Action == null) return false;
-            switch (_selectingTargetFor.Action.BehaviorType)
-            {
-                case BehaviorType.TargetPoint:
-                {
-                    // send our action to the server, we chose our target
-                    SendNetworkMessage(new PerformTargetPointActionMessage(action.ActionType,
-                        args.Coordinates));
-                    if (!_selectingTargetFor.Action.Repeat)
-                    {
-                        StopTargeting();
-                    }
-
-                    return true;
-                }
-                // target the currently hovered entity, if there is one
-                case BehaviorType.TargetEntity when args.EntityUid != EntityUid.Invalid:
-                {
-                    // send our action to the server, we chose our target
-                    SendNetworkMessage(new PerformTargetEntityActionMessage(action.ActionType,
-                        args.EntityUid));
-                    if (!_selectingTargetFor.Action.Repeat)
-                    {
-                        StopTargeting();
-                    }
-
-                    return true;
-                }
-                default:
-                    StopTargeting();
-                    return false;
-            }
-        }
-
-        private bool HandleTargetingOnUse(PointerInputCmdHandler.PointerInputCmdArgs args, ItemActionPrototype action)
-        {
-            if (_selectingTargetFor?.Item == null || _selectingTargetFor?.Action == null) return false;
-            switch (_selectingTargetFor.Action.BehaviorType)
-            {
-                case BehaviorType.TargetPoint:
-                {
-                    // send our action to the server, we chose our target
-                    SendNetworkMessage(new PerformTargetPointItemActionMessage(action.ActionType,
-                        _selectingTargetFor.Item.Uid, args.Coordinates));
-                    if (!_selectingTargetFor.Action.Repeat)
-                    {
-                        StopTargeting();
-                    }
-
-                    return true;
-                }
-                // target the currently hovered entity, if there is one
-                case BehaviorType.TargetEntity when args.EntityUid != EntityUid.Invalid:
-                {
-                    // send our action to the server, we chose our target
-                    SendNetworkMessage(new PerformTargetEntityItemActionMessage(action.ActionType,
-                        _selectingTargetFor.Item.Uid,
-                        args.EntityUid));
-                    if (!_selectingTargetFor.Action.Repeat)
-                    {
-                        StopTargeting();
-                    }
-
-                    return true;
-                }
-                default:
-                    StopTargeting();
-                    return false;
             }
         }
 

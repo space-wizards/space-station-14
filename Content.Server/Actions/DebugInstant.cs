@@ -4,7 +4,6 @@ using Content.Shared.Actions;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
@@ -39,6 +38,7 @@ namespace Content.Server.Actions
 
         public void DoInstantAction(InstantActionEventArgs args)
         {
+            args.Performer.PopupMessageEveryone(Message);
             if (!args.Performer.TryGetComponent<SharedActionsComponent>(out var actionsComponent)) return;
             actionsComponent.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(Cooldown));
         }

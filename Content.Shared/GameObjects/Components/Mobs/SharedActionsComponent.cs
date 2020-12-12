@@ -63,7 +63,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         // cooldowns have expired for a long enough time, also removing the entry if it is then at initial state.
         // This helps to keep our component state smaller.
         [ViewVariables]
-        private Dictionary<ActionType, ActionState> _actions = new Dictionary<ActionType, ActionState>();
+        private Dictionary<ActionType, ActionState> _actions = new();
 
         // Holds item action states. Item actions are only added to this when granted, and are removed
         // when revoked or when they leave inventory. If they had a cooldown when revoked,
@@ -753,11 +753,17 @@ namespace Content.Shared.GameObjects.Components.Mobs
     }
 
     [Serializable, NetSerializable]
-    public abstract class PerformActionMessage : ComponentMessage
+    public abstract class BasePerformActionMessage : ComponentMessage
+    {
+        public abstract BehaviorType BehaviorType { get; }
+    }
+
+    [Serializable, NetSerializable]
+    public abstract class PerformActionMessage : BasePerformActionMessage
     {
         public readonly ActionType ActionType;
 
-        public PerformActionMessage(ActionType actionType)
+        protected PerformActionMessage(ActionType actionType)
         {
             Directed = true;
             ActionType = actionType;
@@ -765,12 +771,12 @@ namespace Content.Shared.GameObjects.Components.Mobs
     }
 
     [Serializable, NetSerializable]
-    public abstract class PerformItemActionMessage : ComponentMessage
+    public abstract class PerformItemActionMessage : BasePerformActionMessage
     {
         public readonly ItemActionType ActionType;
         public readonly EntityUid Item;
 
-        public PerformItemActionMessage(ItemActionType actionType, EntityUid item)
+        protected PerformItemActionMessage(ItemActionType actionType, EntityUid item)
         {
             Directed = true;
             ActionType = actionType;
@@ -778,12 +784,15 @@ namespace Content.Shared.GameObjects.Components.Mobs
         }
     }
 
+
     /// <summary>
     /// A message that tells server we want to run the instant action logic.
     /// </summary>
     [Serializable, NetSerializable]
     public class PerformInstantActionMessage : PerformActionMessage
     {
+        public override BehaviorType BehaviorType => BehaviorType.Instant;
+
         public PerformInstantActionMessage(ActionType actionType) : base(actionType)
         {
         }
@@ -795,17 +804,42 @@ namespace Content.Shared.GameObjects.Components.Mobs
     [Serializable, NetSerializable]
     public class PerformInstantItemActionMessage : PerformItemActionMessage
     {
+        public override BehaviorType BehaviorType => BehaviorType.Instant;
+
         public PerformInstantItemActionMessage(ItemActionType actionType, EntityUid item) : base(actionType, item)
         {
         }
+    }
+
+    public interface IToggleActionMessage
+    {
+        bool ToggleOn { get; }
+    }
+
+    public interface ITargetPointActionMessage
+    {
+        /// <summary>
+        /// Targeted local coordinates
+        /// </summary>
+        EntityCoordinates Target { get; }
+    }
+
+    public interface ITargetEntityActionMessage
+    {
+        /// <summary>
+        /// Targeted entity
+        /// </summary>
+        EntityUid Target { get; }
     }
 
     /// <summary>
     /// A message that tells server we want to toggle on the indicated action.
     /// </summary>
     [Serializable, NetSerializable]
-    public class PerformToggleOnActionMessage : PerformActionMessage
+    public class PerformToggleOnActionMessage : PerformActionMessage, IToggleActionMessage
     {
+        public override BehaviorType BehaviorType => BehaviorType.Toggle;
+        public bool ToggleOn => true;
         public PerformToggleOnActionMessage(ActionType actionType) : base(actionType) { }
     }
 
@@ -813,8 +847,10 @@ namespace Content.Shared.GameObjects.Components.Mobs
     /// A message that tells server we want to toggle off the indicated action.
     /// </summary>
     [Serializable, NetSerializable]
-    public class PerformToggleOffActionMessage : PerformActionMessage
+    public class PerformToggleOffActionMessage : PerformActionMessage, IToggleActionMessage
     {
+        public override BehaviorType BehaviorType => BehaviorType.Toggle;
+        public bool ToggleOn => false;
         public PerformToggleOffActionMessage(ActionType actionType) : base(actionType) { }
     }
 
@@ -822,8 +858,10 @@ namespace Content.Shared.GameObjects.Components.Mobs
     /// A message that tells server we want to toggle on the indicated action.
     /// </summary>
     [Serializable, NetSerializable]
-    public class PerformToggleOnItemActionMessage : PerformItemActionMessage
+    public class PerformToggleOnItemActionMessage : PerformItemActionMessage, IToggleActionMessage
     {
+        public override BehaviorType BehaviorType => BehaviorType.Toggle;
+        public bool ToggleOn => true;
         public PerformToggleOnItemActionMessage(ItemActionType actionType, EntityUid item) : base(actionType, item) { }
     }
 
@@ -831,8 +869,10 @@ namespace Content.Shared.GameObjects.Components.Mobs
     /// A message that tells server we want to toggle off the indicated action.
     /// </summary>
     [Serializable, NetSerializable]
-    public class PerformToggleOffItemActionMessage : PerformItemActionMessage
+    public class PerformToggleOffItemActionMessage : PerformItemActionMessage, IToggleActionMessage
     {
+        public override BehaviorType BehaviorType => BehaviorType.Toggle;
+        public bool ToggleOn => false;
         public PerformToggleOffItemActionMessage(ItemActionType actionType, EntityUid item) : base(actionType, item) { }
     }
 
@@ -840,16 +880,15 @@ namespace Content.Shared.GameObjects.Components.Mobs
     /// A message that tells server we want to target the provided point with a particular action.
     /// </summary>
     [Serializable, NetSerializable]
-    public class PerformTargetPointActionMessage : PerformActionMessage
+    public class PerformTargetPointActionMessage : PerformActionMessage, ITargetPointActionMessage
     {
-        /// <summary>
-        /// Targeted local coordinates
-        /// </summary>
-        public readonly EntityCoordinates Target;
+        public override BehaviorType BehaviorType => BehaviorType.TargetPoint;
+        private readonly EntityCoordinates _target;
+        public EntityCoordinates Target => _target;
 
         public PerformTargetPointActionMessage(ActionType actionType, EntityCoordinates target) : base(actionType)
         {
-            Target = target;
+            _target = target;
         }
     }
 
@@ -857,16 +896,15 @@ namespace Content.Shared.GameObjects.Components.Mobs
     /// A message that tells server we want to target the provided point with a particular action.
     /// </summary>
     [Serializable, NetSerializable]
-    public class PerformTargetPointItemActionMessage : PerformItemActionMessage
+    public class PerformTargetPointItemActionMessage : PerformItemActionMessage, ITargetPointActionMessage
     {
-        /// <summary>
-        /// Targeted local coordinates
-        /// </summary>
-        public readonly EntityCoordinates Target;
+        private readonly EntityCoordinates _target;
+        public EntityCoordinates Target => _target;
+        public override BehaviorType BehaviorType => BehaviorType.TargetPoint;
 
         public PerformTargetPointItemActionMessage(ItemActionType actionType, EntityUid item, EntityCoordinates target) : base(actionType, item)
         {
-            Target = target;
+            _target = target;
         }
     }
 
@@ -874,16 +912,15 @@ namespace Content.Shared.GameObjects.Components.Mobs
     /// A message that tells server we want to target the provided entity with a particular action.
     /// </summary>
     [Serializable, NetSerializable]
-    public class PerformTargetEntityActionMessage : PerformActionMessage
+    public class PerformTargetEntityActionMessage : PerformActionMessage, ITargetEntityActionMessage
     {
-        /// <summary>
-        /// Targeted entity
-        /// </summary>
-        public readonly EntityUid Target;
+        public override BehaviorType BehaviorType => BehaviorType.TargetEntity;
+        private readonly EntityUid _target;
+        public EntityUid Target => _target;
 
         public PerformTargetEntityActionMessage(ActionType actionType, EntityUid target) : base(actionType)
         {
-            Target = target;
+            _target = target;
         }
     }
 
@@ -891,16 +928,15 @@ namespace Content.Shared.GameObjects.Components.Mobs
     /// A message that tells server we want to target the provided entity with a particular action.
     /// </summary>
     [Serializable, NetSerializable]
-    public class PerformTargetEntityItemActionMessage : PerformItemActionMessage
+    public class PerformTargetEntityItemActionMessage : PerformItemActionMessage, ITargetEntityActionMessage
     {
-        /// <summary>
-        /// Targeted entity
-        /// </summary>
-        public readonly EntityUid Target;
+        public override BehaviorType BehaviorType => BehaviorType.TargetEntity;
+        private readonly EntityUid _target;
+        public EntityUid Target => _target;
 
         public PerformTargetEntityItemActionMessage(ItemActionType actionType, EntityUid item, EntityUid target) : base(actionType, item)
         {
-            Target = target;
+            _target = target;
         }
     }
 }
