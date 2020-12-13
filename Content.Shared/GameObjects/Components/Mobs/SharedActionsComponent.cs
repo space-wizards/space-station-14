@@ -161,6 +161,17 @@ namespace Content.Shared.GameObjects.Components.Mobs
             return false;
         }
 
+        /// <returns>true if the action is granted and enabled (if item action, if granted and enabled for any item)</returns>
+        public bool IsGranted(BaseActionPrototype actionType)
+        {
+            return actionType switch
+            {
+                ActionPrototype actionPrototype => IsGranted(actionPrototype.ActionType),
+                ItemActionPrototype itemActionPrototype => IsGranted(itemActionPrototype.ActionType),
+                _ => false
+            };
+        }
+
         public bool IsGranted(ActionType actionType)
         {
             if (TryGetActionState(actionType, out var actionState))

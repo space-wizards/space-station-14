@@ -33,6 +33,7 @@ namespace Content.Client.UserInterface
         private const string ToggleActionTag = "toggle";
         private const string TargetActionTag = "target";
         private const string AllActionsTag = "all";
+        private const string GrantedActionsTag = "granted";
         private const int MinSearchLength = 3;
         private static readonly Regex NonAlphanumeric = new Regex(@"\W", RegexOptions.Compiled);
         private static readonly Regex Whitespace = new Regex(@"\s+", RegexOptions.Compiled);
@@ -116,6 +117,7 @@ namespace Content.Client.UserInterface
             filterTags.Add(ToggleActionTag);
             filterTags.Add(TargetActionTag);
             filterTags.Add(AllActionsTag);
+            filterTags.Add(GrantedActionsTag);
 
             foreach (var tag in filterTags.Distinct().OrderBy(tag => tag))
             {
@@ -385,11 +387,12 @@ namespace Content.Client.UserInterface
             throw new InvalidOperationException();
         }
 
-        private static bool ActionMatchesFilterTag(BaseActionPrototype action, string tag)
+        private bool ActionMatchesFilterTag(BaseActionPrototype action, string tag)
         {
             return tag switch
             {
                 AllActionsTag => true,
+                GrantedActionsTag => _actionsComponent.IsGranted(action),
                 ItemTag => action is ItemActionPrototype,
                 NotItemTag => action is ActionPrototype,
                 InstantActionTag => action.BehaviorType == BehaviorType.Instant,
@@ -455,27 +458,12 @@ namespace Content.Client.UserInterface
             {
                 var actionItem = new ActionMenuItem(action);
                 _resultsGrid.Children.Add(actionItem);
-                actionItem.SetActionState(IsGranted(action));
+                actionItem.SetActionState(_actionsComponent.IsGranted(action));
 
                 actionItem.OnButtonDown += OnItemButtonDown;
                 actionItem.OnButtonUp += OnItemButtonUp;
                 actionItem.OnPressed += OnItemPressed;
             }
-        }
-
-        private bool IsGranted(BaseActionPrototype baseActionPrototype)
-        {
-            if (baseActionPrototype is ActionPrototype actionPrototype)
-            {
-                return _actionsComponent.IsGranted(actionPrototype.ActionType);
-            }
-
-            if (baseActionPrototype is ItemActionPrototype itemActionPrototype)
-            {
-                return _actionsComponent.IsGranted(itemActionPrototype.ActionType);
-            }
-
-            return false;
         }
 
         private void ClearList()
@@ -498,7 +486,7 @@ namespace Content.Client.UserInterface
             foreach (var actionItem in _resultsGrid.Children)
             {
                 var actionMenuItem = ((ActionMenuItem) actionItem);
-                actionMenuItem.SetActionState(IsGranted(actionMenuItem.Action));
+                actionMenuItem.SetActionState(_actionsComponent.IsGranted(actionMenuItem.Action));
             }
         }
 
