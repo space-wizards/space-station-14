@@ -46,7 +46,6 @@ namespace Content.Client.UserInterface
         private readonly Texture _unlockTexture;
 
         private readonly TextureRect _dragShadow;
-        private readonly DragDropHelper<ActionSlot> _dragDropHelper;
 
         private readonly ActionMenu _menu;
 
@@ -60,7 +59,11 @@ namespace Content.Client.UserInterface
         /// </summary>
         public ActionSlot? SelectingTargetFor { get; private set; }
 
-        public bool IsDragging => _dragDropHelper.IsDragging;
+        /// <summary>
+        /// Drag drop helper for coordinating drag drops between action slots
+        /// </summary>
+        public DragDropHelper<ActionSlot> DragDropHelper { get; }
+
         /// <summary>
         /// Whether the bar is currently locked by the user. This is intended to prevent drag / drop
         /// and right click clearing slots. Anything else is still doable.
@@ -191,12 +194,12 @@ namespace Content.Client.UserInterface
 
             for (byte i = 0; i < ClientActionsComponent.Slots; i++)
             {
-                var slot = new ActionSlot(i) {EnableAllKeybinds = true};
+                var slot = new ActionSlot(this, actionsComponent, i);
                 _slotContainer.AddChild(slot);
                 _slots[i] = slot;
             }
 
-            _dragDropHelper = new DragDropHelper<ActionSlot>(OnBeginActionDrag, OnContinueActionDrag, OnEndActionDrag);
+            DragDropHelper = new DragDropHelper<ActionSlot>(OnBeginActionDrag, OnContinueActionDrag, OnEndActionDrag);
         }
 
         protected override void EnteredTree()
@@ -206,14 +209,6 @@ namespace Content.Client.UserInterface
             _nextHotbarButton.OnPressed += NextHotbar;
             _previousHotbarButton.OnPressed += PreviousHotbar;
             _settingsButton.OnPressed += OnToggleActionsMenu;
-            foreach (var slot in _slots)
-            {
-                slot.OnButtonDown += ActionSlotOnButtonDown;
-                slot.OnButtonUp += ActionSlotOnButtonUp;
-                slot.OnPressed += OnActionPress;
-                slot.OnMouseEntered += OnMouseEnteredAction;
-                slot.OnMouseExited += OnMouseExitedAction;
-            }
         }
 
         protected override void ExitedTree()
@@ -225,14 +220,6 @@ namespace Content.Client.UserInterface
             _nextHotbarButton.OnPressed -= NextHotbar;
             _previousHotbarButton.OnPressed -= PreviousHotbar;
             _settingsButton.OnPressed -= OnToggleActionsMenu;
-            foreach (var slot in _slots)
-            {
-                slot.OnButtonDown -= ActionSlotOnButtonDown;
-                slot.OnButtonUp -= ActionSlotOnButtonUp;
-                slot.OnPressed -= OnActionPress;
-                slot.OnMouseEntered -= OnMouseEnteredAction;
-                slot.OnMouseExited -= OnMouseExitedAction;
-            }
         }
 
         protected override Vector2 CalculateMinimumSize()
@@ -274,8 +261,8 @@ namespace Content.Client.UserInterface
         }
 
         /// <summary>
-        /// Update the display of all the slots in the currently displayed hotbar,
-        /// based on current state of actions component.
+        /// Refresh the display of all the slots in the currently displayed hotbar,
+        /// to reflect the current component state and assignments of actions component.
         /// </summary>
         public void UpdateUI()
         {
@@ -453,33 +440,6 @@ namespace Content.Client.UserInterface
             UpdateUI();
         }
 
-        private void OnActionPress(BaseButton.ButtonEventArgs args)
-        {
-            if (IsDragging) return;
-            if (args.Button is not ActionSlot actionSlot) return;
-            if (!actionSlot.HasAssignment) return;
-
-            if (args.Event.Function == EngineKeyFunctions.UIRightClick)
-            {
-                // right click to clear the action
-                if (Locked) return;
-                _actionsComponent.Assignments.ClearSlot(SelectedHotbar, actionSlot.SlotIndex, true);
-
-                StopTargeting();
-                actionSlot.Clear();
-                return;
-            }
-
-            if (args.Event.Function != EngineKeyFunctions.Use &&
-                args.Event.Function != EngineKeyFunctions.UIClick) return;
-
-            // no left-click interaction with it on cooldown or revoked
-            if (!actionSlot.ActionEnabled || actionSlot.IsOnCooldown || actionSlot.Action == null) return;
-
-
-            _actionsComponent.AttemptAction(actionSlot);
-        }
-
         /// <summary>
         /// If currently targeting with this slot, stops targeting.
         /// If currently targeting with no slot or a different slot, switches to
@@ -543,45 +503,27 @@ namespace Content.Client.UserInterface
             }
         }
 
-        private void OnMouseEnteredAction(GUIMouseHoverEventArgs args)
-        {
-            // highlight the inventory slot associated with this if it's an item action
-            // tied to an item
-            if (args.SourceControl is not ActionSlot actionSlot) return;
-            if (actionSlot.Action is not ItemActionPrototype) return;
-            if (actionSlot.Item == null) return;
-
-            _actionsComponent.HighlightItemSlot(actionSlot.Item);
-        }
-
-        private void OnMouseExitedAction(GUIMouseHoverEventArgs args)
-        {
-            _actionsComponent.StopHighlightingItemSlots();
-        }
-
-
         private void OnLockPressed(BaseButton.ButtonEventArgs obj)
         {
             Locked = !Locked;
             _lockButton.TextureNormal = Locked ? _lockTexture : _unlockTexture;
         }
 
-
         private bool OnBeginActionDrag()
         {
             // only initiate the drag if the slot has an action in it
-            if (Locked || _dragDropHelper.Dragged.Action == null) return false;
+            if (Locked || DragDropHelper.Dragged.Action == null) return false;
 
-            _dragShadow.Texture = _dragDropHelper.Dragged.Action.Icon.Frame0();
-            // don't make visible until frameupdate, otherwise it'll flicker
+            _dragShadow.Texture = DragDropHelper.Dragged.Action.Icon.Frame0();
             LayoutContainer.SetPosition(_dragShadow, UserInterfaceManager.MousePositionScaled - (32, 32));
+            DragDropHelper.Dragged.CancelPress();
             return true;
         }
 
         private bool OnContinueActionDrag(float frameTime)
         {
             // stop if there's no action in the slot
-            if (Locked || _dragDropHelper.Dragged.Action == null) return false;
+            if (Locked || DragDropHelper.Dragged.Action == null) return false;
 
             // keep dragged entity centered under mouse
             LayoutContainer.SetPosition(_dragShadow, UserInterfaceManager.MousePositionScaled - (32, 32));
@@ -595,51 +537,6 @@ namespace Content.Client.UserInterface
             _dragShadow.Visible = false;
         }
 
-        private void ActionSlotOnButtonDown(BaseButton.ButtonEventArgs args)
-        {
-            if (Locked || args.Event.Function != EngineKeyFunctions.Use ||
-                args.Button is not ActionSlot actionSlot) return;
-            _dragDropHelper.MouseDown(actionSlot);
-        }
-
-        private void ActionSlotOnButtonUp(BaseButton.ButtonEventArgs args)
-        {
-            // note the button up only fires on the control that was originally
-            // pressed to initiate the drag, NOT the one we are currently hovering
-            if (Locked || args.Event.Function != EngineKeyFunctions.Use) return;
-
-            if (UserInterfaceManager.CurrentlyHovered is ActionSlot targetSlot)
-            {
-                if (!_dragDropHelper.IsDragging || _dragDropHelper.Dragged?.Action == null)
-                {
-                    _dragDropHelper.EndDrag();
-                    return;
-                }
-
-                // swap the 2 slots
-                var fromIdx = _dragDropHelper.Dragged.SlotIndex;
-                var fromAssignment = _actionsComponent.Assignments[SelectedHotbar, fromIdx];
-                var toIdx = targetSlot.SlotIndex;
-                var toAssignment = _actionsComponent.Assignments[SelectedHotbar, toIdx];
-
-                if (fromIdx == toIdx) return;
-                if (!fromAssignment.HasValue) return;
-
-                _actionsComponent.Assignments.AssignSlot(SelectedHotbar, toIdx, fromAssignment.Value);
-                if (toAssignment.HasValue)
-                {
-                    _actionsComponent.Assignments.AssignSlot(SelectedHotbar, fromIdx, toAssignment.Value);
-                }
-                else
-                {
-                    _actionsComponent.Assignments.ClearSlot(SelectedHotbar, fromIdx, false);
-                }
-                UpdateUI();
-            }
-
-            _dragDropHelper.EndDrag();
-        }
-
         /// <summary>
         /// Handle keydown / keyup for one of the slots via a keybinding, simulates mousedown/mouseup on it.
         /// </summary>
@@ -647,13 +544,13 @@ namespace Content.Client.UserInterface
         public void HandleHotbarKeybind(byte slot, PointerInputCmdHandler.PointerInputCmdArgs args)
         {
             var actionSlot = _slots[slot];
-            actionSlot.HandleKeybind(args.State);
+            actionSlot.Depress(args.State == BoundKeyState.Down);
         }
 
         protected override void FrameUpdate(FrameEventArgs args)
         {
             base.Update(args);
-            _dragDropHelper.Update(args.DeltaSeconds);
+            DragDropHelper.Update(args.DeltaSeconds);
         }
     }
 }

@@ -460,19 +460,19 @@ namespace Content.Client.UserInterface.Stylesheets
                 // action slot hotbar buttons
                 new StyleRule(new SelectorElement(typeof(ActionSlot), null, null, new[] {ContainerButton.StylePseudoClassNormal}), new[]
                 {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonRect),
+                    new StyleProperty(PanelContainer.StylePropertyPanel, buttonRect),
                 }),
                 new StyleRule(new SelectorElement(typeof(ActionSlot), null, null, new[] {ContainerButton.StylePseudoClassHover}), new[]
                 {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonRectHover),
+                    new StyleProperty(PanelContainer.StylePropertyPanel, buttonRectHover),
                 }),
                 new StyleRule(new SelectorElement(typeof(ActionSlot), null, null, new[] {ContainerButton.StylePseudoClassPressed}), new[]
                 {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonRectPressed),
+                    new StyleProperty(PanelContainer.StylePropertyPanel, buttonRectPressed),
                 }),
                 new StyleRule(new SelectorElement(typeof(ActionSlot), null, null, new[] {ContainerButton.StylePseudoClassDisabled}), new[]
                 {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonRectDisabled),
+                    new StyleProperty(PanelContainer.StylePropertyPanel, buttonRectDisabled),
                 }),
 
                 // action menu item buttons

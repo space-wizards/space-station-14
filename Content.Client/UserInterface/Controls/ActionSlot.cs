@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System;
+using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Actions;
 using Content.Shared.GameObjects.Components.Mobs;
@@ -13,7 +14,6 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -21,12 +21,10 @@ using Robust.Shared.Utility;
 namespace Content.Client.UserInterface.Controls
 {
     /// <summary>
-    /// A slot in the action hotbar.
-    /// Note that this should never be Disabled internally, it always needs to be clickable regardless
-    /// of whether the action is disabled (so actions can still be dragged / unassigned).
-    /// Thus any event handlers should check if the action is enabled.
+    /// A slot in the action hotbar. Not extending BaseButton because
+    /// its needs diverged too much.
     /// </summary>
-    public class ActionSlot : ContainerButton
+    public class ActionSlot : PanelContainer
     {
         // shorter than default tooltip delay so user can more easily
         // see what actions they've been given
@@ -41,17 +39,22 @@ namespace Content.Client.UserInterface.Controls
         public BaseActionPrototype? Action { get; private set; }
 
         /// <summary>
-        /// true if there is an action or itemaction assigned to the slot
+        /// true if there is an action assigned to the slot
         /// </summary>
         public bool HasAssignment => Action != null;
 
         private bool HasToggleSprite => Action != null && Action.IconOn != SpriteSpecifier.Invalid;
 
         /// <summary>
-        /// Whether the action in this slot is currently shown as usable.
-        /// Not to be confused with Control.Disabled.
+        /// Only applicable when an action is in this slot.
+        /// True if the action is currently shown as enabled, false if action disabled.
         /// </summary>
         public bool ActionEnabled { get; private set; }
+
+        /// <summary>
+        /// Is there an action in the slot that can currently be used?
+        /// </summary>
+        public bool CanUseAction => HasAssignment && ActionEnabled && !IsOnCooldown;
 
         /// <summary>
         /// Item the action is provided by, only valid if Action is an ItemActionPrototype. May be null
@@ -60,8 +63,7 @@ namespace Content.Client.UserInterface.Controls
         public IEntity? Item { get; private set; }
 
         /// <summary>
-        /// Separate from Pressed, if true, this button will be displayed as pressed
-        /// regardless of the Pressed setting.
+        /// Whether the action in this slot should be shown as toggled on. Separate from Depressed.
         /// </summary>
         public bool ToggledOn
         {
@@ -73,7 +75,6 @@ namespace Content.Client.UserInterface.Controls
                 UpdateIcons();
                 DrawModeChanged();
             }
-
         }
 
         /// <summary>
@@ -108,16 +109,24 @@ namespace Content.Client.UserInterface.Controls
         private readonly SpriteView _smallItemSpriteView;
         private readonly SpriteView _bigItemSpriteView;
         private readonly CooldownGraphic _cooldownGraphic;
+        private readonly ActionsUI _actionsUI;
+        private readonly ClientActionsComponent _actionsComponent;
         private bool _toggledOn;
+        // whether button is currently pressed down by mouse or keybind down.
+        private bool _depressed;
+        private bool _beingHovered;
 
         /// <summary>
         /// Creates an action slot for the specified number
         /// </summary>
         /// <param name="slotIndex">slot index this corresponds to, 0-9 (0 labeled as 1, 8, labeled "9", 9 labeled as "0".</param>
-        public ActionSlot(byte slotIndex)
+        public ActionSlot(ActionsUI actionsUI, ClientActionsComponent actionsComponent, byte slotIndex)
         {
+            _actionsComponent = actionsComponent;
+            _actionsUI = actionsUI;
             _gameTiming = IoCManager.Resolve<IGameTiming>();
             SlotIndex = slotIndex;
+            MouseFilter = MouseFilterMode.Stop;
 
             CustomMinimumSize = (64, 64);
             SizeFlagsVertical = SizeFlags.None;
@@ -199,6 +208,7 @@ namespace Content.Client.UserInterface.Controls
             AddChild(_cooldownGraphic);
             AddChild(paddingBox);
             AddChild(paddingBoxItemIcon);
+            DrawModeChanged();
         }
 
         private Control? SupplyTooltip(Control sender)
@@ -222,6 +232,123 @@ namespace Content.Client.UserInterface.Controls
             return attempt;
         }
 
+        protected override void MouseEntered()
+        {
+            base.MouseEntered();
+
+            _beingHovered = true;
+            DrawModeChanged();
+            if (Action is not ItemActionPrototype) return;
+            if (Item == null) return;
+            _actionsComponent.HighlightItemSlot(Item);
+        }
+
+        protected override void MouseExited()
+        {
+            base.MouseExited();
+            _beingHovered = false;
+            CancelPress();
+            DrawModeChanged();
+            _actionsComponent.StopHighlightingItemSlots();
+        }
+
+        protected override void KeyBindDown(GUIBoundKeyEventArgs args)
+        {
+            base.KeyBindDown(args);
+
+            if (args.Function == EngineKeyFunctions.UIRightClick)
+            {
+                if (!_actionsUI.Locked && !_actionsUI.DragDropHelper.IsDragging)
+                {
+                    _actionsComponent.Assignments.ClearSlot(_actionsUI.SelectedHotbar, SlotIndex, true);
+                    _actionsUI.StopTargeting();
+                    _actionsUI.UpdateUI();
+                }
+                return;
+            }
+
+            // only handle clicks, and can't do anything to this if no assignment
+            if (args.Function != EngineKeyFunctions.UIClick || !HasAssignment)
+                return;
+
+            // might turn into a drag or a full press if released
+            Depress(true);
+            _actionsUI.DragDropHelper.MouseDown(this);
+            DrawModeChanged();
+        }
+
+        protected override void KeyBindUp(GUIBoundKeyEventArgs args)
+        {
+            base.KeyBindUp(args);
+
+            if (args.Function != EngineKeyFunctions.UIClick)
+                return;
+
+            // might be finishing a drag or using the action
+            if (_actionsUI.DragDropHelper.IsDragging &&
+                _actionsUI.DragDropHelper.Dragged == this &&
+                UserInterfaceManager.CurrentlyHovered is ActionSlot targetSlot &&
+                targetSlot != this)
+            {
+                // finish the drag, swap the 2 slots
+                var fromIdx = SlotIndex;
+                var fromAssignment = _actionsComponent.Assignments[_actionsUI.SelectedHotbar, fromIdx];
+                var toIdx = targetSlot.SlotIndex;
+                var toAssignment = _actionsComponent.Assignments[_actionsUI.SelectedHotbar, toIdx];
+
+                if (fromIdx == toIdx) return;
+                if (!fromAssignment.HasValue) return;
+
+                _actionsComponent.Assignments.AssignSlot(_actionsUI.SelectedHotbar, toIdx, fromAssignment.Value);
+                if (toAssignment.HasValue)
+                {
+                    _actionsComponent.Assignments.AssignSlot(_actionsUI.SelectedHotbar, fromIdx, toAssignment.Value);
+                }
+                else
+                {
+                    _actionsComponent.Assignments.ClearSlot(_actionsUI.SelectedHotbar, fromIdx, false);
+                }
+                _actionsUI.UpdateUI();
+            }
+            else
+            {
+                // perform the action
+                if (UserInterfaceManager.CurrentlyHovered == this)
+                {
+                    Depress(false);
+                }
+            }
+            _actionsUI.DragDropHelper.EndDrag();
+            DrawModeChanged();
+        }
+
+        /// <summary>
+        /// Cancel current press without triggering the action
+        /// </summary>
+        public void CancelPress()
+        {
+            _depressed = false;
+            DrawModeChanged();
+        }
+
+        /// <summary>
+        /// Press this button down. If it was depressed and now set to not depressed, will
+        /// trigger the action. Only has an effect if CanUseAction.
+        /// </summary>
+        public void Depress(bool depress)
+        {
+            if (!CanUseAction) return;
+
+            if (_depressed && !depress)
+            {
+                // fire the action
+                // no left-click interaction with it on cooldown or revoked
+                _actionsComponent.AttemptAction(this);
+            }
+            _depressed = depress;
+           DrawModeChanged();
+        }
+
         /// <summary>
         /// Updates the action assigned to this slot.
         /// </summary>
@@ -234,7 +361,7 @@ namespace Content.Client.UserInterface.Controls
 
             Action = action;
             Item = null;
-            Pressed = false;
+            _depressed = false;
             ToggledOn = false;
             ActionEnabled = actionEnabled;
             Cooldown = null;
@@ -256,7 +383,7 @@ namespace Content.Client.UserInterface.Controls
 
             Action = action;
             Item = null;
-            Pressed = false;
+            _depressed = false;
             ToggledOn = false;
             ActionEnabled = false;
             Cooldown = null;
@@ -279,7 +406,7 @@ namespace Content.Client.UserInterface.Controls
 
             Action = action;
             Item = item;
-            Pressed = false;
+            _depressed = false;
             ToggledOn = false;
             ActionEnabled = false;
             Cooldown = null;
@@ -298,7 +425,7 @@ namespace Content.Client.UserInterface.Controls
             Action = null;
             Item = null;
             ToggledOn = false;
-            Pressed = false;
+            _depressed = false;
             Cooldown = null;
             HideTooltip();
             UpdateIcons();
@@ -314,6 +441,7 @@ namespace Content.Client.UserInterface.Controls
             if (ActionEnabled || !HasAssignment) return;
 
             ActionEnabled = true;
+            _depressed = false;
             DrawModeChanged();
             _number.SetMessage(SlotNumberLabel());
         }
@@ -327,6 +455,7 @@ namespace Content.Client.UserInterface.Controls
             if (!ActionEnabled || !HasAssignment) return;
 
             ActionEnabled = false;
+            _depressed = false;
             DrawModeChanged();
             _number.SetMessage(SlotNumberLabel());
         }
@@ -450,49 +579,54 @@ namespace Content.Client.UserInterface.Controls
         }
 
 
-        protected override void DrawModeChanged()
+        private void DrawModeChanged()
         {
-            base.DrawModeChanged();
-            // when there's no action or its on cooldown or disabled, it should
-            // not appear as if it's interactable (no mouseover or press style)
+            // always show the normal empty button style if no action in this slot
             if (!HasAssignment)
             {
-                SetOnlyStylePseudoClass(StylePseudoClassNormal);
-            }
-            else if (_cooldownGraphic.Visible && ActionEnabled)
-            {
-                SetOnlyStylePseudoClass((ToggledOn && !HasToggleSprite) ? StylePseudoClassPressed : StylePseudoClassNormal);
-            }
-            else if (!ActionEnabled)
-            {
-                SetOnlyStylePseudoClass((ToggledOn && !HasToggleSprite) ? StylePseudoClassPressed : StylePseudoClassDisabled);
-            }
-            else if (DrawMode != DrawModeEnum.Hover && ToggledOn)
-            {
-                SetOnlyStylePseudoClass(StylePseudoClassPressed);
-            }
-        }
-
-        /// <summary>
-        /// Simulates clicking on this, but being done via a keybind
-        /// </summary>
-        public void HandleKeybind(BoundKeyState keyState)
-        {
-            // simulate a click, using UIClick so it won't be treated as a possible drag / drop attempt
-            var guiArgs = new GUIBoundKeyEventArgs(EngineKeyFunctions.UIClick,
-                keyState, new ScreenCoordinates(GlobalPixelPosition), true,
-                default,
-                default);
-            if (keyState == BoundKeyState.Down)
-            {
-                KeyBindDown(guiArgs);
-            }
-            else
-            {
-                KeyBindUp(guiArgs);
+                SetOnlyStylePseudoClass(ContainerButton.StylePseudoClassNormal);
+                return;
             }
 
+            // it's only depress-able if it's usable, so if we're depressed
+            // show the depressed style
+            if (_depressed)
+            {
+                SetOnlyStylePseudoClass(ContainerButton.StylePseudoClassPressed);
+                return;
+            }
+
+            // show a hover only if the action is usable
+            if (_beingHovered)
+            {
+                if (ActionEnabled && !IsOnCooldown)
+                {
+                    SetOnlyStylePseudoClass(ContainerButton.StylePseudoClassHover);
+                    return;
+                }
+            }
+
+            // if it's toggled on, always show the toggled on style (currently same as depressed style)
+            if (ToggledOn)
+            {
+                // when there's a toggle sprite, we're showing that sprite instead of highlighting this slot
+                SetOnlyStylePseudoClass(HasToggleSprite ? ContainerButton.StylePseudoClassNormal :
+                    ContainerButton.StylePseudoClassPressed);
+                return;
+            }
+
+
+            if (!ActionEnabled)
+            {
+                SetOnlyStylePseudoClass(ContainerButton.StylePseudoClassDisabled);
+                return;
+            }
+
+
+            SetOnlyStylePseudoClass(ContainerButton.StylePseudoClassNormal);
         }
+
+
 
         protected override void FrameUpdate(FrameEventArgs args)
         {
