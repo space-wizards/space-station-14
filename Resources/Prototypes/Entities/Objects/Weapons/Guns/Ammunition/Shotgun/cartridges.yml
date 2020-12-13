@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   id: ShellShotgunBase
   name: shell (.50)
   parent: BaseItem
@@ -87,3 +87,15 @@
   - type: Ammo
     projectile: PelletShotgun
     projectilesFired: 6
+
+- type: entity
+  id: ShellTranquilizer
+  name: shell (.50 tranquilizer)
+  parent: ShellShotgunBase
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_practice.rsi
+  - type: Ammo
+    projectile: PelletShotgunTranquilizer
+    projectilesFired: 1
+    ammoSpread: 0

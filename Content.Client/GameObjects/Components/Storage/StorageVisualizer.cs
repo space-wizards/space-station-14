@@ -1,4 +1,5 @@
 ﻿using Content.Shared.GameObjects.Components.Storage;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
@@ -8,6 +9,7 @@ using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Storage
 {
+    [UsedImplicitly]
     public sealed class StorageVisualizer : AppearanceVisualizer
     {
         private string _stateBase;

@@ -66,7 +66,7 @@ namespace Content.Server.Commands.Atmos
                 tiles++;
 
                 tile.Air.Temperature = temperature;
-                gam.Invalidate(tile.GridIndices);
+                tile.Invalidate();
             }
 
             shell.SendText(player, $"Changed the temperature of {tiles} tiles.");

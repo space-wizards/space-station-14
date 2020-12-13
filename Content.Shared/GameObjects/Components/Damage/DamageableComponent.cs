@@ -135,7 +135,7 @@ namespace Content.Shared.GameObjects.Components.Damage
 
             // TODO DAMAGE Serialize damage done and resistance changes
             serializer.DataReadWriteFunction(
-                "damagePrototype",
+                "damageContainer",
                 DefaultDamageContainer,
                 prototype =>
                 {
@@ -151,7 +151,7 @@ namespace Content.Shared.GameObjects.Components.Damage
                 () => DamageContainerId);
 
             serializer.DataReadWriteFunction(
-                "resistancePrototype",
+                "resistances",
                 DefaultResistanceSet,
                 prototype =>
                 {
@@ -343,7 +343,7 @@ namespace Content.Shared.GameObjects.Components.Damage
             {
                 // Changing multiple types is a bit more complicated. Might be a better way (formula?) to do this,
                 // but essentially just loops between each damage category until all healing is used up.
-                var healingLeft = amount;
+                var healingLeft = -amount;
                 var healThisCycle = 1;
 
                 // While we have healing left...
@@ -354,11 +354,11 @@ namespace Content.Shared.GameObjects.Components.Damage
                     healThisCycle = 0;
 
                     int healPerType;
-                    if (healingLeft > -types.Count)
+                    if (healingLeft < types.Count)
                     {
                         // Say we were to distribute 2 healing between 3
                         // this will distribute 1 to each (and stop after 2 are given)
-                        healPerType = -1;
+                        healPerType = 1;
                     }
                     else
                     {
@@ -369,10 +369,11 @@ namespace Content.Shared.GameObjects.Components.Damage
 
                     foreach (var type in types)
                     {
-                        var healAmount =
-                            Math.Max(Math.Max(healPerType, -GetDamage(type)), healingLeft);
+                        var damage = GetDamage(type);
+                        var healAmount = Math.Min(healingLeft, damage);
+                        healAmount = Math.Min(healAmount, healPerType);
 
-                        ChangeDamage(type, healAmount, true);
+                        ChangeDamage(type, -healAmount, true);
                         healThisCycle += healAmount;
                         healingLeft -= healAmount;
                     }

@@ -162,7 +162,7 @@ namespace Content.Server.Commands.Atmos
 
                     tile.Air.Clear();
 
-                    atmosphere.Invalidate(tile.GridIndices);
+                    tile.Invalidate();
                 }
             }
             else
@@ -176,7 +176,7 @@ namespace Content.Server.Commands.Atmos
 
                     tile.Air.SetMoles(gas.Value, 0);
 
-                    atmosphere.Invalidate(tile.GridIndices);
+                    tile.Invalidate();
                 }
             }
 
