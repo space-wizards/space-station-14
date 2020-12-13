@@ -17,8 +17,9 @@ namespace Content.Server.Commands.Actions
         public string Description => "Revokes an action from a player, defaulting to current player";
         public string Help => "revokeaction <actionType> <name or userID, omit for current player>";
 
-        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
         {
+            if (player == null) return;
             var attachedEntity = player.AttachedEntity;
             if (args.Length > 1)
             {
