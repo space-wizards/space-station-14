@@ -5,6 +5,7 @@ using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using JetBrains.Annotations;
+using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.Input;
@@ -20,6 +21,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Utility;
+using Content.Shared.GameObjects.Components.Inventory;
 
 namespace Content.Client.GameObjects.EntitySystems
 {
@@ -34,9 +36,8 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private Popup _examineTooltipOpen;
         private CancellationTokenSource _requestCancelTokenSource;
-
         private IEntity _examinedEntity = null;
-        private Vector2 _examineOffset = default;
+
         public override void Initialize()
         {
             IoCManager.InjectDependencies(this);
@@ -72,45 +73,33 @@ namespace Content.Client.GameObjects.EntitySystems
 
         public override void Update(float frameTime)
         {
+            // Can we still examine the entity?
+            // If not then remove the target entity from the popup to stop it drawing a line
+            if (_examinedEntity != null && _examineTooltipOpen != null)
+            {
+                var playerEntity = _playerManager.LocalPlayer.ControlledEntity;
+
+                if (playerEntity == null || _examinedEntity == null || !CanExamine(playerEntity, _examinedEntity))
+                {
+                    PopupContainer.SetTargetEntityProperty(_examineTooltipOpen, null);
+                }
+            }
+
+
             base.Update(frameTime);
-
-            if (_examinedEntity == null | _playerManager.LocalPlayer.ControlledEntity == null)
-            {
-                return;
-            }
-
-            // Can we even still see the item we examined?
-            if(!CanExamine(_playerManager.LocalPlayer.ControlledEntity, _examinedEntity))
-            {
-                CloseTooltip();
-                return;
-            }
-
-            var drawPos = _eyeManager.WorldToScreen(_examinedEntity.Transform.MapPosition.Position) + _examineOffset;
-
-            // If the draw point is outside the screen then just close the popup
-            // TODO
-
-            PopupContainer.SetPopupOrigin(_examineTooltipOpen, drawPos);
         }
 
         public async void DoExamine(IEntity entity)
         {
-            if (entity == null) { return; }
-
             const float minWidth = 300;
-            var popupPos = _userInterfaceManager.MousePositionScaled;
-
             CloseTooltip();
-
             _examinedEntity = entity;
 
-            // Find where we clicked on the entity specifically
-            _examineOffset = new Vector2(_userInterfaceManager.MousePositionScaled.X - _eyeManager.WorldToScreen(entity.Transform.MapPosition.Position).X,
-                                         _userInterfaceManager.MousePositionScaled.Y - _eyeManager.WorldToScreen(entity.Transform.MapPosition.Position).Y);
+            var popupPos = _userInterfaceManager.MousePositionScaled;
 
             // Actually open the tooltip.
             _examineTooltipOpen = new Popup();
+            PopupContainer.SetTargetEntityProperty(_examineTooltipOpen, _examinedEntity);
             _userInterfaceManager.ModalRoot.AddChild(_examineTooltipOpen);
             var panel = new PanelContainer();
             panel.AddStyleClass(StyleClassEntityTooltip);
@@ -131,6 +120,10 @@ namespace Content.Client.GameObjects.EntitySystems
                 Text = _examinedEntity.Name,
                 SizeFlagsHorizontal = Control.SizeFlags.FillExpand,
             });
+
+            var size = Vector2.ComponentMax((minWidth, 0), panel.CombinedMinimumSize);
+
+            _examineTooltipOpen.Open(UIBox2.FromDimensions(popupPos, size));
 
             FormattedMessage message;
             if (_examinedEntity.Uid.IsClientSide())
@@ -173,28 +166,6 @@ namespace Content.Client.GameObjects.EntitySystems
                     break;
                 }
             }
-
-            var size = Vector2.ComponentMax((minWidth, 0), panel.CombinedMinimumSize);
-            size = Vector2.ComponentMax(size, _examineTooltipOpen.CombinedPixelMinimumSize);
-
-            // If the target entity is so close to the edge of the screen
-            // that the popup would open partially offscreen
-            // then move the offset back inside the screen
-            if (popupPos.X + size.X > _userInterfaceManager.WindowRoot.Width)
-            {
-                var xOffset = (popupPos.X + size.X) - _userInterfaceManager.WindowRoot.Width;
-                popupPos.X -= xOffset;
-                _examineOffset.X -= xOffset;
-            }
-
-            if (popupPos.Y + size.Y > _userInterfaceManager.WindowRoot.Height)
-            {
-                var yOffset = (popupPos.Y + size.Y) - _userInterfaceManager.WindowRoot.Height;
-                popupPos.Y -= yOffset;
-                _examineOffset.Y -= yOffset;
-            }
-
-            _examineTooltipOpen.Open(UIBox2.FromDimensions(popupPos, size), null, true);
         }
 
         public void CloseTooltip()
@@ -212,7 +183,6 @@ namespace Content.Client.GameObjects.EntitySystems
             }
 
             _examinedEntity = null;
-            _examineOffset = default;
         }
     }
 }
