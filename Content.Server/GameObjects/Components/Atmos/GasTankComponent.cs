@@ -10,7 +10,6 @@ using Content.Shared.Actions;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Atmos.GasTank;
-using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
