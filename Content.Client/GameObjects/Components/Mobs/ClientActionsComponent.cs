@@ -135,9 +135,10 @@ namespace Content.Client.GameObjects.Components.Mobs
                     break;
                 case BehaviorType.Toggle:
                     // for toggle actions, we immediately tell the server we're toggling it.
-                    // Predictive toggle it on as well
                     if (attempt.TryGetActionState(this, out var actionState))
                     {
+                        // TODO: At the moment we always predict that the toggle will work clientside,
+                        // even if it sometimes may not (it will be reset by the server if wrong).
                         attempt.ToggleAction(this, !actionState.ToggledOn);
                         slot.ToggledOn = !actionState.ToggledOn;
                         SendNetworkMessage(attempt.PerformToggleActionMessage(!actionState.ToggledOn));

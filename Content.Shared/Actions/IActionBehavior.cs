@@ -9,10 +9,7 @@ namespace Content.Shared.Actions
     /// Currently just a marker interface delineating the different possible
     /// types of action behaviors.
     /// </summary>
-    public interface IActionBehavior : IExposeData
-    {
-
-    }
+    public interface IActionBehavior : IExposeData { }
 
     /// <summary>
     /// Base class for all action event args
@@ -30,13 +27,13 @@ namespace Content.Shared.Actions
         /// <summary>
         /// Actions component of the performer.
         /// </summary>
-        public readonly SharedActionsComponent PerformerActionsComponent;
+        public readonly SharedActionsComponent PerformerActions;
 
         public ActionEventArgs(IEntity performer, ActionType actionType)
         {
             Performer = performer;
             ActionType = actionType;
-            if (!Performer.TryGetComponent(out PerformerActionsComponent))
+            if (!Performer.TryGetComponent(out PerformerActions))
             {
                 throw new InvalidOperationException($"performer {performer.Name} tried to perform action {actionType} " +
                                                     $" but the performer had no actions component," +

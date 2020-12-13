@@ -20,6 +20,9 @@
     visuals:
       - type: FlashLightVisualizer
   - type: HandheldLight
+  - type: ItemActions
+    actions:
+      - actionType: ToggleLight
   - type: PowerCellSlot
 
 - type: entity

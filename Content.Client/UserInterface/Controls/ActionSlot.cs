@@ -226,7 +226,8 @@ namespace Content.Client.UserInterface.Controls
             {
                 ActionPrototype actionPrototype => new ActionAttempt(actionPrototype),
                 ItemActionPrototype itemActionPrototype =>
-                    Item != null ? new ItemActionAttempt(itemActionPrototype, Item) : null,
+                    (Item != null && Item.TryGetComponent<ItemActionsComponent>(out var itemActions)) ?
+                        new ItemActionAttempt(itemActionPrototype, Item, itemActions) : null,
                 _ => null
             };
             return attempt;

@@ -211,7 +211,6 @@
             "RandomArcade",
             "RandomSpriteState",
             "DebugEquip",
-            "ItemActions",
             "InnateActions",
             "ReagentGrinder",
             "Grindable",

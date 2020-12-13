@@ -42,7 +42,9 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// <summary>
         /// Perform the server-side logic of the toggle action
         /// </summary>
-        void DoToggleAction(IEntity player, bool on);
+        /// <returns>true if the attempt to toggle was successful, meaning the state should be toggled to the
+        /// indicated value</returns>
+        bool DoToggleAction(IEntity player, bool on);
 
         /// <summary>
         /// Perform the server-side logic of the target point action
@@ -81,9 +83,9 @@ namespace Content.Shared.GameObjects.Components.Mobs
             _action.InstantAction.DoInstantAction(new InstantActionEventArgs(player, _action.ActionType));
         }
 
-        public void DoToggleAction(IEntity player, bool on)
+        public bool DoToggleAction(IEntity player, bool on)
         {
-            _action.ToggleAction.DoToggleAction(new ToggleActionEventArgs(player, _action.ActionType, on));
+            return _action.ToggleAction.DoToggleAction(new ToggleActionEventArgs(player, _action.ActionType, on));
         }
 
         public void DoTargetPointAction(IEntity player, EntityCoordinates target)
@@ -131,13 +133,15 @@ namespace Content.Shared.GameObjects.Components.Mobs
     {
         private readonly ItemActionPrototype _action;
         private readonly IEntity _item;
+        private readonly ItemActionsComponent _itemActions;
 
         public BaseActionPrototype Action => _action;
 
-        public ItemActionAttempt(ItemActionPrototype action, IEntity item)
+        public ItemActionAttempt(ItemActionPrototype action, IEntity item, ItemActionsComponent itemActions)
         {
             _action = action;
             _item = item;
+            _itemActions = itemActions;
         }
 
         public void DoInstantAction(IEntity player)
@@ -145,9 +149,9 @@ namespace Content.Shared.GameObjects.Components.Mobs
             _action.InstantAction.DoInstantAction(new InstantItemActionEventArgs(player, _item, _action.ActionType));
         }
 
-        public void DoToggleAction(IEntity player, bool on)
+        public bool DoToggleAction(IEntity player, bool on)
         {
-            _action.ToggleAction.DoToggleAction(new ToggleItemActionEventArgs(player, on, _item, _action.ActionType));
+            return _action.ToggleAction.DoToggleAction(new ToggleItemActionEventArgs(player, on, _item, _action.ActionType));
         }
 
         public void DoTargetPointAction(IEntity player, EntityCoordinates target)
@@ -169,7 +173,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
         public void ToggleAction(SharedActionsComponent actionsComponent, bool toggleOn)
         {
-            actionsComponent.ToggleAction(_action.ActionType, _item, toggleOn);
+            _itemActions.Toggle(_action.ActionType, toggleOn);
         }
 
         public ComponentMessage PerformInstantActionMessage()

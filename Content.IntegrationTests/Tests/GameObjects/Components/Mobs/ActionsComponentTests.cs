@@ -21,7 +21,6 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
     [TestOf(typeof(SharedActionsComponent))]
     [TestOf(typeof(ClientActionsComponent))]
     [TestOf(typeof(ServerActionsComponent))]
-    [TestOf(typeof(SharedActionSystem))]
     public class ActionsComponentTests : ContentIntegrationTest
     {
         [Test]

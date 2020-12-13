@@ -17,7 +17,7 @@ namespace Content.Server.Actions
             serializer.DataField(this, x => x.MessageOff, "messageOff", "off!");
         }
 
-        public void DoToggleAction(ToggleItemActionEventArgs args)
+        public bool DoToggleAction(ToggleItemActionEventArgs args)
         {
             if (args.ToggledOn)
             {
@@ -27,9 +27,11 @@ namespace Content.Server.Actions
             {
                 args.Performer.PopupMessageEveryone(args.Item.Name + ": " +MessageOff);
             }
+
+            return true;
         }
 
-        public void DoToggleAction(ToggleActionEventArgs args)
+        public bool DoToggleAction(ToggleActionEventArgs args)
         {
             if (args.ToggledOn)
             {
@@ -39,6 +41,8 @@ namespace Content.Server.Actions
             {
                 args.Performer.PopupMessageEveryone(MessageOff);
             }
+
+            return true;
         }
     }
 }

@@ -1,11 +1,7 @@
-﻿using System;
-using Content.Server.Utility;
+﻿using Content.Server.Utility;
 using Content.Shared.Actions;
-using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
-using Robust.Shared.Interfaces.Timing;
-using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Actions
@@ -30,14 +26,14 @@ namespace Content.Server.Actions
             args.Performer.PopupMessageEveryone(Message);
             if (Cooldown > 0)
             {
-                args.PerformerActionsComponent.Cooldown(args.ActionType, args.Item, Cooldowns.SecondsFromNow(Cooldown));
+                args.ItemActions.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(Cooldown));
             }
         }
 
         public void DoInstantAction(InstantActionEventArgs args)
         {
             args.Performer.PopupMessageEveryone(Message);
-            args.PerformerActionsComponent.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(Cooldown));
+            args.PerformerActions.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(Cooldown));
         }
     }
 }

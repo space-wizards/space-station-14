@@ -1,6 +1,4 @@
-﻿using System;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
+﻿using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Shared.Actions
 {
@@ -10,11 +8,18 @@ namespace Content.Shared.Actions
     public interface IToggleItemAction : IItemActionBehavior
     {
         /// <summary>
-        /// Invoked after the action is toggled on/off.
+        /// Invoked when the action will be toggled on/off.
         /// Implementation should perform the server side logic of whatever
         /// happens when it is toggled on / off.
         /// </summary>
-        void DoToggleAction(ToggleItemActionEventArgs args);
+        /// <returns>true if the attempt to toggle was successful, meaning the state should be toggled to the desired value.
+        /// False to leave toggle status unchanged. This is NOT returning the new toggle status, it is only returning
+        /// whether the attempt to toggle to the indicated status was successful.
+        ///
+        /// Note that it's still okay if the implementation directly modifies toggle status via ItemActionsComponent,
+        /// this is just an additional level of safety to ensure implementations will always
+        /// explicitly indicate if the toggle status should be changed.</returns>
+        bool DoToggleAction(ToggleItemActionEventArgs args);
     }
 
     public class ToggleItemActionEventArgs : ItemActionEventArgs

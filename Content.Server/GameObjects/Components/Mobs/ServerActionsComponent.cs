@@ -67,8 +67,16 @@ namespace Content.Server.GameObjects.Components.Mobs
                         return;
                     }
 
-                    attempt.ToggleAction(this, toggleMsg.ToggleOn);
-                    attempt.DoToggleAction(player, toggleMsg.ToggleOn);
+                    if (attempt.DoToggleAction(player, toggleMsg.ToggleOn))
+                    {
+                        attempt.ToggleAction(this, toggleMsg.ToggleOn);
+                    }
+                    else
+                    {
+                        // if client predicted the toggle will work, need to reset
+                        // that prediction
+                        Dirty();
+                    }
                     break;
                 case BehaviorType.TargetPoint:
                     if (performActionMessage is not ITargetPointActionMessage targetPointMsg) return;
@@ -125,21 +133,26 @@ namespace Content.Server.GameObjects.Components.Mobs
                         Logger.DebugS("action", "user {0} attempted to perform" +
                                                 " item action {1} for unknown item {2}",
                             session.AttachedEntity, performItemActionMessage.ActionType, performItemActionMessage.Item);
-                        // failsafe, ensure it's revoked (it should've been already)
-                        Revoke(performItemActionMessage.Item);
                         return null;
                     }
 
-                    if (!IsEquipped(item))
+                    if (!item.TryGetComponent<ItemActionsComponent>(out var actionsComponent))
                     {
                         Logger.DebugS("action", "user {0} attempted to perform" +
-                                                " item action {1} for item {2} which is not equipped",
+                                                " item action {1} for item {2} which has no ItemActionsComponent",
                             session.AttachedEntity, performItemActionMessage.ActionType, item);
-                        // failsafe, ensure it's revoked (it should've been already)
-                        Revoke(performItemActionMessage.Item);
                         return null;
                     }
-                    attempt = new ItemActionAttempt(itemAction, item);
+
+                    if (actionsComponent.Holder != session.AttachedEntity)
+                    {
+                        Logger.DebugS("action", "user {0} attempted to perform" +
+                                                " item action {1} for item {2} which they are not holding",
+                            session.AttachedEntity, performItemActionMessage.ActionType, item);
+                        return null;
+                    }
+
+                    attempt = new ItemActionAttempt(itemAction, item, actionsComponent);
                     break;
                 default:
                     return null;
