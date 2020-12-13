@@ -234,6 +234,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
 
             // At this point firing is confirmed
+            ammo.SendMessage(this, new BarrelFiredMessage(projectile));
             var direction = (targetPos - shooter.Transform.WorldPosition).ToAngle();
             var angle = GetRecoilAngle(direction);
             // This should really be client-side but for now we'll just leave it here
@@ -456,6 +457,16 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             });
 
             message.AddText(fireRateMessage);
+        }
+    }
+
+    public class BarrelFiredMessage : ComponentMessage
+    {
+        public readonly IEntity FiredProjectile;
+
+        public BarrelFiredMessage(IEntity firedProjectile)
+        {
+            FiredProjectile = firedProjectile;
         }
     }
 }

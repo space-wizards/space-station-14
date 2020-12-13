@@ -90,10 +90,6 @@
     damages:
       Blunt: 1
   - type: SolutionContainer
-    maxVol: 10
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 10
-    caps: RemoveFrom
+    maxVol: 15
+    caps: AddTo
   - type: ChemicalInjectionProjectile
