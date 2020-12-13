@@ -103,6 +103,13 @@ namespace Content.Shared
             CVarDef.Create("traitor.max_picks", 20);
 
         /*
+         * TraitorDeathMatch
+         */
+
+        public static readonly CVarDef<int> TraitorDeathMatchStartingBalance =
+            CVarDef.Create("traitordm.starting_balance", 20);
+
+        /*
          * Console
          */
 

@@ -44662,4 +44662,32 @@ entities:
   components:
   - parent: 1045
     type: Transform
+- uid: 4285
+  type: TraitorDMRedemptionMachineSpawner
+  components:
+  - parent: 855
+    pos: -18.5,25.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4286
+  type: TraitorDMRedemptionMachineSpawner
+  components:
+  - parent: 855
+    pos: 10.5,13.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4287
+  type: TraitorDMRedemptionMachineSpawner
+  components:
+  - parent: 855
+    pos: -9.5,-25.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4288
+  type: TraitorDMRedemptionMachineSpawner
+  components:
+  - parent: 855
+    pos: 27.5,-1.5
+    rot: -1.5707963267948966 rad
+    type: Transform
 ...
