@@ -1,5 +1,6 @@
 ﻿using System;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
@@ -42,11 +43,6 @@ namespace Content.Server.GameObjects.Components.Mobs
             base.OnRemove();
         }
 
-        public override ComponentState GetComponentState()
-        {
-            return new AlertsComponentState(CreateAlertStatesArray());
-        }
-
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession session = null)
         {
             base.HandleNetworkMessage(message, netChannel, session);
@@ -67,14 +63,21 @@ namespace Content.Server.GameObjects.Components.Mobs
                         break;
                     }
 
-                    // TODO: Implement clicking other status effects in the HUD
-                    if (AlertManager.TryDecode(msg.EncodedAlert, out var alert))
+                    if (!IsShowingAlert(msg.AlertType))
                     {
-                        PerformAlertClickCallback(alert, player);
+                        Logger.DebugS("alert", "user {0} attempted to" +
+                                              " click alert {1} which is not currently showing for them",
+                            player.Name, msg.AlertType);
+                        break;
+                    }
+
+                    if (AlertManager.TryGet(msg.AlertType, out var alert))
+                    {
+                        alert.OnClick.AlertClicked(new ClickAlertEventArgs(player, alert));
                     }
                     else
                     {
-                        Logger.WarningS("alert", "unrecognized encoded alert {0}", msg.EncodedAlert);
+                        Logger.WarningS("alert", "unrecognized encoded alert {0}", msg.AlertType);
                     }
 
                     break;

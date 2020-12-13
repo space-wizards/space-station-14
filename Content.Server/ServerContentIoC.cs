@@ -20,6 +20,7 @@ using Content.Server.PDA;
 using Content.Server.Preferences;
 using Content.Server.Sandbox;
 using Content.Server.Utility;
+using Content.Shared.Actions;
 using Content.Shared.Interfaces;
 using Content.Shared.Kitchen;
 using Content.Shared.Alert;
@@ -43,6 +44,7 @@ namespace Content.Server
             IoCManager.Register<IServerDbManager, ServerDbManager>();
             IoCManager.Register<RecipeManager, RecipeManager>();
             IoCManager.Register<AlertManager, AlertManager>();
+            IoCManager.Register<ActionManager, ActionManager>();
             IoCManager.Register<IPDAUplinkManager,PDAUplinkManager>();
             IoCManager.Register<INodeGroupFactory, NodeGroupFactory>();
             IoCManager.Register<INodeGroupManager, NodeGroupManager>();

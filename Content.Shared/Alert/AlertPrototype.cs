@@ -1,4 +1,6 @@
 ﻿using System;
+using Content.Shared.Interfaces;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -70,6 +72,11 @@ namespace Content.Shared.Alert
         /// </summary>
         public bool SupportsSeverity => MaxSeverity != -1;
 
+        /// <summary>
+        /// Defines what to do when the alert is clicked.
+        /// </summary>
+        public IAlertClick OnClick { get; private set; }
+
         public void LoadFrom(YamlMappingNode mapping)
         {
             var serializer = YamlObjectSerializer.NewReader(mapping);
@@ -94,6 +101,9 @@ namespace Content.Shared.Alert
                 Category = alertCategory;
             }
             AlertKey = new AlertKey(AlertType, Category);
+
+            if (IoCManager.Resolve<IModuleManager>().IsClientModule) return;
+            serializer.DataField(this, x => x.OnClick, "onClick", null);
         }
 
         /// <param name="severity">severity level, if supported by this alert</param>
@@ -143,30 +153,26 @@ namespace Content.Shared.Alert
     [Serializable, NetSerializable]
     public struct AlertKey
     {
-        private readonly AlertType? _alertType;
-        private readonly AlertCategory? _alertCategory;
+        public readonly AlertType? AlertType;
+        public readonly AlertCategory? AlertCategory;
 
         /// NOTE: if the alert has a category you must pass the category for this to work
-        /// properly as a key. I.e. if the alert has a category and you pass only the ID, and you
-        /// compare this to another AlertKey that has both the category and the same ID, it will not consider them equal.
+        /// properly as a key. I.e. if the alert has a category and you pass only the alert type, and you
+        /// compare this to another AlertKey that has both the category and the same alert type, it will not consider them equal.
         public AlertKey(AlertType? alertType, AlertCategory? alertCategory)
         {
-            // if there is a category, ignore the alerttype.
-            if (alertCategory != null)
-            {
-                _alertCategory = alertCategory;
-                _alertType = null;
-            }
-            else
-            {
-                _alertCategory = null;
-                _alertType = alertType;
-            }
+            AlertCategory = alertCategory;
+            AlertType = alertType;
         }
 
         public bool Equals(AlertKey other)
         {
-            return _alertType == other._alertType && _alertCategory == other._alertCategory;
+            // compare only on alert category if we have one
+            if (AlertCategory.HasValue)
+            {
+                return other.AlertCategory == AlertCategory;
+            }
+            return AlertType == other.AlertType && AlertCategory == other.AlertCategory;
         }
 
         public override bool Equals(object obj)
@@ -176,11 +182,14 @@ namespace Content.Shared.Alert
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(_alertType, _alertCategory);
+            // use only alert category if we have one
+            if (AlertCategory.HasValue) return AlertCategory.GetHashCode();
+            return AlertType.GetHashCode();
         }
 
         /// <param name="category">alert category, must not be null</param>
-        /// <returns>An alert key for the provided alert category</returns>
+        /// <returns>An alert key for the provided alert category. This must only be used for
+        /// queries and never storage, as it is lacking an alert type.</returns>
         public static AlertKey ForCategory(AlertCategory category)
         {
             return new(null, category);

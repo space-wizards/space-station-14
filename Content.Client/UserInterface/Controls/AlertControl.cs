@@ -1,29 +1,47 @@
 ﻿#nullable enable
 using System;
-using Content.Client.UserInterface;
 using Content.Client.Utility;
 using Content.Shared.Alert;
 using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Interfaces.Timing;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Timing;
 
-namespace Content.Client.GameObjects.Components.Mobs
+namespace Content.Client.UserInterface.Controls
 {
     public class AlertControl : BaseButton
     {
+        // shorter than default tooltip delay so user can more easily
+        // see what alerts they have
+        private const float CustomTooltipDelay = 0.5f;
+
         public AlertPrototype Alert { get; }
 
         /// <summary>
-        /// Total duration of the cooldown in seconds. Null if no duration / cooldown.
+        /// Current cooldown displayed in this slot. Set to null to show no cooldown.
         /// </summary>
-        public int? TotalDuration { get; set; }
+        public (TimeSpan Start, TimeSpan End)? Cooldown
+        {
+            get => _cooldown;
+            set
+            {
+                _cooldown = value;
+                if (SuppliedTooltip is ActionAlertTooltip actionAlertTooltip)
+                {
+                    actionAlertTooltip.Cooldown = value;
+                }
+            }
+        }
+        private (TimeSpan Start, TimeSpan End)? _cooldown;
 
         private short? _severity;
+        private readonly IGameTiming _gameTiming;
         private readonly TextureRect _icon;
         private readonly CooldownGraphic _cooldownGraphic;
-
         private readonly IResourceCache _resourceCache;
-
 
         /// <summary>
         /// Creates an alert control reflecting the indicated alert + state
@@ -33,6 +51,9 @@ namespace Content.Client.GameObjects.Components.Mobs
         /// <param name="resourceCache">resourceCache to use to load alert icon textures</param>
         public AlertControl(AlertPrototype alert, short? severity, IResourceCache resourceCache)
         {
+            _gameTiming = IoCManager.Resolve<IGameTiming>();
+            TooltipDelay = CustomTooltipDelay;
+            TooltipSupplier = SupplyTooltip;
             _resourceCache = resourceCache;
             Alert = alert;
             _severity = severity;
@@ -49,6 +70,11 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         }
 
+        private Control SupplyTooltip(Control? sender)
+        {
+            return new ActionAlertTooltip(Alert.Name, Alert.Description) {Cooldown = Cooldown};
+        }
+
         /// <summary>
         /// Change the alert severity, changing the displayed icon
         /// </summary>
@@ -61,33 +87,24 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
         }
 
-        /// <summary>
-        /// Updates the displayed cooldown amount, doing nothing if alertCooldown is null
-        /// </summary>
-        /// <param name="alertCooldown">cooldown start and end</param>
-        /// <param name="curTime">current game time</param>
-        public void UpdateCooldown((TimeSpan Start, TimeSpan End)? alertCooldown, in TimeSpan curTime)
+        protected override void FrameUpdate(FrameEventArgs args)
         {
-            if (!alertCooldown.HasValue)
+            base.FrameUpdate(args);
+            if (!Cooldown.HasValue)
             {
-                _cooldownGraphic.Progress = 0;
                 _cooldownGraphic.Visible = false;
-                TotalDuration = null;
+                _cooldownGraphic.Progress = 0;
+                return;
             }
-            else
-            {
 
-                var start = alertCooldown.Value.Start;
-                var end = alertCooldown.Value.End;
+            var duration = Cooldown.Value.End - Cooldown.Value.Start;
+            var curTime = _gameTiming.CurTime;
+            var length = duration.TotalSeconds;
+            var progress = (curTime - Cooldown.Value.Start).TotalSeconds / length;
+            var ratio = (progress <= 1 ? (1 - progress) : (curTime - Cooldown.Value.End).TotalSeconds * -5);
 
-                var length = (end - start).TotalSeconds;
-                var progress = (curTime - start).TotalSeconds / length;
-                var ratio = (progress <= 1 ? (1 - progress) : (curTime - end).TotalSeconds * -5);
-
-                TotalDuration = (int?) Math.Round(length);
-                _cooldownGraphic.Progress = MathHelper.Clamp((float)ratio, -1, 1);
-                _cooldownGraphic.Visible = ratio > -1f;
-            }
+            _cooldownGraphic.Progress = MathHelper.Clamp((float)ratio, -1, 1);
+            _cooldownGraphic.Visible = ratio > -1f;
         }
     }
 }

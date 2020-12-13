@@ -15,6 +15,7 @@ namespace Content.Client.GameObjects.Components.Items
 {
     [RegisterComponent]
     [ComponentReference(typeof(ISharedHandsComponent))]
+    [ComponentReference(typeof(SharedHandsComponent))]
     public class HandsComponent : SharedHandsComponent
     {
         [Dependency] private readonly IGameHud _gameHud = default!;
@@ -30,6 +31,18 @@ namespace Content.Client.GameObjects.Components.Items
         [ViewVariables] private ISpriteComponent? _sprite;
 
         [ViewVariables] public IEntity? ActiveHand => GetEntity(ActiveIndex);
+
+        public override bool IsHolding(IEntity entity)
+        {
+            foreach (var hand in _hands)
+            {
+                if (hand.Entity == entity)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         private void AddHand(Hand hand)
         {
