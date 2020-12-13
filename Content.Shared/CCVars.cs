@@ -107,7 +107,7 @@ namespace Content.Shared
          */
 
         public static readonly CVarDef<int> TraitorDeathMatchStartingBalance =
-            CVarDef.Create("traitordeathmatch.starting_balance", 20);
+            CVarDef.Create("traitordm.starting_balance", 20);
 
         /*
          * Console

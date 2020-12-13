@@ -136,9 +136,21 @@ namespace Content.Server.GameTicking.GamePresets
                 var avoidMeMind = player.Data.ContentData()?.Mind;
                 if ((avoidMeMind == null) || (avoidMeMind == ignoreMe))
                     continue;
-                if (avoidMeMind.OwnedEntity == null)
+                var avoidMeEntity = avoidMeMind.OwnedEntity;
+                if (avoidMeEntity == null)
                     continue;
-                existingPlayerPoints.Add(avoidMeMind.OwnedEntity.Transform.Coordinates);
+                if (avoidMeEntity.TryGetComponent(out IMobStateComponent mobState))
+                {
+                    // Does have mob state component; if critical or dead, they don't really matter for spawn checks
+                    if (mobState.IsCritical() || mobState.IsDead())
+                        continue;
+                }
+                else
+                {
+                    // Doesn't have mob state component. Assume something interesting is going on and don't count this as someone to avoid.
+                    continue;
+                }
+                existingPlayerPoints.Add(avoidMeEntity.Transform.Coordinates);
             }
 
             // Iterate over each possible spawn point, comparing to the existing player points.

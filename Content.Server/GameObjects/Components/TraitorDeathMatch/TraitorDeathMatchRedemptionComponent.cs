@@ -36,38 +36,38 @@ namespace Content.Server.GameObjects.Components.TraitorDeathMatch
         {
             if (!eventArgs.User.TryGetComponent<InventoryComponent>(out var userInv))
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("No inventory! How'd you manage that?"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("The machine buzzes, and displays: \"USER PDA OUT OF RANGE (0039)\""));
                 return false;
             }
 
             if (!eventArgs.User.TryGetComponent<MindComponent>(out var userMindComponent))
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("You have no mind component! How'd you manage that?"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("The machine buzzes, and displays: \"AUTHENTICATION FAILED (0045)\""));
                 return false;
             }
 
             var userMind = userMindComponent.Mind;
             if (userMind == null)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("You have no mind! How'd you manage that?"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("The machine buzzes, and displays: \"AUTHENTICATION FAILED (0052)\""));
                 return false;
             }
 
             if (!eventArgs.Using.TryGetComponent<PDAComponent>(out var victimPDA))
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("It must be a PDA!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("The machine buzzes, and displays: \"GIVEN PDA IS NOT A PDA (0058)\""));
                 return false;
             }
 
             if (!eventArgs.Using.TryGetComponent<TraitorDeathMatchReliableOwnerTagComponent>(out var victimPDAOwner))
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("This PDA isn't owned by anyone!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("The machine buzzes, and displays: \"GIVEN PDA HAS NO OWNER (0064)\""));
                 return false;
             }
 
             if (victimPDAOwner.UserId == userMind.UserId)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't redeem your own PDA!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("The machine buzzes, and displays: \"GIVEN PDA OWNED BY USER (0070)\""));
                 return false;
             }
 
@@ -80,7 +80,7 @@ namespace Content.Server.GameObjects.Components.TraitorDeathMatch
 
             if (userPDA == null)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("You must have your own PDA in your PDA slot."));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("The machine buzzes, and displays: \"NO USER PDA IN IDCARD POCKET (0083)\""));
                 return false;
             }
 
@@ -99,13 +99,13 @@ namespace Content.Server.GameObjects.Components.TraitorDeathMatch
                 // ...So apparently, "it probably shouldn't kill people for a mistake".
                 // :(
                 // Give boring error message instead.
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("Your own PDA does not have an uplink account."));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("The machine buzzes, and displays: \"USER PDA HAS NO UPLINK ACCOUNT (0102)\""));
                 return false;
             }
 
             if (victimAccount == null)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("The PDA you're trying to redeem does not have an uplink account."));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("The machine buzzes, and displays: \"GIVEN PDA HAS NO UPLINK ACCOUNT (0108)\""));
                 return false;
             }
 
@@ -116,7 +116,7 @@ namespace Content.Server.GameObjects.Components.TraitorDeathMatch
 
             victimPDA.Owner.Delete();
 
-            Owner.PopupMessage(eventArgs.User, Loc.GetString("You received {0} TC.", transferAmount));
+            Owner.PopupMessage(eventArgs.User, Loc.GetString("The machine plays a happy little tune, and displays: \"SUCCESS: {0} TC TRANSFERRED\"", transferAmount));
             return true;
         }
     }
