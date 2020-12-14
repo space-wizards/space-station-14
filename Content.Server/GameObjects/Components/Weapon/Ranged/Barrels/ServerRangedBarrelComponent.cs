@@ -234,7 +234,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
 
             // At this point firing is confirmed
-            ammo.SendMessage(this, new BarrelFiredMessage(projectile));
             var direction = (targetPos - shooter.Transform.WorldPosition).ToAngle();
             var angle = GetRecoilAngle(direction);
             // This should really be client-side but for now we'll just leave it here
@@ -253,7 +252,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 var ammoComponent = ammo.GetComponent<AmmoComponent>();
 
-                FireProjectiles(shooter, projectile, ammoComponent.ProjectilesFired, ammoComponent.EvenSpreadAngle, angle, ammoComponent.Velocity);
+                FireProjectiles(shooter, projectile, ammoComponent.ProjectilesFired, ammoComponent.EvenSpreadAngle, angle, ammoComponent.Velocity, ammo);
 
                 if (CanMuzzleFlash)
                 {
@@ -352,7 +351,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         /// <summary>
         /// Handles firing one or many projectiles
         /// </summary>
-        private void FireProjectiles(IEntity shooter, IEntity baseProjectile, int count, float evenSpreadAngle, Angle angle, float velocity)
+        private void FireProjectiles(IEntity shooter, IEntity baseProjectile, int count, float evenSpreadAngle, Angle angle, float velocity, IEntity ammo)
         {
             List<Angle> sprayAngleChange = null;
             if (count > 1)
@@ -361,6 +360,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 sprayAngleChange = Linspace(-evenSpreadAngle / 2, evenSpreadAngle / 2, count);
             }
 
+            var firedProjectiles = new List<IEntity>();
             for (var i = 0; i < count; i++)
             {
                 IEntity projectile;
@@ -374,6 +374,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     projectile =
                         Owner.EntityManager.SpawnEntity(baseProjectile.Prototype.ID, baseProjectile.Transform.Coordinates);
                 }
+                firedProjectiles.Add(projectile);
 
                 Angle projectileAngle;
 
@@ -399,6 +400,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
                 projectile.Transform.LocalRotation = projectileAngle.Theta;
             }
+            ammo.SendMessage(this, new BarrelFiredMessage(firedProjectiles));
         }
 
         /// <summary>
@@ -462,11 +464,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
     public class BarrelFiredMessage : ComponentMessage
     {
-        public readonly IEntity FiredProjectile;
+        public readonly List<IEntity> FiredProjectiles;
 
-        public BarrelFiredMessage(IEntity firedProjectile)
+        public BarrelFiredMessage(List<IEntity> firedProjectiles)
         {
-            FiredProjectile = firedProjectile;
+            FiredProjectiles = firedProjectiles;
         }
     }
 }
