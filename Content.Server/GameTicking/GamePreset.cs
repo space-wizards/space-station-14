@@ -1,5 +1,5 @@
 #nullable enable annotations
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Shared.Preferences;
 using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Mobs;
@@ -14,7 +14,7 @@ using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Shared.Network;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Console;
-﻿using Robust.Server.Interfaces.Player;
+using Robust.Server.Interfaces.Player;
 using Robust.Shared.IoC;
 
 namespace Content.Server.GameTicking
