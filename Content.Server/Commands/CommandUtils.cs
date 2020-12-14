@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable enable
+using System;
+using System.Diagnostics.CodeAnalysis;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.GameObjects;
@@ -17,7 +19,7 @@ namespace Content.Server.Commands
         /// sending a failure to the performer if unable to.
         /// </summary>
         public static bool TryGetSessionByUsernameOrId(IConsoleShell shell,
-            string usernameOrId, IPlayerSession performer, out IPlayerSession session)
+            string usernameOrId, IPlayerSession performer, [NotNullWhen(true)] out IPlayerSession? session)
         {
             var plyMgr = IoCManager.Resolve<IPlayerManager>();
             if (plyMgr.TryGetSessionByUsername(usernameOrId, out session)) return true;
@@ -37,7 +39,7 @@ namespace Content.Server.Commands
         /// sending a failure to the performer if unable to.
         /// </summary>
         public static bool TryGetAttachedEntityByUsernameOrId(IConsoleShell shell,
-            string usernameOrId, IPlayerSession performer, out IEntity attachedEntity)
+            string usernameOrId, IPlayerSession performer, [NotNullWhen(true)]  out IEntity? attachedEntity)
         {
             attachedEntity = null;
             if (!TryGetSessionByUsernameOrId(shell, usernameOrId, performer, out var session)) return false;
@@ -50,17 +52,5 @@ namespace Content.Server.Commands
             attachedEntity = session.AttachedEntity;
             return true;
         }
-
-        /// <summary>
-        /// Checks if attached entity is null, returning false and sending a message
-        /// to performer if not.
-        /// </summary>
-        public static bool ValidateAttachedEntity(IConsoleShell shell, IPlayerSession performer, IEntity attachedEntity)
-        {
-            if (attachedEntity != null) return true;
-            shell.SendText(performer, "User has no attached entity.");
-            return false;
-        }
-
     }
 }

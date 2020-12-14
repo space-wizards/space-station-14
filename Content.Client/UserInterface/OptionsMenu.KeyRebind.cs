@@ -150,7 +150,6 @@ namespace Content.Client.UserInterface
                 AddButton(ContentKeyFunctions.ReleasePulledObject, "Release pulled object");
                 AddButton(ContentKeyFunctions.Point, "Point at location");
 
-
                 AddHeader("User Interface");
                 AddButton(ContentKeyFunctions.FocusChat, "Focus chat");
                 AddButton(ContentKeyFunctions.FocusOOC, "Focus chat (OOC)");
@@ -160,6 +159,7 @@ namespace Content.Client.UserInterface
                 AddButton(ContentKeyFunctions.OpenCraftingMenu, "Open crafting menu");
                 AddButton(ContentKeyFunctions.OpenInventoryMenu, "Open inventory");
                 AddButton(ContentKeyFunctions.OpenTutorial, "Open tutorial");
+                AddButton(ContentKeyFunctions.OpenActionsMenu, "Open action menu");
                 AddButton(ContentKeyFunctions.OpenEntitySpawnWindow, "Open entity spawn menu");
                 AddButton(ContentKeyFunctions.OpenSandboxWindow, "Open sandbox menu");
                 AddButton(ContentKeyFunctions.OpenTileSpawnWindow, "Open tile spawn menu");
@@ -168,6 +168,18 @@ namespace Content.Client.UserInterface
                 AddHeader("Miscellaneous");
                 AddButton(ContentKeyFunctions.TakeScreenshot, "Take screenshot");
                 AddButton(ContentKeyFunctions.TakeScreenshotNoUI, "Take screenshot (without UI)");
+
+                AddHeader("Hotbar");
+                AddButton(ContentKeyFunctions.Hotbar1, "Hotbar slot 1");
+                AddButton(ContentKeyFunctions.Hotbar2, "Hotbar slot 2");
+                AddButton(ContentKeyFunctions.Hotbar3, "Hotbar slot 3");
+                AddButton(ContentKeyFunctions.Hotbar4, "Hotbar slot 4");
+                AddButton(ContentKeyFunctions.Hotbar5, "Hotbar slot 5");
+                AddButton(ContentKeyFunctions.Hotbar6, "Hotbar slot 6");
+                AddButton(ContentKeyFunctions.Hotbar7, "Hotbar slot 7");
+                AddButton(ContentKeyFunctions.Hotbar8, "Hotbar slot 8");
+                AddButton(ContentKeyFunctions.Hotbar9, "Hotbar slot 9");
+                AddButton(ContentKeyFunctions.Hotbar0, "Hotbar slot 0");
 
                 AddHeader("Map Editor");
                 AddButton(EngineKeyFunctions.EditorPlaceObject, "Place object");

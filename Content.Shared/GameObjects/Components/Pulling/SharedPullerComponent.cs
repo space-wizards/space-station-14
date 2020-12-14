@@ -69,17 +69,11 @@ namespace Content.Shared.GameObjects.Components.Pulling
             {
                 case PullStartedMessage msg:
                     Pulling = msg.Pulled.Owner;
-                    if (ownerStatus != null)
-                    {
-                        ownerStatus.ShowAlert(AlertType.Pulling, onClickAlert: OnClickAlert);
-                    }
+                    ownerStatus?.ShowAlert(AlertType.Pulling);
                     break;
                 case PullStoppedMessage _:
                     Pulling = null;
-                    if (ownerStatus != null)
-                    {
-                        ownerStatus.ClearAlert(AlertType.Pulling);
-                    }
+                    ownerStatus?.ClearAlert(AlertType.Pulling);
                     break;
             }
         }

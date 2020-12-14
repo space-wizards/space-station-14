@@ -1,4 +1,4 @@
-using Content.Shared.GameObjects.Components;
+﻿using Content.Shared.GameObjects.Components;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Maths;
@@ -29,7 +29,7 @@ namespace Content.Client.GameObjects.Components.Paper
                 Input.Visible = true;
             }
             var msg = new FormattedMessage();
-            msg.AddMarkup(state.Text);
+            msg.AddMarkupPermissive(state.Text);
             _label.SetMessage(msg);
         }
     }

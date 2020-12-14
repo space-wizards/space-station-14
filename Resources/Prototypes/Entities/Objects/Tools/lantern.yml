@@ -5,6 +5,9 @@
   description: The holy light guides the way.
   components:
     - type: HandheldLight
+    - type: ItemActions
+      actions:
+        - actionType: ToggleLight
     - type: Sprite
       sprite: Objects/Tools/lantern.rsi
       layers:

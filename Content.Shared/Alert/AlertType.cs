@@ -16,8 +16,10 @@
 
     /// <summary>
     /// Every kind of alert. Corresponds to alertType field in alert prototypes defined in YML
+    /// NOTE: Using byte for a compact encoding when sending this in messages, can upgrade
+    /// to ushort
     /// </summary>
-    public enum AlertType
+    public enum AlertType : byte
     {
         Error,
         LowPressure,

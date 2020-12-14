@@ -141,7 +141,7 @@
     preset: HumanPreset
     centerSlot: torso
   - type: Damageable
-    damagePrototype: biologicalDamageContainer
+    damageContainer: biologicalDamageContainer
   - type: Metabolism
     metabolismHeat: 5000
     radiatedHeat: 400
@@ -305,7 +305,7 @@
       preset: HumanPreset
       centerSlot: torso
     - type: Damageable
-      damagePrototype: biologicalDamageContainer
+      damageContainer: biologicalDamageContainer
     - type: MobState
       thresholds:
         0: !type:NormalMobState {}

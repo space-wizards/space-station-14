@@ -5,18 +5,22 @@ using Content.Server.Explosions;
 using Content.Server.GameObjects.Components.Body.Respiratory;
 using Content.Server.Interfaces;
 using Content.Server.Utility;
+using Content.Shared.Actions;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Atmos.GasTank;
+using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
+using JetBrains.Annotations;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
@@ -30,12 +34,14 @@ namespace Content.Server.GameObjects.Components.Atmos
     [ComponentReference(typeof(IActivate))]
     public class GasTankComponent : SharedGasTankComponent, IExamine, IGasMixtureHolder, IUse, IDropped, IActivate
     {
-    	  private const float MaxExplosionRange = 14f;
+        private const float MaxExplosionRange = 14f;
         private const float DefaultOutputPressure = Atmospherics.OneAtmosphere;
 
         private float _pressureResistance;
 
         private int _integrity = 3;
+
+        [ComponentDependency] private readonly ItemActionsComponent? _itemActions = null;
 
         [ViewVariables] private BoundUserInterface? _userInterface;
 
@@ -191,14 +197,18 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         private void UpdateUserInterface(bool initialUpdate = false)
         {
+            var internals = GetInternalsComponent();
             _userInterface?.SetState(
                 new GasTankBoundUserInterfaceState
                 {
                     TankPressure = Air?.Pressure ?? 0,
                     OutputPressure = initialUpdate ? OutputPressure : (float?) null,
                     InternalsConnected = IsConnected,
-                    CanConnectInternals = IsFunctional && GetInternalsComponent() != null
+                    CanConnectInternals = IsFunctional && internals != null
                 });
+
+            if (internals == null) return;
+            _itemActions?.GrantOrUpdate(ItemActionType.ToggleInternals, IsFunctional, IsConnected);
         }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
@@ -214,8 +224,9 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
         }
 
-        private void ToggleInternals()
+        internal void ToggleInternals()
         {
+            if (!ActionBlockerSystem.CanUse(GetInternalsComponent()?.Owner)) return;
             if (IsConnected)
             {
                 DisconnectFromInternals();
@@ -311,6 +322,11 @@ namespace Content.Server.GameObjects.Components.Atmos
                 _integrity++;
         }
 
+        public void Dropped(DroppedEventArgs eventArgs)
+        {
+            DisconnectFromInternals(eventArgs.User);
+        }
+
         /// <summary>
         /// Open interaction window
         /// </summary>
@@ -341,10 +357,21 @@ namespace Content.Server.GameObjects.Components.Atmos
                 component.OpenInterface(actor.playerSession);
             }
         }
+    }
 
-        public void Dropped(DroppedEventArgs eventArgs)
+    [UsedImplicitly]
+    public class ToggleInternalsAction : IToggleItemAction
+    {
+        public void ExposeData(ObjectSerializer serializer) {}
+
+        public bool DoToggleAction(ToggleItemActionEventArgs args)
         {
-            DisconnectFromInternals(eventArgs.User);
+            if (!args.Item.TryGetComponent<GasTankComponent>(out var gasTankComponent)) return false;
+            // no change
+            if (gasTankComponent.IsConnected == args.ToggledOn) return false;
+            gasTankComponent.ToggleInternals();
+            // did we successfully toggle to the desired status?
+            return gasTankComponent.IsConnected == args.ToggledOn;
         }
     }
 }

@@ -74,6 +74,7 @@ Smart equip from belt: [color=#a4885c]{25}[/color]
 Open inventory: [color=#a4885c]{7}[/color]
 Open character window: [color=#a4885c]{8}[/color]
 Open crafting window: [color=#a4885c]{9}[/color]
+Open action menu: [color=#a4885c]{33}[/color]
 Focus chat: [color=#a4885c]{10}[/color]
 Focus OOC: [color=#a4885c]{26}[/color]
 Focus Admin Chat: [color=#a4885c]{27}[/color]
@@ -94,7 +95,18 @@ Toggle debug overlay: [color=#a4885c]{18}[/color]
 Toggle entity spawner: [color=#a4885c]{19}[/color]
 Toggle tile spawner: [color=#a4885c]{20}[/color]
 Toggle sandbox window: [color=#a4885c]{21}[/color]
-Toggle admin menu [color=#a4885c]{31}[/color]",
+Toggle admin menu [color=#a4885c]{31}[/color]
+Hotbar slot 1: [color=#a4885c]{34}[/color]
+Hotbar slot 2: [color=#a4885c]{35}[/color]
+Hotbar slot 3: [color=#a4885c]{36}[/color]
+Hotbar slot 4: [color=#a4885c]{37}[/color]
+Hotbar slot 5: [color=#a4885c]{38}[/color]
+Hotbar slot 6: [color=#a4885c]{39}[/color]
+Hotbar slot 7: [color=#a4885c]{40}[/color]
+Hotbar slot 8: [color=#a4885c]{41}[/color]
+Hotbar slot 9: [color=#a4885c]{42}[/color]
+Hotbar slot 0: [color=#a4885c]{43}[/color]
+                ",
                 Key(MoveUp), Key(MoveLeft), Key(MoveDown), Key(MoveRight),
                 Key(SwapHands),
                 Key(ActivateItemInHand),
@@ -124,7 +136,18 @@ Toggle admin menu [color=#a4885c]{31}[/color]",
                 Key(TryPullObject),
                 Key(MovePulledObject),
                 Key(OpenAdminMenu),
-                Key(ReleasePulledObject)));
+                Key(ReleasePulledObject),
+                Key(OpenActionsMenu),
+                Key(Hotbar1),
+                Key(Hotbar2),
+                Key(Hotbar3),
+                Key(Hotbar4),
+                Key(Hotbar5),
+                Key(Hotbar6),
+                Key(Hotbar7),
+                Key(Hotbar8),
+                Key(Hotbar9),
+                Key(Hotbar0)));
 
             //Gameplay
             VBox.AddChild(new Label { FontOverride = headerFont, Text = "\nGameplay" });
