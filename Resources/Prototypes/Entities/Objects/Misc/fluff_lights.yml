@@ -6,6 +6,9 @@
   abstract: true
   components:
   - type: HandheldLight
+  - type: ItemActions
+    actions:
+        - actionType: ToggleLight
   - type: Sprite
     sprite: Objects/Misc/lights.rsi
   - type: Item

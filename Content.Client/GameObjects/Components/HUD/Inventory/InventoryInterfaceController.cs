@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Content.Client.UserInterface;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.Input;
@@ -52,6 +53,10 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         public virtual void Dispose()
         {
         }
+
+        /// <returns>the button controls associated with the
+        /// specified slot, if any. Empty if none.</returns>
+        public abstract IEnumerable<ItemSlotButton> GetItemSlotButtons(EquipmentSlotDefines.Slots slot);
 
         public virtual void AddToSlot(EquipmentSlotDefines.Slots slot, IEntity entity)
         {

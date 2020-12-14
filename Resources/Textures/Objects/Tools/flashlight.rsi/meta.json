@@ -15,6 +15,15 @@
             ]
         },
         {
+          "name": "lantern_on",
+          "directions": 1,
+          "delays": [
+              [
+                  1.0
+              ]
+          ]
+        },
+        {
             "name": "HandheldLightOnOverlay",
             "directions": 1,
             "delays": [

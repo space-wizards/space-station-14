@@ -20,9 +20,12 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
     /// A character UI which shows items the user has equipped within his inventory
     /// </summary>
     [RegisterComponent]
+    [ComponentReference(typeof(SharedInventoryComponent))]
     public class ClientInventoryComponent : SharedInventoryComponent
     {
         private readonly Dictionary<Slots, IEntity> _slots = new();
+
+        public IReadOnlyDictionary<Slots, IEntity> AllSlots => _slots;
 
         [ViewVariables] public InventoryInterfaceController InterfaceController { get; private set; } = default!;
 
@@ -68,6 +71,11 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             {
                 _setSlot(slot, entity);
             }
+        }
+
+        public override bool IsEquipped(IEntity item)
+        {
+            return item != null && _slots.Values.Any(e => e == item);
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)

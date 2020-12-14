@@ -25,6 +25,7 @@ using static Content.Shared.GameObjects.Components.Inventory.SharedInventoryComp
 namespace Content.Server.GameObjects.Components.GUI
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedInventoryComponent))]
     public class InventoryComponent : SharedInventoryComponent, IExAct, IEffectBlocker, IPressureProtection
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
@@ -571,6 +572,21 @@ namespace Content.Server.GameObjects.Components.GUI
                     }
                 }
             }
+        }
+
+        public override bool IsEquipped(IEntity item)
+        {
+            if (item == null) return false;
+            foreach (var containerSlot in _slotContainers.Values)
+            {
+                // we don't want a recursive check here
+                if (containerSlot.Contains(item))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

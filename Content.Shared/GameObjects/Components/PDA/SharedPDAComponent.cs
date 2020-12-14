@@ -2,6 +2,7 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.PDA
 {
@@ -129,12 +130,14 @@ namespace Content.Shared.GameObjects.Components.PDA
     {
         public event Action<UplinkAccount> BalanceChanged;
         public EntityUid AccountHolder;
-        public int Balance { get; private set; }
+        private int _balance;
+        [ViewVariables]
+        public int Balance => _balance;
 
         public UplinkAccount(EntityUid uid, int startingBalance)
         {
             AccountHolder = uid;
-            Balance = startingBalance;
+            _balance = startingBalance;
         }
 
         public bool ModifyAccountBalance(int newBalance)
@@ -143,7 +146,7 @@ namespace Content.Shared.GameObjects.Components.PDA
             {
                 return false;
             }
-            Balance = newBalance;
+            _balance = newBalance;
             BalanceChanged?.Invoke(this);
             return true;
 

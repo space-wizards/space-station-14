@@ -10,7 +10,10 @@
     show_examine_info: true
   - type: Input
     context: "human"
-  - type: AlertsUI
+  - type: Alerts
+  - type: Actions
+    innateActions:
+      - HumanScream
   - type: OverlayEffectsUI
   - type: Eye
     zoom: 0.5, 0.5

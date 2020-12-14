@@ -15,6 +15,7 @@ namespace Content.Shared.Damage.DamageContainer
     [Serializable, NetSerializable]
     public class DamageContainerPrototype : IPrototype, IIndexedPrototype
     {
+        private bool _supportAll;
         private HashSet<DamageClass> _supportedClasses;
         private HashSet<DamageType> _supportedTypes;
         private string _id;
@@ -31,18 +32,26 @@ namespace Content.Shared.Damage.DamageContainer
             var serializer = YamlObjectSerializer.NewReader(mapping);
 
             serializer.DataField(ref _id, "id", string.Empty);
+            serializer.DataField(ref _supportAll, "supportAll", false);
             serializer.DataField(ref _supportedClasses, "supportedClasses", new HashSet<DamageClass>());
             serializer.DataField(ref _supportedTypes, "supportedTypes", new HashSet<DamageType>());
 
-            var originalTypes = _supportedTypes.ToArray();
-
-            foreach (var supportedClass in _supportedClasses)
-            foreach (var supportedType in supportedClass.ToTypes())
+            if (_supportAll)
             {
-                _supportedTypes.Add(supportedType);
+                _supportedClasses.UnionWith(Enum.GetValues<DamageClass>());
+                _supportedTypes.UnionWith(Enum.GetValues<DamageType>());
+                return;
             }
 
-            foreach (var originalType in originalTypes)
+            foreach (var supportedClass in _supportedClasses)
+            {
+                foreach (var supportedType in supportedClass.ToTypes())
+                {
+                    _supportedTypes.Add(supportedType);
+                }
+            }
+
+            foreach (var originalType in _supportedTypes)
             {
                 _supportedClasses.Add(originalType.ToClass());
             }

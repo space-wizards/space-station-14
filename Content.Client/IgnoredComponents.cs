@@ -210,6 +210,8 @@
             "CrematoriumEntityStorage",
             "RandomArcade",
             "RandomSpriteState",
+            "DebugEquip",
+            "InnateActions",
             "ReagentGrinder",
             "Grindable",
             "Juiceable",

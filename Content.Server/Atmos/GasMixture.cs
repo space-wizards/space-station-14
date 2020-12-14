@@ -452,15 +452,16 @@ namespace Content.Server.Atmos
 
         /// <summary>
         ///     Releases gas from this mixture to the output mixture.
+        ///     If the output mixture is null, then this is being released into space.
         ///     It can't transfer air to a mixture with higher pressure.
         /// </summary>
         /// <param name="outputAir"></param>
         /// <param name="targetPressure"></param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool ReleaseGasTo(GasMixture outputAir, float targetPressure)
+        public bool ReleaseGasTo(GasMixture? outputAir, float targetPressure)
         {
-            var outputStartingPressure = outputAir.Pressure;
+            var outputStartingPressure = outputAir?.Pressure ?? 0;
             var inputStartingPressure = Pressure;
 
             if (outputStartingPressure >= MathF.Min(targetPressure, inputStartingPressure - 10))
@@ -472,11 +473,11 @@ namespace Content.Server.Atmos
 
             // We calculate the necessary moles to transfer with the ideal gas law.
             var pressureDelta = MathF.Min(targetPressure - outputStartingPressure, (inputStartingPressure - outputStartingPressure) / 2f);
-            var transferMoles = pressureDelta * outputAir.Volume / (Temperature * Atmospherics.R);
+            var transferMoles = pressureDelta * (outputAir?.Volume ?? Atmospherics.CellVolume) / (Temperature * Atmospherics.R);
 
             // And now we transfer the gas.
             var removed = Remove(transferMoles);
-            outputAir.Merge(removed);
+            outputAir?.Merge(removed);
 
             return true;
 

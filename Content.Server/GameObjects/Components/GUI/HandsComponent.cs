@@ -30,6 +30,7 @@ namespace Content.Server.GameObjects.Components.GUI
     [RegisterComponent]
     [ComponentReference(typeof(IHandsComponent))]
     [ComponentReference(typeof(ISharedHandsComponent))]
+    [ComponentReference(typeof(SharedHandsComponent))]
     public class HandsComponent : SharedHandsComponent, IHandsComponent, IBodyPartAdded, IBodyPartRemoved
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
@@ -82,7 +83,7 @@ namespace Content.Server.GameObjects.Components.GUI
             }
         }
 
-        public bool IsHolding(IEntity entity)
+        public override bool IsHolding(IEntity entity)
         {
             foreach (var hand in _hands)
             {
@@ -165,12 +166,16 @@ namespace Content.Server.GameObjects.Components.GUI
             }
 
             Dirty();
+
             var success = hand.Container.Insert(item.Owner);
             if (success)
             {
                 item.Owner.Transform.LocalPosition = Vector2.Zero;
                 OnItemChanged?.Invoke();
             }
+
+            _entitySystemManager.GetEntitySystem<InteractionSystem>().EquippedHandInteraction(Owner, item.Owner,
+                ToSharedHand(hand));
 
             _entitySystemManager.GetEntitySystem<InteractionSystem>().HandSelectedInteraction(Owner, item.Owner);
 
@@ -266,6 +271,9 @@ namespace Content.Server.GameObjects.Components.GUI
                 return false;
             }
 
+            _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedHandInteraction(Owner, item.Owner,
+                ToSharedHand(hand));
+
             if (doDropInteraction && !DroppedInteraction(item, false))
                 return false;
 
@@ -280,6 +288,61 @@ namespace Content.Server.GameObjects.Components.GUI
             if (Owner.TryGetContainer(out var container))
             {
                 container.Insert(item.Owner);
+            }
+
+            OnItemChanged?.Invoke();
+
+            Dirty();
+            return true;
+        }
+
+
+        public bool Drop(string slot, BaseContainer targetContainer, bool doMobChecks = true, bool doDropInteraction = true)
+        {
+            if (slot == null)
+            {
+                throw new ArgumentNullException(nameof(slot));
+            }
+
+            if (targetContainer == null)
+            {
+                throw new ArgumentNullException(nameof(targetContainer));
+            }
+
+            var hand = GetHand(slot);
+            if (!CanDrop(slot, doMobChecks) || hand?.Entity == null)
+            {
+                return false;
+            }
+
+            if (!hand.Container.CanRemove(hand.Entity))
+            {
+                return false;
+            }
+
+            if (!targetContainer.CanInsert(hand.Entity))
+            {
+                return false;
+            }
+
+            var item = hand.Entity.GetComponent<ItemComponent>();
+
+            if (!hand.Container.Remove(hand.Entity))
+            {
+                throw new InvalidOperationException();
+            }
+
+            _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedHandInteraction(Owner, item.Owner,
+                ToSharedHand(hand));
+
+            if (doDropInteraction && !DroppedInteraction(item, doMobChecks))
+                return false;
+
+            item.RemovedFromSlot();
+
+            if (!targetContainer.Insert(item.Owner))
+            {
+                throw new InvalidOperationException();
             }
 
             OnItemChanged?.Invoke();
@@ -321,57 +384,6 @@ namespace Content.Server.GameObjects.Components.GUI
             }
 
             return Drop(slot, Owner.Transform.Coordinates, mobChecks, doDropInteraction);
-        }
-
-        public bool Drop(string slot, BaseContainer targetContainer, bool doMobChecks = true, bool doDropInteraction = true)
-        {
-            if (slot == null)
-            {
-                throw new ArgumentNullException(nameof(slot));
-            }
-
-            if (targetContainer == null)
-            {
-                throw new ArgumentNullException(nameof(targetContainer));
-            }
-
-            var hand = GetHand(slot);
-            if (!CanDrop(slot, doMobChecks) || hand?.Entity == null)
-            {
-                return false;
-            }
-
-            if (!hand.Container.CanRemove(hand.Entity))
-            {
-                return false;
-            }
-
-            if (!targetContainer.CanInsert(hand.Entity))
-            {
-                return false;
-            }
-
-            var item = hand.Entity.GetComponent<ItemComponent>();
-
-            if (!hand.Container.Remove(hand.Entity))
-            {
-                throw new InvalidOperationException();
-            }
-
-            if (doDropInteraction && !DroppedInteraction(item, doMobChecks))
-                return false;
-
-            item.RemovedFromSlot();
-
-            if (!targetContainer.Insert(item.Owner))
-            {
-                throw new InvalidOperationException();
-            }
-
-            OnItemChanged?.Invoke();
-
-            Dirty();
-            return true;
         }
 
         public bool Drop(IEntity entity, BaseContainer targetContainer, bool doMobChecks = true, bool doDropInteraction = true)
@@ -463,17 +475,26 @@ namespace Content.Server.GameObjects.Components.GUI
 
             for (var i = 0; i < _hands.Count; i++)
             {
-                var location = i == 0
-                    ? HandLocation.Right
-                    : i == _hands.Count - 1
-                        ? HandLocation.Left
-                        : HandLocation.Middle;
-
-                var hand = _hands[i].ToShared(i, location);
+                var hand = _hands[i].ToShared(i, IndexToHandLocation(i));
                 hands[i] = hand;
             }
 
             return new HandsComponentState(hands, ActiveHand);
+        }
+
+        private HandLocation IndexToHandLocation(int index)
+        {
+            return index == 0
+                ? HandLocation.Right
+                : index == _hands.Count - 1
+                    ? HandLocation.Left
+                    : HandLocation.Middle;
+        }
+
+        private SharedHand ToSharedHand(Hand hand)
+        {
+            var index = _hands.IndexOf(hand);
+            return hand.ToShared(index, IndexToHandLocation(index));
         }
 
         public void SwapHands()
