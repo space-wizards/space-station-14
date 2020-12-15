@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.IoC;
+using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -27,6 +30,8 @@ namespace Content.Shared.Chemistry
         /// </summary>
         [ViewVariables]
         public ReagentUnit TotalVolume { get; private set; }
+
+        public Color Color => GetColor();
 
         /// <summary>
         ///     Constructs an empty solution (ex. an empty beaker).
@@ -256,6 +261,37 @@ namespace Content.Shared.Chemistry
             }
 
             TotalVolume += otherSolution.TotalVolume;
+        }
+
+        private Color GetColor()
+        {
+            if (TotalVolume == 0)
+            {
+                return Color.Transparent;
+            }
+
+            Color mixColor = default;
+            var runningTotalQuantity = ReagentUnit.New(0);
+
+            foreach (var reagent in Contents)
+            {
+                runningTotalQuantity += reagent.Quantity;
+
+                if (!IoCManager.Resolve<IPrototypeManager>().TryIndex(reagent.ReagentId, out ReagentPrototype proto))
+                {
+                    continue;
+                }
+
+                if (mixColor == default)
+                {
+                    mixColor = proto.SubstanceColor;
+                    continue;
+                }
+
+                var interpolateValue = (1 / runningTotalQuantity.Float()) * reagent.Quantity.Float();
+                mixColor = Color.InterpolateBetween(mixColor, proto.SubstanceColor, interpolateValue);
+            }
+            return mixColor;
         }
 
         public Solution Clone()

@@ -133,35 +133,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         protected void RecalculateColor()
         {
-            if (Solution.TotalVolume == 0)
-            {
-                SubstanceColor = Color.Transparent;
-                return;
-            }
-
-            Color mixColor = default;
-            var runningTotalQuantity = ReagentUnit.New(0);
-
-            foreach (var reagent in Solution)
-            {
-                runningTotalQuantity += reagent.Quantity;
-
-                if (!_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
-                {
-                    continue;
-                }
-
-                if (mixColor == default)
-                {
-                    mixColor = proto.SubstanceColor;
-                    continue;
-                }
-
-                var interpolateValue = (1 / runningTotalQuantity.Float()) * reagent.Quantity.Float();
-                mixColor = Color.InterpolateBetween(mixColor, proto.SubstanceColor, interpolateValue);
-            }
-
-            SubstanceColor = mixColor;
+            SubstanceColor = Solution.Color;
         }
 
         /// <summary>
