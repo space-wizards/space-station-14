@@ -33,6 +33,6 @@ namespace Content.Shared.Chemistry
         /// <summary>
         /// Can people examine the solution in the container or is it impossible to see?
         /// </summary>
-        NoExamine = 8,
+        CanExamine = 8,
     }
 }

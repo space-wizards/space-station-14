@@ -50,7 +50,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         public ReagentUnit EmptyVolume => MaxVolume - CurrentVolume;
 
         public IReadOnlyList<Solution.ReagentQuantity> ReagentList => Solution.Contents;
-        public bool CanExamineContents => Capabilities.HasFlag(SolutionContainerCaps.NoExamine);
+        public bool CanExamineContents => Capabilities.HasFlag(SolutionContainerCaps.CanExamine);
         public bool CanUseWithChemDispenser => Capabilities.HasFlag(SolutionContainerCaps.FitsInDispenser);
         public bool CanAddSolutions => Capabilities.HasFlag(SolutionContainerCaps.AddTo);
         public bool CanRemoveSolutions => Capabilities.HasFlag(SolutionContainerCaps.RemoveFrom);
@@ -62,7 +62,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             serializer.DataField(this, x => x.MaxVolume, "maxVol", ReagentUnit.New(0));
             serializer.DataField(this, x => x.Solution, "contents", new Solution());
-            serializer.DataField(this, x => x.Capabilities, "caps", SolutionContainerCaps.AddTo | SolutionContainerCaps.RemoveFrom);
+            serializer.DataField(this, x => x.Capabilities, "caps", SolutionContainerCaps.AddTo | SolutionContainerCaps.RemoveFrom | SolutionContainerCaps.CanExamine);
             serializer.DataField(ref _fillInitState, "fillingState", string.Empty);
             serializer.DataField(ref _fillInitSteps, "fillingSteps", 7);
         }
