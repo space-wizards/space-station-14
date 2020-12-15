@@ -27,7 +27,7 @@ namespace Content.Client.GameObjects.Components.Mobs
     [ComponentReference(typeof(SharedActionsComponent))]
     public sealed class ClientActionsComponent : SharedActionsComponent
     {
-        public const byte Hotbars = 10;
+        public const byte Hotbars = 9;
         public const byte Slots = 10;
 
         [Dependency] private readonly IPlayerManager _playerManager = default!;
