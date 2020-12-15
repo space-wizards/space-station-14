@@ -8,7 +8,6 @@
   - type: Sprite
     drawdepth: FloorObjects
   - type: SolutionContainer
-    caps: AddTo, RemoveFrom
   - type: Puddle
     spill_sound: /Audio/Effects/Fluids/splat.ogg
     recolor: true

@@ -6,7 +6,6 @@
   - type: Drink
     openSounds: bottleOpenSounds
   - type: SolutionContainer
-    caps: AddTo, RemoveFrom
   - type: Pourable
     transferAmount: 5
   - type: Sprite
