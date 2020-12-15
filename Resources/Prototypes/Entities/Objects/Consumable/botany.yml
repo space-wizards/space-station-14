@@ -1,10 +1,10 @@
-﻿- type: entity
+- type: entity
   parent: BaseItem
   id: ProduceBase
   abstract: true
   components:
     - type: SolutionContainer
-      caps: NoExamine
+      caps: None
     - type: Sprite
       state: produce
     - type: Produce
@@ -18,7 +18,7 @@
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/wheat.rsi
     - type: SolutionContainer
-      caps: NoExamine
+      caps: None
       contents:
         reagents:
           - ReagentId: chem.Nutriment
@@ -38,7 +38,7 @@
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/sugarcane.rsi
     - type: SolutionContainer
-      caps: NoExamine
+      caps: None
       contents:
         reagents:
           - ReagentId: chem.Nutriment
@@ -58,7 +58,7 @@
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/towercap.rsi
     - type: SolutionContainer
-      caps: NoExamine
+      caps: None
     - type: MeleeWeapon
     - type: Produce
       seed: towercap
