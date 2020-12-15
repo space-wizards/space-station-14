@@ -99,3 +99,8 @@
     projectile: PelletShotgunTranquilizer
     projectilesFired: 1
     ammoSpread: 0
+  - type: ChemicalAmmo
+  - type: SolutionContainer
+    maxVol: 15
+    caps: AddTo, RemoveFrom
+  - type: Pourable
