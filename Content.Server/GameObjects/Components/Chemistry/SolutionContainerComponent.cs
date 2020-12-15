@@ -466,13 +466,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         public string GetMajorReagentId()
         {
-            if (Solution.Contents.Count == 0)
-            {
-                return "";
-            }
-
-            var majorReagent = Solution.Contents.OrderByDescending(reagent => reagent.Quantity).First();;
-            return majorReagent.ReagentId;
+            return Solution.GetPrimaryReagentId();
         }
 
         protected void UpdateFillIcon()

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -70,6 +71,17 @@ namespace Content.Shared.Chemistry
 
             quantity = ReagentUnit.New(0);
             return false;
+        }
+
+        public string GetPrimaryReagentId()
+        {
+            if (Contents.Count == 0)
+            {
+                return "";
+            }
+
+            var majorReagent = Contents.OrderByDescending(reagent => reagent.Quantity).First(); ;
+            return majorReagent.ReagentId;
         }
 
         /// <summary>
