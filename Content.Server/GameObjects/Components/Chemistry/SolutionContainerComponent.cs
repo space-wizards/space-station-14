@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Chemistry;
 using Content.Server.GameObjects.Components.GUI;
@@ -459,17 +459,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// <returns>Return true if the solution contains the reagent.</returns>
         public bool ContainsReagent(string reagentId, out ReagentUnit quantity)
         {
-            foreach (var reagent in Solution.Contents)
-            {
-                if (reagent.ReagentId == reagentId)
-                {
-                    quantity = reagent.Quantity;
-                    return true;
-                }
-            }
-
-            quantity = ReagentUnit.New(0);
-            return false;
+            var containsReagent = Solution.ContainsReagent(reagentId, out var quantityFound);
+            quantity = quantityFound;
+            return containsReagent;
         }
 
         public string GetMajorReagentId()

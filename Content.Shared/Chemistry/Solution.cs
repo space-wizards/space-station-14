@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -55,6 +55,21 @@ namespace Content.Shared.Chemistry
                     quantities.ForEach(reagent => TotalVolume += reagent.Quantity);
                 },
                 () => _contents);
+        }
+
+        public bool ContainsReagent(string reagentId, out ReagentUnit quantity)
+        {
+            foreach (var reagent in Contents)
+            {
+                if (reagent.ReagentId == reagentId)
+                {
+                    quantity = reagent.Quantity;
+                    return true;
+                }
+            }
+
+            quantity = ReagentUnit.New(0);
+            return false;
         }
 
         /// <summary>
