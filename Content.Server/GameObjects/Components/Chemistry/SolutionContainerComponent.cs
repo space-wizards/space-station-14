@@ -50,10 +50,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
         public ReagentUnit EmptyVolume => MaxVolume - CurrentVolume;
 
         public IReadOnlyList<Solution.ReagentQuantity> ReagentList => Solution.Contents;
-        public bool CanExamineContents => (Capabilities & SolutionContainerCaps.NoExamine) == 0;
-        public bool CanUseWithChemDispenser => (Capabilities & SolutionContainerCaps.FitsInDispenser) != 0;
-        public bool CanAddSolutions => (Capabilities & SolutionContainerCaps.AddTo) != 0;
-        public bool CanRemoveSolutions => (Capabilities & SolutionContainerCaps.RemoveFrom) != 0;
+        public bool CanExamineContents => Capabilities.HasFlag(SolutionContainerCaps.NoExamine);
+        public bool CanUseWithChemDispenser => Capabilities.HasFlag(SolutionContainerCaps.FitsInDispenser);
+        public bool CanAddSolutions => Capabilities.HasFlag(SolutionContainerCaps.AddTo);
+        public bool CanRemoveSolutions => Capabilities.HasFlag(SolutionContainerCaps.RemoveFrom);
 
         /// <inheritdoc />
         public override void ExposeData(ObjectSerializer serializer)
