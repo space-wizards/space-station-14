@@ -44690,4 +44690,53 @@ entities:
     pos: 27.5,-1.5
     rot: -1.5707963267948966 rad
     type: Transform
+- uid: 4289
+  type: reinforced_wall
+  components:
+  - parent: 855
+    pos: 52.5,-1.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4290
+  type: reinforced_wall
+  components:
+  - parent: 855
+    pos: 52.5,-2.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4291
+  type: reinforced_wall
+  components:
+  - parent: 855
+    pos: 52.5,-3.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4292
+  type: reinforced_wall
+  components:
+  - parent: 855
+    pos: 52.5,-4.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4293
+  type: reinforced_wall
+  components:
+  - parent: 855
+    pos: 52.5,-5.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4294
+  type: reinforced_wall
+  components:
+  - parent: 855
+    pos: 52.5,-6.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4295
+  type: reinforced_wall
+  components:
+  - parent: 855
+    pos: 52.5,-7.5
+    rot: -1.5707963267948966 rad
+    type: Transform
 ...
