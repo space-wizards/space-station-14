@@ -1,5 +1,5 @@
+using Content.Server.Chemistry;
 using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
