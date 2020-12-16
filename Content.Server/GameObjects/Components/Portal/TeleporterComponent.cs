@@ -24,7 +24,6 @@ namespace Content.Server.GameObjects.Components.Portal
 {
     [RegisterComponent]
     public class TeleporterComponent : Component, IAfterInteract 
-
     {
         [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
         [Dependency] private readonly IRobustRandom _spreadRandom = default!;
