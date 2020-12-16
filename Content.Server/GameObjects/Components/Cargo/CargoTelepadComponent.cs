@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Prototypes.Cargo;
@@ -12,24 +12,26 @@ using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.Components.Cargo
 {
+
+    //This entire class is a PLACEHOLDER for the cargo shuttle.
+
     [RegisterComponent]
     public class CargoTelepadComponent : Component
     {
         public override string Name => "CargoTelepad";
 
         private const float TeleportDuration = 0.5f;
-        private const float TeleportDelay = 3f;
+        private const float TeleportDelay = 15f;
         private List<CargoProductPrototype> _teleportQueue = new List<CargoProductPrototype>();
         private CargoTelepadState _currentState = CargoTelepadState.Unpowered;
 
 
-        public override void Initialize()
+        public override void OnAdd()
         {
-            base.Initialize();
+            base.OnAdd();
 
             var receiver = Owner.EnsureComponent<PowerReceiverComponent>();
             receiver.OnPowerStateChanged += PowerUpdate;
-            
         }
 
         public override void OnRemove()
