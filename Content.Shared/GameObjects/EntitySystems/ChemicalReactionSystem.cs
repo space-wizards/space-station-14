@@ -22,16 +22,12 @@ namespace Content.Shared.GameObjects.EntitySystems
         /// <summary>
         /// Checks if a solution has the reactants required to cause a specified reaction.
         /// </summary>
-        /// <param name="solution">The solution to check for reaction conditions.</param>
-        /// <param name="reaction">The reaction whose reactants will be checked for in the solution.</param>
-        /// <param name="unitReactions">The number of times the reaction can occur with the given solution.</param>
-        /// <returns></returns>
-        public bool SolutionValidReaction(Solution solution, ReactionPrototype reaction, out ReagentUnit unitReactions)
+        public static bool SolutionValidReaction(Solution solution, ReactionPrototype reaction, out ReagentUnit unitReactions)
         {
             unitReactions = ReagentUnit.MaxValue; //Set to some impossibly large number initially
             foreach (var reactant in reaction.Reactants)
             {
-                if (!solution.ContainsReagent(reactant.Key, out ReagentUnit reagentQuantity))
+                if (!solution.ContainsReagent(reactant.Key, out var reagentQuantity))
                 {
                     return false;
                 }
@@ -53,13 +49,10 @@ namespace Content.Shared.GameObjects.EntitySystems
         }
 
         /// <summary>
-        /// Perform a reaction on a solution. This assumes all reaction criteria have already been checked and are met.
-        /// Remove the reactants from the solution, then returns a solution with all reagents created.
+        /// Perform a reaction on a solution. This assumes all reaction criteria are met.
+        /// Removes the reactants from the solution, then returns a solution with all reagents created.
         /// </summary>
-        /// <param name="solution">Solution to be reacted.</param>
-        /// <param name="reaction">Reaction to occur.</param>
-        /// <param name="unitReactions">The number of times to cause this reaction.</param>
-        public Solution PerformReaction(Solution solution, IEntity owner, ReactionPrototype reaction, ReagentUnit unitReactions)
+        public static Solution PerformReaction(Solution solution, IEntity owner, ReactionPrototype reaction, ReagentUnit unitReactions)
         {
             //Remove non-catalysts
             foreach (var reactant in reaction.Reactants)
@@ -87,9 +80,13 @@ namespace Content.Shared.GameObjects.EntitySystems
             return products;
         }
 
+        /// <summary>
+        /// Looks for reactions that can be applied to this solution, and runs them.
+        /// If a reaction is run, re-checks all reactions again.
+        /// </summary>
         public void CheckForReaction(Solution solution, IEntity owner)
         {
-            bool checkForNewReaction = false;
+            var checkForNewReaction = false;
             while (true)
             {
                 //TODO: make a hashmap at startup and then look up reagents in the contents for a reaction
