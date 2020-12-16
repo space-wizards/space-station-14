@@ -42,6 +42,24 @@ namespace Content.Client.GameObjects.EntitySystems
                     HandleHotbarKeybind(8))
                 .Bind(ContentKeyFunctions.Hotbar0,
                     HandleHotbarKeybind(9))
+                .Bind(ContentKeyFunctions.Loadout1,
+                    HandleChangeHotbarKeybind(0))
+                .Bind(ContentKeyFunctions.Loadout2,
+                    HandleChangeHotbarKeybind(1))
+                .Bind(ContentKeyFunctions.Loadout3,
+                    HandleChangeHotbarKeybind(2))
+                .Bind(ContentKeyFunctions.Loadout4,
+                    HandleChangeHotbarKeybind(3))
+                .Bind(ContentKeyFunctions.Loadout5,
+                    HandleChangeHotbarKeybind(4))
+                .Bind(ContentKeyFunctions.Loadout6,
+                    HandleChangeHotbarKeybind(5))
+                .Bind(ContentKeyFunctions.Loadout7,
+                    HandleChangeHotbarKeybind(6))
+                .Bind(ContentKeyFunctions.Loadout8,
+                    HandleChangeHotbarKeybind(7))
+                .Bind(ContentKeyFunctions.Loadout9,
+                    HandleChangeHotbarKeybind(8))
                 // when selecting a target, we intercept clicks in the game world, treating them as our target selection. We want to
                 // take priority before any other systems handle the click.
                 .BindBefore(EngineKeyFunctions.Use, new PointerInputCmdHandler(TargetingOnUse),
@@ -65,6 +83,20 @@ namespace Content.Client.GameObjects.EntitySystems
                         !playerEntity.TryGetComponent<ClientActionsComponent>( out var actionsComponent)) return false;
 
                     actionsComponent.HandleHotbarKeybind(slot, args);
+                    return true;
+                });
+        }
+
+        private PointerInputCmdHandler HandleChangeHotbarKeybind(byte hotbar)
+        {
+            // delegate to the ActionsUI, simulating a click on it
+            return new((in PointerInputCmdHandler.PointerInputCmdArgs args) =>
+                {
+                    var playerEntity = _playerManager.LocalPlayer.ControlledEntity;
+                    if (playerEntity == null ||
+                        !playerEntity.TryGetComponent<ClientActionsComponent>( out var actionsComponent)) return false;
+
+                    actionsComponent.HandleChangeHotbarKeybind(hotbar, args);
                     return true;
                 },
                 false);

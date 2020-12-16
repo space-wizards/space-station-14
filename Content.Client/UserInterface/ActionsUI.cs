@@ -552,6 +552,15 @@ namespace Content.Client.UserInterface
             actionSlot.Depress(args.State == BoundKeyState.Down);
         }
 
+        /// <summary>
+        /// Handle hotbar change.
+        /// </summary>
+        /// <param name="hotbar">hotbar index to switch to</param>
+        public void HandleChangeHotbarKeybind(byte hotbar, PointerInputCmdHandler.PointerInputCmdArgs args)
+        {
+            ChangeHotbar(hotbar);
+        }
+
         protected override void FrameUpdate(FrameEventArgs args)
         {
             base.Update(args);

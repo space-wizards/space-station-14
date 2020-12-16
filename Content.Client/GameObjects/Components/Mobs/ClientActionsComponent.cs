@@ -106,6 +106,11 @@ namespace Content.Client.GameObjects.Components.Mobs
             _ui?.HandleHotbarKeybind(slot, args);
         }
 
+        public void HandleChangeHotbarKeybind(byte hotbar, in PointerInputCmdHandler.PointerInputCmdArgs args)
+        {
+            _ui?.HandleChangeHotbarKeybind(hotbar, args);
+        }
+
         /// <summary>
         /// Updates the displayed hotbar (and menu) based on current state of actions.
         /// </summary>
