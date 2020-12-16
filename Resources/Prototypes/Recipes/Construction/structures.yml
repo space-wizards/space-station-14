@@ -12,6 +12,7 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
+  canBuildInImpassable: false
 
 - type: construction
   name: wall
@@ -27,6 +28,7 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
+  canBuildInImpassable: false
 
 - type: construction
   name: reinforced wall
@@ -42,6 +44,7 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
+  canBuildInImpassable: false
 
 - type: construction
   name: low wall
@@ -70,6 +73,7 @@
   description: Clear. Must be built on top of a low wall.
   conditions:
     - !type:LowWallInTile {}
+    - !type:NoWindowsInTile {}
   icon:
     sprite: Constructible/Structures/Windows/window.rsi
     state: full
@@ -87,6 +91,7 @@
   description: Clear but tough. Must be built on top of a low wall.
   conditions:
     - !type:LowWallInTile {}
+    - !type:NoWindowsInTile {}
   icon:
     sprite: Constructible/Structures/Windows/reinforced_window.rsi
     state: full
@@ -104,6 +109,7 @@
   description: Clear and even tougher, with an orange tint. Must be built on top of a low wall.
   conditions:
     - !type:LowWallInTile {}
+    - !type:NoWindowsInTile {}
   icon:
     sprite: Constructible/Structures/Windows/phoron_window.rsi
     state: full
@@ -124,6 +130,7 @@
     state: closed
   objectType: Structure
   placementMode: SnapgridCenter
+  canBuildInImpassable: false
 
 - type: construction
   name: Table Frame
@@ -138,6 +145,7 @@
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
+  canBuildInImpassable: false
 
 - type: construction
   name: Poker Table
@@ -152,6 +160,7 @@
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
+  canBuildInImpassable: false
 
 - type: construction
   name: Catwalk
@@ -172,6 +181,7 @@
     state: catwalk_preview
   objectType: Structure
   placementMode: SnapgridCenter
+  canBuildInImpassable: false
 
 - type: construction
   name: APC
@@ -186,3 +196,4 @@
     state: apc0
   objectType: Structure
   placementMode: AlignWallProper
+  canBuildInImpassable: true
