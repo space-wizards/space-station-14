@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Chemistry;
 using Robust.Server.GameObjects;
@@ -71,7 +71,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             //the biggest reagent in the solution decides the appearance
-            var reagentId = solution.GetMajorReagentId();
+            var reagentId = solution.Solution.GetPrimaryReagentId();
 
             //If biggest reagent didn't changed - don't change anything at all
             if (_currentReagent != null && _currentReagent.ID == reagentId)

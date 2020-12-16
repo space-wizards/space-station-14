@@ -348,11 +348,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
             return containsReagent;
         }
 
-        public string GetMajorReagentId()
-        {
-            return Solution.GetPrimaryReagentId();
-        }
-
         protected void UpdateFillIcon()
         {
             if (string.IsNullOrEmpty(_fillInitState))
