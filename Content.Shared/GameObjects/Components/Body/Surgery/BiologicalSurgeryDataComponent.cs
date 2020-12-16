@@ -7,6 +7,7 @@ using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
+using static Content.Shared.GameObjects.Components.Body.Surgery.ISurgeryData;
 
 namespace Content.Shared.GameObjects.Components.Body.Surgery
 {
@@ -14,8 +15,8 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
     ///     Data class representing the surgery state of a biological entity.
     /// </summary>
     [RegisterComponent]
-    [ComponentReference(typeof(SurgeryDataComponent))]
-    public class BiologicalSurgeryDataComponent : SurgeryDataComponent
+    [ComponentReference(typeof(ISurgeryData))]
+    public class BiologicalSurgeryDataComponent : Component, ISurgeryData
     {
         public override string Name => "BiologicalSurgeryData";
 
@@ -25,7 +26,59 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
         private bool _skinRetracted;
         private bool _vesselsClamped;
 
-        protected override SurgeryAction? GetSurgeryStep(SurgeryType toolType)
+        public IBodyPart? Parent => Owner.GetComponentOrNull<IBodyPart>();
+
+        public BodyPartType? ParentType => Parent?.PartType;
+
+        public string GetDescription()
+        {
+            if (Parent == null)
+            {
+                return "";
+            }
+
+            var toReturn = "";
+
+            if (_skinOpened && !_vesselsClamped)
+            {
+                // Case: skin is opened, but not clamped.
+                toReturn += Loc.GetString("The skin on {0:their} {1} has an incision, but it is prone to bleeding.\n",
+                    Owner, Parent.Name);
+            }
+            else if (_skinOpened && _vesselsClamped && !_skinRetracted)
+            {
+                // Case: skin is opened and clamped, but not retracted.
+                toReturn += Loc.GetString("The skin on {0:their} {1} has an incision, but it is not retracted.\n",
+                    Owner, Parent.Name);
+            }
+            else if (_skinOpened && _vesselsClamped && _skinRetracted)
+            {
+                // Case: skin is fully open.
+                toReturn += Loc.GetString("There is an incision on {0:their} {1}.\n", Owner, Parent.Name);
+                foreach (var mechanism in _disconnectedOrgans)
+                {
+                    toReturn += Loc.GetString("{0:their} {1} is loose.\n", Owner, mechanism.Name);
+                }
+            }
+
+            return toReturn;
+        }
+
+        public bool CanAddMechanism(IMechanism mechanism)
+        {
+            return Parent != null &&
+                   _skinOpened &&
+                   _vesselsClamped &&
+                   _skinRetracted;
+        }
+
+        public bool CanAttachBodyPart(IBodyPart part)
+        {
+            return Parent != null;
+            // TODO BODY if a part is disconnected, you should have to do some surgery to allow another bodypart to be attached.
+        }
+
+        public SurgeryAction? GetSurgeryStep(SurgeryType toolType)
         {
             if (Parent == null)
             {
@@ -94,61 +147,30 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
             return null;
         }
 
-        public override string GetDescription()
+        public bool CheckSurgery(SurgeryType toolType)
         {
-            if (Parent == null)
-            {
-                return "";
-            }
-
-            var toReturn = "";
-
-            if (_skinOpened && !_vesselsClamped)
-            {
-                // Case: skin is opened, but not clamped.
-                toReturn += Loc.GetString("The skin on {0:their} {1} has an incision, but it is prone to bleeding.\n",
-                    Owner, Parent.Name);
-            }
-            else if (_skinOpened && _vesselsClamped && !_skinRetracted)
-            {
-                // Case: skin is opened and clamped, but not retracted.
-                toReturn += Loc.GetString("The skin on {0:their} {1} has an incision, but it is not retracted.\n",
-                    Owner, Parent.Name);
-            }
-            else if (_skinOpened && _vesselsClamped && _skinRetracted)
-            {
-                // Case: skin is fully open.
-                toReturn += Loc.GetString("There is an incision on {0:their} {1}.\n", Owner, Parent.Name);
-                foreach (var mechanism in _disconnectedOrgans)
-                {
-                    toReturn += Loc.GetString("{0:their} {1} is loose.\n", Owner, mechanism.Name);
-                }
-            }
-
-            return toReturn;
+            return GetSurgeryStep(toolType) != null;
         }
 
-        public override bool CanAddMechanism(IMechanism mechanism)
+        public bool PerformSurgery(SurgeryType surgeryType, IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
-            return Parent != null &&
-                   _skinOpened &&
-                   _vesselsClamped &&
-                   _skinRetracted;
-        }
+            var step = GetSurgeryStep(surgeryType);
 
-        public override bool CanAttachBodyPart(IBodyPart part)
-        {
-            return Parent != null;
-            // TODO BODY if a part is disconnected, you should have to do some surgery to allow another bodypart to be attached.
+            if (step == null)
+            {
+                return false;
+            }
+
+            step(container, surgeon, performer);
+            return true;
         }
 
         private void OpenSkinSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
             if (Parent == null) return;
 
-                performer.PopupMessage(Loc.GetString("Cut open the skin..."));
+            performer.PopupMessage(Loc.GetString("Cut open the skin..."));
 
-            // TODO BODY do_after: Delay
             _skinOpened = true;
         }
 
