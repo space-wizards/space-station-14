@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.Cargo;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
@@ -11,10 +11,13 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Content.Server.GameObjects.Components.Cargo
@@ -24,6 +27,7 @@ namespace Content.Server.GameObjects.Components.Cargo
     public class CargoConsoleComponent : SharedCargoConsoleComponent, IActivate
     {
         [Dependency] private readonly ICargoOrderDataManager _cargoOrderDataManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         [ViewVariables]
         public int Points = 1000;
@@ -158,14 +162,24 @@ namespace Content.Server.GameObjects.Components.Cargo
                         // TODO replace with shuttle code
                         // TEMPORARY loop for spawning stuff on telepad (looks for a telepad adjacent to the console)
                         IEntity? cargoTelepad = null;
-                        var serverEntityManager = IoCManager.Resolve<IServerEntityManager>();
-                        var adjacentEntities = serverEntityManager.GetEntitiesInRange(Owner.Transform.Coordinates, 2).ToList();
-                        foreach (IEntity entity in adjacentEntities)
+                        var indices = Owner.Transform.Coordinates.ToVector2i(Owner.EntityManager, _mapManager);
+                        var offsets = new Vector2i[] { new Vector2i(0, 1), new Vector2i(1, 1), new Vector2i(1, 0), new Vector2i(1, -1),
+                                                       new Vector2i(0, -1), new Vector2i(-1, -1), new Vector2i(-1, 0), new Vector2i(-1, 1), };
+                        var adjacentEntities = new List<IEnumerable<IEntity>>(); //Probably better than IEnumerable.concat 
+                        foreach (var offset in offsets)
                         {
-                            if (entity.HasComponent<CargoTelepadComponent>() && entity.TryGetComponent<PowerReceiverComponent>(out var powerReceiver) && powerReceiver.Powered)
+                            adjacentEntities.Add((indices+offset).GetEntitiesInTileFast(Owner.Transform.GridID));
+                        }
+
+                        foreach (var enumerator in adjacentEntities)
+                        {
+                            foreach (IEntity entity in enumerator)
                             {
-                                cargoTelepad = entity;
-                                break;
+                                if (entity.HasComponent<CargoTelepadComponent>() && entity.TryGetComponent<PowerReceiverComponent>(out var powerReceiver) && powerReceiver.Powered)
+                                {
+                                    cargoTelepad = entity;
+                                    break;
+                                }
                             }
                         }
                         if (cargoTelepad != null)
