@@ -71,7 +71,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                         break;
                     }
 
-                    if (AlertManager.TryGet(msg.AlertType, out var alert))
+                    if (AlertManager.TryGet(msg.AlertType, out var alert) && alert.OnClick != null)
                     {
                         alert.OnClick.AlertClicked(new ClickAlertEventArgs(player, alert));
                     }
