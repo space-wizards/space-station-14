@@ -104,7 +104,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         }
 
         // Feeding someone else
-        Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (eventArgs.Target == null)
             {

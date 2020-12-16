@@ -146,7 +146,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             return entity;
         }
 
-        Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (eventArgs.Target == null)
             {

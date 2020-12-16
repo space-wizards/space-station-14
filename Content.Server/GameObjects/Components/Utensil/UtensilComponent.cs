@@ -105,7 +105,7 @@ namespace Content.Server.GameObjects.Components.Utensil
             serializer.DataField(ref _breakSound, "breakSound", "/Audio/Items/snap.ogg");
         }
 
-        Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             TryUseUtensil(eventArgs.User, eventArgs.Target);
         }

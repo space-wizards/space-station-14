@@ -22,6 +22,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 {
     [RegisterComponent]
     public class HandcuffComponent : SharedHandcuffComponent, IAfterInteract
+
     {
         /// <summary>
         ///     The time it takes to apply a <see cref="CuffedComponent"/> to an entity.

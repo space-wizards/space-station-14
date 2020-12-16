@@ -97,7 +97,7 @@ namespace Content.Server.GameObjects.Components.Body.Part
             }
         }
 
-        public Task AfterInteract(AfterInteractEventArgs eventArgs)
+        public async Task AfterInteract(AfterInteractEventArgs eventArgs)
         {
             // TODO BODY
             if (eventArgs.Target == null)

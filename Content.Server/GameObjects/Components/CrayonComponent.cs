@@ -109,7 +109,7 @@ namespace Content.Server.GameObjects.Components
             return false;
         }
 
-        Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: false, popup: true,
                 collisionMask: Shared.Physics.CollisionGroup.MobImpassable)) return;

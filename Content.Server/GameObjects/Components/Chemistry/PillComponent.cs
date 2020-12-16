@@ -60,7 +60,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         }
 
         // Feeding someone else
-        Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        public async Task AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (eventArgs.Target == null)
             {

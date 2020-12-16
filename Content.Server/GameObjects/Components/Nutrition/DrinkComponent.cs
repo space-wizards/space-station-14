@@ -114,7 +114,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         }
 
         //Force feeding a drink to someone.
-        Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             TryUseDrink(eventArgs.Target, forced: true);
         }

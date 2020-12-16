@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.Components.Medical
             serializer.DataField(this, h => h.Heal, "heal", new Dictionary<DamageType, int>());
         }
 
-        public Task AfterInteract(AfterInteractEventArgs eventArgs)
+        public async Task AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (eventArgs.Target == null)
             {

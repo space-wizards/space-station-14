@@ -99,7 +99,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             serializer.DataField(ref _safety, "safety", true);
         }
 
-        Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+         async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (!ActionBlockerSystem.CanInteract(eventArgs.User))
                 return;
