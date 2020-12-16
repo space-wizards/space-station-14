@@ -1,5 +1,6 @@
 using Content.Shared.Chemistry;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using System.Collections.Generic;
@@ -50,5 +51,42 @@ namespace Content.Shared.GameObjects.EntitySystems
                 return true;
             }
         }
+
+        /// <summary>
+        /// Perform a reaction on a solution. This assumes all reaction criteria have already been checked and are met.
+        /// Remove the reactants from the solution, then returns a solution with all reagents created.
+        /// </summary>
+        /// <param name="solution">Solution to be reacted.</param>
+        /// <param name="reaction">Reaction to occur.</param>
+        /// <param name="unitReactions">The number of times to cause this reaction.</param>
+        public Solution PerformReaction(Solution solution, IEntity owner, ReactionPrototype reaction, ReagentUnit unitReactions)
+        {
+            //Remove non-catalysts
+            foreach (var reactant in reaction.Reactants)
+            {
+                if (!reactant.Value.Catalyst)
+                {
+                    var amountToRemove = unitReactions * reactant.Value.Amount;
+                    solution.RemoveReagent(reactant.Key, amountToRemove);
+                }
+            }
+
+            // Add products
+            var products = new Solution();
+            foreach (var product in reaction.Products)
+            {
+                products.AddReagent(product.Key, product.Value * unitReactions);
+            }
+
+            // Trigger reaction effects
+            foreach (var effect in reaction.Effects)
+            {
+                effect.React(owner, unitReactions.Double());
+            }
+
+            return products;
+        }
+
+
     }
 }

@@ -379,29 +379,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// <param name="unitReactions">The number of times to cause this reaction.</param>
         private void PerformReaction(ReactionPrototype reaction, ReagentUnit unitReactions)
         {
-            //Remove non-catalysts
-            foreach (var reactant in reaction.Reactants)
-            {
-                if (!reactant.Value.Catalyst)
-                {
-                    var amountToRemove = unitReactions * reactant.Value.Amount;
-                    TryRemoveReagent(reactant.Key, amountToRemove);
-                }
-            }
-
-            // Add products
-            foreach (var product in reaction.Products)
-            {
-                TryAddReagent(product.Key, product.Value * unitReactions, out var acceptedQuantity, true);
-            }
-
-            // Trigger reaction effects
-            foreach (var effect in reaction.Effects)
-            {
-                effect.React(Owner, unitReactions.Double());
-            }
-
-            // Play reaction sound client-side
+            var products = _reactionSystem.PerformReaction(Solution, Owner, reaction, unitReactions);
+            Solution.AddSolution(products);
             _audioSystem.PlayAtCoords("/Audio/Effects/Chemistry/bubbles.ogg", Owner.Transform.Coordinates);
         }
 
