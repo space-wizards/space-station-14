@@ -1,15 +1,19 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameObjects.EntitySystems.DoAfter;
+using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body.Part;
+using Content.Shared.GameObjects.Components.Body.Surgery;
 using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using static Content.Shared.GameObjects.Components.Body.Surgery.ISurgeryData;
 
-namespace Content.Shared.GameObjects.Components.Body.Surgery
+namespace Content.Server.GameObjects.Components.Body.Surgery
 {
     /// <summary>
     ///     Data class representing the surgery state of a biological entity.
@@ -20,38 +24,56 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
     {
         public override string Name => "BiologicalSurgeryData";
 
-        private readonly List<IMechanism> _disconnectedOrgans = new();
+        private readonly HashSet<IMechanism> _disconnectedOrgans = new();
 
-        private bool _skinOpened;
-        private bool _skinRetracted;
-        private bool _vesselsClamped;
+        private bool SkinOpened { get; set; }
+
+        private bool SkinRetracted { get; set; }
+
+        private bool VesselsClamped { get; set; }
 
         public IBodyPart? Parent => Owner.GetComponentOrNull<IBodyPart>();
 
         public BodyPartType? ParentType => Parent?.PartType;
 
+        private void AddDisconnectedOrgan(IMechanism mechanism)
+        {
+            if (_disconnectedOrgans.Add(mechanism))
+            {
+                Dirty();
+            }
+        }
+
+        private void RemoveDisconnectedOrgan(IMechanism mechanism)
+        {
+            if (_disconnectedOrgans.Remove(mechanism))
+            {
+                Dirty();
+            }
+        }
+
         public string GetDescription()
         {
             if (Parent == null)
             {
-                return "";
+                return string.Empty;
             }
 
             var toReturn = "";
 
-            if (_skinOpened && !_vesselsClamped)
+            if (SkinOpened && !VesselsClamped)
             {
                 // Case: skin is opened, but not clamped.
                 toReturn += Loc.GetString("The skin on {0:their} {1} has an incision, but it is prone to bleeding.\n",
                     Owner, Parent.Name);
             }
-            else if (_skinOpened && _vesselsClamped && !_skinRetracted)
+            else if (SkinOpened && VesselsClamped && !SkinRetracted)
             {
                 // Case: skin is opened and clamped, but not retracted.
                 toReturn += Loc.GetString("The skin on {0:their} {1} has an incision, but it is not retracted.\n",
                     Owner, Parent.Name);
             }
-            else if (_skinOpened && _vesselsClamped && _skinRetracted)
+            else if (SkinOpened && VesselsClamped && SkinRetracted)
             {
                 // Case: skin is fully open.
                 toReturn += Loc.GetString("There is an incision on {0:their} {1}.\n", Owner, Parent.Name);
@@ -67,15 +89,15 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
         public bool CanAddMechanism(IMechanism mechanism)
         {
             return Parent != null &&
-                   _skinOpened &&
-                   _vesselsClamped &&
-                   _skinRetracted;
+                   SkinOpened &&
+                   VesselsClamped &&
+                   SkinRetracted;
         }
 
         public bool CanAttachBodyPart(IBodyPart part)
         {
             return Parent != null;
-            // TODO BODY if a part is disconnected, you should have to do some surgery to allow another bodypart to be attached.
+            // TODO BODY if a part is disconnected, you should have to do some surgery to allow another body part to be attached.
         }
 
         public SurgeryAction? GetSurgeryStep(SurgeryType toolType)
@@ -90,7 +112,7 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
                 return RemoveBodyPartSurgery;
             }
 
-            if (!_skinOpened)
+            if (!SkinOpened)
             {
                 // Case: skin is normal.
                 if (toolType == SurgeryType.Incision)
@@ -98,7 +120,7 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
                     return OpenSkinSurgery;
                 }
             }
-            else if (!_vesselsClamped)
+            else if (!VesselsClamped)
             {
                 // Case: skin is opened, but not clamped.
                 switch (toolType)
@@ -109,7 +131,7 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
                         return CauterizeIncisionSurgery;
                 }
             }
-            else if (!_skinRetracted)
+            else if (!SkinRetracted)
             {
                 // Case: skin is opened and clamped, but not retracted.
                 switch (toolType)
@@ -165,45 +187,99 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
             return true;
         }
 
-        private void OpenSkinSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
+        private async void OpenSkinSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
-            if (Parent == null) return;
+            if (Parent == null)
+            {
+                return;
+            }
 
             performer.PopupMessage(Loc.GetString("Cut open the skin..."));
 
-            _skinOpened = true;
+            if (!performer.HasComponent<DoAfterComponent>())
+            {
+                SkinOpened = true;
+                return;
+            }
+
+            var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
+            var args = new DoAfterEventArgs(performer, 3, target: Owner);
+            var result = await doAfterSystem.DoAfter(args);
+
+            if (result == DoAfterStatus.Finished)
+            {
+                SkinOpened = true;
+            }
         }
 
-        private void ClampVesselsSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
+        private async void ClampVesselsSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
             if (Parent == null) return;
 
             performer.PopupMessage(Loc.GetString("Clamp the vessels..."));
 
-            // TODO BODY do_after: Delay
-            _vesselsClamped = true;
+            if (!performer.HasComponent<DoAfterComponent>())
+            {
+                VesselsClamped = true;
+                return;
+            }
+
+            var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
+            var args = new DoAfterEventArgs(performer, 3, target: Owner);
+            var result = await doAfterSystem.DoAfter(args);
+
+            if (result == DoAfterStatus.Finished)
+            {
+                VesselsClamped = true;
+            }
         }
 
-        private void RetractSkinSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
+        private async void RetractSkinSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
             if (Parent == null) return;
 
             performer.PopupMessage(Loc.GetString("Retract the skin..."));
 
-            // TODO BODY do_after: Delay
-            _skinRetracted = true;
+            if (!performer.HasComponent<DoAfterComponent>())
+            {
+                SkinRetracted = true;
+                return;
+            }
+
+            var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
+            var args = new DoAfterEventArgs(performer, 3, target: Owner);
+            var result = await doAfterSystem.DoAfter(args);
+
+            if (result == DoAfterStatus.Finished)
+            {
+                SkinRetracted = true;
+            }
         }
 
-        private void CauterizeIncisionSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
+        private async void CauterizeIncisionSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
             if (Parent == null) return;
 
             performer.PopupMessage(Loc.GetString("Cauterize the incision..."));
 
-            // TODO BODY do_after: Delay
-            _skinOpened = false;
-            _vesselsClamped = false;
-            _skinRetracted = false;
+            if (!performer.HasComponent<DoAfterComponent>())
+            {
+                SkinOpened = false;
+                VesselsClamped = false;
+                SkinRetracted = false;
+                return;
+            }
+
+            var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
+            var args = new DoAfterEventArgs(performer, 3, target: Owner);
+            var result = await doAfterSystem.DoAfter(args);
+
+            if (result == DoAfterStatus.Finished)
+            {
+                SkinOpened = false;
+                VesselsClamped = false;
+                SkinRetracted = false;
+            }
         }
 
         private void LoosenOrganSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
@@ -226,7 +302,7 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
             }
         }
 
-        private void LoosenOrganSurgeryCallback(IMechanism? target, IBodyPartContainer container, ISurgeon surgeon,
+        private async void LoosenOrganSurgeryCallback(IMechanism? target, IBodyPartContainer container, ISurgeon surgeon,
             IEntity performer)
         {
             if (Parent == null || target == null || !Parent.Mechanisms.Contains(target))
@@ -236,8 +312,20 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
 
             performer.PopupMessage(Loc.GetString("Loosen the organ..."));
 
-            // TODO BODY do_after: Delay
-            _disconnectedOrgans.Add(target);
+            if (!performer.HasComponent<DoAfterComponent>())
+            {
+                AddDisconnectedOrgan(target);
+                return;
+            }
+
+            var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
+            var args = new DoAfterEventArgs(performer, 3, target: Owner);
+            var result = await doAfterSystem.DoAfter(args);
+
+            if (result == DoAfterStatus.Finished)
+            {
+                AddDisconnectedOrgan(target);
+            }
         }
 
         private void RemoveOrganSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
@@ -251,7 +339,7 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
 
             if (_disconnectedOrgans.Count == 1)
             {
-                RemoveOrganSurgeryCallback(_disconnectedOrgans[0], container, surgeon, performer);
+                RemoveOrganSurgeryCallback(_disconnectedOrgans.First(), container, surgeon, performer);
             }
             else
             {
@@ -259,7 +347,7 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
             }
         }
 
-        private void RemoveOrganSurgeryCallback(IMechanism? target, IBodyPartContainer container, ISurgeon surgeon,
+        private async void RemoveOrganSurgeryCallback(IMechanism? target, IBodyPartContainer container, ISurgeon surgeon,
             IEntity performer)
         {
             if (Parent == null || target == null || !Parent.Mechanisms.Contains(target))
@@ -269,20 +357,45 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
 
             performer.PopupMessage(Loc.GetString("Remove the organ..."));
 
-            // TODO BODY do_after: Delay
-            Parent.RemoveMechanism(target, performer.Transform.Coordinates);
-            _disconnectedOrgans.Remove(target);
+            if (!performer.HasComponent<DoAfterComponent>())
+            {
+                Parent.RemoveMechanism(target, performer.Transform.Coordinates);
+                RemoveDisconnectedOrgan(target);
+                return;
+            }
+
+            var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
+            var args = new DoAfterEventArgs(performer, 3, target: Owner);
+            var result = await doAfterSystem.DoAfter(args);
+
+            if (result == DoAfterStatus.Finished)
+            {
+                Parent.RemoveMechanism(target, performer.Transform.Coordinates);
+                RemoveDisconnectedOrgan(target);
+            }
         }
 
-        private void RemoveBodyPartSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
+        private async void RemoveBodyPartSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
             if (Parent == null) return;
             if (container is not IBody body) return;
 
             performer.PopupMessage(Loc.GetString("Saw off the limb!"));
 
-            // TODO BODY do_after: Delay
-            body.RemovePart(Parent);
+            if (!performer.HasComponent<DoAfterComponent>())
+            {
+                body.RemovePart(Parent);
+                return;
+            }
+
+            var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
+            var args = new DoAfterEventArgs(performer, 3, target: Owner);
+            var result = await doAfterSystem.DoAfter(args);
+
+            if (result == DoAfterStatus.Finished)
+            {
+                body.RemovePart(Parent);
+            }
         }
     }
 }
