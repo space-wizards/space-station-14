@@ -288,14 +288,14 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
         }
 
-        private const int ReactionIterMax = 1000;
+        private const int ReactionIterMax = 100;
 
         private void CheckForReaction()
         {
             for (var i = 0; i < ReactionIterMax; i++)
             {
                 var products = _reactionSystem.ProcessReactions(Solution, Owner);
-                TryAddSolution(products);
+                TryAddSolution(products, skipReactionCheck:true);
 
                 if (products.TotalVolume <= 0)
                     return;
