@@ -36,9 +36,8 @@ namespace Content.Server.GameObjects.Components.Power.AME
             {
 
                 var mapGrid = _mapManager.GetGrid(args.ClickLocation.GetGridId(_serverEntityManager));
-                var tile = mapGrid.GetTileRef(args.ClickLocation);
                 var snapPos = mapGrid.SnapGridCellFor(args.ClickLocation, SnapGridOffset.Center);
-                if (mapGrid.GetSnapGridCell(snapPos, SnapGridOffset.Center).Where(sc => sc.Owner.HasComponent<AMEShieldComponent>()).Count() > 0)
+                if (mapGrid.GetSnapGridCell(snapPos, SnapGridOffset.Center).Any(sc => sc.Owner.HasComponent<AMEShieldComponent>()))
                 {
                     Owner.PopupMessage(args.User, Loc.GetString("Shielding is already there!"));
                     return true;
