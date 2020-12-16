@@ -222,6 +222,7 @@ namespace Content.Client.GameObjects.Components.Mobs
                 return;
             }
 
+            if (!alert.Alert.HasOnClick) return;
             SendNetworkMessage(new ClickAlertMessage(alert.Alert.AlertType));
         }
 

@@ -73,7 +73,13 @@ namespace Content.Shared.Alert
         public bool SupportsSeverity => MaxSeverity != -1;
 
         /// <summary>
+        /// Whether this alert is clickable. This is valid clientside.
+        /// </summary>
+        public bool HasOnClick { get; private set; }
+
+        /// <summary>
         /// Defines what to do when the alert is clicked.
+        /// This will always be null on clientside.
         /// </summary>
         public IAlertClick OnClick { get; private set; }
 
@@ -101,6 +107,8 @@ namespace Content.Shared.Alert
                 Category = alertCategory;
             }
             AlertKey = new AlertKey(AlertType, Category);
+
+            HasOnClick = serializer.TryReadDataField("onClick", out string _);
 
             if (IoCManager.Resolve<IModuleManager>().IsClientModule) return;
             serializer.DataField(this, x => x.OnClick, "onClick", null);
