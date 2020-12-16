@@ -1,12 +1,11 @@
 using System;
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.GameTicking.GameRules;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Interfaces.Chat;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.PDA;
-using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Markers;
 using Content.Server.GameObjects.Components.TraitorDeathMatch;
 using Content.Server.Mobs;
@@ -20,10 +19,8 @@ using Content.Shared.GameObjects.Components.PDA;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared;
 using Robust.Shared.Map;
-using Robust.Server.Player;
 using Robust.Server.Interfaces.Player;
-using Robust.Server.Interfaces.Console;
-﻿using Robust.Shared.IoC;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -79,7 +76,7 @@ namespace Content.Server.GameTicking.GamePresets
             // Delete anything that may contain "dangerous" role-specific items.
             // (This includes the PDA, as everybody gets the captain PDA in this mode for true-all-access reasons.)
             var inventory = mind.OwnedEntity.GetComponent<InventoryComponent>();
-            EquipmentSlotDefines.Slots[] victimSlots = new EquipmentSlotDefines.Slots[] {EquipmentSlotDefines.Slots.IDCARD, EquipmentSlotDefines.Slots.BELT, EquipmentSlotDefines.Slots.BACKPACK};
+            var victimSlots = new[] {EquipmentSlotDefines.Slots.IDCARD, EquipmentSlotDefines.Slots.BELT, EquipmentSlotDefines.Slots.BACKPACK};
             foreach (var slot in victimSlots)
                 if (inventory.TryGetSlotItem(slot, out ItemComponent vItem))
                     vItem.Owner.Delete();

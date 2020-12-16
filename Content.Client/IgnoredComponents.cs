@@ -223,7 +223,8 @@
             "Machine",
             "MachinePart",
             "MachineFrame",
-            "MachineBoard"
+            "MachineBoard",
+            "ChemicalAmmo"
         };
     }
 }
