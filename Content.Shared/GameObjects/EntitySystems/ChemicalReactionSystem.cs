@@ -81,34 +81,23 @@ namespace Content.Shared.GameObjects.EntitySystems
         }
 
         /// <summary>
-        /// Looks for reactions that can be applied to this solution, and runs them.
-        /// If a reaction is run, re-checks all reactions again.
+        /// Performs all chemical reactions that can be run on a solution.
+        /// WARNING: Does not trigger reactions between solution and new products.
         /// </summary>
-        public void CheckForReaction(Solution solution, IEntity owner)
+        public Solution ProcessReactions(Solution solution, IEntity owner)
         {
-            var checkForNewReaction = false;
-            while (true)
+            //TODO: make a hashmap at startup and then look up reagents in the contents for a reaction
+            var overallProducts = new Solution();
+            foreach (var reaction in _reactions)
             {
-                //TODO: make a hashmap at startup and then look up reagents in the contents for a reaction
-                //Check the solution for every reaction
-                foreach (var reaction in _reactions)
+                if (SolutionValidReaction(solution, reaction, out var unitReactions))
                 {
-                    if (SolutionValidReaction(solution, reaction, out var unitReactions))
-                    {
-                        PerformReaction(solution, owner, reaction, unitReactions);
-                        checkForNewReaction = true;
-                        break;
-                    }
+                    var reactionProducts = PerformReaction(solution, owner, reaction, unitReactions);
+                    overallProducts.AddSolution(reactionProducts);
+                    break;
                 }
-
-                //Check for a new reaction if a reaction occurs, run loop again.
-                if (checkForNewReaction)
-                {
-                    checkForNewReaction = false;
-                    continue;
-                }
-                return;
             }
+            return overallProducts;
         }
     }
 }

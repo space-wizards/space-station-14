@@ -14,6 +14,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -287,9 +288,19 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
         }
 
+        private const int ReactionIterMax = 1000;
+
         private void CheckForReaction()
         {
-            _reactionSystem.CheckForReaction(Solution, Owner);
+            for (var i = 0; i < ReactionIterMax; i++)
+            {
+                var products = _reactionSystem.ProcessReactions(Solution, Owner);
+                TryAddSolution(products);
+
+                if (products.TotalVolume <= 0)
+                    return;
+            }
+            Logger.Error($"{nameof(SolutionContainerComponent)} on {Owner.Name} (Uid: {Owner.Uid}) could not finish reacting in under {ReactionIterMax} loops.");
         }
 
         public bool TryAddReagent(string reagentId, ReagentUnit quantity, out ReagentUnit acceptedQuantity, bool skipReactionCheck = false, bool skipColor = false)
