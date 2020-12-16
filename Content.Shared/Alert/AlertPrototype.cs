@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Content.Shared.Interfaces;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
