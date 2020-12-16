@@ -13,6 +13,8 @@
   placementMode: SnapgridCenter
   canRotate: false
   canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked { }
 
 - type: construction
   name: wall
@@ -29,6 +31,8 @@
   placementMode: SnapgridCenter
   canRotate: false
   canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked {}
 
 - type: construction
   name: reinforced wall
@@ -45,6 +49,8 @@
   placementMode: SnapgridCenter
   canRotate: false
   canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked {}
 
 - type: construction
   name: low wall
@@ -55,7 +61,8 @@
   category: Structures
   description: A low wall used for mounting windows.
   conditions:
-    - !type:NoWindowsInTile { }
+    - !type:NoWindowsInTile {}
+    - !type:TileNotBlocked {}
   icon:
     sprite: Constructible/Structures/Walls/low_wall.rsi
     state: metal
@@ -131,6 +138,8 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked {}
 
 - type: construction
   name: Table Frame
@@ -146,6 +155,8 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked {}
 
 - type: construction
   name: Poker Table
@@ -161,6 +172,8 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked {}
 
 - type: construction
   name: Catwalk
@@ -171,6 +184,7 @@
   category: Structures
   description: Just like a lattice. Except it looks better.
   conditions:
+    - !type:TileNotBlocked {}
     - !type:TileType
       targets:
         - lattice

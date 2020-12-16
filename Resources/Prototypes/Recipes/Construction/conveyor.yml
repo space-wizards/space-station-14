@@ -12,6 +12,8 @@
   icon:
     sprite: Constructible/Power/conveyor.rsi
     state: conveyor_stopped_cw
+  conditions:
+    - !type:TileNotBlocked {}
 
 - type: construction
   name: two-way lever
@@ -26,3 +28,5 @@
   icon:
     sprite: Constructible/Power/conveyor.rsi
     state: switch-off
+  conditions:
+    - !type:TileNotBlocked {}
