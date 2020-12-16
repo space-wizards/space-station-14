@@ -194,7 +194,7 @@ namespace Content.Client.UserInterface
 
             for (byte i = 0; i < ClientActionsComponent.Slots; i++)
             {
-                var slot = new ActionSlot(this, actionsComponent, i);
+                var slot = new ActionSlot(this, _menu, actionsComponent, i);
                 _slotContainer.AddChild(slot);
                 _slots[i] = slot;
             }
