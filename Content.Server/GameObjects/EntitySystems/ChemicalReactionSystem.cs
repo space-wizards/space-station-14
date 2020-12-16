@@ -1,22 +1,28 @@
 using Content.Shared.Chemistry;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using System.Collections.Generic;
 
-namespace Content.Shared.GameObjects.EntitySystems
+namespace Content.Server.GameObjects.EntitySystems
 {
     public class ChemicalReactionSystem : EntitySystem
     {
-        private IEnumerable<ReactionPrototype> _reactions;
+        protected IEnumerable<ReactionPrototype> Reactions;
 
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override void Initialize()
         {
             base.Initialize();
-            _reactions = _prototypeManager.EnumeratePrototypes<ReactionPrototype>();
+            LoadReactions();
+        }
+
+        public void LoadReactions()
+        {
+            Reactions = _prototypeManager.EnumeratePrototypes<ReactionPrototype>();
         }
 
         /// <summary>
@@ -88,7 +94,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         {
             //TODO: make a hashmap at startup and then look up reagents in the contents for a reaction
             var overallProducts = new Solution();
-            foreach (var reaction in _reactions)
+            foreach (var reaction in Reactions)
             {
                 if (SolutionValidReaction(solution, reaction, out var unitReactions))
                 {
