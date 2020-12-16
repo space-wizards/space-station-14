@@ -3998,12 +3998,14 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 407
-  type: AirlockMaint
+  type: Firelock
   components:
   - parent: 855
-    pos: -24.5,-12.5
+    pos: -6.5,-8.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - airBlocked: False
+    type: Airtight
 - uid: 408
   type: Window
   components:
