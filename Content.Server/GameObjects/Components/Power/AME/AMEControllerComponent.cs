@@ -85,11 +85,12 @@ namespace Content.Server.GameObjects.Components.Power.AME
             }
 
             _jarSlot.ContainedEntity.TryGetComponent<AMEFuelContainerComponent>(out var fuelJar);
-            if(fuelJar != null && _powerSupplier != null && fuelJar.FuelAmount > InjectionAmount)
+            if(fuelJar != null && _powerSupplier != null)
             {
-                _powerSupplier.SupplyRate = group.InjectFuel(InjectionAmount);
-                fuelJar.FuelAmount -= InjectionAmount;
-                InjectSound();
+                var availableInject = fuelJar.FuelAmount >= InjectionAmount ? InjectionAmount : fuelJar.FuelAmount;
+                _powerSupplier.SupplyRate = group.InjectFuel(availableInject, out var overloading);
+                fuelJar.FuelAmount -= availableInject;
+                InjectSound(overloading);
                 UpdateUserInterface();
             }
 
@@ -315,9 +316,9 @@ namespace Content.Server.GameObjects.Components.Power.AME
 
         }
 
-        private void InjectSound()
+        private void InjectSound(bool overloading)
         {
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/bang.ogg", Owner, AudioParams.Default.WithVolume(0f));
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/bang.ogg", Owner, AudioParams.Default.WithVolume(overloading ? 10f : 0f));
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
