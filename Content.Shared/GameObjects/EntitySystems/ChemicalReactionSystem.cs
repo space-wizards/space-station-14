@@ -87,6 +87,31 @@ namespace Content.Shared.GameObjects.EntitySystems
             return products;
         }
 
+        public void CheckForReaction(Solution solution, IEntity owner)
+        {
+            bool checkForNewReaction = false;
+            while (true)
+            {
+                //TODO: make a hashmap at startup and then look up reagents in the contents for a reaction
+                //Check the solution for every reaction
+                foreach (var reaction in _reactions)
+                {
+                    if (SolutionValidReaction(solution, reaction, out var unitReactions))
+                    {
+                        PerformReaction(solution, owner, reaction, unitReactions);
+                        checkForNewReaction = true;
+                        break;
+                    }
+                }
 
+                //Check for a new reaction if a reaction occurs, run loop again.
+                if (checkForNewReaction)
+                {
+                    checkForNewReaction = false;
+                    continue;
+                }
+                return;
+            }
+        }
     }
 }

@@ -289,29 +289,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         private void CheckForReaction()
         {
-            bool checkForNewReaction = false;
-            while (true)
-            {
-                //TODO: make a hashmap at startup and then look up reagents in the contents for a reaction
-                //Check the solution for every reaction
-                foreach (var reaction in _reactions)
-                {
-                    if (SolutionValidReaction(reaction, out var unitReactions))
-                    {
-                        PerformReaction(reaction, unitReactions);
-                        checkForNewReaction = true;
-                        break;
-                    }
-                }
-
-                //Check for a new reaction if a reaction occurs, run loop again.
-                if (checkForNewReaction)
-                {
-                    checkForNewReaction = false;
-                    continue;
-                }
-                return;
-            }
+            _reactionSystem.CheckForReaction(Solution, Owner);
         }
 
         public bool TryAddReagent(string reagentId, ReagentUnit quantity, out ReagentUnit acceptedQuantity, bool skipReactionCheck = false, bool skipColor = false)
