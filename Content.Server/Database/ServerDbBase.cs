@@ -56,7 +56,7 @@ namespace Content.Server.Database
                 return;
             }
 
-            if (!(profile is HumanoidCharacterProfile humanoid))
+            if (profile is not HumanoidCharacterProfile humanoid)
             {
                 // TODO: Handle other ICharacterProfile implementations properly
                 throw new NotImplementedException();
@@ -73,7 +73,7 @@ namespace Content.Server.Database
                 .Profiles
                 .SingleOrDefault(h => h.Slot == entity.Slot);
 
-            if (!(oldProfile is null))
+            if (oldProfile is not null)
             {
                 prefs.Profiles.Remove(oldProfile);
             }

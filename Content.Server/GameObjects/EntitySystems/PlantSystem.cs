@@ -19,7 +19,7 @@ namespace Content.Server.GameObjects.EntitySystems
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         private int _nextUid = 0;
-        private readonly Dictionary<int, Seed> _seeds = new Dictionary<int,Seed>();
+        private readonly Dictionary<int, Seed> _seeds = new();
 
         private float _timer = 0f;
 

@@ -24,15 +24,7 @@ namespace Content.Server.GameObjects.Components.Stack
     [ComponentReference(typeof(SharedStackComponent))]
     public class StackComponent : SharedStackComponent, IInteractUsing, IExamine
     {
-        [Dependency] private IEntityManager _entityManager = default!;
-
         private bool _throwIndividually = false;
-
-        public override int Count
-        {
-            get => base.Count;
-            set => base.Count = value;
-        }
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool ThrowIndividually
@@ -78,7 +70,7 @@ namespace Content.Server.GameObjects.Components.Stack
             {
                 Count -= amount;
 
-                stack = _entityManager.SpawnEntity(Owner.Prototype?.ID, spawnPosition);
+                stack = Owner.EntityManager.SpawnEntity(Owner.Prototype?.ID, spawnPosition);
 
                 if (stack.TryGetComponent(out StackComponent? stackComp))
                 {

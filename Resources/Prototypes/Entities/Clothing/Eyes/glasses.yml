@@ -1,0 +1,103 @@
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesGlassesBeer
+  name: beer goggles
+  description: A pair of sunglasses outfitted with apparatus to scan reagents, as well as providing an innate understanding of liquid viscosity while in motion.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/beergoggles.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/beergoggles.rsi
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesGlassesGar
+  name: gar glasses
+  description: Go beyond impossible and kick reason to the curb!
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/gar.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/gar.rsi
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesGlassesGarOrange
+  name: orange gar glasses
+  description: Just who the hell do you think I am?!
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/gar.rsi
+    state: icon-alt
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/gar.rsi
+    HeldPrefix: alt
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesGlassesGarGiga
+  name: giga gar glasses
+  description: We evolve past the person we were a minute before. Little by little we advance with each turn. That's how a drill works!
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/gar.rsi
+    state: icon-super
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/gar.rsi
+    HeldPrefix: super
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesGlassesMeson
+  name: optical meson scanners
+  description: The pinnacle of modern science, wallhacks in real life
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/meson.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/meson.rsi
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesGlasses
+  name: glasses
+  description: You want to wear glasses in a game? Imagine rping as physically disabled.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/glasses.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/glasses.rsi
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesGlassesSunglasses
+  name: sun glasses
+  description: Useful both for security and cargonia
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/sunglasses.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/sunglasses.rsi
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesGlassesSecurity
+  name: security sunglasses
+  description: Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks many flashes. Often worn by budget security officers.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/secglasses.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/secglasses.rsi
+
+#Make a scanner category when these actually function and we get the trayson
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesGlassesThermal
+  name: optical thermal scanner
+  description: Thermals in the shape of glasses.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/thermal.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/thermal.rsi

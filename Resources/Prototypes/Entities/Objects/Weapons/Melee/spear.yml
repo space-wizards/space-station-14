@@ -1,27 +1,29 @@
-- type: entity
+﻿- type: entity
   name: spear
   parent: BaseItem
   id: Spear
+  description: Definition of a Classic. Keeping murder affordable since 200,000 BCE.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/spear.rsi
     state: spear
-
   - type: MeleeWeapon
     range: 1.5
     arcwidth: 0
     arc: spear
-
   - type: Item
     size: 24
     sprite: Objects/Weapons/Melee/spear.rsi
     prefix: inhand
-
   - type: Construction
     graph: spear
     node: spear
-
   - type: ItemCooldown
+  - type: MeleeChemicalInjector
+  - type: SolutionContainer
+    maxVol: 5
+    caps: AddTo, RemoveFrom
+  - type: Pourable
 
 - type: MeleeWeaponAnimation
   id: spear

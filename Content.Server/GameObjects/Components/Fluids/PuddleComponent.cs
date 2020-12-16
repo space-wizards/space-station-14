@@ -17,7 +17,6 @@ using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -26,7 +25,6 @@ using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameObjects.Components.Fluids
 {
@@ -50,8 +48,6 @@ namespace Content.Server.GameObjects.Components.Fluids
 
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-
         public override string Name => "Puddle";
 
         private CancellationTokenSource _evaporationToken;
@@ -68,7 +64,11 @@ namespace Content.Server.GameObjects.Components.Fluids
             set => _slipThreshold = value;
         }
 
-        private float _evaporateTime;
+        /// <summary>
+        ///     The time that it will take this puddle to evaporate, in seconds.
+        /// </summary>
+        public float EvaporateTime { get; private set; }
+
         private string _spillSound;
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         {
             serializer.DataFieldCached(ref _spillSound, "spill_sound", "/Audio/Effects/Fluids/splat.ogg");
             serializer.DataField(ref _overflowVolume, "overflow_volume", ReagentUnit.New(20));
-            serializer.DataField(ref _evaporateTime, "evaporate_time", 5.0f);
+            serializer.DataField(this, x => x.EvaporateTime, "evaporate_time", 5.0f);
             // Long-term probably have this based on the underlying reagents
             serializer.DataField(ref _evaporateThreshold, "evaporate_threshold", ReagentUnit.New(20));
             serializer.DataField(ref _spriteVariants, "variants", 1);
@@ -255,7 +255,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             _evaporationToken = new CancellationTokenSource();
 
             // KYS to evaporate
-            Owner.SpawnTimer(TimeSpan.FromSeconds(_evaporateTime), Evaporate, _evaporationToken.Token);
+            Owner.SpawnTimer(TimeSpan.FromSeconds(EvaporateTime), Evaporate, _evaporationToken.Token);
         }
 
         private void UpdateSlip()
@@ -399,7 +399,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             if (puddle == default)
             {
                 var grid = _snapGrid.DirectionToGrid(direction);
-                puddle = () => _entityManager.SpawnEntity(Owner.Prototype.ID, grid).GetComponent<PuddleComponent>();
+                puddle = () => Owner.EntityManager.SpawnEntity(Owner.Prototype.ID, grid).GetComponent<PuddleComponent>();
             }
 
             return true;

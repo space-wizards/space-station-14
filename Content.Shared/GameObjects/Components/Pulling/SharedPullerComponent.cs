@@ -1,9 +1,14 @@
 ﻿#nullable enable
+using Content.Shared.Alert;
+using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Physics.Pull;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Component = Robust.Shared.GameObjects.Component;
+using Robust.Shared.Log;
 
 namespace Content.Shared.GameObjects.Components.Pulling
 {
@@ -52,21 +57,34 @@ namespace Content.Shared.GameObjects.Components.Pulling
         {
             base.HandleMessage(message, component);
 
-            if (!(message is PullMessage pullMessage) ||
+            if (message is not PullMessage pullMessage ||
                 pullMessage.Puller.Owner != Owner)
             {
                 return;
             }
 
+            SharedAlertsComponent? ownerStatus = Owner.GetComponentOrNull<SharedAlertsComponent>();
+
             switch (message)
             {
                 case PullStartedMessage msg:
                     Pulling = msg.Pulled.Owner;
+                    ownerStatus?.ShowAlert(AlertType.Pulling);
                     break;
                 case PullStoppedMessage _:
                     Pulling = null;
+                    ownerStatus?.ClearAlert(AlertType.Pulling);
                     break;
             }
+        }
+
+        private void OnClickAlert(ClickAlertEventArgs args)
+        {
+            EntitySystem
+                .Get<SharedPullingSystem>()
+                .GetPulled(args.Player)?
+                .GetComponentOrNull<SharedPullableComponent>()?
+                .TryStopPull();
         }
     }
 }

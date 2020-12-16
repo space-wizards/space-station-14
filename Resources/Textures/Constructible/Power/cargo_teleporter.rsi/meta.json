@@ -5,7 +5,7 @@
       "y":32
    },
    "license":"CC-BY-SA-3.0",
-   "copyright":"Taken from /vg/station",
+   "copyright":"Taken from /vg/station at commit 5c50dee8fb2a55d6be3b3c9c90a782a618a5506e",
    "states":[
       {
          "name":"pad-beam",

@@ -8,7 +8,7 @@ using Robust.Shared.Map;
 namespace Content.Shared.GameObjects.EntitySystems
 {
     /// <summary>
-    /// This interface gives components behavior on getting destoyed.
+    /// This interface gives components behavior on getting destroyed.
     /// </summary>
     public interface IDestroyAct
     {
@@ -21,7 +21,6 @@ namespace Content.Shared.GameObjects.EntitySystems
     public class DestructionEventArgs : EventArgs
     {
         public IEntity Owner { get; set; }
-        public bool IsSpawnWreck { get; set; }
     }
 
     public class BreakageEventArgs : EventArgs
@@ -55,19 +54,20 @@ namespace Content.Shared.GameObjects.EntitySystems
     [UsedImplicitly]
     public sealed class ActSystem : EntitySystem
     {
-        public void HandleDestruction(IEntity owner, bool isWreck)
+        public void HandleDestruction(IEntity owner)
         {
             var eventArgs = new DestructionEventArgs
             {
-                Owner = owner,
-                IsSpawnWreck = isWreck
+                Owner = owner
             };
+
             var destroyActs = owner.GetAllComponents<IDestroyAct>().ToList();
 
             foreach (var destroyAct in destroyActs)
             {
                 destroyAct.OnDestroy(eventArgs);
             }
+
             owner.Delete();
         }
 

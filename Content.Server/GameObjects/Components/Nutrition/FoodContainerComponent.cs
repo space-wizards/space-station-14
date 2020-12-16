@@ -23,8 +23,6 @@ namespace Content.Server.GameObjects.Components.Nutrition
     public sealed class FoodContainer : SharedFoodContainerComponent, IUse
     {
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-
         public override string Name => "FoodContainer";
 
         private AppearanceComponent _appearance;
@@ -60,7 +58,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 return false;
             }
 
-            var itemToSpawn = _entityManager.SpawnEntity(GetRandomPrototype(), Owner.Transform.Coordinates);
+            var itemToSpawn = Owner.EntityManager.SpawnEntity(GetRandomPrototype(), Owner.Transform.Coordinates);
             handsComponent.PutInHandOrDrop(itemToSpawn.GetComponent<ItemComponent>());
             _count--;
             if (_count < 1)

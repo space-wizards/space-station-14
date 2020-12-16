@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Content.Client.UserInterface;
 using Content.Client.Utility;
 using JetBrains.Annotations;
@@ -22,7 +23,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
 
         private readonly Dictionary<Slots, List<ItemSlotButton>> _inventoryButtons
-            = new Dictionary<Slots, List<ItemSlotButton>>();
+            = new();
 
         private ItemSlotButton _hudButtonPocket1;
         private ItemSlotButton _hudButtonPocket2;
@@ -83,6 +84,16 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 
         public override SS14Window Window => _window;
         private HumanInventoryWindow _window;
+
+        public override IEnumerable<ItemSlotButton> GetItemSlotButtons(Slots slot)
+        {
+            if (!_inventoryButtons.TryGetValue(slot, out var buttons))
+            {
+                return Enumerable.Empty<ItemSlotButton>();
+            }
+
+            return buttons;
+        }
 
         public override void AddToSlot(Slots slot, IEntity entity)
         {

@@ -174,19 +174,19 @@
   - type: PresetIdCard
     job: Mime
 
-- type: entity
-  parent: IDCardStandard
-  id: ChaplainIDCard
-  name: chaplain ID card
-  components:
-    - type: Sprite
-      layers:
-        - state: default
-        - state: assigned
-        - state: idchaplain
-
-    - type: PresetIdCard
-      job: Chaplain
+#- type: entity
+#  parent: IDCardStandard
+#  id: ChaplainIDCard
+#  name: chaplain ID card
+#  components:
+#    - type: Sprite
+#      layers:
+#        - state: default
+#        - state: assigned
+#        - state: idchaplain
+#
+#    - type: PresetIdCard
+#      job: Chaplain
 
 - type: entity
   parent: IDCardStandard

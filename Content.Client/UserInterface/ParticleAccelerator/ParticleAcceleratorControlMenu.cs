@@ -24,7 +24,7 @@ namespace Content.Client.ParticleAccelerator
 {
     public sealed class ParticleAcceleratorControlMenu : BaseWindow
     {
-        private ShaderInstance _greyScaleShader;
+        private readonly ShaderInstance _greyScaleShader;
 
         private readonly ParticleAcceleratorBoundUserInterface Owner;
 
@@ -355,7 +355,7 @@ namespace Content.Client.ParticleAccelerator
 
             PASegmentControl Segment(string name)
             {
-                return new PASegmentControl(this, resourceCache, name);
+                return new(this, resourceCache, name);
             }
         }
 

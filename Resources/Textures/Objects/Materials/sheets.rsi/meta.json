@@ -166,6 +166,18 @@
             "directions": 1
         },
         {
+        	"name": "rglass",
+        	"directions": 1
+        },
+        {
+        	"name": "rglass-inhand-left",
+        	"directions": 4
+        },
+        {
+        	"name": "rglass-inhand-right",
+        	"directions": 4
+        },
+        {
             "name": "researchicon",
             "directions": 1
         }

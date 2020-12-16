@@ -2,12 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Client.GameObjects.EntitySystems;
+using Content.Shared;
 using Content.Shared.GameObjects.Components.Instruments;
 using Content.Shared.Physics;
 using Robust.Client.Audio.Midi;
 using Robust.Shared.Audio.Midi;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Timers;
+using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -34,6 +38,8 @@ namespace Content.Client.GameObjects.Components.Instruments
 
         private IMidiRenderer? _renderer;
 
+        private InstrumentSystem _instrumentSystem = default!;
+
         private byte _instrumentProgram = 1;
 
         private byte _instrumentBank;
@@ -50,7 +56,7 @@ namespace Content.Client.GameObjects.Components.Instruments
         ///     A queue of MidiEvents to be sent to the server.
         /// </summary>
         [ViewVariables]
-        private readonly List<MidiEvent> _midiEventBuffer = new List<MidiEvent>();
+        private readonly List<MidiEvent> _midiEventBuffer = new();
 
         /// <summary>
         ///     Whether a midi song will loop or not.
@@ -158,6 +164,7 @@ namespace Content.Client.GameObjects.Components.Instruments
         {
             base.Initialize();
             IoCManager.InjectDependencies(this);
+            _instrumentSystem = EntitySystem.Get<InstrumentSystem>();
         }
 
         protected virtual void SetupRenderer(bool fromStateChange = false)
@@ -227,7 +234,7 @@ namespace Content.Client.GameObjects.Components.Instruments
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(this, x => Handheld, "handheld", false);
+            serializer.DataField(this, x => x.Handheld, "handheld", false);
             serializer.DataField(ref _instrumentProgram, "program", (byte) 1);
             serializer.DataField(ref _instrumentBank, "bank", (byte) 0);
             serializer.DataField(ref _allowPercussion, "allowPercussion", false);
@@ -306,7 +313,7 @@ namespace Content.Client.GameObjects.Components.Instruments
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
-            if (!(curState is InstrumentState state)) return;
+            if (curState is not InstrumentState state) return;
 
             if (state.Playing)
             {
@@ -349,12 +356,11 @@ namespace Content.Client.GameObjects.Components.Instruments
             return true;
         }
 
-        /// <inheritdoc cref="MidiRenderer.OpenMidi(string)"/>
-        public bool OpenMidi(string filename)
+        public bool OpenMidi(ReadOnlySpan<byte> data)
         {
             SetupRenderer();
 
-            if (_renderer == null || !_renderer.OpenMidi(filename))
+            if (_renderer == null || !_renderer.OpenMidi(data))
             {
                 return false;
             }
@@ -423,7 +429,7 @@ namespace Content.Client.GameObjects.Components.Instruments
 
             if (_midiEventBuffer.Count == 0) return;
 
-            var max = Math.Min(MaxMidiEventsPerBatch, MaxMidiEventsPerSecond - _sentWithinASec);
+            var max = Math.Min(_instrumentSystem.MaxMidiEventsPerBatch, _instrumentSystem.MaxMidiEventsPerSecond - _sentWithinASec);
 
             if (max <= 0)
             {

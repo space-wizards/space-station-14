@@ -6,6 +6,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Anchorable
+    snap: true
   - type: Construction
     graph: girder
     node: girder
@@ -17,24 +18,23 @@
     anchored: true
     shapes:
     - !type:PhysShapeAabb
-      mask:
+      layer:
+      - Opaque
       - Impassable
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
-      layer:
-      - Opaque
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
   - type: Pullable
-  - type: Destructible
-    deadThreshold: 50
+  - type: Damageable
     resistances: metallicResistances
-    spawnOnDestroy:
-      SteelSheet1:
-        Min: 1
-        Max: 1
+  - type: Destructible
+    thresholds:
+      50:
+        Spawn:
+          SteelSheet1:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]
   - type: SnapGrid
     offset: Edge
   placement:

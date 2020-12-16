@@ -200,7 +200,7 @@
             ]
         },
         {
-            "name": "protolathe_open",
+            "name": "protolathe_panel",
             "directions": 1,
             "delays": [
                 [

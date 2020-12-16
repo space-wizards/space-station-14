@@ -6,7 +6,6 @@ using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Body.Networks;
 using Content.Shared.GameObjects.Components.Chemistry;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -103,7 +102,7 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
         ///     Used to track how long each reagent has been in the stomach
         /// </summary>
         [ViewVariables]
-        private readonly List<ReagentDelta> _reagentDeltas = new List<ReagentDelta>();
+        private readonly List<ReagentDelta> _reagentDeltas = new();
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -116,10 +115,7 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
         {
             base.Startup();
 
-            if (!Owner.EnsureComponent(out SolutionContainerComponent solution))
-            {
-                Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition} didn't have a {nameof(SolutionContainerComponent)}");
-            }
+            Owner.EnsureComponentWarn(out SolutionContainerComponent solution);
 
             solution.MaxVolume = InitialMaxVolume;
         }

@@ -13,14 +13,14 @@
 - type: startingGear
   id: MimeGear
   equipment:
-    innerclothing: UniformMime
-    backpack: BackpackClothing
-    head: HatBeret
-    belt: SuspendersClothing
-    gloves: GlovesWhite
-    shoes: ShoesMime
+    innerclothing: ClothingUniformJumpsuitMime
+    backpack: ClothingBackpackFilled
+    head: ClothingHeadHatBeret
+    belt: ClothingBeltSuspenders
+    gloves: ClothingHandsGlovesLatex
+    shoes: ClothingShoesColorWhite
     pocket1: Pen
     pocket2: Paper
-    mask: MaskMime
+    mask: ClothingMaskMime
     idcard: MimePDA
-    ears: HeadsetService
+    ears: ClothingHeadsetService

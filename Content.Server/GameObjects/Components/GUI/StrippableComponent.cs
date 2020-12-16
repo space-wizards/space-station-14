@@ -39,14 +39,15 @@ namespace Content.Server.GameObjects.Components.GUI
                 UserInterface.OnReceiveMessage += HandleUserInterfaceMessage;
             }
 
-            Owner.EnsureComponent<InventoryComponent>();
-            Owner.EnsureComponent<HandsComponent>();
-            Owner.EnsureComponent<CuffableComponent>();
+            Owner.EnsureComponentWarn<InventoryComponent>();
+            Owner.EnsureComponentWarn<HandsComponent>();
+            Owner.EnsureComponentWarn<CuffableComponent>();
 
             if (Owner.TryGetComponent(out CuffableComponent? cuffed))
             {
                 cuffed.OnCuffedStateChanged += UpdateSubscribed;
             }
+
             if (Owner.TryGetComponent(out InventoryComponent? inventory))
             {
                 inventory.OnItemChanged += UpdateSubscribed;

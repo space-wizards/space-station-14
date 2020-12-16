@@ -75,7 +75,7 @@ namespace Content.Client.GameObjects.Components.Storage
         }
     }
 
-    public enum MorgueVisualLayers
+    public enum MorgueVisualLayers : byte
     {
         Base,
         Light,

@@ -53,7 +53,7 @@ namespace Content.Client.GameObjects.Components.Nutrition
         }
     }
 
-    public enum CreamPiedVisualLayers
+    public enum CreamPiedVisualLayers : byte
     {
         Pie,
     }

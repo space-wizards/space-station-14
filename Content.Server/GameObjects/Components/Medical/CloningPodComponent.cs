@@ -9,6 +9,8 @@ using Content.Server.Mobs;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Medical;
+using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Preferences;
 using Robust.Server.GameObjects;
@@ -32,7 +34,6 @@ namespace Content.Server.GameObjects.Components.Medical
     public class CloningPodComponent : SharedCloningPodComponent, IActivate
     {
         [Dependency] private readonly IServerPreferencesManager _prefsManager = null!;
-        [Dependency] private readonly IEntityManager _entityManager = null!;
         [Dependency] private readonly IPlayerManager _playerManager = null!;
 
         [ViewVariables]
@@ -148,7 +149,7 @@ namespace Content.Server.GameObjects.Components.Medical
 
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
-            if (!(obj.Message is CloningPodUiButtonPressedMessage message)) return;
+            if (obj.Message is not CloningPodUiButtonPressedMessage message) return;
 
             switch (message.Button)
             {
@@ -164,12 +165,12 @@ namespace Content.Server.GameObjects.Components.Medical
                     }
 
                     var dead =
-                        mind.OwnedEntity.TryGetComponent<IDamageableComponent>(out var damageable) &&
-                        damageable.CurrentState == DamageState.Dead;
+                        mind.OwnedEntity.TryGetComponent<IMobStateComponent>(out var state) &&
+                        state.IsDead();
                     if (!dead) return;
 
 
-                    var mob = _entityManager.SpawnEntity("HumanMob_Content", Owner.Transform.MapPosition);
+                    var mob = Owner.EntityManager.SpawnEntity("HumanMob_Content", Owner.Transform.MapPosition);
                     var client = _playerManager.GetSessionByUserId(mind.UserId!.Value);
                     var profile = GetPlayerProfileAsync(client.UserId);
                     mob.GetComponent<HumanoidAppearanceComponent>().UpdateFromProfile(profile);

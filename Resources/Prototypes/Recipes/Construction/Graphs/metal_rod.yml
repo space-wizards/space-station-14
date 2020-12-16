@@ -1,0 +1,16 @@
+﻿- type: constructionGraph
+  id: metalRod
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: MetalRod
+          completed:
+            - !type:SetStackCount
+              amount: 2
+          steps:
+            - material: Metal
+              amount: 1
+
+    - node: MetalRod
+      entity: MetalRod

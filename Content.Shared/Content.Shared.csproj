@@ -3,13 +3,13 @@
   <PropertyGroup>
     <!-- Work around https://github.com/dotnet/project-system/issues/4314 -->
     <TargetFramework>$(TargetFramework)</TargetFramework>
-    <LangVersion>8</LangVersion>
+    <LangVersion>9</LangVersion>
     <IsPackable>false</IsPackable>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <OutputPath>../bin/Content.Shared</OutputPath>
     <Configurations>Release;Debug</Configurations>
     <Platforms>AnyCPU</Platforms>
-    <WarningsAsErrors>CS8604;CS8765;CS8632;CS8622</WarningsAsErrors>
+    <WarningsAsErrors>nullable</WarningsAsErrors>
   </PropertyGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.DefineConstants.targets" />
   <ItemGroup>
