@@ -39,7 +39,6 @@
     transferAmount: 5.0
   - type: Spillable
   - type: GlassBeaker
-  
 
 - type: entity
   name: dropper
