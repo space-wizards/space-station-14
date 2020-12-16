@@ -483,7 +483,7 @@ namespace Content.Server.GameObjects.Components.PA
                 yield return _partEmitterRight;
         }
 
-        private void SwitchOn()
+        public void SwitchOn()
         {
             DebugTools.Assert(_isAssembled);
 
@@ -509,7 +509,7 @@ namespace Content.Server.GameObjects.Components.PA
             _partPowerBox!.PowerConsumerComponent!.DrawRate = PowerDrawFor(_selectedStrength);
         }
 
-        private void SwitchOff()
+        public void SwitchOff()
         {
             _isEnabled = false;
             PowerOff();
@@ -545,7 +545,7 @@ namespace Content.Server.GameObjects.Components.PA
             UpdatePartVisualStates();
         }
 
-        private void SetStrength(ParticleAcceleratorPowerState state)
+        public void SetStrength(ParticleAcceleratorPowerState state)
         {
             if (_wireStrengthCut)
             {
