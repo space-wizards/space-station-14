@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -441,7 +441,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
             foreach (var reagent in recipe.IngredientsReagents)
             {
-                if (!solution.ContainsReagent(reagent.Key, out var amount))
+                if (!solution.Solution.ContainsReagent(reagent.Key, out var amount))
                 {
                     return MicrowaveSuccessState.RecipeFail;
                 }

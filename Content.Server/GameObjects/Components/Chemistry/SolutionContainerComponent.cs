@@ -98,7 +98,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         public override bool TryRemoveReagent(string reagentId, ReagentUnit quantity)
         {
-            if (!ContainsReagent(reagentId, out var currentQuantity))
+            if (!Solution.ContainsReagent(reagentId, out var currentQuantity))
             {
                 return false;
             }
@@ -333,19 +333,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 CheckForReaction();
             OnSolutionChanged(skipColor);
             return true;
-        }
-
-        /// <summary>
-        /// Check if the solution contains the specified reagent.
-        /// </summary>
-        /// <param name="reagentId">The reagent to check for.</param>
-        /// <param name="quantity">Output the quantity of the reagent if it is contained, 0 if it isn't.</param>
-        /// <returns>Return true if the solution contains the reagent.</returns>
-        public bool ContainsReagent(string reagentId, out ReagentUnit quantity)
-        {
-            var containsReagent = Solution.ContainsReagent(reagentId, out var quantityFound);
-            quantity = quantityFound;
-            return containsReagent;
         }
 
         protected void UpdateFillIcon()
