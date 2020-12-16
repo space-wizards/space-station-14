@@ -336,33 +336,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
         }
 
         /// <summary>
-        /// Checks if a solution has the reactants required to cause a specified reaction.
-        /// </summary>
-        /// <param name="solution">The solution to check for reaction conditions.</param>
-        /// <param name="reaction">The reaction whose reactants will be checked for in the solution.</param>
-        /// <param name="unitReactions">The number of times the reaction can occur with the given solution.</param>
-        /// <returns></returns>
-        private bool SolutionValidReaction(ReactionPrototype reaction, out ReagentUnit unitReactions)
-        {
-            var reacted = _reactionSystem.SolutionValidReaction(Solution, reaction, out var unitReactionsFound);
-            unitReactions = unitReactionsFound;
-            return reacted;
-        }
-
-        /// <summary>
-        /// Perform a reaction on a solution. This assumes all reaction criteria have already been checked and are met.
-        /// </summary>
-        /// <param name="solution">Solution to be reacted.</param>
-        /// <param name="reaction">Reaction to occur.</param>
-        /// <param name="unitReactions">The number of times to cause this reaction.</param>
-        private void PerformReaction(ReactionPrototype reaction, ReagentUnit unitReactions)
-        {
-            var products = _reactionSystem.PerformReaction(Solution, Owner, reaction, unitReactions);
-            Solution.AddSolution(products);
-            _audioSystem.PlayAtCoords("/Audio/Effects/Chemistry/bubbles.ogg", Owner.Transform.Coordinates);
-        }
-
-        /// <summary>
         /// Check if the solution contains the specified reagent.
         /// </summary>
         /// <param name="reagentId">The reagent to check for.</param>
