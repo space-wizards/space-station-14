@@ -107,7 +107,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// Called when clicking on entities while holding in active hand
         /// </summary>
         /// <param name="eventArgs"></param>
-        public async Task AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return;
 
