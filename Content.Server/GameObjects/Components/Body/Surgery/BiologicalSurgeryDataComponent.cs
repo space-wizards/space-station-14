@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
@@ -50,6 +51,24 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
             {
                 Dirty();
             }
+        }
+
+        private async Task<bool> SurgeryDoAfter(IEntity performer)
+        {
+            if (!performer.HasComponent<DoAfterComponent>())
+            {
+                return true;
+            }
+
+            var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
+            var target = Parent?.Body?.Owner ?? Owner;
+            var args = new DoAfterEventArgs(performer, 3, target: target)
+            {
+                BreakOnUserMove = true,
+                BreakOnTargetMove = true
+            };
+
+            return await doAfterSystem.DoAfter(args) == DoAfterStatus.Finished;
         }
 
         public string GetDescription()
@@ -196,17 +215,7 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
 
             performer.PopupMessage(Loc.GetString("Cut open the skin..."));
 
-            if (!performer.HasComponent<DoAfterComponent>())
-            {
-                SkinOpened = true;
-                return;
-            }
-
-            var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
-            var args = new DoAfterEventArgs(performer, 3, target: Owner);
-            var result = await doAfterSystem.DoAfter(args);
-
-            if (result == DoAfterStatus.Finished)
+            if (await SurgeryDoAfter(performer))
             {
                 SkinOpened = true;
             }
@@ -218,17 +227,7 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
 
             performer.PopupMessage(Loc.GetString("Clamp the vessels..."));
 
-            if (!performer.HasComponent<DoAfterComponent>())
-            {
-                VesselsClamped = true;
-                return;
-            }
-
-            var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
-            var args = new DoAfterEventArgs(performer, 3, target: Owner);
-            var result = await doAfterSystem.DoAfter(args);
-
-            if (result == DoAfterStatus.Finished)
+            if (await SurgeryDoAfter(performer))
             {
                 VesselsClamped = true;
             }
@@ -240,17 +239,7 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
 
             performer.PopupMessage(Loc.GetString("Retract the skin..."));
 
-            if (!performer.HasComponent<DoAfterComponent>())
-            {
-                SkinRetracted = true;
-                return;
-            }
-
-            var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
-            var args = new DoAfterEventArgs(performer, 3, target: Owner);
-            var result = await doAfterSystem.DoAfter(args);
-
-            if (result == DoAfterStatus.Finished)
+            if (await SurgeryDoAfter(performer))
             {
                 SkinRetracted = true;
             }
@@ -262,19 +251,7 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
 
             performer.PopupMessage(Loc.GetString("Cauterize the incision..."));
 
-            if (!performer.HasComponent<DoAfterComponent>())
-            {
-                SkinOpened = false;
-                VesselsClamped = false;
-                SkinRetracted = false;
-                return;
-            }
-
-            var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
-            var args = new DoAfterEventArgs(performer, 3, target: Owner);
-            var result = await doAfterSystem.DoAfter(args);
-
-            if (result == DoAfterStatus.Finished)
+            if (await SurgeryDoAfter(performer))
             {
                 SkinOpened = false;
                 VesselsClamped = false;
@@ -318,11 +295,7 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
                 return;
             }
 
-            var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
-            var args = new DoAfterEventArgs(performer, 3, target: Owner);
-            var result = await doAfterSystem.DoAfter(args);
-
-            if (result == DoAfterStatus.Finished)
+            if (await SurgeryDoAfter(performer))
             {
                 AddDisconnectedOrgan(target);
             }
@@ -364,11 +337,7 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
                 return;
             }
 
-            var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
-            var args = new DoAfterEventArgs(performer, 3, target: Owner);
-            var result = await doAfterSystem.DoAfter(args);
-
-            if (result == DoAfterStatus.Finished)
+            if (await SurgeryDoAfter(performer))
             {
                 Parent.RemoveMechanism(target, performer.Transform.Coordinates);
                 RemoveDisconnectedOrgan(target);
@@ -382,17 +351,7 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
 
             performer.PopupMessage(Loc.GetString("Saw off the limb!"));
 
-            if (!performer.HasComponent<DoAfterComponent>())
-            {
-                body.RemovePart(Parent);
-                return;
-            }
-
-            var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
-            var args = new DoAfterEventArgs(performer, 3, target: Owner);
-            var result = await doAfterSystem.DoAfter(args);
-
-            if (result == DoAfterStatus.Finished)
+            if (await SurgeryDoAfter(performer))
             {
                 body.RemovePart(Parent);
             }
