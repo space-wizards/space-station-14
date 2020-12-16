@@ -33,6 +33,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
         private IEnumerable<ReactionPrototype> _reactions;
+        private ChemicalReactionSystem _reactionSystem;
         private string _fillInitState;
         private int _fillInitSteps;
         private string _fillPathString = "Objects/Specific/Chemistry/fillings.rsi";
@@ -72,6 +73,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             _audioSystem = EntitySystem.Get<AudioSystem>();
             _chemistrySystem = _entitySystemManager.GetEntitySystem<ChemistrySystem>();
             _reactions = _prototypeManager.EnumeratePrototypes<ReactionPrototype>();
+            _reactionSystem = _entitySystemManager.GetEntitySystem<ChemicalReactionSystem>();
         }
 
         protected override void Startup()
@@ -364,28 +366,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// <returns></returns>
         private bool SolutionValidReaction(ReactionPrototype reaction, out ReagentUnit unitReactions)
         {
-            unitReactions = ReagentUnit.MaxValue; //Set to some impossibly large number initially
-            foreach (var reactant in reaction.Reactants)
-            {
-                if (!ContainsReagent(reactant.Key, out ReagentUnit reagentQuantity))
-                {
-                    return false;
-                }
-                var currentUnitReactions = reagentQuantity / reactant.Value.Amount;
-                if (currentUnitReactions < unitReactions)
-                {
-                    unitReactions = currentUnitReactions;
-                }
-            }
-
-            if (unitReactions == 0)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            var reacted = _reactionSystem.SolutionValidReaction(Solution, reaction, out var unitReactionsFound);
+            unitReactions = unitReactionsFound;
+            return reacted;
         }
 
         /// <summary>
