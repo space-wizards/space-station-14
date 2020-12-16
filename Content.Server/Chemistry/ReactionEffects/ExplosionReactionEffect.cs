@@ -1,4 +1,6 @@
 using System;
+using Content.Server.Explosions;
+using Content.Server.GameObjects.Components.Chemistry;
 using Content.Shared.Interfaces.Chemistry;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
@@ -35,7 +37,6 @@ namespace Content.Server.Chemistry.ReactionEffects
 
         public void React(IEntity solutionEntity, double intensity)
         {
-            /*
             float floatIntensity = (float)intensity;
             if (solutionEntity == null)
                 return;
@@ -59,7 +60,6 @@ namespace Content.Server.Chemistry.ReactionEffects
             int finalFlashRange = (int)MathF.Round(_flashRange * floatIntensity);
             solutionEntity.SpawnExplosion(finalDevastationRange,
                 finalHeavyImpactRange, finalLightImpactRange, finalFlashRange);
-            */
         }
     }
 }
