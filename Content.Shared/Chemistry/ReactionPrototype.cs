@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using Content.Server.Interfaces.Chemistry;
-using Content.Shared.Chemistry;
+using System.Collections.Generic;
+using Content.Shared.Interfaces.Chemistry;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using YamlDotNet.RepresentationModel;
 
-namespace Content.Server.Chemistry
+namespace Content.Shared.Chemistry
 {
     /// <summary>
     /// Prototype for chemical reaction definitions
