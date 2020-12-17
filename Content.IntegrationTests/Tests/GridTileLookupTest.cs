@@ -54,11 +54,10 @@ namespace Content.IntegrationTests.Tests
                 entityManager.SpawnEntity("Dummy", new EntityCoordinates(gridOne.GridEntityId, Vector2.One));
 
                 var entityTiles = tileLookup.GetIndices(entityOne);
-                Assert.That(entityTiles.Count, Is.EqualTo(2));
+                Assert.That(entityTiles.Count, Is.EqualTo(4));
 
                 entities = tileLookup.GetEntitiesIntersecting(entityOne).ToList();
-                // Includes station entity
-                Assert.That(entities.Count, Is.EqualTo(3));
+                Assert.That(entities.Count, Is.EqualTo(5));
 
                 // Both dummies should be in each corner of the 0,0 tile but only one dummy intersects -1,-1
                 entities = tileLookup.GetEntitiesIntersecting(gridOne.Index, new Vector2i(-1, -1)).ToList();

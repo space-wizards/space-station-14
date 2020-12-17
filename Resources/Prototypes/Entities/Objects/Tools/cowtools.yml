@@ -1,0 +1,176 @@
+﻿- type: entity
+  name: haycutters
+  parent: BaseItem
+  id: Haycutters
+  description: This kills the wire. Moo!
+  components:
+    - type: Sprite
+      sprite: Objects/Tools/Cowtools/haycutters.rsi
+      state: haycutters
+    - type: ItemCooldown
+    - type: MeleeWeapon
+    - type: Tool
+      qualities:
+        - Cutting
+      useSound: /Audio/Items/wirecutter.ogg
+      speed: 0.05
+    - type: Item
+      sprite: Objects/Tools/Cowtools/haycutters.rsi
+    - type: PlantSampleTaker
+
+- type: entity
+  name: moodriver
+  parent: BaseItem
+  id: Moodriver
+  description: Turn to use. Moo!
+  components:
+    - type: Sprite
+      sprite: Objects/Tools/Cowtools/moodriver.rsi
+      state: moodriver
+    - type: Item
+      sprite: Objects/Tools/Cowtools/moodriver.rsi
+    - type: ItemCooldown
+    - type: MeleeWeapon
+    - type: Tool
+      qualities:
+        - Screwing
+      useSoundCollection: Screwdriver
+      speed: 0.05
+
+- type: entity
+  name: wronch
+  parent: BaseItem
+  id: Wronch
+  description: Wronch thing. Moo!
+  components:
+    - type: Sprite
+      sprite: Objects/Tools/Cowtools/wronch.rsi
+      state: wronch
+    - type: Item
+      sprite: Objects/Tools/Cowtools/wronch.rsi
+    - type: ItemCooldown
+    - type: MeleeWeapon
+    - type: Tool
+      qualities:
+        - Anchoring
+      useSound: /Audio/Items/ratchet.ogg
+      speed: 0.05
+
+- type: entity
+  name: cowbar
+  parent: BaseItem
+  id: Cowbar
+  description: Cow your problems away. Moo!
+  components:
+    - type: Sprite
+      sprite: Objects/Tools/Cowtools/cowbar.rsi
+      state: cowbar
+    - type: Item
+      sprite: Objects/Tools/Cowtools/cowbar.rsi
+    - type: ItemCooldown
+    - type: MeleeWeapon
+    - type: Tool
+      qualities:
+        - Prying
+      useSound: /Audio/Items/crowbar.ogg
+      speed: 0.05
+    - type: TilePrying
+
+- type: entity
+  name: mooltitool
+  parent: BaseItem
+  id: Mooltitool
+  description: An crude tool to copy, store, and send electrical pulses and signals through wires and machines. Moo!
+  components:
+    - type: Sprite
+      sprite: Objects/Tools/Cowtools/mooltitool.rsi
+      state: mooltitool
+    - type: Item
+      sprite: Objects/Tools/Cowtools/mooltitool.rsi
+    - type: Tool
+      qualities:
+        - Multitool
+    - type: SignalLinker
+
+- type: entity
+  name: cowelding tool
+  parent: BaseItem
+  id: Cowelder
+  description: "Melts anything as long as it's fueled, don't forget your eye protection! Moo!"
+  components:
+    - type: Sprite
+      sprite: Objects/Tools/Cowtools/cowelder.rsi
+      layers:
+        - state: icon
+        - state: welder_flame
+          shader: unshaded
+          visible: false
+    - type: Item
+      size: 10
+      sprite: Objects/Tools/Cowtools/cowelder.rsi
+      HeldPrefix: off
+    - type: ItemCooldown
+    - type: MeleeWeapon
+    - type: ItemStatus
+    - type: SolutionContainer
+      maxVol: 50
+      caps: AddTo, NoExamine
+      contents:
+        reagents:
+          - ReagentId: chem.WeldingFuel
+            Quantity: 100
+    - type: Welder
+      weldSoundCollection: Welder
+      speed: 0.05
+    - type: PointLight
+      enabled: false
+      radius: 1.5
+      color: orange
+
+- type: entity
+  name: milkalyzer
+  parent: BaseItem
+  id: Milkalyzer
+  description: A hand-held environmental scanner which reports current gas levels. Moo!
+  components:
+    - type: Sprite
+      sprite: Objects/Tools/Cowtools/milkalyzer.rsi
+      state: milkalyzer
+    - type: GasAnalyzer
+    - type: UserInterface
+      interfaces:
+        - key: enum.GasAnalyzerUiKey.Key
+          type: GasAnalyzerBoundUserInterface
+    - type: Appearance
+      visuals:
+        - type: GasAnalyzerVisualizer
+          state_off: milkalyzer
+          state_working: milkalyzer
+
+- type: entity
+  name: cow toolbox
+  parent: ToolboxBase
+  id: CowToolbox
+  description: A weirdly shaped box, stocked with... tools?
+  components:
+    - type: Sprite
+      sprite: Objects/Tools/Cowtools/cow_toolbox.rsi
+      state: cow_toolbox
+    - type: Item
+      sprite: Objects/Tools/Cowtools/cow_toolbox.rsi
+
+- type: entity
+  id: CowToolboxFilled
+  name: cow toolbox
+  suffix: Filled
+  parent: CowToolbox
+  components:
+    - type: StorageFill
+      contents:
+        - name: Haycutters
+        - name: Moodriver
+        - name: Wronch
+        - name: Cowbar
+        - name: Mooltitool
+        - name: Cowelder
+        - name: Milkalyzer

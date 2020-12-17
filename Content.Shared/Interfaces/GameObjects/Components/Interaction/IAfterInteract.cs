@@ -7,8 +7,9 @@ using Robust.Shared.Map;
 namespace Content.Shared.Interfaces.GameObjects.Components
 {
     /// <summary>
-    /// This interface gives components a behavior when clicking on another object and no interaction occurs,
-    /// at any range.
+    /// This interface gives components a behavior when their entity is in the active hand, when
+    /// clicking on another object and no interaction occurs, at any range. This includes
+    /// clicking on an object in the world as well as clicking on an object in inventory.
     /// </summary>
     public interface IAfterInteract
     {

@@ -40,7 +40,7 @@ namespace Content.Server.GameObjects.Components.Buckle
         [ComponentDependency] public readonly AppearanceComponent? AppearanceComponent = null;
         [ComponentDependency] private readonly ServerAlertsComponent? _serverAlertsComponent = null;
         [ComponentDependency] private readonly StunnableComponent? _stunnableComponent = null;
-        [ComponentDependency] private readonly MobStateManagerComponent? _mobStateManagerComponent = null;
+        [ComponentDependency] private readonly MobStateComponent? _mobStateComponent = null;
 
         private int _size;
 
@@ -108,20 +108,11 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             if (Buckled)
             {
-                _serverAlertsComponent.ShowAlert(BuckledTo != null ? BuckledTo.BuckledAlertType : AlertType.Buckled,
-                    onClickAlert: OnClickAlert);
+                _serverAlertsComponent.ShowAlert(BuckledTo?.BuckledAlertType ?? AlertType.Buckled);
             }
             else
             {
                 _serverAlertsComponent.ClearAlertCategory(AlertCategory.Buckled);
-            }
-        }
-
-        private void OnClickAlert(ClickAlertEventArgs args)
-        {
-            if (args.Player.TryGetComponent(out BuckleComponent? buckle))
-            {
-                buckle.TryUnbuckle(args.Player);
             }
         }
 
@@ -351,7 +342,7 @@ namespace Content.Server.GameObjects.Components.Buckle
                 EntitySystem.Get<StandingStateSystem>().Standing(Owner);
             }
 
-            _mobStateManagerComponent?.CurrentMobState.EnterState(Owner);
+            _mobStateComponent?.CurrentState?.EnterState(Owner);
 
             UpdateBuckleStatus();
 

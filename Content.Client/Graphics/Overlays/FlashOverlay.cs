@@ -16,7 +16,7 @@ using System;
 
 namespace Content.Client.Graphics.Overlays
 {
-    public class FlashOverlay : Overlay, IConfigurable<TimedOverlayParameter>
+    public class FlashOverlay : Overlay, IConfigurableOverlay
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IClyde _displayManager = default!;
@@ -63,9 +63,12 @@ namespace Content.Client.Graphics.Overlays
             _screenshotTexture = null;
         }
 
-        public void Configure(TimedOverlayParameter parameters)
+        public void Configure(OverlayParameter parameters)
         {
-            _lastsFor = parameters.Length;
+            if (parameters is TimedOverlayParameter timedParams)
+            {
+                _lastsFor = timedParams.Length;
+            }
         }
     }
 }

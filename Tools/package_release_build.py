@@ -59,34 +59,6 @@ LAUNCHER_RESOURCES = {
     "Fonts",
 }
 
-WINDOWS_NATIVES = {
-    "freetype6.dll",
-    "openal32.dll",
-    "swnfd.dll",
-    "glfw3.dll",
-    "fluidsynth.dll",
-    "libglib-2.0-0.dll",
-    "libgobject-2.0-0.dll",
-    "libgthread-2.0-0.dll",
-    "libinstpatch-2.dll",
-    "libintl-8.dll",
-    "libsndfile-1.dll",
-    "libEGL.dll",
-    "libGLESv2.dll"
-}
-
-LINUX_NATIVES = {
-    "libglfw.so.3",
-    "libswnfd.so",
-    "libopenal.so.1"
-}
-
-MAC_NATIVES = {
-    "libglfw.3.dylib",
-    "libswnfd.dylib",
-    "libfreetype.6.dylib"
-}
-
 # Assembly names to copy from content.
 # PDBs are included if available, .dll/.pdb appended automatically.
 SERVER_CONTENT_ASSEMBLIES = [
@@ -191,7 +163,6 @@ def build_windows(skip_build: bool) -> None:
         compression=zipfile.ZIP_DEFLATED)
 
     copy_dir_into_zip(p("RobustToolbox", "bin", "Client", "win-x64", "publish"), "", client_zip)
-    copy_client_natives(WINDOWS_NATIVES, client_zip, "")
     copy_resources("Resources", client_zip, server=False)
     copy_content_assemblies(p("Resources", "Assemblies"), client_zip, server=False)
     # Cool we're done.
@@ -231,7 +202,6 @@ def build_macos(skip_build: bool) -> None:
     contents = p("Space Station 14.app", "Contents", "Resources")
     copy_dir_into_zip(p("BuildFiles", "Mac", "Space Station 14.app"), "Space Station 14.app", client_zip)
     copy_dir_into_zip(p("RobustToolbox", "bin", "Client", "osx-x64", "publish"), contents, client_zip)
-    copy_client_natives(MAC_NATIVES, client_zip, contents)
     copy_resources(p(contents, "Resources"), client_zip, server=False)
     copy_content_assemblies(p(contents, "Resources", "Assemblies"), client_zip, server=False)
     client_zip.close()
@@ -272,7 +242,6 @@ def build_linux(skip_build: bool) -> None:
 
     copy_dir_into_zip(p("RobustToolbox", "bin", "Client", "linux-x64", "publish"), "", client_zip)
     copy_resources("Resources", client_zip, server=False)
-    copy_client_natives(LINUX_NATIVES, client_zip, "")
     copy_content_assemblies(p("Resources", "Assemblies"), client_zip, server=False)
     # Cool we're done.
     client_zip.close()
@@ -444,12 +413,6 @@ def copy_dir_or_file(src: str, dst: str):
 
     else:
         raise IOError("{} is neither file nor directory. Can't copy.".format(src))
-
-
-def copy_client_natives(fileNames: List[str], zipf: zipfile.ZipFile, zipPath: str):
-    for fileName in fileNames:
-        zipf.write(p("RobustToolbox", "bin", "Client", fileName), p(zipPath, fileName))
-        print(f"writing native {fileName}")
 
 
 if __name__ == '__main__':

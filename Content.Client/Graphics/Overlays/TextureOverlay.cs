@@ -1,4 +1,4 @@
-﻿using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Graphics.Overlays;
 using Robust.Client.Graphics.Shaders;
@@ -26,7 +26,7 @@ using Robust.Client.Interfaces.Graphics;
 
 namespace Content.Client.Graphics.Overlays
 {
-    public class TextureOverlay : Overlay, IConfigurable<TextureOverlayParameter>, IConfigurable<KeyedOverlaySpaceOverlayParameter>, IConfigurable<KeyedVector2OverlayParameter>, IConfigurable<KeyedFloatOverlayParameter>, IConfigurable<KeyedBoolOverlayParameter>
+    public class TextureOverlay : Overlay, IConfigurableOverlay
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
@@ -129,29 +129,29 @@ namespace Content.Client.Graphics.Overlays
             public float FrameTime;
         }
 
-        public void Configure(KeyedVector2OverlayParameter parameters){
-            var dict = parameters.Dict;
-            dict.TryGetValue("worldCoords", out _currentWorldCoords);
-        }
 
-        public void Configure(KeyedOverlaySpaceOverlayParameter parameters)
+        public void Configure(OverlayParameter parameters)
         {
-            var dict = parameters.Dict;
-            dict.TryGetValue("overlaySpace", out _space);
+            if (parameters is KeyedVector2OverlayParameter kParams)
+            {
+                var dict = kParams.Dict;
+                dict.TryGetValue("worldCoords", out _currentWorldCoords);
+            }
+            else if (parameters is KeyedOverlaySpaceOverlayParameter oParams)
+            {
+                var dict = oParams.Dict;
+                dict.TryGetValue("overlaySpace", out _space);
+            }
+            else if (parameters is KeyedFloatOverlayParameter fParams)
+            {
+                var dict = fParams.Dict;
+                dict.TryGetValue("cutoffTransparency", out _cutoffTransparency);
+            }
+            else if (parameters is KeyedBoolOverlayParameter bParams)
+            {
+                var dict = bParams.Dict;
+                dict.TryGetValue("disableTransparency", out _disableTransparency);
+            }
         }
-
-        public void Configure(KeyedFloatOverlayParameter parameters)
-        {
-            var dict = parameters.Dict;
-            dict.TryGetValue("cutoffTransparency", out _cutoffTransparency);
-        }
-
-        public void Configure(KeyedBoolOverlayParameter parameters)
-        {
-            var dict = parameters.Dict;
-            dict.TryGetValue("disableTransparency", out _disableTransparency);
-        }
-
-
     }
 }

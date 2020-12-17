@@ -15,13 +15,14 @@ namespace Content.Client.GameObjects.Components.Items
 {
     [RegisterComponent]
     [ComponentReference(typeof(ISharedHandsComponent))]
+    [ComponentReference(typeof(SharedHandsComponent))]
     public class HandsComponent : SharedHandsComponent
     {
         [Dependency] private readonly IGameHud _gameHud = default!;
 
         private HandsGui? _gui;
 
-        private readonly List<Hand> _hands = new List<Hand>();
+        private readonly List<Hand> _hands = new();
 
         [ViewVariables] public IReadOnlyList<Hand> Hands => _hands;
 
@@ -31,8 +32,21 @@ namespace Content.Client.GameObjects.Components.Items
 
         [ViewVariables] public IEntity? ActiveHand => GetEntity(ActiveIndex);
 
+        public override bool IsHolding(IEntity entity)
+        {
+            foreach (var hand in _hands)
+            {
+                if (hand.Entity == entity)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private void AddHand(Hand hand)
         {
+            _sprite?.LayerMapReserveBlank($"hand-{hand.Name}");
             _hands.Insert(hand.Index, hand);
         }
 

@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
@@ -9,7 +8,6 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.IntegrationTests.Tests
@@ -25,6 +23,24 @@ namespace Content.IntegrationTests.Tests
   components:
   - type: Inventory
   - type: Stunnable
+
+- type: entity
+  name: InventoryJumpsuitJanitorDummy
+  id: InventoryJumpsuitJanitorDummy
+  components:
+  - type: Clothing
+    Slots: [innerclothing]
+
+- type: entity
+  name: InventoryIDCardDummy
+  id: InventoryIDCardDummy
+  components:
+  - type: Clothing
+    QuickEquip: false
+    Slots:
+    - idcard
+  - type: PDA
+    idCard: AssistantIDCard
 ";
         [Test]
         public async Task SpawnItemInSlotTest()
@@ -35,7 +51,6 @@ namespace Content.IntegrationTests.Tests
             IEntity human = null;
             InventoryComponent inventory = null;
             StunnableComponent stun = null;
-
 
             server.Assert(() =>
             {
@@ -53,24 +68,24 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(inventory.HasSlot(Slots.INNERCLOTHING));
                 Assert.That(inventory.HasSlot(Slots.IDCARD));
 
-                Assert.That(inventory.SpawnItemInSlot(Slots.INNERCLOTHING, "ClothingUniformJumpsuitJanitor", true));
+                Assert.That(inventory.SpawnItemInSlot(Slots.INNERCLOTHING, "InventoryJumpsuitJanitorDummy", true));
 
                 // Do we actually have the uniform equipped?
                 Assert.That(inventory.TryGetSlotItem(Slots.INNERCLOTHING, out ItemComponent uniform));
-                Assert.That(uniform.Owner.Prototype != null && uniform.Owner.Prototype.ID == "ClothingUniformJumpsuitJanitor");
+                Assert.That(uniform.Owner.Prototype != null && uniform.Owner.Prototype.ID == "InventoryJumpsuitJanitorDummy");
 
                 stun.Stun(1f);
 
                 // Since the mob is stunned, they can't equip this.
-                Assert.That(inventory.SpawnItemInSlot(Slots.IDCARD, "AssistantIDCard", true), Is.False);
+                Assert.That(inventory.SpawnItemInSlot(Slots.IDCARD, "InventoryIDCardDummy", true), Is.False);
 
                 // Make sure we don't have the ID card equipped.
                 Assert.That(inventory.TryGetSlotItem(Slots.IDCARD, out ItemComponent _), Is.False);
 
                 // Let's try skipping the interaction check and see if it equips it!
-                Assert.That(inventory.SpawnItemInSlot(Slots.IDCARD, "AssistantIDCard", false));
+                Assert.That(inventory.SpawnItemInSlot(Slots.IDCARD, "InventoryIDCardDummy", false));
                 Assert.That(inventory.TryGetSlotItem(Slots.IDCARD, out ItemComponent id));
-                Assert.That(id.Owner.Prototype != null && id.Owner.Prototype.ID == "AssistantIDCard");
+                Assert.That(id.Owner.Prototype != null && id.Owner.Prototype.ID == "InventoryIDCardDummy");
             });
 
             await server.WaitIdleAsync();

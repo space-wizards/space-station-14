@@ -35,7 +35,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/4no_raisins.rsi
-
+  - type: Grindable
   - type: Item
     sprite: Objects/Consumable/Food/4no_raisins.rsi
 
@@ -53,6 +53,7 @@
     trash: TrashSnackBowl
   - type: Sprite
     sprite: Objects/Consumable/Food/aesirsalad.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -68,6 +69,7 @@
         Quantity: 10
   - type: Sprite
     sprite: Objects/Consumable/Food/amanita_pie.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -85,6 +87,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/amanitajelly.rsi
+  - type: Grindable
 
 
 #- type: entity
@@ -115,6 +118,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/apple_cake_slice.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -130,6 +134,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/apple_pie.rsi
+  - type: Grindable
 
 
 # TODO: BREADSLICE?
@@ -159,6 +164,7 @@
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/badrecipe.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -174,6 +180,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/baguette.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -191,6 +198,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/breadslice.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -208,6 +216,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/bananabreadslice.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -226,6 +235,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/pie.rsi
+  - type: Grindable
 
 
 #- type: entity
@@ -256,6 +266,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/beetsoup.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -273,6 +284,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/berryclafoutis.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -290,6 +302,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/birthday_cake_slice.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -307,6 +320,7 @@
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/spaghettiboiled.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -324,6 +338,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/brain_cake_slice.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -341,9 +356,9 @@
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Food/candy.rsi
-
   - type: Item
     sprite: Objects/Consumable/Food/candy.rsi
+  - type: Grindable
 
 - type: entity
   name: candy corn
@@ -358,6 +373,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/candy_corn.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -375,6 +391,7 @@
         Quantity: 10
   - type: Sprite
     sprite: Objects/Consumable/Food/carrotcake_slice.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -392,6 +409,7 @@
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/carrotfries.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -409,6 +427,7 @@
         Quantity: 10
   - type: Sprite
     sprite: Objects/Consumable/Food/chawanmushi.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -424,9 +443,9 @@
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/cheeseburger.rsi
-
   - type: Item
     sprite: Objects/Consumable/Food/cheeseburger.rsi
+  - type: Grindable
 
 - type: entity
   name: cheesecake (slice)
@@ -443,6 +462,7 @@
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/cheesecake_slice.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -458,6 +478,7 @@
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/cheesewedge.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -475,6 +496,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/cheesie_honkers.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -492,6 +514,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/cheesyfries.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -507,6 +530,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/cherrypie.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -524,9 +548,9 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/chips.rsi
-
   - type: Item
     sprite: Objects/Consumable/Food/chips.rsi
+  - type: Grindable
 
 - type: entity
   name: chocolate bar
@@ -543,6 +567,7 @@
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/chocolatebar.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -560,6 +585,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/chocolatecake_slice.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -575,6 +601,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/chocolateegg.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -590,9 +617,9 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/clownburger.rsi
-
   - type: Item
     sprite: Objects/Consumable/Food/clownburger.rsi
+  - type: Grindable
 
 - type: entity
   name: clown's tears
@@ -607,6 +634,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/clownstears.rsi
+  - type: Grindable
 
 
 #- type: entity
@@ -638,6 +666,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/coldchili.rsi
+  - type: Grindable
 
 
 #- type: entity
@@ -667,6 +696,7 @@
         Quantity: 10
   - type: Sprite
     sprite: Objects/Consumable/Food/cookie!!!.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -682,6 +712,7 @@
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/cracker.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -699,6 +730,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/creamcheesebreadslice.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -716,6 +748,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/cubancarp.rsi
+  - type: Grindable
 
 
 #- type: entity
@@ -745,6 +778,7 @@
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/donkpocket.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -760,9 +794,9 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/donut1.rsi
-
   - type: Item
     sprite: Objects/Consumable/Food/donut1.rsi
+  - type: Grindable
 
 - type: entity
   parent: FoodBase
@@ -777,9 +811,9 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/donut2.rsi
-
   - type: Item
     sprite: Objects/Consumable/Food/donut2.rsi.rsi
+  - type: Grindable
 
 - type: entity
   parent: FoodBase
@@ -794,9 +828,9 @@
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-blue.rsi
-
   - type: Item
     sprite: Objects/Consumable/Food/egg-blue.rsi.rsi
+  - type: Grindable
 
 - type: entity
   parent: FoodBase
@@ -811,9 +845,9 @@
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-green.rsi
-
   - type: Item
     sprite: Objects/Consumable/Food/egg-green.rsi.rsi
+  - type: Grindable
 
 - type: entity
   parent: FoodBase
@@ -828,9 +862,9 @@
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-mime.rsi
-
   - type: Item
     sprite: Objects/Consumable/Food/egg-mime.rsi.rsi
+  - type: Grindable
 
 - type: entity
   parent: FoodBase
@@ -845,9 +879,9 @@
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-orange.rsi
-
   - type: Item
     sprite: Objects/Consumable/Food/egg-orange.rsi.rsi
+  - type: Grindable
 
 - type: entity
   parent: FoodBase
@@ -862,9 +896,9 @@
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-purple.rsi
-
   - type: Item
     sprite: Objects/Consumable/Food/egg-purple.rsi.rsi
+  - type: Grindable
 
 - type: entity
   parent: FoodBase
@@ -879,9 +913,9 @@
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-rainbow.rsi
-
   - type: Item
     sprite: Objects/Consumable/Food/egg-rainbow.rsi.rsi
+  - type: Grindable
 
 - type: entity
   parent: FoodBase
@@ -896,9 +930,9 @@
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-red.rsi
-
   - type: Item
     sprite: Objects/Consumable/Food/egg-red.rsi.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -914,9 +948,9 @@
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-yellow.rsi
-
   - type: Item
     sprite: Objects/Consumable/Food/egg-yellow.rsi
+  - type: Grindable
 
 - type: entity
   parent: FoodBase
@@ -935,11 +969,12 @@
     seed: eggy
   - type: Item
     sprite: Objects/Consumable/Food/egg.rsi
+  - type: Grindable
 
 - type: entity
   parent: FoodBase
   id: FoodEggplantparm
-  name: eggplant parmigiana  # parma or parmi
+  name: eggplant parmigiana
   description: The only good recipe for eggplant.
   components:
   - type: Food
@@ -951,6 +986,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/eggplantparm.rsi
+  - type: Grindable
 
 
 #- type: entity
@@ -982,6 +1018,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/enchiladas.rsi
+  - type: Grindable
 
 
 #- type: entity
@@ -1025,6 +1062,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/fishandchips.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -1040,9 +1078,9 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/fishburger.rsi
-
   - type: Item
     sprite: Objects/Consumable/Food/fishburger.rsi
+  - type: Grindable
 
 #- type: entity
 #  parent: FoodBase
@@ -1071,6 +1109,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/fishfingers.rsi
+  - type: Grindable
 
 
 #- type: entity
@@ -1100,6 +1139,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/fortune_cookie.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -1115,6 +1155,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/friedegg.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -1132,6 +1173,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/fries.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -1149,6 +1191,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/gappletart.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -1166,6 +1209,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/toastedsandwich.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -1181,9 +1225,9 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/hburger.rsi
-
   - type: Item
     sprite: Objects/Consumable/Food/hburger.rsi
+  - type: Grindable
 
 - type: entity
   parent: FoodBase
@@ -1200,6 +1244,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/herbsalad.rsi
+  - type: Grindable
 
 
 #- type: entity
@@ -1231,6 +1276,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/hotchili.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -1246,6 +1292,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/hotdog.rsi
+  - type: Grindable
 
 
 #- type: entity
@@ -1275,6 +1322,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/hugemushroomslice.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -1292,6 +1340,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/kabob.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -1307,6 +1356,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/jdonut1.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -1322,6 +1372,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/jdonut2.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -1337,9 +1388,9 @@
         Quantity: 10
   - type: Sprite
     sprite: Objects/Consumable/Food/jellyburger.rsi
-
   - type: Item
     sprite: Objects/Consumable/Food/jellyburger.rsi
+  - type: Grindable
 
 - type: entity
   parent: FoodBase
@@ -1356,6 +1407,7 @@
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/jellysandwich.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -1373,6 +1425,7 @@
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/jellytoast.rsi
+  - type: Grindable
 
 
 # TODO: Add more pies. Anything that shares a sprite
@@ -1391,6 +1444,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/kabob.rsi
+  - type: Grindable
 
 
 #- type: entity
@@ -1436,6 +1490,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/lemoncake_slice.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -1453,6 +1508,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/limecake_slice.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -1468,6 +1524,7 @@
         Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Food/liquidfood.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -1483,6 +1540,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/loadedbakedpotato.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -1498,6 +1556,7 @@
         Quantity: 5
   - type: Sprite
     sprite: Objects/Consumable/Food/meat.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -1513,9 +1572,9 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/meatball.rsi
-
   - type: Item
     sprite: Objects/Consumable/Food/meatball.rsi
+  - type: Grindable
 
 - type: entity
   parent: FoodBase
@@ -1532,6 +1591,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/meatballsoup.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -1549,6 +1609,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/meatballspaghetti.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -1566,6 +1627,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/meatbreadslice.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -1583,6 +1645,7 @@
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Food/meatpie.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -1598,6 +1661,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/meatpizzaslice.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -1615,6 +1679,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/meatsteak.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -1632,6 +1697,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/milosoup.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -1647,6 +1713,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/mimeburger.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -1657,11 +1724,12 @@
   components:
   - type: SolutionContainer
     contents:
-      reagents:
+      reagents: # TODO: mint toxin
       - ReagentId: chem.Nutriment
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/mint.rsi
+  - type: Grindable
 
 
 #- type: entity
@@ -1691,9 +1759,9 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/hburger.rsi
-
   - type: Item
     sprite: Objects/Consumable/Food/hburger.rsi
+  - type: Grindable
 
 - type: entity
   parent: FoodBase
@@ -1712,6 +1780,7 @@
     sprite: Objects/Consumable/Food/monkeycube.rsi
   - type: Rehydratable
     target: MonkeyMob_Content
+  - type: Grindable
 
 - type: entity
   parent: FoodBase
@@ -1728,6 +1797,7 @@
         Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Food/monkeysdelight.rsi
+  - type: Grindable
 
 
 #- type: entity
@@ -1771,6 +1841,7 @@
         Quantity: 10
   - type: Sprite
     sprite: Objects/Consumable/Food/mushroompizzaslice.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -1788,6 +1859,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/mushroomsoup.rsi
+  - type: Grindable
 
 
 # TODO: More in this one
@@ -1806,6 +1878,7 @@
         Quantity: 1
   - type: Sprite
     sprite: Objects/Consumable/Food/mysterysoup.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -1823,6 +1896,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/nettlesoup.rsi
+  - type: Grindable
 
 
 #- type: entity
@@ -1854,6 +1928,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/omelette.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -1871,6 +1946,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/orangecake_slice.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -1888,6 +1964,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/pastatomato.rsi
+  - type: Grindable
 
 
 #- type: entity
@@ -1917,6 +1994,7 @@
         Quantity: 10
   - type: Sprite
     sprite: Objects/Consumable/Food/phelmbiscuit.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -1932,6 +2010,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/pizzamargheritaslice.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -1949,6 +2028,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/plaincake_slice.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -1964,6 +2044,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/plump_pie.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -1982,6 +2063,7 @@
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/popcorn.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -1997,6 +2079,7 @@
         Quantity: 10
   - type: Sprite
     sprite: Objects/Consumable/Food/poppypretzel.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -2014,6 +2097,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/pumpkinpieslice.rsi
+  - type: Grindable
 
 
 # TODO: Boiled rice?
@@ -2044,6 +2128,7 @@
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/roburger.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -2061,6 +2146,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/rofflewaffles.rsi
+  - type: Grindable
 
 
 #- type: entity
@@ -2106,6 +2192,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/rpudding.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -2123,6 +2210,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/sandwich.rsi
+  - type: Grindable
 
 
 #- type: entity
@@ -2166,6 +2254,7 @@
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/sausage.rsi
+  - type: Grindable
 
 
 #- type: entity
@@ -2210,9 +2299,9 @@
     trash: TrashSOSJerky
   - type: Sprite
     sprite: Objects/Consumable/Food/sosjerky.rsi
-
   - type: Item
     sprite: Objects/Consumable/Food/sosjerky.rsi
+  - type: Grindable
 
 - type: entity
   parent: FoodBase
@@ -2229,6 +2318,7 @@
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/soydope.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -2246,13 +2336,14 @@
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/soylent_green.rsi
+  - type: Grindable
 
 
 # why these were named different i have no idea
 - type: entity
   parent: FoodBase
   id: FoodSoylentYellow
-  name: soylen virdians
+  name: soylen viridians
   description: Not made of people. Honest.
   components:
   - type: Food
@@ -2264,6 +2355,7 @@
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/soylent_yellow.rsi
+  - type: Grindable
 
 
 #- type: entity
@@ -2293,6 +2385,7 @@
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/space_twinkie.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -2310,6 +2403,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/spacylibertyduff.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -2325,6 +2419,7 @@
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/spaghetti.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -2340,9 +2435,9 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/spellburger.rsi
-
   - type: Item
     sprite: Objects/Consumable/Food/spellburger.rsi
+  - type: Grindable
 
 - type: entity
   parent: FoodBase
@@ -2357,6 +2452,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/spesslaw.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -2372,6 +2468,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/stew.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -2389,6 +2486,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/stewedsoymeat.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -2404,6 +2502,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/stuffing.rsi
+  - type: Grindable
 
 
 #- type: entity
@@ -2447,6 +2546,7 @@
         Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Food/superbiteburger.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -2464,6 +2564,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/syndi_cakes.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -2479,6 +2580,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/taco.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -2496,6 +2598,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/tastybread.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -2513,6 +2616,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/toastedsandwich.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -2528,6 +2632,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/tofu.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -2545,6 +2650,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/tofubreadslice.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -2560,9 +2666,9 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/tofuburger.rsi
-
   - type: Item
     sprite: Objects/Consumable/Food/tofuburger.rsi
+  - type: Grindable
 
 - type: entity
   parent: FoodBase
@@ -2579,6 +2685,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/kabob.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -2594,6 +2701,7 @@
         Quantity: 24
   - type: Sprite
     sprite: Objects/Consumable/Food/tofurkey.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -2609,6 +2717,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/tomatomeat.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -2626,6 +2735,7 @@
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/tomatosoup.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -2641,6 +2751,7 @@
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/twobread.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -2658,6 +2769,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/validsalad.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -2673,6 +2785,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/vegetablepizzaslice.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -2690,6 +2803,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/vegetablesoup.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -2707,6 +2821,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/waffles.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -2722,6 +2837,7 @@
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/watermelonslice.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -2739,6 +2855,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/wingfangchu.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -2756,6 +2873,7 @@
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/wishsoup.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -2771,9 +2889,9 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/xburger.rsi
-
   - type: Item
     sprite: Objects/Consumable/Food/xburger.rsi
+  - type: Grindable
 
 - type: entity
   parent: FoodBase
@@ -2790,6 +2908,7 @@
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Food/xenobreadslice.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -2805,6 +2924,7 @@
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Food/xenomeat.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -2822,6 +2942,7 @@
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Food/xenomeatpie.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -2839,6 +2960,7 @@
         Quantity: 15
   - type: Sprite
     sprite: Objects/Consumable/Food/stew.rsi
+  - type: Grindable
 
 
 - type: entity
@@ -2857,6 +2979,7 @@
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Food/milkape.rsi
+  - type: Grindable
 
 - type: entity
   name: memory leek
@@ -2873,4 +2996,5 @@
     - type: Sprite
       sprite: Objects/Consumable/Food/memoryleek.rsi
       state: memoryLeek
+    - type: Grindable
 

@@ -25,8 +25,8 @@ namespace Content.Server.GameObjects.Components.Access
     {
         public override string Name => "AccessReader";
 
-        private readonly List<ISet<string>> _accessLists = new List<ISet<string>>();
-        private readonly HashSet<string> _denyTags = new HashSet<string>();
+        private readonly List<ISet<string>> _accessLists = new();
+        private readonly HashSet<string> _denyTags = new();
 
         /// <summary>
         ///     List of access lists to check allowed against. For an access check to pass

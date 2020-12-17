@@ -28,6 +28,7 @@
 - type: entity
   parent: MetalRod
   id: MetalRodStack1
+  suffix: 1
   components:
     - type: Stack
       stacktype: enum.StackType.MetalRod

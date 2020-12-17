@@ -1,4 +1,4 @@
-﻿using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Network;
@@ -48,6 +48,16 @@ namespace Content.Server.GameObjects.Components.Mobs
         public Guid AddNewOverlay(OverlayType type)
         {
             return AddNewOverlay(type, new OverlayParameter[] { });
+        }
+        /// <summary>
+        ///     Creates an <see cref="OverlayContainer"/> and add it to this component, syncing it with the client (if there is one currently connected). Automatically parses string input 
+        ///     into the <see cref="OverlayType"/> enum: returns <see cref="Guid.Empty"/> if there was no corresponding OverlayType found!
+        /// </summary>
+        public Guid AddNewOverlay(string type)
+        {
+            if (Enum.TryParse(type, out OverlayType overlayType))
+                return AddNewOverlay(overlayType, new OverlayParameter[] { });
+            return Guid.Empty;
         }
 
         /// <summary>
@@ -111,10 +121,22 @@ namespace Content.Server.GameObjects.Components.Mobs
                     doSync = true;
                 }
             }
-            if(doSync)
+            if (doSync)
                 SyncClient();
         }
-
+        /// <summary>
+        ///     Removes all overlays of a given type. Automatically parses string input into the <see cref="OverlayType"/> enum: returns false
+        ///     if there was no corresponding OverlayType found, otherwise true.
+        /// </summary>
+        public bool RemoveOverlaysOfType(string type)
+        {
+            if (Enum.TryParse(type, out OverlayType overlayType))
+            {
+                RemoveOverlaysOfType(overlayType);
+                return true;
+            }
+            return false;
+        }
         public bool ContainsOverlay(Guid id)
         {
             return ActiveOverlays.Exists(c => c.ID == id);

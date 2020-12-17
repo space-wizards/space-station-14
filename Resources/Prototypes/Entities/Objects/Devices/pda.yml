@@ -105,20 +105,20 @@
   - type: Icon
     state: pda-mime
 
-- type: entity
-  name: Chaplain PDA
-  parent: BasePDA
-  id: ChaplainPDA
-  description: God's chosen PDA.
-  components:
-    - type: PDA
-      idCard: ChaplainIDCard
-    - type: Appearance
-      visuals:
-        - type: PDAVisualizer
-          state: pda-chaplain
-    - type: Icon
-      state: pda-chaplain
+#- type: entity
+#  name: Chaplain PDA
+#  parent: BasePDA
+#  id: ChaplainPDA
+#  description: God's chosen PDA.
+#  components:
+#    - type: PDA
+#      idCard: ChaplainIDCard
+#    - type: Appearance
+#      visuals:
+#        - type: PDAVisualizer
+#          state: pda-chaplain
+#    - type: Icon
+#      state: pda-chaplain
 
 - type: entity
   name: Quartermaster PDA

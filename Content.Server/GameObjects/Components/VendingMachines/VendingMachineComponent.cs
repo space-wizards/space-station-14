@@ -20,10 +20,10 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timers;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.SharedWiresComponent;
@@ -47,6 +47,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
         private bool _broken;
 
         private string _soundVend = "";
+        private string _soundDeny = "";
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(VendingMachineUiKey.Key);
 
@@ -76,6 +77,8 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             serializer.DataField(ref _packPrototypeId, "pack", string.Empty);
             // Grabbed from: https://github.com/discordia-space/CEV-Eris/blob/f702afa271136d093ddeb415423240a2ceb212f0/sound/machines/vending_drop.ogg
             serializer.DataField(ref _soundVend, "soundVend", "/Audio/Machines/machine_vend.ogg");
+            // Yoinked from: https://github.com/discordia-space/CEV-Eris/blob/35bbad6764b14e15c03a816e3e89aa1751660ba9/sound/machines/Custom_deny.ogg
+            serializer.DataField(ref _soundDeny, "soundDeny", "/Audio/Machines/custom_deny.ogg");
         }
 
         private void InitializeFromPrototype()
@@ -172,13 +175,15 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             var entry = Inventory.Find(x => x.ID == id);
             if (entry == null)
             {
-                FlickDenyAnimation();
+                Owner.PopupMessageEveryone(Loc.GetString("Invalid item"));
+                Deny();
                 return;
             }
 
             if (entry.Amount <= 0)
             {
-                FlickDenyAnimation();
+                Owner.PopupMessageEveryone(Loc.GetString("Out of stock"));
+                Deny();
                 return;
             }
 
@@ -203,15 +208,19 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             {
                 if (sender == null || !accessReader.IsAllowed(sender))
                 {
-                    FlickDenyAnimation();
+                    Owner.PopupMessageEveryone(Loc.GetString("Access denied"));
+                    Deny();
                     return;
                 }
             }
             TryEject(id);
         }
 
-        private void FlickDenyAnimation()
+        private void Deny()
         {
+            EntitySystem.Get<AudioSystem>().PlayFromEntity(_soundDeny, Owner, AudioParams.Default.WithVolume(-2f));
+
+            // Play the Deny animation
             TrySetVisualState(VendingMachineVisualState.Deny);
             //TODO: This duration should be a distinct value specific to the deny animation
             Owner.SpawnTimer(_animationDuration, () =>

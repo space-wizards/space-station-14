@@ -50,7 +50,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         public virtual void ExposeData(ObjectSerializer serializer)
         {
-            serializer.DataField(this, x => NodeGroupID, "nodeGroupID", NodeGroupID.Default);
+            serializer.DataField(this, x => x.NodeGroupID, "nodeGroupID", NodeGroupID.Default);
         }
 
         public virtual void Initialize(IEntity owner)

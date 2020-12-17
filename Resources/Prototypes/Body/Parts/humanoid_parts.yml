@@ -1,3 +1,4 @@
+# TODO BODY: Part damage
 - type: entity
   id: PartHuman
   name: "human body part"
@@ -30,8 +31,8 @@
     # TODO BODY DettachableDamageableComponent?
     damageContainer: biologicalDamageContainer
     resistances: defaultResistances
-    criticalThreshold: 100
-    deadThreshold: 150
+#    criticalThreshold: 100
+#    deadThreshold: 150
 
 - type: entity
   id: HeadHuman
@@ -57,8 +58,8 @@
   - type: Damageable
     damageContainer: biologicalDamageContainer
     resistances: defaultResistances
-    criticalThreshold: 50
-    deadThreshold: 120
+#    criticalThreshold: 50
+#    deadThreshold: 120
 
 - type: entity
   id: LeftArmHuman
@@ -81,8 +82,8 @@
   - type: Damageable
     damageContainer: biologicalDamageContainer
     resistances: defaultResistances
-    criticalThreshold: 40
-    deadThreshold: 80
+#    criticalThreshold: 40
+#    deadThreshold: 80
   - type: Extension
     distance: 2.4
 
@@ -107,8 +108,8 @@
   - type: Damageable
     damageContainer: biologicalDamageContainer
     resistances: defaultResistances
-    criticalThreshold: 40
-    deadThreshold: 80
+#    criticalThreshold: 40
+#    deadThreshold: 80
   - type: Extension
     distance: 2.4
 
@@ -133,8 +134,8 @@
   - type: Damageable
     damageContainer: biologicalDamageContainer
     resistances: defaultResistances
-    criticalThreshold: 30
-    deadThreshold: 60
+#    criticalThreshold: 30
+#    deadThreshold: 60
   - type: Grasp
 
 - type: entity
@@ -151,8 +152,6 @@
     state: "r_hand"
   - type: BodyPart
     partType: Hand
-    durability: 30
-    destroyThreshold: -60
     size: 3
     compatibility: Biological
     symmetry: Right
@@ -160,8 +159,8 @@
   - type: Damageable
     damageContainer: biologicalDamageContainer
     resistances: defaultResistances
-    criticalThreshold: 30
-    deadThreshold: 60
+#    criticalThreshold: 30
+#    deadThreshold: 60
   - type: Grasp
 
 - type: entity
@@ -185,8 +184,8 @@
   - type: Damageable
     damageContainer: biologicalDamageContainer
     resistances: defaultResistances
-    criticalThreshold: 45
-    deadThreshold: 90
+#    criticalThreshold: 45
+#    deadThreshold: 90
   - type: Leg
     speed: 2.6
   - type: Extension
@@ -206,8 +205,6 @@
     state: "r_leg"
   - type: BodyPart
     partType: Leg
-    durability: 45
-    destroyThreshold: -90
     size: 6
     compatibility: Biological
     symmetry: Right
@@ -215,8 +212,8 @@
   - type: Damageable
     damageContainer: biologicalDamageContainer
     resistances: defaultResistances
-    criticalThreshold: 45
-    deadThreshold: 90
+#    criticalThreshold: 45
+#    deadThreshold: 90
   - type: Leg
     speed: 2.6
   - type: Extension
@@ -243,8 +240,8 @@
   - type: Damageable
     damageContainer: biologicalDamageContainer
     resistances: defaultResistances
-    criticalThreshold: 30
-    deadThreshold: 60
+#    criticalThreshold: 30
+#    deadThreshold: 60
 
 - type: entity
   id: RightFootHuman
@@ -267,5 +264,5 @@
   - type: Damageable
     damageContainer: biologicalDamageContainer
     resistances: defaultResistances
-    criticalThreshold: 30
-    deadThreshold: 60
+#    criticalThreshold: 30
+#    deadThreshold: 60

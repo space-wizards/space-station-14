@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 ﻿using System.Text;
 using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Mobs;
@@ -139,9 +139,7 @@ namespace Content.Server.Mobs
             {
                 if (player.AttachedEntity.TryGetComponent(out ServerOverlayEffectsComponent overlayEffectsComponent))
                 {
-                    if(Enum.TryParse(args[0], out OverlayType overlayType))
-                       overlayEffectsComponent.AddNewOverlay(overlayType);
-                    else
+                    if(overlayEffectsComponent.AddNewOverlay(args[0]) == Guid.Empty)
                         shell.SendText(player, "Overlay type does not exist!");
                 }
             }

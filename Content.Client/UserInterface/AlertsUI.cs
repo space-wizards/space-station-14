@@ -1,10 +1,8 @@
 ﻿using System;
 using Content.Client.UserInterface.Stylesheets;
-using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Maths;
 
 namespace Content.Client.UserInterface
@@ -16,58 +14,51 @@ namespace Content.Client.UserInterface
     {
         public GridContainer Grid { get; }
 
-        private readonly IClyde _clyde;
-
-        public AlertsUI(IClyde clyde)
+        public AlertsUI()
         {
-            _clyde = clyde;
+            LayoutContainer.SetGrowHorizontal(this, LayoutContainer.GrowDirection.Begin);
+            LayoutContainer.SetGrowVertical(this, LayoutContainer.GrowDirection.End);
+            LayoutContainer.SetAnchorTop(this, 0f);
+            LayoutContainer.SetAnchorRight(this, 1f);
+            LayoutContainer.SetAnchorBottom(this, 1f);
+            LayoutContainer.SetMarginBottom(this, -180);
+            LayoutContainer.SetMarginTop(this, 250);
+            LayoutContainer.SetMarginRight(this, -10);
             var panelContainer = new PanelContainer
             {
                 StyleClasses = {StyleNano.StyleClassTransparentBorderedWindowPanel},
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
+                SizeFlagsVertical = SizeFlags.None
             };
             AddChild(panelContainer);
 
             Grid = new GridContainer
             {
-                MaxHeight = CalcMaxHeight(clyde.ScreenSize),
+                MaxHeight = 64,
                 ExpandBackwards = true
             };
             panelContainer.AddChild(Grid);
-            clyde.OnWindowResized += ClydeOnOnWindowResized;
-
-            LayoutContainer.SetGrowHorizontal(this, LayoutContainer.GrowDirection.Begin);
-            LayoutContainer.SetAnchorAndMarginPreset(this, LayoutContainer.LayoutPreset.TopRight, margin: 10);
-            LayoutContainer.SetMarginTop(this, 250);
         }
 
-        protected override void UIScaleChanged()
-        {
-            Grid.MaxHeight = CalcMaxHeight(_clyde.ScreenSize);
-            base.UIScaleChanged();
-        }
-
-        private void ClydeOnOnWindowResized(WindowResizedEventArgs obj)
+        protected override void Resized()
         {
             // TODO: Can rework this once https://github.com/space-wizards/RobustToolbox/issues/1392 is done,
             // this is here because there isn't currently a good way to allow the grid to adjust its height based
             // on constraints, otherwise we would use anchors to lay it out
-            Grid.MaxHeight = CalcMaxHeight(obj.NewSize);;
+            base.Resized();
+            Grid.MaxHeight = Height;
         }
 
-        private float CalcMaxHeight(Vector2i screenSize)
+        protected override Vector2 CalculateMinimumSize()
         {
-            return Math.Max(((screenSize.Y) / UIScale) - 420, 1);
+            // allows us to shrink down to a single row
+            return (64, 64);
         }
 
-        protected override void Dispose(bool disposing)
+        protected override void UIScaleChanged()
         {
-            base.Dispose(disposing);
-
-            if (disposing)
-            {
-                _clyde.OnWindowResized -= ClydeOnOnWindowResized;
-            }
+            Grid.MaxHeight = Height;
+            base.UIScaleChanged();
         }
     }
 }

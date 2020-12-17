@@ -1,9 +1,11 @@
 using Content.Server.Interfaces;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.IoC;
 
-namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
+namespace Content.Server.GameObjects.EntitySystems
 {
+    [UsedImplicitly]
     internal sealed class DeviceNetworkSystem : EntitySystem
     {
         [Dependency] private readonly IDeviceNetwork _network = default!;

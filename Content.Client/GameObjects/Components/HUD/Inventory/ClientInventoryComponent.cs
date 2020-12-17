@@ -20,9 +20,12 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
     /// A character UI which shows items the user has equipped within his inventory
     /// </summary>
     [RegisterComponent]
+    [ComponentReference(typeof(SharedInventoryComponent))]
     public class ClientInventoryComponent : SharedInventoryComponent
     {
-        private readonly Dictionary<Slots, IEntity> _slots = new Dictionary<Slots, IEntity>();
+        private readonly Dictionary<Slots, IEntity> _slots = new();
+
+        public IReadOnlyDictionary<Slots, IEntity> AllSlots => _slots;
 
         [ViewVariables] public InventoryInterfaceController InterfaceController { get; private set; } = default!;
 
@@ -70,18 +73,21 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             }
         }
 
+        public override bool IsEquipped(IEntity item)
+        {
+            return item != null && _slots.Values.Any(e => e == item);
+        }
+
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
 
-            if (curState == null)
+            if (curState is not InventoryComponentState state)
                 return;
-
-            var cast = (InventoryComponentState) curState;
 
             var doneSlots = new HashSet<Slots>();
 
-            foreach (var (slot, entityUid) in cast.Entities)
+            foreach (var (slot, entityUid) in state.Entities)
             {
                 if (!Owner.EntityManager.TryGetEntity(entityUid, out var entity))
                 {
@@ -95,9 +101,9 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                 doneSlots.Add(slot);
             }
 
-            if (cast.HoverEntity != null)
+            if (state.HoverEntity != null)
             {
-                var (slot, (entityUid, fits)) = cast.HoverEntity.Value;
+                var (slot, (entityUid, fits)) = state.HoverEntity.Value;
                 var entity = Owner.EntityManager.GetEntity(entityUid);
 
                 InterfaceController?.HoverInSlot(slot, entity, fits);

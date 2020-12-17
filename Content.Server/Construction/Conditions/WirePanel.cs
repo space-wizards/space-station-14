@@ -26,15 +26,21 @@ namespace Content.Server.Construction.Conditions
             return wires.IsPanelOpen == Open;
         }
 
-        public void DoExamine(IEntity entity, FormattedMessage message, bool inDetailsRange)
+        public bool DoExamine(IEntity entity, FormattedMessage message, bool inDetailsRange)
         {
-            if (!entity.TryGetComponent(out WiresComponent wires)) return;
+            if (!entity.TryGetComponent(out WiresComponent wires)) return false;
 
-            if(Open && !wires.IsPanelOpen)
-                message.AddMarkup(Loc.GetString("First, open the maintenance panel.\n"));
+            switch (Open)
+            {
+                case true when !wires.IsPanelOpen:
+                    message.AddMarkup(Loc.GetString("First, open the maintenance panel.\n"));
+                    return true;
+                case false when wires.IsPanelOpen:
+                    message.AddMarkup(Loc.GetString("First, close the maintenance panel.\n"));
+                    return true;
+            }
 
-            if(!Open && wires.IsPanelOpen)
-                message.AddMarkup(Loc.GetString("First, close the maintenance panel.\n"));
+            return false;
         }
     }
 }

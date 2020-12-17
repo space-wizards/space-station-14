@@ -29,7 +29,7 @@ namespace Content.Client.GameObjects.EntitySystems
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         private int _nextId;
-        private readonly Dictionary<int, ConstructionGhostComponent> _ghosts = new Dictionary<int, ConstructionGhostComponent>();
+        private readonly Dictionary<int, ConstructionGhostComponent> _ghosts = new();
         private ConstructionMenu _constructionMenu;
 
         /// <inheritdoc />

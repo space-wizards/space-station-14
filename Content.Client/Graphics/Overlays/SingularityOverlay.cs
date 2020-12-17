@@ -1,4 +1,4 @@
-﻿using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Graphics.Overlays;
 using Robust.Client.Graphics.Shaders;
@@ -26,7 +26,7 @@ using Robust.Client.Interfaces.Graphics;
 
 namespace Content.Client.Graphics.Overlays
 {
-    public class SingularityOverlay : Overlay, IConfigurable<KeyedVector2OverlayParameter>, IConfigurable<KeyedFloatOverlayParameter>
+    public class SingularityOverlay : Overlay, IConfigurableOverlay
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
@@ -66,17 +66,19 @@ namespace Content.Client.Graphics.Overlays
 
         }
 
-        public void Configure(KeyedVector2OverlayParameter parameters)
+        public void Configure(OverlayParameter parameters)
         {
-            var dict = parameters.Dict;
-            dict.TryGetValue("worldCoords", out _currentWorldCoords);
-        }
-
-        public void Configure(KeyedFloatOverlayParameter parameters)
-        {
-            var dict = parameters.Dict;
-            dict.TryGetValue("intensity", out _intensity);
-            dict.TryGetValue("falloff", out _falloff);
+            if (parameters is KeyedVector2OverlayParameter kParams)
+            {
+                var dict = kParams.Dict;
+                dict.TryGetValue("worldCoords", out _currentWorldCoords);
+            }
+            else if (parameters is KeyedFloatOverlayParameter fParams)
+            {
+                var dict = fParams.Dict;
+                dict.TryGetValue("intensity", out _intensity);
+                dict.TryGetValue("falloff", out _falloff);
+            }
         }
     }
 }

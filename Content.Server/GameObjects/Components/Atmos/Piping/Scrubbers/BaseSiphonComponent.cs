@@ -68,7 +68,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Scrubbers
             if (tileAtmos == null)
                 return;
             ScrubGas(tileAtmos.Air, _scrubberOutlet.Air);
-            _atmosSystem.GetGridAtmosphere(Owner.Transform.GridID)?.Invalidate(tileAtmos.GridIndices);
+            tileAtmos.Invalidate();
         }
 
         protected abstract void ScrubGas(GasMixture inletGas, GasMixture outletGas);

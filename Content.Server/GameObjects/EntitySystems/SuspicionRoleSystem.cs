@@ -8,7 +8,7 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     public class SuspicionRoleSystem : EntitySystem
     {
-        private readonly HashSet<SuspicionRoleComponent> _traitors = new HashSet<SuspicionRoleComponent>();
+        private readonly HashSet<SuspicionRoleComponent> _traitors = new();
 
         public IReadOnlyCollection<SuspicionRoleComponent> Traitors => _traitors;
 

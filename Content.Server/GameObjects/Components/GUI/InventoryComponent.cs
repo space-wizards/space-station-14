@@ -25,12 +25,13 @@ using static Content.Shared.GameObjects.Components.Inventory.SharedInventoryComp
 namespace Content.Server.GameObjects.Components.GUI
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedInventoryComponent))]
     public class InventoryComponent : SharedInventoryComponent, IExAct, IEffectBlocker, IPressureProtection
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
         [ViewVariables]
-        private readonly Dictionary<Slots, ContainerSlot> _slotContainers = new Dictionary<Slots, ContainerSlot>();
+        private readonly Dictionary<Slots, ContainerSlot> _slotContainers = new();
 
         private KeyValuePair<Slots, (EntityUid entity, bool fits)>? _hoverEntity;
 
@@ -415,7 +416,7 @@ namespace Content.Server.GameObjects.Components.GUI
             // make sure this is one of our containers.
             // Technically the correct way would be to enumerate the possible slot names
             // comparing with this container, but I might as well put the dictionary to good use.
-            if (!(container is ContainerSlot slot) || !_slotContainers.ContainsValue(slot))
+            if (container is not ContainerSlot slot || !_slotContainers.ContainsValue(slot))
                 return;
 
             if (entity.TryGetComponent(out ItemComponent itemComp))
@@ -571,6 +572,21 @@ namespace Content.Server.GameObjects.Components.GUI
                     }
                 }
             }
+        }
+
+        public override bool IsEquipped(IEntity item)
+        {
+            if (item == null) return false;
+            foreach (var containerSlot in _slotContainers.Values)
+            {
+                // we don't want a recursive check here
+                if (containerSlot.Contains(item))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

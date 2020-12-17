@@ -16,6 +16,8 @@ namespace Content.Server.GameObjects.Components.Actor
     {
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
         {
+            if(session?.AttachedEntity != Owner) return;
+
             switch (message)
             {
                 case RequestCharacterInfoMessage _:
@@ -30,12 +32,12 @@ namespace Content.Server.GameObjects.Components.Actor
                             // getting conditions
                             foreach (var objective in mind.AllObjectives)
                             {
-                                if (!conditions.ContainsKey(objective.Issuer))
-                                    conditions[objective.Issuer] = new List<ConditionInfo>();
+                                if (!conditions.ContainsKey(objective.Prototype.Issuer))
+                                    conditions[objective.Prototype.Issuer] = new List<ConditionInfo>();
                                 foreach (var condition in objective.Conditions)
                                 {
-                                    conditions[objective.Issuer].Add(new ConditionInfo(condition.GetTitle(),
-                                        condition.GetDescription(), condition.GetIcon(), condition.GetProgress(mindComponent.Mind)));
+                                    conditions[objective.Prototype.Issuer].Add(new ConditionInfo(condition.Title,
+                                        condition.Description, condition.Icon, condition.Progress));
                                 }
                             }
 

@@ -36,6 +36,7 @@
 - type: alert
   alertType: Fire
   icon: /Textures/Interface/Alerts/Fire/fire.png
+  onClick: !type:ResistFire  { }
   name: "[color=red]On Fire[/color]"
   description: "You're [color=red]on fire[/color]. Click the alert to stop, drop and roll to put the fire out or move to a vacuum area."
 
@@ -80,6 +81,7 @@
 - type: alert
   alertType: Buckled
   category: Buckled
+  onClick: !type:Unbuckle  { }
   icon: /Textures/Interface/Alerts/Buckle/buckled.png
   name: "[color=yellow]Buckled[/color]"
   description: "You've been [color=yellow]buckled[/color] to something. Click the alert to unbuckle unless you're [color=yellow]handcuffed.[/color]"
@@ -110,6 +112,7 @@
 - type: alert
   alertType: PilotingShuttle
   category: Piloting
+  onClick: !type:StopPiloting { }
   icon: /Textures/Interface/Alerts/Buckle/buckled.png
   name: Piloting Shuttle
   description: You are piloting a shuttle. Click the alert to stop.
@@ -165,6 +168,7 @@
 - type: alert
   alertType: Pulling
   icon: /Textures/Interface/Alerts/Pull/pulling.png
+  onClick: !type:StopPulling  { }
   name: Pulling
   description: You're pulling something. Click the alert to stop.
 

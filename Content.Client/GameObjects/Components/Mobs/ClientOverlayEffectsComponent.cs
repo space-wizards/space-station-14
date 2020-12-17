@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Mobs;
@@ -183,7 +183,7 @@ namespace Content.Client.GameObjects.Components.Mobs
 
             if (overlayType != null && overlayType.IsSubclassOf(typeof(Overlay)))
             {
-                overlay = Activator.CreateInstance(overlayType) as Overlay;
+                overlay = IoCManager.Resolve<IDynamicTypeFactory>().CreateInstance<Overlay>(overlayType);
                 UpdateOverlayConfiguration(overlay, container.Parameters);
                 return true;
             }
@@ -197,21 +197,11 @@ namespace Content.Client.GameObjects.Components.Mobs
         /// </summary>
         private void UpdateOverlayConfiguration(Overlay overlay, List<OverlayParameter> parameters)
         {
-            var configurableTypes = overlay.GetType()
-                .GetInterfaces()
-                .Where(type =>
-                    type.IsGenericType
-                    && type.GetGenericTypeDefinition() == typeof(IConfigurable<>)
-                    && parameters.Exists(p => p.GetType() == type.GenericTypeArguments.First()))
-                .ToList();
-
-            foreach (var type in configurableTypes)
+            if (overlay is IConfigurableOverlay configurable)
             {
-                var parameter = parameters.First(p => p.GetType() == type.GenericTypeArguments.First());
-                if (parameter != null)
+                foreach (var param in parameters)
                 {
-                    var method = type.GetMethod(nameof(IConfigurable<object>.Configure));
-                    method!.Invoke(overlay, new[] { parameter });
+                    configurable.Configure(param);
                 }
             }
         }

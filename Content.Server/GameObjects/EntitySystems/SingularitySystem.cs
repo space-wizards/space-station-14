@@ -1,8 +1,10 @@
-﻿using Content.Server.GameObjects.Components.Singularity;
+using Content.Server.GameObjects.Components.Singularity;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
+    [UsedImplicitly]
     public class SingularitySystem : EntitySystem
     {
         private float curTimeSingulo;

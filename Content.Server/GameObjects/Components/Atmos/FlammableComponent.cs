@@ -32,7 +32,7 @@ namespace Content.Server.GameObjects.Components.Atmos
     public class FlammableComponent : SharedFlammableComponent, ICollideBehavior, IFireAct, IReagentReaction
     {
         private bool _resisting = false;
-        private readonly List<EntityUid> _collided = new List<EntityUid>();
+        private readonly List<EntityUid> _collided = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool OnFire { get; private set; }
@@ -100,7 +100,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 return;
             }
 
-            status.ShowAlert(AlertType.Fire, onClickAlert: OnClickAlert);
+            status?.ShowAlert(AlertType.Fire);
 
             if (FireStacks > 0)
             {
@@ -149,14 +149,6 @@ namespace Content.Server.GameObjects.Components.Atmos
                 {
                     _collided.Remove(uid);
                 }
-            }
-        }
-
-        private void OnClickAlert(ClickAlertEventArgs args)
-        {
-            if (args.Player.TryGetComponent(out FlammableComponent flammable))
-            {
-                flammable.Resist();
             }
         }
 
