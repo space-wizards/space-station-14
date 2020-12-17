@@ -21,7 +21,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Body
+namespace Content.Server.GameObjects.Components.Body.Surgery
 {
     /// <summary>
     ///     Server-side component representing a generic tool capable of performing surgery.

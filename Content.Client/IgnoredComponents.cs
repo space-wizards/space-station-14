@@ -224,7 +224,8 @@
             "MachinePart",
             "MachineFrame",
             "MachineBoard",
-            "ChemicalAmmo"
+            "ChemicalAmmo",
+            "BiologicalSurgeryData"
         };
     }
 }
