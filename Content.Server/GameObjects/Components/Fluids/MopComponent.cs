@@ -18,7 +18,6 @@ namespace Content.Server.GameObjects.Components.Fluids
     /// </summary>
     [RegisterComponent]
     public class MopComponent : Component, IAfterInteract
-
     {
         public override string Name => "Mop";
 
