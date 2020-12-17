@@ -168,7 +168,7 @@ namespace Content.Server.GameObjects.Components.Singularity
             return Task.FromResult(true);
         }
 
-        private void SwitchOff()
+        public void SwitchOff()
         {
             _isOn = false;
             _powerConsumer.DrawRate = 0;
@@ -176,7 +176,7 @@ namespace Content.Server.GameObjects.Components.Singularity
             UpdateAppearance();
         }
 
-        private void SwitchOn()
+        public void SwitchOn()
         {
             _isOn = true;
             _powerConsumer.DrawRate = _powerUseActive;
