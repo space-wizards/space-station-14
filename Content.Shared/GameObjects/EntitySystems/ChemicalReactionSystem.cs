@@ -1,4 +1,3 @@
-using Content.Server.Chemistry;
 using Content.Shared.Chemistry;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -6,7 +5,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using System.Collections.Generic;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Shared.GameObjects.EntitySystems
 {
     public class ChemicalReactionSystem : EntitySystem
     {
