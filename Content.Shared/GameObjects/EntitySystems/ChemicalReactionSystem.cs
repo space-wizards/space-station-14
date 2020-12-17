@@ -2,6 +2,7 @@ using Content.Shared.Chemistry;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using System.Collections.Generic;
 
@@ -9,57 +10,54 @@ namespace Content.Shared.GameObjects.EntitySystems
 {
     public class ChemicalReactionSystem : EntitySystem
     {
-        protected IEnumerable<ReactionPrototype> Reactions;
+        private IEnumerable<ReactionPrototype> _reactions;
+
+        private const int MaxReactionIterations = 20;
 
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override void Initialize()
         {
             base.Initialize();
-            LoadReactions();
-        }
-
-        public void LoadReactions()
-        {
-            Reactions = _prototypeManager.EnumeratePrototypes<ReactionPrototype>();
+            _reactions = _prototypeManager.EnumeratePrototypes<ReactionPrototype>();
         }
 
         /// <summary>
-        /// Checks if a solution has the reactants required to cause a specified reaction.
+        ///     Checks if a solution can undergo a specified reaction.
         /// </summary>
-        public static bool SolutionValidReaction(Solution solution, ReactionPrototype reaction, out ReagentUnit unitReactions)
+        /// <param name="solution">The solution to check.</param>
+        /// <param name="reaction">The reaction to check.</param>
+        /// <param name="lowestUnitReactions">How many times this reaction can occur.</param>
+        /// <returns></returns>
+        private static bool CanReact(Solution solution, ReactionPrototype reaction, out ReagentUnit lowestUnitReactions)
         {
-            unitReactions = ReagentUnit.MaxValue; //Set to some impossibly large number initially
-            foreach (var reactant in reaction.Reactants)
+            lowestUnitReactions = ReagentUnit.MaxValue;
+
+            foreach (var reactantData in reaction.Reactants)
             {
-                if (!solution.ContainsReagent(reactant.Key, out var reagentQuantity))
-                {
+                var reactantName = reactantData.Key;
+                var reactantCoefficient = reactantData.Value.Amount;
+
+                if (!solution.ContainsReagent(reactantName, out var reactantQuantity))
                     return false;
-                }
-                var currentUnitReactions = reagentQuantity / reactant.Value.Amount;
-                if (currentUnitReactions < unitReactions)
-                {
-                    unitReactions = currentUnitReactions;
-                }
-            }
 
-            if (unitReactions == 0)
-            {
-                return false;
+                var unitReactions = reactantQuantity / reactantCoefficient;
+
+                if (unitReactions < lowestUnitReactions)
+                {
+                    lowestUnitReactions = unitReactions;
+                }
             }
-            else
-            {
-                return true;
-            }
+            return true;
         }
 
         /// <summary>
-        /// Perform a reaction on a solution. This assumes all reaction criteria are met.
-        /// Removes the reactants from the solution, then returns a solution with all reagents created.
+        ///     Perform a reaction on a solution. This assumes all reaction criteria are met.
+        ///     Removes the reactants from the solution, then returns a solution with all products.
         /// </summary>
-        public static Solution PerformReaction(Solution solution, IEntity owner, ReactionPrototype reaction, ReagentUnit unitReactions)
+        private static Solution PerformReaction(Solution solution, IEntity owner, ReactionPrototype reaction, ReagentUnit unitReactions)
         {
-            //Remove non-catalysts
+            //Remove reactants
             foreach (var reactant in reaction.Reactants)
             {
                 if (!reactant.Value.Catalyst)
@@ -69,7 +67,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                 }
             }
 
-            // Add products
+            //Create products
             var products = new Solution();
             foreach (var product in reaction.Products)
             {
@@ -86,16 +84,17 @@ namespace Content.Shared.GameObjects.EntitySystems
         }
 
         /// <summary>
-        /// Performs all chemical reactions that can be run on a solution.
-        /// WARNING: Does not trigger reactions between solution and new products.
+        ///     Performs all chemical reactions that can be run on a solution.
+        ///     Removes the reactants from the solution, then returns a solution with all products.
+        ///     WARNING: Does not trigger reactions between solution and new products.
         /// </summary>
-        public Solution ProcessReactions(Solution solution, IEntity owner)
+        private Solution ProcessReactions(Solution solution, IEntity owner)
         {
             //TODO: make a hashmap at startup and then look up reagents in the contents for a reaction
             var overallProducts = new Solution();
-            foreach (var reaction in Reactions)
+            foreach (var reaction in _reactions)
             {
-                if (SolutionValidReaction(solution, reaction, out var unitReactions))
+                if (CanReact(solution, reaction, out var unitReactions))
                 {
                     var reactionProducts = PerformReaction(solution, owner, reaction, unitReactions);
                     overallProducts.AddSolution(reactionProducts);
@@ -103,6 +102,49 @@ namespace Content.Shared.GameObjects.EntitySystems
                 }
             }
             return overallProducts;
+        }
+
+        /// <summary>
+        ///     Continually react a solution until no more reactions occur.
+        /// </summary>
+        public void FullyReactSolution(Solution solution, IEntity owner)
+        {
+            for (var i = 0; i < MaxReactionIterations; i++)
+            {
+                var products = ProcessReactions(solution, owner);
+
+                if (products.TotalVolume <= 0)
+                    return;
+
+                solution.AddSolution(products);
+            }
+            Logger.Error($"{nameof(Solution)} on {owner} (Uid: {owner.Uid}) could not finish reacting in under {MaxReactionIterations} loops.");
+        }
+
+        /// <summary>
+        ///     Continually react a solution until no more reactions occur, with a volume constraint.
+        ///     If a reaction's products would exceed the max volume, some product is deleted.
+        /// </summary>
+        public void FullyReactSolution(Solution solution, IEntity owner, ReagentUnit maxVolume)
+        {
+            for (var i = 0; i < MaxReactionIterations; i++)
+            {
+                var products = ProcessReactions(solution, owner);
+
+                if (products.TotalVolume <= 0)
+                    return;
+
+                var totalVolume = solution.TotalVolume + products.TotalVolume;
+                var excessVolume = totalVolume - maxVolume; 
+
+                if (excessVolume > 0)
+                {
+                    products.RemoveSolution(excessVolume); //excess product is deleted to fit under volume limit
+                }
+
+                solution.AddSolution(products);
+            }
+            Logger.Error($"{nameof(Solution)} on {owner} (Uid: {owner.Uid}) could not finish reacting in under {MaxReactionIterations} loops.");
         }
     }
 }

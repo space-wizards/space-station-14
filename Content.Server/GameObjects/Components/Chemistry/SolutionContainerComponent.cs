@@ -289,19 +289,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
         }
 
-        private const int ReactionIterMax = 100;
-
         private void CheckForReaction()
         {
-            for (var i = 0; i < ReactionIterMax; i++)
-            {
-                var products = _reactionSystem.ProcessReactions(Solution, Owner);
-                TryAddSolution(products, skipReactionCheck:true);
-
-                if (products.TotalVolume <= 0)
-                    return;
-            }
-            Logger.Error($"{nameof(SolutionContainerComponent)} on {Owner.Name} (Uid: {Owner.Uid}) could not finish reacting in under {ReactionIterMax} loops.");
+            _reactionSystem.FullyReactSolution(Solution, Owner, MaxVolume);
         }
 
         public bool TryAddReagent(string reagentId, ReagentUnit quantity, out ReagentUnit acceptedQuantity, bool skipReactionCheck = false, bool skipColor = false)
