@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -292,6 +293,67 @@ namespace Content.Shared.Chemistry
                 mixColor = Color.InterpolateBetween(mixColor, proto.SubstanceColor, interpolateValue);
             }
             return mixColor;
+        }
+
+        /// <summary>
+        ///     Checks if the solution can undergo a specified reaction.
+        /// </summary>
+        /// <param name="solution">The solution to check.</param>
+        /// <param name="reaction">The reaction to check.</param>
+        /// <param name="lowestUnitReactions">How many times this reaction can occur.</param>
+        /// <returns></returns>
+        public bool CanReact(ReactionPrototype reaction, out ReagentUnit lowestUnitReactions)
+        {
+            lowestUnitReactions = ReagentUnit.MaxValue;
+
+            foreach (var reactantData in reaction.Reactants)
+            {
+                var reactantName = reactantData.Key;
+                var reactantCoefficient = reactantData.Value.Amount;
+
+                if (!ContainsReagent(reactantName, out var reactantQuantity))
+                    return false;
+
+                var unitReactions = reactantQuantity / reactantCoefficient;
+
+                if (unitReactions < lowestUnitReactions)
+                {
+                    lowestUnitReactions = unitReactions;
+                }
+            }
+            return true;
+        }
+
+        /// <summary>
+        ///     Perform a reaction on the solution. This assumes all reaction criteria are met.
+        ///     Removes the reactants from the solution, then returns a solution with all products.
+        /// </summary>
+        public Solution PerformReaction(ReactionPrototype reaction, ReagentUnit unitReactions, IEntity owner)
+        {
+            //Remove reactants
+            foreach (var reactant in reaction.Reactants)
+            {
+                if (!reactant.Value.Catalyst)
+                {
+                    var amountToRemove = unitReactions * reactant.Value.Amount;
+                    RemoveReagent(reactant.Key, amountToRemove);
+                }
+            }
+
+            //Create products
+            var products = new Solution();
+            foreach (var product in reaction.Products)
+            {
+                products.AddReagent(product.Key, product.Value * unitReactions);
+            }
+
+            // Trigger reaction effects
+            foreach (var effect in reaction.Effects)
+            {
+                effect.React(owner, unitReactions.Double());
+            }
+
+            return products;
         }
 
         public Solution Clone()
