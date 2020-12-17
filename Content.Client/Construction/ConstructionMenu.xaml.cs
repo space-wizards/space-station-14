@@ -7,15 +7,12 @@ using Content.Client.Utility;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Interactable;
-using Content.Shared.Materials;
 using Robust.Client.Graphics;
 using Robust.Client.Interfaces.Placement;
 using Robust.Client.Interfaces.ResourceManagement;
-using Robust.Client.Placement;
-using Robust.Client.ResourceManagement;
-using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Client.UserInterface.XAML;
 using Robust.Client.Utility;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Systems;
@@ -27,7 +24,8 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Construction
 {
-    public class ConstructionMenu : SS14Window
+    [GenerateTypedNameReferences]
+    public partial class ConstructionMenu : SS14Window
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
@@ -39,89 +37,28 @@ namespace Content.Client.Construction
         private ConstructionPrototype? _selected;
         private string[] _categories = Array.Empty<string>();
 
-        private readonly ItemList _recipes;
-        private readonly ItemList _stepList;
-        private readonly Button _buildButton;
-        private readonly Button _eraseButton;
-        private readonly LineEdit _searchBar;
-        private readonly OptionButton _category;
-        private readonly TextureRect _targetTexture;
-        private readonly RichTextLabel _targetName;
-        private readonly RichTextLabel _targetDescription;
-
         public ConstructionMenu()
         {
             IoCManager.InjectDependencies(this);
+            RobustXamlLoader.Load(this);
 
             _placementManager.PlacementChanged += PlacementChanged;
 
-            Title = "Construction";
+            Title = Loc.GetString("Construction");
 
-            var hbox = new HBoxContainer() {SizeFlagsHorizontal = SizeFlags.FillExpand};
+            BuildButton.Text = Loc.GetString("Place construction ghost");
+            RecipesList.OnItemSelected += RecipeSelected;
+            RecipesList.OnItemDeselected += RecipeDeselected;
 
-            var recipeContainer = new VBoxContainer() {SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.45f};
+            SearchBar.OnTextChanged += SearchTextChanged;
+            Category.OnItemSelected += CategorySelected;
 
-            var searchContainer = new HBoxContainer() {SizeFlagsVertical = SizeFlags.FillExpand, SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.1f};
-            _searchBar = new LineEdit() {PlaceHolder = "Search", SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.6f};
-            _category = new OptionButton() {SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.4f};
-
-            _recipes = new ItemList() {SelectMode = ItemList.ItemListSelectMode.Single, SizeFlagsVertical = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.9f};
-
-            var spacer = new Control() {SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.05f};
-
-            var stepsContainer = new VBoxContainer() {SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.45f};
-            var targetContainer = new HBoxContainer() {Align = BoxContainer.AlignMode.Center, SizeFlagsVertical = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.25f};
-            _targetTexture = new TextureRect() {SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.15f, Stretch = TextureRect.StretchMode.KeepCentered};
-            var targetInfoContainer = new VBoxContainer() {SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.85f};
-            _targetName = new RichTextLabel() {SizeFlagsVertical = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.1f};
-            _targetDescription = new RichTextLabel() {SizeFlagsVertical = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.9f};
-
-            _stepList = new ItemList() {SizeFlagsVertical = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.75f, SelectMode = ItemList.ItemListSelectMode.None};
-
-            var buttonContainer = new VBoxContainer() {SizeFlagsVertical = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.1f};
-            _buildButton = new Button() {Disabled = true, ToggleMode = true, Text = Loc.GetString("Place construction ghost"), SizeFlagsVertical = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.5f};
-
-            var eraseContainer = new HBoxContainer() {SizeFlagsVertical = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.5f};
-            _eraseButton = new Button() {Text = Loc.GetString("Eraser Mode"), ToggleMode = true, SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.7f};
-            var clearButton = new Button() {Text = Loc.GetString("Clear All"), SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.3f};
-
-            recipeContainer.AddChild(searchContainer);
-            recipeContainer.AddChild(_recipes);
-
-            searchContainer.AddChild(_searchBar);
-            searchContainer.AddChild(_category);
-
-            targetInfoContainer.AddChild(_targetName);
-            targetInfoContainer.AddChild(_targetDescription);
-
-            targetContainer.AddChild(_targetTexture);
-            targetContainer.AddChild(targetInfoContainer);
-
-            stepsContainer.AddChild(targetContainer);
-            stepsContainer.AddChild(_stepList);
-
-            eraseContainer.AddChild(_eraseButton);
-            eraseContainer.AddChild(clearButton);
-
-            buttonContainer.AddChild(_buildButton);
-            buttonContainer.AddChild(eraseContainer);
-
-            stepsContainer.AddChild(buttonContainer);
-
-            hbox.AddChild(recipeContainer);
-            hbox.AddChild(spacer);
-            hbox.AddChild(stepsContainer);
-            Contents.AddChild(hbox);
-
-            _recipes.OnItemSelected += RecipeSelected;
-            _recipes.OnItemDeselected += RecipeDeselected;
-
-            _searchBar.OnTextChanged += SearchTextChanged;
-            _category.OnItemSelected += CategorySelected;
-
-            _buildButton.OnToggled += BuildButtonToggled;
-            clearButton.OnPressed += ClearAllButtonPressed;
-            _eraseButton.OnToggled += EraseButtonToggled;
+            BuildButton.Text = Loc.GetString("Place construction ghost");
+            BuildButton.OnToggled += BuildButtonToggled;
+            ClearButton.Text = Loc.GetString("Clear All");
+            ClearButton.OnPressed += ClearAllButtonPressed;
+            EraseButton.Text = Loc.GetString("Eraser Mode");
+            EraseButton.OnToggled += EraseButtonToggled;
 
             PopulateCategories();
             PopulateAll();
@@ -129,15 +66,15 @@ namespace Content.Client.Construction
 
         private void PlacementChanged(object? sender, EventArgs e)
         {
-            _buildButton.Pressed = false;
-            _eraseButton.Pressed = false;
+            BuildButton.Pressed = false;
+            EraseButton.Pressed = false;
         }
 
         private void PopulateAll()
         {
             foreach (var recipe in _prototypeManager.EnumeratePrototypes<ConstructionPrototype>())
             {
-                _recipes.Add(GetItem(recipe, _recipes));
+                RecipesList.Add(GetItem(recipe, RecipesList));
             }
         }
 
@@ -155,7 +92,7 @@ namespace Content.Client.Construction
 
         private void PopulateBy(string search, string category)
         {
-            _recipes.Clear();
+            RecipesList.Clear();
 
             foreach (var recipe in _prototypeManager.EnumeratePrototypes<ConstructionPrototype>())
             {
@@ -171,7 +108,7 @@ namespace Content.Client.Construction
                         continue;
                 }
 
-                _recipes.Add(GetItem(recipe, _recipes));
+                RecipesList.Add(GetItem(recipe, RecipesList));
             }
         }
 
@@ -190,7 +127,7 @@ namespace Content.Client.Construction
                     uniqueCategories.Add(category);
             }
 
-            _category.Clear();
+            Category.Clear();
 
             var array = uniqueCategories.ToArray();
             Array.Sort(array);
@@ -198,7 +135,7 @@ namespace Content.Client.Construction
             for (var i = 0; i < array.Length; i++)
             {
                 var category = array[i];
-                _category.AddItem(category, i);
+                Category.AddItem(category, i);
             }
 
             _categories = array;
@@ -210,11 +147,11 @@ namespace Content.Client.Construction
 
             var isItem = prototype.Type == ConstructionType.Item;
 
-            _buildButton.Disabled = false;
-            _buildButton.Text = Loc.GetString(!isItem ? "Place construction ghost" : "Craft");
-            _targetName.SetMessage(prototype.Name);
-            _targetDescription.SetMessage(prototype.Description);
-            _targetTexture.Texture = prototype.Icon.Frame0();
+            BuildButton.Disabled = false;
+            BuildButton.Text = Loc.GetString(!isItem ? "Place construction ghost" : "Craft");
+            TargetName.SetMessage(prototype.Name);
+            TargetDesc.SetMessage(prototype.Description);
+            TargetTexture.Texture = prototype.Icon.Frame0();
 
             if (!_prototypeManager.TryIndex(prototype.Graph, out ConstructionGraphPrototype graph))
                 return;
@@ -295,7 +232,7 @@ namespace Content.Client.Construction
 
                 if (firstNode)
                 {
-                    _stepList.AddItem(isItem
+                    StepList.AddItem(isItem
                         ? Loc.GetString($"{stepNumber++}. To craft this item, you need:")
                         : Loc.GetString($"{stepNumber++}. To build this, first you need:"));
                 }
@@ -307,7 +244,7 @@ namespace Content.Client.Construction
                     switch (step)
                     {
                         case MaterialConstructionGraphStep materialStep:
-                            _stepList.AddItem(
+                            StepList.AddItem(
                                 !firstNode
                                     ? Loc.GetString(
                                         "{0}. Add {1}x {2}.", stepNumber++, materialStep.Amount, materialStep.Material)
@@ -316,20 +253,20 @@ namespace Content.Client.Construction
                             break;
 
                         case ToolConstructionGraphStep toolStep:
-                            _stepList.AddItem(Loc.GetString("{0}. Use a {1}.", stepNumber++, toolStep.Tool.GetToolName()), icon);
+                            StepList.AddItem(Loc.GetString("{0}. Use a {1}.", stepNumber++, toolStep.Tool.GetToolName()), icon);
                             break;
 
                         case PrototypeConstructionGraphStep prototypeStep:
-                            _stepList.AddItem(Loc.GetString("{0}. Add {1}.", stepNumber++, prototypeStep.Name), icon);
+                            StepList.AddItem(Loc.GetString("{0}. Add {1}.", stepNumber++, prototypeStep.Name), icon);
                             break;
 
                         case ComponentConstructionGraphStep componentStep:
-                            _stepList.AddItem(Loc.GetString("{0}. Add {1}.", stepNumber++, componentStep.Name), icon);
+                            StepList.AddItem(Loc.GetString("{0}. Add {1}.", stepNumber++, componentStep.Name), icon);
                             break;
 
                         case NestedConstructionGraphStep nestedStep:
                             var parallelNumber = 1;
-                            _stepList.AddItem(Loc.GetString("{0}. In parallel...", stepNumber++));
+                            StepList.AddItem(Loc.GetString("{0}. In parallel...", stepNumber++));
 
                             foreach (var steps in nestedStep.Steps)
                             {
@@ -343,19 +280,19 @@ namespace Content.Client.Construction
                                     {
                                         case MaterialConstructionGraphStep materialStep:
                                             if (!isItem)
-                                                _stepList.AddItem(Loc.GetString("    {0}.{1}.{2}. Add {3}x {4}.", stepNumber, parallelNumber, subStepNumber++, materialStep.Amount, materialStep.Material), icon);
+                                                StepList.AddItem(Loc.GetString("    {0}.{1}.{2}. Add {3}x {4}.", stepNumber, parallelNumber, subStepNumber++, materialStep.Amount, materialStep.Material), icon);
                                             break;
 
                                         case ToolConstructionGraphStep toolStep:
-                                            _stepList.AddItem(Loc.GetString("    {0}.{1}.{2}. Use a {3}.", stepNumber, parallelNumber, subStepNumber++, toolStep.Tool.GetToolName()), icon);
+                                            StepList.AddItem(Loc.GetString("    {0}.{1}.{2}. Use a {3}.", stepNumber, parallelNumber, subStepNumber++, toolStep.Tool.GetToolName()), icon);
                                             break;
 
                                         case PrototypeConstructionGraphStep prototypeStep:
-                                            _stepList.AddItem(Loc.GetString("    {0}.{1}.{2}. Add {3}.", stepNumber, parallelNumber, subStepNumber++, prototypeStep.Name), icon);
+                                            StepList.AddItem(Loc.GetString("    {0}.{1}.{2}. Add {3}.", stepNumber, parallelNumber, subStepNumber++, prototypeStep.Name), icon);
                                             break;
 
                                         case ComponentConstructionGraphStep componentStep:
-                                            _stepList.AddItem(Loc.GetString("    {0}.{1}.{2}. Add {3}.", stepNumber, parallelNumber, subStepNumber++, componentStep.Name), icon);
+                                            StepList.AddItem(Loc.GetString("    {0}.{1}.{2}. Add {3}.", stepNumber, parallelNumber, subStepNumber++, componentStep.Name), icon);
                                             break;
                                     }
                                 }
@@ -373,11 +310,11 @@ namespace Content.Client.Construction
 
         private void ClearInfo()
         {
-            _buildButton.Disabled = true;
-            _targetName.SetMessage(string.Empty);
-            _targetDescription.SetMessage(string.Empty);
-            _targetTexture.Texture = null;
-            _stepList.Clear();
+            BuildButton.Disabled = true;
+            TargetName.SetMessage(string.Empty);
+            TargetDesc.SetMessage(string.Empty);
+            TargetTexture.Texture = null;
+            StepList.Clear();
         }
 
         private void RecipeSelected(ItemList.ItemListSelectedEventArgs obj)
@@ -394,13 +331,13 @@ namespace Content.Client.Construction
 
         private void CategorySelected(OptionButton.ItemSelectedEventArgs obj)
         {
-            _category.SelectId(obj.Id);
-            PopulateBy(_searchBar.Text, _categories[obj.Id]);
+            Category.SelectId(obj.Id);
+            PopulateBy(SearchBar.Text, _categories[obj.Id]);
         }
 
         private void SearchTextChanged(LineEdit.LineEditEventArgs obj)
         {
-            PopulateBy(_searchBar.Text, _categories[_category.SelectedId]);
+            PopulateBy(SearchBar.Text, _categories[Category.SelectedId]);
         }
 
         private void BuildButtonToggled(BaseButton.ButtonToggledEventArgs args)
@@ -414,7 +351,7 @@ namespace Content.Client.Construction
                 if (_selected.Type == ConstructionType.Item)
                 {
                     constructSystem.TryStartItemConstruction(_selected.ID);
-                    _buildButton.Pressed = false;
+                    BuildButton.Pressed = false;
                     return;
                 }
 
@@ -429,14 +366,14 @@ namespace Content.Client.Construction
                 _placementManager.Clear();
             }
 
-            _buildButton.Pressed = args.Pressed;
+            BuildButton.Pressed = args.Pressed;
         }
 
         private void EraseButtonToggled(BaseButton.ButtonToggledEventArgs args)
         {
             if (args.Pressed) _placementManager.Clear();
             _placementManager.ToggleEraserHijacked(new ConstructionPlacementHijack(_systemManager.GetEntitySystem<ConstructionSystem>(), null));
-            _eraseButton.Pressed = args.Pressed;
+            EraseButton.Pressed = args.Pressed;
         }
 
         private void ClearAllButtonPressed(BaseButton.ButtonEventArgs obj)
