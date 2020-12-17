@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Body.Behavior;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.GUI;
@@ -103,7 +104,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         }
 
         // Feeding someone else
-        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (eventArgs.Target == null)
             {
