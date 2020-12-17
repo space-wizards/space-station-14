@@ -237,7 +237,7 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
         {
             if (Parent == null) return;
 
-            performer.PopupMessage(Loc.GetString("Retract the skin..."));
+            performer.PopupMessage(Loc.GetString("Retracting the skin..."));
 
             if (await SurgeryDoAfter(performer))
             {
@@ -249,7 +249,7 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
         {
             if (Parent == null) return;
 
-            performer.PopupMessage(Loc.GetString("Cauterize the incision..."));
+            performer.PopupMessage(Loc.GetString("Cauterizing the incision..."));
 
             if (await SurgeryDoAfter(performer))
             {
@@ -287,7 +287,7 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
                 return;
             }
 
-            performer.PopupMessage(Loc.GetString("Loosen the organ..."));
+            performer.PopupMessage(Loc.GetString("Loosening the organ..."));
 
             if (!performer.HasComponent<DoAfterComponent>())
             {
@@ -328,7 +328,7 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
                 return;
             }
 
-            performer.PopupMessage(Loc.GetString("Remove the organ..."));
+            performer.PopupMessage(Loc.GetString("Removing the organ..."));
 
             if (!performer.HasComponent<DoAfterComponent>())
             {
@@ -349,7 +349,7 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
             if (Parent == null) return;
             if (container is not IBody body) return;
 
-            performer.PopupMessage(Loc.GetString("Saw off the limb!"));
+            performer.PopupMessage(Loc.GetString("Sawing off the limb!"));
 
             if (await SurgeryDoAfter(performer))
             {
