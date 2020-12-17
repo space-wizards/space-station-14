@@ -3,7 +3,7 @@
 #  name: "chaplain"
 #  positions: 1
 #  startingGear: ChaplainGear
-#  department:
+#  departments:
 #  - Civilian
 #  icon: "Chaplain"
 #  access:

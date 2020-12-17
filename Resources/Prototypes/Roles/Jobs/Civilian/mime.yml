@@ -3,7 +3,7 @@
   name: "mime"
   positions: 1
   startingGear: MimeGear
-  department:
+  departments:
   - Civilian
   icon: "Mime"
   access:
