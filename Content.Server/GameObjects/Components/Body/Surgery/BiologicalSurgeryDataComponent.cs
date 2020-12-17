@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.GameObjects.Components.Body;
@@ -71,6 +72,21 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
             return await doAfterSystem.DoAfter(args) == DoAfterStatus.Finished;
         }
 
+        private bool HasIncisionNotClamped()
+        {
+            return SkinOpened && !VesselsClamped;
+        }
+
+        private bool HasClampedIncisionNotRetracted()
+        {
+            return SkinOpened && VesselsClamped && !SkinRetracted;
+        }
+
+        private bool HasFullyOpenIncision()
+        {
+            return SkinOpened && VesselsClamped && SkinRetracted;
+        }
+
         public string GetDescription()
         {
             if (Parent == null)
@@ -78,31 +94,28 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
                 return string.Empty;
             }
 
-            var toReturn = "";
+            var toReturn = new StringBuilder();
 
-            if (SkinOpened && !VesselsClamped)
+            if (HasIncisionNotClamped())
             {
-                // Case: skin is opened, but not clamped.
-                toReturn += Loc.GetString("The skin on {0:their} {1} has an incision, but it is prone to bleeding.\n",
-                    Owner, Parent.Name);
+                toReturn.Append(Loc.GetString("The skin on {0:their} {1} has an incision, but it is prone to bleeding.",
+                    Owner, Parent.Name));
             }
-            else if (SkinOpened && VesselsClamped && !SkinRetracted)
+            else if (HasClampedIncisionNotRetracted())
             {
-                // Case: skin is opened and clamped, but not retracted.
-                toReturn += Loc.GetString("The skin on {0:their} {1} has an incision, but it is not retracted.\n",
-                    Owner, Parent.Name);
+                toReturn.AppendLine(Loc.GetString("The skin on {0:their} {1} has an incision, but it is not retracted.",
+                    Owner, Parent.Name));
             }
-            else if (SkinOpened && VesselsClamped && SkinRetracted)
+            else if (HasFullyOpenIncision())
             {
-                // Case: skin is fully open.
-                toReturn += Loc.GetString("There is an incision on {0:their} {1}.\n", Owner, Parent.Name);
+                toReturn.AppendLine(Loc.GetString("There is an incision on {0:their} {1}.\n", Owner, Parent.Name));
                 foreach (var mechanism in _disconnectedOrgans)
                 {
-                    toReturn += Loc.GetString("{0:their} {1} is loose.\n", Owner, mechanism.Name);
+                    toReturn.AppendLine(Loc.GetString("{0:their} {1} is loose.", Owner, mechanism.Name));
                 }
             }
 
-            return toReturn;
+            return toReturn.ToString();
         }
 
         public bool CanAddMechanism(IMechanism mechanism)
