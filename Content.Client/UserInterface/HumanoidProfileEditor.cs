@@ -318,6 +318,8 @@ namespace Content.Client.UserInterface
                 _jobPriorities = new List<JobPrioritySelector>();
                 _jobCategories = new Dictionary<string, Control>();
 
+                var first = true;
+
                 foreach (var job in prototypeManager.EnumeratePrototypes<JobPrototype>().OrderBy(j => j.Name))
                 {
                     foreach (var department in job.Departments)
@@ -329,6 +331,28 @@ namespace Content.Client.UserInterface
                                 Name = department,
                                 ToolTip = Loc.GetString("Jobs in the {0} department", department)
                             };
+
+                            if (first)
+                            {
+                                category.AddChild(new Control
+                                {
+                                    CustomMinimumSize = new Vector2(0, 23),
+                                });
+
+                                first = false;
+                            }
+
+                            category.AddChild(new PanelContainer
+                            {
+                                PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#464966")},
+                                Children =
+                                {
+                                    new Label
+                                    {
+                                        Text = Loc.GetString("{0} jobs", department)
+                                    }
+                                }
+                            });
 
                             _jobCategories[department] = category;
                             jobList.AddChild(category);
