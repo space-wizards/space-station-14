@@ -94,7 +94,7 @@ namespace Content.Client.UserInterface
                         });
 
                         _jobCategories[department] = category;
-                        vBox.AddChild(category);
+                        jobList.AddChild(category);
                     }
 
                     var jobButton = new JobButton
