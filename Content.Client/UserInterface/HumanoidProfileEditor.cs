@@ -43,8 +43,11 @@ namespace Content.Client.UserInterface
         private readonly Button _sexClassifiedButton;
         private readonly HairStylePicker _hairPicker;
         private readonly FacialHairStylePicker _facialHairPicker;
+
         private readonly List<JobPrioritySelector> _jobPriorities;
         private readonly OptionButton _preferenceUnavailableButton;
+        private readonly Dictionary<string, Control> _jobCategories;
+
         private readonly List<AntagPreferenceSelector> _antagPreferences;
 
         private readonly IEntity _previewDummy;
@@ -313,31 +316,47 @@ namespace Content.Client.UserInterface
                 };
 
                 _jobPriorities = new List<JobPrioritySelector>();
+                _jobCategories = new Dictionary<string, Control>();
 
                 foreach (var job in prototypeManager.EnumeratePrototypes<JobPrototype>().OrderBy(j => j.Name))
                 {
-                    var selector = new JobPrioritySelector(job);
-                    jobList.AddChild(selector);
-                    _jobPriorities.Add(selector);
-
-                    selector.PriorityChanged += priority =>
+                    foreach (var department in job.Departments)
                     {
-                        Profile = Profile.WithJobPriority(job.ID, priority);
-                        IsDirty = true;
-
-                        if (priority == JobPriority.High)
+                        if (!_jobCategories.TryGetValue(department, out var category))
                         {
-                            // Lower any other high priorities to medium.
-                            foreach (var jobSelector in _jobPriorities)
+                            category = new VBoxContainer
                             {
-                                if (jobSelector != selector && jobSelector.Priority == JobPriority.High)
+                                Name = department,
+                                ToolTip = Loc.GetString("Jobs in the {0} department", department)
+                            };
+
+                            _jobCategories[department] = category;
+                            jobList.AddChild(category);
+                        }
+
+                        var selector = new JobPrioritySelector(job);
+                        category.AddChild(selector);
+                        _jobPriorities.Add(selector);
+
+                        selector.PriorityChanged += priority =>
+                        {
+                            Profile = Profile.WithJobPriority(job.ID, priority);
+                            IsDirty = true;
+
+                            if (priority == JobPriority.High)
+                            {
+                                // Lower any other high priorities to medium.
+                                foreach (var jobSelector in _jobPriorities)
                                 {
-                                    jobSelector.Priority = JobPriority.Medium;
-                                    Profile = Profile.WithJobPriority(jobSelector.Job.ID, JobPriority.Medium);
+                                    if (jobSelector != selector && jobSelector.Priority == JobPriority.High)
+                                    {
+                                        jobSelector.Priority = JobPriority.Medium;
+                                        Profile = Profile.WithJobPriority(jobSelector.Job.ID, JobPriority.Medium);
+                                    }
                                 }
                             }
-                        }
-                    };
+                        };
+                    }
                 }
             }
 
@@ -452,7 +471,7 @@ namespace Content.Client.UserInterface
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
             };
             hbox.AddChild(vBox);
-            
+
             #region Preview
 
             _previewDummy = entityManager.SpawnEntity("HumanMob_Dummy", MapCoordinates.Nullspace);
@@ -495,7 +514,7 @@ namespace Content.Client.UserInterface
             box.AddChild(_previewSpriteSide);
 
             #endregion
-            
+
             #endregion
 
             if (preferencesManager.ServerDataLoaded)
