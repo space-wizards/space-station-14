@@ -57,13 +57,21 @@ namespace Content.Server.GameObjects.Components.Conveyor
             }
         }
 
-        public override void Initialize()
+        public override void OnAdd()
         {
-            base.Initialize();
-
+            base.OnAdd();
             if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
             {
                 receiver.OnPowerStateChanged += OnPowerChanged;
+            }
+        }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
+            {
+                receiver.OnPowerStateChanged -= OnPowerChanged;
             }
         }
 
