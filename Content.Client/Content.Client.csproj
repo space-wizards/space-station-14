@@ -33,7 +33,13 @@
       <DependentUpon>OptionsMenu.cs</DependentUpon>
     </Compile>
   </ItemGroup>
+
+  <Target Name="WriteSolutionPathForGenerator" BeforeTargets="Compile">
+    <Message Text="$(SolutionPath)" Importance="high" />
+    <WriteLinesToFile File="obj/SolutionPathForGenerator" Lines="$(SolutionPath)" Overwrite="true" />
+  </Target>
   <ItemGroup>
-    <ProjectReference Include="..\Content.Generators\Content.Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
+    <AdditionalFiles Include="obj/SolutionPathForGenerator" />
+    <ProjectReference Include="..\Content.Generators\Content.Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 </Project>
