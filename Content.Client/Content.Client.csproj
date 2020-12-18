@@ -33,4 +33,7 @@
       <DependentUpon>OptionsMenu.cs</DependentUpon>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Content.Generators\Content.Generators.csproj" OutputItemType="Analyser" ReferenceOutputAssembly="true"/>
+  </ItemGroup>
 </Project>

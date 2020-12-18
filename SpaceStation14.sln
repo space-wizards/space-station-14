@@ -74,6 +74,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robust.Physics", "RobustToo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.LoaderApi", "RobustToolbox\Robust.LoaderApi\Robust.LoaderApi\Robust.LoaderApi.csproj", "{1FAE651D-29D8-437A-9864-47CE0D180016}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Generators", "Content.Generators\Content.Generators.csproj", "{80C77761-B91C-486A-9E3B-98C700B9B3FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -154,6 +156,10 @@ Global
 		{1FAE651D-29D8-437A-9864-47CE0D180016}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1FAE651D-29D8-437A-9864-47CE0D180016}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1FAE651D-29D8-437A-9864-47CE0D180016}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80C77761-B91C-486A-9E3B-98C700B9B3FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80C77761-B91C-486A-9E3B-98C700B9B3FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80C77761-B91C-486A-9E3B-98C700B9B3FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80C77761-B91C-486A-9E3B-98C700B9B3FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
