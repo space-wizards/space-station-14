@@ -59,38 +59,6 @@ namespace Content.Client.UserInterface
 
             foreach (var job in _prototypeManager.EnumeratePrototypes<JobPrototype>().OrderBy(j => j.Name))
             {
-                var jobButton = new JobButton
-                {
-                    JobId = job.ID
-                };
-
-                var jobSelector = new HBoxContainer
-                {
-                    SizeFlagsHorizontal = SizeFlags.FillExpand
-                };
-
-                var icon = new TextureRect
-                {
-                    TextureScale = (2, 2),
-                    Stretch = TextureRect.StretchMode.KeepCentered
-                };
-
-                if (job.Icon != null)
-                {
-                    var specifier = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/job_icons.rsi"), job.Icon);
-                    icon.Texture = specifier.Frame0();
-                }
-                jobSelector.AddChild(icon);
-
-                var jobLabel = new Label
-                {
-                    Text = job.Name
-                };
-
-                jobSelector.AddChild(jobLabel);
-
-                jobButton.AddChild(jobSelector);
-
                 foreach (var department in job.Departments)
                 {
                     if (!_jobCategories.TryGetValue(department, out var category))
@@ -126,22 +94,54 @@ namespace Content.Client.UserInterface
                         });
 
                         _jobCategories[department] = category;
+                        vBox.AddChild(category);
                     }
 
+                    var jobButton = new JobButton
+                    {
+                        JobId = job.ID
+                    };
+
+                    var jobSelector = new HBoxContainer
+                    {
+                        SizeFlagsHorizontal = SizeFlags.FillExpand
+                    };
+
+                    var icon = new TextureRect
+                    {
+                        TextureScale = (2, 2),
+                        Stretch = TextureRect.StretchMode.KeepCentered
+                    };
+
+                    if (job.Icon != null)
+                    {
+                        var specifier = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/job_icons.rsi"), job.Icon);
+                        icon.Texture = specifier.Frame0();
+                    }
+
+                    jobSelector.AddChild(icon);
+
+                    var jobLabel = new Label
+                    {
+                        Text = job.Name
+                    };
+
+                    jobSelector.AddChild(jobLabel);
+                    jobButton.AddChild(jobSelector);
                     category.AddChild(jobButton);
+
+                    jobButton.OnPressed += _ =>
+                    {
+                        SelectedId?.Invoke(jobButton.JobId);
+                    };
+
+                    if (!_gameTicker.JobsAvailable.Contains(job.ID))
+                    {
+                        jobButton.Disabled = true;
+                    }
+
+                    _jobButtons[job.ID] = jobButton;
                 }
-
-                jobButton.OnPressed += _ =>
-                {
-                    SelectedId?.Invoke(jobButton.JobId);
-                };
-
-                if (!_gameTicker.JobsAvailable.Contains(job.ID))
-                {
-                    jobButton.Disabled = true;
-                }
-
-                _jobButtons[job.ID] = jobButton;
             }
 
             SelectedId += jobId =>
