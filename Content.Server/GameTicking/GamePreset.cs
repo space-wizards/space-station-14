@@ -28,7 +28,7 @@ namespace Content.Server.GameTicking
         public virtual string ModeTitle => "Sandbox";
         public virtual string Description => "Secret!";
         public virtual bool DisallowLateJoin => false;
-        public Dictionary<NetUserId, HumanoidCharacterProfile> readyProfiles;
+        public Dictionary<NetUserId, HumanoidCharacterProfile> ReadyProfiles = new();
 
         public virtual void OnGameStarted() { }
 

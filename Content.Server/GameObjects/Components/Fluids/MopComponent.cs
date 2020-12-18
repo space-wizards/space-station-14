@@ -9,6 +9,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
+using System.Threading.Tasks;
 
 namespace Content.Server.GameObjects.Components.Fluids
 {
@@ -61,7 +62,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             Owner.EnsureComponentWarn(out SolutionContainerComponent _);
         }
 
-        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (!Owner.TryGetComponent(out SolutionContainerComponent? contents)) return;
             if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return;

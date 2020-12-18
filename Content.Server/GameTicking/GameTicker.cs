@@ -1049,7 +1049,7 @@ The current game mode is: [color=white]{0}[/color].
         private GamePreset MakeGamePreset(Dictionary<NetUserId, HumanoidCharacterProfile> readyProfiles)
         {
             var preset = _dynamicTypeFactory.CreateInstance<GamePreset>(_presetType ?? typeof(PresetSandbox));
-            preset.readyProfiles = readyProfiles;
+            preset.ReadyProfiles = readyProfiles;
             return preset;
         }
 

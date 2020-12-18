@@ -40,11 +40,7 @@ SHARED_IGNORED_RESOURCES = {
     ".directory",
     ".DS_Store"
 }
-CLIENT_IGNORED_RESOURCES = {
-    "Maps",
-    "emotes.xml",
-    "Groups"
-}
+
 SERVER_IGNORED_RESOURCES = {
     "Textures",
     "Fonts",
@@ -54,21 +50,11 @@ SERVER_IGNORED_RESOURCES = {
     "Shaders",
 }
 
-LAUNCHER_RESOURCES = {
-    "Nano",
-    "Fonts",
-}
-
 # Assembly names to copy from content.
 # PDBs are included if available, .dll/.pdb appended automatically.
 SERVER_CONTENT_ASSEMBLIES = [
     "Content.Server.Database",
     "Content.Server",
-    "Content.Shared"
-]
-
-CLIENT_CONTENT_ASSEMBLIES = [
-    "Content.Client",
     "Content.Shared"
 ]
 
@@ -97,7 +83,7 @@ def main() -> None:
     skip_build = args.skip_build
 
     if not platforms:
-        platforms = [PLATFORM_WINDOWS, PLATFORM_MACOS, PLATFORM_LINUX]
+        platforms = [PLATFORM_WINDOWS, PLATFORM_MACOS, PLATFORM_LINUX, PLATFORM_LINUX_ARM64]
 
     if os.path.exists("release"):
         print(Fore.BLUE + Style.DIM +
@@ -145,7 +131,7 @@ def build_windows(skip_build: bool) -> None:
         subprocess.run([
             "dotnet",
             "build",
-            "SpaceStation14.sln",
+            p("Content.Server", "Content.Server.csproj"),
             "-c", "Release",
             "--nologo",
             "/v:m",
@@ -156,24 +142,12 @@ def build_windows(skip_build: bool) -> None:
 
         publish_client_server("win-x64", "Windows")
 
-    print(Fore.GREEN + "Packaging Windows x64 client..." + Style.RESET_ALL)
-
-    client_zip = zipfile.ZipFile(
-        p("release", "SS14.Client_Windows_x64.zip"), "w",
-        compression=zipfile.ZIP_DEFLATED)
-
-    copy_dir_into_zip(p("RobustToolbox", "bin", "Client", "win-x64", "publish"), "", client_zip)
-    copy_resources("Resources", client_zip, server=False)
-    copy_content_assemblies(p("Resources", "Assemblies"), client_zip, server=False)
-    # Cool we're done.
-    client_zip.close()
-
     print(Fore.GREEN + "Packaging Windows x64 server..." + Style.RESET_ALL)
     server_zip = zipfile.ZipFile(p("release", "SS14.Server_Windows_x64.zip"), "w",
                                  compression=zipfile.ZIP_DEFLATED)
     copy_dir_into_zip(p("RobustToolbox", "bin", "Server", "win-x64", "publish"), "", server_zip)
-    copy_resources(p("Resources"), server_zip, server=True)
-    copy_content_assemblies(p("Resources", "Assemblies"), server_zip, server=True)
+    copy_resources(p("Resources"), server_zip)
+    copy_content_assemblies(p("Resources", "Assemblies"), server_zip)
     server_zip.close()
 
 def build_macos(skip_build: bool) -> None:
@@ -183,7 +157,7 @@ def build_macos(skip_build: bool) -> None:
         subprocess.run([
             "dotnet",
             "build",
-            "SpaceStation14.sln",
+            p("Content.Server", "Content.Server.csproj"),
             "-c", "Release",
             "--nologo",
             "/v:m",
@@ -194,24 +168,12 @@ def build_macos(skip_build: bool) -> None:
 
         publish_client_server("osx-x64", "MacOS")
 
-    print(Fore.GREEN + "Packaging macOS x64 client..." + Style.RESET_ALL)
-    # Client has to go in an app bundle.
-    client_zip = zipfile.ZipFile(p("release", "SS14.Client_macOS_x64.zip"), "a",
-                                 compression=zipfile.ZIP_DEFLATED)
-
-    contents = p("Space Station 14.app", "Contents", "Resources")
-    copy_dir_into_zip(p("BuildFiles", "Mac", "Space Station 14.app"), "Space Station 14.app", client_zip)
-    copy_dir_into_zip(p("RobustToolbox", "bin", "Client", "osx-x64", "publish"), contents, client_zip)
-    copy_resources(p(contents, "Resources"), client_zip, server=False)
-    copy_content_assemblies(p(contents, "Resources", "Assemblies"), client_zip, server=False)
-    client_zip.close()
-
     print(Fore.GREEN + "Packaging macOS x64 server..." + Style.RESET_ALL)
     server_zip = zipfile.ZipFile(p("release", "SS14.Server_macOS_x64.zip"), "w",
                                  compression=zipfile.ZIP_DEFLATED)
     copy_dir_into_zip(p("RobustToolbox", "bin", "Server", "osx-x64", "publish"), "", server_zip)
-    copy_resources(p("Resources"), server_zip, server=True)
-    copy_content_assemblies(p("Resources", "Assemblies"), server_zip, server=True)
+    copy_resources(p("Resources"), server_zip)
+    copy_content_assemblies(p("Resources", "Assemblies"), server_zip)
     server_zip.close()
 
 
@@ -223,7 +185,7 @@ def build_linux(skip_build: bool) -> None:
         subprocess.run([
             "dotnet",
             "build",
-            "SpaceStation14.sln",
+            p("Content.Server", "Content.Server.csproj"),
             "-c", "Release",
             "--nologo",
             "/v:m",
@@ -234,24 +196,12 @@ def build_linux(skip_build: bool) -> None:
 
         publish_client_server("linux-x64", "Linux")
 
-    print(Fore.GREEN + "Packaging Linux x64 client..." + Style.RESET_ALL)
-
-    client_zip = zipfile.ZipFile(
-        p("release", "SS14.Client_Linux_x64.zip"), "w",
-        compression=zipfile.ZIP_DEFLATED)
-
-    copy_dir_into_zip(p("RobustToolbox", "bin", "Client", "linux-x64", "publish"), "", client_zip)
-    copy_resources("Resources", client_zip, server=False)
-    copy_content_assemblies(p("Resources", "Assemblies"), client_zip, server=False)
-    # Cool we're done.
-    client_zip.close()
-
     print(Fore.GREEN + "Packaging Linux x64 server..." + Style.RESET_ALL)
     server_zip = zipfile.ZipFile(p("release", "SS14.Server_Linux_x64.zip"), "w",
                                  compression=zipfile.ZIP_DEFLATED)
     copy_dir_into_zip(p("RobustToolbox", "bin", "Server", "linux-x64", "publish"), "", server_zip)
-    copy_resources(p("Resources"), server_zip, server=True)
-    copy_content_assemblies(p("Resources", "Assemblies"), server_zip, server=True)
+    copy_resources(p("Resources"), server_zip)
+    copy_content_assemblies(p("Resources", "Assemblies"), server_zip)
     server_zip.close()
 
 
@@ -263,7 +213,7 @@ def build_linux_arm64(skip_build: bool) -> None:
         subprocess.run([
             "dotnet",
             "build",
-            "SpaceStation14.sln",
+            p("Content.Server", "Content.Server.csproj"),
             "-c", "Release",
             "--nologo",
             "/v:m",
@@ -272,18 +222,18 @@ def build_linux_arm64(skip_build: bool) -> None:
             "/p:FullRelease=True"
         ], check=True)
 
-        publish_client_server("linux-arm64", "Linux", True)
+        publish_client_server("linux-arm64", "Linux")
 
     print(Fore.GREEN + "Packaging Linux ARM64 server..." + Style.RESET_ALL)
     server_zip = zipfile.ZipFile(p("release", "SS14.Server_Linux_ARM64.zip"), "w",
                                  compression=zipfile.ZIP_DEFLATED)
     copy_dir_into_zip(p("RobustToolbox", "bin", "Server", "linux-arm64", "publish"), "", server_zip)
-    copy_resources(p("Resources"), server_zip, server=True)
-    copy_content_assemblies(p("Resources", "Assemblies"), server_zip, server=True)
+    copy_resources(p("Resources"), server_zip)
+    copy_content_assemblies(p("Resources", "Assemblies"), server_zip)
     server_zip.close()
 
 
-def publish_client_server(runtime: str, target_os: str, actually_only_server: bool = False) -> None:
+def publish_client_server(runtime: str, target_os: str) -> None:
     # Runs dotnet publish on client and server.
     base = [
         "dotnet", "publish",
@@ -294,19 +244,12 @@ def publish_client_server(runtime: str, target_os: str, actually_only_server: bo
         "/p:FullRelease=True"
     ]
 
-    if not actually_only_server:
-        subprocess.run(base + ["RobustToolbox/Robust.Client/Robust.Client.csproj"], check=True)
-
     subprocess.run(base + ["RobustToolbox/Robust.Server/Robust.Server.csproj"], check=True)
 
 
-def copy_resources(target, zipf, server):
+def copy_resources(target, zipf):
     # Content repo goes FIRST so that it won't override engine files as that's forbidden.
-    ignore_set = SHARED_IGNORED_RESOURCES
-    if server:
-        ignore_set = ignore_set.union(SERVER_IGNORED_RESOURCES)
-    else:
-        ignore_set = ignore_set.union(CLIENT_IGNORED_RESOURCES)
+    ignore_set = SHARED_IGNORED_RESOURCES.union(SERVER_IGNORED_RESOURCES)
 
     do_resource_copy(target, "Resources", zipf, ignore_set)
     do_resource_copy(target, p("RobustToolbox", "Resources"), zipf, ignore_set)
@@ -367,22 +310,17 @@ def copy_dir_into_zip(directory, basepath, zipf):
             zipf.write(filepath, zippath)
 
 
-def copy_content_assemblies(target, zipf, server):
+def copy_content_assemblies(target, zipf):
     files = []
-    if server:
-        source_dir = p("bin", "Content.Server")
-        base_assemblies = SERVER_CONTENT_ASSEMBLIES
+    source_dir = p("bin", "Content.Server")
+    base_assemblies = SERVER_CONTENT_ASSEMBLIES
 
-        # Additional assemblies that need to be copied such as EFCore.
-        for filename in os.listdir(source_dir):
-            for extra_assembly_start in SERVER_EXTRA_ASSEMBLIES:
-                if filename.startswith(extra_assembly_start):
-                    files.append(filename)
-                    break
-
-    else:
-        source_dir = p("bin", "Content.Client")
-        base_assemblies = CLIENT_CONTENT_ASSEMBLIES
+    # Additional assemblies that need to be copied such as EFCore.
+    for filename in os.listdir(source_dir):
+        for extra_assembly_start in SERVER_EXTRA_ASSEMBLIES:
+            if filename.startswith(extra_assembly_start):
+                files.append(filename)
+                break
 
     # Include content assemblies.
     for asm in base_assemblies:

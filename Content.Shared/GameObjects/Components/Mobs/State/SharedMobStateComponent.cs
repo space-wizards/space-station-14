@@ -269,6 +269,7 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
             var message = new MobStateChangedMessage(this, old, state);
 
             SendMessage(message);
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
         }
 
         bool IActionBlocker.CanInteract()

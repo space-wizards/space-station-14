@@ -8,9 +8,12 @@
   description: A conveyor belt, commonly used to transport large numbers of items elsewhere quite quickly.
   objectType: Structure
   placementMode: SnapgridCenter
+  canBuildInImpassable: false
   icon:
     sprite: Constructible/Power/conveyor.rsi
     state: conveyor_stopped_cw
+  conditions:
+    - !type:TileNotBlocked {}
 
 - type: construction
   name: two-way lever
@@ -21,6 +24,9 @@
   category: Structures
   description: A lever to control machines. It has 3 modes.
   objectType: Structure
+  canBuildInImpassable: false
   icon:
     sprite: Constructible/Power/conveyor.rsi
     state: switch-off
+  conditions:
+    - !type:TileNotBlocked {}
