@@ -46,7 +46,7 @@ namespace Content.Client.UserInterface
 
         private readonly List<JobPrioritySelector> _jobPriorities;
         private readonly OptionButton _preferenceUnavailableButton;
-        private readonly Dictionary<string, Control> _jobCategories;
+        private readonly Dictionary<string, VBoxContainer> _jobCategories;
 
         private readonly List<AntagPreferenceSelector> _antagPreferences;
 
@@ -316,7 +316,7 @@ namespace Content.Client.UserInterface
                 };
 
                 _jobPriorities = new List<JobPrioritySelector>();
-                _jobCategories = new Dictionary<string, Control>();
+                _jobCategories = new Dictionary<string, VBoxContainer>();
 
                 var first = true;
 
