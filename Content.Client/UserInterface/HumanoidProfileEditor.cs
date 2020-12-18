@@ -334,12 +334,15 @@ namespace Content.Client.UserInterface
 
                             if (first)
                             {
+                                first = false;
+                            }
+                            else
+                            {
                                 category.AddChild(new Control
                                 {
                                     CustomMinimumSize = new Vector2(0, 23),
                                 });
 
-                                first = false;
                             }
 
                             category.AddChild(new PanelContainer
@@ -367,12 +370,18 @@ namespace Content.Client.UserInterface
                             Profile = Profile.WithJobPriority(job.ID, priority);
                             IsDirty = true;
 
-                            if (priority == JobPriority.High)
+                            foreach (var jobSelector in _jobPriorities)
                             {
-                                // Lower any other high priorities to medium.
-                                foreach (var jobSelector in _jobPriorities)
+                                // Sync other selectors with the same job in case of multiple department jobs
+                                if (jobSelector.Job == selector.Job)
                                 {
-                                    if (jobSelector != selector && jobSelector.Priority == JobPriority.High)
+                                    jobSelector.Priority = priority;
+                                }
+
+                                // Lower any other high priorities to medium.
+                                if (priority == JobPriority.High)
+                                {
+                                    if (jobSelector.Job != selector.Job && jobSelector.Priority == JobPriority.High)
                                     {
                                         jobSelector.Priority = JobPriority.Medium;
                                         Profile = Profile.WithJobPriority(jobSelector.Job.ID, JobPriority.Medium);
