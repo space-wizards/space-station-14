@@ -23,6 +23,67 @@ namespace Content.Shared.GameObjects.EntitySystems
         }
 
         /// <summary>
+        ///     Checks if a solution can undergo a specified reaction.
+        /// </summary>
+        /// <param name="solution">The solution to check.</param>
+        /// <param name="reaction">The reaction to check.</param>
+        /// <param name="lowestUnitReactions">How many times this reaction can occur.</param>
+        /// <returns></returns>
+        private static bool CanReact(Solution solution, ReactionPrototype reaction, out ReagentUnit lowestUnitReactions)
+        {
+            lowestUnitReactions = ReagentUnit.MaxValue;
+
+            foreach (var reactantData in reaction.Reactants)
+            {
+                var reactantName = reactantData.Key;
+                var reactantCoefficient = reactantData.Value.Amount;
+
+                if (!solution.ContainsReagent(reactantName, out var reactantQuantity))
+                    return false;
+
+                var unitReactions = reactantQuantity / reactantCoefficient;
+
+                if (unitReactions < lowestUnitReactions)
+                {
+                    lowestUnitReactions = unitReactions;
+                }
+            }
+            return true;
+        }
+
+        /// <summary>
+        ///     Perform a reaction on a solution. This assumes all reaction criteria are met.
+        ///     Removes the reactants from the solution, then returns a solution with all products.
+        /// </summary>
+        private static Solution PerformReaction(Solution solution, IEntity owner, ReactionPrototype reaction, ReagentUnit unitReactions)
+        {
+            //Remove reactants
+            foreach (var reactant in reaction.Reactants)
+            {
+                if (!reactant.Value.Catalyst)
+                {
+                    var amountToRemove = unitReactions * reactant.Value.Amount;
+                    solution.RemoveReagent(reactant.Key, amountToRemove);
+                }
+            }
+
+            //Create products
+            var products = new Solution();
+            foreach (var product in reaction.Products)
+            {
+                products.AddReagent(product.Key, product.Value * unitReactions);
+            }
+
+            // Trigger reaction effects
+            foreach (var effect in reaction.Effects)
+            {
+                effect.React(owner, unitReactions.Double());
+            }
+
+            return products;
+        }
+
+        /// <summary>
         ///     Performs all chemical reactions that can be run on a solution.
         ///     Removes the reactants from the solution, then returns a solution with all products.
         ///     WARNING: Does not trigger reactions between solution and new products.
@@ -33,9 +94,9 @@ namespace Content.Shared.GameObjects.EntitySystems
             var overallProducts = new Solution();
             foreach (var reaction in _reactions)
             {
-                if (solution.CanReact(reaction, out var unitReactions))
+                if (CanReact(solution, reaction, out var unitReactions))
                 {
-                    var reactionProducts = solution.PerformReaction(reaction, unitReactions, owner);
+                    var reactionProducts = PerformReaction(solution, owner, reaction, unitReactions);
                     overallProducts.AddSolution(reactionProducts);
                     break;
                 }
