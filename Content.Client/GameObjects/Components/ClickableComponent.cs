@@ -46,7 +46,7 @@ namespace Content.Client.GameObjects.Components
 
             var localPos = Owner.Transform.InvWorldMatrix.Transform(worldPos);
 
-            var worldRotation = Owner.Transform.WorldRotation;
+            var worldRotation = new Angle(Owner.Transform.WorldRotation - sprite.Rotation);
             if (sprite.Directional)
             {
                 localPos = new Angle(worldRotation).RotateVec(localPos);
