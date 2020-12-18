@@ -1,4 +1,5 @@
 using System;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using static Content.Shared.GameObjects.Components.Medical.SharedMedicalScannerComponent;
@@ -6,16 +7,12 @@ using static Content.Shared.GameObjects.Components.Medical.SharedMedicalScannerC
 
 namespace Content.Client.GameObjects.Components.MedicalScanner
 {
+    [UsedImplicitly]
     public class MedicalScannerVisualizer : AppearanceVisualizer
     {
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
-
-            if (component.Owner.Deleted)
-            {
-                return;
-            }
 
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
             if (!component.TryGetData(MedicalScannerVisuals.Status, out MedicalScannerStatus status)) return;
@@ -53,7 +50,7 @@ namespace Content.Client.GameObjects.Components.MedicalScanner
             }
         }
 
-        public enum MedicalScannerVisualLayers
+        public enum MedicalScannerVisualLayers : byte
         {
             Machine,
             Terminal,

@@ -56,9 +56,12 @@
   - type: Occluder
   - type: SnapGrid
     offset: Center
-  - type: Destructible
-    deadThreshold: 500
+  - type: Damageable
     resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+      500:
+        Acts: ["Destruction"]
   placement:
     mode: SnapgridCenter
 
@@ -73,7 +76,6 @@
     enabled: false
   - type: Sprite
     sprite: Constructible/Structures/Doors/airlock_glass.rsi
-
 
 - type: entity
   parent: Airlock

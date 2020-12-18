@@ -71,7 +71,7 @@
   name: space villain arcade computer circuit board
   components:
     - type: ComputerBoard
-      prototype: Arcade
+      prototype: SpaceVillainArcade
 
 - type: entity
   id: BlockGameArcadeComputerCircuitboard

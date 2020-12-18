@@ -15,7 +15,7 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
 {
     public sealed class PickUpMeleeWeapon : UtilityAction
     {
-        private IEntity _entity;
+        private readonly IEntity _entity;
 
         public PickUpMeleeWeapon(IEntity owner, IEntity entity, float weight) : base(owner)
         {
@@ -34,7 +34,7 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
             context.GetState<TargetEntityState>().SetValue(_entity);
             context.GetState<WeaponEntityState>().SetValue(_entity);
         }
-        
+
         protected override IReadOnlyCollection<Func<float>> GetConsiderations(Blackboard context)
         {
             var considerationsManager = IoCManager.Resolve<ConsiderationsManager>();

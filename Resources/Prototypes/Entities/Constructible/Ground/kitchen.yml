@@ -2,6 +2,8 @@
   id: KitchenSpike
   name: meat spike
   description: A spike for collecting meat from animals.
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -18,6 +20,9 @@
     state: spike
   - type: Anchorable
   - type: Pullable
+  - type: Damageable
   - type: Destructible
-    deadThreshold: 50
+    thresholds:
+      50:
+        Acts: ["Destruction"]
   - type: KitchenSpike

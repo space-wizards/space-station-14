@@ -2,6 +2,8 @@
   id: chem_master
   name: ChemMaster 4000
   description: An industrial grade chemical manipulator with pill and bottle production included.
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Sprite
     sprite: Constructible/Power/mixer.rsi
@@ -30,9 +32,15 @@
       - VaultImpassable
   - type: SnapGrid
     offset: Center
+  - type: Damageable
   - type: Destructible
-    deadThreshold: 50
-    spawnOnDestroy: chem_master_broken
+    thresholds:
+      50:
+        Spawn:
+          chem_master_broken:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]
   - type: UserInterface
     interfaces:
     - key: enum.ChemMasterUiKey.Key
@@ -43,6 +51,7 @@
   id: chem_master_broken
   name: ChemMaster 4000 [Broken]
   description: A broken industrial grade chemical manipulator.
+  abstract: true
   components:
   - type: Sprite
     sprite: Constructible/Power/mixer.rsi
@@ -69,9 +78,15 @@
       - VaultImpassable
   - type: SnapGrid
     offset: Center
+  - type: Damageable
   - type: Destructible
-    deadThreshold: 25
-    spawnOnDestroy: SteelSheet1
+    thresholds:
+      25:
+        Spawn:
+          SteelSheet1:
+            Min: 1
+            Max: 1
+        Acts: ["Destruction"]
   - type: UserInterface
     interfaces:
     - key: enum.ChemMasterUiKey.Key

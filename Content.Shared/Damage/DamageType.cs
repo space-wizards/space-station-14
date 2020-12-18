@@ -38,8 +38,7 @@ namespace Content.Shared.Damage
                 {DamageType.Radiation, DamageClass.Toxin},
                 {DamageType.Asphyxiation, DamageClass.Airloss},
                 {DamageType.Bloodloss, DamageClass.Airloss},
-                {DamageType.Cellular, DamageClass.Genetic }
-
+                {DamageType.Cellular, DamageClass.Genetic}
             }.ToImmutableDictionary();
 
         public static DamageClass ToClass(this DamageType type)
@@ -59,14 +58,16 @@ namespace Content.Shared.Damage
             var classes = DamageClassExtensions.ToDictionary();
 
             foreach (var @class in classes.Keys.ToList())
-            foreach (var type in @class.ToTypes())
             {
-                if (!types.TryGetValue(type, out var damage))
+                foreach (var type in @class.ToTypes())
                 {
-                    continue;
-                }
+                    if (!types.TryGetValue(type, out var damage))
+                    {
+                        continue;
+                    }
 
-                classes[@class] += damage;
+                    classes[@class] += damage;
+                }
             }
 
             return classes;

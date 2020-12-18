@@ -19,7 +19,7 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
 {
     public sealed class UnarmedAttackEntity : UtilityAction
     {
-        private IEntity _entity;
+        private readonly IEntity _entity;
 
         public UnarmedAttackEntity(IEntity owner, IEntity entity, float weight) : base(owner)
         {
@@ -44,7 +44,7 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
             ActionOperators = new Queue<AiOperator>(new AiOperator[]
             {
                 moveOperator,
-                new UnarmedCombatOperator(Owner, _entity), 
+                new UnarmedCombatOperator(Owner, _entity),
             });
         }
 
@@ -60,7 +60,7 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
         protected override IReadOnlyCollection<Func<float>> GetConsiderations(Blackboard context)
         {
             var considerationsManager = IoCManager.Resolve<ConsiderationsManager>();
-            
+
             return new[]
             {
                 considerationsManager.Get<TargetIsDeadCon>()

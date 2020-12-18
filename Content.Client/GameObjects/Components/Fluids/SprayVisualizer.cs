@@ -1,4 +1,5 @@
 ﻿using Content.Shared.GameObjects.Components.Fluids;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Utility;
@@ -6,6 +7,7 @@ using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Fluids
 {
+    [UsedImplicitly]
     public class SprayVisualizer : AppearanceVisualizer
     {
         private string _safetyOnState;
@@ -44,7 +46,7 @@ namespace Content.Client.GameObjects.Components.Fluids
         }
     }
 
-    public enum SprayVisualLayers
+    public enum SprayVisualLayers : byte
     {
         Base
     }

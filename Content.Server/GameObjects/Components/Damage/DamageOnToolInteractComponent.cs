@@ -17,7 +17,7 @@ namespace Content.Server.GameObjects.Components.Damage
 
         /* Set in YAML */
         protected int Damage;
-        private List<ToolQuality> _tools = new List<ToolQuality>();
+        private List<ToolQuality> _tools = new();
 
         public override void ExposeData(ObjectSerializer serializer)
         {

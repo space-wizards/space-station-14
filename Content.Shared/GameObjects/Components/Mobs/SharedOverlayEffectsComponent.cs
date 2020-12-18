@@ -27,7 +27,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         public string ID { get; }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public List<OverlayParameter> Parameters { get; } = new List<OverlayParameter>();
+        public List<OverlayParameter> Parameters { get; } = new();
 
         public OverlayContainer([NotNull] string id)
         {

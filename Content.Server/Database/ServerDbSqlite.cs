@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net;
@@ -22,7 +23,7 @@ namespace Content.Server.Database
         // For SQLite we use a single DB context via SQLite.
         // This doesn't allow concurrent access so that's what the semaphore is for.
         // That said, this is bloody SQLite, I don't even think EFCore bothers to truly async it.
-        private readonly SemaphoreSlim _prefsSemaphore = new SemaphoreSlim(1, 1);
+        private readonly SemaphoreSlim _prefsSemaphore = new(1, 1);
 
         private readonly Task _dbReadyTask;
         private readonly SqliteServerDbContext _prefsCtx;
@@ -105,6 +106,44 @@ namespace Content.Server.Database
             await db.SqliteDbContext.SaveChangesAsync();
         }
 
+        public override async Task<PlayerRecord?> GetPlayerRecordByUserName(string userName, CancellationToken cancel)
+        {
+            await using var db = await GetDbImpl();
+
+            // Sort by descending last seen time.
+            // So if due to account renames we have two people with the same username in the DB,
+            // the most recent one is picked.
+            var record = await db.SqliteDbContext.Player
+                .OrderByDescending(p => p.LastSeenTime)
+                .FirstOrDefaultAsync(p => p.LastSeenUserName == userName, cancel);
+
+            return MakePlayerRecord(record);
+        }
+
+        public override async Task<PlayerRecord?> GetPlayerRecordByUserId(NetUserId userId, CancellationToken cancel)
+        {
+            await using var db = await GetDbImpl();
+
+            var record = await db.SqliteDbContext.Player
+                .SingleOrDefaultAsync(p => p.UserId == userId.UserId, cancel);
+
+            return MakePlayerRecord(record);
+        }
+
+        private static PlayerRecord? MakePlayerRecord(SqlitePlayer? record)
+        {
+            if (record == null)
+            {
+                return null;
+            }
+
+            return new PlayerRecord(
+                new NetUserId(record.UserId),
+                new DateTimeOffset(record.FirstSeenTime, TimeSpan.Zero),
+                record.LastSeenUserName,
+                new DateTimeOffset(record.LastSeenTime, TimeSpan.Zero),
+                IPAddress.Parse(record.LastSeenAddress));
+        }
         private static ServerBanDef? ConvertBan(SqliteServerBan? ban)
         {
             if (ban == null)
@@ -156,6 +195,21 @@ namespace Content.Server.Database
             await db.SqliteDbContext.SaveChangesAsync();
         }
 
+        public override async Task<((Admin, string? lastUserName)[] admins, AdminRank[])> GetAllAdminAndRanksAsync(
+            CancellationToken cancel)
+        {
+            await using var db = await GetDbImpl();
+
+            var admins = await db.SqliteDbContext.Admin
+                .Include(a => a.Flags)
+                .GroupJoin(db.SqliteDbContext.Player, a => a.UserId, p => p.UserId, (a, grouping) => new {a, grouping})
+                .SelectMany(t => t.grouping.DefaultIfEmpty(), (t, p) => new {t.a, p!.LastSeenUserName})
+                .ToArrayAsync(cancel);
+
+            var adminRanks = await db.DbContext.AdminRank.Include(a => a.Flags).ToArrayAsync(cancel);
+
+            return (admins.Select(p => (p.a, p.LastSeenUserName)).ToArray(), adminRanks)!;
+        }
 
         private async Task<DbGuardImpl> GetDbImpl()
         {

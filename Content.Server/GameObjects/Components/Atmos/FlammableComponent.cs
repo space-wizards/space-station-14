@@ -4,6 +4,7 @@ using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Temperature;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry;
 using Content.Shared.Damage;
@@ -16,6 +17,7 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -29,10 +31,8 @@ namespace Content.Server.GameObjects.Components.Atmos
     [RegisterComponent]
     public class FlammableComponent : SharedFlammableComponent, ICollideBehavior, IFireAct, IReagentReaction
     {
-        [Dependency] private IEntityManager _entityManager = default!;
-
         private bool _resisting = false;
-        private readonly List<EntityUid> _collided = new List<EntityUid>();
+        private readonly List<EntityUid> _collided = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool OnFire { get; private set; }
@@ -92,15 +92,15 @@ namespace Content.Server.GameObjects.Components.Atmos
                 FireStacks = MathF.Min(0, FireStacks + 1);
             }
 
-            Owner.TryGetComponent(out ServerStatusEffectsComponent status);
+            Owner.TryGetComponent(out ServerAlertsComponent status);
 
             if (!OnFire)
             {
-                status?.RemoveStatusEffect(StatusEffect.Fire);
+                status?.ClearAlert(AlertType.Fire);
                 return;
             }
 
-            status?.ChangeStatusEffect(StatusEffect.Fire, "/Textures/Interface/StatusEffects/Fire/fire.png", null);
+            status?.ShowAlert(AlertType.Fire);
 
             if (FireStacks > 0)
             {
@@ -135,13 +135,13 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             foreach (var uid in _collided.ToArray())
             {
-                if (!uid.IsValid() || !_entityManager.EntityExists(uid))
+                if (!uid.IsValid() || !Owner.EntityManager.EntityExists(uid))
                 {
                     _collided.Remove(uid);
                     continue;
                 }
 
-                var entity = _entityManager.GetEntity(uid);
+                var entity = Owner.EntityManager.GetEntity(uid);
                 var physics = Owner.GetComponent<IPhysicsComponent>();
                 var otherPhysics = entity.GetComponent<IPhysicsComponent>();
 
@@ -205,7 +205,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             Owner.PopupMessage(Loc.GetString("You stop, drop, and roll!"));
             stunnable.Paralyze(2f);
 
-            Timer.Spawn(2000, () =>
+            Owner.SpawnTimer(2000, () =>
             {
                 _resisting = false;
                 FireStacks -= 2f;

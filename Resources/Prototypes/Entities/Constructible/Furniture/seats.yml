@@ -3,19 +3,39 @@
   id: SeatBase
   abstract: true
   description: You sit in this. Either by will or force.
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
+    anchored: true
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5,-0.25,0.5,0.25"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     sprite: Constructible/Misc/furniture.rsi
   - type: Strap
     position: Stand
   - type: Anchorable
   - type: Pullable
-  - type: Destructible
-    deadThreshold: 50
+  - type: Damageable
     resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+      50:
+        Acts: ["Destruction"]
 
 - type: entity
   name: chair
@@ -68,6 +88,7 @@
   parent: SeatBase
   components:
   - type: Rotatable
+    rotateWhileAnchored: true
   - type: Sprite
     state: officechair_white
   - type: Physics

@@ -1,5 +1,6 @@
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.Utility;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
@@ -8,6 +9,7 @@ using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Power
 {
+    [UsedImplicitly]
     public class PowerCellVisualizer : AppearanceVisualizer
     {
         private string _prefix;
@@ -34,13 +36,14 @@ namespace Content.Client.GameObjects.Components.Power
             base.OnChangeData(component);
 
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
-            if (component.TryGetData(PowerCellVisuals.ChargeLevel, out float fraction))
+            if (component.TryGetData(PowerCellVisuals.ChargeLevel, out byte level))
             {
-                sprite.LayerSetState(Layers.Charge, $"{_prefix}_{ContentHelpers.RoundToLevels(fraction, 1, 5) * 25}");
+                var adjustedLevel = level * 25;
+                sprite.LayerSetState(Layers.Charge, $"{_prefix}_{adjustedLevel}");
             }
         }
 
-        private enum Layers
+        private enum Layers : byte
         {
             Charge
         }

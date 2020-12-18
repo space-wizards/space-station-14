@@ -1,13 +1,12 @@
-﻿#nullable enable
-using System.Collections.Generic;
-using System.Linq;
+#nullable enable
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.Components.MachineLinking;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Conveyor;
 using Content.Shared.GameObjects.Components.Interactable;
+using Content.Shared.GameObjects.Components.MachineLinking;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
 using Content.Shared.Utility;
@@ -17,7 +16,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Map;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
@@ -26,16 +24,16 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Conveyor
 {
     [RegisterComponent]
-    public class ConveyorComponent : Component, IInteractUsing
+    public class ConveyorComponent : Component, ISignalReceiver<TwoWayLeverSignal>, ISignalReceiver<bool>
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-
         public override string Name => "Conveyor";
+
+        [ViewVariables] private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 
         /// <summary>
         ///     The angle to move entities by in relation to the owner's rotation.
         /// </summary>
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         private Angle _angle;
 
         /// <summary>
@@ -45,7 +43,6 @@ namespace Content.Server.GameObjects.Components.Conveyor
         private float _speed;
 
         private ConveyorState _state;
-
         /// <summary>
         ///     The current state of this conveyor
         /// </summary>
@@ -56,17 +53,47 @@ namespace Content.Server.GameObjects.Components.Conveyor
             set
             {
                 _state = value;
-
-                if (!Owner.TryGetComponent(out AppearanceComponent? appearance))
-                {
-                    return;
-                }
-
-                appearance.SetData(ConveyorVisuals.State, value);
+                UpdateAppearance();
             }
         }
 
-        private ConveyorGroup? _group = new ConveyorGroup();
+        public override void OnAdd()
+        {
+            base.OnAdd();
+            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
+            {
+                receiver.OnPowerStateChanged += OnPowerChanged;
+            }
+        }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
+            {
+                receiver.OnPowerStateChanged -= OnPowerChanged;
+            }
+        }
+
+        private void OnPowerChanged(object? sender, PowerStateEventArgs e)
+        {
+            UpdateAppearance();
+        }
+
+        private void UpdateAppearance()
+        {
+            if (Owner.TryGetComponent<AppearanceComponent>(out var appearance))
+            {
+                if (Powered)
+                {
+                    appearance.SetData(ConveyorVisuals.State, _state);
+                }
+                else
+                {
+                    appearance.SetData(ConveyorVisuals.State, ConveyorState.Off);
+                }
+            }
+        }
 
         /// <summary>
         ///     Calculates the angle in which entities on top of this conveyor
@@ -127,7 +154,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
                 return false;
             }
 
-            if (ContainerHelpers.IsInContainer(entity))
+            if (entity.IsInContainer())
             {
                 return false;
             }
@@ -142,7 +169,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
                 return;
             }
 
-            var intersecting = _entityManager.GetEntitiesIntersecting(Owner, true);
+            var intersecting = Owner.EntityManager.GetEntitiesIntersecting(Owner, true);
             var direction = GetAngle().ToVec();
 
             foreach (var entity in intersecting)
@@ -155,107 +182,33 @@ namespace Content.Server.GameObjects.Components.Conveyor
                 if (entity.TryGetComponent(out IPhysicsComponent? physics))
                 {
                     var controller = physics.EnsureController<ConveyedController>();
-                    controller.Move(direction, _speed);
+                    controller.Move(direction, _speed, entity.Transform.WorldPosition - Owner.Transform.WorldPosition);
                 }
             }
-        }
-
-        private async Task<bool> ToolUsed(IEntity user, ToolComponent tool)
-        {
-            if (!Owner.HasComponent<ItemComponent>() &&
-                await tool.UseTool(user, Owner, 0.5f, ToolQuality.Prying))
-            {
-                State = ConveyorState.Loose;
-
-                Owner.AddComponent<ItemComponent>();
-                _group?.RemoveConveyor(this);
-                Owner.RandomOffset(0.2f);
-
-                return true;
-            }
-
-            return false;
-        }
-
-        public void Sync(ConveyorGroup group)
-        {
-            _group = group;
-
-            if (State == ConveyorState.Loose)
-            {
-                return;
-            }
-
-            State = group.State == ConveyorState.Loose
-                ? ConveyorState.Off
-                : group.State;
-        }
-
-        /// <summary>
-        ///     Disconnects this conveyor from any switch.
-        /// </summary>
-        private void Disconnect()
-        {
-            _group?.RemoveConveyor(this);
-            _group = null;
-            State = ConveyorState.Off;
         }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
-            serializer.DataReadWriteFunction(
-                "switches",
-                new List<EntityUid>(),
-                ids =>
-                {
-                    if (ids == null)
-                    {
-                        return;
-                    }
-
-                    foreach (var id in ids)
-                    {
-                        if (!Owner.EntityManager.TryGetEntity(id, out var @switch))
-                        {
-                            continue;
-                        }
-
-                        if (!@switch.TryGetComponent(out ConveyorSwitchComponent? component))
-                        {
-                            continue;
-                        }
-
-                        component.Connect(this);
-                    }
-                },
-                () => _group?.Switches.Select(@switch => @switch.Owner.Uid).ToList());
-
             serializer.DataField(ref _angle, "angle", 0);
             serializer.DataField(ref _speed, "speed", 2);
         }
 
-        public override void OnRemove()
+        public void TriggerSignal(TwoWayLeverSignal signal)
         {
-            base.OnRemove();
-            Disconnect();
+            State = signal switch
+            {
+                TwoWayLeverSignal.Left => ConveyorState.Reversed,
+                TwoWayLeverSignal.Middle => ConveyorState.Off,
+                TwoWayLeverSignal.Right => ConveyorState.Forward,
+                _ => ConveyorState.Off
+            };
         }
 
-        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        public void TriggerSignal(bool signal)
         {
-            if (eventArgs.Using.TryGetComponent(out ConveyorSwitchComponent? conveyorSwitch))
-            {
-                conveyorSwitch.Connect(this, eventArgs.User);
-                return true;
-            }
-
-            if (eventArgs.Using.TryGetComponent(out ToolComponent? tool))
-            {
-                return await ToolUsed(eventArgs.User, tool);
-            }
-
-            return false;
+            State = signal ? ConveyorState.Forward : ConveyorState.Off;
         }
     }
 }

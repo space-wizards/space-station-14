@@ -41,6 +41,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         {
             Sex.Female => Gender.Female,
             Sex.Male => Gender.Male,
+            Sex.Classified => Gender.Neuter,
             _ => Gender.Epicene,
         };
 
@@ -51,7 +52,9 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            if (!(curState is HumanoidAppearanceComponentState cast))
+            base.HandleComponentState(curState, nextState);
+
+            if (curState is not HumanoidAppearanceComponentState cast)
                 return;
 
             Appearance = cast.Appearance;

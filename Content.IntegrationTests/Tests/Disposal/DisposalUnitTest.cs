@@ -59,10 +59,46 @@ namespace Content.IntegrationTests.Tests.Disposal
             Assert.That(result || entities.Length == 0, Is.EqualTo(unit.ContainedEntities.Count == 0));
         }
 
+        private const string PROTOTYPES = @"
+- type: entity
+  name: HumanDummy
+  id: HumanDummy
+  components:
+  - type: Damageable
+    damagePrototype: biologicalDamageContainer
+    criticalThreshold: 100
+    deadThreshold: 200
+
+- type: entity
+  name: WrenchDummy
+  id: WrenchDummy
+  components:
+  - type: Tool
+    qualities:
+      - Anchoring
+
+- type: entity
+  name: DisposalUnitDummy
+  id: DisposalUnitDummy
+  components:
+  - type: DisposalUnit
+  - type: Anchorable
+  - type: PowerReceiver
+  - type: Physics
+    anchored: true
+
+- type: entity
+  name: DisposalTrunkDummy
+  id: DisposalTrunkDummy
+  components:
+  - type: DisposalEntry
+";
+
         [Test]
         public async Task Test()
         {
-            var server = StartServerDummyTicker();
+            var options = new ServerIntegrationOptions{ExtraPrototypes = PROTOTYPES};
+            var server = StartServerDummyTicker(options);
 
             IEntity human;
             IEntity wrench;
@@ -78,10 +114,10 @@ namespace Content.IntegrationTests.Tests.Disposal
                 var entityManager = IoCManager.Resolve<IEntityManager>();
 
                 // Spawn the entities
-                human = entityManager.SpawnEntity("HumanMob_Content", MapCoordinates.Nullspace);
-                wrench = entityManager.SpawnEntity("Wrench", MapCoordinates.Nullspace);
-                var disposalUnit = entityManager.SpawnEntity("DisposalUnit", MapCoordinates.Nullspace);
-                var disposalTrunk = entityManager.SpawnEntity("DisposalTrunk", disposalUnit.Transform.MapPosition);
+                human = entityManager.SpawnEntity("HumanDummy", MapCoordinates.Nullspace);
+                wrench = entityManager.SpawnEntity("WrenchDummy", MapCoordinates.Nullspace);
+                var disposalUnit = entityManager.SpawnEntity("DisposalUnitDummy", MapCoordinates.Nullspace);
+                var disposalTrunk = entityManager.SpawnEntity("DisposalTrunkDummy", disposalUnit.Transform.MapPosition);
 
                 // Test for components existing
                 Assert.True(disposalUnit.TryGetComponent(out unit!));

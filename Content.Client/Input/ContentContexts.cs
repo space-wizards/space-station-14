@@ -46,6 +46,17 @@ namespace Content.Client.Input
             human.AddFunction(ContentKeyFunctions.Arcade1);
             human.AddFunction(ContentKeyFunctions.Arcade2);
             human.AddFunction(ContentKeyFunctions.Arcade3);
+            human.AddFunction(ContentKeyFunctions.OpenActionsMenu);
+            human.AddFunction(ContentKeyFunctions.Hotbar0);
+            human.AddFunction(ContentKeyFunctions.Hotbar1);
+            human.AddFunction(ContentKeyFunctions.Hotbar2);
+            human.AddFunction(ContentKeyFunctions.Hotbar3);
+            human.AddFunction(ContentKeyFunctions.Hotbar4);
+            human.AddFunction(ContentKeyFunctions.Hotbar5);
+            human.AddFunction(ContentKeyFunctions.Hotbar6);
+            human.AddFunction(ContentKeyFunctions.Hotbar7);
+            human.AddFunction(ContentKeyFunctions.Hotbar8);
+            human.AddFunction(ContentKeyFunctions.Hotbar9);
 
             var ghost = contexts.New("ghost", "common");
             ghost.AddFunction(EngineKeyFunctions.MoveUp);
