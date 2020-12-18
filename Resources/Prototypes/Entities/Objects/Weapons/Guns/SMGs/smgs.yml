@@ -122,7 +122,7 @@
   name: Drozd
   parent: SmgBase
   id: SmgDrozd
-  description: An excellent fully automatic Heavy SMG. Rifled to take a larger caliber than a typical submachine gun, but unlike other heavy SMGs makes use of increased caliber to achieve excellent armor penetration capabilities. Suffers a bit less from poor recoil control and has worse than average fire rate.
+  description: An excellent fully automatic Heavy SMG.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
