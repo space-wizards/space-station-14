@@ -22,36 +22,14 @@
   itemId: ToolboxSyndicateFilled
   price: 5
 
-Noslip shoes
-2
+- type: uplinkListing
+  id: UplinkBalloon
+  category: Misc
+  itemId: BalloonSyn
+  price: 20
 
-Hardsuit
-8
-
-traitor toolbox
-1
-
-decoy disk
-1
-
-syndicate surgery
-3
-
-chestrig
-1
-
-syndie soap
-1
-
-extra-bright lantern
-2
-
-# Bundles
-
-# Misc
-
-ancient jumpsuit
-20
-
-syndie balloon
-20
+- type: uplinkListing
+  id: UplinkToolbox
+  category: Utility
+  itemId: ClothingUniformJumpsuitAncient
+  price: 20
