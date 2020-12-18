@@ -318,7 +318,7 @@ namespace Content.Client.UserInterface
                 _jobPriorities = new List<JobPrioritySelector>();
                 _jobCategories = new Dictionary<string, VBoxContainer>();
 
-                var first = true;
+                var firstCategory = true;
 
                 foreach (var job in prototypeManager.EnumeratePrototypes<JobPrototype>().OrderBy(j => j.Name))
                 {
@@ -332,9 +332,9 @@ namespace Content.Client.UserInterface
                                 ToolTip = Loc.GetString("Jobs in the {0} department", department)
                             };
 
-                            if (first)
+                            if (firstCategory)
                             {
-                                first = false;
+                                firstCategory = false;
                             }
                             else
                             {
@@ -342,7 +342,6 @@ namespace Content.Client.UserInterface
                                 {
                                     CustomMinimumSize = new Vector2(0, 23),
                                 });
-
                             }
 
                             category.AddChild(new PanelContainer
