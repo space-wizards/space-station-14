@@ -40,6 +40,6 @@
   </Target>
   <ItemGroup>
     <AdditionalFiles Include="obj/SolutionPathForGenerator" />
-    <ProjectReference Include="..\Content.Generators\Content.Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="../RobustToolbox/Robust.Generators/Robust.Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 </Project>
