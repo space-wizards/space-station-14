@@ -28,12 +28,12 @@
   <Target Name="WriteSolutionPathForGenerator" BeforeTargets="Compile">
     <Message Text="$(SolutionPath)" Importance="high"/>
     <WriteLinesToFile
-      File="SolutionPathForGenerator"
+      File="obj/SolutionPathForGenerator"
       Lines="$(SolutionPath)"
       Overwrite="true"/>
   </Target>
   <ItemGroup>
-    <AdditionalFiles Include="SolutionPathForGenerator"/>
+    <AdditionalFiles Include="obj/SolutionPathForGenerator"/>
     <ProjectReference Include="../RobustToolbox/Robust.Generators/Robust.Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
   </ItemGroup>
 </Project>
