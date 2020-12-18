@@ -1,4 +1,4 @@
-using Content.Shared.GameObjects.Components.Buckle;
+﻿using Content.Shared.GameObjects.Components.Buckle;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -27,6 +27,8 @@ namespace Content.Client.GameObjects.Components.Buckle
             }
 
             _buckled = buckle.Buckled;
+            LastEntityBuckledTo = buckle.LastEntityBuckledTo;
+            DontCollide = buckle.DontCollide;
 
             if (!Owner.TryGetComponent(out SpriteComponent ownerSprite))
             {
