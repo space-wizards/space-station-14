@@ -9,5 +9,7 @@ namespace Content.Shared.GameObjects.Components.PDA
         Bundles,
         Tools,
         Utility,
+        Armor,
+        Pointless,
     }
 }

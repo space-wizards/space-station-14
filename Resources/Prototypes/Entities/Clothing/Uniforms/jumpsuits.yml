@@ -87,6 +87,28 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCentcomOfficial
+  name: centcom official's jumpsuit
+  description: It's a jumpsuit worn by CentCom's officials.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/centcom_official.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/centcom_official.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCentcomOfficer
+  name: centcom officer's jumpsuit
+  description: It's a jumpsuit worn by CentCom Officers.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/centcom_officer.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/centcom_officer.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitChef
   name: chef uniform
   description: Can't cook without this.

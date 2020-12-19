@@ -25,6 +25,27 @@
 #  itemId: CrossbowEnergyMini
 #  price: 8
 
+# bug swept to make
+#- type: uplinkListing
+#  id: UplinkESword
+#  category: Weapons
+#  itemId: ESword
+#  price: 8
+
+# bug swept to make
+#- type: uplinkListing
+#  id: UplinkDoubleBladedESword
+#  category: Weapons
+#  itemId: DoubleBladedESword
+#  price: 16
+
+# bug swept to make
+#- type: uplinkListing
+#  id: UplinkEnergyDagger
+#  category: Weapons
+#  itemId: EnergyDagger
+#  price: 2
+
 # Explosives
 
 - type: uplinkListing
@@ -65,10 +86,45 @@
   itemId: magazine_9mm
   price: 2
 
+# For the Mandella
+- type: uplinkListing
+  id: UplinkMagazineClRiflePistol
+  category: Ammo
+  itemId: MagazineClRiflePistol
+  price: 2
 
-
+# For the Inspector
+- type: uplinkListing
+  id: Uplink  SLMagnum
+  category: Ammo
+  itemId:   SLMagnum
+  price: 2
 
 # Bundles
+
+- type: uplinkListing
+  id: UplinkC20RBundle
+  category: Bundles
+  itemId: ClothingBackpackDuffelSyndicateFilledSMG
+  price: 14
+
+- type: uplinkListing
+  id: UplinkBojevicBundle
+  category: Bundles
+  itemId: ClothingBackpackDuffelSyndicateFilledShotgun
+  price: 13
+
+- type: uplinkListing
+  id: UplinkL6SawBundle
+  category: Bundles
+  itemId: ClothingBackpackDuffelSyndicateFilledLMG
+  price: 18
+
+- type: uplinkListing
+  id: UplinkGrenadeLauncherBundle
+  category: Bundles
+  itemId: ClothingBackpackDuffelSyndicateFilledGrenadeLauncher
+  price: 25
 
 # Tools
 
@@ -79,9 +135,48 @@
   price: 5
 
 - type: uplinkListing
+  id: UplinkSyndicateJawsOfLife
+  category: Tools
+  itemId: SyndicateJawsOfLife
+  price: 2
+
+- type: uplinkListing
   id: UplinkDuffelSurgery
   category: Tools
   itemId: ClothingBackpackDuffelSyndicateFilledMedical
+  price: 5
+
+- type: uplinkListing
+  id: UplinkCarpDehydrated
+  category: Tools
+  itemId: DehydratedSpaceCarp
+  price: 5
+
+# Armor
+
+# Should be cameleon shoes, change when implemented.
+- type: uplinkListing
+  id: UplinkClothingNoSlipsShoes
+  category: Armor
+  itemId: ClothingShoesChameleonNoSlips
+  price: 2
+
+- type: uplinkListing
+  id: UplinkClothingOuterVestWeb
+  category: Armor
+  itemId: ClothingOuterVestWeb
+  price: 5
+
+- type: uplinkListing
+  id: UplinkHardsuitSyndie
+  category: Armor
+  itemId: ClothingOuterHardsuitSyndie
+  price: 5
+
+- type: uplinkListing
+  id: UplinkHardsuitSyndieHelmet
+  category: Armor
+  itemId: ClothingHeadHelmetHardsuitSyndie
   price: 5
 
 # Misc
@@ -127,3 +222,17 @@
 #  category: Misc
 #  itemId: Telecrystal
 #  price: 1
+
+# Pointless
+
+- type: uplinkListing
+  id: UplinkCostumeCentcom
+  category: Pointless
+  itemId: ClothingBackpackDuffelSyndicateCostumeCentcom
+  price: 4
+
+- type: uplinkListing
+  id: UplinkCostumeClown
+  category: Pointless
+  itemId: ClothingBackpackDuffelSyndicateCostumeClown
+  price: 4

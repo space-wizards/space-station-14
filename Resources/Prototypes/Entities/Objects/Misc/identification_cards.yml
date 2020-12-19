@@ -320,3 +320,19 @@
     - Kitchen
     - Janitor
     - Theatre
+
+- type: entity
+  parent: IDCardStandard
+  id: CentcomIDCardSyndie
+  name: Centcom ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: centcom
+  - type: Clothing
+    HeldPrefix: blue
+  - type: IdCard
+    jobTitle: Central Commander
+  - type: Access
+    tags:
+    - Maintenance
