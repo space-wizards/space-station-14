@@ -95,9 +95,9 @@
 
 # For the Inspector
 - type: uplinkListing
-  id: Uplink  SLMagnum
+  id: UplinkSLMagnum
   category: Ammo
-  itemId:   SLMagnum
+  itemId: SLMagnum
   price: 2
 
 # Bundles

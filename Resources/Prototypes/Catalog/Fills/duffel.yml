@@ -1,7 +1,7 @@
 - type: entity
   parent: ClothingBackpackDuffelMedical
   id: ClothingBackpackDuffelSurgeryFilled
-  name: surgical duffel duffelbag
+  name: surgical duffelbag
   description: "A large duffel bag for holding extra medical supplies - this one seems to be designed for holding surgical tools."
   components:
   - type: StorageFill
@@ -72,7 +72,7 @@
   parent: ClothingBackpackDuffelSyndicate
   id: ClothingBackpackDuffelSyndicateFilledLMG
   name: L6 Saw bundle
-  description: "Swept's choice: The iconic L6 lightmachinegun, bundled with 2 box magazines."
+  description: "More dakka: The iconic L6 lightmachinegun, bundled with 2 box magazines."
   components:
   - type: Sprite
     state: icon-ammo
