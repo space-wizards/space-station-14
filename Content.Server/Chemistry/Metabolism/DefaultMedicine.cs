@@ -15,30 +15,36 @@ namespace Content.Server.Chemistry.Metabolism
     /// </summary>
     public class DefaultMedicine : IMetabolizable
     {
-        //Rate of metabolism in units / second
+        
+        //<summary>
+        //Rate of metabolism in units / seco
+        //</summary>
         private ReagentUnit _metabolismRate;
         public ReagentUnit MetabolismRate => _metabolismRate;
 
-
+        //<summary>
         //How much damage is healed when 1u of the reagent is metabolized
-        private float _healingPerTick;
+        //</summary>
+        private float _healingPerSec;
         private DamageClass _healType;
         private DamageClass healType => _healType;
-        public float HealingPerTick => _healingPerTick;
+        public float HealingPerSec => _healingPerSec;
 
         void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(ref _metabolismRate, "rate", ReagentUnit.New(1));
-            serializer.DataField(ref _healingPerTick, "healingPerTick", 1f);
+            serializer.DataField(ref _healingPerSec, "healingPerSec", 1f);
             serializer.DataField(ref _healType, "healType", DamageClass.Brute);
         }
-
+        
+        //<summary>
         //Remove reagent at set rate, heal damage if a DamageableComponent can be found
+        //</summary>
         ReagentUnit IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime)
         {
             var metabolismAmount = MetabolismRate * tickTime;
             if (solutionEntity.TryGetComponent(out DamageableComponent health))
-                health.ChangeDamage(healType, -(int)(metabolismAmount.Float() * HealingPerTick), true);
+                health.ChangeDamage(healType, -(int)(metabolismAmount.Float() * HealingPerSec), true);
 
             return metabolismAmount;
         }
