@@ -56,7 +56,7 @@ namespace Content.Server.GameObjects.Components
             get => positionOffset;
             set
             {
-                if (positionOffset == value)
+                if (positionOffset.EqualsApprox(value))
                 {
                     return;
                 }
