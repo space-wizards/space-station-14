@@ -65,11 +65,7 @@
   itemId: magazine_9mm
   price: 2
 
-- type: uplinkListing
-  id: UplinkToolbox
-  category: Ammo
-  itemId: ToolboxSyndicateFilled
-  price: 5
+
 
 
 # Bundles

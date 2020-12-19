@@ -7,9 +7,11 @@
   - type: Sprite
     netsync: false
     sprite: Objects/Misc/nukedisk.rsi
+    state: icon
   - type: Item
     size: 12
     sprite: Objects/Misc/nukedisk.rsi
+    state: icon
 
 - type: entity
   parent: NukeDisk
