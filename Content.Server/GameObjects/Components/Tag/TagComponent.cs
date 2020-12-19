@@ -10,7 +10,7 @@ namespace Content.Server.GameObjects.Components.Tag
     {
         public override string Name => "Tag";
 
-        private HashSet<string> _tags = new(0);
+        private HashSet<string> _tags = new();
 
         public IReadOnlySet<string> Tags => _tags;
 
@@ -18,7 +18,7 @@ namespace Content.Server.GameObjects.Components.Tag
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref _tags, "tags", new HashSet<string>(0));
+            serializer.DataField(ref _tags, "tags", new HashSet<string>());
         }
 
         /// <summary>
