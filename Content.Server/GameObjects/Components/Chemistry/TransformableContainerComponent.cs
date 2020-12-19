@@ -1,6 +1,6 @@
 #nullable enable
-using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Chemistry;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
