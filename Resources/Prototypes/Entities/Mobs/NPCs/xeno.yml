@@ -1,7 +1,7 @@
 # Hacky for the stress test so don't even consider adding to this
 - type: entity
   save: false
-  name: Xeno hunter
+  name: Xeno
   id: XenoMob_Content
   description: They mostly come at night. Mostly.
   drawdepth: Mobs
@@ -20,14 +20,14 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
-      sprite: Mobs/Aliens/Xenos/xeno_hunter.rsi
+      sprite: Mobs/Aliens/Xenos/xeno.rsi
   - type: Clickable
   - type: Physics
     anchored: false
     mass: 85
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.35,-0.35,0.35,0.35"
+      bounds: "-0.95,-0.60,-0.10,0.60"
       mask:
       - Impassable
       - MobImpassable

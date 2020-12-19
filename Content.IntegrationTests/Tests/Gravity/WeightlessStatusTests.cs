@@ -25,7 +25,7 @@ namespace Content.IntegrationTests.Tests.Gravity
   name: HumanDummy
   id: HumanDummy
   components:
-  - type: AlertsUI
+  - type: Alerts
 ";
         [Test]
         public async Task WeightlessStatusTest()

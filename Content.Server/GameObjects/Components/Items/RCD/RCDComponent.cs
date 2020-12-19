@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
@@ -93,7 +94,7 @@ namespace Content.Server.GameObjects.Components.Items.RCD
             message.AddMarkup(Loc.GetString("It's currently on {0} mode, and holds {1} charges.",_mode.ToString(), _ammo));
         }
 
-        public async void AfterInteract(AfterInteractEventArgs   eventArgs)
+        public async Task AfterInteract(AfterInteractEventArgs   eventArgs)
         {
             //No changing mode mid-RCD
             var startingMode = _mode;

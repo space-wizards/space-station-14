@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Atmos;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
@@ -38,6 +39,23 @@ namespace Content.Server.Atmos
             return !Equals(air = coordinates.GetTileAir(entityManager)!, default);
         }
 
+        public static bool IsTileAirProbablySafe(this EntityCoordinates coordinates)
+        {
+            // Note that oxygen mix isn't checked, but survival boxes make that not necessary.
+            var air = coordinates.GetTileAir();
+            if (air == null)
+                return false;
+            if (air.Pressure <= Atmospherics.WarningLowPressure)
+                return false;
+            if (air.Pressure >= Atmospherics.WarningHighPressure)
+                return false;
+            if (air.Temperature <= 260)
+                return false;
+            if (air.Temperature >= 360)
+                return false;
+            return true;
+        }
+
         public static TileAtmosphere GetTileAtmosphere(this Vector2i indices, GridId gridId)
         {
             var gridAtmos = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(gridId);
@@ -65,15 +83,7 @@ namespace Content.Server.Atmos
 
         public static bool InvalidateTileAir(this ITransformComponent transform, AtmosphereSystem? atmosSystem = null)
         {
-            atmosSystem ??= EntitySystem.Get<AtmosphereSystem>();
-
-            if (!transform.Coordinates.TryGetTileAtmosphere(out var tileAtmos))
-            {
-                return false;
-            }
-
-            atmosSystem.GetGridAtmosphere(transform.GridID).Invalidate(tileAtmos.GridIndices);
-            return true;
+            return InvalidateTileAir(transform.Coordinates, atmosSystem);
         }
 
         public static bool InvalidateTileAir(this EntityCoordinates coordinates, AtmosphereSystem? atmosSystem = null, IEntityManager? entityManager = null)
@@ -86,8 +96,7 @@ namespace Content.Server.Atmos
                 return false;
             }
 
-            var gridId = coordinates.GetGridId(entityManager);
-            atmosSystem.GetGridAtmosphere(gridId).Invalidate(tileAtmos.GridIndices);
+            tileAtmos.Invalidate();
             return true;
         }
     }

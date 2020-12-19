@@ -3,6 +3,7 @@ using Content.Server.Administration;
 using Content.Shared.Administration;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Server.Interfaces.Timing;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Utility;
@@ -60,9 +61,12 @@ namespace Content.Server.Commands.GameTicking
             shell.ExecuteCommand(player, "aghost");
             shell.ExecuteCommand(player, $"tp 0 0 {mapId}");
 
-            var newGridId = mapManager.GetAllGrids().Max(g => (int) g.Index);
+            var newGrid = mapManager.GetAllGrids().OrderByDescending(g => g.Index).First();
+            var pauseManager = IoCManager.Resolve<IPauseManager>();
 
-            shell.SendText(player, $"Created unloaded map from file {mapName} with id {mapId}. Use \"savebp {newGridId} foo.yml\" to save the new grid as a map.");
+            pauseManager.SetMapPaused(newGrid.ParentMapId, true);
+
+            shell.SendText(player, $"Created unloaded map from file {mapName} with id {mapId}. Use \"savebp {newGrid.Index} foo.yml\" to save the new grid as a map.");
         }
     }
 }

@@ -64,7 +64,11 @@ namespace Content.Server.GameObjects.Components.Fluids
             set => _slipThreshold = value;
         }
 
-        private float _evaporateTime;
+        /// <summary>
+        ///     The time that it will take this puddle to evaporate, in seconds.
+        /// </summary>
+        public float EvaporateTime { get; private set; }
+
         private string _spillSound;
 
         /// <summary>
@@ -104,7 +108,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         {
             serializer.DataFieldCached(ref _spillSound, "spill_sound", "/Audio/Effects/Fluids/splat.ogg");
             serializer.DataField(ref _overflowVolume, "overflow_volume", ReagentUnit.New(20));
-            serializer.DataField(ref _evaporateTime, "evaporate_time", 5.0f);
+            serializer.DataField(this, x => x.EvaporateTime, "evaporate_time", 5.0f);
             // Long-term probably have this based on the underlying reagents
             serializer.DataField(ref _evaporateThreshold, "evaporate_threshold", ReagentUnit.New(20));
             serializer.DataField(ref _spriteVariants, "variants", 1);
@@ -251,7 +255,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             _evaporationToken = new CancellationTokenSource();
 
             // KYS to evaporate
-            Owner.SpawnTimer(TimeSpan.FromSeconds(_evaporateTime), Evaporate, _evaporationToken.Token);
+            Owner.SpawnTimer(TimeSpan.FromSeconds(EvaporateTime), Evaporate, _evaporationToken.Token);
         }
 
         private void UpdateSlip()

@@ -283,6 +283,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             var tile = GetTile(indices);
             if (tile?.GridIndex != _gridId) return;
+            // includeAirBlocked is false, therefore all tiles in this have Air != null.
             var adjacent = GetAdjacentTiles(indices);
             tile.Air = new GasMixture(GetVolumeForCells(1), AtmosphereSystem){Temperature = Atmospherics.T20C};
             Tiles[indices] = tile;
@@ -291,7 +292,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             foreach (var (_, adj) in adjacent)
             {
-                var mix = adj.Air.RemoveRatio(ratio);
+                var mix = adj.Air!.RemoveRatio(ratio);
                 tile.Air.Merge(mix);
                 adj.Air.Merge(mix);
             }

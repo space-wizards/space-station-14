@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.GameObjects.Components;
+using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.Components.Animations;
@@ -119,7 +120,8 @@ namespace Content.Client.GameObjects.Components
     /// <summary>
     /// A light behaviour that alternates between StartValue and EndValue
     /// </summary>
-    public class PulseBehaviour: LightBehaviourAnimationTrack
+    [UsedImplicitly]
+    public class PulseBehaviour : LightBehaviourAnimationTrack
     {
         public override (int KeyFrameIndex, float FramePlayingTime) AdvancePlayback(
             object context, int prevKeyFrameIndex, float prevPlayingTime, float frameTime)
@@ -173,6 +175,7 @@ namespace Content.Client.GameObjects.Components
     /// <summary>
     /// A light behaviour that interpolates from StartValue to EndValue
     /// </summary>
+    [UsedImplicitly]
     public class FadeBehaviour : LightBehaviourAnimationTrack
     {
         public override (int KeyFrameIndex, float FramePlayingTime) AdvancePlayback(
@@ -208,6 +211,7 @@ namespace Content.Client.GameObjects.Components
     /// <summary>
     /// A light behaviour that interpolates using random values chosen between StartValue and EndValue.
     /// </summary>
+    [UsedImplicitly]
     public class RandomizeBehaviour : LightBehaviourAnimationTrack
     {
         private object _randomValue1 = default;
@@ -272,6 +276,7 @@ namespace Content.Client.GameObjects.Components
     /// <summary>
     /// A light behaviour that cycles through a list of colors.
     /// </summary>
+    [UsedImplicitly]
     public class ColorCycleBehaviour : LightBehaviourAnimationTrack
     {
         public List<Color> ColorsToCycle { get; set; }

@@ -6,6 +6,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Anchorable
+    snap: true
   - type: Construction
     graph: girder
     node: girder
@@ -17,13 +18,9 @@
     anchored: true
     shapes:
     - !type:PhysShapeAabb
-      mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
       layer:
       - Opaque
+      - Impassable
       - MobImpassable
       - VaultImpassable
       - SmallImpassable

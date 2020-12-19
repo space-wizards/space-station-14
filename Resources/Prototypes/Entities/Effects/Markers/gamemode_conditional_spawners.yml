@@ -344,3 +344,22 @@
       chance: 0.95
       gameRules:
         - RuleSuspicion
+
+- type: entity
+  name: Traitor DeathMatch PDA Redemption Machine Spawner
+  id: TraitorDMRedemptionMachineSpawner
+  parent: BaseConditionalSpawner
+  components:
+    - type: Sprite
+      netsync: false
+      visible: false
+      sprite: Objects/Misc/traitordm.rsi
+      state: redemption
+
+    - type: ConditionalSpawner
+      prototypes:
+        - TraitorDMRedemptionMachine
+      chance: 1.0
+      gameRules:
+        - RuleTraitorDeathMatch
+

@@ -20,6 +20,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
@@ -252,7 +253,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
         }
 
-        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (!eventArgs.CanReach)
             {

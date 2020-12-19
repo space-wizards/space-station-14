@@ -1,4 +1,5 @@
 using System;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using static Content.Shared.GameObjects.Components.Medical.SharedMedicalScannerComponent;
@@ -6,6 +7,7 @@ using static Content.Shared.GameObjects.Components.Medical.SharedMedicalScannerC
 
 namespace Content.Client.GameObjects.Components.MedicalScanner
 {
+    [UsedImplicitly]
     public class MedicalScannerVisualizer : AppearanceVisualizer
     {
         public override void OnChangeData(AppearanceComponent component)

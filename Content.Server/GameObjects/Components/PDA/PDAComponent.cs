@@ -54,7 +54,9 @@ namespace Content.Server.GameObjects.Components.PDA
         [ViewVariables] public bool IdSlotEmpty => _idSlot.ContainedEntity == null;
         [ViewVariables] public bool PenSlotEmpty => _penSlot.ContainedEntity == null;
 
-        [ViewVariables] private UplinkAccount? _syndicateUplinkAccount;
+        private UplinkAccount? _syndicateUplinkAccount;
+
+        [ViewVariables] public UplinkAccount? SyndicateUplinkAccount => _syndicateUplinkAccount;
 
         [ViewVariables] private readonly PdaAccessSet _accessSet;
 

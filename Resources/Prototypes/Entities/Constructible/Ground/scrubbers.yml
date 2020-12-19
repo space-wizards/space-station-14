@@ -34,7 +34,7 @@
   - type: NodeContainer
     nodes:
     - !type:PipeNode
-      nodeGroID: Pipe
+      nodeGroupID: Pipe
       pipeDirection: East
   - type: PressureSiphon
     scrubberOutletDirection: East

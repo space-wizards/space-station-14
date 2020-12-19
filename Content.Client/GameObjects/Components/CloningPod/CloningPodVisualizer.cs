@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using static Content.Shared.GameObjects.Components.Medical.SharedCloningPodComponent;
@@ -6,6 +7,7 @@ using static Content.Shared.GameObjects.Components.Medical.SharedCloningPodCompo
 
 namespace Content.Client.GameObjects.Components.CloningPod
 {
+    [UsedImplicitly]
     public class CloningPodVisualizer : AppearanceVisualizer
     {
         public override void OnChangeData(AppearanceComponent component)

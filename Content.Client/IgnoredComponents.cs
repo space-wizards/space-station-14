@@ -1,4 +1,4 @@
-﻿namespace Content.Client
+namespace Content.Client
 {
     public static class IgnoredComponents
     {
@@ -28,6 +28,7 @@
             "Wrench",
             "Crowbar",
             "MeleeWeapon",
+            "MeleeChemicalInjector",
             "Dice",
             "Construction",
             "Door",
@@ -209,6 +210,8 @@
             "CrematoriumEntityStorage",
             "RandomArcade",
             "RandomSpriteState",
+            "DebugEquip",
+            "InnateActions",
             "ReagentGrinder",
             "Grindable",
             "Juiceable",
@@ -216,10 +219,14 @@
             "ConveyorAssembly",
             "TwoWayLever",
             "FirelockElectronics",
+            "ChemicalInjectionProjectile",
             "Machine",
             "MachinePart",
             "MachineFrame",
-            "MachineBoard"
+            "MachineBoard",
+            "ChemicalAmmo",
+            "BiologicalSurgeryData",
+            "CargoTelepad",
         };
     }
 }

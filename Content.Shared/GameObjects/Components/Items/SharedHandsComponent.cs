@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Items
@@ -9,6 +10,9 @@ namespace Content.Shared.GameObjects.Components.Items
     {
         public sealed override string Name => "Hands";
         public sealed override uint? NetID => ContentNetIDs.HANDS;
+
+        /// <returns>true if the item is in one of the hands</returns>
+        public abstract bool IsHolding(IEntity item);
     }
 
     [Serializable, NetSerializable]

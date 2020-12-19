@@ -503,27 +503,3 @@
       state_open: weaponcrate_open
       state_closed: weaponcrate_door
 
-#### REMOVE THIS SWEPT!!
-
-- type: entity
-  id: CrateLightBulb
-  name: plastic crate
-  parent: CrateGeneric
-  components:
-  - type: Sprite
-    sprite: Constructible/Storage/Crates/plastic.rsi
-    layers:
-    - state: plasticcrate
-    - state: plasticcrate_door
-      map: ["enum.StorageVisualLayers.Door"]
-    - state: welded
-      visible: false
-      map: ["enum.StorageVisualLayers.Welded"]
-  - type: Icon
-    sprite: Constructible/Storage/Crates/plastic.rsi
-    state: plasticcrate_icon
-  - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: plasticcrate_open
-      state_closed: plasticcrate_door

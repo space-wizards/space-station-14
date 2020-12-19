@@ -2,7 +2,6 @@
 using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Log;
 
 namespace Content.Server.GameObjects.Components.Atmos.Piping
 {
@@ -32,11 +31,6 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         {
             var gridAtmos = EntitySystem.Get<AtmosphereSystem>()
                 .GetGridAtmosphere(Owner.Transform.GridID);
-            if (gridAtmos == null)
-            {
-                Logger.Error($"{nameof(PipeNetDeviceComponent)} on entity {Owner.Uid} could not find an {nameof(IGridAtmosphereComponent)}.");
-                return;
-            }
             JoinedGridAtmos = gridAtmos;
             JoinedGridAtmos.AddPipeNetDevice(this);
         }
