@@ -4,6 +4,10 @@ namespace Content.Shared.GameObjects.Components.PDA
     {
         Weapons,
         Ammo,
+        Explosives,
+        Misc,
+        Bundles,
+        Tools,
         Utility,
     }
 }
