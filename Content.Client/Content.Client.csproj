@@ -33,7 +33,7 @@
       <DependentUpon>OptionsMenu.cs</DependentUpon>
     </Compile>
   </ItemGroup>
-  
+
   <ItemGroup>
     <Compile Update="**\*.xaml.cs">
       <DependentUpon>%(Filename)</DependentUpon>
@@ -43,7 +43,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RobustToolbox\Robust.Client.XAMLUI\Robust.Client.XAMLUI.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
+    <ProjectReference Include="..\RobustToolbox\Robust.Client.NameGenerator\Robust.Client.NameGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
     <ProjectReference Include="..\RobustToolbox\Robust.Client.Injectors\Robust.Client.Injectors.csproj" ReferenceOutputAssembly="false"/>
   </ItemGroup>
 
