@@ -445,6 +445,7 @@
   parent: base_wall
   components:
   - type: Sprite
+    color: "#6b4b2d"
     sprite: Constructible/Structures/Walls/wood.rsi
   - type: Icon
     sprite: Constructible/Structures/Walls/wood.rsi
