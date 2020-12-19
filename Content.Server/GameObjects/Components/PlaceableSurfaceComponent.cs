@@ -34,6 +34,7 @@ namespace Content.Server.GameObjects.Components
             }
         }
 
+        [ViewVariables(VVAccess.ReadWrite)]
         public override bool PlaceCentered
         {
             get => placeCentered;
@@ -46,7 +47,6 @@ namespace Content.Server.GameObjects.Components
 
                 placeCentered = value;
 
-                Dirty();
             }
         }
 
@@ -63,7 +63,6 @@ namespace Content.Server.GameObjects.Components
 
                 positionOffset = value;
 
-                Dirty();
             }
         }
 
@@ -81,7 +80,7 @@ namespace Content.Server.GameObjects.Components
 
         public override ComponentState GetComponentState()
         {
-            return new PlaceableSurfaceComponentState(isPlaceable);
+            return new PlaceableSurfaceComponentState(isPlaceable,placeCentered,positionOffset);
         }
 
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
