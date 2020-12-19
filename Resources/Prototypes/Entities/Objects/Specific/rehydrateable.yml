@@ -1,0 +1,34 @@
+- type: entity
+  parent: FoodBase
+  id: MonkeyCube
+  name: monkey cube
+  description: Just add water!
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: chem.Nutriment
+        Quantity: 10
+    maxVol: 11 # needs room for water
+    caps: AddTo, RemoveFrom, FitsInDispenser
+  - type: Sprite
+    sprite: Objects/Consumable/Food/monkeycube.rsi
+  - type: Rehydratable
+    target: MonkeyMob_Content
+  - type: Grindable
+
+- type: entity
+  parent: PlushieCarp
+  id: DehydratedSpaceCarp
+  name: dehydrated space carp
+  description: Looks like a plush toy carp, but just add water and it becomes a real-life space carp! 
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: chem.Nutriment
+        Quantity: 10
+    maxVol: 11 # needs room for water
+    caps: AddTo, RemoveFrom, FitsInDispenser
+  - type: Rehydratable
+    target: CarpMob_Content

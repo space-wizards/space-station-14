@@ -125,3 +125,14 @@
     sprite: Clothing/Hands/Gloves/spaceninja.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/spaceninja.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesCombat
+  name: combat gloves
+  description: These tactical gloves are fireproof and shock resistant.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Color/black.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/Color/black.rsi
