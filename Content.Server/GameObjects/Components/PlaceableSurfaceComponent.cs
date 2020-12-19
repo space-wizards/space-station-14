@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -13,22 +13,22 @@ namespace Content.Server.GameObjects.Components
     [ComponentReference(typeof(SharedPlaceableSurfaceComponent))]
     public class PlaceableSurfaceComponent : SharedPlaceableSurfaceComponent, IInteractUsing
     {
-        private bool _isPlaceable;
-        private bool _placeCentered;
-        private Vector2 _positionOffset;
+        private bool isPlaceable;
+        private bool placeCentered;
+        private Vector2 positionOffset;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public override bool IsPlaceable
         {
-            get => _isPlaceable;
+            get => isPlaceable;
             set
             {
-                if (_isPlaceable == value)
+                if (isPlaceable == value)
                 {
                     return;
                 }
 
-                _isPlaceable = value;
+                isPlaceable = value;
 
                 Dirty();
             }
@@ -36,15 +36,15 @@ namespace Content.Server.GameObjects.Components
 
         public override bool PlaceCentered
         {
-            get => _placeCentered;
+            get => placeCentered;
             set
             {
-                if (_placeCentered == value)
+                if (placeCentered == value)
                 {
                     return;
                 }
 
-                _placeCentered = value;
+                placeCentered = value;
 
                 Dirty();
             }
@@ -53,15 +53,15 @@ namespace Content.Server.GameObjects.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public override Vector2 PositionOffset
         {
-            get => _positionOffset;
+            get => positionOffset;
             set
             {
-                if (_positionOffset == value)
+                if (positionOffset == value)
                 {
                     return;
                 }
 
-                _positionOffset = value;
+                positionOffset = value;
 
                 Dirty();
             }
@@ -74,14 +74,14 @@ namespace Content.Server.GameObjects.Components
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref _isPlaceable, "IsPlaceable", true);
-            serializer.DataField(ref _placeCentered, "PlaceCentered", false);
-            serializer.DataField(ref _positionOffset, "PositionOffset", Vector2.Zero);
+            serializer.DataField(ref isPlaceable, "IsPlaceable", true);
+            serializer.DataField(ref placeCentered, "PlaceCentered", false);
+            serializer.DataField(ref positionOffset, "PositionOffset", Vector2.Zero);
         }
 
         public override ComponentState GetComponentState()
         {
-            return new PlaceableSurfaceComponentState(_isPlaceable);
+            return new PlaceableSurfaceComponentState(isPlaceable);
         }
 
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
@@ -94,8 +94,8 @@ namespace Content.Server.GameObjects.Components
                 return false;
             }
             handComponent.Drop(eventArgs.Using);
-            if (_placeCentered)
-                eventArgs.Using.Transform.WorldPosition = eventArgs.Target.Transform.WorldPosition + _positionOffset;
+            if (placeCentered)
+                eventArgs.Using.Transform.WorldPosition = eventArgs.Target.Transform.WorldPosition + positionOffset;
             else
                 eventArgs.Using.Transform.WorldPosition = eventArgs.ClickLocation.Position;
             return true;
