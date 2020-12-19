@@ -82,6 +82,12 @@ namespace Content.Server
 
             var password = _configurationManager.GetCVar(CCVars.StatusMoMMIPassword);
 
+            if (string.IsNullOrEmpty(password))
+            {
+                response.StatusCode = (int) HttpStatusCode.Forbidden;
+                return true;
+            }
+
             OOCPostMessage message = null;
             try
             {
