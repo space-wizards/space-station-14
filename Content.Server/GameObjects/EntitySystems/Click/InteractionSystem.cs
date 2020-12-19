@@ -466,7 +466,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
             foreach (var afterAttack in afterAttacks)
             {
-                afterAttack.AfterInteract(afterAttackEventArgs);
+                await afterAttack.AfterInteract(afterAttackEventArgs);
             }
         }
 

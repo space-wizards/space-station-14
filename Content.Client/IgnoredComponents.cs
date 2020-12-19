@@ -225,7 +225,8 @@ namespace Content.Client
             "MachineFrame",
             "MachineBoard",
             "ChemicalAmmo",
-            "CargoTelepad"
+            "BiologicalSurgeryData",
+            "CargoTelepad",
         };
     }
 }

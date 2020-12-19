@@ -9,7 +9,8 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'Tools/package_release_build.py -p windows mac linux linux-arm64'
+                sh 'Tools/package_server_build.py -p windows mac linux linux-arm64'
+                sh 'Tools/package_client_build.py'
             }
         }
         stage('Update build info') {

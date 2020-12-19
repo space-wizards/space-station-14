@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
@@ -146,7 +147,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             return new HandcuffedComponentState(Broken ? BrokenState : string.Empty);
         }
 
-        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (eventArgs.Target == null || !ActionBlockerSystem.CanUse(eventArgs.User) || !eventArgs.Target.TryGetComponent<CuffableComponent>(out var cuffed))
             {

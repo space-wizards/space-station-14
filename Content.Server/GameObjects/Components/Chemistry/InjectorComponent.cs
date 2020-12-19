@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Body.Circulatory;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry;
@@ -106,7 +107,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// Called when clicking on entities while holding in active hand
         /// </summary>
         /// <param name="eventArgs"></param>
-        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return;
 

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -146,7 +146,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             return entity;
         }
 
-        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (eventArgs.Target == null)
             {

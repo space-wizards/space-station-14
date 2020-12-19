@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Body;
@@ -20,7 +21,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Body
+namespace Content.Server.GameObjects.Components.Body.Surgery
 {
     /// <summary>
     ///     Server-side component representing a generic tool capable of performing surgery.
@@ -48,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Body
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(SurgeryUIKey.Key);
 
-        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (eventArgs.Target == null)
             {

@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -28,6 +28,8 @@ namespace Content.Server.GameObjects.Components.Conveyor
     {
         public override string Name => "Conveyor";
 
+        [ViewVariables] private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+
         /// <summary>
         ///     The angle to move entities by in relation to the owner's rotation.
         /// </summary>
@@ -41,7 +43,6 @@ namespace Content.Server.GameObjects.Components.Conveyor
         private float _speed;
 
         private ConveyorState _state;
-
         /// <summary>
         ///     The current state of this conveyor
         /// </summary>
@@ -52,13 +53,45 @@ namespace Content.Server.GameObjects.Components.Conveyor
             set
             {
                 _state = value;
+                UpdateAppearance();
+            }
+        }
 
-                if (!Owner.TryGetComponent(out AppearanceComponent? appearance))
+        public override void OnAdd()
+        {
+            base.OnAdd();
+            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
+            {
+                receiver.OnPowerStateChanged += OnPowerChanged;
+            }
+        }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
+            {
+                receiver.OnPowerStateChanged -= OnPowerChanged;
+            }
+        }
+
+        private void OnPowerChanged(object? sender, PowerStateEventArgs e)
+        {
+            UpdateAppearance();
+        }
+
+        private void UpdateAppearance()
+        {
+            if (Owner.TryGetComponent<AppearanceComponent>(out var appearance))
+            {
+                if (Powered)
                 {
-                    return;
+                    appearance.SetData(ConveyorVisuals.State, _state);
                 }
-
-                appearance.SetData(ConveyorVisuals.State, value);
+                else
+                {
+                    appearance.SetData(ConveyorVisuals.State, ConveyorState.Off);
+                }
             }
         }
 
