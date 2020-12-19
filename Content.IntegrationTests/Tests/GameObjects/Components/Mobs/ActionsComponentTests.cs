@@ -27,6 +27,36 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
     [TestOf(typeof(ItemActionsComponent))]
     public class ActionsComponentTests : ContentIntegrationTest
     {
+        const string PROTOTYPES = @"
+- type: entity
+  name: flashlight
+  parent: BaseItem
+  id: TestFlashlight
+  components:
+    - type: HandheldLight
+    - type: ItemActions
+      actions:
+        - actionType: ToggleLight
+    - type: PowerCellSlot
+    - type: Sprite
+      sprite: Objects/Tools/flashlight.rsi
+      layers:
+        - state: lantern_off
+        - state: HandheldLightOnOverlay
+          shader: unshaded
+          visible: false
+    - type: Item
+      sprite: Objects/Tools/flashlight.rsi
+      HeldPrefix: off
+    - type: PointLight
+      enabled: false
+      radius: 3
+    - type: LoopingSound
+    - type: Appearance
+      visuals:
+        - type: FlashLightVisualizer
+";
+
         [Test]
         public async Task GrantsAndRevokesActionsTest()
         {
@@ -190,7 +220,9 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
         [Test]
         public async Task GrantsAndRevokesItemActions()
         {
-            var (client, server) = await StartConnectedServerClientPair();
+            var serverOptions = new ServerIntegrationOptions { ExtraPrototypes = PROTOTYPES };
+            var clientOptions = new ClientIntegrationOptions { ExtraPrototypes = PROTOTYPES };
+            var (client, server) = await StartConnectedServerClientPair(serverOptions: serverOptions, clientOptions: clientOptions);
 
             await server.WaitIdleAsync();
             await client.WaitIdleAsync();
@@ -212,7 +244,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 serverActionsComponent = serverPlayerEnt.GetComponent<ServerActionsComponent>();
 
                 // spawn and give them an item that has actions
-                serverFlashlight = serverEntManager.SpawnEntity("FlashlightLantern",
+                serverFlashlight = serverEntManager.SpawnEntity("TestFlashlight",
                     new EntityCoordinates(new EntityUid(1), (0, 0)));
                 Assert.That(serverFlashlight.TryGetComponent<ItemActionsComponent>(out var itemActions));
                 // we expect this only to have a toggle light action initially
