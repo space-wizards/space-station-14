@@ -35,7 +35,7 @@ namespace Content.Server.GameObjects.Components.Tag
         ///     Tries to add the given tags if they don't already exist.
         /// </summary>
         /// <param name="tags">The tags to add.</param>
-        /// <returns>true if any tags were added, false if it they all already existed.</returns>
+        /// <returns>true if any tags were added, false if they all already existed.</returns>
         public bool AddTags(params string[] tags)
         {
             return AddTags(tags.AsEnumerable());
@@ -104,7 +104,9 @@ namespace Content.Server.GameObjects.Components.Tag
         ///     Tries to remove a tag if it exists.
         /// </summary>
         /// <param name="tag">The tag to remove.</param>
-        /// <returns>true if it was removed, false if it didn't exist.</returns>
+        /// <returns>
+        ///     true if it was removed, false otherwise even if it didn't exist.
+        /// </returns>
         public bool RemoveTag(string tag)
         {
             return _tags.Remove(tag);
@@ -114,7 +116,9 @@ namespace Content.Server.GameObjects.Components.Tag
         ///     Tries to remove all of the given tags if they exist.
         /// </summary>
         /// <param name="tags">The tags to remove.</param>
-        /// <returns>true if any tag was removed, false otherwise.</returns>
+        /// <returns>
+        ///     true if it was removed, false otherwise even if they didn't exist.
+        /// </returns>
         public bool RemoveTags(params string[] tags)
         {
             return RemoveTags(tags.AsEnumerable());
