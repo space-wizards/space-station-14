@@ -17,9 +17,12 @@
   - type: Sprite
     sprite: Constructible/Power/cargo_teleporter.rsi
     state: pad-offline
-  - type: Destructible
-    deadThreshold: 75
+  - type: Damageable
     resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+      75:
+        Acts: ["Destruction"]
   - type: Anchorable
   - type: Pullable
   - type: PowerReceiver
