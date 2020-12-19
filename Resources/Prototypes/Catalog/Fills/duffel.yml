@@ -107,7 +107,7 @@
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelSyndicateCostumeCentcom
   name: Centcom official costume duffelbag
-  description: "Contains a full CentCom Official uniform set, headset and clipboard included. The headset comes without an encryption key. "
+  description: "Contains a full CentCom Official uniform set, headset and clipboard included. The headset comes without an encryption key."
   components:
   - type: StorageFill
     contents:
