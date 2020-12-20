@@ -1,21 +1,10 @@
 - type: entity
   name: base conditional spawner
   id: BaseConditionalSpawner
+  parent: MarkerBase
   abstract: true
   components:
-    - type: Sprite
-      netsync: false
-      visible: false
-      sprite: Interface/Misc/markers.rsi
-      state: cross_blue
-
-    - type: Marker
-    - type: Clickable
-    - type: InteractionOutline
-    - type: Physics
     - type: ConditionalSpawner
-  placement:
-    mode: AlignTileAny
 
 - type: entity
   name: Suspicion Rifle Spawner
