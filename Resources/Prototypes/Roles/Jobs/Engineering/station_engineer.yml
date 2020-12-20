@@ -4,7 +4,7 @@
   positions: 3
   spawnPositions: 2
   startingGear: StationEngineerGear
-  department:
+  departments:
   - Engineering
   icon: "StationEngineer"
   access:
