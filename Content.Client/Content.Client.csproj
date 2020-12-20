@@ -34,26 +34,5 @@
     </Compile>
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="**\*.xaml.cs">
-      <DependentUpon>%(Filename)</DependentUpon>
-    </Compile>
-    <EmbeddedResource Include="**\*.xaml" />
-    <AdditionalFiles Include="**\*.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\RobustToolbox\Robust.Client.NameGenerator\Robust.Client.NameGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
-    <ProjectReference Include="..\RobustToolbox\Robust.Client.Injectors\Robust.Client.Injectors.csproj" ReferenceOutputAssembly="false"/>
-  </ItemGroup>
-
-  <UsingTask TaskName="CompileRobustXamlTask" AssemblyFile="..\RobustToolbox\Robust.Client.Injectors\bin\$(Configuration)\net5.0\Robust.Client.Injectors.dll" />
-  <Target Name="CompileRobustXaml" AfterTargets="AfterCompile">
-    <PropertyGroup>
-      <RobustXamlReferencesTemporaryFilePath Condition="'$(RobustXamlReferencesTemporaryFilePath)' == ''">$(IntermediateOutputPath)XAML/references</RobustXamlReferencesTemporaryFilePath>
-      <RobustXamlOriginalCopyFilePath Condition="'$(RobustXamlOriginalCopyFilePath)' == ''">$(IntermediateOutputPath)XAML/original.dll</RobustXamlOriginalCopyFilePath>
-    </PropertyGroup>
-    <WriteLinesToFile File="$(RobustXamlReferencesTemporaryFilePath)" Lines="@(ReferencePathWithRefAssemblies)" Overwrite="true" />
-    <CompileRobustXamlTask AssemblyFile="@(IntermediateAssembly)" ReferencesFilePath="$(RobustXamlReferencesTemporaryFilePath)" OriginalCopyPath="$(RobustXamlOriginalCopyFilePath)" ProjectDirectory="$(MSBuildProjectDirectory)" AssemblyOriginatorKeyFile="$(AssemblyOriginatorKeyFile)" SignAssembly="$(SignAssembly)" DelaySign="$(DelaySign)" />
-  </Target>
+  <Import Project="..\RobustToolbox\MSBuild\XamlIL.targets" />
 </Project>
