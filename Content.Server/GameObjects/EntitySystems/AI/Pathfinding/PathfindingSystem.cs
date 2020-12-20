@@ -85,8 +85,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 
             foreach (var update in _collidableUpdateQueue)
             {
-                var entity = EntityManager.GetEntity(update.Owner);
-                if (update.CanCollide)
+                var entity = EntityManager.GetEntity(update.PhysicsComponent);
+                if (update.Enabled)
                 {
                     HandleEntityAdd(entity);
                 }
