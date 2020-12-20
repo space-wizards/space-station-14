@@ -223,15 +223,3 @@
     - type: Item
       size: 24
       sprite: Objects/Fun/Instruments/h_synthesizer.rsi
-
-- type: entity
-  name: super synthesizer
-  suffix: no MIDI limits
-  description: Blasting the ghetto with Touhou MIDIs since 2020.
-  id: SuperSynthesizerUnlimitedInstrument
-  parent: SuperSynthesizerInstrument
-  components:
-    - type: Instrument
-      allowPercussion: true
-      allowProgramChange: true
-      respectMidiLimits: false
