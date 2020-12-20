@@ -159,7 +159,6 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
             }
         }
 
-        // TODO BODY add checks to close UI if user walks too far away from tool or target.
         private void OpenSurgeryUI(IPlayerSession session)
         {
             UserInterface?.Open(session);
