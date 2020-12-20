@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -19,9 +20,11 @@ namespace Content.Client.GameObjects.Components.Damage
     public class DamageVisualizer : AppearanceVisualizer
     {
         /// <summary>
-        ///     Damage thresholds mapped to their state
+        ///     Damage thresholds mapped to the layer that they modify.
+        ///     The states are checked until the first matches, in the order defined
+        ///     in the YAML prototype.
         /// </summary>
-        private readonly SortedDictionary<int, DamageVisualizerState> _highestToLowestStates = new(Comparer<int>.Create((x, y) => y.CompareTo(x)));
+        private readonly Dictionary<int, List<DamageVisualizerState>> _layerStates = new();
 
         public override void LoadData(YamlMappingNode node)
         {
@@ -36,8 +39,9 @@ namespace Content.Client.GameObjects.Components.Damage
                     var mapping = (YamlMappingNode) stateNode;
                     var reader = YamlObjectSerializer.NewReader(mapping, typeof(DamageVisualizerState));
                     var state = (DamageVisualizerState) reader.NodeToType(typeof(DamageVisualizerState), mapping);
+                    var layerStates = _layerStates.GetOrNew(state.Layer ?? -1);
 
-                    _highestToLowestStates.Add(state.Damage, state);
+                    layerStates.Add(state);
                 }
             }
         }
@@ -51,58 +55,51 @@ namespace Content.Client.GameObjects.Components.Damage
                 return;
             }
 
-            if (!component.TryGetData(DamageVisualizerData.TotalDamage, out int damage))
+            int? totalDamage = null;
+            if (component.TryGetData(DamageVisualizerData.TotalDamage, out int totalDamageTemp))
             {
-                return;
+                totalDamage = totalDamageTemp;
             }
 
-            if (!TryGetState(damage, out var state))
-            {
-                return;
-            }
+            component.TryGetData(DamageVisualizerData.DamageClasses, out Dictionary<DamageClass, int>? damageClasses);
 
-            if (state.State == null)
-            {
-                return;
-            }
+            component.TryGetData(DamageVisualizerData.DamageTypes, out Dictionary<DamageType, int>? damageTypes);
 
-            if (state.Sprite != null)
+            foreach (var states in _layerStates.Values)
             {
-                var path = SharedSpriteComponent.TextureRoot / state.Sprite;
-                var rsi = IoCManager.Resolve<IResourceCache>().GetResource<RSIResource>(path).RSI;
-
-                if (state.Layer == null)
+                foreach (var state in states)
                 {
-                    sprite.BaseRSI = rsi;
-                }
-                else
-                {
-                    sprite.LayerSetRSI(state.Layer.Value, rsi);
+                    if (state.Reached(totalDamage, damageClasses, damageTypes))
+                    {
+                        if (state.State == null)
+                        {
+                            break;
+                        }
+
+                        if (state.Sprite != null)
+                        {
+                            var path = SharedSpriteComponent.TextureRoot / state.Sprite;
+                            var rsi = IoCManager.Resolve<IResourceCache>().GetResource<RSIResource>(path).RSI;
+
+                            if (state.Layer == null)
+                            {
+                                sprite.BaseRSI = rsi;
+                            }
+                            else
+                            {
+                                sprite.LayerSetRSI(state.Layer.Value, rsi);
+                            }
+                        }
+
+                        var layerKey = state.Layer ?? 0;
+
+                        sprite.LayerMapReserveBlank(layerKey);
+                        sprite.LayerSetState(layerKey, state.State);
+
+                        break;
+                    }
                 }
             }
-
-            var layerKey = state.Layer ?? 0;
-
-            sprite.LayerMapReserveBlank(layerKey);
-            sprite.LayerSetState(layerKey, state.State);
-        }
-
-        private DamageVisualizerState? GetState(int damage)
-        {
-            foreach (var (threshold, state) in _highestToLowestStates)
-            {
-                if (damage >= threshold)
-                {
-                    return state;
-                }
-            }
-
-            return null;
-        }
-
-        private bool TryGetState(int damage, [NotNullWhen(true)] out DamageVisualizerState? state)
-        {
-            return (state = GetState(damage)) != null;
         }
     }
 }

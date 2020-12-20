@@ -2,6 +2,8 @@
 {
     public enum DamageVisualizerData
     {
-        TotalDamage
+        TotalDamage,
+        DamageClasses,
+        DamageTypes
     }
 }
