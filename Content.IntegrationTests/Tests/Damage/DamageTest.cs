@@ -7,10 +7,10 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Map;
 
-namespace Content.IntegrationTests.Tests.Damageable
+namespace Content.IntegrationTests.Tests.Damage
 {
     [TestFixture]
-    [TestOf(typeof(DamageableComponent))]
+    [TestOf(typeof(SharedDamageableComponent))]
     public class DamageTest : ContentIntegrationTest
     {
         private static readonly string DamageableEntityId = "DamageableEntityId";
@@ -36,7 +36,7 @@ namespace Content.IntegrationTests.Tests.Damageable
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var sMapManager = server.ResolveDependency<IMapManager>();
 
-            IEntity sDamageableEntity = null;
+            IEntity sDamageableEntity;
             IDamageableComponent sDamageableComponent = null;
 
             await server.WaitPost(() =>
@@ -89,7 +89,7 @@ namespace Content.IntegrationTests.Tests.Damageable
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var sMapManager = server.ResolveDependency<IMapManager>();
 
-            IEntity sDamageableEntity = null;
+            IEntity sDamageableEntity;
             IDamageableComponent sDamageableComponent = null;
 
             await server.WaitPost(() =>
