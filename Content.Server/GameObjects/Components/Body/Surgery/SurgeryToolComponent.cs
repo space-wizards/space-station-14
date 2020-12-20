@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Content.Server.GameObjects.Components.Body.Surgery.Messages;
 using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Body;
@@ -162,6 +163,11 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
         private void OpenSurgeryUI(IPlayerSession session)
         {
             UserInterface?.Open(session);
+
+            var message = new SurgeryWindowOpenMessage(this);
+
+            SendMessage(message);
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
         }
 
         private void UpdateSurgeryUIBodyPartRequest(IPlayerSession session, Dictionary<string, int> options)
