@@ -105,10 +105,9 @@ namespace Content.Server.GameObjects.Components.GUI
             return GetHand(handName)?.Entity?.GetComponent<ItemComponent>();
         }
 
-        public bool TryGetItem(string handName, [MaybeNullWhen(false)] out ItemComponent item)
+        public bool TryGetItem(string handName, [NotNullWhen(true)] out ItemComponent? item)
         {
-            item = GetItem(handName);
-            return item != null;
+            return (item = GetItem(handName)) != null;
         }
 
         public ItemComponent? GetActiveHand => ActiveHand == null
@@ -240,7 +239,7 @@ namespace Content.Server.GameObjects.Components.GUI
             return true;
         }
 
-        public bool TryHand(IEntity entity, [MaybeNullWhen(false)] out string handName)
+        public bool TryHand(IEntity entity, [NotNullWhen(true)] out string? handName)
         {
             handName = null;
 

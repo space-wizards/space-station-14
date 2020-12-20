@@ -50,7 +50,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         }
 
         //TODO: reorganize this to make more logical sense
-        protected void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, IPhysicsComponent physics) 
+        protected void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, IPhysicsComponent physics)
         {
             physics.EnsureController<MoverController>();
 
@@ -71,7 +71,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             // TODO: movement check.
             var (walkDir, sprintDir) = mover.VelocityDir;
             var combined = walkDir + sprintDir;
-            if (combined.LengthSquared < 0.001 || !ActionBlockerSystem.CanMove(mover.Owner) && !weightless) 
+            if (combined.LengthSquared < 0.001 || !ActionBlockerSystem.CanMove(mover.Owner) && !weightless)
             {
                 if (physics.TryGetController(out MoverController controller))
                 {
@@ -177,7 +177,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             moverComp.SetSprinting(subTick, walking);
         }
 
-        private static bool TryGetAttachedComponent<T>(ICommonSession? session, [MaybeNullWhen(false)] out T component)
+        private static bool TryGetAttachedComponent<T>(ICommonSession? session, [NotNullWhen(true)] out T? component)
             where T : class, IComponent
         {
             component = default;
