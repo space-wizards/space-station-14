@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.GameObjects.EntitySystems.ActionBlocker
+﻿using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
+
+namespace Content.Shared.GameObjects.EntitySystems.ActionBlocker
 {
     /// <summary>
     /// This interface gives components the ability to block certain actions from

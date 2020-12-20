@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 
@@ -15,9 +16,9 @@ namespace Content.Shared.GameObjects.EntitySystems.ActionBlocker
         {
             var canMove = true;
 
-            foreach (var blockers in entity.GetAllComponents<IActionBlocker>())
+            foreach (var blocker in entity.GetAllComponents<IActionBlocker>())
             {
-                canMove &= blockers.CanMove(); // Sets var to false if false
+                canMove &= blocker.CanMove(); // Sets var to false if false
             }
 
             return canMove;
@@ -27,9 +28,9 @@ namespace Content.Shared.GameObjects.EntitySystems.ActionBlocker
         {
             var canInteract = true;
 
-            foreach (var blockers in entity.GetAllComponents<IActionBlocker>())
+            foreach (var blocker in entity.GetAllComponents<IActionBlocker>())
             {
-                canInteract &= blockers.CanInteract();
+                canInteract &= blocker.CanInteract();
             }
 
             return canInteract;
@@ -39,9 +40,9 @@ namespace Content.Shared.GameObjects.EntitySystems.ActionBlocker
         {
             var canUse = true;
 
-            foreach (var blockers in entity.GetAllComponents<IActionBlocker>())
+            foreach (var blocker in entity.GetAllComponents<IActionBlocker>())
             {
-                canUse &= blockers.CanUse();
+                canUse &= blocker.CanUse();
             }
 
             return canUse;
@@ -51,9 +52,9 @@ namespace Content.Shared.GameObjects.EntitySystems.ActionBlocker
         {
             var canThrow = true;
 
-            foreach (var blockers in entity.GetAllComponents<IActionBlocker>())
+            foreach (var blocker in entity.GetAllComponents<IActionBlocker>())
             {
-                canThrow &= blockers.CanThrow();
+                canThrow &= blocker.CanThrow();
             }
 
             return canThrow;
@@ -63,9 +64,9 @@ namespace Content.Shared.GameObjects.EntitySystems.ActionBlocker
         {
             var canSpeak = true;
 
-            foreach (var blockers in entity.GetAllComponents<IActionBlocker>())
+            foreach (var blocker in entity.GetAllComponents<IActionBlocker>())
             {
-                canSpeak &= blockers.CanSpeak();
+                canSpeak &= blocker.CanSpeak();
             }
 
             return canSpeak;
@@ -75,9 +76,9 @@ namespace Content.Shared.GameObjects.EntitySystems.ActionBlocker
         {
             var canDrop = true;
 
-            foreach (var blockers in entity.GetAllComponents<IActionBlocker>())
+            foreach (var blocker in entity.GetAllComponents<IActionBlocker>())
             {
-                canDrop &= blockers.CanDrop();
+                canDrop &= blocker.CanDrop();
             }
 
             return canDrop;
@@ -87,9 +88,9 @@ namespace Content.Shared.GameObjects.EntitySystems.ActionBlocker
         {
             var canPickup = true;
 
-            foreach (var blockers in entity.GetAllComponents<IActionBlocker>())
+            foreach (var blocker in entity.GetAllComponents<IActionBlocker>())
             {
-                canPickup &= blockers.CanPickup();
+                canPickup &= blocker.CanPickup();
             }
 
             return canPickup;
@@ -99,9 +100,9 @@ namespace Content.Shared.GameObjects.EntitySystems.ActionBlocker
         {
             var canEmote = true;
 
-            foreach (var blockers in entity.GetAllComponents<IActionBlocker>())
+            foreach (var blocker in entity.GetAllComponents<IActionBlocker>())
             {
-                canEmote &= blockers.CanEmote();
+                canEmote &= blocker.CanEmote();
             }
 
             return canEmote;
@@ -111,9 +112,9 @@ namespace Content.Shared.GameObjects.EntitySystems.ActionBlocker
         {
             var canAttack = true;
 
-            foreach (var blockers in entity.GetAllComponents<IActionBlocker>())
+            foreach (var blocker in entity.GetAllComponents<IActionBlocker>())
             {
-                canAttack &= blockers.CanAttack();
+                canAttack &= blocker.CanAttack();
             }
 
             return canAttack;
@@ -123,9 +124,9 @@ namespace Content.Shared.GameObjects.EntitySystems.ActionBlocker
         {
             var canEquip = true;
 
-            foreach (var blockers in entity.GetAllComponents<IActionBlocker>())
+            foreach (var blocker in entity.GetAllComponents<IActionBlocker>())
             {
-                canEquip &= blockers.CanEquip();
+                canEquip &= blocker.CanEquip();
             }
 
             return canEquip;
@@ -135,9 +136,9 @@ namespace Content.Shared.GameObjects.EntitySystems.ActionBlocker
         {
             var canUnequip = true;
 
-            foreach (var blockers in entity.GetAllComponents<IActionBlocker>())
+            foreach (var blocker in entity.GetAllComponents<IActionBlocker>())
             {
-                canUnequip &= blockers.CanUnequip();
+                canUnequip &= blocker.CanUnequip();
             }
 
             return canUnequip;
@@ -147,9 +148,9 @@ namespace Content.Shared.GameObjects.EntitySystems.ActionBlocker
         {
             var canChangeDirection = true;
 
-            foreach (var blockers in entity.GetAllComponents<IActionBlocker>())
+            foreach (var blocker in entity.GetAllComponents<IActionBlocker>())
             {
-                canChangeDirection &= blockers.CanChangeDirection();
+                canChangeDirection &= blocker.CanChangeDirection();
             }
 
             return canChangeDirection;
