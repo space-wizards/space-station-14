@@ -106,7 +106,7 @@ namespace Content.Shared.Preferences
             return new(Name, Age, Sex, appearance, _jobPriorities, PreferenceUnavailable, _antagPreferences);
         }
 
-        public HumanoidCharacterProfile WithJobPriorities(IReadOnlyDictionary<string, JobPriority> jobPriorities)
+        public HumanoidCharacterProfile WithJobPriorities(IEnumerable<KeyValuePair<string, JobPriority>> jobPriorities)
         {
             return new(
                 Name,
@@ -138,7 +138,7 @@ namespace Content.Shared.Preferences
             return new(Name, Age, Sex, Appearance, _jobPriorities, mode, _antagPreferences);
         }
 
-        public HumanoidCharacterProfile WithAntagPreferences(IReadOnlyList<string> antagPreferences)
+        public HumanoidCharacterProfile WithAntagPreferences(IEnumerable<string> antagPreferences)
         {
             return new(
                 Name,
