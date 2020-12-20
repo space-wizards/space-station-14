@@ -22,7 +22,7 @@ namespace Content.Shared.Damage
     {
         public static ImmutableList<DamageType> ToTypes(this DamageClass @class)
         {
-            return EntitySystem.Get<DamageSystem>().ClassToType[@class];
+            return DamageSystem.ClassToType[@class];
         }
 
         public static Dictionary<DamageClass, T> ToNewDictionary<T>()

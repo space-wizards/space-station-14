@@ -27,7 +27,7 @@ namespace Content.Shared.Damage
     {
         public static DamageClass ToClass(this DamageType type)
         {
-            return EntitySystem.Get<DamageSystem>().TypeToClass[type];
+            return DamageSystem.TypeToClass[type];
         }
 
         public static Dictionary<DamageType, T> ToNewDictionary<T>()

@@ -9,9 +9,9 @@ namespace Content.Shared.GameObjects.EntitySystems
     [UsedImplicitly]
     public class DamageSystem : EntitySystem
     {
-        public ImmutableDictionary<DamageClass, ImmutableList<DamageType>> ClassToType { get; } = DefaultClassToType();
+        public static ImmutableDictionary<DamageClass, ImmutableList<DamageType>> ClassToType { get; } = DefaultClassToType();
 
-        public ImmutableDictionary<DamageType, DamageClass> TypeToClass { get; } = DefaultTypeToClass();
+        public static ImmutableDictionary<DamageType, DamageClass> TypeToClass { get; } = DefaultTypeToClass();
 
         private static ImmutableDictionary<DamageClass, ImmutableList<DamageType>> DefaultClassToType()
         {
