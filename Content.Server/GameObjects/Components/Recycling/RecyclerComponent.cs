@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameObjects.Components.Conveyor;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -40,12 +41,12 @@ namespace Content.Server.GameObjects.Components.Recycling
         private int _efficiency; // TODO
 
         private bool Powered =>
-            !Owner.TryGetComponent(out PowerReceiverComponent receiver) ||
+            !Owner.TryGetComponent(out PowerReceiverComponent? receiver) ||
             receiver.Powered;
 
         private void Bloodstain()
         {
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(RecyclerVisuals.Bloody, true);
             }
@@ -53,7 +54,7 @@ namespace Content.Server.GameObjects.Components.Recycling
 
         private void Clean()
         {
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(RecyclerVisuals.Bloody, false);
             }
@@ -64,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Recycling
             return entity.HasComponent<IBody>() && !_safe && Powered;
         }
 
-        private bool CanRecycle(IEntity entity, [MaybeNullWhen(false)] out ConstructionPrototype prototype)
+        private bool CanRecycle(IEntity entity, [NotNullWhen(true)] out ConstructionPrototype? prototype)
         {
             prototype = null;
 
@@ -100,7 +101,7 @@ namespace Content.Server.GameObjects.Components.Recycling
 
         private bool CanRun()
         {
-            if (Owner.TryGetComponent(out PowerReceiverComponent receiver) &&
+            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver) &&
                 !receiver.Powered)
             {
                 return false;
@@ -121,7 +122,7 @@ namespace Content.Server.GameObjects.Components.Recycling
                 return false;
             }
 
-            if (!entity.TryGetComponent(out IPhysicsComponent physics) ||
+            if (!entity.TryGetComponent(out IPhysicsComponent? physics) ||
                 physics.Anchored)
             {
                 return false;
@@ -165,7 +166,7 @@ namespace Content.Server.GameObjects.Components.Recycling
                     continue;
                 }
 
-                if (entity.TryGetComponent(out IPhysicsComponent physics))
+                if (entity.TryGetComponent(out IPhysicsComponent? physics))
                 {
                     var controller = physics.EnsureController<ConveyedController>();
                     controller.Move(direction, frameTime, entity.Transform.WorldPosition - Owner.Transform.WorldPosition);

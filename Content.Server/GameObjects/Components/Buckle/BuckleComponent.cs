@@ -9,9 +9,9 @@ using Content.Server.GameObjects.Components.Strap;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Buckle;
-using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -27,7 +27,6 @@ using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -69,7 +68,7 @@ namespace Content.Server.GameObjects.Components.Buckle
         public Vector2 BuckleOffset { get; private set; }
 
         private StrapComponent? _buckledTo;
-        
+
 
         /// <summary>
         ///     The strap that this component is buckled to.
@@ -157,7 +156,7 @@ namespace Content.Server.GameObjects.Components.Buckle
             }
         }
 
-        private bool CanBuckle(IEntity? user, IEntity to, [MaybeNullWhen(false)] out StrapComponent strap)
+        private bool CanBuckle(IEntity? user, IEntity to, [NotNullWhen(true)] out StrapComponent? strap)
         {
             strap = null;
 
@@ -421,7 +420,7 @@ namespace Content.Server.GameObjects.Components.Buckle
             {
                 drawDepth = BuckledTo.SpriteComponent.DrawDepth - 1;
             }
-            
+
 
             return new BuckleComponentState(Buckled, drawDepth, LastEntityBuckledTo, DontCollide);
         }

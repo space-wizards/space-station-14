@@ -4,7 +4,7 @@
   head: true
   positions: 1
   startingGear: CaptainGear
-  department:
+  departments:
   - Command
   icon: "Captain"
   access:

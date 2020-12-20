@@ -1,3 +1,4 @@
+using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 
