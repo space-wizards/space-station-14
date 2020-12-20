@@ -134,33 +134,6 @@
   - type: SignalLinker
 
 - type: entity
-  name: jaws of life
-  parent: BaseItem
-  id: JawsOfLife
-  description: A set of jaws of life, compressed through the magic of science.
-  components:
-    - type: Sprite
-      sprite: Objects/Tools/jaws_of_life.rsi
-      state: jaws_pry
-    - type: Item
-      sprite: Objects/Tools/jaws_of_life.rsi
-    - type: TilePrying
-    - type: Tool
-      qualities:
-        - Prying
-      statusShowBehavior: true
-    - type: MultiTool
-      tools:
-        - behavior: Prying
-          state: jaws_pry
-          useSound: /Audio/Items/jaws_pry.ogg
-          changeSound: /Audio/Items/change_jaws.ogg
-        - behavior: Cutting
-          state: jaws_cutter
-          useSound: /Audio/Items/jaws_cut.ogg
-          changeSound: /Audio/Items/change_jaws.ogg
-
-- type: entity
   name: power drill
   parent: BaseItem
   id: PowerDrill

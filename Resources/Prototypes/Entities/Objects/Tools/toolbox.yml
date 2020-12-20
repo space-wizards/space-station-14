@@ -9,6 +9,7 @@
     size: 9999
   - type: ItemCooldown
   - type: MeleeWeapon
+    damage: 10
     hitSound: "/Audio/Weapons/smash.ogg"
 
 - type: entity
@@ -98,7 +99,7 @@
     sprite: Objects/Tools/Toolboxes/toolbox_green.rsi
 
 - type: entity
-  name: syndicate toolbox
+  name: suspicious toolbox
   parent: ToolboxBase
   id: ToolboxSyndicate
   description: A sinister looking toolbox filled with elite syndicate tools.
@@ -108,6 +109,24 @@
     state: icon
   - type: Item
     sprite: Objects/Tools/Toolboxes/toolbox_syn.rsi
+  - type: MeleeWeapon
+    damage: 15
+
+- type: entity
+  id: ToolboxSyndicateFilled
+  name: suspicious toolbox
+  suffix: Filled
+  parent: ToolboxSyndicate
+  components:
+  - type: StorageFill
+    contents:
+      - name: Screwdriver
+      - name: Wrench
+      - name: Welder
+      - name: Crowbar
+      - name: Multitool
+      - name: Wirecutter
+      - name: ClothingHandsGlovesCombat
 
 - type: entity
   name: golden toolbox

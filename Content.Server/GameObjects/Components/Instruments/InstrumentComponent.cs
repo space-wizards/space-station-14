@@ -78,8 +78,8 @@ namespace Content.Server.GameObjects.Components.Instruments
         private byte _instrumentBank;
         private bool _allowPercussion;
         private bool _allowProgramChange;
+        private bool _respectMidiLimits;
 
-        [ViewVariables(VVAccess.ReadWrite)]
         public override byte InstrumentProgram { get => _instrumentProgram;
             set
             {
@@ -88,7 +88,6 @@ namespace Content.Server.GameObjects.Components.Instruments
             }
         }
 
-        [ViewVariables(VVAccess.ReadWrite)]
         public override byte InstrumentBank { get => _instrumentBank;
             set
             {
@@ -97,7 +96,6 @@ namespace Content.Server.GameObjects.Components.Instruments
             }
         }
 
-        [ViewVariables(VVAccess.ReadWrite)]
         public override bool AllowPercussion { get => _allowPercussion;
             set
             {
@@ -106,11 +104,18 @@ namespace Content.Server.GameObjects.Components.Instruments
             }
         }
 
-        [ViewVariables(VVAccess.ReadWrite)]
         public override bool AllowProgramChange { get => _allowProgramChange;
             set
             {
                 _allowProgramChange = value;
+                Dirty();
+            }
+        }
+
+        public override bool RespectMidiLimits { get => _respectMidiLimits;
+            set
+            {
+                _respectMidiLimits = value;
                 Dirty();
             }
         }
@@ -181,11 +186,12 @@ namespace Content.Server.GameObjects.Components.Instruments
             serializer.DataField(ref _instrumentBank, "bank", (byte) 0);
             serializer.DataField(ref _allowPercussion, "allowPercussion", false);
             serializer.DataField(ref _allowProgramChange, "allowProgramChange", false);
+            serializer.DataField(ref _respectMidiLimits, "respectMidiLimits", true);
         }
 
         public override ComponentState GetComponentState()
         {
-            return new InstrumentState(Playing, InstrumentProgram, InstrumentBank, AllowPercussion, AllowProgramChange, _lastSequencerTick);
+            return new InstrumentState(Playing, InstrumentProgram, InstrumentBank, AllowPercussion, AllowProgramChange, RespectMidiLimits, _lastSequencerTick);
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
@@ -217,14 +223,17 @@ namespace Content.Server.GameObjects.Components.Instruments
 
                         _laggedBatches++;
 
-                        if (_laggedBatches == (int) (maxMidiLaggedBatches * (1 / 3d) + 1))
+                        if (_respectMidiLimits)
                         {
-                            Owner.PopupMessage(InstrumentPlayer.AttachedEntity,
-                                Loc.GetString("Your fingers are beginning to a cramp a little!"));
-                        } else if (_laggedBatches == (int) (maxMidiLaggedBatches * (2 / 3d) + 1))
-                        {
-                            Owner.PopupMessage(InstrumentPlayer.AttachedEntity,
-                                Loc.GetString("Your fingers are seriously cramping up!"));
+                            if (_laggedBatches == (int) (maxMidiLaggedBatches * (1 / 3d) + 1))
+                            {
+                                Owner.PopupMessage(InstrumentPlayer.AttachedEntity,
+                                    Loc.GetString("Your fingers are beginning to a cramp a little!"));
+                            } else if (_laggedBatches == (int) (maxMidiLaggedBatches * (2 / 3d) + 1))
+                            {
+                                Owner.PopupMessage(InstrumentPlayer.AttachedEntity,
+                                    Loc.GetString("Your fingers are seriously cramping up!"));
+                            }
                         }
 
                         if (_laggedBatches > maxMidiLaggedBatches)
@@ -250,7 +259,7 @@ namespace Content.Server.GameObjects.Components.Instruments
                         send = false;
                     }
 
-                    if (send)
+                    if (send || !_respectMidiLimits)
                     {
                         SendNetworkMessage(midiEventMsg);
                     }
@@ -367,7 +376,7 @@ namespace Content.Server.GameObjects.Components.Instruments
 
             if ((_batchesDropped >= maxMidiBatchDropped
                     || _laggedBatches >= maxMidiLaggedBatches)
-                && InstrumentPlayer != null)
+                && InstrumentPlayer != null && _respectMidiLimits)
             {
                 var mob = InstrumentPlayer.AttachedEntity;
 
