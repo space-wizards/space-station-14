@@ -62,6 +62,9 @@
     thresholds:
       500:
         Acts: ["Destruction"]
+  - type: IconSmooth
+    key: walls
+    mode: NoSprite
   placement:
     mode: SnapgridCenter
 
