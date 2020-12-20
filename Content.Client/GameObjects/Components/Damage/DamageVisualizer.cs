@@ -21,7 +21,7 @@ namespace Content.Client.GameObjects.Components.Damage
         /// <summary>
         ///     Damage thresholds mapped to their state
         /// </summary>
-        private readonly SortedDictionary<int, DamageVisualizerState> _lowestToHighestStates = new();
+        private readonly SortedDictionary<int, DamageVisualizerState> _highestToLowestStates = new(Comparer<int>.Create((x, y) => y.CompareTo(x)));
 
         public override void LoadData(YamlMappingNode node)
         {
@@ -37,7 +37,7 @@ namespace Content.Client.GameObjects.Components.Damage
                     var reader = YamlObjectSerializer.NewReader(mapping, typeof(DamageVisualizerState));
                     var state = (DamageVisualizerState) reader.NodeToType(typeof(DamageVisualizerState), mapping);
 
-                    _lowestToHighestStates.Add(state.Damage, state);
+                    _highestToLowestStates.Add(state.Damage, state);
                 }
             }
         }
@@ -89,7 +89,7 @@ namespace Content.Client.GameObjects.Components.Damage
 
         private DamageVisualizerState? GetState(int damage)
         {
-            foreach (var (threshold, state) in _lowestToHighestStates)
+            foreach (var (threshold, state) in _highestToLowestStates)
             {
                 if (damage >= threshold)
                 {

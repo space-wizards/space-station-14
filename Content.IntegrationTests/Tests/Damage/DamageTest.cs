@@ -21,7 +21,8 @@ namespace Content.IntegrationTests.Tests.Damage
   name: {DamageableEntityId}
   components:
   - type: Damageable
-    damageContainer: allDamageContainer";
+    damageContainer: allDamageContainer
+    resistances: noResistances";
 
         [Test]
         public async Task TestDamageTypeDamageAndHeal()

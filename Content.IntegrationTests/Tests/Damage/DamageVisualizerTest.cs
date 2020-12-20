@@ -4,7 +4,6 @@ using Content.Client.GameObjects.Components.Damage;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using NUnit.Framework;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
@@ -28,6 +27,8 @@ namespace Content.IntegrationTests.Tests.Damage
   components:
   - type: Sprite
   - type: Damageable
+    damageContainer: allDamageContainer
+    resistances: noResistances
   - type: Appearance
     visuals:
     - type: DamageVisualizer
@@ -68,7 +69,6 @@ namespace Content.IntegrationTests.Tests.Damage
             var sPlayerManager = server.ResolveDependency<IPlayerManager>();
 
             IEntity sEntity = null;
-            ISpriteRenderableComponent sSprite = null;
 
             await server.WaitPost(() =>
             {
@@ -81,14 +81,13 @@ namespace Content.IntegrationTests.Tests.Damage
                 var coordinates = player.AttachedEntity!.Transform.Coordinates;
 
                 sEntity = sEntityManager.SpawnEntity(TestSingleLayerDummyId, coordinates);
-                sSprite = sEntity.GetComponent<ISpriteRenderableComponent>();
             });
 
             await RunTicksSync(client, server, 10);
 
             var cEntityManager = client.ResolveDependency<IEntityManager>();
 
-            IEntity cEntity = null;
+            IEntity cEntity;
             SpriteComponent cSprite = null;
 
             await client.WaitPost(() =>
@@ -118,7 +117,6 @@ namespace Content.IntegrationTests.Tests.Damage
             var sPlayerManager = server.ResolveDependency<IPlayerManager>();
 
             IEntity sEntity = null;
-            ISpriteRenderableComponent sSprite = null;
 
             await server.WaitPost(() =>
             {
@@ -130,15 +128,14 @@ namespace Content.IntegrationTests.Tests.Damage
                 var player = sPlayerManager.GetAllPlayers().Single();
                 var coordinates = player.AttachedEntity!.Transform.Coordinates;
 
-                sEntity = sEntityManager.SpawnEntity(TestSingleLayerDummyId, coordinates);
-                sSprite = sEntity.GetComponent<ISpriteRenderableComponent>();
+                sEntity = sEntityManager.SpawnEntity(TestDualLayerDummyId, coordinates);
             });
 
             await RunTicksSync(client, server, 10);
 
             var cEntityManager = client.ResolveDependency<IEntityManager>();
 
-            IEntity cEntity = null;
+            IEntity cEntity;
             SpriteComponent cSprite = null;
 
             await client.WaitPost(() =>
@@ -153,9 +150,12 @@ namespace Content.IntegrationTests.Tests.Damage
                 Assert.That(cSprite.LayerGetState(0).Name, Is.EqualTo("metal0"));
             });
 
-            await server.WaitPost(() =>
+            await server.WaitAssertion(() =>
             {
-                sEntity.GetComponent<IDamageableComponent>().ChangeDamage(DamageClass.Brute, 10, true);
+                var sDamageableComponent = sEntity.GetComponent<IDamageableComponent>();
+
+                Assert.True(sDamageableComponent.ChangeDamage(DamageClass.Brute, 10, true));
+                Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(10));
             });
 
             await RunTicksSync(client, server, 10);
