@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using Content.Shared.GameObjects.EntitySystems;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Damage
@@ -18,27 +20,21 @@ namespace Content.Shared.Damage
 
     public static class DamageClassExtensions
     {
-        // TODO DAMAGE This but not hardcoded
-        private static readonly ImmutableDictionary<DamageClass, List<DamageType>> ClassToType =
-            new Dictionary<DamageClass, List<DamageType>>
-            {
-                {DamageClass.Brute, new List<DamageType> {DamageType.Blunt, DamageType.Slash, DamageType.Piercing}},
-                {DamageClass.Burn, new List<DamageType> {DamageType.Heat, DamageType.Shock, DamageType.Cold}},
-                {DamageClass.Toxin, new List<DamageType> {DamageType.Poison, DamageType.Radiation}},
-                {DamageClass.Airloss, new List<DamageType> {DamageType.Asphyxiation, DamageType.Bloodloss}},
-                {DamageClass.Genetic, new List<DamageType> {DamageType.Cellular}}
-            }.ToImmutableDictionary();
-
-        public static List<DamageType> ToTypes(this DamageClass @class)
+        public static ImmutableList<DamageType> ToTypes(this DamageClass @class)
         {
-            return ClassToType[@class];
+            return DamageSystem.ClassToType[@class];
         }
 
-        public static Dictionary<DamageClass, int> ToDictionary()
+        public static Dictionary<DamageClass, T> ToNewDictionary<T>()
         {
             return Enum.GetValues(typeof(DamageClass))
                 .Cast<DamageClass>()
-                .ToDictionary(@class => @class, type => 0);
+                .ToDictionary(@class => @class, _ => default(T));
+        }
+
+        public static Dictionary<DamageClass, int> ToNewDictionary()
+        {
+            return ToNewDictionary<int>();
         }
     }
 }
