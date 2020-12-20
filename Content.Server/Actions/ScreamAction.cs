@@ -5,6 +5,7 @@ using Content.Shared.Actions;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Preferences;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
