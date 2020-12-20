@@ -10,6 +10,7 @@ namespace Content.Server.GameObjects.Components.Power.AME
     [RegisterComponent]
     public class AMEShieldComponent : SharedAMEShieldComponent
     {
+        public override string Name => "AMEShield";
 
         private bool _isCore = false;
 

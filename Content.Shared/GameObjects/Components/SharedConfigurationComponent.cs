@@ -6,10 +6,8 @@ using System.Collections.Generic;
 
 namespace Content.Shared.GameObjects.Components
 {
-    public class SharedConfigurationComponent : Component
+    public abstract class SharedConfigurationComponent : Component
     {
-        public override string Name => "Configuration";
-
         [Serializable, NetSerializable]
         public class ConfigurationBoundUserInterfaceState : BoundUserInterfaceState
         {

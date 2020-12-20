@@ -33,6 +33,8 @@ namespace Content.Server.GameObjects.Components.Medical
     [ComponentReference(typeof(IActivate))]
     public class CloningPodComponent : SharedCloningPodComponent, IActivate
     {
+        public override string Name => "CloningPod";
+
         [Dependency] private readonly IServerPreferencesManager _prefsManager = null!;
         [Dependency] private readonly IPlayerManager _playerManager = null!;
 

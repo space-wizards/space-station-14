@@ -28,8 +28,10 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Fluids
 {
     [RegisterComponent]
-    class SprayComponent : SharedSprayComponent, IAfterInteract, IUse, IActivate, IDropped
+    class SprayComponent : Component, IAfterInteract, IUse, IActivate, IDropped
     {
+        public override string Name => "Spray";
+
         public const float SprayDistance = 3f;
 
         [Dependency] private readonly IGameTiming _gameTiming = default!;

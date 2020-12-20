@@ -29,6 +29,8 @@ namespace Content.Server.GameObjects.Components.Arcade
     [ComponentReference(typeof(IActivate))]
     public class SpaceVillainArcadeComponent : SharedSpaceVillainArcadeComponent, IActivate, IWires
     {
+        public override string Name => "SpaceVillainArcade";
+
         [Dependency] private readonly IRobustRandom _random = null!;
 
         [ComponentDependency] private readonly PowerReceiverComponent? _powerReceiverComponent = default!;

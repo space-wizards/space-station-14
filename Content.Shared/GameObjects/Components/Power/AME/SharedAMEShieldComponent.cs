@@ -4,10 +4,8 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Power.AME
 {
-    public class SharedAMEShieldComponent : Component
+    public abstract class SharedAMEShieldComponent : Component
     {
-        public override string Name => "AMEShield";
-
         [Serializable, NetSerializable]
         public enum AMEShieldVisuals
         {

@@ -5,9 +5,8 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Arcade
 {
-    public class SharedSpaceVillainArcadeComponent : Component
+    public abstract class SharedSpaceVillainArcadeComponent : Component
     {
-        public override string Name => "SpaceVillainArcade";
         public override uint? NetID => ContentNetIDs.SPACE_VILLAIN_ARCADE;
 
         [Serializable, NetSerializable]

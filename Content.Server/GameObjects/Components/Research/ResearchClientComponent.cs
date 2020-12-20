@@ -16,6 +16,8 @@ namespace Content.Server.GameObjects.Components.Research
     [RegisterComponent]
     public class ResearchClientComponent : SharedResearchClientComponent, IActivate
     {
+        public override string Name => "ResearchClient";
+
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
         // TODO: Create GUI for changing RD server.

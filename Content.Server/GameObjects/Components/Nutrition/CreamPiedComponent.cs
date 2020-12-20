@@ -13,8 +13,10 @@ using Serilog;
 namespace Content.Server.GameObjects.Components.Nutrition
 {
     [RegisterComponent]
-    public class CreamPiedComponent : SharedCreamPiedComponent, IReagentReaction, IThrowCollide
+    public class CreamPiedComponent : Component, IReagentReaction, IThrowCollide
     {
+        public override string Name => "CreamPied";
+
         private bool _creamPied;
 
         [ViewVariables]

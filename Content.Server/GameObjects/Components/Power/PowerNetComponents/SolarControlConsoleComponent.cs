@@ -15,8 +15,10 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class SolarControlConsoleComponent : SharedSolarControlConsoleComponent, IActivate
+    public class SolarControlConsoleComponent : Component, IActivate
     {
+        public override string Name => "SolarControlConsole";
+
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
         private PowerSolarSystem _powerSolarSystem = default!;

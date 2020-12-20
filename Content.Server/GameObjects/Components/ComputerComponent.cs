@@ -12,8 +12,10 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components
 {
     [RegisterComponent]
-    public sealed class ComputerComponent : SharedComputerComponent, IMapInit
+    public sealed class ComputerComponent : Component, IMapInit
     {
+        public override string Name => "Computer";
+
         [ViewVariables]
         private string _boardPrototype;
 

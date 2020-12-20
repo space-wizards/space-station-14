@@ -6,10 +6,8 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components
 {
-    public class SharedMagicMirrorComponent : Component
+    public abstract class SharedMagicMirrorComponent : Component
     {
-        public override string Name => "MagicMirror";
-
         [Serializable, NetSerializable]
         public enum MagicMirrorUiKey
         {

@@ -29,8 +29,10 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Atmos
 {
     [RegisterComponent]
-    public class FlammableComponent : SharedFlammableComponent, ICollideBehavior, IFireAct, IReagentReaction
+    public class FlammableComponent : Component, ICollideBehavior, IFireAct, IReagentReaction
     {
+        public override string Name => "Flammable";
+
         private bool _resisting = false;
         private readonly List<EntityUid> _collided = new();
 

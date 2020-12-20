@@ -5,12 +5,6 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Command
 {
-    public class SharedCommunicationsConsoleComponent : Component
-    {
-        public override string Name => "CommunicationsConsole";
-
-    }
-
     [Serializable, NetSerializable]
     public class CommunicationsConsoleInterfaceState : BoundUserInterfaceState
     {

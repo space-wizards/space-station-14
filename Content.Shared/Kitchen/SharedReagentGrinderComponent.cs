@@ -9,7 +9,6 @@ namespace Content.Shared.Kitchen
 {
     public abstract class SharedReagentGrinderComponent : Component
     {
-        public override string Name => "ReagentGrinder";
         public override uint? NetID => ContentNetIDs.REAGENT_GRINDER;
 
         [Serializable, NetSerializable]

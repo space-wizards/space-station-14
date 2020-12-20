@@ -17,8 +17,10 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Chemistry
 {
     [RegisterComponent]
-    class VaporComponent : SharedVaporComponent, ICollideBehavior
+    class VaporComponent : Component, ICollideBehavior
     {
+        public override string Name => "Vapor";
+
         public const float ReactTime = 0.125f;
 
         [Dependency] private readonly IMapManager _mapManager = default!;

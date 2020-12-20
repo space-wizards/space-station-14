@@ -33,10 +33,8 @@ namespace Content.Shared.GameObjects.Components.Interactable
         }
     }
 
-    public class SharedToolComponent : Component
+    public abstract class SharedToolComponent : Component
     {
-        public override string Name => "Tool";
-
         public virtual ToolQuality Qualities { get; set; }
     }
 

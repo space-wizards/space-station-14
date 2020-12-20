@@ -16,8 +16,10 @@ namespace Content.Server.GameObjects.Components.Command
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class CommunicationsConsoleComponent : SharedCommunicationsConsoleComponent, IActivate
+    public class CommunicationsConsoleComponent : Component, IActivate
     {
+        public override string Name => "CommunicationsConsole";
+
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;

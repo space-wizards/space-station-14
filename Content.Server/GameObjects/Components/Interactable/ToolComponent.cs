@@ -23,6 +23,8 @@ namespace Content.Server.GameObjects.Components.Interactable
     [ComponentReference(typeof(IToolComponent))]
     public class ToolComponent : SharedToolComponent, IToolComponent
     {
+        public override string Name => "Tool";
+
         protected ToolQuality _qualities = ToolQuality.None;
 
         [ViewVariables]

@@ -16,6 +16,8 @@ namespace Content.Server.GameObjects.Components.Paper
     [RegisterComponent]
     public class PaperComponent : SharedPaperComponent, IExamine, IInteractUsing, IUse
     {
+        public override string Name => "Paper";
+
         private PaperAction _mode;
         public string Content { get; private set; } = "";
 

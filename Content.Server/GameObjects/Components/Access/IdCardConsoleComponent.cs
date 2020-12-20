@@ -28,6 +28,8 @@ namespace Content.Server.GameObjects.Components.Access
     [ComponentReference(typeof(IActivate))]
     public class IdCardConsoleComponent : SharedIdCardConsoleComponent, IActivate, IInteractUsing, IBreakAct
     {
+        public override string Name => "IdCardConsole";
+
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         private ContainerSlot _privilegedIdContainer = default!;

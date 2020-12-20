@@ -40,6 +40,8 @@ namespace Content.Server.GameObjects.Components.Kitchen
     [ComponentReference(typeof(IActivate))]
     public class ReagentGrinderComponent : SharedReagentGrinderComponent, IActivate, IInteractUsing
     {
+        public override string Name => "ReagentGrinder";
+
         private AudioSystem _audioSystem = default!;
         [ViewVariables] private ContainerSlot _beakerContainer = default!;
 

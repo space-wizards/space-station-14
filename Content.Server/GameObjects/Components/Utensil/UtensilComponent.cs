@@ -20,6 +20,8 @@ namespace Content.Server.GameObjects.Components.Utensil
     [RegisterComponent]
     public class UtensilComponent : SharedUtensilComponent, IAfterInteract
     {
+        public override string Name => "Utensil";
+
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 

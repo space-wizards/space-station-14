@@ -7,10 +7,8 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Atmos
 {
-    public class SharedGasCanisterComponent : Component
+    public abstract class SharedGasCanisterComponent : Component
     {
-        public override string Name => "GasCanister";
-
         /// <summary>
         /// Key representing which <see cref="BoundUserInterface"/> is currently open.
         /// Useful when there are multiple UI for an object. Here it's future-proofing only.

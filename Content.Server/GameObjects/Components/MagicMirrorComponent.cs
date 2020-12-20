@@ -18,6 +18,8 @@ namespace Content.Server.GameObjects.Components
     [ComponentReference(typeof(IActivate))]
     public class MagicMirrorComponent : SharedMagicMirrorComponent, IActivate
     {
+        public override string Name => "MagicMirror";
+
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(MagicMirrorUiKey.Key);
 
         public override void Initialize()

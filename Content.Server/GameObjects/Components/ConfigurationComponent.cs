@@ -28,6 +28,8 @@ namespace Content.Server.GameObjects.Components
     [ComponentReference(typeof(SharedConfigurationComponent))]
     public class ConfigurationComponent : SharedConfigurationComponent, IInteractUsing
     {
+        public override string Name => "Configuration";
+
         [ViewVariables] private BoundUserInterface UserInterface => Owner.GetUIOrNull(ConfigurationUiKey.Key);
 
         [ViewVariables]

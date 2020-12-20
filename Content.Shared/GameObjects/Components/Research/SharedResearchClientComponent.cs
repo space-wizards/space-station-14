@@ -5,10 +5,8 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Research
 {
-    public class SharedResearchClientComponent : Component
+    public abstract class SharedResearchClientComponent : Component
     {
-        public override string Name => "ResearchClient";
-
         /// <summary>
         ///     Request that the server updates the client.
         /// </summary>

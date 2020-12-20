@@ -12,10 +12,8 @@ namespace Content.Shared.GameObjects.Components.Utensil
         Knife = 1 << 2
     }
 
-    public class SharedUtensilComponent : Component
+    public abstract class SharedUtensilComponent : Component
     {
-        public override string Name => "Utensil";
-
         public virtual UtensilType Types { get; set; }
     }
 }

@@ -12,9 +12,10 @@ namespace Content.Server.GameObjects.Components.Body
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    [ComponentReference(typeof(SharedBodyScannerComponent))]
-    public class BodyScannerComponent : SharedBodyScannerComponent, IActivate
+    public class BodyScannerComponent : Component, IActivate
     {
+        public override string Name => "BodyScanner";
+
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(BodyScannerUiKey.Key);
 
         void IActivate.Activate(ActivateEventArgs eventArgs)

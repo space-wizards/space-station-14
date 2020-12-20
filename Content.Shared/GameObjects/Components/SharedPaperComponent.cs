@@ -5,10 +5,8 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components
 {
-    public class SharedPaperComponent : Component
+    public abstract class SharedPaperComponent : Component
     {
-        public override string Name => "Paper";
-
         [Serializable, NetSerializable]
         public class PaperBoundUserInterfaceState : BoundUserInterfaceState
         {
