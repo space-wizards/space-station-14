@@ -22,6 +22,17 @@
   friction: 0.35
 
 - type: tile
+  name: floor_carpet
+  display_name: Elevator shaft
+  texture: "elevator_shaft"
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+
+- type: tile
   name: floor_freezer
   display_name: Freezer
   texture: "freezer"
