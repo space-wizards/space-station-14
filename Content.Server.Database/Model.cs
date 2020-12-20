@@ -119,7 +119,7 @@ namespace Content.Server.Database
 
     public enum DbJobPriority
     {
-        // These enum values HAVE to match the ones in JobPriority in Shared.
+        // These enum values HAVE to match the ones in JobPriority in Content.Shared
         Never = 0,
         Low = 1,
         Medium = 2,

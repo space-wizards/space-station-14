@@ -12,10 +12,10 @@ namespace Content.Shared
          */
 
         public static readonly CVarDef<string> StatusMoMMIUrl =
-            CVarDef.Create<string>("status.mommiurl", null);
+            CVarDef.Create("status.mommiurl", "", CVar.SERVERONLY);
 
         public static readonly CVarDef<string> StatusMoMMIPassword =
-            CVarDef.Create<string>("status.mommipassword", null);
+            CVarDef.Create("status.mommipassword", "", CVar.SERVERONLY);
 
 
         /*

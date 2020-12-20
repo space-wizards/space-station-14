@@ -5,6 +5,7 @@ using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;

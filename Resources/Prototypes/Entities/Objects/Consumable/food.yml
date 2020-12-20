@@ -1765,25 +1765,6 @@
 
 - type: entity
   parent: FoodBase
-  id: FoodMonkeyCube
-  name: monkey cube
-  description: Just add water!
-  components:
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: chem.Nutriment
-        Quantity: 10
-    maxVol: 11 # needs room for water
-    caps: AddTo, RemoveFrom, FitsInDispenser
-  - type: Sprite
-    sprite: Objects/Consumable/Food/monkeycube.rsi
-  - type: Rehydratable
-    target: MonkeyMob_Content
-  - type: Grindable
-
-- type: entity
-  parent: FoodBase
   id: FoodMonkeysDelight
   name: monkey's delight
   description: Eeee Eee!
@@ -2997,4 +2978,3 @@
       sprite: Objects/Consumable/Food/memoryleek.rsi
       state: memoryLeek
     - type: Grindable
-

@@ -3,7 +3,7 @@
   name: "chef"
   positions: 1
   startingGear: ChefGear
-  department:
+  departments:
   - Civilian
   icon: "Chef"
   access:

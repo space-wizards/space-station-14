@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Content.Server.GameObjects.Components.Body.Surgery.Messages;
 using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Body;
@@ -37,17 +38,17 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
 
         private float _baseOperateTime;
 
-        private IBody? _bodyCache;
-
         private ISurgeon.MechanismRequestCallback? _callbackCache;
 
         private int _idHash;
 
-        private IEntity? _performerCache;
-
         private SurgeryType _surgeryType;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(SurgeryUIKey.Key);
+
+        public IBody? BodyCache { get; private set; }
+
+        public IEntity? PerformerCache { get; private set; }
 
         async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
@@ -62,11 +63,6 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
             }
 
             CloseAllSurgeryUIs();
-            _optionsCache.Clear();
-
-            _performerCache = null;
-            _bodyCache = null;
-            _callbackCache = null;
 
             // Attempt surgery on a body by sending a list of operable parts for the client to choose from
             if (eventArgs.Target.TryGetComponent(out IBody? body))
@@ -88,8 +84,8 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
                 {
                     OpenSurgeryUI(actor.playerSession);
                     UpdateSurgeryUIBodyPartRequest(actor.playerSession, toSend);
-                    _performerCache = eventArgs.User; // Also, cache the data.
-                    _bodyCache = body;
+                    PerformerCache = eventArgs.User; // Also, cache the data.
+                    BodyCache = body;
                 }
                 else // If surgery cannot be performed, show message saying so.
                 {
@@ -99,7 +95,7 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
             else if (eventArgs.Target.TryGetComponent<IBodyPart>(out var part))
             {
                 // Attempt surgery on a DroppedBodyPart - there's only one possible target so no need for selection UI
-                _performerCache = eventArgs.User;
+                PerformerCache = eventArgs.User;
 
                 // If surgery can be performed...
                 if (!part.SurgeryCheck(_surgeryType))
@@ -132,10 +128,10 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
                 toSend.Add(mechanism.Name, _idHash++);
             }
 
-            if (_optionsCache.Count > 0 && _performerCache != null)
+            if (_optionsCache.Count > 0 && PerformerCache != null)
             {
-                OpenSurgeryUI(_performerCache.GetComponent<BasicActorComponent>().playerSession);
-                UpdateSurgeryUIMechanismRequest(_performerCache.GetComponent<BasicActorComponent>().playerSession,
+                OpenSurgeryUI(PerformerCache.GetComponent<BasicActorComponent>().playerSession);
+                UpdateSurgeryUIMechanismRequest(PerformerCache.GetComponent<BasicActorComponent>().playerSession,
                     toSend);
                 _callbackCache = callback;
             }
@@ -144,6 +140,14 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
                 Logger.Debug("Error on callback from mechanisms: there were no viable options to choose from!");
                 throw new InvalidOperationException();
             }
+        }
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+
+            serializer.DataField(ref _surgeryType, "surgeryType", SurgeryType.Incision);
+            serializer.DataField(ref _baseOperateTime, "baseOperateTime", 5);
         }
 
         public override void Initialize()
@@ -156,10 +160,14 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
             }
         }
 
-        // TODO BODY add checks to close UI if user walks too far away from tool or target.
         private void OpenSurgeryUI(IPlayerSession session)
         {
             UserInterface?.Open(session);
+
+            var message = new SurgeryWindowOpenMessage(this);
+
+            SendMessage(message);
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
         }
 
         private void UpdateSurgeryUIBodyPartRequest(IPlayerSession session, Dictionary<string, int> options)
@@ -172,14 +180,25 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
             UserInterface?.SendMessage(new RequestMechanismSurgeryUIMessage(options), session);
         }
 
+        private void ClearUIData()
+        {
+            _optionsCache.Clear();
+
+            PerformerCache = null;
+            BodyCache = null;
+            _callbackCache = null;
+        }
+
         private void CloseSurgeryUI(IPlayerSession session)
         {
             UserInterface?.Close(session);
+            ClearUIData();
         }
 
-        private void CloseAllSurgeryUIs()
+        public void CloseAllSurgeryUIs()
         {
             UserInterface?.CloseAll();
+            ClearUIData();
         }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
@@ -201,8 +220,8 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
         /// </summary>
         private void HandleReceiveBodyPart(int key)
         {
-            if (_performerCache == null ||
-                !_performerCache.TryGetComponent(out IActorComponent? actor))
+            if (PerformerCache == null ||
+                !PerformerCache.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }
@@ -210,7 +229,7 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
             CloseSurgeryUI(actor.playerSession);
             // TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
             if (!_optionsCache.TryGetValue(key, out var targetObject) ||
-                _bodyCache == null)
+                BodyCache == null)
             {
                 NotUsefulAnymorePopup();
                 return;
@@ -219,7 +238,7 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
             var target = (IBodyPart) targetObject!;
 
             // TODO BODY Reconsider
-            if (!target.AttemptSurgery(_surgeryType, _bodyCache, this, _performerCache))
+            if (!target.AttemptSurgery(_surgeryType, BodyCache, this, PerformerCache))
             {
                 NotUsefulAnymorePopup();
             }
@@ -233,8 +252,8 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
         {
             // TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
             if (!_optionsCache.TryGetValue(key, out var targetObject) ||
-                _performerCache == null ||
-                !_performerCache.TryGetComponent(out IActorComponent? actor))
+                PerformerCache == null ||
+                !PerformerCache.TryGetComponent(out IActorComponent? actor))
             {
                 NotUsefulAnymorePopup();
                 return;
@@ -243,27 +262,19 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
             var target = targetObject as MechanismComponent;
 
             CloseSurgeryUI(actor.playerSession);
-            _callbackCache?.Invoke(target, _bodyCache, this, _performerCache);
+            _callbackCache?.Invoke(target, BodyCache, this, PerformerCache);
         }
 
         private void NotUsefulPopup()
         {
-            _bodyCache?.Owner.PopupMessage(_performerCache,
+            BodyCache?.Owner.PopupMessage(PerformerCache,
                 Loc.GetString("You see no useful way to use {0:theName}.", Owner));
         }
 
         private void NotUsefulAnymorePopup()
         {
-            _bodyCache?.Owner.PopupMessage(_performerCache,
+            BodyCache?.Owner.PopupMessage(PerformerCache,
                 Loc.GetString("You see no useful way to use {0:theName} anymore.", Owner));
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _surgeryType, "surgeryType", SurgeryType.Incision);
-            serializer.DataField(ref _baseOperateTime, "baseOperateTime", 5);
         }
     }
 }

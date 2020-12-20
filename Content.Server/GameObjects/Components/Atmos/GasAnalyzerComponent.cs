@@ -130,7 +130,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             // Already get the pressure before Dirty(), because we can't get the EntitySystem in that thread or smth
             var pressure = 0f;
             var gam = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(Owner.Transform.GridID);
-            var tile = gam?.GetTile(Owner.Transform.Coordinates).Air;
+            var tile = gam?.GetTile(Owner.Transform.Coordinates)?.Air;
             if (tile != null)
             {
                 pressure = tile.Pressure;
@@ -190,7 +190,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
             var gam = atmosSystem.GetGridAtmosphere(pos.GetGridId(Owner.EntityManager));
-            var tile = gam?.GetTile(pos).Air;
+            var tile = gam.GetTile(pos)?.Air;
             if (tile == null)
             {
                 error = "No Atmosphere!";

@@ -11,6 +11,7 @@ using Content.Server.Interfaces.Chat;
 using Content.Shared.Chat;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
