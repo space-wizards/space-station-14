@@ -90,7 +90,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
                 var user = serverMsg.Session.AttachedEntity;
                 if(user == null) return;
 
-                if (_accessReader != null && _accessReader.IsAllowed(user))
+                if (_accessReader == null || _accessReader.IsAllowed(user))
                 {
                     MainBreakerEnabled = !MainBreakerEnabled;
                     _uiDirty = true;
