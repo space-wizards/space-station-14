@@ -264,7 +264,7 @@
   name: goat
   parent: MonkeyMob_Content
   id: GoatMob_Content
-  description: Not praised for their intelligence and social skills.
+  description: His spine consists of long sharp segments, no wonder he is so grumpy.
   drawdepth: Mobs
   suffix: AI
   components:
