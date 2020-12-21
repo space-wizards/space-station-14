@@ -54,7 +54,7 @@ namespace Content.Client.GameObjects.Components.Atmos
                                     {
                                         Children =
                                         {
-                                            new Label(){ Text = Loc.GetString("Label") },
+                                            new Label(){ Text = Loc.GetString("Label: ") },
                                             (LabelInput = new LineEdit() { Text = Name, Editable = false,
                                                 CustomMinimumSize = new Vector2(200, 30)}),
                                             (EditLabelBtn = new Button()),
