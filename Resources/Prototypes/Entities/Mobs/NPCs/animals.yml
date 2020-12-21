@@ -5,7 +5,7 @@
   save: false
   name: monkey
   id: MonkeyMob_Content
-  description: New church of neo-darwinists actually belive that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
+  description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
   drawdepth: Mobs
   suffix: AI
   components:
@@ -187,7 +187,7 @@
   name: bat
   parent: MonkeyMob_Content
   id: BatMob_Content
-  description: Some cultures find them terrifying, others crucnhy on the teeth.
+  description: Some cultures find them terrifying, others crunchy on the teeth.
   drawdepth: Mobs
   suffix: AI
   components:
@@ -300,7 +300,7 @@
   name: goose
   parent: MonkeyMob_Content
   id: GooseMob_Content
-  description: It's stomach and mind are an enigma beyond human comprehention.
+  description: Its stomach and mind are an enigma beyond human comprehension.
   drawdepth: Mobs
   suffix: AI
   components:
@@ -412,7 +412,7 @@
   name: tarantula
   parent: MonkeyMob_Content
   id: GiantSpiderMob_Content
-  description: Widely recognized to be the literal worst thing in existance.
+  description: Widely recognized to be the literal worst thing in existence.
   drawdepth: Mobs
   suffix: AI
   components:
