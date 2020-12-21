@@ -26,11 +26,11 @@
   - type: Destructible
     thresholds:
       500:
-        Spawn:
+        spawn:
           AMEPart:
             Min: 1
             Max: 1
-        Acts: ["Destruction"]
+        acts: ["Destruction"]
   - type: SnapGrid
     offset: Center
   - type: Airtight

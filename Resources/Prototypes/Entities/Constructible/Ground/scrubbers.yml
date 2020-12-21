@@ -24,7 +24,7 @@
   - type: Destructible
     thresholds:
       100:
-        Acts: ["Destruction"]
+        acts: ["Destruction"]
 
 - type: entity
   parent: ScrubberBase

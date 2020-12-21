@@ -18,7 +18,7 @@
   - type: Destructible
     thresholds:
       100:
-        Acts: ["Breakage"]
+        acts: ["Breakage"]
   - type: Rotatable
   - type: Pullable
 
@@ -150,7 +150,7 @@
   - type: Destructible
     thresholds:
       100:
-        Acts: ["Destruction"]
+        acts: ["Destruction"]
   - type: Appearance
     visuals:
     - type: DisposalUnitVisualizer
@@ -389,7 +389,7 @@
   - type: Destructible
     thresholds:
       100:
-        Acts: ["Destruction"]
+        acts: ["Destruction"]
   - type: Appearance
     visuals:
     - type: DisposalUnitVisualizer

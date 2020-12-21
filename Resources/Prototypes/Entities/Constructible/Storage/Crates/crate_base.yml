@@ -40,7 +40,7 @@
   - type: Destructible
     thresholds:
       100:
-        Acts: ["Destruction"]
+        acts: ["Destruction"]
   - type: Appearance
     visuals:
     - type: StorageVisualizer

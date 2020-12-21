@@ -13,7 +13,7 @@
   - type: Destructible
     thresholds:
       5:
-        Acts: [ "Destruction" ]
+        acts: [ "Destruction" ]
   - type: Sprite
     drawdepth: WallTops
     sprite: Constructible/Misc/decals.rsi

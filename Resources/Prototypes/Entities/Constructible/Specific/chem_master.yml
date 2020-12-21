@@ -36,11 +36,11 @@
   - type: Destructible
     thresholds:
       50:
-        Spawn:
+        spawn:
           chem_master_broken:
             Min: 1
             Max: 1
-        Acts: ["Destruction"]
+        acts: ["Destruction"]
   - type: UserInterface
     interfaces:
     - key: enum.ChemMasterUiKey.Key
@@ -82,11 +82,11 @@
   - type: Destructible
     thresholds:
       25:
-        Spawn:
+        spawn:
           SteelSheet1:
             Min: 1
             Max: 1
-        Acts: ["Destruction"]
+        acts: ["Destruction"]
   - type: UserInterface
     interfaces:
     - key: enum.ChemMasterUiKey.Key

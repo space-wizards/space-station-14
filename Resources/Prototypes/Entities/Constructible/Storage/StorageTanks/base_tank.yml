@@ -28,7 +28,7 @@
   - type: Destructible
     thresholds:
       10:
-        Acts: ["Destruction"]
+        acts: ["Destruction"]
   - type: SolutionContainer
     maxVol: 1500
     caps: RemoveFrom

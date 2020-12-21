@@ -25,7 +25,7 @@
   - type: Destructible
     thresholds:
       50:
-        Acts: ["Destruction"]
+        acts: ["Destruction"]
   - type: UserInterface
     interfaces:
     - key: enum.InstrumentUiKey.Key
