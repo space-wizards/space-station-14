@@ -265,7 +265,6 @@
   parent: MonkeyMob_Content
   id: GoatMob_Content
   description: Not praised for their intelligence and social skills
-  description:
   drawdepth: Mobs
   suffix: AI
   components:
@@ -302,7 +301,6 @@
   parent: MonkeyMob_Content
   id: GooseMob_Content
   description: It's stomach and mind are an enigma beyond human comprehention
-  description:
   drawdepth: Mobs
   suffix: AI
   components:
