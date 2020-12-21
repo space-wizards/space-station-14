@@ -4,7 +4,7 @@
   positions: 2
   spawnPositions: 1
   startingGear: CargoTechGear
-  department:
+  departments:
   - Cargo
   icon: "CargoTechnician"
   access:

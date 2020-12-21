@@ -3,7 +3,7 @@
   name: "janitor"
   positions: 1
   startingGear: JanitorGear
-  department:
+  departments:
   - Civilian
   icon: "Janitor"
   access:

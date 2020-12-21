@@ -1,6 +1,7 @@
 ﻿using Content.Server.GameObjects.Components.Chemistry;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects;

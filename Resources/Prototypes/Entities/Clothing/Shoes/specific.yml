@@ -79,3 +79,13 @@
     sprite: Clothing/Shoes/Specific/wizard.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Specific/wizard.rsi
+
+- type: entity
+  parent: ClothingShoesColorBlack
+  id: ClothingShoesChameleonNoSlips
+  name: no-slip shoes
+  #name: no-slip chameleon shoes
+  #description: These shoes have an action button to change shape, but unlike the chameleon shoes from the kit they also protect you from slips.
+  description: These protect you from slips while looking like normal sneakers.
+  components:
+  - type: NoSlip

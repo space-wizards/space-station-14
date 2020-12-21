@@ -8,6 +8,7 @@ using Content.Server.Utility;
 using Content.Shared.Arcade;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;

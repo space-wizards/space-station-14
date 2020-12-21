@@ -1,7 +1,7 @@
 - type: entity
   parent: ClothingBackpackDuffelMedical
   id: ClothingBackpackDuffelSurgeryFilled
-  name: surgical duffel bag
+  name: surgical duffelbag
   description: "A large duffel bag for holding extra medical supplies - this one seems to be designed for holding surgical tools."
   components:
   - type: StorageFill
@@ -12,5 +12,131 @@
       - name: Cautery
       - name: Retractor
       - name: Scalpel
+  - type: Storage
+    capacity: 30
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicate
+  id: ClothingBackpackDuffelSyndicateFilledMedical
+  name: syndicate surgical duffelbag
+  description: "A large duffel bag for holding extra medical supplies - this one seems to be designed for holding surgical tools."
+  components:
+  - type: Sprite
+    state: icon-med
+  - type: StorageFill
+    contents:
+      - name: Hemostat
+      - name: BoneSaw
+      - name: Drill
+      - name: Cautery
+      - name: Retractor
+      - name: Scalpel
+  - type: Storage
+    capacity: 30
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicate
+  id: ClothingBackpackDuffelSyndicateFilledShotgun
+  name: Bojevic bundle
+  description: "Lean and mean: Contains the popular Bojevic Shotgun, a 12g beanbag drum and 2 12g buckshot drums." #, and a pair of Thermal Imaging Goggles.
+  components:
+  - type: Sprite
+    state: icon-ammo
+  - type: StorageFill
+    contents:
+      - name: ShotgunBojevic
+      - name: MagazineShotgun
+      - name: MagazineShotgunBeanbag
+#     - name: ThermalImagingGoggles
+  - type: Storage
+    capacity: 100
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicate
+  id: ClothingBackpackDuffelSyndicateFilledSMG
+  name: C-20r bundle
+  description: "Old faithful: The classic C-20r Submachine Gun, bundled with three magazines." #, and a Suppressor.
+  components:
+  - type: Sprite
+    state: icon-ammo
+  - type: StorageFill
+    contents:
+      - name: SmgC20r
+      - name: MagazinePistolSmg
+        amount: 2
+#     - name: SMGSuppressor
+  - type: Storage
+    capacity: 100
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicate
+  id: ClothingBackpackDuffelSyndicateFilledLMG
+  name: L6 Saw bundle
+  description: "More dakka: The iconic L6 lightmachinegun, bundled with 2 box magazines."
+  components:
+  - type: Sprite
+    state: icon-ammo
+  - type: StorageFill
+    contents:
+      - name: LMGL6
+      - name: MagazineLRifleBox
+  - type: Storage
+    capacity: 100
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicate
+  id: ClothingBackpackDuffelSyndicateFilledGrenadeLauncher
+  name: China-Lake bundle
+  description: "An old China-Lake grenade launcher bundled with 9 rounds of various destruction capability."
+  components:
+  - type: Sprite
+    state: icon-ammo
+  - type: StorageFill
+    contents:
+      - name: LauncherChinaLake
+      - name: GrenadeBlast
+        amount: 3
+      - name: GrenadeFlash
+        amount: 3
+      - name: GrenadeFrag
+        amount: 3
+  - type: Storage
+    capacity: 200
+
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelSyndicateCostumeCentcom
+  name: Centcom official costume duffelbag
+  description: "Contains a full CentCom Official uniform set, headset and clipboard included. The headset comes without an encryption key."
+  components:
+  - type: StorageFill
+    contents:
+      - name: ClothingHeadHatCaptain
+      - name: ClothingEyesGlassesSunglasses
+      - name: ClothingUniformJumpsuitCentcomOfficial
+      - name: ClothingShoesBootsJack
+      - name: ClothingHandsGlovesColorGray
+      - name: ClothingHeadsetService
+      - name: ClothingOuterVestKevlar
+      - name: Paper
+      - name: Pen
+      - name: CentcomPDA
+  - type: Storage
+    capacity: 50
+
+- type: entity
+  parent: ClothingBackpackDuffelClown
+  id: ClothingBackpackDuffelSyndicateCostumeClown
+  name: clown costume duffelbag
+  description: "Contains a complete Clown outfit."
+  components:
+  - type: StorageFill
+    contents:
+      - name: ClothingUniformJumpsuitClown
+      - name: ClothingShoesClown
+      - name: ClothingMaskClown
+      - name: BikeHorn
+      - name: ClownPDA
+      - name: ClothingHeadsetService
   - type: Storage
     capacity: 30

@@ -3,7 +3,7 @@
   name: "clown"
   positions: 1
   startingGear: ClownGear
-  department:
+  departments:
   - Civilian
   icon: "Clown"
   access:
