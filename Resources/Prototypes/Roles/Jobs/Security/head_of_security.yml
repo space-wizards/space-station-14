@@ -22,7 +22,7 @@
   equipment:
     innerclothing: ClothingUniformJumpsuitHoS
     backpack: ClothingBackpackSecurityFilled
-    shoes: ClothingShoesJackboots
+    shoes: ClothingShoesBootsJack
     outerclothing: ClothingOuterCoatHoSTrench
     eyes: ClothingEyesGlassesSecurity
     head: ClothingHeadHatBeretHoS
