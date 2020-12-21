@@ -139,7 +139,7 @@
   name: butterfly
   parent: MonkeyMob_Content
   id: ButterflyMob_Content
-  description: Despite popular misconseptions, is not actually made of butter
+  description: Despite popular misconseptions, is not actually made of butter.
   drawdepth: Mobs
   suffix: AI
   components:
@@ -225,7 +225,7 @@
   name: bee
   parent: MonkeyMob_Content
   id: BeeMob_Content
-  description: Nice to have, but you can't build a civilization on foundation of honey alone
+  description: Nice to have, but you can't build a civilization on foundation of honey alone.
   drawdepth: Mobs
   suffix: AI
   components:
@@ -264,7 +264,7 @@
   name: goat
   parent: MonkeyMob_Content
   id: GoatMob_Content
-  description: Not praised for their intelligence and social skills
+  description: Not praised for their intelligence and social skills.
   drawdepth: Mobs
   suffix: AI
   components:
@@ -300,7 +300,7 @@
   name: goose
   parent: MonkeyMob_Content
   id: GooseMob_Content
-  description: It's stomach and mind are an enigma beyond human comprehention
+  description: It's stomach and mind are an enigma beyond human comprehention.
   drawdepth: Mobs
   suffix: AI
   components:
@@ -336,7 +336,7 @@
   name: parrot
   parent: MonkeyMob_Content
   id: ParrotMob_Content
-  description: Infiltrates your domain, spies on you, and somehow still a cool pet
+  description: Infiltrates your domain, spies on you, and somehow still a cool pet.
   drawdepth: Mobs
   suffix: AI
   components:
@@ -482,7 +482,7 @@
   name: penguin
   parent: MonkeyMob_Content
   id: PenguinMob_Content
-  description: Their lives are constant pain due to their inner-body knees
+  description: Their lives are constant pain due to their inner-body knees.
   drawdepth: Mobs
   suffix: AI
   components:
