@@ -155,6 +155,8 @@
     mode: SnapgridCenter
   components:
   - type: Clickable
+  - type: AccessReader
+    access: [["Engineering"]]
   - type: InteractionOutline
   - type: Physics
     shapes:
