@@ -29,13 +29,12 @@ namespace Content.IntegrationTests.Tests.Damage
   - type: Damageable
     damageContainer: allDamageContainer
     resistances: noResistances
-  - type: Appearance
-    visuals:
-    - type: DamageVisualizer
-      states:
-      - damage: 0
-        sprite: Test/Damage/metal.rsi
-        state: metal0
+  - type: Destructible
+    thresholds:
+      0:
+        appearance:
+          sprite: Test/Damage/metal.rsi
+          state: metal0
 
 - type: entity
   id: {TestDualLayerDummyId}
@@ -43,16 +42,20 @@ namespace Content.IntegrationTests.Tests.Damage
   components:
   - type: Sprite
   - type: Damageable
-  - type: Appearance
+  - type: Destructible
+    thresholds:
+    0:
+      appearance:
+        sprite: Test/Damage/metal.rsi
+        state: metal0
     visuals:
     - type: DamageVisualizer
       states:
       - damage: 0
-        sprite: Test/Damage/metal.rsi
-        state: metal0
       - damage: 10
-        sprite: Test/Damage/wood.rsi
-        state: wood0
+        appearance:
+          sprite: Test/Damage/wood.rsi
+          state: wood0
 ";
 
         [Test]
