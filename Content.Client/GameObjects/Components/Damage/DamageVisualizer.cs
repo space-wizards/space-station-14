@@ -38,7 +38,7 @@ namespace Content.Client.GameObjects.Components.Damage
                 {
                     var mapping = (YamlMappingNode) stateNode;
                     var reader = YamlObjectSerializer.NewReader(mapping, typeof(DamageVisualizerState));
-                    var state = (DamageVisualizerState) reader.NodeToType(typeof(DamageVisualizerState), mapping);
+                    var state = reader.NodeToType<DamageVisualizerState>(mapping);
                     var layerStates = _layerStates.GetOrNew(state.Layer ?? -1);
 
                     layerStates.Add(state);
