@@ -8,7 +8,6 @@ using Content.Server.Interfaces.Chat;
 using Content.Shared;
 using Newtonsoft.Json;
 using Robust.Server.Interfaces.ServerStatus;
-using Robust.Server.ServerStatus;
 using Robust.Shared.Asynchronous;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.IoC;
@@ -73,9 +72,9 @@ namespace Content.Server
             }
         }
 
-        private bool _handleChatPost(HttpMethod method, HttpListenerRequest request, HttpListenerResponse response)
+        private bool _handleChatPost(IStatusHandlerContext context)
         {
-            if (method != HttpMethod.Post || request.Url!.AbsolutePath != "/ooc")
+            if (context.RequestMethod != HttpMethod.Post || context.Url!.AbsolutePath != "/ooc")
             {
                 return false;
             }
@@ -84,14 +83,14 @@ namespace Content.Server
 
             if (string.IsNullOrEmpty(password))
             {
-                response.StatusCode = (int) HttpStatusCode.Forbidden;
+                context.RespondError(HttpStatusCode.Forbidden);
                 return true;
             }
 
             OOCPostMessage message = null;
             try
             {
-                message = request.GetFromJson<OOCPostMessage>();
+                message = context.RequestBodyJson<OOCPostMessage>();
             }
             catch (JsonSerializationException)
             {
@@ -100,19 +99,19 @@ namespace Content.Server
 
             if (message == null)
             {
-                response.StatusCode = (int) HttpStatusCode.BadRequest;
+                context.RespondError(HttpStatusCode.BadRequest);
                 return true;
             }
 
             if (message.Password != password)
             {
-                response.StatusCode = (int) HttpStatusCode.Forbidden;
+                context.RespondError(HttpStatusCode.Forbidden);
                 return true;
             }
 
             _taskManager.RunOnMainThread(() => _chatManager.SendHookOOC(message.Sender, message.Contents));
 
-            response.StatusCode = (int) HttpStatusCode.OK;
+            context.Respond("Success", HttpStatusCode.OK);
 
             return false;
         }
