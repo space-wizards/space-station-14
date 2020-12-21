@@ -14,7 +14,7 @@
   - type: Destructible
     thresholds:
       100:
-        Acts: ["Destruction"]
+        acts: ["Destruction"]
   - type: Sprite
     sprite: Constructible/Atmos/pump.rsi
   - type: Icon

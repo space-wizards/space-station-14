@@ -132,12 +132,12 @@
   - type: Destructible
     thresholds:
       10:
-        Sound: /Audio/Effects/glass_break1.ogg
-        Spawn:
+        sound: /Audio/Effects/glass_break1.ogg
+        spawn:
           FloodlightBroken:
-            Min: 1
-            Max: 1
-        Acts: ["Destruction"]
+            min: 1
+            max: 1
+        acts: ["Destruction"]
   - type: Appearance
     visuals:
       - type: FlashLightVisualizer
@@ -157,12 +157,12 @@
   - type: Destructible
     thresholds:
       20:
-        Spawn:
+        spawn:
           SteelSheet1:
-            Min: 1
-            Max: 1
-        Sound: /Audio/Effects/metalbreak.ogg
-        Acts: ["Destruction"]
+            min: 1
+            max: 1
+        sound: /Audio/Effects/metalbreak.ogg
+        acts: ["Destruction"]
   - type: Physics
     shapes:
     - !type:PhysShapeAabb

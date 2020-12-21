@@ -29,15 +29,15 @@ namespace Content.IntegrationTests.Tests.Destructible
   - type: Destructible
     thresholds:
       20:
-        TriggersOnce: false
+        triggersOnce: false
       50:
-        Sound: /Audio/Effects/woodhit.ogg
-        Spawn:
+        sound: /Audio/Effects/woodhit.ogg
+        spawn:
           WoodPlank:
-            Min: 1
-            Max: 1
-        Acts: [""Breakage""]
-        TriggersOnce: false
+            min: 1
+            max: 1
+        acts: [""Breakage""]
+        triggersOnce: false
   - type: TestThresholdListener
 ";
 

@@ -41,7 +41,7 @@
   - type: Destructible
     thresholds:
       50:
-        Acts: [ "Destruction" ]
+        acts: [ "Destruction" ]
 
 - type: entity
   name: small light
@@ -68,7 +68,7 @@
   - type: Destructible
     thresholds:
       25:
-        Acts: [ "Destruction" ]
+        acts: [ "Destruction" ]
 
 - type: entity
   name: unpowered small light
@@ -87,4 +87,4 @@
   - type: Destructible
     thresholds:
       25:
-        Acts: [ "Destruction" ]
+        acts: [ "Destruction" ]

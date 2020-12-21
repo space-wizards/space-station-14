@@ -61,7 +61,7 @@
   - type: Destructible
     thresholds:
       500:
-        Acts: ["Destruction"]
+        acts: ["Destruction"]
   placement:
     mode: SnapgridCenter
 

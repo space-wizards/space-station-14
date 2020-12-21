@@ -40,12 +40,12 @@
   - type: Destructible
     thresholds:
       15:
-        Sound: /Audio/Effects/metalbreak.ogg
-        Spawn:
+        sound: /Audio/Effects/metalbreak.ogg
+        spawn:
           SteelSheet1:
-            Min: 1
-            Max: 1
-        Acts: ["Destruction"]
+            min: 1
+            max: 1
+        acts: ["Destruction"]
 
 - type: entity
   id: TableFrame
@@ -62,12 +62,12 @@
   - type: Destructible
     thresholds:
       1:
-        Sound: /Audio/Effects/metalbreak.ogg
-        Spawn:
+        sound: /Audio/Effects/metalbreak.ogg
+        spawn:
           SteelSheet1:
-            Min: 1
-            Max: 1
-        Acts: ["Destruction"]
+            min: 1
+            max: 1
+        acts: ["Destruction"]
   - type: Construction
     graph: Tables
     node: TableFrame
@@ -87,12 +87,12 @@
   - type: Destructible
     thresholds:
       1:
-        Sound: /Audio/Effects/metalbreak.ogg
-        Spawn:
+        sound: /Audio/Effects/metalbreak.ogg
+        spawn:
           SteelSheet1:
-            Min: 1
-            Max: 1
-        Acts: ["Destruction"]
+            min: 1
+            max: 1
+        acts: ["Destruction"]
 
 - type: entity
   id: TableMetal
@@ -109,12 +109,12 @@
   - type: Destructible
     thresholds:
       15:
-        Sound: /Audio/Effects/metalbreak.ogg
-        Spawn:
+        sound: /Audio/Effects/metalbreak.ogg
+        spawn:
           SteelSheet1:
-            Min: 1
-            Max: 1
-        Acts: ["Destruction"]
+            min: 1
+            max: 1
+        acts: ["Destruction"]
   - type: Construction
     graph: Tables
     node: MetalTable
@@ -134,12 +134,12 @@
   - type: Destructible
     thresholds:
       75:
-        Sound: /Audio/Effects/metalbreak.ogg
-        Spawn:
+        sound: /Audio/Effects/metalbreak.ogg
+        spawn:
           SteelSheet1:
-            Min: 1
-            Max: 1
-        Acts: ["Destruction"]
+            min: 1
+            max: 1
+        acts: ["Destruction"]
   - type: Construction
     graph: Tables
     node: ReinforcedTable
@@ -159,12 +159,12 @@
   - type: Destructible
     thresholds:
       5:
-        Sound: /Audio/Effects/glass_break2.ogg
-        Spawn:
+        sound: /Audio/Effects/glass_break2.ogg
+        spawn:
           ShardGlass:
-            Min: 1
-            Max: 1
-        Acts: ["Destruction"]
+            min: 1
+            max: 1
+        acts: ["Destruction"]
   - type: Construction
     graph: Tables
     node: GlassTable
@@ -184,12 +184,12 @@
   - type: Destructible
     thresholds:
       20:
-        Sound: /Audio/Effects/glass_break2.ogg
-        Spawn:
+        sound: /Audio/Effects/glass_break2.ogg
+        spawn:
           ShardGlass:
-            Min: 1
-            Max: 1
-        Acts: ["Destruction"]
+            min: 1
+            max: 1
+        acts: ["Destruction"]
   - type: Construction
     graph: Tables
     node: RGlassTable
@@ -209,12 +209,12 @@
   - type: Destructible
     thresholds:
       15:
-        Sound: /Audio/Effects/woodhit.ogg
-        Spawn:
+        sound: /Audio/Effects/woodhit.ogg
+        spawn:
           WoodPlank:
-            Min: 1
-            Max: 1
-        Acts: ["Destruction"]
+            min: 1
+            max: 1
+        acts: ["Destruction"]
   - type: Construction
     graph: Tables
     node: WoodTable
@@ -234,12 +234,12 @@
   - type: Destructible
     thresholds:
       15:
-        Sound: /Audio/Effects/woodhit.ogg
-        Spawn:
+        sound: /Audio/Effects/woodhit.ogg
+        spawn:
           WoodPlank:
-            Min: 1
-            Max: 1
-        Acts: ["Destruction"]
+            min: 1
+            max: 1
+        acts: ["Destruction"]
   - type: Construction
     graph: Tables
     node: PokerTable
@@ -259,8 +259,8 @@
   - type: Destructible
     thresholds:
       50:
-        Sound: /Audio/Effects/picaxe2.ogg
-        Acts: ["Destruction"]
+        sound: /Audio/Effects/picaxe2.ogg
+        acts: ["Destruction"]
 
 - type: entity
   id: TableDebug
@@ -277,4 +277,4 @@
   - type: Destructible
     thresholds:
       1:
-        Acts: ["Destruction"]
+        acts: ["Destruction"]

@@ -14,7 +14,7 @@
   - type: Destructible
     thresholds:
       100:
-        Acts: ["Destruction"]
+        acts: ["Destruction"]
   - type: GasCanister
   - type: Anchorable
   - type: Pullable
