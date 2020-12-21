@@ -1,21 +1,25 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Threading;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
+using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameTicking.GameRules
 {
-    public sealed class RuleMaxTimeRestart : GameRule
+    public class RuleInactivityTimeRestart : GameRule
     {
         [Dependency] private readonly IGameTicker _gameTicker = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         private CancellationTokenSource _timerCancel = new();
 
-        public TimeSpan RoundMaxTime { get; set; } = TimeSpan.FromMinutes(5);
+        public TimeSpan InactivityMaxTime { get; set; } = TimeSpan.FromMinutes(10);
         public TimeSpan RoundEndDelay { get; set; } = TimeSpan.FromSeconds(10);
 
         public override void Added()
@@ -23,6 +27,7 @@ namespace Content.Server.GameTicking.GameRules
             base.Added();
 
             _gameTicker.OnRunLevelChanged += RunLevelChanged;
+            _playerManager.PlayerStatusChanged += PlayerStatusChanged;
         }
 
         public override void Removed()
@@ -30,6 +35,8 @@ namespace Content.Server.GameTicking.GameRules
             base.Removed();
 
             _gameTicker.OnRunLevelChanged -= RunLevelChanged;
+            _playerManager.PlayerStatusChanged -= PlayerStatusChanged;
+
             StopTimer();
         }
 
@@ -37,7 +44,7 @@ namespace Content.Server.GameTicking.GameRules
         {
             _timerCancel.Cancel();
             _timerCancel = new CancellationTokenSource();
-            Timer.Spawn(RoundMaxTime, TimerFired, _timerCancel.Token);
+            Timer.Spawn(InactivityMaxTime, TimerFired, _timerCancel.Token);
         }
 
         public void StopTimer()
@@ -65,6 +72,23 @@ namespace Content.Server.GameTicking.GameRules
                 case GameRunLevel.PostRound:
                     StopTimer();
                     break;
+            }
+        }
+
+        private void PlayerStatusChanged(object? sender, SessionStatusEventArgs e)
+        {
+            if (_gameTicker.RunLevel != GameRunLevel.InRound)
+            {
+                return;
+            }
+
+            if (_playerManager.PlayerCount == 0)
+            {
+                RestartTimer();
+            }
+            else
+            {
+                StopTimer();
             }
         }
     }
