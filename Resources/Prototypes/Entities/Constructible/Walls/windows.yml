@@ -34,8 +34,8 @@
         soundCollection: WindowBreak
         spawn:
           ShardGlass:
-            Min: 1
-            Max: 2
+            min: 1
+            max: 2
         acts: ["Destruction"]
   - type: SnapGrid
     offset: Center
@@ -68,8 +68,8 @@
         soundCollection: WindowBreak
         spawn:
           ShardGlassReinforced:
-            Min: 1
-            Max: 2
+            min: 1
+            max: 2
         acts: ["Destruction"]
   - type: Window
     base: rwindow
@@ -96,8 +96,8 @@
         soundCollection: WindowBreak
         spawn:
           ShardGlassPhoron:
-            Min: 1
-            Max: 2
+            min: 1
+            max: 2
         acts: ["Destruction"]
     resistances: metallicResistances
   - type: Window

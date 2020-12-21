@@ -51,8 +51,8 @@
       300:
         spawn:
           Girder:
-            Min: 1
-            Max: 1
+            min: 1
+            max: 1
         acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
@@ -74,8 +74,8 @@
       300:
         spawn:
           Girder:
-            Min: 1
-            Max: 1
+            min: 1
+            max: 1
         acts: ["Destruction"]
   - type: IconSmooth
     key: walls
@@ -97,8 +97,8 @@
       300:
         spawn:
           Girder:
-            Min: 1
-            Max: 1
+            min: 1
+            max: 1
         acts: ["Destruction"]
   - type: IconSmooth
     key: walls
@@ -121,8 +121,8 @@
       300:
         spawn:
           Girder:
-            Min: 1
-            Max: 1
+            min: 1
+            max: 1
         acts: ["Destruction"]
   - type: IconSmooth
     key: walls
@@ -144,8 +144,8 @@
       300:
         spawn:
           Girder:
-            Min: 1
-            Max: 1
+            min: 1
+            max: 1
         acts: ["Destruction"]
   - type: IconSmooth
     key: walls
@@ -167,8 +167,8 @@
       300:
         spawn:
           Girder:
-            Min: 1
-            Max: 1
+            min: 1
+            max: 1
         acts: ["Destruction"]
   - type: IconSmooth
     key: walls
@@ -191,8 +191,8 @@
       300:
         spawn:
           Girder:
-            Min: 1
-            Max: 1
+            min: 1
+            max: 1
         acts: ["Destruction"]
   - type: IconSmooth
     key: walls
@@ -214,8 +214,8 @@
       300:
         spawn:
           Girder:
-            Min: 1
-            Max: 1
+            min: 1
+            max: 1
         acts: ["Destruction"]
   - type: IconSmooth
     key: walls
@@ -237,8 +237,8 @@
       300:
         spawn:
           Girder:
-            Min: 1
-            Max: 1
+            min: 1
+            max: 1
         acts: ["Destruction"]
   - type: IconSmooth
     key: walls
@@ -260,8 +260,8 @@
       300:
         spawn:
           Girder:
-            Min: 1
-            Max: 1
+            min: 1
+            max: 1
         acts: ["Destruction"]
   - type: IconSmooth
     key: walls
@@ -283,8 +283,8 @@
       300:
         spawn:
           Girder:
-            Min: 1
-            Max: 1
+            min: 1
+            max: 1
         acts: ["Destruction"]
   - type: IconSmooth
     key: walls
@@ -337,8 +337,8 @@
       1000:
         spawn:
           Girder:
-            Min: 1
-            Max: 1
+            min: 1
+            max: 1
         acts: ["Destruction"]
   - type: IconSmooth
     key: walls
@@ -360,9 +360,9 @@
       300:
         spawn:
           Girder:
-            Min: 1
-            Max: 1
-        acts: [ "Destruction" ]
+            min: 1
+            max: 1
+        acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     base: sandstone
@@ -383,9 +383,9 @@
       300:
         spawn:
           Girder:
-            Min: 1
-            Max: 1
-        acts: [ "Destruction" ]
+            min: 1
+            max: 1
+        acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     base: silver
@@ -432,9 +432,9 @@
       300:
         spawn:
           Girder:
-            Min: 1
-            Max: 1
-        acts: [ "Destruction" ]
+            min: 1
+            max: 1
+        acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     base: uranium
@@ -455,9 +455,9 @@
       300:
         spawn:
           Girder:
-            Min: 1
-            Max: 1
-        acts: [ "Destruction" ]
+            min: 1
+            max: 1
+        acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     base: wood

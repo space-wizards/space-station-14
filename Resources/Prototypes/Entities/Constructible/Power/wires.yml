@@ -54,8 +54,8 @@
       100:
         spawn:
           HVWireStack1:
-            Min: 1
-            Max: 1
+            min: 1
+            max: 1
         acts: ["Destruction"]
 
 - type: entity
@@ -88,8 +88,8 @@
       100:
         spawn:
           MVWireStack1:
-            Min: 1
-            Max: 1
+            min: 1
+            max: 1
         acts: ["Destruction"]
 
 - type: entity
@@ -124,6 +124,6 @@
       100:
         spawn:
           ApcExtensionCableStack1:
-            Min: 1
-            Max: 1
+            min: 1
+            max: 1
         acts: ["Destruction"]

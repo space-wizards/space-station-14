@@ -34,8 +34,8 @@ namespace Content.IntegrationTests.Tests.Destructible
         sound: /Audio/Effects/woodhit.ogg
         spawn:
           WoodPlank:
-            Min: 1
-            Max: 1
+            min: 1
+            max: 1
         acts: [""Breakage""]
         triggersOnce: false
   - type: TestThresholdListener

@@ -38,8 +38,8 @@
       50:
         spawn:
           chem_master_broken:
-            Min: 1
-            Max: 1
+            min: 1
+            max: 1
         acts: ["Destruction"]
   - type: UserInterface
     interfaces:
@@ -84,8 +84,8 @@
       25:
         spawn:
           SteelSheet1:
-            Min: 1
-            Max: 1
+            min: 1
+            max: 1
         acts: ["Destruction"]
   - type: UserInterface
     interfaces:
