@@ -140,7 +140,6 @@
   parent: MonkeyMob_Content
   id: ButterflyMob_Content
   description: Despite popular misconseptions, is not actually made of butter
-  description:
   drawdepth: Mobs
   suffix: AI
   components:
