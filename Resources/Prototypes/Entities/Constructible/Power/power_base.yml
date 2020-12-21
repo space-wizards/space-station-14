@@ -237,6 +237,6 @@
   - type: Destructible
     thresholds:
       100:
-        Acts: ["Breakage"]
+        acts: ["Breakage"]
   - type: Anchorable
   - type: Pullable

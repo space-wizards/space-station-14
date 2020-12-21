@@ -218,13 +218,15 @@ namespace Content.Server.GameObjects.Components.Atmos
                     Tiles[indices] = tile;
                 }
 
-                if (IsSpace(indices))
+                var isAirBlocked = IsAirBlocked(indices);
+
+                if (IsSpace(indices) && !isAirBlocked)
                 {
                     tile.Air = new GasMixture(GetVolumeForCells(1), AtmosphereSystem);
                     tile.Air.MarkImmutable();
                     Tiles[indices] = tile;
 
-                } else if (IsAirBlocked(indices))
+                } else if (isAirBlocked)
                 {
                     tile.Air = null;
                 }

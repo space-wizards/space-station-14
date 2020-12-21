@@ -22,7 +22,7 @@
   - type: Destructible
     thresholds:
       75:
-        Acts: ["Destruction"]
+        acts: ["Destruction"]
   - type: Anchorable
   - type: Pullable
   - type: PowerReceiver

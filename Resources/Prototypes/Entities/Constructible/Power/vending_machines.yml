@@ -33,7 +33,7 @@
   - type: Destructible
     thresholds:
       50:
-        Acts: ["Breakage"]
+        acts: ["Breakage"]
   - type: UserInterface
     interfaces:
     - key: enum.VendingMachineUiKey.Key

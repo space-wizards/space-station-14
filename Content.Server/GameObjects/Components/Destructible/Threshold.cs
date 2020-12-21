@@ -52,12 +52,12 @@ namespace Content.Server.GameObjects.Components.Destructible
 
         public void ExposeData(ObjectSerializer serializer)
         {
-            serializer.DataField(ref Spawn, "Spawn", null);
-            serializer.DataField(ref Sound, "Sound", string.Empty);
-            serializer.DataField(ref SoundCollection, "SoundCollection", string.Empty);
-            serializer.DataField(ref Acts, "Acts", 0, WithFormat.Flags<ActsFlags>());
-            serializer.DataField(ref Triggered, "Triggered", false);
-            serializer.DataField(ref TriggersOnce, "TriggersOnce", false);
+            serializer.DataField(ref Spawn, "spawn", null);
+            serializer.DataField(ref Sound, "sound", string.Empty);
+            serializer.DataField(ref SoundCollection, "soundCollection", string.Empty);
+            serializer.DataField(ref Acts, "acts", 0, WithFormat.Flags<ActsFlags>());
+            serializer.DataField(ref Triggered, "triggered", false);
+            serializer.DataField(ref TriggersOnce, "triggersOnce", false);
         }
 
         /// <summary>

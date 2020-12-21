@@ -34,7 +34,7 @@
   - type: Destructible
     thresholds:
       150:
-        Acts: ["Breakage"]
+        acts: ["Breakage"]
   - type: GravityGenerator
   - type: UserInterface
     interfaces:

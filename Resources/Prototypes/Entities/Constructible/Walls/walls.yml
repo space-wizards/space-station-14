@@ -49,11 +49,11 @@
   - type: Destructible
     thresholds:
       300:
-        Spawn:
+        spawn:
           Girder:
-            Min: 1
-            Max: 1
-        Acts: [ "Destruction" ]
+            min: 1
+            max: 1
+        acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: brick
@@ -72,11 +72,11 @@
   - type: Destructible
     thresholds:
       300:
-        Spawn:
+        spawn:
           Girder:
-            Min: 1
-            Max: 1
-        Acts: ["Destruction"]
+            min: 1
+            max: 1
+        acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     base: clock
@@ -95,11 +95,11 @@
   - type: Destructible
     thresholds:
       300:
-        Spawn:
+        spawn:
           Girder:
-            Min: 1
-            Max: 1
-        Acts: ["Destruction"]
+            min: 1
+            max: 1
+        acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     base: clown
@@ -119,11 +119,11 @@
   - type: Destructible
     thresholds:
       300:
-        Spawn:
+        spawn:
           Girder:
-            Min: 1
-            Max: 1
-        Acts: ["Destruction"]
+            min: 1
+            max: 1
+        acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     base: cult
@@ -142,11 +142,11 @@
   - type: Destructible
     thresholds:
       300:
-        Spawn:
+        spawn:
           Girder:
-            Min: 1
-            Max: 1
-        Acts: ["Destruction"]
+            min: 1
+            max: 1
+        acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     base: debug
@@ -165,11 +165,11 @@
   - type: Destructible
     thresholds:
       300:
-        Spawn:
+        spawn:
           Girder:
-            Min: 1
-            Max: 1
-        Acts: ["Destruction"]
+            min: 1
+            max: 1
+        acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     base: diamond
@@ -189,11 +189,11 @@
   - type: Destructible
     thresholds:
       300:
-        Spawn:
+        spawn:
           Girder:
-            Min: 1
-            Max: 1
-        Acts: ["Destruction"]
+            min: 1
+            max: 1
+        acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     base: gold
@@ -212,11 +212,11 @@
   - type: Destructible
     thresholds:
       300:
-        Spawn:
+        spawn:
           Girder:
-            Min: 1
-            Max: 1
-        Acts: ["Destruction"]
+            min: 1
+            max: 1
+        acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     base: ice
@@ -235,11 +235,11 @@
   - type: Destructible
     thresholds:
       300:
-        Spawn:
+        spawn:
           Girder:
-            Min: 1
-            Max: 1
-        Acts: ["Destruction"]
+            min: 1
+            max: 1
+        acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     base: metal
@@ -258,11 +258,11 @@
   - type: Destructible
     thresholds:
       300:
-        Spawn:
+        spawn:
           Girder:
-            Min: 1
-            Max: 1
-        Acts: ["Destruction"]
+            min: 1
+            max: 1
+        acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     base: plasma
@@ -281,11 +281,11 @@
   - type: Destructible
     thresholds:
       300:
-        Spawn:
+        spawn:
           Girder:
-            Min: 1
-            Max: 1
-        Acts: ["Destruction"]
+            min: 1
+            max: 1
+        acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     base: plastic
@@ -309,7 +309,7 @@
   - type: Destructible
     thresholds:
       600:
-        Acts: ["Destruction"]
+        acts: ["Destruction"]
   - type: BreakableConstruction
     node: girder
   - type: ReinforcedWall
@@ -335,11 +335,11 @@
   - type: Destructible
     thresholds:
       1000:
-        Spawn:
+        spawn:
           Girder:
-            Min: 1
-            Max: 1
-        Acts: ["Destruction"]
+            min: 1
+            max: 1
+        acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     base: riveted
@@ -358,11 +358,11 @@
   - type: Destructible
     thresholds:
       300:
-        Spawn:
+        spawn:
           Girder:
-            Min: 1
-            Max: 1
-        Acts: [ "Destruction" ]
+            min: 1
+            max: 1
+        acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     base: sandstone
@@ -381,11 +381,11 @@
   - type: Destructible
     thresholds:
       300:
-        Spawn:
+        spawn:
           Girder:
-            Min: 1
-            Max: 1
-        Acts: [ "Destruction" ]
+            min: 1
+            max: 1
+        acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     base: silver
@@ -408,7 +408,7 @@
   - type: Destructible
     thresholds:
       300:
-        Acts: [ "Destruction" ]
+        acts: [ "Destruction" ]
   - type: BreakableConstruction
     node: girder
     destroySound: /Audio/Effects/metalbreak.ogg
@@ -430,11 +430,11 @@
   - type: Destructible
     thresholds:
       300:
-        Spawn:
+        spawn:
           Girder:
-            Min: 1
-            Max: 1
-        Acts: [ "Destruction" ]
+            min: 1
+            max: 1
+        acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     base: uranium
@@ -453,11 +453,11 @@
   - type: Destructible
     thresholds:
       300:
-        Spawn:
+        spawn:
           Girder:
-            Min: 1
-            Max: 1
-        Acts: [ "Destruction" ]
+            min: 1
+            max: 1
+        acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     base: wood

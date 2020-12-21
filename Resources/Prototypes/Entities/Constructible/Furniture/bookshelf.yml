@@ -24,12 +24,12 @@
   - type: Destructible
     thresholds:
       30:
-        Sound: /Audio/Effects/woodhit.ogg
-        Spawn:
+        sound: /Audio/Effects/woodhit.ogg
+        spawn:
           WoodPlank:
-            Min: 1
-            Max: 1
-        Acts: ["Destruction"]
+            min: 1
+            max: 1
+        acts: ["Destruction"]
   - type: Occluder
     sizeX: 32
     sizeY: 32

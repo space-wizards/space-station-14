@@ -30,7 +30,7 @@
   - type: Destructible
     thresholds:
       100:
-        Acts: [ "Destruction" ]
+        acts: [ "Destruction" ]
   - type: BreakableConstruction
     node: start
   - type: SnapGrid
