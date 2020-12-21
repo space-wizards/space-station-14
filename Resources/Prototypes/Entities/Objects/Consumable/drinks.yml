@@ -24,6 +24,21 @@
   components:
   - type: Drink
     isOpen: true
+  - type: Damageable
+  - type: Destructible
+    thresholds:
+      5:
+        acts: [ "Destruction" ]
+        soundCollection: WindowBreak
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 1
+  - type: DamageOnLand
+    amount: 5
+  - type: DamageOtherOnHit
+    amount: 5
+
 
 # Transformable container - normal glass
 - type: entity
@@ -33,7 +48,6 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_clear.rsi
-
   - type: SolutionContainer
     fillingState: glass
     maxVol: 50
