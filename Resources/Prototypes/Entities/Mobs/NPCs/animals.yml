@@ -139,7 +139,7 @@
   name: butterfly
   parent: MonkeyMob_Content
   id: ButterflyMob_Content
-  description: Despite popular misconseptions, is not actually made of butter.
+  description: Despite popular misconceptions, it's not actually made of butter.
   drawdepth: Mobs
   suffix: AI
   components:
