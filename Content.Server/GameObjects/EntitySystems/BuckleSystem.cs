@@ -26,6 +26,14 @@ namespace Content.Server.GameObjects.EntitySystems
             SubscribeLocalEvent<EntRemovedFromContainerMessage>(ContainerModified);
         }
 
+        public override void Update(float frameTime)
+        {
+            foreach (var comp in ComponentManager.EntityQuery<BuckleComponent>(false))
+            {
+                comp.Update();
+            }
+        }
+
         public override void Shutdown()
         {
             base.Shutdown();

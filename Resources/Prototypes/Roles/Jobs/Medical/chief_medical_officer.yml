@@ -6,7 +6,7 @@
   head: true
   positions: 1
   startingGear: CMOGear
-  department:
+  departments:
   - Command
   - Medical
   icon: "ChiefMedicalOfficer"

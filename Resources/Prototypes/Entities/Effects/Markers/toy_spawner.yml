@@ -1,17 +1,13 @@
 - type: entity
   name: Toy Spawner
   id: ToySpawner
+  parent: MarkerBase
   components:
     - type: Sprite
       netsync: false
       visible: false
       sprite: Interface/Misc/markers.rsi
       state: spawner_toy
-
-    - type: Marker
-    - type: Clickable
-    - type: InteractionOutline
-    - type: Physics
     - type: TrashSpawner
       rarePrototypes:
         - CarvingHelpMe
@@ -32,23 +28,17 @@
         - ToyMouse
       chance: 0.5
       offset: 0.2
-  placement:
-    mode: AlignTileAny
 
 - type: entity
   name: Figure Spawner
   id: FigureSpawner
+  parent: MarkerBase
   components:
     - type: Sprite
       netsync: false
       visible: false
       sprite: Interface/Misc/markers.rsi
       state: spawner_figure
-
-    - type: Marker
-    - type: Clickable
-    - type: InteractionOutline
-    - type: Physics
     - type: TrashSpawner
       prototypes:
         - ToyAi
@@ -72,5 +62,3 @@
         - ToySkeleton
       chance: 0.5
       offset: 0.2
-  placement:
-    mode: AlignTileAny

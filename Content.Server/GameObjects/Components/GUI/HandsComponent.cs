@@ -9,6 +9,7 @@ using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Physics.Pull;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -105,10 +106,9 @@ namespace Content.Server.GameObjects.Components.GUI
             return GetHand(handName)?.Entity?.GetComponent<ItemComponent>();
         }
 
-        public bool TryGetItem(string handName, [MaybeNullWhen(false)] out ItemComponent item)
+        public bool TryGetItem(string handName, [NotNullWhen(true)] out ItemComponent? item)
         {
-            item = GetItem(handName);
-            return item != null;
+            return (item = GetItem(handName)) != null;
         }
 
         public ItemComponent? GetActiveHand => ActiveHand == null
@@ -240,7 +240,7 @@ namespace Content.Server.GameObjects.Components.GUI
             return true;
         }
 
-        public bool TryHand(IEntity entity, [MaybeNullWhen(false)] out string handName)
+        public bool TryHand(IEntity entity, [NotNullWhen(true)] out string? handName)
         {
             handName = null;
 

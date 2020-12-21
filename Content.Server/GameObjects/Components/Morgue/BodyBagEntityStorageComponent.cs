@@ -20,6 +20,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using System.Threading.Tasks;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 
 namespace Content.Server.GameObjects.Components.Morgue
 {

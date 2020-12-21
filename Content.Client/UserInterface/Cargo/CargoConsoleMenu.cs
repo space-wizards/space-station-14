@@ -109,7 +109,8 @@ namespace Content.Client.UserInterface.Cargo
             var buttons = new HBoxContainer();
             CallShuttleButton = new Button()
             {
-                Text = Loc.GetString("Call Shuttle"),
+                //Text = Loc.GetString("Call Shuttle"),
+                Text = Loc.GetString("Activate Telepad"), //Shuttle code pending
                 TextAlign = Label.AlignMode.Center,
                 SizeFlagsHorizontal = SizeFlags.FillExpand
             };
