@@ -145,20 +145,20 @@ namespace Content.Server.GameObjects.Components.Metabolism
 
         private float SuffocatingPercentage()
         {
-            var percentages = new float[Atmospherics.TotalNumberOfGases];
+            var total = 0f;
 
             foreach (var (gas, deficit) in DeficitGases)
             {
-                if (!NeedsGases.TryGetValue(gas, out var needed))
+                var lack = 1f;
+                if (NeedsGases.TryGetValue(gas, out var needed))
                 {
-                    percentages[(int) gas] = 1;
-                    continue;
+                    lack = deficit / needed;
                 }
 
-                percentages[(int) gas] = deficit / needed;
+                total += lack / Atmospherics.TotalNumberOfGases;
             }
 
-            return percentages.Average();
+            return total;
         }
 
         private float GasProducedMultiplier(Gas gas, float usedAverage)

@@ -574,7 +574,7 @@ namespace Content.Server.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void FinalizeEq()
         {
-            var transferDirections = new float[Atmospherics.Directions];
+            Span<float> transferDirections = stackalloc float[Atmospherics.Directions];
             var hasTransferDirs = false;
             for (var i = 0; i < Atmospherics.Directions; i++)
             {
@@ -609,7 +609,7 @@ namespace Content.Server.Atmos
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void FinalizeEqNeighbors(in float[] transferDirs)
+        private void FinalizeEqNeighbors(ReadOnlySpan<float> transferDirs)
         {
             for (var i = 0; i < Atmospherics.Directions; i++)
             {
