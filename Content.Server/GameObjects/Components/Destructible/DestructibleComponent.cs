@@ -1,12 +1,10 @@
 ﻿#nullable enable
 using System.Collections.Generic;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
-using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -19,18 +17,16 @@ namespace Content.Server.GameObjects.Components.Destructible
     [RegisterComponent]
     public class DestructibleComponent : Component
     {
-        [Dependency] private readonly IRobustRandom _random = default!;
-
-        private ActSystem _actSystem = default!;
+        private DestructibleSystem _destructibleSystem = default!;
 
         public override string Name => "Destructible";
 
         [ViewVariables]
-        private SortedDictionary<int, Threshold> _lowestToHighestThresholds = new();
+        private SortedDictionary<int, Threshold.Threshold> _lowestToHighestThresholds = new();
 
         [ViewVariables] private int PreviousTotalDamage { get; set; }
 
-        public IReadOnlyDictionary<int, Threshold> LowestToHighestThresholds => _lowestToHighestThresholds;
+        public IReadOnlyDictionary<int, Threshold.Threshold> LowestToHighestThresholds => _lowestToHighestThresholds;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -38,16 +34,16 @@ namespace Content.Server.GameObjects.Components.Destructible
 
             serializer.DataReadWriteFunction(
                 "thresholds",
-                new Dictionary<int, Threshold>(),
-                thresholds => _lowestToHighestThresholds = new SortedDictionary<int, Threshold>(thresholds),
-                () => new Dictionary<int, Threshold>(_lowestToHighestThresholds));
+                new Dictionary<int, Threshold.Threshold>(),
+                thresholds => _lowestToHighestThresholds = new SortedDictionary<int, Threshold.Threshold>(thresholds),
+                () => new Dictionary<int, Threshold.Threshold>(_lowestToHighestThresholds));
         }
 
         public override void Initialize()
         {
             base.Initialize();
 
-            _actSystem = EntitySystem.Get<ActSystem>();
+            _destructibleSystem = EntitySystem.Get<DestructibleSystem>();
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
@@ -83,7 +79,7 @@ namespace Content.Server.GameObjects.Components.Destructible
                             var thresholdMessage = new DestructibleThresholdReachedMessage(this, threshold, msg.Damageable.TotalDamage, damage);
                             SendMessage(thresholdMessage);
 
-                            threshold.Trigger(Owner, _random, _actSystem);
+                            threshold.Trigger(Owner, _destructibleSystem);
                         }
                     }
 

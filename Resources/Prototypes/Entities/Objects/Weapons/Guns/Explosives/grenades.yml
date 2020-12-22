@@ -22,7 +22,9 @@
   - type: Destructible
     thresholds:
       10:
-        acts: ["Destruction"]
+        behaviors:
+        - DoActsBehavior
+          acts: ["Destruction"]
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer
@@ -48,7 +50,9 @@
   - type: Destructible
     thresholds:
       10:
-        acts: ["Destruction"]
+        behaviors:
+        - DoActsBehavior
+          acts: ["Destruction"]
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer
@@ -78,7 +82,9 @@
   - type: Destructible
     thresholds:
       10:
-        acts: ["Destruction"]
+        behaviors:
+        - DoActsBehavior
+          acts: ["Destruction"]
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer
@@ -107,7 +113,9 @@
   - type: Destructible
     thresholds:
       50:
-        acts: ["Destruction"]
+        behaviors:
+        - DoActsBehavior
+          acts: ["Destruction"]
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer

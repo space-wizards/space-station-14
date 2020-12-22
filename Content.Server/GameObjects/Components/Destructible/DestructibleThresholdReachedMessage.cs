@@ -4,7 +4,7 @@ namespace Content.Server.GameObjects.Components.Destructible
 {
     public class DestructibleThresholdReachedMessage : ComponentMessage
     {
-        public DestructibleThresholdReachedMessage(DestructibleComponent parent, Threshold threshold, int totalDamage, int thresholdAmount)
+        public DestructibleThresholdReachedMessage(DestructibleComponent parent, Threshold.Threshold threshold, int totalDamage, int thresholdAmount)
         {
             Parent = parent;
             Threshold = threshold;
@@ -14,7 +14,7 @@ namespace Content.Server.GameObjects.Components.Destructible
 
         public DestructibleComponent Parent { get; }
 
-        public Threshold Threshold { get; }
+        public Threshold.Threshold Threshold { get; }
 
         /// <summary>
         ///     The amount of total damage currently had that triggered this threshold.
