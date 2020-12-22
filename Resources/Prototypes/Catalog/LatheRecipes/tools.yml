@@ -64,3 +64,36 @@
   materials:
     steel: 50
     glass: 20
+
+- type: latheRecipe
+  id: PowerDrill
+  icon:
+    sprite: Objects/Tools/drill.rsi
+    state: drill_screw
+  result: PowerDrill
+  completetime: 500
+  materials:
+    steel: 80
+    glass: 20
+
+- type: latheRecipe
+  id: RCD
+  icon:
+    sprite: Objects/Tools/rcd.rsi
+    state: rcd
+  result: RCD
+  completetime: 1000
+  materials:
+    steel: 250
+    glass: 100
+
+-type: latheRecipe
+ id: RCDAmmo
+ icon:
+    sprite: Objects/Tools/rcd.rsi
+    state: rcd_ammo
+ result: RCDAmmo
+ completetime: 600
+ materials:
+    steel: 90
+    glass: 80
