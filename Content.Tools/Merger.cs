@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -14,8 +15,11 @@ namespace Content.Tools
         public Map MapOther { get; }
 
         public Dictionary<uint, uint> TileMapFromOtherToOurs { get; } = new Dictionary<uint, uint>();
+        public Dictionary<uint, uint> TileMapFromBasedToOurs { get; } = new Dictionary<uint, uint>();
         public Dictionary<uint, uint> EntityMapFromOtherToOurs { get; } = new Dictionary<uint, uint>();
         public List<uint> EntityListDirectMerge { get; } = new List<uint>();
+
+        private const int ExpectedChunkSize = 16 * 16 * 4;
 
         public Merger(Map ours, Map based, Map other)
         {
@@ -26,55 +30,134 @@ namespace Content.Tools
 
         public bool Merge()
         {
-            PlanTileMapping();
-            if (!MergeTiles())
-                return false;
+            PlanTileMapping(TileMapFromOtherToOurs, MapOther);
+            PlanTileMapping(TileMapFromBasedToOurs, MapBased);
+            MergeTiles();
             PlanEntityMapping();
-            bool success = true;
-            foreach (var kvp in EntityMapFromOtherToOurs)
-            {
-                YamlMappingNode oursEnt;
-                YamlMappingNode basedEnt;
-                if (MapOurs.Entities.ContainsKey(kvp.Value))
-                {
-                    oursEnt = MapOurs.Entities[kvp.Value];
-                    if (MapBased.Entities.ContainsKey(kvp.Value))
-                    {
-                        basedEnt = MapBased.Entities[kvp.Value];
-                    }
-                    else
-                    {
-                        basedEnt = oursEnt;
-                    }
-                }
-                else
-                {
-                    basedEnt = oursEnt = new YamlMappingNode();
-                    MapOurs.Entities[kvp.Value] = basedEnt;
-                }
-                if (!MergeEntityNodes(oursEnt, basedEnt, MapOther.Entities[kvp.Key]))
-                {
-                    Console.WriteLine("Unable to successfully merge entity " + kvp.Key);
-                    success = false;
-                }
-                oursEnt.Children["uid"] = kvp.Value.ToString(CultureInfo.InvariantCulture);
-            }
-            if (!success)
-                return false;
-            return true;
+            return MergeEntities();
         }
 
         // -- Tiles --
 
-        public void PlanTileMapping()
+        public void PlanTileMapping(Dictionary<uint, uint> relativeOtherToOurs, Map relativeOther)
         {
-            // TODO
+            var mapping = new Dictionary<string, uint>();
+            uint nextAvailable = 0;
+            foreach (var kvp in MapOurs.TilemapNode)
+            {
+                var k = uint.Parse(kvp.Key.ToString());
+                var v = kvp.Value.ToString();
+                mapping[v] = k;
+                if (k >= nextAvailable)
+                    nextAvailable = k + 1;
+            }
+            foreach (var kvp in relativeOther.TilemapNode)
+            {
+                var k = uint.Parse(kvp.Key.ToString());
+                var v = kvp.Value.ToString();
+                if (mapping.ContainsKey(v))
+                {
+                    relativeOtherToOurs[k] = mapping[v];
+                }
+                else
+                {
+                    MapOurs.TilemapNode.Add(nextAvailable.ToString(CultureInfo.InvariantCulture), v);
+                    relativeOtherToOurs[k] = nextAvailable++;
+                }
+            }
         }
 
-        public bool MergeTiles()
+        public void MergeTiles()
         {
-            // TODO
-            return true;
+            var a = MapOurs.GridsNode.Children[0];
+            var b = MapBased.GridsNode.Children[0];
+            var c = MapOther.GridsNode.Children[0];
+            var aChunks = a["chunks"];
+            var bChunks = b["chunks"];
+            var cChunks = c["chunks"];
+            MergeTileChunks((YamlSequenceNode) aChunks, (YamlSequenceNode) bChunks, (YamlSequenceNode) cChunks);
+        }
+
+        public void MergeTileChunks(YamlSequenceNode aChunks, YamlSequenceNode bChunks, YamlSequenceNode cChunks)
+        {
+            var aMap = ConvertTileChunks(aChunks);
+            var bMap = ConvertTileChunks(bChunks);
+            var cMap = ConvertTileChunks(cChunks);
+
+            var xMap = new HashSet<string>();
+            foreach (var kvp in aMap)
+                xMap.Add(kvp.Key);
+            // don't include b because that would mess with chunk deletion
+            foreach (var kvp in cMap)
+                xMap.Add(kvp.Key);
+
+            foreach (var ind in xMap)
+            {
+                using var a = new MemoryStream(GetChunkBytes(aMap, ind));
+                using var b = new MemoryStream(GetChunkBytes(bMap, ind));
+                using var c = new MemoryStream(GetChunkBytes(cMap, ind));
+                using var aR = new BinaryReader(a);
+                using var bR = new BinaryReader(b);
+                using var cR = new BinaryReader(c);
+
+                var outB = new byte[ExpectedChunkSize];
+                
+                {
+                    using (var outS = new MemoryStream(outB))
+                    using (var outW = new BinaryWriter(outS))
+
+                    for (var i = 0; i < ExpectedChunkSize; i += 4)
+                    {
+                        var aI = aR.ReadUInt32();
+                        var bI = MapTileId(bR.ReadUInt32(), TileMapFromBasedToOurs);
+                        var cI = MapTileId(cR.ReadUInt32(), TileMapFromOtherToOurs);
+                        // cI needs translation.
+
+                        uint result = aI;
+                        if (aI == bI)
+                        {
+                            // If aI == bI then aI did not change anything, so cI always wins
+                            result = cI;
+                        }
+                        else if (bI != cI)
+                        {
+                            // If bI != cI then cI definitely changed something (conflict, but overrides aI)
+                            result = cI;
+                            Console.WriteLine("WARNING: Tile (" + ind + ")[" + i + "] was changed by both branches.");
+                        }
+                        outW.Write(result);
+                    }
+                }
+
+                // Actually output chunk
+                if (!aMap.ContainsKey(ind))
+                {
+                    var res = new YamlMappingNode();
+                    res.Children["ind"] = ind;
+                    aMap[ind] = res;
+                }
+                aMap[ind].Children["tiles"] = Convert.ToBase64String(outB);
+            }
+        }
+
+        public uint MapTileId(uint src, Dictionary<uint, uint> mapping)
+        {
+            return (src & 0xFFFF0000) | mapping[src & 0xFFFF];
+        }
+
+        public Dictionary<string, YamlMappingNode> ConvertTileChunks(YamlSequenceNode chunks)
+        {
+            var map = new Dictionary<string, YamlMappingNode>();
+            foreach (var chunk in chunks)
+                map[chunk["ind"].ToString()] = (YamlMappingNode) chunk;
+            return map;
+        }
+
+        public byte[] GetChunkBytes(Dictionary<string, YamlMappingNode> chunks, string ind)
+        {
+            if (!chunks.ContainsKey(ind))
+                return new byte[ExpectedChunkSize];
+            return Convert.FromBase64String(chunks[ind]["tiles"].ToString());
         }
 
         // -- Entities --
@@ -112,6 +195,40 @@ namespace Content.Tools
                     EntityMapFromOtherToOurs[kvp.Key] = newId;
                 }
             }
+        }
+
+        public bool MergeEntities()
+        {
+            bool success = true;
+            foreach (var kvp in EntityMapFromOtherToOurs)
+            {
+                YamlMappingNode oursEnt;
+                YamlMappingNode basedEnt;
+                if (MapOurs.Entities.ContainsKey(kvp.Value))
+                {
+                    oursEnt = MapOurs.Entities[kvp.Value];
+                    if (MapBased.Entities.ContainsKey(kvp.Value))
+                    {
+                        basedEnt = MapBased.Entities[kvp.Value];
+                    }
+                    else
+                    {
+                        basedEnt = oursEnt;
+                    }
+                }
+                else
+                {
+                    basedEnt = oursEnt = new YamlMappingNode();
+                    MapOurs.Entities[kvp.Value] = basedEnt;
+                }
+                if (!MergeEntityNodes(oursEnt, basedEnt, MapOther.Entities[kvp.Key]))
+                {
+                    Console.WriteLine("Unable to successfully merge entity " + kvp.Key);
+                    success = false;
+                }
+                oursEnt.Children["uid"] = kvp.Value.ToString(CultureInfo.InvariantCulture);
+            }
+            return success;
         }
 
         public bool MergeEntityNodes(YamlMappingNode ours, YamlMappingNode based, YamlMappingNode other)
