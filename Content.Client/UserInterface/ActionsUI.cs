@@ -39,11 +39,10 @@ namespace Content.Client.UserInterface
 
         private readonly TextureButton _lockButton;
         private readonly TextureButton _settingsButton;
-        private readonly TextureButton _previousHotbarButton;
         private readonly Label _loadoutNumber;
-        private readonly TextureButton _nextHotbarButton;
         private readonly Texture _lockTexture;
         private readonly Texture _unlockTexture;
+        private readonly HBoxContainer _loadoutContainer;
 
         private readonly TextureRect _dragShadow;
 
@@ -148,38 +147,39 @@ namespace Content.Client.UserInterface
             };
             hotbarContainer.AddChild(_slotContainer);
 
-            var loadoutContainer = new HBoxContainer
+            _loadoutContainer = new HBoxContainer
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                MouseFilter = MouseFilterMode.Stop
             };
-            hotbarContainer.AddChild(loadoutContainer);
+            hotbarContainer.AddChild(_loadoutContainer);
 
-            loadoutContainer.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 1 });
-            _previousHotbarButton = new TextureButton
+            _loadoutContainer.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 1 });
+            var previousHotbarIcon = new TextureRect()
             {
-                TextureNormal = resourceCache.GetTexture("/Textures/Interface/Nano/left_arrow.svg.png"),
+                Texture = resourceCache.GetTexture("/Textures/Interface/Nano/left_arrow.svg.png"),
                 SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
                 SizeFlagsVertical = SizeFlags.ShrinkCenter,
                 SizeFlagsStretchRatio = 1
             };
-            loadoutContainer.AddChild(_previousHotbarButton);
-            loadoutContainer.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 2 });
+            _loadoutContainer.AddChild(previousHotbarIcon);
+            _loadoutContainer.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 2 });
             _loadoutNumber = new Label
             {
                 Text = "1",
                 SizeFlagsStretchRatio = 1
             };
-            loadoutContainer.AddChild(_loadoutNumber);
-            loadoutContainer.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 2 });
-            _nextHotbarButton = new TextureButton
+            _loadoutContainer.AddChild(_loadoutNumber);
+            _loadoutContainer.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 2 });
+            var nextHotbarIcon = new TextureRect
             {
-                TextureNormal = resourceCache.GetTexture("/Textures/Interface/Nano/right_arrow.svg.png"),
+                Texture = resourceCache.GetTexture("/Textures/Interface/Nano/right_arrow.svg.png"),
                 SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
                 SizeFlagsVertical = SizeFlags.ShrinkCenter,
                 SizeFlagsStretchRatio = 1
             };
-            loadoutContainer.AddChild(_nextHotbarButton);
-            loadoutContainer.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 1 });
+            _loadoutContainer.AddChild(nextHotbarIcon);
+            _loadoutContainer.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 1 });
 
             _slots = new ActionSlot[ClientActionsComponent.Slots];
 
@@ -194,7 +194,7 @@ namespace Content.Client.UserInterface
 
             for (byte i = 0; i < ClientActionsComponent.Slots; i++)
             {
-                var slot = new ActionSlot(this, actionsComponent, i);
+                var slot = new ActionSlot(this, _menu, actionsComponent, i);
                 _slotContainer.AddChild(slot);
                 _slots[i] = slot;
             }
@@ -206,9 +206,8 @@ namespace Content.Client.UserInterface
         {
             base.EnteredTree();
             _lockButton.OnPressed += OnLockPressed;
-            _nextHotbarButton.OnPressed += NextHotbar;
-            _previousHotbarButton.OnPressed += PreviousHotbar;
             _settingsButton.OnPressed += OnToggleActionsMenu;
+            _loadoutContainer.OnKeyBindDown += OnHotbarPaginate;
         }
 
         protected override void ExitedTree()
@@ -217,9 +216,8 @@ namespace Content.Client.UserInterface
             StopTargeting();
             _menu.Close();
             _lockButton.OnPressed -= OnLockPressed;
-            _nextHotbarButton.OnPressed -= NextHotbar;
-            _previousHotbarButton.OnPressed -= PreviousHotbar;
             _settingsButton.OnPressed -= OnToggleActionsMenu;
+            _loadoutContainer.OnKeyBindDown -= OnHotbarPaginate;
         }
 
         protected override Vector2 CalculateMinimumSize()
@@ -420,17 +418,24 @@ namespace Content.Client.UserInterface
             }
         }
 
-        private void NextHotbar(BaseButton.ButtonEventArgs args)
-        {
-            ChangeHotbar((byte) ((SelectedHotbar + 1) % ClientActionsComponent.Hotbars));
-        }
 
-        private void PreviousHotbar(BaseButton.ButtonEventArgs args)
+        private void OnHotbarPaginate(GUIBoundKeyEventArgs args)
         {
-            var newBar = SelectedHotbar == 0 ? ClientActionsComponent.Hotbars - 1 : SelectedHotbar - 1;
-            ChangeHotbar((byte) newBar);
-        }
+            // rather than clicking the arrows themselves, the user can click the hbox so it's more
+            // "forgiving" for misclicks, and we simply check which side they are closer to
+            if (args.Function != EngineKeyFunctions.UIClick) return;
 
+            var rightness = args.RelativePosition.X / _loadoutContainer.Width;
+            if (rightness > 0.5)
+            {
+                ChangeHotbar((byte) ((SelectedHotbar + 1) % ClientActionsComponent.Hotbars));
+            }
+            else
+            {
+                var newBar = SelectedHotbar == 0 ? ClientActionsComponent.Hotbars - 1 : SelectedHotbar - 1;
+                ChangeHotbar((byte) newBar);
+            }
+        }
 
         private void ChangeHotbar(byte hotbar)
         {
@@ -545,6 +550,15 @@ namespace Content.Client.UserInterface
         {
             var actionSlot = _slots[slot];
             actionSlot.Depress(args.State == BoundKeyState.Down);
+        }
+
+        /// <summary>
+        /// Handle hotbar change.
+        /// </summary>
+        /// <param name="hotbar">hotbar index to switch to</param>
+        public void HandleChangeHotbarKeybind(byte hotbar, PointerInputCmdHandler.PointerInputCmdArgs args)
+        {
+            ChangeHotbar(hotbar);
         }
 
         protected override void FrameUpdate(FrameEventArgs args)

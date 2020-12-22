@@ -180,6 +180,15 @@ namespace Content.Client.UserInterface
                 AddButton(ContentKeyFunctions.Hotbar8, "Hotbar slot 8");
                 AddButton(ContentKeyFunctions.Hotbar9, "Hotbar slot 9");
                 AddButton(ContentKeyFunctions.Hotbar0, "Hotbar slot 0");
+                AddButton(ContentKeyFunctions.Loadout1, "Hotbar Loadout 1");
+                AddButton(ContentKeyFunctions.Loadout2, "Hotbar Loadout 2");
+                AddButton(ContentKeyFunctions.Loadout3, "Hotbar Loadout 3");
+                AddButton(ContentKeyFunctions.Loadout4, "Hotbar Loadout 4");
+                AddButton(ContentKeyFunctions.Loadout5, "Hotbar Loadout 5");
+                AddButton(ContentKeyFunctions.Loadout6, "Hotbar Loadout 6");
+                AddButton(ContentKeyFunctions.Loadout7, "Hotbar Loadout 7");
+                AddButton(ContentKeyFunctions.Loadout8, "Hotbar Loadout 8");
+                AddButton(ContentKeyFunctions.Loadout9, "Hotbar Loadout 9");
 
                 AddHeader("Map Editor");
                 AddButton(EngineKeyFunctions.EditorPlaceObject, "Place object");
