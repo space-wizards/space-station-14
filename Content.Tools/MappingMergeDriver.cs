@@ -1,4 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using YamlDotNet.Core;
+using YamlDotNet.RepresentationModel;
 
 namespace Content.Tools
 {
@@ -14,21 +19,20 @@ namespace Content.Tools
             var based = new Map(args[1]); // On what?
             var other = new Map(args[2]);
 
-            Merge(ours, based, other);
-
-            Environment.Exit(0);
-        }
-
-        public static void Merge(Map ours, Map based, Map other)
-        {
-            var result = ours.Merge(other);
-
-            if (result == MergeResult.Conflict)
+            if ((ours.GridsNode.Children.Count != 1) || (based.GridsNode.Children.Count != 1) || (other.GridsNode.Children.Count != 1))
             {
+                Console.WriteLine("one or more files had an amount of grids not equal to 1");
+                Environment.Exit(1);
+            }
+
+            if (!(new Merger(ours, based, other).Merge()))
+            {
+                Console.WriteLine("unable to merge!");
                 Environment.Exit(1);
             }
 
             ours.Save();
+            Environment.Exit(0);
         }
     }
 }
