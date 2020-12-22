@@ -185,7 +185,6 @@ namespace Content.Server.Atmos
             }
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void HighPressureMovements()
         {
             // TODO ATMOS finish this
@@ -241,7 +240,6 @@ namespace Content.Server.Atmos
             }
         }
 
-        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void EqualizePressureInZone(int cycleNum)
         {
             if (Air == null || (_tileAtmosInfo.LastCycle >= cycleNum)) return; // Already done.
@@ -571,7 +569,6 @@ namespace Content.Server.Atmos
             ArrayPool<TileAtmosphere>.Shared.Return(takerTiles);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void FinalizeEq()
         {
             Span<float> transferDirections = stackalloc float[Atmospherics.Directions];
@@ -638,7 +635,6 @@ namespace Content.Server.Atmos
             _adjacentTiles[direction.ToIndex()]._tileAtmosInfo[direction.GetOpposite()] -= amount;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void ProcessCell(int fireCount, bool spaceWind = true)
         {
             // Can't process a tile without air
@@ -973,7 +969,6 @@ namespace Content.Server.Atmos
             return AtmosDirection.All;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void ExplosivelyDepressurize(int cycleNum)
         {
             if (Air == null) return;
@@ -1147,7 +1142,6 @@ namespace Content.Server.Atmos
             _gridAtmosphereComponent.GasTileOverlaySystem.Invalidate(GridIndex, GridIndices);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void UpdateAdjacent()
         {
             for (var i = 0; i < Atmospherics.Directions; i++)
