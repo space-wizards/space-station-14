@@ -19,7 +19,7 @@ namespace Content.Tools
                     return tmp1;
                 case YamlMappingNode subMapping:
                     YamlMappingNode tmp2 = new YamlMappingNode();
-                    MergeYamlMappings((YamlMappingNode) tmp2, new YamlMappingNode(), (YamlMappingNode) other, "");
+                    MergeYamlMappings((YamlMappingNode) tmp2, new YamlMappingNode(), (YamlMappingNode) other, "", new string[] {});
                     return tmp2;
                 case YamlScalarNode subScalar:
                     YamlScalarNode tmp3 = new YamlScalarNode();
@@ -50,10 +50,18 @@ namespace Content.Tools
                     MergeYamlSequences((YamlSequenceNode) ours, (YamlSequenceNode) based, (YamlSequenceNode) other, path);
                     break;
                 case YamlMappingNode subMapping:
-                    MergeYamlMappings((YamlMappingNode) ours, (YamlMappingNode) based, (YamlMappingNode) other, path);
+                    MergeYamlMappings((YamlMappingNode) ours, (YamlMappingNode) based, (YamlMappingNode) other, path, new string[] {});
                     break;
                 case YamlScalarNode subScalar:
-                    CopyYamlScalar((YamlScalarNode) ours, (YamlScalarNode) based);
+                    // Console.WriteLine(path + " - " + ours + " || " + based + " || " + other);
+                    var scalarA = (YamlScalarNode) ours;
+                    var scalarB = (YamlScalarNode) based;
+                    var scalarC = (YamlScalarNode) other;
+                    var aeb = (scalarA.Value == scalarB.Value);
+                    var cneb = (scalarC.Value != scalarB.Value);
+                    if (aeb || cneb)
+                        CopyYamlScalar(scalarA, scalarC);
+                    // Console.WriteLine(path + " . " + ours + " || " + based + " || " + other);
                     break;
                 default:
                     throw new ArgumentException($"Unrecognized YAML node type at {path}: {other.GetType()}", nameof(other));
@@ -62,6 +70,16 @@ namespace Content.Tools
 
         public static void MergeYamlSequences(YamlSequenceNode ours, YamlSequenceNode based, YamlSequenceNode other, string path)
         {
+            if ((ours.Children.Count == based.Children.Count) && (other.Children.Count == ours.Children.Count))
+            {
+                // this is terrible and doesn't do proper rearrange detection
+                // but it looks as if vectors might be arrays
+                // so rearrange detection might break more stuff...
+                // nope, they aren't, but still good to have
+                for (var i = 0; i < ours.Children.Count; i++)
+                    MergeYamlNodes(ours.Children[i], based.Children[i], other.Children[i], path + "/" + i);
+                return;
+            }
             // for now, just copy other -> ours
             // I am aware this is terrible
             ours.Children.Clear();
@@ -69,11 +87,15 @@ namespace Content.Tools
                 ours.Add(CopyYamlNodes(c));
         }
 
-        public static void MergeYamlMappings(YamlMappingNode ours, YamlMappingNode based, YamlMappingNode other, string path)
+        public static void MergeYamlMappings(YamlMappingNode ours, YamlMappingNode based, YamlMappingNode other, string path, string[] ignoreThese)
         {
             // Deletions/modifications
             foreach (var kvp in based)
             {
+                if (ignoreThese.Contains(kvp.Key.ToString()))
+                    continue;
+
+                var localPath = path + "/" + kvp.Key.ToString();
                 var deletedByOurs = !ours.Children.ContainsKey(kvp.Key);
                 var deletedByOther = !other.Children.ContainsKey(kvp.Key);
                 if (deletedByOther && (!deletedByOurs))
@@ -89,17 +111,22 @@ namespace Content.Tools
                     var c = other[kvp.Key];
                     if (!TriTypeMatch(a, b, c))
                     {
+                        Console.WriteLine("Warning: Type mismatch (defaulting to value C) at " + localPath);
                         ours.Children[kvp.Key] = CopyYamlNodes(c);
                     }
                     else
                     {
-                        MergeYamlNodes(a, b, c, path);
+                        MergeYamlNodes(a, b, c, localPath);
                     }
                 }
             }
             // Additions
             foreach (var kvp in other)
             {
+                if (ignoreThese.Contains(kvp.Key.ToString()))
+                    continue;
+
+                var localPath = path + "/" + kvp.Key.ToString();
                 if (!based.Children.ContainsKey(kvp.Key))
                 {
                     if (ours.Children.ContainsKey(kvp.Key))
@@ -110,11 +137,12 @@ namespace Content.Tools
                         var c = kvp.Value; // other[kvp.Key]
                         if (!TriTypeMatch(a, b, c))
                         {
+                            Console.WriteLine("Warning: Type mismatch (defaulting to value C) at " + localPath);
                             ours.Children[kvp.Key] = CopyYamlNodes(c);
                         }
                         else
                         {
-                            MergeYamlNodes(a, b, c, path);
+                            MergeYamlNodes(a, b, c, localPath);
                         }
                     }
                     else

@@ -54,6 +54,17 @@ entities:
     pos: -15.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - type: ContainerContainer
+    typeChange:
+      something: true
+    example:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 855
+      - "contributionC"
 - uid: 1
   type: FakeTestDummy
   components:

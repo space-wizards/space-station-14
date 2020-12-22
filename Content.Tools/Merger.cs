@@ -202,10 +202,12 @@ namespace Content.Tools
             bool success = true;
             foreach (var kvp in EntityMapFromOtherToOurs)
             {
+                // For debug use.
+                // Console.WriteLine("Entity C/" + kvp.Key + " -> A/" + kvp.Value);
                 YamlMappingNode oursEnt;
-                YamlMappingNode basedEnt;
                 if (MapOurs.Entities.ContainsKey(kvp.Value))
                 {
+                    YamlMappingNode basedEnt;
                     oursEnt = MapOurs.Entities[kvp.Value];
                     if (MapBased.Entities.ContainsKey(kvp.Value))
                     {
@@ -215,16 +217,21 @@ namespace Content.Tools
                     {
                         basedEnt = oursEnt;
                     }
+                    if (!MergeEntityNodes(oursEnt, basedEnt, MapOther.Entities[kvp.Key]))
+                    {
+                        Console.WriteLine("Unable to successfully merge entity C/" + kvp.Key);
+                        success = false;
+                    }
                 }
                 else
                 {
-                    basedEnt = oursEnt = new YamlMappingNode();
-                    MapOurs.Entities[kvp.Value] = basedEnt;
-                }
-                if (!MergeEntityNodes(oursEnt, basedEnt, MapOther.Entities[kvp.Key]))
-                {
-                    Console.WriteLine("Unable to successfully merge entity " + kvp.Key);
-                    success = false;
+                    oursEnt = (YamlMappingNode) YamlTools.CopyYamlNodes(MapOther.Entities[kvp.Key]);
+                    if (!MapEntity(oursEnt)) {
+                        Console.WriteLine("Unable to successfully import entity C/" + kvp.Key);
+                        success = false;
+                    } else {
+                        MapOurs.Entities[kvp.Value] = oursEnt;
+                    }
                 }
                 oursEnt.Children["uid"] = kvp.Value.ToString(CultureInfo.InvariantCulture);
             }
@@ -233,12 +240,47 @@ namespace Content.Tools
 
         public bool MergeEntityNodes(YamlMappingNode ours, YamlMappingNode based, YamlMappingNode other)
         {
-            // Copy to intermmediate
+            // Copy to intermediate
             var otherMapped = (YamlMappingNode) YamlTools.CopyYamlNodes(other);
             if (!MapEntity(otherMapped))
                 return false;
-            // Merge
-            YamlTools.MergeYamlNodes(ours, based, otherMapped, "Entity" + (other["uid"].ToString()));
+            // Merge stuff that isn't components
+            var path = "Entity" + (other["uid"].ToString());
+            YamlTools.MergeYamlMappings(ours, based, otherMapped, path, new string[] {"components"});
+            // Components are special
+            var ourComponents = new Dictionary<string, YamlMappingNode>();
+            var basedComponents = new Dictionary<string, YamlMappingNode>();
+            var ourComponentsNode = (YamlSequenceNode) ours["components"];
+            var basedComponentsNode = (YamlSequenceNode) based["components"];
+            var otherComponentsNode = (YamlSequenceNode) otherMapped["components"];
+            foreach (var component in ourComponentsNode)
+            {
+                var name = component["type"].ToString();
+                ourComponents[name] = (YamlMappingNode) component;
+            }
+            foreach (var component in basedComponentsNode)
+            {
+                var name = component["type"].ToString();
+                basedComponents[name] = (YamlMappingNode) component;
+            }
+            foreach (var otherComponent in otherComponentsNode)
+            {
+                var name = otherComponent["type"].ToString();
+                if (ourComponents.ContainsKey(name))
+                {
+                    var ourComponent = ourComponents[name];
+                    YamlMappingNode basedComponent;
+                    if (basedComponents.ContainsKey(name))
+                        basedComponent = basedComponents[name];
+                    else
+                        basedComponent = new YamlMappingNode();
+                    YamlTools.MergeYamlNodes(ourComponent, basedComponent, otherComponent, path + "/components/" + name);
+                }
+                else
+                {
+                    ourComponentsNode.Add(otherComponent);
+                }
+            }
             return true;
         }
 
