@@ -202,10 +202,12 @@
   - type: Sprite
     sprite: Objects/Fun/Instruments/bike_horn.rsi
     state: icon
-
-  - type: Item
+  - type: Clothing
     size: 24
     sprite: Objects/Fun/Instruments/bike_horn.rsi
+    Slots:
+      - Belt
+    QuickEquip: false
 
 - type: entity
   name: super synthesizer
