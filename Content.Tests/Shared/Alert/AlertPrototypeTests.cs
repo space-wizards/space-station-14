@@ -44,7 +44,7 @@ namespace Content.Tests.Shared.Alert
         {
 
             var alert = GetTestPrototype();
-            Assert.That(alert.GetIconPath(severity), Is.EqualTo(expected));
+            Assert.That(alert.GetIcon(severity), Is.EqualTo(new SpriteSpecifier.Texture(new ResourcePath(expected))));
         }
 
         private AlertPrototype GetTestPrototype()
