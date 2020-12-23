@@ -38,6 +38,7 @@ namespace Content.Client.UserInterface.AdminMenu
             new KickCommandButton(),
             new DirectCommandButton("Admin Ghost", "aghost"),
             new TeleportCommandButton(),
+            new DirectCommandButton("Permissions Panel", "permissions"),
         };
         private readonly List<CommandButton> _adminbusButtons = new()
         {
