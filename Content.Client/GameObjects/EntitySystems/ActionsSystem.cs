@@ -84,7 +84,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
                     actionsComponent.HandleHotbarKeybind(slot, args);
                     return true;
-                });
+                }, false);
         }
 
         private PointerInputCmdHandler HandleChangeHotbarKeybind(byte hotbar)
