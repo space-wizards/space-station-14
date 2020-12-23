@@ -1,8 +1,23 @@
 ﻿using Content.Server.Explosions;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Maps;
+using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Interfaces.Random;
+using Robust.Shared.IoC;
+using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
+using Robust.Shared.Random;
+using System;
+using Robust.Shared.GameObjects.EntitySystemMessages;
+using Robust.Shared.Interfaces.Timing;
+using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.Interfaces.Player;
+using Content.Server.GameObjects.Components.Mobs;
 
 namespace Content.Server.GameObjects.Components.Explosion
 {
@@ -16,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Explosion
         public int LightImpactRange = 0;
         public int FlashRange = 0;
 
-        private bool _beingExploded = false;
+        public bool Exploding { get; private set; } = false;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -30,14 +45,16 @@ namespace Content.Server.GameObjects.Components.Explosion
 
         public bool Explosion()
         {
-            //Prevent adjacent explosives from infinitely blowing each other up.
-            if (_beingExploded) return true;
-            _beingExploded = true;
-
-            Owner.SpawnExplosion(DevastationRange, HeavyImpactRange, LightImpactRange, FlashRange);
-
-            Owner.Delete();
-            return true;
+            if (Exploding)
+            {
+                return false;
+            }
+            else
+            {
+                Exploding = true;
+                Owner.SpawnExplosion(DevastationRange, HeavyImpactRange, LightImpactRange, FlashRange);
+                return true;
+            }
         }
 
         bool ITimerTrigger.Trigger(TimerTriggerEventArgs eventArgs)
