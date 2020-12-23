@@ -390,7 +390,7 @@ namespace Content.Server.GameTicking
 
         public void Respawn(IPlayerSession targetPlayer)
         {
-            targetPlayer.ContentData().WipeMind();
+            targetPlayer.ContentData()?.WipeMind();
 
             if (LobbyEnabled)
                 _playerJoinLobby(targetPlayer);
@@ -683,26 +683,32 @@ namespace Content.Server.GameTicking
         {
             // Delete all entities.
             foreach (var entity in _entityManager.GetEntities().ToList())
+            {
                 // TODO: Maybe something less naive here?
                 // FIXME: Actually, definitely.
                 entity.Delete();
+            }
 
             _mapManager.Restart();
 
             // Delete the minds of everybody.
             // TODO: Maybe move this into a separate manager?
-            foreach (var unCastData in PlayerManager.GetAllPlayerData()) unCastData.ContentData().WipeMind();
+            foreach (var unCastData in PlayerManager.GetAllPlayerData())
+            {
+                unCastData.ContentData()?.WipeMind();
+            }
 
             // Clear up any game rules.
-            foreach (var rule in _gameRules) rule.Removed();
+            foreach (var rule in _gameRules)
+            {
+                rule.Removed();
+            }
 
             _gameRules.Clear();
 
             // Move everybody currently in the server to lobby.
             foreach (var player in PlayerManager.GetAllPlayers())
             {
-                if (_playersInLobby.ContainsKey(player)) continue;
-
                 _playerJoinLobby(player);
             }
 
@@ -949,7 +955,7 @@ namespace Content.Server.GameTicking
 
         private void _playerJoinLobby(IPlayerSession session)
         {
-            _playersInLobby.Add(session, PlayerStatus.NotReady);
+            _playersInLobby[session] = PlayerStatus.NotReady;
 
             _netManager.ServerSendMessage(_netManager.CreateNetMessage<MsgTickerJoinLobby>(), session.ConnectedClient);
             _netManager.ServerSendMessage(_getStatusMsg(session), session.ConnectedClient);
@@ -962,7 +968,9 @@ namespace Content.Server.GameTicking
         {
             _chatManager.DispatchServerMessage(session,
                 "Welcome to Space Station 14! If this is your first time checking out the game, be sure to check out the tutorial in the top left!");
-            if (_playersInLobby.ContainsKey(session)) _playersInLobby.Remove(session);
+
+            if (_playersInLobby.ContainsKey(session))
+                _playersInLobby.Remove(session);
 
             _netManager.ServerSendMessage(_netManager.CreateNetMessage<MsgTickerJoinGame>(), session.ConnectedClient);
         }

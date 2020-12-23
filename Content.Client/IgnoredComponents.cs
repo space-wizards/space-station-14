@@ -227,6 +227,8 @@ namespace Content.Client
             "ChemicalAmmo",
             "BiologicalSurgeryData",
             "CargoTelepad",
+            "TraitorDeathMatchRedemption",
+            "GlassBeaker"
         };
     }
 }

@@ -55,7 +55,7 @@ namespace Content.Client.GameObjects.Components.Items
             return Hands.FirstOrDefault(hand => hand.Name == name);
         }
 
-        private bool TryHand(string name, [MaybeNullWhen(false)] out Hand hand)
+        private bool TryHand(string name, [NotNullWhen(true)] out Hand? hand)
         {
             return (hand = GetHand(name)) != null;
         }

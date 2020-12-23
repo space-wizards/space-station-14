@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 
@@ -23,6 +23,7 @@ namespace Content.Shared.GameObjects.Components.Atmos
         }
     }
 
+    [Flags]
     public enum PipeDirection
     {
         None = 0,

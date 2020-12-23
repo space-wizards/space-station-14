@@ -1,12 +1,11 @@
 ﻿#nullable enable
 using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Destructible.Thresholds;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
-using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -19,9 +18,7 @@ namespace Content.Server.GameObjects.Components.Destructible
     [RegisterComponent]
     public class DestructibleComponent : Component
     {
-        [Dependency] private readonly IRobustRandom _random = default!;
-
-        private ActSystem _actSystem = default!;
+        private DestructibleSystem _destructibleSystem = default!;
 
         public override string Name => "Destructible";
 
@@ -47,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Destructible
         {
             base.Initialize();
 
-            _actSystem = EntitySystem.Get<ActSystem>();
+            _destructibleSystem = EntitySystem.Get<DestructibleSystem>();
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
@@ -83,7 +80,7 @@ namespace Content.Server.GameObjects.Components.Destructible
                             var thresholdMessage = new DestructibleThresholdReachedMessage(this, threshold, msg.Damageable.TotalDamage, damage);
                             SendMessage(thresholdMessage);
 
-                            threshold.Trigger(Owner, _random, _actSystem);
+                            threshold.Trigger(Owner, _destructibleSystem);
                         }
                     }
 

@@ -21,6 +21,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 using System;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using static Content.Shared.GameObjects.Components.Disposal.SharedDisposalTaggerComponent;
 
 namespace Content.Server.GameObjects.Components.Disposal

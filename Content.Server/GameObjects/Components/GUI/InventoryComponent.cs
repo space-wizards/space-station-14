@@ -7,6 +7,8 @@ using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.Containers;

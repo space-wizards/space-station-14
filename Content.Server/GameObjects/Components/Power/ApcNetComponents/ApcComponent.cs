@@ -1,9 +1,11 @@
-﻿#nullable enable
+#nullable enable
 using System;
+using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Power;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -11,9 +13,11 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
@@ -50,6 +54,8 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         public BatteryComponent? Battery => Owner.TryGetComponent(out BatteryComponent? batteryComponent) ? batteryComponent : null;
 
+        [ComponentDependency] private AccessReader? _accessReader = null;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -57,6 +63,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
             Owner.EnsureComponent<BatteryComponent>();
             Owner.EnsureComponent<PowerConsumerComponent>();
             Owner.EnsureComponentWarn<ServerUserInterfaceComponent>();
+            Owner.EnsureComponentWarn<AccessReader>();
 
             if (UserInterface != null)
             {
@@ -80,9 +87,20 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         {
             if (serverMsg.Message is ApcToggleMainBreakerMessage)
             {
-                MainBreakerEnabled = !MainBreakerEnabled;
-                _uiDirty = true;
-                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+                var user = serverMsg.Session.AttachedEntity;
+                if(user == null) return;
+
+                if (_accessReader == null || _accessReader.IsAllowed(user))
+                {
+                    MainBreakerEnabled = !MainBreakerEnabled;
+                    _uiDirty = true;
+                    EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+                }
+                else
+                {
+                    user.PopupMessageCursor(Loc.GetString("Insufficient access!"));
+                }
+
             }
         }
 

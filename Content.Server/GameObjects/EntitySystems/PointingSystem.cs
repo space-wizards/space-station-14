@@ -5,6 +5,7 @@ using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.Components.Pointing;
 using Content.Server.Players;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Input;
 using Content.Shared.Interfaces;
 using Content.Shared.Utility;

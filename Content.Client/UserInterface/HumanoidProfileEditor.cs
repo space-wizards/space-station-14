@@ -43,8 +43,11 @@ namespace Content.Client.UserInterface
         private readonly Button _sexClassifiedButton;
         private readonly HairStylePicker _hairPicker;
         private readonly FacialHairStylePicker _facialHairPicker;
+
         private readonly List<JobPrioritySelector> _jobPriorities;
         private readonly OptionButton _preferenceUnavailableButton;
+        private readonly Dictionary<string, VBoxContainer> _jobCategories;
+
         private readonly List<AntagPreferenceSelector> _antagPreferences;
 
         private readonly IEntity _previewDummy;
@@ -313,31 +316,79 @@ namespace Content.Client.UserInterface
                 };
 
                 _jobPriorities = new List<JobPrioritySelector>();
+                _jobCategories = new Dictionary<string, VBoxContainer>();
+
+                var firstCategory = true;
 
                 foreach (var job in prototypeManager.EnumeratePrototypes<JobPrototype>().OrderBy(j => j.Name))
                 {
-                    var selector = new JobPrioritySelector(job);
-                    jobList.AddChild(selector);
-                    _jobPriorities.Add(selector);
-
-                    selector.PriorityChanged += priority =>
+                    foreach (var department in job.Departments)
                     {
-                        Profile = Profile.WithJobPriority(job.ID, priority);
-                        IsDirty = true;
-
-                        if (priority == JobPriority.High)
+                        if (!_jobCategories.TryGetValue(department, out var category))
                         {
-                            // Lower any other high priorities to medium.
+                            category = new VBoxContainer
+                            {
+                                Name = department,
+                                ToolTip = Loc.GetString("Jobs in the {0} department", department)
+                            };
+
+                            if (firstCategory)
+                            {
+                                firstCategory = false;
+                            }
+                            else
+                            {
+                                category.AddChild(new Control
+                                {
+                                    CustomMinimumSize = new Vector2(0, 23),
+                                });
+                            }
+
+                            category.AddChild(new PanelContainer
+                            {
+                                PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#464966")},
+                                Children =
+                                {
+                                    new Label
+                                    {
+                                        Text = Loc.GetString("{0} jobs", department)
+                                    }
+                                }
+                            });
+
+                            _jobCategories[department] = category;
+                            jobList.AddChild(category);
+                        }
+
+                        var selector = new JobPrioritySelector(job);
+                        category.AddChild(selector);
+                        _jobPriorities.Add(selector);
+
+                        selector.PriorityChanged += priority =>
+                        {
+                            Profile = Profile.WithJobPriority(job.ID, priority);
+                            IsDirty = true;
+
                             foreach (var jobSelector in _jobPriorities)
                             {
-                                if (jobSelector != selector && jobSelector.Priority == JobPriority.High)
+                                // Sync other selectors with the same job in case of multiple department jobs
+                                if (jobSelector.Job == selector.Job)
                                 {
-                                    jobSelector.Priority = JobPriority.Medium;
-                                    Profile = Profile.WithJobPriority(jobSelector.Job.ID, JobPriority.Medium);
+                                    jobSelector.Priority = priority;
+                                }
+
+                                // Lower any other high priorities to medium.
+                                if (priority == JobPriority.High)
+                                {
+                                    if (jobSelector.Job != selector.Job && jobSelector.Priority == JobPriority.High)
+                                    {
+                                        jobSelector.Priority = JobPriority.Medium;
+                                        Profile = Profile.WithJobPriority(jobSelector.Job.ID, JobPriority.Medium);
+                                    }
                                 }
                             }
-                        }
-                    };
+                        };
+                    }
                 }
             }
 
@@ -452,7 +503,7 @@ namespace Content.Client.UserInterface
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
             };
             hbox.AddChild(vBox);
-            
+
             #region Preview
 
             _previewDummy = entityManager.SpawnEntity("HumanMob_Dummy", MapCoordinates.Nullspace);
@@ -495,7 +546,7 @@ namespace Content.Client.UserInterface
             box.AddChild(_previewSpriteSide);
 
             #endregion
-            
+
             #endregion
 
             if (preferencesManager.ServerDataLoaded)
