@@ -24,7 +24,7 @@
     thresholds:
       100:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
   - type: SubFloorHide
 
@@ -55,9 +55,9 @@
     thresholds:
       100:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
-        - SpawnEntitiesBehavior
+        - !type:SpawnEntitiesBehavior
           spawn:
             HVWireStack1:
               min: 1
@@ -92,9 +92,9 @@
     thresholds:
       100:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
-        - SpawnEntitiesBehavior
+        - !type:SpawnEntitiesBehavior
           spawn:
             MVWireStack1:
               min: 1
@@ -131,9 +131,9 @@
     thresholds:
       100:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
-        - SpawnEntitiesBehavior
+        - !type:SpawnEntitiesBehavior
           spawn:
             ApcExtensionCableStack1:
               min: 1

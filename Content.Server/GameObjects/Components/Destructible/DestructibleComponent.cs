@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Destructible.Thresholds;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Damage;
 using Robust.Shared.GameObjects;
@@ -22,11 +23,11 @@ namespace Content.Server.GameObjects.Components.Destructible
         public override string Name => "Destructible";
 
         [ViewVariables]
-        private SortedDictionary<int, Threshold.Threshold> _lowestToHighestThresholds = new();
+        private SortedDictionary<int, Threshold> _lowestToHighestThresholds = new();
 
         [ViewVariables] private int PreviousTotalDamage { get; set; }
 
-        public IReadOnlyDictionary<int, Threshold.Threshold> LowestToHighestThresholds => _lowestToHighestThresholds;
+        public IReadOnlyDictionary<int, Threshold> LowestToHighestThresholds => _lowestToHighestThresholds;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -34,9 +35,9 @@ namespace Content.Server.GameObjects.Components.Destructible
 
             serializer.DataReadWriteFunction(
                 "thresholds",
-                new Dictionary<int, Threshold.Threshold>(),
-                thresholds => _lowestToHighestThresholds = new SortedDictionary<int, Threshold.Threshold>(thresholds),
-                () => new Dictionary<int, Threshold.Threshold>(_lowestToHighestThresholds));
+                new Dictionary<int, Threshold>(),
+                thresholds => _lowestToHighestThresholds = new SortedDictionary<int, Threshold>(thresholds),
+                () => new Dictionary<int, Threshold>(_lowestToHighestThresholds));
         }
 
         public override void Initialize()

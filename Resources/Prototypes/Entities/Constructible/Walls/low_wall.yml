@@ -31,7 +31,7 @@
     thresholds:
       100:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
   - type: BreakableConstruction
     node: start

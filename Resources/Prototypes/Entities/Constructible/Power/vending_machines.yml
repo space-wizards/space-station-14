@@ -34,7 +34,7 @@
     thresholds:
       50:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Breakage"]
   - type: UserInterface
     interfaces:

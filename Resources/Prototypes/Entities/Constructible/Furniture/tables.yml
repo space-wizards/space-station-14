@@ -41,11 +41,11 @@
     thresholds:
       15:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: [ "Destruction" ]
-        - PlaySoundBehavior
+        - !type:PlaySoundBehavior
           sound: /Audio/Effects/metalbreak.ogg
-        - SpawnEntitiesBehavior
+        - !type:SpawnEntitiesBehavior
           spawn:
             SteelSheet1:
               min: 1
@@ -67,11 +67,11 @@
     thresholds:
       1:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
-        - PlaySoundBehavior
+        - !type:PlaySoundBehavior
           sound: /Audio/Effects/metalbreak.ogg
-        - SpawnEntitiesBehavior
+        - !type:SpawnEntitiesBehavior
           spawn:
             SteelSheet1:
               min: 1
@@ -96,11 +96,11 @@
     thresholds:
       1:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
-        - PlaySoundBehavior
+        - !type:PlaySoundBehavior
           sound: /Audio/Effects/metalbreak.ogg
-        - SpawnEntitiesBehavior
+        - !type:SpawnEntitiesBehavior
           spawn:
             SteelSheet1:
               min: 1
@@ -122,11 +122,11 @@
     thresholds:
       15:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
-        - PlaySoundBehavior
+        - !type:PlaySoundBehavior
           sound: /Audio/Effects/metalbreak.ogg
-        - SpawnEntitiesBehavior
+        - !type:SpawnEntitiesBehavior
           spawn:
             SteelSheet1:
               min: 1
@@ -151,11 +151,11 @@
     thresholds:
       75:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
-        - PlaySoundBehavior
+        - !type:PlaySoundBehavior
           sound: /Audio/Effects/metalbreak.ogg
-        - SpawnEntitiesBehavior
+        - !type:SpawnEntitiesBehavior
           spawn:
             SteelSheet1:
               min: 1
@@ -180,11 +180,11 @@
     thresholds:
       5:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
-        - PlaySoundBehavior
+        - !type:PlaySoundBehavior
           sound: /Audio/Effects/glass_break2.ogg
-        - SpawnEntitiesBehavior
+        - !type:SpawnEntitiesBehavior
           spawn:
             ShardGlass:
               min: 1
@@ -209,11 +209,11 @@
     thresholds:
       20:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
-        - PlaySoundBehavior
+        - !type:PlaySoundBehavior
           sound: /Audio/Effects/glass_break2.ogg
-        - SpawnEntitiesBehavior
+        - !type:SpawnEntitiesBehavior
           spawn:
             ShardGlass:
               min: 1
@@ -238,11 +238,11 @@
     thresholds:
       15:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
-        - PlaySoundBehavior
+        - !type:PlaySoundBehavior
           sound: /Audio/Effects/woodhit.ogg
-        - SpawnEntitiesBehavior
+        - !type:SpawnEntitiesBehavior
           spawn:
             WoodPlank:
               min: 1
@@ -267,11 +267,11 @@
     thresholds:
       15:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
-        - PlaySoundBehavior
+        - !type:PlaySoundBehavior
           sound: /Audio/Effects/woodhit.ogg
-        - SpawnEntitiesBehavior
+        - !type:SpawnEntitiesBehavior
           spawn:
             WoodPlank:
               min: 1
@@ -296,9 +296,9 @@
     thresholds:
       50:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
-        - PlaySoundBehavior
+        - !type:PlaySoundBehavior
           sound: /Audio/Effects/picaxe2.ogg
 
 - type: entity
@@ -317,5 +317,5 @@
     thresholds:
       1:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]

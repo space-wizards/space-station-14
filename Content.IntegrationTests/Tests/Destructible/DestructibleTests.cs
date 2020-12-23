@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Destructible;
-using Content.Server.GameObjects.Components.Destructible.Threshold;
-using Content.Server.GameObjects.Components.Destructible.Threshold.Behavior;
+using Content.Server.GameObjects.Components.Destructible.Thresholds;
+using Content.Server.GameObjects.Components.Destructible.Thresholds.Behavior;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using NUnit.Framework;
@@ -35,11 +35,11 @@ namespace Content.IntegrationTests.Tests.Destructible
       50:
         triggersOnce: false
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: [""Breakage""]
-        - PlaySoundBehavior
+        - !type:PlaySoundBehavior
           sound: /Audio/Effects/woodhit.ogg
-        - SpawnEntitiesBehavior
+        - !type:SpawnEntitiesBehavior
           spawn:
             WoodPlank:
               min: 1
@@ -241,17 +241,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 threshold = msg.Threshold;
 
                 // Check that it matches the YAML prototype
-                Assert.That(threshold.Behaviors, Has.Count.EqualTo(3));
-
-                actsThreshold = (DoActsBehavior) threshold.Behaviors[0];
-                soundThreshold = (PlaySoundBehavior) threshold.Behaviors[1];
-                spawnThreshold = (SpawnEntitiesBehavior) threshold.Behaviors[2];
-
-                // Check that it matches the YAML prototype
-                Assert.That(actsThreshold.Acts, Is.EqualTo(ThresholdActs.None));
-                Assert.That(soundThreshold.Sound, Is.Null.Or.Empty);
-                Assert.That(spawnThreshold.Spawn, Is.Null);
-                Assert.That(threshold.Triggered, Is.True);
+                Assert.That(threshold.Behaviors, Is.Empty);
 
                 // Verify the second one, should be the highest one (50)
                 msg = sThresholdListenerComponent.ThresholdsReached[1];
@@ -261,6 +251,8 @@ namespace Content.IntegrationTests.Tests.Destructible
                 Assert.That(msg.TotalDamage, Is.EqualTo(50));
 
                 threshold = msg.Threshold;
+
+                Assert.That(threshold.Behaviors, Has.Count.EqualTo(3));
 
                 actsThreshold = (DoActsBehavior) threshold.Behaviors[0];
                 soundThreshold = (PlaySoundBehavior) threshold.Behaviors[1];

@@ -62,7 +62,7 @@
     thresholds:
       500:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
   placement:
     mode: SnapgridCenter

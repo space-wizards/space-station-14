@@ -41,7 +41,7 @@
     thresholds:
       100:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
   - type: Appearance
     visuals:

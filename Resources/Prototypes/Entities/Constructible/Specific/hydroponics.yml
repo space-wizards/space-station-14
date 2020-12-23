@@ -29,7 +29,7 @@
     thresholds:
       50:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
   - type: Sprite
     sprite: Constructible/Hydroponics/hydro_tools.rsi

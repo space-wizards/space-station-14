@@ -33,11 +33,11 @@
     thresholds:
       30:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: [ "Destruction" ]
-        - PlaySoundBehavior
+        - !type:PlaySoundBehavior
           sound: /Audio/Effects/metalbreak.ogg
-        - SpawnEntitiesBehavior
+        - !type:SpawnEntitiesBehavior
           spawn:
             SteelSheet1:
               min: 1
@@ -78,11 +78,11 @@
     thresholds:
       30:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: [ "Destruction" ]
-        - PlaySoundBehavior
+        - !type:PlaySoundBehavior
           sound: /Audio/Effects/metalbreak.ogg
-        - SpawnEntitiesBehavior
+        - !type:SpawnEntitiesBehavior
           spawn:
             SteelSheet1:
               min: 1

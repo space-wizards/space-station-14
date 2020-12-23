@@ -27,7 +27,7 @@
     thresholds:
       500:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
   - type: SnapGrid
     offset: Center

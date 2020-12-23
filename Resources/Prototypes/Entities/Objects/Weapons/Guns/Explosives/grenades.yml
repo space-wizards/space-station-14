@@ -23,7 +23,7 @@
     thresholds:
       10:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
   - type: Appearance
     visuals:
@@ -51,7 +51,7 @@
     thresholds:
       10:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
   - type: Appearance
     visuals:
@@ -83,7 +83,7 @@
     thresholds:
       10:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
   - type: Appearance
     visuals:
@@ -114,7 +114,7 @@
     thresholds:
       50:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
   - type: Appearance
     visuals:

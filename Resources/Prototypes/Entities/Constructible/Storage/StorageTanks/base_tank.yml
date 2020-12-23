@@ -29,7 +29,7 @@
     thresholds:
       10:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
   - type: SolutionContainer
     maxVol: 1500

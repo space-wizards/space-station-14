@@ -25,6 +25,6 @@
     thresholds:
       50:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
   - type: KitchenSpike

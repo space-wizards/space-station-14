@@ -32,11 +32,11 @@
     thresholds:
       15:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
-        - PlaySoundCollectionBehavior
+        - !type:PlaySoundCollectionBehavior
           soundCollection: WindowBreak
-        - SpawnEntitiesBehavior
+        - !type:SpawnEntitiesBehavior
           spawn:
             ShardGlass:
               min: 1
@@ -70,11 +70,11 @@
     thresholds:
       75:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
-        - PlaySoundCollectionBehavior
+        - !type:PlaySoundCollectionBehavior
           soundCollection: WindowBreak
-        - SpawnEntitiesBehavior
+        - !type:SpawnEntitiesBehavior
           spawn:
             ShardGlassReinforced:
               min: 1
@@ -102,11 +102,11 @@
     thresholds:
       100:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
-        - PlaySoundCollectionBehavior
+        - !type:PlaySoundCollectionBehavior
           soundCollection: WindowBreak
-        - SpawnEntitiesBehavior
+        - !type:SpawnEntitiesBehavior
           spawn:
             ShardGlassPhoron:
               min: 1

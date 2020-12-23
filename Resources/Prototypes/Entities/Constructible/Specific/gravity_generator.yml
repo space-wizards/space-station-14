@@ -35,7 +35,7 @@
     thresholds:
       150:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Breakage"]
   - type: GravityGenerator
   - type: UserInterface

@@ -14,7 +14,7 @@
     thresholds:
       5:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
   - type: Sprite
     drawdepth: WallTops

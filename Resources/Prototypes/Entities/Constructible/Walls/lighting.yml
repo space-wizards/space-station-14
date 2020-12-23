@@ -42,7 +42,7 @@
     thresholds:
       50:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
 
 - type: entity
@@ -71,7 +71,7 @@
     thresholds:
       25:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
 
 - type: entity
@@ -92,5 +92,5 @@
     thresholds:
       25:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]

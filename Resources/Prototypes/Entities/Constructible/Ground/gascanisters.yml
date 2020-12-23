@@ -15,7 +15,7 @@
     thresholds:
       100:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
   - type: GasCanister
   - type: Anchorable

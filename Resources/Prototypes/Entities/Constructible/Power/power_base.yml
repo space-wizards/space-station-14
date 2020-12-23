@@ -240,7 +240,7 @@
     thresholds:
       100:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Breakage"]
   - type: Anchorable
   - type: Pullable

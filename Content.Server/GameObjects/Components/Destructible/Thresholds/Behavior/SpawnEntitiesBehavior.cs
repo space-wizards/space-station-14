@@ -4,12 +4,11 @@ using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Utility;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 
-namespace Content.Server.GameObjects.Components.Destructible.Threshold.Behavior
+namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behavior
 {
-    public class SpawnEntitiesBehavior : IThresholdBehavior, IExposeData
+    public class SpawnEntitiesBehavior : IThresholdBehavior
     {
         /// <summary>
         ///     Entities spawned on reaching this threshold, from a min to a max.

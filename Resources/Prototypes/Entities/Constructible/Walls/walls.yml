@@ -50,9 +50,9 @@
     thresholds:
       300:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
-        - SpawnEntitiesBehavior
+        - !type:SpawnEntitiesBehavior
           spawn:
             Girder:
               min: 1
@@ -76,9 +76,9 @@
     thresholds:
       300:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: [ "Destruction" ]
-        - SpawnEntitiesBehavior
+        - !type:SpawnEntitiesBehavior
           spawn:
             Girder:
               min: 1
@@ -102,9 +102,9 @@
     thresholds:
       300:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
-        - SpawnEntitiesBehavior
+        - !type:SpawnEntitiesBehavior
           spawn:
             Girder:
               min: 1
@@ -129,9 +129,9 @@
     thresholds:
       300:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
-        - SpawnEntitiesBehavior
+        - !type:SpawnEntitiesBehavior
           spawn:
             Girder:
               min: 1
@@ -155,9 +155,9 @@
     thresholds:
       300:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
-        - SpawnEntitiesBehavior
+        - !type:SpawnEntitiesBehavior
           spawn:
             Girder:
               min: 1
@@ -181,9 +181,9 @@
     thresholds:
       300:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
-        - SpawnEntitiesBehavior
+        - !type:SpawnEntitiesBehavior
           spawn:
             Girder:
               min: 1
@@ -208,9 +208,9 @@
     thresholds:
       300:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
-        - SpawnEntitiesBehavior
+        - !type:SpawnEntitiesBehavior
           spawn:
             Girder:
               min: 1
@@ -234,9 +234,9 @@
     thresholds:
       300:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
-        - SpawnEntitiesBehavior
+        - !type:SpawnEntitiesBehavior
           spawn:
             Girder:
               min: 1
@@ -260,9 +260,9 @@
     thresholds:
       300:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
-        - SpawnEntitiesBehavior
+        - !type:SpawnEntitiesBehavior
           spawn:
             Girder:
               min: 1
@@ -286,9 +286,9 @@
     thresholds:
       300:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
-        - SpawnEntitiesBehavior
+        - !type:SpawnEntitiesBehavior
           spawn:
             Girder:
               min: 1
@@ -312,9 +312,9 @@
     thresholds:
       300:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
-        - SpawnEntitiesBehavior
+        - !type:SpawnEntitiesBehavior
           spawn:
             Girder:
               min: 1
@@ -343,7 +343,7 @@
     thresholds:
       600:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
   - type: BreakableConstruction
     node: girder
@@ -371,9 +371,9 @@
     thresholds:
       1000:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
-        - SpawnEntitiesBehavior
+        - !type:SpawnEntitiesBehavior
           spawn:
             Girder:
               min: 1
@@ -397,9 +397,9 @@
     thresholds:
       300:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
-        - SpawnEntitiesBehavior
+        - !type:SpawnEntitiesBehavior
           spawn:
             Girder:
               min: 1
@@ -423,9 +423,9 @@
     thresholds:
       300:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
-        - SpawnEntitiesBehavior
+        - !type:SpawnEntitiesBehavior
           spawn:
             Girder:
               min: 1
@@ -453,7 +453,7 @@
     thresholds:
       300:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
   - type: BreakableConstruction
     node: girder
@@ -477,9 +477,9 @@
     thresholds:
       300:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
-        - SpawnEntitiesBehavior
+        - !type:SpawnEntitiesBehavior
           spawn:
             Girder:
               min: 1
@@ -503,9 +503,9 @@
     thresholds:
       300:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: ["Destruction"]
-        - SpawnEntitiesBehavior
+        - !type:SpawnEntitiesBehavior
           spawn:
             Girder:
               min: 1

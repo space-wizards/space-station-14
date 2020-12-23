@@ -25,11 +25,11 @@
     thresholds:
       30:
         behaviors:
-        - DoActsBehavior
+        - !type:DoActsBehavior
           acts: [ "Destruction" ]
-        - PlaySoundBehavior
+        - !type:PlaySoundBehavior
           sound: /Audio/Effects/woodhit.ogg
-        - SpawnEntitiesBehavior
+        - !type:SpawnEntitiesBehavior
           spawn:
             WoodPlank:
               min: 1
