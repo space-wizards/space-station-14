@@ -468,10 +468,11 @@ namespace Content.Client.UserInterface.AdminMenu
                 Name = "Event",
                 GetData = () =>
                 {
-                    var events = IoCManager.Resolve<IStationEventManager>().StationEvents;
-                    if (events == null)
-                        return new List<object> { "Not loaded" };
-                    events.Add("Random");
+                    var events = IoCManager.Resolve<IStationEventManager>().StationEvents.ToList();
+                    if (events.Count == 0)
+                        events.Add(Loc.GetString("Not loaded"));
+                    else
+                        events.Add(Loc.GetString("Random"));
                     return events.ToList<object>();
                 },
                 GetDisplayName = (obj) => (string) obj,
