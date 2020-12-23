@@ -20,13 +20,40 @@ using Robust.Shared.Maths;
 namespace Content.IntegrationTests.Tests.Body
 {
     [TestFixture]
-    [TestOf(typeof(LungBehaviorComponent))]
+    [TestOf(typeof(LungBehavior))]
     public class LungTest : ContentIntegrationTest
     {
+        private const string PROTOTYPES = @"
+- type: entity
+  name: HumanBodyAndBloodstreamDummy
+  id: HumanBodyAndBloodstreamDummy
+  components:
+  - type: Bloodstream
+    max_volume: 100
+  - type: Body
+    template: HumanoidTemplate
+    preset: HumanPreset
+    centerSlot: torso
+  - type: Metabolism
+    metabolismHeat: 5000
+    radiatedHeat: 400
+    implicitHeatRegulation: 5000
+    sweatHeatRegulation: 5000
+    shiveringHeatRegulation: 5000
+    normalBodyTemperature: 310.15
+    thermalRegulationTemperatureThreshold: 25
+    needsGases:
+      Oxygen: 0.00060763888
+    producesGases:
+      Oxygen: 0.00045572916
+      CarbonDioxide: 0.00015190972
+";
+
         [Test]
         public async Task AirConsistencyTest()
         {
-            var server = StartServerDummyTicker();
+            var options = new ServerContentIntegrationOption{ExtraPrototypes = PROTOTYPES};
+            var server = StartServerDummyTicker(options);
 
             server.Assert(() =>
             {
@@ -36,10 +63,10 @@ namespace Content.IntegrationTests.Tests.Body
 
                 var entityManager = IoCManager.Resolve<IEntityManager>();
 
-                var human = entityManager.SpawnEntity("HumanMob_Content", MapCoordinates.Nullspace);
+                var human = entityManager.SpawnEntity("HumanBodyAndBloodstreamDummy", MapCoordinates.Nullspace);
 
                 Assert.That(human.TryGetComponent(out IBody body));
-                Assert.That(body.TryGetMechanismBehaviors(out List<LungBehaviorComponent> lungs));
+                Assert.That(body.TryGetMechanismBehaviors(out List<LungBehavior> lungs));
                 Assert.That(lungs.Count, Is.EqualTo(1));
                 Assert.That(human.TryGetComponent(out BloodstreamComponent bloodstream));
 
@@ -141,7 +168,7 @@ namespace Content.IntegrationTests.Tests.Body
                 human = entityManager.SpawnEntity("HumanMob_Content", coordinates);
 
                 Assert.True(human.TryGetComponent(out IBody body));
-                Assert.True(body.HasMechanismBehavior<LungBehaviorComponent>());
+                Assert.True(body.HasMechanismBehavior<LungBehavior>());
                 Assert.True(human.TryGetComponent(out metabolism));
                 Assert.False(metabolism.Suffocating);
             });

@@ -16,7 +16,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -35,11 +34,10 @@ namespace Content.Server.GameObjects.Components.Singularity
     [ComponentReference(typeof(IActivate))]
     public class EmitterComponent : Component, IActivate, IInteractUsing
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
-        [ComponentDependency] private AppearanceComponent? _appearance;
-        [ComponentDependency] private AccessReader? _accessReader;
+        [ComponentDependency] private readonly AppearanceComponent? _appearance = default;
+        [ComponentDependency] private readonly AccessReader? _accessReader = default;
 
         public override string Name => "Emitter";
 
@@ -170,7 +168,7 @@ namespace Content.Server.GameObjects.Components.Singularity
             return Task.FromResult(true);
         }
 
-        private void SwitchOff()
+        public void SwitchOff()
         {
             _isOn = false;
             _powerConsumer.DrawRate = 0;
@@ -178,7 +176,7 @@ namespace Content.Server.GameObjects.Components.Singularity
             UpdateAppearance();
         }
 
-        private void SwitchOn()
+        public void SwitchOn()
         {
             _isOn = true;
             _powerConsumer.DrawRate = _powerUseActive;
@@ -251,7 +249,7 @@ namespace Content.Server.GameObjects.Components.Singularity
 
         private void Fire()
         {
-            var projectile = _entityManager.SpawnEntity(_boltType, Owner.Transform.Coordinates);
+            var projectile = Owner.EntityManager.SpawnEntity(_boltType, Owner.Transform.Coordinates);
 
             if (!projectile.TryGetComponent<PhysicsComponent>(out var physicsComponent))
             {

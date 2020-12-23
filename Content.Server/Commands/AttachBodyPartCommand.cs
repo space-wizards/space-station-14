@@ -1,5 +1,7 @@
 ﻿#nullable enable
+using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Body.Part;
+using Content.Shared.Administration;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Robust.Server.Interfaces.Console;
@@ -10,6 +12,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.Commands
 {
+    [AdminCommand(AdminFlags.Fun)]
     public class AttachBodyPartCommand : IClientCommand
     {
         public string Command => "attachbodypart";

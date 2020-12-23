@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.GameObjects.Components.Power;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface.Controls;
@@ -10,6 +11,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.GameObjects.Components.Power
 {
+    [UsedImplicitly]
     public class ApcBoundUserInterface : BoundUserInterface
     {
         private ApcWindow _window;

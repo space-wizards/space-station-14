@@ -10,6 +10,7 @@ using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -483,7 +484,7 @@ namespace Content.Server.GameObjects.Components.PA
                 yield return _partEmitterRight;
         }
 
-        private void SwitchOn()
+        public void SwitchOn()
         {
             DebugTools.Assert(_isAssembled);
 
@@ -509,7 +510,7 @@ namespace Content.Server.GameObjects.Components.PA
             _partPowerBox!.PowerConsumerComponent!.DrawRate = PowerDrawFor(_selectedStrength);
         }
 
-        private void SwitchOff()
+        public void SwitchOff()
         {
             _isEnabled = false;
             PowerOff();
@@ -545,7 +546,7 @@ namespace Content.Server.GameObjects.Components.PA
             UpdatePartVisualStates();
         }
 
-        private void SetStrength(ParticleAcceleratorPowerState state)
+        public void SetStrength(ParticleAcceleratorPowerState state)
         {
             if (_wireStrengthCut)
             {

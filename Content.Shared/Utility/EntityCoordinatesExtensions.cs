@@ -10,12 +10,12 @@ namespace Content.Shared.Utility
     {
         public static EntityCoordinates ToCoordinates(this EntityUid id, Vector2 offset)
         {
-            return new EntityCoordinates(id, offset);
+            return new(id, offset);
         }
 
         public static EntityCoordinates ToCoordinates(this EntityUid id, float x, float y)
         {
-            return new EntityCoordinates(id, x, y);
+            return new(id, x, y);
         }
 
         public static EntityCoordinates ToCoordinates(this EntityUid id)
@@ -30,7 +30,7 @@ namespace Content.Shared.Utility
 
         public static EntityCoordinates ToCoordinates(this IEntity entity, float x, float y)
         {
-            return new EntityCoordinates(entity.Uid, x, y);
+            return new(entity.Uid, x, y);
         }
 
         public static EntityCoordinates ToCoordinates(this IEntity entity)

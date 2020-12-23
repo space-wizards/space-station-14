@@ -81,7 +81,7 @@ namespace Content.Client.GameObjects.Components.Atmos
         }
     }
 
-    public enum FireVisualLayers
+    public enum FireVisualLayers : byte
     {
         Fire
     }

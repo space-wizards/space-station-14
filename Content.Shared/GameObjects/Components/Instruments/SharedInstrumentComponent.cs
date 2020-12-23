@@ -2,20 +2,29 @@ using System;
 using Robust.Shared.Audio.Midi;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Instruments
 {
     public class SharedInstrumentComponent : Component
     {
-
-        // These 2 values are quite high for now, and this could be easily abused. Change this if people are abusing it.
-        public const int MaxMidiEventsPerSecond = 1000;
-        public const int MaxMidiEventsPerBatch = 60;
-        public const int MaxMidiBatchDropped = 1;
-        public const int MaxMidiLaggedBatches = 8;
-
         public override string Name => "Instrument";
         public override uint? NetID => ContentNetIDs.INSTRUMENTS;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public virtual byte InstrumentProgram { get; set; }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public virtual byte InstrumentBank { get; set; }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public virtual bool AllowPercussion { get; set; }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public virtual bool AllowProgramChange { get ; set; }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public virtual bool RespectMidiLimits { get; set; }
 
         public virtual void Update(float delta)
         {
@@ -58,10 +67,20 @@ namespace Content.Shared.GameObjects.Components.Instruments
     public class InstrumentState : ComponentState
     {
         public bool Playing { get; }
+        public byte InstrumentProgram { get; }
+        public byte InstrumentBank { get; }
+        public bool AllowPercussion { get; }
+        public bool AllowProgramChange { get; }
+        public bool RespectMidiLimits { get; }
 
-        public InstrumentState(bool playing, uint sequencerTick = 0) : base(ContentNetIDs.INSTRUMENTS)
+        public InstrumentState(bool playing, byte instrumentProgram, byte instrumentBank, bool allowPercussion, bool allowProgramChange, bool respectMidiLimits, uint sequencerTick = 0) : base(ContentNetIDs.INSTRUMENTS)
         {
             Playing = playing;
+            InstrumentProgram = instrumentProgram;
+            InstrumentBank = instrumentBank;
+            AllowPercussion = allowPercussion;
+            AllowProgramChange = allowProgramChange;
+            RespectMidiLimits = respectMidiLimits;
         }
     }
 

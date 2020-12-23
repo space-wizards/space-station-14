@@ -10,7 +10,7 @@ namespace Content.Server.GameObjects.EntitySystems
     /// </summary>
     public class WelderSystem : EntitySystem
     {
-        private readonly HashSet<WelderComponent> _activeWelders = new HashSet<WelderComponent>();
+        private readonly HashSet<WelderComponent> _activeWelders = new();
 
         public bool Subscribe(WelderComponent welder)
         {

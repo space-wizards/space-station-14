@@ -18,7 +18,6 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Scrubbers
     /// </summary>
     public abstract class BaseSiphonComponent : PipeNetDeviceComponent
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         [ViewVariables]
         private PipeNode _scrubberOutlet;
@@ -65,11 +64,11 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Scrubbers
             if (!SiphonEnabled)
                 return;
 
-            var tileAtmos = Owner.Transform.Coordinates.GetTileAtmosphere(_entityManager);
+            var tileAtmos = Owner.Transform.Coordinates.GetTileAtmosphere(Owner.EntityManager);
             if (tileAtmos == null)
                 return;
             ScrubGas(tileAtmos.Air, _scrubberOutlet.Air);
-            _atmosSystem.GetGridAtmosphere(Owner.Transform.GridID)?.Invalidate(tileAtmos.GridIndices);
+            tileAtmos.Invalidate();
         }
 
         protected abstract void ScrubGas(GasMixture inletGas, GasMixture outletGas);

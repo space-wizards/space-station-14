@@ -1,12 +1,15 @@
 ﻿using Content.Shared.GameObjects.Components.Storage;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Log;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Storage
 {
+    [UsedImplicitly]
     public sealed class StorageVisualizer : AppearanceVisualizer
     {
         private string _stateBase;
@@ -56,9 +59,9 @@ namespace Content.Client.GameObjects.Components.Storage
             }
 
             component.TryGetData(StorageVisuals.Open, out bool open);
-            sprite.LayerSetState(StorageVisualLayers.Door, open
-                ? _stateOpen ?? $"{_stateBase}_open"
-                : _stateClosed ?? $"{_stateBase}_door");
+            var state = open ? _stateOpen ?? $"{_stateBase}_open" : _stateClosed ?? $"{_stateBase}_door";
+
+            sprite.LayerSetState(StorageVisualLayers.Door, state);
 
             if (component.TryGetData(StorageVisuals.CanLock, out bool canLock) && canLock)
             {
@@ -84,7 +87,7 @@ namespace Content.Client.GameObjects.Components.Storage
         }
     }
 
-    public enum StorageVisualLayers
+    public enum StorageVisualLayers : byte
     {
         Door,
         Welded,

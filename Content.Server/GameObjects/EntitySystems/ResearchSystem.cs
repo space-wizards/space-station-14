@@ -11,7 +11,7 @@ namespace Content.Server.GameObjects.EntitySystems
         public const float ResearchConsoleUIUpdateTime = 30f;
 
         private float _timer = ResearchConsoleUIUpdateTime;
-        private readonly List<ResearchServerComponent> _servers = new List<ResearchServerComponent>();
+        private readonly List<ResearchServerComponent> _servers = new();
         private readonly IEntityQuery ConsoleQuery;
         public IReadOnlyList<ResearchServerComponent> Servers => _servers;
 

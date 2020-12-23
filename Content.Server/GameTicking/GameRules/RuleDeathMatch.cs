@@ -2,7 +2,9 @@
 using System.Threading;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
+using Content.Shared;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
@@ -35,7 +37,7 @@ namespace Content.Server.GameTicking.GameRules
         {
             _chatManager.DispatchServerAnnouncement(Loc.GetString("The game is now a death match. Kill everybody else to win!"));
 
-            _entityManager.EventBus.SubscribeEvent<HealthChangedEventArgs>(EventSource.Local, this, OnHealthChanged);
+            _entityManager.EventBus.SubscribeEvent<DamageChangedEventArgs>(EventSource.Local, this, OnHealthChanged);
             _playerManager.PlayerStatusChanged += PlayerManagerOnPlayerStatusChanged;
         }
 
@@ -43,11 +45,11 @@ namespace Content.Server.GameTicking.GameRules
         {
             base.Removed();
 
-            _entityManager.EventBus.UnsubscribeEvent<HealthChangedEventArgs>(EventSource.Local, this);
+            _entityManager.EventBus.UnsubscribeEvent<DamageChangedEventArgs>(EventSource.Local, this);
             _playerManager.PlayerStatusChanged -= PlayerManagerOnPlayerStatusChanged;
         }
 
-        private void OnHealthChanged(HealthChangedEventArgs message)
+        private void OnHealthChanged(DamageChangedEventArgs message)
         {
             _runDelayedCheck();
         }
@@ -56,19 +58,20 @@ namespace Content.Server.GameTicking.GameRules
         {
             _checkTimerCancel = null;
 
-            if (!_cfg.GetCVar<bool>("game.enablewin"))
+            if (!_cfg.GetCVar(CCVars.GameLobbyEnableWin))
                 return;
 
             IPlayerSession winner = null;
             foreach (var playerSession in _playerManager.GetAllPlayers())
             {
-                if (playerSession.AttachedEntity == null
-                    || !playerSession.AttachedEntity.TryGetComponent(out IDamageableComponent damageable))
+                var playerEntity = playerSession.AttachedEntity;
+                if (playerEntity == null
+                    || !playerEntity.TryGetComponent(out IMobStateComponent state))
                 {
                     continue;
                 }
 
-                if (damageable.CurrentState != DamageState.Alive)
+                if (!state.IsAlive())
                 {
                     continue;
                 }

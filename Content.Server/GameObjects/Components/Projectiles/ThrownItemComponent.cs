@@ -5,6 +5,7 @@ using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Physics;
@@ -28,7 +29,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
         /// <summary>
         ///     User who threw the item.
         /// </summary>
-        public IEntity User;
+        public IEntity User { get; set; }
 
         void ICollideBehavior.CollideWith(IEntity entity)
         {
@@ -102,7 +103,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
         private void StartStopTimer()
         {
-            Timer.Spawn((int) (DefaultThrowTime * 1000), MaybeStopThrow);
+            Owner.SpawnTimer((int) (DefaultThrowTime * 1000), MaybeStopThrow);
         }
 
         private void MaybeStopThrow()

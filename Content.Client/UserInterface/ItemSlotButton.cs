@@ -1,14 +1,19 @@
 ﻿using System;
 using Robust.Client.Graphics;
+using Robust.Client.Graphics.Shaders;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.UserInterface
 {
     public class ItemSlotButton : MarginContainer
     {
+        private const string HighlightShader = "SelectionOutlineInrange";
+
         public TextureRect Button { get; }
         public SpriteView SpriteView { get; }
         public SpriteView HoverSpriteView { get; }
@@ -21,9 +26,11 @@ namespace Content.Client.UserInterface
 
         public bool EntityHover => HoverSpriteView.Sprite != null;
         public bool MouseIsHovering = false;
+        private readonly ShaderInstance _highlightShader;
 
         public ItemSlotButton(Texture texture, Texture storageTexture)
         {
+            _highlightShader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>(HighlightShader).Instance();
             CustomMinimumSize = (64, 64);
 
             AddChild(Button = new TextureRect
@@ -93,6 +100,20 @@ namespace Content.Client.UserInterface
                 HoverSpriteView.Sprite?.Owner.Delete();
                 HoverSpriteView.Sprite = null;
             }
+        }
+
+        public void Highlight(bool on)
+        {
+            // I make no claim that this actually looks good but it's a start.
+            if (on)
+            {
+                Button.ShaderOverride = _highlightShader;
+            }
+            else
+            {
+                Button.ShaderOverride = null;
+            }
+
         }
 
         private void OnButtonPressed(GUIBoundKeyEventArgs args)

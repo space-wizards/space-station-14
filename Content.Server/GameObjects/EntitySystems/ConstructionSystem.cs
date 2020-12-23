@@ -11,6 +11,7 @@ using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
@@ -20,6 +21,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
@@ -34,11 +36,10 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     internal class ConstructionSystem : SharedConstructionSystem
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
-        private readonly Dictionary<ICommonSession, HashSet<int>> _beingBuilt = new Dictionary<ICommonSession, HashSet<int>>();
+        private readonly Dictionary<ICommonSession, HashSet<int>> _beingBuilt = new();
 
         public override void Initialize()
         {
@@ -82,7 +83,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 }
             }
 
-            foreach (var near in _entityManager.GetEntitiesInRange(user!, 2f, true))
+            foreach (var near in EntityManager.GetEntitiesInRange(user!, 2f, true))
             {
                 yield return near;
             }
@@ -263,7 +264,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 return null;
             }
 
-            var newEntity = _entityManager.SpawnEntity(graph.Nodes[edge.Target].Entity, user.Transform.Coordinates);
+            var newEntity = EntityManager.SpawnEntity(graph.Nodes[edge.Target].Entity, user.Transform.Coordinates);
 
             // Yes, this should throw if it's missing the component.
             var construction = newEntity.GetComponent<ConstructionComponent>();
@@ -306,8 +307,18 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private async void HandleStartItemConstruction(TryStartItemConstructionMessage ev, EntitySessionEventArgs args)
         {
-            var constructionPrototype = _prototypeManager.Index<ConstructionPrototype>(ev.PrototypeName);
-            var constructionGraph = _prototypeManager.Index<ConstructionGraphPrototype>(constructionPrototype.Graph);
+            if (!_prototypeManager.TryIndex(ev.PrototypeName, out ConstructionPrototype constructionPrototype))
+            {
+                Logger.Error($"Tried to start construction of invalid recipe '{ev.PrototypeName}'!");
+                return;
+            }
+
+            if (!_prototypeManager.TryIndex(constructionPrototype.Graph, out ConstructionGraphPrototype constructionGraph))
+            {
+                Logger.Error($"Invalid construction graph '{constructionPrototype.Graph}' in recipe '{ev.PrototypeName}'!");
+                return;
+            }
+
             var startNode = constructionGraph.Nodes[constructionPrototype.StartNode];
             var targetNode = constructionGraph.Nodes[constructionPrototype.TargetNode];
             var pathFind = constructionGraph.Path(startNode.Name, targetNode.Name);
@@ -352,8 +363,20 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private async void HandleStartStructureConstruction(TryStartStructureConstructionMessage ev, EntitySessionEventArgs args)
         {
-            var constructionPrototype = _prototypeManager.Index<ConstructionPrototype>(ev.PrototypeName);
-            var constructionGraph = _prototypeManager.Index<ConstructionGraphPrototype>(constructionPrototype.Graph);
+            if (!_prototypeManager.TryIndex(ev.PrototypeName, out ConstructionPrototype constructionPrototype))
+            {
+                Logger.Error($"Tried to start construction of invalid recipe '{ev.PrototypeName}'!");
+                RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
+                return;
+            }
+
+            if (!_prototypeManager.TryIndex(constructionPrototype.Graph, out ConstructionGraphPrototype constructionGraph))
+            {
+                Logger.Error($"Invalid construction graph '{constructionPrototype.Graph}' in recipe '{ev.PrototypeName}'!");
+                RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
+                return;
+            }
+
             var startNode = constructionGraph.Nodes[constructionPrototype.StartNode];
             var targetNode = constructionGraph.Nodes[constructionPrototype.TargetNode];
             var pathFind = constructionGraph.Path(startNode.Name, targetNode.Name);

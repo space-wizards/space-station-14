@@ -54,7 +54,7 @@ namespace Content.Client.Atmos
 
                 var gridBounds = new Box2(mapGrid.WorldToLocal(worldBounds.BottomLeft), mapGrid.WorldToLocal(worldBounds.TopRight));
 
-                for (var pass = 0; pass < 3; pass++)
+                for (var pass = 0; pass < 2; pass++)
                 {
                     foreach (var tile in mapGrid.GetTilesIntersecting(gridBounds))
                     {
@@ -64,17 +64,65 @@ namespace Content.Client.Atmos
                             var data = (SharedAtmosDebugOverlaySystem.AtmosDebugOverlayData) dataMaybeNull!;
                             if (pass == 0)
                             {
+                                // -- Mole Count --
                                 float total = 0;
-                                foreach (float f in data.Moles)
-                                {
-                                    total += f;
+                                switch (_atmosDebugOverlaySystem.CfgMode) {
+                                    case AtmosDebugOverlayMode.TotalMoles:
+                                        foreach (float f in data.Moles)
+                                        {
+                                            total += f;
+                                        }
+                                        break;
+                                    case AtmosDebugOverlayMode.GasMoles:
+                                        total = data.Moles[_atmosDebugOverlaySystem.CfgSpecificGas];
+                                        break;
+                                    case AtmosDebugOverlayMode.Temperature:
+                                        total = data.Temperature;
+                                        break;
                                 }
-                                var interp = total / (Atmospherics.MolesCellStandard * 2);
-                                var res = Color.InterpolateBetween(Color.Red, Color.Green, interp).WithAlpha(0.75f);
+                                var interp = ((total - _atmosDebugOverlaySystem.CfgBase) / _atmosDebugOverlaySystem.CfgScale);
+                                Color res;
+                                if (_atmosDebugOverlaySystem.CfgCBM)
+                                {
+                                    // Greyscale interpolation
+                                    res = Color.InterpolateBetween(Color.Black, Color.White, interp);
+                                }
+                                else
+                                {
+                                    // Red-Green-Blue interpolation
+                                    if (interp < 0.5f)
+                                    {
+                                        res = Color.InterpolateBetween(Color.Red, Color.Green, interp * 2);
+                                    }
+                                    else
+                                    {
+                                        res = Color.InterpolateBetween(Color.Green, Color.Blue, (interp - 0.5f) * 2);
+                                    }
+                                }
+                                res = res.WithAlpha(0.75f);
                                 drawHandle.DrawRect(Box2.FromDimensions(mapGrid.LocalToWorld(new Vector2(tile.X, tile.Y)), new Vector2(1, 1)), res);
                             }
                             else if (pass == 1)
                             {
+                                // -- Blocked Directions --
+                                void CheckAndShowBlockDir(AtmosDirection dir)
+                                {
+                                    if (data.BlockDirection.HasFlag(dir))
+                                    {
+                                        var atmosAngle = dir.ToAngle();
+                                        var atmosAngleOfs = atmosAngle.ToVec() * 0.45f;
+                                        var atmosAngleOfsR90 = new Vector2(atmosAngleOfs.Y, -atmosAngleOfs.X);
+                                        var tileCentre = new Vector2(tile.X + 0.5f, tile.Y + 0.5f);
+                                        var basisA = mapGrid.LocalToWorld(tileCentre + atmosAngleOfs - atmosAngleOfsR90);
+                                        var basisB = mapGrid.LocalToWorld(tileCentre + atmosAngleOfs + atmosAngleOfsR90);
+                                        drawHandle.DrawLine(basisA, basisB, Color.Azure);
+                                    }
+                                }
+                                CheckAndShowBlockDir(AtmosDirection.North);
+                                CheckAndShowBlockDir(AtmosDirection.South);
+                                CheckAndShowBlockDir(AtmosDirection.East);
+                                CheckAndShowBlockDir(AtmosDirection.West);
+                                // -- Pressure Direction --
                                 if (data.PressureDirection != AtmosDirection.Invalid)
                                 {
                                     var atmosAngle = data.PressureDirection.ToAngle();
@@ -84,9 +132,7 @@ namespace Content.Client.Atmos
                                     var basisB = mapGrid.LocalToWorld(tileCentre + atmosAngleOfs);
                                     drawHandle.DrawLine(basisA, basisB, Color.Blue);
                                 }
-                            }
-                            else if (pass == 2)
-                            {
+                                // -- Excited Groups --
                                 if (data.InExcitedGroup)
                                 {
                                     var tilePos = new Vector2(tile.X, tile.Y);

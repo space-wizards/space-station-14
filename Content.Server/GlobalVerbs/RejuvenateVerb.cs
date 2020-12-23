@@ -2,6 +2,7 @@
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Nutrition;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Verbs;
 using Robust.Server.Console;
 using Robust.Server.Interfaces.GameObjects;
@@ -58,7 +59,11 @@ namespace Content.Server.GlobalVerbs
             if (target.TryGetComponent(out IDamageableComponent damage))
             {
                 damage.Heal();
-                damage.CurrentState = DamageState.Alive;
+            }
+
+            if (target.TryGetComponent(out IMobStateComponent mobState))
+            {
+                mobState.UpdateState(0);
             }
 
             if (target.TryGetComponent(out HungerComponent hunger))

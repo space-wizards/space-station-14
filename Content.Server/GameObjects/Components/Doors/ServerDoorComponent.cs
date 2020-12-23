@@ -17,12 +17,12 @@ using Content.Shared.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Doors
         [ViewVariables(VVAccess.ReadWrite)]
         protected float CloseSpeed = AutoCloseDelay;
 
-        private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
+        private CancellationTokenSource? _cancellationTokenSource;
 
         protected virtual TimeSpan CloseTimeOne => TimeSpan.FromSeconds(0.3f);
         protected virtual TimeSpan CloseTimeTwo => TimeSpan.FromSeconds(0.9f);
@@ -79,6 +79,10 @@ namespace Content.Server.GameObjects.Components.Doors
         [ViewVariables(VVAccess.ReadWrite)] private bool _occludes;
 
         public bool Occludes => _occludes;
+
+        [ViewVariables(VVAccess.ReadWrite)] private bool _bumpOpen;
+
+        public bool BumpOpen => _bumpOpen;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool IsWeldedShut
@@ -102,7 +106,7 @@ namespace Content.Server.GameObjects.Components.Doors
         /// <summary>
         ///     Whether something is currently using a welder on this so DoAfter isn't spammed.
         /// </summary>
-        private bool _beingWelded = false;
+        private bool _beingWelded;
 
         [ViewVariables(VVAccess.ReadWrite)]
         private bool _canCrush = true;
@@ -112,6 +116,7 @@ namespace Content.Server.GameObjects.Components.Doors
             base.ExposeData(serializer);
 
             serializer.DataField(ref _occludes, "occludes", true);
+            serializer.DataField(ref _bumpOpen, "bumpOpen", true);
             serializer.DataField(ref _isWeldedShut, "welded", false);
             serializer.DataField(ref _canCrush, "canCrush", true);
         }
@@ -143,6 +148,11 @@ namespace Content.Server.GameObjects.Components.Doors
         void ICollideBehavior.CollideWith(IEntity entity)
         {
             if (State != DoorState.Closed)
+            {
+                return;
+            }
+
+            if (!_bumpOpen)
             {
                 return;
             }
@@ -249,7 +259,10 @@ namespace Content.Server.GameObjects.Components.Doors
                 occluder.Enabled = false;
             }
 
-            Timer.Spawn(OpenTimeOne, async () =>
+            _cancellationTokenSource?.Cancel();
+            _cancellationTokenSource = new();
+
+            Owner.SpawnTimer(OpenTimeOne, async () =>
             {
                 if (Owner.TryGetComponent(out AirtightComponent? airtight))
                 {
@@ -319,7 +332,7 @@ namespace Content.Server.GameObjects.Components.Doors
                 stun.Paralyze(DoorStunTime);
 
                 // If we hit someone, open up after stun (opens right when stun ends)
-                Timer.Spawn(TimeSpan.FromSeconds(DoorStunTime) - OpenTimeOne - OpenTimeTwo, Open);
+                Owner.SpawnTimer(TimeSpan.FromSeconds(DoorStunTime) - OpenTimeOne - OpenTimeTwo, Open);
                 break;
             }
         }
@@ -333,15 +346,13 @@ namespace Content.Server.GameObjects.Components.Doors
 
             var gridAtmosphere = atmosphereSystem.GetGridAtmosphere(Owner.Transform.GridID);
 
-            if (gridAtmosphere == null)
-                return false;
-
             var minMoles = float.MaxValue;
             var maxMoles = 0f;
 
-            foreach (var (direction, adjacent) in gridAtmosphere.GetAdjacentTiles(tileAtmos.GridIndices))
+            foreach (var (_, adjacent) in gridAtmosphere.GetAdjacentTiles(tileAtmos.GridIndices))
             {
-                var moles = adjacent.Air.TotalMoles;
+                // includeAirBlocked remains false, and therefore Air must be present
+                var moles = adjacent.Air!.TotalMoles;
                 if (moles < minMoles)
                     minMoles = moles;
                 if (moles > maxMoles)
@@ -363,10 +374,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
             var gridAtmosphere = atmosphereSystem.GetGridAtmosphere(Owner.Transform.GridID);
 
-            if (gridAtmosphere == null)
-                return false;
-
-            foreach (var (direction, adjacent) in gridAtmosphere.GetAdjacentTiles(tileAtmos.GridIndices))
+            foreach (var (_, adjacent) in gridAtmosphere.GetAdjacentTiles(tileAtmos.GridIndices))
             {
                 if (adjacent.Hotspot.Valid)
                     return true;
@@ -402,7 +410,10 @@ namespace Content.Server.GameObjects.Components.Doors
                 occluder.Enabled = true;
             }
 
-            Timer.Spawn(CloseTimeOne, async () =>
+            _cancellationTokenSource?.Cancel();
+            _cancellationTokenSource = new();
+
+            Owner.SpawnTimer(CloseTimeOne, async () =>
             {
                 if (shouldCheckCrush && _canCrush)
                 {
@@ -434,8 +445,10 @@ namespace Content.Server.GameObjects.Components.Doors
             if (State == DoorState.Open || _isWeldedShut)
                 return;
 
+            _cancellationTokenSource?.Cancel();
+            _cancellationTokenSource = new();
             SetAppearance(DoorVisualState.Deny);
-            Timer.Spawn(DenyTime, () =>
+            Owner.SpawnTimer(DenyTime, () =>
             {
                 SetAppearance(DoorVisualState.Closed);
             }, _cancellationTokenSource.Token);

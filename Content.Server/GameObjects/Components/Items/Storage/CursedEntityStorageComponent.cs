@@ -4,7 +4,6 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
@@ -17,8 +16,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
     [RegisterComponent]
     public class CursedEntityStorageComponent : EntityStorageComponent
     {
-        [Dependency] private IEntityManager _entityManager = default!;
-        [Dependency] private IRobustRandom _robustRandom = default!;
+         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override string Name => "CursedEntityStorage";
 
@@ -29,7 +27,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             // No contents, we do nothing
             if (Contents.ContainedEntities.Count == 0) return;
 
-            var lockers = _entityManager.GetEntities(new TypeEntityQuery(typeof(EntityStorageComponent))).ToList();
+            var lockers = Owner.EntityManager.GetEntities(new TypeEntityQuery(typeof(EntityStorageComponent))).ToList();
 
             if (lockers.Contains(Owner))
                 lockers.Remove(Owner);

@@ -11,14 +11,14 @@ namespace Content.Benchmarks
         [Params(5000)] public int NEnt { get; set; }
 
         private readonly Dictionary<(EntityUid, Type), BComponent>
-            _componentsFlat = new Dictionary<(EntityUid, Type), BComponent>();
+            _componentsFlat = new();
 
         private readonly Dictionary<Type, Dictionary<EntityUid, BComponent>> _componentsPart =
-            new Dictionary<Type, Dictionary<EntityUid, BComponent>>();
+            new();
 
-        private UniqueIndex<Type, BComponent> _allComponents = new UniqueIndex<Type, BComponent>();
+        private UniqueIndex<Type, BComponent> _allComponents = new();
 
-        private readonly List<EntityUid> _lookupEntities = new List<EntityUid>();
+        private readonly List<EntityUid> _lookupEntities = new();
 
         [GlobalSetup]
         public void Setup()

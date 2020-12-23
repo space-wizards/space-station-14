@@ -13,9 +13,11 @@ using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
+using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Disposal;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -62,7 +64,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         [ViewVariables]
         private TimeSpan _lastExitAttempt;
 
-        public static readonly Regex TagRegex = new Regex("^[a-zA-Z0-9, ]*$", RegexOptions.Compiled);
+        public static readonly Regex TagRegex = new("^[a-zA-Z0-9, ]*$", RegexOptions.Compiled);
 
         /// <summary>
         ///     The current pressure of this disposal unit.
@@ -100,7 +102,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         [ViewVariables] public IReadOnlyList<IEntity> ContainedEntities => _container.ContainedEntities;
 
         [ViewVariables]
-        private readonly List<string> _targetList = new List<string>();
+        private readonly List<string> _targetList = new();
 
         [ViewVariables]
         private string _target = "";
@@ -583,11 +585,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 seconds => _flushDelay = TimeSpan.FromSeconds(seconds),
                 () => (int) _flushDelay.TotalSeconds);
 
-            serializer.DataReadWriteFunction(
-                "entryDelay",
-                0.5f,
-                seconds => _entryDelay = seconds,
-                () => (int) _entryDelay);
+            serializer.DataField(ref _entryDelay, "entryDelay", 0.5f);
 
             serializer.DataField(ref _tag, "Tag", "");
         }
@@ -603,12 +601,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 UserInterface.OnReceiveMessage += OnUiReceiveMessage;
             }
 
-            var network = IoCManager.Resolve<IDeviceNetwork>();
             _connection = new WiredNetworkConnection(OnReceiveNetMessage, false, Owner);
-
-            if (Owner.TryGetComponent<ConfigurationComponent>(out var configuration))
-                configuration.OnConfigUpdate += OnConfigUpdate;
-
             UpdateInterface();
         }
 
@@ -673,6 +666,9 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             switch (message)
             {
+                case SharedConfigurationComponent.ConfigUpdatedComponentMessage msg:
+                    OnConfigUpdate(msg.Config);
+                    break;
                 case RelayMovementEntityMessage msg:
                     if (!msg.Entity.TryGetComponent(out HandsComponent? hands) ||
                         hands.Count == 0 ||
@@ -721,7 +717,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-            if (ContainerHelpers.IsInContainer(eventArgs.User))
+            if (eventArgs.User.IsInContainer())
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't reach there!"));
                 return false;
@@ -745,7 +741,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-            // Duplicated code here, not sure how else to get actor inside to make UserInterface happy. 
+            // Duplicated code here, not sure how else to get actor inside to make UserInterface happy.
 
             if (IsValidInteraction(eventArgs))
             {

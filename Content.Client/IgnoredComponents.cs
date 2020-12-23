@@ -1,4 +1,4 @@
-﻿namespace Content.Client
+namespace Content.Client
 {
     public static class IgnoredComponents
     {
@@ -28,6 +28,7 @@
             "Wrench",
             "Crowbar",
             "MeleeWeapon",
+            "MeleeChemicalInjector",
             "Dice",
             "Construction",
             "Door",
@@ -35,7 +36,6 @@
             "Smes",
             "LightBulb",
             "Healing",
-            "Catwalk",
             "RangedMagazine",
             "Ammo",
             "HitscanWeaponCapacitor",
@@ -58,7 +58,6 @@
             "Drink",
             "Food",
             "FoodContainer",
-            "Stomach",
             "Rotatable",
             "MagicMirror",
             "FloorTile",
@@ -136,7 +135,6 @@
             "DisposalBend",
             "Recycler",
             "Conveyor",
-            "ConveyorSwitch",
             "Flippable",
             "Airtight",
             "MovedByPressure",
@@ -180,10 +178,8 @@
             "BreakableConstruction",
             "GasCanister",
             "GasCanisterPort",
-            "Lung",
             "Cleanable",
             "Configuration",
-            "Brain",
             "PlantHolder",
             "SeedExtractor",
             "Produce",
@@ -212,6 +208,27 @@
             "MorgueEntityStorage",
             "MorgueTray",
             "CrematoriumEntityStorage",
+            "RandomArcade",
+            "RandomSpriteState",
+            "DebugEquip",
+            "InnateActions",
+            "ReagentGrinder",
+            "Grindable",
+            "Juiceable",
+            "WelderRefinable",
+            "ConveyorAssembly",
+            "TwoWayLever",
+            "FirelockElectronics",
+            "ChemicalInjectionProjectile",
+            "Machine",
+            "MachinePart",
+            "MachineFrame",
+            "MachineBoard",
+            "ChemicalAmmo",
+            "BiologicalSurgeryData",
+            "CargoTelepad",
+            "TraitorDeathMatchRedemption",
+            "GlassBeaker"
         };
     }
 }

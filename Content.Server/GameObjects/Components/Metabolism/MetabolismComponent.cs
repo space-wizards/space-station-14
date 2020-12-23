@@ -12,7 +12,9 @@ using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.Chemistry;
 using Robust.Shared.GameObjects;
@@ -31,7 +33,6 @@ namespace Content.Server.GameObjects.Components.Metabolism
     public class MetabolismComponent : Component
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         [ComponentDependency] private readonly IBody? _body = default!;
 
@@ -44,11 +45,11 @@ namespace Content.Server.GameObjects.Components.Metabolism
 
         [ViewVariables(VVAccess.ReadWrite)] private int _suffocationDamage;
 
-        [ViewVariables] public Dictionary<Gas, float> NeedsGases { get; set; } = new Dictionary<Gas, float>();
+        [ViewVariables] public Dictionary<Gas, float> NeedsGases { get; set; } = new();
 
-        [ViewVariables] public Dictionary<Gas, float> ProducesGases { get; set; } = new Dictionary<Gas, float>();
+        [ViewVariables] public Dictionary<Gas, float> ProducesGases { get; set; } = new();
 
-        [ViewVariables] public Dictionary<Gas, float> DeficitGases { get; set; } = new Dictionary<Gas, float>();
+        [ViewVariables] public Dictionary<Gas, float> DeficitGases { get; set; } = new();
 
         /// <summary>
         /// Heat generated due to metabolism. It's generated via metabolism
@@ -144,20 +145,20 @@ namespace Content.Server.GameObjects.Components.Metabolism
 
         private float SuffocatingPercentage()
         {
-            var percentages = new float[Atmospherics.TotalNumberOfGases];
+            var total = 0f;
 
             foreach (var (gas, deficit) in DeficitGases)
             {
-                if (!NeedsGases.TryGetValue(gas, out var needed))
+                var lack = 1f;
+                if (NeedsGases.TryGetValue(gas, out var needed))
                 {
-                    percentages[(int) gas] = 1;
-                    continue;
+                    lack = deficit / needed;
                 }
 
-                percentages[(int) gas] = deficit / needed;
+                total += lack / Atmospherics.TotalNumberOfGases;
             }
 
-            return percentages.Average();
+            return total;
         }
 
         private float GasProducedMultiplier(Gas gas, float usedAverage)
@@ -192,7 +193,7 @@ namespace Content.Server.GameObjects.Components.Metabolism
                 return;
             }
 
-            var lungs = _body.GetMechanismBehaviors<LungBehaviorComponent>().ToArray();
+            var lungs = _body.GetMechanismBehaviors<LungBehavior>().ToArray();
 
             var needs = NeedsAndDeficit(frameTime);
             var used = 0f;
@@ -294,7 +295,7 @@ namespace Content.Server.GameObjects.Components.Metabolism
                 }
 
                 // creadth: sweating does not help in airless environment
-                if (Owner.Transform.Coordinates.TryGetTileAir(out _, _entityManager))
+                if (Owner.Transform.Coordinates.TryGetTileAir(out _, Owner.EntityManager))
                 {
                     temperatureComponent.RemoveHeat(Math.Min(targetHeat, SweatHeatRegulation));
                 }
@@ -356,8 +357,8 @@ namespace Content.Server.GameObjects.Components.Metabolism
         /// </param>
         public void Update(float frameTime)
         {
-            if (!Owner.TryGetComponent<IDamageableComponent>(out var damageable) ||
-                damageable.CurrentState == DamageState.Dead)
+            if (!Owner.TryGetComponent<IMobStateComponent>(out var state) ||
+                state.IsDead())
             {
                 return;
             }

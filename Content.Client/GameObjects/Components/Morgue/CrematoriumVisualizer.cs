@@ -1,12 +1,14 @@
 ﻿#nullable enable
 using Content.Shared.GameObjects.Components.Morgue;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
-namespace Content.Client.GameObjects.Components.Storage
+namespace Content.Client.GameObjects.Components.Morgue
 {
+    [UsedImplicitly]
     public sealed class CrematoriumVisualizer : AppearanceVisualizer
     {
         private string _stateOpen = "";
@@ -44,12 +46,14 @@ namespace Content.Client.GameObjects.Components.Storage
 
             if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite)) return;
 
-            sprite.LayerSetState(
-                CrematoriumVisualLayers.Base,
-                component.GetData<bool>(MorgueVisuals.Open)
-                    ? _stateOpen
-                    : _stateClosed
-            );
+            if (component.TryGetData(MorgueVisuals.Open, out bool open))
+            {
+                sprite.LayerSetState(CrematoriumVisualLayers.Base, open ? _stateOpen : _stateClosed);
+            }
+            else
+            {
+                sprite.LayerSetState(CrematoriumVisualLayers.Base, _stateClosed);
+            }
 
             var lightState = "";
             if (component.TryGetData(MorgueVisuals.HasContents,  out bool hasContents) && hasContents) lightState = _lightContents;
@@ -67,7 +71,7 @@ namespace Content.Client.GameObjects.Components.Storage
         }
     }
 
-    public enum CrematoriumVisualLayers
+    public enum CrematoriumVisualLayers : byte
     {
         Base,
         Light,

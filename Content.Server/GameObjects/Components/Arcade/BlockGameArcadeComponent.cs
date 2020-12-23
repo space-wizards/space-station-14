@@ -8,11 +8,13 @@ using Content.Server.Utility;
 using Content.Shared.Arcade;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -25,17 +27,20 @@ namespace Content.Server.GameObjects.Components.Arcade
     [ComponentReference(typeof(IActivate))]
     public class BlockGameArcadeComponent : Component, IActivate
     {
-        [Dependency] private IRobustRandom _random = null!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         public override string Name => "BlockGameArcade";
         public override uint? NetID => ContentNetIDs.BLOCKGAME_ARCADE;
-        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+
+        [ComponentDependency] private readonly PowerReceiverComponent? _powerReceiverComponent = default!;
+
+        private bool Powered => _powerReceiverComponent?.Powered ?? false;
         private BoundUserInterface? UserInterface => Owner.GetUIOrNull(BlockGameUiKey.Key);
 
-        private BlockGame _game = null!;
+        private BlockGame? _game;
 
         private IPlayerSession? _player;
-        private List<IPlayerSession> _spectators = new List<IPlayerSession>();
+        private readonly List<IPlayerSession> _spectators = new();
 
         public void Activate(ActivateEventArgs eventArgs)
         {
@@ -47,7 +52,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             {
                 return;
             }
-            if(!ActionBlockerSystem.CanInteract(Owner)) return;
+            if(!ActionBlockerSystem.CanInteract(actor.playerSession.AttachedEntity)) return;
 
             UserInterface?.Toggle(actor.playerSession);
             RegisterPlayerSession(actor.playerSession);
@@ -59,7 +64,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             else _spectators.Add(session);
 
             UpdatePlayerStatus(session);
-            _game.UpdateNewPlayerUI(session);
+            _game?.UpdateNewPlayerUI(session);
         }
 
         private void DeactivePlayer(IPlayerSession session)
@@ -104,47 +109,65 @@ namespace Content.Server.GameObjects.Components.Arcade
             {
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             }
+
+            if (_powerReceiverComponent != null)
+            {
+                _powerReceiverComponent.OnPowerStateChanged += OnPowerStateChanged;
+            }
             _game = new BlockGame(this);
+        }
+
+        private void OnPowerStateChanged(object? sender, PowerStateEventArgs e)
+        {
+            if (e.Powered) return;
+
+            UserInterface?.CloseAll();
+            _player = null;
+            _spectators.Clear();
         }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
-            if (obj.Message is BlockGameMessages.BlockGameUserUnregisterMessage unregisterMessage)
+            switch (obj.Message)
             {
-                UnRegisterPlayerSession(obj.Session);
-                return;
-            }
-            if (obj.Session != _player) return;
+                case BlockGameMessages.BlockGameUserUnregisterMessage unregisterMessage:
+                    UnRegisterPlayerSession(obj.Session);
+                    break;
+                case BlockGameMessages.BlockGamePlayerActionMessage playerActionMessage:
+                    if (obj.Session != _player) break;
 
-            if (!ActionBlockerSystem.CanInteract(Owner))
-            {
-                DeactivePlayer(obj.Session);
-            }
+                    if (!ActionBlockerSystem.CanInteract(Owner))
+                    {
+                        DeactivePlayer(obj.Session);
+                        break;
+                    }
 
-            if (!(obj.Message is BlockGameMessages.BlockGamePlayerActionMessage message)) return;
-            if (message.PlayerAction == BlockGamePlayerAction.NewGame)
-            {
-                if(_game.Started) _game = new BlockGame(this);
-                _game.StartGame();
-            }
-            else
-            {
-                _game.ProcessInput(message.PlayerAction);
+                    if (playerActionMessage.PlayerAction == BlockGamePlayerAction.NewGame)
+                    {
+                        if(_game?.Started == true) _game = new BlockGame(this);
+                        _game?.StartGame();
+                    }
+                    else
+                    {
+                        _game?.ProcessInput(playerActionMessage.PlayerAction);
+                    }
+
+                    break;
             }
         }
 
         public void DoGameTick(float frameTime)
         {
-            _game.GameTick(frameTime);
+            _game?.GameTick(frameTime);
         }
 
         private class BlockGame
         {
             //note: field is 10(0 -> 9) wide and 20(0 -> 19) high
 
-            private BlockGameArcadeComponent _component;
+            private readonly BlockGameArcadeComponent _component;
 
-            private List<BlockGameBlock> _field = new List<BlockGameBlock>();
+            private readonly List<BlockGameBlock> _field = new();
 
             private BlockGamePiece _currentPiece;
 
@@ -196,13 +219,12 @@ namespace Content.Server.GameObjects.Components.Arcade
 
             private Vector2i _currentPiecePosition;
             private BlockGamePieceRotation _currentRotation;
-            private float _softDropOverride = 0.1f;
+            private float _softDropModifier = 0.1f;
 
-            private float Speed => !_softDropPressed
-                ? -0.03f * Level + 1
-                : _softDropOverride;
+            private float Speed =>
+                -0.03f * Level + 1 * (!_softDropPressed ? 1 : _softDropModifier);
 
-            private float _pressCheckSpeed = 0.08f;
+            private const float _pressCheckSpeed = 0.08f;
 
             private bool _running;
             public bool Paused => !(_running && _started);
@@ -278,7 +300,9 @@ namespace Content.Server.GameObjects.Components.Arcade
             public BlockGame(BlockGameArcadeComponent component)
             {
                 _component = component;
-                _internalNextPiece = BlockGamePiece.GetRandom(_component._random);
+                _allBlockGamePieces = (BlockGamePieceType[]) Enum.GetValues(typeof(BlockGamePieceType));
+                _internalNextPiece = GetRandomBlockGamePiece(_component._random);
+                InitializeNewBlock();
             }
 
             private void SendHighscoreUpdate()
@@ -295,8 +319,6 @@ namespace Content.Server.GameObjects.Components.Arcade
 
             public void StartGame()
             {
-                InitializeNewBlock();
-
                 _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Game));
 
                 FullUpdate();
@@ -343,7 +365,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                 {
                     _accumulatedLeftPressTime += frameTime;
 
-                    if (_accumulatedLeftPressTime >= _pressCheckSpeed)
+                    while (_accumulatedLeftPressTime >= _pressCheckSpeed)
                     {
 
                         if (_currentPiece.Positions(_currentPiecePosition.AddToX(-1), _currentRotation)
@@ -361,7 +383,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                 {
                     _accumulatedRightPressTime += frameTime;
 
-                    if (_accumulatedRightPressTime >= _pressCheckSpeed)
+                    while (_accumulatedRightPressTime >= _pressCheckSpeed)
                     {
                         if (_currentPiece.Positions(_currentPiecePosition.AddToX(1), _currentRotation)
                             .All(MoveCheck))
@@ -384,13 +406,14 @@ namespace Content.Server.GameObjects.Components.Arcade
 
                 var checkTime = Speed;
 
-                if (_accumulatedFieldFrameTime < checkTime) return;
+                while (_accumulatedFieldFrameTime >= checkTime)
+                {
+                    if (_softDropPressed) AddPoints(1);
 
-                if(_softDropPressed) AddPoints(1);
+                    InternalFieldTick();
 
-                InternalFieldTick();
-
-                _accumulatedFieldFrameTime -= checkTime;
+                    _accumulatedFieldFrameTime -= checkTime;
+                }
             }
 
             private void InternalFieldTick()
@@ -490,7 +513,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             private void InitializeNewBlock()
             {
                 InitializeNewBlock(_nextPiece);
-                _nextPiece = BlockGamePiece.GetRandom(_component._random);
+                _nextPiece = GetRandomBlockGamePiece(_component._random);
                 _holdBlock = false;
 
                 _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameVisualUpdateMessage(_nextPiece.BlocksForPreview(), BlockGameMessages.BlockGameVisualType.NextBlock));
@@ -516,52 +539,60 @@ namespace Content.Server.GameObjects.Components.Arcade
 
             public void ProcessInput(BlockGamePlayerAction action)
             {
+                if (_running)
+                {
+                    switch (action)
+                    {
+                        case BlockGamePlayerAction.StartLeft:
+                            _leftPressed = true;
+                            break;
+                        case BlockGamePlayerAction.StartRight:
+                            _rightPressed = true;
+                            break;
+                        case BlockGamePlayerAction.Rotate:
+                            TrySetRotation(Next(_currentRotation, false));
+                            break;
+                        case BlockGamePlayerAction.CounterRotate:
+                            TrySetRotation(Next(_currentRotation, true));
+                            break;
+                        case BlockGamePlayerAction.SoftdropStart:
+                            _softDropPressed = true;
+                            if (_accumulatedFieldFrameTime > Speed) _accumulatedFieldFrameTime = Speed; //to prevent jumps
+                            break;
+                        case BlockGamePlayerAction.Harddrop:
+                            PerformHarddrop();
+                            break;
+                        case BlockGamePlayerAction.Hold:
+                            HoldPiece();
+                            break;
+                    }
+                }
+
                 switch (action)
                 {
-                    case BlockGamePlayerAction.StartLeft:
-                        _leftPressed = true;
-                        break;
                     case BlockGamePlayerAction.EndLeft:
                         _leftPressed = false;
-                        break;
-                    case BlockGamePlayerAction.StartRight:
-                        _rightPressed = true;
                         break;
                     case BlockGamePlayerAction.EndRight:
                         _rightPressed = false;
                         break;
-                    case BlockGamePlayerAction.Rotate:
-                        TrySetRotation(Next(_currentRotation, false));
-                        break;
-                    case BlockGamePlayerAction.CounterRotate:
-                        TrySetRotation(Next(_currentRotation, true));
-                        break;
-                    case BlockGamePlayerAction.SoftdropStart:
-                        _softDropPressed = true;
-                        break;
                     case BlockGamePlayerAction.SoftdropEnd:
                         _softDropPressed = false;
                         break;
-                    case BlockGamePlayerAction.Harddrop:
-                        PerformHarddrop();
-                        break;
                     case BlockGamePlayerAction.Pause:
                         _running = false;
-                        _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Pause));
+                        _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Pause, _started));
                         break;
                     case BlockGamePlayerAction.Unpause:
-                        if (!_gameOver)
+                        if (!_gameOver && _started)
                         {
                             _running = true;
                             _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Game));
                         }
                         break;
-                    case BlockGamePlayerAction.Hold:
-                        HoldPiece();
-                        break;
                     case BlockGamePlayerAction.ShowHighscores:
                         _running = false;
-                        _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Highscores));
+                        _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Highscores, _started));
                         break;
                 }
             }
@@ -632,6 +663,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             }
 
             private bool IsGameOver => _field.Any(block => block.Position.Y == 0);
+
             private void InvokeGameover()
             {
                 _running = false;
@@ -707,6 +739,22 @@ namespace Content.Server.GameObjects.Components.Arcade
                 };
             }
 
+            private readonly BlockGamePieceType[] _allBlockGamePieces;
+
+            private List<BlockGamePieceType> _blockGamePiecesBuffer = new();
+
+            private BlockGamePiece GetRandomBlockGamePiece(IRobustRandom random)
+            {
+                if (_blockGamePiecesBuffer.Count == 0)
+                {
+                    _blockGamePiecesBuffer = _allBlockGamePieces.ToList();
+                }
+
+                var chosenPiece = random.Pick(_blockGamePiecesBuffer);
+                _blockGamePiecesBuffer.Remove(chosenPiece);
+                return BlockGamePiece.GetPiece(chosenPiece);
+            }
+
             private struct BlockGamePiece
             {
                 public Vector2i[] Offsets;
@@ -768,13 +816,6 @@ namespace Content.Server.GameObjects.Components.Arcade
                     }
 
                     return Blocks(new Vector2i(-xOffset, -yOffset), BlockGamePieceRotation.North);
-                }
-
-                public static BlockGamePiece GetRandom(IRobustRandom random)
-                {
-                    var pieces = (BlockGamePieceType[])Enum.GetValues(typeof(BlockGamePieceType));
-                    var choice = random.Pick(pieces);
-                    return GetPiece(choice);
                 }
 
                 public static BlockGamePiece GetPiece(BlockGamePieceType type)

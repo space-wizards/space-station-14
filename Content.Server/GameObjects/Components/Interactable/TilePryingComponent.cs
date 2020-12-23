@@ -8,6 +8,7 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
+using System.Threading.Tasks;
 
 namespace Content.Server.GameObjects.Components.Interactable
 {
@@ -20,7 +21,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         public override string Name => "TilePrying";
         private bool _toolComponentNeeded = true;
 
-        public void AfterInteract(AfterInteractEventArgs eventArgs)
+        public async Task AfterInteract(AfterInteractEventArgs eventArgs)
         {
             TryPryTile(eventArgs.User, eventArgs.ClickLocation);
         }

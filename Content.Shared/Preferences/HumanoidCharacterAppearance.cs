@@ -36,38 +36,37 @@ namespace Content.Shared.Preferences
 
         public HumanoidCharacterAppearance WithHairStyleName(string newName)
         {
-            return new HumanoidCharacterAppearance(newName, HairColor, FacialHairStyleName, FacialHairColor, EyeColor, SkinColor);
+            return new(newName, HairColor, FacialHairStyleName, FacialHairColor, EyeColor, SkinColor);
         }
 
         public HumanoidCharacterAppearance WithHairColor(Color newColor)
         {
-            return new HumanoidCharacterAppearance(HairStyleName, newColor, FacialHairStyleName, FacialHairColor, EyeColor, SkinColor);
+            return new(HairStyleName, newColor, FacialHairStyleName, FacialHairColor, EyeColor, SkinColor);
         }
 
         public HumanoidCharacterAppearance WithFacialHairStyleName(string newName)
         {
-            return new HumanoidCharacterAppearance(HairStyleName, HairColor, newName, FacialHairColor, EyeColor, SkinColor);
+            return new(HairStyleName, HairColor, newName, FacialHairColor, EyeColor, SkinColor);
         }
 
         public HumanoidCharacterAppearance WithFacialHairColor(Color newColor)
         {
-            return new HumanoidCharacterAppearance(HairStyleName, HairColor, FacialHairStyleName, newColor, EyeColor, SkinColor);
+            return new(HairStyleName, HairColor, FacialHairStyleName, newColor, EyeColor, SkinColor);
         }
 
         public HumanoidCharacterAppearance WithEyeColor(Color newColor)
         {
-            return new HumanoidCharacterAppearance(HairStyleName, HairColor, FacialHairStyleName, FacialHairColor, newColor, SkinColor);
+            return new(HairStyleName, HairColor, FacialHairStyleName, FacialHairColor, newColor, SkinColor);
         }
 
         public HumanoidCharacterAppearance WithSkinColor(Color newColor)
         {
-            return new HumanoidCharacterAppearance(HairStyleName, HairColor, FacialHairStyleName, FacialHairColor, EyeColor, newColor);
+            return new(HairStyleName, HairColor, FacialHairStyleName, FacialHairColor, EyeColor, newColor);
         }
 
         public static HumanoidCharacterAppearance Default()
         {
-            return new HumanoidCharacterAppearance
-            (
+            return new(
                 "Bald",
                 Color.Black,
                 "Shaved",
@@ -104,7 +103,7 @@ namespace Content.Shared.Preferences
 
         public static Color ClampColor(Color color)
         {
-            return new Color(color.RByte, color.GByte, color.BByte);
+            return new(color.RByte, color.GByte, color.BByte);
         }
 
         public static HumanoidCharacterAppearance EnsureValid(HumanoidCharacterAppearance appearance)
@@ -145,7 +144,7 @@ namespace Content.Shared.Preferences
 
         public bool MemberwiseEquals(ICharacterAppearance maybeOther)
         {
-            if (!(maybeOther is HumanoidCharacterAppearance other)) return false;
+            if (maybeOther is not HumanoidCharacterAppearance other) return false;
             if (HairStyleName != other.HairStyleName) return false;
             if (!HairColor.Equals(other.HairColor)) return false;
             if (FacialHairStyleName != other.FacialHairStyleName) return false;

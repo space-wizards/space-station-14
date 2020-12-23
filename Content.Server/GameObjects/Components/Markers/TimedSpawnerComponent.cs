@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -15,13 +16,12 @@ namespace Content.Server.GameObjects.Components.Markers
     [RegisterComponent]
     public class TimedSpawnerComponent : Component
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override string Name => "TimedSpawner";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public List<string> Prototypes { get; set; } = new List<string>();
+        public List<string> Prototypes { get; set; } = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float Chance { get; set; } = 1.0f;
@@ -53,11 +53,11 @@ namespace Content.Server.GameObjects.Components.Markers
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(this, x => Prototypes, "prototypes", new List<string>());
-            serializer.DataField(this, x => Chance, "chance", 1.0f);
-            serializer.DataField(this, x => IntervalSeconds, "intervalSeconds", 60);
-            serializer.DataField(this, x => MinimumEntitiesSpawned, "minimumEntitiesSpawned", 1);
-            serializer.DataField(this, x => MaximumEntitiesSpawned, "maximumEntitiesSpawned", 1);
+            serializer.DataField(this, x => x.Prototypes, "prototypes", new List<string>());
+            serializer.DataField(this, x => x.Chance, "chance", 1.0f);
+            serializer.DataField(this, x => x.IntervalSeconds, "intervalSeconds", 60);
+            serializer.DataField(this, x => x.MinimumEntitiesSpawned, "minimumEntitiesSpawned", 1);
+            serializer.DataField(this, x => x.MaximumEntitiesSpawned, "maximumEntitiesSpawned", 1);
 
             if(MinimumEntitiesSpawned > MaximumEntitiesSpawned)
                 throw new ArgumentException("MaximumEntitiesSpawned can't be lower than MinimumEntitiesSpawned!");
@@ -67,7 +67,7 @@ namespace Content.Server.GameObjects.Components.Markers
         {
             TokenSource?.Cancel();
             TokenSource = new CancellationTokenSource();
-            Timer.SpawnRepeating(TimeSpan.FromSeconds(IntervalSeconds), OnTimerFired, TokenSource.Token);
+            Owner.SpawnRepeatingTimer(TimeSpan.FromSeconds(IntervalSeconds), OnTimerFired, TokenSource.Token);
         }
 
         private void OnTimerFired()
@@ -80,7 +80,7 @@ namespace Content.Server.GameObjects.Components.Markers
             for (int i = 0; i < number; i++)
             {
                 var entity = _robustRandom.Pick(Prototypes);
-                _entityManager.SpawnEntity(entity, Owner.Transform.Coordinates);
+                Owner.EntityManager.SpawnEntity(entity, Owner.Transform.Coordinates);
             }
         }
     }

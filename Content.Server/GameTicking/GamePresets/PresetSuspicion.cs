@@ -9,6 +9,7 @@ using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs.Roles.Suspicion;
 using Content.Server.Players;
+using Content.Shared;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.PDA;
 using Content.Shared.Roles;
@@ -44,20 +45,12 @@ namespace Content.Server.GameTicking.GamePresets
         private static string TraitorID = "SuspicionTraitor";
         private static string InnocentID = "SuspicionInnocent";
 
-        public static void RegisterCVars(IConfigurationManager cfg)
-        {
-            cfg.RegisterCVar("game.suspicion_min_players", 5);
-            cfg.RegisterCVar("game.suspicion_min_traitors", 2);
-            cfg.RegisterCVar("game.suspicion_players_per_traitor", 5);
-            cfg.RegisterCVar("game.suspicion_starting_balance", 20);
-        }
-
         public override bool Start(IReadOnlyList<IPlayerSession> readyPlayers, bool force = false)
         {
-            MinPlayers = _cfg.GetCVar<int>("game.suspicion_min_players");
-            MinTraitors = _cfg.GetCVar<int>("game.suspicion_min_traitors");
-            PlayersPerTraitor = _cfg.GetCVar<int>("game.suspicion_players_per_traitor");
-            TraitorStartingBalance = _cfg.GetCVar<int>("game.suspicion_starting_balance");
+            MinPlayers = _cfg.GetCVar(CCVars.SuspicionMinPlayers);
+            MinTraitors = _cfg.GetCVar(CCVars.SuspicionMinTraitors);
+            PlayersPerTraitor = _cfg.GetCVar(CCVars.SuspicionPlayersPerTraitor);
+            TraitorStartingBalance = _cfg.GetCVar(CCVars.SuspicionStartingBalance);
 
             if (!force && readyPlayers.Count < MinPlayers)
             {
@@ -76,11 +69,11 @@ namespace Content.Server.GameTicking.GamePresets
 
             foreach (var player in list)
             {
-                if (!readyProfiles.ContainsKey(player.UserId))
+                if (!ReadyProfiles.ContainsKey(player.UserId))
                 {
                     continue;
                 }
-                var profile = readyProfiles[player.UserId];
+                var profile = ReadyProfiles[player.UserId];
                 if (profile.AntagPreferences.Contains(_prototypeManager.Index<AntagPrototype>(TraitorID).Name))
                 {
                     prefList.Add(player);

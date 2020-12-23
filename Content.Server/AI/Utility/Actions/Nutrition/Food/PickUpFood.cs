@@ -14,7 +14,7 @@ namespace Content.Server.AI.Utility.Actions.Nutrition.Food
 {
     public sealed class PickUpFood : UtilityAction
     {
-        private IEntity _entity;
+        private readonly IEntity _entity;
 
         public PickUpFood(IEntity owner, IEntity entity, float weight) : base(owner)
         {
@@ -31,8 +31,8 @@ namespace Content.Server.AI.Utility.Actions.Nutrition.Food
         {
             base.UpdateBlackboard(context);
             context.GetState<TargetEntityState>().SetValue(_entity);
-        }   
-        
+        }
+
         protected override IReadOnlyCollection<Func<float>> GetConsiderations(Blackboard context)
         {
             var considerationsManager = IoCManager.Resolve<ConsiderationsManager>();

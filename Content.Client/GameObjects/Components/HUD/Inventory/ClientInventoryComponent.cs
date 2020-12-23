@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.GameObjects.Components.Clothing;
 using Content.Shared.GameObjects.Components.Inventory;
@@ -18,14 +20,16 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
     /// A character UI which shows items the user has equipped within his inventory
     /// </summary>
     [RegisterComponent]
+    [ComponentReference(typeof(SharedInventoryComponent))]
     public class ClientInventoryComponent : SharedInventoryComponent
     {
-        private readonly Dictionary<Slots, IEntity> _slots = new Dictionary<Slots, IEntity>();
+        private readonly Dictionary<Slots, IEntity> _slots = new();
 
-        [ViewVariables]
-        public InventoryInterfaceController InterfaceController { get; private set; }
+        public IReadOnlyDictionary<Slots, IEntity> AllSlots => _slots;
 
-        private ISpriteComponent _sprite;
+        [ViewVariables] public InventoryInterfaceController InterfaceController { get; private set; } = default!;
+
+        private ISpriteComponent? _sprite;
 
         private bool _playerAttached = false;
 
@@ -69,18 +73,21 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             }
         }
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override bool IsEquipped(IEntity item)
+        {
+            return item != null && _slots.Values.Any(e => e == item);
+        }
+
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
 
-            if (curState == null)
+            if (curState is not InventoryComponentState state)
                 return;
-
-            var cast = (InventoryComponentState) curState;
 
             var doneSlots = new HashSet<Slots>();
 
-            foreach (var (slot, entityUid) in cast.Entities)
+            foreach (var (slot, entityUid) in state.Entities)
             {
                 if (!Owner.EntityManager.TryGetEntity(entityUid, out var entity))
                 {
@@ -94,9 +101,9 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                 doneSlots.Add(slot);
             }
 
-            if (cast.HoverEntity != null)
+            if (state.HoverEntity != null)
             {
-                var (slot, (entityUid, fits)) = cast.HoverEntity.Value;
+                var (slot, (entityUid, fits)) = state.HoverEntity.Value;
                 var entity = Owner.EntityManager.GetEntity(entityUid);
 
                 InterfaceController?.HoverInSlot(slot, entity, fits);
@@ -126,7 +133,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                 return;
             }
 
-            if (entity != null && entity.TryGetComponent(out ClothingComponent clothing))
+            if (entity.TryGetComponent(out ClothingComponent? clothing))
             {
                 var flag = SlotMasks[slot];
                 var data = clothing.GetEquippedStateInfo(flag);
@@ -155,6 +162,9 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 
         internal void ClearAllSlotVisuals()
         {
+            if (_sprite == null)
+                return;
+
             foreach (var slot in InventoryInstance.SlotMasks)
             {
                 if (slot != Slots.NONE)
@@ -192,7 +202,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             SendNetworkMessage(new OpenSlotStorageUIMessage(slot));
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent component)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
 
@@ -210,9 +220,25 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             }
         }
 
-        public bool TryGetSlot(Slots slot, out IEntity item)
+        public bool TryGetSlot(Slots slot, out IEntity? item)
         {
             return _slots.TryGetValue(slot, out item);
+        }
+
+        public bool TryFindItemSlots(IEntity item, [NotNullWhen(true)] out Slots? slots)
+        {
+            slots = null;
+
+            foreach (var (slot, entity) in _slots)
+            {
+                if (entity == item)
+                {
+                    slots = slot;
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

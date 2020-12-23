@@ -5,10 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
-using Microsoft.AspNetCore.Http;
+using Content.Shared;
 using Newtonsoft.Json;
 using Robust.Server.Interfaces.ServerStatus;
-using Robust.Server.ServerStatus;
 using Robust.Shared.Asynchronous;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.IoC;
@@ -23,13 +22,10 @@ namespace Content.Server
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly ITaskManager _taskManager = default!;
 
-        private readonly HttpClient _httpClient = new HttpClient();
+        private readonly HttpClient _httpClient = new();
 
         void IPostInjectInit.PostInject()
         {
-            _configurationManager.RegisterCVar<string>("status.mommiurl", null);
-            _configurationManager.RegisterCVar<string>("status.mommipassword", null);
-
             _statusHost.AddHandler(_handleChatPost);
         }
 
@@ -46,8 +42,8 @@ namespace Content.Server
 
         private async Task _sendMessageInternal(string type, object messageObject)
         {
-            var url = _configurationManager.GetCVar<string>("status.mommiurl");
-            var password = _configurationManager.GetCVar<string>("status.mommipassword");
+            var url = _configurationManager.GetCVar(CCVars.StatusMoMMIUrl);
+            var password = _configurationManager.GetCVar(CCVars.StatusMoMMIPassword);
             if (string.IsNullOrWhiteSpace(url))
             {
                 return;
@@ -76,19 +72,25 @@ namespace Content.Server
             }
         }
 
-        private bool _handleChatPost(HttpMethod method, HttpRequest request, HttpResponse response)
+        private bool _handleChatPost(IStatusHandlerContext context)
         {
-            if (method != HttpMethod.Post || request.Path != "/ooc")
+            if (context.RequestMethod != HttpMethod.Post || context.Url!.AbsolutePath != "/ooc")
             {
                 return false;
             }
 
-            var password = _configurationManager.GetCVar<string>("status.mommipassword");
+            var password = _configurationManager.GetCVar(CCVars.StatusMoMMIPassword);
+
+            if (string.IsNullOrEmpty(password))
+            {
+                context.RespondError(HttpStatusCode.Forbidden);
+                return true;
+            }
 
             OOCPostMessage message = null;
             try
             {
-                message = request.GetFromJson<OOCPostMessage>();
+                message = context.RequestBodyJson<OOCPostMessage>();
             }
             catch (JsonSerializationException)
             {
@@ -97,19 +99,19 @@ namespace Content.Server
 
             if (message == null)
             {
-                response.StatusCode = (int) HttpStatusCode.BadRequest;
+                context.RespondError(HttpStatusCode.BadRequest);
                 return true;
             }
 
             if (message.Password != password)
             {
-                response.StatusCode = (int) HttpStatusCode.Forbidden;
+                context.RespondError(HttpStatusCode.Forbidden);
                 return true;
             }
 
             _taskManager.RunOnMainThread(() => _chatManager.SendHookOOC(message.Sender, message.Contents));
 
-            response.StatusCode = (int) HttpStatusCode.OK;
+            context.Respond("Success", HttpStatusCode.OK);
 
             return false;
         }

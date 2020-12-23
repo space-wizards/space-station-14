@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
 using Robust.Shared.Configuration;
@@ -23,7 +24,6 @@ namespace Content.Shared.GameObjects.EntitySystems
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] protected readonly IPhysicsManager PhysicsManager = default!;
-        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
         public override void Initialize()
         {
@@ -41,8 +41,6 @@ namespace Content.Shared.GameObjects.EntitySystems
                 .Bind(EngineKeyFunctions.MoveDown, moveDownCmdHandler)
                 .Bind(EngineKeyFunctions.Walk, new WalkInputCmdHandler())
                 .Register<SharedMoverSystem>();
-
-            _configurationManager.RegisterCVar("game.diagonalmovement", true, CVar.ARCHIVE);
         }
 
         /// <inheritdoc />
@@ -52,6 +50,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             base.Shutdown();
         }
 
+        //TODO: reorganize this to make more logical sense
         protected void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, IPhysicsComponent physics)
         {
             physics.EnsureController<MoverController>();
@@ -80,7 +79,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                     controller.StopMoving();
                 }
             }
-            else
+            else if (ActionBlockerSystem.CanMove(mover.Owner))
             {
                 if (weightless)
                 {
@@ -179,7 +178,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             moverComp.SetSprinting(subTick, walking);
         }
 
-        private static bool TryGetAttachedComponent<T>(ICommonSession? session, [MaybeNullWhen(false)] out T component)
+        private static bool TryGetAttachedComponent<T>(ICommonSession? session, [NotNullWhen(true)] out T? component)
             where T : class, IComponent
         {
             component = default;
@@ -207,7 +206,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
             {
-                if (!(message is FullInputCmdMessage full))
+                if (message is not FullInputCmdMessage full)
                 {
                     return false;
                 }
@@ -221,7 +220,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         {
             public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
             {
-                if (!(message is FullInputCmdMessage full))
+                if (message is not FullInputCmdMessage full)
                 {
                     return false;
                 }

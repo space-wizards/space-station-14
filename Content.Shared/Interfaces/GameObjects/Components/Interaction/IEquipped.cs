@@ -7,22 +7,35 @@ using Robust.Shared.Interfaces.GameObjects;
 namespace Content.Shared.Interfaces.GameObjects.Components
 {
     /// <summary>
-    ///     This interface gives components behavior when their owner is put in an inventory slot.
+    ///     This interface gives components behavior when their entity is put in a non-hand inventory slot,
+    ///     regardless of where it came from.  This includes moving the entity from a hand slot into a non-hand slot
+    ///     (which would also fire <see cref="IUnequippedHand"/>).
+    ///
+    ///     This DOES NOT fire when putting the entity into a hand slot (<see cref="IEquippedHand"/>), nor
+    ///     does it fire when putting the entity into held/equipped storage.
     /// </summary>
     public interface IEquipped
     {
         void Equipped(EquippedEventArgs eventArgs);
     }
 
-    public class EquippedEventArgs : EventArgs
+    public abstract class UserEventArgs : EventArgs
     {
-        public EquippedEventArgs(IEntity user, EquipmentSlotDefines.Slots slot)
+        public IEntity User { get; }
+
+        protected UserEventArgs(IEntity user)
         {
             User = user;
+        }
+    }
+
+    public class EquippedEventArgs : UserEventArgs
+    {
+        public EquippedEventArgs(IEntity user, EquipmentSlotDefines.Slots slot) : base(user)
+        {
             Slot = slot;
         }
 
-        public IEntity User { get; }
         public EquipmentSlotDefines.Slots Slot { get; }
     }
 

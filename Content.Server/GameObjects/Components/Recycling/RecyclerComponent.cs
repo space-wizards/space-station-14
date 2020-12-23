@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameObjects.Components.Conveyor;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Recycling;
@@ -13,9 +13,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Map;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -26,11 +24,9 @@ namespace Content.Server.GameObjects.Components.Recycling
     [RegisterComponent]
     public class RecyclerComponent : Component, ICollideBehavior
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-
         public override string Name => "Recycler";
 
-        private List<IEntity> _intersecting = new List<IEntity>();
+        private readonly List<IEntity> _intersecting = new();
 
         /// <summary>
         ///     Whether or not sentient beings will be recycled
@@ -45,12 +41,12 @@ namespace Content.Server.GameObjects.Components.Recycling
         private int _efficiency; // TODO
 
         private bool Powered =>
-            !Owner.TryGetComponent(out PowerReceiverComponent receiver) ||
+            !Owner.TryGetComponent(out PowerReceiverComponent? receiver) ||
             receiver.Powered;
 
         private void Bloodstain()
         {
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(RecyclerVisuals.Bloody, true);
             }
@@ -58,7 +54,7 @@ namespace Content.Server.GameObjects.Components.Recycling
 
         private void Clean()
         {
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(RecyclerVisuals.Bloody, false);
             }
@@ -69,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Recycling
             return entity.HasComponent<IBody>() && !_safe && Powered;
         }
 
-        private bool CanRecycle(IEntity entity, [MaybeNullWhen(false)] out ConstructionPrototype prototype)
+        private bool CanRecycle(IEntity entity, [NotNullWhen(true)] out ConstructionPrototype? prototype)
         {
             prototype = null;
 
@@ -105,7 +101,7 @@ namespace Content.Server.GameObjects.Components.Recycling
 
         private bool CanRun()
         {
-            if (Owner.TryGetComponent(out PowerReceiverComponent receiver) &&
+            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver) &&
                 !receiver.Powered)
             {
                 return false;
@@ -126,7 +122,7 @@ namespace Content.Server.GameObjects.Components.Recycling
                 return false;
             }
 
-            if (!entity.TryGetComponent(out IPhysicsComponent physics) ||
+            if (!entity.TryGetComponent(out IPhysicsComponent? physics) ||
                 physics.Anchored)
             {
                 return false;
@@ -142,7 +138,7 @@ namespace Content.Server.GameObjects.Components.Recycling
                 return false;
             }
 
-            if (ContainerHelpers.IsInContainer(entity))
+            if (entity.IsInContainer())
             {
                 return false;
             }
@@ -164,16 +160,16 @@ namespace Content.Server.GameObjects.Components.Recycling
             {
                 var entity = _intersecting[i];
 
-                if (entity.Deleted || !CanMove(entity) || !_entityManager.IsIntersecting(Owner, entity))
+                if (entity.Deleted || !CanMove(entity) || !Owner.EntityManager.IsIntersecting(Owner, entity))
                 {
                     _intersecting.RemoveAt(i);
                     continue;
                 }
 
-                if (entity.TryGetComponent(out IPhysicsComponent physics))
+                if (entity.TryGetComponent(out IPhysicsComponent? physics))
                 {
                     var controller = physics.EnsureController<ConveyedController>();
-                    controller.Move(direction, frameTime);
+                    controller.Move(direction, frameTime, entity.Transform.WorldPosition - Owner.Transform.WorldPosition);
                 }
             }
         }

@@ -26,19 +26,23 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
-  - type: Destructible
-    deadThreshold: 15
+  - type: Damageable
     resistances: metallicResistances
-    destroySoundCollection: WindowBreak
-    spawnOnDestroy:
-      ShardGlass:
-        Min: 1
-        Max: 3
+  - type: Destructible
+    thresholds:
+      15:
+        soundCollection: WindowBreak
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 2
+        acts: ["Destruction"]
   - type: SnapGrid
     offset: Center
   - type: Airtight
   - type: Window
     base: window
+    maxDamage: 15
   - type: Construction
     graph: window
     node: window
@@ -56,11 +60,20 @@
     sprite: Constructible/Structures/Windows/reinforced_window.rsi
   - type: Icon
     sprite: Constructible/Structures/Windows/reinforced_window.rsi
-  - type: Destructible
-    deadThreshold: 75
+  - type: Damageable
     resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+      75:
+        soundCollection: WindowBreak
+        spawn:
+          ShardGlassReinforced:
+            min: 1
+            max: 2
+        acts: ["Destruction"]
   - type: Window
     base: rwindow
+    maxDamage: 75
   - type: Construction
     graph: window
     node: reinforcedWindow
@@ -75,11 +88,21 @@
     sprite: Constructible/Structures/Windows/phoron_window.rsi
   - type: Icon
     sprite: Constructible/Structures/Windows/phoron_window.rsi
+  - type: Damageable
+    resistances: metallicResistances
   - type: Destructible
-    deadThreshold: 100
+    thresholds:
+      100:
+        soundCollection: WindowBreak
+        spawn:
+          ShardGlassPhoron:
+            min: 1
+            max: 2
+        acts: ["Destruction"]
     resistances: metallicResistances
   - type: Window
     base: pwindow
+    maxDamage: 100
   - type: Construction
     graph: window
     node: phoronWindow

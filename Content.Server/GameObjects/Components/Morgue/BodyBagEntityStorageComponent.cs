@@ -20,6 +20,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using System.Threading.Tasks;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 
 namespace Content.Server.GameObjects.Components.Morgue
 {
@@ -32,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Morgue
         public override string Name => "BodyBagEntityStorage";
 
         [ViewVariables]
-        [ComponentDependency] private AppearanceComponent? _appearance = null;
+        [ComponentDependency] private readonly AppearanceComponent? _appearance = null;
 
         [ViewVariables] public ContainerSlot? LabelContainer { get; private set; }
 

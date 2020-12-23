@@ -15,7 +15,7 @@
   name: china lake
   parent: LauncherBase
   id: LauncherChinaLake
-  description: This centuries-old design was recently rediscovered and adapted for use in modern battlefields. Working similar to a pump-action combat shotgun, its light weight and robust design quickly made it a popular weapon. It uses specialised grenade shells.
+  description: PLOOP
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
@@ -48,7 +48,7 @@
   name: RPG-7
   parent: LauncherBase
   id: LauncherRocket
-  description: A modified ancient rocket-propelled grenade launcher, this design is centuries old, but well preserved.
+  description: A modified ancient rocket-propelled grenade launcher.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi

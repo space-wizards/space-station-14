@@ -6,6 +6,7 @@ using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -46,10 +47,7 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             base.Initialize();
 
-            if (!Owner.EnsureComponent(out PhysicsComponent _))
-            {
-                Logger.Warning($"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(PhysicsComponent)}");
-            }
+            Owner.EnsureComponentWarn(out PhysicsComponent _);
 
             _doAfterSystem = EntitySystem.Get<DoAfterSystem>();
         }

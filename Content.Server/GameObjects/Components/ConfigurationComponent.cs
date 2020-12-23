@@ -1,16 +1,23 @@
 ﻿using Content.Server.GameObjects.Components.Interactable;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Interactable;
+using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Server.Console;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
+using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -24,19 +31,25 @@ namespace Content.Server.GameObjects.Components
         [ViewVariables] private BoundUserInterface UserInterface => Owner.GetUIOrNull(ConfigurationUiKey.Key);
 
         [ViewVariables]
-        private readonly Dictionary<string, string> _config = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> _config = new();
 
         private Regex _validation;
 
-        public event Action<Dictionary<string, string>> OnConfigUpdate;
-
-        public override void Initialize()
+        public override void OnAdd()
         {
-            base.Initialize();
-
+            base.OnAdd();
             if (UserInterface != null)
             {
                 UserInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
+            }
+        }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage -= UserInterfaceOnReceiveMessage;
             }
         }
 
@@ -48,7 +61,7 @@ namespace Content.Server.GameObjects.Components
                 (list) => FillConfiguration(list, _config, ""),
                 () => _config.Keys.ToList());
 
-            serializer.DataReadFunction("vailidation", "^[a-zA-Z0-9 ]*$", value => _validation = new Regex("^[a-zA-Z0-9 ]*$", RegexOptions.Compiled));
+            serializer.DataReadFunction("validation", "^[a-zA-Z0-9 ]*$", value => _validation = new Regex("^[a-zA-Z0-9 ]*$", RegexOptions.Compiled));
         }
 
         public string GetConfig(string name)
@@ -73,9 +86,7 @@ namespace Content.Server.GameObjects.Components
             if (!await tool.UseTool(eventArgs.User, Owner, 0.2f, ToolQuality.Multitool))
                 return false;
 
-            UpdateUserInterface();
-            UserInterface.Open(actor.playerSession);
-            UserInterface.SendMessage(new ValidationUpdateMessage(_validation.ToString()), actor.playerSession);
+            OpenUserInterface(actor);
             return true;
         }
 
@@ -90,28 +101,58 @@ namespace Content.Server.GameObjects.Components
                 {
                     var value = msg.Config.GetValueOrDefault(key);
 
-                    if (_validation != null && !_validation.IsMatch(value) && value != "")
+                    if (value == null || _validation != null && !_validation.IsMatch(value) && value != "")
                         continue;
 
                     _config[key] = value;
                 }
 
-                OnConfigUpdate(_config);
+                SendMessage(new ConfigUpdatedComponentMessage(config));
             }
          }
 
         private void UpdateUserInterface()
         {
-            if (UserInterface == null)
-                return;
+            UserInterface?.SetState(new ConfigurationBoundUserInterfaceState(_config));
+        }
 
-            UserInterface.SetState(new ConfigurationBoundUserInterfaceState(_config));
+        private void OpenUserInterface(IActorComponent actor)
+        {
+            UpdateUserInterface();
+            UserInterface.Open(actor.playerSession);
+            UserInterface.SendMessage(new ValidationUpdateMessage(_validation.ToString()), actor.playerSession);
         }
 
         private static void FillConfiguration<T>(List<string> list, Dictionary<string, T> configuration, T value){
             for (var index = 0; index < list.Count; index++)
             {
                 configuration.Add(list[index], value);
+            }
+        }
+
+        [Verb]
+        public sealed class ConfigureVerb : Verb<ConfigurationComponent>
+        {
+            protected override void GetData(IEntity user, ConfigurationComponent component, VerbData data)
+            {
+                var session = user.PlayerSession();
+                var groupController = IoCManager.Resolve<IConGroupController>();
+                if (session == null || !groupController.CanAdminMenu(session))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
+                data.Text = Loc.GetString("Open Configuration");
+                data.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.96dpi.png";
+            }
+
+            protected override void Activate(IEntity user, ConfigurationComponent component)
+            {
+                if (user.TryGetComponent(out IActorComponent actor))
+                {
+                    component.OpenUserInterface(actor);
+                }
             }
         }
     }
