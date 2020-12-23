@@ -35,7 +35,9 @@
   - type: Destructible
     thresholds:
       50:
-        acts: ["Destruction"]
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
 
 - type: entity
   name: chair

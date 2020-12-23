@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Destructible;
+using Content.Server.GameObjects.Components.Destructible.Thresholds;
+using Content.Server.GameObjects.Components.Destructible.Thresholds.Behavior;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using NUnit.Framework;
@@ -31,13 +33,17 @@ namespace Content.IntegrationTests.Tests.Destructible
       20:
         triggersOnce: false
       50:
-        sound: /Audio/Effects/woodhit.ogg
-        spawn:
-          WoodPlank:
-            min: 1
-            max: 1
-        acts: [""Breakage""]
         triggersOnce: false
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [""Breakage""]
+        - !type:PlaySoundBehavior
+          sound: /Audio/Effects/woodhit.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            WoodPlank:
+              min: 1
+              max: 1
   - type: TestThresholdListener
 ";
 
@@ -77,7 +83,7 @@ namespace Content.IntegrationTests.Tests.Destructible
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var sMapManager = server.ResolveDependency<IMapManager>();
 
-            IEntity sDestructibleEntity = null;
+            IEntity sDestructibleEntity;
             IDamageableComponent sDamageableComponent = null;
             DestructibleComponent sDestructibleComponent = null;
             TestThresholdListenerComponent sThresholdListenerComponent = null;
@@ -121,10 +127,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 var threshold = msg.Threshold;
 
                 // Check that it matches the YAML prototype
-                Assert.That(threshold.Acts, Is.EqualTo(0));
-                Assert.That(threshold.Sound, Is.Null.Or.Empty);
-                Assert.That(threshold.Spawn, Is.Null);
-                Assert.That(threshold.SoundCollection, Is.Null.Or.Empty);
+                Assert.That(threshold.Behaviors, Is.Empty);
                 Assert.That(threshold.Triggered, Is.True);
 
                 sThresholdListenerComponent.ThresholdsReached.Clear();
@@ -142,14 +145,19 @@ namespace Content.IntegrationTests.Tests.Destructible
                 threshold = msg.Threshold;
 
                 // Check that it matches the YAML prototype
-                Assert.That(threshold.Acts, Is.EqualTo((int) ThresholdActs.Breakage));
-                Assert.That(threshold.Sound, Is.EqualTo("/Audio/Effects/woodhit.ogg"));
-                Assert.That(threshold.Spawn, Is.Not.Null);
-                Assert.That(threshold.Spawn.Count, Is.EqualTo(1));
-                Assert.That(threshold.Spawn.Single().Key, Is.EqualTo("WoodPlank"));
-                Assert.That(threshold.Spawn.Single().Value.Min, Is.EqualTo(1));
-                Assert.That(threshold.Spawn.Single().Value.Max, Is.EqualTo(1));
-                Assert.That(threshold.SoundCollection, Is.Null.Or.Empty);
+                Assert.That(threshold.Behaviors, Has.Count.EqualTo(3));
+
+                var actsThreshold = (DoActsBehavior) threshold.Behaviors[0];
+                var soundThreshold = (PlaySoundBehavior) threshold.Behaviors[1];
+                var spawnThreshold = (SpawnEntitiesBehavior) threshold.Behaviors[2];
+
+                Assert.That(actsThreshold.Acts, Is.EqualTo(ThresholdActs.Breakage));
+                Assert.That(soundThreshold.Sound, Is.EqualTo("/Audio/Effects/woodhit.ogg"));
+                Assert.That(spawnThreshold.Spawn, Is.Not.Null);
+                Assert.That(spawnThreshold.Spawn.Count, Is.EqualTo(1));
+                Assert.That(spawnThreshold.Spawn.Single().Key, Is.EqualTo("WoodPlank"));
+                Assert.That(spawnThreshold.Spawn.Single().Value.Min, Is.EqualTo(1));
+                Assert.That(spawnThreshold.Spawn.Single().Value.Max, Is.EqualTo(1));
                 Assert.That(threshold.Triggered, Is.True);
 
                 sThresholdListenerComponent.ThresholdsReached.Clear();
@@ -192,14 +200,20 @@ namespace Content.IntegrationTests.Tests.Destructible
                 threshold = msg.Threshold;
 
                 // Check that it matches the YAML prototype
-                Assert.That(threshold.Acts, Is.EqualTo((int) ThresholdActs.Breakage));
-                Assert.That(threshold.Sound, Is.EqualTo("/Audio/Effects/woodhit.ogg"));
-                Assert.That(threshold.Spawn, Is.Not.Null);
-                Assert.That(threshold.Spawn.Count, Is.EqualTo(1));
-                Assert.That(threshold.Spawn.Single().Key, Is.EqualTo("WoodPlank"));
-                Assert.That(threshold.Spawn.Single().Value.Min, Is.EqualTo(1));
-                Assert.That(threshold.Spawn.Single().Value.Max, Is.EqualTo(1));
-                Assert.That(threshold.SoundCollection, Is.Null.Or.Empty);
+                Assert.That(threshold.Behaviors, Has.Count.EqualTo(3));
+
+                actsThreshold = (DoActsBehavior) threshold.Behaviors[0];
+                soundThreshold = (PlaySoundBehavior) threshold.Behaviors[1];
+                spawnThreshold = (SpawnEntitiesBehavior) threshold.Behaviors[2];
+
+                // Check that it matches the YAML prototype
+                Assert.That(actsThreshold.Acts, Is.EqualTo(ThresholdActs.Breakage));
+                Assert.That(soundThreshold.Sound, Is.EqualTo("/Audio/Effects/woodhit.ogg"));
+                Assert.That(spawnThreshold.Spawn, Is.Not.Null);
+                Assert.That(spawnThreshold.Spawn.Count, Is.EqualTo(1));
+                Assert.That(spawnThreshold.Spawn.Single().Key, Is.EqualTo("WoodPlank"));
+                Assert.That(spawnThreshold.Spawn.Single().Value.Min, Is.EqualTo(1));
+                Assert.That(spawnThreshold.Spawn.Single().Value.Max, Is.EqualTo(1));
                 Assert.That(threshold.Triggered, Is.True);
 
                 // Reset thresholds reached
@@ -227,11 +241,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 threshold = msg.Threshold;
 
                 // Check that it matches the YAML prototype
-                Assert.That(threshold.Acts, Is.EqualTo(0));
-                Assert.That(threshold.Sound, Is.Null.Or.Empty);
-                Assert.That(threshold.Spawn, Is.Null);
-                Assert.That(threshold.SoundCollection, Is.Null.Or.Empty);
-                Assert.That(threshold.Triggered, Is.True);
+                Assert.That(threshold.Behaviors, Is.Empty);
 
                 // Verify the second one, should be the highest one (50)
                 msg = sThresholdListenerComponent.ThresholdsReached[1];
@@ -242,15 +252,20 @@ namespace Content.IntegrationTests.Tests.Destructible
 
                 threshold = msg.Threshold;
 
+                Assert.That(threshold.Behaviors, Has.Count.EqualTo(3));
+
+                actsThreshold = (DoActsBehavior) threshold.Behaviors[0];
+                soundThreshold = (PlaySoundBehavior) threshold.Behaviors[1];
+                spawnThreshold = (SpawnEntitiesBehavior) threshold.Behaviors[2];
+
                 // Check that it matches the YAML prototype
-                Assert.That(threshold.Acts, Is.EqualTo((int) ThresholdActs.Breakage));
-                Assert.That(threshold.Sound, Is.EqualTo("/Audio/Effects/woodhit.ogg"));
-                Assert.That(threshold.Spawn, Is.Not.Null);
-                Assert.That(threshold.Spawn.Count, Is.EqualTo(1));
-                Assert.That(threshold.Spawn.Single().Key, Is.EqualTo("WoodPlank"));
-                Assert.That(threshold.Spawn.Single().Value.Min, Is.EqualTo(1));
-                Assert.That(threshold.Spawn.Single().Value.Max, Is.EqualTo(1));
-                Assert.That(threshold.SoundCollection, Is.Null.Or.Empty);
+                Assert.That(actsThreshold.Acts, Is.EqualTo(ThresholdActs.Breakage));
+                Assert.That(soundThreshold.Sound, Is.EqualTo("/Audio/Effects/woodhit.ogg"));
+                Assert.That(spawnThreshold.Spawn, Is.Not.Null);
+                Assert.That(spawnThreshold.Spawn.Count, Is.EqualTo(1));
+                Assert.That(spawnThreshold.Spawn.Single().Key, Is.EqualTo("WoodPlank"));
+                Assert.That(spawnThreshold.Spawn.Single().Value.Min, Is.EqualTo(1));
+                Assert.That(spawnThreshold.Spawn.Single().Value.Max, Is.EqualTo(1));
                 Assert.That(threshold.Triggered, Is.True);
 
                 // Reset thresholds reached

@@ -31,12 +31,16 @@
   - type: Destructible
     thresholds:
       15:
-        soundCollection: WindowBreak
-        spawn:
-          ShardGlass:
-            min: 1
-            max: 2
-        acts: ["Destruction"]
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+        - !type:PlaySoundCollectionBehavior
+          soundCollection: WindowBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            ShardGlass:
+              min: 1
+              max: 2
   - type: SnapGrid
     offset: Center
   - type: Airtight
@@ -65,12 +69,16 @@
   - type: Destructible
     thresholds:
       75:
-        soundCollection: WindowBreak
-        spawn:
-          ShardGlassReinforced:
-            min: 1
-            max: 2
-        acts: ["Destruction"]
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+        - !type:PlaySoundCollectionBehavior
+          soundCollection: WindowBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            ShardGlassReinforced:
+              min: 1
+              max: 2
   - type: Window
     base: rwindow
     maxDamage: 75
@@ -93,12 +101,16 @@
   - type: Destructible
     thresholds:
       100:
-        soundCollection: WindowBreak
-        spawn:
-          ShardGlassPhoron:
-            min: 1
-            max: 2
-        acts: ["Destruction"]
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+        - !type:PlaySoundCollectionBehavior
+          soundCollection: WindowBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            ShardGlassPhoron:
+              min: 1
+              max: 2
     resistances: metallicResistances
   - type: Window
     base: pwindow

@@ -2,7 +2,7 @@
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Destructible
+namespace Content.Server.GameObjects.Components.Destructible.Thresholds
 {
     public struct MinMax : IExposeData
     {

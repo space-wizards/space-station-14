@@ -32,6 +32,8 @@
   - type: Destructible
     thresholds:
       75:
-        acts: ["Destruction"]
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
   placement:
     mode: SnapgridCenter

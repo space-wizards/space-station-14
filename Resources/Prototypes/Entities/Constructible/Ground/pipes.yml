@@ -15,7 +15,9 @@
   - type: Destructible
     thresholds:
       100:
-        acts: ["Destruction"]
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
   - type: Sprite
   - type: Appearance
     visuals:
