@@ -1,23 +1,8 @@
-﻿using Content.Server.Explosions;
+using Content.Server.Explosions;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Maps;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Random;
-using Robust.Shared.IoC;
-using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
-using Robust.Shared.Random;
-using System;
-using Robust.Shared.GameObjects.EntitySystemMessages;
-using Robust.Shared.Interfaces.Timing;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.Player;
-using Content.Server.GameObjects.Components.Mobs;
 
 namespace Content.Server.GameObjects.Components.Explosion
 {
