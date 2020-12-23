@@ -30,7 +30,7 @@
       5:
         behaviors:
         - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+          acts: ["Destruction"]
         - !type:PlaySoundCollectionBehavior
           soundCollection: WindowBreak
         - !type:SpawnEntitiesBehavior

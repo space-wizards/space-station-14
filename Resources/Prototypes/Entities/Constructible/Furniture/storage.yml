@@ -34,7 +34,7 @@
       30:
         behaviors:
         - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+          acts: ["Destruction"]
         - !type:PlaySoundBehavior
           sound: /Audio/Effects/metalbreak.ogg
         - !type:SpawnEntitiesBehavior
@@ -79,7 +79,7 @@
       30:
         behaviors:
         - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+          acts: ["Destruction"]
         - !type:PlaySoundBehavior
           sound: /Audio/Effects/metalbreak.ogg
         - !type:SpawnEntitiesBehavior

@@ -77,7 +77,7 @@
       300:
         behaviors:
         - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+          acts: ["Destruction"]
         - !type:SpawnEntitiesBehavior
           spawn:
             Girder:

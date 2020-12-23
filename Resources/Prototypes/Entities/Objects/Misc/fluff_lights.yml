@@ -134,7 +134,7 @@
       10:
         behaviors:
         - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+          acts: ["Destruction"]
         - !type:PlaySoundBehavior
           sound: /Audio/Effects/glass_break1.ogg
         - !type:SpawnEntitiesBehavior
@@ -163,7 +163,7 @@
       20:
         behaviors:
         - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+          acts: ["Destruction"]
         - !type:PlaySoundBehavior
           sound: /Audio/Effects/metalbreak.ogg
         - !type:SpawnEntitiesBehavior

@@ -26,7 +26,7 @@
       30:
         behaviors:
         - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+          acts: ["Destruction"]
         - !type:PlaySoundBehavior
           sound: /Audio/Effects/woodhit.ogg
         - !type:SpawnEntitiesBehavior
