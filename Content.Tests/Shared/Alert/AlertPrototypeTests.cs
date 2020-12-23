@@ -1,9 +1,13 @@
 ﻿using System.IO;
+using Content.Server.Utility;
 using Content.Shared.Alert;
+using Content.Shared.Interfaces;
 using NUnit.Framework;
 using Robust.Shared.Interfaces.Log;
+using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.UnitTesting;
 using YamlDotNet.RepresentationModel;
@@ -21,7 +25,6 @@ namespace Content.Tests.Shared.Alert
   description: ""[color=green]Green[/color] good. [color=red]Red[/color] bad.""
   minSeverity: 0
   maxSeverity: 6";
-
 
         [Test]
         public void TestAlertKey()
@@ -41,7 +44,7 @@ namespace Content.Tests.Shared.Alert
         {
 
             var alert = GetTestPrototype();
-            Assert.That(alert.GetIconPath(severity), Is.EqualTo(expected));
+            Assert.That(alert.GetIcon(severity), Is.EqualTo(new SpriteSpecifier.Texture(new ResourcePath(expected))));
         }
 
         private AlertPrototype GetTestPrototype()

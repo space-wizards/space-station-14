@@ -8,6 +8,7 @@ using Content.Server.GameObjects.Components.Power;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;

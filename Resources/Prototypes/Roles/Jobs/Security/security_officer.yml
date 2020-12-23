@@ -4,7 +4,7 @@
   positions: 3
   spawnPositions: 2
   startingGear: SecurityOfficerGear
-  department:
+  departments:
   - Security
   icon: "SecurityOfficer"
   access:

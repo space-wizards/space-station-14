@@ -19,8 +19,8 @@
 - type: latheRecipe
   id: Welder
   icon:
-    sprite: Objects/Tools/welder.rsi
-    state: welder
+    sprite: /Textures/Objects/Tools/welder.rsi
+    state: icon
   result: Welder
   completetime: 500
   materials:

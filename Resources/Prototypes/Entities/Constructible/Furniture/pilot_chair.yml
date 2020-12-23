@@ -11,9 +11,14 @@
   - type: Physics
   - type: Clickable
   - type: InteractionOutline
-  - type: Destructible
-    deadThreshold: 100
+  - type: Damageable
     resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+      100:
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
   - type: ShuttleController
   - type: Strap
     position: Stand

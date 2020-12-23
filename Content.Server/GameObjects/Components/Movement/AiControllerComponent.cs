@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using Content.Server.AI.Utility.AiLogic;
 using Content.Server.GameObjects.EntitySystems.AI;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.GameObjects.Components.Movement;
@@ -39,7 +40,7 @@ namespace Content.Server.GameObjects.Components.Movement
             }
         }
 
-        public AiLogicProcessor? Processor { get; set; }
+        public UtilityAi? Processor { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
         public string? StartingGearPrototype { get; set; }

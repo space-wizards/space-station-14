@@ -4,7 +4,6 @@ using Content.Shared.Chemistry;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -42,11 +41,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             base.Startup();
 
-            if (!Owner.EnsureComponent(out SolutionContainerComponent solution))
-            {
-                Logger.Warning(
-                    $"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(SolutionContainerComponent)}");
-            }
+            Owner.EnsureComponentWarn(out SolutionContainerComponent solution);
 
             solution.Capabilities |= SolutionContainerCaps.FitsInDispenser;
         }
@@ -89,7 +84,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 _prototypeManager.TryIndex(reagentId, out ReagentPrototype proto) &&
                 !string.IsNullOrWhiteSpace(proto.SpriteReplacementPath))
             {
-                var spriteSpec = new SpriteSpecifier.Rsi(new ResourcePath("Objects/Drinks/" + proto.SpriteReplacementPath),"icon");
+                var spriteSpec = new SpriteSpecifier.Rsi(new ResourcePath("Objects/Consumable/Drinks/" + proto.SpriteReplacementPath),"icon");
 
                 if (Owner.TryGetComponent(out SpriteComponent? sprite))
                 {

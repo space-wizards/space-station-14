@@ -9,7 +9,6 @@ using Content.Server.GameObjects.Components.Atmos.Piping;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.Atmos;
-using Content.Shared;
 using Content.Shared.Atmos;
 using Content.Shared.Maps;
 using Robust.Server.GameObjects.EntitySystems.TileLookup;
@@ -18,7 +17,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.GameObjects.Components.Map;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
@@ -220,13 +218,15 @@ namespace Content.Server.GameObjects.Components.Atmos
                     Tiles[indices] = tile;
                 }
 
-                if (IsSpace(indices))
+                var isAirBlocked = IsAirBlocked(indices);
+
+                if (IsSpace(indices) && !isAirBlocked)
                 {
                     tile.Air = new GasMixture(GetVolumeForCells(1), AtmosphereSystem);
                     tile.Air.MarkImmutable();
                     Tiles[indices] = tile;
 
-                } else if (IsAirBlocked(indices))
+                } else if (isAirBlocked)
                 {
                     tile.Air = null;
                 }
@@ -264,7 +264,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                     var direction = (AtmosDirection) (1 << i);
                     var otherIndices = indices.Offset(direction.ToDirection());
                     var otherTile = GetTile(otherIndices);
-                    AddActiveTile(otherTile);
+                    if (otherTile != null) AddActiveTile(otherTile);
                 }
             }
 
@@ -282,6 +282,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             var tile = GetTile(indices);
             if (tile?.GridIndex != _gridId) return;
+            // includeAirBlocked is false, therefore all tiles in this have Air != null.
             var adjacent = GetAdjacentTiles(indices);
             tile.Air = new GasMixture(GetVolumeForCells(1), AtmosphereSystem){Temperature = Atmospherics.T20C};
             Tiles[indices] = tile;
@@ -290,7 +291,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             foreach (var (_, adj) in adjacent)
             {
-                var mix = adj.Air.RemoveRatio(ratio);
+                var mix = adj.Air!.RemoveRatio(ratio);
                 tile.Air.Merge(mix);
                 adj.Air.Merge(mix);
             }
@@ -298,7 +299,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void AddActiveTile(TileAtmosphere? tile)
+        public virtual void AddActiveTile(TileAtmosphere tile)
         {
             if (tile?.GridIndex != _gridId) return;
             tile.Excited = true;
@@ -307,9 +308,8 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void RemoveActiveTile(TileAtmosphere? tile, bool disposeGroup = true)
+        public virtual void RemoveActiveTile(TileAtmosphere tile, bool disposeGroup = true)
         {
-            if (tile == null) return;
             _activeTiles.Remove(tile);
             tile.Excited = false;
             if(disposeGroup)
@@ -320,7 +320,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void AddHotspotTile(TileAtmosphere? tile)
+        public virtual void AddHotspotTile(TileAtmosphere tile)
         {
             if (tile?.GridIndex != _gridId || tile?.Air == null) return;
             _hotspotTiles.Add(tile);
@@ -328,29 +328,27 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void RemoveHotspotTile(TileAtmosphere? tile)
+        public virtual void RemoveHotspotTile(TileAtmosphere tile)
         {
-            if (tile == null) return;
             _hotspotTiles.Remove(tile);
         }
 
-        public virtual void AddSuperconductivityTile(TileAtmosphere? tile)
+        public virtual void AddSuperconductivityTile(TileAtmosphere tile)
         {
             if (tile?.GridIndex != _gridId) return;
             _superconductivityTiles.Add(tile);
         }
 
-        public virtual void RemoveSuperconductivityTile(TileAtmosphere? tile)
+        public virtual void RemoveSuperconductivityTile(TileAtmosphere tile)
         {
-            if (tile == null) return;
             _superconductivityTiles.Remove(tile);
         }
 
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void AddHighPressureDelta(TileAtmosphere? tile)
+        public virtual void AddHighPressureDelta(TileAtmosphere tile)
         {
-            if (tile?.GridIndex != _gridId) return;
+            if (tile.GridIndex != _gridId) return;
             _highPressureDelta.Add(tile);
         }
 

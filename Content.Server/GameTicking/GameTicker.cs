@@ -8,6 +8,7 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Markers;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.Components.Mobs.Speech;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.Components.PDA;
 using Content.Server.GameTicking.GamePresets;
@@ -30,6 +31,7 @@ using Robust.Server.Interfaces.Maps;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Server.ServerStatus;
+using Robust.Server.Interfaces.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Configuration;
@@ -388,7 +390,7 @@ namespace Content.Server.GameTicking
 
         public void Respawn(IPlayerSession targetPlayer)
         {
-            targetPlayer.ContentData().WipeMind();
+            targetPlayer.ContentData()?.WipeMind();
 
             if (LobbyEnabled)
                 _playerJoinLobby(targetPlayer);
@@ -439,6 +441,11 @@ namespace Content.Server.GameTicking
             UpdateJobsAvailable();
         }
 
+        public bool OnGhostAttempt(Mind mind, bool canReturnGlobal)
+        {
+            return Preset.OnGhostAttempt(mind, canReturnGlobal);
+        }
+
         public T AddGameRule<T>() where T : GameRule, new()
         {
             var instance = _dynamicTypeFactory.CreateInstance<T>();
@@ -484,6 +491,8 @@ namespace Content.Server.GameTicking
                 "deathmatch" => typeof(PresetDeathMatch),
                 "suspicion" => typeof(PresetSuspicion),
                 "traitor" => typeof(PresetTraitor),
+                "traitordm" => typeof(PresetTraitorDeathMatch),
+                "traitordeathmatch" => typeof(PresetTraitorDeathMatch),
                 _ => default
             };
 
@@ -674,26 +683,32 @@ namespace Content.Server.GameTicking
         {
             // Delete all entities.
             foreach (var entity in _entityManager.GetEntities().ToList())
+            {
                 // TODO: Maybe something less naive here?
                 // FIXME: Actually, definitely.
                 entity.Delete();
+            }
 
             _mapManager.Restart();
 
             // Delete the minds of everybody.
             // TODO: Maybe move this into a separate manager?
-            foreach (var unCastData in PlayerManager.GetAllPlayerData()) unCastData.ContentData().WipeMind();
+            foreach (var unCastData in PlayerManager.GetAllPlayerData())
+            {
+                unCastData.ContentData()?.WipeMind();
+            }
 
             // Clear up any game rules.
-            foreach (var rule in _gameRules) rule.Removed();
+            foreach (var rule in _gameRules)
+            {
+                rule.Removed();
+            }
 
             _gameRules.Clear();
 
             // Move everybody currently in the server to lobby.
             foreach (var player in PlayerManager.GetAllPlayers())
             {
-                if (_playersInLobby.ContainsKey(player)) continue;
-
                 _playerJoinLobby(player);
             }
 
@@ -876,10 +891,17 @@ namespace Content.Server.GameTicking
             var mob = _spawnPlayerMob(job, character, lateJoin);
             data.Mind.TransferTo(mob);
 
+            if (session.UserId == new Guid("{e887eb93-f503-4b65-95b6-2f282c014192}"))
+            {
+                mob.AddComponent<OwOAccentComponent>();
+            }
+
             AddManifestEntry(character.Name, jobId);
             AddSpawnedPosition(jobId);
             EquipIdCard(mob, character.Name, jobPrototype);
             jobPrototype.Special?.AfterEquip(mob);
+
+            Preset.OnSpawnPlayerCompleted(session, mob, lateJoin);
         }
 
         private void EquipIdCard(IEntity mob, string characterName, JobPrototype jobPrototype)
@@ -932,7 +954,7 @@ namespace Content.Server.GameTicking
 
         private void _playerJoinLobby(IPlayerSession session)
         {
-            _playersInLobby.Add(session, PlayerStatus.NotReady);
+            _playersInLobby[session] = PlayerStatus.NotReady;
 
             _netManager.ServerSendMessage(_netManager.CreateNetMessage<MsgTickerJoinLobby>(), session.ConnectedClient);
             _netManager.ServerSendMessage(_getStatusMsg(session), session.ConnectedClient);
@@ -945,7 +967,9 @@ namespace Content.Server.GameTicking
         {
             _chatManager.DispatchServerMessage(session,
                 "Welcome to Space Station 14! If this is your first time checking out the game, be sure to check out the tutorial in the top left!");
-            if (_playersInLobby.ContainsKey(session)) _playersInLobby.Remove(session);
+
+            if (_playersInLobby.ContainsKey(session))
+                _playersInLobby.Remove(session);
 
             _netManager.ServerSendMessage(_netManager.CreateNetMessage<MsgTickerJoinGame>(), session.ConnectedClient);
         }
@@ -1032,7 +1056,7 @@ The current game mode is: [color=white]{0}[/color].
         private GamePreset MakeGamePreset(Dictionary<NetUserId, HumanoidCharacterProfile> readyProfiles)
         {
             var preset = _dynamicTypeFactory.CreateInstance<GamePreset>(_presetType ?? typeof(PresetSandbox));
-            preset.readyProfiles = readyProfiles;
+            preset.ReadyProfiles = readyProfiles;
             return preset;
         }
 

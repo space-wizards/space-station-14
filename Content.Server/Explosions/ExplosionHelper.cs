@@ -77,7 +77,7 @@ namespace Content.Server.Explosions
             //TODO: make it into some sort of actual damage component or whatever the boys think is appropriate
             if (mapManager.TryGetGrid(coords.GetGridId(entityManager), out var mapGrid))
             {
-                var circle = new Circle(coords.Position, maxRange);
+                var circle = new Circle(coords.ToMapPos(entityManager), maxRange);
                 var tiles = mapGrid?.GetTilesIntersecting(circle);
                 foreach (var tile in tiles)
                 {

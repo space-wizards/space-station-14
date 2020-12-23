@@ -68,7 +68,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Vents
             if (tileAtmos == null)
                 return;
             VentGas(_ventInlet.Air, tileAtmos.Air);
-            _atmosSystem.GetGridAtmosphere(Owner.Transform.GridID).Invalidate(tileAtmos.GridIndices);
+            tileAtmos.Invalidate();
         }
 
         protected abstract void VentGas(GasMixture inletGas, GasMixture outletGas);

@@ -5,6 +5,9 @@ using Content.Server.Explosions;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.GameObjects.Components.Power.AME;
 using Robust.Shared.GameObjects.Components.Transform;
+using Robust.Shared.Interfaces.Random;
+using Robust.Shared.Random;
+using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
@@ -22,6 +25,9 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         /// </summary>
         [ViewVariables]
         private AMEControllerComponent _masterController;
+
+        [Dependency]
+        private readonly IRobustRandom _random = default!;
 
         public AMEControllerComponent MasterController => _masterController;
 
@@ -95,16 +101,42 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             }
         }
 
-        public int InjectFuel(int injectionAmount)
+        public int InjectFuel(int fuel, out bool overloading)
         {
-            if(injectionAmount > 0 && CoreCount > 0)
+            overloading = false;
+            if(fuel > 0 && CoreCount > 0)
             {
-                var instability = 2 * (injectionAmount / CoreCount);
-                foreach(AMEShieldComponent core in _cores)
+                var safeFuelLimit = CoreCount * 2;
+                if (fuel > safeFuelLimit)
                 {
-                    core.CoreIntegrity -= instability;
+                    // The AME is being overloaded.
+                    // Note about these maths: I would assume the general idea here is to make larger engines less safe to overload.
+                    // In other words, yes, those are supposed to be CoreCount, not safeFuelLimit.
+                    var instability = 0;
+                    var overloadVsSizeResult = fuel - CoreCount;
+
+                    // fuel > safeFuelLimit: Slow damage. Can safely run at this level for burst periods if the engine is small and someone is keeping an eye on it.
+                    if (_random.Prob(0.5f))
+                        instability = 1;
+                    // overloadVsSizeResult > 5: 
+                    if (overloadVsSizeResult > 5)
+                        instability = 5;
+                    // overloadVsSizeResult > 10: This will explode in at most 5 injections.
+                    if (overloadVsSizeResult > 10)
+                        instability = 20;
+
+                    // Apply calculated instability
+                    if (instability != 0)
+                    {
+                        overloading = true;
+                        foreach(AMEShieldComponent core in _cores)
+                        {
+                            core.CoreIntegrity -= instability;
+                        }
+                    }
                 }
-                return CoreCount * injectionAmount * 15000; //2 core engine injecting 2 fuel per core = 60kW(?)
+                // Note the float conversions. The maths will completely fail if not done using floats.
+                return (int) ((((float) fuel) / CoreCount) * fuel * 20000);
             }
             return 0;
         }

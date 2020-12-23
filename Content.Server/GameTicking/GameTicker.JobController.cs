@@ -45,7 +45,11 @@ namespace Content.Server.GameTicking
                                 .Where(j =>
                                 {
                                     var (jobId, priority) = j;
-                                    var job = _prototypeManager.Index<JobPrototype>(jobId);
+                                    if (!_prototypeManager.TryIndex(jobId, out JobPrototype job))
+                                    {
+                                        // Job doesn't exist, probably old data?
+                                        return false;
+                                    }
                                     if (job.IsHead != heads)
                                     {
                                         return false;

@@ -155,6 +155,8 @@
     mode: SnapgridCenter
   components:
   - type: Clickable
+  - type: AccessReader
+    access: [["Engineering"]]
   - type: InteractionOutline
   - type: Physics
     shapes:
@@ -232,8 +234,13 @@
     supply: 1500
   - type: SnapGrid
     offset: Center
-  - type: Breakable
-    deadThreshold: 100
+  - type: Damageable
     resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+      100:
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Breakage"]
   - type: Anchorable
   - type: Pullable

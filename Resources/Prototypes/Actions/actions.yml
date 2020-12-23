@@ -1,0 +1,91 @@
+﻿- type: action
+  actionType: HumanScream
+  icon: Interface/Actions/scream.png
+  name: "Scream"
+  filters:
+    - human
+  behaviorType: Instant
+  behavior: !type:ScreamAction
+    cooldown: 10
+    male:
+      - /Audio/Voice/Human/malescream_1.ogg
+      - /Audio/Voice/Human/malescream_2.ogg
+      - /Audio/Voice/Human/malescream_3.ogg
+      - /Audio/Voice/Human/malescream_4.ogg
+      - /Audio/Voice/Human/malescream_5.ogg
+      - /Audio/Voice/Human/malescream_6.ogg
+    female:
+      - /Audio/Voice/Human/femalescream_1.ogg
+      - /Audio/Voice/Human/femalescream_2.ogg
+      - /Audio/Voice/Human/femalescream_3.ogg
+      - /Audio/Voice/Human/femalescream_4.ogg
+      - /Audio/Voice/Human/femalescream_5.ogg
+    wilhelm: /Audio/Voice/Human/wilhelm_scream.ogg
+
+- type: action
+  actionType: DebugInstant
+  icon: Interface/Alerts/Human/human1.png
+  name: "[color=red]Debug Instant[/color]"
+  description: "This is a [color=red]debug message[/color]."
+  requires: "Requires blah blah"
+  filters:
+    - debug
+  behaviorType: Instant
+  behavior: !type:DebugInstant
+    message: Instant action was used!
+
+- type: action
+  actionType: DebugToggle
+  icon: Interface/Alerts/Human/human3.png
+  name: "[color=red]Debug Toggle[/color]"
+  description: "This is a [color=red]debug message[/color]."
+  requires: "Requires blah blah"
+  filters:
+    - debug
+  behaviorType: Toggle
+  behavior: !type:DebugToggle
+    messageOn: Toggled on!
+    messageOff: Toggled off!
+
+- type: action
+  actionType: DebugTargetPoint
+  icon: Interface/Alerts/Human/human4.png
+  name: "[color=red]Debug Target Position[/color]"
+  description: "This is a [color=red]debug message[/color]."
+  filters:
+    - debug
+  behaviorType: TargetPoint
+  behavior: !type:DebugTargetPoint { }
+
+- type: action
+  actionType: DebugTargetPointRepeat
+  icon: Interface/Alerts/Human/human2.png
+  name: "[color=red]Repeating Debug Target Position[/color]"
+  description: "This is a [color=red]debug message[/color]."
+  filters:
+    - debug
+  behaviorType: TargetPoint
+  repeat: true
+  behavior: !type:DebugTargetPoint { }
+
+- type: action
+  actionType: DebugTargetEntity
+  icon: Interface/Alerts/Human/human6.png
+  name: "[color=red]Debug Target Entity[/color]"
+  description: "This is a [color=red]debug message[/color]."
+  filters:
+    - debug
+  behaviorType: TargetEntity
+  behavior: !type:DebugTargetEntity { }
+
+- type: action
+  actionType: DebugTargetEntityRepeat
+  icon: Interface/Alerts/Human/human5.png
+  name: "[color=red]Repeating Debug Target Entity[/color]"
+  description: "This is a [color=red]debug message[/color]."
+  filters:
+    - debug
+  behaviorType: TargetEntity
+  repeat: true
+  behavior: !type:DebugTargetEntity { }
+

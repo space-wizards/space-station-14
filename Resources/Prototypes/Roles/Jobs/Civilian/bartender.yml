@@ -3,7 +3,7 @@
   name: "bartender"
   positions: 1
   startingGear: BartenderGear
-  department:
+  departments:
   - Civilian
   icon: "Bartender"
   access:

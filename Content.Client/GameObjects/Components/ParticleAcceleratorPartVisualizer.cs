@@ -1,24 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.GameObjects.Components;
-using Content.Shared.GameObjects.Components.Singularity;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Reflection;
-using Robust.Shared.Interfaces.Serialization;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components
 {
+    [UsedImplicitly]
     public class ParticleAcceleratorPartVisualizer : AppearanceVisualizer
     {
         private readonly Dictionary<ParticleAcceleratorVisualState, string> _states = new();

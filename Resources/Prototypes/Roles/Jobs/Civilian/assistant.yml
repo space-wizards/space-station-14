@@ -3,7 +3,7 @@
   name: "assistant"
   positions: -1 # Treated as infinite.
   startingGear: AssistantGear
-  department:
+  departments:
   - Civilian
   icon: "Assistant"
   access:

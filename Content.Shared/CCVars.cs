@@ -12,10 +12,10 @@ namespace Content.Shared
          */
 
         public static readonly CVarDef<string> StatusMoMMIUrl =
-            CVarDef.Create<string>("status.mommiurl", null);
+            CVarDef.Create("status.mommiurl", "", CVar.SERVERONLY);
 
         public static readonly CVarDef<string> StatusMoMMIPassword =
-            CVarDef.Create<string>("status.mommipassword", null);
+            CVarDef.Create("status.mommipassword", "", CVar.SERVERONLY);
 
 
         /*
@@ -103,6 +103,13 @@ namespace Content.Shared
             CVarDef.Create("traitor.max_picks", 20);
 
         /*
+         * TraitorDeathMatch
+         */
+
+        public static readonly CVarDef<int> TraitorDeathMatchStartingBalance =
+            CVarDef.Create("traitordm.starting_balance", 20);
+
+        /*
          * Console
          */
 
@@ -149,10 +156,10 @@ namespace Content.Shared
          */
 
         public static readonly CVarDef<bool> ParallaxEnabled =
-            CVarDef.Create("parallax.enabled", true);
+            CVarDef.Create("parallax.enabled", true, CVar.CLIENTONLY);
 
         public static readonly CVarDef<bool> ParallaxDebug =
-            CVarDef.Create("parallax.debug", true);
+            CVarDef.Create("parallax.debug", false, CVar.CLIENTONLY);
 
 
         /*

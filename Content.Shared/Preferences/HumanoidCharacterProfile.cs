@@ -146,7 +146,7 @@ namespace Content.Shared.Preferences
             return new(this) { Clothing = clothing };
         }
 
-        public HumanoidCharacterProfile WithJobPriorities(IReadOnlyDictionary<string, JobPriority> jobPriorities)
+        public HumanoidCharacterProfile WithJobPriorities(IEnumerable<KeyValuePair<string, JobPriority>> jobPriorities)
         {
             return new(this, new Dictionary<string, JobPriority>(jobPriorities), _antagPreferences);
         }
@@ -170,7 +170,7 @@ namespace Content.Shared.Preferences
             return new(this) { PreferenceUnavailable = mode };
         }
 
-        public HumanoidCharacterProfile WithAntagPreferences(IReadOnlyList<string> antagPreferences)
+        public HumanoidCharacterProfile WithAntagPreferences(IEnumerable<string> antagPreferences)
         {
             return new(this, _jobPriorities, new List<string>(antagPreferences));
         }

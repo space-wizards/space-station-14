@@ -15,6 +15,7 @@ namespace Content.Client.GameObjects.Components.Items
 {
     [RegisterComponent]
     [ComponentReference(typeof(ISharedHandsComponent))]
+    [ComponentReference(typeof(SharedHandsComponent))]
     public class HandsComponent : SharedHandsComponent
     {
         [Dependency] private readonly IGameHud _gameHud = default!;
@@ -31,6 +32,18 @@ namespace Content.Client.GameObjects.Components.Items
 
         [ViewVariables] public IEntity? ActiveHand => GetEntity(ActiveIndex);
 
+        public override bool IsHolding(IEntity entity)
+        {
+            foreach (var hand in _hands)
+            {
+                if (hand.Entity == entity)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private void AddHand(Hand hand)
         {
             _sprite?.LayerMapReserveBlank($"hand-{hand.Name}");
@@ -42,7 +55,7 @@ namespace Content.Client.GameObjects.Components.Items
             return Hands.FirstOrDefault(hand => hand.Name == name);
         }
 
-        private bool TryHand(string name, [MaybeNullWhen(false)] out Hand hand)
+        private bool TryHand(string name, [NotNullWhen(true)] out Hand? hand)
         {
             return (hand = GetHand(name)) != null;
         }
