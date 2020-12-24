@@ -4,7 +4,7 @@
   result: Wirecutter
   completetime: 500
   materials:
-    steel: 80
+    steel: 70
 
 - type: latheRecipe
   id: Screwdriver
@@ -14,7 +14,7 @@
   result: Screwdriver
   completetime: 500
   materials:
-    steel: 75
+    steel: 50
 
 - type: latheRecipe
   id: Welder
@@ -52,7 +52,15 @@
   result: Crowbar
   completetime: 500
   materials:
-    steel: 50
+    steel: 70
+
+- type: latheRecipe
+  id: Pickaxe
+  icon: Objects/Weapons/Melee/pickaxe.rsi
+  result: Pickaxe
+  completetime: 500
+  materials:
+    steel: 80
 
 - type: latheRecipe
   id: Multitool

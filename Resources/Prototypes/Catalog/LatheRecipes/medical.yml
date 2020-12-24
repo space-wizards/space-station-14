@@ -17,6 +17,14 @@
     glass: 125
 
 - type: latheRecipe
+  id: Gauze
+  icon: Objects/Specific/Medical/medical.rsi
+  result: Gauze
+  completetime: 500
+  materials:
+    glass: 40
+
+- type: latheRecipe
   id: Scalpel
   icon: Objects/Specific/Medical/surgery_tools.rsi
   result: Scalpel
