@@ -577,26 +577,34 @@ namespace Content.Server.GameTicking
             return Paused;
         }
 
-        private IEntity _spawnPlayerMob(Job job, bool lateJoin = true)
+        private IEntity _spawnPlayerMob(Job job, HumanoidCharacterProfile profile, bool lateJoin = true)
         {
             EntityCoordinates coordinates = lateJoin ? GetLateJoinSpawnPoint() : GetJobSpawnPoint(job.Prototype.ID);
             var entity = _entityManager.SpawnEntity(PlayerPrototypeName, coordinates);
             var startingGear = _prototypeManager.Index<StartingGearPrototype>(job.StartingGear);
-            EquipStartingGear(entity, startingGear);
+            EquipStartingGear(entity, startingGear, profile);
+
+            if (profile != null)
+            {
+                entity.GetComponent<HumanoidAppearanceComponent>().UpdateFromProfile(profile);
+                entity.Name = profile.Name;
+            }
 
             return entity;
         }
 
-        public void EquipStartingGear(IEntity entity, StartingGearPrototype startingGear)
+        public void EquipStartingGear(IEntity entity, StartingGearPrototype startingGear, HumanoidCharacterProfile profile)
         {
             if (entity.TryGetComponent(out InventoryComponent inventory))
             {
-                var gear = startingGear.Equipment;
-
-                foreach (var (slot, equipmentStr) in gear)
+                foreach (var slot in AllSlots)
                 {
-                    var equipmentEntity = _entityManager.SpawnEntity(equipmentStr, entity.Transform.Coordinates);
-                    inventory.Equip(slot, equipmentEntity.GetComponent<ItemComponent>());
+                    var equipmentStr = startingGear.GetGear(slot, profile);
+                    if (equipmentStr != "")
+                    {
+                        var equipmentEntity = _entityManager.SpawnEntity(equipmentStr, entity.Transform.Coordinates);
+                        inventory.Equip(slot, equipmentEntity.GetComponent<ItemComponent>());
+                    }
                 }
             }
 
@@ -609,14 +617,6 @@ namespace Content.Server.GameTicking
                     handsComponent.PutInHand(inhandEntity.GetComponent<ItemComponent>(), hand);
                 }
             }
-        }
-
-        private void ApplyCharacterProfile(IEntity entity, ICharacterProfile profile)
-        {
-            if (profile is null)
-                return;
-            entity.GetComponent<HumanoidAppearanceComponent>().UpdateFromProfile(profile);
-            entity.Name = profile.Name;
         }
 
         private IEntity _spawnObserverMob()
@@ -888,9 +888,8 @@ namespace Content.Server.GameTicking
             var job = new Job(data.Mind, jobPrototype);
             data.Mind.AddRole(job);
 
-            var mob = _spawnPlayerMob(job, lateJoin);
+            var mob = _spawnPlayerMob(job, character, lateJoin);
             data.Mind.TransferTo(mob);
-            ApplyCharacterProfile(mob, character);
 
             if (session.UserId == new Guid("{e887eb93-f503-4b65-95b6-2f282c014192}"))
             {

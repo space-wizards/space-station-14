@@ -12,6 +12,8 @@ using NUnit.Framework;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.UnitTesting;
+using Robust.Shared.IoC;
+using Robust.Shared.Localization.Macros;
 
 namespace Content.Tests.Server.Preferences
 {
@@ -24,6 +26,7 @@ namespace Content.Tests.Server.Preferences
                 "Charlie Charlieson",
                 21,
                 Sex.Male,
+                Gender.Epicene,
                 new HumanoidCharacterAppearance(
                     "Afro",
                     Color.Aqua,
@@ -32,6 +35,7 @@ namespace Content.Tests.Server.Preferences
                     Color.Azure,
                     Color.Beige
                 ),
+                ClothingPreference.Jumpskirt,
                 new Dictionary<string, JobPriority>
                 {
                     {SharedGameTicker.OverflowJob, JobPriority.High}
