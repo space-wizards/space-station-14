@@ -63,6 +63,8 @@ namespace Content.IntegrationTests.Tests.Destructible
         behaviors:
         - !type:DoActsBehavior # This must come first to test a potential crash
           acts: [""Destruction""]
+        - !type:DoActsBehavior
+          acts: [""Destruction""]
         - !type:PlaySoundBehavior
           sound: /Audio/Effects/woodhit.ogg
         - !type:SpawnEntitiesBehavior
@@ -380,7 +382,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 var threshold = sThresholdListenerComponent.ThresholdsReached[0].Threshold;
 
                 Assert.True(threshold.Triggered);
-                Assert.That(threshold.Behaviors.Count, Is.EqualTo(3));
+                Assert.That(threshold.Behaviors.Count, Is.EqualTo(4));
 
                 var spawnEntitiesBehavior = (SpawnEntitiesBehavior) threshold.Behaviors.Single(b => b is SpawnEntitiesBehavior);
 
