@@ -48,6 +48,8 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds
         {
             Triggered = true;
 
+            Behaviors.Sort((a, b) => a.DeletesEntity ? 1 : 0);
+
             foreach (var behavior in Behaviors)
             {
                 behavior.Trigger(owner, system);
