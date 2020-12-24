@@ -1,6 +1,7 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.Components.Pointing;
 using Content.Server.Players;
 using Content.Shared.GameObjects.EntitySystems;
@@ -79,7 +80,13 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public bool InRange(IEntity pointer, EntityCoordinates coordinates)
         {
-            return pointer.InRangeUnOccluded(coordinates, 15, e => e == pointer);
+            if (pointer.HasComponent<GhostComponent>()){
+                return pointer.Transform.Coordinates.InRange(EntityManager, coordinates, 15);
+            }
+            else
+            {
+                return pointer.InRangeUnOccluded(coordinates, 15, e => e == pointer);
+            }         
         }
 
         public bool TryPoint(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
