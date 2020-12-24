@@ -1,4 +1,5 @@
 ﻿using System;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Input;
@@ -129,28 +130,20 @@ namespace Content.Client.UserInterface
             // Escape
             _buttonEscapeMenu = new TopButton(escapeTexture, "Esc")
             {
-                ToolTip = Loc.GetString("Open escape menu.")
+                ToolTip = Loc.GetString("Open escape menu."),
+                StyleClasses = { StyleBase.ButtonOpenRight }
             };
 
             _topButtonsContainer.AddChild(_buttonEscapeMenu);
 
             _buttonEscapeMenu.OnToggled += args => EscapeButtonToggled?.Invoke(args.Pressed);
 
-            // Tutorial
-            _buttonTutorial = new TopButton(tutorialTexture, "F1")
-            {
-                ToolTip = Loc.GetString("Open tutorial.")
-            };
-
-            _topButtonsContainer.AddChild(_buttonTutorial);
-
-            _buttonTutorial.OnToggled += a => ButtonTutorialOnOnToggled();
-
             // Character
             _buttonCharacterMenu = new TopButton(characterTexture, "C")
             {
                 ToolTip = Loc.GetString("Open character menu."),
-                Visible = false
+                Visible = false,
+                StyleClasses = { StyleBase.ButtonSquare }
             };
 
             _topButtonsContainer.AddChild(_buttonCharacterMenu);
@@ -161,7 +154,8 @@ namespace Content.Client.UserInterface
             _buttonInventoryMenu = new TopButton(inventoryTexture, "I")
             {
                 ToolTip = Loc.GetString("Open inventory menu."),
-                Visible = false
+                Visible = false,
+                StyleClasses = { StyleBase.ButtonSquare }
             };
 
             _topButtonsContainer.AddChild(_buttonInventoryMenu);
@@ -172,7 +166,8 @@ namespace Content.Client.UserInterface
             _buttonCraftingMenu = new TopButton(craftingTexture, "G")
             {
                 ToolTip = Loc.GetString("Open crafting menu."),
-                Visible = false
+                Visible = false,
+                StyleClasses = { StyleBase.ButtonSquare }
             };
 
             _topButtonsContainer.AddChild(_buttonCraftingMenu);
@@ -183,12 +178,24 @@ namespace Content.Client.UserInterface
             _buttonSandboxMenu = new TopButton(sandboxTexture, "B")
             {
                 ToolTip = Loc.GetString("Open sandbox menu."),
-                Visible = false
+                Visible = false,
+                StyleClasses = { StyleBase.ButtonSquare }
             };
 
             _topButtonsContainer.AddChild(_buttonSandboxMenu);
 
             _buttonSandboxMenu.OnToggled += args => SandboxButtonToggled?.Invoke(args.Pressed);
+
+            // Tutorial
+            _buttonTutorial = new TopButton(tutorialTexture, "F1")
+            {
+                ToolTip = Loc.GetString("Open tutorial."),
+                StyleClasses = { StyleBase.ButtonOpenLeft }
+            };
+
+            _topButtonsContainer.AddChild(_buttonTutorial);
+
+            _buttonTutorial.OnToggled += a => ButtonTutorialOnOnToggled();
 
             _tutorialWindow = new TutorialWindow();
 

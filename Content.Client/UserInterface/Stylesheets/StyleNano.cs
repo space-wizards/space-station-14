@@ -410,6 +410,10 @@ namespace Content.Client.UserInterface.Stylesheets
                     .Class(ButtonOpenBoth)
                     .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonOpenBoth),
 
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                    .Class(ButtonSquare)
+                    .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonSquare),
+
                 new StyleRule(new SelectorElement(typeof(Label), new[] { Button.StyleClassButton }, null, null), new[]
                 {
                     new StyleProperty(Label.StylePropertyAlignMode, Label.AlignMode.Center),
@@ -808,8 +812,29 @@ namespace Content.Client.UserInterface.Stylesheets
                 }),
 
                 // Those top menu buttons.
-                Element<GameHud.TopButton>()
-                    .Prop(Button.StylePropertyStyleBox, BaseButton),
+                // these use slight variations on the various BaseButton styles so that the content within them appears centered,
+                // which is NOT the case for the default BaseButton styles (OpenLeft/OpenRight adds extra padding on one of the sides
+                // which makes the TopButton icons appear off-center, which we don't want).
+                new StyleRule(
+                    new SelectorElement(typeof(GameHud.TopButton), new[] {ButtonSquare}, null, null),
+                    new[]
+                    {
+                        new StyleProperty(Button.StylePropertyStyleBox, BaseButtonSquare),
+                    }),
+
+                new StyleRule(
+                    new SelectorElement(typeof(GameHud.TopButton), new[] {ButtonOpenLeft}, null, null),
+                    new[]
+                    {
+                        new StyleProperty(Button.StylePropertyStyleBox, BaseButtonOpenLeft),
+                    }),
+
+                new StyleRule(
+                    new SelectorElement(typeof(GameHud.TopButton), new[] {ButtonOpenRight}, null, null),
+                    new[]
+                    {
+                        new StyleProperty(Button.StylePropertyStyleBox, BaseButtonOpenRight),
+                    }),
 
                 new StyleRule(
                     new SelectorElement(typeof(GameHud.TopButton), null, null, new[] {Button.StylePseudoClassNormal}),
