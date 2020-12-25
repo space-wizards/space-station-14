@@ -49,3 +49,12 @@
   materials:
     steel: 50
     glass: 60
+
+- type: latheRecipe
+  id:  FireExtinguisher
+  icon: Objects/Misc/fire_extinguisher.rsi
+  result: FireExtinguisher
+  completetime: 500
+  materials:
+    steel: 80
+    glass: 30
