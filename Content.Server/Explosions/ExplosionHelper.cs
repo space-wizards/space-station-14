@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Explosion;
@@ -28,7 +28,13 @@ namespace Content.Server.Explosions
         /// </summary>
         private static readonly Vector2 EpicenterDistance = (0.1f, 0.1f);
 
-        private static ExplosionSeverity CalculateSeverity(in float distance, in float devastationRange, in float heaveyRange)
+        /// <summary>
+        /// Chance of a tile breaking if the severity is Light and Heavy
+        /// </summary>
+        private static readonly float LightBreakChance = 0.5f;
+        private static readonly float HeavyBreakChance = 0.8f;
+
+        private static ExplosionSeverity CalculateSeverity(float distance, float devastationRange, float heaveyRange)
         {
             if (distance < devastationRange)
             {
@@ -44,24 +50,39 @@ namespace Content.Server.Explosions
             }
         }
 
-        private static void DamageEntitiesAndTiles(this EntityCoordinates epicenter, in float devastationRange, in float heaveyRange, in float maxrange)
+        /// <summary>
+        /// Damage entities inside the range. The damage depends on a discrete
+        /// damage bracket [light, heavy, devastation] and the distance from the epicenter
+        /// </summary>
+        /// <returns>
+        /// A dictionary of coordinates relative to the parents of every grid of entities that survived the explosion,
+        /// have an airtight component and are currently blocking air. Like a wall.
+        /// </returns>
+        private static Dictionary<GridId, HashSet<Vector2i>> DamageEntitiesInRange(this EntityCoordinates epicenter,
+                                                                    float devastationRange,
+                                                                    float heaveyRange,
+                                                                    float maxRange,
+                                                                    MapId mapId)
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            var mapManager = IoCManager.Resolve<IMapManager>();
-            if (!mapManager.TryGetGrid(epicenter.GetGridId(entityManager), out var mapGrid))
-            {
-                return;
-            }
-
             var serverEntityManager = IoCManager.Resolve<IServerEntityManager>();
             var entitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
-            var exAct = entitySystemManager.GetEntitySystem<ActSystem>();
-            var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
-            var robustRandom = IoCManager.Resolve<IRobustRandom>();
+            var mapManager = IoCManager.Resolve<IMapManager>();
 
-            var alive_entities_airtight = new HashSet<Vector2i>();
-            var entities_in = serverEntityManager.GetEntitiesInRange(epicenter, maxrange * 2).ToList();
-            foreach (var entity in entities_in)
+            var exAct = entitySystemManager.GetEntitySystem<ActSystem>();
+
+            var airtightEntitiesDictionary = new Dictionary<GridId, HashSet<Vector2i>>();
+            var boundingBox = Box2.CenteredAround(epicenter.ToMapPos(entityManager), new Vector2(maxRange * 2, maxRange * 2));
+            var mapGridsNear = mapManager.FindGridsIntersecting(mapId, boundingBox);
+
+            foreach (var gridId in mapGridsNear)
+            {
+                airtightEntitiesDictionary.Add(gridId.Index, new HashSet<Vector2i>());
+            }
+
+            var entitiesInRange = serverEntityManager.GetEntitiesInRange(epicenter, maxRange).ToList();
+
+            foreach (var entity in entitiesInRange)
             {
                 if (entity.Deleted || !entity.Transform.IsMapTransform)
                 {
@@ -72,21 +93,61 @@ namespace Content.Server.Explosions
                 {
                     continue;
                 }
+
                 var severity = CalculateSeverity(distance, devastationRange, heaveyRange);
                 exAct.HandleExplosion(epicenter, entity, severity);
 
                 if (!entity.Deleted && entity.TryGetComponent(out GameObjects.Components.Atmos.AirtightComponent airtight) && airtight.AirBlocked)
                 {
-                    // This should stop tiles from being affected by the explosion if
-                    // the wall on top of them were not destroyed.
-                    alive_entities_airtight.Add(entity.Transform.Coordinates.ToVector2i(entityManager, mapManager));
+                    var gridId = entity.Transform.GridID;
+                    var entityAt = entity.Transform.Coordinates.ToVector2i(entityManager, mapManager);
+
+                    if (airtightEntitiesDictionary.TryGetValue(gridId, out var gridHashset))
+                    {
+                        gridHashset.Add(entityAt);
+                    }
+                    else
+                    {
+                        airtightEntitiesDictionary.Add(gridId, new HashSet<Vector2i>() { entityAt });
+                    }
                 }
             }
+            return airtightEntitiesDictionary;
+        }
 
-            var tiles_in = mapGrid.GetTilesIntersecting(new Circle(epicenter.ToMapPos(entityManager), maxrange));
-            foreach (var tile in tiles_in)
+        /// <summary>
+        /// Damage tiles inside the range. The type of tile can change depending on a discrete
+        /// damage bracket [light, heavy, devastation], the distance from the epicenter and
+        /// a probabilty bracket [<see cref="LightBreakChance"/>, <see cref="HeavyBreakChance"/>, 1.0].
+        /// </summary>
+        private static void DamageTilesInRange(this EntityCoordinates epicenter,
+                                               KeyValuePair<GridId, HashSet<Vector2i>> airtightEntities,
+                                               float devastationRange,
+                                               float heaveyRange,
+                                               float maxRange)
+        {
+            var mapManager = IoCManager.Resolve<IMapManager>();
+            if (!mapManager.TryGetGrid(airtightEntities.Key, out var mapGrid))
             {
-                if (alive_entities_airtight.Contains(tile.GridIndices))
+                return;
+            }
+
+            var robustRandom = IoCManager.Resolve<IRobustRandom>();
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
+
+            var boundingBox = Box2.CenteredAround(epicenter.ToMapPos(entityManager), new Vector2(maxRange * 2, maxRange * 2));
+            var tilesInGridAndCircle = mapGrid.GetTilesIntersecting(boundingBox);
+
+            foreach (var tile in tilesInGridAndCircle)
+            {
+                var tileLoc = mapGrid.GridTileToLocal(tile.GridIndices);
+                if (!tileLoc.TryDistance(entityManager, epicenter, out var distance) || distance > maxRange)
+                {
+                    continue;
+                }
+
+                if (airtightEntities.Value.Contains(tile.GridIndices))
                 {
                     continue;
                 }
@@ -98,27 +159,22 @@ namespace Content.Server.Explosions
                     continue;
                 }
 
-                var tileLoc = mapGrid.GridTileToLocal(tile.GridIndices);
-                if (!tileLoc.TryDistance(entityManager, epicenter, out var distance))
-                {
-                    continue;
-                }
-
-                var severity = CalculateSeverity(distance, devastationRange, heaveyRange);
                 var zeroTile = new Tile(tileDefinitionManager[baseTurfs[0]].TileId);
                 var previousTile = new Tile(tileDefinitionManager[baseTurfs[^1]].TileId);
+
+                var severity = CalculateSeverity(distance, devastationRange, heaveyRange);
 
                 switch (severity)
                 {
                     case ExplosionSeverity.Light:
                         mapGrid.SetTile(tileLoc, previousTile);
-                        if (!previousTile.IsEmpty && robustRandom.Prob(0.5f))
+                        if (!previousTile.IsEmpty && robustRandom.Prob(LightBreakChance))
                         {
                             mapGrid.SetTile(tileLoc, previousTile);
                         }
                         break;
                     case ExplosionSeverity.Heavy:
-                        if (!previousTile.IsEmpty && robustRandom.Prob(0.8f))
+                        if (!previousTile.IsEmpty && robustRandom.Prob(HeavyBreakChance))
                         {
                             mapGrid.SetTile(tileLoc, previousTile);
                         }
@@ -130,10 +186,10 @@ namespace Content.Server.Explosions
             }
         }
 
-        private static void CameraShakeInRange(this EntityCoordinates epicenter, in float maxrange)
+        private static void CameraShakeInRange(this EntityCoordinates epicenter, float maxRange)
         {
             var playerManager = IoCManager.Resolve<IPlayerManager>();
-            var players = playerManager.GetPlayersInRange(epicenter, (int) Math.Ceiling(maxrange));
+            var players = playerManager.GetPlayersInRange(epicenter, (int) Math.Ceiling(maxRange));
             foreach (var player in players)
             {
                 if (player.AttachedEntity == null || !player.AttachedEntity.TryGetComponent(out CameraRecoilComponent recoil))
@@ -145,9 +201,10 @@ namespace Content.Server.Explosions
 
                 var playerPos = player.AttachedEntity.Transform.WorldPosition;
                 var delta = epicenter.ToMapPos(entityManager) - playerPos;
+
                 //Change if zero. Will result in a NaN later breaking camera shake if not changed
                 if (delta.EqualsApprox((0.0f, 0.0f)))
-                    delta = (0.1f, 0.1f);
+                    delta = EpicenterDistance;
 
                 var distance = delta.LengthSquared;
                 var effect = 10 * (1 / (1 + distance));
@@ -159,7 +216,7 @@ namespace Content.Server.Explosions
             }
         }
 
-        private static void FlashInRange(this EntityCoordinates epicenter, in float flashrange)
+        private static void FlashInRange(this EntityCoordinates epicenter, float flashrange)
         {
             if (flashrange > 0)
             {
@@ -182,29 +239,38 @@ namespace Content.Server.Explosions
             }
         }
 
-        public static void SpawnExplosion(this IEntity source, int devastationRange = 0, int heavyImpactRange = 0, int lightImpactRange = 0, int flashRange = 0)
+        private static void SpawnExplosion(this EntityCoordinates epicenter, int devastationRange, int heavyImpactRange, int lightImpactRange, int flashRange)
+        {
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var mapId = epicenter.GetMapId(entityManager);
+
+            if (mapId == MapId.Nullspace)
+            {
+                return;
+            }
+
+            var maxRange = MathHelper.Max(devastationRange, heavyImpactRange, lightImpactRange, 0);
+            var airtightEntitiesDictionary = epicenter.DamageEntitiesInRange(devastationRange, heavyImpactRange, maxRange, mapId);
+            foreach (var airtightEntities in airtightEntitiesDictionary)
+            {
+                epicenter.DamageTilesInRange(airtightEntities, devastationRange, heavyImpactRange, maxRange);
+            }
+
+            epicenter.CameraShakeInRange(maxRange);
+            epicenter.FlashInRange(flashRange);
+        }
+
+        public static void SpawnExplosion(this IEntity entity, int devastationRange = 0, int heavyImpactRange = 0, int lightImpactRange = 0, int flashRange = 0)
         {
             // If you want to directly set off the explosive
-            if (!source.Deleted && source.TryGetComponent(out ExplosiveComponent explosive) && !explosive.Exploding)
+            if (!entity.Deleted && entity.TryGetComponent(out ExplosiveComponent explosive) && !explosive.Exploding)
             {
                 explosive.Explosion();
             }
             else
             {
-                SpawnExplosion(source.Transform.Coordinates, devastationRange, heavyImpactRange, lightImpactRange, flashRange);
+                SpawnExplosion(entity.Transform.Coordinates, devastationRange, heavyImpactRange, lightImpactRange, flashRange);
             }
-        }
-
-        public static void SpawnExplosion(this EntityCoordinates epicenter, int devastationRange, int heavyImpactRange, int lightImpactRange, int flashRange)
-        {
-            var maxrange = MathHelper.Max(devastationRange, heavyImpactRange, lightImpactRange, 0);
-
-            epicenter.DamageEntitiesAndTiles(devastationRange, heavyImpactRange, maxrange);
-            epicenter.CameraShakeInRange(maxrange);
-            epicenter.FlashInRange(flashRange);
-
-            var entitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
-            entitySystemManager.GetEntitySystem<AudioSystem>().PlayAtCoords("/Audio/Effects/explosion.ogg", epicenter);
         }
     }
 }
