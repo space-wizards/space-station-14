@@ -1,101 +1,183 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/dc89ef0239830774bd3d9d7d6c8da2856da2b869",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/f3fdb19c606ea11786ebcad0350198f52ede17a3",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
+      "name": "analyzer",
+      "directions": 4
+    },
+    {
       "name": "baton",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
+    },
+    {
+      "name": "beaker",
+      "directions": 4
+    },
+    {
+      "name": "c4",
+      "directions": 4
+    },
+    {
+      "name": "cigpack",
+      "directions": 4
+    },
+    {
+      "name": "clipboard",
+      "directions": 4
+    },
+    {
+      "name": "coil",
+      "directions": 4
+    },
+    {
+      "name": "crowbar",
+      "directions": 4
+    },
+    {
+      "name": "crowbar_red",
+      "directions": 4
+    },
+    {
+      "name": "cutters",
+      "directions": 4
+    },
+    {
+      "name": "drill",
+      "directions": 4
+    },
+    {
+      "name": "electronic",
+      "directions": 4
+    },
+    {
+      "name": "flare",
+      "directions": 4
+    },
+    {
+      "name": "flashbang",
+      "directions": 4
+    },
+    {
+      "name": "flashlight",
+      "directions": 4
+    },
+    {
+      "name": "geiger_counter",
+      "directions": 4
+    },
+    {
+      "name": "grenade",
+      "directions": 4
     },
     {
       "name": "gun",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "handcuff",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
+    },
+    {
+      "name": "horn",
+      "directions": 4
+    },
+    {
+      "name": "horn_gold",
+      "directions": 4
+    },
+    {
+      "name": "hypo",
+      "directions": 4
     },
     {
       "name": "injector",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
-      "name": "tank",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "name": "jawsoflife",
+      "directions": 4
+    },
+    {
+      "name": "knife",
+      "directions": 4
+    },
+    {
+      "name": "lighter",
+      "directions": 4
+    },
+    {
+      "name": "medipen",
+      "directions": 4
+    },
+    {
+      "name": "minibomb",
+      "directions": 4
+    },
+    {
+      "name": "painter",
+      "directions": 4
+    },
+    {
+      "name": "plasmatank",
+      "directions": 4
+    },
+    {
+      "name": "rcd",
+      "directions": 4
+    },
+    {
+      "name": "rolling_pin",
+      "directions": 4
+    },
+    {
+      "name": "rpd",
+      "directions": 4
+    },
+    {
+      "name": "rped",
+      "directions": 4
+    },
+    {
+      "name": "screwdriver",
+      "directions": 4
+    },
+    {
+      "name": "spade",
+      "directions": 4
+    },
+    {
+      "name": "spraybottle",
+      "directions": 4
+    },
+    {
+      "name": "spraycan",
+      "directions": 4
+    },
+    {
+      "name": "tele_baton",
+      "directions": 4
+    },
+    {
+      "name": "tray",
+      "directions": 4
+    },
+    {
+      "name": "welder",
+      "directions": 4
+    },
+    {
+      "name": "wrench",
+      "directions": 4
+    },
+    {
+      "name": "x4",
+      "directions": 4
     }
   ]
 }

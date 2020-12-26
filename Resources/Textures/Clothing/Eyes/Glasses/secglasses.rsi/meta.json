@@ -9,7 +9,7 @@
   "states": [
     {
       "name": "icon",
-      "directions": 1
+      "directions": 4
     },
     {
       "name": "equipped-EYES",

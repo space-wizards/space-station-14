@@ -21,3 +21,5 @@
     idcard: BotanistPDA
     ears: ClothingHeadsetService
     outerclothing: ClothingOuterApronBotanist
+  innerclothingskirt: ClothingUniformJumpskirtHydroponics
+

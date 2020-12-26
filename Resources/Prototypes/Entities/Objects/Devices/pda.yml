@@ -17,8 +17,10 @@
     state: pda
   - type: Clothing
     QuickEquip: false
+    size: 10
     Slots:
     - idcard
+    - Belt
   - type: PointLight
     enabled: false
     radius: 3

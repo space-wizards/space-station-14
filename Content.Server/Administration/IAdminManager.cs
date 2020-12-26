@@ -72,5 +72,7 @@ namespace Content.Server.Administration
         void ReloadAdminsWithRank(int rankId);
 
         void Initialize();
+
+        void PromoteHost(IPlayerSession player);
     }
 }

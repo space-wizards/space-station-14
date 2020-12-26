@@ -23,6 +23,7 @@
   - type: Icon
     sprite: Constructible/Power/VendingMachines/cola.rsi
     state: normal
+  - type: Clickable
   - type: Physics
     anchored: false
     mass: 85

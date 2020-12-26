@@ -106,6 +106,15 @@ Hotbar slot 7: [color=#a4885c]{40}[/color]
 Hotbar slot 8: [color=#a4885c]{41}[/color]
 Hotbar slot 9: [color=#a4885c]{42}[/color]
 Hotbar slot 0: [color=#a4885c]{43}[/color]
+Hotbar Loadout 1: [color=#a4885c]{44}[/color]
+Hotbar Loadout 2: [color=#a4885c]{45}[/color]
+Hotbar Loadout 3: [color=#a4885c]{46}[/color]
+Hotbar Loadout 4: [color=#a4885c]{47}[/color]
+Hotbar Loadout 5: [color=#a4885c]{48}[/color]
+Hotbar Loadout 6: [color=#a4885c]{49}[/color]
+Hotbar Loadout 7: [color=#a4885c]{50}[/color]
+Hotbar Loadout 8: [color=#a4885c]{51}[/color]
+Hotbar Loadout 9: [color=#a4885c]{52}[/color]
                 ",
                 Key(MoveUp), Key(MoveLeft), Key(MoveDown), Key(MoveRight),
                 Key(SwapHands),
@@ -147,7 +156,16 @@ Hotbar slot 0: [color=#a4885c]{43}[/color]
                 Key(Hotbar7),
                 Key(Hotbar8),
                 Key(Hotbar9),
-                Key(Hotbar0)));
+                Key(Hotbar0),
+                Key(Loadout1),
+                Key(Loadout2),
+                Key(Loadout3),
+                Key(Loadout4),
+                Key(Loadout5),
+                Key(Loadout6),
+                Key(Loadout7),
+                Key(Loadout8),
+                Key(Loadout9)));
 
             //Gameplay
             VBox.AddChild(new Label { FontOverride = headerFont, Text = "\nGameplay" });

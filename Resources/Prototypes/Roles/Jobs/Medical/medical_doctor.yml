@@ -21,3 +21,5 @@
     idcard: MedicalPDA
     ears: ClothingHeadsetMedical
     belt: ClothingBeltMedical
+  innerclothingskirt: ClothingUniformJumpskirtMedicalDoctor
+

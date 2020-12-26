@@ -22,10 +22,12 @@
   equipment:
     innerclothing: ClothingUniformJumpsuitHoS
     backpack: ClothingBackpackSecurityFilled
-    shoes: ClothingShoesJackboots
+    shoes: ClothingShoesBootsJack
     outerclothing: ClothingOuterCoatHoSTrench
     eyes: ClothingEyesGlassesSecurity
     head: ClothingHeadHatBeretHoS
     idcard: HoSPDA
     ears: ClothingHeadsetAltSecurity
     belt: ClothingBeltSecurityFilled
+  innerclothingskirt: ClothingUniformJumpskirtHoS
+

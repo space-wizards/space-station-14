@@ -17,6 +17,10 @@
       ]
     },
     {
+      "name": "equipped-BELT",
+      "directions": 4
+    },
+    {
       "name": "insert_overlay",
       "directions": 1,
       "delays": [

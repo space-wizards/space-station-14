@@ -7,8 +7,12 @@
     - type: Sprite
       sprite: Objects/Tools/jaws_of_life.rsi
       state: jaws_pry
-    - type: Item
+    - type: Clothing
       sprite: Objects/Tools/jaws_of_life.rsi
+      size: 50
+      QuickEquip: false
+      Slots:
+        - Belt
     - type: TilePrying
     - type: Tool
       qualities:

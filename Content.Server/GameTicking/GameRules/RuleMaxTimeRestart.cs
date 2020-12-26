@@ -47,7 +47,7 @@ namespace Content.Server.GameTicking.GameRules
 
         private void TimerFired()
         {
-            _gameTicker.EndRound("Time has run out!");
+            _gameTicker.EndRound(Loc.GetString("Time has run out!"));
 
             _chatManager.DispatchServerAnnouncement(Loc.GetString("Restarting in {0} seconds.", (int) RoundEndDelay.TotalSeconds));
 
