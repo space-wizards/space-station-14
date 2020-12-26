@@ -105,11 +105,11 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
                 case IconSmoothingMode.Corners:
                     CalculateNewSpriteCorners();
                     break;
-
                 case IconSmoothingMode.CardinalFlags:
                     CalculateNewSpriteCardinal();
                     break;
-
+                case IconSmoothingMode.NoSprite:
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -303,5 +303,10 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
         ///     The icon selected is a bit field made up of the cardinal direction flags that have adjacent entities.
         /// </summary>
         CardinalFlags,
+
+        /// <summary>
+        ///     Where this component contributes to our neighbors being calculated but we do not update our own sprite.
+        /// </summary>
+        NoSprite,
     }
 }
