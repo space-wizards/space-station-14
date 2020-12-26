@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
@@ -43,6 +43,11 @@ namespace Content.Server.Throw
         /// </param>
         public static void Throw(this IEntity thrownEnt, float throwForce, EntityCoordinates targetLoc, EntityCoordinates sourceLoc, bool spread = false, IEntity throwSourceEnt = null)
         {
+            if (thrownEnt.Deleted)
+            {
+                return;
+            }
+
             if (!thrownEnt.TryGetComponent(out IPhysicsComponent colComp))
                 return;
 

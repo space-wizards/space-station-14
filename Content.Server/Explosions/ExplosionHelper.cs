@@ -1,13 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.Explosion;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Maps;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.EntitySystemMessages;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
@@ -58,7 +62,7 @@ namespace Content.Server.Explosions
         /// A dictionary of coordinates relative to the parents of every grid of entities that survived the explosion,
         /// have an airtight component and are currently blocking air. Like a wall.
         /// </returns>
-        private static Dictionary<GridId, HashSet<Vector2i>> DamageEntitiesInRange(this EntityCoordinates epicenter,
+        private static void DamageEntitiesInRange(EntityCoordinates epicenter, Box2 boundingBox,
                                                                     float devastationRange,
                                                                     float heaveyRange,
                                                                     float maxRange,
@@ -67,20 +71,10 @@ namespace Content.Server.Explosions
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var serverEntityManager = IoCManager.Resolve<IServerEntityManager>();
             var entitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
-            var mapManager = IoCManager.Resolve<IMapManager>();
 
             var exAct = entitySystemManager.GetEntitySystem<ActSystem>();
-
-            var airtightEntitiesDictionary = new Dictionary<GridId, HashSet<Vector2i>>();
-            var boundingBox = Box2.CenteredAround(epicenter.ToMapPos(entityManager), new Vector2(maxRange * 2, maxRange * 2));
-            var mapGridsNear = mapManager.FindGridsIntersecting(mapId, boundingBox);
-
-            foreach (var gridId in mapGridsNear)
-            {
-                airtightEntitiesDictionary.Add(gridId.Index, new HashSet<Vector2i>());
-            }
-
-            var entitiesInRange = serverEntityManager.GetEntitiesInRange(epicenter, maxRange).ToList();
+            
+            var entitiesInRange = serverEntityManager.GetEntitiesInRange(mapId, boundingBox, maxRange).ToList();
 
             foreach (var entity in entitiesInRange)
             {
@@ -96,23 +90,7 @@ namespace Content.Server.Explosions
 
                 var severity = CalculateSeverity(distance, devastationRange, heaveyRange);
                 exAct.HandleExplosion(epicenter, entity, severity);
-
-                if (!entity.Deleted && entity.TryGetComponent(out GameObjects.Components.Atmos.AirtightComponent airtight) && airtight.AirBlocked)
-                {
-                    var gridId = entity.Transform.GridID;
-                    var entityAt = entity.Transform.Coordinates.ToVector2i(entityManager, mapManager);
-
-                    if (airtightEntitiesDictionary.TryGetValue(gridId, out var gridHashset))
-                    {
-                        gridHashset.Add(entityAt);
-                    }
-                    else
-                    {
-                        airtightEntitiesDictionary.Add(gridId, new HashSet<Vector2i>() { entityAt });
-                    }
-                }
             }
-            return airtightEntitiesDictionary;
         }
 
         /// <summary>
@@ -120,23 +98,31 @@ namespace Content.Server.Explosions
         /// damage bracket [light, heavy, devastation], the distance from the epicenter and
         /// a probabilty bracket [<see cref="LightBreakChance"/>, <see cref="HeavyBreakChance"/>, 1.0].
         /// </summary>
-        private static void DamageTilesInRange(this EntityCoordinates epicenter,
-                                               KeyValuePair<GridId, HashSet<Vector2i>> airtightEntities,
+        ///
+        private static void DamageTilesInRange(EntityCoordinates epicenter,
+                                               GridId gridId,
+                                               Box2 boundingBox,
                                                float devastationRange,
                                                float heaveyRange,
                                                float maxRange)
         {
             var mapManager = IoCManager.Resolve<IMapManager>();
-            if (!mapManager.TryGetGrid(airtightEntities.Key, out var mapGrid))
+            if (!mapManager.TryGetGrid(gridId, out var mapGrid))
             {
                 return;
             }
 
-            var robustRandom = IoCManager.Resolve<IRobustRandom>();
             var entityManager = IoCManager.Resolve<IEntityManager>();
+            if (!entityManager.TryGetEntity(mapGrid.GridEntityId, out var grid))
+            {
+                return;
+            }
+
+            _ = grid.TryGetComponent(out GridAtmosphereComponent atmosphereComponent);
+
+            var robustRandom = IoCManager.Resolve<IRobustRandom>();
             var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
 
-            var boundingBox = Box2.CenteredAround(epicenter.ToMapPos(entityManager), new Vector2(maxRange * 2, maxRange * 2));
             var tilesInGridAndCircle = mapGrid.GetTilesIntersecting(boundingBox);
 
             foreach (var tile in tilesInGridAndCircle)
@@ -147,7 +133,7 @@ namespace Content.Server.Explosions
                     continue;
                 }
 
-                if (airtightEntities.Value.Contains(tile.GridIndices))
+                if (atmosphereComponent != null && atmosphereComponent.IsAirBlocked(tile.GridIndices))
                 {
                     continue;
                 }
@@ -186,7 +172,7 @@ namespace Content.Server.Explosions
             }
         }
 
-        private static void CameraShakeInRange(this EntityCoordinates epicenter, float maxRange)
+        private static void CameraShakeInRange(EntityCoordinates epicenter, float maxRange)
         {
             var playerManager = IoCManager.Resolve<IPlayerManager>();
             var players = playerManager.GetPlayersInRange(epicenter, (int) Math.Ceiling(maxRange));
@@ -216,7 +202,7 @@ namespace Content.Server.Explosions
             }
         }
 
-        private static void FlashInRange(this EntityCoordinates epicenter, float flashrange)
+        private static void FlashInRange(EntityCoordinates epicenter, float flashrange)
         {
             if (flashrange > 0)
             {
@@ -239,25 +225,36 @@ namespace Content.Server.Explosions
             }
         }
 
-        private static void SpawnExplosion(this EntityCoordinates epicenter, int devastationRange, int heavyImpactRange, int lightImpactRange, int flashRange)
+        private static void Detonate(IEntity source, int devastationRange, int heavyImpactRange, int lightImpactRange, int flashRange)
         {
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var mapId = epicenter.GetMapId(entityManager);
-
+            var mapId = source.Transform.MapID;
             if (mapId == MapId.Nullspace)
             {
                 return;
             }
 
             var maxRange = MathHelper.Max(devastationRange, heavyImpactRange, lightImpactRange, 0);
-            var airtightEntitiesDictionary = epicenter.DamageEntitiesInRange(devastationRange, heavyImpactRange, maxRange, mapId);
-            foreach (var airtightEntities in airtightEntitiesDictionary)
+
+            var epicenter = source.Transform.Coordinates;
+            if (source.TryGetContainer(out var container) && container.Owner.HasComponent<EntityStorageComponent>())
             {
-                epicenter.DamageTilesInRange(airtightEntities, devastationRange, heavyImpactRange, maxRange);
+                epicenter = container.Owner.Transform.Coordinates;
             }
 
-            epicenter.CameraShakeInRange(maxRange);
-            epicenter.FlashInRange(flashRange);
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var mapManager = IoCManager.Resolve<IMapManager>();
+            var boundingBox = Box2.CenteredAround(epicenter.ToMapPos(entityManager), new Vector2(maxRange * 2, maxRange * 2));
+
+            DamageEntitiesInRange(epicenter, boundingBox, devastationRange, heavyImpactRange, maxRange, mapId);
+
+            var mapGridsNear = mapManager.FindGridsIntersecting(mapId, boundingBox);
+            foreach (var gridId in mapGridsNear)
+            {
+                DamageTilesInRange(epicenter, gridId.Index, boundingBox, devastationRange, heavyImpactRange, maxRange);
+            }
+
+            CameraShakeInRange(epicenter, maxRange);
+            FlashInRange(epicenter, flashRange);
         }
 
         public static void SpawnExplosion(this IEntity entity, int devastationRange = 0, int heavyImpactRange = 0, int lightImpactRange = 0, int flashRange = 0)
@@ -269,7 +266,7 @@ namespace Content.Server.Explosions
             }
             else
             {
-                SpawnExplosion(entity.Transform.Coordinates, devastationRange, heavyImpactRange, lightImpactRange, flashRange);
+                Detonate(entity, devastationRange, heavyImpactRange, lightImpactRange, flashRange);
             }
         }
     }
