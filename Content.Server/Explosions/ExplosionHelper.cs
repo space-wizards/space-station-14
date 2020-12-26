@@ -74,7 +74,7 @@ namespace Content.Server.Explosions
 
             var exAct = entitySystemManager.GetEntitySystem<ActSystem>();
             
-            var entitiesInRange = serverEntityManager.GetEntitiesInRange(mapId, boundingBox, maxRange).ToList();
+            var entitiesInRange = serverEntityManager.GetEntitiesInRange(mapId, boundingBox, 0).ToList();
 
             foreach (var entity in entitiesInRange)
             {
@@ -83,7 +83,7 @@ namespace Content.Server.Explosions
                     continue;
                 }
 
-                if (!entity.Transform.Coordinates.TryDistance(entityManager, epicenter, out var distance))
+                if (!entity.Transform.Coordinates.TryDistance(entityManager, epicenter, out var distance) || distance > maxRange)
                 {
                     continue;
                 }
@@ -243,7 +243,9 @@ namespace Content.Server.Explosions
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var mapManager = IoCManager.Resolve<IMapManager>();
-            var boundingBox = Box2.CenteredAround(epicenter.ToMapPos(entityManager), new Vector2(maxRange * 2, maxRange * 2));
+
+            var epicenterMapPos = epicenter.ToMapPos(entityManager);
+            var boundingBox = new Box2(epicenterMapPos - new Vector2(maxRange, maxRange), epicenterMapPos + new Vector2(maxRange, maxRange));
 
             DamageEntitiesInRange(epicenter, boundingBox, devastationRange, heavyImpactRange, maxRange, mapId);
 
