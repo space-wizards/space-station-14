@@ -42,6 +42,24 @@
       ]
     },
     {
+      "name": "equipped-BELT",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
       "name": "multitool",
       "directions": 1,
       "delays": [

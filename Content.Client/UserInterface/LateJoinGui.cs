@@ -4,6 +4,8 @@ using System.Linq;
 using Content.Client.Interfaces;
 using Content.Shared.Roles;
 using Robust.Client.Console;
+using Robust.Client.Graphics.Drawing;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Utility;
@@ -27,6 +29,7 @@ namespace Content.Client.UserInterface
         public event Action<string> SelectedId;
 
         private readonly Dictionary<string, JobButton> _jobButtons = new();
+        private readonly Dictionary<string, VBoxContainer> _jobCategories = new();
 
         public LateJoinGui()
         {
@@ -37,65 +40,108 @@ namespace Content.Client.UserInterface
             var jobList = new VBoxContainer();
             var vBox = new VBoxContainer
             {
-                    Children =
+                Children =
+                {
+                    new ScrollContainer
                     {
-                        new ScrollContainer
+                        SizeFlagsVertical = SizeFlags.FillExpand,
+                        Children =
                         {
-                            SizeFlagsVertical = SizeFlags.FillExpand,
-                            Children =
-                            {
-                                jobList
-                            }
+                            jobList
                         }
                     }
-                };
+                }
+            };
+
             Contents.AddChild(vBox);
+
+            var firstCategory = true;
 
             foreach (var job in _prototypeManager.EnumeratePrototypes<JobPrototype>().OrderBy(j => j.Name))
             {
-                var jobButton = new JobButton
+                foreach (var department in job.Departments)
                 {
-                    JobId = job.ID
-                };
+                    if (!_jobCategories.TryGetValue(department, out var category))
+                    {
+                        category = new VBoxContainer
+                        {
+                            Name = department,
+                            ToolTip = Loc.GetString("Jobs in the {0} department", department)
+                        };
 
-                var jobSelector = new HBoxContainer
-                {
-                    SizeFlagsHorizontal = SizeFlags.FillExpand
-                };
+                        if (firstCategory)
+                        {
+                            firstCategory = false;
+                        }
+                        else
+                        {
+                            category.AddChild(new Control
+                            {
+                                CustomMinimumSize = new Vector2(0, 23),
+                            });
+                        }
 
-                var icon = new TextureRect
-                {
-                    TextureScale = (2, 2),
-                    Stretch = TextureRect.StretchMode.KeepCentered
-                };
+                        category.AddChild(new PanelContainer
+                        {
+                            PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#464966")},
+                            Children =
+                            {
+                                new Label
+                                {
+                                    Text = Loc.GetString("{0} jobs", department)
+                                }
+                            }
+                        });
 
-                if (job.Icon != null)
-                {
-                    var specifier = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/job_icons.rsi"), job.Icon);
-                    icon.Texture = specifier.Frame0();
+                        _jobCategories[department] = category;
+                        jobList.AddChild(category);
+                    }
+
+                    var jobButton = new JobButton
+                    {
+                        JobId = job.ID
+                    };
+
+                    var jobSelector = new HBoxContainer
+                    {
+                        SizeFlagsHorizontal = SizeFlags.FillExpand
+                    };
+
+                    var icon = new TextureRect
+                    {
+                        TextureScale = (2, 2),
+                        Stretch = TextureRect.StretchMode.KeepCentered
+                    };
+
+                    if (job.Icon != null)
+                    {
+                        var specifier = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/job_icons.rsi"), job.Icon);
+                        icon.Texture = specifier.Frame0();
+                    }
+
+                    jobSelector.AddChild(icon);
+
+                    var jobLabel = new Label
+                    {
+                        Text = job.Name
+                    };
+
+                    jobSelector.AddChild(jobLabel);
+                    jobButton.AddChild(jobSelector);
+                    category.AddChild(jobButton);
+
+                    jobButton.OnPressed += _ =>
+                    {
+                        SelectedId?.Invoke(jobButton.JobId);
+                    };
+
+                    if (!_gameTicker.JobsAvailable.Contains(job.ID))
+                    {
+                        jobButton.Disabled = true;
+                    }
+
+                    _jobButtons[job.ID] = jobButton;
                 }
-                jobSelector.AddChild(icon);
-
-                var jobLabel = new Label
-                {
-                    Text = job.Name
-                };
-
-                jobSelector.AddChild(jobLabel);
-
-                jobButton.AddChild(jobSelector);
-                jobList.AddChild(jobButton);
-                jobButton.OnPressed += args =>
-                {
-                    SelectedId?.Invoke(jobButton.JobId);
-                };
-
-                if (!_gameTicker.JobsAvailable.Contains(job.ID))
-                {
-                    jobButton.Disabled = true;
-                }
-
-                _jobButtons[job.ID] = jobButton;
             }
 
             SelectedId += jobId =>
@@ -106,11 +152,6 @@ namespace Content.Client.UserInterface
             };
 
             _gameTicker.LobbyJobsAvailableUpdated += JobsAvailableUpdated;
-        }
-
-        public string ReturnId()
-        {
-            return SelectedId.ToString();
         }
 
         private void JobsAvailableUpdated(IReadOnlyList<string> jobs)
@@ -129,6 +170,7 @@ namespace Content.Client.UserInterface
             {
                 _gameTicker.LobbyJobsAvailableUpdated -= JobsAvailableUpdated;
                 _jobButtons.Clear();
+                _jobCategories.Clear();
             }
         }
     }

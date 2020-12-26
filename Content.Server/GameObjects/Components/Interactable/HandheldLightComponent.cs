@@ -11,6 +11,7 @@ using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;

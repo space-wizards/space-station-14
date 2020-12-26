@@ -6,6 +6,7 @@ using System.Linq;
 using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
@@ -269,6 +270,7 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
             var message = new MobStateChangedMessage(this, old, state);
 
             SendMessage(message);
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
         }
 
         bool IActionBlocker.CanInteract()

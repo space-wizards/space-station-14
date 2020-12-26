@@ -11,6 +11,7 @@ using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Input;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
@@ -466,7 +467,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
             foreach (var afterAttack in afterAttacks)
             {
-                afterAttack.AfterInteract(afterAttackEventArgs);
+                await afterAttack.AfterInteract(afterAttackEventArgs);
             }
         }
 

@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Utility;
@@ -77,11 +77,12 @@ namespace Content.Server.GameObjects.Components.Command
         {
             if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
                 return;
-
+/*
             if (!Powered)
             {
                 return;
             }
+*/
             OpenUserInterface(actor.playerSession);
         }
     }

@@ -84,7 +84,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 _prototypeManager.TryIndex(reagentId, out ReagentPrototype proto) &&
                 !string.IsNullOrWhiteSpace(proto.SpriteReplacementPath))
             {
-                var spriteSpec = new SpriteSpecifier.Rsi(new ResourcePath("Objects/Drinks/" + proto.SpriteReplacementPath),"icon");
+                var spriteSpec = new SpriteSpecifier.Rsi(new ResourcePath("Objects/Consumable/Drinks/" + proto.SpriteReplacementPath),"icon");
 
                 if (Owner.TryGetComponent(out SpriteComponent? sprite))
                 {

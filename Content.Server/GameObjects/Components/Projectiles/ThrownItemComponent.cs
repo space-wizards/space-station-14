@@ -29,7 +29,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
         /// <summary>
         ///     User who threw the item.
         /// </summary>
-        public IEntity User;
+        public IEntity User { get; set; }
 
         void ICollideBehavior.CollideWith(IEntity entity)
         {

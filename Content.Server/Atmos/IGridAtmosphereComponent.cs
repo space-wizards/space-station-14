@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.Atmos.Piping;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
@@ -120,7 +121,7 @@ namespace Content.Server.Atmos
         /// <param name="indices"></param>
         /// <param name="createSpace"></param>
         /// <returns></returns>
-        TileAtmosphere GetTile(Vector2i indices, bool createSpace = true);
+        TileAtmosphere? GetTile(Vector2i indices, bool createSpace = true);
 
         /// <summary>
         ///     Returns a tile.
@@ -128,7 +129,7 @@ namespace Content.Server.Atmos
         /// <param name="coordinates"></param>
         /// <param name="createSpace"></param>
         /// <returns></returns>
-        TileAtmosphere GetTile(EntityCoordinates coordinates, bool createSpace = true);
+        TileAtmosphere? GetTile(EntityCoordinates coordinates, bool createSpace = true);
 
         /// <summary>
         ///     Returns if the tile in question is air-blocked.

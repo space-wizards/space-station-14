@@ -1,4 +1,4 @@
-﻿namespace Content.Client
+namespace Content.Client
 {
     public static class IgnoredComponents
     {
@@ -223,7 +223,12 @@
             "Machine",
             "MachinePart",
             "MachineFrame",
-            "MachineBoard"
+            "MachineBoard",
+            "ChemicalAmmo",
+            "BiologicalSurgeryData",
+            "CargoTelepad",
+            "TraitorDeathMatchRedemption",
+            "GlassBeaker"
         };
     }
 }

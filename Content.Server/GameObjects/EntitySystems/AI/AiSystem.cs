@@ -70,7 +70,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI
 
             foreach (var message in _queuedMobStateMessages)
             {
-                if (!message.Entity.TryGetComponent(out AiControllerComponent? controller))
+                if (message.Entity.Deleted ||
+                    !message.Entity.TryGetComponent(out AiControllerComponent? controller))
                 {
                     continue;
                 }

@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,6 +6,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using YamlDotNet.RepresentationModel;
+using Content.Shared.Preferences;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Shared.Roles
@@ -12,18 +14,21 @@ namespace Content.Shared.Roles
     [Prototype("startingGear")]
     public class StartingGearPrototype : IPrototype, IIndexedPrototype
     {
-        private string _id;
-        private Dictionary<Slots, string> _equipment;
+        private string _id = default!;
+        private Dictionary<Slots, string> _equipment = default!;
+
+        /// <summary>
+        /// if empty, there is no skirt override - instead the uniform provided in equipment is added.
+        /// </summary>
+        private string _innerClothingSkirt = default!;
 
         public IReadOnlyDictionary<string, string> Inhand => _inHand;
         /// <summary>
         /// hand index, item prototype
         /// </summary>
-        private Dictionary<string, string> _inHand;
+        private Dictionary<string, string> _inHand = default!;
 
         [ViewVariables] public string ID => _id;
-
-        [ViewVariables] public IReadOnlyDictionary<Slots, string> Equipment => _equipment;
 
         public void LoadFrom(YamlMappingNode mapping)
         {
@@ -44,6 +49,26 @@ namespace Content.Shared.Roles
 
                 return slot;
             }, type => type.Value);
+
+            serializer.DataField(ref _innerClothingSkirt, "innerclothingskirt", string.Empty);
+        }
+
+        public string GetGear(Slots slot, HumanoidCharacterProfile? profile)
+        {
+            if (profile != null)
+            {
+                if ((slot == Slots.INNERCLOTHING) && (profile.Clothing == ClothingPreference.Jumpskirt) && (_innerClothingSkirt != ""))
+                    return _innerClothingSkirt;
+            }
+
+            if (_equipment.ContainsKey(slot))
+            {
+                return _equipment[slot];
+            }
+            else
+            {
+                return "";
+            }
         }
     }
 }
