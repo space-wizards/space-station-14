@@ -1,9 +1,7 @@
 ﻿#nullable enable
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.GUI;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components;
-using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
@@ -27,7 +25,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         /// <summary>
         /// How long will matchstick last in seconds.
         /// </summary>
-        [ViewVariables(VVAccess.ReadOnly)] public int _duration;
+        [ViewVariables(VVAccess.ReadOnly)] private int _duration;
 
         /// <summary>
         /// Sound played when you ignite the matchstick.
@@ -91,8 +89,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             return CurrentState == MatchstickState.Lit;
         }
 
-
-        private void Ignite(IEntity user)
+        public void Ignite(IEntity user)
         {
             // Play Sound
             if (!string.IsNullOrEmpty(_igniteSound))
@@ -119,7 +116,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             return false;
         }
 
-        public void AfterInteract(AfterInteractEventArgs eventArgs)
+        public async Task AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (eventArgs.Target.TryGetComponent<MatchboxComponent>(out _))
             {

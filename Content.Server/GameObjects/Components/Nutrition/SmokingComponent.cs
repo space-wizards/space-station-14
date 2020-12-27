@@ -93,7 +93,6 @@ namespace Content.Server.GameObjects.Components.Nutrition
             serializer.DataField(ref _temperature, "temperature", 673.15f);
         }
 
-
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (eventArgs.Using.TryGetComponent(out IHotItem lighter)
@@ -108,13 +107,6 @@ namespace Content.Server.GameObjects.Components.Nutrition
             }
 
             return false;
-        }
-
-        private static bool IsItemEquippedInSlot(ItemComponent clothingComponent, IEntity user,
-            EquipmentSlotDefines.Slots slot)
-        {
-            return user.TryGetComponent<InventoryComponent>(out var inventoryComponent)
-                   && inventoryComponent.GetSlotItem(slot) == clothingComponent;
         }
 
         public bool IsCurrentlyHot()
