@@ -35,7 +35,7 @@ namespace Content.Server.Explosions
         /// <summary>
         /// Chance of a tile breaking if the severity is Light and Heavy
         /// </summary>
-        private static readonly float LightBreakChance = 0.5f;
+        private static readonly float LightBreakChance = 0.3f;
         private static readonly float HeavyBreakChance = 0.8f;
 
         private static ExplosionSeverity CalculateSeverity(float distance, float devastationRange, float heaveyRange)
@@ -235,11 +235,11 @@ namespace Content.Server.Explosions
 
             var maxRange = MathHelper.Max(devastationRange, heavyImpactRange, lightImpactRange, 0);
 
-            var epicenter = source.Transform.Coordinates;
-            if (source.TryGetContainer(out var container) && container.Owner.HasComponent<EntityStorageComponent>())
+            while(source.TryGetContainer(out var cont))
             {
-                epicenter = container.Owner.Transform.Coordinates;
+                source = cont.Owner;
             }
+            var epicenter = source.Transform.Coordinates;
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var mapManager = IoCManager.Resolve<IMapManager>();
