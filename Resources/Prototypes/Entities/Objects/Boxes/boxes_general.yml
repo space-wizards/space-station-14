@@ -102,3 +102,16 @@
   - type: Storage
     capacity: 15
     size: 15
+
+- type: entity
+  name: box of hugs
+  parent: BoxSurvival
+  id: BoxHug
+  description: A special box for sensitive people.
+  components:
+  - type: Sprite
+    layers:
+      - state: box_hug
+      - state: heart
+  - type: Item
+    HeldPrefix: hug
