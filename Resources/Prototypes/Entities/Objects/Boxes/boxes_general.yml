@@ -39,7 +39,9 @@
   - type: StorageFill
     contents:
       - name: LightTube
-        amount: 12
+        amount: 6
+      - name: LightBulb
+        amount: 6
   - type: Sprite
     layers:
       - state: box
