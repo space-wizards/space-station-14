@@ -4,7 +4,7 @@
   result: Wirecutter
   completetime: 500
   materials:
-    steel: 80
+    steel: 70
 
 - type: latheRecipe
   id: Screwdriver
@@ -14,7 +14,7 @@
   result: Screwdriver
   completetime: 500
   materials:
-    steel: 75
+    steel: 50
 
 - type: latheRecipe
   id: Welder
@@ -52,7 +52,15 @@
   result: Crowbar
   completetime: 500
   materials:
-    steel: 50
+    steel: 70
+
+- type: latheRecipe
+  id: Pickaxe
+  icon: Objects/Weapons/Melee/pickaxe.rsi
+  result: Pickaxe
+  completetime: 500
+  materials:
+    steel: 80
 
 - type: latheRecipe
   id: Multitool
@@ -64,3 +72,36 @@
   materials:
     steel: 50
     glass: 20
+
+- type: latheRecipe
+  id: PowerDrill
+  icon:
+    sprite: Objects/Tools/drill.rsi
+    state: drill_screw
+  result: PowerDrill
+  completetime: 500
+  materials:
+    steel: 80
+    glass: 20
+
+- type: latheRecipe
+  id: RCD
+  icon:
+    sprite: Objects/Tools/rcd.rsi
+    state: rcd
+  result: RCD
+  completetime: 1000
+  materials:
+    steel: 250
+    glass: 100
+
+-type: latheRecipe
+ id: RCDAmmo
+ icon:
+    sprite: Objects/Tools/rcd.rsi
+    state: rcd_ammo
+ result: RCDAmmo
+ completetime: 600
+ materials:
+    steel: 90
+    glass: 80
