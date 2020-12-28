@@ -64,6 +64,9 @@
         behaviors:
         - !type:DoActsBehavior
           acts: ["Destruction"]
+  - type: IconSmooth
+    key: walls
+    mode: NoSprite
   placement:
     mode: SnapgridCenter
 

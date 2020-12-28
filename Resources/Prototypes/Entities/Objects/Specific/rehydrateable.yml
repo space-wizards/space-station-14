@@ -10,7 +10,7 @@
       - ReagentId: chem.Nutriment
         Quantity: 10
     maxVol: 11 # needs room for water
-    caps: AddTo, RemoveFrom, FitsInDispenser
+    caps: AddTo
   - type: Sprite
     sprite: Objects/Consumable/Food/monkeycube.rsi
   - type: Rehydratable
@@ -21,7 +21,7 @@
   parent: PlushieCarp
   id: DehydratedSpaceCarp
   name: dehydrated space carp
-  description: Looks like a plush toy carp, but just add water and it becomes a real-life space carp! 
+  description: Looks like a plush toy carp, but just add water and it becomes a real-life space carp!
   components:
   - type: SolutionContainer
     contents:
@@ -29,6 +29,6 @@
       - ReagentId: chem.Nutriment
         Quantity: 10
     maxVol: 11 # needs room for water
-    caps: AddTo, RemoveFrom, FitsInDispenser
+    caps: AddTo
   - type: Rehydratable
     target: CarpMob_Content

@@ -21,3 +21,5 @@
     idcard: ChefPDA
     ears: ClothingHeadsetService
     outerclothing: ClothingOuterApronChef
+  innerclothingskirt: ClothingUniformJumpskirtChef
+

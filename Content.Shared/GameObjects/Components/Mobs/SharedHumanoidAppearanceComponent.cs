@@ -14,6 +14,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
     {
         private HumanoidCharacterAppearance _appearance;
         private Sex _sex;
+        private Gender _gender;
 
         public sealed override string Name => "HumanoidAppearance";
         public sealed override uint? NetID => NetIDs.HUMANOID_APPEARANCE;
@@ -40,17 +41,20 @@ namespace Content.Shared.GameObjects.Components.Mobs
             }
         }
 
-        public Gender Gender => Sex switch
+        [ViewVariables(VVAccess.ReadWrite)]
+        public virtual Gender Gender
         {
-            Sex.Female => Gender.Female,
-            Sex.Male => Gender.Male,
-            Sex.Classified => Gender.Neuter,
-            _ => Gender.Epicene,
-        };
+            get => _gender;
+            set
+            {
+                _gender = value;
+                Dirty();
+            }
+        }
 
         public override ComponentState GetComponentState()
         {
-            return new HumanoidAppearanceComponentState(Appearance, Sex);
+            return new HumanoidAppearanceComponentState(Appearance, Sex, Gender);
         }
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
@@ -62,6 +66,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
             Appearance = cast.Appearance;
             Sex = cast.Sex;
+            Gender = cast.Gender;
         }
 
         public void UpdateFromProfile(ICharacterProfile profile)
@@ -69,20 +74,23 @@ namespace Content.Shared.GameObjects.Components.Mobs
             var humanoid = (HumanoidCharacterProfile) profile;
             Appearance = (HumanoidCharacterAppearance) humanoid.CharacterAppearance;
             Sex = humanoid.Sex;
+            Gender = humanoid.Gender;
         }
 
         [Serializable]
         [NetSerializable]
         private sealed class HumanoidAppearanceComponentState : ComponentState
         {
-            public HumanoidAppearanceComponentState(HumanoidCharacterAppearance appearance, Sex sex) : base(NetIDs.HUMANOID_APPEARANCE)
+            public HumanoidAppearanceComponentState(HumanoidCharacterAppearance appearance, Sex sex, Gender gender) : base(NetIDs.HUMANOID_APPEARANCE)
             {
                 Appearance = appearance;
                 Sex = sex;
+                Gender = gender;
             }
 
             public HumanoidCharacterAppearance Appearance { get; }
             public Sex Sex { get; }
+            public Gender Gender { get; }
         }
     }
 }
