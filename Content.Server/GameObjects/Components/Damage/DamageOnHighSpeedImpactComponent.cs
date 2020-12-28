@@ -11,6 +11,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Physics;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 
@@ -52,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Damage
 
         public void CollideWith(IEntity collidedWith)
         {
-            if (!Owner.TryGetComponent(out IPhysicsComponent physics) || !Owner.TryGetComponent(out IDamageableComponent damageable)) return;
+            if (!Owner.TryGetComponent(out PhysicsComponent physics) || !Owner.TryGetComponent(out IDamageableComponent damageable)) return;
 
             var speed = physics.LinearVelocity.Length;
 

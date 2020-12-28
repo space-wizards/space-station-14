@@ -14,6 +14,7 @@ using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
@@ -158,7 +159,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
             var targetNode = _pathfindingSystem.GetNode(targetTile);
 
             var collisionMask = 0;
-            if (entity.TryGetComponent(out IPhysicsComponent physics))
+            if (entity.TryGetComponent(out PhysicsComponent physics))
             {
                 collisionMask = physics.CollisionMask;
             }

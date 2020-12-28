@@ -9,6 +9,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
 
 namespace Content.Server.Administration
 {
@@ -112,9 +113,9 @@ namespace Content.Server.Administration
                 if (found.GetGridId(entityManager) != GridId.Invalid)
                 {
                     player.AttachedEntity.Transform.Coordinates = found;
-                    if (player.AttachedEntity.TryGetComponent(out IPhysicsComponent physics))
+                    if (player.AttachedEntity.TryGetComponent(out PhysicsComponent physics))
                     {
-                        physics.Stop();
+                        //physics.Stop();
                     }
                 }
                 else

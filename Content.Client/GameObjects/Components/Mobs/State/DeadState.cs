@@ -6,6 +6,7 @@ using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Physics;
 
 namespace Content.Client.GameObjects.Components.Mobs.State
 {
@@ -22,7 +23,7 @@ namespace Content.Client.GameObjects.Components.Mobs.State
 
             if (entity.TryGetComponent(out PhysicsComponent physics))
             {
-                physics.CanCollide = false;
+                physics.Enabled = false;
             }
         }
 
@@ -32,7 +33,7 @@ namespace Content.Client.GameObjects.Components.Mobs.State
 
             if (entity.TryGetComponent(out PhysicsComponent physics))
             {
-                physics.CanCollide = true;
+                physics.Enabled = true;
             }
         }
 

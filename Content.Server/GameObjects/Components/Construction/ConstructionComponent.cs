@@ -20,6 +20,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -421,8 +422,8 @@ namespace Content.Server.GameObjects.Components.Construction
                 }
             }
 
-            if (Owner.TryGetComponent(out IPhysicsComponent? physics) &&
-                entity.TryGetComponent(out IPhysicsComponent? otherPhysics))
+            if (Owner.TryGetComponent(out PhysicsComponent? physics) &&
+                entity.TryGetComponent(out PhysicsComponent? otherPhysics))
             {
                 otherPhysics.Anchored = physics.Anchored;
             }

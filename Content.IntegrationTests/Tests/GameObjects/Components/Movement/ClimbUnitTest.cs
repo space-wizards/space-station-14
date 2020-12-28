@@ -10,6 +10,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
 
 namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
 {
@@ -47,8 +48,6 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
                 // Now let's make the player enter a climbing transitioning state.
                 climbing.IsClimbing = true;
                 climbing.TryClimb(table.GetComponent<SharedClimbableComponent>());
-                var body = human.GetComponent<IPhysicsComponent>();
-
             });
 
             await server.WaitIdleAsync();

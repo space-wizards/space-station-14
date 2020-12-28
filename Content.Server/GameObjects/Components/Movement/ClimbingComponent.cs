@@ -53,11 +53,13 @@ namespace Content.Server.GameObjects.Components.Movement
         /// </summary>
         private void TryMoveTo(Vector2 to)
         {
+            /*
             if (Body == null)
                 return;
 
-            Body.WakeBody();
-            Body.ApplyImpulse(to.Normalized * 500f);
+*/
+            //Body.WakeBody();
+            //Body.ApplyImpulse(to.Normalized * 500f);
 
             _startedClimb = true;
             Owner.SpawnTimer(500, () =>
@@ -93,10 +95,10 @@ namespace Content.Server.GameObjects.Components.Movement
 
         public void Update()
         {
-            if (!IsClimbing || Body == null || _startedClimb)
+            if (!IsClimbing || _startedClimb)
                 return;
 
-            Body.WakeBody();
+            //Body.WakeBody();
 
             if (!IsOnClimbableThisFrame && IsClimbing)
                 IsClimbing = false;

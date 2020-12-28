@@ -19,6 +19,7 @@ using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -234,7 +235,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             var physics = Owner.EnsureComponent<PhysicsComponent>();
 
-            physics.AnchoredChanged += AnchoredChanged;
+            //physics.AnchoredChanged += AnchoredChanged;
         }
 
         protected override void Startup()
@@ -255,7 +256,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             base.OnRemove();
 
             var physics = Owner.EnsureComponent<PhysicsComponent>();
-            physics.AnchoredChanged -= AnchoredChanged;
+            //physics.AnchoredChanged -= AnchoredChanged;
 
             Disconnect();
         }

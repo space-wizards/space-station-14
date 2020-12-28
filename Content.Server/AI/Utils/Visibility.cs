@@ -5,10 +5,10 @@ using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics.Broadphase;
 
 namespace Content.Server.AI.Utils
 {
@@ -35,15 +35,17 @@ namespace Content.Server.AI.Utils
                 range = controller.VisionRadius;
             }
 
-            var angle = new Angle(target.Transform.Coordinates.Position - owner.Transform.Coordinates.Position);
             var ray = new CollisionRay(
-                owner.Transform.Coordinates.Position,
-                angle.ToVec(),
+                owner.Transform.WorldPosition,
+                target.Transform.WorldPosition,
                 (int)(CollisionGroup.Opaque | CollisionGroup.Impassable | CollisionGroup.MobImpassable));
 
-            var rayCastResults = IoCManager.Resolve<IPhysicsManager>().IntersectRay(owner.Transform.MapID, ray, range, owner).ToList();
+            return false;
+            /*
+            var rayCastResults = IoCManager.Resolve<IBroadPhaseManager>().IntersectRay(owner.Transform.MapID, ray, range, owner).ToList();
 
             return rayCastResults.Count > 0 && rayCastResults[0].HitEntity == target;
+            */
         }
 
         // Should this be in robust or something? Fark it

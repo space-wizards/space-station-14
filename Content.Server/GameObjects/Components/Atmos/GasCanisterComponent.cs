@@ -8,6 +8,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System;
 using System.Linq;
+using Robust.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
@@ -20,7 +21,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         public GasMixture Air { get; set; }
 
         [ViewVariables]
-        public bool Anchored => !Owner.TryGetComponent<IPhysicsComponent>(out var physics) || physics.Anchored;
+        public bool Anchored => !Owner.TryGetComponent<PhysicsComponent>(out var physics) || physics.Anchored;
 
         [ViewVariables]
         public GasCanisterPortComponent ConnectedPort { get; private set; }
@@ -39,19 +40,20 @@ namespace Content.Server.GameObjects.Components.Atmos
         public override void Initialize()
         {
             base.Initialize();
-            if (Owner.TryGetComponent<IPhysicsComponent>(out var physics))
+            if (Owner.TryGetComponent<PhysicsComponent>(out var physics))
             {
                 AnchorUpdate();
-                physics.AnchoredChanged += AnchorUpdate;
+                //physics.AnchoredChanged += AnchorUpdate;
+                // TODO
             }
         }
 
         public override void OnRemove()
         {
             base.OnRemove();
-            if (Owner.TryGetComponent<IPhysicsComponent>(out var physics))
+            if (Owner.TryGetComponent<PhysicsComponent>(out var physics))
             {
-                physics.AnchoredChanged -= AnchorUpdate;
+                //physics.AnchoredChanged -= AnchorUpdate;
             }
             DisconnectFromPort();
         }

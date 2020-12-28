@@ -27,6 +27,7 @@ using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timers.Timer;
@@ -257,9 +258,9 @@ namespace Content.Server.GameObjects.Components.Doors
                     airtight.AirBlocked = false;
                 }
 
-                if (Owner.TryGetComponent(out IPhysicsComponent? physics))
+                if (Owner.TryGetComponent(out PhysicsComponent? physics))
                 {
-                    physics.CanCollide = false;
+                    physics.Enabled = false;
                 }
 
                 await Timer.Delay(OpenTimeTwo, _cancellationTokenSource.Token);
@@ -300,15 +301,16 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private void CheckCrush()
         {
-            if (!Owner.TryGetComponent(out IPhysicsComponent? body))
+            if (!Owner.TryGetComponent(out PhysicsComponent? body))
                 return;
 
             // Crush
+            /*
             foreach (var e in body.GetCollidingEntities(Vector2.Zero, false))
             {
                 if (!e.TryGetComponent(out StunnableComponent? stun)
                     || !e.TryGetComponent(out IDamageableComponent? damage)
-                    || !e.TryGetComponent(out IPhysicsComponent? otherBody))
+                    || !e.TryGetComponent(out PhysicsComponent? otherBody))
                     continue;
 
                 var percentage = otherBody.WorldAABB.IntersectPercentage(body.WorldAABB);
@@ -323,6 +325,7 @@ namespace Content.Server.GameObjects.Components.Doors
                 Owner.SpawnTimer(TimeSpan.FromSeconds(DoorStunTime) - OpenTimeOne - OpenTimeTwo, Open);
                 break;
             }
+            */
         }
 
         public bool IsHoldingPressure(float threshold = 20)
@@ -379,15 +382,15 @@ namespace Content.Server.GameObjects.Components.Doors
         public bool Close()
         {
             bool shouldCheckCrush = false;
-            if (Owner.TryGetComponent(out IPhysicsComponent? physics))
-                physics.CanCollide = true;
+            if (Owner.TryGetComponent(out PhysicsComponent? physics))
+                physics.Enabled = true;
 
             if (_canCrush && physics != null &&
                 physics.IsColliding(Vector2.Zero, false))
             {
                 if (Safety)
                 {
-                    physics.CanCollide = false;
+                    physics.Enabled = false;
                     return false;
                 }
 
@@ -415,9 +418,9 @@ namespace Content.Server.GameObjects.Components.Doors
                     airtight.AirBlocked = true;
                 }
 
-                if (Owner.TryGetComponent(out IPhysicsComponent? body))
+                if (Owner.TryGetComponent(out PhysicsComponent? body))
                 {
-                    body.CanCollide = true;
+                    body.Enabled = true;
                 }
 
                 await Timer.Delay(CloseTimeTwo, _cancellationTokenSource.Token);

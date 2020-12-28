@@ -5,7 +5,6 @@ using Content.Server.GameObjects.Components.Buckle;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.Components.Pulling;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects;
@@ -125,12 +124,14 @@ namespace Content.Server.GameObjects.Components.Mobs
                             controller.RemoveController();
                             break;
                         case StatusEffect.Pulling:
+                            /*
                             EntitySystem
                                 .Get<SharedPullingSystem>()
                                 .GetPulled(player)?
                                 .GetComponentOrNull<SharedPullableComponent>()?
                                 .TryStopPull();
 
+                            */
                             break;
                         case StatusEffect.Fire:
                             if (!player.TryGetComponent(out FlammableComponent flammable))

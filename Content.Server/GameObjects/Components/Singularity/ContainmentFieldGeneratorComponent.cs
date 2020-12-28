@@ -1,24 +1,19 @@
 #nullable enable
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.Utility;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Physics;
-using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Log;
-using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Utility;
+using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Singularity
@@ -26,7 +21,6 @@ namespace Content.Server.GameObjects.Components.Singularity
     [RegisterComponent]
     public class ContainmentFieldGeneratorComponent : Component, ICollideBehavior
     {
-        [Dependency] private IPhysicsManager _physicsManager = null!;
         [Dependency] private IEntityManager _entityManager = null!;
 
         public override string Name => "ContainmentFieldGenerator";
@@ -70,8 +64,6 @@ namespace Content.Server.GameObjects.Components.Singularity
             }
         }
 
-        private PhysicsComponent? _collidableComponent;
-
         private Tuple<Direction, ContainmentFieldConnection>? _connection1;
         private Tuple<Direction, ContainmentFieldConnection>? _connection2;
 
@@ -81,17 +73,18 @@ namespace Content.Server.GameObjects.Components.Singularity
         public override void Initialize()
         {
             base.Initialize();
-            if (!Owner.TryGetComponent(out _collidableComponent))
+            if (!Owner.TryGetComponent(out PhysicsComponent? physicsComponent))
             {
                 Logger.Error("ContainmentFieldGeneratorComponent created with no CollidableComponent");
                 return;
             }
-            _collidableComponent.AnchoredChanged += OnAnchoredChanged;
+            //_collidableComponent.AnchoredChanged += OnAnchoredChanged;
         }
 
 
         private void OnAnchoredChanged()
         {
+            /*
             if(_collidableComponent?.Anchored == true)
             {
                 Owner.SnapToGrid();
@@ -101,6 +94,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                 _connection1?.Item2.Dispose();
                 _connection2?.Item2.Dispose();
             }
+            */
         }
 
         private bool IsConnectedWith(ContainmentFieldGeneratorComponent comp)
@@ -118,15 +112,15 @@ namespace Content.Server.GameObjects.Components.Singularity
         private bool TryGenerateFieldConnection([NotNullWhen(true)] ref Tuple<Direction, ContainmentFieldConnection>? propertyFieldTuple)
         {
             if (propertyFieldTuple != null) return false;
-            if(_collidableComponent?.Anchored == false) return false;
+            //if(_collidableComponent?.Anchored == false) return false;
 
             foreach (var direction in new[] {Direction.North, Direction.East, Direction.South, Direction.West})
             {
                 if (_connection1?.Item1 == direction || _connection2?.Item1 == direction) continue;
 
                 var dirVec = direction.ToVec();
-                var ray = new CollisionRay(Owner.Transform.WorldPosition, dirVec, (int) CollisionGroup.MobMask);
-                var rawRayCastResults = _physicsManager.IntersectRay(Owner.Transform.MapID, ray, 4.5f, Owner, false);
+                var ray = new CollisionRay(Owner.Transform.WorldPosition, dirVec, 4.5f, (int) CollisionGroup.MobMask);
+                var rawRayCastResults = IoCManager.Resolve<IBroadPhaseManager>().IntersectRay(Owner.Transform.MapID, ray, Owner, false);
 
                 var rayCastResults = rawRayCastResults as RayCastResults[] ?? rawRayCastResults.ToArray();
                 if(!rayCastResults.Any()) continue;

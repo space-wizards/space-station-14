@@ -1,6 +1,7 @@
 using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Portal
@@ -13,9 +14,9 @@ namespace Content.Shared.GameObjects.Components.Portal
         {
             base.OnAdd();
 
-            if (Owner.TryGetComponent<IPhysicsComponent>(out var physics))
+            if (Owner.TryGetComponent<PhysicsComponent>(out var physics))
             {
-                physics.Hard = false;
+                physics.IsSensor = true;
             }
         }
     }

@@ -21,6 +21,7 @@ using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Shared.Physics;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -93,7 +94,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                 return;
             }
 
-            _collidableComponent.AnchoredChanged += OnAnchoredChanged;
+            //_collidableComponent.AnchoredChanged += OnAnchoredChanged;
             _powerConsumer.OnReceivedPowerChanged += OnReceivedPowerChanged;
         }
 
@@ -259,7 +260,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                 return;
             }
 
-            physicsComponent.Status = BodyStatus.InAir;
+            // physicsComponent.Status = BodyStatus.InAir;
 
             if (!projectile.TryGetComponent<ProjectileComponent>(out var projectileComponent))
             {
@@ -269,9 +270,11 @@ namespace Content.Server.GameObjects.Components.Singularity
 
             projectileComponent.IgnoreEntity(Owner);
 
+            /*
             physicsComponent
                 .EnsureController<BulletController>()
                 .LinearVelocity = Owner.Transform.WorldRotation.ToVec() * 20f;
+                */
 
             projectile.Transform.LocalRotation = Owner.Transform.WorldRotation;
 

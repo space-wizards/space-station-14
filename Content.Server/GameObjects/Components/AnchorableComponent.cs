@@ -9,6 +9,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -44,7 +45,7 @@ namespace Content.Server.GameObjects.Components
         /// <returns>true if it is valid, false otherwise</returns>
         private async Task<bool> Valid(IEntity user, IEntity? utilizing, [MaybeNullWhen(false)] bool force = false)
         {
-            if (!Owner.HasComponent<IPhysicsComponent>())
+            if (!Owner.HasComponent<PhysicsComponent>())
             {
                 return false;
             }
@@ -76,7 +77,7 @@ namespace Content.Server.GameObjects.Components
                 return false;
             }
 
-            var physics = Owner.GetComponent<IPhysicsComponent>();
+            var physics = Owner.GetComponent<PhysicsComponent>();
             physics.Anchored = true;
 
             if (Snap)
@@ -99,7 +100,7 @@ namespace Content.Server.GameObjects.Components
                 return false;
             }
 
-            var physics = Owner.GetComponent<IPhysicsComponent>();
+            var physics = Owner.GetComponent<PhysicsComponent>();
             physics.Anchored = false;
 
             return true;
@@ -114,7 +115,7 @@ namespace Content.Server.GameObjects.Components
         /// <returns>true if toggled, false otherwise</returns>
         private async Task<bool> TryToggleAnchor(IEntity user, IEntity? utilizing = null, bool force = false)
         {
-            if (!Owner.TryGetComponent(out IPhysicsComponent? physics))
+            if (!Owner.TryGetComponent(out PhysicsComponent? physics))
             {
                 return false;
             }

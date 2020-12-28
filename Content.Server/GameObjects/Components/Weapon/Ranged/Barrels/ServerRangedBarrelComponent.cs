@@ -10,14 +10,12 @@ using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Physics;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -25,6 +23,8 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -389,16 +389,19 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     projectileAngle = angle;
                 }
 
-                var physics = projectile.GetComponent<IPhysicsComponent>();
-                physics.Status = BodyStatus.InAir;
+                var physics = projectile.GetComponent<PhysicsComponent>();
+                physics.IsBullet = true;
+                //physics.Status = BodyStatus.InAir;
 
                 var projectileComponent = projectile.GetComponent<ProjectileComponent>();
                 projectileComponent.IgnoreEntity(shooter);
 
+                /*
                 projectile
-                    .GetComponent<IPhysicsComponent>()
+                    .GetComponent<PhysicsComponent>()
                     .EnsureController<BulletController>()
                     .LinearVelocity = projectileAngle.ToVec() * velocity;
+                    */
 
                 projectile.Transform.LocalRotation = projectileAngle.Theta;
             }
@@ -425,9 +428,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         /// </summary>
         private void FireHitscan(IEntity shooter, HitscanComponent hitscan, Angle angle)
         {
-            var ray = new CollisionRay(Owner.Transform.Coordinates.ToMapPos(Owner.EntityManager), angle.ToVec(), (int) hitscan.CollisionMask);
-            var physicsManager = IoCManager.Resolve<IPhysicsManager>();
-            var rayCastResults = physicsManager.IntersectRay(Owner.Transform.MapID, ray, hitscan.MaxLength, shooter, false).ToList();
+            var ray = new CollisionRay(Owner.Transform.Coordinates.ToMapPos(Owner.EntityManager), angle.ToVec(), hitscan.MaxLength, (int) hitscan.CollisionMask);
+            var rayCastResults = IoCManager.Resolve<IBroadPhaseManager>().IntersectRay(Owner.Transform.MapID, ray, shooter, false).ToList();
 
             if (rayCastResults.Count >= 1)
             {

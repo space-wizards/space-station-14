@@ -14,7 +14,6 @@ namespace Content.Shared.GameObjects.Components.Movement
         public sealed override string Name => "Climbing";
         public sealed override uint? NetID => ContentNetIDs.CLIMBING;
 
-        protected IPhysicsComponent Body;
         protected bool IsOnClimbableThisFrame = false;
 
         protected bool OwnerIsTransitioning { get; set; }
@@ -25,7 +24,7 @@ namespace Content.Shared.GameObjects.Components.Movement
 
         bool ICollideSpecial.PreventCollide(IPhysBody collided)
         {
-            if ((collided.CollisionLayer & (int) CollisionGroup.VaultImpassable) != 0 && collided.Entity.HasComponent<SharedClimbableComponent>())
+            if ((collided.CollisionLayer & (int) CollisionGroup.VaultImpassable) != 0 && collided.Owner.HasComponent<SharedClimbableComponent>())
             {
                 IsOnClimbableThisFrame = true;
                 return IsClimbing;
@@ -42,13 +41,6 @@ namespace Content.Shared.GameObjects.Components.Movement
         bool IDraggable.Drop(DragDropEventArgs args)
         {
             return false;
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            Owner.TryGetComponent(out Body);
         }
 
         [Serializable, NetSerializable]

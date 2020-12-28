@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Movement;
-using Content.Server.GameObjects.Components.Pulling;
 using Content.Server.GameObjects.Components.Timing;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Inventory;
@@ -13,14 +10,12 @@ using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Physics.Pull;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
@@ -274,10 +269,12 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return false;
             }
 
+            /*
             if (!pulledObject.TryGetComponent(out PullableComponent pull))
             {
                 return false;
             }
+            */
 
             var dist = player.Transform.Coordinates.Position - pulledObject.Transform.Coordinates.Position;
             if (dist.LengthSquared > InteractionRangeSquared)
@@ -285,7 +282,9 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return false;
             }
 
-            return pull.TogglePull(player);
+            return false;
+
+            // return pull.TogglePull(player);
         }
 
         private void UserInteraction(IEntity player, EntityCoordinates coordinates, EntityUid clickedUid)

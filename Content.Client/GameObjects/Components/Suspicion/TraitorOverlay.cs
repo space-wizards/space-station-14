@@ -11,6 +11,7 @@ using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 
 namespace Content.Client.GameObjects.Components.Suspicion
 {
@@ -73,7 +74,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
                     return;
                 }
 
-                if (!ally.TryGetComponent(out IPhysicsComponent physics))
+                if (!ally.TryGetComponent(out IPhysBody physics))
                 {
                     return;
                 }
@@ -85,7 +86,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
                 }
 
                 // all entities have a TransformComponent
-                var transform = physics.Entity.Transform;
+                var transform = physics.Owner.Transform;
 
                 // if not on the same map, continue
                 if (transform.MapID != _eyeManager.CurrentMap || !transform.IsMapTransform)

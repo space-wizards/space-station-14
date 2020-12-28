@@ -6,6 +6,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components.Mobs.State
 {
@@ -36,17 +37,17 @@ namespace Content.Server.GameObjects.Components.Mobs.State
 
             EntitySystem.Get<StandingStateSystem>().Down(entity);
 
-            if (entity.TryGetComponent(out IPhysicsComponent physics))
+            if (entity.TryGetComponent(out PhysicsComponent physics))
             {
-                physics.CanCollide = false;
+                physics.Enabled = false;
             }
         }
 
         public override void ExitState(IEntity entity)
         {
-            if (entity.TryGetComponent(out IPhysicsComponent physics))
+            if (entity.TryGetComponent(out PhysicsComponent physics))
             {
-                physics.CanCollide = true;
+                physics.Enabled = true;
             }
 
             if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlay))

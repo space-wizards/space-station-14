@@ -20,6 +20,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -111,7 +112,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
                 return false;
             }
 
-            if (!entity.TryGetComponent(out IPhysicsComponent? physics) ||
+            if (!entity.TryGetComponent(out PhysicsComponent? physics) ||
                 physics.Anchored)
             {
                 return false;
@@ -152,10 +153,10 @@ namespace Content.Server.GameObjects.Components.Conveyor
                     continue;
                 }
 
-                if (entity.TryGetComponent(out IPhysicsComponent? physics))
+                if (entity.TryGetComponent(out PhysicsComponent? physics))
                 {
-                    var controller = physics.EnsureController<ConveyedController>();
-                    controller.Move(direction, _speed);
+                    //var controller = physics.EnsureController<ConveyedController>();
+                    //controller.Move(direction, _speed);
                 }
             }
         }

@@ -1,12 +1,9 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.GameObjects.Components.Pulling;
 using Content.Shared.Input;
-using Content.Shared.Physics.Pull;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input.Binding;
@@ -25,6 +22,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         private readonly Dictionary<IEntity, IEntity> _pullers =
             new Dictionary<IEntity, IEntity>();
 
+        /*
         public override void Initialize()
         {
             base.Initialize();
@@ -62,7 +60,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                 return;
             }
 
-            if (!pulled.TryGetComponent(out IPhysicsComponent? physics))
+            if (!pulled.TryGetComponent(out PhysicsComponent? physics))
             {
                 return;
             }
@@ -140,5 +138,6 @@ namespace Content.Shared.GameObjects.EntitySystems
         {
             return _pullers.ContainsKey(puller);
         }
+        */
     }
 }

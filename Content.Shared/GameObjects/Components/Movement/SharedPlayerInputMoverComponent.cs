@@ -144,11 +144,11 @@ namespace Content.Shared.GameObjects.Components.Movement
         /// <inheritdoc />
         public override void OnAdd()
         {
-            // This component requires that the entity has a IPhysicsComponent.
-            if (!Owner.HasComponent<IPhysicsComponent>())
+            // This component requires that the entity has a PhysicsComponent.
+            if (!Owner.HasComponent<PhysicsComponent>())
                 Logger.Error(
                     $"[ECS] {Owner.Prototype?.Name} - {nameof(SharedPlayerInputMoverComponent)} requires" +
-                    $" {nameof(IPhysicsComponent)}. ");
+                    $" {nameof(PhysicsComponent)}. ");
 
             base.OnAdd();
         }
@@ -270,7 +270,7 @@ namespace Content.Shared.GameObjects.Components.Movement
         bool ICollideSpecial.PreventCollide(IPhysBody collidedWith)
         {
             // Don't collide with other mobs
-            return collidedWith.Entity.HasComponent<IBody>();
+            return collidedWith.Owner.HasComponent<IBody>();
         }
 
         [Serializable, NetSerializable]

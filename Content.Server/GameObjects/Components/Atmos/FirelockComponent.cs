@@ -9,6 +9,7 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
@@ -36,9 +37,9 @@ namespace Content.Server.GameObjects.Components.Atmos
                 airtightComponent.AirBlocked = false;
             }
 
-            if (Owner.TryGetComponent(out IPhysicsComponent physics))
+            if (Owner.TryGetComponent(out PhysicsComponent physics))
             {
-                physics.CanCollide = false;
+                physics.Enabled = false;
             }
 
             AutoClose = false;

@@ -9,13 +9,11 @@ using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Physics.Pull;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystemMessages;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
@@ -24,6 +22,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components.GUI
 {
@@ -525,14 +524,17 @@ namespace Content.Server.GameObjects.Components.GUI
         {
             base.HandleMessage(message, component);
 
+            /*
             if (message is PullMessage pullMessage &&
                 pullMessage.Puller.Owner != Owner)
             {
                 return;
             }
+            */
 
             switch (message)
             {
+                /*
                 case PullAttemptMessage msg:
                     if (!_hands.Any(hand => hand.Enabled))
                     {
@@ -562,6 +564,7 @@ namespace Content.Server.GameObjects.Components.GUI
                     firstOccupiedHand.Enabled = true;
 
                     break;
+                */
                 case HandDisabledMsg msg:
                     Drop(msg.Name, false);
                     break;
@@ -667,13 +670,13 @@ namespace Content.Server.GameObjects.Components.GUI
 
                 Dirty();
 
-                if (!message.Entity.TryGetComponent(out IPhysicsComponent? physics))
+                if (!message.Entity.TryGetComponent(out PhysicsComponent? physics))
                 {
                     return;
                 }
 
                 // set velocity to zero
-                physics.Stop();
+                // TODO physics.Stop();
                 return;
             }
         }

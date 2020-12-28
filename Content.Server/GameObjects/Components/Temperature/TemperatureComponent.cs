@@ -7,6 +7,7 @@ using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -31,7 +32,7 @@ namespace Content.Server.GameObjects.Components.Temperature
         [ViewVariables] public float HeatCapacity {
             get
             {
-                if (Owner.TryGetComponent<IPhysicsComponent>(out var physics))
+                if (Owner.TryGetComponent<PhysicsComponent>(out var physics))
                 {
                     return SpecificHeat * physics.Mass;
                 }

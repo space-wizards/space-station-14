@@ -38,6 +38,7 @@ using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timers.Timer;
@@ -140,8 +141,8 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
 
 
-            if (!entity.TryGetComponent(out IPhysicsComponent? physics) ||
-                !physics.CanCollide)
+            if (!entity.TryGetComponent(out PhysicsComponent? physics) ||
+                !physics.Enabled)
             {
                 if (!(entity.TryGetComponent(out IDamageableComponent? damageState) && damageState.CurrentState == DamageState.Dead)) {
                     return false;
@@ -555,9 +556,9 @@ namespace Content.Server.GameObjects.Components.Disposal
                 Logger.WarningS("VitalComponentMissing", $"Disposal unit {Owner.Uid} is missing an anchorable component");
             }
 
-            if (Owner.TryGetComponent(out IPhysicsComponent? physics))
+            if (Owner.TryGetComponent(out PhysicsComponent? physics))
             {
-                physics.AnchoredChanged += UpdateVisualState;
+                //physics.AnchoredChanged += UpdateVisualState;
             }
 
             if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
@@ -570,9 +571,9 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public override void OnRemove()
         {
-            if (Owner.TryGetComponent(out IPhysicsComponent? physics))
+            if (Owner.TryGetComponent(out PhysicsComponent? physics))
             {
-                physics.AnchoredChanged -= UpdateVisualState;
+                //physics.AnchoredChanged -= UpdateVisualState;
             }
 
             if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))

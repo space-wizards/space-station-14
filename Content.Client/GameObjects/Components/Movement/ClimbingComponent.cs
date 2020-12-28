@@ -9,7 +9,7 @@ namespace Content.Client.GameObjects.Components.Movement
     {
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            if (!(curState is ClimbModeComponentState climbModeState) || Body == null)
+            if (!(curState is ClimbModeComponentState climbModeState))
             {
                 return;
             }

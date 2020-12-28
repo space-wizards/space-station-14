@@ -8,6 +8,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -74,7 +75,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             }
 
             // This is so entities that shouldn't get a collision are ignored.
-            if (entity.TryGetComponent(out IPhysicsComponent otherPhysics) && otherPhysics.Hard == false)
+            if (entity.TryGetComponent(out PhysicsComponent otherPhysics) && otherPhysics.IsSensor)
             {
                 _internalDeleteOnCollide = false;
                 return;
@@ -105,7 +106,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             }
 
             if (!entity.Deleted && entity.TryGetComponent(out CameraRecoilComponent recoilComponent)
-                                && Owner.TryGetComponent(out IPhysicsComponent ownPhysics))
+                                && Owner.TryGetComponent(out PhysicsComponent ownPhysics))
             {
                 var direction = ownPhysics.LinearVelocity.Normalized;
                 recoilComponent.Kick(direction);

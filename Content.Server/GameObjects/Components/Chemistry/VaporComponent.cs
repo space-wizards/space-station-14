@@ -13,6 +13,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -58,10 +59,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
             _velocity = velocity;
             _aliveTime = aliveTime;
             // Set Move
-            if (Owner.TryGetComponent(out IPhysicsComponent physics))
+            if (Owner.TryGetComponent(out PhysicsComponent physics))
             {
-                var controller = physics.EnsureController<VaporController>();
-                controller.Move(_direction, _velocity);
+                //var controller = physics.EnsureController<VaporController>();
+                //controller.Move(_direction, _velocity);
             }
         }
 
@@ -82,7 +83,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             _timer += frameTime;
             _reactTimer += frameTime;
 
-            if (_reactTimer >= ReactTime && Owner.TryGetComponent(out IPhysicsComponent physics))
+            if (_reactTimer >= ReactTime && Owner.TryGetComponent(out PhysicsComponent physics))
             {
                 _reactTimer = 0;
                 var mapGrid = _mapManager.GetGrid(Owner.Transform.GridID);
@@ -101,10 +102,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
             {
                 _reached = true;
 
-                if (Owner.TryGetComponent(out IPhysicsComponent coll))
+                if (Owner.TryGetComponent(out PhysicsComponent coll))
                 {
-                    var controller = coll.EnsureController<VaporController>();
-                    controller.Stop();
+                    //var controller = coll.EnsureController<VaporController>();
+                    //controller.Stop();
                 }
             }
 
@@ -150,11 +151,12 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             // Check for collision with a impassable object (e.g. wall) and stop
-            if (collidedWith.TryGetComponent(out IPhysicsComponent physics))
+            /*
+            if (collidedWith.TryGetComponent(out PhysicsComponent physics))
             {
                 if ((physics.CollisionLayer & (int) CollisionGroup.Impassable) != 0 && physics.Hard)
                 {
-                    if (Owner.TryGetComponent(out IPhysicsComponent coll))
+                    if (Owner.TryGetComponent(out PhysicsComponent coll))
                     {
                         var controller = coll.EnsureController<VaporController>();
                         controller.Stop();
@@ -163,6 +165,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     Owner.Delete();
                 }
             }
+            */
         }
     }
 }

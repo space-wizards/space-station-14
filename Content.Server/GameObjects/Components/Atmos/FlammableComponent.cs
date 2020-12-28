@@ -21,6 +21,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
@@ -59,7 +60,6 @@ namespace Content.Server.GameObjects.Components.Atmos
             if (FireStacks > 0 && !OnFire)
             {
                 OnFire = true;
-
             }
 
             UpdateAppearance();
@@ -143,8 +143,8 @@ namespace Content.Server.GameObjects.Components.Atmos
                 }
 
                 var entity = _entityManager.GetEntity(uid);
-                var physics = Owner.GetComponent<IPhysicsComponent>();
-                var otherPhysics = entity.GetComponent<IPhysicsComponent>();
+                var physics = Owner.GetComponent<PhysicsComponent>();
+                var otherPhysics = entity.GetComponent<PhysicsComponent>();
 
                 if (!physics.WorldAABB.Intersects(otherPhysics.WorldAABB))
                 {

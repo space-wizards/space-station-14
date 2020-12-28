@@ -3,9 +3,7 @@ using Content.Server.GameObjects.Components.Projectiles;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Physics;
-using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -42,23 +40,23 @@ namespace Content.Server.Throw
         /// </param>
         public static void Throw(this IEntity thrownEnt, float throwForce, EntityCoordinates targetLoc, EntityCoordinates sourceLoc, bool spread = false, IEntity throwSourceEnt = null)
         {
-            if (!thrownEnt.TryGetComponent(out IPhysicsComponent colComp))
+            if (!thrownEnt.TryGetComponent(out PhysicsComponent colComp))
                 return;
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
-            colComp.CanCollide = true;
+            colComp.Enabled = true;
             // I can now collide with player, so that i can do damage.
 
             if (!thrownEnt.TryGetComponent(out ThrownItemComponent projComp))
             {
                 projComp = thrownEnt.AddComponent<ThrownItemComponent>();
 
-                if (colComp.PhysicsShapes.Count == 0)
-                    colComp.PhysicsShapes.Add(new PhysShapeAabb());
+                // if (colComp.FixtureList.Count == 0)
+                    //colComp.PhysicsShapes.Add(new PhysShapeAabb());
 
-                colComp.PhysicsShapes[0].CollisionMask |= (int) CollisionGroup.ThrownItem;
-                colComp.Status = BodyStatus.InAir;
+                colComp.FixtureList[0].CollisionMask |= (int) CollisionGroup.ThrownItem;
+                // colComp.Status = BodyStatus.InAir;
             }
             var angle = new Angle(targetLoc.ToMapPos(entityManager) - sourceLoc.ToMapPos(entityManager));
 
@@ -85,7 +83,7 @@ namespace Content.Server.Throw
             projComp.StartThrow(angle.ToVec(), spd);
 
             if (throwSourceEnt != null &&
-                throwSourceEnt.TryGetComponent<IPhysicsComponent>(out var physics))
+                throwSourceEnt.TryGetComponent<PhysicsComponent>(out var physics))
             {
                 if (throwSourceEnt.IsWeightless())
                 {
@@ -95,8 +93,8 @@ namespace Content.Server.Throw
                     // If somebody wants they can come along and make it so magboots completely hold you still.
                     // Would be a cool incentive to use them.
                     const float throwFactor = 0.2f; // Break Newton's Third Law for better gameplay
-                    var mover = physics.EnsureController<ThrowKnockbackController>();
-                    mover.Push(-angle.ToVec(), spd * throwFactor);
+                    // var mover = physics.EnsureController<ThrowKnockbackController>();
+                    // mover.Push(-angle.ToVec(), spd * throwFactor);
                 }
             }
         }

@@ -1,8 +1,6 @@
 #nullable enable
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Physics;
-using Robust.Shared.IoC;
 
 namespace Content.Shared.GameObjects.Components.Movement
 {
@@ -14,12 +12,12 @@ namespace Content.Shared.GameObjects.Components.Movement
 
     public static class GravityExtensions
     {
-        public static bool IsWeightless(this IEntity entity, IPhysicsManager? physicsManager = null)
+        public static bool IsWeightless(this IEntity entity)
         {
-            physicsManager ??= IoCManager.Resolve<IPhysicsManager>();
-
-            return !entity.HasComponent<MovementIgnoreGravityComponent>() &&
-                   physicsManager.IsWeightless(entity.Transform.Coordinates);
+            // TODO:
+            return false;
+            //return !entity.HasComponent<MovementIgnoreGravityComponent>() &&
+            //       physicsManager.IsWeightless(entity.Transform.Coordinates);
         }
     }
 }

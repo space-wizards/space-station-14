@@ -13,6 +13,7 @@ using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Shared.Physics;
 using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
@@ -36,7 +37,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
                 Logger.Error("RadiationCollectorComponent created with no CollidableComponent");
                 return;
             }
-            _collidableComponent.AnchoredChanged += OnAnchoredChanged;
+            //_collidableComponent.AnchoredChanged += OnAnchoredChanged;
         }
 
         private void OnAnchoredChanged()

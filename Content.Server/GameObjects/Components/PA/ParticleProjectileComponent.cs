@@ -9,6 +9,7 @@ using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Timers;
 
 namespace Content.Server.GameObjects.Components.PA
@@ -58,7 +59,10 @@ namespace Content.Server.GameObjects.Components.PA
                 Logger.Error("ParticleProjectile tried firing, but it was spawned without a CollidableComponent");
                 return;
             }
-            physicsComponent.Status = BodyStatus.InAir;
+
+            // TODO?
+            // physicsComponent.BodyType = BodyType.Kinematic;
+            physicsComponent.IsBullet = true;
 
             if (!Owner.TryGetComponent<ProjectileComponent>(out var projectileComponent))
             {
@@ -83,9 +87,11 @@ namespace Content.Server.GameObjects.Components.PA
             }
             spriteComponent.LayerSetState(0, $"particle{suffix}");
 
+            /*
             physicsComponent
                 .EnsureController<BulletController>()
                 .LinearVelocity = angle.ToVec() * 20f;
+                */
 
             Owner.Transform.LocalRotation = new Angle(angle + Angle.FromDegrees(180));
             Timer.Spawn(3000, () => Owner.Delete());

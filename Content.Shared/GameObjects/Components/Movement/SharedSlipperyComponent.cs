@@ -9,6 +9,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -62,8 +63,8 @@ namespace Content.Shared.GameObjects.Components.Movement
                 || ContainerHelpers.IsInContainer(Owner)
                 ||  _slipped.Contains(entity.Uid)
                 ||  !entity.TryGetComponent(out SharedStunnableComponent stun)
-                ||  !entity.TryGetComponent(out IPhysicsComponent otherBody)
-                ||  !Owner.TryGetComponent(out IPhysicsComponent body))
+                ||  !entity.TryGetComponent(out PhysicsComponent otherBody)
+                ||  !Owner.TryGetComponent(out PhysicsComponent body))
             {
                 return false;
             }
@@ -85,10 +86,10 @@ namespace Content.Shared.GameObjects.Components.Movement
                 return false;
             }
 
-            if (entity.TryGetComponent(out IPhysicsComponent physics))
+            if (entity.TryGetComponent(out PhysicsComponent physics))
             {
-                var controller = physics.EnsureController<SlipController>();
-                controller.LinearVelocity = physics.LinearVelocity * LaunchForwardsMultiplier;
+                //var controller = physics.EnsureController<SlipController>();
+                //controller.LinearVelocity = physics.LinearVelocity * LaunchForwardsMultiplier;
             }
 
             stun.Paralyze(5);
@@ -117,8 +118,8 @@ namespace Content.Shared.GameObjects.Components.Movement
                 }
 
                 var entity = _entityManager.GetEntity(uid);
-                var physics = Owner.GetComponent<IPhysicsComponent>();
-                var otherPhysics = entity.GetComponent<IPhysicsComponent>();
+                var physics = Owner.GetComponent<PhysicsComponent>();
+                var otherPhysics = entity.GetComponent<PhysicsComponent>();
 
                 if (!physics.WorldAABB.Intersects(otherPhysics.WorldAABB))
                 {
@@ -133,7 +134,8 @@ namespace Content.Shared.GameObjects.Components.Movement
 
             var physics = Owner.EnsureComponent<PhysicsComponent>();
 
-            physics.Hard = false;
+            /* TODO: waddafak is going on here
+            physics.IsSensor = true;
 
             var shape = physics.PhysicsShapes.FirstOrDefault();
 
@@ -142,6 +144,7 @@ namespace Content.Shared.GameObjects.Components.Movement
                 shape.CollisionLayer |= (int) CollisionGroup.SmallImpassable;
                 shape.CollisionMask = (int) CollisionGroup.None;
             }
+            */
         }
 
         public override void ExposeData(ObjectSerializer serializer)

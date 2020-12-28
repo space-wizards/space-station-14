@@ -17,6 +17,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Disposal.SharedDisposalRouterComponent;
 
@@ -34,7 +35,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         [ViewVariables]
         public bool Anchored =>
-            !Owner.TryGetComponent(out IPhysicsComponent? physics) ||
+            !Owner.TryGetComponent(out PhysicsComponent? physics) ||
             physics.Anchored;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalRouterUiKey.Key);

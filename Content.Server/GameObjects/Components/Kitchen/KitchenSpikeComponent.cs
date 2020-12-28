@@ -29,6 +29,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
         {
             SpriteComponent? sprite;
 
+            /*
             if (!EntitySystem.Get<SharedPullingSystem>().TryGetPulled(eventArgs.User, out var victim))
             {
                 if (_meatParts == 0)
@@ -90,6 +91,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
             Owner.PopupMessageEveryone(Loc.GetString("{0:theName} has forced {1:theName} onto the spike, killing them instantly!", eventArgs.User, victim));
             victim.Delete();
+            */
         }
 
         public SuicideKind Suicide(IEntity victim, IChatManager chat)

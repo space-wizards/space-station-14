@@ -5,12 +5,13 @@ using System.Runtime.CompilerServices;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Physics;
 using Content.Shared.Utility;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics.Broadphase;
 
 namespace Content.Shared.Maps
 {
@@ -156,19 +157,20 @@ namespace Content.Shared.Maps
         /// </summary>
         public static bool IsBlockedTurf(this TileRef turf, bool filterMobs)
         {
-            var physics = IoCManager.Resolve<IPhysicsManager>();
-
             var worldBox = GetWorldTileBox(turf);
 
-            var query = physics.GetCollidingEntities(turf.MapIndex, in worldBox);
+            var query = EntitySystem.Get<SharedBroadPhaseSystem>().GetCollidingEntities(turf.MapIndex, in worldBox);
 
             foreach (var body in query)
             {
-                if (body.CanCollide && body.Hard && (body.CollisionLayer & (int) CollisionGroup.Impassable) != 0)
-                    return true;
+                foreach (var fixture in body.FixtureList)
+                {
+                    if (!fixture.IsSensor && (fixture.CollisionLayer & (int) CollisionGroup.Impassable) != 0)
+                        return true;
 
-                if (filterMobs && (body.CollisionLayer & (int) CollisionGroup.MobMask) != 0)
-                    return true;
+                    if (filterMobs && (fixture.CollisionLayer & (int) CollisionGroup.MobMask) != 0)
+                        return true;
+                }
             }
 
             return false;

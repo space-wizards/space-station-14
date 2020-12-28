@@ -3,14 +3,14 @@ using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Broadphase;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {
@@ -20,7 +20,7 @@ namespace Content.Shared.GameObjects.EntitySystems
     [UsedImplicitly]
     public class SharedInteractionSystem : EntitySystem
     {
-        [Dependency] private readonly IPhysicsManager _physicsManager = default!;
+        [Dependency] private readonly IBroadPhaseManager _broadPhaseManager = default!;
 
         public const float InteractionRange = 2;
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;
@@ -50,8 +50,8 @@ namespace Content.Shared.GameObjects.EntitySystems
             if (dir.LengthSquared.Equals(0f)) return 0f;
 
             predicate ??= _ => false;
-            var ray = new CollisionRay(origin.Position, dir.Normalized, collisionMask);
-            var rayResults = _physicsManager.IntersectRayWithPredicate(origin.MapId, ray, dir.Length, predicate.Invoke, false).ToList();
+            var ray = new CollisionRay(origin.Position, other.Position, collisionMask);
+            var rayResults = _broadPhaseManager.IntersectRayWithPredicate(origin.MapId, ray, predicate.Invoke, false).ToList();
 
             if (rayResults.Count == 0) return dir.Length;
             return (rayResults[0].HitPos - origin.Position).Length;
@@ -126,8 +126,8 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             predicate ??= _ => false;
 
-            var ray = new CollisionRay(origin.Position, dir.Normalized, (int) collisionMask);
-            var rayResults = _physicsManager.IntersectRayWithPredicate(origin.MapId, ray, dir.Length, predicate.Invoke, false).ToList();
+            var ray = new CollisionRay(origin.Position, other.Position, (int) collisionMask);
+            var rayResults = _broadPhaseManager.IntersectRayWithPredicate(origin.MapId, ray, predicate.Invoke, false).ToList();
 
             if (rayResults.Count == 0) return true;
 
@@ -135,7 +135,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             foreach (var result in rayResults)
             {
-                if (!result.HitEntity.TryGetComponent(out IPhysicsComponent p))
+                if (!result.HitEntity.TryGetComponent(out PhysicsComponent p))
                 {
                     continue;
                 }

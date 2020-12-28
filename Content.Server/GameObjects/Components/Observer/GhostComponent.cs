@@ -100,9 +100,11 @@ namespace Content.Server.GameObjects.Components.Observer
                     {
                         foreach (var player in _playerManager.GetAllPlayers())
                         {
-                            if (player.AttachedEntity != null && warp.PlayerTarget == player.AttachedEntity.Uid)
+                            if (player.AttachedEntity != null &&
+                                warp.PlayerTarget == player.AttachedEntity.Uid &&
+                                session?.AttachedEntity != null)
                             {
-                                session?.AttachedEntity!.Transform.Coordinates =
+                                session.AttachedEntity.Transform.Coordinates =
                                     player.AttachedEntity.Transform.Coordinates;
                             }
                         }
@@ -113,7 +115,10 @@ namespace Content.Server.GameObjects.Components.Observer
                         {
                             if (warp.WarpName == warpPoint.Location)
                             {
-                                session?.AttachedEntity!.Transform.Coordinates = warpPoint.Owner.Transform.Coordinates ;
+                                if (session?.AttachedEntity != null)
+                                {
+                                    session.AttachedEntity.Transform.Coordinates = warpPoint.Owner.Transform.Coordinates;
+                                }
                             }
                         }
                     }

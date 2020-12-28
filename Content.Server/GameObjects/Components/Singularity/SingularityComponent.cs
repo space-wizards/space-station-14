@@ -19,6 +19,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Shapes;
 using Robust.Shared.Timers;
 
 namespace Content.Server.GameObjects.Components.Singularity
@@ -78,7 +79,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                 _spriteComponent?.LayerSetRSI(0, "Effects/Singularity/singularity_" + _level + ".rsi");
                 _spriteComponent?.LayerSetState(0, "singularity_" + _level);
 
-                if(_collidableComponent != null && _collidableComponent.PhysicsShapes.Any() && _collidableComponent.PhysicsShapes[0] is PhysShapeCircle circle)
+                if(_collidableComponent != null && _collidableComponent.FixtureList.Any() && _collidableComponent.FixtureList[0].Shape is CircleShape circle)
                 {
                     circle.Radius = _level - 0.5f;
                 }
@@ -98,7 +99,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                 _ => 0
             };
 
-        private SingularityController? _singularityController;
+        //private SingularityController? _singularityController;
         private PhysicsComponent? _collidableComponent;
         private SpriteComponent? _spriteComponent;
         private RadiationPulseComponent? _radiationPulseComponent;
@@ -122,7 +123,7 @@ namespace Content.Server.GameObjects.Components.Singularity
             }
             else
             {
-                _collidableComponent.Hard = false;
+                _collidableComponent.IsSensor = true;
             }
 
             if (!Owner.TryGetComponent(out _spriteComponent))
@@ -130,8 +131,8 @@ namespace Content.Server.GameObjects.Components.Singularity
                 Logger.Error("SingularityComponent was spawned without SpriteComponent");
             }
 
-            _singularityController = _collidableComponent?.EnsureController<SingularityController>();
-            if(_singularityController!=null)_singularityController.ControlledComponent = _collidableComponent;
+            //_singularityController = _collidableComponent?.EnsureController<SingularityController>();
+            //if(_singularityController!=null)_singularityController.ControlledComponent = _collidableComponent;
 
             if (!Owner.TryGetComponent(out _radiationPulseComponent))
             {
@@ -152,7 +153,7 @@ namespace Content.Server.GameObjects.Components.Singularity
             {
                 pushVector = new Vector2((_random.Next(-10, 10)), _random.Next(-10, 10));
             }
-            _singularityController?.Push(pushVector.Normalized, 200);
+            // _singularityController?.Push(pushVector.Normalized, 200);
         }
 
         public void PullUpdate()
@@ -161,14 +162,14 @@ namespace Content.Server.GameObjects.Components.Singularity
             foreach (var entity in entitiesToPull)
             {
                 if (!entity.TryGetComponent<PhysicsComponent>(out var collidableComponent)) continue;
-                var controller = collidableComponent.EnsureController<SingularityPullController>();
+                // var controller = collidableComponent.EnsureController<SingularityPullController>();
                 if(Owner.Transform.Coordinates.EntityId != entity.Transform.Coordinates.EntityId) continue;
                 var vec = (Owner.Transform.Coordinates - entity.Transform.Coordinates).Position;
                 if (vec == Vector2.Zero) continue;
 
                 var speed = 100 / vec.Length * Level;
 
-                controller.Pull(vec.Normalized, speed);
+                // controller.Pull(vec.Normalized, speed);
             }
         }
 

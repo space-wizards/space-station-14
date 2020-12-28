@@ -15,6 +15,7 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
@@ -85,7 +86,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 
             foreach (var update in _collidableUpdateQueue)
             {
-                var entity = EntityManager.GetEntity(update.PhysicsComponent);
+                var entity = EntityManager.GetEntity(update.PhysicsComponent.Owner.Uid);
                 if (update.Enabled)
                 {
                     HandleEntityAdd(entity);
@@ -266,7 +267,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         {
             if (entity.Deleted ||
                 _lastKnownPositions.ContainsKey(entity) ||
-                !entity.TryGetComponent(out IPhysicsComponent physics) ||
+                !entity.TryGetComponent(out PhysicsComponent physics) ||
                 !PathfindingNode.IsRelevant(entity, physics))
             {
                 return;
@@ -305,7 +306,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         {
             // If we've moved to space or the likes then remove us.
             if (moveEvent.Sender.Deleted ||
-                !moveEvent.Sender.TryGetComponent(out IPhysicsComponent physics) ||
+                !moveEvent.Sender.TryGetComponent(out PhysicsComponent physics) ||
                 !PathfindingNode.IsRelevant(moveEvent.Sender, physics))
             {
                 HandleEntityRemove(moveEvent.Sender);
@@ -369,7 +370,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 
         public bool CanTraverse(IEntity entity, PathfindingNode node)
         {
-            if (entity.TryGetComponent(out IPhysicsComponent physics) &&
+            if (entity.TryGetComponent(out PhysicsComponent physics) &&
                 (physics.CollisionMask & node.BlockedCollisionMask) != 0)
             {
                 return false;

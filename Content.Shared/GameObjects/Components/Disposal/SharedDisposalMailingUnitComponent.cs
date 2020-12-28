@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.UserInterface;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 

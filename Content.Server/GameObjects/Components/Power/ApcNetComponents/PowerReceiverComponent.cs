@@ -10,6 +10,7 @@ using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -24,7 +25,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
     {
         [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
 
-        [ViewVariables] [ComponentDependency] private readonly IPhysicsComponent? _physicsComponent = null;
+        [ViewVariables] [ComponentDependency] private readonly PhysicsComponent? _physicsComponent = null;
 
         public override string Name => "PowerReceiver";
 
@@ -98,7 +99,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
             if (_physicsComponent != null)
             {
                 AnchorUpdate();
-                _physicsComponent.AnchoredChanged += AnchorUpdate;
+                //_physicsComponent.AnchoredChanged += AnchorUpdate;
             }
         }
 
@@ -106,7 +107,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         {
             if (_physicsComponent != null)
             {
-                _physicsComponent.AnchoredChanged -= AnchorUpdate;
+                //_physicsComponent.AnchoredChanged -= AnchorUpdate;
             }
             _provider.RemoveReceiver(this);
             base.OnRemove();

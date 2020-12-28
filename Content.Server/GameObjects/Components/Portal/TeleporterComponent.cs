@@ -15,6 +15,7 @@ using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
@@ -108,7 +109,7 @@ namespace Content.Server.GameObjects.Components.Portal
                 {
                     // Added this component to avoid stacking portals and causing shenanigans
                     // TODO: Doesn't do a great job of stopping stacking portals for directed
-                    if (entity.HasComponent<IPhysicsComponent>() || entity.HasComponent<TeleporterComponent>())
+                    if (entity.HasComponent<PhysicsComponent>() || entity.HasComponent<TeleporterComponent>())
                     {
                         return;
                     }
@@ -152,7 +153,7 @@ namespace Content.Server.GameObjects.Components.Portal
             // TODO: Check the user's spot? Upside is no stacking TPs but downside is they can't unstuck themselves from walls.
             foreach (var entity in _serverEntityManager.GetEntitiesIntersecting(user.Transform.MapID, target))
             {
-                if (entity.HasComponent<IPhysicsComponent>() || entity.HasComponent<PortalComponent>())
+                if (entity.HasComponent<PhysicsComponent>() || entity.HasComponent<PortalComponent>())
                 {
                     return false;
                 }

@@ -9,6 +9,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Disposal
@@ -56,8 +57,8 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-            if (!entity.TryGetComponent(out IPhysicsComponent? physics) ||
-                !physics.CanCollide)
+            if (!entity.TryGetComponent(out PhysicsComponent? physics) ||
+                !physics.Enabled)
             {
                 return false;
             }
@@ -73,9 +74,9 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-            if (entity.TryGetComponent(out IPhysicsComponent? physics))
+            if (entity.TryGetComponent(out PhysicsComponent? physics))
             {
-                physics.CanCollide = false;
+                physics.Enabled = false;
             }
 
             return true;
@@ -105,9 +106,9 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             foreach (var entity in _contents.ContainedEntities.ToArray())
             {
-                if (entity.TryGetComponent(out IPhysicsComponent? physics))
+                if (entity.TryGetComponent(out PhysicsComponent? physics))
                 {
-                    physics.CanCollide = true;
+                    physics.Enabled = true;
                 }
 
                 _contents.ForceRemove(entity);

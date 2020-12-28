@@ -7,6 +7,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameObjects.Components.Singularity
@@ -91,7 +92,8 @@ namespace Content.Server.GameObjects.Components.Singularity
         /// <param name="toRepell">Entity to repell.</param>
         public void TryRepell(IEntity repellFrom, IEntity toRepell)
         {
-            if (!_fields.Contains(repellFrom) || !toRepell.TryGetComponent<IPhysicsComponent>(out var collidableComponent)) return;
+            /*
+            if (!_fields.Contains(repellFrom) || !toRepell.TryGetComponent<PhysicsComponent>(out var collidableComponent)) return;
 
             var speed = 5;
             var containmentFieldRepellController = collidableComponent.EnsureController<ContainmentFieldRepellController>();
@@ -125,7 +127,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                     containmentFieldRepellController.Repell(Direction.North, speed);
                 }
             }
-
+*/
             return;
         }
 

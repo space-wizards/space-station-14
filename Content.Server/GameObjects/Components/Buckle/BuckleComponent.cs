@@ -4,7 +4,6 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Mobs.State;
-using Content.Server.GameObjects.Components.Pulling;
 using Content.Server.GameObjects.Components.Strap;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Buckle;
@@ -270,13 +269,17 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             SendMessage(new BuckleMessage(Owner, to));
 
+            /*
             if (Owner.TryGetComponent(out PullableComponent? pullableComponent))
             {
+
                 if (pullableComponent.Puller != null)
                 {
                     pullableComponent.TryStopPull();
                 }
+
             }
+            */
 
             return true;
         }

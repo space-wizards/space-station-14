@@ -23,6 +23,7 @@ using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -226,15 +227,15 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         private void ModifyComponents()
         {
-            if (!_isCollidableWhenOpen && Owner.TryGetComponent<IPhysicsComponent>(out var physics))
+            if (!_isCollidableWhenOpen && Owner.TryGetComponent<PhysicsComponent>(out var physics))
             {
                 if (Open)
                 {
-                    physics.Hard = false;
+                    physics.IsSensor = true;
                 }
                 else
                 {
-                    physics.Hard = true;
+                    physics.IsSensor = false;
                 }
             }
 
@@ -252,7 +253,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         protected virtual bool AddToContents(IEntity entity)
         {
             if (entity == Owner) return false;
-            if (entity.TryGetComponent(out IPhysicsComponent entityPhysicsComponent))
+            if (entity.TryGetComponent(out PhysicsComponent entityPhysicsComponent))
             {
                 if(MaxSize < entityPhysicsComponent.WorldAABB.Size.X
                     || MaxSize < entityPhysicsComponent.WorldAABB.Size.Y)
@@ -266,7 +267,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 entity.Transform.LocalPosition = Vector2.Zero;
                 if (entityPhysicsComponent != null)
                 {
-                    entityPhysicsComponent.CanCollide = false;
+                    entityPhysicsComponent.Enabled = false;
                 }
                 return true;
             }
@@ -285,9 +286,9 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 if(Contents.Remove(contained))
                 {
                     contained.Transform.WorldPosition = ContentsDumpPosition();
-                    if (contained.TryGetComponent<IPhysicsComponent>(out var physics))
+                    if (contained.TryGetComponent<PhysicsComponent>(out var physics))
                     {
-                        physics.CanCollide = true;
+                        physics.Enabled = true;
                     }
                 }
             }

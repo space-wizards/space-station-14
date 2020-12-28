@@ -23,6 +23,7 @@ using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -378,7 +379,7 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             foreach (var entity in _snapGrid.GetInDir(direction))
             {
-                if (entity.TryGetComponent(out IPhysicsComponent physics) &&
+                if (entity.TryGetComponent(out PhysicsComponent physics) &&
                     (physics.CollisionLayer & (int) CollisionGroup.Impassable) != 0)
                 {
                     puddle = default;
