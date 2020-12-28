@@ -274,6 +274,8 @@ namespace Content.Shared.Preferences
         public string Summary =>
             Loc.GetString("This is {0}. {3:They} {3:are} a {2} year old human {1}.", Name, Sex.ToString().ToLower(), Age, this);
 
+            //. Human will be replaced by {Species} when that gets added .//
+
         public bool MemberwiseEquals(ICharacterProfile maybeOther)
         {
             if (maybeOther is not HumanoidCharacterProfile other) return false;
