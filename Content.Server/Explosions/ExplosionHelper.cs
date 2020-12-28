@@ -138,7 +138,7 @@ namespace Content.Server.Explosions
             // there are probably more ExplosivePassable entities around
             foreach (var (entity, distance) in nonImpassableEntities)
             {
-                if (!entity.InRangeUnobstructed(epicenter, maxRange, ignoreInsideBlocker: false, predicate: IgnoreExplosivePassable))
+                if (!entity.InRangeUnobstructed(epicenter, maxRange, ignoreInsideBlocker: true, predicate: IgnoreExplosivePassable))
                 {
                     continue;
                 }
