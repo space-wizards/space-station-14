@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
+using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.VendingMachines
 {
+    [NetID("VENDING_MACHINE")]
     public class SharedVendingMachineComponent : Component
     {
         public override string Name => "VendingMachine";
