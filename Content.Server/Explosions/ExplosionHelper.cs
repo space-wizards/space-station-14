@@ -45,7 +45,7 @@ namespace Content.Server.Explosions
         private static readonly float LightBreakChance = 0.3f;
         private static readonly float HeavyBreakChance = 0.8f;
 
-        private static bool IgnoreExplosivePassable(IEntity e) =>(e.GetComponent<IPhysicsComponent>().CollisionLayer & (int) CollisionGroup.ExplosivePassable) != 0;
+        private static bool IgnoreExplosivePassable(IEntity e) => (e.GetComponent<IPhysicsComponent>().CollisionLayer & (int) CollisionGroup.ExplosivePassable) != 0;
 
 
         private static ExplosionSeverity CalculateSeverity(float distance, float devastationRange, float heaveyRange)
@@ -84,7 +84,7 @@ namespace Content.Server.Explosions
 
             var exAct = entitySystemManager.GetEntitySystem<ActSystem>();
 
-            var entitiesInRange = serverEntityManager.GetEntitiesInRange(mapId, boundingBox, 0);
+            var entitiesInRange = serverEntityManager.GetEntitiesInRange(mapId, boundingBox, 0).ToList();
 
             var impassableEntities = new List<Tuple<IEntity, float>>();
             var nonImpassableEntities = new List<Tuple<IEntity, float>>();
@@ -134,8 +134,8 @@ namespace Content.Server.Explosions
                 exAct.HandleExplosion(epicenter, entity, CalculateSeverity(distance, devastationRange, heaveyRange));
             }
 
-            // Impassable entities were handled first so NonImpassable entities had bigger chance to get hit if there
-            // was an unobstructed path
+            // Impassable entities were handled first so NonImpassable entities have a bigger chance to get hit. As now
+            // there are probably more ExplosivePassable entities around
             foreach (var (entity, distance) in nonImpassableEntities)
             {
                 if (!entity.InRangeUnobstructed(epicenter, maxRange, ignoreInsideBlocker: true, predicate: IgnoreExplosivePassable))
@@ -184,7 +184,7 @@ namespace Content.Server.Explosions
                     continue;
                 }
 
-                if (!tileLoc.ToMap(entityManager).InRangeUnobstructed(epicenter, maxRange, ignoreInsideBlocker: true, predicate: IgnoreExplosivePassable))
+                if (!tileLoc.ToMap(entityManager).InRangeUnobstructed(epicenter, maxRange, ignoreInsideBlocker: false, predicate: IgnoreExplosivePassable))
                 {
                     continue;
                 }
