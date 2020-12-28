@@ -138,7 +138,7 @@ namespace Content.Server.Explosions
             // there are probably more ExplosivePassable entities around
             foreach (var (entity, distance) in nonImpassableEntities)
             {
-                if (!entity.InRangeUnobstructed(epicenter, maxRange, ignoreInsideBlocker: true, predicate: IgnoreExplosivePassable))
+                if (!entity.InRangeUnobstructed(epicenter, maxRange, ignoreInsideBlocker: false, predicate: IgnoreExplosivePassable))
                 {
                     continue;
                 }
@@ -185,11 +185,6 @@ namespace Content.Server.Explosions
                 }
 
                 if (!tileLoc.ToMap(entityManager).InRangeUnobstructed(epicenter, maxRange, ignoreInsideBlocker: false, predicate: IgnoreExplosivePassable))
-                {
-                    continue;
-                }
-
-                if (tile.IsBlockedTurf(false))
                 {
                     continue;
                 }
