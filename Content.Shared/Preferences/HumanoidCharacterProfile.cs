@@ -180,7 +180,7 @@ namespace Content.Shared.Preferences
             var list = new List<string>(_antagPreferences);
             if(pref)
             {
-                if (!list.Contains(antagId))
+                if(!list.Contains(antagId))
                 {
                     list.Add(antagId);
                 }
