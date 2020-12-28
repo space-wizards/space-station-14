@@ -47,7 +47,6 @@ namespace Content.Server.Explosions
 
         private static bool IgnoreExplosivePassable(IEntity e) => (e.GetComponent<IPhysicsComponent>().CollisionLayer & (int) CollisionGroup.ExplosivePassable) != 0;
 
-
         private static ExplosionSeverity CalculateSeverity(float distance, float devastationRange, float heaveyRange)
         {
             if (distance < devastationRange)
@@ -185,6 +184,11 @@ namespace Content.Server.Explosions
                 }
 
                 if (!tileLoc.ToMap(entityManager).InRangeUnobstructed(epicenter, maxRange, ignoreInsideBlocker: false, predicate: IgnoreExplosivePassable))
+                {
+                    continue;
+                }
+
+                if (tile.IsBlockedTurf(false))
                 {
                     continue;
                 }
