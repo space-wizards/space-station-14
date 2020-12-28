@@ -22,9 +22,11 @@
       air:
         volume: 70
         temperature: 293.15
+    - type: Jetpack
     - type: ItemActions
       actions:
         - actionType: ToggleInternals
+        - actionType: ToggleJetpack
 
 #Empty blue
 - type: entity

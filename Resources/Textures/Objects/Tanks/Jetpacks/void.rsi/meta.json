@@ -77,6 +77,24 @@
                     1.0
                 ]
             ]
+        },
+		{
+            "name": "on-equipped-BACKPACK",
+            "directions": 4,
+            "delays": [
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ]
+            ]
         }
     ]
 }

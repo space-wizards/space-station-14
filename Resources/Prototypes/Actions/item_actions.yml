@@ -1,4 +1,4 @@
-﻿- type: itemAction
+- type: itemAction
   actionType: ToggleInternals
   icon: Interface/Actions/internal0.png
   iconOn: Interface/Actions/internal1.png
@@ -119,3 +119,17 @@
         - actionType: DebugTargetPointRepeat
         - actionType: DebugTargetEntity
         - actionType: DebugTargetEntityRepeat
+
+- type: itemAction
+  actionType: ToggleJetpack
+  name: Toggle Jetpack
+  description: "Toggles the jetpack on or off."
+  icon: Objects/Fun/bikehorn.rsi/icon.png
+  filters:
+    - common
+    - atmos
+    - jetpack
+  keywords:
+    - jetpack
+  behaviorType: Toggle
+  behavior: !type:ToggleJetpackAction { }

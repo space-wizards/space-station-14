@@ -81,7 +81,7 @@
             ]
         },
 		{
-            "name": "equipped-on-BACKPACK",
+            "name": "on-equipped-BACKPACK",
             "directions": 4,
             "delays": [
                 [

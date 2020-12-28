@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Actions
+namespace Content.Shared.Actions
 {
     /// <summary>
     /// Every possible action. Corresponds to actionType in action prototypes.
@@ -28,6 +28,7 @@
         DebugTargetPoint,
         DebugTargetPointRepeat,
         DebugTargetEntity,
-        DebugTargetEntityRepeat
+        DebugTargetEntityRepeat,
+        ToggleJetpack
     }
 }
