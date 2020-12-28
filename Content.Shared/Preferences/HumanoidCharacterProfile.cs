@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +12,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Localization.Macros;
 using Robust.Shared.Localization;
+using Robust.Shared.Localization.Macros.English;
 
 namespace Content.Shared.Preferences
 {
@@ -178,16 +179,16 @@ namespace Content.Shared.Preferences
         public HumanoidCharacterProfile WithAntagPreference(string antagId, bool pref)
         {
             var list = new List<string>(_antagPreferences);
-            if(pref)
+            if (pref)
             {
-                if(!list.Contains(antagId))
+                if (!list.Contains(antagId))
                 {
                     list.Add(antagId);
                 }
             }
             else
             {
-                if(list.Contains(antagId))
+                if (list.Contains(antagId))
                 {
                     list.Remove(antagId);
                 }
@@ -221,7 +222,7 @@ namespace Content.Shared.Preferences
             string name;
             if (string.IsNullOrEmpty(profile.Name))
             {
-                name = "John Doe";
+                name = "Urist McHands";
             }
             else if (profile.Name.Length > MaxNameLength)
             {
@@ -272,7 +273,7 @@ namespace Content.Shared.Preferences
         }
 
         public string Summary =>
-            Loc.GetString("{0}, {1} years old human. {2:Their} pronouns are {2:they}/{2:them}.", Name, Age, this);
+            Loc.GetString("This is {0}. {3:They} {3:are} a {2} year old human {1}.", Name, Sex.ToString().ToLower(), Age, this);
 
         public bool MemberwiseEquals(ICharacterProfile maybeOther)
         {
