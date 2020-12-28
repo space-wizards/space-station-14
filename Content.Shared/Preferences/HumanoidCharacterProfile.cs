@@ -12,7 +12,6 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Localization.Macros;
 using Robust.Shared.Localization;
-using Robust.Shared.Localization.Macros.English;
 
 namespace Content.Shared.Preferences
 {
@@ -179,7 +178,7 @@ namespace Content.Shared.Preferences
         public HumanoidCharacterProfile WithAntagPreference(string antagId, bool pref)
         {
             var list = new List<string>(_antagPreferences);
-            if (pref)
+            if(pref)
             {
                 if (!list.Contains(antagId))
                 {
@@ -188,7 +187,7 @@ namespace Content.Shared.Preferences
             }
             else
             {
-                if (list.Contains(antagId))
+                if(list.Contains(antagId))
                 {
                     list.Remove(antagId);
                 }
@@ -220,11 +219,11 @@ namespace Content.Shared.Preferences
             };
 
             string name;
-            if (string.IsNullOrEmpty(profile.Name))
+            if(string.IsNullOrEmpty(profile.Name))
             {
                 name = "Urist McHands";
             }
-            else if (profile.Name.Length > MaxNameLength)
+            else if(profile.Name.Length > MaxNameLength)
             {
                 name = profile.Name[..MaxNameLength];
             }
