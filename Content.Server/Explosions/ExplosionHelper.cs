@@ -7,20 +7,27 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Maps;
+using Content.Shared.Physics;
+using Content.Shared.Utility;
+using Microsoft.Extensions.Logging;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.EntitySystemMessages;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Explosions
 {
@@ -37,6 +44,9 @@ namespace Content.Server.Explosions
         /// </summary>
         private static readonly float LightBreakChance = 0.3f;
         private static readonly float HeavyBreakChance = 0.8f;
+
+        private static bool IgnoreExplosivePassable(IEntity e) =>(e.GetComponent<IPhysicsComponent>().CollisionLayer & (int) CollisionGroup.ExplosivePassable) != 0;
+
 
         private static ExplosionSeverity CalculateSeverity(float distance, float devastationRange, float heaveyRange)
         {
@@ -73,9 +83,14 @@ namespace Content.Server.Explosions
             var entitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
 
             var exAct = entitySystemManager.GetEntitySystem<ActSystem>();
-            
-            var entitiesInRange = serverEntityManager.GetEntitiesInRange(mapId, boundingBox, 0).ToList();
 
+            var entitiesInRange = serverEntityManager.GetEntitiesInRange(mapId, boundingBox, 0);
+
+            var impassableEntities = new List<Tuple<IEntity, float>>();
+            var nonImpassableEntities = new List<Tuple<IEntity, float>>();
+
+            // The entities are paired with their distance to the epicenter
+            // and splitted into two lists based on if they are Impassable or not
             foreach (var entity in entitiesInRange)
             {
                 if (entity.Deleted || !entity.Transform.IsMapTransform)
@@ -88,8 +103,46 @@ namespace Content.Server.Explosions
                     continue;
                 }
 
-                var severity = CalculateSeverity(distance, devastationRange, heaveyRange);
-                exAct.HandleExplosion(epicenter, entity, severity);
+                if (!entity.TryGetComponent(out IPhysicsComponent body) || body.PhysicsShapes.Count < 1)
+                {
+                    continue;
+                }
+
+                if ((body.CollisionLayer & (int) CollisionGroup.Impassable) != 0)
+                {
+                    impassableEntities.Add(Tuple.Create(entity, distance));
+                }
+                else
+                {
+                    nonImpassableEntities.Add(Tuple.Create(entity, distance));
+                }
+            }
+
+            // The Impassable entities are sorted in descending order
+            // Entities closer to the epicenter are first
+            impassableEntities.Sort((x, y) => x.Item2.CompareTo(y.Item2));
+
+            // Impassable entities are handled first. If they are damaged enough, they are destroyed and they may
+            // be able to spawn a new entity. I.e Wall -> Girder.
+            // Girder has a layer ExplosivePassable, and the predicate make it so the entities with this layer are ignored
+            foreach (var (entity, distance) in impassableEntities)
+            {
+                if (!entity.InRangeUnobstructed(epicenter, maxRange, ignoreInsideBlocker: true, predicate: IgnoreExplosivePassable))
+                {
+                    continue;
+                }
+                exAct.HandleExplosion(epicenter, entity, CalculateSeverity(distance, devastationRange, heaveyRange));
+            }
+
+            // Impassable entities were handled first so NonImpassable entities had bigger chance to get hit if there
+            // was an unobstructed path
+            foreach (var (entity, distance) in nonImpassableEntities)
+            {
+                if (!entity.InRangeUnobstructed(epicenter, maxRange, ignoreInsideBlocker: true, predicate: IgnoreExplosivePassable))
+                {
+                    continue;
+                }
+                exAct.HandleExplosion(epicenter, entity, CalculateSeverity(distance, devastationRange, heaveyRange));
             }
         }
 
@@ -98,7 +151,7 @@ namespace Content.Server.Explosions
         /// damage bracket [light, heavy, devastation], the distance from the epicenter and
         /// a probabilty bracket [<see cref="LightBreakChance"/>, <see cref="HeavyBreakChance"/>, 1.0].
         /// </summary>
-        ///
+        ///    
         private static void DamageTilesInRange(EntityCoordinates epicenter,
                                                GridId gridId,
                                                Box2 boundingBox,
@@ -118,8 +171,6 @@ namespace Content.Server.Explosions
                 return;
             }
 
-            _ = grid.TryGetComponent(out GridAtmosphereComponent atmosphereComponent);
-
             var robustRandom = IoCManager.Resolve<IRobustRandom>();
             var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
 
@@ -133,7 +184,12 @@ namespace Content.Server.Explosions
                     continue;
                 }
 
-                if (atmosphereComponent != null && atmosphereComponent.IsAirBlocked(tile.GridIndices))
+                if (!tileLoc.ToMap(entityManager).InRangeUnobstructed(epicenter, maxRange, ignoreInsideBlocker: true, predicate: IgnoreExplosivePassable))
+                {
+                    continue;
+                }
+
+                if (tile.IsBlockedTurf(false))
                 {
                     continue;
                 }
@@ -250,6 +306,7 @@ namespace Content.Server.Explosions
             DamageEntitiesInRange(epicenter, boundingBox, devastationRange, heavyImpactRange, maxRange, mapId);
 
             var mapGridsNear = mapManager.FindGridsIntersecting(mapId, boundingBox);
+
             foreach (var gridId in mapGridsNear)
             {
                 DamageTilesInRange(epicenter, gridId.Index, boundingBox, devastationRange, heavyImpactRange, maxRange);
@@ -268,6 +325,7 @@ namespace Content.Server.Explosions
             }
             else
             {
+
                 Detonate(entity, devastationRange, heavyImpactRange, lightImpactRange, flashRange);
             }
         }

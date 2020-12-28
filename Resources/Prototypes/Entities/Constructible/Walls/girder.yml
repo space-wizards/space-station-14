@@ -24,6 +24,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - ExplosivePassable
   - type: Pullable
   - type: Damageable
     resistances: metallicResistances
