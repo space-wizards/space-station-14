@@ -1,299 +1,151 @@
 {
   "version": 1,
+  "license": "CC-BY-SA 3",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/17dc39d12005f3279a90212b5c61a781c08693a5",
   "size": {
     "x": 32,
     "y": 32
   },
-  "license": "CC-BY-SA 3",
-  "copyright": "https://github.com/discordia-space/CEV-Eris/commit/9216a1754b1e1d25b8f771b15fbaf4e086fcade9",
   "states": [
     {
       "name": "beaker",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "bodybags",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
+    },
+    {
+      "name": "clown",
+      "directions": 1
+    },
+    {
+      "name": "heart",
+      "directions": 1
     },
     {
       "name": "meson",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "sechud",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "box",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
+    },
+    {
+      "name": "box_hug",
+      "directions": 1
     },
     {
       "name": "box_donk_pocket",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "box_id",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "box_of_doom",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "box_of_doom_big",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "box_security",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "circuit",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "disk",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "flashbang",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "glasses",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "handcuff",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "implant",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "latex",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "light",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "lightmixed",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "lighttube",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "mousetraps",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "pda",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "pillbox",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "solution_trays",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "sterile",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "syringe",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "writing",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "writing_of_doom",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "inhand-left",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "inhand-right",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
+    },
+    {
+      "name": "hug-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "hug-inhand-right",
+      "directions": 4
     }
   ]
 }

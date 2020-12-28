@@ -15,3 +15,62 @@
   materials:
     steel: 400
     glass: 125
+
+- type: latheRecipe
+  id: Gauze
+  icon: Objects/Specific/Medical/medical.rsi
+  result: Gauze
+  completetime: 500
+  materials:
+    glass: 40
+
+- type: latheRecipe
+  id: Scalpel
+  icon: Objects/Specific/Medical/surgery_tools.rsi
+  result: Scalpel
+  completetime: 500
+  materials:
+    steel: 70
+
+- type: latheRecipe
+  id: Retractor
+  icon: Objects/Specific/Medical/surgery_tools.rsi
+  result: Scalpel
+  completetime: 500
+  materials:
+    steel: 50
+
+- type: latheRecipe
+  id: Cautery
+  icon: Objects/Specific/Medical/surgery_tools.rsi
+  result: Cautery
+  completetime: 500
+  materials:
+    steel: 80
+    glass: 20
+
+- type: latheRecipe
+  id: Drill
+  icon: Objects/Specific/Medical/surgery_tools.rsi
+  result: Drill
+  completetime: 500
+  materials:
+    steel: 70
+    glass: 30
+
+- type: latheRecipe
+  id: BoneSaw
+  icon: Objects/Specific/Medical/surgery_tools.rsi
+  result: BoneSaw
+  completetime: 500
+  materials:
+    steel: 80
+    glass: 20
+
+- type: latheRecipe
+  id: Hemostat
+  icon: Objects/Specific/Medical/surgery_tools.rsi
+  result: Hemostat
+  completetime: 500
+  materials:
+    steel: 50

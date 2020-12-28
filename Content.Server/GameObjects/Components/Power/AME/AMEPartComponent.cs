@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using System.Linq;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.Interfaces.GameObjects.Components.Items;
@@ -11,6 +11,8 @@ using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.Components.Power.AME
 {
@@ -22,6 +24,7 @@ namespace Content.Server.GameObjects.Components.Power.AME
         [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
 
         public override string Name => "AMEPart";
+        private string _unwrap = "/Audio/Effects/unwrap.ogg";
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
         {
@@ -45,6 +48,8 @@ namespace Content.Server.GameObjects.Components.Power.AME
 
                 var ent = _serverEntityManager.SpawnEntity("AMEShielding", mapGrid.GridTileToLocal(snapPos));
                 ent.Transform.LocalRotation = Owner.Transform.LocalRotation;
+
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(_unwrap, Owner);
 
                 Owner.Delete();
             }
