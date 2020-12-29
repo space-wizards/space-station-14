@@ -26,7 +26,6 @@ namespace Content.Server.GameObjects.Components.Cargo
     [ComponentReference(typeof(IActivate))]
     public class CargoConsoleComponent : SharedCargoConsoleComponent, IActivate
     {
-        [Dependency] private readonly ICargoOrderDataManager _cargoOrderDataManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
 
         [ViewVariables]
@@ -125,12 +124,12 @@ namespace Content.Server.GameObjects.Components.Cargo
                             break;
                         }
 
-                        _cargoOrderDataManager.AddOrder(orders.Database.Id, msg.Requester, msg.Reason, msg.ProductId, msg.Amount, _bankAccount.Id);
+                        _cargoConsoleSystem.AddOrder(orders.Database.Id, msg.Requester, msg.Reason, msg.ProductId, msg.Amount, _bankAccount.Id);
                         break;
                     }
                 case CargoConsoleRemoveOrderMessage msg:
                     {
-                        _cargoOrderDataManager.RemoveOrder(orders.Database.Id, msg.OrderNumber);
+                        _cargoConsoleSystem.RemoveOrder(orders.Database.Id, msg.OrderNumber);
                         break;
                     }
                 case CargoConsoleApproveOrderMessage msg:
@@ -145,12 +144,12 @@ namespace Content.Server.GameObjects.Components.Cargo
                         PrototypeManager.TryIndex(order.ProductId, out CargoProductPrototype product);
                         if (product == null!)
                             break;
-                        var capacity = _cargoOrderDataManager.GetCapacity(orders.Database.Id);
+                        var capacity = _cargoConsoleSystem.GetCapacity(orders.Database.Id);
                         if (capacity.CurrentCapacity == capacity.MaxCapacity)
                             break;
                         if (!_cargoConsoleSystem.ChangeBalance(_bankAccount.Id, (-product.PointCost) * order.Amount))
                             break;
-                        _cargoOrderDataManager.ApproveOrder(orders.Database.Id, msg.OrderNumber);
+                        _cargoConsoleSystem.ApproveOrder(orders.Database.Id, msg.OrderNumber);
                         UpdateUIState();
                         break;
                     }
@@ -186,7 +185,7 @@ namespace Content.Server.GameObjects.Components.Cargo
                         {
                             if (cargoTelepad.TryGetComponent<CargoTelepadComponent>(out var telepadComponent))
                             {
-                                var approvedOrders = _cargoOrderDataManager.RemoveAndGetApprovedFrom(orders.Database);
+                                var approvedOrders = _cargoConsoleSystem.RemoveAndGetApprovedOrders(orders.Database.Id);
                                 orders.Database.ClearOrderCapacity();
                                 foreach (var order in approvedOrders)
                                 {
@@ -226,7 +225,7 @@ namespace Content.Server.GameObjects.Components.Cargo
             var id = _bankAccount.Id;
             var name = _bankAccount.Name;
             var balance = _bankAccount.Balance;
-            var capacity = _cargoOrderDataManager.GetCapacity(id);
+            var capacity = _cargoConsoleSystem.GetCapacity(id);
             UserInterface?.SetState(new CargoConsoleInterfaceState(_requestOnly, id, name, balance, capacity));
         }
     }
