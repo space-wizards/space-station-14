@@ -124,9 +124,10 @@ namespace Content.Server.Explosions
             // Impassable entities are handled first. If they are damaged enough, they are destroyed and they may
             // be able to spawn a new entity. I.e Wall -> Girder.
             // Girder has a layer ExplosivePassable, and the predicate make it so the entities with this layer are ignored
+            var epicenterMapPos = epicenter.ToMap(entityManager);
             foreach (var (entity, distance) in impassableEntities)
             {
-                if (!entity.InRangeUnobstructed(epicenter, maxRange, ignoreInsideBlocker: true, predicate: IgnoreExplosivePassable))
+                if (!entity.InRangeUnobstructed(epicenterMapPos, maxRange, ignoreInsideBlocker: true, predicate: IgnoreExplosivePassable))
                 {
                     continue;
                 }
@@ -137,7 +138,7 @@ namespace Content.Server.Explosions
             // there are probably more ExplosivePassable entities around
             foreach (var (entity, distance) in nonImpassableEntities)
             {
-                if (!entity.InRangeUnobstructed(epicenter, maxRange, ignoreInsideBlocker: true, predicate: IgnoreExplosivePassable))
+                if (!entity.InRangeUnobstructed(epicenterMapPos, maxRange, ignoreInsideBlocker: true, predicate: IgnoreExplosivePassable))
                 {
                     continue;
                 }
@@ -175,6 +176,7 @@ namespace Content.Server.Explosions
 
             var tilesInGridAndCircle = mapGrid.GetTilesIntersecting(boundingBox);
 
+            var epicenterMapPos = epicenter.ToMap(entityManager);
             foreach (var tile in tilesInGridAndCircle)
             {
                 var tileLoc = mapGrid.GridTileToLocal(tile.GridIndices);
@@ -183,12 +185,12 @@ namespace Content.Server.Explosions
                     continue;
                 }
 
-                if (!tileLoc.ToMap(entityManager).InRangeUnobstructed(epicenter, maxRange, ignoreInsideBlocker: false, predicate: IgnoreExplosivePassable))
+                if (tile.IsBlockedTurf(false))
                 {
                     continue;
                 }
 
-                if (tile.IsBlockedTurf(false))
+                if (!tileLoc.ToMap(entityManager).InRangeUnobstructed(epicenterMapPos, maxRange, ignoreInsideBlocker: false, predicate: IgnoreExplosivePassable))
                 {
                     continue;
                 }
@@ -324,7 +326,6 @@ namespace Content.Server.Explosions
             }
             else
             {
-
                 Detonate(entity, devastationRange, heavyImpactRange, lightImpactRange, flashRange);
             }
         }
