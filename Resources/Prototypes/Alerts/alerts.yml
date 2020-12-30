@@ -69,7 +69,7 @@
   icon: /Textures/Interface/Alerts/Weightless/weightless.png
   name: Weightless
   description: >-
-    Gravity has ceased affecting you, and you're floating around aimlessly. Find something sturdy to hold onto, or push yourself by propelling something in a direction.
+    Gravity has ceased affecting you, and you're floating around aimlessly. Find something sturdy to hold onto, or expand force in a direction opposite of you. Magnetic boots or jetpacks will help you move with more control
 
 - type: alert
   alertType: Stun
