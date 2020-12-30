@@ -113,12 +113,14 @@
     - map: [ "enum.Slots.MASK" ]
     - map: [ "enum.Slots.HEAD" ]
   - type: Physics
-    anchored: false
     mass: 85
-    friction: 0.8
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.35,-0.35,0.35,0.35"
+    linearDamping: 0.8
+    fixtures:
+    - shape: !type:CircleShape {}
+      radius: 0.35
+      density: 1
+      friction: 1
+      restitution: 0.2
       mask:
       - Impassable
       - MobImpassable

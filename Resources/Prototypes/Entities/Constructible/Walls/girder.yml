@@ -13,10 +13,15 @@
     sprite: Constructible/Structures/Walls/solid.rsi
     state: wall_girder
   - type: Physics
+    bodyType: Static
     mass: 25
-    anchored: true
-    shapes:
-    - !type:PhysShapeAabb
+    fixtures:
+    - shape: !type:PolygonShape {}
+      vertices:
+      - "-0.5, -0.5"
+      - "0.5, -0.5"
+      - "0.5, 0.5"
+      - "-0.5, 0.5"
       mask:
       - Impassable
       - MobImpassable

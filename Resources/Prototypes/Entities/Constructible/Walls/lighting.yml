@@ -5,10 +5,17 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.45, -0.15, 0.45, 0.35"
-      layer: [ Passable ]
+    bodyType: Static
+    mass: 10
+    fixtures:
+    - shape: !type:PolygonShape {}
+      vertices:
+      - "-0.45, -0.15"
+      - "0.35, -0.15"
+      - "0.35, 0.45"
+      - "-0.45, 0.45"
+      layer:
+      - Passable
   - type: LoopingSound
   - type: Sprite
     sprite: Constructible/Lighting/light_tube.rsi
@@ -53,10 +60,17 @@
     enabled: false
     offset: "-0.5, 0"
   - type: Physics
-    shapes:
-      - !type:PhysShapeAabb
-        bounds: "0, 0.1, 0.25, 0.1"
-        layer: [ Passable ]
+    bodyType: Static
+    mass: 5
+    fixtures:
+    - shape: !type:PolygonShape {}
+      vertices:
+      - "0, .1"
+      - "0.25, .1"
+      - "0.25, 0.1"
+      - "0, 0.1"
+      layer:
+      - Passable
   - type: PoweredLight
     bulb: Bulb
   - type: PowerReceiver

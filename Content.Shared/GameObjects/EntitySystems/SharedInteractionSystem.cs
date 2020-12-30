@@ -20,12 +20,18 @@ namespace Content.Shared.GameObjects.EntitySystems
     [UsedImplicitly]
     public class SharedInteractionSystem : EntitySystem
     {
-        [Dependency] private readonly IBroadPhaseManager _broadPhaseManager = default!;
+        private SharedBroadPhaseSystem _broadPhaseManager = default!;
 
         public const float InteractionRange = 2;
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;
 
         public delegate bool Ignored(IEntity entity);
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            _broadPhaseManager = Get<SharedBroadPhaseSystem>();
+        }
 
         /// <summary>
         ///     Traces a ray from coords to otherCoords and returns the length
