@@ -27,4 +27,5 @@
     ears: ClothingHeadsetAltMedical
     belt: ClothingBeltMedical
   innerclothingskirt: ClothingUniformJumpskirtCMO
-
+  satchel: ClothingBackpackSatchelMedicalFilled
+  duffelbag: ClothingBackpackDuffelMedicalFilled
