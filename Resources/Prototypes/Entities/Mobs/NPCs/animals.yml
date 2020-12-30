@@ -225,7 +225,7 @@
   name: bee
   parent: MonkeyMob_Content
   id: BeeMob_Content
-  description: Nice to have, but you can't build a civilization on foundation of honey alone.
+  description: Nice to have, but you can't build a civilization on a foundation of honey alone.
   drawdepth: Mobs
   suffix: AI
   components:
