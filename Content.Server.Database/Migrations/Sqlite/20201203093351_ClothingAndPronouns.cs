@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Content.Server.Database.Migrations.Sqlite
 {
@@ -8,6 +8,13 @@ namespace Content.Server.Database.Migrations.Sqlite
         {
             migrationBuilder.AddColumn<string>(
                 name: "clothing",
+                table: "profile",
+                type: "TEXT",
+                nullable: false,
+                defaultValue: "");
+
+            migrationBuilder.AddColumn<string>(
+                name: "backpack",
                 table: "profile",
                 type: "TEXT",
                 nullable: false,
@@ -25,6 +32,10 @@ namespace Content.Server.Database.Migrations.Sqlite
         {
             migrationBuilder.DropColumn(
                 name: "clothing",
+                table: "profile");
+
+            migrationBuilder.DropColumn(
+                name: "backpack",
                 table: "profile");
 
             migrationBuilder.DropColumn(

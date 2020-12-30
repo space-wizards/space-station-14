@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Content.Server.Database.Migrations.Postgres
 {
@@ -8,6 +8,13 @@ namespace Content.Server.Database.Migrations.Postgres
         {
             migrationBuilder.AddColumn<string>(
                 name: "clothing",
+                table: "profile",
+                type: "text",
+                nullable: false,
+                defaultValue: "");
+
+            migrationBuilder.AddColumn<string>(
+                name: "backpack",
                 table: "profile",
                 type: "text",
                 nullable: false,
@@ -25,6 +32,10 @@ namespace Content.Server.Database.Migrations.Postgres
         {
             migrationBuilder.DropColumn(
                 name: "clothing",
+                table: "profile");
+
+            migrationBuilder.DropColumn(
+                name: "backpack",
                 table: "profile");
 
             migrationBuilder.DropColumn(
