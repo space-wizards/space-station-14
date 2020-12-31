@@ -24,14 +24,6 @@
       "directions": 4
     },
     {
-      "name": "ammo-equipped-BACKPACK",
-      "directions": 4
-    },
-    {
-      "name": "med-equipped-BACKPACK",
-      "directions": 4
-    },
-    {
       "name": "inhand-left",
       "directions": 4
     },
