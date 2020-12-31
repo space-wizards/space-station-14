@@ -210,7 +210,6 @@ namespace Content.Server.Explosions
                 switch (severity)
                 {
                     case ExplosionSeverity.Light:
-                        mapGrid.SetTile(tileLoc, previousTile);
                         if (!previousTile.IsEmpty && robustRandom.Prob(LightBreakChance))
                         {
                             mapGrid.SetTile(tileLoc, previousTile);
