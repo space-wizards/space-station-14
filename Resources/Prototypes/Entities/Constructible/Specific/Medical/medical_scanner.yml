@@ -9,8 +9,10 @@
     netsync: false
     sprite: Constructible/Specific/Medical/scanner.rsi
     layers:
-    - state: scanner_open
+    - state: open
       map: ["enum.MedicalScannerVisualLayers.Machine"]
+    - state: idle_unlit
+      map: ["enum.MedicalScannerVisualLayers.Terminal"]
   - type: PowerReceiver
   - type: Anchorable
   - type: Clickable
