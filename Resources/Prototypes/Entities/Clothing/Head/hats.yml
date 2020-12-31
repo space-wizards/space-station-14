@@ -360,3 +360,14 @@
     sprite: Clothing/Head/Hats/xmascrown.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/xmascrown.rsi
+    - type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatXmasCrown
+  
+  name: really tall hat
+  description: 'This hat is too tall. Too much hat power for one man.'
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/tallhat.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/tallhat.rsi
