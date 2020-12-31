@@ -12,6 +12,7 @@ using Content.Shared.GameObjects.Components.Atmos;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -100,7 +101,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 return;
             }
 
-            status.ShowAlert(AlertType.Fire, onClickAlert: OnClickAlert);
+            status?.ShowAlert(AlertType.Fire);
 
             if (FireStacks > 0)
             {
@@ -149,14 +150,6 @@ namespace Content.Server.GameObjects.Components.Atmos
                 {
                     _collided.Remove(uid);
                 }
-            }
-        }
-
-        private void OnClickAlert(ClickAlertEventArgs args)
-        {
-            if (args.Player.TryGetComponent(out FlammableComponent flammable))
-            {
-                flammable.Resist();
             }
         }
 

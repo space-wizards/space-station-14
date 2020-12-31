@@ -5,13 +5,10 @@
 import hashlib
 import json
 import os
+import subprocess
 from zipfile import ZipFile, ZIP_DEFLATED
 
-FILES = {
-    "linux": "SS14.Client_Linux_x64.zip",
-    "windows": "SS14.Client_Windows_x64.zip",
-    "macos": "SS14.Client_macOS_x64.zip"
-}
+FILE = "SS14.Client.zip"
 
 SERVER_FILES = [
     "SS14.Server_Linux_x64.zip",
@@ -38,17 +35,25 @@ def inject_manifest(zip_path: str, manifest: str) -> None:
 def generate_manifest(dir: str) -> str:
     # Env variables set by Jenkins.
 
-    jenkins_base = f"{os.environ['BUILD_URL']}artifact/release/"
-
     version = os.environ["BUILD_NUMBER"]
-    downloads = {}
-    hashes = {}
+    download = f"{os.environ['BUILD_URL']}artifact/release/{FILE}"
+    hash = sha256_file(os.path.join(dir, FILE))
+    engine_version = get_engine_version()
 
-    for platform, filename in FILES.items():
-        downloads[platform] = f"{jenkins_base}{filename}"
-        hashes[platform] = sha256_file(os.path.join(dir, filename))
+    return json.dumps({
+        "download": download,
+        "hash": hash,
+        "version": version,
+        "fork_id": FORK_ID,
+        "engine_version": engine_version
+    })
 
-    return json.dumps({"downloads": downloads, "hashes": hashes, "version": version, "fork_id": FORK_ID})
+
+def get_engine_version() -> str:
+    proc = subprocess.run(["git", "describe", "--tags", "--abbrev=0"], stdout=subprocess.PIPE, cwd="RobustToolbox", check=True, encoding="UTF-8")
+    tag = proc.stdout.strip()
+    assert tag.startswith("v")
+    return tag[1:] # Cut off v prefix.
 
 
 def sha256_file(path: str) -> str:

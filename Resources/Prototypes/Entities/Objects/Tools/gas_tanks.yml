@@ -19,6 +19,9 @@
         - Back
         - Belt
     - type: GasTank
+    - type: ItemActions
+      actions:
+        - actionType: ToggleInternals
 
 - type: entity
   id: OxygenTank
@@ -281,7 +284,7 @@
       sprite: Objects/Tanks/phoron.rsi
       Slots:
         - Belt
-        
+
 - type: entity
   id: PhoronTankFilled
   parent: PhoronTank

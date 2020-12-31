@@ -13,6 +13,7 @@ using Content.Client.StationEvents;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.AdminMenu;
 using Content.Client.UserInterface.Stylesheets;
+using Content.Shared.Actions;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Cargo;
 using Content.Shared.GameObjects.Components.Chemistry;
@@ -80,6 +81,7 @@ namespace Content.Client
             prototypes.RegisterIgnore("seed"); // Seeds prototypes are server-only.
             prototypes.RegisterIgnore("barSign");
             prototypes.RegisterIgnore("objective");
+            prototypes.RegisterIgnore("dataset");
 
             ClientContentIoC.Register();
 
@@ -156,6 +158,7 @@ namespace Content.Client
             IoCManager.Resolve<IAdminMenuManager>().Initialize();
             IoCManager.Resolve<EuiManager>().Initialize();
             IoCManager.Resolve<AlertManager>().Initialize();
+            IoCManager.Resolve<ActionManager>().Initialize();
 
             _baseClient.RunLevelChanged += (sender, args) =>
             {

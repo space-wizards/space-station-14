@@ -22,8 +22,8 @@ namespace Content.Client.GameObjects.Components.Kitchen
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         private GrinderMenu _menu;
-        private Dictionary<int, EntityUid> _chamberVisualContents = new Dictionary<int, EntityUid>();
-        private Dictionary<int, Solution.ReagentQuantity> _beakerVisualContents = new Dictionary<int, Solution.ReagentQuantity>();
+        private Dictionary<int, EntityUid> _chamberVisualContents = new();
+        private Dictionary<int, Solution.ReagentQuantity> _beakerVisualContents = new();
         public ReagentGrinderBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey) { }
 
         protected override void Open()

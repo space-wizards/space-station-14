@@ -11,7 +11,6 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos
@@ -42,7 +41,7 @@ namespace Content.Server.Atmos
         public bool Immutable { get; private set; }
 
         [ViewVariables]
-        public float LastShare { get; private set; } = 0;
+        public float LastShare { get; private set; }
 
         [ViewVariables]
         public readonly Dictionary<GasReaction, float> ReactionResults = new()
@@ -148,7 +147,7 @@ namespace Content.Server.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Merge(GasMixture giver)
         {
-            if (Immutable || giver == null) return;
+            if (Immutable) return;
 
             if (MathF.Abs(Temperature - giver.Temperature) > Atmospherics.MinimumTemperatureDeltaToConsider)
             {
@@ -453,15 +452,16 @@ namespace Content.Server.Atmos
 
         /// <summary>
         ///     Releases gas from this mixture to the output mixture.
+        ///     If the output mixture is null, then this is being released into space.
         ///     It can't transfer air to a mixture with higher pressure.
         /// </summary>
         /// <param name="outputAir"></param>
         /// <param name="targetPressure"></param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool ReleaseGasTo(GasMixture outputAir, float targetPressure)
+        public bool ReleaseGasTo(GasMixture? outputAir, float targetPressure)
         {
-            var outputStartingPressure = outputAir.Pressure;
+            var outputStartingPressure = outputAir?.Pressure ?? 0;
             var inputStartingPressure = Pressure;
 
             if (outputStartingPressure >= MathF.Min(targetPressure, inputStartingPressure - 10))
@@ -473,11 +473,11 @@ namespace Content.Server.Atmos
 
             // We calculate the necessary moles to transfer with the ideal gas law.
             var pressureDelta = MathF.Min(targetPressure - outputStartingPressure, (inputStartingPressure - outputStartingPressure) / 2f);
-            var transferMoles = pressureDelta * outputAir.Volume / (Temperature * Atmospherics.R);
+            var transferMoles = pressureDelta * (outputAir?.Volume ?? Atmospherics.CellVolume) / (Temperature * Atmospherics.R);
 
             // And now we transfer the gas.
             var removed = Remove(transferMoles);
-            outputAir.Merge(removed);
+            outputAir?.Merge(removed);
 
             return true;
 
@@ -536,10 +536,10 @@ namespace Content.Server.Atmos
 
         public void ExposeData(ObjectSerializer serializer)
         {
-            serializer.DataField(this, x => Immutable, "immutable", false);
-            serializer.DataField(this, x => Volume, "volume", 0f);
-            serializer.DataField(this, x => LastShare, "lastShare", 0f);
-            serializer.DataField(this, x => TemperatureArchived, "temperatureArchived", 0f);
+            serializer.DataField(this, x => x.Immutable, "immutable", false);
+            serializer.DataField(this, x => x.Volume, "volume", 0f);
+            serializer.DataField(this, x => x.LastShare, "lastShare", 0f);
+            serializer.DataField(this, x => x.TemperatureArchived, "temperatureArchived", 0f);
             serializer.DataField(ref _moles, "moles", new float[Atmospherics.AdjustedNumberOfGases]);
             serializer.DataField(ref _molesArchived, "molesArchived", new float[Atmospherics.AdjustedNumberOfGases]);
             serializer.DataField(ref _temperature, "temperature", Atmospherics.TCMB);

@@ -11,7 +11,9 @@ using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Medical;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -146,14 +148,23 @@ namespace Content.Server.GameObjects.Components.Medical
             UserInterface?.SetState(newState);
         }
 
-        private MedicalScannerStatus GetStatusFromDamageState(DamageState damageState)
+        private MedicalScannerStatus GetStatusFromDamageState(IMobStateComponent state)
         {
-            switch (damageState)
+            if (state.IsAlive())
             {
-                case DamageState.Alive: return MedicalScannerStatus.Green;
-                case DamageState.Critical: return MedicalScannerStatus.Red;
-                case DamageState.Dead: return MedicalScannerStatus.Death;
-                default: throw new ArgumentException(nameof(damageState));
+                return MedicalScannerStatus.Green;
+            }
+            else if (state.IsCritical())
+            {
+                return MedicalScannerStatus.Red;
+            }
+            else if (state.IsDead())
+            {
+                return MedicalScannerStatus.Death;
+            }
+            else
+            {
+                return MedicalScannerStatus.Yellow;
             }
         }
 
@@ -162,9 +173,11 @@ namespace Content.Server.GameObjects.Components.Medical
             if (Powered)
             {
                 var body = _bodyContainer.ContainedEntity;
-                return body == null
+                var state = body?.GetComponentOrNull<IMobStateComponent>();
+
+                return state == null
                     ? MedicalScannerStatus.Open
-                    : GetStatusFromDamageState(body.GetComponent<IDamageableComponent>().CurrentState);
+                    : GetStatusFromDamageState(state);
             }
 
             return MedicalScannerStatus.Off;

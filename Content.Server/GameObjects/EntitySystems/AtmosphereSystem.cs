@@ -125,7 +125,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        public IGridAtmosphereComponent? GetGridAtmosphere(GridId gridId)
+        public IGridAtmosphereComponent GetGridAtmosphere(GridId gridId)
         {
             if (!gridId.IsValid())
             {

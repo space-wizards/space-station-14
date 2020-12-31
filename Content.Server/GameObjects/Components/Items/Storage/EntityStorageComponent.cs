@@ -9,6 +9,7 @@ using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -152,8 +153,8 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             serializer.DataField(ref _open, "open", false);
             serializer.DataField(this, a => a.IsWeldedShut, "IsWeldedShut", false);
             serializer.DataField(this, a => a.CanWeldShut, "CanWeldShut", true);
-            serializer.DataField(this, x => _closeSound, "closeSound", "/Audio/Machines/closetclose.ogg");
-            serializer.DataField(this, x => _openSound, "openSound", "/Audio/Machines/closetopen.ogg");
+            serializer.DataField(this, x => x._closeSound, "closeSound", "/Audio/Machines/closetclose.ogg");
+            serializer.DataField(this, x => x._openSound, "openSound", "/Audio/Machines/closetopen.ogg");
         }
 
         public virtual void Activate(ActivateEventArgs eventArgs)

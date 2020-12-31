@@ -98,7 +98,7 @@ namespace Content.Client.GameObjects.EntitySystems
         }
     }
 
-    internal enum AtmosDebugOverlayMode
+    internal enum AtmosDebugOverlayMode : byte
     {
         TotalMoles,
         GasMoles,

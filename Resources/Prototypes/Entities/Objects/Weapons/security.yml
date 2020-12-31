@@ -4,28 +4,25 @@
   parent: BaseItem
   id: Stunbaton
   components:
-    - type: Sprite
-      sprite: Objects/Weapons/Melee/stunbaton.rsi
-      state: stunbaton_off
-
-
-
-    - type: Stunbaton
-      damage: 1
-      range: 0.75
-      arcwidth: 0
-      arc: default
-
-    - type: PowerCellSlot
-      slotSize: Medium
-      startingCellType: PowerCellMediumHigh
-
-    - type: Item
-      size: 10
-      sprite: Objects/Weapons/Melee/stunbaton.rsi
-      HeldPrefix: off
-
-    - type: ItemCooldown
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/stunbaton.rsi
+    state: stunbaton_off
+  - type: Stunbaton
+    damage: 1
+    range: 0.75
+    arcwidth: 0
+    arc: default
+  - type: PowerCellSlot
+    slotSize: Medium
+    startingCellType: PowerCellMediumHigh
+  - type: ItemCooldown
+  - type: Clothing
+    sprite: Objects/Weapons/Melee/stunbaton.rsi
+    HeldPrefix: off
+    QuickEquip: false
+    size: 20
+    Slots:
+    - Belt
 
 - type: entity
   name: flash
@@ -35,18 +32,12 @@
     - type: Sprite
       sprite: Objects/Weapons/Melee/flash.rsi
       state: flash
-
-
-
     - type: Flash
       damage: 0
       cooldownTime: 1
       arc: smash
       hitSound: /Audio/Weapons/flash.ogg
-
     - type: Item
       size: 2
       sprite: Objects/Weapons/Melee/flash.rsi
-
     - type: ItemCooldown
-

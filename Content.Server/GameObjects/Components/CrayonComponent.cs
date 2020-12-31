@@ -18,6 +18,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Content.Server.GameObjects.Components
 {
@@ -108,7 +109,7 @@ namespace Content.Server.GameObjects.Components
             return false;
         }
 
-        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: false, popup: true,
                 collisionMask: Shared.Physics.CollisionGroup.MobImpassable)) return;

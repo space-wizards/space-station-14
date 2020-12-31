@@ -18,6 +18,9 @@
     damageType: Slash
   - type: Item
     sprite: Objects/Materials/Shards/shard.rsi
+  - type: DamageOtherOnHit
+    amount: 5
+    damageType: Slash
 
 - type: entity
   id: ShardGlass
@@ -47,6 +50,9 @@
       refineResult:
       - GlassStack
       - MetalStack
+    - type: DamageOtherOnHit
+      amount: 10
+
 - type: entity
   id: ShardGlassPhoron
   name: phoron glass shard
@@ -61,3 +67,5 @@
       refineResult:
       - GlassStack
       - PhoronStack
+    - type: DamageOtherOnHit
+      amount: 15

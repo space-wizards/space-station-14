@@ -9,9 +9,14 @@
   - type: Physics
   - type: SnapGrid
     offset: Center
-  - type: Destructible
-    thresholdvalue: 100
+  - type: Damageable
     resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+      100:
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
   - type: Sprite
     sprite: Constructible/Atmos/pump.rsi
   - type: Icon

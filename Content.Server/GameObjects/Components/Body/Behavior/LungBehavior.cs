@@ -138,11 +138,14 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
 
         public void Inhale(float frameTime)
         {
-            if (Body != null && Body.Owner.TryGetComponent(out InternalsComponent? internals)
-                             && internals.BreathToolEntity != null && internals.GasTankEntity != null
-                             && internals.BreathToolEntity.TryGetComponent(out BreathToolComponent? breathTool)
-                             && breathTool.IsFunctional && internals.GasTankEntity.TryGetComponent(out GasTankComponent? gasTank)
-                             && gasTank.Air != null)
+            if (Body != null &&
+                Body.Owner.TryGetComponent(out InternalsComponent? internals) &&
+                internals.BreathToolEntity != null &&
+                internals.GasTankEntity != null &&
+                internals.BreathToolEntity.TryGetComponent(out BreathToolComponent? breathTool) &&
+                breathTool.IsFunctional &&
+                internals.GasTankEntity.TryGetComponent(out GasTankComponent? gasTank) &&
+                gasTank.Air != null)
             {
                 Inhale(frameTime, gasTank.RemoveAirVolume(Atmospherics.BreathVolume));
                 return;

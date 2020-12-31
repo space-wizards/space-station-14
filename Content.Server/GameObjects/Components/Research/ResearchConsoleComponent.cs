@@ -37,6 +37,8 @@ namespace Content.Server.GameObjects.Components.Research
         {
             base.Initialize();
 
+            Owner.EnsureComponentWarn<ServerUserInterfaceComponent>();
+
             if (UserInterface != null)
             {
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;

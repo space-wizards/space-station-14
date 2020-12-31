@@ -7,6 +7,7 @@ using Content.Server.Interfaces;
 using Content.Shared;
 using Content.Shared.Network.NetMessages;
 using Content.Shared.Preferences;
+using Content.Shared.Roles;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.Network;
@@ -250,7 +251,36 @@ namespace Content.Server.Preferences
                 return await _db.InitPrefsAsync(userId, HumanoidCharacterProfile.Default());
             }
 
-            return prefs;
+            return SanitizePreferences(prefs);
+        }
+
+        private PlayerPreferences SanitizePreferences(PlayerPreferences prefs)
+        {
+            // Clean up preferences in case of changes to the game,
+            // such as removed jobs still being selected.
+
+            return new PlayerPreferences(prefs.Characters.Select(p =>
+            {
+                ICharacterProfile newProf;
+                switch (p.Value)
+                {
+                    case HumanoidCharacterProfile hp:
+                    {
+                        newProf = hp
+                            .WithJobPriorities(
+                                hp.JobPriorities.Where(job =>
+                                    _protos.HasIndex<JobPrototype>(job.Key)))
+                            .WithAntagPreferences(
+                                hp.AntagPreferences.Where(antag =>
+                                    _protos.HasIndex<AntagPrototype>(antag)));
+                        break;
+                    }
+                    default:
+                        throw new NotSupportedException();
+                }
+
+                return new KeyValuePair<int, ICharacterProfile>(p.Key, newProf);
+            }), prefs.SelectedCharacterIndex);
         }
 
         public IEnumerable<KeyValuePair<NetUserId, ICharacterProfile>> GetSelectedProfilesForPlayers(

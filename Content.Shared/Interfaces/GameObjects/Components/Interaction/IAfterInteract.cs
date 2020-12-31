@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -7,15 +8,16 @@ using Robust.Shared.Map;
 namespace Content.Shared.Interfaces.GameObjects.Components
 {
     /// <summary>
-    /// This interface gives components a behavior when clicking on another object and no interaction occurs,
-    /// at any range.
+    /// This interface gives components a behavior when their entity is in the active hand, when
+    /// clicking on another object and no interaction occurs, at any range. This includes
+    /// clicking on an object in the world as well as clicking on an object in inventory.
     /// </summary>
     public interface IAfterInteract
     {
         /// <summary>
         /// Called when we interact with nothing, or when we interact with an entity out of range that has no behavior
         /// </summary>
-        void AfterInteract(AfterInteractEventArgs eventArgs);
+        Task AfterInteract(AfterInteractEventArgs eventArgs);
     }
 
     public class AfterInteractEventArgs : EventArgs

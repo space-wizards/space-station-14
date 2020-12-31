@@ -150,7 +150,8 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
                 return;
 
             // Set position ready for 2nd+ frames.
-            _playerPosition = _eyeManager.CoordinatesToScreen(AttachedEntity.Transform.Coordinates);
+            var screenCoordinates = _eyeManager.CoordinatesToScreen(AttachedEntity.Transform.Coordinates);
+            _playerPosition = new ScreenCoordinates(screenCoordinates.X / UIScale, screenCoordinates.Y / UIScale);
             LayoutContainer.SetPosition(this, new Vector2(_playerPosition.X - Width / 2, _playerPosition.Y - Height - 30.0f));
 
             if (FirstDraw)

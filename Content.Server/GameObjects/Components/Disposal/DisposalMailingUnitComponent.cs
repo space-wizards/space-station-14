@@ -17,6 +17,7 @@ using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Disposal;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -584,11 +585,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 seconds => _flushDelay = TimeSpan.FromSeconds(seconds),
                 () => (int) _flushDelay.TotalSeconds);
 
-            serializer.DataReadWriteFunction(
-                "entryDelay",
-                0.5f,
-                seconds => _entryDelay = seconds,
-                () => (int) _entryDelay);
+            serializer.DataField(ref _entryDelay, "entryDelay", 0.5f);
 
             serializer.DataField(ref _tag, "Tag", "");
         }

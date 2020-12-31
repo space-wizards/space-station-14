@@ -32,7 +32,7 @@
   name: Bojevic
   parent: ShotgunBase
   id: ShotgunBojevic
-  description: It's a magazine-fed shotgun designed for close quarters combat, nicknamed 'Striker' by boarding parties. A robust and reliable design allows you to swap magazines on the go and dump as many shells at your foes as you want... if you can manage the recoil, of course.
+  description: It's a magazine-fed shotgun designed for close quarters combat.
   components:
   - type: Sprite
     netsync: false
@@ -120,7 +120,7 @@
   name: Bull
   parent: ShotgunBase
   id: ShotgunBull
-  description: A Frozen Star pump-action shotgun. A marvel of engineering, this gun is often used by Ironhammer tactical units. Due to shorter than usual barrels, recoil kicks slightly harder.
+  description: A Frozen Star pump-action shotgun.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/bull.rsi
@@ -150,7 +150,7 @@
   name: Gladstone
   parent: ShotgunBase
   id: ShotgunGladstone
-  description: It is a next-generation Frozen Star shotgun intended as a cost-effective competitor to the aging NT "Regulator 1000". It has a semi-rifled lightweight full-length barrel which gives it exceptional accuracy with all types of ammunition, with a high-capacity magazine tube below it.
+  description: A next-generation Frozen Star shotgun.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/gladstone.rsi
@@ -167,7 +167,7 @@
   name: Regulator 1000
   parent: ShotgunBase
   id: ShotgunRegulator
-  description: Designed for close quarters combat, the Regulator is widely regarded as a weapon of choice for repelling boarders. Some may say that it's too old, but it actually proved itself useful.
+  description: Ol' reliable.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/regulator.rsi

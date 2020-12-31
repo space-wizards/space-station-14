@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.StationEvents;
 using Content.Shared;
 using Content.Shared.GameTicking;
+using Content.Shared.Network.NetMessages;
 using JetBrains.Annotations;
 using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
@@ -17,7 +19,6 @@ using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using static Content.Shared.StationEvents.SharedStationEvent;
 
 namespace Content.Server.GameObjects.EntitySystems.StationEvents
 {
@@ -29,6 +30,9 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IGameTicker _gameTicker = default!;
+        [Dependency] private readonly IConGroupController _conGroupController = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         public StationEvent CurrentEvent { get; private set; }
         public IReadOnlyCollection<StationEvent> StationEvents => _stationEvents;
@@ -170,29 +174,26 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
             // Can't just check debug / release for a default given mappers need to use release mode
             // As such we'll always pause it by default.
             _configurationManager.OnValueChanged(CCVars.EventsEnabled, value => Enabled = value, true);
-            _netManager.RegisterNetMessage<MsgGetStationEvents>(nameof(MsgGetStationEvents), GetEventReceived);
+
+            _netManager.RegisterNetMessage<MsgRequestStationEvents>(nameof(MsgRequestStationEvents), RxRequest);
+            _netManager.RegisterNetMessage<MsgStationEvents>(nameof(MsgStationEvents));
         }
 
-        private void GetEventReceived(MsgGetStationEvents msg)
+        private void RxRequest(MsgRequestStationEvents msg)
         {
-            var player = _playerManager.GetSessionByChannel(msg.MsgChannel);
-            SendEvents(player);
+            if (_playerManager.TryGetSessionByChannel(msg.MsgChannel, out var player))
+                SendEvents(player);
         }
 
         private void SendEvents(IPlayerSession player)
         {
-            if (!IoCManager.Resolve<IConGroupController>().CanCommand(player, "events"))
+            if (!_conGroupController.CanCommand(player, "events"))
                 return;
 
-            var newMsg = _netManager.CreateNetMessage<MsgGetStationEvents>();
-            newMsg.Events = new List<string>();
-            foreach (var e in StationEvents)
-            {
-                newMsg.Events.Add(e.Name);
-            }
+            var newMsg = _netManager.CreateNetMessage<MsgStationEvents>();
+            newMsg.Events = StationEvents.Select(e => e.Name).ToArray();
             _netManager.ServerSendMessage(newMsg, player.ConnectedClient);
         }
-
 
         public override void Update(float frameTime)
         {
@@ -254,9 +255,8 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
         /// </summary>
         private void ResetTimer()
         {
-            var robustRandom = IoCManager.Resolve<IRobustRandom>();
             // 5 - 15 minutes. TG does 3-10 but that's pretty frequent
-            _timeUntilNextEvent = robustRandom.Next(300, 900);
+            _timeUntilNextEvent = _random.Next(300, 900);
         }
 
         /// <summary>
@@ -277,8 +277,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
                 sumOfWeights += (int) stationEvent.Weight;
             }
 
-            var robustRandom = IoCManager.Resolve<IRobustRandom>();
-            sumOfWeights = robustRandom.Next(sumOfWeights);
+            sumOfWeights = _random.Next(sumOfWeights);
 
             foreach (var stationEvent in availableEvents)
             {
@@ -301,12 +300,12 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
         private List<StationEvent> AvailableEvents(bool ignoreEarliestStart = false)
         {
             TimeSpan currentTime;
-            var playerCount = IoCManager.Resolve<IPlayerManager>().PlayerCount;
+            var playerCount = _playerManager.PlayerCount;
 
             // playerCount does a lock so we'll just keep the variable here
             if (!ignoreEarliestStart)
             {
-                currentTime = IoCManager.Resolve<IGameTiming>().CurTime;
+                currentTime = _gameTiming.CurTime;
             }
             else
             {

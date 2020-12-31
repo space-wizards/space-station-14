@@ -94,7 +94,7 @@ namespace Content.Client.GameObjects.Components.Atmos
         }
     }
 
-    public enum VaporVisualLayers
+    public enum VaporVisualLayers : byte
     {
         Base
     }
