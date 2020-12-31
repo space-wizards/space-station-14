@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Items.Clothing;
@@ -6,6 +6,7 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects.Components.Inventory;
+using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
@@ -19,6 +20,7 @@ using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
@@ -28,7 +30,7 @@ namespace Content.Server.GameObjects.Components.GUI
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedInventoryComponent))]
-    public class InventoryComponent : SharedInventoryComponent, IExAct, IEffectBlocker, IPressureProtection
+    public class InventoryComponent : SharedInventoryComponent, IExAct, IEffectBlocker, IPressureProtection, IRelayMoveInput
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
@@ -40,6 +42,8 @@ namespace Content.Server.GameObjects.Components.GUI
         public IEnumerable<Slots> Slots => _slotContainers.Keys;
 
         public event Action OnItemChanged;
+
+        public event Action<ICommonSession, Direction> OnInventoryRelayMove;
 
         public override void Initialize()
         {
@@ -223,6 +227,8 @@ namespace Content.Server.GameObjects.Components.GUI
 
             OnItemChanged?.Invoke();
 
+            if (item.OnInventoryRelayMove != null) OnInventoryRelayMove += item.OnInventoryRelayMove;
+
             Dirty();
 
             return true;
@@ -305,6 +311,8 @@ namespace Content.Server.GameObjects.Components.GUI
 
             OnItemChanged?.Invoke();
 
+            if (item.OnInventoryRelayMove != null) OnInventoryRelayMove -= item.OnInventoryRelayMove;
+
             Dirty();
 
             return true;
@@ -329,6 +337,8 @@ namespace Content.Server.GameObjects.Components.GUI
             _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedInteraction(Owner, item.Owner, slot);
 
             OnItemChanged?.Invoke();
+
+            if (item.OnInventoryRelayMove != null) OnInventoryRelayMove -= item.OnInventoryRelayMove;
 
             Dirty();
         }
@@ -424,6 +434,7 @@ namespace Content.Server.GameObjects.Components.GUI
             if (entity.TryGetComponent(out ItemComponent itemComp))
             {
                 itemComp.RemovedFromSlot();
+                if (itemComp.OnInventoryRelayMove != null) OnInventoryRelayMove -= itemComp.OnInventoryRelayMove;
             }
 
             OnItemChanged?.Invoke();
@@ -589,6 +600,11 @@ namespace Content.Server.GameObjects.Components.GUI
             }
 
             return false;
+        }
+
+        void IRelayMoveInput.MoveInputPressed(ICommonSession session, Direction dir)
+        {
+            OnInventoryRelayMove?.Invoke(session, dir);
         }
     }
 }

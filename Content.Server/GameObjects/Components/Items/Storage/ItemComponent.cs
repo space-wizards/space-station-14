@@ -1,4 +1,4 @@
-﻿using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Throw;
 using Content.Shared.GameObjects;
@@ -15,7 +15,10 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Maths;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
+using System;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
 {
@@ -29,6 +32,8 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         public override uint? NetID => ContentNetIDs.ITEM;
 
         private string _equippedPrefix;
+
+        public Action<ICommonSession, Direction> OnInventoryRelayMove;
 
         public string EquippedPrefix
         {

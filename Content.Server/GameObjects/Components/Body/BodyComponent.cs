@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Content.Server.Commands.Observer;
 using Content.Shared.GameObjects.Components.Body;
@@ -12,6 +12,7 @@ using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Maths;
 using Robust.Shared.Players;
 
 namespace Content.Server.GameObjects.Components.Body
@@ -78,7 +79,7 @@ namespace Content.Server.GameObjects.Components.Body
             }
         }
 
-        void IRelayMoveInput.MoveInputPressed(ICommonSession session)
+        void IRelayMoveInput.MoveInputPressed(ICommonSession session, Direction dir)
         {
             if (Owner.TryGetComponent(out IMobStateComponent? mobState) &&
                 mobState.IsDead())
