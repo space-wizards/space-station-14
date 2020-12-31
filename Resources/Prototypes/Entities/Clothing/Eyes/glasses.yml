@@ -46,7 +46,6 @@
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/gar.rsi
     HeldPrefix: super
-    ClothingPrefix: super
 
 - type: entity
   parent: ClothingEyesBase
