@@ -1,10 +1,7 @@
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Jetpack;
+using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -12,6 +9,26 @@ namespace Content.Server.GameObjects.EntitySystems
     {
         private float _timer = 0f;
         private const float Interval = 0.5f;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            SubscribeLocalEvent<MoveEvent>(MoveEventHandler);
+        }
+
+        private void MoveEventHandler(MoveEvent moveEvent)
+        {
+            // If the jetpack is not equipped it does not matter to us
+            if (!moveEvent.Sender.TryGetComponent<InventoryComponent>(out var inventoryComponent))
+                return;
+            foreach (var ent in inventoryComponent.GetAllHeldItems())
+            {
+                if (ent.TryGetComponent<JetpackComponent>(out var jetpackComponent))
+                {
+                    jetpackComponent.HandleMoveEvent(moveEvent);
+                }
+            }
+        }
 
         public override void Update(float frameTime)
         {

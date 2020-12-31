@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Movement;
@@ -56,22 +56,17 @@ namespace Content.Shared.GameObjects.EntitySystems
             physics.EnsureController<MoverController>();
 
             var weightless = transform.Owner.IsWeightless();
-
-            if (weightless)
-            {
-                // No gravity: is our entity touching anything?
-                var touching = IsAroundCollider(transform, mover, physics);
-
-                if (!touching)
-                {
-                    transform.LocalRotation = physics.LinearVelocity.GetDir().ToAngle();
-                    return;
-                }
-            }
-
             // TODO: movement check.
             var (walkDir, sprintDir) = mover.VelocityDir;
             var combined = walkDir + sprintDir;
+
+            if (weightless && !IsAroundCollider(transform, mover, physics))
+            {
+                // No gravity: is our entity touching anything?
+                return;
+            }
+
+            
             if (combined.LengthSquared < 0.001 || !ActionBlockerSystem.CanMove(mover.Owner) && !weightless)
             {
                 if (physics.TryGetController(out MoverController controller))
@@ -88,7 +83,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                         controller.Push(combined, mover.CurrentPushSpeed);
                     }
 
-                    transform.LocalRotation = physics.LinearVelocity.GetDir().ToAngle();
+                    transform.LocalRotation = combined.ToAngle();
                     return;
                 }
 
@@ -161,7 +156,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             {
                 foreach (var comp in owner.GetAllComponents<IRelayMoveInput>())
                 {
-                    comp.MoveInputPressed(session);
+                    comp.MoveInputPressed(session, dir);
                 }
             }
 
