@@ -11,7 +11,6 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.Atmos;
 using Content.Shared.Atmos;
 using Content.Shared.Maps;
-using Robust.Server.GameObjects.EntitySystems.TileLookup;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.ComponentDependencies;
@@ -21,6 +20,7 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics.Chunks;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
@@ -38,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         [Robust.Shared.IoC.Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
         [Robust.Shared.IoC.Dependency] private IServerEntityManager _serverEntityManager = default!;
 
-        public GridTileLookupSystem GridTileLookupSystem { get; private set; } = default!;
+        public SharedEntityLookupSystem GridTileLookupSystem { get; private set; } = default!;
         internal GasTileOverlaySystem GasTileOverlaySystem { get; private set; } = default!;
         public AtmosphereSystem AtmosphereSystem { get; private set; } = default!;
 
@@ -166,7 +166,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         public override void Initialize()
         {
             base.Initialize();
-            GridTileLookupSystem = EntitySystem.Get<GridTileLookupSystem>();
+            GridTileLookupSystem = EntitySystem.Get<SharedEntityLookupSystem>();
             GasTileOverlaySystem = EntitySystem.Get<GasTileOverlaySystem>();
             AtmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
@@ -806,7 +806,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         protected virtual IEnumerable<AirtightComponent> GetObstructingComponents(Vector2i indices)
         {
-            var gridLookup = EntitySystem.Get<GridTileLookupSystem>();
+            var gridLookup = EntitySystem.Get<SharedEntityLookupSystem>();
 
             foreach (var v in gridLookup.GetEntitiesIntersecting(_gridId, indices))
             {

@@ -10,18 +10,16 @@ using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects.EntitySystems.TileLookup;
 using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Map;
 using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Configuration;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics.Chunks;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameObjects.EntitySystems
@@ -37,7 +35,7 @@ namespace Content.Server.GameObjects.EntitySystems
         private GasReactionPrototype[] _gasReactions = Array.Empty<GasReactionPrototype>();
 
         private SpaceGridAtmosphereComponent _spaceAtmos = default!;
-        private GridTileLookupSystem? _gridTileLookup = null;
+        private SharedEntityLookupSystem? _gridTileLookup = null;
 
         /// <summary>
         ///     List of gas reactions ordered by priority.
@@ -47,7 +45,7 @@ namespace Content.Server.GameObjects.EntitySystems
         private float[] _gasSpecificHeats = new float[Atmospherics.TotalNumberOfGases];
         public float[] GasSpecificHeats => _gasSpecificHeats;
 
-        public GridTileLookupSystem GridTileLookupSystem => _gridTileLookup ??= Get<GridTileLookupSystem>();
+        public SharedEntityLookupSystem GridTileLookupSystem => _gridTileLookup ??= Get<SharedEntityLookupSystem>();
 
         public override void Initialize()
         {

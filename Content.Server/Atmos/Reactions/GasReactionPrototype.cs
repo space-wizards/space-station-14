@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using Content.Server.Interfaces;
 using Content.Shared.Atmos;
-using Robust.Server.GameObjects.EntitySystems.TileLookup;
-using Robust.Shared.GameObjects;
+using Robust.Shared.Physics.Chunks;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using YamlDotNet.RepresentationModel;
@@ -66,7 +65,7 @@ namespace Content.Server.Atmos.Reactions
             serializer.DataField(ref _effects, "effects", new List<IGasReactionEffect>());
         }
 
-        public ReactionResult React(GasMixture mixture, IGasMixtureHolder holder, GridTileLookupSystem gridLookup)
+        public ReactionResult React(GasMixture mixture, IGasMixtureHolder holder, SharedEntityLookupSystem gridLookup)
         {
             var result = ReactionResult.NoReaction;
 

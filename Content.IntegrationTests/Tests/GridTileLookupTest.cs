@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Robust.Server.GameObjects.EntitySystems.TileLookup;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics.Chunks;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -27,7 +27,7 @@ namespace Content.IntegrationTests.Tests
             await server.WaitIdleAsync();
 
             var entityManager = server.ResolveDependency<IEntityManager>();
-            var tileLookup = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<GridTileLookupSystem>();
+            var tileLookup = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<SharedEntityLookupSystem>();
             var mapManager = server.ResolveDependency<IMapManager>();
             var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
 

@@ -4,8 +4,7 @@ using Content.Server.Interfaces;
 using Content.Server.Utility;
 using Content.Shared.Atmos;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects.EntitySystems.TileLookup;
-using Robust.Shared.GameObjects;
+using Robust.Shared.Physics.Chunks;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Atmos.Reactions
@@ -13,7 +12,7 @@ namespace Content.Server.Atmos.Reactions
     [UsedImplicitly]
     public class PhoronFireReaction : IGasReactionEffect
     {
-        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, GridTileLookupSystem gridTileLookup)
+        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, SharedEntityLookupSystem gridTileLookup)
         {
             var energyReleased = 0f;
             var oldHeatCapacity = mixture.HeatCapacity;

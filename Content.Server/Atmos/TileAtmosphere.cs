@@ -12,7 +12,6 @@ using Content.Shared.Audio;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.GameObjects.EntitySystems.TileLookup;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
@@ -22,6 +21,7 @@ using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics.Chunks;
 using Robust.Shared.Random;
 using Robust.Shared.ViewVariables;
 
@@ -32,7 +32,7 @@ namespace Content.Server.Atmos
         [Robust.Shared.IoC.Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Robust.Shared.IoC.Dependency] private readonly IEntityManager _entityManager = default!;
         [Robust.Shared.IoC.Dependency] private readonly IMapManager _mapManager = default!;
-        private readonly GridTileLookupSystem _gridTileLookupSystem = default!;
+        private readonly SharedEntityLookupSystem _gridTileLookupSystem = default!;
 
 
         private static readonly TileAtmosphereComparer Comparer = new();
@@ -123,7 +123,7 @@ namespace Content.Server.Atmos
         {
             IoCManager.InjectDependencies(this);
             _gridAtmosphereComponent = atmosphereComponent;
-            _gridTileLookupSystem = _entityManager.EntitySysManager.GetEntitySystem<GridTileLookupSystem>();
+            _gridTileLookupSystem = _entityManager.EntitySysManager.GetEntitySystem<SharedEntityLookupSystem>();
             GridIndex = gridIndex;
             GridIndices = gridIndices;
             Air = mixture;

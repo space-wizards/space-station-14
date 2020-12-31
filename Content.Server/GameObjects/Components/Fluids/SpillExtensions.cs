@@ -2,13 +2,12 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
-using Content.Shared.GameObjects;
-using Robust.Server.GameObjects.EntitySystems.TileLookup;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Chunks;
 
 namespace Content.Server.GameObjects.Components.Fluids
 {
@@ -127,7 +126,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             return puddle != null;
         }
 
-        public static bool TryGetPuddle(this TileRef tileRef, GridTileLookupSystem? gridTileLookupSystem, [NotNullWhen(true)] out PuddleComponent? puddle)
+        public static bool TryGetPuddle(this TileRef tileRef, SharedEntityLookupSystem? gridTileLookupSystem, [NotNullWhen(true)] out PuddleComponent? puddle)
         {
             foreach (var entity in tileRef.GetEntitiesInTileFast(gridTileLookupSystem))
             {
