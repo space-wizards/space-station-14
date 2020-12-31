@@ -40,8 +40,6 @@
     layers:
       - state: screwdriver-map
       - state: screwdriver-screwybits
-
-
   - type: Item
     sprite: Objects/Tools/screwdriver.rsi
   - type: ItemCooldown
@@ -126,8 +124,12 @@
   - type: Sprite
     sprite: Objects/Tools/multitool.rsi
     state: multitool
-  - type: Item
+  - type: Clothing
+    size: 10
     sprite: Objects/Tools/multitool.rsi
+    QuickEquip: false
+    Slots:
+    - Belt
   - type: Tool
     qualities:
       - Multitool
@@ -144,6 +146,7 @@
       state: drill_screw
     - type: Item
       sprite: Objects/Tools/drill.rsi
+      size: 20
     - type: Tool
       qualities:
         - Screwing
@@ -170,9 +173,13 @@
     delay: 1.0
   - type: Sprite
     sprite: Objects/Tools/rcd.rsi
-    state: rcd
-  - type: Item
+    state: icon
+  - type: Clothing
+    size: 20
     sprite: Objects/Tools/rcd.rsi
+    QuickEquip: false
+    Slots:
+    - Belt
 
 - type: entity
   name: RCD Ammo

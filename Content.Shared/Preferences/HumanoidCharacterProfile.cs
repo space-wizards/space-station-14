@@ -10,11 +10,16 @@ using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Robust.Shared.Localization.Macros;
+using Robust.Shared.Localization;
 
 namespace Content.Shared.Preferences
 {
+    /// <summary>
+    /// Character profile. Looks immutable, but uses non-immutable semantics internally for serialization/code sanity purposes.
+    /// </summary>
     [Serializable, NetSerializable]
-    public class HumanoidCharacterProfile : ICharacterProfile
+    public class HumanoidCharacterProfile : ICharacterProfile, IGenderable
     {
         private readonly Dictionary<string, JobPriority> _jobPriorities;
         private readonly List<string> _antagPreferences;
@@ -26,7 +31,9 @@ namespace Content.Shared.Preferences
             string name,
             int age,
             Sex sex,
+            Gender gender,
             HumanoidCharacterAppearance appearance,
+            ClothingPreference clothing,
             Dictionary<string, JobPriority> jobPriorities,
             PreferenceUnavailableMode preferenceUnavailable,
             List<string> antagPreferences)
@@ -34,21 +41,41 @@ namespace Content.Shared.Preferences
             Name = name;
             Age = age;
             Sex = sex;
+            Gender = gender;
             Appearance = appearance;
+            Clothing = clothing;
             _jobPriorities = jobPriorities;
             PreferenceUnavailable = preferenceUnavailable;
             _antagPreferences = antagPreferences;
+        }
+
+        /// <summary>Copy constructor but with overridable references (to prevent useless copies)</summary>
+        private HumanoidCharacterProfile(
+            HumanoidCharacterProfile other,
+            Dictionary<string, JobPriority> jobPriorities,
+            List<string> antagPreferences)
+            : this(other.Name, other.Age, other.Sex, other.Gender, other.Appearance, other.Clothing,
+                jobPriorities, other.PreferenceUnavailable, antagPreferences)
+        {
+        }
+
+        /// <summary>Copy constructor</summary>
+        private HumanoidCharacterProfile(HumanoidCharacterProfile other)
+            : this(other, new Dictionary<string, JobPriority>(other.JobPriorities), new List<string>(other.AntagPreferences))
+        {
         }
 
         public HumanoidCharacterProfile(
             string name,
             int age,
             Sex sex,
+            Gender gender,
             HumanoidCharacterAppearance appearance,
+            ClothingPreference clothing,
             IReadOnlyDictionary<string, JobPriority> jobPriorities,
             PreferenceUnavailableMode preferenceUnavailable,
             IReadOnlyList<string> antagPreferences)
-            : this(name, age, sex, appearance, new Dictionary<string, JobPriority>(jobPriorities),
+            : this(name, age, sex, gender, appearance, clothing, new Dictionary<string, JobPriority>(jobPriorities),
                 preferenceUnavailable, new List<string>(antagPreferences))
         {
         }
@@ -62,6 +89,7 @@ namespace Content.Shared.Preferences
         {
             var random = IoCManager.Resolve<IRobustRandom>();
             var sex = random.Prob(0.5f) ? Sex.Male : Sex.Female;
+            var gender = sex == Sex.Male ? Gender.Male : Gender.Female;
 
             var firstName = random.Pick(sex == Sex.Male
                 ? Names.MaleFirstNames
@@ -70,52 +98,57 @@ namespace Content.Shared.Preferences
             var name = $"{firstName} {lastName}";
             var age = random.Next(MinimumAge, MaximumAge);
 
-            return new HumanoidCharacterProfile(name, age, sex, HumanoidCharacterAppearance.Random(sex),
+            return new HumanoidCharacterProfile(name, age, sex, gender, HumanoidCharacterAppearance.Random(sex), ClothingPreference.Jumpsuit,
                 new Dictionary<string, JobPriority>
                 {
                     {SharedGameTicker.OverflowJob, JobPriority.High}
                 }, PreferenceUnavailableMode.StayInLobby, new List<string>());
         }
 
-        public string Name { get; }
-        public int Age { get; }
-        public Sex Sex { get; }
+        public string Name { get; private set; }
+        public int Age { get; private set; }
+        public Sex Sex { get; private set; }
+        public Gender Gender { get; private set; }
         public ICharacterAppearance CharacterAppearance => Appearance;
-        public HumanoidCharacterAppearance Appearance { get; }
+        public HumanoidCharacterAppearance Appearance { get; private set; }
+        public ClothingPreference Clothing { get; private set; }
         public IReadOnlyDictionary<string, JobPriority> JobPriorities => _jobPriorities;
         public IReadOnlyList<string> AntagPreferences => _antagPreferences;
-        public PreferenceUnavailableMode PreferenceUnavailable { get; }
+        public PreferenceUnavailableMode PreferenceUnavailable { get; private set; }
 
         public HumanoidCharacterProfile WithName(string name)
         {
-            return new(name, Age, Sex, Appearance, _jobPriorities, PreferenceUnavailable, _antagPreferences);
+            return new(this) { Name = name };
         }
 
         public HumanoidCharacterProfile WithAge(int age)
         {
-            return new(Name, Math.Clamp(age, MinimumAge, MaximumAge), Sex, Appearance, _jobPriorities, PreferenceUnavailable, _antagPreferences);
+            return new(this) { Age = age };
         }
 
         public HumanoidCharacterProfile WithSex(Sex sex)
         {
-            return new(Name, Age, sex, Appearance, _jobPriorities, PreferenceUnavailable, _antagPreferences);
+            return new(this) { Sex = sex };
+        }
+
+        public HumanoidCharacterProfile WithGender(Gender gender)
+        {
+            return new(this) { Gender = gender };
         }
 
         public HumanoidCharacterProfile WithCharacterAppearance(HumanoidCharacterAppearance appearance)
         {
-            return new(Name, Age, Sex, appearance, _jobPriorities, PreferenceUnavailable, _antagPreferences);
+            return new(this) { Appearance = appearance };
+        }
+
+        public HumanoidCharacterProfile WithClothingPreference(ClothingPreference clothing)
+        {
+            return new(this) { Clothing = clothing };
         }
 
         public HumanoidCharacterProfile WithJobPriorities(IEnumerable<KeyValuePair<string, JobPriority>> jobPriorities)
         {
-            return new(
-                Name,
-                Age,
-                Sex,
-                Appearance,
-                new Dictionary<string, JobPriority>(jobPriorities),
-                PreferenceUnavailable,
-                _antagPreferences);
+            return new(this, new Dictionary<string, JobPriority>(jobPriorities), _antagPreferences);
         }
 
         public HumanoidCharacterProfile WithJobPriority(string jobId, JobPriority priority)
@@ -129,25 +162,17 @@ namespace Content.Shared.Preferences
             {
                 dictionary[jobId] = priority;
             }
-
-            return new HumanoidCharacterProfile(Name, Age, Sex, Appearance, dictionary, PreferenceUnavailable, _antagPreferences);
+            return new(this, dictionary, _antagPreferences);
         }
 
         public HumanoidCharacterProfile WithPreferenceUnavailable(PreferenceUnavailableMode mode)
         {
-            return new(Name, Age, Sex, Appearance, _jobPriorities, mode, _antagPreferences);
+            return new(this) { PreferenceUnavailable = mode };
         }
 
         public HumanoidCharacterProfile WithAntagPreferences(IEnumerable<string> antagPreferences)
         {
-            return new(
-                Name,
-                Age,
-                Sex,
-                Appearance,
-                _jobPriorities,
-                PreferenceUnavailable,
-                new List<string>(antagPreferences));
+            return new(this, _jobPriorities, new List<string>(antagPreferences));
         }
 
         public HumanoidCharacterProfile WithAntagPreference(string antagId, bool pref)
@@ -167,7 +192,7 @@ namespace Content.Shared.Preferences
                     list.Remove(antagId);
                 }
             }
-            return new HumanoidCharacterProfile(Name, Age, Sex, Appearance, _jobPriorities, PreferenceUnavailable, list);
+            return new(this, _jobPriorities, list);
         }
 
         /// <summary>
@@ -183,6 +208,14 @@ namespace Content.Shared.Preferences
                 Sex.Male => Sex.Male,
                 Sex.Female => Sex.Female,
                 _ => Sex.Male // Invalid enum values.
+            };
+            var gender = profile.Gender switch
+            {
+                Gender.Epicene => Gender.Epicene,
+                Gender.Female => Gender.Female,
+                Gender.Male => Gender.Male,
+                Gender.Neuter => Gender.Neuter,
+                _ => Gender.Epicene // Invalid enum values.
             };
 
             string name;
@@ -214,6 +247,13 @@ namespace Content.Shared.Preferences
                 _ => PreferenceUnavailableMode.StayInLobby // Invalid enum values.
             };
 
+            var clothing = profile.Clothing switch
+            {
+                ClothingPreference.Jumpsuit => ClothingPreference.Jumpsuit,
+                ClothingPreference.Jumpskirt => ClothingPreference.Jumpskirt,
+                _ => ClothingPreference.Jumpsuit // Invalid enum values.
+            };
+
             var priorities = new Dictionary<string, JobPriority>(profile.JobPriorities
                 .Where(p => prototypeManager.HasIndex<JobPrototype>(p.Key) && p.Value switch
                 {
@@ -228,11 +268,11 @@ namespace Content.Shared.Preferences
                 .Where(prototypeManager.HasIndex<AntagPrototype>)
                 .ToList();
 
-            return new HumanoidCharacterProfile(name, age, sex, appearance, priorities, prefsUnavailableMode, antags);
+            return new HumanoidCharacterProfile(name, age, sex, gender, appearance, clothing, priorities, prefsUnavailableMode, antags);
         }
 
         public string Summary =>
-            $"{Name}, {Age} years old human. Their gender is {Sex.ToString().ToLower()}.";
+            Loc.GetString("{0}, {1} years old human. {2:Their} pronouns are {2:they}/{2:them}.", Name, Age, this);
 
         public bool MemberwiseEquals(ICharacterProfile maybeOther)
         {
@@ -240,7 +280,9 @@ namespace Content.Shared.Preferences
             if (Name != other.Name) return false;
             if (Age != other.Age) return false;
             if (Sex != other.Sex) return false;
+            if (Gender != other.Gender) return false;
             if (PreferenceUnavailable != other.PreferenceUnavailable) return false;
+            if (Clothing != other.Clothing) return false;
             if (!_jobPriorities.SequenceEqual(other._jobPriorities)) return false;
             if (!_antagPreferences.SequenceEqual(other._antagPreferences)) return false;
             return Appearance.MemberwiseEquals(other.Appearance);
@@ -254,13 +296,18 @@ namespace Content.Shared.Preferences
         public override int GetHashCode()
         {
             return HashCode.Combine(
-                Name,
-                Age,
-                Sex,
+                HashCode.Combine(
+                    Name,
+                    Age,
+                    Sex,
+                    Gender,
+                    Appearance,
+                    Clothing
+                ),
                 PreferenceUnavailable,
                 _jobPriorities,
-                _antagPreferences,
-                Appearance);
+                _antagPreferences
+                );
         }
     }
 }

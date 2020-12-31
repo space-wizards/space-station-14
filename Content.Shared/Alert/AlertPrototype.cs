@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using Content.Shared.Interfaces;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -28,7 +29,7 @@ namespace Content.Shared.Alert
         /// to get the correct icon path for a particular severity level.
         /// </summary>
         [ViewVariables]
-        public string IconPath { get; private set; }
+        public SpriteSpecifier Icon { get; private set; }
 
         /// <summary>
         /// Name to show in tooltip window. Accepts formatting.
@@ -59,6 +60,7 @@ namespace Content.Shared.Alert
         /// -1 (no effect) unless MaxSeverity is specified. Defaults to 1. Minimum severity level supported by this state.
         /// </summary>
         public short MinSeverity => MaxSeverity == -1 ? (short) -1 : _minSeverity;
+
         private short _minSeverity;
 
         /// <summary>
@@ -87,7 +89,7 @@ namespace Content.Shared.Alert
         {
             var serializer = YamlObjectSerializer.NewReader(mapping);
 
-            serializer.DataField(this, x => x.IconPath, "icon", string.Empty);
+            serializer.DataField(this, x => x.Icon, "icon", SpriteSpecifier.Invalid);
             serializer.DataField(this, x => x.MaxSeverity, "maxSeverity", (short) -1);
             serializer.DataField(ref _minSeverity, "minSeverity", (short) 1);
 
@@ -106,6 +108,7 @@ namespace Content.Shared.Alert
             {
                 Category = alertCategory;
             }
+
             AlertKey = new AlertKey(AlertType, Category);
 
             HasOnClick = serializer.TryReadDataField("onClick", out string _);
@@ -116,40 +119,45 @@ namespace Content.Shared.Alert
 
         /// <param name="severity">severity level, if supported by this alert</param>
         /// <returns>the icon path to the texture for the provided severity level</returns>
-        public string GetIconPath(short? severity = null)
+        public SpriteSpecifier GetIcon(short? severity = null)
         {
             if (!SupportsSeverity && severity != null)
             {
-                Logger.WarningS("alert", "attempted to get icon path for severity level for alert {0}, but" +
-                                          " this alert does not support severity levels", AlertType);
+                throw new InvalidOperationException("This alert does not support severity");
             }
-            if (!SupportsSeverity) return IconPath;
+
+            if (!SupportsSeverity)
+                return Icon;
+
             if (severity == null)
             {
-                Logger.WarningS("alert", "attempted to get icon path without severity level for alert {0}," +
-                                " but this alert requires a severity level. Using lowest" +
-                                " valid severity level instead...", AlertType);
-                severity = MinSeverity;
+                throw new ArgumentException("No severity specified but this alert has severity.", nameof(severity));
             }
 
             if (severity < MinSeverity)
             {
-                Logger.WarningS("alert", "attempted to get icon path with severity level {0} for alert {1}," +
-                                          " but the minimum severity level for this alert is {2}. Using" +
-                                          " lowest valid severity level instead...", severity, AlertType, MinSeverity);
-                severity = MinSeverity;
-            }
-            if (severity > MaxSeverity)
-            {
-                Logger.WarningS("alert", "attempted to get icon path with severity level {0} for alert {1}," +
-                                          " but the max severity level for this alert is {2}. Using" +
-                                          " highest valid severity level instead...", severity, AlertType, MaxSeverity);
-                severity = MaxSeverity;
+                throw new ArgumentOutOfRangeException(nameof(severity), "Severity below minimum severity.");
             }
 
-            // split and add the severity number to the path
-            var ext = IconPath.LastIndexOf('.');
-            return IconPath.Substring(0, ext) + severity + IconPath.Substring(ext, IconPath.Length - ext);
+            if (severity > MaxSeverity)
+            {
+                throw new ArgumentOutOfRangeException(nameof(severity), "Severity above maximum severity.");
+            }
+
+            var severityText = severity.Value.ToString(CultureInfo.InvariantCulture);
+            switch (Icon)
+            {
+                case SpriteSpecifier.EntityPrototype entityPrototype:
+                    throw new InvalidOperationException("Severity not supported for EntityPrototype icon");
+                case SpriteSpecifier.Rsi rsi:
+                    return new SpriteSpecifier.Rsi(rsi.RsiPath, rsi.RsiState + severityText);
+                case SpriteSpecifier.Texture texture:
+                    var newName = texture.TexturePath.FilenameWithoutExtension + severityText;
+                    return new SpriteSpecifier.Texture(
+                        texture.TexturePath.WithName(newName + "." + texture.TexturePath.Extension));
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(Icon));
+            }
         }
     }
 
@@ -180,6 +188,7 @@ namespace Content.Shared.Alert
             {
                 return other.AlertCategory == AlertCategory;
             }
+
             return AlertType == other.AlertType && AlertCategory == other.AlertCategory;
         }
 

@@ -32,12 +32,16 @@
   - type: Destructible
     thresholds:
       30:
-        sound: /Audio/Effects/metalbreak.ogg
-        spawn:
-          SteelSheet1:
-            min: 1
-            max: 1
-        acts: ["Destruction"]
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+        - !type:PlaySoundBehavior
+          sound: /Audio/Effects/metalbreak.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SteelSheet1:
+              min: 1
+              max: 1
 
 - type: entity
   id: Shelf
@@ -73,9 +77,13 @@
   - type: Destructible
     thresholds:
       30:
-        sound: /Audio/Effects/metalbreak.ogg
-        spawn:
-          SteelSheet1:
-            min: 1
-            max: 1
-        acts: ["Destruction"]
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+        - !type:PlaySoundBehavior
+          sound: /Audio/Effects/metalbreak.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SteelSheet1:
+              min: 1
+              max: 1

@@ -32,7 +32,9 @@
   - type: Destructible
     thresholds:
       100:
-        acts: ["Breakage"]
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Breakage"]
   - type: Anchorable
 
 - type: entity

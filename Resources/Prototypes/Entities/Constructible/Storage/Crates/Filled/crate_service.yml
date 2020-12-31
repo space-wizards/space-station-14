@@ -28,6 +28,6 @@
   - type: StorageFill
     contents:
       - name: BoxLighttube
-        amount: 5
+        amount: 1
       - name: BoxLightbulb
-        amount: 5
+        amount: 1

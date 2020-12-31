@@ -6,6 +6,7 @@ using Content.Shared;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -140,13 +141,15 @@ namespace Content.Client.UserInterface
 
             inventory.ClearAllSlotVisuals();
 
-            foreach (var (slot, itemType) in gear.Equipment)
+            foreach (var slot in AllSlots)
             {
-                var item = entityMan.SpawnEntity(itemType, MapCoordinates.Nullspace);
-
-                inventory.SetSlotVisuals(slot, item);
-
-                item.Delete();
+                var itemType = gear.GetGear(slot, profile);
+                if (itemType != "")
+                {
+                    var item = entityMan.SpawnEntity(itemType, MapCoordinates.Nullspace);
+                    inventory.SetSlotVisuals(slot, item);
+                    item.Delete();
+                }
             }
         }
     }

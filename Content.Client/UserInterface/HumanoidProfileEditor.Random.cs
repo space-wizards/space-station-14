@@ -17,6 +17,8 @@ namespace Content.Client.UserInterface
         {
             Profile = HumanoidCharacterProfile.Random();
             UpdateSexControls();
+            UpdateGenderControls();
+            UpdateClothingControls();
             UpdateAgeEdit();
             UpdateNameEdit();
             UpdateHairPickers();

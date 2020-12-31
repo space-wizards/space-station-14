@@ -28,7 +28,9 @@
   - type: Destructible
     thresholds:
       50:
-        acts: ["Destruction"]
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
   - type: Sprite
     sprite: Constructible/Hydroponics/hydro_tools.rsi
     state: soil

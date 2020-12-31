@@ -1,13 +1,13 @@
 ﻿using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Server.GameObjects.Components.Destructible
+namespace Content.Server.GameObjects.Components.Destructible.Thresholds
 {
     [Flags, FlagsFor(typeof(ActsFlags))]
     [Serializable]
     public enum ThresholdActs
     {
-        Invalid = 0,
+        None = 0,
         Breakage,
         Destruction
     }

@@ -1,10 +1,9 @@
 ﻿#nullable enable
 using System;
-using Content.Client.Utility;
 using Content.Shared.Alert;
-using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Client.Utility;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -41,23 +40,20 @@ namespace Content.Client.UserInterface.Controls
         private readonly IGameTiming _gameTiming;
         private readonly TextureRect _icon;
         private readonly CooldownGraphic _cooldownGraphic;
-        private readonly IResourceCache _resourceCache;
 
         /// <summary>
         /// Creates an alert control reflecting the indicated alert + state
         /// </summary>
         /// <param name="alert">alert to display</param>
         /// <param name="severity">severity of alert, null if alert doesn't have severity levels</param>
-        /// <param name="resourceCache">resourceCache to use to load alert icon textures</param>
-        public AlertControl(AlertPrototype alert, short? severity, IResourceCache resourceCache)
+        public AlertControl(AlertPrototype alert, short? severity)
         {
             _gameTiming = IoCManager.Resolve<IGameTiming>();
             TooltipDelay = CustomTooltipDelay;
             TooltipSupplier = SupplyTooltip;
-            _resourceCache = resourceCache;
             Alert = alert;
             _severity = severity;
-            var texture = _resourceCache.GetTexture(alert.GetIconPath(_severity));
+            var texture = alert.GetIcon(_severity).Frame0();
             _icon = new TextureRect
             {
                 TextureScale = (2, 2),
@@ -83,7 +79,7 @@ namespace Content.Client.UserInterface.Controls
             if (_severity != severity)
             {
                 _severity = severity;
-                _icon.Texture = _resourceCache.GetTexture(Alert.GetIconPath(_severity));
+                _icon.Texture = Alert.GetIcon(_severity).Frame0();
             }
         }
 

@@ -19,7 +19,9 @@
   - type: Destructible
     thresholds:
       100:
-        acts: [ "Destruction" ]
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
   - type: Occluder
     sizeX: 32
     sizeY: 32

@@ -16,7 +16,9 @@
   - type: Destructible
     thresholds:
       100:
-        acts: ["Destruction"]
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
   - type: ShuttleController
   - type: Strap
     position: Stand

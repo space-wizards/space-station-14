@@ -20,3 +20,5 @@
     idcard: JanitorPDA
     ears: ClothingHeadsetService
     belt: ClothingBeltJanitorFilled
+  innerclothingskirt: ClothingUniformJumpskirtJanitor
+

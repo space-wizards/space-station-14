@@ -1,31 +1,30 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using Lidgren.Network;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 
-namespace Content.Shared.StationEvents
+namespace Content.Shared.Network.NetMessages
 {
-    public class SharedStationEvent
-    {
-        public class MsgGetStationEvents : NetMessage
+        public class MsgStationEvents : NetMessage
         {
             #region REQUIRED
 
             public const MsgGroups GROUP = MsgGroups.Command;
-            public const string NAME = nameof(MsgGetStationEvents);
-            public MsgGetStationEvents(INetChannel channel) : base(NAME, GROUP) { }
+            public const string NAME = nameof(MsgStationEvents);
+            public MsgStationEvents(INetChannel channel) : base(NAME, GROUP) { }
 
             #endregion
-            public List<string> Events;
+
+            public string[] Events;
+
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
                 var serializer = IoCManager.Resolve<IRobustSerializer>();
                 var length = buffer.ReadVariableInt32();
                 using var stream = buffer.ReadAlignedMemory(length);
-                Events = serializer.Deserialize<List<string>>(stream);
+                serializer.DeserializeDirect(stream, out Events);
             }
 
             public override void WriteToBuffer(NetOutgoingMessage buffer)
@@ -33,12 +32,11 @@ namespace Content.Shared.StationEvents
                 var serializer = IoCManager.Resolve<IRobustSerializer>();
                 using (var stream = new MemoryStream())
                 {
-                    serializer.Serialize(stream, Events);
+                    serializer.SerializeDirect(stream, Events);
                     buffer.WriteVariableInt32((int)stream.Length);
                     stream.TryGetBuffer(out var segment);
                     buffer.Write(segment);
                 }
             }
         }
-    }
 }

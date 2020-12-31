@@ -40,12 +40,16 @@
   - type: Destructible
     thresholds:
       15:
-        sound: /Audio/Effects/metalbreak.ogg
-        spawn:
-          SteelSheet1:
-            min: 1
-            max: 1
-        acts: ["Destruction"]
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+        - !type:PlaySoundBehavior
+          sound: /Audio/Effects/metalbreak.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SteelSheet1:
+              min: 1
+              max: 1
 
 - type: entity
   id: TableFrame
@@ -62,12 +66,16 @@
   - type: Destructible
     thresholds:
       1:
-        sound: /Audio/Effects/metalbreak.ogg
-        spawn:
-          SteelSheet1:
-            min: 1
-            max: 1
-        acts: ["Destruction"]
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+        - !type:PlaySoundBehavior
+          sound: /Audio/Effects/metalbreak.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SteelSheet1:
+              min: 1
+              max: 1
   - type: Construction
     graph: Tables
     node: TableFrame
@@ -87,12 +95,16 @@
   - type: Destructible
     thresholds:
       1:
-        sound: /Audio/Effects/metalbreak.ogg
-        spawn:
-          SteelSheet1:
-            min: 1
-            max: 1
-        acts: ["Destruction"]
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+        - !type:PlaySoundBehavior
+          sound: /Audio/Effects/metalbreak.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SteelSheet1:
+              min: 1
+              max: 1
 
 - type: entity
   id: TableMetal
@@ -109,12 +121,16 @@
   - type: Destructible
     thresholds:
       15:
-        sound: /Audio/Effects/metalbreak.ogg
-        spawn:
-          SteelSheet1:
-            min: 1
-            max: 1
-        acts: ["Destruction"]
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+        - !type:PlaySoundBehavior
+          sound: /Audio/Effects/metalbreak.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SteelSheet1:
+              min: 1
+              max: 1
   - type: Construction
     graph: Tables
     node: MetalTable
@@ -134,12 +150,16 @@
   - type: Destructible
     thresholds:
       75:
-        sound: /Audio/Effects/metalbreak.ogg
-        spawn:
-          SteelSheet1:
-            min: 1
-            max: 1
-        acts: ["Destruction"]
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+        - !type:PlaySoundBehavior
+          sound: /Audio/Effects/metalbreak.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SteelSheet1:
+              min: 1
+              max: 1
   - type: Construction
     graph: Tables
     node: ReinforcedTable
@@ -159,12 +179,16 @@
   - type: Destructible
     thresholds:
       5:
-        sound: /Audio/Effects/glass_break2.ogg
-        spawn:
-          ShardGlass:
-            min: 1
-            max: 1
-        acts: ["Destruction"]
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+        - !type:PlaySoundBehavior
+          sound: /Audio/Effects/glass_break2.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            ShardGlass:
+              min: 1
+              max: 1
   - type: Construction
     graph: Tables
     node: GlassTable
@@ -184,12 +208,16 @@
   - type: Destructible
     thresholds:
       20:
-        sound: /Audio/Effects/glass_break2.ogg
-        spawn:
-          ShardGlass:
-            min: 1
-            max: 1
-        acts: ["Destruction"]
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+        - !type:PlaySoundBehavior
+          sound: /Audio/Effects/glass_break2.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            ShardGlass:
+              min: 1
+              max: 1
   - type: Construction
     graph: Tables
     node: RGlassTable
@@ -209,12 +237,16 @@
   - type: Destructible
     thresholds:
       15:
-        sound: /Audio/Effects/woodhit.ogg
-        spawn:
-          WoodPlank:
-            min: 1
-            max: 1
-        acts: ["Destruction"]
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+        - !type:PlaySoundBehavior
+          sound: /Audio/Effects/woodhit.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            WoodPlank:
+              min: 1
+              max: 1
   - type: Construction
     graph: Tables
     node: WoodTable
@@ -234,12 +266,16 @@
   - type: Destructible
     thresholds:
       15:
-        sound: /Audio/Effects/woodhit.ogg
-        spawn:
-          WoodPlank:
-            min: 1
-            max: 1
-        acts: ["Destruction"]
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+        - !type:PlaySoundBehavior
+          sound: /Audio/Effects/woodhit.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            WoodPlank:
+              min: 1
+              max: 1
   - type: Construction
     graph: Tables
     node: PokerTable
@@ -259,8 +295,11 @@
   - type: Destructible
     thresholds:
       50:
-        sound: /Audio/Effects/picaxe2.ogg
-        acts: ["Destruction"]
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+        - !type:PlaySoundBehavior
+          sound: /Audio/Effects/picaxe2.ogg
 
 - type: entity
   id: TableDebug
@@ -277,4 +316,6 @@
   - type: Destructible
     thresholds:
       1:
-        acts: ["Destruction"]
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]

@@ -5,7 +5,9 @@ using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Body.Behavior;
 using Content.Server.GameObjects.Components.Body.Circulatory;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Temperature;
+using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry;
 using Content.Shared.Damage;
@@ -389,6 +391,11 @@ namespace Content.Server.GameObjects.Components.Metabolism
         {
             Suffocating = true;
 
+            if (Owner.TryGetComponent(out ServerAlertsComponent? alertsComponent))
+            {
+                alertsComponent.ShowAlert(AlertType.LowOxygen);
+            }
+
             if (!Owner.TryGetComponent(out IDamageableComponent? damageable))
             {
                 return;
@@ -400,6 +407,11 @@ namespace Content.Server.GameObjects.Components.Metabolism
         private void StopSuffocation()
         {
             Suffocating = false;
+
+            if (Owner.TryGetComponent(out ServerAlertsComponent? alertsComponent))
+            {
+                alertsComponent.ClearAlert(AlertType.LowOxygen);
+            }
         }
 
         public GasMixture Clean(BloodstreamComponent bloodstream)
