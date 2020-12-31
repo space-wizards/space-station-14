@@ -130,4 +130,3 @@
       shader: unshaded
   - type: Clothing
     sprite: Clothing/Back/Backpacks/holding.rsi
-    HeldPrefix: holding
