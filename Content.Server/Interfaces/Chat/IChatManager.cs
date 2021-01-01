@@ -16,7 +16,8 @@ namespace Content.Server.Interfaces.Chat
         ///     Station announcement to every player
         /// </summary>
         /// <param name="message"></param>
-        void DispatchStationAnnouncement(string message);
+        /// <param name="sender"></param>
+        void DispatchStationAnnouncement(string message, string sender = "CentComm");
 
         void DispatchServerMessage(IPlayerSession player, string message);
 

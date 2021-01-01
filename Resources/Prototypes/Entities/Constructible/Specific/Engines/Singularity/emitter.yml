@@ -38,6 +38,7 @@
   - type: PowerConsumer
     voltage: Medium
   - type: NodeContainer
+    examinable: true
     nodes:
     - !type:AdjacentNode
       nodeGroupID: MVPower
