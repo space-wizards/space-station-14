@@ -1,6 +1,8 @@
 ﻿#nullable enable
+using Content.Server.Commands.Observer;
 using Content.Server.GameObjects.Components.Medical;
 using Content.Server.GameObjects.Components.Observer;
+using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs;
 using Content.Server.Utility;
@@ -29,7 +31,6 @@ namespace Content.Server.GameObjects.Components.Mobs
     [RegisterComponent]
     public class MindComponent : Component, IExamine
     {
-        private bool _showExamineInfo;
 
         /// <inheritdoc />
         public override string Name => "Mind";
@@ -50,11 +51,13 @@ namespace Content.Server.GameObjects.Components.Mobs
         ///     Whether examining should show information about the mind or not.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool ShowExamineInfo
-        {
-            get => _showExamineInfo;
-            set => _showExamineInfo = value;
-        }
+        public bool ShowExamineInfo { get; set; }
+
+        /// <summary>
+        ///     Whether the mind will be put on a ghost after this component is shutdown.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool GhostOnShutdown { get; set; }
 
         [ViewVariables]
         private BoundUserInterface? UserInterface =>
@@ -122,6 +125,10 @@ namespace Content.Server.GameObjects.Components.Mobs
         {
             base.Shutdown();
 
+            // Let's not create ghosts if not in the middle of the round.
+            if (IoCManager.Resolve<IGameTicker>().RunLevel != GameRunLevel.InRound)
+                return;
+
             if (HasMind)
             {
                 var visiting = Mind?.VisitingEntity;
@@ -134,7 +141,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
                     Mind!.TransferTo(visiting);
                 }
-                else
+                else if(GhostOnShutdown)
                 {
                     var spawnPosition = Owner.Transform.Coordinates;
                     // Use a regular timer here because the entity has probably been deleted.
@@ -166,7 +173,8 @@ namespace Content.Server.GameObjects.Components.Mobs
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _showExamineInfo, "show_examine_info", false);
+            serializer.DataField(this, x => x.ShowExamineInfo, "showExamineInfo", false);
+            serializer.DataField(this, x => x.GhostOnShutdown, "ghostOnShutdown", true);
         }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
