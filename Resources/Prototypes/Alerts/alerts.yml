@@ -39,7 +39,7 @@
   icon: /Textures/Interface/Alerts/Pressure/highpressure.png
   maxSeverity: 2
   name: "[color=red]High Pressure[/color]"
-  description: "The air around you is [color=red]hazardously thick[/color]. A [color=green]fire suit[/color] would be enough protect you."
+  description: "The air around you is [color=red]hazardously thick[/color]. A [color=green]pressurized suit[/color] would be enough protect you"
 
 - type: alert
   alertType: Fire
@@ -68,12 +68,14 @@
   alertType: Weightless
   icon: /Textures/Interface/Alerts/Weightless/weightless.png
   name: Weightless
+  description: 
   description: >-
-    Gravity has ceased affecting you, and you're floating around aimlessly. Find something sturdy to hold onto, or expand force in a direction opposite of you. Magnetic boots or jetpacks will help you move with more control
+    Gravity has ceased affecting you, and you're floating around aimlessly. Find something sturdy to hold onto, or throw or shoot something in a direction opposite of you. 
+    Mag-boots or jetpacks would help you move with more control
 
 - type: alert
   alertType: Stun
-  icon: /Textures/Interface/Alerts/Stun/Stunned.png #Should probably add a proper Icon
+  icon: /Textures/Objects/Weapons/Melee/stunbaton.rsi/stunbaton_off.png #Should probably draw a proper icon
   name: "[color=yellow]Stunned[/color]"
   description: "You're [color=yellow]stunned[/color]! Something is impairing your ability to move or interact with objects"
 
