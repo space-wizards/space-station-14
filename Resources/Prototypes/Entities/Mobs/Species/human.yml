@@ -200,6 +200,8 @@
   - type: Puller
   - type: Butcherable
     meat: FoodMeat
+  - type: Recyclable
+    safe: false
 
 - type: entity
   save: false
