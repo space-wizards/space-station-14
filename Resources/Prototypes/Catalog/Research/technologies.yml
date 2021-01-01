@@ -1,4 +1,4 @@
-﻿# In order to make this list somewhat organized, please place new technologies underneath their overarching "base" technology.
+# In order to make this list somewhat organized, please place new technologies underneath their overarching "base" technology.
 # The technology tree is using this layout - https://tgstation13.org/wiki//images/thumb/f/f4/ResearchTree.png/800px-ResearchTree.png
 
 # Base Technology
@@ -20,6 +20,46 @@
   requiredPoints: 1000
   requiredTechnologies:
     - BasicResearch
+
+- type: technology
+  name: advanced botany
+  id: AdvancedBotany
+  description: When you're tired of being a glorified space farmer...
+  icon: Objects/Specific/Hydroponics/potato.rsi
+  requiredPoints: 1500
+  requiredTechnologies:
+    - BiologicalTechnology
+
+- type: technology
+  name: "advanced surgery"
+  id: AdvancedSugery
+  description: An improved understanding in the noble art of carving people up.
+  icon: Objects/Specific/Medical/surgery_tools.rsi
+  requiredPoints: 1500
+  requiredTechnologies:
+    - BiologicalTechnology
+
+# Chemistry Technology Tree
+
+type: technology
+  name: "chemistry technology"
+  id: ChemistryTechnology
+  description: A crash course in chemistry.
+  icon: Objects/Specific/Chemistry/beakers.rsi
+  requiredPoints: 1000
+  requiredTechnologies:
+    - BasicResearch
+
+# Security Technology Tree
+
+- type: technology
+  name: "security technology"
+  id: SecurityTechnology
+  description: Study new and exiting ways in making the clown more miserable.
+  icon: Objects/Weapons/Melee/stunbaton.rsi
+  requiredPoints: 1000
+  requiredTechnologies:
+    -BasicResearch
 
 # Data Theory Technology Tree
 
