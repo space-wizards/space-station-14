@@ -1,10 +1,11 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.StationEvents;
 using Content.Shared.Atmos;
+using Content.Shared.Roles;
 using Robust.Client.Console;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.Placement;
@@ -45,6 +46,7 @@ namespace Content.Client.UserInterface.AdminMenu
             new SpawnEntitiesCommandButton(),
             new SpawnTilesCommandButton(),
             new StationEventsCommandButton(),
+            new SetOutfitCommandButton()
         };
         private readonly List<CommandButton> _debugButtons = new()
         {
@@ -504,6 +506,48 @@ namespace Content.Client.UserInterface.AdminMenu
             public override void Submit()
             {
                 IoCManager.Resolve<IClientConsole>().ProcessCommand($"events run \"{_eventsDropDown.GetValue()}\"");
+            }
+        }
+
+        private class SetOutfitCommandButton : UICommandButton
+        {
+            public override string Name => "Set Outfit";
+            public override string RequiredCommand => "setoutfit";
+            public override string? SubmitText => "Run";
+            public override List<CommandUIControl> UI => new()
+            {
+                _playersDropdown,
+                _outfitsDropdown
+            };
+
+            private readonly CommandUIDropDown _playersDropdown = new()
+            {
+                Name = "Player",
+                GetData = () => IoCManager.Resolve<IPlayerManager>().Sessions.ToList<object>(),
+                GetDisplayName = (obj) => $"{((IPlayerSession) obj).Name} ({((IPlayerSession) obj).AttachedEntity?.Name})",
+                GetValueFromData = (obj) =>
+                {
+                    var entity = ((IPlayerSession) obj);
+                    if (entity.AttachedEntity != null)
+                        return entity.AttachedEntity.Uid.ToString();
+                    return "";
+                }
+            };
+
+            private readonly CommandUIDropDown _outfitsDropdown = new()
+            {
+                Name = "Outfit",
+                GetData = () =>
+                {
+                    var outfits = IoCManager.Resolve<IPrototypeManager>().EnumeratePrototypes<StartingGearPrototype>().ToList();
+                    return outfits.ToList<object>();
+                },
+                GetDisplayName = (obj) =>  ((StartingGearPrototype) obj).ID,
+                GetValueFromData = (obj) => ((StartingGearPrototype) obj).ID,
+            };
+            public override void Submit()
+            {
+                IoCManager.Resolve<IClientConsole>().ProcessCommand($"setoutfit {_playersDropdown.GetValue()} {_outfitsDropdown.GetValue()}");
             }
         }
 
