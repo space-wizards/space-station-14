@@ -47,7 +47,7 @@ namespace Content.Tests.Shared.Alert
             {
                 alert.GetIcon(severity);
             }
-            catch (ArgumentException e)
+            catch (ArgumentException)
             {
                 Assert.Pass();
             }
