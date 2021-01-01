@@ -17,6 +17,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timers;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -136,7 +137,8 @@ namespace Content.Server.GameObjects.Components.Mobs
                 else
                 {
                     var spawnPosition = Owner.Transform.Coordinates;
-                    Owner.SpawnTimer(0, () =>
+                    // Use a regular timer here because the entity has probably been deleted.
+                    Timer.Spawn(0, () =>
                     {
                         // Async this so that we don't throw if the grid we're on is being deleted.
                         var mapMan = IoCManager.Resolve<IMapManager>();
