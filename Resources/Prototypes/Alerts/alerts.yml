@@ -68,8 +68,7 @@
   alertType: Weightless
   icon: /Textures/Interface/Alerts/Weightless/weightless.png
   name: Weightless
-  description: 
-  description: >-
+  description: >
     Gravity has ceased affecting you, and you're floating around aimlessly. Find something sturdy to hold onto, or throw or shoot something in a direction opposite of you. 
     Mag-boots or jetpacks would help you move with more control
 
