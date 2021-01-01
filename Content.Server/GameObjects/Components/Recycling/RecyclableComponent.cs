@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
@@ -10,7 +11,7 @@ namespace Content.Server.GameObjects.Components.Recycling
         /// <summary>
         ///     The prototype that will be spawned on recycle.
         /// </summary>
-        private string _prototype;
+        private string? _prototype;
 
         /// <summary>
         ///     The amount of things that will be spawned on recycle.
@@ -29,7 +30,7 @@ namespace Content.Server.GameObjects.Components.Recycling
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _prototype, "prototype", string.Empty);
+            serializer.DataField(ref _prototype, "prototype", null);
             serializer.DataField(ref _safe, "safe", true);
             serializer.DataField(ref _amount, "amount", 1);
         }
