@@ -18,6 +18,8 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         void RemoveReceiver(PowerReceiverComponent receiver);
 
+        void UpdateReceiverLoad(int oldLoad, int newLoad);
+
         public IEntity ProviderOwner { get; }
 
         public bool HasApcPower { get; }
@@ -65,6 +67,11 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
             var oldLoad = GetTotalLoad();
             _linkedReceivers.Remove(receiver);
             var newLoad = oldLoad - receiver.Load;
+            Net.UpdatePowerProviderReceivers(this, oldLoad, newLoad);
+        }
+
+        public void UpdateReceiverLoad(int oldLoad, int newLoad)
+        {
             Net.UpdatePowerProviderReceivers(this, oldLoad, newLoad);
         }
 
@@ -145,13 +152,15 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         private class NullPowerProvider : IPowerProvider
         {
-            public void AddReceiver(PowerReceiverComponent receiver) { }
-            public void RemoveReceiver(PowerReceiverComponent receiver) { }
-            public IEntity ProviderOwner => default;
             /// <summary>
             ///     It is important that this returns false, so <see cref="PowerReceiverComponent"/>s with a <see cref="NullPowerProvider"/> have no power.
             /// </summary>
             public bool HasApcPower => false;
+
+            public void AddReceiver(PowerReceiverComponent receiver) { }
+            public void RemoveReceiver(PowerReceiverComponent receiver) { }
+            public void UpdateReceiverLoad(int oldLoad, int newLoad) { }
+            public IEntity ProviderOwner => default;
         }
     }
 }

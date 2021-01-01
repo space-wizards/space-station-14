@@ -182,6 +182,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         private void SetLoad(int newLoad)
         {
+            Provider.UpdateReceiverLoad(Load, newLoad);
             _load = newLoad;
         }
 

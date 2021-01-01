@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -42,7 +43,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         private int TotalReceivers => _providers.SelectMany(provider => provider.LinkedReceivers).Count();
 
         [ViewVariables]
-        private int TotalPowerReceiverLoad { get; set; } = 0;
+        private int TotalPowerReceiverLoad { get => _totalPowerReceiverLoad; set => SetTotalPowerReceiverLoad(value); }
+        private int _totalPowerReceiverLoad = 0;
 
         public static readonly IApcNet NullNet = new NullApcNet();
 
@@ -146,6 +148,13 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             }
         }
 
+        private void SetTotalPowerReceiverLoad(int totalPowerReceiverLoad)
+        {
+            Debug.Assert(totalPowerReceiverLoad >= 0);
+            _totalPowerReceiverLoad = totalPowerReceiverLoad;
+
+        }
+
         #endregion
 
         private class NullApcNet : IApcNet
@@ -154,6 +163,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             ///     It is important that this returns false, so <see cref="PowerProviderComponent"/>s with a <see cref="NullApcNet"/> have no power.
             /// </summary>
             public bool Powered => false;
+
             public void AddApc(ApcComponent apc) { }
             public void AddPowerProvider(PowerProviderComponent provider) { }
             public void RemoveApc(ApcComponent apc) { }
