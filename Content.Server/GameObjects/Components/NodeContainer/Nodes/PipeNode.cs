@@ -105,7 +105,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
                 var ownNeededConnection = pipeDirection;
                 var theirNeededConnection = ownNeededConnection.GetOpposite();
-                if (!_pipeDirection.HasFlag(ownNeededConnection))
+                if (!_pipeDirection.HasDirection(ownNeededConnection))
                 {
                     continue;
                 }
@@ -121,7 +121,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
                     {
                         foreach (var node in container.Nodes)
                         {
-                            if (node is PipeNode pipeNode && pipeNode._pipeDirection.HasFlag(theirNeededConnection))
+                            if (node is PipeNode pipeNode && pipeNode._pipeDirection.HasDirection(theirNeededConnection))
                             {
                                 pipeNodesInDirection.Add(pipeNode);
                             }
