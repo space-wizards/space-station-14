@@ -16,6 +16,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -90,8 +91,6 @@ namespace Content.Server.GameObjects.Components.Singularity
                 Logger.Error($"EmitterComponent {Owner} created with no PowerConsumerComponent");
                 return;
             }
-
-            _collidableComponent.AnchoredChanged += OnAnchoredChanged;
             _powerConsumer.OnReceivedPowerChanged += OnReceivedPowerChanged;
         }
 
@@ -109,6 +108,17 @@ namespace Content.Server.GameObjects.Components.Singularity
             else
             {
                 PowerOn();
+            }
+        }
+
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+            switch (message)
+            {
+                case AnchoredChangedMessage:
+                    OnAnchoredChanged();
+                    break;
             }
         }
 

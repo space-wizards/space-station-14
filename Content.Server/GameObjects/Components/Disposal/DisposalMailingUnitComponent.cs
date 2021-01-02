@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -614,11 +614,6 @@ namespace Content.Server.GameObjects.Components.Disposal
                 Logger.WarningS("VitalComponentMissing", $"Disposal unit {Owner.Uid} is missing an anchorable component");
             }
 
-            if (Owner.TryGetComponent(out IPhysicsComponent? physics))
-            {
-                physics.AnchoredChanged += UpdateVisualState;
-            }
-
             if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
             {
                 receiver.OnPowerStateChanged += PowerStateChanged;
@@ -630,11 +625,6 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public override void OnRemove()
         {
-            if (Owner.TryGetComponent(out IPhysicsComponent? physics))
-            {
-                physics.AnchoredChanged -= UpdateVisualState;
-            }
-
             if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
             {
                 receiver.OnPowerStateChanged -= PowerStateChanged;
@@ -679,6 +669,10 @@ namespace Content.Server.GameObjects.Components.Disposal
 
                     _lastExitAttempt = _gameTiming.CurTime;
                     Remove(msg.Entity);
+                    break;
+
+                case AnchoredChangedMessage:
+                    UpdateVisualState();
                     break;
             }
         }

@@ -79,9 +79,18 @@ namespace Content.Server.GameObjects.Components.Singularity
                 Logger.Error("ContainmentFieldGeneratorComponent created with no CollidableComponent");
                 return;
             }
-            _collidableComponent.AnchoredChanged += OnAnchoredChanged;
         }
 
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+            switch (message)
+            {
+                case AnchoredChangedMessage:
+                    OnAnchoredChanged();
+                    break;
+            }
+        }
 
         private void OnAnchoredChanged()
         {
