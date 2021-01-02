@@ -4,7 +4,7 @@
   description: "Three vests of well-rounded, decently-protective armor. Requires Security access to open."
   icon:
     sprite: Clothing/OuterClothing/Vests/oldarmor.rsi
-    state: armor
+    state: icon
   product: CrateSecurityArmor
   cost: 1500
   category: Security

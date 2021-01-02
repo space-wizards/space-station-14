@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
@@ -32,7 +32,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             }
         }
 
-        private EmergencyLightState _state = EmergencyLightState.Charging;
+        private EmergencyLightState _state = EmergencyLightState.Empty;
 
         [ViewVariables(VVAccess.ReadWrite)]
         private float _wattage;
@@ -139,11 +139,15 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         public override void Initialize()
         {
             base.Initialize();
+        }
 
-            Owner.EnsureComponentWarn(out PowerReceiverComponent receiver);
-
-            receiver.OnPowerStateChanged += UpdateState;
-            State = EmergencyLightState.Charging;
+        public override void OnAdd()
+        {
+            base.OnAdd();
+            if (Owner.TryGetComponent(out PowerReceiverComponent receiver))
+            {
+                receiver.OnPowerStateChanged += UpdateState;
+            }
         }
 
         public override void OnRemove()

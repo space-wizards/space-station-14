@@ -82,7 +82,7 @@ namespace Content.Server.GameObjects.Components.Cargo
                         {
                             if (!Deleted && !Owner.Deleted && _currentState == CargoTelepadState.Teleporting && _teleportQueue.Count > 0)
                             {
-                                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/machines/phasein.ogg", Owner, AudioParams.Default.WithVolume(-8f));
+                                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/phasein.ogg", Owner, AudioParams.Default.WithVolume(-8f));
                                 Owner.EntityManager.SpawnEntity(_teleportQueue[0].Product, Owner.Transform.Coordinates);
                                 _teleportQueue.RemoveAt(0);
                                 if (Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))

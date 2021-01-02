@@ -130,4 +130,5 @@
       shader: unshaded
   - type: Clothing
     sprite: Clothing/Back/Backpacks/holding.rsi
-    HeldPrefix: holding
+  - type: Storage
+    capacity: 10000

@@ -5,7 +5,7 @@
   save: false
   name: monkey
   id: MonkeyMob_Content
-  description: A description.
+  description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
   drawdepth: Mobs
   suffix: AI
   components:
@@ -69,7 +69,7 @@
   name: gorilla
   parent: MonkeyMob_Content
   id: GorillaMob_Content
-  description:
+  description: Smashes, roars, looks cool. Don't stand near one.
   drawdepth: Mobs
   suffix: AI
   components:
@@ -104,7 +104,7 @@
   name: chicken
   parent: MonkeyMob_Content
   id: ChickenMob_Content
-  description:
+  description: Comes before an egg, and IS a dinosaur!
   drawdepth: Mobs
   suffix: AI
   components:
@@ -139,7 +139,7 @@
   name: butterfly
   parent: MonkeyMob_Content
   id: ButterflyMob_Content
-  description:
+  description: Despite popular misconceptions, it's not actually made of butter.
   drawdepth: Mobs
   suffix: AI
   components:
@@ -187,7 +187,7 @@
   name: bat
   parent: MonkeyMob_Content
   id: BatMob_Content
-  description:
+  description: Some cultures find them terrifying, others crunchy on the teeth.
   drawdepth: Mobs
   suffix: AI
   components:
@@ -225,7 +225,7 @@
   name: bee
   parent: MonkeyMob_Content
   id: BeeMob_Content
-  description:
+  description: Nice to have, but you can't build a civilization on a foundation of honey alone.
   drawdepth: Mobs
   suffix: AI
   components:
@@ -264,7 +264,7 @@
   name: goat
   parent: MonkeyMob_Content
   id: GoatMob_Content
-  description:
+  description: His spine consists of long sharp segments, no wonder he is so grumpy.
   drawdepth: Mobs
   suffix: AI
   components:
@@ -300,7 +300,7 @@
   name: goose
   parent: MonkeyMob_Content
   id: GooseMob_Content
-  description:
+  description: Its stomach and mind are an enigma beyond human comprehension.
   drawdepth: Mobs
   suffix: AI
   components:
@@ -336,7 +336,7 @@
   name: parrot
   parent: MonkeyMob_Content
   id: ParrotMob_Content
-  description:
+  description: Infiltrates your domain, spies on you, and somehow still a cool pet.
   drawdepth: Mobs
   suffix: AI
   components:
@@ -374,7 +374,7 @@
   name: snake
   parent: MonkeyMob_Content
   id: SnakeMob_Content
-  description:
+  description: Hissss! Bites aren't poisonous.
   drawdepth: Mobs
   suffix: AI
   components:
@@ -412,7 +412,7 @@
   name: tarantula
   parent: MonkeyMob_Content
   id: GiantSpiderMob_Content
-  description:
+  description: Widely recognized to be the literal worst thing in existence.
   drawdepth: Mobs
   suffix: AI
   components:
@@ -447,7 +447,7 @@
   name: crab
   parent: MonkeyMob_Content
   id: CrabMob_Content
-  description:
+  description: A folk legend goes around that his claw snaps spacemen out of existance over distasteful remarks. Be polite and tolerant for your own safety.
   drawdepth: Mobs
   suffix: AI
   components:
@@ -482,7 +482,7 @@
   name: penguin
   parent: MonkeyMob_Content
   id: PenguinMob_Content
-  description:
+  description: Their lives are constant pain due to their inner-body knees.
   drawdepth: Mobs
   suffix: AI
   components:
