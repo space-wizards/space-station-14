@@ -29,8 +29,6 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         public override string Name => "PowerReceiver";
 
-        public event EventHandler<PowerStateEventArgs>? OnPowerStateChanged;
-
         [ViewVariables]
         public bool Powered => (HasApcPower || !NeedsPower) && !PowerDisabled;
 
@@ -209,7 +207,8 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         private void OnNewPowerState()
         {
-            OnPowerStateChanged?.Invoke(this, new PowerStateEventArgs(Powered));
+            SendMessage(new PowerChangedMessage(Powered));
+
             if (Owner.TryGetComponent<AppearanceComponent>(out var appearance))
             {
                 appearance.SetData(PowerDeviceVisuals.Powered, Powered);
@@ -240,11 +239,11 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         }
     }
 
-    public class PowerStateEventArgs : EventArgs
+    public class PowerChangedMessage : ComponentMessage
     {
         public readonly bool Powered;
 
-        public PowerStateEventArgs(bool powered)
+        public PowerChangedMessage(bool powered)
         {
             Powered = powered;
         }
