@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chemistry
@@ -34,5 +34,13 @@ namespace Content.Shared.Chemistry
         /// Can people examine the solution in the container or is it impossible to see?
         /// </summary>
         CanExamine = 8,
+    }
+
+    public static class SolutionContainerCapsHelpers
+    {
+        public static bool HasCap(this SolutionContainerCaps cap, SolutionContainerCaps other)
+        {
+            return (cap & other) == other;
+        }
     }
 }

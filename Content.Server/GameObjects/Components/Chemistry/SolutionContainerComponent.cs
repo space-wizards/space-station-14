@@ -51,10 +51,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
         public ReagentUnit EmptyVolume => MaxVolume - CurrentVolume;
 
         public IReadOnlyList<Solution.ReagentQuantity> ReagentList => Solution.Contents;
-        public bool CanExamineContents => Capabilities.HasFlag(SolutionContainerCaps.CanExamine);
-        public bool CanUseWithChemDispenser => Capabilities.HasFlag(SolutionContainerCaps.FitsInDispenser);
-        public bool CanAddSolutions => Capabilities.HasFlag(SolutionContainerCaps.AddTo);
-        public bool CanRemoveSolutions => Capabilities.HasFlag(SolutionContainerCaps.RemoveFrom);
+        public bool CanExamineContents => Capabilities.HasCap(SolutionContainerCaps.CanExamine);
+        public bool CanUseWithChemDispenser => Capabilities.HasCap(SolutionContainerCaps.FitsInDispenser);
+        public bool CanAddSolutions => Capabilities.HasCap(SolutionContainerCaps.AddTo);
+        public bool CanRemoveSolutions => Capabilities.HasCap(SolutionContainerCaps.RemoveFrom);
 
         /// <inheritdoc />
         public override void ExposeData(ObjectSerializer serializer)
