@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
@@ -92,10 +93,9 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         public void UpdatePowerProviderReceivers(PowerProviderComponent provider, int oldLoad, int newLoad)
         {
-            Debug.Assert(_providers.Contains(provider));
-            TotalPowerReceiverLoad -= oldLoad;
-            TotalPowerReceiverLoad += newLoad;
-        } 
+            DebugTools.Assert(_providers.Contains(provider));
+            TotalPowerReceiverLoad += newLoad - oldLoad;
+        }
 
         public void Update(float frameTime)
         {
@@ -150,9 +150,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         private void SetTotalPowerReceiverLoad(int totalPowerReceiverLoad)
         {
-            Debug.Assert(totalPowerReceiverLoad >= 0);
-            _totalPowerReceiverLoad = totalPowerReceiverLoad;
-
+            _totalPowerReceiverLoad = Math.Max(0, totalPowerReceiverLoad);
         }
 
         #endregion
