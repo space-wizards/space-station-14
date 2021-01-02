@@ -115,7 +115,8 @@ namespace Content.Server.GameObjects.Components.Jetpack
                 Coordinates = coordinates,
                 RsiState = "freon_old",
                 Color = Vector4.Multiply(new Vector4(255, 255, 255, 125), 1.0f),
-                ColorDelta = Vector4.Multiply(new Vector4(0, 0, 0, -10), 1.0f)
+                ColorDelta = Vector4.Multiply(new Vector4(0, 0, 0, -10), 1.0f),
+                AnimationLoops = true
             };
             _effectSystem?.CreateParticle(effect);
             _lastEffectTime = _gameTiming.CurTime;
