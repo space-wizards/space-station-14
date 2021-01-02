@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -137,15 +138,18 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         private void SetPowerTransferRange(int newPowerTransferRange)
         {
-            var oldLoad = GetTotalLoad();
-            foreach (var receiver in _linkedReceivers.ToArray())
+            var receivers = _linkedReceivers.ToArray();
+
+            foreach (var receiver in receivers)
             {
                 receiver.ClearProvider();
             }
             _powerTransferRange = newPowerTransferRange;
-            _linkedReceivers = FindAvailableReceivers();
-            var newLoad = GetTotalLoad();
-            Net.UpdatePowerProviderReceivers(this, oldLoad, newLoad);
+
+            foreach (var receiver in receivers)
+            {
+                receiver.TryFindAndSetProvider();
+            }
         }
 
         private int GetTotalLoad()
