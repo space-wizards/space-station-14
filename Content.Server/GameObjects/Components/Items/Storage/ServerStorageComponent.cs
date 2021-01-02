@@ -43,9 +43,6 @@ namespace Content.Server.GameObjects.Components.Items.Storage
     [ComponentReference(typeof(IStorageComponent))]
     public class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IUse, IActivate, IStorageComponent, IDestroyAct, IExAct
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
-
         private const string LoggerName = "Storage";
 
         private Container? _storage;
@@ -56,9 +53,10 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         private int _storageCapacityMax;
         public readonly HashSet<IPlayerSession> SubscribedSessions = new();
 
+        public string? UseSoundCollection { get; set; }
+
         [ViewVariables]
         public override IReadOnlyList<IEntity>? StoredEntities => _storage?.ContainedEntities;
-        public string _soundCollectionName = "storageRustle";
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool OccludesLight
@@ -146,7 +144,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 return;
             }
 
-            PlayRustleEffect();
+            PlaySoundCollection("storageRustle");
             EnsureInitialCalculated();
 
             Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) had entity (UID {message.Entity.Uid}) inserted into it.");
@@ -219,7 +217,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         /// <param name="entity">The entity to open the UI for</param>
         public void OpenStorageUI(IEntity entity)
         {
-            PlayRustleEffect();
+            PlaySoundCollection("storageRustle");
             EnsureInitialCalculated();
 
             var userSession = entity.GetComponent<BasicActorComponent>().playerSession;
@@ -344,6 +342,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
             serializer.DataField(ref _storageCapacityMax, "capacity", 10000);
             serializer.DataField(ref _occludesLight, "occludesLight", true);
+            serializer.DataField(this, collection => UseSoundCollection, "rustleSoundCollection", string.Empty);
             //serializer.DataField(ref StorageUsed, "used", 0);
         }
 
@@ -507,14 +506,11 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 }
             }
         }
-        public void PlayRustleEffect()
+        public void PlaySoundCollection(string name)
         {
-            if (!string.IsNullOrWhiteSpace(_soundCollectionName))
-            {
-                var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(_soundCollectionName);
-                var file = _random.Pick(soundCollection.PickFiles);
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(file, Owner, AudioParams.Default);
-            }
+            var file = AudioHelpers.GetRandomFileFromSoundCollection(name);
+            EntitySystem.Get<AudioSystem>()
+                .PlayFromEntity(file, Owner);
         }
     }
 }
