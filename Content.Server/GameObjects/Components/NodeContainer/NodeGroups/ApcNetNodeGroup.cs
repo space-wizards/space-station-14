@@ -151,10 +151,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         private void SetTotalPowerReceiverLoad(int totalPowerReceiverLoad)
         {
-            if (totalPowerReceiverLoad == 0)
-            {
-                Debugger.Break();
-            }
             DebugTools.Assert(totalPowerReceiverLoad >= 0, $"Expected load equal to or greater than 0, was {totalPowerReceiverLoad}");
             _totalPowerReceiverLoad = totalPowerReceiverLoad;
         }
