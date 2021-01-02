@@ -7,12 +7,6 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behavior
     public interface IThresholdBehavior : IExposeData
     {
         /// <summary>
-        ///     Whether or not this behavior will delete the entity.
-        ///     Used to order it during execution.
-        /// </summary>
-        bool DeletesEntity => false;
-
-        /// <summary>
         ///     Triggers this behavior.
         /// </summary>
         /// <param name="owner">The entity that owns this behavior.</param>

@@ -9,8 +9,6 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behavior
     {
         private int _acts;
 
-        public bool DeletesEntity => HasAct(ThresholdActs.Destruction);
-
         /// <summary>
         ///     What acts should be triggered upon activation.
         ///     See <see cref="ActSystem"/>.
