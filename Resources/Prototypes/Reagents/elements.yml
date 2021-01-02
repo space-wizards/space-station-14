@@ -1,6 +1,6 @@
 - type: reagent
   id: chem.Aluminium # We use real words here.
-  name: aluminum
+  name: aluminium
   desc: A silver, soft, non-magnetic, and ductile metal.
   physicalDesc: metallic
   color: "#848789"
