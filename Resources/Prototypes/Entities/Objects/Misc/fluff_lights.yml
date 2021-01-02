@@ -133,8 +133,6 @@
     thresholds:
       10:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:PlaySoundBehavior
           sound: /Audio/Effects/glass_break1.ogg
         - !type:SpawnEntitiesBehavior
@@ -142,6 +140,8 @@
             FloodlightBroken:
               min: 1
               max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: Appearance
     visuals:
       - type: FlashLightVisualizer
@@ -162,8 +162,6 @@
     thresholds:
       20:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:PlaySoundBehavior
           sound: /Audio/Effects/metalbreak.ogg
         - !type:SpawnEntitiesBehavior
@@ -171,6 +169,8 @@
             SteelSheet1:
               min: 1
               max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: Physics
     shapes:
     - !type:PhysShapeAabb
