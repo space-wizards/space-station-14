@@ -87,7 +87,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             UpdateUserInterface();
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent ?component)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
             switch (message)

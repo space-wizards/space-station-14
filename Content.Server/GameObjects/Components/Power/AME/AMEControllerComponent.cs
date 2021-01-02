@@ -66,7 +66,7 @@ namespace Content.Server.GameObjects.Components.Power.AME
             _jarSlot = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-fuelJarContainer", Owner);
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent ?component)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
             switch (message)

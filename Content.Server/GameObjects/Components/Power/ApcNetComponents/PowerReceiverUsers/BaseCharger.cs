@@ -55,7 +55,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             // Default state in the visualizer is OFF, so when this gets powered on during initialization it will generally show empty
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent ?component)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
             switch (message)

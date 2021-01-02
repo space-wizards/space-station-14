@@ -42,7 +42,7 @@ namespace Content.Server.GameObjects.Components.Arcade
         private IPlayerSession? _player;
         private readonly List<IPlayerSession> _spectators = new();
 
-        public override void HandleMessage(ComponentMessage message, IComponent ?component)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
             switch (message)

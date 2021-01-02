@@ -200,7 +200,7 @@ namespace Content.Server.GameObjects.Components.Doors
             }
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent ?component)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
             switch (message)

@@ -123,7 +123,7 @@ namespace Content.Server.GameObjects.Components.PA
             _powerReceiverComponent.Load = 250;
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent ?component)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
             switch (message)

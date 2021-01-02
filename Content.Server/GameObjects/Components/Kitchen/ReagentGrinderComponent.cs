@@ -98,7 +98,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             _audioSystem = EntitySystem.Get<AudioSystem>();
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent ?component)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
             switch (message)

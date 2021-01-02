@@ -57,7 +57,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
             }
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent ?component)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
             switch (message)
