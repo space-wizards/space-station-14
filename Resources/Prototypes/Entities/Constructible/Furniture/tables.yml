@@ -41,8 +41,6 @@
     thresholds:
       15:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:PlaySoundBehavior
           sound: /Audio/Effects/metalbreak.ogg
         - !type:SpawnEntitiesBehavior
@@ -50,6 +48,8 @@
             SteelSheet1:
               min: 1
               max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
 
 - type: entity
   id: TableFrame
@@ -67,8 +67,6 @@
     thresholds:
       1:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:PlaySoundBehavior
           sound: /Audio/Effects/metalbreak.ogg
         - !type:SpawnEntitiesBehavior
@@ -76,6 +74,8 @@
             SteelSheet1:
               min: 1
               max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: Construction
     graph: Tables
     node: TableFrame
@@ -96,8 +96,6 @@
     thresholds:
       1:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:PlaySoundBehavior
           sound: /Audio/Effects/metalbreak.ogg
         - !type:SpawnEntitiesBehavior
@@ -105,6 +103,8 @@
             SteelSheet1:
               min: 1
               max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
 
 - type: entity
   id: TableMetal
@@ -122,8 +122,6 @@
     thresholds:
       15:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:PlaySoundBehavior
           sound: /Audio/Effects/metalbreak.ogg
         - !type:SpawnEntitiesBehavior
@@ -131,6 +129,8 @@
             SteelSheet1:
               min: 1
               max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: Construction
     graph: Tables
     node: MetalTable
@@ -151,8 +151,6 @@
     thresholds:
       75:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:PlaySoundBehavior
           sound: /Audio/Effects/metalbreak.ogg
         - !type:SpawnEntitiesBehavior
@@ -160,6 +158,8 @@
             SteelSheet1:
               min: 1
               max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: Construction
     graph: Tables
     node: ReinforcedTable
@@ -180,8 +180,6 @@
     thresholds:
       5:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:PlaySoundBehavior
           sound: /Audio/Effects/glass_break2.ogg
         - !type:SpawnEntitiesBehavior
@@ -189,6 +187,8 @@
             ShardGlass:
               min: 1
               max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: Construction
     graph: Tables
     node: GlassTable
@@ -209,8 +209,6 @@
     thresholds:
       20:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:PlaySoundBehavior
           sound: /Audio/Effects/glass_break2.ogg
         - !type:SpawnEntitiesBehavior
@@ -218,6 +216,8 @@
             ShardGlass:
               min: 1
               max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: Construction
     graph: Tables
     node: RGlassTable
@@ -238,8 +238,6 @@
     thresholds:
       15:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:PlaySoundBehavior
           sound: /Audio/Effects/woodhit.ogg
         - !type:SpawnEntitiesBehavior
@@ -247,6 +245,8 @@
             WoodPlank:
               min: 1
               max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: Construction
     graph: Tables
     node: WoodTable
@@ -267,8 +267,6 @@
     thresholds:
       15:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:PlaySoundBehavior
           sound: /Audio/Effects/woodhit.ogg
         - !type:SpawnEntitiesBehavior
@@ -276,6 +274,8 @@
             WoodPlank:
               min: 1
               max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: Construction
     graph: Tables
     node: PokerTable
@@ -296,10 +296,10 @@
     thresholds:
       50:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:PlaySoundBehavior
           sound: /Audio/Effects/picaxe2.ogg
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
 
 - type: entity
   id: TableDebug
