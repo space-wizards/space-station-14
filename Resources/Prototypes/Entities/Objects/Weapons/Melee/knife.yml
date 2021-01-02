@@ -1,20 +1,47 @@
 - type: entity
-  name: kitchen knife
   parent: BaseItem
+  id: BaseKnife
+  abstract: true
+  components:
+  - type: CulinarySharp
+  - type: MeleeWeapon
+    hitSound: /Audio/Weapons/bladeslice.ogg
+    damage: 12
+  - type: Sprite
+  - type: Item
+
+- type: entity
+  name: kitchen knife
+  parent: BaseKnife
   id: KitchenKnife
   description: A general purpose Chef's Knife made by Asters Merchant Guild. Guaranteed to stay sharp for years to come..
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/kitchen_knife.rsi
     size: 2
-    state: kitchen_knife
+    state: icon
 
   - type: ItemCooldown
-  - type: CulinarySharp
+  - type: Item
+    size: 10
+    sprite: Objects/Weapons/Melee/kitchen_knife.rsi
+    prefix: inhand
+
+
+- type: entity
+  name: butcher's cleaver
+  parent: BaseKnife
+  id: ButchCleaver
+  description: A huge blade used for chopping and chopping up meat. This includes clowns and clown-by-products.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/cleaver.rsi
+    size: 4
+    state: butch
+
+  - type: ItemCooldown
   - type: MeleeWeapon
-  - type: Clothing
-    Slots:
-      Belt
+    damage: 20
   - type: Item
     size: 10
     sprite: Objects/Weapons/Melee/cleaver.rsi

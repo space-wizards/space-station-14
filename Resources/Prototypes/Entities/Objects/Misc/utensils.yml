@@ -69,6 +69,7 @@
   - type: Sprite
     state: plastic_knife
 
+  - type: CulinarySharp
   - type: Utensil
     types:
     - Knife

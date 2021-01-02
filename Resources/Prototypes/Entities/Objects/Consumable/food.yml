@@ -3045,7 +3045,7 @@
   components:
   - type: Food
     trash: TrashTray
-  - type: Sliceablefood
+  - type: SliceableFood
     slice: FoodBrainCakeSlice
   - type: SolutionContainer
     contents:

@@ -13,11 +13,39 @@
         },
         {
             "name": "inhand-left",
-            "directions": 1
+            "directions": 4,
+            "delays": [
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ]
+            ]
         },
         {
             "name": "inhand-right",
-            "directions": 1
-        }
+            "directions": 4,
+            "delays": [
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ]
+            ]
+        },
     ]
 }
