@@ -77,7 +77,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer
                         break;
                     case NodeGroupID.Apc:
                         message.AddMarkup(
-                            Loc.GetString("It has a connector for [color=green]LV cables[/color]."));
+                            Loc.GetString("It has a connector for [color=green]APC cables[/color]."));
                         break;
                 }
 
