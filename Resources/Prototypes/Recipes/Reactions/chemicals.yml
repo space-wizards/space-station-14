@@ -1,19 +1,19 @@
 - type: reaction
-  id: react.H2O
+  id: react.Water
   reactants:
-    chem.H:
+    chem.Hydrogen:
       amount: 1
-    chem.O:
+    chem.Oxygen:
       amount: 1
   products:
-    chem.H2O: 2
+    chem.Water: 2
 
 - type: reaction
   id: react.Ammonia
   reactants:
-    chem.H:
+    chem.Hydrogen:
       amount: 3
-    chem.N:
+    chem.Nitrogen:
       amount: 1
   products:
     chem.Ammonia: 4
@@ -25,7 +25,7 @@
       amount: 2
     chem.SpaceCleaner:
       amount: 2
-    chem.O:
+    chem.Oxygen:
       amount: 1
   products:
     chem.Bleach: 5
@@ -43,9 +43,9 @@
 - type: reaction
   id: react.FoamingAgent
   reactants:
-    chem.Li:
+    chem.Lithium:
       amount: 1
-    chem.H:
+    chem.Hydrogen:
       amount: 1
   products:
     chem.FoamingAgent: 2
@@ -53,11 +53,11 @@
 - type: reaction
   id: react.PolytrinicAcid
   reactants:
-    chem.H2SO4:
+    chem.SulfuricAcid:
       amount: 1
-    chem.Cl:
+    chem.Chlorine:
       amount: 1
-    chem.K:
+    chem.Potassium:
       amount: 1
   products:
     chem.PolytrinicAcid: 3
@@ -67,7 +67,7 @@
   reactants:
     chem.Ammonia:
       amount: 1
-    chem.H2O:
+    chem.Water:
       amount: 1
   products:
     chem.SpaceCleaner: 2
@@ -75,11 +75,11 @@
 - type: reaction
   id: react.SpaceLube
   reactants:
-    chem.H2O:
+    chem.Water:
       amount: 1
-    chem.Si:
+    chem.Silicon:
       amount: 1
-    chem.O:
+    chem.Oxygen:
       amount: 1
   products:
     chem.SpaceLube: 3
@@ -87,9 +87,9 @@
 - type: reaction
   id: react.TableSalt
   reactants:
-    chem.Cl:
+    chem.Chlorine:
       amount: 1
-    chem.Na:
+    chem.Sodium:
       amount: 1
   products:
     chem.TableSalt: 2
@@ -97,11 +97,11 @@
 - type: reaction
   id: react.Thermite
   reactants:
-    chem.Fe:
+    chem.Iron:
       amount: 1
-    chem.Al:
+    chem.Aluminium:
       amount: 1
-    chem.O:
+    chem.Oxygen:
       amount: 1
   products:
     chem.Thermite: 3
@@ -109,11 +109,11 @@
 - type: reaction
   id: react.UnstableMutagen
   reactants:
-    chem.Ra:
+    chem.Radium:
       amount: 1
-    chem.P:
+    chem.Phosphorus:
       amount: 1
-    chem.Cl:
+    chem.Chlorine:
       amount: 1
   products:
     chem.UnstableMutagen: 3
@@ -121,9 +121,9 @@
 - type: reaction
   id: react.PotassiumExplosion
   reactants:
-    chem.H2O:
+    chem.Water:
       amount: 1
-    chem.K:
+    chem.Potassium:
       amount: 1
   effects:
     - !type:ExplosionReactionEffect
@@ -138,11 +138,11 @@
 - type: reaction
   id: react.EZNutrient
   reactants:
-    chem.N:
+    chem.Nitrogen:
       amount: 1
-    chem.P:
+    chem.Phosphorus:
       amount: 1
-    chem.K:
+    chem.Potassium:
       amount: 1
   products:
     chem.EZNutrient: 3
@@ -152,7 +152,7 @@
   reactants:
     chem.EZNutrient:
       amount: 1
-    chem.H2SO4:
+    chem.SulfuricAcid:
       amount: 1
       catalyst: true
   products:
@@ -163,7 +163,7 @@
   reactants:
     chem.EZNutrient:
       amount: 1
-    chem.Ra:
+    chem.Radium:
       amount: 1
       catalyst: true
   products:
@@ -174,7 +174,7 @@
   reactants:
     chem.Toxin:
       amount: 1
-    chem.H2O:
+    chem.Water:
       amount: 4
   products:
     chem.PlantBGone: 5
