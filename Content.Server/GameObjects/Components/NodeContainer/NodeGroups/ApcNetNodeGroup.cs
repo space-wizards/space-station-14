@@ -94,7 +94,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         public void UpdatePowerProviderReceivers(PowerProviderComponent provider, int oldLoad, int newLoad)
         {
             DebugTools.Assert(_providers.Contains(provider));
-            TotalPowerReceiverLoad += newLoad - oldLoad;
+            TotalPowerReceiverLoad -= oldLoad;
+            TotalPowerReceiverLoad += newLoad;
         }
 
         public void Update(float frameTime)
@@ -150,7 +151,12 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         private void SetTotalPowerReceiverLoad(int totalPowerReceiverLoad)
         {
-            _totalPowerReceiverLoad = Math.Max(0, totalPowerReceiverLoad);
+            if (totalPowerReceiverLoad == 0)
+            {
+                Debugger.Break();
+            }
+            DebugTools.Assert(totalPowerReceiverLoad >= 0, $"Expected load equal to or greater than 0, was {totalPowerReceiverLoad}");
+            _totalPowerReceiverLoad = totalPowerReceiverLoad;
         }
 
         #endregion
