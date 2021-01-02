@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -109,12 +108,21 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         {
             var nearbyEntities = Owner.EntityManager
                 .GetEntitiesInRange(Owner, PowerTransferRange);
-            return nearbyEntities.Select(entity => entity.TryGetComponent<PowerReceiverComponent>(out var receiver) ? receiver : null)
-                .Where(receiver => receiver != null)
-                .Where(receiver => receiver.Connectable)
-                .Where(receiver => receiver.NeedsProvider)
-                .Where(receiver => receiver.Owner.Transform.Coordinates.TryDistance(Owner.EntityManager, Owner.Transform.Coordinates, out var distance) && distance < Math.Min(PowerTransferRange, receiver.PowerReceptionRange))
-                .ToList();
+
+            var receivers = new List<PowerReceiverComponent>();
+
+            foreach (var entity in nearbyEntities)
+            {
+                if (entity.TryGetComponent<PowerReceiverComponent>(out var receiver) &&
+                    receiver.Connectable &&
+                    receiver.NeedsProvider &&
+                    receiver.Owner.Transform.Coordinates.TryDistance(Owner.EntityManager, Owner.Transform.Coordinates, out var distance) &&
+                    distance < Math.Min(PowerTransferRange, receiver.PowerReceptionRange))
+                {
+                    receivers.Add(receiver);
+                }
+            }
+            return receivers;
         }
 
         protected override void AddSelfToNet(IApcNet apcNet)
