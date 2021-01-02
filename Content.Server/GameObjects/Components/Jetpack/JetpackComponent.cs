@@ -20,7 +20,6 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
@@ -55,9 +54,9 @@ namespace Content.Server.GameObjects.Components.Jetpack
 
         private bool _active = false;
 
-        private IEntity? _user = null;
+        private IEntity? _user = default!;
 
-        private EffectSystem? _effectSystem = null;
+        private EffectSystem? _effectSystem = default!;
 
         private readonly TimeSpan _effectCooldown = TimeSpan.FromSeconds(0.3);
         private TimeSpan _lastEffectTime = TimeSpan.FromSeconds(0);
@@ -73,6 +72,17 @@ namespace Content.Server.GameObjects.Components.Jetpack
                 _sprite?.LayerSetState(0, state);
                 if (_clothing != null)
                     _clothing.ClothingEquippedPrefix = Active ? "on" : null;
+                if (_user != null && _user.TryGetComponent<IPhysicsComponent>(out var physics))
+                {
+                    if (Active)
+                    {
+                        physics.EnsureController<JetpackController>();
+                    }
+                    else
+                    {
+                        physics.TryRemoveController<JetpackController>();
+                    }
+                }
             }
         }
 
@@ -81,7 +91,7 @@ namespace Content.Server.GameObjects.Components.Jetpack
             base.Initialize();
             _effectSystem = EntitySystem.Get<EffectSystem>();
 
-            if(_itemComponent!=null) _itemComponent.OnInventoryRelayMove += OnInventoryRelayMove;
+            if (_itemComponent != null) _itemComponent.OnInventoryRelayMove += OnInventoryRelayMove;
         }
 
         public void HandleMoveEvent(MoveEvent moveEvent)
@@ -129,6 +139,10 @@ namespace Content.Server.GameObjects.Components.Jetpack
         void IEquipped.Equipped(EquippedEventArgs eventArgs)
         {
             _user = eventArgs.User;
+            if (Active && _user.TryGetComponent<IPhysicsComponent>(out var physics))
+            {
+                physics.EnsureController<JetpackController>();
+            }
         }
 
         void IUnequipped.Unequipped(UnequippedEventArgs eventArgs)
