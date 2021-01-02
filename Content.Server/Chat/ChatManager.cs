@@ -71,12 +71,12 @@ namespace Content.Server.Chat
             _netManager.ServerSendToAll(msg);
         }
 
-        public void DispatchStationAnnouncement(string message)
+        public void DispatchStationAnnouncement(string message, string sender = "CentComm")
         {
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Radio;
             msg.Message = message;
-            msg.MessageWrap = "Centcom Announcement:\n{0}";
+            msg.MessageWrap = $"{sender} Announcement:\n{{0}}";
             _netManager.ServerSendToAll(msg);
         }
 

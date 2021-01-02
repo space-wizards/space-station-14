@@ -95,13 +95,13 @@
     steel: 250
     glass: 100
 
--type: latheRecipe
- id: RCDAmmo
- icon:
+- type: latheRecipe
+  id: RCDAmmo
+  icon:
     sprite: Objects/Tools/rcd.rsi
     state: rcd_ammo
- result: RCDAmmo
- completetime: 600
- materials:
+  result: RCDAmmo
+  completetime: 600
+  materials:
     steel: 90
     glass: 80

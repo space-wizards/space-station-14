@@ -142,6 +142,10 @@ namespace Content.Shared
         public static readonly CVarDef<string> DatabasePgPassword =
             CVarDef.Create("database.pg_password", "", CVar.SERVERONLY);
 
+        // Basically only exists for integration tests to avoid race conditions.
+        public static readonly CVarDef<bool> DatabaseSynchronous =
+            CVarDef.Create("database.sync", false, CVar.SERVERONLY);
+
 
         /*
          * Outline
