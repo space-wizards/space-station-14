@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Administration;
 using Content.Server.GameObjects.Components.GUI;
@@ -220,6 +220,27 @@ namespace Content.Server.Chat
             msg.Channel = ChatChannel.Dead;
             msg.Message = message;
             msg.MessageWrap = $"{Loc.GetString("DEAD")}: {player.AttachedEntity.Name}: {{0}}";
+            msg.SenderEntity = player.AttachedEntityUid.GetValueOrDefault();
+            _netManager.ServerSendToMany(msg, clients.ToList());
+        }
+
+        public void SendAdminDeadChat(IPlayerSession player, string message)
+        {
+            // Check if message exceeds the character limit
+            if (message.Length > MaxMessageLength)
+            {
+                DispatchServerMessage(player, Loc.GetString(MaxLengthExceededMessage, MaxMessageLength));
+                return;
+            }
+
+            var clients = _playerManager
+                .GetPlayersBy(x => x.AttachedEntity != null && x.AttachedEntity.HasComponent<GhostComponent>())
+                .Select(p => p.ConnectedClient);
+
+            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
+            msg.Channel = ChatChannel.Dead;
+            msg.Message = message;
+            msg.MessageWrap = $"{Loc.GetString("ADMIN")}:(${player.ConnectedClient.UserName}): {{0}}";
             msg.SenderEntity = player.AttachedEntityUid.GetValueOrDefault();
             _netManager.ServerSendToMany(msg, clients.ToList());
         }
