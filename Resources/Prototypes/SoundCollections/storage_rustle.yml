@@ -1,5 +1,5 @@
 - type: soundCollection
-  id: rustle
+  id: storageRustle
   files:
   - /Audio/Effects/rustle1.ogg
   - /Audio/Effects/rustle2.ogg

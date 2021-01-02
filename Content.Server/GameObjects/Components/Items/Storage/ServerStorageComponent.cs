@@ -1,10 +1,11 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
@@ -13,16 +14,22 @@ using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystemMessages;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Network;
+using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Players;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -36,6 +43,9 @@ namespace Content.Server.GameObjects.Components.Items.Storage
     [ComponentReference(typeof(IStorageComponent))]
     public class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IUse, IActivate, IStorageComponent, IDestroyAct, IExAct
     {
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+
         private const string LoggerName = "Storage";
 
         private Container? _storage;
@@ -48,6 +58,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         [ViewVariables]
         public override IReadOnlyList<IEntity>? StoredEntities => _storage?.ContainedEntities;
+        public string _soundCollectionName = "storageRustle";
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool OccludesLight
@@ -135,6 +146,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 return;
             }
 
+            PlayRustleEffect();
             EnsureInitialCalculated();
 
             Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) had entity (UID {message.Entity.Uid}) inserted into it.");
@@ -207,6 +219,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         /// <param name="entity">The entity to open the UI for</param>
         public void OpenStorageUI(IEntity entity)
         {
+            PlayRustleEffect();
             EnsureInitialCalculated();
 
             var userSession = entity.GetComponent<BasicActorComponent>().playerSession;
@@ -492,6 +505,15 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 {
                     exAct.OnExplosion(eventArgs);
                 }
+            }
+        }
+        public void PlayRustleEffect()
+        {
+            if (!string.IsNullOrWhiteSpace(_soundCollectionName))
+            {
+                var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(_soundCollectionName);
+                var file = _random.Pick(soundCollection.PickFiles);
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(file, Owner, AudioParams.Default);
             }
         }
     }
