@@ -36,6 +36,7 @@ namespace Content.Tests.Server.Preferences
                     Color.Beige
                 ),
                 ClothingPreference.Jumpskirt,
+                BackpackPreference.Backpack,
                 new Dictionary<string, JobPriority>
                 {
                     {SharedGameTicker.OverflowJob, JobPriority.High}

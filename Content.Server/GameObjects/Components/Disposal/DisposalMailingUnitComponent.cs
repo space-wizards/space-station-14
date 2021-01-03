@@ -547,7 +547,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             UpdateInterface();
         }
 
-        private void PowerStateChanged(object? sender, PowerStateEventArgs args)
+        private void PowerStateChanged(PowerChangedMessage args)
         {
             if (!args.Powered)
             {
@@ -614,22 +614,12 @@ namespace Content.Server.GameObjects.Components.Disposal
                 Logger.WarningS("VitalComponentMissing", $"Disposal unit {Owner.Uid} is missing an anchorable component");
             }
 
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
-            {
-                receiver.OnPowerStateChanged += PowerStateChanged;
-            }
-
             UpdateTargetList();
             UpdateVisualState();
         }
 
         public override void OnRemove()
         {
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
-            {
-                receiver.OnPowerStateChanged -= PowerStateChanged;
-            }
-
             if (_container != null)
             {
                 foreach (var entity in _container.ContainedEntities.ToArray())
@@ -673,6 +663,10 @@ namespace Content.Server.GameObjects.Components.Disposal
 
                 case AnchoredChangedMessage:
                     UpdateVisualState();
+                    break;
+
+                case PowerChangedMessage powerChanged:
+                    PowerStateChanged(powerChanged);
                     break;
             }
         }
