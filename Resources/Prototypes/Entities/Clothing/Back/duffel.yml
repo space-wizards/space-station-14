@@ -15,7 +15,8 @@
     - back
   - type: Storage
     capacity: 100
-
+    storageSoundCollection : storageRustle
+    
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelEngineering

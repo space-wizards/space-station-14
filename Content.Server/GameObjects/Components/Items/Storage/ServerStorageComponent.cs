@@ -506,8 +506,13 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 }
             }
         }
-        protected void PlaySoundCollection(string name)
+        protected void PlaySoundCollection(string? name)
         {
+            if (string.IsNullOrEmpty(name))
+            {
+                return;
+            }
+
             var file = AudioHelpers.GetRandomFileFromSoundCollection(name);
             EntitySystem.Get<AudioSystem>()
                 .PlayFromEntity(file, Owner, AudioParams.Default);

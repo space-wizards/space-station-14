@@ -15,6 +15,7 @@
     sprite: Clothing/Back/Backpacks/backpack.rsi
   - type: Storage
     capacity: 100
+    storageSoundCollection : storageRustle
 
 - type: entity
   parent: ClothingBackpack
