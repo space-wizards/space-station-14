@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         private int _storageCapacityMax;
         public readonly HashSet<IPlayerSession> SubscribedSessions = new();
 
-        public string? UseSoundCollection { get; set; }
+        public string? StorageSoundCollection { get; set; }
 
         [ViewVariables]
         public override IReadOnlyList<IEntity>? StoredEntities => _storage?.ContainedEntities;
@@ -144,7 +144,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 return;
             }
 
-            PlaySoundCollection("storageRustle");
+            PlaySoundCollection(StorageSoundCollection);
             EnsureInitialCalculated();
 
             Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) had entity (UID {message.Entity.Uid}) inserted into it.");
@@ -217,7 +217,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         /// <param name="entity">The entity to open the UI for</param>
         public void OpenStorageUI(IEntity entity)
         {
-            PlaySoundCollection("storageRustle");
+            PlaySoundCollection(StorageSoundCollection);
             EnsureInitialCalculated();
 
             var userSession = entity.GetComponent<BasicActorComponent>().playerSession;
@@ -342,7 +342,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
             serializer.DataField(ref _storageCapacityMax, "capacity", 10000);
             serializer.DataField(ref _occludesLight, "occludesLight", true);
-            serializer.DataField(this, collection => UseSoundCollection, "rustleSoundCollection", string.Empty);
+            serializer.DataField(this, collection => StorageSoundCollection, "storageSoundCollection", string.Empty);
             //serializer.DataField(ref StorageUsed, "used", 0);
         }
 
@@ -506,11 +506,11 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 }
             }
         }
-        public void PlaySoundCollection(string name)
+        protected void PlaySoundCollection(string name)
         {
             var file = AudioHelpers.GetRandomFileFromSoundCollection(name);
             EntitySystem.Get<AudioSystem>()
-                .PlayFromEntity(file, Owner);
+                .PlayFromEntity(file, Owner, AudioParams.Default);
         }
     }
 }
