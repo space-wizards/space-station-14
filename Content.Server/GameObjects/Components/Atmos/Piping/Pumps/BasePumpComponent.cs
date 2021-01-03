@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
@@ -15,7 +15,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
     /// <summary>
     ///     Transfer gas from one <see cref="PipeNode"/> to another.
     /// </summary>
-    public abstract class BasePumpComponent : PipeNetDeviceComponent
+    public abstract class BasePumpComponent : Component, IPipeNetUpdated
     {
         /// <summary>
         ///     If the pump is currently pumping.
@@ -63,13 +63,14 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
         public override void Initialize()
         {
             base.Initialize();
+            Owner.EnsureComponent<PipeNetDeviceComponent>();
             UpdatePipes();
             Owner.EntityManager.EventBus.SubscribeEvent<RotateEvent>(EventSource.Local, this, RotateEvent);
             Owner.TryGetComponent(out _appearance);
             UpdateAppearance();
         }
 
-        public override void Update()
+        public void Update(PipeNetUpdateMessage message)
         {
             if (!PumpEnabled)
                 return;
@@ -103,7 +104,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
 
             if (!Owner.TryGetComponent<NodeContainerComponent>(out var container))
             {
-                JoinedGridAtmos?.RemovePipeNetDevice(this);
+                //TODO: must stop updating
                 Logger.Error($"{typeof(BasePumpComponent)} on entity {Owner.Uid} did not have a {nameof(NodeContainerComponent)}.");
                 return;
             }
@@ -112,7 +113,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
             _outletPipe = pipeNodes.Where(pipe => pipe.PipeDirection == _outletDirection).FirstOrDefault();
             if (_inletPipe == null | _outletPipe == null)
             {
-                JoinedGridAtmos?.RemovePipeNetDevice(this);
+                //TODO: must stop updating
                 Logger.Error($"{typeof(BasePumpComponent)} on entity {Owner.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
                 return;
             }

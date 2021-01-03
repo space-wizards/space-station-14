@@ -1,4 +1,4 @@
-﻿using Content.Server.GameObjects.Components.NodeContainer;
+using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
@@ -9,7 +9,7 @@ using System.Linq;
 namespace Content.Server.GameObjects.Components.Atmos.Piping
 {
     [RegisterComponent]
-    public class GasCanisterPortComponent : PipeNetDeviceComponent
+    public class GasCanisterPortComponent : Component, IPipeNetUpdated
     {
         public override string Name => "GasCanisterPort";
 
@@ -25,16 +25,17 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         public override void Initialize()
         {
             base.Initialize();
+            Owner.EnsureComponent<PipeNetDeviceComponent>();
             if (!Owner.TryGetComponent<NodeContainerComponent>(out var container))
             {
-                JoinedGridAtmos?.RemovePipeNetDevice(this);
+                //TODO: must stop updating
                 Logger.Error($"{typeof(GasCanisterPortComponent)} on entity {Owner.Uid} did not have a {nameof(NodeContainerComponent)}.");
                 return;
             }
             _gasPort = container.Nodes.OfType<PipeNode>().FirstOrDefault();
             if (_gasPort == null)
             {
-                JoinedGridAtmos?.RemovePipeNetDevice(this);
+                //TODO: must stop updating
                 Logger.Error($"{typeof(GasCanisterPortComponent)} on entity {Owner.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
                 return;
             }
@@ -59,7 +60,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
             ConnectedCanister?.DisconnectFromPort();
         }
 
-        public override void Update()
+        public void Update(PipeNetUpdateMessage message)
         {
             ConnectedCanister?.Air.Share(_gasPort.Air, 1);
             ConnectedCanister?.AirWasUpdated();
