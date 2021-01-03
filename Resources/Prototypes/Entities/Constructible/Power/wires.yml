@@ -55,13 +55,13 @@
     thresholds:
       100:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:SpawnEntitiesBehavior
           spawn:
             HVWireStack1:
               min: 1
               max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
 
 - type: entity
   parent: WireBase
@@ -92,13 +92,13 @@
     thresholds:
       100:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:SpawnEntitiesBehavior
           spawn:
             MVWireStack1:
               min: 1
               max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
 
 - type: entity
   parent: WireBase
@@ -131,10 +131,10 @@
     thresholds:
       100:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:SpawnEntitiesBehavior
           spawn:
             ApcExtensionCableStack1:
               min: 1
               max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]

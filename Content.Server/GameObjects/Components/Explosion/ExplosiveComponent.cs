@@ -1,4 +1,4 @@
-﻿using Content.Server.Explosions;
+using Content.Server.Explosions;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
@@ -16,7 +16,7 @@ namespace Content.Server.GameObjects.Components.Explosion
         public int LightImpactRange = 0;
         public int FlashRange = 0;
 
-        private bool _beingExploded = false;
+        public bool Exploding { get; private set; } = false;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -30,14 +30,17 @@ namespace Content.Server.GameObjects.Components.Explosion
 
         public bool Explosion()
         {
-            //Prevent adjacent explosives from infinitely blowing each other up.
-            if (_beingExploded) return true;
-            _beingExploded = true;
-
-            Owner.SpawnExplosion(DevastationRange, HeavyImpactRange, LightImpactRange, FlashRange);
-
-            Owner.Delete();
-            return true;
+            if (Exploding)
+            {
+                return false;
+            }
+            else
+            {
+                Exploding = true;
+                Owner.SpawnExplosion(DevastationRange, HeavyImpactRange, LightImpactRange, FlashRange);
+                Owner.Delete();
+                return true;
+            }
         }
 
         bool ITimerTrigger.Trigger(TimerTriggerEventArgs eventArgs)

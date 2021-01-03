@@ -17,7 +17,7 @@
       caps: AddTo, RemoveFrom, NoExamine
       contents:
         reagents:
-          - ReagentId: chem.H2O
+          - ReagentId: chem.Water
             Quantity: 100
     - type: ItemCooldown
     - type: Spray
