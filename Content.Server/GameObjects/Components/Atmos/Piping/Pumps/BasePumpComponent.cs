@@ -1,3 +1,4 @@
+#nullable enable
 using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer;
@@ -5,7 +6,6 @@ using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Shared.GameObjects.Components.Atmos;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -33,30 +33,30 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
         private bool _pumpEnabled;
 
         /// <summary>
-        ///     Needs to be same <see cref="PipeDirection"/> as that of a <see cref="Pipe"/> on this entity.
+        ///     Needs to be same <see cref="PipeDirection"/> as that of a <see cref="PipeNode"/> on this entity.
         /// </summary>
         [ViewVariables]
-        private PipeDirection _inletDirection;
+        private PipeDirection _initialInletDirection;
 
         /// <summary>
-        ///     Needs to be same <see cref="PipeDirection"/> as that of a <see cref="Pipe"/> on this entity.
+        ///     Needs to be same <see cref="PipeDirection"/> as that of a <see cref="PipeNode"/> on this entity.
         /// </summary>
         [ViewVariables]
-        private PipeDirection _outletDirection;
+        private PipeDirection _initialOutletDirection;
 
         [ViewVariables]
-        private PipeNode _inletPipe;
+        private PipeNode? _inletPipe;
 
         [ViewVariables]
-        private PipeNode _outletPipe;
+        private PipeNode? _outletPipe;
 
-        private AppearanceComponent _appearance;
+        private AppearanceComponent? _appearance;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _inletDirection, "inletDirection", PipeDirection.None);
-            serializer.DataField(ref _outletDirection, "outletDirection", PipeDirection.None);
+            serializer.DataField(ref _initialInletDirection, "inletDirection", PipeDirection.None);
+            serializer.DataField(ref _initialOutletDirection, "outletDirection", PipeDirection.None);
             serializer.DataField(ref _pumpEnabled, "pumpEnabled", false);
         }
 
@@ -64,8 +64,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
         {
             base.Initialize();
             Owner.EnsureComponent<PipeNetDeviceComponent>();
-            UpdatePipes();
-            Owner.EntityManager.EventBus.SubscribeEvent<RotateEvent>(EventSource.Local, this, RotateEvent);
+            SetPipes();
             Owner.TryGetComponent(out _appearance);
             UpdateAppearance();
         }
@@ -75,45 +74,35 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
             if (!PumpEnabled)
                 return;
 
+            if (_inletPipe == null || _outletPipe == null)
+                return;
+
             PumpGas(_inletPipe.Air, _outletPipe.Air);
         }
 
         protected abstract void PumpGas(GasMixture inletGas, GasMixture outletGas);
 
-        private void RotateEvent(RotateEvent ev)
-        {
-            if (ev.Sender != Owner || ev.NewRotation == ev.OldRotation)
-                return;
-
-            var diff = ev.NewRotation - ev.OldRotation;
-            _inletDirection = _inletDirection.RotatePipeDirection(diff);
-            _outletDirection = _outletDirection.RotatePipeDirection(diff);
-            UpdatePipes();
-        }
-
         private void UpdateAppearance()
         {
             if (_inletPipe == null || _outletPipe == null) return;
-            _appearance?.SetData(PumpVisuals.VisualState, new PumpVisualState(_inletDirection, _outletDirection, _inletPipe.ConduitLayer, _outletPipe.ConduitLayer, PumpEnabled));
+            _appearance?.SetData(PumpVisuals.VisualState, new PumpVisualState(_initialInletDirection, _initialOutletDirection, _inletPipe.ConduitLayer, _outletPipe.ConduitLayer, PumpEnabled));
         }
 
-        private void UpdatePipes()
+        private void SetPipes()
         {
             _inletPipe = null;
             _outletPipe = null;
 
             if (!Owner.TryGetComponent<NodeContainerComponent>(out var container))
             {
-                //TODO: must stop updating
                 Logger.Error($"{typeof(BasePumpComponent)} on entity {Owner.Uid} did not have a {nameof(NodeContainerComponent)}.");
                 return;
             }
             var pipeNodes = container.Nodes.OfType<PipeNode>();
-            _inletPipe = pipeNodes.Where(pipe => pipe.PipeDirection == _inletDirection).FirstOrDefault();
-            _outletPipe = pipeNodes.Where(pipe => pipe.PipeDirection == _outletDirection).FirstOrDefault();
+            _inletPipe = pipeNodes.Where(pipe => pipe.PipeDirection == _initialInletDirection).FirstOrDefault();
+            _outletPipe = pipeNodes.Where(pipe => pipe.PipeDirection == _initialOutletDirection).FirstOrDefault();
             if (_inletPipe == null | _outletPipe == null)
             {
-                //TODO: must stop updating
                 Logger.Error($"{typeof(BasePumpComponent)} on entity {Owner.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
                 return;
             }

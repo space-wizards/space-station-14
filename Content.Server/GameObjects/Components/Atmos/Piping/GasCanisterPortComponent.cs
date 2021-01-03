@@ -1,3 +1,4 @@
+#nullable enable
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Robust.Shared.GameObjects;
@@ -14,42 +15,27 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         public override string Name => "GasCanisterPort";
 
         [ViewVariables]
-        public GasCanisterComponent ConnectedCanister { get; private set; }
+        public GasCanisterComponent? ConnectedCanister { get; private set; }
 
         [ViewVariables]
         public bool ConnectedToCanister => ConnectedCanister != null;
 
         [ViewVariables]
-        private PipeNode _gasPort;
+        private PipeNode? _gasPort;
 
         public override void Initialize()
         {
             base.Initialize();
-            Owner.EnsureComponent<PipeNetDeviceComponent>();
-            if (!Owner.TryGetComponent<NodeContainerComponent>(out var container))
-            {
-                //TODO: must stop updating
-                Logger.Error($"{typeof(GasCanisterPortComponent)} on entity {Owner.Uid} did not have a {nameof(NodeContainerComponent)}.");
-                return;
-            }
-            _gasPort = container.Nodes.OfType<PipeNode>().FirstOrDefault();
-            if (_gasPort == null)
-            {
-                //TODO: must stop updating
-                Logger.Error($"{typeof(GasCanisterPortComponent)} on entity {Owner.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
-                return;
-            }
+            SetGasPort();
             if (Owner.TryGetComponent<SnapGridComponent>(out var snapGrid))
             {
-                var anchoredCanister = snapGrid.GetLocal()
-                    .Select(entity => entity.TryGetComponent<GasCanisterComponent>(out var canister) ? canister : null)
-                    .Where(canister => canister != null)
-                    .Where(canister => canister.Anchored)
-                    .Where(canister => !canister.ConnectedToPort)
-                    .FirstOrDefault();
-                if (anchoredCanister != null)
+                var entities = snapGrid.GetLocal();
+                foreach (var entity in entities)
                 {
-                    anchoredCanister.TryConnectToPort();
+                    if (entity.TryGetComponent<GasCanisterComponent>(out var canister) && canister.Anchored && !canister.ConnectedToPort)
+                    {
+                        canister.TryConnectToPort();
+                    }
                 }
             }
         }
@@ -62,8 +48,11 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
 
         public void Update(PipeNetUpdateMessage message)
         {
-            ConnectedCanister?.Air.Share(_gasPort.Air, 1);
-            ConnectedCanister?.AirWasUpdated();
+            if (_gasPort == null || ConnectedCanister == null)
+                return;
+
+            ConnectedCanister.Air.Share(_gasPort.Air, 1);
+            ConnectedCanister.AirWasUpdated();
         }
 
         public void ConnectGasCanister(GasCanisterComponent gasCanister)
@@ -74,6 +63,22 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         public void DisconnectGasCanister()
         {
             ConnectedCanister = null;
+        }
+
+        private void SetGasPort()
+        {
+            Owner.EnsureComponent<PipeNetDeviceComponent>();
+            if (!Owner.TryGetComponent<NodeContainerComponent>(out var container))
+            {
+                Logger.Error($"{typeof(GasCanisterPortComponent)} on entity {Owner.Uid} did not have a {nameof(NodeContainerComponent)}.");
+                return;
+            }
+            _gasPort = container.Nodes.OfType<PipeNode>().FirstOrDefault();
+            if (_gasPort == null)
+            {
+                Logger.Error($"{typeof(GasCanisterPortComponent)} on entity {Owner.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
+                return;
+            }
         }
     }
 }

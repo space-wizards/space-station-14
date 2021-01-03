@@ -1,3 +1,4 @@
+#nullable enable
 using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer;
@@ -19,9 +20,9 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Vents
     {
 
         [ViewVariables]
-        private PipeNode _ventInlet;
+        private PipeNode? _ventInlet;
 
-        private AtmosphereSystem _atmosSystem;
+        private AtmosphereSystem? _atmosSystem;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool VentEnabled
@@ -35,27 +36,14 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Vents
         }
         private bool _ventEnabled = true;
 
-        private AppearanceComponent _appearance;
+        private AppearanceComponent? _appearance;
 
         public override void Initialize()
         {
             base.Initialize();
             Owner.EnsureComponent<PipeNetDeviceComponent>();
-
             _atmosSystem = EntitySystem.Get<AtmosphereSystem>();
-            if (!Owner.TryGetComponent<NodeContainerComponent>(out var container))
-            {
-                //TODO: must stop updating
-                Logger.Error($"{typeof(BaseVentComponent)} on entity {Owner.Uid} did not have a {nameof(NodeContainerComponent)}.");
-                return;
-            }
-            _ventInlet = container.Nodes.OfType<PipeNode>().FirstOrDefault();
-            if (_ventInlet == null)
-            {
-                //TODO: must stop updating
-                Logger.Error($"{typeof(BaseVentComponent)} on entity {Owner.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
-                return;
-            }
+            SetInlet();
             Owner.TryGetComponent(out _appearance);
             UpdateAppearance();
         }
@@ -66,13 +54,30 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Vents
                 return;
 
             var tileAtmos = Owner.Transform.Coordinates.GetTileAtmosphere(Owner.EntityManager);
-            if (tileAtmos == null)
+
+            if (_ventInlet == null || tileAtmos == null || tileAtmos.Air == null)
                 return;
+
             VentGas(_ventInlet.Air, tileAtmos.Air);
             tileAtmos.Invalidate();
         }
 
         protected abstract void VentGas(GasMixture inletGas, GasMixture outletGas);
+
+        private void SetInlet()
+        {
+            if (!Owner.TryGetComponent<NodeContainerComponent>(out var container))
+            {
+                Logger.Error($"{typeof(BaseVentComponent)} on entity {Owner.Uid} did not have a {nameof(NodeContainerComponent)}.");
+                return;
+            }
+            _ventInlet = container.Nodes.OfType<PipeNode>().FirstOrDefault();
+            if (_ventInlet == null)
+            {
+                Logger.Error($"{typeof(BaseVentComponent)} on entity {Owner.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
+                return;
+            }
+        }
 
         private void UpdateAppearance()
         {

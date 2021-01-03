@@ -1,3 +1,4 @@
+#nullable enable
 using Content.Server.Atmos;
 using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
@@ -15,9 +16,9 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
     {
         public override string Name => "PipeNetDevice";
 
-        private IGridAtmosphereComponent JoinedGridAtmos { get; set; }
+        private IGridAtmosphereComponent? JoinedGridAtmos { get; set; }
 
-        private IEnumerable<IPipeNetUpdated> DevicesToUpdate { get; set; }
+        private IEnumerable<IPipeNetUpdated> DevicesToUpdate { get; set; } = new List<IPipeNetUpdated>();
 
         public override void Initialize()
         {
