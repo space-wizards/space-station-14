@@ -59,48 +59,6 @@ namespace Content.Server.GameObjects.Components.Mobs
         [ViewVariables(VVAccess.ReadWrite)]
         public bool GhostOnShutdown { get; set; }
 
-        [ViewVariables]
-        private BoundUserInterface? UserInterface =>
-            Owner.GetUIOrNull(SharedAcceptCloningComponent.AcceptCloningUiKey.Key);
-
-
-        public override void Initialize()
-        {
-            base.Initialize();
-            Owner.EntityManager.EventBus.SubscribeEvent<CloningPodComponent.CloningStartedMessage>(
-                EventSource.Local, this,
-                HandleCloningStartedMessage);
-
-            if (UserInterface != null)
-            {
-                UserInterface.OnReceiveMessage += OnUiAcceptCloningMessage;
-            }
-        }
-
-        private void HandleCloningStartedMessage(CloningPodComponent.CloningStartedMessage ev)
-        {
-            if (ev.CapturedMind == Mind)
-            {
-                UserInterface?.Open(Mind.Session);
-            }
-        }
-
-        private void OnUiAcceptCloningMessage(ServerBoundUserInterfaceMessage obj)
-        {
-            if (obj.Message is not SharedAcceptCloningComponent.UiButtonPressedMessage) return;
-            if (Mind != null)
-            {
-                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new GhostComponent.GhostReturnMessage(Mind));
-            }
-        }
-
-        public override void OnRemove()
-        {
-            base.OnRemove();
-            Owner.EntityManager.EventBus.UnsubscribeEvent<CloningPodComponent.CloningStartedMessage>(EventSource.Local, this);
-            if (UserInterface != null) UserInterface.OnReceiveMessage -= OnUiAcceptCloningMessage;
-        }
-
         /// <summary>
         ///     Don't call this unless you know what the hell you're doing.
         ///     Use <see cref="Mind.TransferTo(IEntity)"/> instead.
