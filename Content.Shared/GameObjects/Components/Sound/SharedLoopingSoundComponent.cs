@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
@@ -116,6 +117,18 @@ namespace Content.Shared.GameObjects.Components.Sound
             RandomDelay = serializer.ReadDataField("randomdelay", 0u);
             Times = serializer.ReadDataField("times", 0);
             AudioParams = serializer.ReadDataField("audioparams", Robust.Shared.Audio.AudioParams.Default);
+        }
+
+        public IDeepClone DeepClone()
+        {
+            return new ScheduledSound
+            {
+                Filename = Filename,
+                Delay = Delay,
+                RandomDelay = RandomDelay,
+                Times = Times,
+                AudioParams = AudioParams
+            };
         }
     }
 }

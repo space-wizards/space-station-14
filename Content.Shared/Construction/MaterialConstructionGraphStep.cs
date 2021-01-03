@@ -4,6 +4,7 @@ using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Materials;
 using Content.Shared.Materials;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -28,6 +29,15 @@ namespace Content.Shared.Construction
         public override void DoExamine(FormattedMessage message, bool inDetailsRange)
         {
             message.AddMarkup(Loc.GetString("Next, add [color=yellow]{0}x[/color] [color=cyan]{1}[/color].", Amount, Material));
+        }
+
+        public override IDeepClone DeepClone()
+        {
+            return new MaterialConstructionGraphStep
+            {
+                Material = Material,
+                Amount = Amount
+            };
         }
 
         public override bool EntityValid(IEntity entity)

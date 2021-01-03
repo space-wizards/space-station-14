@@ -9,11 +9,13 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Cargo
 {
+    [CustomDataClass(typeof(SharedGalacticMarketDataClass))]
     public class SharedGalacticMarketComponent : Component, IEnumerable<CargoProductPrototype>
     {
         public sealed override string Name => "GalacticMarket";
         public sealed override uint? NetID => ContentNetIDs.GALACTIC_MARKET;
 
+        [CustomYamlField("products")]
         protected List<CargoProductPrototype> _products = new();
 
         /// <summary>
@@ -59,31 +61,6 @@ namespace Content.Shared.GameObjects.Components.Cargo
             }
 
             return productIds;
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataReadWriteFunction(
-                "products",
-                new List<string>(),
-                products =>
-                {
-                    var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-
-                    _products.Clear();
-                    foreach (var id in products)
-                    {
-                        if (!prototypeManager.TryIndex(id, out CargoProductPrototype product))
-                        {
-                            continue;
-                        }
-
-                        _products.Add(product);
-                    }
-                },
-                GetProductIdList);
         }
     }
 

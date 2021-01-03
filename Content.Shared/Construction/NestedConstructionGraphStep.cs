@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
@@ -36,6 +37,22 @@ namespace Content.Shared.Construction
 
         public override void DoExamine(FormattedMessage message, bool inDetailsRange)
         {
+        }
+
+        public override IDeepClone DeepClone()
+        {
+            var newSteps = new List<List<ConstructionGraphStep>>();
+            foreach (var innerlist in Steps)
+            {
+                var newInnerList = new List<ConstructionGraphStep>();
+                foreach (var step in innerlist)
+                {
+                    newInnerList.Add((ConstructionGraphStep)step.DeepClone());
+                }
+                newSteps.Add(newInnerList);
+            }
+
+            return new NestedConstructionGraphStep {Steps = newSteps};
         }
     }
 }

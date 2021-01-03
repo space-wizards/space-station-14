@@ -21,32 +21,10 @@ namespace Content.Shared.GameObjects.Components.Materials
         public override string Name => "Material";
 
         public Dictionary<object, Material> MaterialTypes => _materialTypes;
+        [CustomYamlField("materials")]
         private Dictionary<object, Material> _materialTypes;
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            // TODO: Writing.
-            if (serializer.Writing)
-            {
-                return;
-            }
-
-            _materialTypes = new Dictionary<object, Material>();
-
-            if (serializer.TryReadDataField("materials", out List<MaterialDataEntry> list))
-            {
-                var protoMan = IoCManager.Resolve<IPrototypeManager>();
-                foreach (var entry in list)
-                {
-                    var proto = protoMan.Index<MaterialPrototype>(entry.Value);
-                    _materialTypes[entry.Key] = proto.Material;
-                }
-            }
-        }
-
-        class MaterialDataEntry : IExposeData
+        public class MaterialDataEntry : IExposeData
         {
             public object Key;
             public string Value;

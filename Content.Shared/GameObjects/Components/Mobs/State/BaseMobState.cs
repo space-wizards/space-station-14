@@ -1,4 +1,5 @@
 ﻿using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Mobs.State
@@ -94,5 +95,7 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
         {
             return true;
         }
+
+        public abstract IDeepClone DeepClone();
     }
 }

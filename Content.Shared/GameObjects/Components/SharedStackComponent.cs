@@ -3,11 +3,13 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components
 {
+    [CustomDataClass(typeof(SharedStackComponentDataClass))]
     public abstract class SharedStackComponent : Component
     {
         private const string SerializationCache = "stack";
@@ -15,8 +17,10 @@ namespace Content.Shared.GameObjects.Components
         public sealed override string Name => "Stack";
         public sealed override uint? NetID => ContentNetIDs.STACK;
 
-        private int _count;
-        private int _maxCount;
+        [YamlField("count")]
+        private int _count = 50;
+        [YamlField("max")]
+        private int _maxCount = 50;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public virtual int Count
@@ -51,44 +55,11 @@ namespace Content.Shared.GameObjects.Components
 
         [ViewVariables] public int AvailableSpace => MaxCount - Count;
 
-        [ViewVariables] public object StackType { get; private set; }
+        [ViewVariables]
+        [CustomYamlField("stacktype")]
+        public object StackType { get => _stackType == null ? Owner.Prototype.ID : _stackType; private set => _stackType = value; }
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataFieldCached(ref _maxCount, "max", 50);
-            serializer.DataFieldCached(ref _count, "count", MaxCount);
-
-            if (serializer.Writing)
-            {
-                return;
-            }
-
-            if (serializer.TryGetCacheData(SerializationCache, out object stackType))
-            {
-                StackType = stackType;
-                return;
-            }
-
-            if (serializer.TryReadDataFieldCached("stacktype", out string raw))
-            {
-                var refl = IoCManager.Resolve<IReflectionManager>();
-                if (refl.TryParseEnumReference(raw, out var @enum))
-                {
-                    stackType = @enum;
-                }
-                else
-                {
-                    stackType = raw;
-                }
-            }
-            else
-            {
-                stackType = Owner.Prototype.ID;
-            }
-
-            serializer.SetCacheData(SerializationCache, stackType);
-            StackType = stackType;
-        }
+        private object? _stackType = null;
 
         public override ComponentState GetComponentState()
         {
