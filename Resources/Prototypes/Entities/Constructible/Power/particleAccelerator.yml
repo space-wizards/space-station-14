@@ -225,6 +225,7 @@
     - type: PowerConsumer
       voltage: High
     - type: NodeContainer
+      examinable: true
       nodes:
         - !type:AdjacentNode
           nodeGroupID: HVPower

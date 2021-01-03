@@ -11,11 +11,11 @@
     offset: "0.5, 0"
     color: "#FF4020"
     mask: /Textures/Effects/LightMasks/emergency_mask.png
-  - type: EmergencyLight
   - type: PowerReceiver
   - type: Battery
     maxCharge: 30000
     startingCharge: 0
+  - type: EmergencyLight
   - type: Sprite
     sprite: Constructible/Lighting/emergency_light.rsi
     state: emergency_light_off

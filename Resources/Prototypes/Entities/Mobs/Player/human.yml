@@ -7,7 +7,7 @@
   drawdepth: Mobs
   components:
   - type: Mind
-    show_examine_info: true
+    showExamineInfo: true
   - type: Input
     context: "human"
   - type: Alerts

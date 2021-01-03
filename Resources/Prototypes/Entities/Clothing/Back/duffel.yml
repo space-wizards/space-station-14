@@ -81,3 +81,21 @@
     sprite: Clothing/Back/Duffels/syndicate.rsi
   - type: Clothing
     sprite: Clothing/Back/Duffels/syndicate.rsi
+
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelHolding
+  name: duffelbag of holding
+  description: A duffelbag that opens into a localized pocket of bluespace.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/holding.rsi
+    state: icon
+    layers:
+    - state: icon
+    - state: icon-unlit
+      shader: unshaded
+  - type: Clothing
+    sprite: Clothing/Back/Duffels/holding.rsi
+  - type: Storage
+    capacity: 10000
