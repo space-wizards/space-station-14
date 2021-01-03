@@ -21,6 +21,82 @@
   requiredTechnologies:
     - BasicResearch
 
+- type: technology
+  name: "advanced botany"
+  id: AdvancedBotany
+  description: A better understanding of botany.
+  icon: Objects/Specific/Hydroponics/potato.rsi
+  requiredPoints: 1500
+  requiredTechnologies:
+    - BiologicalTechnology
+
+- type: technology
+  name: "advanced surgery"
+  id: AdvancedSugery
+  description: Research new surgical procedures.
+  icon: Objects/Specific/Medical/surgery_tools.rsi
+  requiredPoints: 1500
+  requiredTechnologies:
+    - BiologicalTechnology
+
+# Chemistry Technology Tree
+
+type: technology
+  name: "chemistry technology"
+  id: ChemistryTechnology
+  description: A crash course in chemistry.
+  icon: Objects/Specific/Chemistry/beakers.rsi
+  requiredPoints: 1000
+  requiredTechnologies:
+    - BasicResearch
+
+# Security Technology Tree
+
+- type: technology
+  name: "security technology"
+  id: SecurityTechnology
+  description: Beginning of the long hard road to exosuits.
+  icon: Objects/Weapons/Melee/stunbaton.rsi
+  requiredPoints: 1000
+  requiredTechnologies:
+    -BasicResearch
+
+- type: technology
+  name: "ballistic technology"
+  id: BallisticTechnology
+  description: Just a fancy term for guns.
+  icon: Objects/Weapons/Guns/Pistols/clarissa.rsi
+  requiredPoints: 1500
+  requiredTechnologies:
+    -SecurityTechnology
+
+- type: technology
+  name: "direct energy technology"
+  id: DirectEnergyTechnology
+  description: Basically laser guns.
+  icon: Objects/Weapons/Guns/Battery/taser.rsi
+  requiredPoints: 1500
+  requiredTechnologies:
+    -SecurityTechnology
+
+- type: technology
+  name: "explosives technology"
+  id: ExplosivesTechnology
+  description: Let's just start with grenades for now.
+  icon: Objects/Weapons/Grenades/flashbang.rsi
+  requiredPoints: 1500
+  requiredTechnologies:
+    -SecurityTechnology
+
+- type: technology
+  name: "armor technology"
+  id: ArmorTechnology
+  description: Basic protective gear for security personnel.
+  icon: Clothing/OuterClothing/Vests/kevlar.rsi
+  requiredPoints: 1500
+  requiredTechnologies:
+    -SecurityTechnology
+
 # Data Theory Technology Tree
 
 - type: technology
