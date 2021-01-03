@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -547,7 +547,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             UpdateInterface();
         }
 
-        private void PowerStateChanged(object? sender, PowerStateEventArgs args)
+        private void PowerStateChanged(PowerChangedMessage args)
         {
             if (!args.Powered)
             {
@@ -619,11 +619,6 @@ namespace Content.Server.GameObjects.Components.Disposal
                 physics.AnchoredChanged += UpdateVisualState;
             }
 
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
-            {
-                receiver.OnPowerStateChanged += PowerStateChanged;
-            }
-
             UpdateTargetList();
             UpdateVisualState();
         }
@@ -633,11 +628,6 @@ namespace Content.Server.GameObjects.Components.Disposal
             if (Owner.TryGetComponent(out IPhysicsComponent? physics))
             {
                 physics.AnchoredChanged -= UpdateVisualState;
-            }
-
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
-            {
-                receiver.OnPowerStateChanged -= PowerStateChanged;
             }
 
             if (_container != null)
@@ -679,6 +669,10 @@ namespace Content.Server.GameObjects.Components.Disposal
 
                     _lastExitAttempt = _gameTiming.CurTime;
                     Remove(msg.Entity);
+                    break;
+
+                case PowerChangedMessage powerChanged:
+                    PowerStateChanged(powerChanged);
                     break;
             }
         }
