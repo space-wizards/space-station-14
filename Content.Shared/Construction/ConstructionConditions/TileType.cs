@@ -5,13 +5,13 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using System.Collections.Generic;
+using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Shared.Construction.ConstructionConditions
 {
     [UsedImplicitly]
     public class TileType : IConstructionCondition
     {
-
         public List<string> TargetTiles { get; private set; }
         public void ExposeData(ObjectSerializer serializer)
         {
@@ -35,6 +35,11 @@ namespace Content.Shared.Construction.ConstructionConditions
                 }
             }
             return false;
+        }
+
+        public IDeepClone DeepClone()
+        {
+            return new TileType {TargetTiles = TargetTiles};
         }
     }
 }

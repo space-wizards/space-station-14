@@ -110,6 +110,24 @@ namespace Content.Shared.Materials
             serializer.DataField(ref _bluntDamage, "bluntDamage", 1, alwaysWrite: true);
             serializer.DataField(ref _icon, "icon", SpriteSpecifier.Invalid, alwaysWrite: true);
         }
+
+        public IDeepClone DeepClone()
+        {
+            return new Material
+            {
+                _name = _name,
+                _color = _color,
+                _density = _density,
+                _electricResistivity = _electricResistivity,
+                _thermalConductivity = _thermalConductivity,
+                _specificHeat = _specificHeat,
+                _durability = _durability,
+                _hardness = _hardness,
+                _sharpDamage = _sharpDamage,
+                _bluntDamage = _bluntDamage,
+                _icon = _icon
+            };
+        }
     }
 
     [Prototype("material")]

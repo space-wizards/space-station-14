@@ -25,5 +25,6 @@ namespace Content.Shared.Construction
         }
 
         public abstract void DoExamine(FormattedMessage message, bool inDetailsRange);
+        public abstract IDeepClone DeepClone();
     }
 }

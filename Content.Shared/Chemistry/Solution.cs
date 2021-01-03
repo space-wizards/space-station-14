@@ -287,5 +287,10 @@ namespace Content.Shared.Chemistry
         }
 
         #endregion
+
+        public IDeepClone DeepClone()
+        {
+            return Clone();
+        }
     }
 }

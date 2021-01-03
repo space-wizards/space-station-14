@@ -97,5 +97,16 @@ namespace Content.Shared.Construction
 
             throw new ArgumentException("Tried to convert invalid YAML node mapping to ConstructionGraphStep!");
         }
+
+        public IDeepClone DeepClone()
+        {
+            return new ConstructionGraphEdge
+            {
+                Target = Target,
+                _steps = _steps,
+                _completed = _completed,
+                _conditions = _conditions
+            };
+        }
     }
 }

@@ -68,6 +68,11 @@ namespace Content.Shared.GameObjects.Components.Materials
                 }
                 Key = key;
             }
+
+            public IDeepClone DeepClone()
+            {
+                return new MaterialDataEntry {Key = Key, Value = Value};
+            }
         }
     }
 
