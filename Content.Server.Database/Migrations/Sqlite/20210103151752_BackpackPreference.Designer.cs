@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Content.Server.Database.Migrations.Sqlite
 {
     [DbContext(typeof(SqliteServerDbContext))]
-    [Migration("20201203093351_ClothingAndPronouns")]
-    partial class ClothingAndPronouns
+    [Migration("20210103151752_BackpackPreference")]
+    partial class BackpackPreference
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -224,6 +224,11 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Property<int>("Age")
                         .HasColumnType("INTEGER")
                         .HasColumnName("age");
+
+                    b.Property<string>("Backpack")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("backpack");
 
                     b.Property<string>("CharacterName")
                         .IsRequired()

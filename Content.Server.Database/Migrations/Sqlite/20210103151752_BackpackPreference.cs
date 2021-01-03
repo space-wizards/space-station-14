@@ -2,19 +2,12 @@
 
 namespace Content.Server.Database.Migrations.Sqlite
 {
-    public partial class ClothingAndPronouns : Migration
+    public partial class BackpackPreference : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "clothing",
-                table: "profile",
-                type: "TEXT",
-                nullable: false,
-                defaultValue: "");
-
-            migrationBuilder.AddColumn<string>(
-                name: "gender",
+                name: "backpack",
                 table: "profile",
                 type: "TEXT",
                 nullable: false,
@@ -24,11 +17,7 @@ namespace Content.Server.Database.Migrations.Sqlite
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "clothing",
-                table: "profile");
-
-            migrationBuilder.DropColumn(
-                name: "gender",
+                name: "backpack",
                 table: "profile");
         }
     }
