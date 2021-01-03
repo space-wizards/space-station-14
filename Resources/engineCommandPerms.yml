@@ -20,6 +20,7 @@
   - querymappaused
   - showtime
   - inrangeunoccluded
+  - chunkupdates
 
 - Flags: MAPPING
   Commands:
