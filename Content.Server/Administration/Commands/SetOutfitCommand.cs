@@ -1,3 +1,4 @@
+using Content.Server.Eui;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Shared.Administration;
@@ -13,17 +14,17 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    class SetOutfit : IClientCommand
+    class SetOutfitCommand : IClientCommand
     {
         public string Command => "setoutfit";
 
         public string Description => Loc.GetString("Sets the outfit of the specified entity. The entity must have an InventoryComponent");
 
-        public string Help => Loc.GetString("Usage: {0} <entityUid> <outfitId>", Command);
+        public string Help => Loc.GetString("Usage: {0} <entityUid> | {0} <entityUid> <outfitId>", Command);
 
         public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
         {
-            if (args.Length != 2)
+            if (args.Length < 1)
             {
                 shell.SendText(player, Loc.GetString("Wrong number of arguments."));
                 return;
@@ -50,6 +51,14 @@ namespace Content.Server.Administration.Commands
             if (!target.TryGetComponent<InventoryComponent>(out var inventoryComponent))
             {
                 shell.SendText(player, Loc.GetString("Target entity does not have an inventory!"));
+                return;
+            }
+
+            if (args.Length == 1)
+            {
+                var eui = IoCManager.Resolve<EuiManager>();
+                var ui = new SetOutfitEui(target);
+                eui.OpenEui(ui, player);
                 return;
             }
 
