@@ -3,7 +3,7 @@ using Content.Server.Interfaces;
 using Content.Server.Utility;
 using Content.Shared.Atmos;
 using JetBrains.Annotations;
-using Robust.Shared.Physics.Chunks;
+using Robust.Shared.EntityLookup;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Atmos.Reactions

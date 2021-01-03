@@ -1,8 +1,8 @@
 ﻿#nullable enable
 using Content.Server.Atmos;
 using Content.Server.Atmos.Reactions;
+using Robust.Shared.EntityLookup;
 using Robust.Shared.Interfaces.Serialization;
-using Robust.Shared.Physics.Chunks;
 
 namespace Content.Server.Interfaces
 {

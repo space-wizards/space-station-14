@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Content.Server.Interfaces;
 using Content.Shared.Atmos;
-using Robust.Shared.Physics.Chunks;
+using Robust.Shared.EntityLookup;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using YamlDotNet.RepresentationModel;
