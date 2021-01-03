@@ -24,4 +24,5 @@
     belt: ClothingBeltUtilityFilled
     ears: ClothingHeadsetEngineering
   innerclothingskirt: ClothingUniformJumpskirtEngineering
-
+  satchel: ClothingBackpackSatchelEngineeringFilled
+  duffelbag: ClothingBackpackDuffelEngineeringFilled

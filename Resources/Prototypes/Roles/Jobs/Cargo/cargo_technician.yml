@@ -21,4 +21,5 @@
     idcard: CargoPDA
     ears: ClothingHeadsetCargo
   innerclothingskirt: ClothingUniformJumpskirtCargo
-
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled
