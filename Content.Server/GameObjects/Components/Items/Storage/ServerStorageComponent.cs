@@ -506,6 +506,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 }
             }
         }
+
         protected void PlaySoundCollection(string? name)
         {
             if (string.IsNullOrEmpty(name))
