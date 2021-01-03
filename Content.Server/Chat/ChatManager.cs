@@ -212,9 +212,7 @@ namespace Content.Server.Chat
                 return;
             }
 
-            var clients = _playerManager
-                .GetPlayersBy(x => x.AttachedEntity != null && x.AttachedEntity.HasComponent<GhostComponent>())
-                .Select(p => p.ConnectedClient);
+            var clients = GetDeadChatClients();
 
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Dead;
@@ -233,16 +231,20 @@ namespace Content.Server.Chat
                 return;
             }
 
-            var clients = _playerManager
-                .GetPlayersBy(x => x.AttachedEntity != null && x.AttachedEntity.HasComponent<GhostComponent>())
-                .Select(p => p.ConnectedClient);
+            var clients = GetDeadChatClients();
 
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Dead;
             msg.Message = message;
             msg.MessageWrap = $"{Loc.GetString("ADMIN")}:(${player.ConnectedClient.UserName}): {{0}}";
-            msg.SenderEntity = player.AttachedEntityUid.GetValueOrDefault();
             _netManager.ServerSendToMany(msg, clients.ToList());
+        }
+
+        private IEnumerable<INetChannel> GetDeadChatClients()
+        {
+            return _playerManager
+                .GetPlayersBy(x => x.AttachedEntity != null && x.AttachedEntity.HasComponent<GhostComponent>())
+                .Select(p => p.ConnectedClient);
         }
 
         public void SendAdminChat(IPlayerSession player, string message)
