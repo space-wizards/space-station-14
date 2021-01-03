@@ -22,29 +22,29 @@ namespace Content.Shared.GameObjects.Components.Damage
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IDamageableComponent))]
+    [CustomDataClass(typeof(DamageableComponentData))]
     public class DamageableComponent : Component, IDamageableComponent, IRadiationAct
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        // TODO define these in yaml?
-        public const string DefaultDamageContainer = "metallicDamageContainer";
-        public const string DefaultResistanceSet = "defaultResistances";
 
         public override string Name => "Damageable";
 
         public override uint? NetID => ContentNetIDs.DAMAGEABLE;
 
         private readonly Dictionary<DamageType, int> _damageList = DamageTypeExtensions.ToNewDictionary();
+        [CustomYamlField("supportedTypes")]
         private readonly HashSet<DamageType> _supportedTypes = new();
+        [CustomYamlField("supportedClasses")]
         private readonly HashSet<DamageClass> _supportedClasses = new();
         private DamageFlag _flags;
 
         public event Action<DamageChangedEventArgs>? HealthChangedEvent;
 
         // TODO DAMAGE Use as default values, specify overrides in a separate property through yaml for better (de)serialization
-        [ViewVariables] public string DamageContainerId { get; set; } = default!;
+        [ViewVariables] [CustomYamlField("damageContainer")] public string DamageContainerId { get; set; } = default!;
 
-        [ViewVariables] private ResistanceSet Resistances { get; set; } = default!;
+        [ViewVariables] [CustomYamlField("resistances")] private ResistanceSet Resistances { get; set; } = default!;
 
         // TODO DAMAGE Cache this
         [ViewVariables] public int TotalDamage => _damageList.Values.Sum();
@@ -55,6 +55,7 @@ namespace Content.Shared.GameObjects.Components.Damage
 
         [ViewVariables] public IReadOnlyDictionary<DamageType, int> DamageTypes => _damageList;
 
+        [CustomYamlField("flags")]
         public DamageFlag Flags
         {
             get => _flags;
@@ -93,72 +94,6 @@ namespace Content.Shared.GameObjects.Components.Damage
         public bool SupportsDamageType(DamageType type)
         {
             return _supportedTypes.Contains(type);
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataReadWriteFunction(
-                "flags",
-                new List<DamageFlag>(),
-                flags =>
-                {
-                    var result = DamageFlag.None;
-
-                    foreach (var flag in flags)
-                    {
-                        result |= flag;
-                    }
-
-                    Flags = result;
-                },
-                () =>
-                {
-                    var writeFlags = new List<DamageFlag>();
-
-                    if (Flags == DamageFlag.None)
-                    {
-                        return writeFlags;
-                    }
-
-                    foreach (var flag in (DamageFlag[]) Enum.GetValues(typeof(DamageFlag)))
-                    {
-                        if ((Flags & flag) == flag)
-                        {
-                            writeFlags.Add(flag);
-                        }
-                    }
-
-                    return writeFlags;
-                });
-
-            // TODO DAMAGE Serialize damage done and resistance changes
-            serializer.DataReadWriteFunction(
-                "damageContainer",
-                DefaultDamageContainer,
-                prototype =>
-                {
-                    var damagePrototype = _prototypeManager.Index<DamageContainerPrototype>(prototype);
-
-                    _supportedClasses.Clear();
-                    _supportedTypes.Clear();
-
-                    DamageContainerId = damagePrototype.ID;
-                    _supportedClasses.UnionWith(damagePrototype.SupportedClasses);
-                    _supportedTypes.UnionWith(damagePrototype.SupportedTypes);
-                },
-                () => DamageContainerId);
-
-            serializer.DataReadWriteFunction(
-                "resistances",
-                DefaultResistanceSet,
-                prototype =>
-                {
-                    var resistancePrototype = _prototypeManager.Index<ResistanceSetPrototype>(prototype);
-                    Resistances = new ResistanceSet(resistancePrototype);
-                },
-                () => Resistances.ID);
         }
 
         protected override void Startup()

@@ -1,4 +1,5 @@
 ﻿using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -35,9 +36,12 @@ namespace Content.Shared.GameObjects.Components.Movement
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public float BaseWalkSpeed { get; set; }
+        [YamlField("baseWalkSpeed")]
+        public float BaseWalkSpeed { get; set; } = 4;
+
         [ViewVariables(VVAccess.ReadWrite)]
-        public float BaseSprintSpeed { get; set; }
+        [YamlField("baseSprintSpeed")]
+        public float BaseSprintSpeed { get; set; } = 7;
 
         [ViewVariables]
         public float CurrentWalkSpeed => WalkSpeedModifier * BaseWalkSpeed;
@@ -52,14 +56,6 @@ namespace Content.Shared.GameObjects.Components.Movement
         public void RefreshMovementSpeedModifiers()
         {
             _movespeedModifiersNeedRefresh = true;
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(this, p => p.BaseWalkSpeed, "baseWalkSpeed", 4);
-            serializer.DataField(this, p => p.BaseSprintSpeed, "baseSprintSpeed", 7);
         }
 
         /// <summary>

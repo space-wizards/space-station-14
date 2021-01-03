@@ -9,6 +9,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -68,36 +69,25 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
 
         public IReadOnlyDictionary<Type, IMechanismBehavior> Behaviors => _behaviors;
 
-        public int MaxDurability { get; set; }
+        [YamlField("maxDurability")] public int MaxDurability { get; set; } = 10;
 
-        public int CurrentDurability { get; set; }
+        [YamlField("currentDurability")] public int CurrentDurability { get; set; } = 10;
 
-        public int DestroyThreshold { get; set; }
+        [YamlField("destroyThreshold")] public int DestroyThreshold { get; set; } = -10;
 
         // TODO BODY: Surgery description and adding a message to the examine tooltip of the entity that owns this mechanism
         // TODO BODY
-        public int Resistance { get; set; }
+        [YamlField("resistance")] public int Resistance { get; set; } = 0;
 
         // TODO BODY OnSizeChanged
-        public int Size { get; set; }
+        [YamlField("size")] public int Size { get; set; } = 1;
 
-        public BodyPartCompatibility Compatibility { get; set; }
+        [YamlField("compatibility")]
+        public BodyPartCompatibility Compatibility { get; set; } = BodyPartCompatibility.Universal;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-
-            serializer.DataField(this, m => m.MaxDurability, "maxDurability", 10);
-
-            serializer.DataField(this, m => m.CurrentDurability, "currentDurability", MaxDurability);
-
-            serializer.DataField(this, m => m.DestroyThreshold, "destroyThreshold", -MaxDurability);
-
-            serializer.DataField(this, m => m.Resistance, "resistance", 0);
-
-            serializer.DataField(this, m => m.Size, "size", 1);
-
-            serializer.DataField(this, m => m.Compatibility, "compatibility", BodyPartCompatibility.Universal);
 
             var moduleManager = IoCManager.Resolve<IModuleManager>();
 

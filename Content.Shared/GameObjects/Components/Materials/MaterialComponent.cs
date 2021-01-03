@@ -33,12 +33,6 @@ namespace Content.Shared.GameObjects.Components.Materials
                 return;
             }
 
-            if (serializer.TryGetCacheData(SerializationCache, out Dictionary<object, Material> cached))
-            {
-                _materialTypes = cached.ShallowClone();
-                return;
-            }
-
             _materialTypes = new Dictionary<object, Material>();
 
             if (serializer.TryReadDataField("materials", out List<MaterialDataEntry> list))
@@ -50,8 +44,6 @@ namespace Content.Shared.GameObjects.Components.Materials
                     _materialTypes[entry.Key] = proto.Material;
                 }
             }
-
-            serializer.SetCacheData(SerializationCache, _materialTypes.ShallowClone());
         }
 
         class MaterialDataEntry : IExposeData

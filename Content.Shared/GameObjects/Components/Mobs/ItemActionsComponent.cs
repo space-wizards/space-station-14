@@ -9,6 +9,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Mobs
@@ -52,22 +53,24 @@ namespace Content.Shared.GameObjects.Components.Mobs
         public IEntity? Holder { get; private set; }
         // cached actions component of the holder, since we'll need to access it frequently
         private SharedActionsComponent? _holderActionsComponent;
-        private List<ItemActionConfig> _actionConfigs = new();
-        // State of all actions provided by this item.
-        private readonly Dictionary<ItemActionType, ActionState> _actions = new();
 
-
-        public override void ExposeData(ObjectSerializer serializer)
+        [YamlField("actions")]
+        private List<ItemActionConfig> _actionConfigs
         {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _actionConfigs,"actions", new List<ItemActionConfig>());
-
-            foreach (var actionConfig in _actionConfigs)
+            get => internalActionConfigs;
+            set
             {
-                GrantOrUpdate(actionConfig.ActionType, actionConfig.Enabled, false, null);
+                internalActionConfigs = value;
+                foreach (var actionConfig in value)
+                {
+                    GrantOrUpdate(actionConfig.ActionType, actionConfig.Enabled, false, null);
+                }
             }
         }
+
+        // State of all actions provided by this item.
+        private readonly Dictionary<ItemActionType, ActionState> _actions = new();
+        private List<ItemActionConfig> internalActionConfigs = new ();
 
         protected override void Startup()
         {

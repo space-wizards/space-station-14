@@ -9,6 +9,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timers.Timer;
@@ -33,17 +34,22 @@ namespace Content.Shared.GameObjects.Components.Mobs
               (TimeSpan.FromSeconds(Math.Max(StunnedTimer, Math.Max(KnockdownTimer, SlowdownTimer))));
 
         private bool _canHelp = true;
+        [YamlField("stunCap")]
         protected float _stunCap = 20f;
+        [YamlField("knockdownCap")]
         protected float _knockdownCap = 20f;
+        [YamlField("slowdownCap")]
         protected float _slowdownCap = 20f;
         private float _helpKnockdownRemove = 1f;
+        [YamlField("helpInterval")]
         private float _helpInterval = 1f;
 
         protected float StunnedTimer;
         protected float KnockdownTimer;
         protected float SlowdownTimer;
 
-        private string _stunAlertId;
+        [YamlField("stunAlertId")]
+        private string _stunAlertId = "stun";
 
         protected CancellationTokenSource StatusRemoveCancellation = new();
 
@@ -203,19 +209,6 @@ namespace Content.Shared.GameObjects.Components.Mobs
                 (StunStart == null || StunEnd == null) ? default : (StunStart.Value, StunEnd.Value));
             StatusRemoveCancellation.Cancel();
             StatusRemoveCancellation = new CancellationTokenSource();
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _stunCap, "stunCap", 20f);
-            serializer.DataField(ref _knockdownCap, "knockdownCap", 20f);
-            serializer.DataField(ref _slowdownCap, "slowdownCap", 20f);
-            serializer.DataField(ref _helpInterval, "helpInterval", 1f);
-            serializer.DataField(ref _helpKnockdownRemove, "helpKnockdownRemove", 1f);
-            serializer.DataField(ref _stunAlertId, "stunAlertId",
-                "stun");
         }
 
         protected virtual void OnInteractHand() { }

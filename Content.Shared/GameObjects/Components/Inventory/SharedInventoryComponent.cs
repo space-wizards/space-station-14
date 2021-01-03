@@ -4,6 +4,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -25,14 +26,8 @@ namespace Content.Shared.GameObjects.Components.Inventory
         protected Inventory InventoryInstance { get; private set; }
 
         [ViewVariables]
+        [YamlField("Template")]
         private string _templateName = "HumanInventory"; //stored for serialization purposes
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _templateName, "Template", "HumanInventory");
-        }
 
         public override void Initialize()
         {

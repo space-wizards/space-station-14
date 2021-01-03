@@ -1,4 +1,5 @@
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -13,6 +14,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         public override string Name => "Examiner";
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [YamlField("DoRangeCheck")]
         private bool _doRangeCheck = true;
 
         /// <summary>
@@ -20,12 +22,5 @@ namespace Content.Shared.GameObjects.Components.Mobs
         ///     If false, the user can theoretically examine from infinitely far away.
         /// </summary>
         public bool DoRangeCheck => _doRangeCheck;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _doRangeCheck, "DoRangeCheck", true);
-        }
     }
 }

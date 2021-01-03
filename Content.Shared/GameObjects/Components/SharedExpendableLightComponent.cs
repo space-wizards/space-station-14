@@ -1,5 +1,6 @@
 ﻿using System;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -28,53 +29,47 @@ namespace Content.Shared.GameObjects.Components
         protected ExpendableLightState CurrentState { get; set; }
 
         [ViewVariables]
-        protected string TurnOnBehaviourID { get; set; }
+        [YamlField("turnOnBehaviourID")]
+        protected string TurnOnBehaviourID { get; set; } = string.Empty;
 
         [ViewVariables]
-        protected string FadeOutBehaviourID { get; set; }
+        [YamlField("fadeOutBehaviourID")]
+        protected string FadeOutBehaviourID { get; set; } = string.Empty;
 
         [ViewVariables]
-        protected float GlowDuration { get; set; }
+        [YamlField("glowDuration")]
+        protected float GlowDuration { get; set; } = 60 * 15f;
 
         [ViewVariables]
-        protected float FadeOutDuration { get; set; }
+        [YamlField("fadeOutDuration")]
+        protected float FadeOutDuration { get; set; } = 60 * 5f;
 
         [ViewVariables]
-        protected string SpentDesc { get; set; }
+        [YamlField("spentDesc")]
+        protected string SpentDesc { get; set; } = string.Empty;
 
         [ViewVariables]
-        protected string SpentName { get; set; }
+        [YamlField("spentName")]
+        protected string SpentName { get; set; } = string.Empty;
 
         [ViewVariables]
-        protected string IconStateSpent { get; set; }
+        [YamlField("iconStateSpent")]
+        protected string IconStateSpent { get; set; } = string.Empty;
 
         [ViewVariables]
-        protected string IconStateLit { get; set; }
+        [YamlField("iconStateOn")]
+        protected string IconStateLit { get; set; } = string.Empty;
 
         [ViewVariables]
-        protected string LitSound { get; set; }
+        [YamlField("litSound")]
+        protected string LitSound { get; set; } = string.Empty;
 
         [ViewVariables]
-        protected string LoopedSound { get; set; }
+        [YamlField("loopedSound")]
+        protected string LoopedSound { get; set; } = string.Empty;
 
         [ViewVariables]
-        protected string DieSound { get; set; }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(this, x => x.TurnOnBehaviourID, "turnOnBehaviourID", string.Empty);
-            serializer.DataField(this, x => x.FadeOutBehaviourID, "fadeOutBehaviourID", string.Empty);
-            serializer.DataField(this, x => x.GlowDuration, "glowDuration", 60 * 15f);
-            serializer.DataField(this, x => x.FadeOutDuration, "fadeOutDuration", 60 * 5f);
-            serializer.DataField(this, x => x.SpentName, "spentName", string.Empty);
-            serializer.DataField(this, x => x.SpentDesc, "spentDesc", string.Empty);
-            serializer.DataField(this, x => x.IconStateLit, "iconStateOn", string.Empty);
-            serializer.DataField(this, x => x.IconStateSpent, "iconStateSpent", string.Empty);
-            serializer.DataField(this, x => x.LitSound, "litSound", string.Empty);
-            serializer.DataField(this, x => x.LoopedSound, "loopedSound", string.Empty);
-            serializer.DataField(this, x => x.DieSound, "dieSound", string.Empty);
-        }
+        [YamlField("dieSound")]
+        protected string DieSound { get; set; } = string.Empty;
     }
 }

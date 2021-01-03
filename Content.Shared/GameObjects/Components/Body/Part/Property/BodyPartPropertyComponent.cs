@@ -1,4 +1,5 @@
 ﻿using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Body.Part.Property
@@ -14,13 +15,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part.Property
         /// <summary>
         ///     Whether this property is currently active.
         /// </summary>
-        public bool Active { get; set; }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(this, b => b.Active, "active", true);
-        }
+        [YamlField("active")]
+        public bool Active { get; set; } = true;
     }
 }
