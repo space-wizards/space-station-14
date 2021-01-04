@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -95,12 +95,18 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 UserInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
             }
 
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
-            {
-                receiver.OnPowerStateChanged += OnPowerStateChanged;
-            }
-
             _audioSystem = EntitySystem.Get<AudioSystem>();
+        }
+
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+            switch (message)
+            {
+                case PowerChangedMessage powerChanged:
+                    OnPowerStateChanged(powerChanged);
+                    break;
+            }
         }
 
         public override void OnRemove()
@@ -109,11 +115,6 @@ namespace Content.Server.GameObjects.Components.Kitchen
             if (UserInterface != null)
             {
                 UserInterface.OnReceiveMessage -= UserInterfaceOnReceiveMessage;
-            }
-
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
-            {
-                receiver.OnPowerStateChanged -= OnPowerStateChanged;
             }
         }
 
@@ -166,7 +167,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             }
         }
 
-        private void OnPowerStateChanged(object? sender, PowerStateEventArgs e)
+        private void OnPowerStateChanged(PowerChangedMessage e)
         {
             _uiDirty = true;
         }

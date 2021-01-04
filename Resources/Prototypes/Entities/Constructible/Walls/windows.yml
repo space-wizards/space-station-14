@@ -32,8 +32,6 @@
     thresholds:
       15:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:PlaySoundCollectionBehavior
           soundCollection: WindowBreak
         - !type:SpawnEntitiesBehavior
@@ -41,6 +39,8 @@
             ShardGlass:
               min: 1
               max: 2
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: SnapGrid
     offset: Center
   - type: Airtight
@@ -70,8 +70,6 @@
     thresholds:
       75:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:PlaySoundCollectionBehavior
           soundCollection: WindowBreak
         - !type:SpawnEntitiesBehavior
@@ -79,6 +77,8 @@
             ShardGlassReinforced:
               min: 1
               max: 2
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: Window
     base: rwindow
     maxDamage: 75
@@ -102,8 +102,6 @@
     thresholds:
       100:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:PlaySoundCollectionBehavior
           soundCollection: WindowBreak
         - !type:SpawnEntitiesBehavior
@@ -111,6 +109,8 @@
             ShardGlassPhoron:
               min: 1
               max: 2
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     resistances: metallicResistances
   - type: Window
     base: pwindow

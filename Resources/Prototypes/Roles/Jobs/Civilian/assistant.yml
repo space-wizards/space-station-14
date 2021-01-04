@@ -18,4 +18,5 @@
     idcard: AssistantPDA
     ears: ClothingHeadsetService
   innerclothingskirt: ClothingUniformJumpskirtColorGrey
-
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled

@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.VendingMachines;
@@ -100,14 +100,20 @@ namespace Content.Server.GameObjects.Components.Arcade
             {
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             }
+        }
 
-            if (_powerReceiverComponent != null)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+            switch (message)
             {
-                _powerReceiverComponent.OnPowerStateChanged += OnOnPowerStateChanged;
+                case PowerChangedMessage powerChanged:
+                    OnOnPowerStateChanged(powerChanged);
+                    break;
             }
         }
 
-        private void OnOnPowerStateChanged(object? sender, PowerStateEventArgs e)
+        private void OnOnPowerStateChanged(PowerChangedMessage e)
         {
             if(e.Powered) return;
 
