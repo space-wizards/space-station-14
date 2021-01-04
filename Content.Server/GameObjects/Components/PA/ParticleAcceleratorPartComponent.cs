@@ -11,7 +11,6 @@ namespace Content.Server.GameObjects.Components.PA
 {
     public abstract class ParticleAcceleratorPartComponent : Component
     {
-        [ViewVariables] private PhysicsComponent? _collidableComponent;
         [ViewVariables] public ParticleAcceleratorControlBoxComponent? Master;
         [ViewVariables] protected SnapGridComponent? SnapGrid;
 
@@ -19,10 +18,6 @@ namespace Content.Server.GameObjects.Components.PA
         {
             base.Initialize();
             // FIXME: this has to be an entity system, full stop.
-            if (!Owner.TryGetComponent(out _collidableComponent))
-            {
-                Logger.Error("ParticleAcceleratorPartComponent created with no CollidableComponent");
-            }
 
             if (!Owner.TryGetComponent(out SnapGrid))
             {

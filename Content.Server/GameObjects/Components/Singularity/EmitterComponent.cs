@@ -44,7 +44,6 @@ namespace Content.Server.GameObjects.Components.Singularity
 
         private CancellationTokenSource? _timerCancel;
 
-        private PhysicsComponent _collidableComponent = default!;
         private PowerConsumerComponent _powerConsumer = default!;
 
         // whether the power switch is in "on"
@@ -80,12 +79,6 @@ namespace Content.Server.GameObjects.Components.Singularity
         {
             base.Initialize();
 
-            if (!Owner.TryGetComponent(out _collidableComponent!))
-            {
-                Logger.Error($"EmitterComponent {Owner} created with no CollidableComponent");
-                return;
-            }
-
             if (!Owner.TryGetComponent(out _powerConsumer!))
             {
                 Logger.Error($"EmitterComponent {Owner} created with no PowerConsumerComponent");
@@ -116,15 +109,15 @@ namespace Content.Server.GameObjects.Components.Singularity
             base.HandleMessage(message, component);
             switch (message)
             {
-                case AnchoredChangedMessage:
-                    OnAnchoredChanged();
+                case AnchoredChangedMessage anchoredChanged:
+                    OnAnchoredChanged(anchoredChanged);
                     break;
             }
         }
 
-        private void OnAnchoredChanged()
+        private void OnAnchoredChanged(AnchoredChangedMessage anchoredChanged)
         {
-            if (_collidableComponent.Anchored)
+            if (anchoredChanged.Anchored)
                 Owner.SnapToGrid();
         }
 
