@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -83,13 +83,19 @@ namespace Content.Server.GameObjects.Components.Chemistry
             _beakerContainer =
                 ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-reagentContainerContainer", Owner);
 
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
-            {
-                receiver.OnPowerStateChanged += OnPowerChanged;
-            }
-
             InitializeFromPrototype();
             UpdateUserInterface();
+        }
+
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+            switch (message)
+            {
+                case PowerChangedMessage powerChanged:
+                    OnPowerChanged(powerChanged);
+                    break;
+            }
         }
 
         /// <summary>
@@ -111,7 +117,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
         }
 
-        private void OnPowerChanged(object? sender, PowerStateEventArgs e)
+        private void OnPowerChanged(PowerChangedMessage e)
         {
             UpdateUserInterface();
         }

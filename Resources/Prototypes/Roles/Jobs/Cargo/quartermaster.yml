@@ -22,4 +22,5 @@
     idcard: QuartermasterPDA
     ears: ClothingHeadsetCargo
   innerclothingskirt: ClothingUniformJumpskirtQM
-
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled
