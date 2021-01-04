@@ -4,6 +4,7 @@ using Content.Server.GameObjects.EntitySystems.Click;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystemMessages;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.EntitySystems
