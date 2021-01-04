@@ -8,6 +8,7 @@ using Content.Shared.GameObjects.Components.Atmos;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -123,6 +124,15 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
                     yield return pipeNode;
                 }
             }
+        }
+
+        public override IDeepClone DeepClone()
+        {
+            var node = LazyDeepClone<PipeNode>();
+            node._pipeDirection = _pipeDirection;
+            node._conduitLayer = _conduitLayer;
+            node.LocalAir = (GasMixture)LocalAir.DeepClone();
+            return node;
         }
 
         private void UpdateAppearance()

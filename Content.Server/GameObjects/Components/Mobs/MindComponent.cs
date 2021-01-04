@@ -16,6 +16,7 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -28,6 +29,7 @@ namespace Content.Server.GameObjects.Components.Mobs
     [RegisterComponent]
     public class MindComponent : Component, IExamine
     {
+        [YamlField("show_examine_info")]
         private bool _showExamineInfo;
 
         /// <inheritdoc />
@@ -159,12 +161,6 @@ namespace Content.Server.GameObjects.Components.Mobs
                     });
                 }
             }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _showExamineInfo, "show_examine_info", false);
         }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)

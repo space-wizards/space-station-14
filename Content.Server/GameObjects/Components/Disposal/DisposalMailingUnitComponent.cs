@@ -37,6 +37,7 @@ using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timers.Timer;
@@ -82,7 +83,8 @@ namespace Content.Server.GameObjects.Components.Disposal
         private TimeSpan _flushDelay;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private float _entryDelay;
+        [YamlField("entryDelay")]
+        private float _entryDelay = 0.5f;
 
         /// <summary>
         ///     Token used to cancel the automatic engage of a disposal unit
@@ -108,6 +110,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         private string _target = "";
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [YamlField("Tag")]
         private string _tag = "";
 
         [ViewVariables]
@@ -584,10 +587,6 @@ namespace Content.Server.GameObjects.Components.Disposal
                 3,
                 seconds => _flushDelay = TimeSpan.FromSeconds(seconds),
                 () => (int) _flushDelay.TotalSeconds);
-
-            serializer.DataField(ref _entryDelay, "entryDelay", 0.5f);
-
-            serializer.DataField(ref _tag, "Tag", "");
         }
 
         public override void Initialize()

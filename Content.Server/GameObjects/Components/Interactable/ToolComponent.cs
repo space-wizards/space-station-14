@@ -10,6 +10,7 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -41,10 +42,13 @@ namespace Content.Server.GameObjects.Components.Interactable
         ///     For tool interactions that have a delay before action this will modify the rate, time to wait is divided by this value
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
+        [YamlField("speed")]
         public float SpeedModifier { get; set; } = 1;
 
+        [YamlField("useSound")]
         public string UseSound { get; set; }
 
+        [YamlField("useSoundCollection")]
         public string UseSoundCollection { get; set; }
 
         public void AddQuality(ToolQuality quality)
@@ -86,10 +90,6 @@ namespace Content.Server.GameObjects.Components.Interactable
 
                     return qualities;
                 });
-
-            serializer.DataField(this, mod => SpeedModifier, "speed", 1);
-            serializer.DataField(this, use => UseSound, "useSound", string.Empty);
-            serializer.DataField(this, collection => UseSoundCollection, "useSoundCollection", string.Empty);
         }
 
         public virtual async Task<bool> UseTool(IEntity user, IEntity target, float doAfterDelay, ToolQuality toolQualityNeeded, Func<bool> doAfterCheck = null)

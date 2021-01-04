@@ -42,6 +42,7 @@ using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -84,7 +85,8 @@ namespace Content.Server.GameObjects.Components.Disposal
         private TimeSpan _flushDelay;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private float _entryDelay;
+        [YamlField("entryDelay")]
+        private float _entryDelay = 0.5f;
 
         /// <summary>
         ///     Token used to cancel the automatic engage of a disposal unit
@@ -135,7 +137,8 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// </summary>
         private (PressureState State, string Localized) _locState;
 
-        public GasMixture Air { get; set; } = default!;
+        [YamlField("air")]
+        public GasMixture Air { get; set; } = new GasMixture(Atmospherics.CellVolume);
 
         public bool CanInsert(IEntity entity)
         {
@@ -541,9 +544,6 @@ namespace Content.Server.GameObjects.Components.Disposal
                 3,
                 seconds => _flushDelay = TimeSpan.FromSeconds(seconds),
                 () => (int) _flushDelay.TotalSeconds);
-
-            serializer.DataField(this, x => x.Air, "air", new GasMixture(Atmospherics.CellVolume));
-            serializer.DataField(ref _entryDelay, "entryDelay", 0.5f);
         }
 
         public override void Initialize()

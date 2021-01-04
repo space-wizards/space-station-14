@@ -26,6 +26,7 @@ using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timers.Timer;
@@ -76,11 +77,11 @@ namespace Content.Server.GameObjects.Components.Doors
         [ViewVariables(VVAccess.ReadWrite)]
         protected bool Safety = true;
 
-        [ViewVariables(VVAccess.ReadWrite)] private bool _occludes;
+        [ViewVariables(VVAccess.ReadWrite)] [YamlField("occludes")] private bool _occludes = true;
 
         public bool Occludes => _occludes;
 
-        [ViewVariables(VVAccess.ReadWrite)] private bool _bumpOpen;
+        [ViewVariables(VVAccess.ReadWrite)] [YamlField("bumpOpen")] private bool _bumpOpen = true;
 
         public bool BumpOpen => _bumpOpen;
 
@@ -99,6 +100,7 @@ namespace Content.Server.GameObjects.Components.Doors
                 SetAppearance(_isWeldedShut ? DoorVisualState.Welded : DoorVisualState.Closed);
             }
         }
+        [YamlField("welded")]
         private bool _isWeldedShut;
 
         private bool _canWeldShut = true;
@@ -109,17 +111,8 @@ namespace Content.Server.GameObjects.Components.Doors
         private bool _beingWelded;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [YamlField("canCrush")]
         private bool _canCrush = true;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _occludes, "occludes", true);
-            serializer.DataField(ref _bumpOpen, "bumpOpen", true);
-            serializer.DataField(ref _isWeldedShut, "welded", false);
-            serializer.DataField(ref _canCrush, "canCrush", true);
-        }
 
         public override void OnRemove()
         {

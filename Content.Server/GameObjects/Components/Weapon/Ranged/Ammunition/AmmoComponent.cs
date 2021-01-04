@@ -13,6 +13,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -23,13 +24,15 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
     /// Generally used for bullets but can be used for other things like bananas
     /// </summary>
     [RegisterComponent]
+    [CustomDataClass(typeof(AmmoComponentData))]
     public class AmmoComponent : Component, IExamine
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override string Name => "Ammo";
         public BallisticCaliber Caliber => _caliber;
-        private BallisticCaliber _caliber;
+        [YamlField("caliber")]
+        private BallisticCaliber _caliber = BallisticCaliber.Unspecified;
         public bool Spent
         {
             get
@@ -47,12 +50,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
         /// <summary>
         /// Used for anything without a case that fires itself
         /// </summary>
+        [CustomYamlField("isProjectile")]
         private bool _ammoIsProjectile;
 
         /// <summary>
         /// Used for something that is deleted when the projectile is retrieved
         /// </summary>
         public bool Caseless => _caseless;
+        [CustomYamlField("caseless")]
         private bool _caseless;
         // Rather than managing bullet / case state seemed easier to just have 2 toggles
         // ammoIsProjectile being for a beanbag for example and caseless being for ClRifle rounds
@@ -61,50 +66,27 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
         /// For shotguns where they might shoot multiple entities
         /// </summary>
         public int ProjectilesFired => _projectilesFired;
-        private int _projectilesFired;
+        [CustomYamlField("projectilesFired")]
+        private int _projectilesFired = 1;
+        [YamlField("projectile")]
         private string _projectileId;
         // How far apart each entity is if multiple are shot
         public float EvenSpreadAngle => _evenSpreadAngle;
+        [CustomYamlField("ammoSpread")]
         private float _evenSpreadAngle;
         /// <summary>
         /// How fast the shot entities travel
         /// </summary>
         public float Velocity => _velocity;
-        private float _velocity;
+        [YamlField("ammoVelocity")]
+        private float _velocity = 20f;
 
-        private string _muzzleFlashSprite;
+        [YamlField("muzzleFlash")]
+        private string _muzzleFlashSprite = "Objects/Weapons/Guns/Projectiles/bullet_muzzle.png";
 
         public string SoundCollectionEject => _soundCollectionEject;
-        private string _soundCollectionEject;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            // For shotty of whatever as well
-            serializer.DataField(ref _projectileId, "projectile", null);
-            serializer.DataField(ref _caliber, "caliber", BallisticCaliber.Unspecified);
-            serializer.DataField(ref _projectilesFired, "projectilesFired", 1);
-            // Used for shotty to determine overall pellet spread
-            serializer.DataField(ref _evenSpreadAngle, "ammoSpread", 0);
-            serializer.DataField(ref _velocity, "ammoVelocity", 20.0f);
-            serializer.DataField(ref _ammoIsProjectile, "isProjectile", false);
-            serializer.DataField(ref _caseless, "caseless", false);
-            // Being both caseless and shooting yourself doesn't make sense
-            DebugTools.Assert(!(_ammoIsProjectile && _caseless));
-            serializer.DataField(ref _muzzleFlashSprite, "muzzleFlash", "Objects/Weapons/Guns/Projectiles/bullet_muzzle.png");
-            serializer.DataField(ref _soundCollectionEject, "soundCollectionEject", "CasingEject");
-
-            if (_projectilesFired < 1)
-            {
-                Logger.Error("Ammo can't have less than 1 projectile");
-            }
-
-            if (_evenSpreadAngle > 0 && _projectilesFired == 1)
-            {
-                Logger.Error("Can't have an even spread if only 1 projectile is fired");
-                throw new InvalidOperationException();
-            }
-        }
+        [YamlField("soundCollectionEject")]
+        private string _soundCollectionEject = "CasingEject";
 
         public IEntity TakeBullet(EntityCoordinates spawnAt)
         {

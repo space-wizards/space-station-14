@@ -15,6 +15,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
@@ -28,6 +29,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;
 
+        [YamlField("HeldPrefix")]
         private string _equippedPrefix;
 
         public string EquippedPrefix
@@ -67,13 +69,6 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         public virtual void Unequipped(UnequippedEventArgs eventArgs)
         {
             RemovedFromSlot();
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _equippedPrefix, "HeldPrefix", null);
         }
 
         public bool CanPickup(IEntity user)

@@ -7,6 +7,7 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Interactable
@@ -44,11 +45,25 @@ namespace Content.Server.GameObjects.Components.Interactable
                 serializer.DataField(ref _soundCollection, "useSoundCollection", string.Empty);
                 serializer.DataField(ref _changeSound, "changeSound", string.Empty);
             }
+
+            public IDeepClone DeepClone()
+            {
+                return new ToolEntry
+                {
+                    Behavior = Behavior,
+                    _sound = _sound,
+                    _sprite = _sprite,
+                    _state = _state,
+                    _texture = _texture,
+                    _changeSound = _changeSound,
+                    _soundCollection = _soundCollection
+                };
+            }
         }
 
         public override string Name => "MultiTool";
         public override uint? NetID => ContentNetIDs.MULTITOOLS;
-        private List<ToolEntry> _tools;
+        [YamlField("tools")] private List<ToolEntry> _tools = new();
         private int _currentTool = 0;
 
         private AudioSystem _audioSystem;
@@ -96,12 +111,6 @@ namespace Content.Server.GameObjects.Components.Interactable
                 _sprite.LayerSetTexture(0, current.Texture);
 
             Dirty();
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _tools, "tools", new List<ToolEntry>());
         }
 
         public bool UseEntity(UseEntityEventArgs eventArgs)

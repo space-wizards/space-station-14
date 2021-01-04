@@ -24,6 +24,7 @@ using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Players;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -52,6 +53,7 @@ namespace Content.Server.GameObjects.Components.Instruments
         [ViewVariables]
         private IPlayerSession? _instrumentPlayer;
 
+        [YamlField("handheld")]
         private bool _handheld;
 
         [ViewVariables]
@@ -75,11 +77,16 @@ namespace Content.Server.GameObjects.Components.Instruments
         [ViewVariables]
         private int _midiEventCount = 0;
 
-        private byte _instrumentProgram;
+        [YamlField("program")]
+        private byte _instrumentProgram = 1;
+        [YamlField("bank")]
         private byte _instrumentBank;
+        [YamlField("allowPercussion")]
         private bool _allowPercussion;
+        [YamlField("allowProgramChange")]
         private bool _allowProgramChange;
-        private bool _respectMidiLimits;
+        [YamlField("respectMidiLimits")]
+        private bool _respectMidiLimits = true;
 
         public override byte InstrumentProgram { get => _instrumentProgram;
             set
@@ -177,17 +184,6 @@ namespace Content.Server.GameObjects.Components.Instruments
             }
 
             _instrumentSystem = EntitySystem.Get<InstrumentSystem>();
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _handheld, "handheld", false);
-            serializer.DataField(ref _instrumentProgram, "program", (byte) 1);
-            serializer.DataField(ref _instrumentBank, "bank", (byte) 0);
-            serializer.DataField(ref _allowPercussion, "allowPercussion", false);
-            serializer.DataField(ref _allowProgramChange, "allowProgramChange", false);
-            serializer.DataField(ref _respectMidiLimits, "respectMidiLimits", true);
         }
 
         public override ComponentState GetComponentState()

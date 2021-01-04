@@ -22,13 +22,8 @@ namespace Content.Server.GameObjects.Components.Items
         public override string Name => "Toys";
 
         [ViewVariables]
+        [YamlField("toySqueak")]
         public string _soundCollectionName = "ToySqueak";
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _soundCollectionName, "toySqueak", "ToySqueak");
-        }
 
         public void Squeak()
         {

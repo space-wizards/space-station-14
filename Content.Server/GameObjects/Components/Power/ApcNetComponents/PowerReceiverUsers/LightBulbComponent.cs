@@ -43,6 +43,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         public event EventHandler<EventArgs> OnLightBulbStateChange;
         public event EventHandler<EventArgs> OnLightColorChange;
 
+        [YamlField("color")]
         private Color _color = Color.White;
 
         [ViewVariables(VVAccess.ReadWrite)] public Color Color
@@ -58,12 +59,15 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         public override string Name => "LightBulb";
 
+        [YamlField("bulb")]
         public LightBulbType Type = LightBulbType.Tube;
 
-        private int _burningTemperature;
+        [YamlField("BurningTemperature")]
+        private int _burningTemperature = 1400;
         public int BurningTemperature => _burningTemperature;
 
-        private int _powerUse;
+        [YamlField("PowerUse")]
+        private int _powerUse = 40;
         public int PowerUse => _powerUse;
 
         /// <summary>
@@ -94,14 +98,6 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         }
 
         private LightBulbState _state = LightBulbState.Normal;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(ref Type, "bulb", LightBulbType.Tube);
-            serializer.DataField(ref _color, "color", Color.White);
-            serializer.DataFieldCached(ref _burningTemperature, "BurningTemperature", 1400);
-            serializer.DataFieldCached(ref _powerUse, "PowerUse", 40);
-        }
 
         public void UpdateColor()
         {

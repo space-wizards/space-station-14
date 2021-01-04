@@ -6,6 +6,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Logger = Robust.Shared.Log.Logger;
@@ -17,14 +18,8 @@ namespace Content.Server.GameObjects.Components.Items.Storage
     {
         public override string Name => "StorageFill";
 
-        private List<PrototypeItemData> _contents;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _contents, "contents", new List<PrototypeItemData>());
-        }
+        [YamlField("contents")]
+        private List<PrototypeItemData> _contents = new ();
 
         void IMapInit.MapInit()
         {
@@ -74,6 +69,11 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 serializer.DataField(ref Amount, "amount", 1);
                 serializer.DataField(ref SpawnProbability, "prob", 1f);
                 serializer.DataField(ref GroupId, "orGroup", null);
+            }
+
+            public IDeepClone DeepClone()
+            {
+                return this;
             }
         }
     }

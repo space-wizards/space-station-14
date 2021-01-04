@@ -7,6 +7,7 @@ using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -21,13 +22,8 @@ namespace Content.Server.GameObjects.Components.Rotatable
         ///     If true, this entity can be rotated even while anchored.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
+        [YamlField("rotateWhileAnchored")]
         public bool RotateWhileAnchored { get; private set; }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(this, x => x.RotateWhileAnchored, "rotateWhileAnchored", false);
-        }
 
         private void TryRotate(IEntity user, Angle angle)
         {

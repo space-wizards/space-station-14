@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Server.Atmos;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -21,6 +22,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
             get => _pressurePumpTarget;
             set => _pressurePumpTarget = Math.Clamp(value, 0, MaxPressurePumpTarget);
         }
+        [YamlField("startingPressurePumpTarget")]
         private int _pressurePumpTarget;
 
         /// <summary>
@@ -32,7 +34,8 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
             get => _maxPressurePumpTarget;
             set => Math.Max(value, 0);
         }
-        private int _maxPressurePumpTarget;
+        [YamlField("maxPressurePumpTarget")]
+        private int _maxPressurePumpTarget = 100;
 
         /// <summary>
         ///     Every update, this pump will only increase the outlet pressure by this fraction of the amount needed to reach the <see cref="PressurePumpTarget"/>.
@@ -43,15 +46,8 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
             get => _transferRatio;
             set => _transferRatio = Math.Clamp(value, 0, 1);
         }
-        private float _transferRatio;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _pressurePumpTarget, "startingPressurePumpTarget", 0);
-            serializer.DataField(ref _maxPressurePumpTarget, "maxPressurePumpTarget", 100);
-            serializer.DataField(ref _transferRatio, "transferRatio", 0.5f);
-        }
+        [YamlField("transferRatio")]
+        private float _transferRatio = 0.5f;
 
         protected override void PumpGas(GasMixture inletGas, GasMixture outletGas)
         {

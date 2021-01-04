@@ -14,6 +14,7 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -29,30 +30,25 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 
         public int ShotsLeft => _spawnedAmmo.Count + _unspawnedCount;
         public int Capacity => _capacity;
-        private int _capacity;
+        [YamlField("capacity")]
+        private int _capacity = 20;
 
         public MagazineType MagazineType => _magazineType;
-        private MagazineType _magazineType;
+        [YamlField("magazineType")]
+        private MagazineType _magazineType = MagazineType.Unspecified;
         public BallisticCaliber Caliber => _caliber;
-        private BallisticCaliber _caliber;
+        [YamlField("caliber")]
+        private BallisticCaliber _caliber = BallisticCaliber.Unspecified;
 
         private AppearanceComponent _appearanceComponent;
 
         // If there's anything already in the magazine
+        [YamlField("fillPrototype")]
         private string _fillPrototype;
         // By default the magazine won't spawn the entity until needed so we need to keep track of how many left we can spawn
         // Generally you probablt don't want to use this
         private int _unspawnedCount;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _magazineType, "magazineType", MagazineType.Unspecified);
-            serializer.DataField(ref _caliber, "caliber", BallisticCaliber.Unspecified);
-            serializer.DataField(ref _fillPrototype, "fillPrototype", null);
-            serializer.DataField(ref _capacity, "capacity", 20);
-        }
-
+        
         void IMapInit.MapInit()
         {
             if (_fillPrototype != null)

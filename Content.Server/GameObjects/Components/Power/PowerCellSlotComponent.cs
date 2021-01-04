@@ -13,6 +13,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -32,18 +33,21 @@ namespace Content.Server.GameObjects.Components.Power
         /// What size of cell fits into this component.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
+        [YamlField("slotSize")]
         public PowerCellSize SlotSize { get; set; } = PowerCellSize.Small;
 
         /// <summary>
         /// Can the cell be removed ?
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
+        [YamlField("canRemoveCell")]
         public bool CanRemoveCell { get; set; } = true;
 
         /// <summary>
         /// Should the "Remove cell" verb be displayed on this component?
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
+        [YamlField("showVerb")]
         public bool ShowVerb { get; set; } = true;
 
         /// <summary>
@@ -52,21 +56,24 @@ namespace Content.Server.GameObjects.Components.Power
         /// Use null to show no text.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public string? DescFormatString { get; set; }
+        [YamlField("descFormatString")]
+        public string? DescFormatString { get; set; } = "It uses size {0} power cells.";
 
         /// <summary>
         /// File path to a sound file that should be played when the cell is removed.
         /// </summary>
         /// <example>"/Audio/Items/pistol_magout.ogg"</example>
         [ViewVariables(VVAccess.ReadWrite)]
-        public string? CellRemoveSound { get; set; }
+        [YamlField("cellRemoveSound")]
+        public string? CellRemoveSound { get; set; } = "/Audio/Items/pistol_magin.ogg";
 
         /// <summary>
         /// File path to a sound file that should be played when a cell is inserted.
         /// </summary>
         /// <example>"/Audio/Items/pistol_magin.ogg"</example>
         [ViewVariables(VVAccess.ReadWrite)]
-        public string? CellInsertSound { get; set; }
+        [YamlField("cellInsertSound")]
+        public string? CellInsertSound { get; set; } = "/Audio/Items/pistol_magout.ogg";
 
         [ViewVariables] private ContainerSlot _cellContainer = default!;
 
@@ -85,25 +92,14 @@ namespace Content.Server.GameObjects.Components.Power
         /// <summary>
         /// True if we don't want a cell inserted during map init.
         /// </summary>
+        [YamlField("startEmpty")]
         private bool _startEmpty = false;
 
         /// <summary>
         /// If not null, this cell type will be inserted at MapInit instead of the default Standard cell.
         /// </summary>
+        [YamlField("startingCellType")]
         private string? _startingCellType = null;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(this, x => x.SlotSize, "slotSize", PowerCellSize.Small);
-            serializer.DataField(this, x => x.CanRemoveCell, "canRemoveCell", true);
-            serializer.DataField(this, x => x.ShowVerb, "showVerb", true);
-            serializer.DataField(ref _startEmpty, "startEmpty", false);
-            serializer.DataField(ref _startingCellType, "startingCellType", null);
-            serializer.DataField(this, x => x.CellRemoveSound, "cellRemoveSound", "/Audio/Items/pistol_magin.ogg");
-            serializer.DataField(this, x => x.CellInsertSound, "cellInsertSound", "/Audio/Items/pistol_magout.ogg");
-            serializer.DataField(this, x => x.DescFormatString, "descFormatString", "It uses size {0} power cells.");
-        }
 
         public override void Initialize()
         {

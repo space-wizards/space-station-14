@@ -20,6 +20,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -38,8 +39,9 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         private static readonly TimeSpan _thunkDelay = TimeSpan.FromSeconds(2);
         private TimeSpan _lastThunk;
 
-        [ViewVariables] private bool _on;
+        [ViewVariables] [YamlField("on")] private bool _on = true;
 
+        [YamlField("bulb")]
         private LightBulbType BulbType = LightBulbType.Tube;
         [ViewVariables] private ContainerSlot _lightBulbContainer;
 
@@ -138,12 +140,6 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             if (!user.TryGetComponent(out HandsComponent hands)
                 || !hands.PutInHand(bulb.Owner.GetComponent<ItemComponent>()))
                 bulb.Owner.Transform.Coordinates = user.Transform.Coordinates;
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(ref BulbType, "bulb", LightBulbType.Tube);
-            serializer.DataField(ref _on, "on", true);
         }
 
         /// <summary>

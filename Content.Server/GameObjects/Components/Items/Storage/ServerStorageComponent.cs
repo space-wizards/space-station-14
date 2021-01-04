@@ -23,6 +23,7 @@ using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Players;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -40,10 +41,12 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         private Container? _storage;
 
-        private bool _occludesLight;
+        [YamlField("occludesLight")]
+        private bool _occludesLight = true;
         private bool _storageInitialCalculated;
         private int _storageUsed;
-        private int _storageCapacityMax;
+        [YamlField("capacity")]
+        private int _storageCapacityMax = 10000;
         public readonly HashSet<IPlayerSession> SubscribedSessions = new();
 
         [ViewVariables]
@@ -323,15 +326,6 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             // ReSharper disable once StringLiteralTypo
             _storage = ContainerManagerComponent.Ensure<Container>("storagebase", Owner);
             _storage.OccludesLight = _occludesLight;
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _storageCapacityMax, "capacity", 10000);
-            serializer.DataField(ref _occludesLight, "occludesLight", true);
-            //serializer.DataField(ref StorageUsed, "used", 0);
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)

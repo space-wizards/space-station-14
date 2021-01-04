@@ -1,6 +1,7 @@
 ﻿using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -15,34 +16,27 @@ namespace Content.Server.GameObjects.Components.Power
         /// Maximum charge of the battery in joules (ie. watt seconds)
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)] public int MaxCharge { get => _maxCharge; set => SetMaxCharge(value); }
-        private int _maxCharge;
+        [YamlField("maxCharge")]
+        private int _maxCharge = 1000;
 
         /// <summary>
         /// Current charge of the battery in joules (ie. watt seconds)
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public float CurrentCharge { get => _currentCharge; set => SetCurrentCharge(value); }
-        private float _currentCharge;
+        [YamlField("startingCharge")]
+        private float _currentCharge = 500;
 
         /// <summary>
         /// True if the battery is fully charged.
         /// </summary>
         [ViewVariables] public bool IsFullyCharged => MathHelper.CloseTo(CurrentCharge, MaxCharge);
 
-        [ViewVariables(VVAccess.ReadWrite)] public bool AutoRecharge { get; set; }
+        [ViewVariables(VVAccess.ReadWrite)] [YamlField("autoRecharge")] public bool AutoRecharge { get; set; }
 
-        [ViewVariables(VVAccess.ReadWrite)] public float AutoRechargeRate { get; set; }
+        [ViewVariables(VVAccess.ReadWrite)] [YamlField("autoRechargeRate")] public float AutoRechargeRate { get; set; }
 
         [ViewVariables] public BatteryState BatteryState { get; private set; }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _maxCharge, "maxCharge", 1000);
-            serializer.DataField(ref _currentCharge, "startingCharge", 500);
-            serializer.DataField(this, x => x.AutoRecharge, "autoRecharge", false);
-            serializer.DataField(this, x => x.AutoRechargeRate, "autoRechargeRate", 0);
-        }
 
         public override void Initialize()
         {
