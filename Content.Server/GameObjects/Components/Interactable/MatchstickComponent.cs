@@ -72,7 +72,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             base.ExposeData(serializer);
 
             serializer.DataField(ref _duration, "duration", 10);
-            serializer.DataField(ref _igniteSound, "igniteSound", "");
+            serializer.DataField(ref _igniteSound, "igniteSound", null);
         }
 
         public override void Initialize()

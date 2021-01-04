@@ -28,7 +28,7 @@
 - type: entity
   id: CigarettePack
   parent: SmallboxItem
-  name: Cigarette pack
+  name: cigarette pack
   description: "Pack of cigars"
   components:
     - type: Sprite
