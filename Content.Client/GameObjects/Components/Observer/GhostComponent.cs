@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Content.Client.Interfaces.Chat;
 using Content.Client.UserInterface;
 using Content.Shared.GameObjects.Components.Observer;
 using Robust.Client.GameObjects;
@@ -19,6 +20,7 @@ namespace Content.Client.GameObjects.Components.Observer
         [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IComponentManager _componentManager = default!;
+        [Dependency] private readonly IChatManager _chatManager = default!;
         public List<string> WarpNames = new();
         public Dictionary<EntityUid,string> PlayerNames = new();
 
@@ -83,6 +85,7 @@ namespace Content.Client.GameObjects.Components.Observer
                     _gameHud.HandsContainer.AddChild(_gui);
                     SetGhostVisibility(true);
                     _isAttached = true;
+                    _chatManager.ToggleDeadChatButtonVisibility(true);
 
                     break;
 
@@ -90,6 +93,7 @@ namespace Content.Client.GameObjects.Components.Observer
                     _gui!.Parent?.RemoveChild(_gui);
                     SetGhostVisibility(false);
                     _isAttached = false;
+                    _chatManager.ToggleDeadChatButtonVisibility(false);
                     break;
             }
         }
