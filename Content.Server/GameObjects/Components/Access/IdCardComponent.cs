@@ -1,5 +1,6 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -13,6 +14,7 @@ namespace Content.Server.GameObjects.Components.Access
         /// See <see cref="UpdateEntityName"/>.
         private string _ownerOriginalName;
 
+        [YamlField("fullName")]
         private string _fullName;
         [ViewVariables(VVAccess.ReadWrite)]
         public string FullName
@@ -25,6 +27,7 @@ namespace Content.Server.GameObjects.Components.Access
             }
         }
 
+        [YamlField("jobTitle")]
         private string _jobTitle;
         [ViewVariables(VVAccess.ReadWrite)]
         public string JobTitle
@@ -69,14 +72,6 @@ namespace Content.Server.GameObjects.Components.Access
             base.Initialize();
             _ownerOriginalName = Owner.Name;
             UpdateEntityName();
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _fullName, "fullName", string.Empty);
-            serializer.DataField(ref _jobTitle, "jobTitle", string.Empty);
         }
     }
 }

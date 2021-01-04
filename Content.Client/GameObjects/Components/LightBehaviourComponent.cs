@@ -13,6 +13,7 @@ using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -115,6 +116,7 @@ namespace Content.Client.GameObjects.Components
 
         public virtual void OnInitialize() { }
         public virtual void OnStart() { }
+        public abstract IDeepClone DeepClone();
     }
 
     /// <summary>
@@ -170,6 +172,11 @@ namespace Content.Client.GameObjects.Components
 
             return (-1, playingTime);
         }
+
+        public override IDeepClone DeepClone()
+        {
+            return new PulseBehaviour();
+        }
     }
 
     /// <summary>
@@ -205,6 +212,11 @@ namespace Content.Client.GameObjects.Components
             }
 
             return (-1, playingTime);
+        }
+
+        public override IDeepClone DeepClone()
+        {
+            return new FadeBehaviour();
         }
     }
 
@@ -242,6 +254,17 @@ namespace Content.Client.GameObjects.Components
 
             _randomValue3 = _randomValue4;
             _randomValue4 = InterpolateLinear(StartValue, EndValue, (float) RobustRandom.NextDouble());
+        }
+
+        public override IDeepClone DeepClone()
+        {
+            return new RandomizeBehaviour
+            {
+                _randomValue1 = _randomValue1,
+                _randomValue2 = _randomValue2,
+                _randomValue3 = _randomValue3,
+                _randomValue4 = _randomValue4
+            };
         }
 
         public override (int KeyFrameIndex, float FramePlayingTime) AdvancePlayback(
@@ -291,6 +314,15 @@ namespace Content.Client.GameObjects.Components
             {
                 _colorIndex = 0;
             }
+        }
+
+        public override IDeepClone DeepClone()
+        {
+            return new ColorCycleBehaviour
+            {
+                _colorIndex = _colorIndex,
+                ColorsToCycle = ColorsToCycle
+            };
         }
 
         public override (int KeyFrameIndex, float FramePlayingTime) AdvancePlayback(
@@ -346,11 +378,12 @@ namespace Content.Client.GameObjects.Components
     /// A component which applies a specific behaviour to a PointLightComponent on its owner.
     /// </summary>
     [RegisterComponent]
+    [CustomDataClass(typeof(LightBehaviourComponentData))]
     public class LightBehaviourComponent : SharedLightBehaviourComponent
     {
         private const string KeyPrefix = nameof(LightBehaviourComponent);
 
-        private class AnimationContainer
+        public class AnimationContainer
         {
             public AnimationContainer(int key, Animation animation, LightBehaviourAnimationTrack track)
             {
@@ -366,6 +399,7 @@ namespace Content.Client.GameObjects.Components
         }
 
         [ViewVariables(VVAccess.ReadOnly)]
+        [CustomYamlField("animations")]
         private readonly List<AnimationContainer> _animations = new();
 
         private float _originalRadius = default;
@@ -516,25 +550,6 @@ namespace Content.Client.GameObjects.Components
             if (playImmediately)
             {
                 StartLightBehaviour(behaviour.ID);
-            }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            var behaviours = serializer.ReadDataField("behaviours", new List<LightBehaviourAnimationTrack>());
-            var key = 0;
-
-            foreach (LightBehaviourAnimationTrack behaviour in behaviours)
-            {
-                var animation = new Animation()
-                {
-                    AnimationTracks = { behaviour }
-                };
-
-                _animations.Add(new AnimationContainer(key, animation, behaviour));
-                key++;
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿﻿using Content.Server.GameObjects.Components.Atmos;
  using Content.Shared.Alert;
  using JetBrains.Annotations;
+ using Robust.Shared.Interfaces.Serialization;
  using Robust.Shared.Serialization;
 
 namespace Content.Server.Alert.Click
@@ -19,6 +20,11 @@ namespace Content.Server.Alert.Click
             {
                 flammable.Resist();
             }
+        }
+
+        public IDeepClone DeepClone()
+        {
+            return new ResistFire();
         }
     }
 }

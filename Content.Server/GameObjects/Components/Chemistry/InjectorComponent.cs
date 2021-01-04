@@ -32,6 +32,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// device that can only inject.
         /// </summary>
         [ViewVariables]
+        [YamlField("injectOnly")]
         private bool _injectOnly;
 
         /// <summary>
@@ -39,13 +40,15 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// attempt to inject it's entire contents upon use.
         /// </summary>
         [ViewVariables]
-        private ReagentUnit _transferAmount;
+        [YamlField("transferAmount")]
+        private ReagentUnit _transferAmount = ReagentUnit.New(5);
 
         /// <summary>
         /// Initial storage volume of the injector
         /// </summary>
         [ViewVariables]
-        private ReagentUnit _initialMaxVolume;
+        [YamlField("initialMaxVolume")]
+        private ReagentUnit _initialMaxVolume = ReagentUnit.New(15);
 
         /// <summary>
         /// The state of the injector. Determines it's attack behavior. Containers must have the
@@ -54,14 +57,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         private InjectorToggleMode _toggleState;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _injectOnly, "injectOnly", false);
-            serializer.DataField(ref _initialMaxVolume, "initialMaxVolume", ReagentUnit.New(15));
-            serializer.DataField(ref _transferAmount, "transferAmount", ReagentUnit.New(5));
-        }
+        
         protected override void Startup()
         {
             base.Startup();

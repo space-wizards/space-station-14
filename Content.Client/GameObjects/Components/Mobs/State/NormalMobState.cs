@@ -2,6 +2,7 @@
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Client.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Client.GameObjects.Components.Mobs.State
 {
@@ -15,6 +16,11 @@ namespace Content.Client.GameObjects.Components.Mobs.State
             {
                 appearance.SetData(DamageStateVisuals.State, DamageState.Alive);
             }
+        }
+
+        public override IDeepClone DeepClone()
+        {
+            return new NormalMobState();
         }
     }
 }

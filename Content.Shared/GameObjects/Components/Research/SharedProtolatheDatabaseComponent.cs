@@ -10,11 +10,13 @@ namespace Content.Shared.GameObjects.Components.Research
 {
 
     [ComponentReference(typeof(SharedLatheDatabaseComponent))]
+    [CustomDataClass(typeof(SharedProtoLatheDatabaseComponentData))]
     public class SharedProtolatheDatabaseComponent : SharedLatheDatabaseComponent
     {
         public override string Name => "ProtolatheDatabase";
         public sealed override uint? NetID => ContentNetIDs.PROTOLATHE_DATABASE;
 
+        [CustomYamlField("protolatherecipes")]
         private readonly List<LatheRecipePrototype> _protolatheRecipes = new();
 
         /// <summary>
@@ -22,27 +24,6 @@ namespace Content.Shared.GameObjects.Components.Research
         /// </summary>
         public List<LatheRecipePrototype> ProtolatheRecipes => _protolatheRecipes;
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataReadWriteFunction(
-                "protolatherecipes",
-                new List<string>(),
-                recipes =>
-                {
-                    var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-
-                    foreach (var id in recipes)
-                    {
-                        if (prototypeManager.TryIndex(id, out LatheRecipePrototype recipe))
-                        {
-                            _protolatheRecipes.Add(recipe);
-                        }
-                    }
-                },
-                GetProtolatheRecipeIdList);
-        }
 
         /// <summary>
         ///     Returns a list of the allowed protolathe recipe IDs.

@@ -25,6 +25,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
@@ -49,7 +50,8 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// What <see cref="GasMixture"/> the canister contains.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public GasMixture Air { get; set; } = default!;
+        [YamlField("gasMixture")]
+        public GasMixture Air { get; set; } = new(DefaultVolume);
 
         [ViewVariables]
         public bool Anchored => !Owner.TryGetComponent<IPhysicsComponent>(out var physics) || physics.Anchored;
@@ -78,13 +80,6 @@ namespace Content.Server.GameObjects.Components.Atmos
         private GasCanisterBoundUserInterfaceState? _lastUiState;
 
         private AppearanceComponent? _appearance;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(this, x => Air, "gasMixture", new GasMixture(DefaultVolume));
-        }
-
 
         public override void Initialize()
         {

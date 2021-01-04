@@ -5,6 +5,7 @@ using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Client.GameObjects.Components.Mobs.State
 {
@@ -37,6 +38,11 @@ namespace Content.Client.GameObjects.Components.Mobs.State
             {
                 physics.CanCollide = true;
             }
+        }
+
+        public override IDeepClone DeepClone()
+        {
+            return new DeadMobState();
         }
     }
 }

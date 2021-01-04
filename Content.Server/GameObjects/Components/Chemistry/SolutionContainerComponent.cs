@@ -35,8 +35,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
         private IEnumerable<ReactionPrototype> _reactions;
+        [YamlField("fillingState")]
         private string _fillInitState;
-        private int _fillInitSteps;
+        [YamlField("fillingSteps")]
+        private int _fillInitSteps = 7;
         private string _fillPathString = "Objects/Specific/Chemistry/fillings.rsi";
         private ResourcePath _fillPath;
         private SpriteSpecifier _fillSprite;
@@ -55,18 +57,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
         public bool CanUseWithChemDispenser => (Capabilities & SolutionContainerCaps.FitsInDispenser) != 0;
         public bool CanAddSolutions => (Capabilities & SolutionContainerCaps.AddTo) != 0;
         public bool CanRemoveSolutions => (Capabilities & SolutionContainerCaps.RemoveFrom) != 0;
-
-        /// <inheritdoc />
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(this, x => x.MaxVolume, "maxVol", ReagentUnit.New(0));
-            serializer.DataField(this, x => x.Solution, "contents", new Solution());
-            serializer.DataField(this, x => x.Capabilities, "caps", SolutionContainerCaps.AddTo | SolutionContainerCaps.RemoveFrom);
-            serializer.DataField(ref _fillInitState, "fillingState", string.Empty);
-            serializer.DataField(ref _fillInitSteps, "fillingSteps", 7);
-        }
 
         public override void Initialize()
         {

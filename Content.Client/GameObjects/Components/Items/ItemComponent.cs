@@ -11,6 +11,7 @@ using Robust.Shared.GameObjects.Components.Renderable;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -26,10 +27,15 @@ namespace Content.Client.GameObjects.Components.Items
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;
 
-        [ViewVariables] protected ResourcePath RsiPath;
+        [ViewVariables]
+        [YamlField("sprite")]
+        protected ResourcePath RsiPath;
 
-        [ViewVariables(VVAccess.ReadWrite)] protected Color Color;
+        [ViewVariables(VVAccess.ReadWrite)]
+        [YamlField("color")]
+        protected Color Color = Color.White;
 
+        [YamlField("HeldPrefix")]
         private string _equippedPrefix;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -61,15 +67,6 @@ namespace Content.Client.GameObjects.Components.Items
             }
 
             return null;
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataFieldCached(ref Color, "color", Color.White);
-            serializer.DataFieldCached(ref RsiPath, "sprite", null);
-            serializer.DataFieldCached(ref _equippedPrefix, "HeldPrefix", null);
         }
 
         protected RSI GetRSI()

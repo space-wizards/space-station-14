@@ -41,8 +41,10 @@ namespace Content.Server.GameObjects.Components.Nutrition
         [ViewVariables]
         private SolutionContainerComponent _contents;
         [ViewVariables]
-        private string _useSound;
+        [YamlField("useSound")]
+        private string _useSound = "/Audio/Items/drink.ogg";
         [ViewVariables]
+        [YamlField("isOpen")]
         private bool _defaultToOpened;
         [ViewVariables(VVAccess.ReadWrite)]
         public ReagentUnit TransferAmount { get; private set; } = ReagentUnit.New(2);
@@ -52,19 +54,12 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public bool Empty => _contents.CurrentVolume.Float() <= 0;
 
         private AppearanceComponent _appearanceComponent;
-        private string _soundCollection;
+        [YamlField("openSounds")]
+        private string _soundCollection = "canOpenSounds";
+        [YamlField("pressurized")]
         private bool _pressurized;
-        private string _burstSound;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _useSound, "useSound", "/Audio/Items/drink.ogg");
-            serializer.DataField(ref _defaultToOpened, "isOpen", false); // For things like cups of coffee.
-            serializer.DataField(ref _soundCollection, "openSounds", "canOpenSounds");
-            serializer.DataField(ref _pressurized, "pressurized", false);
-            serializer.DataField(ref _burstSound, "burstSound", "/Audio/Effects/flash_bang.ogg");
-        }
+        [YamlField("burstSound")]
+        private string _burstSound = "/Audio/Effects/flash_bang.ogg";
 
         public override void Initialize()
         {

@@ -3,6 +3,7 @@ using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces.Chemistry;
 using JetBrains.Annotations;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
@@ -20,6 +21,11 @@ namespace Content.Server.Chemistry.TileReactions
             if (reactVolume < 5 || !tile.TryGetPuddle(null, out _)) return ReagentUnit.Zero;
 
             return tile.SpillAt(new Solution(reagent.ID, reactVolume), "PuddleSmear", true, false) != null ? reactVolume : ReagentUnit.Zero;
+        }
+
+        public IDeepClone DeepClone()
+        {
+            return new SpillIfPuddlePresentTileReaction();
         }
     }
 }

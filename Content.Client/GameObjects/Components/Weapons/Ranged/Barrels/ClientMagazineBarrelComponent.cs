@@ -14,6 +14,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -88,14 +89,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
         [ViewVariables]
         public (int count, int max)? MagazineCount { get; private set; }
 
-        [ViewVariables(VVAccess.ReadWrite)] private bool _isLmgAlarmAnimation;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _isLmgAlarmAnimation, "lmg_alarm_animation", false);
-        }
+        [ViewVariables(VVAccess.ReadWrite)] [YamlField("lmg_alarm_animation")] private bool _isLmgAlarmAnimation;
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {

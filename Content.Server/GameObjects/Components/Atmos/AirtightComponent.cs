@@ -8,6 +8,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -22,16 +23,21 @@ namespace Content.Server.GameObjects.Components.Atmos
         public override string Name => "Airtight";
 
         [ViewVariables]
-        private int _initialAirBlockedDirection;
+        [YamlField("airBlockedDirection")]//todo paul: WithFormat.Flags<AtmosDirectionFlags>()
+        private int _initialAirBlockedDirection = (int)AtmosDirection.All;
         [ViewVariables]
         private int _currentAirBlockedDirection;
+        [YamlField("airBlocked")]
         private bool _airBlocked = true;
-        private bool _fixVacuum;
+        [YamlField("fixVacuum")]
+        private bool _fixVacuum = true;
 
         [ViewVariables]
+        [YamlField("rotateAirBlocked")]
         private bool _rotateAirBlocked = true;
 
         [ViewVariables]
+        [YamlField("fixAirBlockedDirectionInitialize")]
         private bool _fixAirBlockedDirectionInitialize = true;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -60,17 +66,6 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         [ViewVariables]
         public bool FixVacuum => _fixVacuum;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _airBlocked, "airBlocked", true);
-            serializer.DataField(ref _fixVacuum, "fixVacuum", true);
-            serializer.DataField(ref _initialAirBlockedDirection, "airBlockedDirection", (int)AtmosDirection.All, WithFormat.Flags<AtmosDirectionFlags>());
-            serializer.DataField(ref _rotateAirBlocked, "rotateAirBlocked", true);
-            serializer.DataField(ref _fixAirBlockedDirectionInitialize, "fixAirBlockedDirectionInitialize", true);
-        }
 
         public override void Initialize()
         {

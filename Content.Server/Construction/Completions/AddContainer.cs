@@ -4,6 +4,7 @@ using Content.Server.GameObjects.Components.Construction;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Construction.Completions
@@ -25,6 +26,11 @@ namespace Content.Server.Construction.Completions
 
             var construction = entity.GetComponent<ConstructionComponent>();
             construction.AddContainer(Container);
+        }
+
+        public IDeepClone DeepClone()
+        {
+            return new AddContainer {Container = Container};
         }
     }
 }

@@ -6,6 +6,7 @@ using Content.Shared.GameObjects.Components.Mobs.State;
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
 
@@ -23,6 +24,14 @@ namespace Content.Server.Objectives.Conditions
                 return (entity?.GetComponentOrNull<IMobStateComponent>()?.IsAlive() ?? false) && mc.Mind != mind;
             }).Select(mc => mc.Mind).ToList();
             return new KillRandomPersonCondition {Target = IoCManager.Resolve<IRobustRandom>().Pick(allHumans)};
+        }
+
+        public override IDeepClone DeepClone()
+        {
+            return new KillRandomPersonCondition
+            {
+                Target = Target
+            };
         }
     }
 }

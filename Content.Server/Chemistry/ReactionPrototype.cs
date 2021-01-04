@@ -69,5 +69,14 @@ namespace Content.Server.Chemistry
             serializer.DataField(ref _amount, "amount", ReagentUnit.New(1));
             serializer.DataField(ref _catalyst, "catalyst", false);
         }
+
+        public IDeepClone DeepClone()
+        {
+            return new ReactantPrototype
+            {
+                _amount = _amount,
+                _catalyst = _catalyst
+            };
+        }
     }
 }

@@ -15,7 +15,8 @@ namespace Content.Shared.GameObjects.Components
         public override uint? NetID => ContentNetIDs.CRAYONS;
 
         public string SelectedState { get; set; }
-        protected string _color;
+        [YamlField("color")]
+        protected Color _color = Color.White;
 
         [Serializable, NetSerializable]
         public enum CrayonUiKey
@@ -45,12 +46,12 @@ namespace Content.Shared.GameObjects.Components
     [Serializable, NetSerializable]
     public class CrayonComponentState : ComponentState
     {
-        public readonly string Color;
+        public readonly Color Color;
         public readonly string State;
         public readonly int Charges;
         public readonly int Capacity;
 
-        public CrayonComponentState(string color, string state, int charges, int capacity) : base(ContentNetIDs.CRAYONS)
+        public CrayonComponentState(Color color, string state, int charges, int capacity) : base(ContentNetIDs.CRAYONS)
         {
             Color = color;
             State = state;

@@ -11,6 +11,7 @@ using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Players;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
 
@@ -23,6 +24,15 @@ namespace Content.Client.GameObjects.Components.Sound
 
         private readonly Dictionary<ScheduledSound, IPlayingAudioStream> _audioStreams = new();
         private AudioSystem _audioSystem;
+
+        [YamlField("schedules", true)]
+        private List<ScheduledSound> _scheduledSounds
+        {
+            set
+            {
+                value.ForEach(AddScheduledSound);
+            }
+        }
 
         public override void StopAllSounds()
         {
@@ -99,16 +109,6 @@ namespace Content.Client.GameObjects.Components.Sound
         {
             base.Initialize();
             if (EntitySystem.TryGet(out _audioSystem)) _audioSystem.OcclusionCollisionMask = (int) CollisionGroup.Impassable;
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataReadFunction(
-                "schedules",
-                new List<ScheduledSound>(),
-                schedules => schedules.ForEach(AddScheduledSound));
         }
     }
 }

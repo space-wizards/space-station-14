@@ -35,5 +35,10 @@ namespace Content.Server.Chemistry.TileReactions
 
             return amount;
         }
+
+        public IDeepClone DeepClone()
+        {
+            return new CleanTileReaction();
+        }
     }
 }

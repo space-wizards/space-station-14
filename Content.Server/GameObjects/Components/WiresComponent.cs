@@ -25,6 +25,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -135,15 +136,19 @@ namespace Content.Server.GameObjects.Components
         private readonly List<WireLetter> _availableLetters =
             new((WireLetter[]) Enum.GetValues(typeof(WireLetter)));
 
-        private string _boardName = default!;
+        [YamlField("BoardName")]
+        private string _boardName = "Wires";
 
+        [YamlField("SerialNumber")]
         private string? _serialNumber;
 
         // Used to generate wire appearance randomization client side.
         // We honestly don't care what it is or such but do care that it doesn't change between UI re-opens.
         [ViewVariables]
+        [YamlField("WireSeed")]
         private int _wireSeed;
         [ViewVariables]
+        [YamlField("LayoutId")]
         private string? _layoutId;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(WiresUiKey.Key);
@@ -472,16 +477,6 @@ namespace Content.Server.GameObjects.Components
                     BoardName,
                     SerialNumber,
                     _wireSeed));
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _boardName, "BoardName", "Wires");
-            serializer.DataField(ref _serialNumber, "SerialNumber", null);
-            serializer.DataField(ref _wireSeed, "WireSeed", 0);
-            serializer.DataField(ref _layoutId, "LayoutId", null);
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)

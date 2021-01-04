@@ -23,6 +23,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -36,18 +37,28 @@ namespace Content.Server.GameObjects.Components.Fluids
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
 
-        private ReagentUnit _transferAmount;
+        [YamlField("transferAmount")]
+        private ReagentUnit _transferAmount = ReagentUnit.New(10);
+        [YamlField("spraySound")]
         private string _spraySound;
-        private float _sprayVelocity;
-        private float _sprayAliveTime;
+        [YamlField("sprayVelocity")]
+        private float _sprayVelocity = 1.5f;
+        [YamlField("sprayAliveTime")]
+        private float _sprayAliveTime = 0.75f;
         private TimeSpan _lastUseTime;
         private TimeSpan _cooldownEnd;
-        private float _cooldownTime;
-        private string _vaporPrototype;
-        private int _vaporAmount;
-        private float _vaporSpread;
+        [YamlField("cooldownTime")]
+        private float _cooldownTime = 0.5f;
+        [YamlField("sprayedPrototype")]
+        private string _vaporPrototype = "Vapor";
+        [YamlField("vaporAmount")]
+        private int _vaporAmount = 1;
+        [YamlField("vaporSpread")]
+        private float _vaporSpread = 90f;
+        [YamlField("hasSafety")]
         private bool _hasSafety;
-        private bool _safety;
+        [YamlField("safety")]
+        private bool _safety = true;
 
         /// <summary>
         ///     The amount of solution to be sprayer from this solution when using it
@@ -83,21 +94,6 @@ namespace Content.Server.GameObjects.Components.Fluids
             {
                 SetSafety(Owner, _safety);
             }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _vaporPrototype, "sprayedPrototype", "Vapor");
-            serializer.DataField(ref _vaporAmount, "vaporAmount", 1);
-            serializer.DataField(ref _vaporSpread, "vaporSpread", 90f);
-            serializer.DataField(ref _cooldownTime, "cooldownTime", 0.5f);
-            serializer.DataField(ref _transferAmount, "transferAmount", ReagentUnit.New(10));
-            serializer.DataField(ref _sprayVelocity, "sprayVelocity", 1.5f);
-            serializer.DataField(ref _spraySound, "spraySound", string.Empty);
-            serializer.DataField(ref _sprayAliveTime, "sprayAliveTime", 0.75f);
-            serializer.DataField(ref _hasSafety, "hasSafety", false);
-            serializer.DataField(ref _safety, "safety", true);
         }
 
         async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)

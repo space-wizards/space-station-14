@@ -13,6 +13,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -22,14 +23,8 @@ namespace Content.Server.GameObjects.Components
     [ComponentReference(typeof(SharedWindowComponent))]
     public class WindowComponent : SharedWindowComponent, IExamine, IInteractHand
     {
-        private int _maxDamage;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _maxDamage, "maxDamage", 100);
-        }
+        [YamlField("maxDamage")]
+        private int _maxDamage = 100;
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
         {

@@ -37,9 +37,9 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         public override string Name => "Food";
 
-        [ViewVariables] private string _useSound = "";
-        [ViewVariables] private string? _trashPrototype;
-        [ViewVariables] private ReagentUnit _transferAmount;
+        [ViewVariables] [YamlField("useSound")] private string _useSound = "/Audio/Items/eatfood.ogg";
+        [ViewVariables] [YamlField("trash")] private string? _trashPrototype;
+        [ViewVariables] [YamlField("transferAmount")] private ReagentUnit _transferAmount = ReagentUnit.New(5);
         private UtensilType _utensilsNeeded;
 
         [ViewVariables]
@@ -61,11 +61,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-
-            serializer.DataField(ref _useSound, "useSound", "/Audio/Items/eatfood.ogg");
-            serializer.DataField(ref _transferAmount, "transferAmount", ReagentUnit.New(5));
-            serializer.DataField(ref _trashPrototype, "trash", null);
-
+            
             serializer.DataReadWriteFunction(
                 "utensils",
                 new List<UtensilType>(),

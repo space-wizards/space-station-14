@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Materials
 {
-    public class MaterialComponentDataClass
+    public partial class MaterialComponentDataClass
     {
         [CustomYamlField("materials")]
         public Dictionary<object, Material> MaterialTypes;

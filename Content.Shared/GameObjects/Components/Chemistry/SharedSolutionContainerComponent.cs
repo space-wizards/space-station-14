@@ -3,6 +3,7 @@ using System;
 using Content.Shared.Chemistry;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -16,13 +17,14 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         public sealed override uint? NetID => ContentNetIDs.SOLUTION;
 
         private Solution _solution = new();
-        private ReagentUnit _maxVolume;
+        private ReagentUnit _maxVolume = ReagentUnit.New(0);
         private Color _substanceColor;
 
         /// <summary>
         ///     The contained solution.
         /// </summary>
         [ViewVariables]
+        [YamlField("contents")]
         public Solution Solution
         {
             get => _solution;
@@ -48,6 +50,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         ///     The maximum volume of the container.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
+        [YamlField("maxVol")]
         public ReagentUnit MaxVolume
         {
             get => _maxVolume;
@@ -86,7 +89,9 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         ///     The current capabilities of this container (is the top open to pour? can I inject it into another object?).
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public SolutionContainerCaps Capabilities { get; set; }
+        [YamlField("caps")]
+        public SolutionContainerCaps Capabilities { get; set; } =
+            SolutionContainerCaps.AddTo | SolutionContainerCaps.RemoveFrom;
 
         public abstract bool CanAddSolution(Solution solution);
 

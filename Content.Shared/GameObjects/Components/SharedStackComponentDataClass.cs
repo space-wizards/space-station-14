@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components
 {
-    public class SharedStackComponentDataClass
+    public partial class SharedStackComponentDataClass
     {
         [CustomYamlField("stacktype")]
         public object StackType;

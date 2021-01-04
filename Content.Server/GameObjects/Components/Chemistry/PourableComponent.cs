@@ -4,6 +4,7 @@ using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -20,7 +21,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
     {
         public override string Name => "Pourable";
 
-        private ReagentUnit _transferAmount;
+        [YamlField("transferAmount")]
+        private ReagentUnit _transferAmount = ReagentUnit.New(5);
 
         /// <summary>
         ///     The amount of solution to be transferred from this solution when clicking on other solutions with it.
@@ -30,12 +32,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             get => _transferAmount;
             set => _transferAmount = value;
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _transferAmount, "transferAmount", ReagentUnit.New(5.0));
         }
 
         /// <summary>
@@ -91,7 +87,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("{0:theName} is full!", toSolution.Owner));
                 return false;
             }
-            
+
             //Move units from attackSolution to targetSolution
             var removedSolution = fromSolution.SplitSolution(realTransferAmount);
 

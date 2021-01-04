@@ -8,6 +8,7 @@ using Robust.Client.Graphics;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -18,13 +19,15 @@ namespace Content.Client.GameObjects.Components.Clothing
     [ComponentReference(typeof(IItemComponent))]
     public class ClothingComponent : ItemComponent
     {
-        private FemaleClothingMask _femaleMask;
+        [YamlField("femaleMask")]
+        private FemaleClothingMask _femaleMask = FemaleClothingMask.UniformFull;
         public override string Name => "Clothing";
         public override uint? NetID => ContentNetIDs.CLOTHING;
 
         private string? _clothingEquippedPrefix;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [YamlField("ClothingPrefix")]
         public string? ClothingEquippedPrefix
         {
             get => _clothingEquippedPrefix;
@@ -51,14 +54,6 @@ namespace Content.Client.GameObjects.Components.Clothing
         {
             get => _femaleMask;
             set => _femaleMask = value;
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _femaleMask, "femaleMask", FemaleClothingMask.UniformFull);
-            serializer.DataField(this, p => p.ClothingEquippedPrefix, "ClothingPrefix", null);
         }
 
         public (RSI rsi, RSI.StateId stateId)? GetEquippedStateInfo(EquipmentSlotDefines.SlotFlags slot)

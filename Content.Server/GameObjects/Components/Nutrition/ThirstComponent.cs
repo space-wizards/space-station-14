@@ -12,6 +12,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -29,7 +30,8 @@ namespace Content.Server.GameObjects.Components.Nutrition
             get => _baseDecayRate;
             set => _baseDecayRate = value;
         }
-        private float _baseDecayRate;
+        [YamlField("base_decay_rate")]
+        private float _baseDecayRate = 0.1f;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float ActualDecayRate
@@ -70,12 +72,6 @@ namespace Content.Server.GameObjects.Components.Nutrition
             {ThirstThreshold.Thirsty, AlertType.Thirsty},
             {ThirstThreshold.Parched, AlertType.Parched},
         };
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _baseDecayRate, "base_decay_rate", 0.1f);
-        }
 
         public void ThirstThresholdEffect(bool force = false)
         {

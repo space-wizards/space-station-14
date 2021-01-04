@@ -23,6 +23,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
@@ -42,17 +43,12 @@ namespace Content.Server.GameObjects.Components.Atmos
         public float FireStacks { get; private set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [YamlField("fireSpread")]
         public bool FireSpread { get; private set; } = false;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [YamlField("canResistFire")]
         public bool CanResistFire { get; private set; } = false;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(this, x => x.FireSpread, "fireSpread", false);
-            serializer.DataField(this, x => x.CanResistFire, "canResistFire", false);
-        }
 
         public void Ignite()
         {

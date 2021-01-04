@@ -4,6 +4,7 @@ using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Construction.Completions
@@ -23,6 +24,14 @@ namespace Content.Server.Construction.Completions
             if (!entity.TryGetComponent(out IPhysicsComponent? physics)) return;
 
             physics.Anchored = Value;
+        }
+
+        public IDeepClone DeepClone()
+        {
+            return new SetAnchor
+            {
+                Value = Value
+            };
         }
     }
 }

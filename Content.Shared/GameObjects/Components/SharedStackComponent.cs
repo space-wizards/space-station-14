@@ -59,7 +59,7 @@ namespace Content.Shared.GameObjects.Components
         [CustomYamlField("stacktype")]
         public object StackType { get => _stackType == null ? Owner.Prototype.ID : _stackType; private set => _stackType = value; }
 
-        private object? _stackType = null;
+        private object _stackType;
 
         public override ComponentState GetComponentState()
         {

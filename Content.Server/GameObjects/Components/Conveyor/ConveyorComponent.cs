@@ -18,6 +18,7 @@ using Robust.Shared.GameObjects.Components.Map;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -34,13 +35,15 @@ namespace Content.Server.GameObjects.Components.Conveyor
         ///     The angle to move entities by in relation to the owner's rotation.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
+        [YamlField("angle")]
         private Angle _angle;
 
         /// <summary>
         ///     The amount of units to move the entity by per second.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        private float _speed;
+        [YamlField("speed")]
+        private float _speed = 2f;
 
         private ConveyorState _state;
         /// <summary>
@@ -185,14 +188,6 @@ namespace Content.Server.GameObjects.Components.Conveyor
                     controller.Move(direction, _speed, entity.Transform.WorldPosition - Owner.Transform.WorldPosition);
                 }
             }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _angle, "angle", 0);
-            serializer.DataField(ref _speed, "speed", 2);
         }
 
         public void TriggerSignal(TwoWayLeverSignal signal)

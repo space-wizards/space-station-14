@@ -10,7 +10,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Damage
 {
-    public class DamageableComponentData : Component_AUTODATA
+    public partial class DamageableComponentData
     {
         // TODO define these in yaml?
         public const string DefaultResistanceSet = "defaultResistances";

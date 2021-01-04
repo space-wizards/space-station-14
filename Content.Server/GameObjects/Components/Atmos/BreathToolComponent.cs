@@ -5,6 +5,7 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Npgsql.TypeHandlers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Atmos
@@ -18,17 +19,12 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// <summary>
         /// Tool is functional only in allowed slots
         /// </summary>
-        private EquipmentSlotDefines.SlotFlags _allowedSlots;
+        [YamlField("allowedSlots")]
+        private EquipmentSlotDefines.SlotFlags _allowedSlots = EquipmentSlotDefines.SlotFlags.MASK;
 
         public override string Name => "BreathMask";
         public bool IsFunctional { get; private set; }
         public IEntity? ConnectedInternalsEntity { get; private set; }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _allowedSlots, "allowedSlots", EquipmentSlotDefines.SlotFlags.MASK);
-        }
 
         protected override void Shutdown()
         {

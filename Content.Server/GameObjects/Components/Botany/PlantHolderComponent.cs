@@ -55,6 +55,7 @@ namespace Content.Server.GameObjects.Components.Botany
         [ViewVariables(VVAccess.ReadWrite)] private bool _updateSpriteAfterUpdate;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [YamlField("drawWarnings")]
         public bool DrawWarnings { get; private set; } = false;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -125,12 +126,6 @@ namespace Content.Server.GameObjects.Components.Botany
             base.Initialize();
 
             Owner.EnsureComponentWarn<SolutionContainerComponent>();
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(this, x => x.DrawWarnings, "drawWarnings", false);
         }
 
         public void WeedInvasion()

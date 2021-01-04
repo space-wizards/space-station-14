@@ -27,6 +27,7 @@ using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -42,13 +43,15 @@ namespace Content.Server.GameObjects.Components.Buckle
         [ComponentDependency] private readonly StunnableComponent? _stunnableComponent = null;
         [ComponentDependency] private readonly MobStateComponent? _mobStateComponent = null;
 
-        private int _size;
+        [YamlField("size")]
+        private int _size = 100;
 
         /// <summary>
         ///     The range from which this entity can buckle to a <see cref="StrapComponent"/>.
         /// </summary>
         [ViewVariables]
-        private float _range;
+        [YamlField("range")]
+        private float _range = SharedInteractionSystem.InteractionRange / 1.4f;
         /// <summary>
         ///     The amount of time that must pass for this entity to
         ///     be able to unbuckle after recently buckling.
@@ -383,10 +386,6 @@ namespace Content.Server.GameObjects.Components.Buckle
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-
-            serializer.DataField(ref _size, "size", 100);
-            serializer.DataField(ref _range, "range", SharedInteractionSystem.InteractionRange / 1.4f);
-
             var seconds = 0.25f;
             serializer.DataField(ref seconds, "cooldown", 0.25f);
 

@@ -6,6 +6,7 @@ using Content.Shared.Construction;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 
@@ -22,7 +23,6 @@ namespace Content.Server.Construction.Completions
             serializer.DataField(this, x => x.Prototype, "prototype", string.Empty);
             serializer.DataField(this, x => x.Amount, "amount", 1);
         }
-
 
         public async Task PerformAction(IEntity entity, IEntity? user)
         {
@@ -45,7 +45,16 @@ namespace Content.Server.Construction.Completions
                     entityManager.SpawnEntity(Prototype, coordinates);
                 }
             }
-            
+
+        }
+
+        public IDeepClone DeepClone()
+        {
+            return new SpawnPrototype
+            {
+                Prototype = Prototype,
+                Amount = Amount
+            };
         }
     }
 }

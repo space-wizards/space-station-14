@@ -6,6 +6,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -18,14 +19,7 @@ namespace Content.Client.GameObjects.Components
 
         [Dependency] private readonly IClickMapManager _clickMapManager = default!;
 
-        [ViewVariables] private DirBoundData _data = default!;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _data, "bounds", DirBoundData.Default);
-        }
+        [ViewVariables] [YamlField("bounds")] private DirBoundData _data = DirBoundData.Default;
 
         /// <summary>
         /// Used to check whether a click worked.
@@ -122,7 +116,7 @@ namespace Content.Client.GameObjects.Components
             return found;
         }
 
-        private sealed class DirBoundData : IExposeData
+        public sealed class DirBoundData : IExposeData
         {
             [ViewVariables] public Box2 All;
             [ViewVariables] public Box2 North;
@@ -139,6 +133,18 @@ namespace Content.Client.GameObjects.Components
                 serializer.DataField(ref South, "south", default);
                 serializer.DataField(ref East, "east", default);
                 serializer.DataField(ref West, "west", default);
+            }
+
+            public IDeepClone DeepClone()
+            {
+                return new DirBoundData
+                {
+                    All = All,
+                    North = North,
+                    South = South,
+                    East = East,
+                    West = West
+                };
             }
         }
     }

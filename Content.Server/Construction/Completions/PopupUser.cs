@@ -4,6 +4,7 @@ using Content.Shared.Construction;
 using Content.Shared.Interfaces;
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Construction.Completions
@@ -28,6 +29,15 @@ namespace Content.Server.Construction.Completions
                 user.PopupMessageCursor(Text);
             else
                 entity.PopupMessage(user, Text);
+        }
+
+        public IDeepClone DeepClone()
+        {
+            return new PopupUser
+            {
+                Text = Text,
+                Cursor = Cursor
+            };
         }
     }
 }

@@ -53,5 +53,15 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds
                 behavior.Trigger(owner, system);
             }
         }
+
+        public IDeepClone DeepClone()
+        {
+            return new Threshold
+            {
+                Behaviors = (List<IThresholdBehavior>) IDeepClone.CloneValue(Behaviors)!,
+                Triggered = Triggered,
+                TriggersOnce = TriggersOnce
+            };
+        }
     }
 }

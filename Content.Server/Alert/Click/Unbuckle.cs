@@ -2,6 +2,7 @@
 using Content.Shared.Alert;
 using Robust.Shared.Serialization;
 using JetBrains.Annotations;
+using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Server.Alert.Click
 {
@@ -19,6 +20,11 @@ namespace Content.Server.Alert.Click
             {
                 buckle.TryUnbuckle(args.Player);
             }
+        }
+
+        public IDeepClone DeepClone()
+        {
+            return new Unbuckle();
         }
     }
 }

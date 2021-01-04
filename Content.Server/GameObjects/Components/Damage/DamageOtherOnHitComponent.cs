@@ -2,6 +2,7 @@ using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Damage
@@ -11,18 +12,12 @@ namespace Content.Server.GameObjects.Components.Damage
     {
         public override string Name => "DamageOtherOnHit";
 
-        private DamageType _damageType;
-        private int _amount;
+        [YamlField("damageType")]
+        private DamageType _damageType = DamageType.Blunt;
+        [YamlField("amount")]
+        private int _amount = 1;
+        [YamlField("ignoreResistances")]
         private bool _ignoreResistances;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _damageType, "damageType", DamageType.Blunt);
-            serializer.DataField(ref _amount, "amount", 1);
-            serializer.DataField(ref _ignoreResistances, "ignoreResistances", false);
-        }
 
         public void DoHit(ThrowCollideEventArgs eventArgs)
         {

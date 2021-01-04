@@ -26,6 +26,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -43,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
     public class ChemMasterComponent : SharedChemMasterComponent, IActivate, IInteractUsing, ISolutionChange
     {
         [ViewVariables] private ContainerSlot _beakerContainer = default!;
-        [ViewVariables] private string _packPrototypeId = "";
+        [ViewVariables] [YamlField("pack")] private string _packPrototypeId = "";
         [ViewVariables] private bool HasBeaker => _beakerContainer.ContainedEntity != null;
         [ViewVariables] private bool _bufferModeTransfer = true;
 
@@ -52,17 +53,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
         [ViewVariables] private readonly SolutionContainerComponent BufferSolution = new();
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ChemMasterUiKey.Key);
-
-        /// <summary>
-        /// Shows the serializer how to save/load this components yaml prototype.
-        /// </summary>
-        /// <param name="serializer">Yaml serializer</param>
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _packPrototypeId, "pack", string.Empty);
-        }
 
         /// <summary>
         /// Called once per instance of this component. Gets references to any other components needed

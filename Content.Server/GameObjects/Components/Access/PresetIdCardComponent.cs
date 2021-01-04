@@ -13,14 +13,8 @@ namespace Content.Server.GameObjects.Components.Access
     {
         public override string Name => "PresetIdCard";
 
+        [YamlField("job")]
         private string? _jobName;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _jobName, "job", null);
-        }
 
         void IMapInit.MapInit()
         {

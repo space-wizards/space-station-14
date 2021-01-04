@@ -8,6 +8,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -20,7 +21,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
         private EntityUid _shooter = EntityUid.Invalid;
 
-        private Dictionary<DamageType, int> _damages;
+        [YamlField("damages")] private Dictionary<DamageType, int> _damages = new();
 
         [ViewVariables]
         public Dictionary<DamageType, int> Damages
@@ -30,23 +31,16 @@ namespace Content.Server.GameObjects.Components.Projectiles
         }
 
         public bool DeleteOnCollide => _deleteOnCollide;
-        private bool _deleteOnCollide;
+        [YamlField("delete_on_collide")]
+        private bool _deleteOnCollide = true;
 
         // Get that juicy FPS hit sound
+        [YamlField("soundHit")]
         private string _soundHit;
+        [YamlField("soundHitSpecies")]
         private string _soundHitSpecies;
 
         private bool _damagedEntity;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _deleteOnCollide, "delete_on_collide", true);
-            // If not specified 0 damage
-            serializer.DataField(ref _damages, "damages", new Dictionary<DamageType, int>());
-            serializer.DataField(ref _soundHit, "soundHit", null);
-            serializer.DataField(ref _soundHitSpecies, "soundHitSpecies", null);
-        }
 
         public float TimeLeft { get; set; } = 10;
 

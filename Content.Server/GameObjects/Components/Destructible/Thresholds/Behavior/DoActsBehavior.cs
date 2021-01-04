@@ -1,6 +1,7 @@
 ﻿using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behavior
@@ -40,6 +41,14 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behavior
             {
                 system.ActSystem.HandleDestruction(owner);
             }
+        }
+
+        public IDeepClone DeepClone()
+        {
+            return new DoActsBehavior
+            {
+                _acts = _acts
+            };
         }
     }
 }

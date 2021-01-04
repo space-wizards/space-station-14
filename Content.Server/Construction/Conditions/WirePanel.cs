@@ -3,6 +3,7 @@ using Content.Server.GameObjects.Components;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -41,6 +42,11 @@ namespace Content.Server.Construction.Conditions
             }
 
             return false;
+        }
+
+        public IDeepClone DeepClone()
+        {
+            return new WirePanel {Open = Open};
         }
     }
 }

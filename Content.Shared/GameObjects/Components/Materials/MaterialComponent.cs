@@ -15,6 +15,7 @@ namespace Content.Shared.GameObjects.Components.Materials
     ///     This is not a storage system for say smelteries.
     /// </summary>
     [RegisterComponent]
+    [CustomDataClass(typeof(MaterialComponentDataClass))]
     public class MaterialComponent : Component
     {
         public const string SerializationCache = "mat";

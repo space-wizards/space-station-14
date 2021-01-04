@@ -10,6 +10,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using System.Threading.Tasks;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameObjects.Components.Fluids
 {
@@ -43,17 +44,11 @@ namespace Content.Server.GameObjects.Components.Fluids
         // Dumping in a bucket requires 1 click
         // Long-term you'd probably use a cooldown and start the pickup once we have some form of global cooldown
         public ReagentUnit PickupAmount => _pickupAmount;
-        private ReagentUnit _pickupAmount;
+        [YamlField("pickup_amount")]
+        private ReagentUnit _pickupAmount = ReagentUnit.New(5);
 
-        private string _pickupSound = "";
-
-        /// <inheritdoc />
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataFieldCached(ref _pickupSound, "pickup_sound", "/Audio/Effects/Fluids/slosh.ogg");
-            // The turbo mop will pickup more
-            serializer.DataFieldCached(ref _pickupAmount, "pickup_amount", ReagentUnit.New(5));
-        }
+        [YamlField("pickup_sound")]
+        private string _pickupSound = "/Audio/Effects/Fluids/slosh.ogg";
 
         public override void Initialize()
         {

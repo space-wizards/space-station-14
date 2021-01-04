@@ -4,6 +4,7 @@ using Content.Shared.Interfaces.Chemistry;
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
@@ -42,6 +43,11 @@ namespace Content.Server.Chemistry.PlantMetabolism
                 plantHolderComp.CheckForDivergence(true);
                 plantHolderComp.Seed.Yield--;
             }
+        }
+
+        public IDeepClone DeepClone()
+        {
+            return new RobustHarvest();
         }
     }
 }

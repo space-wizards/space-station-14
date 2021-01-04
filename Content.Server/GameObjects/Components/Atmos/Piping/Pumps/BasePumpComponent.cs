@@ -7,6 +7,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -30,19 +31,22 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
                 UpdateAppearance();
             }
         }
+        [YamlField("pumpEnabled")]
         private bool _pumpEnabled;
 
         /// <summary>
         ///     Needs to be same <see cref="PipeDirection"/> as that of a <see cref="Pipe"/> on this entity.
         /// </summary>
         [ViewVariables]
-        private PipeDirection _inletDirection;
+        [YamlField("inletDirection")]
+        private PipeDirection _inletDirection = PipeDirection.None;
 
         /// <summary>
         ///     Needs to be same <see cref="PipeDirection"/> as that of a <see cref="Pipe"/> on this entity.
         /// </summary>
         [ViewVariables]
-        private PipeDirection _outletDirection;
+        [YamlField("outletDirection")]
+        private PipeDirection _outletDirection = PipeDirection.None;
 
         [ViewVariables]
         private PipeNode _inletPipe;
@@ -51,15 +55,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
         private PipeNode _outletPipe;
 
         private AppearanceComponent _appearance;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _inletDirection, "inletDirection", PipeDirection.None);
-            serializer.DataField(ref _outletDirection, "outletDirection", PipeDirection.None);
-            serializer.DataField(ref _pumpEnabled, "pumpEnabled", false);
-        }
-
+        
         public override void Initialize()
         {
             base.Initialize();

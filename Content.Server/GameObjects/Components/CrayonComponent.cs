@@ -27,26 +27,16 @@ namespace Content.Server.GameObjects.Components
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         //TODO: useSound
+        [YamlField("useSound")]
         private string? _useSound;
-        [ViewVariables]
-        public Color Color { get; set; }
-
         [ViewVariables(VVAccess.ReadWrite)]
         public int Charges { get; set; }
-        private int _capacity;
+        [YamlField("capacity")]
+        private int _capacity = 30;
         [ViewVariables(VVAccess.ReadWrite)]
         public int Capacity { get => _capacity; set => _capacity = value; }
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(CrayonUiKey.Key);
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _useSound, "useSound", string.Empty);
-            serializer.DataField(ref _color, "color", "white");
-            serializer.DataField(ref _capacity, "capacity", 30);
-            Color = Color.FromName(_color);
-        }
 
         public override void Initialize()
         {
@@ -102,7 +92,7 @@ namespace Content.Server.GameObjects.Components
                 {
                     // Tell the user interface the selected stuff
                     UserInterface.SetState(
-                        new CrayonBoundUserInterfaceState(SelectedState, Color));
+                        new CrayonBoundUserInterfaceState(SelectedState, _color));
                 }
                 return true;
             }
@@ -121,12 +111,12 @@ namespace Content.Server.GameObjects.Components
             }
 
             var entityManager = IoCManager.Resolve<IServerEntityManager>();
-            
+
             var entity = entityManager.SpawnEntity("CrayonDecal", eventArgs.ClickLocation);
             if (entity.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(CrayonVisuals.State, SelectedState);
-                appearance.SetData(CrayonVisuals.Color, Color);
+                appearance.SetData(CrayonVisuals.Color, _color);
                 appearance.SetData(CrayonVisuals.Rotation, eventArgs.User.Transform.LocalRotation);
             }
 

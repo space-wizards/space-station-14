@@ -19,6 +19,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
 using System.Linq;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameObjects.Components.Cargo
 {
@@ -61,6 +62,7 @@ namespace Content.Server.GameObjects.Components.Cargo
             }
         }
 
+        [YamlField("requestOnly")]
         private bool _requestOnly = false;
 
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
@@ -92,16 +94,6 @@ namespace Content.Server.GameObjects.Components.Cargo
             }
 
             base.OnRemove();
-        }
-
-        /// <summary>
-        ///    Reads data from YAML
-        /// </summary>
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _requestOnly, "requestOnly", false);
         }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
@@ -165,7 +157,7 @@ namespace Content.Server.GameObjects.Components.Cargo
                         var indices = Owner.Transform.Coordinates.ToVector2i(Owner.EntityManager, _mapManager);
                         var offsets = new Vector2i[] { new Vector2i(0, 1), new Vector2i(1, 1), new Vector2i(1, 0), new Vector2i(1, -1),
                                                        new Vector2i(0, -1), new Vector2i(-1, -1), new Vector2i(-1, 0), new Vector2i(-1, 1), };
-                        var adjacentEntities = new List<IEnumerable<IEntity>>(); //Probably better than IEnumerable.concat 
+                        var adjacentEntities = new List<IEnumerable<IEntity>>(); //Probably better than IEnumerable.concat
                         foreach (var offset in offsets)
                         {
                             adjacentEntities.Add((indices+offset).GetEntitiesInTileFast(Owner.Transform.GridID));

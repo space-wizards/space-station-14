@@ -6,6 +6,7 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Construction.Completions
@@ -34,6 +35,11 @@ namespace Content.Server.Construction.Completions
         private string GetSound()
         {
             return !string.IsNullOrEmpty(SoundCollection) ? AudioHelpers.GetRandomFileFromSoundCollection(SoundCollection) : Sound;
+        }
+
+        public IDeepClone DeepClone()
+        {
+            return new PlaySound {Sound = Sound, SoundCollection = SoundCollection};
         }
     }
 }

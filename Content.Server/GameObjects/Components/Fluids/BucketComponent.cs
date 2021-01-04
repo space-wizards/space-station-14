@@ -9,6 +9,7 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Fluids
@@ -37,13 +38,8 @@ namespace Content.Server.GameObjects.Components.Fluids
             ? solution.CurrentVolume
             : ReagentUnit.Zero;
 
-        private string? _sound;
-
-        /// <inheritdoc />
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataFieldCached(ref _sound, "sound", "/Audio/Effects/Fluids/watersplash.ogg");
-        }
+        [YamlField("sound")]
+        private string? _sound = "/Audio/Effects/Fluids/watersplash.ogg";
 
         /// <inheritdoc />
         public override void Initialize()

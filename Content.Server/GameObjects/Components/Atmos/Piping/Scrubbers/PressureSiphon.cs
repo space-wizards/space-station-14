@@ -2,6 +2,7 @@
 using Content.Server.Atmos;
 using Content.Shared.Atmos;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -22,7 +23,8 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Scrubbers
             get => _siphonPressureTarget;
             set => _siphonPressureTarget = Math.Max(value, 0);
         }
-        private float _siphonPressureTarget;
+        [YamlField("startingSiphonPressureTarget")]
+        private float _siphonPressureTarget = Atmospherics.OneAtmosphere * 2;
 
         /// <summary>
         ///     Every update, this siphon will only decrease the inlet pressure by this fraction of the amount needed to reach the <see cref="SiphonPressureTarget"/>.
@@ -33,14 +35,8 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Scrubbers
             get => _transferRatio;
             set => _transferRatio = Math.Clamp(value, 0, 1);
         }
-        private float _transferRatio;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _siphonPressureTarget, "startingSiphonPressureTarget", Atmospherics.OneAtmosphere * 2);
-            serializer.DataField(ref _transferRatio, "transferRatio", 0.5f);
-        }
+        [YamlField("transferRatio")]
+        private float _transferRatio = 0.5f;
 
         protected override void ScrubGas(GasMixture inletGas, GasMixture outletGas)
         {

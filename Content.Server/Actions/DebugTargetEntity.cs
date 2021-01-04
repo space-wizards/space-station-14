@@ -1,6 +1,7 @@
 ﻿using Content.Server.Utility;
 using Content.Shared.Actions;
 using JetBrains.Annotations;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Actions
@@ -23,6 +24,11 @@ namespace Content.Server.Actions
         {
             args.Performer.PopupMessageEveryone("Clicked " +
                                                 args.Target.Name);
+        }
+
+        public IDeepClone DeepClone()
+        {
+            return new DebugTargetEntity();
         }
     }
 }

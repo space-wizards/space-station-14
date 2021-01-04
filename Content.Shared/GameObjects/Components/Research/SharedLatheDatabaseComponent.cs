@@ -9,11 +9,13 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Research
 {
+    [CustomDataClass(typeof(SharedLatheDatabaseComponentDataClass))]
     public class SharedLatheDatabaseComponent : Component, IEnumerable<LatheRecipePrototype>
     {
         public override string Name => "LatheDatabase";
         public override uint? NetID => ContentNetIDs.LATHE_DATABASE;
 
+        [CustomYamlField("recipes")]
         private readonly List<LatheRecipePrototype> _recipes = new();
 
         /// <summary>
@@ -68,29 +70,6 @@ namespace Content.Shared.GameObjects.Components.Research
                 if (recipe.ID == id) return true;
             }
             return false;
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataReadWriteFunction(
-                "recipes",
-                new List<string>(),
-                recipes =>
-                {
-                    var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-
-                    foreach (var id in recipes)
-                    {
-                        if (prototypeManager.TryIndex(id, out LatheRecipePrototype recipe))
-                        {
-                            _recipes.Add(recipe);
-                        }
-                    }
-                },
-                GetRecipeIdList);
-
         }
 
         public List<string> GetRecipeIdList()

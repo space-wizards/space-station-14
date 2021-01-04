@@ -44,11 +44,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override FireRateSelector FireRateSelector => _fireRateSelector;
-        private FireRateSelector _fireRateSelector;
+        [YamlField("currentSelector")]
+        private FireRateSelector _fireRateSelector = FireRateSelector.Safety;
         public override FireRateSelector AllRateSelectors => _fireRateSelector;
         private FireRateSelector _allRateSelectors;
         public override float FireRate => _fireRate;
-        private float _fireRate;
+        [YamlField("fireRate")]
+        private float _fireRate = 2f;
 
         // _lastFire is when we actually fired (so if we hold the button then recoil doesn't build up if we're not firing)
         private TimeSpan _lastFire;
@@ -72,6 +74,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         private float _spreadRatio;
 
         public bool CanMuzzleFlash => _canMuzzleFlash;
+        [YamlField("canMuzzleFlash")]
         private bool _canMuzzleFlash = true;
 
         // Sounds
@@ -80,16 +83,15 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             get => _soundGunshot;
             set => _soundGunshot = value;
         }
+        [YamlField("soundGunshot")]
         private string _soundGunshot;
         public string SoundEmpty => _soundEmpty;
-        private string _soundEmpty;
+        [YamlField("soundEmpty")]
+        private string _soundEmpty = "/Audio/Weapons/Guns/Empty/empty.ogg";
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-
-            serializer.DataField(ref _fireRateSelector, "currentSelector", FireRateSelector.Safety);
-            serializer.DataField(ref _fireRate, "fireRate", 2.0f);
 
             // This hard-to-read area's dealing with recoil
             // Use degrees in yaml as it's easier to read compared to "0.0125f"
@@ -145,12 +147,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 Logger.Error("SpreadRatio must be <= 1.0f for guns");
                 throw new InvalidOperationException();
             }
-
-            serializer.DataField(ref _canMuzzleFlash, "canMuzzleFlash", true);
-
-            // Sounds
-            serializer.DataField(ref _soundGunshot, "soundGunshot", null);
-            serializer.DataField(ref _soundEmpty, "soundEmpty", "/Audio/Weapons/Guns/Empty/empty.ogg");
         }
 
         public override void OnAdd()

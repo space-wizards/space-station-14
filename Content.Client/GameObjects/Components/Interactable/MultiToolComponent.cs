@@ -5,6 +5,7 @@ using Content.Shared.GameObjects.Components.Interactable;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
@@ -15,7 +16,8 @@ namespace Content.Client.GameObjects.Components.Interactable
     public class MultiToolComponent : Component, IItemStatus
     {
         private ToolQuality _behavior;
-        private bool _statusShowBehavior;
+        [YamlField("statusShowBehavior")]
+        private bool _statusShowBehavior = true;
 
         [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;
         [ViewVariables] public bool StatusShowBehavior => _statusShowBehavior;
@@ -23,12 +25,6 @@ namespace Content.Client.GameObjects.Components.Interactable
 
         public override string Name => "MultiTool";
         public override uint? NetID => ContentNetIDs.MULTITOOLS;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _statusShowBehavior, "statusShowBehavior", true);
-        }
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {

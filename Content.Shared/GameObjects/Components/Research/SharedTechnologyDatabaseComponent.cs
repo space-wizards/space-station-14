@@ -9,11 +9,13 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Research
 {
+    [CustomDataClass(typeof(SharedTechnologyDatabaseComponentDataClass))]
     public class SharedTechnologyDatabaseComponent : Component, IEnumerable<TechnologyPrototype>
     {
         public override string Name => "TechnologyDatabase";
         public override uint? NetID => ContentNetIDs.TECHNOLOGY_DATABASE;
 
+        [CustomYamlField("technologies")]
         protected List<TechnologyPrototype> _technologies = new();
 
         /// <summary>
@@ -77,27 +79,6 @@ namespace Content.Shared.GameObjects.Components.Research
                     return false;
             }
             return true;
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataReadWriteFunction(
-                "technologies",
-                new List<string>(),
-                techs =>
-                {
-                    var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-
-                    foreach (var id in techs)
-                    {
-                        if (prototypeManager.TryIndex(id, out TechnologyPrototype tech))
-                        {
-                            _technologies.Add(tech);
-                        }
-                    }
-                }, GetTechnologyIdList);
         }
     }
 

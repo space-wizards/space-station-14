@@ -37,5 +37,14 @@ namespace Content.Server.Chemistry.Metabolism
             //Return amount of reagent to be removed, remove reagent regardless of ThirstComponent presence
             return metabolismAmount;
         }
+
+        public IDeepClone DeepClone()
+        {
+            return new DefaultDrink
+            {
+                _hydrationFactor = _hydrationFactor,
+                _metabolismRate = _metabolismRate
+            };
+        }
     }
 }

@@ -12,6 +12,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -53,14 +54,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         [ViewVariables]
         public HashSet<string> Tags { get; set; } = new();
 
-        [ViewVariables] public GasMixture Air { get; set; } = default!;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(this, x => x.Air, "air", new GasMixture(Atmospherics.CellVolume));
-        }
+        [ViewVariables] [YamlField("air")] public GasMixture Air { get; set; } = new GasMixture(Atmospherics.CellVolume);
 
         public override void Initialize()
         {

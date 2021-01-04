@@ -25,7 +25,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         [ViewVariables]
-        private ReagentUnit _transferAmount;
+        [YamlField("transferAmount")]
+        private ReagentUnit _transferAmount = ReagentUnit.New(0.5);
 
         private bool _reached;
         private float _reactTimer;
@@ -56,12 +57,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 var controller = physics.EnsureController<VaporController>();
                 controller.Move(_direction, _velocity);
             }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _transferAmount, "transferAmount", ReagentUnit.New(0.5));
         }
 
         public void Update(float frameTime)

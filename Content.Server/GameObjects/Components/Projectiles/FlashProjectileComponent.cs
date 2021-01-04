@@ -2,6 +2,7 @@ using Content.Server.GameObjects.Components.Weapon;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Projectiles
@@ -14,17 +15,12 @@ namespace Content.Server.GameObjects.Components.Projectiles
     {
         public override string Name => "FlashProjectile";
 
-        private float _range;
-        private float _duration;
+        [YamlField("range")]
+        private float _range = 1.0f;
+        [YamlField("duration")]
+        private float _duration = 8.0f;
 
         private bool _flashed;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _range, "range", 1.0f);
-            serializer.DataField(ref _duration, "duration", 8.0f);
-        }
 
         public override void Initialize()
         {

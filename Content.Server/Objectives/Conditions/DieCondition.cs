@@ -3,6 +3,7 @@ using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using JetBrains.Annotations;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 
@@ -49,6 +50,14 @@ namespace Content.Server.Objectives.Conditions
         public override int GetHashCode()
         {
             return (_mind != null ? _mind.GetHashCode() : 0);
+        }
+
+        public IDeepClone DeepClone()
+        {
+            return new DieCondition
+            {
+                _mind = _mind
+            };
         }
     }
 }

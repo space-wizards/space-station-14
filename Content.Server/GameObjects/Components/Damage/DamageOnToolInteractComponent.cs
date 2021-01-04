@@ -6,6 +6,7 @@ using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Damage
@@ -15,18 +16,10 @@ namespace Content.Server.GameObjects.Components.Damage
     {
         public override string Name => "DamageOnToolInteract";
 
-        /* Set in YAML */
+        [YamlField("damage")]
         protected int Damage;
+        [YamlField("tools")]
         private List<ToolQuality> _tools = new();
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref Damage, "damage", 0);
-
-            serializer.DataField(ref _tools, "tools", new List<ToolQuality>());
-        }
 
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {

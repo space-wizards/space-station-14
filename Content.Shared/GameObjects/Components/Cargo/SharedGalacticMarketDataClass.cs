@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Cargo
 {
-    public class SharedGalacticMarketDataClass
+    public partial class SharedGalacticMarketDataClass
     {
         [CustomYamlField("products")]
         protected List<CargoProductPrototype> _products = new();

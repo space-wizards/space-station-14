@@ -5,6 +5,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using static Content.Client.GameObjects.Components.IconSmoothing.IconSmoothComponent;
 
@@ -14,6 +15,7 @@ namespace Content.Client.GameObjects.Components
     [ComponentReference(typeof(SharedWindowComponent))]
     public sealed class WindowComponent : SharedWindowComponent
     {
+        [YamlField("base")]
         private string _stateBase;
         private ISpriteComponent _sprite;
         private SnapGridComponent _snapGrid;
@@ -103,13 +105,6 @@ namespace Content.Client.GameObjects.Components
 
             return null;
         }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _stateBase, "base", null);
-        }
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
@@ -119,5 +114,5 @@ namespace Content.Client.GameObjects.Components
         DamageNE,
         DamageNW,
         DamageSW
-    }
+    } //mauff mauff
 }

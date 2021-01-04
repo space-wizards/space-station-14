@@ -15,6 +15,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.GameObjects.Components.Body.Mechanism
 {
+    [CustomDataClass(typeof(SharedMechanismComponentDataClass))]
     public abstract class SharedMechanismComponent : Component, IMechanism
     {
         public override string Name => "Mechanism";
@@ -24,6 +25,7 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
         protected int IdHash;
         protected IEntity? PerformerCache;
         private IBodyPart? _part;
+        [CustomYamlField("behaviours")]
         private readonly Dictionary<Type, IMechanismBehavior> _behaviors = new();
 
         public IBody? Body => Part?.Body;
@@ -84,41 +86,6 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
 
         [YamlField("compatibility")]
         public BodyPartCompatibility Compatibility { get; set; } = BodyPartCompatibility.Universal;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            var moduleManager = IoCManager.Resolve<IModuleManager>();
-
-            if (moduleManager.IsServerModule)
-            {
-                serializer.DataReadWriteFunction(
-                    "behaviors",
-                    null!,
-                    behaviors =>
-                    {
-                        if (behaviors == null)
-                        {
-                            return;
-                        }
-
-                        foreach (var behavior in behaviors)
-                        {
-                            var type = behavior.GetType();
-
-                            if (!_behaviors.TryAdd(type, behavior))
-                            {
-                                Logger.Warning($"Duplicate behavior in {nameof(SharedMechanismComponent)} for entity {Owner.Name}: {type}.");
-                                continue;
-                            }
-
-                            IoCManager.InjectDependencies(behavior);
-                        }
-                    },
-                    () => _behaviors.Values.ToList());
-            }
-        }
 
         public override void Initialize()
         {

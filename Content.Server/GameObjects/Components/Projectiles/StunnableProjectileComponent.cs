@@ -3,6 +3,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Projectiles
@@ -16,17 +17,12 @@ namespace Content.Server.GameObjects.Components.Projectiles
         public override string Name => "StunnableProjectile";
 
         // See stunnable for what these do
+        [YamlField("stunAmount")]
         private int _stunAmount;
+        [YamlField("knockdownAmount")]
         private int _knockdownAmount;
+        [YamlField("slowdownAmount")]
         private int _slowdownAmount;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _stunAmount, "stunAmount", 0);
-            serializer.DataField(ref _knockdownAmount, "knockdownAmount", 0);
-            serializer.DataField(ref _slowdownAmount, "slowdownAmount", 0);
-        }
 
         public override void Initialize()
         {

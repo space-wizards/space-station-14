@@ -350,5 +350,10 @@ namespace Content.Server.Botany
         {
             return (!Ligneous || (Ligneous && held != null && held.HasComponent<BotanySharpComponent>()));
         }
+
+        public IDeepClone DeepClone()
+        {
+            return Clone();
+        }
     }
 }

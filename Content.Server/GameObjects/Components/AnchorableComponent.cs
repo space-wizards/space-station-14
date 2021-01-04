@@ -9,6 +9,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -20,20 +21,15 @@ namespace Content.Server.GameObjects.Components
         public override string Name => "Anchorable";
 
         [ViewVariables]
+        [YamlField("tool")]
         public ToolQuality Tool { get; private set; } = ToolQuality.Anchoring;
 
         [ViewVariables]
         int IInteractUsing.Priority => 1;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [YamlField("snap")]
         public bool Snap { get; private set; }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(this, x => x.Tool, "tool", ToolQuality.Anchoring);
-            serializer.DataField(this, x => x.Snap, "snap", false);
-        }
 
         /// <summary>
         ///     Checks if a tool can change the anchored status.

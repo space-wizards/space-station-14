@@ -46,7 +46,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         [ViewVariables] private ContainerSlot _beakerContainer = default!;
-        [ViewVariables] private string _packPrototypeId = "";
+        [ViewVariables] [YamlField("pack")] private string _packPrototypeId = "";
 
         [ViewVariables] private bool HasBeaker => _beakerContainer.ContainedEntity != null;
         [ViewVariables] private ReagentUnit _dispenseAmount = ReagentUnit.New(10);
@@ -55,17 +55,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
         [ViewVariables] private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ReagentDispenserUiKey.Key);
-
-        /// <summary>
-        /// Shows the serializer how to save/load this components yaml prototype.
-        /// </summary>
-        /// <param name="serializer">Yaml serializer</param>
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _packPrototypeId, "pack", string.Empty);
-        }
 
         /// <summary>
         /// Called once per instance of this component. Gets references to any other components needed
