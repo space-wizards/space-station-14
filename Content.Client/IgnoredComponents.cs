@@ -229,7 +229,7 @@ namespace Content.Client
             "CargoTelepad",
             "TraitorDeathMatchRedemption",
             "GlassBeaker",
-            "SliceableFood"
+            "SliceableFood",
             "DamageOtherOnHit",
             "DamageOnLand"
         };
