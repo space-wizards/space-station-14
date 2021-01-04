@@ -21,6 +21,7 @@
   - chem.H2O
   - chem.Ethanol
   - chem.Glucose
+  - chem.Sugar
   - chem.H
   - chem.O
   - chem.S

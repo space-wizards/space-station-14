@@ -136,6 +136,21 @@
       maxScale: 30 #Explosion strength stops scaling at 30 potassium + 30 water
 
 - type: reaction
+  id: react.Smoke
+  reactants:
+    chem.P:
+      amount: 1
+    chem.K:
+      amount: 1
+    chem.Sugar:
+      amount: 1
+  effects:
+    - !type:SmokeReactionEffect
+      rangeMultiplier: 0.2
+      duration: 10
+      spreadDelay: 0.5
+
+- type: reaction
   id: react.EZNutrient
   reactants:
     chem.N:
