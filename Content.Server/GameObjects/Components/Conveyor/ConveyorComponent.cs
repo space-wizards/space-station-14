@@ -57,25 +57,18 @@ namespace Content.Server.GameObjects.Components.Conveyor
             }
         }
 
-        public override void OnAdd()
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
-            base.OnAdd();
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
+            base.HandleMessage(message, component);
+            switch (message)
             {
-                receiver.OnPowerStateChanged += OnPowerChanged;
+                case PowerChangedMessage powerChanged:
+                    OnPowerChanged(powerChanged);
+                    break;
             }
         }
 
-        public override void OnRemove()
-        {
-            base.OnRemove();
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
-            {
-                receiver.OnPowerStateChanged -= OnPowerChanged;
-            }
-        }
-
-        private void OnPowerChanged(object? sender, PowerStateEventArgs e)
+        private void OnPowerChanged(PowerChangedMessage e)
         {
             UpdateAppearance();
         }
