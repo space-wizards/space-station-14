@@ -71,6 +71,7 @@
       rangeMultiplier: 0.2
       duration: 10
       spreadDelay: 0.5
+      smokeSound: /Audio/Effects/smoke.ogg
 
 - type: reaction
   id: react.TableSalt

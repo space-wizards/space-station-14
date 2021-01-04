@@ -1,8 +1,7 @@
 ﻿- type: entity
   id: smoke_cloud
   name: Smoke
-  placement:
-    mode: SnapgridCenter
+  abstract: true
   components:
     - type: Sprite
       drawdepth: Ghosts

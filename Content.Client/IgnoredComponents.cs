@@ -230,7 +230,8 @@ namespace Content.Client
             "TraitorDeathMatchRedemption",
             "GlassBeaker",
             "DamageOtherOnHit",
-            "DamageOnLand"
+            "DamageOnLand",
+            "Smoke"
         };
     }
 }

@@ -11,7 +11,14 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             foreach (var smokeComp in ComponentManager.EntityQuery<SmokeComponent>())
             {
-                smokeComp.Update(frameTime);
+                if (!smokeComp.IsInception)
+                    smokeComp.Update(frameTime);
+            }
+
+            foreach (var smokeComp in ComponentManager.EntityQuery<SmokeComponent>())
+            {
+                if (smokeComp.IsInception)
+                    smokeComp.Update(frameTime);
             }
         }
     }

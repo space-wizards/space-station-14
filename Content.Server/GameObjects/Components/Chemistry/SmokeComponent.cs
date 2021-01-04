@@ -24,6 +24,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
     [RegisterComponent]
     public class SmokeComponent : Component
     {
+        private const float ExposeDelay = 0.5f;
+
         public override string Name => "Smoke";
 
         [Dependency] private readonly IMapManager _mapManager = default!;
@@ -33,29 +35,21 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         private bool _running;
         private float _timer;
-        private float _exposetimer;
-
-        private float _exposeDelay;
+        private float _exposeTimer;
 
         private int _amount;
         private float _lifetime;
         private float _spreadDelay;
+        private float _averageLifetime;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public bool IsInception => _inception == Owner;
+
+        public void Activate(Solution solution, int amount, float duration, float spreadDelay)
         {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _exposeDelay, "exposeDelay", 0.5f);
-        }
-
-        public void Start(IEntity inception, int amount, float lifetime, float spreadDelay)
-        {
-            _inception = inception;
-            _amount = amount;
-            _lifetime = lifetime;
-            _spreadDelay = spreadDelay;
-            _running = true;
-
-            Owner.SpawnTimer((int) (_spreadDelay*1000), SpreadSmoke);
+            if (_running)
+                return;
+            TryAddSolution(solution);
+            Start(Owner, amount, duration+2*amount*spreadDelay, spreadDelay, duration+amount*spreadDelay);
         }
 
         public void Update(float frameTime)
@@ -63,14 +57,25 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (!_running)
                 return;
 
-            _timer += frameTime;
-            _exposetimer += frameTime;
-
-            if (_exposetimer > _exposeDelay)
+            if (IsInception)
             {
-                _exposetimer = 0;
-                ReactWithTileAndEntities();
+                if (_exposeTimer > ExposeDelay)
+                {
+                    _exposeTimer = 0;
+                    ReactWithTileAndEntities();
+                }
+                _exposeTimer += frameTime;
             }
+            else
+            {
+                if (_inception.TryGetComponent(out SmokeComponent smokeComp) &&
+                    smokeComp._exposeTimer > ExposeDelay)
+                {
+                    ReactWithTileAndEntities();
+                }
+            }
+
+            _timer += frameTime;
 
             if (_timer > _lifetime)
             {
@@ -78,30 +83,37 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
         }
 
-        public bool TryAddSolution(Solution solution)
+        private void Start(IEntity inception, int amount, float lifetime, float spreadDelay, float averageLifetime)
+        {
+            _inception = inception;
+            _amount = amount;
+            _lifetime = lifetime;
+            _spreadDelay = spreadDelay;
+            _averageLifetime = averageLifetime;
+            _running = true;
+
+            Owner.SpawnTimer((int) (_spreadDelay*1000), SpreadSmoke);
+        }
+
+        private void TryAddSolution(Solution solution)
         {
             if (solution.TotalVolume == 0)
-            {
-                return false;
-            }
+                return;
 
             if (!Owner.TryGetComponent(out SolutionContainerComponent contents))
-            {
-                return false;
-            }
+                return;
 
-            var result = contents.TryAddSolution(solution);
+            var addSolution = solution.SplitSolution(ReagentUnit.Min(solution.TotalVolume,contents.EmptyVolume));
+
+            var result = contents.TryAddSolution(addSolution);
 
             if (!result)
-            {
-                return false;
-            }
+                return;
 
             if (Owner.TryGetComponent(out SpriteComponent sprite))
                 sprite.Color = contents.SubstanceColor;
-
-            return true;
         }
+
         private void SpreadSmoke()
         {
             if (_amount == 0)
@@ -130,7 +142,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     var solution = contents.Solution.Clone();
                     smokeComponent.TryAddSolution(solution);
                 }
-                smokeComponent.Start(_inception,_amount-1,_lifetime-_timer-_spreadDelay, _spreadDelay);
+                smokeComponent.Start(_inception,_amount-1,_lifetime-_timer-_spreadDelay, _spreadDelay, _averageLifetime);
             }
 
             SpreadToDir(Direction.North);
@@ -147,7 +159,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             var mapGrid = _mapManager.GetGrid(Owner.Transform.GridID);
             var tile = mapGrid.GetTileRef(Owner.Transform.Coordinates.ToVector2i(Owner.EntityManager, _mapManager));
 
-            var solutionFraction = 1 / Math.Floor(_lifetime / _exposeDelay);
+            var solutionFraction = 1 / Math.Floor(_averageLifetime / ExposeDelay);
 
             // Reagents react with the tile under the smoke
             foreach (var reagentQuantity in contents.ReagentList.ToArray())
