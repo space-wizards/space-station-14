@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -52,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         /// <summary>
         ///     For attaching UpdateState() to events.
         /// </summary>
-        public void UpdateState(object sender, EventArgs e)
+        public void UpdateState(PowerChangedMessage e)
         {
             UpdateState();
         }
@@ -136,28 +137,15 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             }
         }
 
-        public override void Initialize()
+        public override void HandleMessage(ComponentMessage message, IComponent component)
         {
-            base.Initialize();
-        }
-
-        public override void OnAdd()
-        {
-            base.OnAdd();
-            if (Owner.TryGetComponent(out PowerReceiverComponent receiver))
+            base.HandleMessage(message, component);
+            switch (message)
             {
-                receiver.OnPowerStateChanged += UpdateState;
+                case PowerChangedMessage powerChanged:
+                    UpdateState(powerChanged);
+                    break;
             }
-        }
-
-        public override void OnRemove()
-        {
-            if (Owner.TryGetComponent(out PowerReceiverComponent receiver))
-            {
-                receiver.OnPowerStateChanged -= UpdateState;
-            }
-
-            base.OnRemove();
         }
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)

@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using Content.Shared.Chemistry;
+using Content.Shared.GameObjects.Components.Medical;
+using Content.Shared.GameObjects.Components.Observer;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
@@ -102,7 +104,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry.ChemMaster
         }
 
         /// <summary>
-        /// Used in <see cref="UiButtonPressedMessage"/> to specify which button was pressed.
+        /// Used in <see cref="AcceptCloningChoiceMessage"/> to specify which button was pressed.
         /// </summary>
         public enum UiAction
         {

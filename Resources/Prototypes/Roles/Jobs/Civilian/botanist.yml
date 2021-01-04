@@ -22,4 +22,5 @@
     ears: ClothingHeadsetService
     outerclothing: ClothingOuterApronBotanist
   innerclothingskirt: ClothingUniformJumpskirtHydroponics
-
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled
