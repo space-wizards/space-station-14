@@ -1,7 +1,7 @@
 ﻿using System;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.GameObjects.Components.Utensil
+namespace Content.Shared.GameObjects.Components.Culinary
 {
     [Flags]
     public enum UtensilType : byte

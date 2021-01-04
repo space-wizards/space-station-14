@@ -3,11 +3,14 @@
   id: BaseKnife
   abstract: true
   components:
-  - type: CulinarySharp
+  - type: Utensil
+    types:
+      - Knife
   - type: MeleeWeapon
     hitSound: /Audio/Weapons/bladeslice.ogg
     damage: 12
   - type: Sprite
+    netsync: false
   - type: Item
 
 - type: entity
@@ -21,7 +24,6 @@
     size: 2
     state: icon
 
-  - type: ItemCooldown
   - type: Item
     size: 10
     sprite: Objects/Weapons/Melee/kitchen_knife.rsi
@@ -39,7 +41,6 @@
     size: 4
     state: butch
 
-  - type: ItemCooldown
   - type: MeleeWeapon
     damage: 20
   - type: Item

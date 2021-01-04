@@ -2,8 +2,10 @@ using System.Threading.Tasks;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Components.Culinary;
 using Content.Server.GameObjects.Components.Nutrition;
 using Content.Server.GameObjects.Components.Chemistry;
+using Content.Server.GameObjects.Components.Explosion;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Robust.Server.GameObjects.EntitySystems;
@@ -21,22 +23,24 @@ namespace Content.Server.GameObjects.Components.Culinary
     [RegisterComponent]
     class SliceableFoodComponent : Component, IInteractUsing, IExamine
     {
-        public override string Name => "SliceableFood";
+        public override string Name => "SliceableFood"; // take priority over eating with utensils
+
+        int IInteractUsing.Priority => 1;
 
         [ViewVariables(VVAccess.ReadWrite)] private string _slice;
-        private uint _totalCount;
+        private ushort _totalCount;
         [ViewVariables(VVAccess.ReadWrite)] private string _sound;
 
-        [ViewVariables(VVAccess.ReadWrite)] public uint Count;
+        [ViewVariables(VVAccess.ReadWrite)] public ushort Count;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _slice, "slice", "FoodOrangeCakeSlice");
+            serializer.DataField(ref _slice, "slice", string.Empty);
             serializer.DataField(ref _sound, "sound", "/Audio/Items/Culinary/chop.ogg");
-            serializer.DataField<uint>(ref _totalCount, "count", 5);
+            serializer.DataField<ushort>(ref _totalCount, "count", 5);
         }
-        
+
         public override void Initialize()
         {
             base.Initialize();
@@ -47,11 +51,15 @@ namespace Content.Server.GameObjects.Components.Culinary
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
+            if (string.IsNullOrEmpty(_slice))
+            {
+                return false;
+            }
             if (!Owner.TryGetComponent(out SolutionContainerComponent solution))
             {
                 return false;
             }
-            if (!eventArgs.Using.HasComponent<CulinarySharpComponent>())
+            if (!eventArgs.Using.TryGetComponent(out UtensilComponent utensil) || !utensil.HasType(UtensilType.Knife))
             {
                 return false;
             }
@@ -65,7 +73,8 @@ namespace Content.Server.GameObjects.Components.Culinary
                 }
             }
 
-            EntitySystem.Get<AudioSystem>().PlayAtCoords(_sound, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
+            EntitySystem.Get<AudioSystem>().PlayAtCoords(_sound, Owner.Transform.Coordinates,
+                AudioParams.Default.WithVolume(-2));
 
             Count--;
             if (Count < 1)

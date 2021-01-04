@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Nutrition;
-using Content.Shared.GameObjects.Components.Utensil;
+using Content.Shared.GameObjects.Components.Culinary;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects.EntitySystems;
@@ -15,7 +15,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Utensil
+namespace Content.Server.GameObjects.Components.Culinary
 {
     [RegisterComponent]
     public class UtensilComponent : SharedUtensilComponent, IAfterInteract
