@@ -1,11 +1,11 @@
 {
     "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from cev-eris at commit https://github.com/discordia-space/CEV-Eris/commit/baeadc0388aba2e74106f99b1551a465b825e3b1",
     "size": {
         "x": 32,
         "y": 32
     },
-    "license": "CC-BY-SA-3.0",
-    "copyright": "https://github.com/discordia-space/CEV-Eris/blob/07ee982debba61c2a59c36c60ffc91e8f3bbbd45/icons/obj/kitchen.dmi",
     "states": [
         {
             "name": "icon",
