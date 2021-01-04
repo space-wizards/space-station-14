@@ -1,4 +1,4 @@
-﻿using Content.Client.GameObjects.Components;
+using Content.Client.GameObjects.Components;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.Interfaces;
 using Content.Shared.GameTicking;
@@ -43,6 +43,7 @@ namespace Content.Client.UserInterface
         private readonly Button _sexMaleButton;
         private readonly OptionButton _genderButton;
         private readonly OptionButton _clothingButton;
+        private readonly OptionButton _backpackButton;
         private readonly HairStylePicker _hairPicker;
         private readonly FacialHairStylePicker _facialHairPicker;
 
@@ -328,6 +329,33 @@ namespace Content.Client.UserInterface
 
                     hBox.AddChild(clothingLabel);
                     hBox.AddChild(_clothingButton);
+                    panel.AddChild(hBox);
+                    appearanceVBox.AddChild(panel);
+                }
+
+                #endregion Clothing
+
+                #region Backpack
+
+                {
+                    var panel = HighlightedContainer();
+                    var hBox = new HBoxContainer();
+                    var backpackLabel = new Label { Text = Loc.GetString("Backpack:") };
+
+                    _backpackButton = new OptionButton();
+
+                    _backpackButton.AddItem(Loc.GetString("Backpack"), (int) BackpackPreference.Backpack);
+                    _backpackButton.AddItem(Loc.GetString("Satchel"), (int) BackpackPreference.Satchel);
+                    _backpackButton.AddItem(Loc.GetString("Duffelbag"), (int) BackpackPreference.Duffelbag);
+
+                    _backpackButton.OnItemSelected += args =>
+                    {
+                        _backpackButton.SelectId(args.Id);
+                        SetBackpack((BackpackPreference) args.Id);
+                    };
+
+                    hBox.AddChild(backpackLabel);
+                    hBox.AddChild(_backpackButton);
                     panel.AddChild(hBox);
                     appearanceVBox.AddChild(panel);
                 }
@@ -669,6 +697,12 @@ namespace Content.Client.UserInterface
             IsDirty = true;
         }
 
+        private void SetBackpack(BackpackPreference newBackpack)
+        {
+            Profile = Profile?.WithBackpackPreference(newBackpack);
+            IsDirty = true;
+        }
+
         public void Save()
         {
             IsDirty = false;
@@ -723,6 +757,11 @@ namespace Content.Client.UserInterface
             _clothingButton.SelectId((int) Profile.Clothing);
         }
 
+        private void UpdateBackpackControls()
+        {
+            _backpackButton.SelectId((int) Profile.Backpack);
+        }
+
         private void UpdateHairPickers()
         {
             _hairPicker.SetData(
@@ -754,6 +793,7 @@ namespace Content.Client.UserInterface
             UpdateSexControls();
             UpdateGenderControls();
             UpdateClothingControls();
+            UpdateBackpackControls();
             UpdateAgeEdit();
             UpdateHairPickers();
             UpdateSaveButton();

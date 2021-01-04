@@ -110,7 +110,7 @@
     maxVol: 80
     contents:
       reagents:
-      - ReagentId: chem.H2O
+      - ReagentId: chem.Water
         Quantity: 80
   - type: Sprite
     sprite: Objects/Consumable/Drinks/kahluabottle.rsi
@@ -217,4 +217,3 @@
         Quantity: 80
   - type: Sprite
     sprite: Objects/Consumable/Drinks/winebottle.rsi
-

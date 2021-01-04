@@ -223,6 +223,11 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("INTEGER")
                         .HasColumnName("age");
 
+                    b.Property<string>("Backpack")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("backpack");
+
                     b.Property<string>("CharacterName")
                         .IsRequired()
                         .HasColumnType("TEXT")
