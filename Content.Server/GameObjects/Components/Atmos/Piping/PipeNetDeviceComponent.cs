@@ -3,7 +3,6 @@ using Content.Server.Atmos;
 using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.Components.Atmos.Piping
 {
@@ -18,13 +17,10 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
 
         private IGridAtmosphereComponent? JoinedGridAtmos { get; set; }
 
-        private IEnumerable<IPipeNetUpdated> DevicesToUpdate { get; set; } = new List<IPipeNetUpdated>();
-
         public override void Initialize()
         {
             base.Initialize();
             JoinGridAtmos();
-            DevicesToUpdate = Owner.GetAllComponents<IPipeNetUpdated>();
         }
 
         public override void OnRemove()
@@ -36,10 +32,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         public void Update()
         {
             var message = new PipeNetUpdateMessage();
-            foreach (var device in DevicesToUpdate)
-            {
-                device.Update(message);
-            }
+            SendMessage(message);
         }
 
         private void JoinGridAtmos()
@@ -55,5 +48,10 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
             JoinedGridAtmos?.RemovePipeNetDevice(this);
             JoinedGridAtmos = null;
         }
+    }
+
+    public class PipeNetUpdateMessage : ComponentMessage
+    {
+
     }
 }

@@ -3,6 +3,7 @@ using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.ViewVariables;
 using System.Linq;
@@ -10,7 +11,7 @@ using System.Linq;
 namespace Content.Server.GameObjects.Components.Atmos.Piping
 {
     [RegisterComponent]
-    public class GasCanisterPortComponent : Component, IPipeNetUpdated
+    public class GasCanisterPortComponent : Component
     {
         public override string Name => "GasCanisterPort";
 
@@ -46,7 +47,18 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
             ConnectedCanister?.DisconnectFromPort();
         }
 
-        public void Update(PipeNetUpdateMessage message)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+            switch (message)
+            {
+                case PipeNetUpdateMessage:
+                    Update();
+                    break;
+            }
+        }
+
+        public void Update()
         {
             if (_gasPort == null || ConnectedCanister == null)
                 return;

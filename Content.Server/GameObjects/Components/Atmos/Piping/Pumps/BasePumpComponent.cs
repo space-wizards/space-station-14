@@ -6,6 +6,7 @@ using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Shared.GameObjects.Components.Atmos;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -15,7 +16,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
     /// <summary>
     ///     Transfer gas from one <see cref="PipeNode"/> to another.
     /// </summary>
-    public abstract class BasePumpComponent : Component, IPipeNetUpdated
+    public abstract class BasePumpComponent : Component
     {
         /// <summary>
         ///     If the pump is currently pumping.
@@ -67,6 +68,17 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
             SetPipes();
             Owner.TryGetComponent(out _appearance);
             UpdateAppearance();
+        }
+
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+            switch (message)
+            {
+                case PipeNetUpdateMessage:
+                    Update();
+                    break;
+            }
         }
 
         public void Update(PipeNetUpdateMessage message)

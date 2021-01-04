@@ -8,6 +8,7 @@ using Content.Shared.GameObjects.Components.Atmos;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.ViewVariables;
 
@@ -16,7 +17,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Vents
     /// <summary>
     ///     Transfers gas from a <see cref="PipeNode"/> to the tile it is on.
     /// </summary>
-    public abstract class BaseVentComponent : Component, IPipeNetUpdated
+    public abstract class BaseVentComponent : Component
     {
 
         [ViewVariables]
@@ -46,6 +47,17 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Vents
             SetInlet();
             Owner.TryGetComponent(out _appearance);
             UpdateAppearance();
+        }
+
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+            switch (message)
+            {
+                case PipeNetUpdateMessage:
+                    Update();
+                    break;
+            }
         }
 
         public void Update(PipeNetUpdateMessage message)
