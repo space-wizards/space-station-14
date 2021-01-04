@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
-using Content.Shared.GameObjects.EntitySystems;
+﻿using Content.Shared.GameObjects.EntitySystems;
 using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Graphics.Overlays;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 
@@ -18,37 +18,25 @@ namespace Content.Client.GameObjects.Components.Suspicion
     {
         private readonly IEntityManager _entityManager;
         private readonly IEyeManager _eyeManager;
+        private readonly IPlayerManager _playerManager;
 
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;
         private readonly Font _font;
 
-        private readonly IEntity _user;
-        private readonly HashSet<EntityUid> _allies = new();
         private readonly string _traitorText = Loc.GetString("Traitor");
 
         public TraitorOverlay(
-            IEntity user,
             IEntityManager entityManager,
             IResourceCache resourceCache,
             IEyeManager eyeManager)
             : base(nameof(TraitorOverlay))
         {
+            _playerManager = IoCManager.Resolve<IPlayerManager>();
+
             _entityManager = entityManager;
             _eyeManager = eyeManager;
 
             _font = new VectorFont(resourceCache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 10);
-
-            _user = user;
-        }
-
-        public bool AddAlly(EntityUid ally)
-        {
-            return _allies.Add(ally);
-        }
-
-        public bool RemoveAlly(EntityUid ally)
-        {
-            return _allies.Remove(ally);
         }
 
         protected override void Draw(DrawingHandleBase handle, OverlaySpace currentSpace)
@@ -65,7 +53,13 @@ namespace Content.Client.GameObjects.Components.Suspicion
         {
             var viewport = _eyeManager.GetWorldViewport();
 
-            foreach (var uid in _allies)
+            var ent = _playerManager.LocalPlayer?.ControlledEntity;
+            if (ent == null || ent.TryGetComponent(out SuspicionRoleComponent sus) != true)
+            {
+                return;
+            }
+
+            foreach (var (_, uid) in sus.Allies)
             {
                 // Otherwise the entity can not exist yet
                 if (!_entityManager.TryGetEntity(uid, out var ally))
@@ -78,8 +72,8 @@ namespace Content.Client.GameObjects.Components.Suspicion
                     return;
                 }
 
-                if (!ExamineSystemShared.InRangeUnOccluded(_user.Transform.MapPosition, ally.Transform.MapPosition, 15,
-                    entity => entity == _user || entity == ally))
+                if (!ExamineSystemShared.InRangeUnOccluded(ent.Transform.MapPosition, ally.Transform.MapPosition, 15,
+                    entity => entity == ent || entity == ally))
                 {
                     return;
                 }
