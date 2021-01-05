@@ -13,6 +13,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
 using Robust.Shared.Utility;
@@ -25,11 +26,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
     {
         public override string Name => "Flash";
 
-        [ViewVariables(VVAccess.ReadWrite)] private int _flashDuration = 5000;
-        [ViewVariables(VVAccess.ReadWrite)] private int _uses = 5;
-        [ViewVariables(VVAccess.ReadWrite)] private float _range = 3f;
-        [ViewVariables(VVAccess.ReadWrite)] private int _aoeFlashDuration = 5000 / 3;
-        [ViewVariables(VVAccess.ReadWrite)] private float _slowTo = 0.75f;
+        [YamlField("duration")] [ViewVariables(VVAccess.ReadWrite)] private int _flashDuration = 5000;
+        [YamlField("uses")] [ViewVariables(VVAccess.ReadWrite)] private int _uses = 5;
+        [YamlField("range")] [ViewVariables(VVAccess.ReadWrite)] private float _range = 7f;
+        [ViewVariables(VVAccess.ReadWrite)] private int _aoeFlashDuration => _internalAoeFlashDuration ?? _flashDuration / 3;
+        [YamlField("aoeFlashDuration")] private int? _internalAoeFlashDuration;
+        [YamlField("slowTo")] [ViewVariables(VVAccess.ReadWrite)] private float _slowTo = 0.75f;
         private bool _flashing;
 
         private int Uses
@@ -43,17 +45,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         }
 
         private bool HasUses => _uses > 0;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _flashDuration, "duration", 5000);
-            serializer.DataField(ref _uses, "uses", 5);
-            serializer.DataField(ref _range, "range", 7f);
-            serializer.DataField(ref _aoeFlashDuration, "aoeFlashDuration", _flashDuration / 3);
-            serializer.DataField(ref _slowTo, "slowTo", 0.75f);
-        }
 
         protected override bool OnHitEntities(IReadOnlyList<IEntity> entities, AttackEventArgs eventArgs)
         {

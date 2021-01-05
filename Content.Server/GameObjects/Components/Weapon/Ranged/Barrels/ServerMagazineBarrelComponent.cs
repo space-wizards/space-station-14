@@ -22,6 +22,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -29,6 +30,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 {
     [RegisterComponent]
+    [CustomDataClass(typeof(ServerMagazineBarrelComponentData))]
     public sealed class ServerMagazineBarrelComponent : ServerRangedBarrelComponent, IExamine
     {
         public override string Name => "MagazineBarrel";
@@ -40,9 +42,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         private ContainerSlot _magazineContainer;
 
         [ViewVariables] public MagazineType MagazineTypes => _magazineTypes;
+        [CustomYamlField("types")]
         private MagazineType _magazineTypes;
         [ViewVariables] public BallisticCaliber Caliber => _caliber;
-        private BallisticCaliber _caliber;
+        [YamlField("caliber")]
+        private BallisticCaliber _caliber = BallisticCaliber.Unspecified;
 
         public override int ShotsLeft
         {
@@ -80,6 +84,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
         }
 
+        [YamlField("magFillPrototype")]
         private string _magFillPrototype;
 
         public bool BoltOpen
@@ -118,40 +123,28 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         }
         private bool _boltOpen = true;
 
+        [YamlField("autoEjectMag")]
         private bool _autoEjectMag;
         // If the bolt needs to be open before we can insert / remove the mag (i.e. for LMGs)
         public bool MagNeedsOpenBolt => _magNeedsOpenBolt;
+        [YamlField("magNeedsOpenBolt")]
         private bool _magNeedsOpenBolt;
 
         private AppearanceComponent _appearanceComponent;
 
         // Sounds
+        [YamlField("soundBoltOpen")]
         private string _soundBoltOpen;
+        [YamlField("soundBoltClosed")]
         private string _soundBoltClosed;
+        [YamlField("soundRack")]
         private string _soundRack;
+        [YamlField("soundMagInsert")]
         private string _soundMagInsert;
+        [YamlField("soundMagEject")]
         private string _soundMagEject;
-        private string _soundAutoEject;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataReadWriteFunction(
-                "magazineTypes",
-                new List<MagazineType>(),
-                types => types.ForEach(mag => _magazineTypes |= mag), GetMagazineTypes);
-            serializer.DataField(ref _caliber, "caliber", BallisticCaliber.Unspecified);
-            serializer.DataField(ref _magFillPrototype, "magFillPrototype", null);
-            serializer.DataField(ref _autoEjectMag, "autoEjectMag", false);
-            serializer.DataField(ref _magNeedsOpenBolt, "magNeedsOpenBolt", false);
-            serializer.DataField(ref _soundBoltOpen, "soundBoltOpen", null);
-            serializer.DataField(ref _soundBoltClosed, "soundBoltClosed", null);
-            serializer.DataField(ref _soundRack, "soundRack", null);
-            serializer.DataField(ref _soundMagInsert, "soundMagInsert", null);
-            serializer.DataField(ref _soundMagEject, "soundMagEject", null);
-            serializer.DataField(ref _soundAutoEject, "soundAutoEject", "/Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg");
-        }
+        [YamlField("soundAutoEject")]
+        private string _soundAutoEject = "/Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg";
 
         private List<MagazineType> GetMagazineTypes()
         {

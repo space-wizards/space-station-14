@@ -30,6 +30,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 {
     [RegisterComponent]
     [ComponentReference(typeof(IAfterInteract))]
+    [CustomDataClass(typeof(FoodComponentData))]
     public class FoodComponent : Component, IUse, IAfterInteract
     {
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
@@ -40,7 +41,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         [ViewVariables] [YamlField("useSound")] private string _useSound = "/Audio/Items/eatfood.ogg";
         [ViewVariables] [YamlField("trash")] private string? _trashPrototype;
         [ViewVariables] [YamlField("transferAmount")] private ReagentUnit _transferAmount = ReagentUnit.New(5);
-        private UtensilType _utensilsNeeded;
+        [CustomYamlField("utensilsNeeded")] private UtensilType _utensilsNeeded;
 
         [ViewVariables]
         public int UsesRemaining
@@ -56,30 +57,6 @@ namespace Content.Server.GameObjects.Components.Nutrition
                     ? 0
                     : Math.Max(1, (int)Math.Ceiling((solution.CurrentVolume / _transferAmount).Float()));
             }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            
-            serializer.DataReadWriteFunction(
-                "utensils",
-                new List<UtensilType>(),
-                types => types.ForEach(type => _utensilsNeeded |= type),
-                () =>
-                {
-                    var types = new List<UtensilType>();
-
-                    foreach (var type in (UtensilType[]) Enum.GetValues(typeof(UtensilType)))
-                    {
-                        if ((_utensilsNeeded & type) != 0)
-                        {
-                            types.Add(type);
-                        }
-                    }
-
-                    return types;
-                });
         }
 
         public override void Initialize()

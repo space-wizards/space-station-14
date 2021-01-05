@@ -6,6 +6,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 
@@ -19,16 +20,17 @@ namespace Content.Server.GameObjects.Components.StationEvents
         [Dependency] private readonly IRobustRandom _random = default!;
 
         private float _duration;
-        private float _radsPerSecond;
-        private float _range;
+        private float _radsPerSecond = 40f;
+        private float _range = 5f;
         private TimeSpan _endTime;
-        private bool _draw;
-        private bool _decay;
+        private bool _draw = true;
+        private bool _decay = true;
 
         /// <summary>
         ///     Whether the entity will delete itself after a certain duration defined by
         ///     <see cref="MinPulseLifespan"/> and <see cref="MaxPulseLifespan"/>
         /// </summary>
+        [YamlField("decay")]
         public override bool Decay
         {
             get => _decay;
@@ -39,10 +41,13 @@ namespace Content.Server.GameObjects.Components.StationEvents
             }
         }
 
-        public float MinPulseLifespan { get; set; }
+        [YamlField("minPulseLifespan")]
+        public float MinPulseLifespan { get; set; } = 0.8f;
 
-        public float MaxPulseLifespan { get; set; }
+        [YamlField("maxPulseLifespan")]
+        public float MaxPulseLifespan { get; set; } = 2.5f;
 
+        [YamlField("dps")]
         public override float RadsPerSecond
         {
             get => _radsPerSecond;
@@ -53,8 +58,9 @@ namespace Content.Server.GameObjects.Components.StationEvents
             }
         }
 
-        public string Sound { get; set; }
+        [YamlField("sound")] public string Sound { get; set; } = "/Audio/Weapons/Guns/Gunshots/laser3.ogg";
 
+        [YamlField("range")]
         public override float Range
         {
             get => _range;
@@ -65,6 +71,7 @@ namespace Content.Server.GameObjects.Components.StationEvents
             }
         }
 
+        [YamlField("draw")]
         public override bool Draw
         {
             get => _draw;
@@ -76,18 +83,6 @@ namespace Content.Server.GameObjects.Components.StationEvents
         }
 
         public override TimeSpan EndTime => _endTime;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(this, x => x.RadsPerSecond, "dps", 40.0f);
-            serializer.DataField(this, x => x.Sound, "sound", "/Audio/Weapons/Guns/Gunshots/laser3.ogg");
-            serializer.DataField(this, x => x.Range, "range", 5.0f);
-            serializer.DataField(this, x => x.Draw, "draw", true);
-            serializer.DataField(this, x => x.Decay, "decay", true);
-            serializer.DataField(this, x => x.MaxPulseLifespan, "maxPulseLifespan", 2.5f);
-            serializer.DataField(this, x => x.MinPulseLifespan, "minPulseLifespan", 0.8f);
-        }
 
         public void DoPulse()
         {

@@ -2,6 +2,7 @@
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Explosion
@@ -11,22 +12,16 @@ namespace Content.Server.GameObjects.Components.Explosion
     {
         public override string Name => "Explosive";
 
-        public int DevastationRange = 0;
-        public int HeavyImpactRange = 0;
-        public int LightImpactRange = 0;
-        public int FlashRange = 0;
+        [YamlField("devastationRange")]
+        public int DevastationRange;
+        [YamlField("heavyImpactRange")]
+        public int HeavyImpactRange;
+        [YamlField("lightImpactRange")]
+        public int LightImpactRange;
+        [YamlField("flashRange")]
+        public int FlashRange;
 
         private bool _beingExploded = false;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref DevastationRange, "devastationRange", 0);
-            serializer.DataField(ref HeavyImpactRange, "heavyImpactRange", 0);
-            serializer.DataField(ref LightImpactRange, "lightImpactRange", 0);
-            serializer.DataField(ref FlashRange, "flashRange", 0);
-        }
 
         public bool Explosion()
         {

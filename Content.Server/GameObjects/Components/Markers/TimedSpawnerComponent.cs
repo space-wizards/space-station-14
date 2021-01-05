@@ -6,6 +6,7 @@ using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -14,6 +15,7 @@ using Timer = Robust.Shared.Timers.Timer;
 namespace Content.Server.GameObjects.Components.Markers
 {
     [RegisterComponent]
+    [CustomDataClass(typeof(TimedSpawnerComponentData))]
     public class TimedSpawnerComponent : Component
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
@@ -21,18 +23,23 @@ namespace Content.Server.GameObjects.Components.Markers
         public override string Name => "TimedSpawner";
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [YamlField("prototypes")]
         public List<string> Prototypes { get; set; } = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [YamlField("chance")]
         public float Chance { get; set; } = 1.0f;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [YamlField("intervalSeconds")]
         public int IntervalSeconds { get; set; } = 60;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [CustomYamlField("MinimumEntitiesSpawned")]
         public int MinimumEntitiesSpawned { get; set; } = 1;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [CustomYamlField("MaximumEntitiesSpawned")]
         public int MaximumEntitiesSpawned { get; set; } = 1;
 
         private CancellationTokenSource TokenSource;
@@ -47,20 +54,6 @@ namespace Content.Server.GameObjects.Components.Markers
         {
             base.Shutdown();
             TokenSource.Cancel();
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(this, x => x.Prototypes, "prototypes", new List<string>());
-            serializer.DataField(this, x => x.Chance, "chance", 1.0f);
-            serializer.DataField(this, x => x.IntervalSeconds, "intervalSeconds", 60);
-            serializer.DataField(this, x => x.MinimumEntitiesSpawned, "minimumEntitiesSpawned", 1);
-            serializer.DataField(this, x => x.MaximumEntitiesSpawned, "maximumEntitiesSpawned", 1);
-
-            if(MinimumEntitiesSpawned > MaximumEntitiesSpawned)
-                throw new ArgumentException("MaximumEntitiesSpawned can't be lower than MinimumEntitiesSpawned!");
         }
 
         private void SetupTimer()

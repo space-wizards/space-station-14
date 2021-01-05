@@ -4,6 +4,7 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Sound
@@ -18,16 +19,11 @@ namespace Content.Server.GameObjects.Components.Sound
         ///
         public override string Name => "EmitSoundOnThrow";
 
+        [YamlField("sound")]
         public string _soundName;
+        [YamlField("variation")]
         public float _pitchVariation;
 
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _soundName, "sound", string.Empty);
-            serializer.DataField(ref _pitchVariation, "variation", 0.0f);
-        }
         public void PlaySoundEffect()
         {
             if (!string.IsNullOrWhiteSpace(_soundName))

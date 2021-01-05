@@ -19,12 +19,14 @@ using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 {
     [RegisterComponent]
+    [CustomDataClass(typeof(RevolverBarrelComponentData))]
     public sealed class RevolverBarrelComponent : ServerRangedBarrelComponent
     {
         [Dependency] private readonly IRobustRandom _random = default!;
@@ -33,43 +35,31 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override uint? NetID => ContentNetIDs.REVOLVER_BARREL;
 
         [ViewVariables]
-        private BallisticCaliber _caliber;
+        [YamlField("caliber")]
+        private BallisticCaliber _caliber = BallisticCaliber.Unspecified;
         private Container _ammoContainer;
         [ViewVariables]
         private int _currentSlot = 0;
         public override int Capacity => _ammoSlots.Length;
+        [CustomYamlField("ammoSlots")]
         private IEntity[] _ammoSlots;
 
         public override int ShotsLeft => _ammoContainer.ContainedEntities.Count;
 
         private AppearanceComponent _appearanceComponent;
         [ViewVariables]
+        [YamlField("fillPrototype")]
         private string _fillPrototype;
         [ViewVariables]
         private int _unspawnedCount;
 
         // Sounds
-        private string _soundEject;
-        private string _soundInsert;
-        private string _soundSpin;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _caliber, "caliber", BallisticCaliber.Unspecified);
-            serializer.DataReadWriteFunction(
-                "capacity",
-                6,
-                cap => _ammoSlots = new IEntity[cap],
-                () => _ammoSlots.Length);
-            serializer.DataField(ref _fillPrototype, "fillPrototype", null);
-
-            // Sounds
-            serializer.DataField(ref _soundEject, "soundEject", "/Audio/Weapons/Guns/MagOut/revolver_magout.ogg");
-            serializer.DataField(ref _soundInsert, "soundInsert", "/Audio/Weapons/Guns/MagIn/revolver_magin.ogg");
-            serializer.DataField(ref _soundSpin, "soundSpin", "/Audio/Weapons/Guns/Misc/revolver_spin.ogg");
-        }
+        [YamlField("soundEject")]
+        private string _soundEject = "/Audio/Weapons/Guns/MagOut/revolver_magout.ogg";
+        [YamlField("soundInsert")]
+        private string _soundInsert = "/Audio/Weapons/Guns/MagIn/revolver_magin.ogg";
+        [YamlField("soundSpin")]
+        private string _soundSpin = "/Audio/Weapons/Guns/Misc/revolver_spin.ogg";
 
         public override ComponentState GetComponentState()
         {

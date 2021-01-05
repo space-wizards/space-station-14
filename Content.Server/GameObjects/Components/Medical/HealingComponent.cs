@@ -8,6 +8,7 @@ using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Medical
@@ -17,14 +18,7 @@ namespace Content.Server.GameObjects.Components.Medical
     {
         public override string Name => "Healing";
 
-        public Dictionary<DamageType, int> Heal { get; private set; }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(this, h => h.Heal, "heal", new Dictionary<DamageType, int>());
-        }
+        [YamlField("heal")] public Dictionary<DamageType, int> Heal { get; private set; } = new();
 
         public async Task AfterInteract(AfterInteractEventArgs eventArgs)
         {

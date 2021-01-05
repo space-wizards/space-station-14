@@ -6,6 +6,7 @@ using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Body.Networks;
 using Content.Shared.GameObjects.Components.Chemistry;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -68,6 +69,11 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
 
             // Transfer digested reagents to bloodstream
             bloodstream.TryTransferSolution(transferSolution);
+        }
+
+        public override IDeepClone DeepClone()
+        {
+            return new StomachBehavior();
         }
 
         /// <summary>

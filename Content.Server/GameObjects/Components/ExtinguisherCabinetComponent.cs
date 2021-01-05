@@ -13,6 +13,7 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -26,7 +27,8 @@ namespace Content.Server.GameObjects.Components
         public override string Name => "ExtinguisherCabinet";
 
         private bool _opened = false;
-        private string _doorSound;
+        [YamlField("doorSound")]
+        private string _doorSound = "/Audio/Machines/machine_switch.ogg";
 
         [ViewVariables] protected ContainerSlot ItemContainer;
         [ViewVariables] public string DoorSound => _doorSound;
@@ -37,13 +39,6 @@ namespace Content.Server.GameObjects.Components
 
             ItemContainer =
                 ContainerManagerComponent.Ensure<ContainerSlot>("extinguisher_cabinet", Owner, out _);
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _doorSound, "doorSound", "/Audio/Machines/machine_switch.ogg");
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)

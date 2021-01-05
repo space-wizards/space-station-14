@@ -21,6 +21,7 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
@@ -32,6 +33,7 @@ namespace Content.Server.GameObjects.Components.Atmos
     /// </summary>
     [ComponentReference(typeof(IGridAtmosphereComponent))]
     [RegisterComponent, Serializable]
+    [CustomDataClass(typeof(GridAtmosphereComponentData))]
     public class GridAtmosphereComponent : Component, IGridAtmosphereComponent
     {
         [Robust.Shared.IoC.Dependency] private IMapManager _mapManager = default!;
@@ -73,6 +75,38 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         [ViewVariables]
         protected readonly Dictionary<Vector2i, TileAtmosphere> Tiles = new(1000);
+
+        [CustomYamlField("Tiles")]
+        private List<GridAtmosphereComponentData.IntermediateTileAtmosphere> TilesReceiver
+        {
+            get
+            {
+                var intermediateTiles = new List<GridAtmosphereComponentData.IntermediateTileAtmosphere>();
+                foreach (var (indices, tile) in Tiles)
+                {
+                    if (tile.Air == null) continue;
+
+                    intermediateTiles.Add(new GridAtmosphereComponentData.IntermediateTileAtmosphere(indices, tile.Air));
+                }
+
+                return intermediateTiles;
+            }
+            set
+            {
+                if (Owner.TryGetComponent(out IMapGridComponent? mapGrid))
+                {
+                    var gridId = mapGrid.Grid.Index;
+                    Tiles.Clear();
+
+                    foreach (var intermediateTileAtmosphere in value)
+                    {
+                        Tiles.Add(intermediateTileAtmosphere.Indicies, new TileAtmosphere(this, gridId, intermediateTileAtmosphere.Indicies, intermediateTileAtmosphere.GasMixture));
+
+                        Invalidate(intermediateTileAtmosphere.Indicies);
+                    }
+                }
+            }
+        }
 
         [ViewVariables]
         private readonly HashSet<TileAtmosphere> _activeTiles = new(1000);
@@ -843,60 +877,6 @@ namespace Content.Server.GameObjects.Components.Atmos
         public void Dispose()
         {
 
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            if (serializer.Reading && Owner.TryGetComponent(out IMapGridComponent? mapGrid))
-            {
-                var gridId = mapGrid.Grid.Index;
-
-                if (!serializer.TryReadDataField("uniqueMixes", out List<GasMixture>? uniqueMixes) ||
-                    !serializer.TryReadDataField("tiles", out Dictionary<Vector2i, int>? tiles))
-                    return;
-
-                Tiles.Clear();
-
-                foreach (var (indices, mix) in tiles!)
-                {
-                    try
-                    {
-                        Tiles.Add(indices, new TileAtmosphere(this, gridId, indices, (GasMixture)uniqueMixes![mix].Clone()));
-                    }
-                    catch (ArgumentOutOfRangeException)
-                    {
-                        Logger.Error($"Error during atmos serialization! Tile at {indices} points to an unique mix ({mix}) out of range!");
-                        throw;
-                    }
-
-                    Invalidate(indices);
-                }
-            }
-            else if (serializer.Writing)
-            {
-                var uniqueMixes = new List<GasMixture>();
-                var uniqueMixHash = new Dictionary<GasMixture, int>();
-                var tiles = new Dictionary<Vector2i, int>();
-                foreach (var (indices, tile) in Tiles)
-                {
-                    if (tile.Air == null) continue;
-
-                    if (uniqueMixHash.TryGetValue(tile.Air, out var index))
-                    {
-                        tiles[indices] = index;
-                        continue;
-                    }
-
-                    uniqueMixes.Add(tile.Air);
-                    var newIndex = uniqueMixes.Count - 1;
-                    uniqueMixHash[tile.Air] = newIndex;
-                    tiles[indices] = newIndex;
-                }
-
-                serializer.DataField(ref uniqueMixes, "uniqueMixes", new List<GasMixture>());
-                serializer.DataField(ref tiles, "tiles", new Dictionary<Vector2i, int>());
-            }
         }
 
         public IEnumerator<TileAtmosphere> GetEnumerator()

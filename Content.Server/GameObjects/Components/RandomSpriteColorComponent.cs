@@ -5,6 +5,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 
@@ -15,18 +16,12 @@ namespace Content.Server.GameObjects.Components
     {
         public override string Name => "RandomSpriteColor";
 
+        [YamlField("selected")]
         private string _selectedColor;
-        private string _baseState;
-        private Dictionary<string, Color> _colors;
+        [YamlField("state")]
+        private string _baseState = "error";
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _selectedColor, "selected", null);
-            serializer.DataField(ref _baseState, "state", "error");
-            serializer.DataFieldCached(ref _colors, "colors", new Dictionary<string, Color>());
-        }
+        [YamlField("colors")] private Dictionary<string, Color> _colors = new();
 
         void IMapInit.MapInit()
         {

@@ -19,6 +19,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -51,6 +52,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         private SolutionContainerComponent? _solutionComponent;
         private PointLightComponent? _pointLightComponent;
 
+        [YamlField("weldSoundCollection")]
         public string? WeldSoundCollection { get; set; }
 
         [ViewVariables]
@@ -84,11 +86,6 @@ namespace Content.Server.GameObjects.Components.Interactable
             Owner.TryGetComponent(out _solutionComponent);
             Owner.TryGetComponent(out _spriteComponent);
             Owner.TryGetComponent(out _pointLightComponent);
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(this, collection => WeldSoundCollection, "weldSoundCollection", string.Empty);
         }
 
         public override ComponentState GetComponentState()

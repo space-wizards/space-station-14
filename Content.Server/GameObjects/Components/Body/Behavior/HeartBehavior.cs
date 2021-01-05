@@ -1,5 +1,6 @@
 ﻿using Content.Shared.GameObjects.Components.Body.Behavior;
 using Content.Shared.GameObjects.Components.Body.Networks;
+using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Server.GameObjects.Components.Body.Behavior
 {
@@ -25,6 +26,11 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
                 // bloodstream.Update(_accumulatedFrameTime);
                 _accumulatedFrameTime -= 1;
             }
+        }
+
+        public override IDeepClone DeepClone()
+        {
+            return new HeartBehavior();
         }
     }
 }

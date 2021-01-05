@@ -23,13 +23,8 @@ namespace Content.Server.GameObjects.Components.Sound
         /// <inheritdoc />
         public override string Name => "FootstepModifier";
 
+        [YamlField("footstepSoundCollection")]
         public string _soundCollectionName;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _soundCollectionName, "footstepSoundCollection", "");
-        }
 
         public void PlayFootstep()
         {

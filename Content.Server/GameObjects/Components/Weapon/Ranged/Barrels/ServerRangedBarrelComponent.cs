@@ -36,6 +36,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
     /// All of the ranged weapon components inherit from this to share mechanics like shooting etc.
     /// Only difference between them is how they retrieve a projectile to shoot (battery, magazine, etc.)
     /// </summary>
+    [CustomDataClass(typeof(ServerRangedBarrelComponentData))]
     public abstract class ServerRangedBarrelComponent : SharedRangedBarrelComponent, IUse, IInteractUsing, IExamine
     {
         // There's still some of py01 and PJB's work left over, especially in underlying shooting logic,
@@ -47,9 +48,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         [YamlField("currentSelector")]
         private FireRateSelector _fireRateSelector = FireRateSelector.Safety;
         public override FireRateSelector AllRateSelectors => _fireRateSelector;
+        [CustomYamlField("allRateSelectors")]
         private FireRateSelector _allRateSelectors;
         public override float FireRate => _fireRate;
-        [YamlField("fireRate")]
+        [CustomYamlField("fireRate")]
         private float _fireRate = 2f;
 
         // _lastFire is when we actually fired (so if we hold the button then recoil doesn't build up if we're not firing)
@@ -59,19 +61,24 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public abstract IEntity TakeProjectile(EntityCoordinates spawnAt);
 
         // Recoil / spray control
+        [CustomYamlField("minAngle")]
         private Angle _minAngle;
+        [CustomYamlField("maxAngle")]
         private Angle _maxAngle;
         private Angle _currentAngle = Angle.Zero;
         /// <summary>
         /// How slowly the angle's theta decays per second in radians
         /// </summary>
+        [CustomYamlField("angleDecay")]
         private float _angleDecay;
         /// <summary>
         /// How quickly the angle's theta builds for every shot fired in radians
         /// </summary>
+        [CustomYamlField("angleIncrease")]
         private float _angleIncrease;
         // Multiplies the ammo spread to get the final spread of each pellet
-        private float _spreadRatio;
+        [CustomYamlField("spreadRatio")]
+        private float _spreadRatio = 1f;
 
         public bool CanMuzzleFlash => _canMuzzleFlash;
         [YamlField("canMuzzleFlash")]
@@ -88,66 +95,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public string SoundEmpty => _soundEmpty;
         [YamlField("soundEmpty")]
         private string _soundEmpty = "/Audio/Weapons/Guns/Empty/empty.ogg";
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            // This hard-to-read area's dealing with recoil
-            // Use degrees in yaml as it's easier to read compared to "0.0125f"
-            serializer.DataReadWriteFunction(
-                "minAngle",
-                0,
-                angle => _minAngle = Angle.FromDegrees(angle / 2f),
-                () => _minAngle.Degrees * 2);
-
-            // Random doubles it as it's +/- so uhh we'll just half it here for readability
-            serializer.DataReadWriteFunction(
-                "maxAngle",
-                45,
-                angle => _maxAngle = Angle.FromDegrees(angle / 2f),
-                () => _maxAngle.Degrees * 2);
-
-            serializer.DataReadWriteFunction(
-                "angleIncrease",
-                40 / _fireRate,
-                angle => _angleIncrease = angle * (float) Math.PI / 180f,
-                () => MathF.Round(_angleIncrease / ((float) Math.PI / 180f), 2));
-
-            serializer.DataReadWriteFunction(
-                "angleDecay",
-                20f,
-                angle => _angleDecay = angle * (float) Math.PI / 180f,
-                () => MathF.Round(_angleDecay / ((float) Math.PI / 180f), 2));
-
-            serializer.DataField(ref _spreadRatio, "ammoSpreadRatio", 1.0f);
-
-            serializer.DataReadWriteFunction(
-                "allSelectors",
-                new List<FireRateSelector>(),
-                selectors => selectors.ForEach(selector => _allRateSelectors |= selector),
-                () =>
-                {
-                    var types = new List<FireRateSelector>();
-
-                    foreach (FireRateSelector selector in Enum.GetValues(typeof(FireRateSelector)))
-                    {
-                        if ((_allRateSelectors & selector) != 0)
-                        {
-                            types.Add(selector);
-                        }
-                    }
-
-                    return types;
-                });
-
-            // For simplicity we'll enforce it this way; ammo determines max spread
-            if (_spreadRatio > 1.0f)
-            {
-                Logger.Error("SpreadRatio must be <= 1.0f for guns");
-                throw new InvalidOperationException();
-            }
-        }
 
         public override void OnAdd()
         {

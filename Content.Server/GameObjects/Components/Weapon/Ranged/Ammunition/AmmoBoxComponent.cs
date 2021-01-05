@@ -16,6 +16,7 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -26,26 +27,28 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
     {
         public override string Name => "AmmoBox";
 
-        private BallisticCaliber _caliber;
-        public int Capacity => _capacity;
-        private int _capacity;
+        [YamlField("caliber")]
+        private BallisticCaliber _caliber = BallisticCaliber.Unspecified;
+        public int Capacity
+        {
+            get => _capacity;
+            set
+            {
+                _capacity = value;
+                _spawnedAmmo = new Stack<IEntity>(value);
+            }
+        }
+
+        [YamlField("capacity")]
+        private int _capacity = 30;
 
         public int AmmoLeft => _spawnedAmmo.Count + _unspawnedCount;
         private Stack<IEntity> _spawnedAmmo;
         private Container _ammoContainer;
         private int _unspawnedCount;
 
+        [YamlField("fillPrototype")]
         private string _fillPrototype;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _caliber, "caliber", BallisticCaliber.Unspecified);
-            serializer.DataField(ref _capacity, "capacity", 30);
-            serializer.DataField(ref _fillPrototype, "fillPrototype", null);
-
-            _spawnedAmmo = new Stack<IEntity>(_capacity);
-        }
 
         public override void Initialize()
         {

@@ -21,6 +21,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -33,16 +34,21 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override uint? NetID => ContentNetIDs.BATTERY_BARREL;
 
         // The minimum change we need before we can fire
-        [ViewVariables] private float _lowerChargeLimit;
-        [ViewVariables] private int _baseFireCost;
+        [YamlField("lowerChargeLimit")]
+        [ViewVariables] private float _lowerChargeLimit = 10;
+        [YamlField("fireCost")]
+        [ViewVariables] private int _baseFireCost = 300;
         // What gets fired
+        [YamlField("ammoPrototype")]
         [ViewVariables] private string _ammoPrototype;
 
         [ViewVariables] public IEntity PowerCellEntity => _powerCellContainer.ContainedEntity;
         public BatteryComponent PowerCell => _powerCellContainer.ContainedEntity.GetComponent<BatteryComponent>();
         private ContainerSlot _powerCellContainer;
         private ContainerSlot _ammoContainer;
+        [YamlField("powerCellPrototype")]
         private string _powerCellPrototype;
+        [YamlField("powerCellRemovable")]
         [ViewVariables] private bool _powerCellRemovable;
 
         public override int ShotsLeft
@@ -78,21 +84,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         private AppearanceComponent _appearanceComponent;
 
         // Sounds
+        [YamlField("soundPowerCellInsert")]
         private string _soundPowerCellInsert;
+        [YamlField("soundPowerCellEject")]
         private string _soundPowerCellEject;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _powerCellPrototype, "powerCellPrototype", null);
-            serializer.DataField(ref _powerCellRemovable, "powerCellRemovable", false);
-            serializer.DataField(ref _baseFireCost, "fireCost", 300);
-            serializer.DataField(ref _ammoPrototype, "ammoPrototype", null);
-            serializer.DataField(ref _lowerChargeLimit, "lowerChargeLimit", 10);
-            serializer.DataField(ref _soundPowerCellInsert, "soundPowerCellInsert", null);
-            serializer.DataField(ref _soundPowerCellEject, "soundPowerCellEject", null);
-        }
 
         public override ComponentState GetComponentState()
         {

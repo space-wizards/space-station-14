@@ -7,6 +7,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.MachineLinking
@@ -16,6 +17,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
     {
         public override string Name => "SignalSwitch";
 
+        [YamlField("on")]
         private bool _on;
 
         public override void Initialize()
@@ -23,13 +25,6 @@ namespace Content.Server.GameObjects.Components.MachineLinking
             base.Initialize();
 
             UpdateSprite();
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _on, "on", true);
         }
 
         public void Activate(ActivateEventArgs eventArgs)

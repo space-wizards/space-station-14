@@ -14,6 +14,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -33,7 +34,8 @@ namespace Content.Server.GameObjects.Components.Movement
         /// <summary>
         ///     ID of the alert to show when piloting
         /// </summary>
-        private AlertType _pilotingAlertType;
+        [YamlField("pilotingAlertType")]
+        private AlertType _pilotingAlertType = AlertType.PilotingShuttle;
 
         /// <summary>
         ///     The entity that's currently controlling this component.
@@ -205,13 +207,6 @@ namespace Content.Server.GameObjects.Components.Movement
             {
                 RemoveController(entity);
             }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _pilotingAlertType, "pilotingAlertType", AlertType.PilotingShuttle);
         }
 
         public override void Initialize()

@@ -5,6 +5,7 @@ using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -19,21 +20,17 @@ namespace Content.Server.GameObjects.Components.Markers
         public override string Name => "TrashSpawner";
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [YamlField("rarePrototypes")]
         public List<string> RarePrototypes { get; set; } = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [YamlField("rareChance")]
         public float RareChance { get; set; } = 0.05f;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [YamlField("offset")]
         public float Offset { get; set; } = 0.2f;
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(this, x => x.RarePrototypes, "rarePrototypes", new List<string>());
-            serializer.DataField(this, x => x.RareChance, "rareChance", 0.05f);
-            serializer.DataField(this, x => x.Offset, "offset", 0.2f);
-        }
         public override void Spawn()
         {
             if (RarePrototypes.Count > 0 && (RareChance == 1.0f || _robustRandom.Prob(RareChance)))

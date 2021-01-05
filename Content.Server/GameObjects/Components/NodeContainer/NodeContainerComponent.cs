@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -16,13 +17,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer
 
         [ViewVariables]
         public IReadOnlyList<Node> Nodes => _nodes;
+        [YamlField("nodes")]
         private List<Node> _nodes = new();
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _nodes, "nodes", new List<Node>());
-        }
 
         public override void Initialize()
         {

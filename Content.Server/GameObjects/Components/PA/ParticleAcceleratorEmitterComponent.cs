@@ -3,6 +3,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.PA
@@ -12,14 +13,8 @@ namespace Content.Server.GameObjects.Components.PA
     public class ParticleAcceleratorEmitterComponent : ParticleAcceleratorPartComponent
     {
         public override string Name => "ParticleAcceleratorEmitter";
-        public ParticleAcceleratorEmitterType Type;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref Type, "emitterType", ParticleAcceleratorEmitterType.Center);
-        }
+        [YamlField("emitterType")]
+        public ParticleAcceleratorEmitterType Type = ParticleAcceleratorEmitterType.Center;
 
         public void Fire(ParticleAcceleratorPowerState strength)
         {

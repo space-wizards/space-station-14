@@ -6,6 +6,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Trigger.TimerTrigger
@@ -17,14 +18,8 @@ namespace Content.Server.GameObjects.Components.Trigger.TimerTrigger
 
         public override string Name => "OnUseTimerTrigger";
 
+        [YamlField("delay")]
         private float _delay = 0f;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _delay, "delay", 0f);
-        }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {

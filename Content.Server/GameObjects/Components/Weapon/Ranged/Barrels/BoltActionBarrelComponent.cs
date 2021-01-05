@@ -19,6 +19,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -46,16 +47,19 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
         }
         public override int Capacity => _capacity;
-        private int _capacity;
+        [YamlField("capacity")]
+        private int _capacity = 6;
 
         private ContainerSlot _chamberContainer;
         private Stack<IEntity> _spawnedAmmo;
         private Container _ammoContainer;
 
         [ViewVariables]
-        private BallisticCaliber _caliber;
+        [YamlField("caliber")]
+        private BallisticCaliber _caliber = BallisticCaliber.Unspecified;
 
         [ViewVariables]
+        [YamlField("fillPrototype")]
         private string _fillPrototype;
         [ViewVariables]
         private int _unspawnedCount;
@@ -95,28 +99,19 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
         }
         private bool _boltOpen;
+        [YamlField("autoCycle")]
         private bool _autoCycle;
 
         private AppearanceComponent _appearanceComponent;
         // Sounds
-        private string _soundCycle;
-        private string _soundBoltOpen;
-        private string _soundBoltClosed;
-        private string _soundInsert;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _caliber, "caliber", BallisticCaliber.Unspecified);
-            serializer.DataField(ref _capacity, "capacity", 6);
-            serializer.DataField(ref _fillPrototype, "fillPrototype", null);
-            serializer.DataField(ref _autoCycle, "autoCycle", false);
-
-            serializer.DataField(ref _soundCycle, "soundCycle", "/Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg");
-            serializer.DataField(ref _soundBoltOpen, "soundBoltOpen", "/Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg");
-            serializer.DataField(ref _soundBoltClosed, "soundBoltClosed", "/Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg");
-            serializer.DataField(ref _soundInsert, "soundInsert", "/Audio/Weapons/Guns/MagIn/bullet_insert.ogg");
-        }
+        [YamlField("soundCycle")]
+        private string _soundCycle = "/Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg";
+        [YamlField("soundBoltOpen")]
+        private string _soundBoltOpen = "/Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg";
+        [YamlField("soundBoltClosed")]
+        private string _soundBoltClosed = "/Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg";
+        [YamlField("soundInsert")]
+        private string _soundInsert = "/Audio/Weapons/Guns/MagIn/bullet_insert.ogg";
 
         void IMapInit.MapInit()
         {

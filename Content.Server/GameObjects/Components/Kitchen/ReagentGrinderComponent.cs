@@ -24,6 +24,7 @@ using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -69,15 +70,8 @@ namespace Content.Server.GameObjects.Components.Kitchen
         private bool _busy = false;
 
         //YAML serialization vars
-        [ViewVariables(VVAccess.ReadWrite)] private int _storageCap = 16;
-        [ViewVariables(VVAccess.ReadWrite)] private int _workTime = 3500; //3.5 seconds, completely arbitrary for now.
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _storageCap, "chamberCapacity", 16);
-            serializer.DataField(ref _workTime, "workTime", 3500);
-        }
+        [ViewVariables(VVAccess.ReadWrite)] [YamlField("chamberCapacity")] private int _storageCap = 16;
+        [ViewVariables(VVAccess.ReadWrite)] [YamlField("workTime")] private int _workTime = 3500; //3.5 seconds, completely arbitrary for now.
 
         public override void Initialize()
         {

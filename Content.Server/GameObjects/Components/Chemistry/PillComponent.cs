@@ -30,22 +30,16 @@ namespace Content.Server.GameObjects.Components.Chemistry
         public override string Name => "Pill";
 
         [ViewVariables]
+        [YamlField("useSound")]
         private string _useSound;
         [ViewVariables]
+        [YamlField("trash")]
         private string _trashPrototype;
         [ViewVariables]
         private SolutionContainerComponent _contents;
         [ViewVariables]
-        private ReagentUnit _transferAmount;
-
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _useSound, "useSound", null);
-            serializer.DataField(ref _transferAmount, "transferAmount", ReagentUnit.New(1000));
-            serializer.DataField(ref _trashPrototype, "trash", null);
-        }
+        [YamlField("transferAmount")]
+        private ReagentUnit _transferAmount = ReagentUnit.New(1000);
 
         public override void Initialize()
         {

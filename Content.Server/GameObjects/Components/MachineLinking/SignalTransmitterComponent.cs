@@ -9,6 +9,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -22,7 +23,8 @@ namespace Content.Server.GameObjects.Components.MachineLinking
 
         private List<SignalReceiverComponent> _unresolvedReceivers;
         private List<SignalReceiverComponent> _receivers;
-        [ViewVariables] private float _range;
+        [YamlField("range")]
+        [ViewVariables] private float _range = 10;
 
         /// <summary>
         /// 0 is unlimited range
@@ -45,31 +47,10 @@ namespace Content.Server.GameObjects.Components.MachineLinking
             }
         }
 
-        public override void ExposeData(ObjectSerializer serializer)
+        [YamlField("signalReceivers")]
+        private List<EntityUid> signalReceiversReceiver
         {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _range, "range", 10);
-            if (serializer.Reading)
-            {
-                if (!serializer.TryReadDataField("signalReceivers", out List<EntityUid> entityUids))
-                {
-                    return;
-                }
-
-                _unresolvedReceivers = new List<SignalReceiverComponent>();
-                foreach (var entityUid in entityUids)
-                {
-                    if (!Owner.EntityManager.TryGetEntity(entityUid, out var entity)
-                        || !entity.TryGetComponent<SignalReceiverComponent>(out var receiver))
-                    {
-                        continue;
-                    }
-
-                    _unresolvedReceivers.Add(receiver);
-                }
-            }
-            else if (serializer.Writing)
+            get
             {
                 var entityList = new List<EntityUid>();
                 foreach (var receiver in _receivers)
@@ -82,7 +63,21 @@ namespace Content.Server.GameObjects.Components.MachineLinking
                     entityList.Add(receiver.Owner.Uid);
                 }
 
-                serializer.DataWriteFunction("signalReceivers", null, () => entityList);
+                return entityList;
+            }
+            set
+            {
+                _unresolvedReceivers = new List<SignalReceiverComponent>();
+                foreach (var entityUid in value)
+                {
+                    if (!Owner.EntityManager.TryGetEntity(entityUid, out var entity)
+                        || !entity.TryGetComponent<SignalReceiverComponent>(out var receiver))
+                    {
+                        continue;
+                    }
+
+                    _unresolvedReceivers.Add(receiver);
+                }
             }
         }
 

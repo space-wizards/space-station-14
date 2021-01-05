@@ -12,27 +12,17 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Botany
 {
     [RegisterComponent]
+    [CustomDataClass(typeof(ProduceComponentData))]
     public class ProduceComponent : Component
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         public override string Name => "Produce";
 
         [ViewVariables]
+        [CustomYamlField("Seed")]
         public Seed Seed { get; set; } = null;
 
         public float Potency => Seed.Potency;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataReadFunction<string>("seed", null,
-                (s) =>
-                {
-                    if(!string.IsNullOrEmpty(s))
-                        Seed = _prototypeManager.Index<Seed>(s);
-                });
-        }
 
         public void Grown()
         {

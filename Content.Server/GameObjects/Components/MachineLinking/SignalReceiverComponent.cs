@@ -10,6 +10,7 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -22,6 +23,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
 
         private List<SignalTransmitterComponent> _transmitters;
 
+        [YamlField("maxTransmitters")]
         private int? _maxTransmitters = default;
 
         public override void Initialize()
@@ -29,11 +31,6 @@ namespace Content.Server.GameObjects.Components.MachineLinking
             base.Initialize();
 
             _transmitters = new List<SignalTransmitterComponent>();
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(this, x=> x._maxTransmitters, "maxTransmitters", null);
         }
 
         public void DistributeSignal<T>(T state)

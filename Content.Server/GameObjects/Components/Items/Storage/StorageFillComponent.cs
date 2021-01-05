@@ -14,7 +14,7 @@ using Logger = Robust.Shared.Log.Logger;
 namespace Content.Server.GameObjects.Components.Items.Storage
 {
     [RegisterComponent]
-    internal sealed class StorageFillComponent : Component, IMapInit
+    public sealed class StorageFillComponent : Component, IMapInit
     {
         public override string Name => "StorageFill";
 
