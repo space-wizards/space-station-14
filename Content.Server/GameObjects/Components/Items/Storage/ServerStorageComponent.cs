@@ -342,7 +342,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
             serializer.DataField(ref _storageCapacityMax, "capacity", 10000);
             serializer.DataField(ref _occludesLight, "occludesLight", true);
-            serializer.DataField(this, collection => StorageSoundCollection, "storageSoundCollection", string.Empty);
+            serializer.DataField(this, x => x.StorageSoundCollection, "storageSoundCollection", string.Empty);
             //serializer.DataField(ref StorageUsed, "used", 0);
         }
 
