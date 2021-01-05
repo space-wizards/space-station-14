@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
@@ -43,10 +43,21 @@ namespace Content.Server.Throw
         /// </param>
         public static void Throw(this IEntity thrownEnt, float throwForce, EntityCoordinates targetLoc, EntityCoordinates sourceLoc, bool spread = false, IEntity throwSourceEnt = null)
         {
+            if (thrownEnt.Deleted)
+            {
+                return;
+            }
+
             if (!thrownEnt.TryGetComponent(out IPhysicsComponent colComp))
                 return;
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
+            var direction_vector = targetLoc.ToMapPos(entityManager) - sourceLoc.ToMapPos(entityManager);
+
+            if (direction_vector.Length == 0)
+            {
+                return;
+            }
 
             colComp.CanCollide = true;
             // I can now collide with player, so that i can do damage.
@@ -61,8 +72,8 @@ namespace Content.Server.Throw
                 colComp.PhysicsShapes[0].CollisionMask |= (int) CollisionGroup.ThrownItem;
                 colComp.Status = BodyStatus.InAir;
             }
-            var angle = new Angle(targetLoc.ToMapPos(entityManager) - sourceLoc.ToMapPos(entityManager));
 
+            var angle = new Angle(direction_vector);
             if (spread)
             {
                 var spreadRandom = IoCManager.Resolve<IRobustRandom>();

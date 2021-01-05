@@ -21,4 +21,5 @@
     ears: ClothingHeadsetService
     belt: ClothingBeltJanitorFilled
   innerclothingskirt: ClothingUniformJumpskirtJanitor
-
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled

@@ -186,7 +186,7 @@
   result: FoodSpaghettiBoiled
   time: 5
   reagents:
-    chem.H2O: 5
+    chem.Water: 5
   solids:
     FoodSpaghetti: 1
 
@@ -196,7 +196,7 @@
   result: FoodPastaTomato
   time: 10
   reagents:
-    chem.H2O: 5
+    chem.Water: 5
   solids:
     FoodSpaghetti: 1
     FoodTomato: 2
@@ -207,7 +207,7 @@
   result: FoodMeatballSpaghetti
   time: 10
   reagents:
-    chem.H2O: 5
+    chem.Water: 5
   solids:
     FoodSpaghetti: 1
     FoodMeatball: 2
@@ -218,7 +218,7 @@
   result: FoodCrabSpaghetti
   time: 10
   reagents:
-    chem.H2O: 5
+    chem.Water: 5
   solids:
     FoodCrabMeat: 2
 
@@ -294,7 +294,7 @@
   result: FoodMeatballSoup
   time: 10
   reagents:
-    chem.H2O: 10
+    chem.Water: 10
   solids:
     FoodMeatball: 1
     FoodCarrot: 1
@@ -306,7 +306,7 @@
   result: FoodNettleSoup
   time: 10
   reagents:
-    chem.H2O: 10
+    chem.Water: 10
   solids:
     FoodNettle: 1
     FoodEgg: 1

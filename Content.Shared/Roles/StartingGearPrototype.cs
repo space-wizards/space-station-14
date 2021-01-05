@@ -21,6 +21,8 @@ namespace Content.Shared.Roles
         /// if empty, there is no skirt override - instead the uniform provided in equipment is added.
         /// </summary>
         private string _innerClothingSkirt = default!;
+        private string _satchel = default!;
+        private string _duffelbag = default!;
 
         public IReadOnlyDictionary<string, string> Inhand => _inHand;
         /// <summary>
@@ -51,6 +53,8 @@ namespace Content.Shared.Roles
             }, type => type.Value);
 
             serializer.DataField(ref _innerClothingSkirt, "innerclothingskirt", string.Empty);
+            serializer.DataField(ref _satchel, "satchel", string.Empty);
+            serializer.DataField(ref _duffelbag, "duffelbag", string.Empty);
         }
 
         public string GetGear(Slots slot, HumanoidCharacterProfile? profile)
@@ -59,6 +63,10 @@ namespace Content.Shared.Roles
             {
                 if ((slot == Slots.INNERCLOTHING) && (profile.Clothing == ClothingPreference.Jumpskirt) && (_innerClothingSkirt != ""))
                     return _innerClothingSkirt;
+                if ((slot == Slots.BACKPACK) && (profile.Backpack == BackpackPreference.Satchel) && (_satchel != ""))
+                    return _satchel;
+                if ((slot == Slots.BACKPACK) && (profile.Backpack == BackpackPreference.Duffelbag) && (_duffelbag != ""))
+                    return _duffelbag;
             }
 
             if (_equipment.ContainsKey(slot))

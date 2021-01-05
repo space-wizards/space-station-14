@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
         void ICollideBehavior.CollideWith(IEntity entity)
         {
-            if (!_shouldCollide) return;
+            if (!_shouldCollide || entity.Deleted) return;
             if (entity.TryGetComponent(out PhysicsComponent collid))
             {
                 if (!collid.Hard) // ignore non hard

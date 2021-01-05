@@ -123,7 +123,7 @@ namespace Content.Shared.Alert
         {
             if (!SupportsSeverity && severity != null)
             {
-                throw new InvalidOperationException("This alert does not support severity");
+                throw new InvalidOperationException($"This alert ({AlertKey}) does not support severity");
             }
 
             if (!SupportsSeverity)
@@ -131,24 +131,24 @@ namespace Content.Shared.Alert
 
             if (severity == null)
             {
-                throw new ArgumentException("No severity specified but this alert has severity.", nameof(severity));
+                throw new ArgumentException($"No severity specified but this alert ({AlertKey}) has severity.", nameof(severity));
             }
 
             if (severity < MinSeverity)
             {
-                throw new ArgumentOutOfRangeException(nameof(severity), "Severity below minimum severity.");
+                throw new ArgumentOutOfRangeException(nameof(severity), $"Severity below minimum severity in {AlertKey}.");
             }
 
             if (severity > MaxSeverity)
             {
-                throw new ArgumentOutOfRangeException(nameof(severity), "Severity above maximum severity.");
+                throw new ArgumentOutOfRangeException(nameof(severity), $"Severity above maximum severity in {AlertKey}.");
             }
 
             var severityText = severity.Value.ToString(CultureInfo.InvariantCulture);
             switch (Icon)
             {
                 case SpriteSpecifier.EntityPrototype entityPrototype:
-                    throw new InvalidOperationException("Severity not supported for EntityPrototype icon");
+                    throw new InvalidOperationException($"Severity not supported for EntityPrototype icon in {AlertKey}");
                 case SpriteSpecifier.Rsi rsi:
                     return new SpriteSpecifier.Rsi(rsi.RsiPath, rsi.RsiState + severityText);
                 case SpriteSpecifier.Texture texture:
