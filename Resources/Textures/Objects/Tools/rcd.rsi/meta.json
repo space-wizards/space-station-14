@@ -43,7 +43,25 @@
             ]
         },
         {
-            "name": "rcd",
+            "name": "equipped-BELT",
+            "directions": 4,
+            "delays": [
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "icon",
             "directions": 1,
             "delays": [
                 [

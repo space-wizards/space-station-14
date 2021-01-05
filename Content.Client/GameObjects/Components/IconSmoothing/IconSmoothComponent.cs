@@ -105,11 +105,11 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
                 case IconSmoothingMode.Corners:
                     CalculateNewSpriteCorners();
                     break;
-
                 case IconSmoothingMode.CardinalFlags:
                     CalculateNewSpriteCardinal();
                     break;
-
+                case IconSmoothingMode.NoSprite:
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -277,7 +277,7 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
             Clockwise = 4,
         }
 
-        public enum CornerLayers
+        public enum CornerLayers : byte
         {
             SE,
             NE,
@@ -290,7 +290,7 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
     ///     Controls the mode with which icon smoothing is calculated.
     /// </summary>
     [PublicAPI]
-    public enum IconSmoothingMode
+    public enum IconSmoothingMode : byte
     {
         /// <summary>
         ///     Each icon is made up of 4 corners, each of which can get a different state depending on
@@ -303,5 +303,10 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
         ///     The icon selected is a bit field made up of the cardinal direction flags that have adjacent entities.
         /// </summary>
         CardinalFlags,
+
+        /// <summary>
+        ///     Where this component contributes to our neighbors being calculated but we do not update our own sprite.
+        /// </summary>
+        NoSprite,
     }
 }

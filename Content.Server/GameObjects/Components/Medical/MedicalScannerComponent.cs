@@ -11,7 +11,9 @@ using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Medical;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -36,13 +38,12 @@ namespace Content.Server.GameObjects.Components.Medical
     public class MedicalScannerComponent : SharedMedicalScannerComponent, IActivate, IDestroyAct
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = null!;
 
         private static readonly TimeSpan InternalOpenAttemptDelay = TimeSpan.FromSeconds(0.5);
         private TimeSpan _lastInternalOpenAttempt;
 
         private ContainerSlot _bodyContainer = default!;
-        private readonly Vector2 _ejectOffset = new Vector2(0f, 0f);
+        private readonly Vector2 _ejectOffset = new(0f, 0f);
 
         [ViewVariables]
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
@@ -95,7 +96,7 @@ namespace Content.Server.GameObjects.Components.Medical
         }
 
         private static readonly MedicalScannerBoundUserInterfaceState EmptyUIState =
-            new MedicalScannerBoundUserInterfaceState(
+            new(
                 null,
                 new Dictionary<DamageClass, int>(),
                 new Dictionary<DamageType, int>(),
@@ -146,14 +147,23 @@ namespace Content.Server.GameObjects.Components.Medical
             UserInterface?.SetState(newState);
         }
 
-        private MedicalScannerStatus GetStatusFromDamageState(DamageState damageState)
+        private MedicalScannerStatus GetStatusFromDamageState(IMobStateComponent state)
         {
-            switch (damageState)
+            if (state.IsAlive())
             {
-                case DamageState.Alive: return MedicalScannerStatus.Green;
-                case DamageState.Critical: return MedicalScannerStatus.Red;
-                case DamageState.Dead: return MedicalScannerStatus.Death;
-                default: throw new ArgumentException(nameof(damageState));
+                return MedicalScannerStatus.Green;
+            }
+            else if (state.IsCritical())
+            {
+                return MedicalScannerStatus.Red;
+            }
+            else if (state.IsDead())
+            {
+                return MedicalScannerStatus.Death;
+            }
+            else
+            {
+                return MedicalScannerStatus.Yellow;
             }
         }
 
@@ -162,9 +172,11 @@ namespace Content.Server.GameObjects.Components.Medical
             if (Powered)
             {
                 var body = _bodyContainer.ContainedEntity;
-                return body == null
+                var state = body?.GetComponentOrNull<IMobStateComponent>();
+
+                return state == null
                     ? MedicalScannerStatus.Open
-                    : GetStatusFromDamageState(body.GetComponent<IDamageableComponent>().CurrentState);
+                    : GetStatusFromDamageState(state);
             }
 
             return MedicalScannerStatus.Off;
@@ -243,6 +255,7 @@ namespace Content.Server.GameObjects.Components.Medical
         public void EjectBody()
         {
             var containedEntity = _bodyContainer.ContainedEntity;
+            if (containedEntity == null) return;
             _bodyContainer.Remove(containedEntity);
             containedEntity.Transform.WorldPosition += _ejectOffset;
             UpdateUserInterface();
@@ -257,7 +270,7 @@ namespace Content.Server.GameObjects.Components.Medical
 
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
-            if (!(obj.Message is UiButtonPressedMessage message)) return;
+            if (obj.Message is not UiButtonPressedMessage message) return;
 
             switch (message.Button)
             {
@@ -266,16 +279,11 @@ namespace Content.Server.GameObjects.Components.Medical
                     {
                         //TODO: Show a 'ERROR: Body is completely devoid of soul' if no Mind owns the entity.
                         var cloningSystem = EntitySystem.Get<CloningSystem>();
-                        cloningSystem.AddToDnaScans(_playerManager
-                            .GetPlayersBy(playerSession =>
-                            {
-                                var mindOwnedMob = playerSession.ContentData()?.Mind?.OwnedEntity;
 
-                                return mindOwnedMob != null && mindOwnedMob ==
-                                    _bodyContainer.ContainedEntity;
-                            }).Single()
-                            .ContentData()
-                            ?.Mind);
+                        if (!_bodyContainer.ContainedEntity.TryGetComponent(out MindComponent? mind) || !mind.HasMind)
+                            break;
+
+                        cloningSystem.AddToDnaScans(mind.Mind);
                     }
 
                     break;

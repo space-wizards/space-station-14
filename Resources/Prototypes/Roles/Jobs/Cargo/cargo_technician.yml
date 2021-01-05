@@ -4,7 +4,7 @@
   positions: 2
   spawnPositions: 1
   startingGear: CargoTechGear
-  department:
+  departments:
   - Cargo
   icon: "CargoTechnician"
   access:
@@ -14,8 +14,12 @@
 - type: startingGear
   id: CargoTechGear
   equipment:
-    innerclothing: UniformCargoTech
-    backpack: BackpackClothingFilled
-    shoes: ShoesBlack
+    head: ClothingHeadHatCargosoft
+    innerclothing: ClothingUniformJumpsuitCargo
+    backpack: ClothingBackpackFilled
+    shoes: ClothingShoesColorBlack
     idcard: CargoPDA
-    ears: HeadsetCargo
+    ears: ClothingHeadsetCargo
+  innerclothingskirt: ClothingUniformJumpskirtCargo
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled

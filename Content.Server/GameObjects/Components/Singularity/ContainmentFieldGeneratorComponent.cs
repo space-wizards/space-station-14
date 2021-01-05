@@ -1,24 +1,18 @@
 #nullable enable
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.Utility;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Physics;
-using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Log;
-using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Singularity
@@ -26,7 +20,7 @@ namespace Content.Server.GameObjects.Components.Singularity
     [RegisterComponent]
     public class ContainmentFieldGeneratorComponent : Component, ICollideBehavior
     {
-        [Dependency] private IPhysicsManager _physicsManager = null!;
+        [Dependency] private readonly IPhysicsManager _physicsManager = null!;
 
         public override string Name => "ContainmentFieldGenerator";
 
@@ -85,9 +79,18 @@ namespace Content.Server.GameObjects.Components.Singularity
                 Logger.Error("ContainmentFieldGeneratorComponent created with no CollidableComponent");
                 return;
             }
-            _collidableComponent.AnchoredChanged += OnAnchoredChanged;
         }
 
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+            switch (message)
+            {
+                case AnchoredChangedMessage:
+                    OnAnchoredChanged();
+                    break;
+            }
+        }
 
         private void OnAnchoredChanged()
         {

@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Pulling;
 using Content.Server.GameObjects.Components.Timing;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Inventory;
+using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Input;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
@@ -36,7 +39,6 @@ namespace Content.Server.GameObjects.EntitySystems.Click
     [UsedImplicitly]
     public sealed class InteractionSystem : SharedInteractionSystem
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override void Initialize()
@@ -115,11 +117,9 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         }
 
         /// <summary>
-        /// Activates the Activate behavior of an object
+        /// Activates the IActivate behavior of an object
         /// Verifies that the user is capable of doing the use interaction first
         /// </summary>
-        /// <param name="user"></param>
-        /// <param name="used"></param>
         public void TryInteractionActivate(IEntity user, IEntity used)
         {
             if (user != null && used != null && ActionBlockerSystem.CanUse(user))
@@ -330,19 +330,19 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             // If in a container
-            if (ContainerHelpers.IsInContainer(player))
+            if (player.IsInContainer())
             {
                 return;
             }
 
 
             // In a container where the attacked entity is not the container's owner
-            if (ContainerHelpers.TryGetContainer(player, out var playerContainer) &&
+            if (player.TryGetContainer(out var playerContainer) &&
                 attacked != playerContainer.Owner)
             {
                 // Either the attacked entity is null, not contained or in a different container
                 if (attacked == null ||
-                    !ContainerHelpers.TryGetContainer(attacked, out var attackedContainer) ||
+                    !attacked.TryGetContainer(out var attackedContainer) ||
                     attackedContainer != playerContainer)
                 {
                     return;
@@ -468,7 +468,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
             foreach (var afterAttack in afterAttacks)
             {
-                afterAttack.AfterInteract(afterAttackEventArgs);
+                await afterAttack.AfterInteract(afterAttackEventArgs);
             }
         }
 
@@ -506,7 +506,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         }
 
         /// <summary>
-        /// Activates the Use behavior of an object
+        /// Activates the IUse behaviors of an entity
         /// Verifies that the user is capable of doing the use interaction first
         /// </summary>
         /// <param name="user"></param>
@@ -520,8 +520,8 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         }
 
         /// <summary>
-        /// Activates/Uses an object in control/possession of a user
-        /// If the item has the IUse interface on one of its components we use the object in our hand
+        /// Activates the IUse behaviors of an entity without first checking
+        /// if the user is capable of doing the use interaction.
         /// </summary>
         public void UseInteraction(IEntity user, IEntity used)
         {
@@ -626,11 +626,13 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
             foreach (var comp in thrown.GetAllComponents<IThrowCollide>().ToArray())
             {
+                if (thrown.Deleted) break;
                 comp.DoHit(eventArgs);
             }
 
             foreach (var comp in target.GetAllComponents<IThrowCollide>().ToArray())
             {
+                if (target.Deleted) break;
                 comp.HitBy(eventArgs);
             }
         }
@@ -676,6 +678,48 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             foreach (var comp in comps)
             {
                 comp.Unequipped(new UnequippedEventArgs(user, slot));
+            }
+        }
+
+        /// <summary>
+        ///     Calls EquippedHand on all components that implement the IEquippedHand interface
+        ///     on an item.
+        /// </summary>
+        public void EquippedHandInteraction(IEntity user, IEntity item, SharedHand hand)
+        {
+            var equippedHandMessage = new EquippedHandMessage(user, item, hand);
+            RaiseLocalEvent(equippedHandMessage);
+            if (equippedHandMessage.Handled)
+            {
+                return;
+            }
+
+            var comps = item.GetAllComponents<IEquippedHand>().ToList();
+
+            foreach (var comp in comps)
+            {
+                comp.EquippedHand(new EquippedHandEventArgs(user, hand));
+            }
+        }
+
+        /// <summary>
+        ///     Calls UnequippedHand on all components that implement the IUnequippedHand interface
+        ///     on an item.
+        /// </summary>
+        public void UnequippedHandInteraction(IEntity user, IEntity item, SharedHand hand)
+        {
+            var unequippedHandMessage = new UnequippedHandMessage(user, item, hand);
+            RaiseLocalEvent(unequippedHandMessage);
+            if (unequippedHandMessage.Handled)
+            {
+                return;
+            }
+
+            var comps = item.GetAllComponents<IUnequippedHand>().ToList();
+
+            foreach (var comp in comps)
+            {
+                comp.UnequippedHand(new UnequippedHandEventArgs(user, hand));
             }
         }
 
@@ -757,7 +801,6 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
         }
 
-
         /// <summary>
         /// Will have two behaviors, either "uses" the weapon at range on the entity if it is capable of accepting that action
         /// Or it will use the weapon itself on the position clicked, regardless of what was there
@@ -806,7 +849,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         private void DoAttack(IEntity player, EntityCoordinates coordinates, bool wideAttack, EntityUid target = default)
         {
             // Verify player is on the same map as the entity he clicked on
-            if (_mapManager.GetGrid(coordinates.GetGridId(_entityManager)).ParentMapId != player.Transform.MapID)
+            if (coordinates.GetMapId(EntityManager) != player.Transform.MapID)
             {
                 Logger.WarningS("system.interaction",
                     $"Player named {player.Name} clicked on a map he isn't located on");

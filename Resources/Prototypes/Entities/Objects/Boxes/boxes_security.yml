@@ -44,7 +44,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: SecGlasses
+      - name: ClothingEyesGlassesSecurity
         amount: 4
   - type: Sprite
     layers:

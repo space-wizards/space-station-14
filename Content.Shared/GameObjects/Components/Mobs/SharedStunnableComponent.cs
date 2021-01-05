@@ -3,6 +3,7 @@ using System.Threading;
 using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Timers;
@@ -44,7 +45,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
         private string _stunAlertId;
 
-        protected CancellationTokenSource StatusRemoveCancellation = new CancellationTokenSource();
+        protected CancellationTokenSource StatusRemoveCancellation = new();
 
         [ViewVariables] protected float WalkModifierOverride = 0f;
         [ViewVariables] protected float RunModifierOverride = 0f;

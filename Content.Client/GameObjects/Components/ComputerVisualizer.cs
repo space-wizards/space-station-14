@@ -1,4 +1,5 @@
 using Content.Shared.GameObjects.Components;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
@@ -7,6 +8,7 @@ using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components
 {
+    [UsedImplicitly]
     public sealed class ComputerVisualizer : AppearanceVisualizer
     {
         private string KeyboardState = "generic_key";
@@ -85,7 +87,7 @@ namespace Content.Client.GameObjects.Components
             }
         }
 
-        public enum Layers
+        public enum Layers : byte
         {
             Body,
             Screen,

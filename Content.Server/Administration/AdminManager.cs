@@ -21,6 +21,7 @@ using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Resources;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Network;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -39,7 +40,8 @@ namespace Content.Server.Administration
         [Dependency] private readonly IConsoleShell _consoleShell = default!;
         [Dependency] private readonly IChatManager _chat = default!;
 
-        private readonly Dictionary<IPlayerSession, AdminReg> _admins = new Dictionary<IPlayerSession, AdminReg>();
+        private readonly Dictionary<IPlayerSession, AdminReg> _admins = new();
+        private readonly HashSet<NetUserId> _promotedPlayers = new();
 
         public event Action<AdminPermsChangedEventArgs>? OnPermsChanged;
 
@@ -49,8 +51,8 @@ namespace Content.Server.Administration
 
         // If a command isn't in this list it's server-console only.
         // if a command is in but the flags value is null it's available to everybody.
-        private readonly HashSet<string> _anyCommands = new HashSet<string>();
-        private readonly Dictionary<string, AdminFlags[]> _adminCommands = new Dictionary<string, AdminFlags[]>();
+        private readonly HashSet<string> _anyCommands = new();
+        private readonly Dictionary<string, AdminFlags[]> _adminCommands = new();
 
         public AdminData? GetAdminData(IPlayerSession session, bool includeDeAdmin = false)
         {
@@ -227,6 +229,13 @@ namespace Content.Server.Administration
             }
         }
 
+        public void PromoteHost(IPlayerSession player)
+        {
+            _promotedPlayers.Add(player.UserId);
+
+            ReloadAdmin(player);
+        }
+
         void IPostInjectInit.PostInject()
         {
             _playerManager.PlayerStatusChanged += PlayerStatusChanged;
@@ -267,9 +276,7 @@ namespace Content.Server.Administration
             }
             else if (e.NewStatus == SessionStatus.Disconnected)
             {
-                _admins.Remove(e.Session);
-
-                if (_cfg.GetCVar(CCVars.AdminAnnounceLogout))
+                if (_admins.Remove(e.Session) && _cfg.GetCVar(CCVars.AdminAnnounceLogout))
                 {
                     _chat.SendAdminAnnouncement(Loc.GetString("Admin logout: {0}", e.Session.Name));
                 }
@@ -311,7 +318,7 @@ namespace Content.Server.Administration
 
         private async Task<(AdminData dat, int? rankId, bool specialLogin)?> LoadAdminData(IPlayerSession session)
         {
-            if (IsLocal(session) && _cfg.GetCVar(CCVars.ConsoleLoginLocal))
+            if (IsLocal(session) && _cfg.GetCVar(CCVars.ConsoleLoginLocal) || _promotedPlayers.Contains(session.UserId))
             {
                 var data = new AdminData
                 {
@@ -460,12 +467,12 @@ namespace Content.Server.Administration
 
         private sealed class AdminReg
         {
-            public IPlayerSession Session;
+            public readonly IPlayerSession Session;
 
             public AdminData Data;
             public int? RankId;
 
-            // Such as console.loginlocal
+            // Such as console.loginlocal or promotehost
             public bool IsSpecialLogin;
 
             public AdminReg(IPlayerSession session, AdminData data)

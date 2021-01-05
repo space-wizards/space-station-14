@@ -1,16 +1,28 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
+using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Disposal;
+using Content.Shared.Atmos;
+using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Disposal;
+using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -41,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Disposal
     [ComponentReference(typeof(SharedDisposalUnitComponent))]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IInteractUsing))]
-    public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IActivate, IInteractUsing, IThrowCollide
+    public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IActivate, IInteractUsing, IThrowCollide, IGasMixtureHolder
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -125,10 +137,27 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// </summary>
         private (PressureState State, string Localized) _locState;
 
-        public override bool CanInsert(IEntity entity)
+        public GasMixture Air { get; set; } = default!;
+
+        public bool CanInsert(IEntity entity)
         {
             if (!base.CanInsert(entity))
                 return false;
+            }
+
+            if (!entity.TryGetComponent(out IPhysicsComponent? physics) ||
+                !physics.CanCollide)
+            {
+                if (!(entity.TryGetComponent(out IMobStateComponent? state) && state.IsDead())) {
+                    return false;
+                }
+            }
+
+            if (!entity.HasComponent<ItemComponent>() &&
+                !entity.HasComponent<IBody>())
+            {
+                return false;
+            }
 
             return _container.CanInsert(entity);
         }
@@ -259,13 +288,27 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
 
             var entryComponent = entry.GetComponent<DisposalEntryComponent>();
-            var entities = _container.ContainedEntities.ToList();
             foreach (var entity in _container.ContainedEntities.ToList())
             {
                 _container.Remove(entity);
             }
 
-            entryComponent.TryInsert(entities);
+            if (Owner.Transform.Coordinates.TryGetTileAtmosphere(out var tileAtmos) &&
+                tileAtmos.Air != null &&
+                tileAtmos.Air.Temperature > 0)
+            {
+                var tileAir = tileAtmos.Air;
+                var transferMoles = 0.1f * (0.05f * Atmospherics.OneAtmosphere * 1.01f - Air.Pressure) * Air.Volume / (tileAir.Temperature * Atmospherics.R);
+
+                Air = tileAir.Remove(transferMoles);
+
+                var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
+                atmosSystem
+                    .GetGridAtmosphere(Owner.Transform.GridID)?
+                    .Invalidate(tileAtmos.GridIndices);
+            }
+
+            entryComponent.TryInsert(this);
 
             _automaticEngageToken?.Cancel();
             _automaticEngageToken = null;
@@ -357,7 +400,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return;
             }
 
-            if (!(obj.Message is UiButtonPressedMessage message))
+            if (obj.Message is not UiButtonPressedMessage message)
             {
                 return;
             }
@@ -373,7 +416,6 @@ namespace Content.Server.GameObjects.Components.Disposal
                 case UiButton.Power:
                     TogglePower();
                     EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
-
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -463,7 +505,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             UpdateInterface();
         }
 
-        private void PowerStateChanged(object? sender, PowerStateEventArgs args)
+        private void PowerStateChanged(PowerChangedMessage args)
         {
             if (!args.Powered)
             {
@@ -501,11 +543,8 @@ namespace Content.Server.GameObjects.Components.Disposal
                 seconds => _flushDelay = TimeSpan.FromSeconds(seconds),
                 () => (int) _flushDelay.TotalSeconds);
 
-            serializer.DataReadWriteFunction(
-                "entryDelay",
-                0.5f,
-                seconds => _entryDelay = seconds,
-                () => (int) _entryDelay);
+            serializer.DataField(this, x => x.Air, "air", new GasMixture(Atmospherics.CellVolume));
+            serializer.DataField(ref _entryDelay, "entryDelay", 0.5f);
         }
 
         public override void Initialize()
@@ -531,31 +570,11 @@ namespace Content.Server.GameObjects.Components.Disposal
                 Logger.WarningS("VitalComponentMissing", $"Disposal unit {Owner.Uid} is missing an anchorable component");
             }
 
-            if (Owner.TryGetComponent(out IPhysicsComponent? physics))
-            {
-                physics.AnchoredChanged += UpdateVisualState;
-            }
-
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
-            {
-                receiver.OnPowerStateChanged += PowerStateChanged;
-            }
-
             UpdateVisualState();
         }
 
         public override void OnRemove()
         {
-            if (Owner.TryGetComponent(out IPhysicsComponent? physics))
-            {
-                physics.AnchoredChanged -= UpdateVisualState;
-            }
-
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
-            {
-                receiver.OnPowerStateChanged -= PowerStateChanged;
-            }
-
             foreach (var entity in _container.ContainedEntities.ToArray())
             {
                 _container.ForceRemove(entity);
@@ -588,6 +607,14 @@ namespace Content.Server.GameObjects.Components.Disposal
                     _lastExitAttempt = _gameTiming.CurTime;
                     Remove(msg.Entity);
                     break;
+
+                case AnchoredChangedMessage:
+                    UpdateVisualState();
+                    break;
+
+                case PowerChangedMessage powerChanged:
+                    PowerStateChanged(powerChanged);
+                    break;
             }
         }
 
@@ -599,7 +626,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-            if (ContainerHelpers.IsInContainer(eventArgs.User))
+            if (eventArgs.User.IsInContainer())
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't reach there!"));
                 return false;

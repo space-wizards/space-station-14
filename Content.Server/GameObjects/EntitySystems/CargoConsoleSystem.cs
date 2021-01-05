@@ -22,7 +22,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <summary>
         /// Stores all bank accounts.
         /// </summary>
-        private readonly Dictionary<int, CargoBankAccount> _accountsDict = new Dictionary<int, CargoBankAccount>();
+        private readonly Dictionary<int, CargoBankAccount> _accountsDict = new();
         /// <summary>
         /// Used to assign IDs to bank accounts. Incremental counter.
         /// </summary>

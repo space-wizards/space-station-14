@@ -25,15 +25,15 @@ namespace Content.Client.GameObjects.Components.CloningPod
         public readonly Button EjectButton;
         private readonly CloningScanButton _measureButton;
         private CloningScanButton? _selectedButton;
-        private Label _progressLabel;
+        private readonly Label _progressLabel;
         private readonly ProgressBar _cloningProgressBar;
-        private Label _mindState;
+        private readonly Label _mindState;
 
         protected override Vector2 ContentsMinimumSize => _mainVBox?.CombinedMinimumSize ?? Vector2.Zero;
         private CloningPodBoundUserInterfaceState _lastUpdate = null!;
 
         // List of scans that are visible based on current filter criteria.
-        private readonly Dictionary<int, string> _filteredScans = new Dictionary<int, string>();
+        private readonly Dictionary<int, string> _filteredScans = new();
 
         // The indices of the visible scans last time UpdateVisibleScans was ran.
         // This is inclusive, so end is the index of the last scan, not right after it.

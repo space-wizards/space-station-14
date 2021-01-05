@@ -1,603 +1,263 @@
 {
-    "version": 1,
-    "size": {
-        "x": 32,
-        "y": 32
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/d917f4c2a088419d5c3aec7656b7ff8cebd1822e",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "default",
+      "directions": 1
     },
-    "states": [
-        {
-            "name": "assigned",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "centcom",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "default",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "default-inhand-left",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "default-inhand-right",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "ert_chaplain",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "ert_commander",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "ert_engineer",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "ert_janitor",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "ert_medic",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "ert_security",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "gold",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "gold-inhand-left",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "gold-inhand-right",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "idassistant",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "idatmospherictechnician",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "idbartender",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "idbotanist",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "idcaptain",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "idcargotechnician",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "idcentcom",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "idchaplain",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "idchemist",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "idchiefengineer",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "idchiefmedicalofficer",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "idclown",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "idcook",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "idcurator",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "iddetective",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "idgeneticist",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "idheadofpersonnel",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "idheadofsecurity",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "idjanitor",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "idlawyer",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "idmedicaldoctor",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "idmime",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "idparamedic",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "idprisoner",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "idquartermaster",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "idresearchdirector",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "idroboticist",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "idscientist",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "idsecurityofficer",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "idshaftminer",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "idstationengineer",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "idunknown",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "idvirologist",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "idwarden",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "orange",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "prisoner_001",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "prisoner_002",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "prisoner_003",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "prisoner_004",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "prisoner_005",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "prisoner_006",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "prisoner_007",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "silver",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "silver-inhand-left",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "silver-inhand-right",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "syndie",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        }
-    ]
+    {
+      "name": "centcom",
+      "directions": 1
+    },
+    {
+      "name": "ert_chaplain",
+      "directions": 1
+    },
+    {
+      "name": "ert_commander",
+      "directions": 1
+    },
+    {
+      "name": "ert_engineer",
+      "directions": 1
+    },
+    {
+      "name": "ert_janitor",
+      "directions": 1
+    },
+    {
+      "name": "ert_medic",
+      "directions": 1
+    },
+    {
+      "name": "ert_security",
+      "directions": 1
+    },
+    {
+      "name": "gold",
+      "directions": 1
+    },
+    {
+      "name": "idassistant",
+      "directions": 1
+    },
+    {
+      "name": "idatmospherictechnician",
+      "directions": 1
+    },
+    {
+      "name": "idbartender",
+      "directions": 1
+    },
+    {
+      "name": "idbotanist",
+      "directions": 1
+    },
+    {
+      "name": "idcaptain",
+      "directions": 1
+    },
+    {
+      "name": "idcargotechnician",
+      "directions": 1
+    },
+    {
+      "name": "idcentcom",
+      "directions": 1
+    },
+    {
+      "name": "idchaplain",
+      "directions": 1
+    },
+    {
+      "name": "idchemist",
+      "directions": 1
+    },
+    {
+      "name": "idchiefengineer",
+      "directions": 1
+    },
+    {
+      "name": "idchiefmedicalofficer",
+      "directions": 1
+    },
+    {
+      "name": "idclown",
+      "directions": 1
+    },
+    {
+      "name": "idcook",
+      "directions": 1
+    },
+    {
+      "name": "idcurator",
+      "directions": 1
+    },
+    {
+      "name": "iddetective",
+      "directions": 1
+    },
+    {
+      "name": "idgeneticist",
+      "directions": 1
+    },
+    {
+      "name": "idheadofpersonnel",
+      "directions": 1
+    },
+    {
+      "name": "idheadofsecurity",
+      "directions": 1
+    },
+    {
+      "name": "idjanitor",
+      "directions": 1
+    },
+    {
+      "name": "idlawyer",
+      "directions": 1
+    },
+    {
+      "name": "idmedicaldoctor",
+      "directions": 1
+    },
+    {
+      "name": "idmime",
+      "directions": 1
+    },
+    {
+      "name": "idparamedic",
+      "directions": 1
+    },
+    {
+      "name": "idprisoner",
+      "directions": 1
+    },
+    {
+      "name": "idquartermaster",
+      "directions": 1
+    },
+    {
+      "name": "idresearchdirector",
+      "directions": 1
+    },
+    {
+      "name": "idroboticist",
+      "directions": 1
+    },
+    {
+      "name": "idscientist",
+      "directions": 1
+    },
+    {
+      "name": "idsecurityofficer",
+      "directions": 1
+    },
+    {
+      "name": "idshaftminer",
+      "directions": 1
+    },
+    {
+      "name": "idstationengineer",
+      "directions": 1
+    },
+    {
+      "name": "idunknown",
+      "directions": 1
+    },
+    {
+      "name": "idvirologist",
+      "directions": 1
+    },
+    {
+      "name": "idwarden",
+      "directions": 1
+    },
+    {
+      "name": "orange",
+      "directions": 1
+    },
+    {
+      "name": "prisoner_001",
+      "directions": 1
+    },
+    {
+      "name": "prisoner_002",
+      "directions": 1
+    },
+    {
+      "name": "prisoner_003",
+      "directions": 1
+    },
+    {
+      "name": "prisoner_004",
+      "directions": 1
+    },
+    {
+      "name": "prisoner_005",
+      "directions": 1
+    },
+    {
+      "name": "prisoner_006",
+      "directions": 1
+    },
+    {
+      "name": "prisoner_007",
+      "directions": 1
+    },
+    {
+      "name": "silver",
+      "directions": 1
+    },
+    {
+      "name": "syndie",
+      "directions": 1
+    },
+    {
+      "name": "gold-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "gold-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "default-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "default-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "silver-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "silver-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "orange-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "orange-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "blue-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "blue-inhand-right",
+      "directions": 4
+    }
+  ]
 }

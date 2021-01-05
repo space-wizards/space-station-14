@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net;
@@ -7,7 +6,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Preferences;
 using Content.Server.Utility;
+using Content.Shared;
 using Microsoft.EntityFrameworkCore;
+using Robust.Shared.Interfaces.Configuration;
+using Robust.Shared.IoC;
 using Robust.Shared.Network;
 
 #nullable enable
@@ -23,7 +25,7 @@ namespace Content.Server.Database
         // For SQLite we use a single DB context via SQLite.
         // This doesn't allow concurrent access so that's what the semaphore is for.
         // That said, this is bloody SQLite, I don't even think EFCore bothers to truly async it.
-        private readonly SemaphoreSlim _prefsSemaphore = new SemaphoreSlim(1, 1);
+        private readonly SemaphoreSlim _prefsSemaphore = new(1, 1);
 
         private readonly Task _dbReadyTask;
         private readonly SqliteServerDbContext _prefsCtx;
@@ -32,7 +34,15 @@ namespace Content.Server.Database
         {
             _prefsCtx = new SqliteServerDbContext(options);
 
-            _dbReadyTask = Task.Run(() => _prefsCtx.Database.Migrate());
+            if (IoCManager.Resolve<IConfigurationManager>().GetCVar(CCVars.DatabaseSynchronous))
+            {
+                _prefsCtx.Database.Migrate();
+                _dbReadyTask = Task.CompletedTask;
+            }
+            else
+            {
+                _dbReadyTask = Task.Run(() => _prefsCtx.Database.Migrate());
+            }
         }
 
         public override async Task<ServerBanDef?> GetServerBanAsync(IPAddress? address, NetUserId? userId)

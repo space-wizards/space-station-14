@@ -4,7 +4,7 @@
   positions: 1
   spawnPositions: 1
   startingGear: QuartermasterGear
-  department:
+  departments:
   - Cargo
   icon: "QuarterMaster"
   access:
@@ -15,8 +15,12 @@
 - type: startingGear
   id: QuartermasterGear
   equipment:
-    innerclothing: UniformQM
-    backpack: BackpackClothingFilled
-    shoes: ShoesBrown
+    head: ClothingHeadHatCargosoft
+    innerclothing: ClothingUniformJumpsuitQM
+    backpack: ClothingBackpackFilled
+    shoes: ClothingShoesColorBrown
     idcard: QuartermasterPDA
-    ears: HeadsetCargo
+    ears: ClothingHeadsetCargo
+  innerclothingskirt: ClothingUniformJumpskirtQM
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled

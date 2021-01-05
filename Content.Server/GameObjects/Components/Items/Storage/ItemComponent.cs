@@ -5,6 +5,7 @@ using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
@@ -111,7 +112,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             protected override void GetData(IEntity user, ItemComponent component, VerbData data)
             {
                 if (!ActionBlockerSystem.CanInteract(user) ||
-                    ContainerHelpers.IsInContainer(component.Owner) ||
+                    component.Owner.IsInContainer() ||
                     !component.CanPickup(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;

@@ -25,9 +25,7 @@ namespace Content.Client.GameObjects.EntitySystems
     [UsedImplicitly]
     internal sealed class ExamineSystem : ExamineSystemShared
     {
-        [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         public const string StyleClassEntityTooltip = "entity-tooltip";
@@ -52,7 +50,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private bool HandleExamine(ICommonSession session, EntityCoordinates coords, EntityUid uid)
         {
-            if (!uid.IsValid() || !_entityManager.TryGetEntity(uid, out var examined))
+            if (!uid.IsValid() || !EntityManager.TryGetEntity(uid, out var examined))
             {
                 return false;
             }
@@ -73,7 +71,7 @@ namespace Content.Client.GameObjects.EntitySystems
             const float minWidth = 300;
             CloseTooltip();
 
-            var popupPos = _inputManager.MouseScreenPosition;
+            var popupPos = _userInterfaceManager.MousePositionScaled;
 
             // Actually open the tooltip.
             _examineTooltipOpen = new Popup();

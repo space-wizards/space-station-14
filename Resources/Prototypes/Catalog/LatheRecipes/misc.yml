@@ -15,3 +15,46 @@
   materials:
     steel: 30
     glass: 50
+
+- type: latheRecipe
+  id: PowerCellSmallHigh
+  icon: Objects/Power/PowerCells/power_cell_small_hi.rsi
+  result: PowerCellSmallHigh
+  completetime: 500
+  materials:
+    steel: 80
+    glass: 90
+
+- type: latheRecipe
+  id: GlowStickRed
+  icon: Objects/Misc/glowstick.rsi
+  result: GlowStickRed
+  completetime: 500
+  materials:
+    glass: 20
+
+- type: latheRecipe
+  id: FlareBase
+  icon: Objects/Misc/flare.rsi
+  result: FlareBase
+  completetime: 500
+  materials:
+    glass: 40
+
+- type: latheRecipe
+  id: FlashLightLantern
+  icon: Objects/Tools/flashlight.rsi
+  result: FlashLightLantern
+  completetime: 500
+  materials:
+    steel: 50
+    glass: 60
+
+- type: latheRecipe
+  id:  FireExtinguisher
+  icon: Objects/Misc/fire_extinguisher.rsi
+  result: FireExtinguisher
+  completetime: 500
+  materials:
+    steel: 80
+    glass: 30

@@ -9,9 +9,9 @@ using Content.Server.GameObjects.Components.Strap;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Buckle;
-using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -41,7 +41,7 @@ namespace Content.Server.GameObjects.Components.Buckle
         [ComponentDependency] public readonly AppearanceComponent? AppearanceComponent = null;
         [ComponentDependency] private readonly ServerAlertsComponent? _serverAlertsComponent = null;
         [ComponentDependency] private readonly StunnableComponent? _stunnableComponent = null;
-        [ComponentDependency] private readonly MobStateManagerComponent? _mobStateManagerComponent = null;
+        [ComponentDependency] private readonly MobStateComponent? _mobStateComponent = null;
 
         private int _size;
 
@@ -64,6 +64,7 @@ namespace Content.Server.GameObjects.Components.Buckle
         public Vector2 BuckleOffset { get; private set; }
 
         private StrapComponent? _buckledTo;
+
 
         /// <summary>
         ///     The strap that this component is buckled to.
@@ -103,20 +104,11 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             if (Buckled)
             {
-                _serverAlertsComponent.ShowAlert(BuckledTo != null ? BuckledTo.BuckledAlertType : AlertType.Buckled,
-                    onClickAlert: OnClickAlert);
+                _serverAlertsComponent.ShowAlert(BuckledTo?.BuckledAlertType ?? AlertType.Buckled);
             }
             else
             {
                 _serverAlertsComponent.ClearAlertCategory(AlertCategory.Buckled);
-            }
-        }
-
-        private void OnClickAlert(ClickAlertEventArgs args)
-        {
-            if (args.Player.TryGetComponent(out BuckleComponent? buckle))
-            {
-                buckle.TryUnbuckle(args.Player);
             }
         }
 
@@ -160,7 +152,7 @@ namespace Content.Server.GameObjects.Components.Buckle
             }
         }
 
-        private bool CanBuckle(IEntity? user, IEntity to, [MaybeNullWhen(false)] out StrapComponent strap)
+        private bool CanBuckle(IEntity? user, IEntity to, [NotNullWhen(true)] out StrapComponent? strap)
         {
             strap = null;
 
@@ -194,10 +186,10 @@ namespace Content.Server.GameObjects.Components.Buckle
             }
 
             // If in a container
-            if (ContainerHelpers.TryGetContainer(Owner, out var ownerContainer))
+            if (Owner.TryGetContainer(out var ownerContainer))
             {
                 // And not in the same container as the strap
-                if (!ContainerHelpers.TryGetContainer(strap.Owner, out var strapContainer) ||
+                if (!strap.Owner.TryGetContainer(out var strapContainer) ||
                     ownerContainer != strapContainer)
                 {
                     return false;
@@ -270,6 +262,8 @@ namespace Content.Server.GameObjects.Components.Buckle
             AppearanceComponent?.SetData(BuckleVisuals.Buckled, true);
 
             BuckledTo = strap;
+            LastEntityBuckledTo = BuckledTo.Owner.Uid;
+            DontCollide = true;
 
             ReAttach(strap);
             UpdateBuckleStatus();
@@ -331,7 +325,7 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             if (Owner.Transform.Parent == oldBuckledTo.Owner.Transform)
             {
-                ContainerHelpers.AttachParentToContainerOrGrid(Owner.Transform);
+                Owner.Transform.AttachParentToContainerOrGrid();
                 Owner.Transform.WorldRotation = oldBuckledTo.Owner.Transform.WorldRotation;
             }
 
@@ -346,7 +340,7 @@ namespace Content.Server.GameObjects.Components.Buckle
                 EntitySystem.Get<StandingStateSystem>().Standing(Owner);
             }
 
-            _mobStateManagerComponent?.CurrentMobState.EnterState(Owner);
+            _mobStateComponent?.CurrentState?.EnterState(Owner);
 
             UpdateBuckleStatus();
 
@@ -422,12 +416,31 @@ namespace Content.Server.GameObjects.Components.Buckle
                 drawDepth = BuckledTo.SpriteComponent.DrawDepth - 1;
             }
 
-            return new BuckleComponentState(Buckled, drawDepth);
+
+            return new BuckleComponentState(Buckled, drawDepth, LastEntityBuckledTo, DontCollide);
         }
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
             return TryUnbuckle(eventArgs.User);
+        }
+
+
+        public void Update()
+        {
+            if (!DontCollide || Body == null)
+                return;
+
+            Body.WakeBody();
+
+            if (!IsOnStrapEntityThisFrame && DontCollide)
+            {
+                DontCollide = false;
+                TryUnbuckle(Owner);
+                Dirty();
+            }
+
+            IsOnStrapEntityThisFrame = false;
         }
 
         /// <summary>

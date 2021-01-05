@@ -18,7 +18,7 @@ namespace Content.Client.GameObjects.Components.Research
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
             base.HandleComponentState(curState, nextState);
-            if (!(curState is TechnologyDatabaseState state)) return;
+            if (curState is not TechnologyDatabaseState state) return;
             _technologies.Clear();
             var protoManager = IoCManager.Resolve<IPrototypeManager>();
             foreach (var techID in state.Technologies)

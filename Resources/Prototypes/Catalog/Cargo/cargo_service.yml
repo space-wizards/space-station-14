@@ -1,0 +1,23 @@
+- type: cargoProduct
+  name: "janitorial supplies crate"
+  id: cargo.servicejanitorial
+  description: "Fight back against dirt and grime with Nanotrasen's Janitorial Essentials(tm)! Contains three buckets, caution signs, a single mop and bucket, spray cleaner, and soap."
+  icon:
+    sprite: Objects/Specific/Janitorial/janitorial.rsi
+    state: cleaner
+  product: CrateServiceJanitorialSupplies
+  cost: 1000
+  category: Service
+  group: market
+
+- type: cargoProduct
+  name: "replacement lights crate"
+  id: cargo.servicelightsreplacement
+  description: "May the light of Aether shine upon this station! Or at least, the light of forty two light tubes and twenty one light bulbs."
+  icon:
+    sprite: Objects/Power/light_bulb.rsi
+    state: normal
+  product: CrateServiceReplacementLights
+  cost: 1000
+  category: Service
+  group: market

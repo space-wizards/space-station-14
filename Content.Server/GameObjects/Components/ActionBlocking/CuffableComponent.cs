@@ -10,6 +10,7 @@ using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.ActionBlocking;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Utility;
@@ -115,7 +116,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             _container.Insert(handcuff);
             CanStillInteract = _hands.Hands.Count() > CuffedHandCount;
 
-            OnCuffedStateChanged.Invoke();
+            OnCuffedStateChanged?.Invoke();
             UpdateAlert();
             UpdateHeldItems();
             Dirty();

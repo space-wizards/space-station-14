@@ -14,8 +14,8 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
 
         [Dependency] private readonly IRobustRandom _random = default!;
 
-        private readonly Dictionary<int, List<NetworkDevice>> _devices = new Dictionary<int, List<NetworkDevice>>();
-        private readonly Queue<NetworkPackage> _packages = new Queue<NetworkPackage>();
+        private readonly Dictionary<int, List<NetworkDevice>> _devices = new();
+        private readonly Queue<NetworkPackage> _packages = new();
 
         /// <inheritdoc/>
         public DeviceNetworkConnection Register(int netId, int frequency, OnReceiveNetMessage messageHandler, bool receiveAll = false)

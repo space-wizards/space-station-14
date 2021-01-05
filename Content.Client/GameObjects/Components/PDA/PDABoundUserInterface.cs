@@ -2,6 +2,7 @@
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.PDA;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.UserInterface;
@@ -17,6 +18,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.GameObjects.Components.PDA
 {
+    [UsedImplicitly]
     public class PDABoundUserInterface : BoundUserInterface
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -228,7 +230,7 @@ namespace Content.Client.GameObjects.Components.PDA
             public Button EjectIDButton { get; }
             public Button EjectPenButton { get; }
 
-            public TabContainer MasterTabContainer;
+            public readonly TabContainer MasterTabContainer;
 
             public RichTextLabel PDAOwnerLabel { get; }
             public PanelContainer IDInfoContainer { get; }
@@ -236,14 +238,14 @@ namespace Content.Client.GameObjects.Components.PDA
 
             public VBoxContainer UplinkTabContainer { get; }
 
-            protected HSplitContainer CategoryAndListingsContainer;
+            protected readonly HSplitContainer CategoryAndListingsContainer;
 
-            private IPrototypeManager _prototypeManager;
+            private readonly IPrototypeManager _prototypeManager;
 
-            public VBoxContainer UplinkListingsContainer;
+            public readonly VBoxContainer UplinkListingsContainer;
 
-            public VBoxContainer CategoryListContainer;
-            public RichTextLabel BalanceInfo;
+            public readonly VBoxContainer CategoryListContainer;
+            public readonly RichTextLabel BalanceInfo;
             public event Action<BaseButton.ButtonEventArgs, UplinkListingData> OnListingButtonPressed;
             public event Action<BaseButton.ButtonEventArgs, UplinkCategory> OnCategoryButtonPressed;
 

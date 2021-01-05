@@ -13,10 +13,17 @@ namespace Content.IntegrationTests.Tests
     [TestFixture]
     public class GridTileLookupTest : ContentIntegrationTest
     {
+        private const string PROTOTYPES = @"
+- type: entity
+  name: Dummy
+  id: Dummy
+";
+
         [Test]
         public async Task Test()
         {
-            var server = StartServerDummyTicker();
+            var options = new ServerIntegrationOptions{ExtraPrototypes = PROTOTYPES};
+            var server = StartServerDummyTicker(options);
             await server.WaitIdleAsync();
 
             var entityManager = server.ResolveDependency<IEntityManager>();
@@ -39,19 +46,18 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(entities.Count, Is.EqualTo(0));
 
                 // Space entity, check that nothing intersects it and that also it doesn't throw.
-                entityManager.SpawnEntity("HumanMob_Content", new MapCoordinates(Vector2.One * 1000, mapOne));
+                entityManager.SpawnEntity("Dummy", new MapCoordinates(Vector2.One * 1000, mapOne));
                 entities = tileLookup.GetEntitiesIntersecting(gridOne.Index, new Vector2i(1000, 1000)).ToList();
                 Assert.That(entities.Count, Is.EqualTo(0));
 
-                var entityOne = entityManager.SpawnEntity("Food4NoRaisins", new EntityCoordinates(gridOne.GridEntityId, Vector2.Zero));
-                entityManager.SpawnEntity("Food4NoRaisins", new EntityCoordinates(gridOne.GridEntityId, Vector2.One));
+                var entityOne = entityManager.SpawnEntity("Dummy", new EntityCoordinates(gridOne.GridEntityId, Vector2.Zero));
+                entityManager.SpawnEntity("Dummy", new EntityCoordinates(gridOne.GridEntityId, Vector2.One));
 
                 var entityTiles = tileLookup.GetIndices(entityOne);
-                Assert.That(entityTiles.Count, Is.EqualTo(2));
+                Assert.That(entityTiles.Count, Is.EqualTo(4));
 
                 entities = tileLookup.GetEntitiesIntersecting(entityOne).ToList();
-                // Includes station entity
-                Assert.That(entities.Count, Is.EqualTo(3));
+                Assert.That(entities.Count, Is.EqualTo(5));
 
                 // Both dummies should be in each corner of the 0,0 tile but only one dummy intersects -1,-1
                 entities = tileLookup.GetEntitiesIntersecting(gridOne.Index, new Vector2i(-1, -1)).ToList();

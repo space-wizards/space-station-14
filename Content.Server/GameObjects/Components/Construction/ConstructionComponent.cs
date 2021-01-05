@@ -28,10 +28,9 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Construction
 {
     [RegisterComponent]
-    public class ConstructionComponent : Component, IExamine, IInteractUsing
+    public partial class ConstructionComponent : Component, IExamine, IInteractUsing
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override string Name => "Construction";
 
@@ -40,19 +39,20 @@ namespace Content.Server.GameObjects.Components.Construction
         private TaskCompletionSource<object>? _handlingTask = null;
         private string _graphIdentifier = string.Empty;
         private string _startingNodeIdentifier = string.Empty;
+        private string _startingTargetNodeIdentifier = string.Empty;
 
         [ViewVariables]
-        private HashSet<string> _containers = new HashSet<string>();
+        private HashSet<string> _containers = new();
         [ViewVariables]
         private List<List<ConstructionGraphStep>>? _edgeNestedStepProgress = null;
 
         private ConstructionGraphNode? _target = null;
 
         [ViewVariables]
-        public ConstructionGraphPrototype GraphPrototype { get; private set; } = null!;
+        public ConstructionGraphPrototype? GraphPrototype { get; private set; }
 
         [ViewVariables]
-        public ConstructionGraphNode Node { get; private set; } = null!;
+        public ConstructionGraphNode? Node { get; private set; } = null;
 
         [ViewVariables]
         public ConstructionGraphEdge? Edge { get; private set; } = null;
@@ -80,6 +80,9 @@ namespace Content.Server.GameObjects.Components.Construction
         [ViewVariables]
         public int EdgeStep { get; private set; } = 0;
 
+        [ViewVariables]
+        public string DeconstructionNodeIdentifier { get; private set; } = "start";
+
         /// <inheritdoc />
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -87,6 +90,19 @@ namespace Content.Server.GameObjects.Components.Construction
 
             serializer.DataField(ref _graphIdentifier, "graph", string.Empty);
             serializer.DataField(ref _startingNodeIdentifier, "node", string.Empty);
+            serializer.DataField(ref _startingTargetNodeIdentifier, "defaultTarget", string.Empty);
+            serializer.DataField(this, x => x.DeconstructionNodeIdentifier, "deconstructionTarget", "start");
+        }
+
+        /// <summary>
+        ///     Attempts to set a new pathfinding target.
+        /// </summary>
+        public void SetNewTarget(string node)
+        {
+            if (GraphPrototype != null && GraphPrototype.Nodes.TryGetValue(node, out var target))
+            {
+                Target = target;
+            }
         }
 
         public void ClearTarget()
@@ -98,8 +114,8 @@ namespace Content.Server.GameObjects.Components.Construction
 
         public void UpdateTarget()
         {
-            // Can't pathfind without a target.
-            if (Target == null) return;
+            // Can't pathfind without a target or no node.
+            if (Target == null || Node == null || GraphPrototype == null) return;
 
             // If we're at our target, stop pathfinding.
             if (Target == Node)
@@ -134,7 +150,7 @@ namespace Content.Server.GameObjects.Components.Construction
             }
 
             // Let's set the next target edge.
-            if (Edge == null && TargetNextEdge == null)
+            if (Edge == null && TargetNextEdge == null && TargetPathfinding != null)
                 TargetNextEdge = Node.GetEdge(TargetPathfinding.Peek().Name);
         }
 
@@ -161,6 +177,8 @@ namespace Content.Server.GameObjects.Components.Construction
         private async Task<bool> HandleNode(InteractUsingEventArgs eventArgs)
         {
             EdgeStep = 0;
+
+            if (Node == null || GraphPrototype == null) return false;
 
             foreach (var edge in Node.Edges)
             {
@@ -345,7 +363,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
         private async Task<bool> HandleCompletion(ConstructionGraphEdge edge, IEntity user)
         {
-            if (edge.Steps.Count != EdgeStep)
+            if (edge.Steps.Count != EdgeStep || GraphPrototype == null)
             {
                 return false;
             }
@@ -381,6 +399,16 @@ namespace Content.Server.GameObjects.Components.Construction
             return true;
         }
 
+        public void ResetEdge()
+        {
+            _edgeNestedStepProgress = null;
+            TargetNextEdge = null;
+            Edge = null;
+            EdgeStep = 0;
+
+            UpdateTarget();
+        }
+
         private async Task<bool> HandleEdge(InteractUsingEventArgs eventArgs)
         {
             if (Edge == null || EdgeStep >= Edge.Steps.Count) return false;
@@ -390,16 +418,17 @@ namespace Content.Server.GameObjects.Components.Construction
 
         private async Task<bool> HandleEntityChange(ConstructionGraphNode node, IEntity? user = null)
         {
-            if (node.Entity == Owner.Prototype?.ID || string.IsNullOrEmpty(node.Entity)) return false;
+            if (node.Entity == Owner.Prototype?.ID || string.IsNullOrEmpty(node.Entity)
+            || GraphPrototype == null) return false;
 
-            var entity = _entityManager.SpawnEntity(node.Entity, Owner.Transform.Coordinates);
+            var entity = Owner.EntityManager.SpawnEntity(node.Entity, Owner.Transform.Coordinates);
 
             entity.Transform.LocalRotation = Owner.Transform.LocalRotation;
 
             if (entity.TryGetComponent(out ConstructionComponent? construction))
             {
                 if(construction.GraphPrototype != GraphPrototype)
-                    throw new Exception($"New entity {node.Entity}'s graph {construction.GraphPrototype.ID} isn't the same as our graph {GraphPrototype.ID} on node {node.Name}!");
+                    throw new Exception($"New entity {node.Entity}'s graph {construction.GraphPrototype?.ID ?? null} isn't the same as our graph {GraphPrototype.ID} on node {node.Name}!");
 
                 construction.Node = node;
                 construction.Target = Target;
@@ -462,14 +491,6 @@ namespace Content.Server.GameObjects.Components.Construction
                 if (GraphPrototype.Nodes.TryGetValue(_startingNodeIdentifier, out var node))
                 {
                     Node = node;
-
-                    foreach (var action in Node.Actions)
-                    {
-                        action.PerformAction(Owner, null);
-
-                        if (Owner.Deleted)
-                            return;
-                    }
                 }
                 else
                 {
@@ -480,10 +501,30 @@ namespace Content.Server.GameObjects.Components.Construction
             {
                 Logger.Error($"Couldn't find prototype {_graphIdentifier} in construction component!");
             }
+
+            if (!string.IsNullOrEmpty(_startingTargetNodeIdentifier))
+                SetNewTarget(_startingTargetNodeIdentifier);
+        }
+
+        protected override void Startup()
+        {
+            base.Startup();
+
+            if (Node == null) return;
+
+            foreach (var action in Node.Actions)
+            {
+                action.PerformAction(Owner, null);
+
+                if (Owner.Deleted)
+                    return;
+            }
         }
 
         public async Task ChangeNode(string node)
         {
+            if (GraphPrototype == null) return;
+
             var graphNode = GraphPrototype.Nodes[node];
 
             if (_handling && _handlingTask?.Task != null)
@@ -509,21 +550,28 @@ namespace Content.Server.GameObjects.Components.Construction
 
             if (Edge == null && TargetNextEdge != null)
             {
+                var preventStepExamine = false;
+
                 foreach (var condition in TargetNextEdge.Conditions)
                 {
-                    condition.DoExamine(Owner, message, inDetailsRange);
+                    preventStepExamine |= condition.DoExamine(Owner, message, inDetailsRange);
                 }
 
-                TargetNextEdge.Steps[0].DoExamine(message, inDetailsRange);
+                if(!preventStepExamine)
+                    TargetNextEdge.Steps[0].DoExamine(message, inDetailsRange);
                 return;
             }
 
             if (Edge != null)
             {
+                var preventStepExamine = false;
+
                 foreach (var condition in Edge.Conditions)
                 {
-                    condition.DoExamine(Owner, message, inDetailsRange);
+                    preventStepExamine |= condition.DoExamine(Owner, message, inDetailsRange);
                 }
+
+                if (preventStepExamine) return;
             }
 
             if (_edgeNestedStepProgress == null)

@@ -17,7 +17,7 @@ namespace Content.Client.Administration
         [Dependency] private readonly IClientConGroupController _conGroup = default!;
 
         private AdminData? _adminData;
-        private readonly HashSet<string> _availableCommands = new HashSet<string>();
+        private readonly HashSet<string> _availableCommands = new();
 
         public event Action? AdminStatusUpdated;
 

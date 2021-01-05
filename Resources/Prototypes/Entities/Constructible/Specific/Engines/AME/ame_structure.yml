@@ -21,13 +21,19 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
-  - type: Destructible
-    maxHP: 500
+  - type: Damageable
     resistances: metallicResistances
-    spawnOnDestroy:
-      AMEPart:
-        Min: 1
-        Max: 1
+  - type: Destructible
+    thresholds:
+      500:
+        behaviors:
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            AMEPart:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
   - type: SnapGrid
     offset: Center
   - type: Airtight

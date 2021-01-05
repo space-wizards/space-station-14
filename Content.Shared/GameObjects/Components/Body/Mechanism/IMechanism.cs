@@ -9,23 +9,22 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
 {
     public interface IMechanism : IComponent
     {
+        /// <summary>
+        ///     The body that owns the <see cref="IBodyPart"/> in which this
+        ///     <see cref="IMechanism"/> is in.
+        /// </summary>
         IBody? Body { get; }
 
+        /// <summary>
+        ///     The part in which this <see cref="IMechanism"/> is in.
+        /// </summary>
         IBodyPart? Part { get; set; }
 
+        /// <summary>
+        ///     The behaviors attached to this <see cref="IMechanism"/>
+        ///     mapped by their type.
+        /// </summary>
         IReadOnlyDictionary<Type, IMechanismBehavior> Behaviors { get; }
-
-        /// <summary>
-        ///     Professional description of the <see cref="IMechanism"/>.
-        /// </summary>
-        string Description { get; set; }
-
-        /// <summary>
-        ///     The message to display upon examining a mob with this
-        ///     <see cref="IMechanism"/> added.
-        ///     If the string is empty (""), no message will be displayed.
-        /// </summary>
-        string ExamineMessage { get; set; }
 
         /// <summary>
         ///     Max HP of this <see cref="IMechanism"/>.
@@ -61,7 +60,8 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
         BodyPartCompatibility Compatibility { get; set; }
 
         /// <summary>
-        ///    Adds a behavior if it does not exist already.
+        ///    Adds a <see cref="IMechanismBehavior"/> if this
+        ///     <see cref="IMechanism"/> does not have it already.
         /// </summary>
         /// <typeparam name="T">The behavior type to add.</typeparam>
         /// <returns>
@@ -69,10 +69,34 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
         /// </returns>
         bool EnsureBehavior<T>(out T behavior) where T : IMechanismBehavior, new();
 
+        /// <summary>
+        ///     Checks if this <see cref="IMechanism"/> has the specified
+        ///     <see cref="IMechanismBehavior"/>.
+        /// </summary>
+        /// <typeparam name="T">
+        ///     The type of <see cref="IMechanismBehavior"/> to check for.
+        /// </typeparam>
+        /// <returns>
+        ///     true if it has the <see cref="IMechanismBehavior"/>, false otherwise.
+        /// </returns>
         bool HasBehavior<T>() where T : IMechanismBehavior;
 
+        /// <summary>
+        ///     Removes the specified <see cref="IMechanismBehavior"/> from this
+        ///     <see cref="IMechanism"/> if it has it.
+        /// </summary>
+        /// <typeparam name="T">
+        ///     The type of <see cref="IMechanismBehavior"/> to remove.
+        /// </typeparam>
+        /// <returns>true if it was removed, false otherwise.</returns>
         bool TryRemoveBehavior<T>() where T : IMechanismBehavior;
 
+        /// <summary>
+        ///     Runs an update cycle for this <see cref="IMechanism"/>.
+        /// </summary>
+        /// <param name="frameTime">
+        ///     The amount of seconds that passed since the last update.
+        /// </param>
         void Update(float frameTime);
 
         // TODO BODY Turn these into event listeners so they dont need to be exposed

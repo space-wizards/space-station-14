@@ -1,6 +1,6 @@
-﻿using System;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
+using System;
 
 namespace Content.Shared.GameObjects.Components.Atmos
 {
@@ -23,6 +23,7 @@ namespace Content.Shared.GameObjects.Components.Atmos
         }
     }
 
+    [Flags]
     public enum PipeDirection
     {
         None = 0,
@@ -74,6 +75,11 @@ namespace Content.Shared.GameObjects.Components.Atmos
     public static class PipeDirectionHelpers
     {
         public const int PipeDirections = 4;
+
+        public static bool HasDirection(this PipeDirection pipeDirection, PipeDirection other)
+        {
+            return (pipeDirection & other) == other;
+        }
 
         public static Angle ToAngle(this PipeDirection pipeDirection)
         {
