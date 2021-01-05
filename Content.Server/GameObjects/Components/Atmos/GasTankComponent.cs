@@ -35,6 +35,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
+    [CustomDataClass(typeof(GasTankComponentData))]
     public class GasTankComponent : SharedGasTankComponent, IExamine, IGasMixtureHolder, IUse, IDropped, IActivate
     {
         private const float MaxExplosionRange = 14f;
@@ -49,7 +50,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         [ViewVariables] private BoundUserInterface? _userInterface;
 
-        [ViewVariables] [YamlField("air")] public GasMixture? Air { get; set; } = new();
+        [ViewVariables] [CustomYamlField("air")] public GasMixture? Air { get; set; } = null!;
 
         /// <summary>
         ///     Distributed pressure.

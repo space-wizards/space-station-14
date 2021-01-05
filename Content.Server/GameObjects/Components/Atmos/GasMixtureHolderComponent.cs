@@ -8,10 +8,11 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Atmos
 {
     [RegisterComponent]
+    [CustomDataClass(typeof(GasMixtureHolderComponentData))]
     public class GasMixtureHolderComponent : Component, IGasMixtureHolder
     {
         public override string Name => "GasMixtureHolder";
 
-        [ViewVariables] [YamlField("air")] public GasMixture Air { get; set; } = new();
+        [ViewVariables] [CustomYamlField("air")] public GasMixture Air { get; set; } = null!;
     }
 }

@@ -15,6 +15,7 @@ namespace Content.Server.GameObjects.Components.Body.Circulatory
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedBloodstreamComponent))]
+    [CustomDataClass(typeof(BloodstreamComponentData))]
     public class BloodstreamComponent : SharedBloodstreamComponent, IGasMixtureHolder
     {
         public override string Name => "Bloodstream";
@@ -36,7 +37,8 @@ namespace Content.Server.GameObjects.Components.Body.Circulatory
         [ViewVariables] public ReagentUnit EmptyVolume => _internalSolution.EmptyVolume;
 
         [ViewVariables]
-        public GasMixture Air { get; set; } = new GasMixture(6) {Temperature = Atmospherics.NormalBodyTemperature};
+        [CustomYamlField("air")]
+        public GasMixture Air { get; set; } = null!;
 
         [ViewVariables] public SolutionContainerComponent Solution => _internalSolution;
 

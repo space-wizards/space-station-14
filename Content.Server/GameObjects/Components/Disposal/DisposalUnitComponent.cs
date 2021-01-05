@@ -141,8 +141,8 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// </summary>
         private (PressureState State, string Localized) _locState;
 
-        [YamlField("air")]
-        public GasMixture Air { get; set; } = new GasMixture(Atmospherics.CellVolume);
+        [CustomYamlField("air")]
+        public GasMixture Air { get; set; } = null!;
 
         public bool CanInsert(IEntity entity)
         {
