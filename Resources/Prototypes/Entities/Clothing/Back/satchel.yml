@@ -15,7 +15,8 @@
     sprite: Clothing/Back/Satchels/satchel.rsi
   - type: Storage
     capacity: 100
-
+    storageSoundCollection : storageRustle
+    
 - type: entity
   parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelEngineering
