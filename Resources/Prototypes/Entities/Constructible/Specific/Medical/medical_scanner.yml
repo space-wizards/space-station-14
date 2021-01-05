@@ -1,16 +1,18 @@
 ﻿- type: entity
-  id: CloningPod
-  name: Cloning Pod
-  description: A Cloning Pod. 50% reliable.
+  id: MedicalScanner
+  name: medical scanner
+  description: A bulky medical scanner.
   placement:
     mode: SnapgridCenter
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Specific/Medical/cloning.rsi
+    sprite: Constructible/Specific/Medical/scanner.rsi
     layers:
-      - state: pod_0
-        map: ["enum.CloningPodVisualLayers.Machine"]
+    - state: open
+      map: ["enum.MedicalScannerVisualLayers.Machine"]
+    - state: idle_unlit
+      map: ["enum.MedicalScannerVisualLayers.Terminal"]
   - type: PowerReceiver
   - type: Anchorable
   - type: Clickable
@@ -19,17 +21,15 @@
     mass: 25
     anchored: true
     shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.5,-0.25,0.5,0.25"
-        layer:
-          - Opaque
-          - Impassable
-          - MobImpassable
-          - VaultImpassable
+    - !type:PhysShapeAabb
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
   - type: SnapGrid
     offset: Center
-  - type: CloningPod
-    cloningTime: 10.0
+  - type: MedicalScanner
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
@@ -40,8 +40,8 @@
           acts: ["Destruction"]
   - type: Appearance
     visuals:
-      - type: CloningPodVisualizer
+    - type: MedicalScannerVisualizer
   - type: UserInterface
     interfaces:
-      - key: enum.CloningPodUIKey.Key
-        type: CloningPodBoundUserInterface
+    - key: enum.MedicalScannerUiKey.Key
+      type: MedicalScannerBoundUserInterface
