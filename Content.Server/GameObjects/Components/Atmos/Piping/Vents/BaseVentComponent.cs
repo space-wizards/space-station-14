@@ -60,7 +60,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Vents
             }
         }
 
-        public void Update(PipeNetUpdateMessage message)
+        public void Update()
         {
             if (!VentEnabled)
                 return;

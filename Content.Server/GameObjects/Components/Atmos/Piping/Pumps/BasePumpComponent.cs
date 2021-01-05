@@ -81,7 +81,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
             }
         }
 
-        public void Update(PipeNetUpdateMessage message)
+        public void Update()
         {
             if (!PumpEnabled)
                 return;

@@ -60,7 +60,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Scrubbers
             }
         }
 
-        public void Update(PipeNetUpdateMessage message)
+        public void Update()
         {
             if (!SiphonEnabled)
                 return;
