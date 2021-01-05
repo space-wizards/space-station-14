@@ -83,6 +83,30 @@
     sprite: Clothing/Back/Duffels/syndicate.rsi
 
 - type: entity
+  parent: ClothingBackpackDuffelSyndicate
+  id: ClothingBackpackDuffelSyndicateAmmo
+  name: syndicate duffel bag
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/syndicate.rsi
+    state: icon-ammo
+  - type: Clothing
+    sprite: Clothing/Back/Duffels/syndicate.rsi
+    ClothingPrefix: ammo
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicate
+  id: ClothingBackpackDuffelSyndicateMedical
+  name: syndicate duffel bag
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/syndicate.rsi
+    state: icon-med
+  - type: Clothing
+    sprite: Clothing/Back/Duffels/syndicate.rsi
+    ClothingPrefix: med
+
+- type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelHolding
   name: duffelbag of holding
