@@ -821,7 +821,7 @@ namespace Content.Client.UserInterface
         private class JobPrioritySelector : Control
         {
             public JobPrototype Job { get; }
-            private readonly RadioOptionButton _optionButton;
+            private readonly RadioOptions _optionButton;
 
             public JobPriority Priority
             {
@@ -834,7 +834,7 @@ namespace Content.Client.UserInterface
             public JobPrioritySelector(JobPrototype job)
             {
                 Job = job;
-                _optionButton = new RadioOptionButton();
+                _optionButton = new RadioOptions(RadioOptions.RadioLayout.Horizontal);
 
                 _optionButton.FirstButtonStyle = StyleBase.ButtonOpenRight;
                 _optionButton.ButtonStyle = StyleBase.ButtonOpenBoth;
@@ -844,6 +844,8 @@ namespace Content.Client.UserInterface
                 _optionButton.AddItem(Loc.GetString("Medium"), (int) JobPriority.Medium);
                 _optionButton.AddItem(Loc.GetString("Low"), (int) JobPriority.Low);
                 _optionButton.AddItem(Loc.GetString("Never"), (int) JobPriority.Never);
+
+
 
                 _optionButton.OnItemSelected += args =>
                 {
