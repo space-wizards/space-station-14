@@ -19,7 +19,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         public override string Name => "StorageFill";
 
         [YamlField("contents")]
-        private List<PrototypeItemData> _contents = new ();
+        private List<StorageFillEntry> _contents = new ();
 
         void IMapInit.MapInit()
         {
@@ -56,7 +56,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         }
 
         [Serializable]
-        private struct PrototypeItemData : IExposeData
+        public struct StorageFillEntry : IExposeData
         {
             public string PrototypeName;
             public float SpawnProbability;
