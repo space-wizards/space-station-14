@@ -15,6 +15,7 @@ using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Map;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -32,13 +33,15 @@ namespace Content.Server.GameObjects.Components.Recycling
         ///     Whether or not sentient beings will be recycled
         /// </summary>
         [ViewVariables]
-        private bool _safe;
+        [YamlField("safe")]
+        private bool _safe = true;
 
         /// <summary>
         ///     The percentage of material that will be recovered
         /// </summary>
         [ViewVariables]
-        private int _efficiency; // TODO
+        [YamlField("efficiency")]
+        private int _efficiency = 25; // TODO
 
         private bool Powered =>
             !Owner.TryGetComponent(out PowerReceiverComponent? receiver) ||
@@ -172,14 +175,6 @@ namespace Content.Server.GameObjects.Components.Recycling
                     controller.Move(direction, frameTime, entity.Transform.WorldPosition - Owner.Transform.WorldPosition);
                 }
             }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _safe, "safe", true);
-            serializer.DataField(ref _efficiency, "efficiency", 25);
         }
 
         void ICollideBehavior.CollideWith(IEntity collidedWith)

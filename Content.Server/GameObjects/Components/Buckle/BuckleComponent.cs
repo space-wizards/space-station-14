@@ -34,6 +34,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Buckle
 {
     [RegisterComponent]
+    [CustomDataClass(typeof(BuckleComponentData))]
     public class BuckleComponent : SharedBuckleComponent, IInteractHand
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -57,6 +58,7 @@ namespace Content.Server.GameObjects.Components.Buckle
         ///     be able to unbuckle after recently buckling.
         /// </summary>
         [ViewVariables]
+        [CustomYamlField("delay")]
         private TimeSpan _unbuckleDelay;
 
         /// <summary>
@@ -381,15 +383,6 @@ namespace Content.Server.GameObjects.Components.Buckle
             }
 
             return TryBuckle(user, to);
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            var seconds = 0.25f;
-            serializer.DataField(ref seconds, "cooldown", 0.25f);
-
-            _unbuckleDelay = TimeSpan.FromSeconds(seconds);
         }
 
         protected override void Startup()

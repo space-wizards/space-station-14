@@ -10,6 +10,7 @@ using Content.Shared.GameObjects.Components.Inventory;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -21,10 +22,12 @@ namespace Content.Server.GameObjects.Components.Access
     /// </summary>
     [PublicAPI]
     [RegisterComponent]
+    [CustomDataClass(typeof(AccessReaderComponentData))]
     public class AccessReader : Component
     {
         public override string Name => "AccessReader";
 
+        [CustomYamlField("accessList")]
         private readonly List<ISet<string>> _accessLists = new();
         private readonly HashSet<string> _denyTags = new();
 
@@ -102,22 +105,6 @@ namespace Content.Server.GameObjects.Components.Access
             }
 
             return Array.Empty<string>();
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataReadWriteFunction("access", new List<List<string>>(),
-                v =>
-                {
-                    if (v.Count != 0)
-                    {
-                        _accessLists.Clear();
-                        _accessLists.AddRange(v.Select(a => new HashSet<string>(a)));
-                    }
-                },
-                () => _accessLists.Select(p => new List<string>(p)).ToList());
         }
     }
 }

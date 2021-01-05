@@ -25,26 +25,29 @@ namespace Content.Server.GameObjects.Components.Items
 
         public override string Name => "Dice";
 
+        [YamlField("step")]
         private int _step = 1;
         private int _sides = 20;
         private int _currentSide = 20;
         [ViewVariables]
+        [YamlField("diceSoundCollection")]
         public string _soundCollectionName = "dice";
         [ViewVariables]
         public int Step => _step;
         [ViewVariables]
-        public int Sides => _sides;
+        [YamlField("sides")]
+        public int Sides
+        {
+            get => _sides;
+            set
+            {
+                _sides = value;
+                _currentSide = value;
+            }
+        }
+
         [ViewVariables]
         public int CurrentSide => _currentSide;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _step, "step", 1);
-            serializer.DataField(ref _sides, "sides", 20);
-            serializer.DataField(ref _soundCollectionName, "diceSoundCollection", "dice");
-            _currentSide = _sides;
-        }
 
         public void Roll()
         {

@@ -5,6 +5,7 @@ using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -16,29 +17,23 @@ namespace Content.Server.GameObjects.Components.Construction
     {
         public override string Name => "MachineBoard";
 
-        [ViewVariables]
-        private Dictionary<MachinePart, int> _requirements;
+        [ViewVariables] [YamlField("requirements")]
+        private Dictionary<MachinePart, int> _requirements = new();
 
         [ViewVariables]
-        private Dictionary<StackType, int> _materialRequirements;
+        [YamlField("materialRequirements")]
+        private Dictionary<StackType, int> _materialRequirements = new();
 
         [ViewVariables]
-        private Dictionary<string, ComponentPartInfo> _componentRequirements;
+        [YamlField("componentRequirements")]
+        private Dictionary<string, ComponentPartInfo> _componentRequirements = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [YamlField("prototype")]
         public string Prototype { get; private set; }
         public IReadOnlyDictionary<MachinePart, int> Requirements => _requirements;
         public IReadOnlyDictionary<StackType, int> MaterialRequirements => _materialRequirements;
         public IReadOnlyDictionary<string, ComponentPartInfo> ComponentRequirements => _componentRequirements;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(this, x => x.Prototype, "prototype", null);
-            serializer.DataField(ref _requirements, "requirements", new Dictionary<MachinePart, int>());
-            serializer.DataField(ref _materialRequirements, "materialRequirements", new Dictionary<StackType, int>());
-            serializer.DataField(ref _componentRequirements, "componentRequirements", new Dictionary<string, ComponentPartInfo>());
-        }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {

@@ -23,11 +23,13 @@ namespace Content.Server.GameObjects.Components.Interactable
 
     [RegisterComponent]
     [ComponentReference(typeof(IToolComponent))]
+    [CustomDataClass(typeof(ToolComponentData))]
     public class ToolComponent : SharedToolComponent, IToolComponent
     {
         protected ToolQuality _qualities = ToolQuality.None;
 
         [ViewVariables]
+        [CustomYamlField("qualities")]
         public override ToolQuality Qualities
         {
             get => _qualities;
@@ -66,30 +68,6 @@ namespace Content.Server.GameObjects.Components.Interactable
         public bool HasQuality(ToolQuality quality)
         {
             return _qualities.HasFlag(quality);
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataReadWriteFunction(
-                "qualities",
-                new List<ToolQuality>(),
-                qualities => qualities.ForEach(AddQuality),
-                () =>
-                {
-                    var qualities = new List<ToolQuality>();
-
-                    foreach (ToolQuality quality in Enum.GetValues(typeof(ToolQuality)))
-                    {
-                        if ((_qualities & quality) != 0)
-                        {
-                            qualities.Add(quality);
-                        }
-                    }
-
-                    return qualities;
-                });
         }
 
         public virtual async Task<bool> UseTool(IEntity user, IEntity target, float doAfterDelay, ToolQuality toolQualityNeeded, Func<bool> doAfterCheck = null)

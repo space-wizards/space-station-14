@@ -5,6 +5,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timers.Timer;
@@ -21,7 +22,8 @@ namespace Content.Server.GameObjects.Components.Timing
 
         private TimeSpan _lastUseTime;
 
-        private float _delay;
+        [YamlField("delay")]
+        private float _delay = 1;
         /// <summary>
         /// The time, in seconds, between an object's use and when it can be used again
         /// </summary>
@@ -31,12 +33,6 @@ namespace Content.Server.GameObjects.Components.Timing
         public bool ActiveDelay{ get; private set; }
 
         private CancellationTokenSource cancellationTokenSource;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _delay, "delay", 1);
-        }
 
         public void BeginDelay()
         {

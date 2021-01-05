@@ -24,8 +24,10 @@ namespace Content.Server.GameObjects.Components.Movement
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IGameTicker _gameTicker = default!;
 
+        [YamlField("logic")]
         private string? _logicName;
-        private float _visionRadius;
+        [YamlField("vision")]
+        private float _visionRadius = 8.0f;
 
         public override string Name => "AiController";
 
@@ -43,6 +45,7 @@ namespace Content.Server.GameObjects.Components.Movement
         public UtilityAi? Processor { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [YamlField("startingGear")]
         public string? StartingGearPrototype { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -73,20 +76,6 @@ namespace Content.Server.GameObjects.Components.Movement
                 _gameTicker.EquipStartingGear(Owner, startingGear, null);
             }
 
-        }
-
-        /// <inheritdoc />
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _logicName, "logic", null);
-            serializer.DataReadWriteFunction(
-                "startingGear",
-                null,
-                startingGear => StartingGearPrototype = startingGear,
-                () => StartingGearPrototype);
-            serializer.DataField(ref _visionRadius, "vision", 8.0f);
         }
 
         protected override void Shutdown()

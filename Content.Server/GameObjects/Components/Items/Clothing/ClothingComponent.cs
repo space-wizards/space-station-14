@@ -9,6 +9,7 @@ using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
@@ -20,19 +21,24 @@ namespace Content.Server.GameObjects.Components.Items.Clothing
     [ComponentReference(typeof(StorableComponent))]
     [ComponentReference(typeof(SharedStorableComponent))]
     [ComponentReference(typeof(IItemComponent))]
+    [CustomDataClass(typeof(ClothingComponentData))]
     public class ClothingComponent : ItemComponent, IUse
     {
         public override string Name => "Clothing";
         public override uint? NetID => ContentNetIDs.CLOTHING;
 
         [ViewVariables]
+        [CustomYamlField("slotFlags")]
         public SlotFlags SlotFlags = SlotFlags.PREVENTEQUIP; //Different from None, NONE allows equips if no slot flags are required
 
+        [YamlField("QuickEquip")]
         private bool _quickEquipEnabled = true;
-        private int _heatResistance;
+        [YamlField("HeatResistance")]
+        private int _heatResistance = 323;
         [ViewVariables(VVAccess.ReadWrite)]
         public int HeatResistance => _heatResistance;
 
+        [YamlField("ClothingPrefix")]
         private string _clothingEquippedPrefix;
         [ViewVariables(VVAccess.ReadWrite)]
         public string ClothingEquippedPrefix
@@ -46,25 +52,6 @@ namespace Content.Server.GameObjects.Components.Items.Clothing
                 Dirty();
                 _clothingEquippedPrefix = value;
             }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _clothingEquippedPrefix, "ClothingPrefix", null);
-
-            // TODO: Writing.
-            serializer.DataReadFunction("Slots", new List<string>(0), list =>
-            {
-                foreach (var slotflagsloaded in list)
-                {
-                    SlotFlags |= (SlotFlags)Enum.Parse(typeof(SlotFlags), slotflagsloaded.ToUpper());
-                }
-            });
-
-            serializer.DataField(ref _quickEquipEnabled, "QuickEquip", true);
-            serializer.DataFieldCached(ref _heatResistance, "HeatResistance", 323);
         }
 
         public override ComponentState GetComponentState()

@@ -6,6 +6,7 @@ using Content.Shared.GameObjects.Components.Damage;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -16,6 +17,7 @@ namespace Content.Server.GameObjects.Components.Destructible
     ///     and triggers thresholds when reached.
     /// </summary>
     [RegisterComponent]
+    [CustomDataClass(typeof(DestructibleComponentData))]
     public class DestructibleComponent : Component
     {
         private DestructibleSystem _destructibleSystem = default!;
@@ -23,22 +25,12 @@ namespace Content.Server.GameObjects.Components.Destructible
         public override string Name => "Destructible";
 
         [ViewVariables]
+        [CustomYamlField("thresholds")]
         private SortedDictionary<int, Threshold> _lowestToHighestThresholds = new();
 
         [ViewVariables] private int PreviousTotalDamage { get; set; }
 
         public IReadOnlyDictionary<int, Threshold> LowestToHighestThresholds => _lowestToHighestThresholds;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataReadWriteFunction(
-                "thresholds",
-                new Dictionary<int, Threshold>(),
-                thresholds => _lowestToHighestThresholds = new SortedDictionary<int, Threshold>(thresholds),
-                () => new Dictionary<int, Threshold>(_lowestToHighestThresholds));
-        }
 
         public override void Initialize()
         {

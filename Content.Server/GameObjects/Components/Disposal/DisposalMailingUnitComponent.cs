@@ -48,6 +48,7 @@ namespace Content.Server.GameObjects.Components.Disposal
     [ComponentReference(typeof(SharedDisposalMailingUnitComponent))]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IInteractUsing))]
+    [CustomDataClass(typeof(DisposalMailingUnitComponentData))]
     public class DisposalMailingUnitComponent : SharedDisposalMailingUnitComponent, IInteractHand, IActivate, IInteractUsing, IDragDropOn
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -72,14 +73,17 @@ namespace Content.Server.GameObjects.Components.Disposal
         ///     Prevents it from flushing if it is not equal to or bigger than 1.
         /// </summary>
         [ViewVariables]
-        private float _pressure;
+        [YamlField("pressure")]
+        private float _pressure = 1f;
 
         private bool _engaged;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [CustomYamlField("autoEngageTime")]
         private TimeSpan _automaticEngageTime;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [CustomYamlField("flushDelay")]
         private TimeSpan _flushDelay;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -564,29 +568,6 @@ namespace Content.Server.GameObjects.Components.Disposal
             {
                 TryQueueEngage();
             }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataReadWriteFunction(
-                "pressure",
-                1.0f,
-                pressure => _pressure = pressure,
-                () => _pressure);
-
-            serializer.DataReadWriteFunction(
-                "automaticEngageTime",
-                30,
-                seconds => _automaticEngageTime = TimeSpan.FromSeconds(seconds),
-                () => (int) _automaticEngageTime.TotalSeconds);
-
-            serializer.DataReadWriteFunction(
-                "flushDelay",
-                3,
-                seconds => _flushDelay = TimeSpan.FromSeconds(seconds),
-                () => (int) _flushDelay.TotalSeconds);
         }
 
         public override void Initialize()

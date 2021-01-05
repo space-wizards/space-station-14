@@ -1,6 +1,7 @@
 ﻿using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Research;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -15,18 +16,12 @@ namespace Content.Server.GameObjects.Components.Research
         /// </summary>
         [ViewVariables]
         public bool Static => _static;
+        [YamlField("static")]
         private bool _static = false;
 
         public override ComponentState GetComponentState()
         {
             return new LatheDatabaseState(GetRecipeIdList());
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _static, "static", false);
         }
 
         public override void Clear()

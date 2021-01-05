@@ -45,74 +45,63 @@ namespace Content.Server.GameObjects.Components.Metabolism
         private bool _isShivering;
         private bool _isSweating;
 
-        [ViewVariables(VVAccess.ReadWrite)] private int _suffocationDamage;
+        [ViewVariables(VVAccess.ReadWrite)] [YamlField("suffocationDamage")] private int _suffocationDamage = 1;
 
-        [ViewVariables] public Dictionary<Gas, float> NeedsGases { get; set; } = new();
+        [ViewVariables] [YamlField("needsGases")] public Dictionary<Gas, float> NeedsGases { get; set; } = new();
 
-        [ViewVariables] public Dictionary<Gas, float> ProducesGases { get; set; } = new();
+        [ViewVariables] [YamlField("producesGases")] public Dictionary<Gas, float> ProducesGases { get; set; } = new();
 
-        [ViewVariables] public Dictionary<Gas, float> DeficitGases { get; set; } = new();
+        [ViewVariables] [YamlField("deficitGases")] public Dictionary<Gas, float> DeficitGases { get; set; } = new();
 
         /// <summary>
         /// Heat generated due to metabolism. It's generated via metabolism
         /// </summary>
         [ViewVariables]
+        [YamlField("metabolismHeat")]
         public float MetabolismHeat { get; private set; }
 
         /// <summary>
         /// Heat output via radiation.
         /// </summary>
         [ViewVariables]
+        [YamlField("radiatedHeat")]
         public float RadiatedHeat { get; private set; }
 
         /// <summary>
         /// Maximum heat regulated via sweat
         /// </summary>
         [ViewVariables]
+        [YamlField("sweatHeatRegulation")]
         public float SweatHeatRegulation { get; private set; }
 
         /// <summary>
         /// Maximum heat regulated via shivering
         /// </summary>
         [ViewVariables]
+        [YamlField("shiveringHeatRegulation")]
         public float ShiveringHeatRegulation { get; private set; }
 
         /// <summary>
         /// Amount of heat regulation that represents thermal regulation processes not
         /// explicitly coded.
         /// </summary>
+        [YamlField("implicitHeatRegulation")]
         public float ImplicitHeatRegulation { get; private set; }
 
         /// <summary>
         /// Normal body temperature
         /// </summary>
         [ViewVariables]
+        [YamlField("normalBodyTemperature")]
         public float NormalBodyTemperature { get; private set; }
 
         /// <summary>
         /// Deviation from normal temperature for body to start thermal regulation
         /// </summary>
+        [YamlField("thermalRegulationTemperatureThreshold")]
         public float ThermalRegulationTemperatureThreshold { get; private set; }
 
         [ViewVariables] public bool Suffocating { get; private set; }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(this, b => b.NeedsGases, "needsGases", new Dictionary<Gas, float>());
-            serializer.DataField(this, b => b.ProducesGases, "producesGases", new Dictionary<Gas, float>());
-            serializer.DataField(this, b => b.DeficitGases, "deficitGases", new Dictionary<Gas, float>());
-            serializer.DataField(this, b => b.MetabolismHeat, "metabolismHeat", 0);
-            serializer.DataField(this, b => b.RadiatedHeat, "radiatedHeat", 0);
-            serializer.DataField(this, b => b.SweatHeatRegulation, "sweatHeatRegulation", 0);
-            serializer.DataField(this, b => b.ShiveringHeatRegulation, "shiveringHeatRegulation", 0);
-            serializer.DataField(this, b => b.ImplicitHeatRegulation, "implicitHeatRegulation", 0);
-            serializer.DataField(this, b => b.NormalBodyTemperature, "normalBodyTemperature", 0);
-            serializer.DataField(this, b => b.ThermalRegulationTemperatureThreshold,
-                "thermalRegulationTemperatureThreshold", 0);
-            serializer.DataField(ref _suffocationDamage, "suffocationDamage", 1);
-        }
 
         private Dictionary<Gas, float> NeedsAndDeficit(float frameTime)
         {

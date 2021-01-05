@@ -6,6 +6,7 @@ using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -19,20 +20,15 @@ namespace Content.Server.GameObjects.Components.Construction
     public class WelderRefinableComponent : Component, IInteractUsing
     {
         [ViewVariables]
-        private HashSet<string>? _refineResult = default;
+        [YamlField("refineResult")]
+        private HashSet<string>? _refineResult = new() { "GlassStack" };
         [ViewVariables]
-        private float _refineTime;
+        [YamlField("refineTime")]
+        private float _refineTime = 2f;
 
         private bool _beingWelded;
 
         public override string Name => "WelderRefinable";
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _refineResult, "refineResult", new HashSet<string> { "GlassStack" });
-            serializer.DataField(ref _refineTime, "refineTime", 2f);
-        }
 
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {

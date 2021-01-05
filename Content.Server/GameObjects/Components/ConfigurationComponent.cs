@@ -21,18 +21,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameObjects.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedConfigurationComponent))]
+    [CustomDataClass(typeof(ConfigurationComponentData))]
     public class ConfigurationComponent : SharedConfigurationComponent, IInteractUsing
     {
         [ViewVariables] private BoundUserInterface UserInterface => Owner.GetUIOrNull(ConfigurationUiKey.Key);
 
         [ViewVariables]
+        [CustomYamlField("config")]
         private readonly Dictionary<string, string> _config = new();
 
+        [CustomYamlField("validation")]
         private Regex _validation;
 
         public override void OnAdd()
@@ -51,17 +55,6 @@ namespace Content.Server.GameObjects.Components
             {
                 UserInterface.OnReceiveMessage -= UserInterfaceOnReceiveMessage;
             }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataReadWriteFunction("keys", new List<string>(),
-                (list) => FillConfiguration(list, _config, ""),
-                () => _config.Keys.ToList());
-
-            serializer.DataReadFunction("validation", "^[a-zA-Z0-9 ]*$", value => _validation = new Regex("^[a-zA-Z0-9 ]*$", RegexOptions.Compiled));
         }
 
         public string GetConfig(string name)

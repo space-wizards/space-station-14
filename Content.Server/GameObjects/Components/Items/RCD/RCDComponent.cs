@@ -18,6 +18,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -35,9 +36,9 @@ namespace Content.Server.GameObjects.Components.Items.RCD
         public override string Name => "RCD";
         private RcdMode _mode = 0; //What mode are we on? Can be floors, walls, deconstruct.
         private readonly RcdMode[] _modes = (RcdMode[])  Enum.GetValues(typeof(RcdMode));
-        [ViewVariables(VVAccess.ReadWrite)] public int maxAmmo;
+        [ViewVariables(VVAccess.ReadWrite)] [YamlField("maxAmmo")] public int maxAmmo = 5;
         public int _ammo; //How much "ammo" we have left. You can refill this with RCD ammo.
-        [ViewVariables(VVAccess.ReadWrite)] private float _delay;
+        [ViewVariables(VVAccess.ReadWrite)] [YamlField("delay")] private float _delay = 2f;
         private DoAfterSystem doAfterSystem;
 
 
@@ -48,14 +49,6 @@ namespace Content.Server.GameObjects.Components.Items.RCD
             Walls,
             Airlock,
             Deconstruct
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref maxAmmo, "maxAmmo", 5);
-            serializer.DataField(ref _delay, "delay", 2f);
         }
 
         public override void Initialize()

@@ -37,8 +37,11 @@ namespace Content.Server.GameObjects.Components.Construction
         private bool _handling = false;
 
         private TaskCompletionSource<object>? _handlingTask = null;
+        [YamlField("graph")]
         private string _graphIdentifier = string.Empty;
+        [YamlField("node")]
         private string _startingNodeIdentifier = string.Empty;
+        [YamlField("defaultTarget")]
         private string _startingTargetNodeIdentifier = string.Empty;
 
         [ViewVariables]
@@ -81,18 +84,8 @@ namespace Content.Server.GameObjects.Components.Construction
         public int EdgeStep { get; private set; } = 0;
 
         [ViewVariables]
+        [YamlField("deconstructionTarget")]
         public string DeconstructionNodeIdentifier { get; private set; } = "start";
-
-        /// <inheritdoc />
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _graphIdentifier, "graph", string.Empty);
-            serializer.DataField(ref _startingNodeIdentifier, "node", string.Empty);
-            serializer.DataField(ref _startingTargetNodeIdentifier, "defaultTarget", string.Empty);
-            serializer.DataField(this, x => x.DeconstructionNodeIdentifier, "deconstructionTarget", "start");
-        }
 
         /// <summary>
         ///     Attempts to set a new pathfinding target.

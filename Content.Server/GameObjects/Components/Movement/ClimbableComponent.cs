@@ -20,6 +20,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -33,13 +34,15 @@ namespace Content.Server.GameObjects.Components.Movement
         ///     The range from which this entity can be climbed.
         /// </summary>
         [ViewVariables]
-        private float _range;
+        [YamlField("range")]
+        private float _range = SharedInteractionSystem.InteractionRange / 1.4f;
 
         /// <summary>
         ///     The time it takes to climb onto the entity.
         /// </summary>
         [ViewVariables]
-        private float _climbDelay;
+        [YamlField("delay")]
+        private float _climbDelay = 0.8f;
 
         private DoAfterSystem _doAfterSystem;
 
@@ -50,14 +53,6 @@ namespace Content.Server.GameObjects.Components.Movement
             Owner.EnsureComponentWarn(out PhysicsComponent _);
 
             _doAfterSystem = EntitySystem.Get<DoAfterSystem>();
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _range, "range", SharedInteractionSystem.InteractionRange / 1.4f);
-            serializer.DataField(ref _climbDelay, "delay", 0.8f);
         }
 
         bool IDragDropOn.CanDragDropOn(DragDropEventArgs eventArgs)

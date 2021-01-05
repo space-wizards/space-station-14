@@ -13,6 +13,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameObjects.Components.Items
 {
@@ -22,14 +23,8 @@ namespace Content.Server.GameObjects.Components.Items
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
 
         public override string Name => "FloorTile";
+        [YamlField("outputs")]
         private List<string> _outputTiles;
-
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _outputTiles, "outputs", null);
-        }
 
         public override void Initialize()
         {

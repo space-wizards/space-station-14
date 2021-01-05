@@ -1,4 +1,5 @@
 ﻿using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -14,19 +15,14 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 
         [ViewVariables(VVAccess.ReadWrite)]
         public int ActiveDrawRate { get => _activeDrawRate; set => SetActiveDrawRate(value); }
-        private int _activeDrawRate;
+        [YamlField("activeDrawRate")]
+        private int _activeDrawRate = 100;
 
         [ViewVariables]
         private BatteryComponent _battery;
 
         [ViewVariables]
         public PowerConsumerComponent Consumer { get; private set; }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _activeDrawRate, "activeDrawRate", 100);
-        }
 
         public override void Initialize()
         {

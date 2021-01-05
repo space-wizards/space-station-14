@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Research;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -18,7 +19,8 @@ namespace Content.Server.GameObjects.Components.Research
         /// </summary>
         [ViewVariables]
         public int StorageLimit => _storageLimit;
-        private int _storageLimit;
+        [YamlField("StorageLimit")]
+        private int _storageLimit = -1;
 
         public override ComponentState GetComponentState()
         {
@@ -75,13 +77,6 @@ namespace Content.Server.GameObjects.Components.Research
         public bool RemoveMaterial(string ID, int amount)
         {
             return InsertMaterial(ID, -amount);
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _storageLimit, "StorageLimit", -1);
         }
     }
 }
