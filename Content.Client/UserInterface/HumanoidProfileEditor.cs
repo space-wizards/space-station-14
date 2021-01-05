@@ -21,6 +21,7 @@ using Robust.Shared.Localization.Macros;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Client.UserInterface.Stylesheets;
 
 namespace Content.Client.UserInterface
 {
@@ -820,7 +821,7 @@ namespace Content.Client.UserInterface
         private class JobPrioritySelector : Control
         {
             public JobPrototype Job { get; }
-            private readonly OptionButton _optionButton;
+            private readonly RadioOptionButton _optionButton;
 
             public JobPriority Priority
             {
@@ -833,7 +834,12 @@ namespace Content.Client.UserInterface
             public JobPrioritySelector(JobPrototype job)
             {
                 Job = job;
-                _optionButton = new OptionButton();
+                _optionButton = new RadioOptionButton();
+
+                _optionButton.FirstButtonStyle = StyleBase.ButtonOpenRight;
+                _optionButton.ButtonStyle = StyleBase.ButtonOpenBoth;
+                _optionButton.LastButtonStyle = StyleBase.ButtonOpenLeft;
+
                 _optionButton.AddItem(Loc.GetString("High"), (int) JobPriority.High);
                 _optionButton.AddItem(Loc.GetString("Medium"), (int) JobPriority.Medium);
                 _optionButton.AddItem(Loc.GetString("Low"), (int) JobPriority.Low);
