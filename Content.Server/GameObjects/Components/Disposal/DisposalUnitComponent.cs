@@ -143,12 +143,12 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             if (!base.CanInsert(entity))
                 return false;
-            }
 
             if (!entity.TryGetComponent(out IPhysicsComponent? physics) ||
                 !physics.CanCollide)
             {
-                if (!(entity.TryGetComponent(out IMobStateComponent? state) && state.IsDead())) {
+                if (entity.TryGetComponent(out IMobStateComponent? state) && state.IsDead())
+                {
                     return false;
                 }
             }

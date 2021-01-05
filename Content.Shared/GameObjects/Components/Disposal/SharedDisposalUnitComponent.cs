@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
@@ -173,7 +174,7 @@ namespace Content.Shared.GameObjects.Components.Disposal
             if (!entity.TryGetComponent(out IPhysicsComponent? physics) ||
                 !physics.CanCollide)
             {
-                if (!(entity.TryGetComponent(out IDamageableComponent? damageState) && damageState.CurrentState == DamageState.Dead)) {
+                if (!(entity.TryGetComponent(out IMobStateComponent? damageState) && damageState.IsDead())) {
                     return false;
                 }
             }
