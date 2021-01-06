@@ -31,13 +31,9 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IGameTicker _gameTicker = default!;
-<<<<<<< HEAD
-        [Dependency] private readonly IChatManager _chat = default!;
-=======
         [Dependency] private readonly IConGroupController _conGroupController = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
->>>>>>> space-wizards/master
 
         public StationEvent CurrentEvent { get; private set; }
         public IReadOnlyCollection<StationEvent> StationEvents => _stationEvents;
