@@ -19,6 +19,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.GameObjects.Components.Culinary
 {
     [RegisterComponent]
+    [ComponentReference(typeof(IAfterInteract))]
     class SliceableFoodComponent : Component, IInteractUsing, IExamine
     {
         public override string Name => "SliceableFood"; // take priority over eating with utensils
