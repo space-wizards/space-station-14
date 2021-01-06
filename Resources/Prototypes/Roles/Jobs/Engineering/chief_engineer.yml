@@ -4,7 +4,7 @@
   head: true
   positions: 1
   startingGear: ChiefEngineerGear
-  department:
+  departments:
   - Command
   - Engineering
   icon: "ChiefEngineer"
@@ -25,3 +25,6 @@
     idcard: CEPDA
     ears: ClothingHeadsetEngineering
     belt: ClothingBeltChiefEngineerFilled
+  innerclothingskirt: ClothingUniformJumpskirtChiefEngineer
+  satchel: ClothingBackpackSatchelEngineeringFilled
+  duffelbag: ClothingBackpackDuffelEngineeringFilled

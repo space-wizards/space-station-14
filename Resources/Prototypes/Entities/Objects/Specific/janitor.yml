@@ -222,7 +222,7 @@
       caps: AddTo, RemoveFrom
       contents:
         reagents:
-          - ReagentId: chem.H2O
+          - ReagentId: chem.Water
             Quantity: 100
 
 - type: entity

@@ -38,7 +38,7 @@
   name: L6 SAW
   id: LMGL6
   parent: LMGBase
-  description: A rather traditionally made L6 SAW with a pleasantly lacquered wooden pistol grip. This one is unmarked.
+  description: A rather traditionally made LMG with a pleasantly lacquered wooden pistol grip.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/LMGs/l6.rsi
@@ -74,7 +74,7 @@
   name: pulemyot kalashnikova
   id: LMGPK
   parent: LMGBase
-  description: Kalashnikov's Machinegun, a well preserved and maintained antique weapon of war.
+  description: A well preserved and maintained antique weapon of war.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/LMGs/pk.rsi

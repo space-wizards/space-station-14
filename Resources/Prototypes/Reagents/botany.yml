@@ -1,0 +1,82 @@
+- type: reagent
+  id: chem.EZNutrient
+  name: EZ nutrient
+  desc: Give your plants some of those EZ nutrients!
+  color: "#664330"
+  physicalDesc: thick
+  plantMetabolism:
+    - !type:AdjustNutrition
+      amount: 1
+
+- type: reagent
+  id: chem.Left4Zed
+  name: left-4-zed
+  desc: A cocktail of mutagenic compounds, which cause plant life to become highly unstable.
+  color: "#5b406c"
+  physicalDesc: heterogeneous
+  plantMetabolism:
+    - !type:AdjustNutrition
+      amount: 1
+    - !type:AdjustHealth
+      amount: -0.5
+    - !type:AdjustMutationMod
+      prob: 0.3
+      amount: 0.2
+
+- type: reagent
+  id: chem.PestKiller
+  name: pest killer
+  desc: A mixture that targets pests.
+  color: "#9e9886"
+  physicalDesc: bubbling
+  plantMetabolism:
+    - !type:AdjustToxins
+      amount: 4
+    - !type:AdjustPests
+      amount: -6
+
+- type: reagent
+  id: chem.PlantBGone
+  name: plant-B-gone
+  desc: A harmful toxic mixture to kill plantlife. Do not ingest!
+  color: "#49002E"
+  physicalDesc: bubbling
+  plantMetabolism:
+    - !type:AdjustToxins
+      amount: 6
+    - !type:AdjustWeeds
+      amount: -8
+    - !type:AdjustHealth
+      amount: -20
+    - !type:AdjustMutationMod
+      amount: 0.1
+
+- type: reagent
+  id: chem.RobustHarvest
+  name: robust harvest
+  desc: Plant-enhancing hormones, good for increasing potency.
+  color: "#3e901c"
+  physicalDesc: robust
+  customPlantMetabolism: 0.1
+  plantMetabolism:
+    - !type:AdjustNutrition
+      amount: 0.05
+    - !type:AdjustWeeds
+      prob: 0.025
+      amount: 1
+    - !type:AdjustPests
+      prob: 0.025
+      amount: 1
+    - !type:RobustHarvest {}
+
+- type: reagent
+  id: chem.WeedKiller
+  name: weed killer
+  desc: A mixture that targets weeds.
+  color: "#968395"
+  physicalDesc: bubbling
+  plantMetabolism:
+    - !type:AdjustToxins
+      amount: 4
+    - !type:AdjustWeeds
+      amount: -6

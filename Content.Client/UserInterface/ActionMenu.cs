@@ -39,6 +39,11 @@ namespace Content.Client.UserInterface
         private static readonly Regex Whitespace = new Regex(@"\s+", RegexOptions.Compiled);
         private static readonly BaseActionPrototype[] EmptyActionList = Array.Empty<BaseActionPrototype>();
 
+        /// <summary>
+        /// Is an action currently being dragged from this window?
+        /// </summary>
+        public bool IsDragging => _dragDropHelper.IsDragging;
+
         // parallel list of actions currently selectable in itemList
         private BaseActionPrototype[] _actionList;
 
@@ -158,6 +163,7 @@ namespace Content.Client.UserInterface
         protected override void ExitedTree()
         {
             base.ExitedTree();
+            _dragDropHelper.EndDrag();
             _clearButton.OnPressed -= OnClearButtonPressed;
             _searchBar.OnTextChanged -= OnSearchTextChanged;
             _filterButton.OnItemSelected -= OnFilterItemSelected;

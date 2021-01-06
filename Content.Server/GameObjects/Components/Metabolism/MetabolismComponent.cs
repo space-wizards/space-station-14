@@ -5,7 +5,9 @@ using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Body.Behavior;
 using Content.Server.GameObjects.Components.Body.Circulatory;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Temperature;
+using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry;
 using Content.Shared.Damage;
@@ -14,6 +16,7 @@ using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.Chemistry;
 using Robust.Shared.GameObjects;
@@ -144,20 +147,20 @@ namespace Content.Server.GameObjects.Components.Metabolism
 
         private float SuffocatingPercentage()
         {
-            var percentages = new float[Atmospherics.TotalNumberOfGases];
+            var total = 0f;
 
             foreach (var (gas, deficit) in DeficitGases)
             {
-                if (!NeedsGases.TryGetValue(gas, out var needed))
+                var lack = 1f;
+                if (NeedsGases.TryGetValue(gas, out var needed))
                 {
-                    percentages[(int) gas] = 1;
-                    continue;
+                    lack = deficit / needed;
                 }
 
-                percentages[(int) gas] = deficit / needed;
+                total += lack / Atmospherics.TotalNumberOfGases;
             }
 
-            return percentages.Average();
+            return total;
         }
 
         private float GasProducedMultiplier(Gas gas, float usedAverage)
@@ -388,6 +391,11 @@ namespace Content.Server.GameObjects.Components.Metabolism
         {
             Suffocating = true;
 
+            if (Owner.TryGetComponent(out ServerAlertsComponent? alertsComponent))
+            {
+                alertsComponent.ShowAlert(AlertType.LowOxygen);
+            }
+
             if (!Owner.TryGetComponent(out IDamageableComponent? damageable))
             {
                 return;
@@ -399,6 +407,11 @@ namespace Content.Server.GameObjects.Components.Metabolism
         private void StopSuffocation()
         {
             Suffocating = false;
+
+            if (Owner.TryGetComponent(out ServerAlertsComponent? alertsComponent))
+            {
+                alertsComponent.ClearAlert(AlertType.LowOxygen);
+            }
         }
 
         public GasMixture Clean(BloodstreamComponent bloodstream)

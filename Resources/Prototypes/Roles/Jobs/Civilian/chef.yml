@@ -3,7 +3,7 @@
   name: "chef"
   positions: 1
   startingGear: ChefGear
-  department:
+  departments:
   - Civilian
   icon: "Chef"
   access:
@@ -21,3 +21,6 @@
     idcard: ChefPDA
     ears: ClothingHeadsetService
     outerclothing: ClothingOuterApronChef
+  innerclothingskirt: ClothingUniformJumpskirtChef
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled

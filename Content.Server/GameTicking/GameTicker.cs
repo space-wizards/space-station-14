@@ -211,6 +211,8 @@ namespace Content.Server.GameTicking
             }
             else
             {
+                Preset = null;
+
                 if (PlayerManager.PlayerCount == 0)
                     _roundStartCountdownHasNotStartedYetDueToNoPlayers = true;
                 else
@@ -390,7 +392,7 @@ namespace Content.Server.GameTicking
 
         public void Respawn(IPlayerSession targetPlayer)
         {
-            targetPlayer.ContentData().WipeMind();
+            targetPlayer.ContentData()?.WipeMind();
 
             if (LobbyEnabled)
                 _playerJoinLobby(targetPlayer);
@@ -577,26 +579,34 @@ namespace Content.Server.GameTicking
             return Paused;
         }
 
-        private IEntity _spawnPlayerMob(Job job, bool lateJoin = true)
+        private IEntity _spawnPlayerMob(Job job, HumanoidCharacterProfile profile, bool lateJoin = true)
         {
             EntityCoordinates coordinates = lateJoin ? GetLateJoinSpawnPoint() : GetJobSpawnPoint(job.Prototype.ID);
             var entity = _entityManager.SpawnEntity(PlayerPrototypeName, coordinates);
             var startingGear = _prototypeManager.Index<StartingGearPrototype>(job.StartingGear);
-            EquipStartingGear(entity, startingGear);
+            EquipStartingGear(entity, startingGear, profile);
+
+            if (profile != null)
+            {
+                entity.GetComponent<HumanoidAppearanceComponent>().UpdateFromProfile(profile);
+                entity.Name = profile.Name;
+            }
 
             return entity;
         }
 
-        public void EquipStartingGear(IEntity entity, StartingGearPrototype startingGear)
+        public void EquipStartingGear(IEntity entity, StartingGearPrototype startingGear, HumanoidCharacterProfile profile)
         {
             if (entity.TryGetComponent(out InventoryComponent inventory))
             {
-                var gear = startingGear.Equipment;
-
-                foreach (var (slot, equipmentStr) in gear)
+                foreach (var slot in AllSlots)
                 {
-                    var equipmentEntity = _entityManager.SpawnEntity(equipmentStr, entity.Transform.Coordinates);
-                    inventory.Equip(slot, equipmentEntity.GetComponent<ItemComponent>());
+                    var equipmentStr = startingGear.GetGear(slot, profile);
+                    if (equipmentStr != "")
+                    {
+                        var equipmentEntity = _entityManager.SpawnEntity(equipmentStr, entity.Transform.Coordinates);
+                        inventory.Equip(slot, equipmentEntity.GetComponent<ItemComponent>());
+                    }
                 }
             }
 
@@ -609,14 +619,6 @@ namespace Content.Server.GameTicking
                     handsComponent.PutInHand(inhandEntity.GetComponent<ItemComponent>(), hand);
                 }
             }
-        }
-
-        private void ApplyCharacterProfile(IEntity entity, ICharacterProfile profile)
-        {
-            if (profile is null)
-                return;
-            entity.GetComponent<HumanoidAppearanceComponent>().UpdateFromProfile(profile);
-            entity.Name = profile.Name;
         }
 
         private IEntity _spawnObserverMob()
@@ -683,26 +685,32 @@ namespace Content.Server.GameTicking
         {
             // Delete all entities.
             foreach (var entity in _entityManager.GetEntities().ToList())
+            {
                 // TODO: Maybe something less naive here?
                 // FIXME: Actually, definitely.
                 entity.Delete();
+            }
 
             _mapManager.Restart();
 
             // Delete the minds of everybody.
             // TODO: Maybe move this into a separate manager?
-            foreach (var unCastData in PlayerManager.GetAllPlayerData()) unCastData.ContentData().WipeMind();
+            foreach (var unCastData in PlayerManager.GetAllPlayerData())
+            {
+                unCastData.ContentData()?.WipeMind();
+            }
 
             // Clear up any game rules.
-            foreach (var rule in _gameRules) rule.Removed();
+            foreach (var rule in _gameRules)
+            {
+                rule.Removed();
+            }
 
             _gameRules.Clear();
 
             // Move everybody currently in the server to lobby.
             foreach (var player in PlayerManager.GetAllPlayers())
             {
-                if (_playersInLobby.ContainsKey(player)) continue;
-
                 _playerJoinLobby(player);
             }
 
@@ -882,9 +890,8 @@ namespace Content.Server.GameTicking
             var job = new Job(data.Mind, jobPrototype);
             data.Mind.AddRole(job);
 
-            var mob = _spawnPlayerMob(job, lateJoin);
+            var mob = _spawnPlayerMob(job, character, lateJoin);
             data.Mind.TransferTo(mob);
-            ApplyCharacterProfile(mob, character);
 
             if (session.UserId == new Guid("{e887eb93-f503-4b65-95b6-2f282c014192}"))
             {
@@ -949,7 +956,7 @@ namespace Content.Server.GameTicking
 
         private void _playerJoinLobby(IPlayerSession session)
         {
-            _playersInLobby.Add(session, PlayerStatus.NotReady);
+            _playersInLobby[session] = PlayerStatus.NotReady;
 
             _netManager.ServerSendMessage(_netManager.CreateNetMessage<MsgTickerJoinLobby>(), session.ConnectedClient);
             _netManager.ServerSendMessage(_getStatusMsg(session), session.ConnectedClient);
@@ -962,7 +969,9 @@ namespace Content.Server.GameTicking
         {
             _chatManager.DispatchServerMessage(session,
                 "Welcome to Space Station 14! If this is your first time checking out the game, be sure to check out the tutorial in the top left!");
-            if (_playersInLobby.ContainsKey(session)) _playersInLobby.Remove(session);
+
+            if (_playersInLobby.ContainsKey(session))
+                _playersInLobby.Remove(session);
 
             _netManager.ServerSendMessage(_netManager.CreateNetMessage<MsgTickerJoinGame>(), session.ConnectedClient);
         }

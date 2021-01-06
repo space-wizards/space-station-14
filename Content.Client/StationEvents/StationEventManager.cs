@@ -1,42 +1,43 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Shared.StationEvents;
+using Content.Shared.Network.NetMessages;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
+using Robust.Shared.Network;
 
 namespace Content.Client.StationEvents
 {
-    class StationEventManager : SharedStationEvent, IStationEventManager
+    internal sealed class StationEventManager : IStationEventManager
     {
-        private List<string>? _events;
-        public List<string>? StationEvents
-        {
-            get
-            {
-                if (_events == null)
-                    RequestEvents();
-                return _events;
-            }
-        }
+        [Dependency] private readonly IClientNetManager _netManager = default!;
+
+        private readonly List<string> _events = new();
+        public IReadOnlyList<string> StationEvents => _events;
         public event Action? OnStationEventsReceived;
 
         public void Initialize()
         {
-            var netManager = IoCManager.Resolve<IClientNetManager>();
-            netManager.RegisterNetMessage<MsgGetStationEvents>(nameof(MsgGetStationEvents), EventHandler);
-            netManager.Disconnect += (sender, msg) => _events = null;
+            _netManager.RegisterNetMessage<MsgRequestStationEvents>(nameof(MsgRequestStationEvents));
+            _netManager.RegisterNetMessage<MsgStationEvents>(nameof(MsgStationEvents), RxStationEvents);
+            _netManager.Disconnect += OnNetManagerOnDisconnect;
         }
 
-        private void EventHandler(MsgGetStationEvents msg)
+        private void OnNetManagerOnDisconnect(object? sender, NetDisconnectedArgs msg)
         {
-            _events = msg.Events;
+            _events.Clear();
+        }
+
+        private void RxStationEvents(MsgStationEvents msg)
+        {
+            _events.Clear();
+            _events.AddRange(msg.Events);
             OnStationEventsReceived?.Invoke();
         }
+
         public void RequestEvents()
         {
-            var netManager = IoCManager.Resolve<IClientNetManager>();
-            netManager.ClientSendMessage(netManager.CreateNetMessage<MsgGetStationEvents>());
+            _netManager.ClientSendMessage(_netManager.CreateNetMessage<MsgRequestStationEvents>());
         }
     }
 }

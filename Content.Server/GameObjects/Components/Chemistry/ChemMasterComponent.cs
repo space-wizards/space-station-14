@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +12,7 @@ using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry.ChemMaster;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
@@ -79,11 +80,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
             _beakerContainer =
                 ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-reagentContainerContainer", Owner);
 
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
-            {
-                receiver.OnPowerStateChanged += OnPowerChanged;
-            }
-
             //BufferSolution = Owner.BufferSolution
             BufferSolution.Solution = new Solution();
             BufferSolution.MaxVolume = ReagentUnit.New(1000);
@@ -91,7 +87,18 @@ namespace Content.Server.GameObjects.Components.Chemistry
             UpdateUserInterface();
         }
 
-        private void OnPowerChanged(object? sender, PowerStateEventArgs e)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+            switch (message)
+            {
+                case PowerChangedMessage powerChanged:
+                    OnPowerChanged(powerChanged);
+                    break;
+            }
+        }
+
+        private void OnPowerChanged(PowerChangedMessage e)
         {
             UpdateUserInterface();
         }

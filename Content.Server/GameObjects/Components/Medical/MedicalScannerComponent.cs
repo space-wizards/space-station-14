@@ -13,6 +13,7 @@ using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Medical;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -37,7 +38,6 @@ namespace Content.Server.GameObjects.Components.Medical
     public class MedicalScannerComponent : SharedMedicalScannerComponent, IActivate, IDragDropOn, IDestroyAct
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = null!;
 
         private static readonly TimeSpan InternalOpenAttemptDelay = TimeSpan.FromSeconds(0.5);
         private TimeSpan _lastInternalOpenAttempt;
@@ -279,16 +279,11 @@ namespace Content.Server.GameObjects.Components.Medical
                     {
                         //TODO: Show a 'ERROR: Body is completely devoid of soul' if no Mind owns the entity.
                         var cloningSystem = EntitySystem.Get<CloningSystem>();
-                        cloningSystem.AddToDnaScans(_playerManager
-                            .GetPlayersBy(playerSession =>
-                            {
-                                var mindOwnedMob = playerSession.ContentData()?.Mind?.OwnedEntity;
 
-                                return mindOwnedMob != null && mindOwnedMob ==
-                                    _bodyContainer.ContainedEntity;
-                            }).Single()
-                            .ContentData()
-                            ?.Mind);
+                        if (!_bodyContainer.ContainedEntity.TryGetComponent(out MindComponent? mind) || !mind.HasMind)
+                            break;
+
+                        cloningSystem.AddToDnaScans(mind.Mind);
                     }
 
                     break;

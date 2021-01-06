@@ -1,13 +1,14 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Nutrition;
-using Content.Shared.GameObjects.Components.Utensil;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -18,21 +19,22 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Utensil
 {
     [RegisterComponent]
-    public class UtensilComponent : SharedUtensilComponent, IAfterInteract
+    public class UtensilComponent : Component, IAfterInteract
     {
-        [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
+        public override string Name => "Utensil";
 
-        protected UtensilType _types = UtensilType.None;
+        private UtensilType _types = UtensilType.None;
 
         [ViewVariables]
-        public override UtensilType Types
+        public UtensilType Types
         {
             get => _types;
             set
             {
+                if (_types.Equals(value))
+                    return;
+
                 _types = value;
-                Dirty();
             }
         }
 
@@ -47,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Utensil
         /// The sound to be played if the utensil breaks.
         /// </summary>
         [ViewVariables]
-        private string _breakSound;
+        private string? _breakSound;
 
         public void AddType(UtensilType type)
         {
@@ -61,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Utensil
 
         public bool HasType(UtensilType type)
         {
-            return _types.HasFlag(type);
+            return (_types & type) != 0;
         }
 
         public void RemoveType(UtensilType type)
@@ -71,9 +73,9 @@ namespace Content.Server.GameObjects.Components.Utensil
 
         internal void TryBreak(IEntity user)
         {
-            if (_random.Prob(_breakChance))
+            if (_breakSound != null && IoCManager.Resolve<IRobustRandom>().Prob(_breakChance))
             {
-                _entitySystem.GetEntitySystem<AudioSystem>()
+                EntitySystem.Get<AudioSystem>()
                     .PlayFromEntity(_breakSound, user, AudioParams.Default.WithVolume(-2f));
                 Owner.Delete();
             }
@@ -112,12 +114,7 @@ namespace Content.Server.GameObjects.Components.Utensil
 
         private void TryUseUtensil(IEntity user, IEntity target)
         {
-            if (user == null || target == null)
-            {
-                return;
-            }
-
-            if (!target.TryGetComponent(out FoodComponent food))
+            if (!target.TryGetComponent(out FoodComponent? food))
             {
                 return;
             }
@@ -129,5 +126,14 @@ namespace Content.Server.GameObjects.Components.Utensil
 
             food.TryUseFood(user, null, this);
         }
+    }
+
+    [Flags]
+    public enum UtensilType : byte
+    {
+        None = 0,
+        Fork = 1,
+        Spoon = 1 << 1,
+        Knife = 1 << 2
     }
 }

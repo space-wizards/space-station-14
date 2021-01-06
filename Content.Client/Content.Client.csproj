@@ -33,4 +33,6 @@
       <DependentUpon>OptionsMenu.cs</DependentUpon>
     </Compile>
   </ItemGroup>
+
+  <Import Project="..\RobustToolbox\MSBuild\XamlIL.targets" />
 </Project>
