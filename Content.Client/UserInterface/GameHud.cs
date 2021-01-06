@@ -138,11 +138,14 @@ namespace Content.Client.UserInterface
 
             _buttonEscapeMenu.OnToggled += args => EscapeButtonToggled?.Invoke(args.Pressed);
 
+            var squareMinSize = (52, 75);
+
             // Character
             _buttonCharacterMenu = new TopButton(characterTexture, "C")
             {
                 ToolTip = Loc.GetString("Open character menu."),
                 Visible = false,
+                CustomMinimumSize = squareMinSize,
                 StyleClasses = {StyleBase.ButtonSquare}
             };
 
@@ -155,6 +158,7 @@ namespace Content.Client.UserInterface
             {
                 ToolTip = Loc.GetString("Open inventory menu."),
                 Visible = false,
+                CustomMinimumSize = squareMinSize,
                 StyleClasses = {StyleBase.ButtonSquare}
             };
 
@@ -167,6 +171,7 @@ namespace Content.Client.UserInterface
             {
                 ToolTip = Loc.GetString("Open crafting menu."),
                 Visible = false,
+                CustomMinimumSize = squareMinSize,
                 StyleClasses = {StyleBase.ButtonSquare}
             };
 
@@ -179,6 +184,7 @@ namespace Content.Client.UserInterface
             {
                 ToolTip = Loc.GetString("Open sandbox menu."),
                 Visible = false,
+                CustomMinimumSize = squareMinSize,
                 StyleClasses = {StyleBase.ButtonSquare}
             };
 
@@ -190,6 +196,7 @@ namespace Content.Client.UserInterface
             _buttonTutorial = new TopButton(tutorialTexture, "F1")
             {
                 ToolTip = Loc.GetString("Open tutorial."),
+                CustomMinimumSize = squareMinSize,
                 StyleClasses = {StyleBase.ButtonOpenLeft}
             };
 
@@ -373,7 +380,7 @@ namespace Content.Client.UserInterface
                 {
                     Children =
                     {
-                        // padding
+                        // padding and max width
                         new Control {CustomMinimumSize = (0, 4)},
                         (_textureRect = new TextureRect
                         {
@@ -381,7 +388,6 @@ namespace Content.Client.UserInterface
                             SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
                             SizeFlagsVertical = SizeFlags.Expand | SizeFlags.ShrinkCenter,
                             ModulateSelfOverride = ColorNormal,
-                            CustomMinimumSize = (0, 32),
                             Stretch = TextureRect.StretchMode.KeepCentered
                         }),
                         // padding
