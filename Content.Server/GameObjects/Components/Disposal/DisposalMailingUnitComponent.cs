@@ -614,22 +614,12 @@ namespace Content.Server.GameObjects.Components.Disposal
                 Logger.WarningS("VitalComponentMissing", $"Disposal unit {Owner.Uid} is missing an anchorable component");
             }
 
-            if (Owner.TryGetComponent(out IPhysicsComponent? physics))
-            {
-                physics.AnchoredChanged += UpdateVisualState;
-            }
-
             UpdateTargetList();
             UpdateVisualState();
         }
 
         public override void OnRemove()
         {
-            if (Owner.TryGetComponent(out IPhysicsComponent? physics))
-            {
-                physics.AnchoredChanged -= UpdateVisualState;
-            }
-
             if (_container != null)
             {
                 foreach (var entity in _container.ContainedEntities.ToArray())
@@ -669,6 +659,10 @@ namespace Content.Server.GameObjects.Components.Disposal
 
                     _lastExitAttempt = _gameTiming.CurTime;
                     Remove(msg.Entity);
+                    break;
+
+                case AnchoredChangedMessage:
+                    UpdateVisualState();
                     break;
 
                 case PowerChangedMessage powerChanged:

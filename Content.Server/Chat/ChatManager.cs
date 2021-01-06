@@ -52,7 +52,7 @@ namespace Content.Server.Chat
         public void Initialize()
         {
             _netManager.RegisterNetMessage<MsgChatMessage>(MsgChatMessage.NAME);
-            _netManager.RegisterNetMessage<ChatMaxMsgLengthMessage>(ChatMaxMsgLengthMessage.NAME, _onMaxLengthRequest);
+            _netManager.RegisterNetMessage<ChatMaxMsgLengthMessage>(ChatMaxMsgLengthMessage.NAME, OnMaxLengthRequest);
 
             // Tell all the connected players the chat's character limit
             var msg = _netManager.CreateNetMessage<ChatMaxMsgLengthMessage>();
@@ -244,7 +244,8 @@ namespace Content.Server.Chat
         {
             return _playerManager
                 .GetPlayersBy(x => x.AttachedEntity != null && x.AttachedEntity.HasComponent<GhostComponent>())
-                .Select(p => p.ConnectedClient);
+                .Select(p => p.ConnectedClient)
+                .Union(_adminManager.ActiveAdmins.Select(p => p.ConnectedClient));
         }
 
         public void SendAdminChat(IPlayerSession player, string message)
@@ -288,7 +289,7 @@ namespace Content.Server.Chat
             _netManager.ServerSendToAll(msg);
         }
 
-        private void _onMaxLengthRequest(ChatMaxMsgLengthMessage msg)
+        private void OnMaxLengthRequest(ChatMaxMsgLengthMessage msg)
         {
             var response = _netManager.CreateNetMessage<ChatMaxMsgLengthMessage>();
             response.MaxMessageLength = MaxMessageLength;

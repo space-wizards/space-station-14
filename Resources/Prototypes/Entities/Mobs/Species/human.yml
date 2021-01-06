@@ -20,7 +20,7 @@
   # Organs
   - type: SolutionContainer
     maxVol: 250
-    caps: AddTo, RemoveFrom, NoExamine
+    caps: AddTo, RemoveFrom
   - type: Bloodstream
     max_volume: 100
   # StatusEffects

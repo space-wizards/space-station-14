@@ -123,7 +123,10 @@
   components:
   - type: Sprite
     sprite: Objects/Tools/multitool.rsi
-    state: multitool
+    layers:
+    - state: icon
+    - state: green-unlit
+      shader: unshaded
   - type: Clothing
     size: 10
     sprite: Objects/Tools/multitool.rsi

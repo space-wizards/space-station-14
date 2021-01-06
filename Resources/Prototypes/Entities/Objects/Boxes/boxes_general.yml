@@ -64,7 +64,7 @@
       - state: pda
   - type: Item
   - type: Storage
-    capacity: 3
+    capacity: 30
 
 - type: entity
   name: meson box
