@@ -19,7 +19,6 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Culinary
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IAfterInteract))]
     public class UtensilComponent : Component, IAfterInteract
     {
         public override string Name => "Utensil";

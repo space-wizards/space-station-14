@@ -19,12 +19,11 @@ using Robust.Shared.Audio;
 namespace Content.Server.GameObjects.Components.Culinary
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IAfterInteract))]
     class SliceableFoodComponent : Component, IInteractUsing, IExamine
     {
-        public override string Name => "SliceableFood"; // take priority over eating with utensils
+        public override string Name => "SliceableFood";
 
-        int IInteractUsing.Priority => 1;
+        int IInteractUsing.Priority => 1; // take priority over eating with utensils
 
         [ViewVariables(VVAccess.ReadWrite)] private string _slice;
         private ushort _totalCount;
