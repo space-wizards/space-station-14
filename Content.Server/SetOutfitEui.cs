@@ -30,11 +30,6 @@ namespace Content.Server
             _adminManager.OnPermsChanged += AdminManagerOnPermsChanged;
         }
 
-        public override void HandleMessage(EuiMessageBase msg)
-        {
-
-        }
-
         public override EuiStateBase GetNewState()
         {
             return new SetOutfitEuiState
