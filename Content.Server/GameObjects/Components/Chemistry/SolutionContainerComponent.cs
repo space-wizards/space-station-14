@@ -51,11 +51,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
         [ViewVariables]
         public ReagentUnit EmptyVolume => MaxVolume - CurrentVolume;
 
-        public IReadOnlyList<Solution.ReagentQuantity> ReagentList => Solution.Contents;
-        public bool CanExamineContents => Capabilities.HasFlag(SolutionContainerCaps.CanExamine);
-        public bool CanUseWithChemDispenser => Capabilities.HasFlag(SolutionContainerCaps.FitsInDispenser);
-        public bool CanAddSolutions => Capabilities.HasFlag(SolutionContainerCaps.AddTo);
-        public bool CanRemoveSolutions => Capabilities.HasFlag(SolutionContainerCaps.RemoveFrom);
+        public bool CanExamineContents => (Capabilities & SolutionContainerCaps.NoExamine) == 0;
+        public bool CanUseWithChemDispenser => (Capabilities & SolutionContainerCaps.FitsInDispenser) != 0;
+        public bool CanAddSolutions => (Capabilities & SolutionContainerCaps.AddTo) != 0;
+        public bool CanRemoveSolutions => (Capabilities & SolutionContainerCaps.RemoveFrom) != 0;
 
         /// <inheritdoc />
         public override void ExposeData(ObjectSerializer serializer)
@@ -64,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             serializer.DataField(this, x => x.MaxVolume, "maxVol", ReagentUnit.New(0));
             serializer.DataField(this, x => x.Solution, "contents", new Solution());
-            serializer.DataField(this, x => x.Capabilities, "caps", SolutionContainerCaps.AddTo | SolutionContainerCaps.RemoveFrom | SolutionContainerCaps.CanExamine);
+            serializer.DataField(this, x => x.Capabilities, "caps", SolutionContainerCaps.AddTo | SolutionContainerCaps.RemoveFrom);
             serializer.DataField(ref _fillInitState, "fillingState", string.Empty);
             serializer.DataField(ref _fillInitSteps, "fillingSteps", 7);
         }
@@ -136,7 +135,35 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         protected void RecalculateColor()
         {
-            SubstanceColor = Solution.Color;
+            if (Solution.TotalVolume == 0)
+            {
+                SubstanceColor = Color.Transparent;
+                return;
+            }
+
+            Color mixColor = default;
+            var runningTotalQuantity = ReagentUnit.New(0);
+
+            foreach (var reagent in Solution)
+            {
+                runningTotalQuantity += reagent.Quantity;
+
+                if (!_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
+                {
+                    continue;
+                }
+
+                if (mixColor == default)
+                {
+                    mixColor = proto.SubstanceColor;
+                    continue;
+                }
+
+                var interpolateValue = (1 / runningTotalQuantity.Float()) * reagent.Quantity.Float();
+                mixColor = Color.InterpolateBetween(mixColor, proto.SubstanceColor, interpolateValue);
+            }
+
+            SubstanceColor = mixColor;
         }
 
         /// <summary>
