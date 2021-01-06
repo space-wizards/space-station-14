@@ -3,6 +3,7 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.Administration;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
+using System;
 
 namespace Content.Server.Commands.Mobs
 {
@@ -25,7 +26,8 @@ namespace Content.Server.Commands.Mobs
             {
                 if (player.AttachedEntity.TryGetComponent(out ServerOverlayEffectsComponent overlayEffectsComponent))
                 {
-                    overlayEffectsComponent.AddNewOverlay(args[0]);
+                    if (overlayEffectsComponent.AddNewOverlay(args[0]) == Guid.Empty)
+                        shell.SendText(player, "Overlay type does not exist!");
                 }
             }
         }
