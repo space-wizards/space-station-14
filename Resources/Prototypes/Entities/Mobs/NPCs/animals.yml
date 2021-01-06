@@ -102,7 +102,7 @@
 - type: entity
   save: false
   name: chicken
-  parent: MonkeyMob_Content
+  parent: SimpleMobBase
   id: ChickenMob_Content
   description: Comes before an egg, and IS a dinosaur!
   drawdepth: Mobs
