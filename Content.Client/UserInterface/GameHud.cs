@@ -131,7 +131,7 @@ namespace Content.Client.UserInterface
             _buttonEscapeMenu = new TopButton(escapeTexture, "Esc")
             {
                 ToolTip = Loc.GetString("Open escape menu."),
-                StyleClasses = { StyleBase.ButtonOpenRight }
+                StyleClasses = {StyleBase.ButtonOpenRight}
             };
 
             _topButtonsContainer.AddChild(_buttonEscapeMenu);
@@ -143,7 +143,7 @@ namespace Content.Client.UserInterface
             {
                 ToolTip = Loc.GetString("Open character menu."),
                 Visible = false,
-                StyleClasses = { StyleBase.ButtonSquare }
+                StyleClasses = {StyleBase.ButtonSquare}
             };
 
             _topButtonsContainer.AddChild(_buttonCharacterMenu);
@@ -155,7 +155,7 @@ namespace Content.Client.UserInterface
             {
                 ToolTip = Loc.GetString("Open inventory menu."),
                 Visible = false,
-                StyleClasses = { StyleBase.ButtonSquare }
+                StyleClasses = {StyleBase.ButtonSquare}
             };
 
             _topButtonsContainer.AddChild(_buttonInventoryMenu);
@@ -167,7 +167,7 @@ namespace Content.Client.UserInterface
             {
                 ToolTip = Loc.GetString("Open crafting menu."),
                 Visible = false,
-                StyleClasses = { StyleBase.ButtonSquare }
+                StyleClasses = {StyleBase.ButtonSquare}
             };
 
             _topButtonsContainer.AddChild(_buttonCraftingMenu);
@@ -179,7 +179,7 @@ namespace Content.Client.UserInterface
             {
                 ToolTip = Loc.GetString("Open sandbox menu."),
                 Visible = false,
-                StyleClasses = { StyleBase.ButtonSquare }
+                StyleClasses = {StyleBase.ButtonSquare}
             };
 
             _topButtonsContainer.AddChild(_buttonSandboxMenu);
@@ -190,7 +190,7 @@ namespace Content.Client.UserInterface
             _buttonTutorial = new TopButton(tutorialTexture, "F1")
             {
                 ToolTip = Loc.GetString("Open tutorial."),
-                StyleClasses = { StyleBase.ButtonOpenLeft }
+                StyleClasses = {StyleBase.ButtonOpenLeft}
             };
 
             _topButtonsContainer.AddChild(_buttonTutorial);
@@ -258,7 +258,8 @@ namespace Content.Client.UserInterface
 
             RootControl.AddChild(SuspicionContainer);
 
-            LayoutContainer.SetAnchorAndMarginPreset(SuspicionContainer, LayoutContainer.LayoutPreset.BottomLeft, margin: 10);
+            LayoutContainer.SetAnchorAndMarginPreset(SuspicionContainer, LayoutContainer.LayoutPreset.BottomLeft,
+                margin: 10);
             LayoutContainer.SetGrowHorizontal(SuspicionContainer, LayoutContainer.GrowDirection.End);
             LayoutContainer.SetGrowVertical(SuspicionContainer, LayoutContainer.GrowDirection.Begin);
         }
@@ -351,7 +352,7 @@ namespace Content.Client.UserInterface
 
         public Action<bool> SandboxButtonToggled { get; set; }
 
-        public sealed class TopButton : BaseButton
+        public sealed class TopButton : ContainerButton
         {
             public const string StyleClassLabelTopButton = "topButtonLabel";
 
@@ -359,6 +360,7 @@ namespace Content.Client.UserInterface
             private static readonly Color ColorHovered = Color.FromHex("#9699bb");
             private static readonly Color ColorPressed = Color.FromHex("#789B8C");
 
+            // TODO: update their colors if needed
             private readonly TextureRect _textureRect;
             private readonly Label _label;
 
@@ -366,95 +368,33 @@ namespace Content.Client.UserInterface
             {
                 ToggleMode = true;
 
-                AddChild(new MarginContainer
+                // TODO: try margin container again
+                AddChild(new VBoxContainer
                 {
-                    MarginTopOverride = 4,
                     Children =
                     {
-                        new VBoxContainer
+                        // padding
+                        new Control {CustomMinimumSize = (0, 4)},
+                        (_textureRect = new TextureRect
                         {
-                            Children =
-                            {
-                                (_textureRect = new TextureRect
-                                {
-                                    Texture = texture,
-                                    SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                                    SizeFlagsVertical = SizeFlags.Expand | SizeFlags.ShrinkCenter,
-                                    ModulateSelfOverride = ColorNormal,
-                                    CustomMinimumSize = (0, 32),
-                                    Stretch = TextureRect.StretchMode.KeepCentered
-                                }),
-                                (_label = new Label
-                                {
-                                    Text = keyName,
-                                    SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                                    ModulateSelfOverride = ColorNormal,
-                                    StyleClasses = {StyleClassLabelTopButton}
-                                })
-                            }
-                        }
+                            Texture = texture,
+                            SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
+                            SizeFlagsVertical = SizeFlags.Expand | SizeFlags.ShrinkCenter,
+                            ModulateSelfOverride = ColorNormal,
+                            CustomMinimumSize = (0, 32),
+                            Stretch = TextureRect.StretchMode.KeepCentered
+                        }),
+                        // padding
+                        new Control {CustomMinimumSize = (0, 4)},
+                        (_label = new Label
+                        {
+                            Text = keyName,
+                            SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
+                            ModulateSelfOverride = ColorNormal,
+                            StyleClasses = {StyleClassLabelTopButton}
+                        })
                     }
                 });
-
-                DrawModeChanged();
-            }
-
-            protected override Vector2 CalculateMinimumSize()
-            {
-                var styleSize = ActualStyleBox?.MinimumSize ?? Vector2.Zero;
-                return (0, 4) + styleSize + base.CalculateMinimumSize();
-            }
-
-            protected override void Draw(DrawingHandleScreen handle)
-            {
-                ActualStyleBox?.Draw(handle, PixelSizeBox);
-            }
-
-            private StyleBox ActualStyleBox
-            {
-                get
-                {
-                    TryGetStyleProperty(Button.StylePropertyStyleBox, out StyleBox ret);
-                    return ret;
-                }
-            }
-
-            protected override void DrawModeChanged()
-            {
-                switch (DrawMode)
-                {
-                    case DrawModeEnum.Normal:
-                        SetOnlyStylePseudoClass(Button.StylePseudoClassNormal);
-                        _textureRect.ModulateSelfOverride = ColorNormal;
-                        _label.ModulateSelfOverride = ColorNormal;
-                        break;
-
-                    case DrawModeEnum.Pressed:
-                        SetOnlyStylePseudoClass(Button.StylePseudoClassPressed);
-                        _textureRect.ModulateSelfOverride = ColorPressed;
-                        _label.ModulateSelfOverride = ColorPressed;
-                        break;
-
-                    case DrawModeEnum.Hover:
-                        SetOnlyStylePseudoClass(Button.StylePseudoClassHover);
-                        _textureRect.ModulateSelfOverride = ColorHovered;
-                        _label.ModulateSelfOverride = ColorHovered;
-                        break;
-
-                    case DrawModeEnum.Disabled:
-                        break;
-                }
-            }
-
-            protected override void LayoutUpdateOverride()
-            {
-                var box = ActualStyleBox ?? new StyleBoxEmpty();
-                var contentBox = box.GetContentBox(PixelSizeBox);
-
-                foreach (var child in Children)
-                {
-                    FitChildInPixelBox(child, (UIBox2i) contentBox);
-                }
             }
         }
     }

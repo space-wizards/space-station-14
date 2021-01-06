@@ -2,6 +2,7 @@
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Utility;
+using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -161,6 +162,50 @@ namespace Content.Client.UserInterface.Stylesheets
             {
                 Modulate = ButtonColorPressed
             };
+
+            var topButtonBase = new StyleBoxTexture(BaseButton)
+            {
+                Texture = buttonRectTex
+            };
+            topButtonBase.SetPatchMargin(StyleBox.Margin.All, 2);
+            topButtonBase.SetPadding(StyleBox.Margin.All, 2);
+            topButtonBase.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
+            topButtonBase.SetContentMarginOverride(StyleBox.Margin.Horizontal, 10);
+
+            // var buttonTex = resCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
+            // var topButtonBase = new StyleBoxTexture
+            // {
+            //     Texture = buttonTex,
+            // };
+            // topButtonBase.SetPatchMargin(StyleBox.Margin.All, 10);
+            //topButtonBase.SetPadding(StyleBox.Margin.All, 1);
+            // topButtonBase.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
+            // topButtonBase.SetContentMarginOverride(StyleBox.Margin.Horizontal, 8);
+
+            // var topButtonOpenRight = new StyleBoxTexture(topButtonBase)
+            // {
+            //     Texture = new AtlasTexture(buttonTex, UIBox2.FromDimensions((0, 0), (14, 24))),
+            // };
+            // topButtonOpenRight.SetPatchMargin(StyleBox.Margin.Right, 0);
+            // //topButtonOpenRight.SetContentMarginOverride(StyleBox.Margin.Right, 10);
+            // //topButtonOpenRight.SetPadding(StyleBox.Margin.Right, 2);
+            //
+            // var topButtonOpenLeft = new StyleBoxTexture(topButtonBase)
+            // {
+            //     Texture = new AtlasTexture(buttonTex, UIBox2.FromDimensions((10, 0), (14, 24))),
+            // };
+            // topButtonOpenLeft.SetPatchMargin(StyleBox.Margin.Left, 0);
+            // //topButtonOpenLeft.SetContentMarginOverride(StyleBox.Margin.Left, 10);
+            // //topButtonOpenLeft.SetPadding(StyleBox.Margin.Left, 1);
+            //
+            // var topButtonSquare = new StyleBoxTexture(topButtonBase)
+            // {
+            //     Texture = new AtlasTexture(buttonTex, UIBox2.FromDimensions((10, 0), (3, 24))),
+            // };
+            // topButtonSquare.SetPatchMargin(StyleBox.Margin.Horizontal, 0);
+            //topButtonSquare.SetContentMarginOverride(StyleBox.Margin.Horizontal, 8);
+            //topButtonSquare.SetPadding(StyleBox.Margin.Right, 2);
+            //topButtonSquare.SetPadding(StyleBox.Margin.Left, 1);
 
             var textureInvertedTriangle = resCache.GetTexture("/Textures/Interface/Nano/inverted_triangle.svg.png");
 
@@ -819,21 +864,21 @@ namespace Content.Client.UserInterface.Stylesheets
                     new SelectorElement(typeof(GameHud.TopButton), new[] {ButtonSquare}, null, null),
                     new[]
                     {
-                        new StyleProperty(Button.StylePropertyStyleBox, BaseButtonSquare),
+                        new StyleProperty(Button.StylePropertyStyleBox, topButtonBase),
                     }),
 
                 new StyleRule(
                     new SelectorElement(typeof(GameHud.TopButton), new[] {ButtonOpenLeft}, null, null),
                     new[]
                     {
-                        new StyleProperty(Button.StylePropertyStyleBox, BaseButtonOpenLeft),
+                        new StyleProperty(Button.StylePropertyStyleBox, topButtonBase),
                     }),
 
                 new StyleRule(
                     new SelectorElement(typeof(GameHud.TopButton), new[] {ButtonOpenRight}, null, null),
                     new[]
                     {
-                        new StyleProperty(Button.StylePropertyStyleBox, BaseButtonOpenRight),
+                        new StyleProperty(Button.StylePropertyStyleBox, topButtonBase),
                     }),
 
                 new StyleRule(
