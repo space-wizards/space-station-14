@@ -9,51 +9,51 @@ namespace Content.Client.GameObjects.Components
     [ComponentReference(typeof(SharedPlaceableSurfaceComponent))]
     public class PlaceableSurfaceComponent : SharedPlaceableSurfaceComponent
     {
-        private bool isPlaceable;
-        private bool placeCentered;
-        private Vector2 positionOffset;
+        private bool _isPlaceable;
+        private bool _placeCentered;
+        private Vector2 _positionOffset;
 
         public override bool IsPlaceable
         {
-            get => isPlaceable;
+            get => _isPlaceable;
             set
             {
-                if (isPlaceable == value)
+                if (_isPlaceable == value)
                 {
                     return;
                 }
 
-                isPlaceable = value;
+                _isPlaceable = value;
 
             }
         }
 
         public override bool PlaceCentered
         {
-            get => placeCentered;
+            get => _placeCentered;
             set
             {
-                if (placeCentered == value)
+                if (_placeCentered == value)
                 {
                     return;
                 }
 
-                placeCentered = value;
+                _placeCentered = value;
 
             }
         }
 
         public override Vector2 PositionOffset
         {
-            get => positionOffset;
+            get => _positionOffset;
             set
             {
-                if (positionOffset.EqualsApprox(value))
+                if (_positionOffset.EqualsApprox(value))
                 {
                     return;
                 }
 
-                positionOffset = value;
+                _positionOffset = value;
 
             }
         }
@@ -67,9 +67,9 @@ namespace Content.Client.GameObjects.Components
                 return;
             }
 
-            isPlaceable = state.IsPlaceable;
-            placeCentered = state.PlaceCentered;
-            positionOffset = state.PositionOffset;
+            _isPlaceable = state.IsPlaceable;
+            _placeCentered = state.PlaceCentered;
+            _positionOffset = state.PositionOffset;
         }
     }
 }
