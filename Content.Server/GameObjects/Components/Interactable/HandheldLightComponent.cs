@@ -80,6 +80,12 @@ namespace Content.Server.GameObjects.Components.Interactable
             Dirty();
         }
 
+        public override void OnRemove()
+        {
+            base.OnRemove();
+            Owner.EntityManager.EventBus.QueueEvent(EventSource.Local, new DeactivateHandheldLightMessage(this));
+        }
+
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!ActionBlockerSystem.CanInteract(eventArgs.User)) return false;

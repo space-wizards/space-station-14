@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             foreach (var handheld in _activeLights.ToArray())
             {
-                if (handheld.Paused) continue;
+                if (handheld.Deleted || handheld.Paused) continue;
                 handheld.OnUpdate(frameTime);
             }
         }
