@@ -68,9 +68,12 @@
       amount: 1
   effects:
     - !type:SmokeReactionEffect
-      rangeMultiplier: 0.2
+      rangeConstant: 0
+      rangeMultiplier: 0.25 #Range formula: rangeConstant + rangeMultiplier*ReactionUnits
+      maxRange: 15
       duration: 10
       spreadDelay: 0.5
+      smokePrototypeId: Smoke
       smokeSound: /Audio/Effects/smoke.ogg
 
 - type: reaction

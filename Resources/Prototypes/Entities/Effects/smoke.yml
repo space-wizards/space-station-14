@@ -1,13 +1,10 @@
 ﻿- type: entity
-  id: smoke_cloud
-  name: Smoke
+  id: Smoke
+  name: smoke
   abstract: true
   components:
     - type: Sprite
       drawdepth: Ghosts
-      sprite: Effects/chemsmoke.rsi
-      state: chemsmoke
-    - type: Icon
       sprite: Effects/chemsmoke.rsi
       state: chemsmoke
     - type: Occluder
