@@ -74,8 +74,8 @@ namespace Content.Server.GameObjects.Components
             base.ExposeData(serializer);
 
             serializer.DataField(ref _isPlaceable, "IsPlaceable", true);
-            serializer.DataField(ref _placeCentered, "PlaceCentered", false);
-            serializer.DataField(ref _positionOffset, "PositionOffset", Vector2.Zero);
+            serializer.DataField(ref _placeCentered, "placeCentered", false);
+            serializer.DataField(ref _positionOffset, "positionOffset", Vector2.Zero);
         }
 
         public override ComponentState GetComponentState()
