@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         public override string Name => "Airtight";
 
         [ViewVariables]
-        [YamlField("airBlockedDirection")]//todo paul: WithFormat.Flags<AtmosDirectionFlags>()
+        [YamlField("airBlockedDirection", flagType:typeof(AtmosDirectionFlags))]
         private int _initialAirBlockedDirection = (int)AtmosDirection.All;
         [ViewVariables]
         private int _currentAirBlockedDirection;
