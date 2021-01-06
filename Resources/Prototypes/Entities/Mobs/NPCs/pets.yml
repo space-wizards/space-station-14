@@ -3,64 +3,8 @@
 
 - type: entity
   save: false
-  name: based on what?
-  abstract: true
-  id: PetBaseMob_Content
-  description:
-  drawdepth: Mobs
-  suffix: AI
-  components:
-  - type: AiController
-    logic: Civilian
-  - type: AiFactionTag
-    factions:
-    - SimpleNeutral
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 5
-    baseSprintSpeed : 5
-  - type: InteractionOutline
-  - type: Clickable
-  - type: Physics
-    anchored: false
-    mass: 50
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.30,-0.35,0.45,0.35"
-      mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
-      layer:
-      - Opaque
-      - MobImpassable
-  - type: Damageable
-  - type: MobState
-    thresholds:
-      0: !type:NormalMobState {}
-      50: !type:CriticalMobState {}
-      100: !type:DeadMobState {}
-  - type: HeatResistance
-  - type: CombatMode
-  - type: Teleportable
-  - type: Stunnable
-  - type: UnarmedCombat
-    range: 1.5
-    arcwidth: 0
-    arc: bite
-    damage: 50
-  - type: MovementIgnoreGravity
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: monkey
-      dead: dead
-  - type: Pullable
-
-- type: entity
-  save: false
   name: corgi
-  parent: PetBaseMob_Content
+  parent: SimpleMobBase
   id: CorgiMob_Content
   description: Finally, a space corgi!
   drawdepth: Mobs
@@ -79,12 +23,10 @@
       bounds: "-0.50,-0.25,0.30,0.25"
       mask:
       - Impassable
-      - MobImpassable
       - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
-      - MobImpassable
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -94,7 +36,7 @@
 - type: entity
   save: false
   name: ian
-  parent: PetBaseMob_Content
+  parent: SimpleMobBase
   id: IanMob_Content
   description: Favorite pet corgi.
   drawdepth: Mobs
@@ -113,12 +55,10 @@
       bounds: "-0.50,-0.25,0.30,0.25"
       mask:
       - Impassable
-      - MobImpassable
       - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
-      - MobImpassable
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -128,7 +68,7 @@
 - type: entity
   save: false
   name: cat
-  parent: PetBaseMob_Content
+  parent: SimpleMobBase
   id: CatMob_Content
   description: Feline pet, very funny.
   drawdepth: Mobs
@@ -147,12 +87,10 @@
       bounds: "-0.45,-0.20,0.30,0.20"
       mask:
       - Impassable
-      - MobImpassable
       - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
-      - MobImpassable
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -162,7 +100,7 @@
 - type: entity
   save: false
   name: calico cat
-  parent: PetBaseMob_Content
+  parent: SimpleMobBase
   id: CatCalicoMob_Content
   description: Feline pet, very funny.
   drawdepth: Mobs
@@ -174,19 +112,16 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: cat2
-
   - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.50,-0.25,0.30,0.25"
       mask:
       - Impassable
-      - MobImpassable
       - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
-      - MobImpassable
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -196,7 +131,7 @@
 - type: entity
   save: false
   name: sloth
-  parent: PetBaseMob_Content
+  parent: SimpleMobBase
   id: SlothMob_Content
   description: Very slow animal. For people with low energy.
   drawdepth: Mobs
@@ -218,12 +153,10 @@
       bounds: "-0.45,-0.35,0.15,0.35"
       mask:
       - Impassable
-      - MobImpassable
       - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
-      - MobImpassable
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer

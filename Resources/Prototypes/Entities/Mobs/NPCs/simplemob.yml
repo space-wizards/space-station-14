@@ -27,12 +27,12 @@
     - !type:PhysShapeAabb
       mask:
       - Impassable
-      - MobImpassable
+#      - MobImpassable Turns these off for now since humans don't have collisions either.
       - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
-      - MobImpassable
+#      - MobImpassable
   - type: Bloodstream
     max_volume: 100
   - type: Damageable
@@ -77,7 +77,6 @@
     damage: 50
   - type: Appearance
     visuals:
-    - type: DamageStateVisualizer
     - type: BuckleVisualizer
     - type: FireVisualizer
       sprite: Mobs/Effects/onfire.rsi
