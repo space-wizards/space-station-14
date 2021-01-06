@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Nutrition;
-using Content.Shared.GameObjects.Components.Utensil;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects.EntitySystems;
@@ -20,12 +19,14 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Utensil
 {
     [RegisterComponent]
-    public class UtensilComponent : SharedUtensilComponent, IAfterInteract
+    public class UtensilComponent : Component, IAfterInteract
     {
+        public override string Name => "Utensil";
+
         private UtensilType _types = UtensilType.None;
 
         [ViewVariables]
-        public override UtensilType Types
+        public UtensilType Types
         {
             get => _types;
             set
@@ -34,7 +35,6 @@ namespace Content.Server.GameObjects.Components.Utensil
                     return;
 
                 _types = value;
-                //Dirty();
             }
         }
 
@@ -114,11 +114,6 @@ namespace Content.Server.GameObjects.Components.Utensil
 
         private void TryUseUtensil(IEntity user, IEntity target)
         {
-            if (user == null || target == null)
-            {
-                return;
-            }
-
             if (!target.TryGetComponent(out FoodComponent? food))
             {
                 return;
@@ -131,5 +126,14 @@ namespace Content.Server.GameObjects.Components.Utensil
 
             food.TryUseFood(user, null, this);
         }
+    }
+
+    [Flags]
+    public enum UtensilType : byte
+    {
+        None = 0,
+        Fork = 1,
+        Spoon = 1 << 1,
+        Knife = 1 << 2
     }
 }
