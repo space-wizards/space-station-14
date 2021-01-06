@@ -25,7 +25,6 @@ namespace Content.Client.GameObjects.Components
 
                 isPlaceable = value;
 
-                Dirty();
             }
         }
 
