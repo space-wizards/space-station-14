@@ -108,7 +108,10 @@ namespace Content.Server.StationEvents
         /// <summary>
         /// Called when the tick is equal to the StartAfter variable.
         /// </summary>
-        public abstract void Start();
+        public virtual void Start()
+        {
+            Started = true;
+        }
 
         /// <summary>
         /// Called when after the time has elapsed to the AnnounceWhen variable.
@@ -124,6 +127,7 @@ namespace Content.Server.StationEvents
             {
                 EntitySystem.Get<AudioSystem>().PlayGlobal(StartAudio, AudioParams.Default.WithVolume(-10f));
             }
+            Announced = true;
         }
 
         /// <summary>
@@ -140,7 +144,10 @@ namespace Content.Server.StationEvents
             {
                 EntitySystem.Get<AudioSystem>().PlayGlobal(EndAudio, AudioParams.Default.WithVolume(-10f));
             }
+            Started = false;
+            Announced = false;
             Running = false;
+            ActiveFor = 0;
         }
 
         /// <summary>
@@ -166,13 +173,11 @@ namespace Content.Server.StationEvents
             if (ActiveFor >= StartAfter && !Started)
             {
                 Start();
-                Started = true;
             }
 
             if (ActiveFor >= AnnounceWhen && !Announced)
             {
                 Announce();
-                Announced = true;
             }
 
             if (StartAfter < ActiveFor && ActiveFor < EndWhen)
@@ -183,8 +188,6 @@ namespace Content.Server.StationEvents
             if (ActiveFor >= EndWhen && ActiveFor >= AnnounceWhen && ActiveFor >= StartAfter)
             {
                 Shutdown();
-                Started = false;
-                Announced = false;
                 return;
             }
             ActiveFor += frameTime;

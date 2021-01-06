@@ -45,6 +45,7 @@ namespace Content.Server.StationEvents
                 component.PowerDisabled = true;
                 _powered.Add(component.Owner);
             }
+            base.Start();
         }
 
         public override void Shutdown()

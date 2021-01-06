@@ -26,6 +26,7 @@ namespace Content.Server.StationEvents
             {
                 randomEvent.Announce();
             }
+            base.Start();
         }
     }
     

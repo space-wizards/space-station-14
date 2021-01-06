@@ -57,6 +57,7 @@ namespace Content.Server.StationEvents
             {
                 overlay.AddOverlay(SharedOverlayID.RadiationPulseOverlay);
             }
+            base.Start();
         }
 
         public override void Shutdown()

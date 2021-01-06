@@ -49,6 +49,7 @@ namespace Content.Server.StationEvents
                 var playerPos = player.AttachedEntity.Transform.Coordinates;
                 entityManager.SpawnEntity("UtilityBeltClothingFilledEvent", playerPos);
             }
+            base.Start();
         }
         public override void Shutdown()
         {

@@ -1,4 +1,5 @@
 ﻿#nullable enable
+/*
 using JetBrains.Annotations;
 using System.Linq;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+
+/// disabled until tags gets merged
 
 namespace Content.Server.StationEvents
 {
@@ -60,7 +63,7 @@ namespace Content.Server.StationEvents
         public override void Start()
         {
             // todo: Flicker lights here for spooks
-            return;
+            base.Start();
         }
 
         public override void Announce()
@@ -99,6 +102,8 @@ namespace Content.Server.StationEvents
             }
             // finish all prison timers
             // no prison timers on ss14 <b>yet</b>.
+            base.Shutdown();
         }
     }
 }
+*/
