@@ -87,7 +87,7 @@ namespace Content.Server.GameObjects.Components.Cargo
         {
             if (UserInterface != null)
             {
-                UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
+                UserInterface.OnReceiveMessage -= UserInterfaceOnOnReceiveMessage;
             }
 
             base.OnRemove();
@@ -164,7 +164,7 @@ namespace Content.Server.GameObjects.Components.Cargo
                         var indices = Owner.Transform.Coordinates.ToVector2i(Owner.EntityManager, _mapManager);
                         var offsets = new Vector2i[] { new Vector2i(0, 1), new Vector2i(1, 1), new Vector2i(1, 0), new Vector2i(1, -1),
                                                        new Vector2i(0, -1), new Vector2i(-1, -1), new Vector2i(-1, 0), new Vector2i(-1, 1), };
-                        var adjacentEntities = new List<IEnumerable<IEntity>>(); //Probably better than IEnumerable.concat 
+                        var adjacentEntities = new List<IEnumerable<IEntity>>(); //Probably better than IEnumerable.concat
                         foreach (var offset in offsets)
                         {
                             adjacentEntities.Add((indices+offset).GetEntitiesInTileFast(Owner.Transform.GridID));
