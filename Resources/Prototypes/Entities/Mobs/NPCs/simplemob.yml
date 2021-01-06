@@ -1,5 +1,6 @@
 - type: entity
   save: false
+  abstract: true
   id: SimpleMobBase
   drawdepth: Mobs
   suffix: AI
