@@ -64,7 +64,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
         public override void Initialize()
         {
             base.Initialize();
-            Owner.EnsureComponent<PipeNetDeviceComponent>();
+            Owner.EnsureComponentWarn<PipeNetDeviceComponent>();
             SetPipes();
             Owner.TryGetComponent(out _appearance);
             UpdateAppearance();
@@ -113,7 +113,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
             var pipeNodes = container.Nodes.OfType<PipeNode>();
             _inletPipe = pipeNodes.Where(pipe => pipe.PipeDirection == _initialInletDirection).FirstOrDefault();
             _outletPipe = pipeNodes.Where(pipe => pipe.PipeDirection == _initialOutletDirection).FirstOrDefault();
-            if (_inletPipe == null | _outletPipe == null)
+            if (_inletPipe == null || _outletPipe == null)
             {
                 Logger.Error($"{typeof(BasePumpComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
                 return;

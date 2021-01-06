@@ -27,6 +27,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         public override void Initialize()
         {
             base.Initialize();
+            Owner.EnsureComponentWarn<PipeNetDeviceComponent>();
             SetGasPort();
             if (Owner.TryGetComponent<SnapGridComponent>(out var snapGrid))
             {
@@ -79,7 +80,6 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
 
         private void SetGasPort()
         {
-            Owner.EnsureComponent<PipeNetDeviceComponent>();
             if (!Owner.TryGetComponent<NodeContainerComponent>(out var container))
             {
                 Logger.Error($"{typeof(GasCanisterPortComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} did not have a {nameof(NodeContainerComponent)}.");

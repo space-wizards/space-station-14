@@ -17,6 +17,8 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
 
         private IGridAtmosphereComponent? JoinedGridAtmos { get; set; }
 
+        private PipeNetUpdateMessage _cachedUpdateMessage = new();
+
         public override void Initialize()
         {
             base.Initialize();
@@ -31,8 +33,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
 
         public void Update()
         {
-            var message = new PipeNetUpdateMessage();
-            SendMessage(message);
+            SendMessage(_cachedUpdateMessage);
         }
 
         private void JoinGridAtmos()

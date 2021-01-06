@@ -42,7 +42,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Scrubbers
         public override void Initialize()
         {
             base.Initialize();
-            Owner.EnsureComponent<PipeNetDeviceComponent>();
+            Owner.EnsureComponentWarn<PipeNetDeviceComponent>();
             _atmosSystem = EntitySystem.Get<AtmosphereSystem>();
             SetOutlet();
             Owner.TryGetComponent(out _appearance);
