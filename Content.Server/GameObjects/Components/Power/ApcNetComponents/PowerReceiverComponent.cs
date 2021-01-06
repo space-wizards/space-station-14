@@ -1,6 +1,5 @@
 #nullable enable
 using System;
-using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.GameObjects.EntitySystems;
@@ -9,6 +8,7 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
@@ -99,16 +99,11 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
             if (_physicsComponent != null)
             {
                 AnchorUpdate();
-                _physicsComponent.AnchoredChanged += AnchorUpdate;
             }
         }
 
         public override void OnRemove() 
         {
-            if (_physicsComponent != null)
-            {
-                _physicsComponent.AnchoredChanged -= AnchorUpdate;
-            }
             _provider.RemoveReceiver(this);
             base.OnRemove();
         }
@@ -118,6 +113,17 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
             if (TryFindAvailableProvider(out var provider))
             {
                 Provider = provider;
+            }
+        }
+
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+            switch (message)
+            {
+                case AnchoredChangedMessage:
+                    AnchorUpdate();
+                    break;
             }
         }
 

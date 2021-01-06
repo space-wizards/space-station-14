@@ -23,6 +23,7 @@ namespace Content.Client.Chat
         public Button LocalButton { get; }
         public Button OOCButton { get; }
         public Button AdminButton { get; }
+        public Button DeadButton { get;  }
 
         /// <summary>
         ///     Default formatting string for the ClientChatConsole.
@@ -103,13 +104,23 @@ namespace Content.Client.Chat
                 Visible = false
             };
 
+            DeadButton = new Button
+            {
+                Text = Loc.GetString("Dead"),
+                Name = "Dead",
+                ToggleMode = true,
+                Visible = false
+            };
+
             AllButton.OnToggled += OnFilterToggled;
             LocalButton.OnToggled += OnFilterToggled;
             OOCButton.OnToggled += OnFilterToggled;
             AdminButton.OnToggled += OnFilterToggled;
+            DeadButton.OnToggled += OnFilterToggled;
 
             hBox.AddChild(AllButton);
             hBox.AddChild(LocalButton);
+            hBox.AddChild(DeadButton);
             hBox.AddChild(OOCButton);
             hBox.AddChild(AdminButton);
 

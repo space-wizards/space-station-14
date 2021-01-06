@@ -70,6 +70,12 @@ namespace Content.Client.State
             _inputManager.SetInputCommand(ContentKeyFunctions.FocusChat,
                 InputCmdHandler.FromDelegate(s => GameScreen.FocusChat(_lobby.Chat)));
 
+            _inputManager.SetInputCommand(ContentKeyFunctions.FocusOOC,
+                InputCmdHandler.FromDelegate(s => GameScreen.FocusOOC(_lobby.Chat)));
+
+            _inputManager.SetInputCommand(ContentKeyFunctions.FocusAdminChat,
+                InputCmdHandler.FromDelegate(s => GameScreen.FocusAdminChat(_lobby.Chat)));
+
             UpdateLobbyUi();
 
             _lobby.CharacterPreview.CharacterSetupButton.OnPressed += args =>

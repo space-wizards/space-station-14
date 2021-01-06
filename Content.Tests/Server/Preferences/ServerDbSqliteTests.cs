@@ -18,7 +18,7 @@ using Robust.Shared.Localization.Macros;
 namespace Content.Tests.Server.Preferences
 {
     [TestFixture]
-    public class ServerDbSqliteTests : RobustUnitTest
+    public class ServerDbSqliteTests : ContentUnitTest
     {
         private static HumanoidCharacterProfile CharlieCharlieson()
         {
