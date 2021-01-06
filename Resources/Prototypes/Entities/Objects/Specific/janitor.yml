@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: BaseItem
   name: mop
   id: MopItem
@@ -13,7 +13,6 @@
   - type: Mop
   - type: SolutionContainer
     maxVol: 10
-    caps: AddTo, RemoveFrom
   - type: LoopingSound
 
 - type: entity
@@ -33,7 +32,6 @@
   - type: LoopingSound
   - type: SolutionContainer
     maxVol: 500
-    caps: AddTo, RemoveFrom
   - type: Physics
     mass: 5
     anchored: false
@@ -65,7 +63,6 @@
   - type: LoopingSound
   - type: SolutionContainer
     maxVol: 500
-    caps: AddTo, RemoveFrom
   - type: Physics
     mass: 5
     anchored: false
@@ -219,7 +216,6 @@
   components:
     - type: SolutionContainer
       maxVol: 100
-      caps: AddTo, RemoveFrom
       contents:
         reagents:
           - ReagentId: chem.Water
@@ -234,7 +230,6 @@
   components:
     - type: SolutionContainer
       maxVol: 100
-      caps: AddTo, RemoveFrom
       contents:
         reagents:
           - ReagentId: chem.SpaceCleaner

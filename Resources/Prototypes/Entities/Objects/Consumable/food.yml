@@ -6,7 +6,7 @@
   - type: Food
   - type: LoopingSound
   - type: SolutionContainer
-    caps: NoExamine
+    caps: None
   - type: Sprite
     state: icon
     netsync: false

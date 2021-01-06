@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Chemistry;
 using Content.Server.GameObjects.Components.GUI;
@@ -51,10 +51,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
         public ReagentUnit EmptyVolume => MaxVolume - CurrentVolume;
 
         public IReadOnlyList<Solution.ReagentQuantity> ReagentList => Solution.Contents;
-        public bool CanExamineContents => (Capabilities & SolutionContainerCaps.NoExamine) == 0;
-        public bool CanUseWithChemDispenser => (Capabilities & SolutionContainerCaps.FitsInDispenser) != 0;
-        public bool CanAddSolutions => (Capabilities & SolutionContainerCaps.AddTo) != 0;
-        public bool CanRemoveSolutions => (Capabilities & SolutionContainerCaps.RemoveFrom) != 0;
+        public bool CanExamineContents => Capabilities.HasCap(SolutionContainerCaps.CanExamine);
+        public bool CanUseWithChemDispenser => Capabilities.HasCap(SolutionContainerCaps.FitsInDispenser);
+        public bool CanAddSolutions => Capabilities.HasCap(SolutionContainerCaps.AddTo);
+        public bool CanRemoveSolutions => Capabilities.HasCap(SolutionContainerCaps.RemoveFrom);
 
         /// <inheritdoc />
         public override void ExposeData(ObjectSerializer serializer)
@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             serializer.DataField(this, x => x.MaxVolume, "maxVol", ReagentUnit.New(0));
             serializer.DataField(this, x => x.Solution, "contents", new Solution());
-            serializer.DataField(this, x => x.Capabilities, "caps", SolutionContainerCaps.AddTo | SolutionContainerCaps.RemoveFrom);
+            serializer.DataField(this, x => x.Capabilities, "caps", SolutionContainerCaps.AddTo | SolutionContainerCaps.RemoveFrom | SolutionContainerCaps.CanExamine);
             serializer.DataField(ref _fillInitState, "fillingState", string.Empty);
             serializer.DataField(ref _fillInitSteps, "fillingSteps", 7);
         }
@@ -134,35 +134,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         protected void RecalculateColor()
         {
-            if (Solution.TotalVolume == 0)
-            {
-                SubstanceColor = Color.Transparent;
-                return;
-            }
-
-            Color mixColor = default;
-            var runningTotalQuantity = ReagentUnit.New(0);
-
-            foreach (var reagent in Solution)
-            {
-                runningTotalQuantity += reagent.Quantity;
-
-                if (!_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
-                {
-                    continue;
-                }
-
-                if (mixColor == default)
-                {
-                    mixColor = proto.SubstanceColor;
-                    continue;
-                }
-
-                var interpolateValue = (1 / runningTotalQuantity.Float()) * reagent.Quantity.Float();
-                mixColor = Color.InterpolateBetween(mixColor, proto.SubstanceColor, interpolateValue);
-            }
-
-            SubstanceColor = mixColor;
+            SubstanceColor = Solution.Color;
         }
 
         /// <summary>
@@ -460,28 +432,14 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// <returns>Return true if the solution contains the reagent.</returns>
         public bool ContainsReagent(string reagentId, out ReagentUnit quantity)
         {
-            foreach (var reagent in Solution.Contents)
-            {
-                if (reagent.ReagentId == reagentId)
-                {
-                    quantity = reagent.Quantity;
-                    return true;
-                }
-            }
-
-            quantity = ReagentUnit.New(0);
-            return false;
+            var containsReagent = Solution.ContainsReagent(reagentId, out var quantityFound);
+            quantity = quantityFound;
+            return containsReagent;
         }
 
         public string GetMajorReagentId()
         {
-            if (Solution.Contents.Count == 0)
-            {
-                return "";
-            }
-
-            var majorReagent = Solution.Contents.OrderByDescending(reagent => reagent.Quantity).First();;
-            return majorReagent.ReagentId;
+            return Solution.GetPrimaryReagentId();
         }
 
         protected void UpdateFillIcon()
