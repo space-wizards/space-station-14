@@ -187,6 +187,7 @@ namespace Content.Client.UserInterface.Stylesheets
              Texture = new AtlasTexture(buttonTex, UIBox2.FromDimensions((0, 0), (14, 24))),
             };
             topButtonOpenRight.SetPatchMargin(StyleBox.Margin.Right, 0);
+            topButtonOpenRight.SetContentMarginOverride(StyleBox.Margin.Horizontal, 20);
             //topButtonOpenRight.SetContentMarginOverride(StyleBox.Margin.Right, 10);
             //topButtonOpenRight.SetPadding(StyleBox.Margin.Right, 2);
 
