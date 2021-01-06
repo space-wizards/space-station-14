@@ -125,6 +125,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             SetState(false);
             Activated = false;
             UpdateLightAction();
+            Owner.EntityManager.EventBus.QueueEvent(EventSource.Local, new DeactivateHandheldLightMessage(this));
 
             if (makeNoise)
             {
@@ -163,6 +164,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             Activated = true;
             UpdateLightAction();
             SetState(true);
+            Owner.EntityManager.EventBus.QueueEvent(EventSource.Local, new ActivateHandheldLightMessage(this));
 
             if (TurnOnSound != null) EntitySystem.Get<AudioSystem>().PlayFromEntity(TurnOnSound, Owner);
             return true;
@@ -281,6 +283,26 @@ namespace Content.Server.GameObjects.Components.Interactable
             if (!args.Item.TryGetComponent<HandheldLightComponent>(out var lightComponent)) return false;
             if (lightComponent.Activated == args.ToggledOn) return false;
             return lightComponent.ToggleStatus(args.Performer);
+        }
+    }
+
+    internal sealed class ActivateHandheldLightMessage : EntitySystemMessage
+    {
+        public HandheldLightComponent Component { get; }
+
+        public ActivateHandheldLightMessage(HandheldLightComponent component)
+        {
+            Component = component;
+        }
+    }
+
+    internal sealed class DeactivateHandheldLightMessage : EntitySystemMessage
+    {
+        public HandheldLightComponent Component { get; }
+
+        public DeactivateHandheldLightMessage(HandheldLightComponent component)
+        {
+            Component = component;
         }
     }
 }
