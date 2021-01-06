@@ -20,6 +20,12 @@ namespace Content.Server.GameObjects.EntitySystems
             SubscribeLocalEvent<DeactivateHandheldLightMessage>(HandleDeactivate);
         }
 
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            _activeLights.Clear();
+        }
+
         private void HandleActivate(ActivateHandheldLightMessage message)
         {
             _activeLights.Add(message.Component);
