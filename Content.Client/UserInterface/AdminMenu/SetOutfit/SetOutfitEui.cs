@@ -38,10 +38,5 @@ namespace Content.Client.UserInterface.AdminMenu.SetOutfit
             _window.TargetEntityId = outfitState.TargetEntityId;
 
         }
-
-        public override void HandleMessage(EuiMessageBase msg)
-        {
-
-        }
     }
 }
