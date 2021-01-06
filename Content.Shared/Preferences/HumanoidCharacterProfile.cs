@@ -219,11 +219,11 @@ namespace Content.Shared.Preferences
             };
 
             string name;
-            if(string.IsNullOrEmpty(profile.Name))
+            if (string.IsNullOrEmpty(profile.Name))
             {
                 name = "Urist McHands";
             }
-            else if(profile.Name.Length > MaxNameLength)
+            else if (profile.Name.Length > MaxNameLength)
             {
                 name = profile.Name[..MaxNameLength];
             }
