@@ -39,6 +39,7 @@ namespace Content.Client.GameObjects.Components
 
             _overlayEntity = Owner.EntityManager.SpawnEntity("LowWallOverlay", Owner.Transform.Coordinates);
             _overlayEntity.Transform.AttachParent(Owner);
+            _overlayEntity.Transform.LocalPosition = Vector2.Zero;
 
             _overlaySprite = _overlayEntity.GetComponent<ISpriteComponent>();
 

@@ -15,7 +15,8 @@
     sprite: Clothing/Back/Satchels/satchel.rsi
   - type: Storage
     capacity: 100
-
+    storageSoundCollection : storageRustle
+    
 - type: entity
   parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelEngineering
@@ -92,3 +93,21 @@
     sprite: Clothing/Back/Satchels/hydroponics.rsi
   - type: Clothing
     sprite: Clothing/Back/Satchels/hydroponics.rsi
+
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelHolding
+  name: satchel of holding
+  description: A satchel that opens into a localized pocket of bluespace.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/holding.rsi
+    state: icon
+    layers:
+    - state: icon
+    - state: icon-unlit
+      shader: unshaded
+  - type: Clothing
+    sprite: Clothing/Back/Satchels/holding.rsi
+  - type: Storage
+    capacity: 10000

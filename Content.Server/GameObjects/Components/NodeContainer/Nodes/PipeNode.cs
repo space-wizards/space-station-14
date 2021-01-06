@@ -1,6 +1,4 @@
-﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.Interfaces;
@@ -107,17 +105,30 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
                 var ownNeededConnection = pipeDirection;
                 var theirNeededConnection = ownNeededConnection.GetOpposite();
-                if (!_pipeDirection.HasFlag(ownNeededConnection))
+                if (!_pipeDirection.HasDirection(ownNeededConnection))
                 {
                     continue;
                 }
-                var pipeNodesInDirection = Owner.GetComponent<SnapGridComponent>()
-                    .GetInDir(pipeDirection.ToDirection())
-                    .Select(entity => entity.TryGetComponent<NodeContainerComponent>(out var container) ? container : null)
-                    .Where(container => container != null)
-                    .SelectMany(container => container.Nodes)
-                    .OfType<PipeNode>()
-                    .Where(pipeNode => pipeNode._pipeDirection.HasFlag(theirNeededConnection));
+
+                var pipeNodesInDirection = new List<PipeNode>();
+
+                var entities = Owner.GetComponent<SnapGridComponent>()
+                    .GetInDir(pipeDirection.ToDirection());
+
+                foreach (var entity in entities)
+                {
+                    if (entity.TryGetComponent<NodeContainerComponent>(out var container))
+                    {
+                        foreach (var node in container.Nodes)
+                        {
+                            if (node is PipeNode pipeNode && pipeNode._pipeDirection.HasDirection(theirNeededConnection))
+                            {
+                                pipeNodesInDirection.Add(pipeNode);
+                            }
+                        }
+                    }
+                }
+
                 foreach (var pipeNode in pipeNodesInDirection)
                 {
                     yield return pipeNode;

@@ -225,8 +225,12 @@ namespace Content.Client
             "MachineFrame",
             "MachineBoard",
             "ChemicalAmmo",
-            "ShaderAura",
-            "SingularityShaderAura",
+            "BiologicalSurgeryData",
+            "CargoTelepad",
+            "TraitorDeathMatchRedemption",
+            "GlassBeaker",
+            "DamageOtherOnHit",
+            "DamageOnLand"
         };
     }
 }

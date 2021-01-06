@@ -49,6 +49,7 @@
     visuals:
       - type: RadiationCollectorVisualizer
   - type: NodeContainer
+    examinable: true
     nodes:
     - !type:AdjacentNode
       nodeGroupID: HVPower

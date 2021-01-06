@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+#nullable enable
 using System.Collections.Generic;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.Suspicion;
@@ -7,15 +6,11 @@ using Content.Shared.GameObjects.Components.Suspicion;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.Graphics.Overlays;
-using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Players;
-using Robust.Shared.Prototypes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Suspicion
 {
@@ -30,6 +25,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
         private SuspicionGui? _gui;
         private string? _role;
         private bool? _antagonist;
+        private bool _overlayActive;
 
         public string? Role
         {
@@ -69,53 +65,28 @@ namespace Content.Client.GameObjects.Components.Suspicion
             }
         }
 
-        public HashSet<EntityUid> Allies { get; } = new();
-
-        private bool AddAlly(EntityUid ally)
-        {
-            if (!Allies.Add(ally))
-            {
-                return false;
-            }
-
-            if (!_overlayManager.TryGetOverlaysOfClass<TraitorOverlay>(out var overlays))
-            {
-                return false;
-            }
-            if(overlays.Count != 1)
-                Logger.Warning("There was more than one TraitorOverlay on EntityUid '{0}', is this intentional?", ally.ToString());
-            return overlays[0].AddAlly(ally);
-        }
-
-        private bool RemoveAlly(EntityUid ally)
-        {
-            if (!Allies.Remove(ally))
-            {
-                return false;
-            }
-
-            if (!_overlayManager.TryGetOverlaysOfClass<TraitorOverlay>(out var overlays))
-            {
-                return false;
-            }
-            if (overlays.Count != 1)
-                Logger.Warning("There was more than one TraitorOverlay on EntityUid '{0}', is this intentional?", ally.ToString());
-            return overlays[0].RemoveAlly(ally);
-        }
+        [ViewVariables]
+        public List<(string name, EntityUid uid)> Allies { get; } = new();
 
         private void AddTraitorOverlay()
         {
-            if (_overlayManager.HasOverlayOfClass(nameof(TraitorOverlay)))
+            if (_overlayManager.HasOverlayOfType<TraitorOverlay>())
             {
                 return;
             }
 
-            var overlay = new TraitorOverlay(Owner, Owner.EntityManager, _resourceCache, _eyeManager);
-            _overlayManager.AddOverlay(Guid.NewGuid(), overlay);
+            _overlayActive = true;
+            var overlay = new TraitorOverlay(Owner.EntityManager, _resourceCache, _eyeManager);
+            _overlayManager.AddOverlay(System.Guid.NewGuid(), overlay);
         }
 
         private void RemoveTraitorOverlay()
         {
+            if (!_overlayActive)
+            {
+                return;
+            }
+
             _overlayManager.RemoveOverlaysOfClass(nameof(TraitorOverlay));
         }
 
@@ -130,6 +101,8 @@ namespace Content.Client.GameObjects.Components.Suspicion
 
             Role = state.Role;
             Antagonist = state.Antagonist;
+            Allies.Clear();
+            Allies.AddRange(state.Allies);
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
@@ -161,36 +134,6 @@ namespace Content.Client.GameObjects.Components.Suspicion
                     _gui?.Parent?.RemoveChild(_gui);
                     RemoveTraitorOverlay();
                     break;
-            }
-        }
-
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
-        {
-            base.HandleNetworkMessage(message, netChannel, session);
-
-            switch (message)
-            {
-                case SuspicionAlliesMessage msg:
-                {
-                    Allies.Clear();
-
-                    foreach (var uid in msg.Allies)
-                    {
-                        AddAlly(uid);
-                    }
-
-                    break;
-                }
-                case SuspicionAllyAddedMessage msg:
-                {
-                    AddAlly(msg.Ally);
-                    break;
-                }
-                case SuspicionAllyRemovedMessage msg:
-                {
-                    RemoveAlly(msg.Ally);
-                    break;
-                }
             }
         }
 

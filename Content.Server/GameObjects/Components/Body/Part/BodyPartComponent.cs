@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.Commands;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Body;
@@ -96,7 +97,7 @@ namespace Content.Server.GameObjects.Components.Body.Part
             }
         }
 
-        public void AfterInteract(AfterInteractEventArgs eventArgs)
+        public async Task AfterInteract(AfterInteractEventArgs eventArgs)
         {
             // TODO BODY
             if (eventArgs.Target == null)

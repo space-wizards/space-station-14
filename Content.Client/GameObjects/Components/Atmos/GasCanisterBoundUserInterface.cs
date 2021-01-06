@@ -111,5 +111,12 @@ namespace Content.Client.GameObjects.Components.Atmos
 
             _window?.UpdateState(cast);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            if (!disposing) return;
+            _window?.Dispose();
+        }
     }
 }

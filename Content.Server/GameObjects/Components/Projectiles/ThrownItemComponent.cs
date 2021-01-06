@@ -1,8 +1,9 @@
-﻿using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.Physics;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Timers;
@@ -29,11 +30,11 @@ namespace Content.Server.GameObjects.Components.Projectiles
         /// <summary>
         ///     User who threw the item.
         /// </summary>
-        public IEntity User;
+        public IEntity User { get; set; }
 
         void ICollideBehavior.CollideWith(IEntity entity)
         {
-            if (!_shouldCollide) return;
+            if (!_shouldCollide || entity.Deleted) return;
             if (entity.TryGetComponent(out PhysicsComponent collid))
             {
                 if (!collid.Hard) // ignore non hard
@@ -97,6 +98,9 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
             var controller = comp.EnsureController<ThrownController>();
             controller.Push(direction, speed);
+
+            EntitySystem.Get<AudioSystem>()
+                .PlayFromEntity("/Audio/Effects/toss.ogg", Owner);
 
             StartStopTimer();
         }

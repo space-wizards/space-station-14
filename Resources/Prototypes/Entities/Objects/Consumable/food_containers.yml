@@ -258,10 +258,12 @@
   parent: FoodContainerBase
   name: monkey cube wrap
   id: FoodContainerMonkeyCubeWrap
+  description: Unwrap this to get a monkey cube.
   components:
   - type: FoodContainer
+    capacity: 1
     prototypes:
-      FoodMonkeyCube: 100
+      MonkeyCube: 100
   - type: Sprite
     sprite: Objects/Consumable/FoodContainers/monkeycubewrap.rsi
 

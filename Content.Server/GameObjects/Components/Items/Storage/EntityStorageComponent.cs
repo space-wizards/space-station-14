@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Linq;
 using System.Threading;
@@ -9,6 +9,7 @@ using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -469,7 +470,8 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 return;
             }
 
-            foreach (var entity in Contents.ContainedEntities)
+            var containedEntities = Contents.ContainedEntities.ToList();
+            foreach (var entity in containedEntities)
             {
                 var exActs = entity.GetAllComponents<IExAct>().ToArray();
                 foreach (var exAct in exActs)

@@ -27,7 +27,7 @@ namespace Content.Client.GameObjects.Components.Mobs
     [ComponentReference(typeof(SharedActionsComponent))]
     public sealed class ClientActionsComponent : SharedActionsComponent
     {
-        public const byte Hotbars = 10;
+        public const byte Hotbars = 9;
         public const byte Slots = 10;
 
         [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -104,6 +104,11 @@ namespace Content.Client.GameObjects.Components.Mobs
         public void HandleHotbarKeybind(byte slot, in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
             _ui?.HandleHotbarKeybind(slot, args);
+        }
+
+        public void HandleChangeHotbarKeybind(byte hotbar, in PointerInputCmdHandler.PointerInputCmdArgs args)
+        {
+            _ui?.HandleChangeHotbarKeybind(hotbar, args);
         }
 
         /// <summary>

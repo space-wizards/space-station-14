@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers;
 using JetBrains.Annotations;
@@ -9,7 +9,7 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     internal sealed class EmergencyLightSystem : EntitySystem
     {
-        private readonly List<EmergencyLightComponent> _activeLights = new();
+        private readonly HashSet<EmergencyLightComponent> _activeLights = new();
 
         public override void Initialize()
         {
@@ -21,19 +21,13 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             switch (message.State)
             {
+                case EmergencyLightComponent.EmergencyLightState.On:
                 case EmergencyLightComponent.EmergencyLightState.Charging:
-                    if (_activeLights.Contains(message.Component))
-                        _activeLights.Add(message.Component);
-
+                    _activeLights.Add(message.Component);
                     break;
                 case EmergencyLightComponent.EmergencyLightState.Full:
                 case EmergencyLightComponent.EmergencyLightState.Empty:
                     _activeLights.Remove(message.Component);
-                    break;
-                case EmergencyLightComponent.EmergencyLightState.On:
-                    if (!_activeLights.Contains(message.Component))
-                        _activeLights.Add(message.Component);
-
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -42,10 +36,9 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public override void Update(float frameTime)
         {
-            for (var i = _activeLights.Count - 1; i >= 0; i--)
+            foreach (var activeLight in _activeLights)
             {
-                var comp = _activeLights[i];
-                comp.OnUpdate(frameTime);
+                activeLight.OnUpdate(frameTime);
             }
         }
     }

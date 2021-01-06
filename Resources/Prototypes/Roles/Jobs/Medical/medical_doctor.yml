@@ -4,7 +4,7 @@
   positions: 3
   spawnPositions: 2
   startingGear: DoctorGear
-  department:
+  departments:
   - Medical
   icon: "MedicalDoctor"
   access:
@@ -21,3 +21,6 @@
     idcard: MedicalPDA
     ears: ClothingHeadsetMedical
     belt: ClothingBeltMedical
+  innerclothingskirt: ClothingUniformJumpskirtMedicalDoctor
+  satchel: ClothingBackpackSatchelMedicalFilled
+  duffelbag: ClothingBackpackDuffelMedicalFilled
