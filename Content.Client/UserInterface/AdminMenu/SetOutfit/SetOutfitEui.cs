@@ -18,7 +18,6 @@ namespace Content.Client.UserInterface.AdminMenu.SetOutfit
         private readonly SetOutfitMenu _window;
         public SetOutfitEui()
         {
-            IoCManager.InjectDependencies(this);
             _window = new SetOutfitMenu();
         }
 

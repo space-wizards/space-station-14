@@ -15,10 +15,10 @@ namespace Content.Server
     public sealed class SetOutfitEui : BaseEui
     {
         [Dependency] private readonly IAdminManager _adminManager = default!;
-        private readonly IEntity target;
+        private readonly IEntity _target;
         public SetOutfitEui(IEntity entity)
         {
-            target = entity;
+            _target = entity;
             IoCManager.InjectDependencies(this);
         }
 
@@ -39,7 +39,7 @@ namespace Content.Server
         {
             return new SetOutfitEuiState
             {
-                TargetEntityId = target.Uid.ToString()
+                TargetEntityId = _target.Uid
             };
         }
 

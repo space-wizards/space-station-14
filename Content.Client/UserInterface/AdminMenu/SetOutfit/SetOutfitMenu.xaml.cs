@@ -9,6 +9,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Client.Utility;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -23,7 +24,7 @@ namespace Content.Client.UserInterface.AdminMenu.SetOutfit
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IClientConsole _console = default!;
 
-        public string? TargetEntityId { get; set; }
+        public EntityUid? TargetEntityId { get; set; }
         protected override Vector2? CustomSize => (250, 320);
 
         private StartingGearPrototype? _selectedOutfit;
@@ -45,7 +46,7 @@ namespace Content.Client.UserInterface.AdminMenu.SetOutfit
 
         private void ConfirmButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
         {
-            if (string.IsNullOrEmpty(TargetEntityId) || _selectedOutfit == null)
+            if (TargetEntityId == null || _selectedOutfit == null)
                 return;
             var command = $"setoutfit {TargetEntityId} {_selectedOutfit.ID}";
             _console.ProcessCommand(command);

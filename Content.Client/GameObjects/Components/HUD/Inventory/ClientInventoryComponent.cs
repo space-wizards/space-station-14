@@ -243,42 +243,5 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 
             return false;
         }
-
-        [Verb]
-        private sealed class SetOutfitVerb : Verb<ClientInventoryComponent>
-        {
-            public override bool RequireInteractionRange => false;
-            public override bool BlockedByContainers => false;
-
-            protected override void GetData(IEntity user, ClientInventoryComponent component, VerbData data)
-            {
-                data.Visibility = VerbVisibility.Invisible;
-                var target = component.Owner;
-
-                if (!CanCommand()) //|| !target.HasComponent<ClientInventoryComponent>())
-                    return;
-
-                data.Visibility = VerbVisibility.Visible;
-                data.Text = Loc.GetString("Set Outfit");
-                data.CategoryData = VerbCategories.Debug;
-            }
-
-            protected override void Activate(IEntity user, ClientInventoryComponent component)
-            {
-                if (!CanCommand())
-                    return;
-                var console = IoCManager.Resolve<IClientConsole>();
-                var target = component.Owner;
-
-                var entityId = target.Uid.ToString();
-                console.ProcessCommand($"setoutfit {entityId}");
-            }
-
-            private static bool CanCommand()
-            {
-                var groupController = IoCManager.Resolve<IClientConGroupController>();
-                return groupController.CanCommand("setoutfit");
-            }
-        }
     }
 }

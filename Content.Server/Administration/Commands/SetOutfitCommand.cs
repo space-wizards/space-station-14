@@ -63,17 +63,11 @@ namespace Content.Server.Administration.Commands
             }
 
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            StartingGearPrototype startingGear;
-            try
-            {
-                startingGear = prototypeManager.Index<StartingGearPrototype>(args[1]);
-            }
-            catch (UnknownPrototypeException)
+            if (!prototypeManager.TryIndex<StartingGearPrototype>(args[1], out var startingGear))
             {
                 shell.SendText(player, Loc.GetString("Invalid outfit id"));
                 return;
             }
-
 
             foreach (var slot in inventoryComponent.Slots)
             {
