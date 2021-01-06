@@ -21,7 +21,7 @@ namespace Content.Server.Atmos
     [Serializable]
     public class GasMixture : IExposeData, IEquatable<GasMixture>, ICloneable
     {
-        private readonly AtmosphereSystem _atmosphereSystem;
+        private AtmosphereSystem? _atmosphereSystem;
 
         public static GasMixture SpaceGas => new() {Volume = 2500f, Immutable = true, Temperature = Atmospherics.TCMB};
 
@@ -56,6 +56,7 @@ namespace Content.Server.Atmos
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
+                _atmosphereSystem ??= EntitySystem.Get<AtmosphereSystem>();
                 Span<float> tmp = stackalloc float[_moles.Length];
                 NumericsHelpers.Multiply(_moles, _atmosphereSystem.GasSpecificHeats, tmp);
 
@@ -69,6 +70,7 @@ namespace Content.Server.Atmos
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
+                _atmosphereSystem ??= EntitySystem.Get<AtmosphereSystem>();
                 Span<float> tmp = stackalloc float[_moles.Length];
                 NumericsHelpers.Multiply(_molesArchived, _atmosphereSystem.GasSpecificHeats, tmp);
 
@@ -119,7 +121,7 @@ namespace Content.Server.Atmos
 
         public GasMixture(AtmosphereSystem? atmosphereSystem)
         {
-            _atmosphereSystem = atmosphereSystem ?? EntitySystem.Get<AtmosphereSystem>();
+            _atmosphereSystem = atmosphereSystem;
             _moles = new float[Atmospherics.AdjustedNumberOfGases];
             _molesArchived = new float[Atmospherics.AdjustedNumberOfGases];
         }
@@ -263,6 +265,7 @@ namespace Content.Server.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float Share(GasMixture sharer, int atmosAdjacentTurfs)
         {
+            _atmosphereSystem ??= EntitySystem.Get<AtmosphereSystem>();
             var temperatureDelta = TemperatureArchived - sharer.TemperatureArchived;
             var absTemperatureDelta = Math.Abs(temperatureDelta);
             var oldHeatCapacity = 0f;
@@ -486,6 +489,7 @@ namespace Content.Server.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ReactionResult React(IGasMixtureHolder holder)
         {
+            _atmosphereSystem ??= EntitySystem.Get<AtmosphereSystem>();
             var reaction = ReactionResult.NoReaction;
             var temperature = Temperature;
             var energy = ThermalEnergy;
