@@ -76,7 +76,7 @@ namespace Content.Client.Sandbox
             ShowMarkersButton = new Button { Text = Loc.GetString("Show Spawns"), ToggleMode = true };
             vBox.AddChild(ShowMarkersButton);
 
-            ShowBbButton = new Button { Text = Loc.GetString("Show Bb"), ToggleMode = true };
+            ShowBbButton = new Button { Text = Loc.GetString("Show BB"), ToggleMode = true };
             vBox.AddChild(ShowBbButton);
 
             MachineLinkingButton = new Button { Text = Loc.GetString("Link machines"), ToggleMode = true };

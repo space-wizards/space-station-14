@@ -17,8 +17,10 @@
     state: pda
   - type: Clothing
     QuickEquip: false
+    size: 10
     Slots:
     - idcard
+    - Belt
   - type: PointLight
     enabled: false
     radius: 3
@@ -350,3 +352,12 @@
         state: pda-security
   - type: Icon
     state: pda-security
+
+- type: entity
+  name: Centcom PDA
+  parent: AssistantPDA
+  id: CentcomPDA
+  description: Colored the numbing grey of bureaucracy.
+  components:
+  - type: PDA
+    idCard: CentcomIDCardSyndie

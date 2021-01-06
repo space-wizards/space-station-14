@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
+using Content.Shared.GameObjects.EntitySystems;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Damage
@@ -24,38 +25,26 @@ namespace Content.Shared.Damage
 
     public static class DamageTypeExtensions
     {
-        // TODO: Automatically generate this
-        private static readonly ImmutableDictionary<DamageType, DamageClass> TypeToClass =
-            new Dictionary<DamageType, DamageClass>
-            {
-                {DamageType.Blunt, DamageClass.Brute},
-                {DamageType.Slash, DamageClass.Brute},
-                {DamageType.Piercing, DamageClass.Brute},
-                {DamageType.Heat, DamageClass.Burn},
-                {DamageType.Shock, DamageClass.Burn},
-                {DamageType.Cold, DamageClass.Burn},
-                {DamageType.Poison, DamageClass.Toxin},
-                {DamageType.Radiation, DamageClass.Toxin},
-                {DamageType.Asphyxiation, DamageClass.Airloss},
-                {DamageType.Bloodloss, DamageClass.Airloss},
-                {DamageType.Cellular, DamageClass.Genetic}
-            }.ToImmutableDictionary();
-
         public static DamageClass ToClass(this DamageType type)
         {
-            return TypeToClass[type];
+            return DamageSystem.TypeToClass[type];
         }
 
-        public static Dictionary<DamageType, int> ToDictionary()
+        public static Dictionary<DamageType, T> ToNewDictionary<T>()
         {
             return Enum.GetValues(typeof(DamageType))
                 .Cast<DamageType>()
-                .ToDictionary(type => type, type => 0);
+                .ToDictionary(type => type, _ => default(T));
+        }
+
+        public static Dictionary<DamageType, int> ToNewDictionary()
+        {
+            return ToNewDictionary<int>();
         }
 
         public static Dictionary<DamageClass, int> ToClassDictionary(IReadOnlyDictionary<DamageType, int> types)
         {
-            var classes = DamageClassExtensions.ToDictionary();
+            var classes = DamageClassExtensions.ToNewDictionary();
 
             foreach (var @class in classes.Keys.ToList())
             {

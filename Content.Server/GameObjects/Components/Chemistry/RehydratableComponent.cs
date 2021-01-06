@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _catalystPrototype, "catalyst", "chem.H2O");
+            serializer.DataField(ref _catalystPrototype, "catalyst", "chem.Water");
             serializer.DataField(ref _targetPrototype, "target", null);
         }
 

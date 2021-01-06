@@ -1,0 +1,7 @@
+- type: latheRecipe
+  id: ButchCleaver
+  icon: Objects/Weapons/Melee/cleaver.rsi
+  result: ButchCleaver
+  completetime: 500
+  materials:
+    steel: 90

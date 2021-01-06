@@ -218,7 +218,7 @@
       maxVol: 100
       contents:
         reagents:
-          - ReagentId: chem.H2O
+          - ReagentId: chem.Water
             Quantity: 100
 
 - type: entity

@@ -7,6 +7,8 @@ using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Buckle;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
 using Content.Shared.Utility;
 using NUnit.Framework;
 using Robust.Shared.Interfaces.GameObjects;

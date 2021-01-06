@@ -12,6 +12,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Content.Server.GameObjects.Components.Items
 {
@@ -55,7 +56,7 @@ namespace Content.Server.GameObjects.Components.Items
             EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Items/genhit.ogg", location, AudioHelpers.WithVariation(0.125f));
         }
 
-        public void AfterInteract(AfterInteractEventArgs eventArgs)
+        public async Task AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return;
             if (!Owner.TryGetComponent(out StackComponent stack)) return;

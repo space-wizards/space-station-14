@@ -4,7 +4,7 @@
   positions: 3
   spawnPositions: 2
   startingGear: SecurityOfficerGear
-  department:
+  departments:
   - Security
   icon: "SecurityOfficer"
   access:
@@ -24,3 +24,6 @@
     idcard: SecurityPDA
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled
+  innerclothingskirt: ClothingUniformJumpskirtSec
+  satchel: ClothingBackpackSatchelSecurityFilled
+  duffelbag: ClothingBackpackDuffelSecurityFilled

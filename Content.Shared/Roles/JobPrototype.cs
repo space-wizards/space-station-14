@@ -42,7 +42,7 @@ namespace Content.Shared.Roles
 
         public JobSpecial Special { get; private set; }
 
-        public IReadOnlyCollection<string> Department { get; private set; }
+        public IReadOnlyCollection<string> Departments { get; private set; }
         public IReadOnlyCollection<string> Access { get; private set; }
 
         public void LoadFrom(YamlMappingNode mapping)
@@ -51,7 +51,7 @@ namespace Content.Shared.Roles
             ID = srz.ReadDataField<string>("id");
             Name = Loc.GetString(srz.ReadDataField<string>("name"));
             StartingGear = srz.ReadDataField<string>("startingGear");
-            Department = srz.ReadDataField<List<string>>("department");
+            Departments = srz.ReadDataField<List<string>>("departments");
             TotalPositions = srz.ReadDataField<int>("positions");
 
             srz.DataField(this, p => p.SpawnPositions, "spawnPositions", TotalPositions);

@@ -6,6 +6,7 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
@@ -50,11 +51,11 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// </summary>
         [ViewVariables]
         public ReagentUnit EmptyVolume => MaxVolume - CurrentVolume;
-
-        public bool CanExamineContents => (Capabilities & SolutionContainerCaps.NoExamine) == 0;
-        public bool CanUseWithChemDispenser => (Capabilities & SolutionContainerCaps.FitsInDispenser) != 0;
-        public bool CanAddSolutions => (Capabilities & SolutionContainerCaps.AddTo) != 0;
-        public bool CanRemoveSolutions => (Capabilities & SolutionContainerCaps.RemoveFrom) != 0;
+        public IReadOnlyList<Solution.ReagentQuantity> ReagentList => Solution.Contents;
+        public bool CanExamineContents => Capabilities.HasCap(SolutionContainerCaps.CanExamine);
+        public bool CanUseWithChemDispenser => Capabilities.HasCap(SolutionContainerCaps.FitsInDispenser);
+        public bool CanAddSolutions => Capabilities.HasCap(SolutionContainerCaps.AddTo);
+        public bool CanRemoveSolutions => Capabilities.HasCap(SolutionContainerCaps.RemoveFrom);
 
         /// <inheritdoc />
         public override void ExposeData(ObjectSerializer serializer)
@@ -63,7 +64,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             serializer.DataField(this, x => x.MaxVolume, "maxVol", ReagentUnit.New(0));
             serializer.DataField(this, x => x.Solution, "contents", new Solution());
-            serializer.DataField(this, x => x.Capabilities, "caps", SolutionContainerCaps.AddTo | SolutionContainerCaps.RemoveFrom);
+            serializer.DataField(this, x => x.Capabilities, "caps", SolutionContainerCaps.AddTo | SolutionContainerCaps.RemoveFrom | SolutionContainerCaps.CanExamine);
             serializer.DataField(ref _fillInitState, "fillingState", string.Empty);
             serializer.DataField(ref _fillInitSteps, "fillingSteps", 7);
         }
@@ -135,35 +136,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         protected void RecalculateColor()
         {
-            if (Solution.TotalVolume == 0)
-            {
-                SubstanceColor = Color.Transparent;
-                return;
-            }
-
-            Color mixColor = default;
-            var runningTotalQuantity = ReagentUnit.New(0);
-
-            foreach (var reagent in Solution)
-            {
-                runningTotalQuantity += reagent.Quantity;
-
-                if (!_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
-                {
-                    continue;
-                }
-
-                if (mixColor == default)
-                {
-                    mixColor = proto.SubstanceColor;
-                    continue;
-                }
-
-                var interpolateValue = (1 / runningTotalQuantity.Float()) * reagent.Quantity.Float();
-                mixColor = Color.InterpolateBetween(mixColor, proto.SubstanceColor, interpolateValue);
-            }
-
-            SubstanceColor = mixColor;
+            SubstanceColor = Solution.Color;
         }
 
         /// <summary>

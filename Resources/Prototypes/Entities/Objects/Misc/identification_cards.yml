@@ -7,7 +7,6 @@
   components:
   - type: Sprite
     sprite: Objects/Misc/id_cards.rsi
-
   - type: Clothing
     Slots:
     - idcard
@@ -26,9 +25,7 @@
   - type: Sprite
     layers:
     - state: default
-    - state: assigned
     - state: idassistant
-
   - type: PresetIdCard
     job: Assistant
 
@@ -40,9 +37,7 @@
   - type: Sprite
     layers:
     - state: gold
-    - state: assigned
     - state: idcaptain
-
   - type: Clothing
     HeldPrefix: gold
   - type: PresetIdCard
@@ -56,9 +51,7 @@
   - type: Sprite
     layers:
     - state: default
-    - state: assigned
     - state: idsecurityofficer
-
   - type: PresetIdCard
     job: SecurityOfficer
 
@@ -70,9 +63,7 @@
     - type: Sprite
       layers:
         - state: default
-        - state: assigned
         - state: idwarden
-
     - type: PresetIdCard
       job: Warden
 
@@ -84,9 +75,7 @@
   - type: Sprite
     layers:
     - state: default
-    - state: assigned
     - state: idstationengineer
-
   - type: PresetIdCard
     job: StationEngineer
 
@@ -98,9 +87,7 @@
   - type: Sprite
     layers:
     - state: default
-    - state: assigned
     - state: idmedicaldoctor
-
   - type: PresetIdCard
     job: MedicalDoctor
 
@@ -112,9 +99,7 @@
   - type: Sprite
     layers:
     - state: default
-    - state: assigned
     - state: idcargotechnician
-
   - type: PresetIdCard
     job: CargoTechnician
 
@@ -126,9 +111,7 @@
     - type: Sprite
       layers:
         - state: default
-        - state: assigned
         - state: idquartermaster
-
     - type: PresetIdCard
       job: Quartermaster
 
@@ -140,9 +123,7 @@
   - type: Sprite
     layers:
     - state: default
-    - state: assigned
     - state: idscientist
-
   - type: PresetIdCard
     job: Scientist
 
@@ -154,9 +135,7 @@
   - type: Sprite
     layers:
     - state: default
-    - state: assigned
     - state: idclown
-
   - type: PresetIdCard
     job: Clown
 
@@ -168,9 +147,7 @@
   - type: Sprite
     layers:
     - state: default
-    - state: assigned
     - state: idmime
-
   - type: PresetIdCard
     job: Mime
 
@@ -182,7 +159,7 @@
 #    - type: Sprite
 #      layers:
 #        - state: default
-#        - state: assigned
+#
 #        - state: idchaplain
 #
 #    - type: PresetIdCard
@@ -196,9 +173,7 @@
   - type: Sprite
     layers:
     - state: default
-    - state: assigned
     - state: idjanitor
-
   - type: PresetIdCard
     job: Janitor
 
@@ -210,9 +185,7 @@
   - type: Sprite
     layers:
     - state: default
-    - state: assigned
     - state: idbartender
-
   - type: PresetIdCard
     job: Bartender
 
@@ -224,9 +197,7 @@
   - type: Sprite
     layers:
     - state: default
-    - state: assigned
     - state: idcook
-
   - type: PresetIdCard
     job: Chef
 
@@ -238,12 +209,9 @@
     - type: Sprite
       layers:
         - state: default
-        - state: assigned
         - state: idbotanist
-
     - type: PresetIdCard
       job: Botanist
-
 
 - type: entity
   parent: IDCardStandard
@@ -253,9 +221,7 @@
   - type: Sprite
     layers:
     - state: silver
-    - state: assigned
     - state: idheadofpersonnel
-
   - type: Clothing
     HeldPrefix: silver
   - type: PresetIdCard
@@ -269,9 +235,7 @@
   - type: Sprite
     layers:
     - state: silver
-    - state: assigned
     - state: idchiefengineer
-
   - type: Clothing
     HeldPrefix: silver
   - type: PresetIdCard
@@ -285,9 +249,7 @@
   - type: Sprite
     layers:
     - state: silver
-    - state: assigned
     - state: idchiefmedicalofficer
-
   - type: Clothing
     HeldPrefix: silver
   - type: PresetIdCard
@@ -301,9 +263,7 @@
   - type: Sprite
     layers:
     - state: silver
-    - state: assigned
     - state: idresearchdirector
-
   - type: Clothing
     HeldPrefix: silver
   - type: PresetIdCard
@@ -317,9 +277,7 @@
   - type: Sprite
     layers:
     - state: silver
-    - state: assigned
     - state: idheadofsecurity
-
   - type: Clothing
     HeldPrefix: silver
   - type: PresetIdCard
@@ -333,9 +291,7 @@
   - type: Sprite
     layers:
     - state: gold
-    - state: assigned
     - state: idcentcom
-
   - type: Clothing
     HeldPrefix: gold
   - type: IdCard
@@ -364,3 +320,19 @@
     - Kitchen
     - Janitor
     - Theatre
+
+- type: entity
+  parent: IDCardStandard
+  id: CentcomIDCardSyndie
+  name: Centcom ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: centcom
+  - type: Clothing
+    HeldPrefix: blue
+  - type: IdCard
+    jobTitle: Central Commander
+  - type: Access
+    tags:
+    - Maintenance

@@ -61,7 +61,12 @@
   - type: Destructible
     thresholds:
       500:
-        Acts: ["Destruction"]
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+  - type: IconSmooth
+    key: walls
+    mode: NoSprite
   placement:
     mode: SnapgridCenter
 

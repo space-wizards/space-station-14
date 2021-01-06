@@ -21,6 +21,7 @@ using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Resources;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Network;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -40,6 +41,7 @@ namespace Content.Server.Administration
         [Dependency] private readonly IChatManager _chat = default!;
 
         private readonly Dictionary<IPlayerSession, AdminReg> _admins = new();
+        private readonly HashSet<NetUserId> _promotedPlayers = new();
 
         public event Action<AdminPermsChangedEventArgs>? OnPermsChanged;
 
@@ -227,6 +229,13 @@ namespace Content.Server.Administration
             }
         }
 
+        public void PromoteHost(IPlayerSession player)
+        {
+            _promotedPlayers.Add(player.UserId);
+
+            ReloadAdmin(player);
+        }
+
         void IPostInjectInit.PostInject()
         {
             _playerManager.PlayerStatusChanged += PlayerStatusChanged;
@@ -309,7 +318,7 @@ namespace Content.Server.Administration
 
         private async Task<(AdminData dat, int? rankId, bool specialLogin)?> LoadAdminData(IPlayerSession session)
         {
-            if (IsLocal(session) && _cfg.GetCVar(CCVars.ConsoleLoginLocal))
+            if (IsLocal(session) && _cfg.GetCVar(CCVars.ConsoleLoginLocal) || _promotedPlayers.Contains(session.UserId))
             {
                 var data = new AdminData
                 {
@@ -463,7 +472,7 @@ namespace Content.Server.Administration
             public AdminData Data;
             public int? RankId;
 
-            // Such as console.loginlocal
+            // Such as console.loginlocal or promotehost
             public bool IsSpecialLogin;
 
             public AdminReg(IPlayerSession session, AdminData data)

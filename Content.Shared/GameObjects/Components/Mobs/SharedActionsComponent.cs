@@ -265,6 +265,10 @@ namespace Content.Shared.GameObjects.Components.Mobs
                 return;
 
             itemStates.Remove(actionType);
+            if (itemStates.Count == 0)
+            {
+                _itemActions.Remove(item);
+            }
             AfterActionChanged();
             Dirty();
         }

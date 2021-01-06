@@ -30,6 +30,7 @@
     sprite: Constructible/Power/power.rsi
     state: generator
   - type: NodeContainer
+    examinable: true
     nodes:
     - !type:AdjacentNode
       nodeGroupID: HVPower
@@ -80,6 +81,7 @@
     maxCharge: 1000
     startingCharge: 1000
   - type: NodeContainer
+    examinable: true
     nodes:
     - !type:AdjacentNode
       nodeGroupID: HVPower
@@ -131,6 +133,7 @@
     maxCharge: 1000
     startingCharge: 1000
   - type: NodeContainer
+    examinable: true
     nodes:
     - !type:AdjacentNode
       nodeGroupID: HVPower
@@ -155,6 +158,8 @@
     mode: SnapgridCenter
   components:
   - type: Clickable
+  - type: AccessReader
+    access: [["Engineering"]]
   - type: InteractionOutline
   - type: Physics
     shapes:
@@ -175,6 +180,7 @@
     maxCharge: 10000
     startingCharge: 10000
   - type: NodeContainer
+    examinable: true
     nodes:
     - !type:AdjacentNode
       nodeGroupID: MVPower
@@ -224,6 +230,7 @@
     sprite: Constructible/Power/solar_panel.rsi
     state: normal
   - type: NodeContainer
+    examinable: true
     nodes:
     - !type:AdjacentNode
       nodeGroupID: HVPower
@@ -237,6 +244,8 @@
   - type: Destructible
     thresholds:
       100:
-        Acts: ["Breakage"]
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Breakage"]
   - type: Anchorable
   - type: Pullable
