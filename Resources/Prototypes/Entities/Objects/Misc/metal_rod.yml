@@ -10,9 +10,8 @@
     - type: Item
       size: 24
       icon:
-        sprite: /Textures/Constructible/Structures/Walls/materials.rsi
+        sprite: Objects/Materials/materials.rsi
         state: rods
-      prefix: inhand
     - type: Construction
       graph: metalRod
       node: MetalRod
