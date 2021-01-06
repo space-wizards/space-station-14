@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -48,6 +50,17 @@ namespace Content.Server.GameObjects.Components.NodeContainer
             }
         }
 
+        public override void HandleMessage(ComponentMessage message, IComponent component)
+        {
+            base.HandleMessage(message, component);
+            switch (message)
+            {
+                case AnchoredChangedMessage:
+                    AnchorUpdate();
+                    break;
+            }
+        }
+
         public override void OnRemove()
         {
             foreach (var node in _nodes)
@@ -55,6 +68,14 @@ namespace Content.Server.GameObjects.Components.NodeContainer
                 node.OnContainerRemove();
             }
             base.OnRemove();
+        }
+
+        private void AnchorUpdate()
+        {
+            foreach (var node in Nodes)
+            {
+                node.AnchorUpdate();
+            }
         }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
