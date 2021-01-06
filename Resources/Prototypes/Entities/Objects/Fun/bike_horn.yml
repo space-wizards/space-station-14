@@ -7,17 +7,15 @@
   - type: Sprite
     sprite: Objects/Fun/bikehorn.rsi
     state: icon
-
-
-
-  - type: Item
-    size: 5
+  - type: Clothing
     sprite: Objects/Fun/bikehorn.rsi
+    size: 5
+    Slots:
+      - Belt
+    QuickEquip: false
   - type: ItemCooldown
-
   - type: EmitSoundOnUse
     sound: /Audio/Items/bikehorn.ogg
     semitoneVariation: 6
-
   - type: UseDelay
     delay: 0.5

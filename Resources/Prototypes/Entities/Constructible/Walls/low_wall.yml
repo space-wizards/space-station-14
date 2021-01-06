@@ -25,10 +25,16 @@
       layer:
       - VaultImpassable
       - SmallImpassable
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+      100:
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
   - type: BreakableConstruction
     node: start
-    deadThreshold: 100
-    resistances: metallicResistances
   - type: SnapGrid
     offset: Center
   - type: Climbable

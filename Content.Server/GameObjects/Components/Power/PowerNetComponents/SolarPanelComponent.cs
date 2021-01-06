@@ -4,7 +4,6 @@ using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Timing;
-using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -73,10 +72,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         {
             base.Initialize();
 
-            if (!Owner.EnsureComponent(out PowerSupplierComponent _))
-            {
-                Logger.Warning($"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(PowerSupplierComponent)}");
-            }
+            Owner.EnsureComponentWarn(out PowerSupplierComponent _);
 
             UpdateSupply();
         }

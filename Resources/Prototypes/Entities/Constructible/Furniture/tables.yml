@@ -35,14 +35,21 @@
     sprite: Constructible/Structures/Tables/generic.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/generic.rsi
-  - type: Destructible
-    deadThreshold: 15
-    destroySound: /Audio/Effects/metalbreak.ogg
+  - type: Damageable
     resistances: metallicResistances
-    spawnOnDestroy:
-      SteelSheet1:
-        Min: 1
-        Max: 1
+  - type: Destructible
+    thresholds:
+      15:
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound: /Audio/Effects/metalbreak.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SteelSheet1:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
 
 - type: entity
   id: TableFrame
@@ -54,14 +61,21 @@
     sprite: Constructible/Structures/Tables/frame.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/frame.rsi
-  - type: Destructible
-    deadThreshold: 1
-    destroySound: /Audio/Effects/metalbreak.ogg
+  - type: Damageable
     resistances: metallicResistances
-    spawnOnDestroy:
-      SteelSheet1:
-        Min: 1
-        Max: 1
+  - type: Destructible
+    thresholds:
+      1:
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound: /Audio/Effects/metalbreak.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SteelSheet1:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: Construction
     graph: Tables
     node: TableFrame
@@ -76,14 +90,21 @@
     sprite: Constructible/Structures/Tables/bar.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/bar.rsi
-  - type: Destructible
-    deadThreshold: 1
-    destroySound: /Audio/Effects/metalbreak.ogg
+  - type: Damageable
     resistances: metallicResistances
-    spawnOnDestroy:
-      SteelSheet1:
-        Min: 1
-        Max: 1
+  - type: Destructible
+    thresholds:
+      1:
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound: /Audio/Effects/metalbreak.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SteelSheet1:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
 
 - type: entity
   id: TableMetal
@@ -95,14 +116,21 @@
     sprite: Constructible/Structures/Tables/metal.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/metal.rsi
-  - type: Destructible
-    deadThreshold: 15
-    destroySound: /Audio/Effects/metalbreak.ogg
+  - type: Damageable
     resistances: metallicResistances
-    spawnOnDestroy:
-      SteelSheet1:
-        Min: 1
-        Max: 1
+  - type: Destructible
+    thresholds:
+      15:
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound: /Audio/Effects/metalbreak.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SteelSheet1:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: Construction
     graph: Tables
     node: MetalTable
@@ -117,14 +145,21 @@
     sprite: Constructible/Structures/Tables/reinforced.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/reinforced.rsi
-  - type: Destructible
-    deadThreshold: 75
-    destroySound: /Audio/Effects/metalbreak.ogg
+  - type: Damageable
     resistances: metallicResistances
-    spawnOnDestroy:
-      SteelSheet1:
-        Min: 1
-        Max: 1
+  - type: Destructible
+    thresholds:
+      75:
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound: /Audio/Effects/metalbreak.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SteelSheet1:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: Construction
     graph: Tables
     node: ReinforcedTable
@@ -139,14 +174,21 @@
     sprite: Constructible/Structures/Tables/glass.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/glass.rsi
-  - type: Destructible
-    deadThreshold: 5
-    destroySound: /Audio/Effects/glass_break2.ogg
+  - type: Damageable
     resistances: metallicResistances
-    spawnOnDestroy:
-      ShardGlass:
-        Min: 1
-        Max: 1
+  - type: Destructible
+    thresholds:
+      5:
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound: /Audio/Effects/glass_break2.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            ShardGlass:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: Construction
     graph: Tables
     node: GlassTable
@@ -161,14 +203,21 @@
     sprite: Constructible/Structures/Tables/r_glass.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/r_glass.rsi
-  - type: Destructible
-    deadThreshold: 20
-    destroySound: /Audio/Effects/glass_break2.ogg
+  - type: Damageable
     resistances: metallicResistances
-    spawnOnDestroy:
-      ShardGlass:
-        Min: 1
-        Max: 1
+  - type: Destructible
+    thresholds:
+      20:
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound: /Audio/Effects/glass_break2.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            ShardGlass:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: Construction
     graph: Tables
     node: RGlassTable
@@ -183,14 +232,21 @@
     sprite: Constructible/Structures/Tables/wood.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/wood.rsi
-  - type: Destructible
-    deadThreshold: 15
-    destroySound: /Audio/Effects/woodhit.ogg
+  - type: Damageable
     resistances: metallicResistances
-    spawnOnDestroy:
-      WoodPlank:
-        Min: 1
-        Max: 1
+  - type: Destructible
+    thresholds:
+      15:
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound: /Audio/Effects/woodhit.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            WoodPlank:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: Construction
     graph: Tables
     node: WoodTable
@@ -205,14 +261,21 @@
     sprite: Constructible/Structures/Tables/carpet.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/carpet.rsi
-  - type: Destructible
-    deadThreshold: 15
-    destroySound: /Audio/Effects/woodhit.ogg
+  - type: Damageable
     resistances: metallicResistances
-    spawnOnDestroy:
-      WoodPlank:
-        Min: 1
-        Max: 1
+  - type: Destructible
+    thresholds:
+      15:
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound: /Audio/Effects/woodhit.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            WoodPlank:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: Construction
     graph: Tables
     node: PokerTable
@@ -227,10 +290,16 @@
     sprite: Constructible/Structures/Tables/stone.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/stone.rsi
-  - type: Destructible
-    deadThreshold: 50
-    destroySound: /Audio/Effects/picaxe2.ogg
+  - type: Damageable
     resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+      50:
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound: /Audio/Effects/picaxe2.ogg
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
 
 - type: entity
   id: TableDebug
@@ -242,6 +311,11 @@
     sprite: Constructible/Structures/Tables/debug.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/debug.rsi
-  - type: Destructible
-    deadThreshold: 1
+  - type: Damageable
     resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+      1:
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]

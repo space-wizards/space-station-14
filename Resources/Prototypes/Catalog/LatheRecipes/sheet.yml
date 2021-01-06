@@ -6,14 +6,14 @@
   result: SteelSheet1
   completetime: 500
   materials:
-    steel: 3750
+    steel: 100
 
 - type: latheRecipe
   id: GlassStack
-  icon: 
+  icon:
     sprite: Objects/Materials/sheets.rsi
     state: glass
   result: GlassSheet1
   completetime: 500
   materials:
-    glass: 3750
+    glass: 100

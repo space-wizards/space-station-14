@@ -19,21 +19,19 @@ namespace Content.Server.Commands.Alerts
 
         public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
         {
-            var attachedEntity = player?.AttachedEntity;
-
-            if (attachedEntity == null)
+            if (player?.AttachedEntity == null)
             {
                 shell.SendText(player, "You don't have an entity.");
                 return;
             }
+
+            var attachedEntity = player.AttachedEntity;
 
             if (args.Length > 1)
             {
                 var target = args[1];
                 if (!CommandUtils.TryGetAttachedEntityByUsernameOrId(shell, target, player, out attachedEntity)) return;
             }
-
-            if (!CommandUtils.ValidateAttachedEntity(shell, player, attachedEntity)) return;
 
             if (!attachedEntity.TryGetComponent(out ServerAlertsComponent? alertsComponent))
             {

@@ -7,6 +7,8 @@ using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.Containers;
@@ -25,6 +27,7 @@ using static Content.Shared.GameObjects.Components.Inventory.SharedInventoryComp
 namespace Content.Server.GameObjects.Components.GUI
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedInventoryComponent))]
     public class InventoryComponent : SharedInventoryComponent, IExAct, IEffectBlocker, IPressureProtection
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
@@ -571,6 +574,21 @@ namespace Content.Server.GameObjects.Components.GUI
                     }
                 }
             }
+        }
+
+        public override bool IsEquipped(IEntity item)
+        {
+            if (item == null) return false;
+            foreach (var containerSlot in _slotContainers.Values)
+            {
+                // we don't want a recursive check here
+                if (containerSlot.Contains(item))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

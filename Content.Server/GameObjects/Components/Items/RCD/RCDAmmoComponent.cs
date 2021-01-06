@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
@@ -31,7 +32,7 @@ namespace Content.Server.GameObjects.Components.Items.RCD
             message.AddMarkup(Loc.GetString("It holds {0} charges.", refillAmmo));
         }
 
-        void IAfterInteract.AfterInteract(AfterInteractEventArgs   eventArgs)
+        public async Task AfterInteract(AfterInteractEventArgs   eventArgs)
         {
             if (eventArgs.Target == null || !eventArgs.Target.TryGetComponent(out RCDComponent rcdComponent) || !eventArgs.User.TryGetComponent(out IHandsComponent hands))
             {

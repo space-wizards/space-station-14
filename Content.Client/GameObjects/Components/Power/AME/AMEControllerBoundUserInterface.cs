@@ -1,9 +1,12 @@
-﻿using Robust.Client.GameObjects.Components.UserInterface;
+﻿using Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser;
+using JetBrains.Annotations;
+using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using static Content.Shared.GameObjects.Components.Power.AME.SharedAMEControllerComponent;
 
 namespace Content.Client.GameObjects.Components.Power.AME
 {
+    [UsedImplicitly]
     public class AMEControllerBoundUserInterface : BoundUserInterface
     {
         private AMEWindow _window;

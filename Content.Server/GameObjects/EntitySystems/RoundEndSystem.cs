@@ -3,6 +3,7 @@ using System.Threading;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.GameTicking;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -48,6 +49,10 @@ namespace Content.Server.GameObjects.EntitySystems
 
             IsRoundEndCountdownStarted = true;
 
+            _chatManager.DispatchStationAnnouncement(Loc.GetString("An emergency shuttle has been sent. ETA: {0} minutes.", RoundEndCountdownTime.Minutes), Loc.GetString("Station"));
+
+            Get<AudioSystem>().PlayGlobal("/Audio/Announcements/shuttlecalled.ogg");
+
             ExpectedCountdownEnd = _gameTiming.CurTime + RoundEndCountdownTime;
             Timer.Spawn(RoundEndCountdownTime, EndRound, _roundEndCancellationTokenSource.Token);
             OnRoundEndCountdownStarted?.Invoke();
@@ -59,6 +64,10 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
 
             IsRoundEndCountdownStarted = false;
+
+            _chatManager.DispatchStationAnnouncement(Loc.GetString("The emergency shuttle has been recalled."), Loc.GetString("Station"));
+
+            Get<AudioSystem>().PlayGlobal("/Audio/Announcements/shuttlerecalled.ogg");
 
             _roundEndCancellationTokenSource.Cancel();
             _roundEndCancellationTokenSource = new CancellationTokenSource();

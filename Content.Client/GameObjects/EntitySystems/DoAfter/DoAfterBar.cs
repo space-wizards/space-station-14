@@ -117,7 +117,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
             var box = new UIBox2i(
                 leftOffset,
                 -2 + 2 * DoAfterBarScale,
-            leftOffset + (int) (XPixelDiff * Ratio),
+            leftOffset + (int) (XPixelDiff * Ratio * UIScale),
             -2);
             handle.DrawRect(box, color);
         }

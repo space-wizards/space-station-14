@@ -1,7 +1,7 @@
-root = true
+﻿root = true
 [*]
 
-charset = utf-8-bom
+charset = utf-8
 
 # Indentation and spacing
 indent_size = 4
