@@ -16,13 +16,11 @@
     capacity: 30
 
 - type: entity
-  parent: ClothingBackpackDuffelSyndicate
+  parent: ClothingBackpackDuffelSyndicateMedical
   id: ClothingBackpackDuffelSyndicateFilledMedical
   name: syndicate surgical duffelbag
   description: "A large duffel bag for holding extra medical supplies - this one seems to be designed for holding surgical tools."
   components:
-  - type: Sprite
-    state: icon-med
   - type: StorageFill
     contents:
       - name: Hemostat
@@ -35,13 +33,11 @@
     capacity: 30
 
 - type: entity
-  parent: ClothingBackpackDuffelSyndicate
+  parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateFilledShotgun
   name: Bojevic bundle
   description: "Lean and mean: Contains the popular Bojevic Shotgun, a 12g beanbag drum and 2 12g buckshot drums." #, and a pair of Thermal Imaging Goggles.
   components:
-  - type: Sprite
-    state: icon-ammo
   - type: StorageFill
     contents:
       - name: ShotgunBojevic
@@ -52,13 +48,11 @@
     capacity: 100
 
 - type: entity
-  parent: ClothingBackpackDuffelSyndicate
+  parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateFilledSMG
   name: C-20r bundle
   description: "Old faithful: The classic C-20r Submachine Gun, bundled with three magazines." #, and a Suppressor.
   components:
-  - type: Sprite
-    state: icon-ammo
   - type: StorageFill
     contents:
       - name: SmgC20r
@@ -69,13 +63,11 @@
     capacity: 100
 
 - type: entity
-  parent: ClothingBackpackDuffelSyndicate
+  parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateFilledLMG
   name: L6 Saw bundle
   description: "More dakka: The iconic L6 lightmachinegun, bundled with 2 box magazines."
   components:
-  - type: Sprite
-    state: icon-ammo
   - type: StorageFill
     contents:
       - name: LMGL6
@@ -84,13 +76,11 @@
     capacity: 100
 
 - type: entity
-  parent: ClothingBackpackDuffelSyndicate
+  parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateFilledGrenadeLauncher
   name: China-Lake bundle
   description: "An old China-Lake grenade launcher bundled with 9 rounds of various destruction capability."
   components:
-  - type: Sprite
-    state: icon-ammo
   - type: StorageFill
     contents:
       - name: LauncherChinaLake
