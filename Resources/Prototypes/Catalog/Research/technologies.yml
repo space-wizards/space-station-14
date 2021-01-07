@@ -41,7 +41,7 @@
 
 # Chemistry Technology Tree
 
-type: technology
+- type: technology
   name: "chemistry technology"
   id: ChemistryTechnology
   description: A crash course in chemistry.
