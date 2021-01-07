@@ -49,6 +49,8 @@ namespace Content.Shared.Chemistry
 
             if (_moduleManager.IsServerModule)
             {
+                //TODO: Don't have a check for if this is the server
+                //Some implementations of IReactionEffect can't currently be moved to shared, so this is here to prevent the client from breaking when reading server-only IReactionEffects.
                 serializer.DataField(ref _effects, "effects", new List<IReactionEffect>());
             }
         }
