@@ -24,9 +24,6 @@
       sprite: Objects/Tanks/yellow.rsi
     - type: Clothing
       sprite: Objects/Tanks/yellow.rsi
-      Slots:
-        - Back
-        - Belt
 
 - type: entity
   id: RedOxygenTankFilled
@@ -39,9 +36,6 @@
       sprite: Objects/Tanks/red.rsi
     - type: Clothing
       sprite: Objects/Tanks/red.rsi
-      Slots:
-        - Back
-        - Belt
 
 - type: entity
   id: EmergencyOxygenTankFilled
@@ -107,8 +101,6 @@
         temperature: 293.15
     - type: Clothing
       sprite: Objects/Tanks/generic.rsi
-      Slots:
-        - Back
 
 - type: entity
   id: PhoronTankFilled

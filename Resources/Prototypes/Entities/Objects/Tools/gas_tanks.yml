@@ -15,9 +15,6 @@
     - type: Clothing
       sprite: Objects/Tanks/generic.rsi
       QuickEquip: false
-      Slots:
-        - Back
-        - Belt
     - type: GasTank
     - type: ItemActions
       actions:
@@ -41,7 +38,6 @@
       sprite: Objects/Tanks/oxygen.rsi
       Slots:
         - Back
-        - Belt
 
 - type: entity
   id: YellowOxygenTank
@@ -56,7 +52,6 @@
       sprite: Objects/Tanks/yellow.rsi
       Slots:
         - Back
-        - Belt
 
 - type: entity
   id: RedOxygenTank
@@ -71,7 +66,6 @@
       sprite: Objects/Tanks/red.rsi
       Slots:
         - Back
-        - Belt
 
 - type: entity
   id: EmergencyOxygenTank
@@ -151,7 +145,6 @@
       sprite: Objects/Tanks/generic.rsi
       Slots:
         - Back
-        - Belt
 
 - type: entity
   id: PhoronTank
