@@ -47,6 +47,8 @@ namespace Content.Server.GameObjects.Components
 
                 _placeCentered = value;
 
+                Dirty();
+
             }
         }
 
@@ -62,6 +64,8 @@ namespace Content.Server.GameObjects.Components
                 }
 
                 _positionOffset = value;
+
+                Dirty();
 
             }
         }
