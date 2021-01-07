@@ -16,12 +16,13 @@
     bodyType: Static
     mass: 25
     fixtures:
-    - shape: !type:PolygonShape {}
-      vertices:
-      - "-0.5, -0.5"
-      - "0.5, -0.5"
-      - "0.5, 0.5"
-      - "-0.5, 0.5"
+    - shape:
+        !type:PolygonShape
+          vertices:
+          - "-0.5, -0.5"
+          - "0.5, -0.5"
+          - "0.5, 0.5"
+          - "-0.5, 0.5"
       mask:
       - Impassable
       - MobImpassable

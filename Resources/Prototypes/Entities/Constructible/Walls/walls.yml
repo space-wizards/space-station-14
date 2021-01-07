@@ -20,12 +20,13 @@
     bodyType: Static
     mass: 100
     fixtures:
-    - shape: !type:PolygonShape {}
-      vertices:
-      - "-0.5, -0.5"
-      - "0.5, -0.5"
-      - "0.5, 0.5"
-      - "-0.5, 0.5"
+    - shape:
+        !type:PolygonShape
+          vertices:
+          - "-0.5, -0.5"
+          - "0.5, -0.5"
+          - "0.5, 0.5"
+          - "-0.5, 0.5"
       layer:
       - Opaque
       - Impassable

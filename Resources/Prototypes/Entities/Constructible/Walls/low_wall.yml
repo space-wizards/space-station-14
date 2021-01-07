@@ -23,15 +23,13 @@
     bodyType: Static
     mass: 50
     fixtures:
-    - shape: 
+    - shape:
         !type:PolygonShape
-        vertices: "0.5, 0.5"
-        #- 0.5, 0.5
-        #- 0.5, 0.5
-        #- "-0.5, -0.5"
-        #- "0.5, -0.5"
-        #- "0.5, 0.5"
-        #- "-0.5, 0.5"
+          vertices:
+          - "-0.5, -0.5"
+          - "0.5, -0.5"
+          - "0.5, 0.5"
+          - "-0.5, 0.5"
       layer:
       - VaultImpassable
       - SmallImpassable
