@@ -1,5 +1,5 @@
 - type: entity
-  name: Bedsheet Spawner
+  name: Random Sheet Spawner
   id: BedsheetSpawner
   components:
     - type: Sprite
