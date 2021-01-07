@@ -30,6 +30,6 @@
         - BedsheetGrey
         - BedsheetWhite
         - BedsheetRainbow
-      chance: 0.5
+      chance: 0.97
   placement:
     mode: AlignTileAny
