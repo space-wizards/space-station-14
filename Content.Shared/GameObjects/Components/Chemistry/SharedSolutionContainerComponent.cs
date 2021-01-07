@@ -1,126 +1,147 @@
-﻿#nullable enable
-using System;
+#nullable enable
 using Content.Shared.Chemistry;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
+using System.Collections.Generic;
 
 namespace Content.Shared.GameObjects.Components.Chemistry
 {
-    public abstract class SharedSolutionContainerComponent : Component
+    public abstract class SharedSolutionContainerComponent : Component, IExamine
     {
         public override string Name => "SolutionContainer";
 
         /// <inheritdoc />
         public sealed override uint? NetID => ContentNetIDs.SOLUTION;
 
-        private Solution _solution = new();
-        private ReagentUnit _maxVolume;
-        private Color _substanceColor;
-
-        /// <summary>
-        ///     The contained solution.
-        /// </summary>
         [ViewVariables]
-        public Solution Solution
-        {
-            get => _solution;
-            set
-            {
-                if (_solution == value)
-                {
-                    return;
-                }
+        public Solution Solution { get => _solution; set => _solution = value; }
+        private Solution _solution = new();
 
-                _solution = value;
-                Dirty();
-            }
-        }
+        public IReadOnlyList<Solution.ReagentQuantity> ReagentList => Solution.Contents;
 
-        /// <summary>
-        ///     The total volume of all the of the reagents in the container.
-        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public ReagentUnit MaxVolume { get => _maxVolume; set => _maxVolume = value; }
+        private ReagentUnit _maxVolume;
+
         [ViewVariables]
         public ReagentUnit CurrentVolume => Solution.TotalVolume;
 
-        /// <summary>
-        ///     The maximum volume of the container.
-        /// </summary>
+        [ViewVariables]
+        public ReagentUnit EmptyVolume => MaxVolume - CurrentVolume;
+
         [ViewVariables(VVAccess.ReadWrite)]
-        public ReagentUnit MaxVolume
-        {
-            get => _maxVolume;
-            set
-            {
-                if (_maxVolume == value)
-                {
-                    return;
-                }
+        public virtual Color Color { get => _color; set => _color = value; }
+        private Color _color;
 
-                _maxVolume = value;
-                Dirty();
-            }
-        }
-
-        /// <summary>
-        ///     The current blended color of all the reagents in the container.
-        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public virtual Color SubstanceColor
-        {
-            get => _substanceColor;
-            set
-            {
-                if (_substanceColor == value)
-                {
-                    return;
-                }
+        public bool CanReact { get; set; }
 
-                _substanceColor = value;
-                Dirty();
-            }
-        }
-
-        /// <summary>
-        ///     The current capabilities of this container (is the top open to pour? can I inject it into another object?).
-        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public SolutionContainerCaps Capabilities { get; set; }
 
-        public abstract bool CanAddSolution(Solution solution);
+        public bool CanExamineContents => Capabilities.HasCap(SolutionContainerCaps.CanExamine);
 
-        public abstract bool TryAddSolution(Solution solution, bool skipReactionCheck = false, bool skipColor = false);
+        public bool CanUseWithChemDispenser => Capabilities.HasCap(SolutionContainerCaps.FitsInDispenser);
 
-        public abstract bool TryRemoveReagent(string reagentId, ReagentUnit quantity);
+        public bool CanAddSolutions => Capabilities.HasCap(SolutionContainerCaps.AddTo);
 
-        /// <inheritdoc />
-        public override ComponentState GetComponentState()
+        public bool CanRemoveSolutions => Capabilities.HasCap(SolutionContainerCaps.RemoveFrom);
+
+        public override void ExposeData(ObjectSerializer serializer)
         {
-            return new SolutionContainerComponentState(Solution);
+            base.ExposeData(serializer);
+
+            serializer.DataField(this, x => x.CanReact, "canReact", true);
+            serializer.DataField(this, x => x.MaxVolume, "maxVol", ReagentUnit.New(0));
+            serializer.DataField(this, x => x.Solution, "contents", new Solution());
+            serializer.DataField(this, x => x.Capabilities, "caps", SolutionContainerCaps.AddTo | SolutionContainerCaps.RemoveFrom | SolutionContainerCaps.CanExamine);
         }
 
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+        public void RemoveAllSolution()
         {
-            base.HandleComponentState(curState, nextState);
+            Solution.RemoveAllSolution();
+        }
 
-            if (curState is not SolutionContainerComponentState state)
+        public bool TryAddReagent(string reagentId, ReagentUnit quantity, out ReagentUnit acceptedQuantity)
+        {
+            acceptedQuantity = EmptyVolume > quantity ? quantity : EmptyVolume;
+            Solution.AddReagent(reagentId, acceptedQuantity);
+            CheckForReaction();
+            return acceptedQuantity == quantity;
+        }
+
+        public bool TryRemoveReagent(string reagentId, ReagentUnit quantity)
+        {
+            if (!Solution.ContainsReagent(reagentId))
+                return false;
+
+            Solution.RemoveReagent(reagentId, quantity);
+            return true;
+        }
+
+        public Solution SplitSolution(ReagentUnit quantity)
+        {
+            return Solution.SplitSolution(quantity);
+        }
+
+        public bool CanAddSolution(Solution solution)
+        {
+            return solution.TotalVolume <= MaxVolume - Solution.TotalVolume;
+        }
+
+        public bool TryAddSolution(Solution solution)
+        {
+            if (!CanAddSolution(solution))
+                return false;
+
+            Solution.AddSolution(solution);
+            CheckForReaction();
+            return true;
+        }
+
+        private void CheckForReaction()
+        {
+            if (!CanReact)
+                return;
+
+            IoCManager.Resolve<IEntitySystemManager>()
+                .GetEntitySystem<ChemicalReactionSystem>()
+                .FullyReactSolution(Solution, Owner, MaxVolume);
+        }
+
+        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
+        {
+            if (!CanExamineContents)
+                return;
+
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+
+            if (ReagentList.Count == 0)
             {
+                message.AddText(Loc.GetString("Contains no chemicals."));
                 return;
             }
 
-            _solution = state.Solution;
-        }
-    }
+            var primaryReagent = Solution.GetPrimaryReagentId();
+            if (!prototypeManager.TryIndex(primaryReagent, out ReagentPrototype proto))
+            {
+                Logger.Error($"{nameof(SharedSolutionContainerComponent)} could not find the prototype associated with {primaryReagent}.");
+                return;
+            }
 
-    [Serializable, NetSerializable]
-    public class SolutionContainerComponentState : ComponentState
-    {
-        public readonly Solution Solution;
+            var colorHex = Color.ToHexNoAlpha(); //TODO: If the chem has a dark color, the examine text becomes black on a black background, which is unreadable.
+            var messageString = "It contains a [color={0}]{1}[/color] " + (ReagentList.Count == 1 ? "chemical." : "mixture of chemicals.");
 
-        public SolutionContainerComponentState(Solution solution) : base(ContentNetIDs.SOLUTION)
-        {
-            Solution = solution;
+            message.AddMarkup(Loc.GetString(messageString, colorHex, Loc.GetString(proto.PhysicalDescription)));
         }
     }
 }
