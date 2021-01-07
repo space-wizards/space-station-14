@@ -109,7 +109,6 @@
       sprite: Objects/Tanks/generic.rsi
       Slots:
         - Back
-        - Belt
 
 - type: entity
   id: PhoronTankFilled
