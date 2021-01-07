@@ -71,7 +71,7 @@
     lowPressureMultiplier: 100
 
 - type: entity
-  parent: ClothingHeadHardsuitBase
+  parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitMedical
   name: medical hardsuit helmet
   description: Lightweight medical hardsuit helmet that doesn't restrict your head movements.
@@ -85,9 +85,9 @@
     lowPressureMultiplier: 55
 
 - type: entity
-  parent: ClothingHeadHardsuitBase
+  parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitRd
-  name: rd hardsuit helmet
+  name: research director's hardsuit helmet
   description: Lightweight hardsuit helmet that doesn't restrict your head movements.
   components:
   - type: Sprite
