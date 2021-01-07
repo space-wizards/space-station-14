@@ -76,7 +76,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         {
             acceptedQuantity = EmptyVolume > quantity ? quantity : EmptyVolume;
             Solution.AddReagent(reagentId, acceptedQuantity);
-            CheckForReaction();
+            ChemicalsAdded();
             return acceptedQuantity == quantity;
         }
 
@@ -86,12 +86,15 @@ namespace Content.Shared.GameObjects.Components.Chemistry
                 return false;
 
             Solution.RemoveReagent(reagentId, quantity);
+            ChemicalsRemoved();
             return true;
         }
 
         public Solution SplitSolution(ReagentUnit quantity)
         {
-            return Solution.SplitSolution(quantity);
+            var splitSol = Solution.SplitSolution(quantity);
+            ChemicalsRemoved();
+            return splitSol;
         }
 
         public bool CanAddSolution(Solution solution)
@@ -105,11 +108,31 @@ namespace Content.Shared.GameObjects.Components.Chemistry
                 return false;
 
             Solution.AddSolution(solution);
-            CheckForReaction();
+            ChemicalsAdded();
             return true;
         }
 
-        private void CheckForReaction()
+        private void ChemicalsAdded()
+        {
+            ProcessReactions();
+            SolutionChanged();
+            UpdateAppearance();
+        }
+
+        private void ChemicalsRemoved()
+        {
+            SolutionChanged();
+            UpdateAppearance();
+        }
+
+        private void SolutionChanged()
+        {
+            IoCManager.Resolve<IEntitySystemManager>()
+                .GetEntitySystem<ChemistrySystem>()
+                .HandleSolutionChange(Owner);
+        }
+
+        private void ProcessReactions()
         {
             if (!CanReact)
                 return;
