@@ -29,3 +29,29 @@
     - type: PressureProtection
       highPressureMultiplier: 0.5
       lowPressureMultiplier: 100
+
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHardsuitWithLightBase
+  name: base hardsuit helmet with light
+  abstract: true
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+    - state: icon-flash
+      visible: false
+  - type: Clothing
+    HeldPrefix: off
+    ClothingPrefix: off
+  - type: PointLight
+    enabled: false
+    radius: 3
+  - type: LoopingSound
+  - type: Appearance
+    visuals:
+      - type: FlashLightVisualizer
+  - type: HandheldLight
+  - type: ItemActions
+    actions:
+      - actionType: ToggleLight
