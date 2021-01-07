@@ -8,11 +8,12 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power
 {
+    [CustomDataClass(typeof(BaseNetConnectorComponentData))]
     public abstract class BaseNetConnectorComponent<TNetType> : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         public Voltage Voltage { get => _voltage; set => SetVoltage(value); }
-        [YamlField("voltage")]
+        [CustomYamlField("voltage")]
         private Voltage _voltage = Voltage.High;
 
         [ViewVariables]
