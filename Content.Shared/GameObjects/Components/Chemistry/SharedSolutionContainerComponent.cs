@@ -40,9 +40,8 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         [ViewVariables]
         public ReagentUnit EmptyVolume => MaxVolume - CurrentVolume;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public virtual Color Color { get => _color; set => _color = value; }
-        private Color _color;
+        [ViewVariables]
+        public virtual Color Color => Solution.Color;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool CanReact { get; set; }
