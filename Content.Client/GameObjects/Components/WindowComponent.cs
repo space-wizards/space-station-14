@@ -114,5 +114,5 @@ namespace Content.Client.GameObjects.Components
         DamageNE,
         DamageNW,
         DamageSW
-    } //mauff mauff
+    }
 }
