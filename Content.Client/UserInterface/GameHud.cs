@@ -198,7 +198,7 @@ namespace Content.Client.UserInterface
             {
                 ToolTip = Loc.GetString("Open tutorial."),
                 CustomMinimumSize = squareMinSize,
-                StyleClasses = {StyleBase.ButtonOpenLeft}
+                StyleClasses = {StyleBase.ButtonOpenLeft, TopButton.StyleClassRedTopButton},
             };
 
             _topButtonsContainer.AddChild(_buttonTutorial);
@@ -363,10 +363,16 @@ namespace Content.Client.UserInterface
         public sealed class TopButton : ContainerButton
         {
             public const string StyleClassLabelTopButton = "topButtonLabel";
+            public const string StyleClassRedTopButton = "topButtonLabel";
 
             private static readonly Color ColorNormal = Color.FromHex("#7b7e9e");
+            private static readonly Color ColorRedNormal = Color.FromHex("#FEFEFE");
             private static readonly Color ColorHovered = Color.FromHex("#9699bb");
+            private static readonly Color ColorRedHovered = Color.FromHex("#FFFFFF");
             private static readonly Color ColorPressed = Color.FromHex("#789B8C");
+
+            private Color NormalColor => HasStyleClass(StyleClassRedTopButton) ? ColorRedNormal : ColorNormal;
+            private Color HoveredColor => HasStyleClass(StyleClassRedTopButton) ? ColorRedHovered : ColorHovered;
 
             private readonly TextureRect _textureRect;
             private readonly Label _label;
@@ -384,7 +390,7 @@ namespace Content.Client.UserInterface
                             Texture = texture,
                             SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
                             SizeFlagsVertical = SizeFlags.Expand | SizeFlags.ShrinkCenter,
-                            ModulateSelfOverride = ColorNormal,
+                            ModulateSelfOverride =  NormalColor,
                             Stretch = TextureRect.StretchMode.KeepCentered
                         }),
                         // padding
@@ -393,7 +399,7 @@ namespace Content.Client.UserInterface
                         {
                             Text = keyName,
                             SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                            ModulateSelfOverride = ColorNormal,
+                            ModulateSelfOverride = NormalColor,
                             StyleClasses = {StyleClassLabelTopButton}
                         })
                     }
@@ -401,15 +407,21 @@ namespace Content.Client.UserInterface
                 ToggleMode = true;
             }
 
-            protected override void DrawModeChanged()
+            protected override void StylePropertiesChanged()
             {
-                base.DrawModeChanged();
+                // colors of children depend on style, so ensure we update when style is changed
+                base.StylePropertiesChanged();
+                UpdateChildColors();
+            }
+
+            private void UpdateChildColors()
+            {
                 if (_label == null || _textureRect == null) return;
                 switch (DrawMode)
                 {
                     case DrawModeEnum.Normal:
-                        _textureRect.ModulateSelfOverride = ColorNormal;
-                        _label.ModulateSelfOverride = ColorNormal;
+                        _textureRect.ModulateSelfOverride = NormalColor;
+                        _label.ModulateSelfOverride = NormalColor;
                         break;
 
                     case DrawModeEnum.Pressed:
@@ -418,13 +430,20 @@ namespace Content.Client.UserInterface
                         break;
 
                     case DrawModeEnum.Hover:
-                        _textureRect.ModulateSelfOverride = ColorHovered;
-                        _label.ModulateSelfOverride = ColorHovered;
+                        _textureRect.ModulateSelfOverride = HoveredColor;
+                        _label.ModulateSelfOverride = HoveredColor;
                         break;
 
                     case DrawModeEnum.Disabled:
                         break;
                 }
+            }
+
+
+            protected override void DrawModeChanged()
+            {
+                base.DrawModeChanged();
+                UpdateChildColors();
             }
         }
     }

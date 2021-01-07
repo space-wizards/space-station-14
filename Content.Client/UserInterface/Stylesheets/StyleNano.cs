@@ -45,7 +45,9 @@ namespace Content.Client.UserInterface.Stylesheets
         public static readonly Color NanoGold = Color.FromHex("#A88B5E");
 
         public static readonly Color ButtonColorDefault = Color.FromHex("#464966");
+        public static readonly Color ButtonColorDefaultRed = Color.FromHex("#D43B3B");
         public static readonly Color ButtonColorHovered = Color.FromHex("#575b7f");
+        public static readonly Color ButtonColorHoveredRed = Color.FromHex("#DF6B6B");
         public static readonly Color ButtonColorPressed = Color.FromHex("#3e6c45");
         public static readonly Color ButtonColorDisabled = Color.FromHex("#30313c");
 
@@ -162,15 +164,6 @@ namespace Content.Client.UserInterface.Stylesheets
             {
                 Modulate = ButtonColorPressed
             };
-
-            // var topButtonBase = new StyleBoxTexture(BaseButton)
-            // {
-            //     Texture = buttonRectTex
-            // };
-            // topButtonBase.SetPatchMargin(StyleBox.Margin.All, 2);
-            // topButtonBase.SetPadding(StyleBox.Margin.All, 2);
-            // topButtonBase.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
-            // topButtonBase.SetContentMarginOverride(StyleBox.Margin.Horizontal, 10);
 
             var buttonTex = resCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
             var topButtonBase = new StyleBoxTexture
@@ -883,6 +876,20 @@ namespace Content.Client.UserInterface.Stylesheets
                     }),
 
                 new StyleRule(
+                    new SelectorElement(typeof(GameHud.TopButton), new[] {GameHud.TopButton.StyleClassRedTopButton}, null, new[] {Button.StylePseudoClassNormal}),
+                    new[]
+                    {
+                        new StyleProperty(Button.StylePropertyModulateSelf, ButtonColorDefaultRed),
+                    }),
+
+                new StyleRule(
+                    new SelectorElement(typeof(GameHud.TopButton), null, null, new[] {Button.StylePseudoClassNormal}),
+                    new[]
+                    {
+                        new StyleProperty(Button.StylePropertyModulateSelf, ButtonColorDefault),
+                    }),
+
+                new StyleRule(
                     new SelectorElement(typeof(GameHud.TopButton), null, null, new[] {Button.StylePseudoClassPressed}),
                     new[]
                     {
@@ -894,6 +901,13 @@ namespace Content.Client.UserInterface.Stylesheets
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyModulateSelf, ButtonColorHovered),
+                    }),
+
+                new StyleRule(
+                    new SelectorElement(typeof(GameHud.TopButton), new[] {GameHud.TopButton.StyleClassRedTopButton}, null, new[] {Button.StylePseudoClassHover}),
+                    new[]
+                    {
+                        new StyleProperty(Button.StylePropertyModulateSelf, ButtonColorHoveredRed),
                     }),
 
                 new StyleRule(
