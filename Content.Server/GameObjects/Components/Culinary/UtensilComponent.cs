@@ -16,7 +16,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Utensil
+namespace Content.Server.GameObjects.Components.Culinary
 {
     [RegisterComponent]
     public class UtensilComponent : Component, IAfterInteract
