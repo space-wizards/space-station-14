@@ -110,23 +110,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
             return true;
         }
 
-        /// <summary>
-        /// Attempt to remove the specified quantity from this solution
-        /// </summary>
-        /// <param name="quantity">Quantity of this solution to remove</param>
-        /// <returns>Whether or not the solution was successfully removed</returns>
-        public bool TryRemoveSolution(ReagentUnit quantity)
-        {
-            if (CurrentVolume == 0)
-            {
-                return false;
-            }
-
-            Solution.RemoveSolution(quantity);
-            OnSolutionChanged(false);
-            return true;
-        }
-
         public Solution SplitSolution(ReagentUnit quantity)
         {
             var solutionSplit = Solution.SplitSolution(quantity);
