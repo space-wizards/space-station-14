@@ -46,7 +46,7 @@ namespace Content.Client.UserInterface
         protected override void ControlFocusExited()
         {
             base.ControlFocusExited();
-            _onControlFocusExited.Invoke(this);
+            _onControlFocusExited?.Invoke(this);
         }
 
         private Control SupplyTooltip(Control? sender)
