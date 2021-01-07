@@ -51,7 +51,11 @@
   - type: Appearance
     visuals:
       - type: FlashLightVisualizer
-  - type: HandheldLight
   - type: ItemActions
     actions:
       - actionType: ToggleLight
+    # right now there is no power system for hardsuits
+    # so hardsuit helmet just have small battery inside 
+  - type: HandheldLight
+  - type: PowerCellSlot
+    startingCellType: PowerCellSmallHigh
