@@ -41,7 +41,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             inception.AddSmoke(this);
 
-            //Register the inception into the smoke system
+            // Register the inception into the smoke system
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new SmokeInceptionCreatedMessage(Inception));
         }
 
@@ -126,29 +126,38 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 if (reagentQuantity.Quantity == ReagentUnit.Zero) continue;
                 var reagent = prototypeManager.Index<ReagentPrototype>(reagentQuantity.ReagentId);
 
-                //React with the tile the smoke is on
+                // React with the tile the smoke is on
                 reagent.ReactionTile(tile, reagentQuantity.Quantity * solutionFraction);
 
+                // Touch every entity on the tile
                 foreach (var entity in tile.GetEntitiesInTileFast())
                 {
-                    //Touch every entity on the tile
                     reagent.ReactionEntity(entity, ReactionMethod.Touch, reagentQuantity.Quantity * solutionFraction);
-
-                    //Enter the bloodstream of every entity without internals
-                    if (!entity.TryGetComponent(out BloodstreamComponent bloodstream))
-                        continue;
-
-                    if (entity.TryGetComponent(out InternalsComponent internals) &&
-                        internals.AreInternalsWorking())
-                        continue;
-
-                    var cloneSolution = contents.Solution.Clone();
-                    var transferAmount = ReagentUnit.Min(cloneSolution.TotalVolume * solutionFraction, bloodstream.EmptyVolume);
-                    var transferSolution = cloneSolution.SplitSolution(transferAmount);
-
-                    transferSolution.RemoveReagent(reagentQuantity.ReagentId,reagent.ReactionEntity(entity, ReactionMethod.Ingestion, reagentQuantity.Quantity));
-                    bloodstream.TryTransferSolution(transferSolution);
                 }
+            }
+
+            // Enter the bloodstream of every entity without internals
+            foreach (var entity in tile.GetEntitiesInTileFast())
+            {
+                if (!entity.TryGetComponent(out BloodstreamComponent bloodstream))
+                    continue;
+
+                if (entity.TryGetComponent(out InternalsComponent internals) &&
+                    internals.AreInternalsWorking())
+                    continue;
+
+                var cloneSolution = contents.Solution.Clone();
+                var transferAmount = ReagentUnit.Min(cloneSolution.TotalVolume * solutionFraction, bloodstream.EmptyVolume);
+                var transferSolution = cloneSolution.SplitSolution(transferAmount);
+
+                foreach (var reagentQuantity in transferSolution.Contents.ToArray())
+                {
+                    if (reagentQuantity.Quantity == ReagentUnit.Zero) continue;
+                    var reagent = prototypeManager.Index<ReagentPrototype>(reagentQuantity.ReagentId);
+                    transferSolution.RemoveReagent(reagentQuantity.ReagentId,reagent.ReactionEntity(entity, ReactionMethod.Ingestion, reagentQuantity.Quantity));
+                }
+
+                bloodstream.TryTransferSolution(transferSolution);
             }
         }
     }
