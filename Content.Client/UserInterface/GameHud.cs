@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Transactions;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Mobs;
@@ -367,14 +368,11 @@ namespace Content.Client.UserInterface
             private static readonly Color ColorHovered = Color.FromHex("#9699bb");
             private static readonly Color ColorPressed = Color.FromHex("#789B8C");
 
-            // TODO: update their colors if needed
             private readonly TextureRect _textureRect;
             private readonly Label _label;
 
             public TopButton(Texture texture, string keyName)
             {
-                ToggleMode = true;
-
                 // TODO: try margin container again
                 AddChild(new VBoxContainer
                 {
@@ -401,6 +399,33 @@ namespace Content.Client.UserInterface
                         })
                     }
                 });
+                ToggleMode = true;
+            }
+
+            protected override void DrawModeChanged()
+            {
+                base.DrawModeChanged();
+                if (_label == null || _textureRect == null) return;
+                switch (DrawMode)
+                {
+                    case DrawModeEnum.Normal:
+                        _textureRect.ModulateSelfOverride = ColorNormal;
+                        _label.ModulateSelfOverride = ColorNormal;
+                        break;
+
+                    case DrawModeEnum.Pressed:
+                        _textureRect.ModulateSelfOverride = ColorPressed;
+                        _label.ModulateSelfOverride = ColorPressed;
+                        break;
+
+                    case DrawModeEnum.Hover:
+                        _textureRect.ModulateSelfOverride = ColorHovered;
+                        _label.ModulateSelfOverride = ColorHovered;
+                        break;
+
+                    case DrawModeEnum.Disabled:
+                        break;
+                }
             }
         }
     }
