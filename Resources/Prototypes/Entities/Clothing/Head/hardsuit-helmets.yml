@@ -127,7 +127,7 @@
     lowPressureMultiplier: 100
 
 - type: entity
-  parent: ClothingHeadHardsuitBase
+  parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitSecurityRed
   name: hos hardsuit helmet
   description: Red armored hardsuit helmet for security needs. Belongs to the HoS.
@@ -141,7 +141,7 @@
     lowPressureMultiplier: 100
 
 - type: entity
-  parent: ClothingHeadHardsuitBase
+  parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitSyndie
   name: blood red hardsuit helmet
   description: An advanced red hardsuit helmet designed for work in special operations.
@@ -150,6 +150,8 @@
     sprite: Clothing/Head/Hardsuits/syndicate.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/syndicate.rsi
+  - type: PointLight
+    color: green
 
 - type: entity
   parent: ClothingHeadHardsuitBase
