@@ -114,7 +114,7 @@ namespace Content.Client.UserInterface
             var characterTexture = _resourceCache.GetTexture("/Textures/Interface/character.svg.96dpi.png");
             var inventoryTexture = _resourceCache.GetTexture("/Textures/Interface/inventory.svg.96dpi.png");
             var craftingTexture = _resourceCache.GetTexture("/Textures/Interface/hammer.svg.96dpi.png");
-            var tutorialTexture = _resourceCache.GetTexture("/Textures/Interface/students-cap.svg.96dpi.png");
+            var tutorialTexture = _resourceCache.GetTexture("/Textures/Interface/tutorial.svg.96dpi.png");
             var sandboxTexture = _resourceCache.GetTexture("/Textures/Interface/sandbox.svg.96dpi.png");
 
             _topButtonsContainer = new HBoxContainer
