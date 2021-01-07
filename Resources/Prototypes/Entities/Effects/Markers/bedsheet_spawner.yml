@@ -31,5 +31,6 @@
         - BedsheetWhite
         - BedsheetRainbow
       chance: 0.97
+      offset: 0
   placement:
     mode: AlignTileAny
