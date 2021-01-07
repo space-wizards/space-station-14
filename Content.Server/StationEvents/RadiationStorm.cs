@@ -4,6 +4,7 @@ using Content.Server.Interfaces.GameTicking;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects.Systems;
@@ -13,6 +14,7 @@ using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents
@@ -45,8 +47,8 @@ namespace Content.Server.StationEvents
 
         private int _pulsesRemaining;
         private float _timeUntilPulse;
-        private const float MinPulseDelay = 0.2f;
-        private const float MaxPulseDelay = 0.8f;
+        private const float MinPulseDelay = 0.5f;
+        private const float MaxPulseDelay = 2.0f;
 
         private void ResetTimeUntilPulse()
         {
@@ -74,10 +76,6 @@ namespace Content.Server.StationEvents
         public override void Shutdown()
         {
             base.Shutdown();
-
-            // IOC uninject?
-            _entityManager = null;
-            _robustRandom = null;
 
             var componentManager = IoCManager.Resolve<IComponentManager>();
 
@@ -117,19 +115,26 @@ namespace Content.Server.StationEvents
                 if (pauseManager.IsGridPaused(defaultGrid))
                     return;
 
-                SpawnPulse(defaultGrid);
+                SpawnPulseWithLight(defaultGrid);
             }
         }
 
-        private void SpawnPulse(IMapGrid mapGrid)
+        private void SpawnPulseWithLight(IMapGrid mapGrid)
         {
             if (!TryFindRandomGrid(mapGrid, out var coordinates))
                 return;
 
             var pulse = _entityManager.SpawnEntity("RadiationPulse", coordinates);
-            pulse.GetComponent<RadiationPulseComponent>().DoPulse();
+            if (pulse.TryGetComponent(out RadiationPulseComponent radPulse))
+            {
+                var light = pulse.AddComponent<PointLightComponent>();
+                light.Color = new Color(0.0f, 1.0f, 0.0f, 1.0f);
+                light.Radius = radPulse.Range;
+
+                radPulse.DoPulse();
+            }
             ResetTimeUntilPulse();
-            _pulsesRemaining -= 1;
+            _pulsesRemaining--;
         }
 
         private bool TryFindRandomGrid(IMapGrid mapGrid, out EntityCoordinates coordinates)
@@ -139,11 +144,10 @@ namespace Content.Server.StationEvents
                 coordinates = default;
                 return false;
             }
-
             var randomX = _robustRandom.Next((int) mapGrid.WorldBounds.Left, (int) mapGrid.WorldBounds.Right);
             var randomY = _robustRandom.Next((int) mapGrid.WorldBounds.Bottom, (int) mapGrid.WorldBounds.Top);
 
-            coordinates = mapGrid.ToCoordinates(randomX, randomY);
+            coordinates = mapGrid.ToCoordinates(randomX + 0.5f, randomY + 0.5f);
 
             // TODO: Need to get valid tiles? (maybe just move right if the tile we chose is invalid?)
             if (!coordinates.IsValid(_entityManager))
@@ -151,7 +155,6 @@ namespace Content.Server.StationEvents
                 coordinates = default;
                 return false;
             }
-
             return true;
         }
     }

@@ -1,12 +1,12 @@
 #nullable enable
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Content.Client.GameObjects.Components.StationEvents;
 using Content.Shared.GameObjects.Components.Mobs;
 using JetBrains.Annotations;
+using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Graphics.Overlays;
+using Robust.Client.Graphics.Shaders;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Player;
 using Robust.Shared.Interfaces.GameObjects;
@@ -14,6 +14,10 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Content.Client.StationEvents
 {
@@ -25,109 +29,54 @@ namespace Content.Client.StationEvents
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        /// <summary>
-        /// Current color of a pulse
-        /// </summary>
-        private readonly Dictionary<IEntity, Color> _colors = new();
-
-        /// <summary>
-        /// Whether our alpha is increasing or decreasing and at what time does it flip (or stop)
-        /// </summary>
-        private readonly Dictionary<IEntity, (bool EasingIn, TimeSpan TransitionTime)> _transitions =
-                     new();
-
-        /// <summary>
-        /// How much the alpha changes per second for each pulse
-        /// </summary>
-        private readonly Dictionary<IEntity, float> _alphaRateOfChange = new();
-
-        private TimeSpan _lastTick;
-
-        // TODO: When worldHandle can do DrawCircle change this.
-        public override OverlaySpace Space => OverlaySpace.ScreenSpace;
+        private readonly Dictionary<IEntity, TimeSpan> _radiationPulsesRunning = new();
+        private readonly ShaderInstance _shader;
+        private readonly int _lightLevels = 10;
+        public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
         public RadiationPulseOverlay() : base(nameof(SharedOverlayID.RadiationPulseOverlay))
         {
             IoCManager.InjectDependencies(this);
-            _lastTick = _gameTiming.CurTime;
+            _shader = _prototypeManager.Index<ShaderPrototype>("RadPulse").Instance();
         }
 
         /// <summary>
-        /// Get the current color for the entity,
-        /// accounting for what its alpha should be and whether it should be transitioning in or out
+        /// Calculates the intensity of color of the PointLightComponent associated to this entity.
+        /// The ratio range goes from [0, 2] when the ratio is [0, 1) it simply returns it.
+        /// If the ratio is [1, 2] it returns (2 - ratio). So the function range goes from [0, 1]
         /// </summary>
-        /// <param name="entity"></param>
-        /// <param name="elapsedTime">frametime</param>
-        /// <param name="endTime"></param>
-        /// <returns></returns>
-        private Color GetColor(IEntity entity, float elapsedTime, TimeSpan endTime)
+        /// <param name="entity">Entity associated to the PointLightComponent</param>
+        /// <param name="endTime">When the radiation pulse disappears</param>
+        /// <returns>The intensity ratio, at half endTime it is 1.0</returns>
+        private float GetIntensity(IEntity entity, TimeSpan endTime)
         {
-            var currentTime = _gameTiming.CurTime;
-
-            // New pulse
-            if (!_colors.ContainsKey(entity))
+            if (!_radiationPulsesRunning.ContainsKey(entity))
             {
-                UpdateTransition(entity, currentTime, endTime);
+                _radiationPulsesRunning.Add(entity, _gameTiming.CurTime);
             }
-
-            var currentColor = _colors[entity];
-            var alphaChange = _alphaRateOfChange[entity] * elapsedTime;
-
-            if (!_transitions[entity].EasingIn)
+           
+            var ratio = (float) ((_gameTiming.CurTime - _radiationPulsesRunning[entity]) / ((endTime - _radiationPulsesRunning[entity]) / 2.0f));
+            if (ratio >= 1.0f)
             {
-                alphaChange *= -1;
+                ratio = 2.0f - ratio;
+                ratio = ratio >= 0.0f ? ratio : -ratio;
             }
-
-            if (currentTime > _transitions[entity].TransitionTime)
-            {
-                UpdateTransition(entity, currentTime, endTime);
-            }
-
-            _colors[entity] = _colors[entity].WithAlpha(currentColor.A + alphaChange);
-            return _colors[entity];
-        }
-
-        private void UpdateTransition(IEntity entity, TimeSpan currentTime, TimeSpan endTime)
-        {
-            bool easingIn;
-            TimeSpan transitionTime;
-
-            if (!_transitions.TryGetValue(entity, out var transition))
-            {
-                // Start as false because it will immediately be flipped
-                easingIn = false;
-                transitionTime = (endTime - currentTime) / 2 + currentTime;
-            }
-            else
-            {
-                easingIn = transition.EasingIn;
-                transitionTime = endTime;
-            }
-
-            _transitions[entity] = (!easingIn, transitionTime);
-            _colors[entity] = Color.Green.WithAlpha(0.0f);
-            _alphaRateOfChange[entity] = 1.0f / (float) (transitionTime - currentTime).TotalSeconds;
+            return ratio;
         }
 
         protected override void Draw(DrawingHandleBase handle, OverlaySpace currentSpace)
         {
             // PVS should control the overlay pretty well so the overlay doesn't get instantiated unless we're near one...
             var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
-
             if (playerEntity == null)
             {
                 return;
             }
 
-            var elapsedTime = (float) (_gameTiming.CurTime - _lastTick).TotalSeconds;
-            _lastTick = _gameTiming.CurTime;
-
-            var radiationPulses = _componentManager
-                .EntityQuery<RadiationPulseComponent>()
-                .ToList();
-
-            var screenHandle = (DrawingHandleScreen) handle;
+            var radiationPulses = _componentManager.EntityQuery<RadiationPulseComponent>().ToList();
+            var worldHandle = (DrawingHandleWorld) handle;
             var viewport = _eyeManager.GetWorldViewport();
 
             foreach (var grid in _mapManager.FindGridsIntersecting(playerEntity.Transform.MapID, viewport))
@@ -137,13 +86,13 @@ namespace Content.Client.StationEvents
                     if (!pulse.Draw || grid.Index != pulse.Owner.Transform.GridID) continue;
 
                     // TODO: Check if viewport intersects circle
-                    var circlePosition = _eyeManager.WorldToScreen(pulse.Owner.Transform.WorldPosition);
-
-                    // change to worldhandle when implemented
-                    screenHandle.DrawCircle(
-                        circlePosition,
-                        pulse.Range * 64,
-                        GetColor(pulse.Owner, pulse.Decay ? elapsedTime : 0, pulse.EndTime));
+                    if (pulse.Owner.TryGetComponent<PointLightComponent>(out var light))
+                    {
+                        var color = GetIntensity(pulse.Owner, pulse.EndTime) * _lightLevels;
+                        light.Color = new Color(0.0f, color, 0.0f, 1.0f);
+                        worldHandle.UseShader(_shader);
+                    }
+                    worldHandle.DrawTextureRect(Texture.Transparent, Box2.CenteredAround(pulse.Owner.Transform.WorldPosition, new Vector2(pulse.Range, pulse.Range)));
                 }
             }
         }
