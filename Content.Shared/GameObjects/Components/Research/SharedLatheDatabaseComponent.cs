@@ -9,7 +9,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Research
 {
-    [CustomDataClass(typeof(SharedLatheDatabaseComponentDataClass))]
+    [CustomDataClass(typeof(SharedLatheDatabaseComponentData))]
     public class SharedLatheDatabaseComponent : Component, IEnumerable<LatheRecipePrototype>
     {
         public override string Name => "LatheDatabase";

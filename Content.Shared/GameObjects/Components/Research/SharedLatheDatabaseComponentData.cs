@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Research
 {
-    public partial class SharedLatheDatabaseComponentDataClass
+    public partial class SharedLatheDatabaseComponentData
     {
         [CustomYamlField("recipes")]
         private readonly List<LatheRecipePrototype> _recipes = new();
