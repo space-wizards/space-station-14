@@ -1,7 +1,7 @@
 #nullable enable
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;

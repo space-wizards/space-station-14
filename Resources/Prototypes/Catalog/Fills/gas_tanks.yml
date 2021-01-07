@@ -1,138 +1,93 @@
-﻿- type: entity
-  parent: BaseItem
-  abstract: true
-  id: GasTankBase
-  name: Gas Tank
-  description: It's a gas tank. It contains gas.
-  components:
-    - type: Sprite
-      sprite: Objects/Tanks/generic.rsi
-      state: icon
-    - type: UserInterface
-      interfaces:
-        - key: enum.SharedGasTankUiKey.Key
-          type: GasTankBoundUserInterface
-    - type: Clothing
-      sprite: Objects/Tanks/generic.rsi
-      QuickEquip: false
-    - type: GasTank
-    - type: ItemActions
-      actions:
-        - actionType: ToggleInternals
-
 - type: entity
-  id: OxygenTank
-  parent: GasTankBase
+  id: OxygenTankFilled
+  parent: OxygenTank
   name: oxygen tank
   description: A tank of oxygen.
-  suffix: Empty
+  suffix: Filled
   components:
-    - type: Sprite
-      sprite: Objects/Tanks/oxygen.rsi
     - type: GasTank
       outputPressure: 21.27825
       air:
         volume: 70
+        moles:
+          - 22.6293856 # oxygen
         temperature: 293.15
-    - type: Clothing
-      sprite: Objects/Tanks/oxygen.rsi
-      Slots:
-        - Back
 
 - type: entity
-  id: YellowOxygenTank
-  parent: OxygenTank
+  id: YellowOxygenTankFilled
+  parent: OxygenTankFilled
   name: oxygen tank
   description: A tank of oxygen. This one is in yellow.
-  suffix: Empty
+  suffix: Filled
   components:
     - type: Sprite
       sprite: Objects/Tanks/yellow.rsi
     - type: Clothing
       sprite: Objects/Tanks/yellow.rsi
-      Slots:
-        - Back
 
 - type: entity
-  id: RedOxygenTank
-  parent: OxygenTank
+  id: RedOxygenTankFilled
+  parent: OxygenTankFilled
   name: oxygen tank
   description: A tank of oxygen. This one is in yellow.
-  suffix: Empty
+  suffix: Filled
   components:
     - type: Sprite
       sprite: Objects/Tanks/red.rsi
     - type: Clothing
       sprite: Objects/Tanks/red.rsi
-      Slots:
-        - Back
 
 - type: entity
-  id: EmergencyOxygenTank
-  parent: OxygenTank
+  id: EmergencyOxygenTankFilled
+  parent: EmergencyOxygenTank
   name: emergency oxygen tank
   description: Used for emergencies. Contains very little oxygen, so try to conserve it until you actually need it.
-  suffix: Empty
+  suffix: Filled
   components:
-    - type: Sprite
-      sprite: Objects/Tanks/emergency.rsi
     - type: GasTank
       outputPressure: 21.27825
       air:
         volume: 2
+        moles:
+          - 0.323460326 # oxygen
         temperature: 293.15
-    - type: Clothing
-      sprite: Objects/Tanks/emergency.rsi
-      Slots:
-        - Pocket
-        - Belt
 
 - type: entity
-  id: ExtendedEmergencyOxygenTank
-  parent: EmergencyOxygenTank
+  id: ExtendedEmergencyOxygenTankFilled
+  parent: ExtendedEmergencyOxygenTank
   name: extended-capacity emergency oxygen tank
   description: Used for emergencies. Contains very little oxygen, so try to conserve it until you actually need it.
-  suffix: Empty
+  suffix: Filled
   components:
-    - type: Sprite
-      sprite: Objects/Tanks/emergency_yellow.rsi
     - type: GasTank
       outputPressure: 21.27825
       air:
         volume: 6
+        moles:
+          - 0.969830813 # oxygen
         temperature: 293.15
-    - type: Clothing
-      sprite: Objects/Tanks/emergency_yellow.rsi
-      Slots:
-        - Pocket
-        - Belt
 
 - type: entity
-  id: DoubleEmergencyOxygenTank
-  parent: ExtendedEmergencyOxygenTank
+  id: DoubleEmergencyOxygenTankFilled
+  parent: DoubleEmergencyOxygenTank
   name: double emergency oxygen tank
   description: Used for emergencies. Contains very little oxygen, so try to conserve it until you actually need it.
-  suffix: Empty
+  suffix: Filled
   components:
-    - type: Sprite
-      sprite: Objects/Tanks/emergency_double.rsi
     - type: GasTank
       outputPressure: 21.27825
       air:
         volume: 10
+        moles:
+          - 1.61721219 # oxygen
         temperature: 293.15
-    - type: Clothing
-      sprite: Objects/Tanks/emergency_double.rsi
-      Slots:
-        - Pocket
-        - Belt
 
 - type: entity
-  id: AirTank
+  id: AirTankFilled
   parent: GasTankBase
   name: air tank
   description: Mixed anyone?
-  suffix: Empty
+  suffix: Filled
   components:
     - type: Sprite
       sprite: Objects/Tanks/generic.rsi
@@ -140,27 +95,27 @@
       outputPressure: 101.325
       air:
         volume: 70
+        moles:
+          - 4.75217098 # oxygen
+          - 17.8772147 # nitrogen
         temperature: 293.15
     - type: Clothing
       sprite: Objects/Tanks/generic.rsi
-      Slots:
-        - Back
 
 - type: entity
-  id: PhoronTank
-  parent: GasTankBase
+  id: PhoronTankFilled
+  parent: PhoronTank
   name: phoron tank
-  suffix: Empty
+  suffix: Filled
   description: "Contains dangerous phoron. Do not inhale. Warning: extremely flammable."
   components:
-    - type: Sprite
-      sprite: Objects/Tanks/phoron.rsi
     - type: GasTank
       outputPressure: 101.325
       air:
         volume: 70
+        moles:
+          - 0
+          - 0
+          - 0
+          - 11.3146928 # phoron
         temperature: 293.15
-    - type: Clothing
-      sprite: Objects/Tanks/phoron.rsi
-      Slots:
-        - Belt
