@@ -2,6 +2,7 @@
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Appearance;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -11,6 +12,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
+using System;
 using System.Collections.Generic;
 
 namespace Content.Shared.GameObjects.Components.Chemistry
@@ -142,6 +144,33 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             var messageString = "It contains a [color={0}]{1}[/color] " + (ReagentList.Count == 1 ? "chemical." : "mixture of chemicals.");
 
             message.AddMarkup(Loc.GetString(messageString, colorHex, Loc.GetString(proto.PhysicalDescription)));
+        }
+
+        private void UpdateAppearance()
+        {
+            if (!Owner.TryGetComponent<SharedAppearanceComponent>(out var appearance))
+                return;
+
+            appearance.SetData(SolutionContainerVisuals.VisualState, VisualState);
+        }
+
+        private SolutionContainerVisualState VisualState => new SolutionContainerVisualState(Color);
+    }
+
+    [Serializable, NetSerializable]
+    public enum SolutionContainerVisuals
+    {
+        VisualState
+    }
+
+    [Serializable, NetSerializable]
+    public class SolutionContainerVisualState
+    {
+        public readonly Color Color;
+
+        public SolutionContainerVisualState(Color color)
+        {
+            Color = color;
         }
     }
 }
