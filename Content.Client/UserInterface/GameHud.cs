@@ -373,7 +373,6 @@ namespace Content.Client.UserInterface
 
             public TopButton(Texture texture, string keyName)
             {
-                // TODO: try margin container again
                 AddChild(new VBoxContainer
                 {
                     Children =
