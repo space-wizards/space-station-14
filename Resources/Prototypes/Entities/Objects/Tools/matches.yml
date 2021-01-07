@@ -31,7 +31,10 @@
       color: darkorange
     - type: Appearance
       visuals:
-        - type: MatchstickVisualizer
+        - type: BurnStateVisualizer
+          unlitIcon: match_unlit
+          litIcon: match_lit
+          burntIcon: match_burnt
 
 - type: entity
   name: match box

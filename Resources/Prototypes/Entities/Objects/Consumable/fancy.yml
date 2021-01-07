@@ -17,7 +17,7 @@
       duration: 30
     - type: Appearance
       visuals:
-        - type: SmokingVisualizer
+        - type: BurnStateVisualizer
 
 - type: entity
   id: Cigarette

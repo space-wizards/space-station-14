@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
     {
         public override string Name => "Smoking";
 
-        private SharedSmokingStates _currentState;
+        private SharedBurningStates _currentState;
         private ClothingComponent _clothingComponent;
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         private float _temperature;
 
         [ViewVariables]
-        private SharedSmokingStates CurrentState
+        private SharedBurningStates CurrentState
         {
             get => _currentState;
             set
@@ -61,7 +61,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
                 switch (_currentState)
                 {
-                    case SharedSmokingStates.Lit:
+                    case SharedBurningStates.Lit:
                         _clothingComponent.EquippedPrefix = "lit";
                         _clothingComponent.ClothingEquippedPrefix = "lit";
                         break;
@@ -83,7 +83,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             base.Initialize();
 
             Owner.TryGetComponent(out _clothingComponent);
-            _currentState = SharedSmokingStates.Unlit;
+            _currentState = SharedBurningStates.Unlit;
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -97,12 +97,12 @@ namespace Content.Server.GameObjects.Components.Nutrition
         {
             if (eventArgs.Using.TryGetComponent(out IHotItem lighter)
                 && lighter.IsCurrentlyHot()
-                && CurrentState == SharedSmokingStates.Unlit
+                && CurrentState == SharedBurningStates.Unlit
             )
             {
-                CurrentState = SharedSmokingStates.Lit;
+                CurrentState = SharedBurningStates.Lit;
                 // TODO More complex handling of cigar consumption
-                Owner.SpawnTimer(_duration * 1000, () => CurrentState = SharedSmokingStates.Burnt);
+                Owner.SpawnTimer(_duration * 1000, () => CurrentState = SharedBurningStates.Burnt);
                 return true;
             }
 
@@ -111,7 +111,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         public bool IsCurrentlyHot()
         {
-            return _currentState == SharedSmokingStates.Lit;
+            return _currentState == SharedBurningStates.Lit;
         }
     }
 }

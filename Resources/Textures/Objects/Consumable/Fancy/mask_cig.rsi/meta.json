@@ -58,7 +58,7 @@
       ]
     },
     {
-      "name": "burnt_icon",
+      "name": "burnt-icon",
       "directions": 1
     },
     {
@@ -66,7 +66,7 @@
       "directions": 1
     },
     {
-      "name": "lit_icon",
+      "name": "lit-icon",
       "directions": 1,
       "delays": [
         [

@@ -17,7 +17,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (eventArgs.Using.TryGetComponent<MatchstickComponent>(out var matchstick)
-                && matchstick.CurrentState == MatchstickState.Unlit)
+                && matchstick.CurrentState == SharedBurningStates.Unlit)
             {
                 matchstick.Ignite(eventArgs.User);
                 return true;

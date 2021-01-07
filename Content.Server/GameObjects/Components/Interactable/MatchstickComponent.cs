@@ -16,11 +16,11 @@ namespace Content.Server.GameObjects.Components.Interactable
 {
     [RegisterComponent]
     [ComponentReference(typeof(IHotItem))]
-    public class MatchstickComponent : Component, IHotItem, IInteractUsing, IAfterInteract
+    public class MatchstickComponent : Component, IHotItem, IInteractUsing
     {
         public override string Name => "Matchstick";
 
-        private MatchstickState _currentState;
+        private SharedBurningStates _currentState;
 
         /// <summary>
         /// How long will matchstick last in seconds.
@@ -41,7 +41,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         /// Current state to matchstick. Can be <code>Unlit</code>, <code>Lit</code> or <code>Burnt</code>.
         /// </summary>
         [ViewVariables]
-        public MatchstickState CurrentState
+        public SharedBurningStates CurrentState
         {
             get => _currentState;
             private set
@@ -50,19 +50,12 @@ namespace Content.Server.GameObjects.Components.Interactable
 
                 if (_pointLightComponent != null)
                 {
-                    if (_currentState == MatchstickState.Lit)
-                    {
-                        _pointLightComponent.Enabled = true;
-                    }
-                    else
-                    {
-                        _pointLightComponent.Enabled = false;
-                    }
+                    _pointLightComponent.Enabled = _currentState == SharedBurningStates.Lit;
                 }
 
                 if (Owner.TryGetComponent(out AppearanceComponent? appearance))
                 {
-                    appearance.SetData(MatchstickVisual.Igniting, _currentState);
+                    appearance.SetData(SmokingVisuals.Smoking, _currentState);
                 }
             }
         }
@@ -79,14 +72,14 @@ namespace Content.Server.GameObjects.Components.Interactable
         {
             base.Initialize();
 
-            CurrentState = MatchstickState.Unlit;
+            CurrentState = SharedBurningStates.Unlit;
 
             Owner.TryGetComponent(out _pointLightComponent);
         }
 
         public bool IsCurrentlyHot()
         {
-            return CurrentState == MatchstickState.Lit;
+            return CurrentState == SharedBurningStates.Lit;
         }
 
         public void Ignite(IEntity user)
@@ -99,29 +92,21 @@ namespace Content.Server.GameObjects.Components.Interactable
             }
 
             // Change state
-            CurrentState = MatchstickState.Lit;
-            Owner.SpawnTimer(_duration * 1000, () => CurrentState = MatchstickState.Burnt);
+            CurrentState = SharedBurningStates.Lit;
+            Owner.SpawnTimer(_duration * 1000, () => CurrentState = SharedBurningStates.Burnt);
         }
 
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (eventArgs.Target.TryGetComponent<IHotItem>(out var hotItem)
                 && hotItem.IsCurrentlyHot()
-                && CurrentState == MatchstickState.Unlit)
+                && CurrentState == SharedBurningStates.Unlit)
             {
                 Ignite(eventArgs.User);
                 return true;
             }
 
             return false;
-        }
-
-        public async Task AfterInteract(AfterInteractEventArgs eventArgs)
-        {
-            if (eventArgs.Target.TryGetComponent<MatchboxComponent>(out _))
-            {
-                Ignite(eventArgs.User);
-            }
         }
     }
 }
