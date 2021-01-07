@@ -37,6 +37,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
                     if (entity.TryGetComponent<GasCanisterComponent>(out var canister) && canister.Anchored && !canister.ConnectedToPort)
                     {
                         canister.TryConnectToPort();
+                        break;
                     }
                 }
             }
