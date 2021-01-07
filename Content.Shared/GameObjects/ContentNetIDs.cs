@@ -88,6 +88,8 @@
         public const uint REAGENT_GRINDER = 1082;
         public const uint ACTIONS = 1083;
         public const uint DAMAGEABLE = 1084;
+        // Used for clientside fake prediction of doors.
+        public const uint DOOR = 1085;
 
         // Net IDs for integration tests.
         public const uint PREDICTION_TEST = 10001;

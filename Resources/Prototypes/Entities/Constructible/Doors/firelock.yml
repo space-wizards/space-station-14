@@ -36,6 +36,15 @@
             - MobImpassable
             - VaultImpassable
             - SmallImpassable
+    - type: Door
+      CloseTimeOne: 0.1
+      CloseTimeTwo: 0.6
+      OpenTimeOne: 0.1
+      OpenTimeTwo: 0.6
+      startOpen: true
+      Safety: false
+      AutoClose: false
+      bumpOpen: false
     - type: Firelock
     - type: Appearance
       visuals:
@@ -70,7 +79,7 @@
   parent: Firelock
   name: glass firelock
   components:
-    - type: Firelock
+    - type: Door
       occludes: false
     - type: Occluder
       enabled: false
@@ -83,7 +92,7 @@
   parent: Firelock
   name: firelock
   components:
-    - type: Firelock
+    - type: Door
       occludes: false
       canCrush: false
     - type: Sprite

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Client.GameObjects.Components.Wires;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Doors;
@@ -147,6 +147,12 @@ namespace Content.Client.GameObjects.Components.Doors
                     break;
                 case DoorVisualState.Welded:
                     weldedVisible = true;
+                    break;
+                case DoorVisualState.EndAnimations:
+                    if (animPlayer.HasRunningAnimation(AnimationKey))
+                    {
+                        animPlayer.Stop(AnimationKey);
+                    }
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

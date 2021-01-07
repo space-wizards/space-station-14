@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Doors;
+using Content.Shared.GameObjects.Components.Doors;
 using NUnit.Framework;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
@@ -19,6 +20,7 @@ namespace Content.IntegrationTests.Tests.Doors
   name: AirlockDummy
   id: AirlockDummy
   components:
+  - type: Door
   - type: Airlock
 ";
         [Test]
@@ -33,7 +35,7 @@ namespace Content.IntegrationTests.Tests.Doors
             var entityManager = server.ResolveDependency<IEntityManager>();
 
             IEntity airlock = null;
-            AirlockComponent airlockComponent = null;
+            ServerDoorComponent doorComponent = null;
 
             server.Assert(() =>
             {
@@ -41,33 +43,33 @@ namespace Content.IntegrationTests.Tests.Doors
 
                 airlock = entityManager.SpawnEntity("Airlock", MapCoordinates.Nullspace);
 
-                Assert.True(airlock.TryGetComponent(out airlockComponent));
-                Assert.That(airlockComponent.State, Is.EqualTo(DoorState.Closed));
+                Assert.True(airlock.TryGetComponent(out doorComponent));
+                Assert.That(doorComponent.State, Is.EqualTo(SharedDoorComponent.DoorState.Closed));
             });
 
             await server.WaitIdleAsync();
 
             server.Assert(() =>
             {
-                airlockComponent.Open();
-                Assert.That(airlockComponent.State, Is.EqualTo(DoorState.Opening));
+                doorComponent.Open();
+                Assert.That(doorComponent.State, Is.EqualTo(SharedDoorComponent.DoorState.Opening));
             });
 
             await server.WaitIdleAsync();
 
-            await WaitUntil(server, () => airlockComponent.State == DoorState.Open);
+            await WaitUntil(server, () => doorComponent.State == SharedDoorComponent.DoorState.Open);
 
-            Assert.That(airlockComponent.State, Is.EqualTo(DoorState.Open));
+            Assert.That(doorComponent.State, Is.EqualTo(SharedDoorComponent.DoorState.Open));
 
             server.Assert(() =>
             {
-                airlockComponent.Close();
-                Assert.That(airlockComponent.State, Is.EqualTo(DoorState.Closing));
+                doorComponent.Close();
+                Assert.That(doorComponent.State, Is.EqualTo(SharedDoorComponent.DoorState.Closing));
             });
 
-            await WaitUntil(server, () => airlockComponent.State == DoorState.Closed);
+            await WaitUntil(server, () => doorComponent.State == SharedDoorComponent.DoorState.Closed);
 
-            Assert.That(airlockComponent.State, Is.EqualTo(DoorState.Closed));
+            Assert.That(doorComponent.State, Is.EqualTo(SharedDoorComponent.DoorState.Closed));
 
             server.Assert(() =>
             {
@@ -96,7 +98,7 @@ namespace Content.IntegrationTests.Tests.Doors
             IEntity human = null;
             IEntity airlock = null;
             TestController controller = null;
-            AirlockComponent airlockComponent = null;
+            ServerDoorComponent doorComponent = null;
 
             var humanStartingX = -1;
 
@@ -114,8 +116,8 @@ namespace Content.IntegrationTests.Tests.Doors
 
                 controller = physics.EnsureController<TestController>();
 
-                Assert.True(airlock.TryGetComponent(out airlockComponent));
-                Assert.That(airlockComponent.State, Is.EqualTo(DoorState.Closed));
+                Assert.True(airlock.TryGetComponent(out doorComponent));
+                Assert.That(doorComponent.State, Is.EqualTo(SharedDoorComponent.DoorState.Closed));
             });
 
             await server.WaitIdleAsync();
@@ -129,7 +131,7 @@ namespace Content.IntegrationTests.Tests.Doors
                 airlock.GetComponent<IPhysicsComponent>().WakeBody();
 
                 // Ensure that it is still closed
-                Assert.That(airlockComponent.State, Is.EqualTo(DoorState.Closed));
+                Assert.That(doorComponent.State, Is.EqualTo(SharedDoorComponent.DoorState.Closed));
 
                 await server.WaitRunTicks(10);
                 await server.WaitIdleAsync();
