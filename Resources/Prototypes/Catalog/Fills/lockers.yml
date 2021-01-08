@@ -81,10 +81,6 @@
     contents:
       - name: ClothingNeckCloakQm
         prob: 1
-      - name: ClothingUniformJumpskirtQM
-        prob: 1
-      - name: ClothingUniformJumpsuitQM
-        prob: 1
       - name: ClothingHeadsetCargo
         prob: 1
       - name: PlushieLizard
@@ -109,8 +105,6 @@
   components:
   - type: StorageFill
     contents:
-      - name: ClothingUniformJumpsuitCaptain
-        prob: 1
       - name: NukeDisk
         prob: 1
       - name: CaptainPDA
@@ -144,10 +138,6 @@
       - name: ClothingNeckCloakHop
         prob: 1
       - name: ClothingHeadHatHopcap
-        prob: 1
-      - name: ClothingUniformJumpskirtHoP
-        prob: 1
-      - name: ClothingUniformJumpsuitHoP
         prob: 1
       - name: HoPIDCard
         prob: 0.9
@@ -183,8 +173,6 @@
   components:
   - type: StorageFill
     contents:
-      - name: ToolboxElectrical
-        prob: 0.5
       - name: ToolboxElectricalFilled
         prob: 0.7
       - name: FirelockElectronics
@@ -272,10 +260,6 @@
   components:
   - type: StorageFill
     contents:
-      - name: ClothingUniformJumpskirtMedicalDoctor
-        prob: 1
-      - name: ClothingUniformJumpsuitMedicalDoctor
-        prob: 1
       - name: ClothingHandsGlovesLatex
         prob: 1
       - name: ClothingHeadsetMedical
@@ -317,17 +301,15 @@
     contents:
       - name: MedkitFilled
         prob: 1
-      - name: ClothingUniformJumpsuitCMO
-        prob: 1
       - name: ClothingHandsGlovesLatex
-        prob: 1
-      - name: ClothingUniformJumpskirtCMO
         prob: 1
       - name: ClothingEyesHudMedical
         prob: 1
       - name: ClothingHeadsetAltMedical
         prob: 1
       - name: CloathingCloakCmo
+        prob: 1
+      - name: ClothingBackpackDuffelSurgeryFilled
         prob: 1
       - name: ClothingOuterCoatLabCmo
         prob: 1
@@ -347,15 +329,7 @@
         prob: 1
       - name: ClothingNeckCloakRd
         prob: 1
-      - name: ClothingUniformJumpsuitResearchDirector
-        prob: 1
-      - name: ClothingUniformJumpskirtResearchDirector
-        prob: 1
       - name: ClothingHeadsetMedicalScience
-        prob: 1
-      - name: ClothingHeadsetMedicalScience
-        prob: 1
-      - name: ClothingHeadHatHoodBioScientist
         prob: 1
       - name: PlushieSlime
         prob: 0.1
@@ -374,10 +348,6 @@
       - name: ClothingHeadHatHoshat
         prob: 1
       - name: ClothingNeckCloakHos
-        prob: 1
-      - name: ClothingUniformJumpskirtHoS
-        prob: 1
-      - name: ClothingUniformJumpsuitHoS
         prob: 1
       - name: ClothingOuterCoatHoSTrench
         prob: 1
@@ -405,8 +375,6 @@
         prob: 1
       - name: ClothingEyesGlassesSecurity
         prob: 1
-      - name: ClothingBeltSecurityWebbing
-        prob: 1
       - name: ClothingShoesBootsJack
         prob: 1
 
@@ -420,26 +388,12 @@
     contents:
       - name: TaserGun
         prob: 0.3
-      - name: ClothingUniformJumpskirtWarden
-        prob: 1
-      - name: ClothingUniformJumpsuitWarden
-        prob: 1
-      - name: ClothingNeckCloakHos
-        prob: 1
       - name: ClothingHeadHatWarden
         prob: 1
       - name: ClothingHeadHatBeretWarden
         prob: 1
-      - name: BoxHandcuff
-        prob: 1
-      - name: BoxSechud
-        prob: 1
       - name: ClothingBeltSecurityFilled
         prob: 1
-      - name: ClothingBeltSecurityFilled
-        prob: 0.8
-      - name: BoxFlashbang
-        prob: 0.5
       - name: Flash
         prob: 1
       - name: ClothingEyesGlassesSecurity
@@ -458,10 +412,6 @@
   components:
   - type: StorageFill
     contents:
-      - name: ClothingUniformJumpsuitSec
-        prob: 1
-      - name: ClothingUniformJumpskirtSec
-        prob: 1
       - name: ClothingUniformJumpsuitSecGrey
         prob: 0.3
       - name: ClothingHeadHelmetHelmet
