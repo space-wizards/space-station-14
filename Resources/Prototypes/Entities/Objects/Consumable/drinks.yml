@@ -29,7 +29,7 @@
       5:
         behaviors:
         - !type:PlaySoundCollectionBehavior
-          soundCollection: WindowBreak
+          soundCollection: GlassBreak
         - !type:SpawnEntitiesBehavior
           spawn:
             ShardGlass:
