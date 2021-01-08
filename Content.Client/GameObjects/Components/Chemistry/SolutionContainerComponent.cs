@@ -1,3 +1,4 @@
+#nullable enable
 using Content.Shared.GameObjects.Components.Chemistry;
 using Robust.Shared.GameObjects;
 

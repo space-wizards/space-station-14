@@ -1,3 +1,4 @@
+#nullable enable
 using Content.Server.GameObjects.Components.GUI;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry;
