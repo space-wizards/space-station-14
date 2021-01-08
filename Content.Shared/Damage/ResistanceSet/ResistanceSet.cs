@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -12,7 +13,7 @@ namespace Content.Shared.Damage.ResistanceSet
     /// </summary>
     [NetSerializable]
     [Serializable]
-    public class ResistanceSet
+    public class ResistanceSet : IDeepClone
     {
         [ViewVariables]
         private Dictionary<DamageType, ResistanceSetSettings> _resistances =
@@ -32,7 +33,7 @@ namespace Content.Shared.Damage.ResistanceSet
             _resistances = data.Resistances;
         }
 
-        public string ID { get; }
+        public string ID { get; private set; }
 
         /// <summary>
         ///     Adjusts input damage with the resistance set values.
@@ -56,6 +57,15 @@ namespace Content.Shared.Damage.ResistanceSet
             amount = (int) Math.Ceiling(amount * _resistances[damageType].Coefficient);
 
             return amount;
+        }
+
+        public IDeepClone DeepClone()
+        {
+            return new ResistanceSet
+            {
+                _resistances = (Dictionary<DamageType, ResistanceSetSettings>) IDeepClone.CloneValue(_resistances),
+                ID = ID
+            };
         }
     }
 
