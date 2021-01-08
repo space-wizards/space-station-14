@@ -6,6 +6,7 @@ using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Atmos;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
@@ -87,7 +88,8 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Filters
         [ViewVariables]
         private PipeNode? _outletPipe;
 
-        private AppearanceComponent? _appearance;
+        [ComponentDependency]
+        private readonly AppearanceComponent? _appearance = default;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -105,7 +107,6 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Filters
             base.Initialize();
             Owner.EnsureComponent<PipeNetDeviceComponent>();
             SetPipes();
-            Owner.TryGetComponent(out _appearance);
             UpdateAppearance();
         }
 
