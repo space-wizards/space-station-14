@@ -119,7 +119,7 @@ namespace Content.Client.UserInterface
 
             _topButtonsContainer = new HBoxContainer
             {
-                SeparationOverride = 4
+                SeparationOverride = 8
             };
 
             RootControl.AddChild(_topButtonsContainer);

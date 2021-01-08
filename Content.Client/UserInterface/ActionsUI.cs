@@ -85,8 +85,8 @@ namespace Content.Client.UserInterface
             LayoutContainer.SetGrowVertical(this, LayoutContainer.GrowDirection.End);
             LayoutContainer.SetAnchorTop(this, 0f);
             LayoutContainer.SetAnchorBottom(this, 0.8f);
-            LayoutContainer.SetMarginLeft(this, 10);
-            LayoutContainer.SetMarginTop(this, 100);
+            LayoutContainer.SetMarginLeft(this, 13);
+            LayoutContainer.SetMarginTop(this, 110);
 
             SizeFlagsHorizontal = SizeFlags.None;
             SizeFlagsVertical = SizeFlags.FillExpand;
