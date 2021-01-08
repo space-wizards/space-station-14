@@ -3,6 +3,7 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -58,6 +59,15 @@ namespace Content.Client.GameObjects.Components.Recycling
             sprite.LayerSetState(RecyclerVisualLayers.Bloody, bloody
                 ? _stateBloody
                 : _stateClean);
+        }
+
+        public override IDeepClone DeepClone()
+        {
+            return new RecyclerVisualizer
+            {
+                _stateBloody = IDeepClone.CloneValue(_stateBloody),
+                _stateClean = IDeepClone.CloneValue(_stateClean)
+            };
         }
     }
 

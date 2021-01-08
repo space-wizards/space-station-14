@@ -6,6 +6,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.Components.Animations;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Animations;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
@@ -67,6 +68,14 @@ namespace Content.Client.GameObjects.Components.Atmos
             {
                 SetState(component, state);
             }
+        }
+
+        public override IDeepClone DeepClone()
+        {
+            return new VaporVisualizer
+            {
+                VaporFlick = IDeepClone.CloneValue(VaporFlick)
+            };
         }
 
         private void SetState(AppearanceComponent component, bool state)

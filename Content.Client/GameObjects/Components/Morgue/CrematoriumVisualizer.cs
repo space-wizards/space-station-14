@@ -3,6 +3,7 @@ using Content.Shared.GameObjects.Components.Morgue;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -68,6 +69,17 @@ namespace Content.Client.GameObjects.Components.Morgue
             {
                 sprite.LayerSetVisible(CrematoriumVisualLayers.Light, false);
             }
+        }
+
+        public override IDeepClone DeepClone()
+        {
+            return new CrematoriumVisualizer
+            {
+                _lightBurning = IDeepClone.CloneValue(_lightBurning)!,
+                _lightContents = IDeepClone.CloneValue(_lightContents)!,
+                _stateClosed = IDeepClone.CloneValue(_stateClosed)!,
+                _stateOpen = IDeepClone.CloneValue(_stateOpen)!
+            };
         }
     }
 

@@ -3,6 +3,7 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -42,6 +43,14 @@ namespace Content.Client.GameObjects.Components.Nutrition
             {
                 SetPied(component, pied);
             }
+        }
+
+        public override IDeepClone DeepClone()
+        {
+            return new CreamPiedVisualizer
+            {
+                _state = IDeepClone.CloneValue(_state)
+            };
         }
 
         private void SetPied(AppearanceComponent component, bool pied)

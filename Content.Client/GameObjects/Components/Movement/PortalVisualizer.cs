@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Client.GameObjects.Components.Movement
 {
@@ -46,6 +47,11 @@ namespace Content.Client.GameObjects.Components.Movement
             {
                 sprite.LayerSetState(Layers.Portal, "portal-pending");
             }
+        }
+
+        public override IDeepClone DeepClone()
+        {
+            return new PortalVisualizer();
         }
 
         enum Layers : byte

@@ -2,6 +2,7 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Shared.Interfaces.Serialization;
 using static Content.Shared.GameObjects.Components.Medical.SharedCloningPodComponent;
 using static Content.Shared.GameObjects.Components.Medical.SharedCloningPodComponent.CloningPodStatus;
 
@@ -17,6 +18,11 @@ namespace Content.Client.GameObjects.Components.CloningPod
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
             if (!component.TryGetData(CloningPodVisuals.Status, out CloningPodStatus status)) return;
             sprite.LayerSetState(CloningPodVisualLayers.Machine, StatusToMachineStateId(status));
+        }
+
+        public override IDeepClone DeepClone()
+        {
+            return new CloningPodVisualizer();
         }
 
         private string StatusToMachineStateId(CloningPodStatus status)

@@ -7,6 +7,7 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Audio;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Log;
 
 namespace Content.Client.GameObjects.Components.Kitchen
@@ -53,6 +54,11 @@ namespace Content.Client.GameObjects.Components.Kitchen
 
             var glowingPartsVisible = !(component.TryGetData(PowerDeviceVisuals.Powered, out bool powered) && !powered);
             sprite.LayerSetVisible(MicrowaveVisualizerLayers.BaseUnlit, glowingPartsVisible);
+        }
+
+        public override IDeepClone DeepClone()
+        {
+            return new MicrowaveVisualizer();
         }
 
         private enum MicrowaveVisualizerLayers : byte

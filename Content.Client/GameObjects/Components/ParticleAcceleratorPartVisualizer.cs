@@ -6,6 +6,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using YamlDotNet.RepresentationModel;
@@ -15,7 +16,7 @@ namespace Content.Client.GameObjects.Components
     [UsedImplicitly]
     public class ParticleAcceleratorPartVisualizer : AppearanceVisualizer
     {
-        private readonly Dictionary<ParticleAcceleratorVisualState, string> _states = new();
+        private Dictionary<ParticleAcceleratorVisualState, string> _states = new();
 
         public override void LoadData(YamlMappingNode node)
         {
@@ -66,6 +67,14 @@ namespace Content.Client.GameObjects.Components
             {
                 sprite.LayerSetVisible(ParticleAcceleratorVisualLayers.Unlit, false);
             }
+        }
+
+        public override IDeepClone DeepClone()
+        {
+            return new ParticleAcceleratorPartVisualizer
+            {
+                _states = IDeepClone.CloneValue(_states)
+            };
         }
     }
 }

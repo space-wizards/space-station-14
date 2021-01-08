@@ -6,6 +6,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.Components.Animations;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -69,6 +70,14 @@ namespace Content.Client.GameObjects.Components.Trigger
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        public override IDeepClone DeepClone()
+        {
+            return new TimerTriggerVisualizer
+            {
+                PrimingAnimation = IDeepClone.CloneValue(PrimingAnimation)
+            };
         }
     }
     public enum TriggerVisualLayers : byte

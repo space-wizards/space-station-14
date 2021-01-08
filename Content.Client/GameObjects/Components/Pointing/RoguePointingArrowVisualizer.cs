@@ -6,6 +6,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.Components.Animations;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Animations;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Maths;
 
 namespace Content.Client.GameObjects.Components.Pointing
@@ -26,6 +27,11 @@ namespace Content.Client.GameObjects.Components.Pointing
             {
                 SetRotation(component, Angle.FromDegrees(degrees));
             }
+        }
+
+        public override IDeepClone DeepClone()
+        {
+            return new RoguePointingArrowVisualizer();
         }
 
         private void SetRotation(AppearanceComponent component, Angle rotation)

@@ -2,6 +2,7 @@ using Content.Shared.GameObjects.Components.Power;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Client.GameObjects.Components.Power
 {
@@ -15,6 +16,11 @@ namespace Content.Client.GameObjects.Components.Power
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
             var powered = component.TryGetData(PowerDeviceVisuals.Powered, out bool poweredVar) && poweredVar;
             sprite.LayerSetVisible(PowerDeviceVisualLayers.Powered, powered);
+        }
+
+        public override IDeepClone DeepClone()
+        {
+            return new PowerDeviceVisualizer();
         }
     }
 

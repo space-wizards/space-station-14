@@ -6,6 +6,7 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
+using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Client.GameObjects.Components
 {
@@ -48,6 +49,11 @@ namespace Content.Client.GameObjects.Components
                 sprite.LayerSetState(WindowDamageLayers.DamageNW, $"{(int) lowWall.LastCornerNW}_{level}");
 
             }
+        }
+
+        public override IDeepClone DeepClone()
+        {
+            return new WindowVisualizer();
         }
 
         private static LowWallComponent? FindLowWall(SnapGridComponent snapGrid)

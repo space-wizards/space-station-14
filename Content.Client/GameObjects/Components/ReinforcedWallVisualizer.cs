@@ -2,6 +2,7 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Client.GameObjects.Components
 {
@@ -16,6 +17,11 @@ namespace Content.Client.GameObjects.Components
             {
                 SetDeconstructionStage(component, stage);
             }
+        }
+
+        public override IDeepClone DeepClone()
+        {
+            return new ReinforcedWallVisualizer();
         }
 
         public void SetDeconstructionStage(AppearanceComponent component, int stage)

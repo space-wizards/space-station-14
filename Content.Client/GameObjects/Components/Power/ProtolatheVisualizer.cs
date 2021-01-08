@@ -6,6 +6,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.Components.Animations;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Power
@@ -112,6 +113,19 @@ namespace Content.Client.GameObjects.Components.Power
             var glowingPartsVisible = !(component.TryGetData(PowerDeviceVisuals.Powered, out bool powered) && !powered);
             sprite.LayerSetVisible(ProtolatheVisualLayers.BaseUnlit, glowingPartsVisible);
         }
+
+        public override IDeepClone DeepClone()
+        {
+            return new ProtolatheVisualizer
+            {
+                _buildingAnimation = IDeepClone.CloneValue(_buildingAnimation),
+                _insertingGlassAnimation = IDeepClone.CloneValue(_insertingGlassAnimation),
+                _insertingGoldAnimation = IDeepClone.CloneValue(_insertingGoldAnimation),
+                _insertingMetalAnimation = IDeepClone.CloneValue(_insertingMetalAnimation),
+                _insertingPhoronAnimation = IDeepClone.CloneValue(_insertingPhoronAnimation)
+            };
+        }
+
         public enum ProtolatheVisualLayers : byte
         {
             Base,

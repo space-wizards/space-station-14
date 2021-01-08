@@ -3,6 +3,7 @@ using Content.Shared.GameObjects.Components.Morgue;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Client.GameObjects.Components.Morgue
 {
@@ -22,6 +23,11 @@ namespace Content.Client.GameObjects.Components.Morgue
             {
                 sprite.LayerSetVisible(BodyBagVisualLayers.Label, labelVal);
             }
+        }
+
+        public override IDeepClone DeepClone()
+        {
+            return new BodyBagVisualizer();
         }
     }
 

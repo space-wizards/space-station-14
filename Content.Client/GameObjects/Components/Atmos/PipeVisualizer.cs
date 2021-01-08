@@ -8,6 +8,7 @@ using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.GameObjects.Components.Renderable;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Utility;
@@ -56,6 +57,14 @@ namespace Content.Client.GameObjects.Components.Atmos
             var pipeBase = sprite.LayerMapGet(Layer.PipeBase);
             var pipeBaseStateId = GetPipeBaseStateId(pipeVisualState);
             sprite.LayerSetState(pipeBase, pipeBaseStateId);
+        }
+
+        public override IDeepClone DeepClone()
+        {
+            return new PipeVisualizer
+            {
+                _pipeRSI = IDeepClone.CloneValue(_pipeRSI)
+            };
         }
 
         private string GetPipeBaseStateId(PipeVisualState pipeVisualState)

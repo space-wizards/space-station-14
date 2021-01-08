@@ -2,6 +2,7 @@
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using static Content.Shared.GameObjects.Components.Power.AME.SharedAMEControllerComponent;
 
 namespace Content.Client.GameObjects.Components.Power.AME
@@ -46,6 +47,11 @@ namespace Content.Client.GameObjects.Components.Power.AME
                         break;
                 }
             }
+        }
+
+        public override IDeepClone DeepClone()
+        {
+            return new AMEControllerVisualizer();
         }
 
         enum Layers : byte

@@ -3,6 +3,7 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Client.GameObjects.Components.Power
 {
@@ -62,6 +63,11 @@ namespace Content.Client.GameObjects.Components.Power
                 sprite.LayerSetState(Layers.Input, "smes-oc0");
                 sprite.LayerSetState(Layers.Output, "smes-op1");
             }
+        }
+
+        public override IDeepClone DeepClone()
+        {
+            return new SmesVisualizer();
         }
 
         enum Layers : byte

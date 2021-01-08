@@ -3,6 +3,7 @@ using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -39,6 +40,14 @@ namespace Content.Client.GameObjects.Components.Nutrition
             {
                 sprite.LayerSetState(0, "icon-0");
             }
+        }
+
+        public override IDeepClone DeepClone()
+        {
+            return new DrinkFoodVisualizer
+            {
+                _steps = IDeepClone.CloneValue(_steps)
+            };
         }
     }
 }

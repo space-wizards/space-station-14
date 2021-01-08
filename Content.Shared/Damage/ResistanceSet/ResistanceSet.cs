@@ -73,7 +73,7 @@ namespace Content.Shared.Damage.ResistanceSet
     ///     Settings for a specific damage type in a resistance set. Flat reduction is applied before the coefficient.
     /// </summary>
     [Serializable, NetSerializable]
-    public struct ResistanceSetSettings
+    public struct ResistanceSetSettings : IDeepClone
     {
         [ViewVariables] public float Coefficient { get; private set; }
 
@@ -83,6 +83,11 @@ namespace Content.Shared.Damage.ResistanceSet
         {
             Coefficient = coefficient;
             FlatReduction = flatReduction;
+        }
+
+        public IDeepClone DeepClone()
+        {
+            return this;
         }
     }
 }

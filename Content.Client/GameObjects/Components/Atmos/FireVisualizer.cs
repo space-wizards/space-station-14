@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -65,6 +66,17 @@ namespace Content.Client.GameObjects.Components.Atmos
 
                 SetOnFire(component, onFire, fireStacks);
             }
+        }
+
+        public override IDeepClone DeepClone()
+        {
+            return new FireVisualizer
+            {
+                _sprite = IDeepClone.CloneValue(_sprite),
+                _alternateState = IDeepClone.CloneValue(_alternateState),
+                _normalState = IDeepClone.CloneValue(_normalState),
+                _fireStackAlternateState = IDeepClone.CloneValue(_fireStackAlternateState)
+            };
         }
 
         private void SetOnFire(AppearanceComponent component, bool onFire, float fireStacks)

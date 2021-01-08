@@ -6,6 +6,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.Components.Animations;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components
@@ -94,6 +95,14 @@ namespace Content.Client.GameObjects.Components
             }
         }
 
+        public override IDeepClone DeepClone()
+        {
+            return new RadiationCollectorVisualizer
+            {
+                ActivateAnimation = IDeepClone.CloneValue(ActivateAnimation),
+                DeactiveAnimation = IDeepClone.CloneValue(DeactiveAnimation)
+            };
+        }
     }
     public enum RadiationCollectorVisualLayers : byte
     {

@@ -116,7 +116,6 @@ namespace Content.Client.GameObjects.Components
 
         public virtual void OnInitialize() { }
         public virtual void OnStart() { }
-        public abstract IDeepClone DeepClone();
     }
 
     /// <summary>
@@ -320,8 +319,8 @@ namespace Content.Client.GameObjects.Components
         {
             return new ColorCycleBehaviour
             {
-                _colorIndex = _colorIndex,
-                ColorsToCycle = ColorsToCycle
+                _colorIndex = IDeepClone.CloneValue(_colorIndex),
+                ColorsToCycle = IDeepClone.CloneValue(ColorsToCycle)
             };
         }
 

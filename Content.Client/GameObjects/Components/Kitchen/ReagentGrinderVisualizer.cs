@@ -1,5 +1,6 @@
 ﻿using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Shared.Interfaces.Serialization;
 using static Content.Shared.Kitchen.SharedReagentGrinderComponent;
 
 namespace Content.Client.GameObjects.Components.Kitchen
@@ -12,6 +13,11 @@ namespace Content.Client.GameObjects.Components.Kitchen
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
             component.TryGetData(ReagentGrinderVisualState.BeakerAttached, out bool hasBeaker);
             sprite.LayerSetState(0, $"juicer{(hasBeaker ? "1" : "0")}");
+        }
+
+        public override IDeepClone DeepClone()
+        {
+            return new ReagentGrinderVisualizer();
         }
     }
 }

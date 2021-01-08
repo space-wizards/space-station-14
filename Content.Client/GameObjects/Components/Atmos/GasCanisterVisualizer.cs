@@ -4,6 +4,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
@@ -61,6 +62,15 @@ namespace Content.Client.GameObjects.Components.Atmos
             if (component.TryGetData(GasCanisterVisuals.PressureState, out int pressureState))
                 if ((pressureState >= 0) && (pressureState < _statePressure.Length))
                     sprite.LayerSetState(Layers.PressureLight, _statePressure[pressureState]);
+        }
+
+        public override IDeepClone DeepClone()
+        {
+            return new GasCanisterVisualizer
+            {
+                _stateConnected = IDeepClone.CloneValue(_stateConnected),
+                _statePressure = IDeepClone.CloneValue(_statePressure)
+            };
         }
 
         enum Layers

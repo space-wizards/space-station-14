@@ -3,6 +3,7 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -64,6 +65,12 @@ namespace Content.Client.GameObjects.Components.PDA
 
         }
 
-
+        public override IDeepClone DeepClone()
+        {
+            return new PDAVisualizer
+            {
+                _state = IDeepClone.CloneValue(_state)
+            };
+        }
     }
 }

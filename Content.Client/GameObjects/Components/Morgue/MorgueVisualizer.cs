@@ -1,7 +1,9 @@
 ﻿#nullable enable
+using System.Runtime.CompilerServices;
 using Content.Shared.GameObjects.Components.Morgue;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -72,6 +74,18 @@ namespace Content.Client.GameObjects.Components.Storage
             {
                 sprite.LayerSetVisible(MorgueVisualLayers.Light, false);
             }
+        }
+
+        public override IDeepClone DeepClone()
+        {
+            return new MorgueVisualizer
+            {
+                _lightContents = IDeepClone.CloneValue(_lightContents)!,
+                _lightMob = IDeepClone.CloneValue(_lightMob)!,
+                _lightSoul = IDeepClone.CloneValue(_lightSoul)!,
+                _stateClosed = IDeepClone.CloneValue(_stateClosed)!,
+                _stateOpen = IDeepClone.CloneValue(_stateOpen)!
+            };
         }
     }
 
