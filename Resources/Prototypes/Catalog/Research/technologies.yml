@@ -25,7 +25,7 @@
   name: "advanced botany"
   id: AdvancedBotany
   description: A better understanding of botany.
-  icon: Objects/Specific/Hydroponics/potato.rsi
+  icon: Objects/Specific/Hydroponics/potato.rsi/seed.png
   requiredPoints: 1500
   requiredTechnologies:
     - BiologicalTechnology
@@ -34,7 +34,7 @@
   name: "advanced surgery"
   id: AdvancedSugery
   description: Research new surgical procedures.
-  icon: Objects/Specific/Medical/surgery_tools.rsi
+  icon: Objects/Specific/Medical/surgery_tools.rsi/bone_saw.png
   requiredPoints: 1500
   requiredTechnologies:
     - BiologicalTechnology
@@ -45,7 +45,7 @@
   name: "chemistry technology"
   id: ChemistryTechnology
   description: A crash course in chemistry.
-  icon: Objects/Specific/Chemistry/beakers.rsi
+  icon: Objects/Specific/Chemistry/beakers.rsi/beakerlarge.png
   requiredPoints: 1000
   requiredTechnologies:
     - BasicResearch
@@ -56,7 +56,7 @@
   name: "security technology"
   id: SecurityTechnology
   description: Beginning of the long hard road to exosuits.
-  icon: Objects/Weapons/Melee/stunbaton.rsi
+  icon: Objects/Weapons/Melee/stunbaton.rsi/stunbaton_off.png
   requiredPoints: 1000
   requiredTechnologies:
     - BasicResearch
@@ -65,7 +65,7 @@
   name: "ballistic technology"
   id: BallisticTechnology
   description: Just a fancy term for guns.
-  icon: Objects/Weapons/Guns/Pistols/clarissa.rsi
+  icon: Objects/Weapons/Guns/Pistols/clarissa.rsi/icon.png
   requiredPoints: 1500
   requiredTechnologies:
     - SecurityTechnology
@@ -74,7 +74,7 @@
   name: "direct energy technology"
   id: DirectEnergyTechnology
   description: Basically laser guns.
-  icon: Objects/Weapons/Guns/Battery/taser.rsi
+  icon: Objects/Weapons/Guns/Battery/taser.rsi/icon.png
   requiredPoints: 1500
   requiredTechnologies:
     - SecurityTechnology
@@ -83,7 +83,7 @@
   name: "explosives technology"
   id: ExplosivesTechnology
   description: Let's just start with grenades for now.
-  icon: Objects/Weapons/Grenades/flashbang.rsi
+  icon: Objects/Weapons/Grenades/flashbang.rsi/icon.png
   requiredPoints: 1500
   requiredTechnologies:
     - SecurityTechnology
@@ -92,7 +92,7 @@
   name: "armor technology"
   id: ArmorTechnology
   description: Basic protective gear for security personnel.
-  icon: Clothing/OuterClothing/Vests/kevlar.rsi
+  icon: Clothing/OuterClothing/Vests/kevlar.rsi/icon.png
   requiredPoints: 1500
   requiredTechnologies:
     - SecurityTechnology
@@ -125,9 +125,7 @@
   name: material sheet printing
   id: Sheets
   description: Print those sheets!
-  icon:
-    sprite: Objects/Materials/sheets.rsi
-    state: researchicon
+  icon: Objects/Materials/sheets.rsi/researchicon.png
   requiredPoints: 250
   requiredTechnologies:
     - IndustrialEngineering

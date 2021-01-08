@@ -231,7 +231,8 @@ namespace Content.Client
             "GlassBeaker",
             "SliceableFood",
             "DamageOtherOnHit",
-            "DamageOnLand"
+            "DamageOnLand",
+            "Recyclable"
         };
     }
 }
