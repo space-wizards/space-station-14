@@ -69,8 +69,6 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
                 }
             }
 
-
-
             foreach (var (item, itemStates) in itemActionStates)
             {
                 foreach (var itemActionState in itemStates)

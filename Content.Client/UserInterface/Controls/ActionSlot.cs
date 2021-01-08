@@ -340,7 +340,8 @@ namespace Content.Client.UserInterface.Controls
         /// </summary>
         public void Depress(bool depress)
         {
-            if (!CanUseAction) return;
+            // Allow people to toggle repeatable actions on cooldown.
+            if (!CanUseAction && (!Action?.Repeat ?? true)) return;
 
             if (_depressed && !depress)
             {

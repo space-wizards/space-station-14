@@ -327,13 +327,6 @@ namespace Content.Client.UserInterface
                 // action is currently granted
                 actionSlot.EnableAction();
                 actionSlot.Cooldown = actionState.Cooldown;
-
-                // if we are targeting with an action now on cooldown, stop targeting
-                if (SelectingTargetFor?.Action != null && SelectingTargetFor.Action == action &&
-                    actionState.IsOnCooldown(_gameTiming))
-                {
-                    StopTargeting();
-                }
             }
 
             // check if we need to toggle it
@@ -400,14 +393,6 @@ namespace Content.Client.UserInterface
             {
                 // action is currently granted
                 actionSlot.EnableAction();
-
-                // if we are targeting with an action now on cooldown, stop targeting
-                if (SelectingTargetFor?.Action != null && SelectingTargetFor.Action == action &&
-                    SelectingTargetFor.Item == itemEntity &&
-                    actionState.IsOnCooldown(_gameTiming))
-                {
-                    StopTargeting();
-                }
             }
             actionSlot.Cooldown = actionState.Cooldown;
 

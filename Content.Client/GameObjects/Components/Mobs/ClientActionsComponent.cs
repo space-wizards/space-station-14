@@ -217,6 +217,15 @@ namespace Content.Client.GameObjects.Components.Mobs
                     }
                     return true;
                 }
+                // we're targeting entities, but the user didn't point at one
+                case BehaviorType.TargetEntity when args.EntityUid == EntityUid.Invalid:
+
+                    // If we don't repeat, stop targeting.
+                    if (!attempt.Action.Repeat)
+                        goto default;
+
+                    // Otherwise, continue as normal.
+                    return true;
                 default:
                     _ui.StopTargeting();
                     return false;
