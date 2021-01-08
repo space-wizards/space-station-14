@@ -24,7 +24,7 @@
 
 - type: action
   actionType: Disarm
-  icon: Interface/Alerts/Human/human5.png
+  icon: Interface/Actions/disarm.png
   name: "[color=red]Disarm[/color]"
   description: "Attempt to [color=red]disarm[/color] someone."
   filters:
