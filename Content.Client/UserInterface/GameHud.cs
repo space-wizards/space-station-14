@@ -49,6 +49,11 @@ namespace Content.Client.UserInterface
         bool CraftingButtonVisible { get; set; }
         Action<bool> CraftingButtonToggled { get; set; }
 
+        // Actions top button.
+        bool ActionsButtonDown { get; set; }
+        bool ActionsButtonVisible { get; set; }
+        Action<bool> ActionsButtonToggled { get; set; }
+
         // Sandbox top button.
         bool SandboxButtonDown { get; set; }
         bool SandboxButtonVisible { get; set; }
@@ -77,6 +82,7 @@ namespace Content.Client.UserInterface
         private TopButton _buttonCharacterMenu;
         private TopButton _buttonInventoryMenu;
         private TopButton _buttonCraftingMenu;
+        private TopButton _buttonActionsMenu;
         private TopButton _buttonSandboxMenu;
         private TutorialWindow _tutorialWindow;
         private TargetingDoll _targetingDoll;
@@ -120,6 +126,7 @@ namespace Content.Client.UserInterface
             var characterTexture = _resourceCache.GetTexture("/Textures/Interface/character.svg.96dpi.png");
             var inventoryTexture = _resourceCache.GetTexture("/Textures/Interface/inventory.svg.96dpi.png");
             var craftingTexture = _resourceCache.GetTexture("/Textures/Interface/hammer.svg.96dpi.png");
+            var actionsTexture = _resourceCache.GetTexture("/Textures/Interface/fist.svg.96dpi.png");
             var tutorialTexture = _resourceCache.GetTexture("/Textures/Interface/tutorial.svg.96dpi.png");
             var sandboxTexture = _resourceCache.GetTexture("/Textures/Interface/sandbox.svg.96dpi.png");
 
@@ -189,6 +196,19 @@ namespace Content.Client.UserInterface
             _topButtonsContainer.AddChild(_buttonCraftingMenu);
 
             _buttonCraftingMenu.OnToggled += args => CraftingButtonToggled?.Invoke(args.Pressed);
+
+            // Actions
+            _buttonActionsMenu = new TopButton(actionsTexture, ContentKeyFunctions.OpenActionsMenu, _inputManager)
+            {
+                ToolTip = Loc.GetString("Open actions menu."),
+                CustomMinimumSize = topMinSize,
+                Visible = false,
+                StyleClasses = {StyleBase.ButtonSquare}
+            };
+
+            _topButtonsContainer.AddChild(_buttonActionsMenu);
+
+            _buttonActionsMenu.OnToggled += args => ActionsButtonToggled?.Invoke(args.Pressed);
 
             // Sandbox
             _buttonSandboxMenu = new TopButton(sandboxTexture, ContentKeyFunctions.OpenSandboxWindow, _inputManager)
@@ -356,6 +376,20 @@ namespace Content.Client.UserInterface
 
         public Action<bool> CraftingButtonToggled { get; set; }
 
+        public bool ActionsButtonDown
+        {
+            get => _buttonActionsMenu.Pressed;
+            set => _buttonActionsMenu.Pressed = value;
+        }
+
+        public bool ActionsButtonVisible
+        {
+            get => _buttonActionsMenu.Visible;
+            set => _buttonActionsMenu.Visible = value;
+        }
+
+        public Action<bool> ActionsButtonToggled { get; set; }
+
         public bool SandboxButtonDown
         {
             get => _buttonSandboxMenu.Pressed;
@@ -374,6 +408,7 @@ namespace Content.Client.UserInterface
         {
             public const string StyleClassLabelTopButton = "topButtonLabel";
             public const string StyleClassRedTopButton = "topButtonLabel";
+            private const float CustomTooltipDelay = 0.3f;
 
             private static readonly Color ColorNormal = Color.FromHex("#7b7e9e");
             private static readonly Color ColorRedNormal = Color.FromHex("#FEFEFE");
@@ -395,6 +430,7 @@ namespace Content.Client.UserInterface
             {
                 _function = function;
                 _inputManager = inputManager;
+                TooltipDelay = CustomTooltipDelay;
 
                 AddChild(
                     new VBoxContainer
