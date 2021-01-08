@@ -74,7 +74,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             }
         }
 
-        public bool IsCurrentlyHot()
+        bool IHotItem.IsCurrentlyHot()
         {
             return WelderLit;
         }

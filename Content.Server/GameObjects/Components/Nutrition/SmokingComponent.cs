@@ -1,14 +1,12 @@
-﻿using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.GUI;
+﻿#nullable enable
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Items.Clothing;
-using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Shared.GameObjects.Components;
-using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.GameObjects.Components.Timers;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -31,16 +29,17 @@ namespace Content.Server.GameObjects.Components.Nutrition
     {
         public override string Name => "Smoking";
 
-        private SharedBurningStates _currentState;
-        private ClothingComponent _clothingComponent;
+        private SharedBurningStates _currentState = SharedBurningStates.Unlit;
+
+        [ComponentDependency] private readonly ClothingComponent? _clothingComponent = default!;
+        [ComponentDependency] private AppearanceComponent? _appearanceComponent;
 
         /// <summary>
         /// Duration represents how long will this item last.
         /// Generally it ticks down whether it's time-based
         /// or consumption-based.
         /// </summary>
-        [ViewVariables(VVAccess.ReadOnly)]
-        private int _duration;
+        [ViewVariables(VVAccess.ReadOnly)] private int _duration;
 
         /// <summary>
         /// What is the temperature of the cigar?
@@ -48,8 +47,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         /// For a regular cigar, the temp approaches around 400°C or 580°C
         /// dependant on where you measure.
         /// </summary>
-        [ViewVariables]
-        private float _temperature;
+        [ViewVariables] private float _temperature;
 
         [ViewVariables]
         private SharedBurningStates CurrentState
@@ -59,31 +57,26 @@ namespace Content.Server.GameObjects.Components.Nutrition
             {
                 _currentState = value;
 
-                switch (_currentState)
+                if (_clothingComponent != null)
                 {
-                    case SharedBurningStates.Lit:
-                        _clothingComponent.EquippedPrefix = "lit";
-                        _clothingComponent.ClothingEquippedPrefix = "lit";
-                        break;
-                    default:
-                        _clothingComponent.EquippedPrefix = "unlit";
-                        _clothingComponent.ClothingEquippedPrefix = "unlit";
-                        break;
+                    switch (_currentState)
+                    {
+                        case SharedBurningStates.Lit:
+                            _clothingComponent.EquippedPrefix = "lit";
+                            _clothingComponent.ClothingEquippedPrefix = "lit";
+                            break;
+                        default:
+                            _clothingComponent.EquippedPrefix = "unlit";
+                            _clothingComponent.ClothingEquippedPrefix = "unlit";
+                            break;
+                    }
                 }
 
-                if (Owner.TryGetComponent(out AppearanceComponent appearance))
+                if (Owner.TryGetComponent(out _appearanceComponent))
                 {
-                    appearance.SetData(SmokingVisuals.Smoking, _currentState);
+                    _appearanceComponent.SetData(SmokingVisuals.Smoking, _currentState);
                 }
             }
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            Owner.TryGetComponent(out _clothingComponent);
-            _currentState = SharedBurningStates.Unlit;
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -95,7 +88,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (eventArgs.Using.TryGetComponent(out IHotItem lighter)
+            if (eventArgs.Using.TryGetComponent(out IHotItem? lighter)
                 && lighter.IsCurrentlyHot()
                 && CurrentState == SharedBurningStates.Unlit
             )
@@ -109,7 +102,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             return false;
         }
 
-        public bool IsCurrentlyHot()
+        bool IHotItem.IsCurrentlyHot()
         {
             return _currentState == SharedBurningStates.Lit;
         }

@@ -6,6 +6,7 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -20,7 +21,7 @@ namespace Content.Server.GameObjects.Components.Interactable
     {
         public override string Name => "Matchstick";
 
-        private SharedBurningStates _currentState;
+        private SharedBurningStates _currentState = SharedBurningStates.Unlit;
 
         /// <summary>
         /// How long will matchstick last in seconds.
@@ -33,9 +34,10 @@ namespace Content.Server.GameObjects.Components.Interactable
         private string? _igniteSound;
 
         /// <summary>
-        /// Point light component.
+        /// Point light component. Gives matches a glow in dark effect.
         /// </summary>
-        private PointLightComponent? _pointLightComponent;
+        [ComponentDependency]
+        private readonly PointLightComponent? _pointLightComponent = default!;
 
         /// <summary>
         /// Current state to matchstick. Can be <code>Unlit</code>, <code>Lit</code> or <code>Burnt</code>.
@@ -68,16 +70,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             serializer.DataField(ref _igniteSound, "igniteSound", null);
         }
 
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            CurrentState = SharedBurningStates.Unlit;
-
-            Owner.TryGetComponent(out _pointLightComponent);
-        }
-
-        public bool IsCurrentlyHot()
+        bool IHotItem.IsCurrentlyHot()
         {
             return CurrentState == SharedBurningStates.Lit;
         }
@@ -87,7 +80,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             // Play Sound
             if (!string.IsNullOrEmpty(_igniteSound))
             {
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(_igniteSound, user,
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(_igniteSound, Owner,
                     AudioHelpers.WithVariation(0.125f).WithVolume(-0.125f));
             }
 

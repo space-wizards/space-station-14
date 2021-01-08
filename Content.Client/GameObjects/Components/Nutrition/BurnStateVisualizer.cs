@@ -26,7 +26,7 @@ namespace Content.Client.GameObjects.Components.Nutrition
             {
                 _litIcon = litIcon.AsString();
             }
-            if (node.TryGetNode("unlitIcon", out var burntIcon))
+            if (node.TryGetNode("burntIcon", out var burntIcon))
             {
                 _burntIcon = burntIcon.AsString();
             }
