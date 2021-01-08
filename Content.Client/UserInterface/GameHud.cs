@@ -128,8 +128,14 @@ namespace Content.Client.UserInterface
                 margin: 10);
 
             // TODO: Pull key names here from the actual key binding config.
+
+            // the icons here have the same height but different widths, so in order to ensure
+            // they are consistent widths we have to adjust their horizontal padding separately.
+
+            var baseHorizPad = 8f;
+
             // Escape
-            _buttonEscapeMenu = new TopButton(escapeTexture, "Esc")
+            _buttonEscapeMenu = new TopButton(escapeTexture, "Esc", baseHorizPad + 8f)
             {
                 ToolTip = Loc.GetString("Open escape menu."),
                 StyleClasses = {StyleBase.ButtonOpenRight}
@@ -139,14 +145,11 @@ namespace Content.Client.UserInterface
 
             _buttonEscapeMenu.OnToggled += args => EscapeButtonToggled?.Invoke(args.Pressed);
 
-            var squareMinSize = (52, 75);
-
             // Character
-            _buttonCharacterMenu = new TopButton(characterTexture, "C")
+            _buttonCharacterMenu = new TopButton(characterTexture, "C", baseHorizPad)
             {
                 ToolTip = Loc.GetString("Open character menu."),
                 Visible = false,
-                CustomMinimumSize = squareMinSize,
                 StyleClasses = {StyleBase.ButtonSquare}
             };
 
@@ -155,11 +158,10 @@ namespace Content.Client.UserInterface
             _buttonCharacterMenu.OnToggled += args => CharacterButtonToggled?.Invoke(args.Pressed);
 
             // Inventory
-            _buttonInventoryMenu = new TopButton(inventoryTexture, "I")
+            _buttonInventoryMenu = new TopButton(inventoryTexture, "I", baseHorizPad - 3f)
             {
                 ToolTip = Loc.GetString("Open inventory menu."),
                 Visible = false,
-                CustomMinimumSize = squareMinSize,
                 StyleClasses = {StyleBase.ButtonSquare}
             };
 
@@ -168,11 +170,10 @@ namespace Content.Client.UserInterface
             _buttonInventoryMenu.OnToggled += args => InventoryButtonToggled?.Invoke(args.Pressed);
 
             // Crafting
-            _buttonCraftingMenu = new TopButton(craftingTexture, "G")
+            _buttonCraftingMenu = new TopButton(craftingTexture, "G", baseHorizPad)
             {
                 ToolTip = Loc.GetString("Open crafting menu."),
                 Visible = false,
-                CustomMinimumSize = squareMinSize,
                 StyleClasses = {StyleBase.ButtonSquare}
             };
 
@@ -181,11 +182,10 @@ namespace Content.Client.UserInterface
             _buttonCraftingMenu.OnToggled += args => CraftingButtonToggled?.Invoke(args.Pressed);
 
             // Sandbox
-            _buttonSandboxMenu = new TopButton(sandboxTexture, "B")
+            _buttonSandboxMenu = new TopButton(sandboxTexture, "B", baseHorizPad - 4f)
             {
                 ToolTip = Loc.GetString("Open sandbox menu."),
                 Visible = false,
-                CustomMinimumSize = squareMinSize,
                 StyleClasses = {StyleBase.ButtonSquare}
             };
 
@@ -194,10 +194,9 @@ namespace Content.Client.UserInterface
             _buttonSandboxMenu.OnToggled += args => SandboxButtonToggled?.Invoke(args.Pressed);
 
             // Tutorial
-            _buttonTutorial = new TopButton(tutorialTexture, "F1")
+            _buttonTutorial = new TopButton(tutorialTexture, "F1", baseHorizPad - 5f)
             {
                 ToolTip = Loc.GetString("Open tutorial."),
-                CustomMinimumSize = squareMinSize,
                 StyleClasses = {StyleBase.ButtonOpenLeft, TopButton.StyleClassRedTopButton},
             };
 
@@ -377,33 +376,42 @@ namespace Content.Client.UserInterface
             private readonly TextureRect _textureRect;
             private readonly Label _label;
 
-            public TopButton(Texture texture, string keyName)
+            public TopButton(Texture texture, string keyName, float horizPad, float vertPad = 8f)
             {
-                AddChild(new VBoxContainer
-                {
-                    Children =
+                AddChild(
+                    new HBoxContainer
                     {
-                        // padding and max width
-                        new Control {CustomMinimumSize = (0, 4)},
-                        (_textureRect = new TextureRect
+                        Children =
                         {
-                            Texture = texture,
-                            SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                            SizeFlagsVertical = SizeFlags.Expand | SizeFlags.ShrinkCenter,
-                            ModulateSelfOverride =  NormalColor,
-                            Stretch = TextureRect.StretchMode.KeepCentered
-                        }),
-                        // padding
-                        new Control {CustomMinimumSize = (0, 4)},
-                        (_label = new Label
-                        {
-                            Text = keyName,
-                            SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                            ModulateSelfOverride = NormalColor,
-                            StyleClasses = {StyleClassLabelTopButton}
-                        })
+                            new Control {CustomMinimumSize = (horizPad, 0)},
+                            new VBoxContainer
+                            {
+                                Children =
+                                {
+                                    new Control {CustomMinimumSize = (0, vertPad)},
+                                    (_textureRect = new TextureRect
+                                    {
+                                        Texture = texture,
+                                        SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
+                                        SizeFlagsVertical = SizeFlags.Expand | SizeFlags.ShrinkCenter,
+                                        ModulateSelfOverride = NormalColor,
+                                        Stretch = TextureRect.StretchMode.KeepCentered
+                                    }),
+                                    new Control {CustomMinimumSize = (0, vertPad)},
+                                    (_label = new Label
+                                    {
+                                        Text = keyName,
+                                        SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
+                                        ModulateSelfOverride = NormalColor,
+                                        StyleClasses = {StyleClassLabelTopButton}
+                                    })
+                                }
+                            },
+                            new Control {CustomMinimumSize = (horizPad, 0)},
+                        }
                     }
-                });
+                    );
+
                 ToggleMode = true;
             }
 

@@ -171,16 +171,14 @@ namespace Content.Client.UserInterface.Stylesheets
              Texture = buttonTex,
             };
             topButtonBase.SetPatchMargin(StyleBox.Margin.All, 10);
-            topButtonBase.SetPadding(StyleBox.Margin.All, 1);
-            topButtonBase.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
-            topButtonBase.SetContentMarginOverride(StyleBox.Margin.Horizontal, 2);
+            topButtonBase.SetPadding(StyleBox.Margin.All, 0);
+            topButtonBase.SetContentMarginOverride(StyleBox.Margin.All, 0);
 
             var topButtonOpenRight = new StyleBoxTexture(topButtonBase)
             {
              Texture = new AtlasTexture(buttonTex, UIBox2.FromDimensions((0, 0), (14, 24))),
             };
             topButtonOpenRight.SetPatchMargin(StyleBox.Margin.Right, 0);
-            topButtonOpenRight.SetContentMarginOverride(StyleBox.Margin.Horizontal, 18);
 
             var topButtonOpenLeft = new StyleBoxTexture(topButtonBase)
             {
