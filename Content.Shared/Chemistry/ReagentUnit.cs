@@ -6,7 +6,7 @@ using Robust.Shared.Interfaces.Serialization;
 namespace Content.Shared.Chemistry
 {
     [Serializable]
-    public struct ReagentUnit : ISelfSerialize, IComparable<ReagentUnit>, IEquatable<ReagentUnit>
+    public struct ReagentUnit : ISelfSerialize, IComparable<ReagentUnit>, IEquatable<ReagentUnit>, IDeepClone
     {
         private int _value;
         private static readonly int Shift = 2;
@@ -239,6 +239,11 @@ namespace Content.Shared.Chemistry
                 return 1;
             }
             return 0;
+        }
+
+        public IDeepClone DeepClone()
+        {
+            return new ReagentUnit(_value);
         }
     }
 }
