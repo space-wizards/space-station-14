@@ -124,7 +124,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             if (State == LightBulbState.Broken)
                 return;
 
-            var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>("glassbreak");
+            var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>("GlassBreak");
             var file = _random.Pick(soundCollection.PickFiles);
 
             EntitySystem.Get<AudioSystem>().PlayFromEntity(file, Owner);
