@@ -130,14 +130,14 @@ namespace Content.Client.UserInterface
             // TODO: Pull key names here from the actual key binding config.
 
             // the icons here have the same height but different widths, so in order to ensure
-            // they are consistent widths we have to adjust their horizontal padding separately.
-
-            var baseHorizPad = 8f;
+            // the buttons themselves are consistent widths we set a common custom min size
+            Vector2 topMinSize = (42, 64);
 
             // Escape
-            _buttonEscapeMenu = new TopButton(escapeTexture, "Esc", baseHorizPad + 8f)
+            _buttonEscapeMenu = new TopButton(escapeTexture, "Esc")
             {
                 ToolTip = Loc.GetString("Open escape menu."),
+                CustomMinimumSize = (70, 64),
                 StyleClasses = {StyleBase.ButtonOpenRight}
             };
 
@@ -146,9 +146,10 @@ namespace Content.Client.UserInterface
             _buttonEscapeMenu.OnToggled += args => EscapeButtonToggled?.Invoke(args.Pressed);
 
             // Character
-            _buttonCharacterMenu = new TopButton(characterTexture, "C", baseHorizPad)
+            _buttonCharacterMenu = new TopButton(characterTexture, "C")
             {
                 ToolTip = Loc.GetString("Open character menu."),
+                CustomMinimumSize = topMinSize,
                 Visible = false,
                 StyleClasses = {StyleBase.ButtonSquare}
             };
@@ -158,9 +159,10 @@ namespace Content.Client.UserInterface
             _buttonCharacterMenu.OnToggled += args => CharacterButtonToggled?.Invoke(args.Pressed);
 
             // Inventory
-            _buttonInventoryMenu = new TopButton(inventoryTexture, "I", baseHorizPad - 3f)
+            _buttonInventoryMenu = new TopButton(inventoryTexture, "I")
             {
                 ToolTip = Loc.GetString("Open inventory menu."),
+                CustomMinimumSize = topMinSize,
                 Visible = false,
                 StyleClasses = {StyleBase.ButtonSquare}
             };
@@ -170,9 +172,10 @@ namespace Content.Client.UserInterface
             _buttonInventoryMenu.OnToggled += args => InventoryButtonToggled?.Invoke(args.Pressed);
 
             // Crafting
-            _buttonCraftingMenu = new TopButton(craftingTexture, "G", baseHorizPad)
+            _buttonCraftingMenu = new TopButton(craftingTexture, "G")
             {
                 ToolTip = Loc.GetString("Open crafting menu."),
+                CustomMinimumSize = topMinSize,
                 Visible = false,
                 StyleClasses = {StyleBase.ButtonSquare}
             };
@@ -182,9 +185,10 @@ namespace Content.Client.UserInterface
             _buttonCraftingMenu.OnToggled += args => CraftingButtonToggled?.Invoke(args.Pressed);
 
             // Sandbox
-            _buttonSandboxMenu = new TopButton(sandboxTexture, "B", baseHorizPad - 4f)
+            _buttonSandboxMenu = new TopButton(sandboxTexture, "B")
             {
                 ToolTip = Loc.GetString("Open sandbox menu."),
+                CustomMinimumSize = topMinSize,
                 Visible = false,
                 StyleClasses = {StyleBase.ButtonSquare}
             };
@@ -194,9 +198,10 @@ namespace Content.Client.UserInterface
             _buttonSandboxMenu.OnToggled += args => SandboxButtonToggled?.Invoke(args.Pressed);
 
             // Tutorial
-            _buttonTutorial = new TopButton(tutorialTexture, "F1", baseHorizPad - 5f)
+            _buttonTutorial = new TopButton(tutorialTexture, "F1")
             {
                 ToolTip = Loc.GetString("Open tutorial."),
+                CustomMinimumSize = topMinSize,
                 StyleClasses = {StyleBase.ButtonOpenLeft, TopButton.StyleClassRedTopButton},
             };
 
@@ -370,47 +375,42 @@ namespace Content.Client.UserInterface
             private static readonly Color ColorRedHovered = Color.FromHex("#FFFFFF");
             private static readonly Color ColorPressed = Color.FromHex("#789B8C");
 
+            private const float VertPad = 8f;
+
             private Color NormalColor => HasStyleClass(StyleClassRedTopButton) ? ColorRedNormal : ColorNormal;
             private Color HoveredColor => HasStyleClass(StyleClassRedTopButton) ? ColorRedHovered : ColorHovered;
 
             private readonly TextureRect _textureRect;
             private readonly Label _label;
 
-            public TopButton(Texture texture, string keyName, float horizPad, float vertPad = 8f)
+            public TopButton(Texture texture, string keyName)
             {
+
                 AddChild(
-                    new HBoxContainer
+                    new VBoxContainer
                     {
                         Children =
                         {
-                            new Control {CustomMinimumSize = (horizPad, 0)},
-                            new VBoxContainer
+                            new Control {CustomMinimumSize = (0, VertPad)},
+                            (_textureRect = new TextureRect
                             {
-                                Children =
-                                {
-                                    new Control {CustomMinimumSize = (0, vertPad)},
-                                    (_textureRect = new TextureRect
-                                    {
-                                        Texture = texture,
-                                        SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                                        SizeFlagsVertical = SizeFlags.Expand | SizeFlags.ShrinkCenter,
-                                        ModulateSelfOverride = NormalColor,
-                                        Stretch = TextureRect.StretchMode.KeepCentered
-                                    }),
-                                    new Control {CustomMinimumSize = (0, vertPad)},
-                                    (_label = new Label
-                                    {
-                                        Text = keyName,
-                                        SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                                        ModulateSelfOverride = NormalColor,
-                                        StyleClasses = {StyleClassLabelTopButton}
-                                    })
-                                }
-                            },
-                            new Control {CustomMinimumSize = (horizPad, 0)},
+                                Texture = texture,
+                                SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
+                                SizeFlagsVertical = SizeFlags.Expand | SizeFlags.ShrinkCenter,
+                                ModulateSelfOverride = NormalColor,
+                                Stretch = TextureRect.StretchMode.KeepCentered
+                            }),
+                            new Control {CustomMinimumSize = (0, VertPad)},
+                            (_label = new Label
+                            {
+                                Text = keyName,
+                                SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
+                                ModulateSelfOverride = NormalColor,
+                                StyleClasses = {StyleClassLabelTopButton}
+                            })
                         }
                     }
-                    );
+                );
 
                 ToggleMode = true;
             }
