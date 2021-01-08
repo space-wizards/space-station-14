@@ -21,4 +21,5 @@
     pocket1: BikeHorn
     idcard: ClownPDA
     ears: ClothingHeadsetService
+  satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelClownFilled

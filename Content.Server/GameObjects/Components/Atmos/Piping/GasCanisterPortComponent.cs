@@ -1,7 +1,9 @@
-﻿using Content.Server.GameObjects.Components.NodeContainer;
+#nullable enable
+using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.ViewVariables;
 using System.Linq;
@@ -9,46 +11,34 @@ using System.Linq;
 namespace Content.Server.GameObjects.Components.Atmos.Piping
 {
     [RegisterComponent]
-    public class GasCanisterPortComponent : PipeNetDeviceComponent
+    public class GasCanisterPortComponent : Component
     {
         public override string Name => "GasCanisterPort";
 
         [ViewVariables]
-        public GasCanisterComponent ConnectedCanister { get; private set; }
+        public GasCanisterComponent? ConnectedCanister { get; private set; }
 
         [ViewVariables]
         public bool ConnectedToCanister => ConnectedCanister != null;
 
         [ViewVariables]
-        private PipeNode _gasPort;
+        private PipeNode? _gasPort;
 
         public override void Initialize()
         {
             base.Initialize();
-            if (!Owner.TryGetComponent<NodeContainerComponent>(out var container))
-            {
-                JoinedGridAtmos?.RemovePipeNetDevice(this);
-                Logger.Error($"{typeof(GasCanisterPortComponent)} on entity {Owner.Uid} did not have a {nameof(NodeContainerComponent)}.");
-                return;
-            }
-            _gasPort = container.Nodes.OfType<PipeNode>().FirstOrDefault();
-            if (_gasPort == null)
-            {
-                JoinedGridAtmos?.RemovePipeNetDevice(this);
-                Logger.Error($"{typeof(GasCanisterPortComponent)} on entity {Owner.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
-                return;
-            }
+            Owner.EnsureComponentWarn<PipeNetDeviceComponent>();
+            SetGasPort();
             if (Owner.TryGetComponent<SnapGridComponent>(out var snapGrid))
             {
-                var anchoredCanister = snapGrid.GetLocal()
-                    .Select(entity => entity.TryGetComponent<GasCanisterComponent>(out var canister) ? canister : null)
-                    .Where(canister => canister != null)
-                    .Where(canister => canister.Anchored)
-                    .Where(canister => !canister.ConnectedToPort)
-                    .FirstOrDefault();
-                if (anchoredCanister != null)
+                var entities = snapGrid.GetLocal();
+                foreach (var entity in entities)
                 {
-                    anchoredCanister.TryConnectToPort();
+                    if (entity.TryGetComponent<GasCanisterComponent>(out var canister) && canister.Anchored && !canister.ConnectedToPort)
+                    {
+                        canister.TryConnectToPort();
+                        break;
+                    }
                 }
             }
         }
@@ -59,10 +49,24 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
             ConnectedCanister?.DisconnectFromPort();
         }
 
-        public override void Update()
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
-            ConnectedCanister?.Air.Share(_gasPort.Air, 1);
-            ConnectedCanister?.AirWasUpdated();
+            base.HandleMessage(message, component);
+            switch (message)
+            {
+                case PipeNetUpdateMessage:
+                    Update();
+                    break;
+            }
+        }
+
+        public void Update()
+        {
+            if (_gasPort == null || ConnectedCanister == null)
+                return;
+
+            ConnectedCanister.Air.Share(_gasPort.Air, 1);
+            ConnectedCanister.AirWasUpdated();
         }
 
         public void ConnectGasCanister(GasCanisterComponent gasCanister)
@@ -73,6 +77,21 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         public void DisconnectGasCanister()
         {
             ConnectedCanister = null;
+        }
+
+        private void SetGasPort()
+        {
+            if (!Owner.TryGetComponent<NodeContainerComponent>(out var container))
+            {
+                Logger.Error($"{typeof(GasCanisterPortComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} did not have a {nameof(NodeContainerComponent)}.");
+                return;
+            }
+            _gasPort = container.Nodes.OfType<PipeNode>().FirstOrDefault();
+            if (_gasPort == null)
+            {
+                Logger.Error($"{typeof(GasCanisterPortComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
+                return;
+            }
         }
     }
 }

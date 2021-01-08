@@ -16,6 +16,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -35,6 +36,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
         private IEnumerable<ReactionPrototype> _reactions;
+        private ChemicalReactionSystem _reactionSystem;
         private string _fillInitState;
         private int _fillInitSteps;
         private string _fillPathString = "Objects/Specific/Chemistry/fillings.rsi";
@@ -49,7 +51,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// </summary>
         [ViewVariables]
         public ReagentUnit EmptyVolume => MaxVolume - CurrentVolume;
-
         public IReadOnlyList<Solution.ReagentQuantity> ReagentList => Solution.Contents;
         public bool CanExamineContents => Capabilities.HasCap(SolutionContainerCaps.CanExamine);
         public bool CanUseWithChemDispenser => Capabilities.HasCap(SolutionContainerCaps.FitsInDispenser);
@@ -74,6 +75,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             _audioSystem = EntitySystem.Get<AudioSystem>();
             _chemistrySystem = _entitySystemManager.GetEntitySystem<ChemistrySystem>();
             _reactions = _prototypeManager.EnumeratePrototypes<ReactionPrototype>();
+            _reactionSystem = _entitySystemManager.GetEntitySystem<ChemicalReactionSystem>();
         }
 
         protected override void Startup()
@@ -98,7 +100,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         public override bool TryRemoveReagent(string reagentId, ReagentUnit quantity)
         {
-            if (!ContainsReagent(reagentId, out var currentQuantity))
+            if (!Solution.ContainsReagent(reagentId, out var currentQuantity))
             {
                 return false;
             }
@@ -289,29 +291,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         private void CheckForReaction()
         {
-            bool checkForNewReaction = false;
-            while (true)
-            {
-                //TODO: make a hashmap at startup and then look up reagents in the contents for a reaction
-                //Check the solution for every reaction
-                foreach (var reaction in _reactions)
-                {
-                    if (SolutionValidReaction(reaction, out var unitReactions))
-                    {
-                        PerformReaction(reaction, unitReactions);
-                        checkForNewReaction = true;
-                        break;
-                    }
-                }
-
-                //Check for a new reaction if a reaction occurs, run loop again.
-                if (checkForNewReaction)
-                {
-                    checkForNewReaction = false;
-                    continue;
-                }
-                return;
-            }
+            _reactionSystem.FullyReactSolution(Solution, Owner, MaxVolume);
         }
 
         public bool TryAddReagent(string reagentId, ReagentUnit quantity, out ReagentUnit acceptedQuantity, bool skipReactionCheck = false, bool skipColor = false)
@@ -355,91 +335,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 CheckForReaction();
             OnSolutionChanged(skipColor);
             return true;
-        }
-
-        /// <summary>
-        /// Checks if a solution has the reactants required to cause a specified reaction.
-        /// </summary>
-        /// <param name="solution">The solution to check for reaction conditions.</param>
-        /// <param name="reaction">The reaction whose reactants will be checked for in the solution.</param>
-        /// <param name="unitReactions">The number of times the reaction can occur with the given solution.</param>
-        /// <returns></returns>
-        private bool SolutionValidReaction(ReactionPrototype reaction, out ReagentUnit unitReactions)
-        {
-            unitReactions = ReagentUnit.MaxValue; //Set to some impossibly large number initially
-            foreach (var reactant in reaction.Reactants)
-            {
-                if (!ContainsReagent(reactant.Key, out ReagentUnit reagentQuantity))
-                {
-                    return false;
-                }
-                var currentUnitReactions = reagentQuantity / reactant.Value.Amount;
-                if (currentUnitReactions < unitReactions)
-                {
-                    unitReactions = currentUnitReactions;
-                }
-            }
-
-            if (unitReactions == 0)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-
-        /// <summary>
-        /// Perform a reaction on a solution. This assumes all reaction criteria have already been checked and are met.
-        /// </summary>
-        /// <param name="solution">Solution to be reacted.</param>
-        /// <param name="reaction">Reaction to occur.</param>
-        /// <param name="unitReactions">The number of times to cause this reaction.</param>
-        private void PerformReaction(ReactionPrototype reaction, ReagentUnit unitReactions)
-        {
-            //Remove non-catalysts
-            foreach (var reactant in reaction.Reactants)
-            {
-                if (!reactant.Value.Catalyst)
-                {
-                    var amountToRemove = unitReactions * reactant.Value.Amount;
-                    TryRemoveReagent(reactant.Key, amountToRemove);
-                }
-            }
-
-            // Add products
-            foreach (var product in reaction.Products)
-            {
-                TryAddReagent(product.Key, product.Value * unitReactions, out var acceptedQuantity, true);
-            }
-
-            // Trigger reaction effects
-            foreach (var effect in reaction.Effects)
-            {
-                effect.React(Owner, unitReactions.Double());
-            }
-
-            // Play reaction sound client-side
-            _audioSystem.PlayAtCoords("/Audio/Effects/Chemistry/bubbles.ogg", Owner.Transform.Coordinates);
-        }
-
-        /// <summary>
-        /// Check if the solution contains the specified reagent.
-        /// </summary>
-        /// <param name="reagentId">The reagent to check for.</param>
-        /// <param name="quantity">Output the quantity of the reagent if it is contained, 0 if it isn't.</param>
-        /// <returns>Return true if the solution contains the reagent.</returns>
-        public bool ContainsReagent(string reagentId, out ReagentUnit quantity)
-        {
-            var containsReagent = Solution.ContainsReagent(reagentId, out var quantityFound);
-            quantity = quantityFound;
-            return containsReagent;
-        }
-
-        public string GetMajorReagentId()
-        {
-            return Solution.GetPrimaryReagentId();
         }
 
         protected void UpdateFillIcon()

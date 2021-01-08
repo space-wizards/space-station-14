@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Server.Interfaces.Chemistry

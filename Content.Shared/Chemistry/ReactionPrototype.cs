@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.Interfaces.Chemistry;
-using Content.Shared.Chemistry;
+using Content.Shared.Interfaces;
 using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using YamlDotNet.RepresentationModel;
 
-namespace Content.Server.Chemistry
+namespace Content.Shared.Chemistry
 {
     /// <summary>
     /// Prototype for chemical reaction definitions
@@ -35,6 +36,8 @@ namespace Content.Server.Chemistry
         /// </summary>
         public IReadOnlyList<IReactionEffect> Effects => _effects;
 
+        [Dependency] private readonly IModuleManager _moduleManager = default!;
+
         public void LoadFrom(YamlMappingNode mapping)
         {
             var serializer = YamlObjectSerializer.NewReader(mapping);
@@ -43,7 +46,13 @@ namespace Content.Server.Chemistry
             serializer.DataField(ref _name, "name", string.Empty);
             serializer.DataField(ref _reactants, "reactants", new Dictionary<string, ReactantPrototype>());
             serializer.DataField(ref _products, "products", new Dictionary<string, ReagentUnit>());
-            serializer.DataField(ref _effects, "effects", new List<IReactionEffect>());
+
+            if (_moduleManager.IsServerModule)
+            {
+                //TODO: Don't have a check for if this is the server
+                //Some implementations of IReactionEffect can't currently be moved to shared, so this is here to prevent the client from breaking when reading server-only IReactionEffects.
+                serializer.DataField(ref _effects, "effects", new List<IReactionEffect>());
+            }
         }
     }
 
