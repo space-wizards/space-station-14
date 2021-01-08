@@ -54,6 +54,11 @@ namespace Content.Client.UserInterface
         bool ActionsButtonVisible { get; set; }
         Action<bool> ActionsButtonToggled { get; set; }
 
+        // Admin top button.
+        bool AdminButtonDown { get; set; }
+        bool AdminButtonVisible { get; set; }
+        Action<bool> AdminButtonToggled { get; set; }
+
         // Sandbox top button.
         bool SandboxButtonDown { get; set; }
         bool SandboxButtonVisible { get; set; }
@@ -83,6 +88,7 @@ namespace Content.Client.UserInterface
         private TopButton _buttonInventoryMenu;
         private TopButton _buttonCraftingMenu;
         private TopButton _buttonActionsMenu;
+        private TopButton _buttonAdminMenu;
         private TopButton _buttonSandboxMenu;
         private TutorialWindow _tutorialWindow;
         private TargetingDoll _targetingDoll;
@@ -127,6 +133,7 @@ namespace Content.Client.UserInterface
             var inventoryTexture = _resourceCache.GetTexture("/Textures/Interface/inventory.svg.96dpi.png");
             var craftingTexture = _resourceCache.GetTexture("/Textures/Interface/hammer.svg.96dpi.png");
             var actionsTexture = _resourceCache.GetTexture("/Textures/Interface/fist.svg.96dpi.png");
+            var adminTexture = _resourceCache.GetTexture("/Textures/Interface/gavel.svg.96dpi.png");
             var tutorialTexture = _resourceCache.GetTexture("/Textures/Interface/tutorial.svg.96dpi.png");
             var sandboxTexture = _resourceCache.GetTexture("/Textures/Interface/sandbox.svg.96dpi.png");
 
@@ -142,7 +149,7 @@ namespace Content.Client.UserInterface
 
             // TODO: Pull key names here from the actual key binding config.
 
-            // the icons here have the same height but different widths, so in order to ensure
+            // the icon textures here should all have the same image height (32) but different widths, so in order to ensure
             // the buttons themselves are consistent widths we set a common custom min size
             Vector2 topMinSize = (42, 64);
 
@@ -209,6 +216,19 @@ namespace Content.Client.UserInterface
             _topButtonsContainer.AddChild(_buttonActionsMenu);
 
             _buttonActionsMenu.OnToggled += args => ActionsButtonToggled?.Invoke(args.Pressed);
+
+            // Admin
+            _buttonAdminMenu = new TopButton(adminTexture, ContentKeyFunctions.OpenAdminMenu, _inputManager)
+            {
+                ToolTip = Loc.GetString("Open admin menu."),
+                CustomMinimumSize = topMinSize,
+                Visible = false,
+                StyleClasses = {StyleBase.ButtonSquare}
+            };
+
+            _topButtonsContainer.AddChild(_buttonAdminMenu);
+
+            _buttonAdminMenu.OnToggled += args => AdminButtonToggled?.Invoke(args.Pressed);
 
             // Sandbox
             _buttonSandboxMenu = new TopButton(sandboxTexture, ContentKeyFunctions.OpenSandboxWindow, _inputManager)
@@ -390,6 +410,20 @@ namespace Content.Client.UserInterface
 
         public Action<bool> ActionsButtonToggled { get; set; }
 
+        public bool AdminButtonDown
+        {
+            get => _buttonAdminMenu.Pressed;
+            set => _buttonAdminMenu.Pressed = value;
+        }
+
+        public bool AdminButtonVisible
+        {
+            get => _buttonAdminMenu.Visible;
+            set => _buttonAdminMenu.Visible = value;
+        }
+
+        public Action<bool> AdminButtonToggled { get; set; }
+
         public bool SandboxButtonDown
         {
             get => _buttonSandboxMenu.Pressed;
@@ -408,7 +442,7 @@ namespace Content.Client.UserInterface
         {
             public const string StyleClassLabelTopButton = "topButtonLabel";
             public const string StyleClassRedTopButton = "topButtonLabel";
-            private const float CustomTooltipDelay = 0.3f;
+            private const float CustomTooltipDelay = 0.4f;
 
             private static readonly Color ColorNormal = Color.FromHex("#7b7e9e");
             private static readonly Color ColorRedNormal = Color.FromHex("#FEFEFE");
