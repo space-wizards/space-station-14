@@ -34,7 +34,7 @@
 
 - type: entity
   parent: ClothingNeckBase
-  id: CloathingCloakCmo
+  id: ClothingCloakCmo
   name: CMO's cloak
   description: A sterile blue cloak with a green cross, radiating with a sense of duty and willingness to help others.
   components:

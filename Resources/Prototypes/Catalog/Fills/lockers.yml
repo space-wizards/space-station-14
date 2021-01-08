@@ -167,6 +167,10 @@
       - name: ClothingOuterHardsuitEngineeringWhite
       - name: ClothingMaskBreath
       - name: OxygenTankFilled
+      - name: ClothingNeckCloakCe
+      - name: ClothingEyesGlassesMeson
+      - name: ClothingBeltChiefEngineerFilled
+      - name: ClothingHeadHatBeretEngineering
 
 - type: entity
   id: LockerElectricalSuppliesFilled
@@ -309,7 +313,7 @@
         prob: 1
       - name: ClothingHeadsetAltMedical
         prob: 1
-      - name: CloathingCloakCmo
+      - name: ClothingCloakCmo
         prob: 1
       - name: ClothingBackpackDuffelSurgeryFilled
         prob: 1
