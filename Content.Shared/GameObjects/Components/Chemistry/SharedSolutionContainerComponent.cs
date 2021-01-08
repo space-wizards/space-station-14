@@ -31,15 +31,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         public IReadOnlyList<Solution.ReagentQuantity> ReagentList => Solution.Contents;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public ReagentUnit MaxVolume
-        {
-            get => _maxVolume;
-            set
-            {
-                _maxVolume = value;
-                Dirty();
-            }
-        }
+        public ReagentUnit MaxVolume { get => _maxVolume; set => _maxVolume = value; }
         private ReagentUnit _maxVolume;
 
         [ViewVariables]
@@ -77,6 +69,9 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 
         public void RemoveAllSolution()
         {
+            if (CurrentVolume > 0)
+                return;
+
             Solution.RemoveAllSolution();
             ChemicalsRemoved();
         }
@@ -187,14 +182,27 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             if (!Owner.TryGetComponent<SharedAppearanceComponent>(out var appearance))
                 return;
 
-            appearance.SetData(SolutionContainerVisuals.VisualState, VisualState);
+            appearance.SetData(SolutionContainerVisuals.VisualState, GetVisualState());
         }
 
-        private SolutionContainerVisualState VisualState => new SolutionContainerVisualState(Color);
+        private SolutionContainerVisualState GetVisualState()
+        {
+            var filledVolumeFraction = CurrentVolume.Float() / MaxVolume.Float();
+
+            return new SolutionContainerVisualState(Color, filledVolumeFraction);
+        }
 
         public override ComponentState GetComponentState()
         {
-            return new SolutionContainerComponentState();
+            return new SolutionContainerComponentState(Solution);
+        }
+
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+        {
+            if (curState is not SolutionContainerComponentState containerState)
+                return;
+
+            Solution = containerState.Solution;
         }
     }
 
@@ -209,18 +217,23 @@ namespace Content.Shared.GameObjects.Components.Chemistry
     {
         public readonly Color Color;
 
-        public SolutionContainerVisualState(Color color)
+        public readonly float FilledVolumeFraction;
+
+        public SolutionContainerVisualState(Color color, float filledVolumeFraction)
         {
             Color = color;
+            FilledVolumeFraction = filledVolumeFraction;
         }
     }
 
     [Serializable, NetSerializable]
     public class SolutionContainerComponentState : ComponentState
     {
-        public SolutionContainerComponentState() : base(ContentNetIDs.SOLUTION)
-        {
+        public readonly Solution Solution;
 
+        public SolutionContainerComponentState(Solution solution) : base(ContentNetIDs.SOLUTION)
+        {
+            Solution = solution;
         }
     }
 }
