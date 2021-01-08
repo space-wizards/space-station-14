@@ -3,6 +3,7 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Pulling;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects;
 using Content.Server.Utility;
 using Content.Shared.Actions;
 using Content.Shared.Audio;
@@ -45,6 +46,14 @@ namespace Content.Server.Actions
             if (!ValidTarget(args.Target) || !args.Performer.InRangeUnobstructed(args.Target)) return;
             if (!args.Performer.TryGetComponent<SharedActionsComponent>(out var actions)) return;
             if (args.Target == args.Performer || !args.Performer.CanAttack()) return;
+
+            var eventArgs = new DisarmedActEventArgs() {Target = args.Target, Source = args.Performer};
+
+            foreach (var disarmedAct in args.Target.GetAllComponents<IDisarmedAct>())
+            {
+                if (disarmedAct.Disarmed(eventArgs))
+                    return;
+            }
 
             var random = IoCManager.Resolve<IRobustRandom>();
             var audio = EntitySystem.Get<AudioSystem>();
