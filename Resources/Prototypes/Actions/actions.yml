@@ -26,9 +26,9 @@
   actionType: Disarm
   icon: Interface/Alerts/Human/human5.png
   name: "[color=red]Disarm[/color]"
-  description: "This is a [color=red]debug message[/color]."
+  description: "Attempt to [color=red]disarm[/color] someone."
   filters:
-    - debug
+    - human
   behaviorType: TargetEntity
   repeat: true
   behavior: !type:DisarmAction { }
