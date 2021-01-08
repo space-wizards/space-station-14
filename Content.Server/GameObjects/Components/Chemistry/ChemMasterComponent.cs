@@ -81,7 +81,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-reagentContainerContainer", Owner);
 
             //BufferSolution = Owner.BufferSolution
-            BufferSolution.Solution = new Solution();
+            BufferSolution.RemoveAllSolution();
             BufferSolution.MaxVolume = ReagentUnit.New(1000);
 
             UpdateUserInterface();

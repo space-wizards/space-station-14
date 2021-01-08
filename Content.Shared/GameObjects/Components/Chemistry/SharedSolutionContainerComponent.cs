@@ -25,13 +25,21 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         public sealed override uint? NetID => ContentNetIDs.SOLUTION;
 
         [ViewVariables]
-        public Solution Solution { get => _solution; set => _solution = value; }
+        public Solution Solution { get => _solution; private set => _solution = value; }
         private Solution _solution = new();
 
         public IReadOnlyList<Solution.ReagentQuantity> ReagentList => Solution.Contents;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public ReagentUnit MaxVolume { get => _maxVolume; set => _maxVolume = value; }
+        public ReagentUnit MaxVolume
+        {
+            get => _maxVolume;
+            set
+            {
+                _maxVolume = value;
+                Dirty();
+            }
+        }
         private ReagentUnit _maxVolume;
 
         [ViewVariables]
@@ -70,13 +78,17 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         public void RemoveAllSolution()
         {
             Solution.RemoveAllSolution();
+            ChemicalsRemoved();
         }
 
         public bool TryAddReagent(string reagentId, ReagentUnit quantity, out ReagentUnit acceptedQuantity)
         {
             acceptedQuantity = EmptyVolume > quantity ? quantity : EmptyVolume;
             Solution.AddReagent(reagentId, acceptedQuantity);
-            ChemicalsAdded();
+
+            if (acceptedQuantity > 0)
+                ChemicalsAdded();
+
             return acceptedQuantity == quantity;
         }
 
@@ -99,7 +111,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 
         public bool CanAddSolution(Solution solution)
         {
-            return solution.TotalVolume <= MaxVolume - Solution.TotalVolume;
+            return solution.TotalVolume <= EmptyVolume;
         }
 
         public bool TryAddSolution(Solution solution)
@@ -117,12 +129,14 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             ProcessReactions();
             SolutionChanged();
             UpdateAppearance();
+            Dirty();
         }
 
         private void ChemicalsRemoved()
         {
             SolutionChanged();
             UpdateAppearance();
+            Dirty();
         }
 
         private void SolutionChanged()
@@ -177,6 +191,11 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         }
 
         private SolutionContainerVisualState VisualState => new SolutionContainerVisualState(Color);
+
+        public override ComponentState GetComponentState()
+        {
+            return new SolutionContainerComponentState();
+        }
     }
 
     [Serializable, NetSerializable]
@@ -193,6 +212,15 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         public SolutionContainerVisualState(Color color)
         {
             Color = color;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class SolutionContainerComponentState : ComponentState
+    {
+        public SolutionContainerComponentState() : base(ContentNetIDs.SOLUTION)
+        {
+
         }
     }
 }
