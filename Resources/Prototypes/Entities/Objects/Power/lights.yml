@@ -1,6 +1,5 @@
 ﻿- type: entity
   parent: BaseItem
-  name: baselightbulb
   id: BaseLightbulb
   abstract: true
   components:
