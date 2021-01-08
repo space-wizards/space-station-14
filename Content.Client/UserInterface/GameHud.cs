@@ -446,7 +446,7 @@ namespace Content.Client.UserInterface
             private string ShortKeyName(BoundKeyFunction keyFunction)
             {
                 // need to use shortened key names so they fit in the buttons.
-                return TryGetShortKeyName(keyFunction, out var name) ? name : " ";
+                return TryGetShortKeyName(keyFunction, out var name) ? Loc.GetString(name) : " ";
             }
 
             private bool TryGetShortKeyName(BoundKeyFunction keyFunction, out string name)
