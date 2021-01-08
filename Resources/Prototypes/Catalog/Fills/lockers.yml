@@ -125,6 +125,8 @@
         prob: 1
       - name: CommsComputerCircuitboard
         prob: 1
+      - name: ClothingHeadsetAltCommand
+        prob: 1
       - name: PlushieNuke
         prob: 0.1
         
