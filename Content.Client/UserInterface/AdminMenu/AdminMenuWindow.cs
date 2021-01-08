@@ -1,10 +1,11 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.StationEvents;
 using Content.Shared.Atmos;
+using Content.Shared.Roles;
 using Robust.Client.Console;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.Placement;
@@ -44,7 +45,7 @@ namespace Content.Client.UserInterface.AdminMenu
         {
             new SpawnEntitiesCommandButton(),
             new SpawnTilesCommandButton(),
-            new StationEventsCommandButton(),
+            new StationEventsCommandButton()
         };
         private readonly List<CommandButton> _debugButtons = new()
         {
