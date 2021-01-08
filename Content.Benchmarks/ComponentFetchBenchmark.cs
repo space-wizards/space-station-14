@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using BenchmarkDotNet.Attributes;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Benchmarks
@@ -178,7 +179,7 @@ namespace Content.Benchmarks
             }
         }
 
-        private readonly struct EntityUid : IEquatable<EntityUid>
+        private readonly struct EntityUid : IEquatable<EntityUid>, IDeepClone
         {
             public readonly uint Value;
 
@@ -210,6 +211,11 @@ namespace Content.Benchmarks
             public static bool operator !=(EntityUid left, EntityUid right)
             {
                 return !left.Equals(right);
+            }
+
+            public IDeepClone DeepClone()
+            {
+                return new EntityUid(Value);
             }
         }
 
