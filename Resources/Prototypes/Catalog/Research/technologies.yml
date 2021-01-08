@@ -59,7 +59,7 @@
   icon: Objects/Weapons/Melee/stunbaton.rsi
   requiredPoints: 1000
   requiredTechnologies:
-    -BasicResearch
+    - BasicResearch
 
 - type: technology
   name: "ballistic technology"
@@ -68,7 +68,7 @@
   icon: Objects/Weapons/Guns/Pistols/clarissa.rsi
   requiredPoints: 1500
   requiredTechnologies:
-    -SecurityTechnology
+    - SecurityTechnology
 
 - type: technology
   name: "direct energy technology"
@@ -77,7 +77,7 @@
   icon: Objects/Weapons/Guns/Battery/taser.rsi
   requiredPoints: 1500
   requiredTechnologies:
-    -SecurityTechnology
+    - SecurityTechnology
 
 - type: technology
   name: "explosives technology"
@@ -86,7 +86,7 @@
   icon: Objects/Weapons/Grenades/flashbang.rsi
   requiredPoints: 1500
   requiredTechnologies:
-    -SecurityTechnology
+    - SecurityTechnology
 
 - type: technology
   name: "armor technology"
@@ -95,7 +95,7 @@
   icon: Clothing/OuterClothing/Vests/kevlar.rsi
   requiredPoints: 1500
   requiredTechnologies:
-    -SecurityTechnology
+    - SecurityTechnology
 
 # Data Theory Technology Tree
 
