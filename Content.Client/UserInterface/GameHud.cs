@@ -147,8 +147,6 @@ namespace Content.Client.UserInterface
             LayoutContainer.SetAnchorAndMarginPreset(_topButtonsContainer, LayoutContainer.LayoutPreset.TopLeft,
                 margin: 10);
 
-            // TODO: Pull key names here from the actual key binding config.
-
             // the icon textures here should all have the same image height (32) but different widths, so in order to ensure
             // the buttons themselves are consistent widths we set a common custom min size
             Vector2 topMinSize = (42, 64);
