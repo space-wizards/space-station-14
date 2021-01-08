@@ -6,14 +6,20 @@ using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Input;
 using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
+using Robust.Client.Input;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Utility;
+using YamlDotNet.Core.Tokens;
+using static Robust.Client.Input.Keyboard.Key;
+using Control = Robust.Client.UserInterface.Control;
 
 namespace Content.Client.UserInterface
 {
@@ -134,7 +140,7 @@ namespace Content.Client.UserInterface
             Vector2 topMinSize = (42, 64);
 
             // Escape
-            _buttonEscapeMenu = new TopButton(escapeTexture, "Esc")
+            _buttonEscapeMenu = new TopButton(escapeTexture, EngineKeyFunctions.EscapeMenu, _inputManager)
             {
                 ToolTip = Loc.GetString("Open escape menu."),
                 CustomMinimumSize = (70, 64),
@@ -146,7 +152,7 @@ namespace Content.Client.UserInterface
             _buttonEscapeMenu.OnToggled += args => EscapeButtonToggled?.Invoke(args.Pressed);
 
             // Character
-            _buttonCharacterMenu = new TopButton(characterTexture, "C")
+            _buttonCharacterMenu = new TopButton(characterTexture, ContentKeyFunctions.OpenCharacterMenu, _inputManager)
             {
                 ToolTip = Loc.GetString("Open character menu."),
                 CustomMinimumSize = topMinSize,
@@ -159,7 +165,7 @@ namespace Content.Client.UserInterface
             _buttonCharacterMenu.OnToggled += args => CharacterButtonToggled?.Invoke(args.Pressed);
 
             // Inventory
-            _buttonInventoryMenu = new TopButton(inventoryTexture, "I")
+            _buttonInventoryMenu = new TopButton(inventoryTexture, ContentKeyFunctions.OpenInventoryMenu, _inputManager)
             {
                 ToolTip = Loc.GetString("Open inventory menu."),
                 CustomMinimumSize = topMinSize,
@@ -172,7 +178,7 @@ namespace Content.Client.UserInterface
             _buttonInventoryMenu.OnToggled += args => InventoryButtonToggled?.Invoke(args.Pressed);
 
             // Crafting
-            _buttonCraftingMenu = new TopButton(craftingTexture, "G")
+            _buttonCraftingMenu = new TopButton(craftingTexture, ContentKeyFunctions.OpenCraftingMenu, _inputManager)
             {
                 ToolTip = Loc.GetString("Open crafting menu."),
                 CustomMinimumSize = topMinSize,
@@ -185,7 +191,7 @@ namespace Content.Client.UserInterface
             _buttonCraftingMenu.OnToggled += args => CraftingButtonToggled?.Invoke(args.Pressed);
 
             // Sandbox
-            _buttonSandboxMenu = new TopButton(sandboxTexture, "B")
+            _buttonSandboxMenu = new TopButton(sandboxTexture, ContentKeyFunctions.OpenSandboxWindow, _inputManager)
             {
                 ToolTip = Loc.GetString("Open sandbox menu."),
                 CustomMinimumSize = topMinSize,
@@ -198,7 +204,7 @@ namespace Content.Client.UserInterface
             _buttonSandboxMenu.OnToggled += args => SandboxButtonToggled?.Invoke(args.Pressed);
 
             // Tutorial
-            _buttonTutorial = new TopButton(tutorialTexture, "F1")
+            _buttonTutorial = new TopButton(tutorialTexture, ContentKeyFunctions.OpenTutorial, _inputManager)
             {
                 ToolTip = Loc.GetString("Open tutorial."),
                 CustomMinimumSize = topMinSize,
@@ -382,9 +388,13 @@ namespace Content.Client.UserInterface
 
             private readonly TextureRect _textureRect;
             private readonly Label _label;
+            private readonly BoundKeyFunction _function;
+            private readonly IInputManager _inputManager;
 
-            public TopButton(Texture texture, string keyName)
+            public TopButton(Texture texture, BoundKeyFunction function, IInputManager inputManager)
             {
+                _function = function;
+                _inputManager = inputManager;
 
                 AddChild(
                     new VBoxContainer
@@ -403,7 +413,7 @@ namespace Content.Client.UserInterface
                             new Control {CustomMinimumSize = (0, VertPad)},
                             (_label = new Label
                             {
-                                Text = keyName,
+                                Text = ShortKeyName(_function),
                                 SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
                                 ModulateSelfOverride = NormalColor,
                                 StyleClasses = {StyleClassLabelTopButton}
@@ -413,6 +423,121 @@ namespace Content.Client.UserInterface
                 );
 
                 ToggleMode = true;
+            }
+
+            protected override void EnteredTree()
+            {
+                _inputManager.OnKeyBindingAdded += OnKeyBindingChanged;
+                _inputManager.OnKeyBindingRemoved += OnKeyBindingChanged;
+            }
+
+            protected override void ExitedTree()
+            {
+                _inputManager.OnKeyBindingAdded -= OnKeyBindingChanged;
+                _inputManager.OnKeyBindingRemoved -= OnKeyBindingChanged;
+            }
+
+
+            private void OnKeyBindingChanged(IKeyBinding obj)
+            {
+                _label.Text = ShortKeyName(_function);
+            }
+
+            private string ShortKeyName(BoundKeyFunction keyFunction)
+            {
+                // need to use shortened key names so they fit in the buttons.
+                return TryGetShortKeyName(keyFunction, out var name) ? name : " ";
+            }
+
+            private bool TryGetShortKeyName(BoundKeyFunction keyFunction, out string name)
+            {
+                if (_inputManager.TryGetKeyBinding(keyFunction, out var binding))
+                {
+                    // can't possibly fit a modifier key in the top button, so omit it
+                    var key = binding.BaseKey;
+                    if (binding.Mod1 != Unknown || binding.Mod2 != Unknown ||
+                        binding.Mod3 != Unknown)
+                    {
+                        name = null;
+                        return false;
+                    }
+
+                    name = null;
+                    name = key switch
+                    {
+                        Apostrophe => "'",
+                        Comma => ",",
+                        Delete => "Del",
+                        Down => "Dwn",
+                        Escape => "Esc",
+                        Equal => "=",
+                        Home => "Hom",
+                        Insert => "Ins",
+                        Left => "Lft",
+                        Menu => "Men",
+                        Minus => "-",
+                        Num0 => "0",
+                        Num1 => "1",
+                        Num2 => "2",
+                        Num3 => "3",
+                        Num4 => "4",
+                        Num5 => "5",
+                        Num6 => "6",
+                        Num7 => "7",
+                        Num8 => "8",
+                        Num9 => "9",
+                        Pause => "||",
+                        Period => ".",
+                        Return => "Ret",
+                        Right => "Rgt",
+                        Slash => "/",
+                        Space => "Spc",
+                        Tab => "Tab",
+                        Tilde => "~",
+                        BackSlash => "\\",
+                        BackSpace => "Bks",
+                        LBracket => "[",
+                        MouseButton4 => "M4",
+                        MouseButton5 => "M5",
+                        MouseButton6 => "M6",
+                        MouseButton7 => "M7",
+                        MouseButton8 => "M8",
+                        MouseButton9 => "M9",
+                        MouseLeft => "ML",
+                        MouseMiddle => "MM",
+                        MouseRight => "MR",
+                        NumpadDecimal => "N.",
+                        NumpadDivide => "N/",
+                        NumpadEnter => "Ent",
+                        NumpadMultiply => "*",
+                        NumpadNum0 => "0",
+                        NumpadNum1 => "1",
+                        NumpadNum2 => "2",
+                        NumpadNum3 => "3",
+                        NumpadNum4 => "4",
+                        NumpadNum5 => "5",
+                        NumpadNum6 => "6",
+                        NumpadNum7 => "7",
+                        NumpadNum8 => "8",
+                        NumpadNum9 => "9",
+                        NumpadSubtract => "N-",
+                        PageDown => "PgD",
+                        PageUp => "PgU",
+                        RBracket => "]",
+                        SemiColon => ";",
+                        _ => DefaultShortKeyName(keyFunction)
+                    };
+                    return name != null;
+                }
+
+                name = null;
+                return false;
+            }
+
+            private string DefaultShortKeyName(BoundKeyFunction keyFunction)
+            {
+                var name = FormattedMessage.EscapeText(_inputManager.GetKeyFunctionButtonString(keyFunction));
+                return name.Length > 3 ? null : name;
             }
 
             protected override void StylePropertiesChanged()
