@@ -53,8 +53,10 @@ namespace Content.Client.UserInterface.Controls
 
         /// <summary>
         /// Is there an action in the slot that can currently be used?
+        /// Target-basedActions on cooldown can still be selected / deselected if they've been configured as such
         /// </summary>
-        public bool CanUseAction => HasAssignment && ActionEnabled && !IsOnCooldown;
+        public bool CanUseAction => Action != null && ActionEnabled &&
+                                    (!IsOnCooldown || (Action.IsTargetAction && !Action.DeselectOnCooldown));
 
         /// <summary>
         /// Item the action is provided by, only valid if Action is an ItemActionPrototype. May be null
@@ -340,7 +342,9 @@ namespace Content.Client.UserInterface.Controls
         /// </summary>
         public void Depress(bool depress)
         {
+            // action can still be toggled if it's allowed to stay selected
             if (!CanUseAction) return;
+
 
             if (_depressed && !depress)
             {
