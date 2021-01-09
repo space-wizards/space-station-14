@@ -35,12 +35,18 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         [ViewVariables]
         public ReagentUnit CurrentVolume => Solution.TotalVolume;
 
+        /// <summary>
+        ///     Volume needed to fill this container.
+        /// </summary>
         [ViewVariables]
         public ReagentUnit EmptyVolume => MaxVolume - CurrentVolume;
 
         [ViewVariables]
         public virtual Color Color => Solution.Color;
 
+        /// <summary>
+        ///     If reactions will be checked for when adding reagents to the container.
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public bool CanReact { get; set; }
 
@@ -74,6 +80,13 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             ChemicalsRemoved();
         }
 
+        /// <summary>
+        ///     Adds reagent of an Id to the container.
+        /// </summary>
+        /// <param name="reagentId">The Id of the reagent to add.</param>
+        /// <param name="quantity">The amount of reagent to add.</param>
+        /// <param name="acceptedQuantity">The amount of reagent sucesfully added.</param>
+        /// <returns>If all the reagent could be added.</returns>
         public bool TryAddReagent(string reagentId, ReagentUnit quantity, out ReagentUnit acceptedQuantity)
         {
             acceptedQuantity = EmptyVolume > quantity ? quantity : EmptyVolume;
@@ -85,6 +98,12 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             return acceptedQuantity == quantity;
         }
 
+        /// <summary>
+        ///     Removes reagent of an Id to the container.
+        /// </summary>
+        /// <param name="reagentId">The Id of the reagent to remove.</param>
+        /// <param name="quantity">The amount of reagent to remove.</param>
+        /// <returns>If the reagent to remove was found in the container.</returns>
         public bool TryRemoveReagent(string reagentId, ReagentUnit quantity)
         {
             if (!Solution.ContainsReagent(reagentId))
@@ -95,6 +114,11 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             return true;
         }
 
+        /// <summary>
+        ///     Removes part of the solution in the container.
+        /// </summary>
+        /// <param name="quantity">the volume of solution to remove.</param>
+        /// <returns>The solution that was removed.</returns>
         public Solution SplitSolution(ReagentUnit quantity)
         {
             var splitSol = Solution.SplitSolution(quantity);
@@ -102,11 +126,21 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             return splitSol;
         }
 
+        /// <summary>
+        ///     Checks if a solution can fit into the container.
+        /// </summary>
+        /// <param name="solution">The solution that is trying to be added.</param>
+        /// <returns>If the solution can be fully added.</returns>
         public bool CanAddSolution(Solution solution)
         {
             return solution.TotalVolume <= EmptyVolume;
         }
 
+        /// <summary>
+        ///     Adds a solution to the container, if it can fully fit.
+        /// </summary>
+        /// <param name="solution">The solution to try to add.</param>
+        /// <returns>If the solutoon could be added.</returns>
         public bool TryAddSolution(Solution solution)
         {
             if (!CanAddSolution(solution))
