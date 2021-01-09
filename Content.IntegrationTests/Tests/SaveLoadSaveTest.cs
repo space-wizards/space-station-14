@@ -88,7 +88,7 @@ namespace Content.IntegrationTests.Tests
             {
                 var mapId = mapManager.CreateMap();
                 pauseMgr.AddUninitializedMap(mapId);
-                grid = mapLoader.LoadBlueprint(mapId, "Maps/stationstation.yml");
+                grid = mapLoader.LoadBlueprint(mapId, "Maps/saltern.yml");
                 mapLoader.SaveBlueprint(grid.Index, "load save ticks save 1.yml");
             });
 

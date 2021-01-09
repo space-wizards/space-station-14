@@ -116,6 +116,7 @@
     mass: 85
     linearDamping: 0.8
     fixtures:
+    # This is fucked don't use it for reference I need to fix
     - shape: !type:CircleShape {}
       radius: 0.35
       density: 1
