@@ -226,7 +226,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     if (reagent.ReagentId == id)
                     {
                         ReagentUnit actualAmount;
-                        if (amount == ReagentUnit.New(-1))
+                        if (amount == ReagentUnit.New(-1)) //amount is ReagentUnit.New(-1) when the client sends a message requesting to remove all solution from the container
                         {
                             actualAmount = ReagentUnit.Min(reagent.Quantity, beakerSolution.EmptyVolume);
                         }
