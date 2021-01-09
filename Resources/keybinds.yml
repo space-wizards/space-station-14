@@ -315,7 +315,7 @@ binds:
   key: Z
 - function: OpenAbilitiesMenu
   type: State
-  key: Equal
+  key: K
 - function: Hotbar0
   type: State
   key: Num0

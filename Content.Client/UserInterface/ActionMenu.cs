@@ -56,6 +56,7 @@ namespace Content.Client.UserInterface
         private readonly Button _clearButton;
         private readonly GridContainer _resultsGrid;
         private readonly TextureRect _dragShadow;
+        private readonly IGameHud _gameHud;
         private readonly DragDropHelper<ActionMenuItem> _dragDropHelper;
 
 
@@ -64,6 +65,8 @@ namespace Content.Client.UserInterface
             _actionsComponent = actionsComponent;
             _actionsUI = actionsUI;
             _actionManager = IoCManager.Resolve<ActionManager>();
+            _gameHud = IoCManager.Resolve<IGameHud>();
+
             Title = Loc.GetString("Actions");
             CustomMinimumSize = (300, 300);
 
@@ -143,14 +146,13 @@ namespace Content.Client.UserInterface
             _dragDropHelper = new DragDropHelper<ActionMenuItem>(OnBeginActionDrag, OnContinueActionDrag, OnEndActionDrag);
         }
 
-
         protected override void EnteredTree()
         {
             base.EnteredTree();
             _clearButton.OnPressed += OnClearButtonPressed;
             _searchBar.OnTextChanged += OnSearchTextChanged;
             _filterButton.OnItemSelected += OnFilterItemSelected;
-
+            _gameHud.ActionsButtonDown = true;
             foreach (var actionMenuControl in _resultsGrid.Children)
             {
                 var actionMenuItem = (actionMenuControl as ActionMenuItem);
@@ -167,7 +169,7 @@ namespace Content.Client.UserInterface
             _clearButton.OnPressed -= OnClearButtonPressed;
             _searchBar.OnTextChanged -= OnSearchTextChanged;
             _filterButton.OnItemSelected -= OnFilterItemSelected;
-
+            _gameHud.ActionsButtonDown = false;
             foreach (var actionMenuControl in _resultsGrid.Children)
             {
                 var actionMenuItem = (actionMenuControl as ActionMenuItem);
