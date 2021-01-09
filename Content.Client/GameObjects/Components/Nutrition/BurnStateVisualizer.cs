@@ -22,10 +22,12 @@ namespace Content.Client.GameObjects.Components.Nutrition
             {
                 _unlitIcon = unlitIcon.AsString();
             }
+
             if (node.TryGetNode("litIcon", out var litIcon))
             {
                 _litIcon = litIcon.AsString();
             }
+
             if (node.TryGetNode("burntIcon", out var burntIcon))
             {
                 _burntIcon = burntIcon.AsString();
@@ -44,19 +46,20 @@ namespace Content.Client.GameObjects.Components.Nutrition
 
         private void SetState(AppearanceComponent component, SharedBurningStates burnState)
         {
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
-
-            switch (burnState)
+            if (component.Owner.TryGetComponent<ISpriteComponent>(out var sprite))
             {
-                case SharedBurningStates.Lit:
-                    sprite.LayerSetState(0, _litIcon);
-                    break;
-                case SharedBurningStates.Burnt:
-                    sprite.LayerSetState(0, _burntIcon);
-                    break;
-                default:
-                    sprite.LayerSetState(0, _unlitIcon);
-                    break;
+                switch (burnState)
+                {
+                    case SharedBurningStates.Lit:
+                        sprite.LayerSetState(0, _litIcon);
+                        break;
+                    case SharedBurningStates.Burnt:
+                        sprite.LayerSetState(0, _burntIcon);
+                        break;
+                    default:
+                        sprite.LayerSetState(0, _unlitIcon);
+                        break;
+                }
             }
         }
     }

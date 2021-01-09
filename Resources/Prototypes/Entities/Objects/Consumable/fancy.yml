@@ -29,7 +29,7 @@
   id: CigarettePack
   parent: SmallboxItem
   name: cigarette pack
-  description: "Pack of cigars"
+  description: "Pack of cigarettes"
   components:
     - type: Sprite
       sprite: Objects/Consumable/Fancy/cigarettes.rsi

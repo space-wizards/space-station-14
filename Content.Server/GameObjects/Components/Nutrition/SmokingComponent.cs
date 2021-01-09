@@ -32,14 +32,14 @@ namespace Content.Server.GameObjects.Components.Nutrition
         private SharedBurningStates _currentState = SharedBurningStates.Unlit;
 
         [ComponentDependency] private readonly ClothingComponent? _clothingComponent = default!;
-        [ComponentDependency] private AppearanceComponent? _appearanceComponent;
+        [ComponentDependency] private readonly AppearanceComponent? _appearanceComponent = default!;
 
         /// <summary>
         /// Duration represents how long will this item last.
         /// Generally it ticks down whether it's time-based
         /// or consumption-based.
         /// </summary>
-        [ViewVariables(VVAccess.ReadOnly)] private int _duration;
+        [ViewVariables] private int _duration;
 
         /// <summary>
         /// What is the temperature of the cigar?
@@ -72,10 +72,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                     }
                 }
 
-                if (Owner.TryGetComponent(out _appearanceComponent))
-                {
-                    _appearanceComponent.SetData(SmokingVisuals.Smoking, _currentState);
-                }
+                _appearanceComponent?.SetData(SmokingVisuals.Smoking, _currentState);
             }
         }
 
