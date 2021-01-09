@@ -34,7 +34,6 @@
   id: BedsheetBlue
   parent: BedsheetBase
   name: blue bedsheet
-  description:
   components:
   - type: Sprite
     state: sheetblue
@@ -69,6 +68,7 @@
   id: BedsheetCE
   parent: BedsheetBase
   name: ce's bedsheet
+  description: It is decorated with a wrench emblem. It's highly reflective and stain resistant, so you don't need to worry about ruining it with oil.
   components:
   - type: Sprite
     state: sheetce
@@ -80,6 +80,7 @@
   id: BedsheetCentcom
   parent: BedsheetBase
   name: centcom bedsheet
+  description: Woven with advanced nanothread for warmth as well as being very decorated, essential for all officials.
   components:
   - type: Sprite
     state: sheetcentcom
@@ -91,6 +92,7 @@
   id: BedsheetClown
   parent: BedsheetBase
   name: clown's bedsheet
+  description: A rainbow blanket with a clown mask woven in. It smells faintly of bananas.
   components:
   - type: Sprite
     state: sheetclown
@@ -102,6 +104,7 @@
   id: BedsheetCMO
   parent: BedsheetBase
   name: cmo's bedsheet
+  description: It's a sterilized blanket that has a cross emblem. There's some cat fur on it, likely from Runtime.
   components:
   - type: Sprite
     state: sheetcmo
@@ -113,6 +116,7 @@
   id: BedsheetCosmos
   parent: BedsheetBase
   name: cosmos bedsheet
+  description: Made from the dreams of those who wonder at the stars.
   components:
   - type: Sprite
     state: sheetcosmos
@@ -124,6 +128,7 @@
   id: BedsheetCult
   parent: BedsheetBase
   name: cult bedsheet
+  description: You might dream of Nar'Sie if you sleep with this. It seems rather tattered and glows of an eldritch presence.
   components:
   - type: Sprite
     state: sheetcult
@@ -157,6 +162,7 @@
   id: BedsheetHOP
   parent: BedsheetBase
   name: hop's bedsheet
+  description: It is decorated with a key emblem. For those rare moments when you can rest and cuddle with Ian without someone screaming for you over the radio.
   components:
   - type: Sprite
     state: sheethop
@@ -168,6 +174,7 @@
   id: BedsheetHOS
   parent: BedsheetBase
   name: hos's bedsheet
+  description: It is decorated with a shield emblem. While crime doesn't sleep, you do, but you are still THE LAW!
   components:
   - type: Sprite
     state: sheethos
@@ -190,6 +197,7 @@
   id: BedsheetMedical
   parent: BedsheetBase
   name: medical bedsheet
+  description: It's a sterilized* blanket commonly used in the Medbay.  *Sterilization is voided if a virologist is present onboard the station.
   components:
   - type: Sprite
     state: sheetmedical
@@ -201,6 +209,7 @@
   id: BedsheetMime
   parent: BedsheetBase
   name: mime's bedsheet
+  description: A very soothing striped blanket.  All the noise just seems to fade out when you're under the covers in this.
   components:
   - type: Sprite
     state: sheetmime
@@ -212,6 +221,7 @@
   id: BedsheetNT
   parent: BedsheetBase
   name: nt bedsheet
+  description: It has the Nanotrasen logo on it and an aura of duty.
   components:
   - type: Sprite
     state: sheetNT
@@ -267,6 +277,7 @@
   id: BedsheetRD
   parent: BedsheetBase
   name: rd's bedsheet
+  description: It appears to have a beaker emblem, and is made out of fire-resistant material, although it probably won't protect you in the event of fires you're familiar with every day.
   components:
   - type: Sprite
     state: sheetrd
@@ -289,6 +300,7 @@
   id: BedsheetSyndie
   parent: BedsheetBase
   name: syndie bedsheet
+  description: It has a syndicate emblem and it has an aura of evil.
   components:
   - type: Sprite
     state: sheetsyndie
@@ -322,6 +334,7 @@
   id: BedsheetWiz
   parent: BedsheetBase
   name: wizard's bedsheet
+  description: A special fabric enchanted with magic so you can have an enchanted night. It even glows!
   components:
   - type: Sprite
     state: sheetwiz
