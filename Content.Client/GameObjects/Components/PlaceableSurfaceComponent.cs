@@ -25,8 +25,6 @@ namespace Content.Client.GameObjects.Components
 
                 _isPlaceable = value;
 
-                Dirty();
-
             }
         }
 
@@ -42,8 +40,6 @@ namespace Content.Client.GameObjects.Components
 
                 _placeCentered = value;
 
-                Dirty();
-
             }
         }
 
@@ -58,8 +54,6 @@ namespace Content.Client.GameObjects.Components
                 }
 
                 _positionOffset = value;
-
-                Dirty();
 
             }
         }
