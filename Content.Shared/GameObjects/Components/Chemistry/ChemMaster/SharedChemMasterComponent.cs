@@ -30,11 +30,11 @@ namespace Content.Shared.GameObjects.Components.Chemistry.ChemMaster
             /// <summary>
             /// A list of the reagents and their amounts within the beaker/reagent container, if applicable.
             /// </summary>
-            public readonly List<Solution.ReagentQuantity> ContainerReagents;
+            public readonly IReadOnlyList<Solution.ReagentQuantity> ContainerReagents;
             /// <summary>
             /// A list of the reagents and their amounts within the buffer, if applicable.
             /// </summary>
-            public readonly List<Solution.ReagentQuantity> BufferReagents;
+            public readonly IReadOnlyList<Solution.ReagentQuantity> BufferReagents;
             public readonly string DispenserName;
 
             public readonly bool BufferModeTransfer;
@@ -42,7 +42,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry.ChemMaster
             public readonly ReagentUnit BufferCurrentVolume;
 
             public ChemMasterBoundUserInterfaceState(bool hasPower, bool hasBeaker, ReagentUnit beakerCurrentVolume, ReagentUnit beakerMaxVolume, string containerName,
-                string dispenserName, List<Solution.ReagentQuantity> containerReagents, List<Solution.ReagentQuantity> bufferReagents, bool bufferModeTransfer, ReagentUnit bufferCurrentVolume)
+                string dispenserName, IReadOnlyList<Solution.ReagentQuantity> containerReagents, IReadOnlyList<Solution.ReagentQuantity> bufferReagents, bool bufferModeTransfer, ReagentUnit bufferCurrentVolume)
             {
                 HasPower = hasPower;
                 HasBeaker = hasBeaker;

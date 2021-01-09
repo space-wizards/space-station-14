@@ -181,12 +181,12 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (beaker == null)
             {
                 return new ChemMasterBoundUserInterfaceState(Powered, false, ReagentUnit.New(0), ReagentUnit.New(0),
-                    "", Owner.Name, new List<Solution.ReagentQuantity>(), BufferSolution.Contents.ToList(), _bufferModeTransfer, BufferSolution.TotalVolume);
+                    "", Owner.Name, new List<Solution.ReagentQuantity>(), BufferSolution.Contents, _bufferModeTransfer, BufferSolution.TotalVolume);
             }
 
             var solution = beaker.GetComponent<SolutionContainerComponent>();
             return new ChemMasterBoundUserInterfaceState(Powered, true, solution.CurrentVolume, solution.MaxVolume,
-                beaker.Name, Owner.Name, solution.ReagentList.ToList(), BufferSolution.Contents.ToList(), _bufferModeTransfer, BufferSolution.TotalVolume);
+                beaker.Name, Owner.Name, solution.ReagentList, BufferSolution.Contents, _bufferModeTransfer, BufferSolution.TotalVolume);
         }
 
         private void UpdateUserInterface()
