@@ -14,6 +14,12 @@ namespace Content.Server.Interfaces.GameObjects
         ///     or rest of IDisarmAct behaviors that come after this one from happening.
         /// </summary>
         bool Disarmed(DisarmedActEventArgs eventArgs);
+
+        /// <summary>
+        ///     Priority for this disarm act.
+        ///     Used to determine act execution order.
+        /// </summary>
+        int Priority => 0;
     }
 
     public class DisarmedActEventArgs : EventArgs
@@ -27,5 +33,10 @@ namespace Content.Server.Interfaces.GameObjects
         ///     The entity performing the disarm.
         /// </summary>
         public IEntity Source { get; init; }
+
+        /// <summary>
+        ///     Probability for push/knockdown.
+        /// </summary>
+        public float PushProbability { get; init; }
     }
 }

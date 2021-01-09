@@ -1,4 +1,6 @@
 #nullable enable
+using System;
+using System.Linq;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Pulling;
@@ -43,25 +45,19 @@ namespace Content.Server.Actions
 
         public void DoTargetEntityAction(TargetEntityActionEventArgs args)
         {
-            if (!ValidTarget(args.Target) || !args.Performer.InRangeUnobstructed(args.Target)) return;
+            var disarmedActs = args.Target.GetAllComponents<IDisarmedAct>().ToArray();
+
+            if (disarmedActs.Length == 0 || !args.Performer.InRangeUnobstructed(args.Target)) return;
             if (!args.Performer.TryGetComponent<SharedActionsComponent>(out var actions)) return;
             if (args.Target == args.Performer || !args.Performer.CanAttack()) return;
-
-            var eventArgs = new DisarmedActEventArgs() {Target = args.Target, Source = args.Performer};
-
-            foreach (var disarmedAct in args.Target.GetAllComponents<IDisarmedAct>())
-            {
-                if (disarmedAct.Disarmed(eventArgs))
-                    return;
-            }
 
             var random = IoCManager.Resolve<IRobustRandom>();
             var audio = EntitySystem.Get<AudioSystem>();
             var system = EntitySystem.Get<MeleeWeaponSystem>();
 
-            actions.Cooldown(ActionType.Disarm, Cooldowns.SecondsFromNow(_cooldown));
-
             var angle = new Angle(args.Target.Transform.MapPosition.Position - args.Performer.Transform.MapPosition.Position);
+
+            actions.Cooldown(ActionType.Disarm, Cooldowns.SecondsFromNow(_cooldown));
 
             if (random.Prob(_failProb))
             {
@@ -75,49 +71,19 @@ namespace Content.Server.Actions
 
             system.SendAnimation("disarm", angle, args.Performer, args.Performer, new []{ args.Target });
 
-            if (args.Target.TryGetComponent(out StunnableComponent? stunnable) && random.Prob(_pushProb))
+            var eventArgs = new DisarmedActEventArgs() {Target = args.Target, Source = args.Performer, PushProbability = _pushProb};
+
+            // Sort by priority.
+            Array.Sort(disarmedActs, (a, b) => a.Priority.CompareTo(b.Priority));
+
+            foreach (var disarmedAct in disarmedActs)
             {
-                stunnable.Paralyze(4f);
-
-                audio.PlayFromEntity("/Audio/Effects/thudswoosh.ogg", args.Performer,
-                    AudioHelpers.WithVariation(0.025f));
-
-                args.Performer.PopupMessageOtherClients(Loc.GetString("{0} pushes {1}!", args.Performer.Name, args.Target.Name));
-                args.Performer.PopupMessageCursor(Loc.GetString("You push {0}!", args.Target.Name));
-
-                return;
-            }
-
-            if (!BreakPulls(args.Target) && args.Target.TryGetComponent(out HandsComponent? hands))
-            {
-                if (hands.ActiveHand != null && hands.Drop(hands.ActiveHand, false))
-                {
-                    args.Performer.PopupMessageOtherClients(Loc.GetString("{0} disarms {1}!", args.Performer.Name, args.Target.Name));
-                    args.Performer.PopupMessageCursor(Loc.GetString("You disarm {0}!", args.Target.Name));
-                }
-                else
-                {
-                    args.Performer.PopupMessageOtherClients(Loc.GetString("{0} shoves {1}!", args.Performer.Name, args.Target.Name));
-                    args.Performer.PopupMessageCursor(Loc.GetString("You shove {0}!", args.Target.Name));
-                }
+                if (disarmedAct.Disarmed(eventArgs))
+                    return;
             }
 
             audio.PlayFromEntity("/Audio/Effects/thudswoosh.ogg", args.Performer,
                 AudioHelpers.WithVariation(0.025f));
-        }
-
-        private bool BreakPulls(IEntity target)
-        {
-            // What is this API??
-            if (!target.TryGetComponent(out SharedPullerComponent? puller) || puller.Pulling == null
-            || !puller.Pulling.TryGetComponent(out PullableComponent? pullable)) return false;
-
-            return pullable.TryStopPull();
-        }
-
-        private bool ValidTarget(IEntity target)
-        {
-            return target.HasComponent<HandsComponent>() || target.HasComponent<StunnableComponent>();
         }
     }
 }
