@@ -1,4 +1,6 @@
-﻿  icon: Interface/Alerts/Human/human1.png
+﻿- type: action
+  actionType: Fireball
+  icon: Interface/Alerts/Human/human1.png
   name: "Fireball"
   filters:
     - human

@@ -8,7 +8,7 @@ using Robust.Shared.Serialization;
 namespace Content.Server.Actions
 {
     [UsedImplicitly]
-    public class Fireball : ITargetPointAction
+    public class ProjectileSpell : ITargetPointAction
     {
         public string CastMessage { get; private set; }
         public string Projectile { get; private set; }
