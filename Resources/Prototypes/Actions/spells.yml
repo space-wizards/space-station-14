@@ -1,0 +1,9 @@
+﻿  icon: Interface/Alerts/Human/human1.png
+  name: "Fireball"
+  filters:
+    - human
+  description: "This is a [color=red]no-wiznerd fireball[/color]."
+  behaviorType: TargetPoint
+  behavior: !type:ProjectileSpell
+   castmessage: EL NATH!
+   spellprojectile: null

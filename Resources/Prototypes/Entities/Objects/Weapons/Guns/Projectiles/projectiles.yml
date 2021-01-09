@@ -229,3 +229,27 @@
     state: capbullet
   - type: Projectile
     deleteOnCollide: true
+
+#I will move it somewhere else on demand 
+- type: entity
+  id: FireBallbullet
+  name: fireballbullet
+  parent: BulletBase
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Projectiles/fireball.rsi
+    state: fireball
+  - type: ExplosiveProjectile
+  - type: Projectile
+    deleteOnCollide: false
+  - type: Explosive
+    devastationRange: 1
+    heavyImpactRange: 2
+    lightImpactRange: 7
+    flashRange: 1
+  - type: PointLight
+    radius: 1
+    color: orange
+    energy: 0.5

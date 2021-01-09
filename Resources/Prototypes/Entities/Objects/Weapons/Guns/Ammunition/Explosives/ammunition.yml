@@ -13,6 +13,22 @@
     sprite: Objects/Weapons/Guns/Ammunition/Explosives/rpg.rsi
     state: frag
     drawdepth: FloorObjects
+    
+- type: entity
+  id: FireBall
+  name: PlaceHolder fire
+  parent: BaseItem
+  description: Fireshooting not out of hands
+  components:
+  - type: Ammo
+    caliber: Rocket
+    projectile: FireBallbullet
+    caseless: true
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/rpg.rsi
+    state: frag
+    drawdepth: FloorObjects
 
 - type: entity
   id: GrenadeBaton
