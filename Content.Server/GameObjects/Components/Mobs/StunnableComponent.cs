@@ -1,10 +1,12 @@
 ﻿using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Alert;
+using Content.Shared.Audio;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Interfaces.GameObjects.Components;
 using NFluidsynth;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.Systems;
@@ -106,6 +108,12 @@ namespace Content.Server.GameObjects.Components.Mobs
                 Owner.SpawnTimer(250, () => status.ClearAlert(AlertType.Stun), StatusRemoveCancellation.Token);
                 LastStun = null;
             }
+        }
+
+        protected override void OnInteractHand()
+        {
+            EntitySystem.Get<AudioSystem>()
+                .PlayFromEntity("/Audio/Effects/thudswoosh.ogg", Owner, AudioHelpers.WithVariation(0.05f));
         }
 
         public override ComponentState GetComponentState()
