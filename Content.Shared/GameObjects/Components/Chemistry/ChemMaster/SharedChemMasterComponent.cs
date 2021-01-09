@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Shared.Chemistry;
@@ -40,10 +40,9 @@ namespace Content.Shared.GameObjects.Components.Chemistry.ChemMaster
             public readonly bool BufferModeTransfer;
 
             public readonly ReagentUnit BufferCurrentVolume;
-            public readonly ReagentUnit BufferMaxVolume;
 
             public ChemMasterBoundUserInterfaceState(bool hasPower, bool hasBeaker, ReagentUnit beakerCurrentVolume, ReagentUnit beakerMaxVolume, string containerName,
-                string dispenserName, List<Solution.ReagentQuantity> containerReagents, List<Solution.ReagentQuantity> bufferReagents, bool bufferModeTransfer, ReagentUnit bufferCurrentVolume, ReagentUnit bufferMaxVolume)
+                string dispenserName, List<Solution.ReagentQuantity> containerReagents, List<Solution.ReagentQuantity> bufferReagents, bool bufferModeTransfer, ReagentUnit bufferCurrentVolume)
             {
                 HasPower = hasPower;
                 HasBeaker = hasBeaker;
@@ -55,7 +54,6 @@ namespace Content.Shared.GameObjects.Components.Chemistry.ChemMaster
                 BufferReagents = bufferReagents;
                 BufferModeTransfer = bufferModeTransfer;
                 BufferCurrentVolume = bufferCurrentVolume;
-                BufferMaxVolume = bufferMaxVolume;
             }
         }
 

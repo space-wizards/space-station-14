@@ -25,14 +25,12 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         public sealed override uint? NetID => ContentNetIDs.SOLUTION;
 
         [ViewVariables]
-        public Solution Solution { get => _solution; private set => _solution = value; }
-        private Solution _solution = new();
+        public Solution Solution { get; private set; } = new();
 
         public IReadOnlyList<Solution.ReagentQuantity> ReagentList => Solution.Contents;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public ReagentUnit MaxVolume { get => _maxVolume; set => _maxVolume = value; }
-        private ReagentUnit _maxVolume;
+        public ReagentUnit MaxVolume { get; set; }
 
         [ViewVariables]
         public ReagentUnit CurrentVolume => Solution.TotalVolume;
@@ -69,7 +67,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 
         public void RemoveAllSolution()
         {
-            if (CurrentVolume > 0)
+            if (CurrentVolume == 0)
                 return;
 
             Solution.RemoveAllSolution();
@@ -189,7 +187,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         {
             var filledVolumeFraction = CurrentVolume.Float() / MaxVolume.Float();
 
-            return new SolutionContainerVisualState(Color, filledVolumeFraction);
+            return new SolutionContainerVisualState(Color, (byte) filledVolumeFraction);
         }
 
         public override ComponentState GetComponentState()
@@ -207,7 +205,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
     }
 
     [Serializable, NetSerializable]
-    public enum SolutionContainerVisuals
+    public enum SolutionContainerVisuals : byte
     {
         VisualState
     }
@@ -217,9 +215,9 @@ namespace Content.Shared.GameObjects.Components.Chemistry
     {
         public readonly Color Color;
 
-        public readonly float FilledVolumeFraction;
+        public readonly byte FilledVolumeFraction;
 
-        public SolutionContainerVisualState(Color color, float filledVolumeFraction)
+        public SolutionContainerVisualState(Color color, byte filledVolumeFraction)
         {
             Color = color;
             FilledVolumeFraction = filledVolumeFraction;

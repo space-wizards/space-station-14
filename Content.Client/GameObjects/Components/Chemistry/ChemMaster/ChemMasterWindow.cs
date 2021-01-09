@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Chemistry;
@@ -378,7 +378,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
             bufferHBox.AddChild(bufferLabel);
             var bufferVol = new Label
             {
-                Text = $"{state.BufferCurrentVolume}/{state.BufferMaxVolume}",
+                Text = $"{state.BufferCurrentVolume}",
                 StyleClasses = {StyleNano.StyleClassLabelSecondaryColor}
             };
             bufferHBox.AddChild(bufferVol);
