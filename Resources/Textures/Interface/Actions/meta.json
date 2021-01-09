@@ -18,6 +18,10 @@
         {
             "name": "scream",
             "directions": 1
+        },
+        {
+            "name": "disarm",
+            "directions": 1
         }
     ]
 }
