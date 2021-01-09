@@ -3,7 +3,7 @@ using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Appearance;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
@@ -17,6 +17,9 @@ using System.Collections.Generic;
 
 namespace Content.Shared.GameObjects.Components.Chemistry
 {
+    /// <summary>
+    ///     Holds a <see cref="Solution"/> with a limited volume.
+    /// </summary>
     public abstract class SharedSolutionContainerComponent : Component, IExamine
     {
         public override string Name => "SolutionContainer";
@@ -168,8 +171,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 
         private void SolutionChanged()
         {
-            IoCManager.Resolve<IEntitySystemManager>()
-                .GetEntitySystem<ChemistrySystem>()
+            EntitySystem.Get<ChemistrySystem>()
                 .HandleSolutionChange(Owner);
         }
 
@@ -178,8 +180,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             if (!CanReact)
                 return;
 
-            IoCManager.Resolve<IEntitySystemManager>()
-                .GetEntitySystem<ChemicalReactionSystem>()
+            EntitySystem.Get<ChemicalReactionSystem>()
                 .FullyReactSolution(Solution, Owner, MaxVolume);
         }
 
