@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   parent: BaseItem
   id: BaseLightbulb
   abstract: true
@@ -11,6 +11,12 @@
     amount: 5
   - type: Destructible
     thresholds:
+      5:
+        behaviors:
+        - !type:PlaySoundCollectionBehavior
+          soundCollection: GlassBreak
+        - !type:DoActsBehavior
+          acts: [ "Breakage" ]
       10:
         behaviors:
         - !type:PlaySoundCollectionBehavior
