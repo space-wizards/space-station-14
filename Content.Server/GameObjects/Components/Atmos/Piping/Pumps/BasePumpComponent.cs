@@ -97,7 +97,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
         private void UpdateAppearance()
         {
             if (_inletPipe == null || _outletPipe == null) return;
-            _appearance?.SetData(PumpVisuals.VisualState, new PumpVisualState(_initialInletDirection, _initialOutletDirection, _inletPipe.ConduitLayer, _outletPipe.ConduitLayer, PumpEnabled));
+            _appearance?.SetData(PumpVisuals.VisualState, new PumpVisualState(_initialInletDirection, _initialOutletDirection, PumpEnabled));
         }
 
         private void SetPipes()

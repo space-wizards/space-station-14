@@ -1,0 +1,17 @@
+<customControls:SS14Window
+    xmlns:customControls="clr-namespace:Robust.Client.UserInterface.CustomControls;assembly=Robust.Client"
+    xmlns:controls="clr-namespace:Robust.Client.UserInterface.Controls;assembly=Robust.Client"
+    xmlns:userInterface="clr-namespace:Robust.Client.UserInterface;assembly=Robust.Client">
+    <controls:HBoxContainer SizeFlagsHorizontal="FillExpand">
+        <controls:VBoxContainer SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="0.45">
+            <controls:HBoxContainer SizeFlagsHorizontal="FillExpand" SizeFlagsVertical="FillExpand"
+                                    SizeFlagsStretchRatio="0.1">
+                <controls:LineEdit Name="SearchBar" PlaceHolder="Search" SizeFlagsHorizontal="FillExpand"
+                                   SizeFlagsStretchRatio="0.6" />
+            </controls:HBoxContainer>
+            <controls:ItemList Name="OutfitList" SelectMode="Single" SizeFlagsVertical="FillExpand"
+                               SizeFlagsStretchRatio="0.9" />
+            <controls:Button Name="ConfirmButton" SizeFlagsHorizontal="FillExpand" />
+        </controls:VBoxContainer>
+    </controls:HBoxContainer>
+</customControls:SS14Window>

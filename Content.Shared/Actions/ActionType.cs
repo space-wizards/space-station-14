@@ -7,6 +7,7 @@
     {
         Error,
         HumanScream,
+        Disarm,
         DebugInstant,
         DebugToggle,
         DebugTargetPoint,
