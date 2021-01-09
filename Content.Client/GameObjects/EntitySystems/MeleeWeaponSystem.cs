@@ -28,6 +28,7 @@ namespace Content.Client.GameObjects.EntitySystems
         public override void Initialize()
         {
             SubscribeNetworkEvent<PlayMeleeWeaponAnimationMessage>(PlayWeaponArc);
+            SubscribeNetworkEvent<PlayLungeAnimationMessage>(PlayLunge);
         }
 
         public override void FrameUpdate(float frameTime)
@@ -105,6 +106,14 @@ namespace Content.Client.GameObjects.EntitySystems
                     }
                 });
             }
+        }
+
+        private void PlayLunge(PlayLungeAnimationMessage msg)
+        {
+            EntityManager
+                .GetEntity(msg.Source)
+                .EnsureComponent<MeleeLungeComponent>()
+                .SetData(msg.Angle);
         }
     }
 }
