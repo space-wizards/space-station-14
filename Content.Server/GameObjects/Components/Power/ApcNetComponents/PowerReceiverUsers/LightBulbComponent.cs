@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using Content.Shared.Audio;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
@@ -32,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
     ///     Component that represents a light bulb. Can be broken, or burned, which turns them mostly useless.
     /// </summary>
     [RegisterComponent]
-    public class LightBulbComponent : Component, ILand
+    public class LightBulbComponent : Component, ILand, IDestroyAct
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
@@ -129,6 +130,11 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
             EntitySystem.Get<AudioSystem>().PlayFromEntity(file, Owner);
 
+            State = LightBulbState.Broken;
+        }
+
+        void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
+        {
             State = LightBulbState.Broken;
         }
     }
