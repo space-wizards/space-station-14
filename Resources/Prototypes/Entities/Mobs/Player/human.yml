@@ -13,7 +13,7 @@
   - type: Alerts
   - type: Actions
     innateActions:
-      - HumanScream
+      - Scream
       - Disarm
   - type: OverlayEffectsUI
   - type: Eye

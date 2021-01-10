@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Actions
+namespace Content.Shared.Actions
 {
     /// <summary>
     /// Every possible action. Corresponds to actionType in action prototypes.
@@ -6,7 +6,8 @@
     public enum ActionType : byte
     {
         Error,
-        HumanScream,
+        Scream,
+        Laugh,
         Disarm,
         DebugInstant,
         DebugToggle,

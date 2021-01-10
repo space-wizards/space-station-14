@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.Actions;
@@ -20,7 +20,7 @@ using Robust.Shared.Serialization;
 namespace Content.Server.Actions
 {
     [UsedImplicitly]
-    public class ScreamAction : IInstantAction
+    public class VoiceAction : IInstantAction
     {
         private const float Variation = 0.125f;
         private const float Volume = 4f;
@@ -33,7 +33,7 @@ namespace Content.Server.Actions
 
         private IRobustRandom _random;
 
-        public ScreamAction()
+        public VoiceAction()
         {
             _random = IoCManager.Resolve<IRobustRandom>();
         }

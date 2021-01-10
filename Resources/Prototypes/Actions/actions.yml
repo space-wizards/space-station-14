@@ -1,11 +1,11 @@
 ﻿- type: action
-  actionType: HumanScream
+  actionType: Scream
   icon: Interface/Actions/scream.png
   name: "Scream"
   filters:
     - human
   behaviorType: Instant
-  behavior: !type:ScreamAction
+  behavior: !type:VoiceAction
     cooldown: 10
     male:
       - /Audio/Voice/Human/malescream_1.ogg
@@ -21,6 +21,21 @@
       - /Audio/Voice/Human/femalescream_4.ogg
       - /Audio/Voice/Human/femalescream_5.ogg
     wilhelm: /Audio/Voice/Human/wilhelm_scream.ogg
+
+- type: action
+  actionType: Laugh
+  icon: Interface/Actions/laugh.png
+  name: "Laugh"
+  filters:
+    - human
+  behaviorType: Instant
+  behavior: !type:VoiceAction
+    cooldown: 10
+    male:
+      - /Audio/Voice/Human/malelaugh_1.ogg
+      - /Audio/Voice/Human/malelaugh_2.ogg
+    female:
+      - /Audio/Voice/Human/femalelaugh_1.ogg
 
 - type: action
   actionType: Disarm
