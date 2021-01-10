@@ -50,7 +50,8 @@
      inkscape:window-x="-8"
      inkscape:window-y="181"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg10" />
+     inkscape:current-layer="svg10"
+     inkscape:document-rotation="0" />
   <rect
      x="1"
      y="1"
@@ -59,7 +60,8 @@
      fill="#24242B"
      stroke="#3A4051"
      stroke-width="2"
-     id="rect2" />
+     id="rect2"
+     style="fill:#24242b;fill-opacity:0.94999999" />
   <path
      fill-rule="evenodd"
      clip-rule="evenodd"

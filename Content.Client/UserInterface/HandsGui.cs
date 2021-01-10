@@ -64,7 +64,7 @@ namespace Content.Client.UserInterface
                                         {
                                             (_handsContainer = new HBoxContainer {SeparationOverride = 4}),
                                             // bottom padding
-                                            new Control{CustomMinimumSize = (0, 4)}
+                                            new Control{CustomMinimumSize = (0, 6)}
                                         }
                                     }
                                 }

@@ -40,17 +40,18 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="2560"
-     inkscape:window-height="1377"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
      id="namedview8"
      showgrid="false"
      inkscape:zoom="15.75"
      inkscape:cx="32"
      inkscape:cy="32"
-     inkscape:window-x="1912"
-     inkscape:window-y="-8"
+     inkscape:window-x="-8"
+     inkscape:window-y="181"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg6" />
+     inkscape:current-layer="svg6"
+     inkscape:document-rotation="0" />
   <rect
      x="1"
      y="1"
@@ -59,7 +60,8 @@
      fill="#24242B"
      stroke="#3A4051"
      stroke-width="2"
-     id="rect2" />
+     id="rect2"
+     style="fill:#24242b;fill-opacity:0.94999999" />
   <path
      fill-rule="evenodd"
      clip-rule="evenodd"
