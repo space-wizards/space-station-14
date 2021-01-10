@@ -315,12 +315,11 @@ namespace Content.Shared.GameObjects.Components.Body.Part
 
         protected virtual void OnRemovedFromBody(IBody old) { }
 
-        public void Gib()
+        public virtual void Gib()
         {
             foreach (var mechanism in _mechanisms)
             {
                 RemoveMechanism(mechanism);
-                mechanism.Owner.RandomOffset(0.25f);
             }
         }
     }

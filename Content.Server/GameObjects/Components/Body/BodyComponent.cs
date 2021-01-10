@@ -42,6 +42,7 @@ namespace Content.Server.GameObjects.Components.Body
             base.OnRemovePart(slot, part);
 
             _partContainer.ForceRemove(part.Owner);
+            part.Owner.RandomOffset(0.25f);
         }
 
         public override void Initialize()
@@ -92,11 +93,6 @@ namespace Content.Server.GameObjects.Components.Body
 
         public override void Gib(bool gibParts = false)
         {
-            foreach (var (_, parts) in Parts)
-            {
-                parts.Owner.RandomOffset(0.25f);
-            }
-
             base.Gib(gibParts);
 
             if (Owner.TryGetComponent(out ContainerManagerComponent? container))
