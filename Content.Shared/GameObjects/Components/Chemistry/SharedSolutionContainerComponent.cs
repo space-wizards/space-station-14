@@ -251,7 +251,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         public readonly Color Color;
 
         /// <summary>
-        ///     Represents how full the container is, as a fractiom equivalent to <see cref="FilledVolumeFraction"/>/<see cref="byte.MaxValue"/>.
+        ///     Represents how full the container is, as a fraction equivalent to <see cref="FilledVolumeFraction"/>/<see cref="byte.MaxValue"/>.
         /// </summary>
         public readonly byte FilledVolumeFraction;
 
