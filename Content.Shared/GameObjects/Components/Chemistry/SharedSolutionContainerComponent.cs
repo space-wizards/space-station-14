@@ -255,7 +255,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         /// </summary>
         public readonly byte FilledVolumeFraction;
 
-        /// <param name="filledVolumeFraction">The fraction of the container's colume that is filled.</param>
+        /// <param name="filledVolumeFraction">The fraction of the container's volume that is filled.</param>
         public SolutionContainerVisualState(Color color, float filledVolumeFraction)
         {
             Color = color;
