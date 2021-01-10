@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Shared.GameObjects.Components;
 using Content.Shared.Maps;
 using Content.Shared.Utility;
@@ -21,6 +21,13 @@ namespace Content.Shared.Construction.ConstructionConditions
             bool invalidDirection = FacingWallOtherSide(user, location, direction);
             if (invalidDirection)
                 return false;
+
+            // there is some weird bug with east directional wallmounts
+            // GetEntitiesInTile returns info about one tile left
+            if (direction == Direction.East)
+            {
+                location = location.Offset(Direction.West);
+            }
 
             if (direction != Direction.North)
             {

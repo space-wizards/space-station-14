@@ -1,4 +1,4 @@
-﻿- type: construction
+- type: construction
   name: wall light
   id: LightTubeFixture
   graph: lightFixture
@@ -10,7 +10,7 @@
     sprite: Constructible/Lighting/light_tube.rsi
     state: off
   objectType: Structure
-  placementMode: SnapgridBorder
+  placementMode: WallmountLight
   canRotate: true
   canBuildInImpassable: true
   conditions:
@@ -28,7 +28,7 @@
     sprite: Constructible/Lighting/light_small.rsi
     state: off
   objectType: Structure
-  placementMode: SnapgridBorder
+  placementMode: WallmountLight
   canRotate: true
   canBuildInImpassable: true
   conditions:
