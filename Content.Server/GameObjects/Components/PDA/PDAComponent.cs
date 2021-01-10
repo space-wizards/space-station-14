@@ -14,6 +14,7 @@ using Content.Server.Interfaces.PDA;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.PDA;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -54,7 +55,9 @@ namespace Content.Server.GameObjects.Components.PDA
         [ViewVariables] public bool IdSlotEmpty => _idSlot.ContainedEntity == null;
         [ViewVariables] public bool PenSlotEmpty => _penSlot.ContainedEntity == null;
 
-        [ViewVariables] private UplinkAccount? _syndicateUplinkAccount;
+        private UplinkAccount? _syndicateUplinkAccount;
+
+        [ViewVariables] public UplinkAccount? SyndicateUplinkAccount => _syndicateUplinkAccount;
 
         [ViewVariables] private readonly PdaAccessSet _accessSet;
 

@@ -1,10 +1,10 @@
-﻿using System;
+﻿#nullable enable annotations
+using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Reactions;
 using Content.Server.GameObjects.Components.Atmos;
-using Content.Server.GameObjects.EntitySystems.Atmos;
 using Content.Server.Interfaces;
 using Content.Server.Utility;
 using Content.Shared.Atmos;
@@ -14,7 +14,6 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.EntitySystems.TileLookup;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -51,7 +50,7 @@ namespace Content.Server.Atmos
         private static int _soundCooldown;
 
         [ViewVariables]
-        public TileAtmosphere PressureSpecificTarget { get; set; }
+        public TileAtmosphere? PressureSpecificTarget { get; set; }
 
         [ViewVariables]
         public float PressureDifference { get; set; }
@@ -103,10 +102,14 @@ namespace Content.Server.Atmos
         public Vector2i GridIndices { get; }
 
         [ViewVariables]
-        public ExcitedGroup ExcitedGroup { get; set; }
+        public ExcitedGroup? ExcitedGroup { get; set; }
 
+        /// <summary>
+        /// The air in this tile. If null, this tile is completely airblocked.
+        /// This can be immutable if the tile is spaced.
+        /// </summary>
         [ViewVariables]
-        public GasMixture Air { get; set; }
+        public GasMixture? Air { get; set; }
 
         [ViewVariables, UsedImplicitly]
         private int _blockedAirflow => (int)BlockedAirflow;
@@ -116,7 +119,7 @@ namespace Content.Server.Atmos
         [ViewVariables]
         public bool BlocksAllAir => BlockedAirflow == AtmosDirection.All;
 
-        public TileAtmosphere(GridAtmosphereComponent atmosphereComponent, GridId gridIndex, Vector2i gridIndices, GasMixture mixture = null, bool immutable = false)
+        public TileAtmosphere(GridAtmosphereComponent atmosphereComponent, GridId gridIndex, Vector2i gridIndices, GasMixture? mixture = null, bool immutable = false)
         {
             IoCManager.InjectDependencies(this);
             _gridAtmosphereComponent = atmosphereComponent;
@@ -182,7 +185,6 @@ namespace Content.Server.Atmos
             }
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void HighPressureMovements()
         {
             // TODO ATMOS finish this
@@ -238,7 +240,6 @@ namespace Content.Server.Atmos
             }
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void EqualizePressureInZone(int cycleNum)
         {
             if (Air == null || (_tileAtmosInfo.LastCycle >= cycleNum)) return; // Already done.
@@ -429,7 +430,7 @@ namespace Content.Server.Atmos
                             if (!tile._adjacentBits.IsFlagSet(direction)) continue;
                             var tile2 = tile._adjacentTiles[k];
                             if (giver._tileAtmosInfo.MoleDelta <= 0) break; // We're done here now. Let's not do more work than needed.
-                            if (tile2._tileAtmosInfo.LastQueueCycle != queueCycle) continue;
+                            if (tile2 == null || tile2._tileAtmosInfo.LastQueueCycle != queueCycle) continue;
                             if (tile2._tileAtmosInfo.LastSlowQueueCycle == queueCycleSlow) continue;
 
                             queue[queueLength++] = tile2;
@@ -498,7 +499,7 @@ namespace Content.Server.Atmos
                             var tile2 = tile._adjacentTiles[k];
 
                             if (taker._tileAtmosInfo.MoleDelta >= 0) break; // We're done here now. Let's not do more work than needed.
-                            if (tile2._tileAtmosInfo.LastQueueCycle != queueCycle) continue;
+                            if (tile2 == null || tile2._tileAtmosInfo.LastQueueCycle != queueCycle) continue;
                             if (tile2._tileAtmosInfo.LastSlowQueueCycle == queueCycleSlow) continue;
                             queue[queueLength++] = tile2;
                             tile2._tileAtmosInfo.LastSlowQueueCycle = queueCycleSlow;
@@ -568,10 +569,9 @@ namespace Content.Server.Atmos
             ArrayPool<TileAtmosphere>.Shared.Return(takerTiles);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void FinalizeEq()
         {
-            var transferDirections = new float[Atmospherics.Directions];
+            Span<float> transferDirections = stackalloc float[Atmospherics.Directions];
             var hasTransferDirs = false;
             for (var i = 0; i < Atmospherics.Directions; i++)
             {
@@ -606,7 +606,7 @@ namespace Content.Server.Atmos
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void FinalizeEqNeighbors(in float[] transferDirs)
+        private void FinalizeEqNeighbors(ReadOnlySpan<float> transferDirs)
         {
             for (var i = 0; i < Atmospherics.Directions; i++)
             {
@@ -635,7 +635,6 @@ namespace Content.Server.Atmos
             _adjacentTiles[direction.ToIndex()]._tileAtmosInfo[direction.GetOpposite()] -= amount;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void ProcessCell(int fireCount, bool spaceWind = true)
         {
             // Can't process a tile without air
@@ -970,7 +969,6 @@ namespace Content.Server.Atmos
             return AtmosDirection.All;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void ExplosivelyDepressurize(int cycleNum)
         {
             if (Air == null) return;
@@ -1123,7 +1121,7 @@ namespace Content.Server.Atmos
 
         public bool AssumeAir(GasMixture giver)
         {
-            if (giver == null || Air == null) return false;
+            if (Air == null) return false;
 
             Air.Merge(giver);
 
@@ -1144,7 +1142,6 @@ namespace Content.Server.Atmos
             _gridAtmosphereComponent.GasTileOverlaySystem.Invalidate(GridIndex, GridIndices);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void UpdateAdjacent()
         {
             for (var i = 0; i < Atmospherics.Directions; i++)
@@ -1177,6 +1174,14 @@ namespace Content.Server.Atmos
             {
                 _adjacentBits &= ~direction;
             }
+        }
+
+        /// <summary>
+        ///     Calls <see cref="GridAtmosphereComponent.Invalidate"/> on this tile atmosphere's position.
+        /// </summary>
+        public void Invalidate()
+        {
+            _gridAtmosphereComponent.Invalidate(GridIndices);
         }
 
         private void LastShareCheck()

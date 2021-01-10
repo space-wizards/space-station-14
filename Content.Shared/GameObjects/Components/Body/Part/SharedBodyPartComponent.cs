@@ -89,9 +89,8 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         [ViewVariables]
         public BodyPartSymmetry Symmetry { get; private set; }
 
-        // TODO BODY
         [ViewVariables]
-        public SurgeryDataComponent? SurgeryDataComponent => Owner.GetComponentOrNull<SurgeryDataComponent>();
+        public ISurgeryData? SurgeryDataComponent => Owner.GetComponentOrNull<ISurgeryData>();
 
         protected virtual void OnAddMechanism(IMechanism mechanism)
         {

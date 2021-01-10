@@ -4,7 +4,7 @@
   head: true
   positions: 1
   startingGear: ResearchDirectorGear
-  department:
+  departments:
   - Command
   - Science
   icon: "ResearchDirector"
@@ -22,3 +22,6 @@
     shoes: ClothingShoesColorBrown
     idcard: RnDPDA
     ears: ClothingHeadsetScience
+  innerclothingskirt: ClothingUniformJumpskirtResearchDirector
+  satchel: ClothingBackpackSatchelScienceFilled
+  duffelbag: ClothingBackpackDuffelFilled

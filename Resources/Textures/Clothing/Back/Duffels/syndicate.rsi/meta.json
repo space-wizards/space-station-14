@@ -12,7 +12,23 @@
       "directions": 1
     },
     {
+      "name": "icon-ammo",
+      "directions": 1
+    },
+    {
+      "name": "icon-med",
+      "directions": 1
+    },
+    {
       "name": "equipped-BACKPACK",
+      "directions": 4
+    },
+    {
+      "name": "ammo-equipped-BACKPACK",
+      "directions": 4
+    },
+    {
+      "name": "med-equipped-BACKPACK",
       "directions": 4
     },
     {

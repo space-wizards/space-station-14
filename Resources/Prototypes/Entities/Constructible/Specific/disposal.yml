@@ -13,8 +13,14 @@
   - type: SnapGrid
     offset: Center
   - type: Anchorable
-  - type: Breakable
+  - type: Damageable
     resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+      100:
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Breakage"]
   - type: Rotatable
   - type: Pullable
 
@@ -141,9 +147,14 @@
   - type: SnapGrid
     offset: Center
   - type: Anchorable
-  - type: Destructible
-    thresholdvalue: 100
+  - type: Damageable
     resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+      100:
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
   - type: Appearance
     visuals:
     - type: DisposalUnitVisualizer
@@ -350,7 +361,6 @@
       map: ["enum.DisposalUnitVisualLayers.Handle"]
     - state: dispover-ready
       map: ["enum.DisposalUnitVisualLayers.Light"]
-
   - type: PowerReceiver
   - type: Configuration
     keys:
@@ -378,9 +388,14 @@
   - type: SnapGrid
     offset: Center
   - type: Anchorable
-  - type: Destructible
-    thresholdvalue: 100
+  - type: Damageable
     resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+      100:
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
   - type: Appearance
     visuals:
     - type: DisposalUnitVisualizer

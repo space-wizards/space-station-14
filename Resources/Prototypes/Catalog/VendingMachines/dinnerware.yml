@@ -5,6 +5,7 @@
   spriteName: dinnerware
   startingInventory:
     ButchCleaver: 1
+    KitchenKnife: 5
     DrinkGlass: 10
     DrinkPitcher: 1
     DrinkMug: 5

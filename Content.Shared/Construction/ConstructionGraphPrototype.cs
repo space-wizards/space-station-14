@@ -14,7 +14,7 @@ namespace Content.Shared.Construction
     {
         private readonly Dictionary<string, ConstructionGraphNode> _nodes = new();
         private readonly Dictionary<ValueTuple<string, string>, ConstructionGraphNode[]> _paths = new();
-        private Dictionary<ConstructionGraphNode, ConstructionGraphNode> _pathfinding = new();
+        private readonly Dictionary<string, Dictionary<ConstructionGraphNode, ConstructionGraphNode>> _pathfinding = new();
 
         [ViewVariables]
         public string ID { get; private set; }
@@ -44,8 +44,6 @@ namespace Content.Shared.Construction
 
             if(string.IsNullOrEmpty(Start) || !_nodes.ContainsKey(Start))
                 throw new InvalidDataException($"Starting node for construction graph {ID} is null, empty or invalid!");
-
-            _pathfinding = Pathfind(Start);
         }
 
         public ConstructionGraphEdge Edge(string startNode, string nextNode)
@@ -61,6 +59,20 @@ namespace Content.Shared.Construction
             if (_paths.ContainsKey(tuple))
                 return _paths[tuple];
 
+            // Get graph given the current start.
+
+            Dictionary<ConstructionGraphNode, ConstructionGraphNode> pathfindingForStart;
+            if (_pathfinding.ContainsKey(startNode))
+            {
+                pathfindingForStart = _pathfinding[startNode];
+            }
+            else
+            {
+                pathfindingForStart = _pathfinding[startNode] = PathsForStart(startNode);
+            }
+
+            // Follow the chain backwards.
+
             var start = _nodes[startNode];
             var finish = _nodes[finishNode];
 
@@ -71,14 +83,14 @@ namespace Content.Shared.Construction
                 path.Add(current);
 
                 // No path.
-                if (current == null || !_pathfinding.ContainsKey(current))
+                if (current == null || !pathfindingForStart.ContainsKey(current))
                 {
                     // We remember this for next time.
                     _paths[tuple] = null;
                     return null;
                 }
 
-                current = _pathfinding[current];
+                current = pathfindingForStart[current];
             }
 
             path.Reverse();
@@ -89,7 +101,7 @@ namespace Content.Shared.Construction
         ///     Uses breadth first search for pathfinding.
         /// </summary>
         /// <param name="start"></param>
-        private Dictionary<ConstructionGraphNode, ConstructionGraphNode> Pathfind(string start)
+        private Dictionary<ConstructionGraphNode, ConstructionGraphNode> PathsForStart(string start)
         {
             // TODO: Make this use A* or something, although it's not that important.
             var startNode = _nodes[start];

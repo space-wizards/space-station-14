@@ -70,7 +70,7 @@ namespace Content.Server.Commands.Atmos
             }
 
             tile.Air.AdjustMoles(gasId, moles);
-            gam.Invalidate(indices);
+            tile.Invalidate();
         }
     }
 }

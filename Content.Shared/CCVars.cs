@@ -1,4 +1,4 @@
-﻿using Robust.Shared;
+using Robust.Shared;
 using Robust.Shared.Configuration;
 
 namespace Content.Shared
@@ -12,10 +12,10 @@ namespace Content.Shared
          */
 
         public static readonly CVarDef<string> StatusMoMMIUrl =
-            CVarDef.Create<string>("status.mommiurl", null);
+            CVarDef.Create("status.mommiurl", "", CVar.SERVERONLY);
 
         public static readonly CVarDef<string> StatusMoMMIPassword =
-            CVarDef.Create<string>("status.mommipassword", null);
+            CVarDef.Create("status.mommipassword", "", CVar.SERVERONLY);
 
 
         /*
@@ -103,6 +103,13 @@ namespace Content.Shared
             CVarDef.Create("traitor.max_picks", 20);
 
         /*
+         * TraitorDeathMatch
+         */
+
+        public static readonly CVarDef<int> TraitorDeathMatchStartingBalance =
+            CVarDef.Create("traitordm.starting_balance", 20);
+
+        /*
          * Console
          */
 
@@ -134,6 +141,10 @@ namespace Content.Shared
 
         public static readonly CVarDef<string> DatabasePgPassword =
             CVarDef.Create("database.pg_password", "", CVar.SERVERONLY);
+
+        // Basically only exists for integration tests to avoid race conditions.
+        public static readonly CVarDef<bool> DatabaseSynchronous =
+            CVarDef.Create("database.sync", false, CVar.SERVERONLY);
 
 
         /*

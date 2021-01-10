@@ -20,7 +20,7 @@ namespace Content.Shared.GameObjects.Components.Nutrition
             {
                 if (CurrentHungerThreshold == HungerThreshold.Starving)
                 {
-                    return 0.5f;
+                    return 0.75f;
                 }
                 return 1.0f;
             }
@@ -31,7 +31,7 @@ namespace Content.Shared.GameObjects.Components.Nutrition
             {
                 if (CurrentHungerThreshold == HungerThreshold.Starving)
                 {
-                    return 0.5f;
+                    return 0.75f;
                 }
                 return 1.0f;
             }

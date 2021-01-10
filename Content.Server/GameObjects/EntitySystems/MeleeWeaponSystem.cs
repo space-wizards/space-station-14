@@ -14,5 +14,10 @@ namespace Content.Server.GameObjects.EntitySystems
             RaiseNetworkEvent(new MeleeWeaponSystemMessages.PlayMeleeWeaponAnimationMessage(arc, angle, attacker.Uid, source.Uid,
                 hits.Select(e => e.Uid).ToList(), textureEffect, arcFollowAttacker));
         }
+
+        public void SendLunge(Angle angle, IEntity source)
+        {
+            RaiseNetworkEvent(new MeleeWeaponSystemMessages.PlayLungeAnimationMessage(angle, source.Uid));
+        }
     }
 }

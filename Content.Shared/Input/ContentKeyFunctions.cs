@@ -41,5 +41,25 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction Arcade1 = "Arcade1";
         public static readonly BoundKeyFunction Arcade2 = "Arcade2";
         public static readonly BoundKeyFunction Arcade3 = "Arcade3";
+        public static readonly BoundKeyFunction OpenActionsMenu = "OpenAbilitiesMenu";
+        public static readonly BoundKeyFunction Hotbar0 = "Hotbar0";
+        public static readonly BoundKeyFunction Hotbar1 = "Hotbar1";
+        public static readonly BoundKeyFunction Hotbar2 = "Hotbar2";
+        public static readonly BoundKeyFunction Hotbar3 = "Hotbar3";
+        public static readonly BoundKeyFunction Hotbar4 = "Hotbar4";
+        public static readonly BoundKeyFunction Hotbar5 = "Hotbar5";
+        public static readonly BoundKeyFunction Hotbar6 = "Hotbar6";
+        public static readonly BoundKeyFunction Hotbar7 = "Hotbar7";
+        public static readonly BoundKeyFunction Hotbar8 = "Hotbar8";
+        public static readonly BoundKeyFunction Hotbar9 = "Hotbar9";
+        public static readonly BoundKeyFunction Loadout1 = "Loadout1";
+        public static readonly BoundKeyFunction Loadout2 = "Loadout2";
+        public static readonly BoundKeyFunction Loadout3 = "Loadout3";
+        public static readonly BoundKeyFunction Loadout4 = "Loadout4";
+        public static readonly BoundKeyFunction Loadout5 = "Loadout5";
+        public static readonly BoundKeyFunction Loadout6 = "Loadout6";
+        public static readonly BoundKeyFunction Loadout7 = "Loadout7";
+        public static readonly BoundKeyFunction Loadout8 = "Loadout8";
+        public static readonly BoundKeyFunction Loadout9 = "Loadout9";
     }
 }

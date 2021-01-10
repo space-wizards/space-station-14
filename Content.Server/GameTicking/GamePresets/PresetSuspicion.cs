@@ -69,11 +69,11 @@ namespace Content.Server.GameTicking.GamePresets
 
             foreach (var player in list)
             {
-                if (!readyProfiles.ContainsKey(player.UserId))
+                if (!ReadyProfiles.ContainsKey(player.UserId))
                 {
                     continue;
                 }
-                var profile = readyProfiles[player.UserId];
+                var profile = ReadyProfiles[player.UserId];
                 if (profile.AntagPreferences.Contains(_prototypeManager.Index<AntagPrototype>(TraitorID).Name))
                 {
                     prefList.Add(player);

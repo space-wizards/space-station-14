@@ -75,7 +75,7 @@ namespace Content.Server.Commands.Atmos
             }
 
             tile.Air.Temperature = temperature;
-            gam.Invalidate(indices);
+            tile.Invalidate();
         }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Body.Part.Property;
 using Content.Shared.GameObjects.Components.Body.Preset;
@@ -103,8 +104,7 @@ namespace Content.Shared.GameObjects.Components.Body
             {
                 if (part.IsVital && Parts.Count(x => x.Value.PartType == part.PartType) == 0)
                 {
-                    damageable.CurrentState = DamageState.Dead;
-                    damageable.ForceHealthChangedEvent();
+                    damageable.ChangeDamage(DamageType.Bloodloss, 300, true); // TODO BODY KILL
                 }
             }
 
