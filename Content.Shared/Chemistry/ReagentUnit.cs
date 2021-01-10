@@ -1,10 +1,14 @@
-﻿using System;
+using System;
 using System.Globalization;
 using System.Linq;
 using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Shared.Chemistry
 {
+    /// <summary>
+    ///     Represents a quantity of reagent, to a precision of 0.01.
+    ///     To enforce this level of precision, floats are shifted by 2 decimal points, rounded, and converted to an int.
+    /// </summary>
     [Serializable]
     public struct ReagentUnit : ISelfSerialize, IComparable<ReagentUnit>, IEquatable<ReagentUnit>
     {
