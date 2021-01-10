@@ -404,8 +404,7 @@ namespace Content.Client.UserInterface
                 ItemTag => action is ItemActionPrototype,
                 NotItemTag => action is ActionPrototype,
                 InstantActionTag => action.BehaviorType == BehaviorType.Instant,
-                TargetActionTag => action.BehaviorType == BehaviorType.TargetEntity ||
-                                   action.BehaviorType == BehaviorType.TargetPoint,
+                TargetActionTag => action.IsTargetAction,
                 ToggleActionTag => action.BehaviorType == BehaviorType.Toggle,
                 _ => action.Filters.Contains(tag)
             };
