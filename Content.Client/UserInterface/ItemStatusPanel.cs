@@ -90,6 +90,10 @@ namespace Content.Client.UserInterface
                     flat = StyleBox.Margin.Right | StyleBox.Margin.Bottom;
                     break;
                 case HandLocation.Middle:
+                    texture = "/Textures/Interface/Nano/item_status_middle.svg.96dpi.png";
+                    cutOut = StyleBox.Margin.Right | StyleBox.Margin.Top;
+                    flat = StyleBox.Margin.Left | StyleBox.Margin.Bottom;
+                    break;
                 case HandLocation.Right:
                     texture = "/Textures/Interface/Nano/item_status_left.svg.96dpi.png";
                     cutOut = StyleBox.Margin.Right | StyleBox.Margin.Top;
