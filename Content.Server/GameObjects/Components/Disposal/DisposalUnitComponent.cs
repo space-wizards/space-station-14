@@ -287,10 +287,6 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
 
             var entryComponent = entry.GetComponent<DisposalEntryComponent>();
-            foreach (var entity in _container.ContainedEntities.ToList())
-            {
-                _container.Remove(entity);
-            }
 
             if (Owner.Transform.Coordinates.TryGetTileAtmosphere(out var tileAtmos) &&
                 tileAtmos.Air != null &&
