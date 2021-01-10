@@ -19,7 +19,7 @@ namespace Content.Shared.GameObjects.Components.Nutrition
             {
                 if (CurrentThirstThreshold == ThirstThreshold.Parched)
                 {
-                    return 0.25f;
+                    return 0.75f;
                 }
                 return 1.0f;
             }
@@ -30,7 +30,7 @@ namespace Content.Shared.GameObjects.Components.Nutrition
             {
                 if (CurrentThirstThreshold == ThirstThreshold.Parched)
                 {
-                    return 0.5f;
+                    return 0.75f;
                 }
                 return 1.0f;
             }
