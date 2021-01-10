@@ -21,9 +21,9 @@ namespace Content.Server.AI.Operators.Inventory
             _owner = owner;
         }
 
-        public override bool TryStartup()
+        public override bool Startup()
         {
-            if (!base.TryStartup())
+            if (!base.Startup())
             {
                 return true;
             }
@@ -40,12 +40,15 @@ namespace Content.Server.AI.Operators.Inventory
             return _target != null;
         }
 
-        public override void Shutdown(Outcome outcome)
+        public override bool Shutdown(Outcome outcome)
         {
-            base.Shutdown(outcome);
+            if (!base.Shutdown(outcome))
+                return false;
+
             var blackboard = UtilityAiHelpers.GetBlackboard(_owner);
 
             blackboard?.GetState<LastOpenedStorageState>().SetValue(null);
+            return true;
         }
 
         public override Outcome Execute(float frameTime)
