@@ -6,6 +6,7 @@ using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
@@ -87,6 +88,26 @@ namespace Content.Server.GameObjects.Components.Body
 
                 new Ghost().Execute(shell, (IPlayerSession) session, Array.Empty<string>());
             }
+        }
+
+        public override void Gib(bool recursive = false)
+        {
+            base.Gib(recursive);
+
+            if (Owner.TryGetComponent(out ContainerManagerComponent? container))
+            {
+                foreach (var cont in container.GetAllContainers())
+                {
+                    foreach (var ent in cont.ContainedEntities)
+                    {
+                        cont.ForceRemove(ent);
+                        ent.Transform.Coordinates = Owner.Transform.Coordinates;
+                        ent.RandomOffset(0.25f);
+                    }
+                }
+            }
+
+            Owner.Delete();
         }
     }
 }
