@@ -90,9 +90,14 @@ namespace Content.Server.GameObjects.Components.Body
             }
         }
 
-        public override void Gib(bool recursive = false)
+        public override void Gib(bool gibParts = false)
         {
-            base.Gib(recursive);
+            foreach (var (_, parts) in Parts)
+            {
+                parts.Owner.RandomOffset(0.25f);
+            }
+
+            base.Gib(gibParts);
 
             if (Owner.TryGetComponent(out ContainerManagerComponent? container))
             {

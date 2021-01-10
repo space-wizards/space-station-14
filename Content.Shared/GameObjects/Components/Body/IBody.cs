@@ -251,6 +251,6 @@ namespace Content.Shared.GameObjects.Components.Body
         /// <summary>
         ///     Gibs this body.
         /// </summary>
-        void Gib(bool recursive = false);
+        void Gib(bool gibParts = false);
     }
 }

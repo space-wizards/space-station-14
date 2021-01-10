@@ -703,15 +703,13 @@ namespace Content.Shared.GameObjects.Components.Body
             }
         }
 
-        public virtual void Gib(bool recursive = false)
+        public virtual void Gib(bool gibParts = false)
         {
             foreach (var (_, part) in Parts)
             {
                 RemovePart(part);
 
-                part.Owner.RandomOffset(0.5f);
-
-                if (recursive)
+                if (gibParts)
                     part.Gib();
             }
         }
