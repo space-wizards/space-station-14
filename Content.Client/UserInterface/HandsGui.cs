@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Content.Client.GameObjects.Components.Items;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Input;
@@ -52,7 +53,22 @@ namespace Content.Client.UserInterface
                         Children =
                         {
                             (_topPanel = ItemStatusPanel.FromSide(HandLocation.Middle)),
-                            (_handsContainer = new HBoxContainer {SeparationOverride = 0})
+                            new PanelContainer
+                            {
+                                StyleClasses = { StyleNano.StyleClassInventorySlotBackground },
+                                Children =
+                                {
+                                    new VBoxContainer
+                                    {
+                                        Children =
+                                        {
+                                            (_handsContainer = new HBoxContainer {SeparationOverride = 4}),
+                                            // bottom padding
+                                            new Control{CustomMinimumSize = (0, 4)}
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }),
                     (_leftPanel = ItemStatusPanel.FromSide(HandLocation.Left))
