@@ -78,7 +78,8 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                     _hudButtonBack,
                     _hudButtonPocket1,
                     _hudButtonPocket2,
-                }
+                },
+                SeparationOverride = 5
             };
         }
 

@@ -270,6 +270,7 @@ namespace Content.Client.UserInterface
             LayoutContainer.SetGrowHorizontal(inventoryContainer, LayoutContainer.GrowDirection.Begin);
             LayoutContainer.SetGrowVertical(inventoryContainer, LayoutContainer.GrowDirection.Begin);
             LayoutContainer.SetAnchorAndMarginPreset(inventoryContainer, LayoutContainer.LayoutPreset.BottomRight);
+            LayoutContainer.SetMarginBottom(inventoryContainer, -10f);
 
             InventoryQuickButtonContainer = new MarginContainer
             {
@@ -306,6 +307,7 @@ namespace Content.Client.UserInterface
             LayoutContainer.SetAnchorAndMarginPreset(HandsContainer, LayoutContainer.LayoutPreset.CenterBottom);
             LayoutContainer.SetGrowHorizontal(HandsContainer, LayoutContainer.GrowDirection.Both);
             LayoutContainer.SetGrowVertical(HandsContainer, LayoutContainer.GrowDirection.Begin);
+            LayoutContainer.SetMarginBottom(HandsContainer, -10f);
 
             SuspicionContainer = new MarginContainer
             {
