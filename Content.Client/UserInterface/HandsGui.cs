@@ -22,7 +22,7 @@ namespace Content.Client.UserInterface
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
 
-        private readonly TextureRect _activeHandRect;
+        private readonly PanelContainer _activeHandRect;
 
         private readonly Texture _leftHandTexture;
         private readonly Texture _middleHandTexture;
@@ -75,13 +75,11 @@ namespace Content.Client.UserInterface
                 }
             });
 
-            var textureHandActive = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_active.png");
-
             // Active hand
-            _activeHandRect = new TextureRect
+            _activeHandRect = new PanelContainer
             {
-                Texture = textureHandActive,
-                TextureScale = (2, 2)
+                StyleClasses = { StyleNano.StyleClassHandSlotHighlight },
+                CustomMinimumSize = (64, 64)
             };
 
             _leftHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.svg.96dpi.png");
@@ -202,6 +200,8 @@ namespace Content.Client.UserInterface
                 hand.Button!.Button.Texture = HandTexture(hand.Location);
                 hand.Button!.SetPositionInParent(i);
                 _itemSlotManager.SetItemSlot(hand.Button, hand.Entity);
+
+                hand.Button!.SetActiveHighlight(component.ActiveIndex == hand.Name);
             }
 
             _activeHandRect.Parent?.RemoveChild(_activeHandRect);
