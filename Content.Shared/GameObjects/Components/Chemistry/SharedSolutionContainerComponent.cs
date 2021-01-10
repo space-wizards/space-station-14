@@ -143,7 +143,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         ///     Adds a solution to the container, if it can fully fit.
         /// </summary>
         /// <param name="solution">The solution to try to add.</param>
-        /// <returns>If the solutoon could be added.</returns>
+        /// <returns>If the solution could be added.</returns>
         public bool TryAddSolution(Solution solution)
         {
             if (!CanAddSolution(solution))
@@ -250,12 +250,16 @@ namespace Content.Shared.GameObjects.Components.Chemistry
     {
         public readonly Color Color;
 
+        /// <summary>
+        ///     Represents how full the container is, as a fractiom equivalent to <see cref="FilledVolumeFraction"/>/<see cref="byte.MaxValue"/>.
+        /// </summary>
         public readonly byte FilledVolumeFraction;
 
-        public SolutionContainerVisualState(Color color, byte filledVolumeFraction)
+        /// <param name="filledVolumeFraction">The fraction of the container's colume that is filled.</param>
+        public SolutionContainerVisualState(Color color, float filledVolumeFraction)
         {
             Color = color;
-            FilledVolumeFraction = filledVolumeFraction;
+            FilledVolumeFraction = (byte) (byte.MaxValue * filledVolumeFraction);
         }
     }
 
