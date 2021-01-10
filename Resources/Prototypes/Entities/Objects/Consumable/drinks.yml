@@ -30,6 +30,7 @@
         behaviors:
         - !type:PlaySoundCollectionBehavior
           soundCollection: GlassBreak
+        - !type:SpillBehavior { }
         - !type:SpawnEntitiesBehavior
           spawn:
             ShardGlass:
