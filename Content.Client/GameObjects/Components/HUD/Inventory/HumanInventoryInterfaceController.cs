@@ -196,7 +196,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             base.PlayerDetached();
 
             GameHud.RightInventoryQuickButtonContainer.RemoveChild(_rightQuickButtonsContainer);
-            GameHud.RightInventoryQuickButtonContainer.RemoveChild(_leftQuickButtonsContainer);
+            GameHud.LeftInventoryQuickButtonContainer.RemoveChild(_leftQuickButtonsContainer);
 
             foreach (var (slot, list) in _inventoryButtons)
             {

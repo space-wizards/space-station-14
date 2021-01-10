@@ -22,8 +22,6 @@ namespace Content.Client.UserInterface
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
 
-        private readonly PanelContainer _activeHandRect;
-
         private readonly Texture _leftHandTexture;
         private readonly Texture _middleHandTexture;
         private readonly Texture _rightHandTexture;
@@ -74,14 +72,6 @@ namespace Content.Client.UserInterface
                     (_leftPanel = ItemStatusPanel.FromSide(HandLocation.Left))
                 }
             });
-
-            // Active hand
-            _activeHandRect = new PanelContainer
-            {
-                StyleClasses = { StyleNano.StyleClassHandSlotHighlight },
-                CustomMinimumSize = (64, 64)
-            };
-
             _leftHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.svg.96dpi.png");
             _middleHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.svg.96dpi.png");
             _rightHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_r.svg.96dpi.png");
@@ -133,13 +123,6 @@ namespace Content.Client.UserInterface
             button.OnStoragePressed += args => _OnStoragePressed(args, slot);
 
             _handsContainer.AddChild(button);
-
-            if (_activeHandRect.Parent == null)
-            {
-                button.AddChild(_activeHandRect);
-                _activeHandRect.SetPositionInParent(1);
-            }
-
             hand.Button = button;
         }
 
@@ -149,11 +132,6 @@ namespace Content.Client.UserInterface
 
             if (button != null)
             {
-                if (button.Children.Contains(_activeHandRect))
-                {
-                    button.RemoveChild(_activeHandRect);
-                }
-
                 _handsContainer.RemoveChild(button);
             }
         }
@@ -201,15 +179,7 @@ namespace Content.Client.UserInterface
                 hand.Button!.SetPositionInParent(i);
                 _itemSlotManager.SetItemSlot(hand.Button, hand.Entity);
 
-                hand.Button!.SetActiveHighlight(component.ActiveIndex == hand.Name);
-            }
-
-            _activeHandRect.Parent?.RemoveChild(_activeHandRect);
-            component.GetHand(component.ActiveIndex)?.Button?.AddChild(_activeHandRect);
-
-            if (hands.Length > 0)
-            {
-                _activeHandRect.SetPositionInParent(1);
+                hand.Button!.SetActiveHand(component.ActiveIndex == hand.Name);
             }
 
             _leftPanel.SetPositionFirst();
