@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using Content.Client.Administration;
+using Content.Client.GameObjects.Components.Observer;
 using Content.Client.Interfaces.Chat;
 using Content.Shared.Administration;
 using Content.Shared.Chat;
 using Robust.Client.Console;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.UserInterface;
+using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
@@ -25,6 +27,8 @@ namespace Content.Client.Chat
 {
     internal sealed class ChatManager : IChatManager, IPostInjectInit
     {
+        [Dependency] private IPlayerManager _playerManager = default!;
+
         private struct SpeechBubbleData
         {
             public string Message;
@@ -387,7 +391,13 @@ namespace Content.Client.Chat
             switch (msg.Channel)
             {
                 case ChatChannel.Local:
+                    AddSpeechBubble(msg, SpeechBubble.SpeechType.Say);
+                    break;
+
                 case ChatChannel.Dead:
+                    if (!_playerManager.LocalPlayer?.ControlledEntity?.HasComponent<GhostComponent>() ?? true)
+                        break;
+
                     AddSpeechBubble(msg, SpeechBubble.SpeechType.Say);
                     break;
 
