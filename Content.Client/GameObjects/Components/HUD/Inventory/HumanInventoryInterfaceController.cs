@@ -210,7 +210,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         private class HumanInventoryWindow : SS14Window
         {
             private const int ButtonSize = 64;
-            private const int ButtonSeparation = 2;
+            private const int ButtonSeparation = 4;
             private const int RightSeparation = 2;
 
             public IReadOnlyDictionary<Slots, ItemSlotButton> Buttons { get; }
