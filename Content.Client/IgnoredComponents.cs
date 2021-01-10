@@ -229,8 +229,10 @@ namespace Content.Client
             "CargoTelepad",
             "TraitorDeathMatchRedemption",
             "GlassBeaker",
+            "SliceableFood",
             "DamageOtherOnHit",
-            "DamageOnLand"
+            "DamageOnLand",
+            "Recyclable"
         };
     }
 }

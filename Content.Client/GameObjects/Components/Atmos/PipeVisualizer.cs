@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Shared.GameObjects.Components.Atmos;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -62,7 +62,6 @@ namespace Content.Client.GameObjects.Components.Atmos
         {
             var stateId = "pipe";
             stateId += pipeVisualState.PipeDirection.PipeDirectionToPipeShape().ToString();
-            stateId += (int) pipeVisualState.ConduitLayer;
             return stateId;
         }
 
