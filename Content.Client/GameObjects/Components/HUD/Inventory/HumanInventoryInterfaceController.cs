@@ -30,7 +30,8 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         private ItemSlotButton _hudButtonBelt;
         private ItemSlotButton _hudButtonBack;
         private ItemSlotButton _hudButtonId;
-        private Control _quickButtonsContainer;
+        private Control _rightQuickButtonsContainer;
+        private Control _leftQuickButtonsContainer;
 
         public HumanInventoryInterfaceController(ClientInventoryComponent owner) : base(owner)
         {
@@ -69,15 +70,24 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             AddButton(out _hudButtonBelt, Slots.BELT, "belt");
             AddButton(out _hudButtonId, Slots.IDCARD, "id");
 
-            _quickButtonsContainer = new HBoxContainer
+            _leftQuickButtonsContainer = new HBoxContainer
             {
                 Children =
                 {
                     _hudButtonId,
-                    _hudButtonBelt,
                     _hudButtonBack,
+                    _hudButtonBelt,
+                },
+                SeparationOverride = 5
+            };
+            _rightQuickButtonsContainer = new HBoxContainer
+            {
+                Children =
+                {
                     _hudButtonPocket1,
                     _hudButtonPocket2,
+                    // keeps this "balanced" with the left, so the hands will appear perfectly in the center
+                    new Control{CustomMinimumSize = (64, 64)}
                 },
                 SeparationOverride = 5
             };
@@ -162,7 +172,8 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         {
             base.PlayerAttached();
 
-            GameHud.InventoryQuickButtonContainer.AddChild(_quickButtonsContainer);
+            GameHud.RightInventoryQuickButtonContainer.AddChild(_rightQuickButtonsContainer);
+            GameHud.LeftInventoryQuickButtonContainer.AddChild(_leftQuickButtonsContainer);
 
             // Update all the buttons to make sure they check out.
 
@@ -184,7 +195,8 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         {
             base.PlayerDetached();
 
-            GameHud.InventoryQuickButtonContainer.RemoveChild(_quickButtonsContainer);
+            GameHud.RightInventoryQuickButtonContainer.RemoveChild(_rightQuickButtonsContainer);
+            GameHud.RightInventoryQuickButtonContainer.RemoveChild(_leftQuickButtonsContainer);
 
             foreach (var (slot, list) in _inventoryButtons)
             {
