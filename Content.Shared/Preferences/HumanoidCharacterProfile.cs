@@ -272,7 +272,7 @@ namespace Content.Shared.Preferences
         }
 
         public string Summary =>
-            Loc.GetString(" This is {0}. {3:They} {3:are} a {2} year old {1}.", Name, Sex.ToString().ToLower(), Age, this);
+             Loc.GetString(" This is {0}. {2:They} {2:are} {1} years old.", Name, Age, this); 
 
         public bool MemberwiseEquals(ICharacterProfile maybeOther)
         {
