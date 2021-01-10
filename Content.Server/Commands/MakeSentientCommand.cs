@@ -20,7 +20,7 @@ namespace Content.Server.Commands
 
         public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
         {
-            if (args.Length == 0 || args.Length > 1)
+            if (args.Length != 1)
             {
                 shell.SendText(player, "Wrong number of arguments.");
                 return;
