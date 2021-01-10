@@ -1,4 +1,4 @@
-﻿using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Graphics.Overlays;
@@ -64,18 +64,18 @@ namespace Content.Client.GameObjects.Components.Suspicion
                 // Otherwise the entity can not exist yet
                 if (!_entityManager.TryGetEntity(uid, out var ally))
                 {
-                    return;
+                    continue;
                 }
 
                 if (!ally.TryGetComponent(out IPhysicsComponent physics))
                 {
-                    return;
+                    continue;
                 }
 
                 if (!ExamineSystemShared.InRangeUnOccluded(ent.Transform.MapPosition, ally.Transform.MapPosition, 15,
                     entity => entity == ent || entity == ally))
                 {
-                    return;
+                    continue;
                 }
 
                 // all entities have a TransformComponent
