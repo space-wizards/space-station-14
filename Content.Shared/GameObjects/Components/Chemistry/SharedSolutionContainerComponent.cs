@@ -171,8 +171,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 
         private void SolutionChanged()
         {
-            EntitySystem.Get<ChemistrySystem>()
-                .HandleSolutionChange(Owner);
+            EntitySystem.Get<ChemistrySystem>().HandleSolutionChange(Owner);
         }
 
         private void ProcessReactions()
@@ -212,7 +211,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 
         private void UpdateAppearance()
         {
-            if (!Owner.TryGetComponent<SharedAppearanceComponent>(out var appearance))
+            if (Owner.Deleted || !Owner.TryGetComponent<SharedAppearanceComponent>(out var appearance))
                 return;
 
             appearance.SetData(SolutionContainerVisuals.VisualState, GetVisualState());
