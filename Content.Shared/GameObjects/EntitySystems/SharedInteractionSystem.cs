@@ -5,6 +5,7 @@ using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
@@ -20,6 +21,8 @@ namespace Content.Shared.GameObjects.EntitySystems
     [UsedImplicitly]
     public class SharedInteractionSystem : EntitySystem
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
+
         private SharedBroadPhaseSystem _broadPhaseManager = default!;
 
         public const float InteractionRange = 2;
@@ -146,7 +149,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                     continue;
                 }
 
-                var bBox = p.WorldAABB;
+                var bBox = p.GetWorldAABB(_mapManager);
 
                 if (bBox.Contains(origin.Position) || bBox.Contains(other.Position))
                 {

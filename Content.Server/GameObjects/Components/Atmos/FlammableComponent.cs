@@ -146,7 +146,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 var physics = Owner.GetComponent<PhysicsComponent>();
                 var otherPhysics = entity.GetComponent<PhysicsComponent>();
 
-                if (!physics.WorldAABB.Intersects(otherPhysics.WorldAABB))
+                if (!physics.GetWorldAABB().Intersects(otherPhysics.GetWorldAABB()))
                 {
                     _collided.Remove(uid);
                 }

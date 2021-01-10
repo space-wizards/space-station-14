@@ -9,6 +9,8 @@ using Robust.Client.ResourceManagement;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Map;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
@@ -64,6 +66,8 @@ namespace Content.Client.GameObjects.Components.Suspicion
 
         private void DrawScreen(DrawingHandleScreen screen)
         {
+            // TODO: Cache
+            var mapManager = IoCManager.Resolve<IMapManager>();
             var viewport = _eyeManager.GetWorldViewport();
 
             foreach (var uid in _allies)
@@ -94,7 +98,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
                     continue;
                 }
 
-                var worldBox = physics.WorldAABB;
+                var worldBox = physics.GetWorldAABB(mapManager);
 
                 // if not on screen, or too small, continue
                 if (!worldBox.Intersects(in viewport) || worldBox.IsEmpty())
@@ -102,7 +106,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
                     continue;
                 }
 
-                var screenCoordinates = _eyeManager.WorldToScreen(physics.WorldAABB.TopLeft + (0, 0.5f));
+                var screenCoordinates = _eyeManager.WorldToScreen(physics.GetWorldAABB(mapManager).TopLeft + (0, 0.5f));
                 DrawString(screen, _font, screenCoordinates, _traitorText, Color.OrangeRed);
             }
         }

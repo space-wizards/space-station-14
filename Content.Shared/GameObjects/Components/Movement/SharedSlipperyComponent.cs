@@ -74,7 +74,7 @@ namespace Content.Shared.GameObjects.Components.Movement
                 return false;
             }
 
-            var percentage = otherBody.WorldAABB.IntersectPercentage(body.WorldAABB);
+            var percentage = otherBody.GetWorldAABB().IntersectPercentage(body.GetWorldAABB());
 
             if (percentage < IntersectPercentage)
             {
@@ -121,7 +121,7 @@ namespace Content.Shared.GameObjects.Components.Movement
                 var physics = Owner.GetComponent<PhysicsComponent>();
                 var otherPhysics = entity.GetComponent<PhysicsComponent>();
 
-                if (!physics.WorldAABB.Intersects(otherPhysics.WorldAABB))
+                if (!physics.GetWorldAABB().Intersects(otherPhysics.GetWorldAABB()))
                 {
                     _slipped.Remove(uid);
                 }

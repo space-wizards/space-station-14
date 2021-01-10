@@ -13,6 +13,7 @@ using Robust.Shared.GameObjects.Components.Map;
 using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -27,6 +28,7 @@ namespace Content.Server.GameObjects.Components.Singularity
     [RegisterComponent]
     public class SingularityComponent : Component, ICollideBehavior
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private IRobustRandom _random = default!;
 
         public override uint? NetID => ContentNetIDs.SINGULARITY;
@@ -179,7 +181,7 @@ namespace Content.Server.GameObjects.Components.Singularity
 
             if (entity.TryGetComponent<IMapGridComponent>(out var mapGridComponent))
             {
-                foreach (var tile in mapGridComponent.Grid.GetTilesIntersecting(((IPhysBody) _collidableComponent).WorldAABB))
+                foreach (var tile in mapGridComponent.Grid.GetTilesIntersecting(((IPhysBody) _collidableComponent).GetWorldAABB(_mapManager)))
                 {
                     mapGridComponent.Grid.SetTile(tile.GridIndices, Tile.Empty);
                     Energy++;
