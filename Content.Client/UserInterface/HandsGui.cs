@@ -68,9 +68,9 @@ namespace Content.Client.UserInterface
                 TextureScale = (2, 2)
             };
 
-            _leftHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.png");
-            _middleHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_middle.png");
-            _rightHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_r.png");
+            _leftHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.svg.96dpi.png");
+            _middleHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.svg.96dpi.png");
+            _rightHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_r.svg.96dpi.png");
         }
 
         private ItemStatusPanel GetItemPanel(Hand hand)
@@ -110,7 +110,7 @@ namespace Content.Client.UserInterface
         private void AddHand(Hand hand, HandLocation buttonLocation)
         {
             var buttonTexture = HandTexture(buttonLocation);
-            var storageTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/back.png");
+            var storageTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/back.svg.96dpi.png");
             var blockedTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/blocked.png");
             var button = new HandButton(buttonTexture, storageTexture, blockedTexture, buttonLocation);
             var slot = hand.Name;

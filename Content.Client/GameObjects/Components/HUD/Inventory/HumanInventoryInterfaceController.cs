@@ -52,8 +52,8 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 
             void AddButton(out ItemSlotButton variable, Slots slot, string textureName)
             {
-                var texture = _resourceCache.GetTexture($"/Textures/Interface/Inventory/{textureName}.png");
-                var storageTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/back.png");
+                var texture = _resourceCache.GetTexture($"/Textures/Interface/Inventory/{textureName}.svg.96dpi.png");
+                var storageTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/back.svg.96dpi.png");
                 variable = new ItemSlotButton(texture, storageTexture)
                 {
                     OnPressed = (e) => AddToInventory(e, slot),
@@ -218,8 +218,8 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 
                 void AddButton(Slots slot, string textureName, Vector2 position)
                 {
-                    var texture = resourceCache.GetTexture($"/Textures/Interface/Inventory/{textureName}.png");
-                    var storageTexture = resourceCache.GetTexture("/Textures/Interface/Inventory/back.png");
+                    var texture = resourceCache.GetTexture($"/Textures/Interface/Inventory/{textureName}.svg.96dpi.png");
+                    var storageTexture = resourceCache.GetTexture("/Textures/Interface/Inventory/back.svg.96dpi.png");
                     var button = new ItemSlotButton(texture, storageTexture);
 
                     LayoutContainer.SetPosition(button, position);
@@ -237,13 +237,13 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                 AddButton(Slots.POCKET1, "pocket", (0, 3 * sizep));
 
                 // Middle column.
-                AddButton(Slots.HEAD, "head", (sizep, 0));
+                AddButton(Slots.HEAD, "hat", (sizep, 0));
                 AddButton(Slots.MASK, "mask", (sizep, sizep));
-                AddButton(Slots.OUTERCLOTHING, "suit", (sizep, 2 * sizep));
-                AddButton(Slots.SHOES, "shoes", (sizep, 3 * sizep));
+                AddButton(Slots.OUTERCLOTHING, "armor", (sizep, 2 * sizep));
+                AddButton(Slots.SHOES, "boots", (sizep, 3 * sizep));
 
                 // Right column
-                AddButton(Slots.EARS, "ears", (2 * sizep, 0));
+                AddButton(Slots.EARS, "ear", (2 * sizep, 0));
                 AddButton(Slots.IDCARD, "id", (2 * sizep, sizep));
                 AddButton(Slots.GLOVES, "gloves", (2 * sizep, 2 * sizep));
                 AddButton(Slots.POCKET2, "pocket", (2 * sizep, 3 * sizep));
