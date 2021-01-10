@@ -222,7 +222,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         {
             var filledVolumeFraction = CurrentVolume.Float() / MaxVolume.Float();
 
-            return new SolutionContainerVisualState(Color, (byte) filledVolumeFraction);
+            return new SolutionContainerVisualState(Color, filledVolumeFraction);
         }
 
         public override ComponentState GetComponentState()
