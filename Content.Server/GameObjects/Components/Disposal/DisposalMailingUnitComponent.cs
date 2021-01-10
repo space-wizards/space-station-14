@@ -10,13 +10,11 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems.DeviceNetwork;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
-using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Disposal;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
@@ -145,7 +143,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// </summary>
         private (PressureState State, string Localized) _locState;
 
-        public bool CanInsert(IEntity entity)
+        public override bool CanInsert(IEntity entity)
         {
             if (!Anchored)
             {

@@ -8,7 +8,6 @@ using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Interfaces;
@@ -17,11 +16,7 @@ using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Disposal;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.Components.Disposal;
-using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Mobs.State;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
@@ -139,7 +134,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public GasMixture Air { get; set; } = default!;
 
-        public bool CanInsert(IEntity entity)
+        public override bool CanInsert(IEntity entity)
         {
             if (!base.CanInsert(entity))
                 return false;
