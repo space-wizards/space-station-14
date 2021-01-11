@@ -11,6 +11,7 @@ using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
@@ -35,11 +36,10 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     internal class ConstructionSystem : SharedConstructionSystem
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
-        private readonly Dictionary<ICommonSession, HashSet<int>> _beingBuilt = new Dictionary<ICommonSession, HashSet<int>>();
+        private readonly Dictionary<ICommonSession, HashSet<int>> _beingBuilt = new();
 
         public override void Initialize()
         {
@@ -83,7 +83,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 }
             }
 
-            foreach (var near in _entityManager.GetEntitiesInRange(user!, 2f, true))
+            foreach (var near in EntityManager.GetEntitiesInRange(user!, 2f, true))
             {
                 yield return near;
             }
@@ -264,7 +264,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 return null;
             }
 
-            var newEntity = _entityManager.SpawnEntity(graph.Nodes[edge.Target].Entity, user.Transform.Coordinates);
+            var newEntity = EntityManager.SpawnEntity(graph.Nodes[edge.Target].Entity, user.Transform.Coordinates);
 
             // Yes, this should throw if it's missing the component.
             var construction = newEntity.GetComponent<ConstructionComponent>();

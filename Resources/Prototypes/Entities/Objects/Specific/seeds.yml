@@ -1,11 +1,11 @@
-﻿- type: entity
+- type: entity
   parent: BaseItem
   id: SeedBase
   abstract: true
   components:
     - type: Seed
     - type: SolutionContainer
-      caps: NoExamine
+      caps: None
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/seeds.rsi
       state: seed
@@ -117,7 +117,7 @@
   id: CornSeeds
   components:
     - type: Seed
-      seed: apple
+      seed: corn
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/corn.rsi
 

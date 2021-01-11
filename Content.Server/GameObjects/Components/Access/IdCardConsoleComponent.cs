@@ -11,6 +11,7 @@ using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
@@ -45,16 +46,10 @@ namespace Content.Server.GameObjects.Components.Access
             _privilegedIdContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-privilegedId", Owner);
             _targetIdContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-targetId", Owner);
 
-            if (!Owner.EnsureComponent(out AccessReader _))
-            {
-                Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition} didn't have a {nameof(AccessReader)}");
-            }
+            Owner.EnsureComponentWarn<AccessReader>();
+            Owner.EnsureComponentWarn<ServerUserInterfaceComponent>();
 
-            if (UserInterface == null)
-            {
-                Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition} doesn't have a {nameof(ServerUserInterfaceComponent)}");
-            }
-            else
+            if (UserInterface != null)
             {
                 UserInterface.OnReceiveMessage += OnUiReceiveMessage;
             }

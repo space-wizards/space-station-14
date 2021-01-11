@@ -1,0 +1,36 @@
+- type: entity
+  name: Random Sheet Spawner
+  id: BedsheetSpawner
+  components:
+    - type: Sprite
+      netsync: false
+      visible: false
+      sprite: Objects/Misc/bedsheets.rsi
+      state: random_bedsheet
+    - type: Marker
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Physics
+    - type: TrashSpawner
+      rarePrototypes:
+        - BedsheetIan
+        - BedsheetCosmos
+      rareChance: 0.03
+      prototypes:
+        - BedsheetBlue
+        - BedsheetYellow
+        - BedsheetOrange
+        - BedsheetGreen
+        - BedsheetNT
+        - BedsheetRed
+        - BedsheetUSA
+        - BedsheetBrown
+        - BedsheetBlack
+        - BedsheetPurple
+        - BedsheetGrey
+        - BedsheetWhite
+        - BedsheetRainbow
+      chance: 0.97
+      offset: 0
+  placement:
+    mode: AlignTileAny

@@ -5,38 +5,36 @@ namespace Content.Server.AI.Operators
 {
     public abstract class AiOperator
     {
-        public bool HasStartup => _hasStartup;
-        private bool _hasStartup = false;
-        private bool _hasShutdown = false;
+        public bool HasStartup { get; private set; }
+
+        public bool HasShutdown { get; private set; }
 
         /// <summary>
         /// Called once when the AiLogicProcessor starts this action
         /// </summary>
-        public virtual bool TryStartup()
+        /// <returns>true if it hasn't started up previously</returns>
+        public virtual bool Startup()
         {
             // If we've already startup then no point continuing
             // This signals to the override that it's already startup
             // Should probably throw but it made some code elsewhere marginally easier
-            if (_hasStartup)
-            {
+            if (HasStartup)
                 return false;
-            }
-            
-            _hasStartup = true;
+
+            HasStartup = true;
             return true;
         }
 
         /// <summary>
         /// Called once when the AiLogicProcessor is done with this action if the outcome is successful or fails.
         /// </summary>
-        public virtual void Shutdown(Outcome outcome)
+        public virtual bool Shutdown(Outcome outcome)
         {
-            if (_hasShutdown)
-            {
-                throw new InvalidOperationException("AiOperator has already shutdown");
-            }
+            if (HasShutdown)
+                return false;
 
-            _hasShutdown = true;
+            HasShutdown = true;
+            return true;
         }
 
         /// <summary>

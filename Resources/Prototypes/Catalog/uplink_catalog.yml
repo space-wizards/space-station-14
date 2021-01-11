@@ -1,17 +1,238 @@
+# Guns
+
 - type: uplinkListing
   id: UplinkPistolClarissa
   category: Weapons
   itemId: PistolClarissa
-  price: 15
+  price: 6
+
+- type: uplinkListing
+  id: UplinkRevolverInspector
+  category: Weapons
+  itemId: RevolverInspector
+  price: 8
+
+# Inbuilt suppressor so it's sneaky + more expensive.
+- type: uplinkListing
+  id: UplinkPistolMandella
+  category: Weapons
+  itemId: PistolMandella
+  price: 8
+
+#- type: uplinkListing
+#  id: UplinkCrossbowEnergyMini
+#  category: Weapons
+#  itemId: CrossbowEnergyMini
+#  price: 8
+
+# bug swept to make
+#- type: uplinkListing
+#  id: UplinkESword
+#  category: Weapons
+#  itemId: ESword
+#  price: 8
+
+# bug swept to make
+#- type: uplinkListing
+#  id: UplinkDoubleBladedESword
+#  category: Weapons
+#  itemId: DoubleBladedESword
+#  price: 16
+
+# bug swept to make
+#- type: uplinkListing
+#  id: UplinkEnergyDagger
+#  category: Weapons
+#  itemId: EnergyDagger
+#  price: 2
+
+# Explosives
+
+- type: uplinkListing
+  id: UplinkExplosiveGrenade
+  category: Explosives
+  itemId: ExGrenade
+  price: 4
+
+- type: uplinkListing
+  id: UplinkExplosiveGrenadeFlash
+  category: Explosives
+  itemId: GrenadeFlashBang
+  price: 4
+
+- type: uplinkListing
+  id: UplinkSyndieMiniBomb
+  category: Explosives
+  itemId: SyndieMiniBomb
+  price: 6
+
+#- type: uplinkListing
+#  id: UplinkExplosiveC4
+#  category: Weapons
+#  itemId: ExplosiveC4
+#  price: 5
+
+#- type: uplinkListing
+#  id: UplinkDuffelExplosiveC4
+#  category: Weapons
+#  itemId: DuffelExplosiveC4
+#  price: 15
+
+# Ammo
 
 - type: uplinkListing
   id: UplinkPistol9mmMagazine
   category: Ammo
   itemId: magazine_9mm
+  price: 2
+
+# For the Mandella
+- type: uplinkListing
+  id: UplinkMagazineClRiflePistol
+  category: Ammo
+  itemId: MagazineClRiflePistol
+  price: 2
+
+# For the Inspector
+- type: uplinkListing
+  id: UplinkSLMagnum
+  category: Ammo
+  itemId: SLMagnum
+  price: 2
+
+# Bundles
+
+- type: uplinkListing
+  id: UplinkC20RBundle
+  category: Bundles
+  itemId: ClothingBackpackDuffelSyndicateFilledSMG
+  price: 14
+
+- type: uplinkListing
+  id: UplinkBojevicBundle
+  category: Bundles
+  itemId: ClothingBackpackDuffelSyndicateFilledShotgun
+  price: 13
+
+- type: uplinkListing
+  id: UplinkL6SawBundle
+  category: Bundles
+  itemId: ClothingBackpackDuffelSyndicateFilledLMG
+  price: 18
+
+- type: uplinkListing
+  id: UplinkGrenadeLauncherBundle
+  category: Bundles
+  itemId: ClothingBackpackDuffelSyndicateFilledGrenadeLauncher
+  price: 25
+
+# Tools
+
+- type: uplinkListing
+  id: UplinkToolbox
+  category: Tools
+  itemId: ToolboxSyndicateFilled
   price: 5
 
 - type: uplinkListing
+  id: UplinkSyndicateJawsOfLife
+  category: Tools
+  itemId: SyndicateJawsOfLife
+  price: 2
+
+- type: uplinkListing
+  id: UplinkDuffelSurgery
+  category: Tools
+  itemId: ClothingBackpackDuffelSyndicateFilledMedical
+  price: 5
+
+- type: uplinkListing
+  id: UplinkCarpDehydrated
+  category: Tools
+  itemId: DehydratedSpaceCarp
+  price: 5
+
+# Armor
+
+# Should be cameleon shoes, change when implemented.
+- type: uplinkListing
+  id: UplinkClothingNoSlipsShoes
+  category: Armor
+  itemId: ClothingShoesChameleonNoSlips
+  price: 2
+
+- type: uplinkListing
+  id: UplinkClothingOuterVestWeb
+  category: Armor
+  itemId: ClothingOuterVestWeb
+  price: 5
+
+- type: uplinkListing
+  id: UplinkHardsuitSyndie
+  category: Armor
+  itemId: ClothingOuterHardsuitSyndie
+  price: 5
+
+- type: uplinkListing
+  id: UplinkHardsuitSyndieHelmet
+  category: Armor
+  itemId: ClothingHeadHelmetHardsuitSyndie
+  price: 5
+
+# Misc
+
+- type: uplinkListing
+  id: UplinkBalloon
+  category: Misc
+  itemId: BalloonSyn
+  price: 20
+
+- type: uplinkListing
+  id: UplinkDecoyDisk
+  category: Misc
+  itemId: NukeDiskFake
+  price: 1
+
+- type: uplinkListing
+  id: UplinkRevolverCapGun
+  category: Misc
+  itemId: RevolverCapGun
+  price: 4
+
+- type: uplinkListing
   id: UplinkPen
-  category: Utility
+  category: Misc
   itemId: Pen
   price: 2
+
+- type: uplinkListing
+  id: UplinkSoapSyndie
+  category: Misc
+  itemId: SoapSyndie
+  price: 1
+
+- type: uplinkListing
+  id: UplinkUltrabrightLantern
+  category: Misc
+  itemId: lanternextrabright
+  price: 2
+
+#- type: uplinkListing
+#  id: UplinkTelecrystal
+#  category: Misc
+#  itemId: Telecrystal
+#  price: 1
+
+# Pointless
+
+- type: uplinkListing
+  id: UplinkCostumeCentcom
+  category: Pointless
+  itemId: ClothingBackpackDuffelSyndicateCostumeCentcom
+  price: 4
+
+- type: uplinkListing
+  id: UplinkCostumeClown
+  category: Pointless
+  itemId: ClothingBackpackDuffelSyndicateCostumeClown
+  price: 4

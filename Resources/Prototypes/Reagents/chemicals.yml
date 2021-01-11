@@ -1,105 +1,4 @@
 - type: reagent
-  id: chem.Nutriment
-  name: nutriment
-  desc: All the vitamins, minerals, and carbohydrates the body needs in pure form.
-  physicalDesc: opaque
-  color: "#664330"
-  metabolism:
-    - !type:DefaultFood
-      rate: 1
-  plantMetabolism:
-    - !type:AdjustNutrition
-      amount: 1
-    - !type:AdjustHealth
-      amount: 0.5
-
-- type: reagent
-  id: chem.H2SO4
-  name: sulfuric acid
-  desc: A highly corrosive, oily, colorless liquid.
-  physicalDesc: oily
-  color: "#BF8C00"
-  boilingPoint: 337.0
-  meltingPoint: 10.31
-  plantMetabolism:
-    - !type:AdjustToxins
-      amount: 10
-    - !type:AdjustWeeds
-      amount: -2
-    - !type:AdjustHealth
-      amount: -4
-
-- type: reagent
-  id: chem.H2O
-  name: water
-  desc: A colorless liquid that humans need in order to survive.
-  physicalDesc: translucent
-  color: "#c0e0ff20"
-  boilingPoint: 100.0
-  meltingPoint: 0.0
-  metabolism:
-    - !type:DefaultDrink
-      rate: 1
-  tileReactions:
-    - !type:ExtinguishTileReaction {}
-    - !type:SpillIfPuddlePresentTileReaction {}
-  plantMetabolism:
-    - !type:AdjustWater
-      amount: 1
-
-- type: reagent
-  id: chem.Ice
-  name: ice
-  desc: Frozen water.
-  physicalDesc: frosty
-  color: "#bed8e6"
-  meltingPoint: 0.0
-  boilingPoint: 100.0
-  plantMetabolism:
-    - !type:AdjustWater
-      amount: 1
-
-- type: reagent
-  id: chem.Phoron
-  name: phoron
-  desc: Funky, space-magic pixie dust. You probably shouldn't eat this, but we both know you will anyways.
-  physicalDesc: gaseous
-  color: "#7e009e"
-  boilingPoint: -127.3 # Random values picked between the actual values for CO2 and O2
-  meltingPoint: -186.4
-  tileReactions:
-    - !type:FlammableTileReaction
-      temperatureMultiplier: 1.5
-
-- type: reagent
-  id: chem.Ethanol
-  name: ethanol
-  desc: A simple alcohol, makes you drunk if consumed, flammable.
-  physicalDesc: strong-smelling
-  color: "#b05b3c"
-  boilingPoint: 78.2
-  meltingPoint: -114.1
-  tileReactions:
-    - !type:FlammableTileReaction
-      temperatureMultiplier: 1.35
-
-- type: reagent
-  id: chem.Glucose
-  name: glucose
-  desc: A simple sugar found in many foods.
-  physicalDesc: syrupy
-  color: "#ffffff"
-  boilingPoint: 340282300000000000000000000000000000000 #Fun fact: Glucose can't boil. So let's just set it to the maximum float value.
-  meltingPoint: 146.0
-  plantMetabolism:
-    - !type:AdjustNutrition
-      amount: 0.1
-    - !type:AdjustWeeds
-      amount: 2
-    - !type:AdjustPests
-      amount: 2
-
-- type: reagent
   id: chem.Ammonia
   name: ammonia
   desc: An effective fertilizer which is better than what is available to the botanist initially, though it isn't as powerful as Diethylamine
@@ -112,15 +11,6 @@
       amount: 1
     - !type:AdjustHealth
       amount: 0.5
-
-- type: reagent
-  id: chem.Bleach
-  name: bleach
-  desc: Heavy duty cleaner that can clean tiles the same as Space Cleaner and also decontaminate clothes. Extremely toxic when ingested.
-  physicalDesc: strong-smelling
-  color: "#a1000b"
-  boilingPoint: 111.0
-  meltingPoint: -5.0
 
 - type: reagent
   id: chem.Diethylamine
@@ -144,20 +34,86 @@
       amount: 1
     - !type:Diethylamine {}
 
+- type: reagent
+  id: chem.Ethanol
+  name: ethanol
+  desc: A simple alcohol, makes you drunk if consumed, flammable.
+  physicalDesc: strong-smelling
+  color: "#b05b3c"
+  boilingPoint: 78.2
+  meltingPoint: -114.1
+  tileReactions:
+    - !type:FlammableTileReaction
+      temperatureMultiplier: 1.35
 
 - type: reagent
   id: chem.FoamingAgent
   name: foaming agent
-  desc: Makes foam such as that required in metal foam grenades
+  desc: Makes foam such as that's required in metal foam grenades.
   physicalDesc: foamy
   color: "#215263"
   boilingPoint: 418.0 # I went with ammonium lauryl sulfate as the basis for this
   meltingPoint: 7.4 # I made this up
 
 - type: reagent
+  id: chem.Glucose
+  name: glucose
+  desc: A simple sugar found in many foods.
+  physicalDesc: syrupy
+  color: "#ffffff"
+  boilingPoint: 340282300000000000000000000000000000000 #Fun fact: Glucose can't boil. So let's just set it to the maximum float value.
+  meltingPoint: 146.0
+  plantMetabolism:
+    - !type:AdjustNutrition
+      amount: 0.1
+    - !type:AdjustWeeds
+      amount: 2
+    - !type:AdjustPests
+      amount: 2
+
+- type: reagent
+  id: chem.Ice
+  name: ice
+  desc: Frozen water.
+  physicalDesc: frosty
+  color: "#bed8e6"
+  meltingPoint: 0.0
+  boilingPoint: 100.0
+  plantMetabolism:
+    - !type:AdjustWater
+      amount: 1
+
+- type: reagent
+  id: chem.Nutriment
+  name: nutriment
+  desc: All the vitamins, minerals, and carbohydrates the body needs in pure form.
+  physicalDesc: opaque
+  color: "#664330"
+  metabolism:
+    - !type:DefaultFood
+      rate: 1
+  plantMetabolism:
+    - !type:AdjustNutrition
+      amount: 1
+    - !type:AdjustHealth
+      amount: 0.5
+
+- type: reagent
+  id: chem.Phoron
+  name: phoron
+  desc: Funky, space-magic pixie dust. You probably shouldn't eat this, but we both know you will anyways.
+  physicalDesc: gaseous
+  color: "#7e009e"
+  boilingPoint: -127.3 # Random values picked between the actual values for CO2 and O2
+  meltingPoint: -186.4
+  tileReactions:
+    - !type:FlammableTileReaction
+      temperatureMultiplier: 1.5
+
+- type: reagent
   id: chem.PolytrinicAcid
   name: polytrinic acid
-  desc: An extremely corrosive chemical substance. The slightest touch of it will melt off most masks and headgear, and it deals extreme damage to anyone who comes directly into contact with it. Spraying it on other items will usually melt them too, which does make it useful if the clown has covered the entire hallway in banana peels.
+  desc: An extremely corrosive chemical substance. The slightest touch of it will melt off most masks and headgear, and it deals extreme damage to anyone who comes directly into contact with it.
   physicalDesc: strong-smelling
   color: "#a1000b"
   boilingPoint: 78.2 # This isn't a real chemical...
@@ -169,31 +125,6 @@
       amount: -4
     - !type:AdjustHealth
       amount: -8
-
-- type: reagent
-  id: chem.SpaceCleaner
-  name: space cleaner
-  desc: This is able to clean almost all surfaces of almost anything that may dirty them. The janitor is likely to appreciate refills.
-  physicalDesc: lemony fresh
-  color: "#c8ff69"
-  boilingPoint: 147.0 # Made this up, loosely based on bleach
-  meltingPoint: -11.0
-  tileReactions:
-    - !type:CleanTileReaction {}
-
-- type: reagent
-  id: chem.SpaceLube
-  name: space lube
-  desc: Space Lube is a high performance lubricant intended for maintenance of extremely complex mechanical equipment (and certainly not used to make people slip).
-  physicalDesc: shiny
-  color: "#77b58e"
-  boilingPoint: 290.0 # Glycerin
-  meltingPoint: 18.2
-  tileReactions:
-    - !type:SpillTileReaction
-      paralyzeTime: 3
-      launchForwardsMultiplier: 2
-      requiredSlipSpeed: 1
 
 - type: reagent
   id: chem.TableSalt
@@ -230,6 +161,46 @@
       temperatureMultiplier: 1.35
 
 - type: reagent
+  id: chem.Toxin
+  name: toxin
+  desc: A Toxic chemical.
+  color: "#cf3600"
+  physicalDesc: opaque
+  plantMetabolism:
+    - !type:AdjustToxins
+      amount: 10
+
+- type: reagent
+  id: chem.Sugar
+  name: sugar
+  desc: Sweet.
+  color: "#ffffff"
+  physicalDesc: opaque
+  plantMetabolism:
+    - !type:AdjustNutrition
+      amount: 0.1
+    - !type:AdjustWeeds
+      amount: 2
+    - !type:AdjustPests
+      amount: 2
+
+- type: reagent
+  id: chem.SulfuricAcid
+  name: sulfuric acid
+  desc: A highly corrosive, oily, colorless liquid.
+  physicalDesc: oily
+  color: "#BF8C00"
+  boilingPoint: 337.0
+  meltingPoint: 10.31
+  plantMetabolism:
+    - !type:AdjustToxins
+      amount: 10
+    - !type:AdjustWeeds
+      amount: -2
+    - !type:AdjustHealth
+      amount: -4
+
+- type: reagent
   id: chem.UnstableMutagen
   name: unstable mutagen
   desc: Causes mutations when injected into living people or plants. High doses may be lethal, especially in humans.
@@ -243,6 +214,24 @@
       amount: 1
 
 - type: reagent
+  id: chem.Water
+  name: water
+  desc: A colorless liquid that humans need in order to survive.
+  physicalDesc: translucent
+  color: "#c0e0ff20"
+  boilingPoint: 100.0
+  meltingPoint: 0.0
+  metabolism:
+    - !type:DefaultDrink
+      rate: 1
+  tileReactions:
+    - !type:ExtinguishTileReaction {}
+    - !type:SpillIfPuddlePresentTileReaction {}
+  plantMetabolism:
+    - !type:AdjustWater
+      amount: 1
+
+- type: reagent
   id: chem.WeldingFuel
   name: welding fuel
   desc: Used by welders to weld.
@@ -252,110 +241,3 @@
   meltingPoint: -80.7
   tileReactions:
     - !type:FlammableTileReaction {}
-
-- type: reagent
-  id: chem.EZNutrient
-  name: EZ nutrient
-  desc: Give your plants some of those EZ nutrients!
-  color: "#664330"
-  physicalDesc: thick
-  plantMetabolism:
-    - !type:AdjustNutrition
-      amount: 1
-
-- type: reagent
-  id: chem.Left4Zed
-  name: left-4-zed
-  desc: A cocktail of mutagenic compounds, which cause plant life to become highly unstable.
-  color: "#5b406c"
-  physicalDesc: heterogeneous
-  plantMetabolism:
-    - !type:AdjustNutrition
-      amount: 1
-    - !type:AdjustHealth
-      amount: -0.5
-    - !type:AdjustMutationMod
-      prob: 0.3
-      amount: 0.2
-
-- type: reagent
-  id: chem.RobustHarvest
-  name: robust harvest
-  desc: Plant-enhancing hormones, good for increasing potency.
-  color: "#3e901c"
-  physicalDesc: robust
-  customPlantMetabolism: 0.1
-  plantMetabolism:
-    - !type:AdjustNutrition
-      amount: 0.05
-    - !type:AdjustWeeds
-      prob: 0.025
-      amount: 1
-    - !type:AdjustPests
-      prob: 0.025
-      amount: 1
-    - !type:RobustHarvest {}
-
-- type: reagent
-  id: chem.PlantBGone
-  name: plant-B-gone
-  desc: A harmful toxic mixture to kill plantlife. Do not ingest!
-  color: "#49002E"
-  physicalDesc: bubbling
-  plantMetabolism:
-    - !type:AdjustToxins
-      amount: 6
-    - !type:AdjustWeeds
-      amount: -8
-    - !type:AdjustHealth
-      amount: -20
-    - !type:AdjustMutationMod
-      amount: 0.1
-
-- type: reagent
-  id: chem.WeedKiller
-  name: weed killer
-  desc: A mixture that targets weeds.
-  color: "#968395"
-  physicalDesc: bubbling
-  plantMetabolism:
-    - !type:AdjustToxins
-      amount: 4
-    - !type:AdjustWeeds
-      amount: -6
-
-- type: reagent
-  id: chem.PestKiller
-  name: pest killer
-  desc: A mixture that targets pests.
-  color: "#9e9886"
-  physicalDesc: bubbling
-  plantMetabolism:
-    - !type:AdjustToxins
-      amount: 4
-    - !type:AdjustPests
-      amount: -6
-
-- type: reagent
-  id: chem.Toxin
-  name: toxin
-  desc: A Toxic chemical.
-  color: "#cf3600"
-  physicalDesc: opaque
-  plantMetabolism:
-    - !type:AdjustToxins
-      amount: 10
-
-- type: reagent
-  id: chem.Sugar
-  name: sugar
-  desc: Sickly sweet.
-  color: "#ffffff"
-  physicalDesc: opaque
-  plantMetabolism:
-    - !type:AdjustNutrition
-      amount: 0.1
-    - !type:AdjustWeeds
-      amount: 2
-    - !type:AdjustPests
-      amount: 2

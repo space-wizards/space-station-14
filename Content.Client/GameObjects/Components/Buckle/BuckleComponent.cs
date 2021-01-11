@@ -1,4 +1,4 @@
-using Content.Shared.GameObjects.Components.Buckle;
+﻿using Content.Shared.GameObjects.Components.Buckle;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -6,6 +6,7 @@ using Robust.Shared.Interfaces.GameObjects;
 namespace Content.Client.GameObjects.Components.Buckle
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedBuckleComponent))]
     public class BuckleComponent : SharedBuckleComponent
     {
         private bool _buckled;
@@ -21,12 +22,14 @@ namespace Content.Client.GameObjects.Components.Buckle
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            if (!(curState is BuckleComponentState buckle))
+            if (curState is not BuckleComponentState buckle)
             {
                 return;
             }
 
             _buckled = buckle.Buckled;
+            LastEntityBuckledTo = buckle.LastEntityBuckledTo;
+            DontCollide = buckle.DontCollide;
 
             if (!Owner.TryGetComponent(out SpriteComponent ownerSprite))
             {

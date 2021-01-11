@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Headset
 
         private RadioSystem _radioSystem = default!;
 
-        private List<int> _channels = new List<int>();
+        private List<int> _channels = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
         private int BroadcastFrequency { get; set; }

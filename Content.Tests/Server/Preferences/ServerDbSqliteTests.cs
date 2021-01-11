@@ -12,20 +12,21 @@ using NUnit.Framework;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.UnitTesting;
+using Robust.Shared.IoC;
+using Robust.Shared.Localization.Macros;
 
 namespace Content.Tests.Server.Preferences
 {
     [TestFixture]
-    public class ServerDbSqliteTests : RobustUnitTest
+    public class ServerDbSqliteTests : ContentUnitTest
     {
-        private const int MaxCharacterSlots = 10;
-
         private static HumanoidCharacterProfile CharlieCharlieson()
         {
-            return new HumanoidCharacterProfile(
+            return new(
                 "Charlie Charlieson",
                 21,
                 Sex.Male,
+                Gender.Epicene,
                 new HumanoidCharacterAppearance(
                     "Afro",
                     Color.Aqua,
@@ -34,6 +35,8 @@ namespace Content.Tests.Server.Preferences
                     Color.Azure,
                     Color.Beige
                 ),
+                ClothingPreference.Jumpskirt,
+                BackpackPreference.Backpack,
                 new Dictionary<string, JobPriority>
                 {
                     {SharedGameTicker.OverflowJob, JobPriority.High}
@@ -87,7 +90,7 @@ namespace Content.Tests.Server.Preferences
 
         private static NetUserId NewUserId()
         {
-            return new NetUserId(Guid.NewGuid());
+            return new(Guid.NewGuid());
         }
     }
 }

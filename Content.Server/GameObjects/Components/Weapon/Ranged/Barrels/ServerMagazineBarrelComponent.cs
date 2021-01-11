@@ -8,6 +8,7 @@ using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -200,8 +201,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 var magEntity = Owner.EntityManager.SpawnEntity(_magFillPrototype, Owner.Transform.Coordinates);
                 _magazineContainer.Insert(magEntity);
             }
-
             Dirty();
+        }
+
+        protected override void Startup()
+        {
             UpdateAppearance();
         }
 

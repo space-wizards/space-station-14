@@ -18,7 +18,7 @@ namespace Content.Client.GameObjects.Components.Power
         }
     }
 
-    public enum PowerDeviceVisualLayers
+    public enum PowerDeviceVisualLayers : byte
     {
         Powered
     }

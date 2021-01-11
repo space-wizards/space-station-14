@@ -8,6 +8,7 @@ using Content.Server.GameObjects.EntitySystems.AI.Pathfinding;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Utility;
 using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects.Components;
@@ -27,7 +28,6 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         // http://www.red3d.com/cwr/papers/1999/gdc99steer.html for a steering overview
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPauseManager _pauseManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private PathfindingSystem _pathfindingSystem;
 
@@ -53,37 +53,37 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         // agent's steering. Should help a lot given this is the most expensive operator by far.
         // The AI will keep moving, it's just it'll keep moving in its existing direction.
         // If we change to 20/30 TPS you might want to change this but for now it's fine
-        private readonly List<Dictionary<IEntity, IAiSteeringRequest>> _agentLists = new List<Dictionary<IEntity, IAiSteeringRequest>>(AgentListCount);
+        private readonly List<Dictionary<IEntity, IAiSteeringRequest>> _agentLists = new(AgentListCount);
         private const int AgentListCount = 2;
         private int _listIndex;
 
         // Cache nextGrid
-        private readonly Dictionary<IEntity, EntityCoordinates> _nextGrid = new Dictionary<IEntity, EntityCoordinates>();
+        private readonly Dictionary<IEntity, EntityCoordinates> _nextGrid = new();
 
         /// <summary>
         /// Current live paths for AI
         /// </summary>
-        private readonly Dictionary<IEntity, Queue<TileRef>> _paths = new Dictionary<IEntity, Queue<TileRef>>();
+        private readonly Dictionary<IEntity, Queue<TileRef>> _paths = new();
 
         /// <summary>
         /// Pathfinding request jobs we're waiting on
         /// </summary>
         private readonly Dictionary<IEntity, (CancellationTokenSource CancelToken, Job<Queue<TileRef>> Job)> _pathfindingRequests =
-            new Dictionary<IEntity, (CancellationTokenSource, Job<Queue<TileRef>>)>();
+            new();
 
         /// <summary>
         /// Keep track of how long we've been in 1 position and re-path if it's been too long
         /// </summary>
-        private readonly Dictionary<IEntity, int> _stuckCounter = new Dictionary<IEntity, int>();
+        private readonly Dictionary<IEntity, int> _stuckCounter = new();
 
         /// <summary>
         /// Get a fixed position for the target entity; if they move then re-path
         /// </summary>
-        private readonly Dictionary<IEntity, EntityCoordinates> _entityTargetPosition = new Dictionary<IEntity, EntityCoordinates>();
+        private readonly Dictionary<IEntity, EntityCoordinates> _entityTargetPosition = new();
 
         // Anti-Stuck
         // Given the collision avoidance can lead to twitching need to store a reference position and check if we've been near this too long
-        private readonly Dictionary<IEntity, EntityCoordinates> _stuckPositions = new Dictionary<IEntity, EntityCoordinates>();
+        private readonly Dictionary<IEntity, EntityCoordinates> _stuckPositions = new();
 
         public override void Initialize()
         {
@@ -269,7 +269,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
 
             // Validation
             // Check if we can even arrive -> Currently only samegrid movement supported
-            if (entity.Transform.GridID != steeringRequest.TargetGrid.GetGridId(_entityManager))
+            if (entity.Transform.GridID != steeringRequest.TargetGrid.GetGridId(EntityManager))
             {
                 controller.VelocityDir = Vector2.Zero;
                 return SteeringStatus.NoPath;

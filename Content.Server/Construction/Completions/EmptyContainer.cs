@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.Components.Container;
+using Robust.Shared.Containers;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 
@@ -26,12 +27,7 @@ namespace Content.Server.Construction.Completions
             if (!entity.TryGetComponent(out ContainerManagerComponent? containerManager) ||
                 !containerManager.TryGetContainer(Container, out var container)) return;
 
-            foreach (var ent in container.ContainedEntities.ToArray())
-            {
-                if (ent == null || ent.Deleted) continue;
-                container.ForceRemove(ent);
-                ent.Transform.Coordinates = entity.Transform.Coordinates;
-            }
+            container.EmptyContainer(true, entity.Transform.Coordinates);
         }
     }
 }

@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesEyepatch
+  name: eyepatch
+  description: Yarr.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Misc/eyepatch.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Misc/eyepatch.rsi

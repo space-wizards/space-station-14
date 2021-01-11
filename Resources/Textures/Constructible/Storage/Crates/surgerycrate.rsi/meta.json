@@ -1,0 +1,48 @@
+{
+    "version": 1,
+	"license": "CC-BY-SA-3.0",
+	"copyright": "Taken from Citadelstation at commit https://github.com/Citadel-Station-13/Citadel-Station-13/commit/85186a971453b0653bacfb3fae88f978dc1be689",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "surgerycrate",
+            "select": [],
+            "flags": {},
+            "directions": 1
+        },
+        {
+            "name": "surgerycrate_door",
+            "select": [],
+            "flags": {},
+            "directions": 1
+        },
+        {
+            "name": "surgerycrate_icon",
+            "select": [],
+            "flags": {},
+            "directions": 1
+        },
+        {
+            "name": "welded",
+            "select": [],
+            "flags": {},
+            "directions": 1
+        },
+        {
+            "name": "sparking",
+            "select": [],
+            "flags": {},
+            "directions": 1,
+            "delays": [[0.1,0.1,0.1,0.1,0.1,0.1]]
+        },
+        {
+            "name": "surgerycrate_open",
+            "select": [],
+            "flags": {},
+            "directions": 1
+        }
+    ]
+}

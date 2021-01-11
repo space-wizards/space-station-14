@@ -1,34 +1,12 @@
 - type: reaction
-  id: react.H2O
-  reactants:
-    chem.H:
-      amount: 1
-    chem.O:
-      amount: 1
-  products:
-    chem.H2O: 2
-
-- type: reaction
   id: react.Ammonia
   reactants:
-    chem.H:
+    chem.Hydrogen:
       amount: 3
-    chem.N:
+    chem.Nitrogen:
       amount: 1
   products:
     chem.Ammonia: 4
-
-- type: reaction
-  id: react.Bleach
-  reactants:
-    chem.TableSalt:
-      amount: 2
-    chem.SpaceCleaner:
-      amount: 2
-    chem.O:
-      amount: 1
-  products:
-    chem.Bleach: 5
 
 - type: reaction
   id: react.Diethylamine
@@ -43,9 +21,9 @@
 - type: reaction
   id: react.FoamingAgent
   reactants:
-    chem.Li:
+    chem.Lithium:
       amount: 1
-    chem.H:
+    chem.Hydrogen:
       amount: 1
   products:
     chem.FoamingAgent: 2
@@ -53,77 +31,21 @@
 - type: reaction
   id: react.PolytrinicAcid
   reactants:
-    chem.H2SO4:
+    chem.SulfuricAcid:
       amount: 1
-    chem.Cl:
+    chem.Chlorine:
       amount: 1
-    chem.K:
+    chem.Potassium:
       amount: 1
   products:
     chem.PolytrinicAcid: 3
 
 - type: reaction
-  id: react.SpaceCleaner
-  reactants:
-    chem.Ammonia:
-      amount: 1
-    chem.H2O:
-      amount: 1
-  products:
-    chem.SpaceCleaner: 2
-
-- type: reaction
-  id: react.SpaceLube
-  reactants:
-    chem.H2O:
-      amount: 1
-    chem.Si:
-      amount: 1
-    chem.O:
-      amount: 1
-  products:
-    chem.SpaceLube: 3
-
-- type: reaction
-  id: react.TableSalt
-  reactants:
-    chem.Cl:
-      amount: 1
-    chem.Na:
-      amount: 1
-  products:
-    chem.TableSalt: 2
-
-- type: reaction
-  id: react.Thermite
-  reactants:
-    chem.Fe:
-      amount: 1
-    chem.Al:
-      amount: 1
-    chem.O:
-      amount: 1
-  products:
-    chem.Thermite: 3
-
-- type: reaction
-  id: react.UnstableMutagen
-  reactants:
-    chem.Ra:
-      amount: 1
-    chem.P:
-      amount: 1
-    chem.Cl:
-      amount: 1
-  products:
-    chem.UnstableMutagen: 3
-
-- type: reaction
   id: react.PotassiumExplosion
   reactants:
-    chem.H2O:
+    chem.Water:
       amount: 1
-    chem.K:
+    chem.Potassium:
       amount: 1
   effects:
     - !type:ExplosionReactionEffect
@@ -136,45 +58,45 @@
       maxScale: 30 #Explosion strength stops scaling at 30 potassium + 30 water
 
 - type: reaction
-  id: react.EZNutrient
+  id: react.TableSalt
   reactants:
-    chem.N:
+    chem.Chlorine:
       amount: 1
-    chem.P:
-      amount: 1
-    chem.K:
+    chem.Sodium:
       amount: 1
   products:
-    chem.EZNutrient: 3
+    chem.TableSalt: 2
 
 - type: reaction
-  id: react.RobustHarvest
+  id: react.Thermite
   reactants:
-    chem.EZNutrient:
+    chem.Iron:
       amount: 1
-    chem.H2SO4:
+    chem.Aluminium:
       amount: 1
-      catalyst: true
+    chem.Oxygen:
+      amount: 1
   products:
-    chem.RobustHarvest: 1
+    chem.Thermite: 3
 
 - type: reaction
-  id: react.Left4Zed
+  id: react.UnstableMutagen
   reactants:
-    chem.EZNutrient:
+    chem.Radium:
       amount: 1
-    chem.Ra:
+    chem.Phosphorus:
       amount: 1
-      catalyst: true
+    chem.Chlorine:
+      amount: 1
   products:
-    chem.Left4Zed: 1
+    chem.UnstableMutagen: 3
 
 - type: reaction
-  id: react.PlantBGone
+  id: react.Water
   reactants:
-    chem.Toxin:
+    chem.Hydrogen:
       amount: 1
-    chem.H2O:
-      amount: 4
+    chem.Oxygen:
+      amount: 1
   products:
-    chem.PlantBGone: 5
+    chem.Water: 2

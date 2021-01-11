@@ -72,24 +72,5 @@ namespace Content.Server
 
             _netManager.ServerSendMessage(netMessage, actor.playerSession.ConnectedClient);
         }
-
-        [AdminCommand(AdminFlags.Debug)]
-        public class PopupMsgCommand : IClientCommand
-        {
-            public string Command => "srvpopupmsg";
-            public string Description => "";
-            public string Help => "";
-
-            public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
-            {
-                var entityMgr = IoCManager.Resolve<IEntityManager>();
-
-                var source = EntityUid.Parse(args[0]);
-                var viewer = EntityUid.Parse(args[1]);
-                var msg = args[2];
-
-                entityMgr.GetEntity(source).PopupMessage(entityMgr.GetEntity(viewer), msg);
-            }
-        }
     }
 }

@@ -4,6 +4,7 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -22,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Interactable
     [RegisterComponent]
     public class ExpendableLightComponent : SharedExpendableLightComponent, IUse
     {
-        private static readonly AudioParams LoopedSoundParams = new AudioParams(0, 1, "Master", 62.5f, 1, AudioMixTarget.Stereo, true, 0.3f);
+        private static readonly AudioParams LoopedSoundParams = new(0, 1, "Master", 62.5f, 1, AudioMixTarget.Stereo, true, 0.3f);
 
         /// <summary>
         ///     Status of light, whether or not it is emitting light.

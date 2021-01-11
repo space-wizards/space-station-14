@@ -9,7 +9,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.LoadBalancer
     /// </summary>
     public class AiActionSystem : EntitySystem
     {
-        private readonly AiActionJobQueue _aiRequestQueue = new AiActionJobQueue();
+        private readonly AiActionJobQueue _aiRequestQueue = new();
 
         public AiActionRequestJob RequestAction(AiActionRequest request, CancellationTokenSource cancellationToken)
         {

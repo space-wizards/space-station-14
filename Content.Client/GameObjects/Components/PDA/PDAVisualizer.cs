@@ -17,7 +17,7 @@ namespace Content.Client.GameObjects.Components.PDA
         /// </summary>
         private string _state;
 
-        private enum PDAVisualLayers
+        private enum PDAVisualLayers : byte
         {
             Base,
             Flashlight,

@@ -1,6 +1,11 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Mobs.State;
+using Content.Shared.GameObjects.Components.Storage;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.UserInterface;
@@ -12,11 +17,11 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Disposal
 {
-    public abstract class SharedDisposalUnitComponent : Component, ICollideSpecial
+    public abstract class SharedDisposalUnitComponent : Component, ICollideSpecial, IDragDropOn
     {
         public override string Name => "DisposalUnit";
 
-        private readonly List<IEntity> _intersecting = new List<IEntity>();
+        private readonly List<IEntity> _intersecting = new();
 
         [ViewVariables]
         public bool Anchored =>
@@ -160,5 +165,34 @@ namespace Content.Shared.GameObjects.Components.Disposal
         {
             Key
         }
+
+        public virtual bool CanInsert(IEntity entity)
+        {
+            if (!Anchored)
+                return false;
+
+            if (!entity.TryGetComponent(out IPhysicsComponent? physics) ||
+                !physics.CanCollide)
+            {
+                if (!(entity.TryGetComponent(out IMobStateComponent? damageState) && damageState.IsDead())) {
+                    return false;
+                }
+            }
+
+            if (!entity.HasComponent<SharedStorableComponent>() &&
+                !entity.HasComponent<IBody>())
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public virtual bool CanDragDropOn(DragDropEventArgs eventArgs)
+        {
+            return CanInsert(eventArgs.Dragged);
+        }
+
+        public abstract bool DragDropOn(DragDropEventArgs eventArgs);
     }
 }

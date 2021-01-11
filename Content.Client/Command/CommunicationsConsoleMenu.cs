@@ -15,7 +15,7 @@ namespace Content.Client.Command
         protected override Vector2? CustomSize => new Vector2(600, 400);
 
         private CommunicationsConsoleBoundUserInterface Owner { get; set; }
-        private readonly CancellationTokenSource _timerCancelTokenSource = new CancellationTokenSource();
+        private readonly CancellationTokenSource _timerCancelTokenSource = new();
         private readonly Button _emergencyShuttleButton;
         private readonly RichTextLabel _countdownLabel;
 

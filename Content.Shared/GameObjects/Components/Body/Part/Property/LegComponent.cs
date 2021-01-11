@@ -3,13 +3,16 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Body.Part.Property
 {
+    /// <summary>
+    ///     Defines the speed at which a <see cref="IBodyPart"/> can move.
+    /// </summary>
     [RegisterComponent]
     public class LegComponent : BodyPartPropertyComponent
     {
         public override string Name => "Leg";
 
         /// <summary>
-        ///     Speed (in tiles per second).
+        ///     Speed in tiles per second.
         /// </summary>
         public float Speed { get; set; }
 

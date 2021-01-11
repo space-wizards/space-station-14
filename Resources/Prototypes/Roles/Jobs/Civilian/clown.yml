@@ -3,7 +3,7 @@
   name: "clown"
   positions: 1
   startingGear: ClownGear
-  department:
+  departments:
   - Civilian
   icon: "Clown"
   access:
@@ -14,10 +14,12 @@
 - type: startingGear
   id: ClownGear
   equipment:
-    innerclothing: UniformClown
-    backpack: ClownPackFilled
-    shoes: ShoesClown
-    mask: MaskClown
+    innerclothing: ClothingUniformJumpsuitClown
+    backpack: ClothingBackpackClownFilled
+    shoes: ClothingShoesClown
+    mask: ClothingMaskClown
     pocket1: BikeHorn
     idcard: ClownPDA
-    ears: HeadsetService
+    ears: ClothingHeadsetService
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelClownFilled

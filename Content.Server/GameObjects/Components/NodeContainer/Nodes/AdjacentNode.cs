@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+using System.Collections.Generic;
 using Robust.Shared.GameObjects.Components.Transform;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
@@ -11,13 +10,25 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
     {
         protected override IEnumerable<Node> GetReachableNodes()
         {
-            return Owner.GetComponent<SnapGridComponent>()
-                .GetCardinalNeighborCells()
-                .SelectMany(sgc => sgc.GetLocal())
-                .Select(entity => entity.TryGetComponent<NodeContainerComponent>(out var container) ? container : null)
-                .Where(container => container != null)
-                .SelectMany(container => container.Nodes)
-                .Where(node => node != null && node != this);
+            var cells = Owner.GetComponent<SnapGridComponent>()
+                .GetCardinalNeighborCells();
+
+            foreach (var cell in cells)
+            {
+                foreach (var entity in cell.GetLocal())
+                {
+                    if (entity.TryGetComponent<NodeContainerComponent>(out var container))
+                    {
+                        foreach (var node in container.Nodes)
+                        {
+                            if (node != null && node != this)
+                            {
+                                yield return node;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

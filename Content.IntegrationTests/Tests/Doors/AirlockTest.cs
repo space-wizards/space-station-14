@@ -14,10 +14,18 @@ namespace Content.IntegrationTests.Tests.Doors
     [TestOf(typeof(AirlockComponent))]
     public class AirlockTest : ContentIntegrationTest
     {
+        private const string PROTOTYPES = @"
+- type: entity
+  name: AirlockDummy
+  id: AirlockDummy
+  components:
+  - type: Airlock
+";
         [Test]
         public async Task OpenCloseDestroyTest()
         {
-            var server = StartServerDummyTicker();
+            var options = new ServerIntegrationOptions{ExtraPrototypes = PROTOTYPES};
+            var server = StartServerDummyTicker(options);
 
             await server.WaitIdleAsync();
 
@@ -77,7 +85,8 @@ namespace Content.IntegrationTests.Tests.Doors
         [Test]
         public async Task AirlockBlockTest()
         {
-            var server = StartServer();
+            var options = new ServerIntegrationOptions {ExtraPrototypes = PROTOTYPES};
+            var server = StartServer(options);
 
             await server.WaitIdleAsync();
 

@@ -43,7 +43,6 @@ namespace Content.Client.GameObjects.EntitySystems
     public sealed class VerbSystem : SharedVerbSystem, IResettingEntitySystem
     {
         [Dependency] private readonly IStateManager _stateManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
@@ -143,12 +142,12 @@ namespace Content.Client.GameObjects.EntitySystems
                 return true;
             }
 
-            if (!(_stateManager.CurrentState is GameScreenBase gameScreen))
+            if (_stateManager.CurrentState is not GameScreenBase)
             {
                 return false;
             }
 
-            var mapCoordinates = args.Coordinates.ToMap(_entityManager);
+            var mapCoordinates = args.Coordinates.ToMap(EntityManager);
             var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
 
             if (playerEntity == null || !TryGetContextEntities(playerEntity, mapCoordinates, out var entities))
@@ -183,7 +182,7 @@ namespace Content.Client.GameObjects.EntitySystems
             _userInterfaceManager.ModalRoot.AddChild(_currentEntityList);
 
             var size = _currentEntityList.List.CombinedMinimumSize;
-            var box = UIBox2.FromDimensions(args.ScreenCoordinates.Position, size);
+            var box = UIBox2.FromDimensions(_userInterfaceManager.MousePositionScaled, size);
             _currentEntityList.Open(box);
 
             return true;
@@ -191,12 +190,12 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void OnContextButtonPressed(IEntity entity)
         {
-            OpenContextMenu(entity, new ScreenCoordinates(_inputManager.MouseScreenPosition));
+            OpenContextMenu(entity, new ScreenCoordinates(_userInterfaceManager.MousePositionScaled));
         }
 
         private void FillEntityPopup(VerbSystemMessages.VerbsResponseMessage msg)
         {
-            if (_currentEntity != msg.Entity || !_entityManager.TryGetEntity(_currentEntity, out var entity))
+            if (_currentEntity != msg.Entity || !EntityManager.TryGetEntity(_currentEntity, out var entity))
             {
                 return;
             }
