@@ -46,6 +46,7 @@ namespace Content.Client.UserInterface
         private readonly OptionButton _backpackButton;
         private readonly HairStylePicker _hairPicker;
         private readonly FacialHairStylePicker _facialHairPicker;
+        private readonly EyeColorPicker _eyesPicker;
 
         private readonly List<JobPrioritySelector> _jobPriorities;
         private readonly OptionButton _preferenceUnavailableButton;
@@ -360,7 +361,33 @@ namespace Content.Client.UserInterface
                     appearanceVBox.AddChild(panel);
                 }
 
-                #endregion Clothing
+                #endregion Backpack
+
+                #region Eyes
+
+                {
+                    var panel = HighlightedContainer();
+                    panel.SizeFlagsHorizontal = SizeFlags.None;
+                    var eyesHBox = new HBoxContainer();
+
+                    _eyesPicker = new EyeColorPicker();
+
+                    _eyesPicker.OnEyeColorPicked += newColor =>
+                    {
+                        if (Profile is null)
+                            return;
+                        Profile = Profile.WithCharacterAppearance(
+                            Profile.Appearance.WithEyeColor(newColor));
+                        IsDirty = true;
+                    };
+
+                    eyesHBox.AddChild(_eyesPicker);
+
+                    panel.AddChild(eyesHBox);
+                    appearanceVBox.AddChild(panel);
+                }
+
+                #endregion Eyes
             }
 
             #endregion
