@@ -7,5 +7,6 @@
   description: "This is a [color=red]no-wiznerd fireball[/color]."
   behaviorType: TargetPoint
   behavior: !type:ProjectileSpell
-   castmessage: EL NATH!
-   spellprojectile: null
+   castmessage: EL'NATH! 
+   spellprojectile: BulletGrenadeFrag
+   trap: false

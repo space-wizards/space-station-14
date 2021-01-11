@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
 
@@ -22,6 +22,7 @@ namespace Content.Shared.Actions
     {
         public InstantActionEventArgs(IEntity performer, ActionType actionType) : base(performer, actionType)
         {
+
         }
     }
 }
