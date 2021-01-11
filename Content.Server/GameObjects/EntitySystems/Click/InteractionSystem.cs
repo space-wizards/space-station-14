@@ -411,7 +411,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             var afterInteracts = weapon.GetAllComponents<IAfterInteract>().ToList();
-            var afterInteractEventArgs = new AfterInteractEventArgs { User = user, ClickLocation = clickLocation, CanReach = canReach };
+            var afterInteractEventArgs = new AfterInteractEventArgs(user, clickLocation, null, canReach);
 
             foreach (var afterInteract in afterInteracts)
             {
@@ -460,10 +460,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
             // If we aren't directly attacking the nearby object, lets see if our item has an after attack we can do
             var afterAttacks = weapon.GetAllComponents<IAfterInteract>().ToList();
-            var afterAttackEventArgs = new AfterInteractEventArgs
-            {
-                User = user, ClickLocation = clickLocation, Target = attacked, CanReach = true
-            };
+            var afterAttackEventArgs = new AfterInteractEventArgs(user, clickLocation, attacked, canReach: true);
 
             foreach (var afterAttack in afterAttacks)
             {
@@ -833,10 +830,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return;
 
             var afterAttacks = weapon.GetAllComponents<IAfterInteract>().ToList();
-            var afterAttackEventArgs = new AfterInteractEventArgs
-            {
-                User = user, ClickLocation = clickLocation, Target = attacked, CanReach = false
-            };
+            var afterAttackEventArgs = new AfterInteractEventArgs(user, clickLocation, attacked, canReach: false);
 
             //See if we have a ranged attack interaction
             foreach (var afterAttack in afterAttacks)
