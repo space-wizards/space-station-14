@@ -8,6 +8,7 @@ namespace Content.Shared.Actions
         Error,
         Scream,
         Laugh,
+        Clap,
         Disarm,
         DebugInstant,
         DebugToggle,

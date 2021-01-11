@@ -20,62 +20,46 @@ using Robust.Shared.Serialization;
 namespace Content.Server.Actions
 {
     [UsedImplicitly]
-    public class VoiceAction : IInstantAction
+    public class SoundAction : IInstantAction
     {
         private const float Variation = 0.125f;
         private const float Volume = 4f;
 
-        private List<string> _male;
-        private List<string> _female;
+        private List<string> _sound;
         private string _backup;
         /// seconds
         private float _cooldown;
 
         private IRobustRandom _random;
 
-        public VoiceAction()
+        public SoundAction()
         {
             _random = IoCManager.Resolve<IRobustRandom>();
         }
 
         public void ExposeData(ObjectSerializer serializer)
         {
-            serializer.DataField(ref _male, "male", null);
-            serializer.DataField(ref _female, "female", null);
-            serializer.DataField(ref _backup, "backup", null);
+            serializer.DataField(ref _sound, "sound", null);
             serializer.DataField(ref _cooldown, "cooldown", 10);
         }
 
         public void DoInstantAction(InstantActionEventArgs args)
         {
-            if (!ActionBlockerSystem.CanSpeak(args.Performer)) return;
+            if (!ActionBlockerSystem.CanEmote(args.Performer)) return;
             if (!args.Performer.TryGetComponent<HumanoidAppearanceComponent>(out var humanoid)) return;
             if (!args.Performer.TryGetComponent<SharedActionsComponent>(out var actions)) return;
 
-            if (_random.Prob(.01f) && !string.IsNullOrWhiteSpace(_backup))
+            if (!string.IsNullOrWhiteSpace(_backup))
             {
                 EntitySystem.Get<AudioSystem>().PlayFromEntity(_backup, args.Performer, AudioParams.Default.WithVolume(Volume));
             }
             else
             {
-                switch (humanoid.Sex)
-                {
-                    case Sex.Male:
-                        if (_male == null) break;
-                        EntitySystem.Get<AudioSystem>().PlayFromEntity(_random.Pick(_male), args.Performer,
-                            AudioHelpers.WithVariation(Variation).WithVolume(Volume));
-                        break;
-                    case Sex.Female:
-                        if (_female == null) break;
-                        EntitySystem.Get<AudioSystem>().PlayFromEntity(_random.Pick(_female), args.Performer,
-                            AudioHelpers.WithVariation(Variation).WithVolume(Volume));
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(_random.Pick(_sound), args.Performer,
+                    AudioHelpers.WithVariation(Variation).WithVolume(Volume));
+                actions.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(_cooldown));
+                return;
             }
-
-            actions.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(_cooldown));
         }
     }
 }

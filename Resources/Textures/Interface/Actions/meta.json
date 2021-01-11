@@ -30,6 +30,10 @@
     {
       "name": "cry",
       "directions": 1
+    },
+    {
+      "name": "clap",
+      "directions": 1
     }
   ]
 }

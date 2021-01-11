@@ -6,8 +6,7 @@
     - human
   behaviorType: Instant
   behavior: !type:VoiceAction
-    cooldown: 10
-    message: screams
+    cooldown: 7
     male:
       - /Audio/Voice/Human/malescream_1.ogg
       - /Audio/Voice/Human/malescream_2.ogg
@@ -31,12 +30,27 @@
     - human
   behaviorType: Instant
   behavior: !type:VoiceAction
-    cooldown: 10
+    cooldown: 7
     male:
       - /Audio/Voice/Human/malelaugh_1.ogg
       - /Audio/Voice/Human/malelaugh_2.ogg
     female:
       - /Audio/Voice/Human/femalelaugh_1.ogg
+
+- type: action
+  actionType: Clap
+  icon: Interface/Actions/clap.png
+  name: "Clap"
+  filters:
+    - human
+  behaviorType: Instant
+  behavior: !type:SoundAction
+    cooldown: 4
+    sound:
+      - /Audio/Effects/clap1.ogg
+      - /Audio/Effects/clap2.ogg
+      - /Audio/Effects/clap3.ogg
+      - /Audio/Effects/clap4.ogg
 
 - type: action
   actionType: Disarm
