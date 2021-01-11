@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Client.GameObjects.Components.Mobs;
@@ -84,7 +84,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 Assert.That(innateActions.Count, Is.GreaterThan(0));
 
                 actionsComponent.Grant(ActionType.DebugInstant);
-                Assert.That(actionsComponent.TryGetActionState(ActionType.HumanScream, out var state) && state.Enabled);
+                Assert.That(actionsComponent.TryGetActionState(ActionType.Scream, out var state) && state.Enabled);
             });
 
             // check that client has the actions
