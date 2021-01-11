@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.Interfaces.Chat;
 using Content.Shared.Actions;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Preferences;
 using Content.Shared.Utility;
@@ -27,9 +27,11 @@ namespace Content.Server.Actions
 
         private List<string> _male;
         private List<string> _female;
-        private string _wilhelm;
+        private string _backup;
         /// seconds
         private float _cooldown;
+        // popup
+        private string _message;
 
         private IRobustRandom _random;
 
@@ -42,7 +44,8 @@ namespace Content.Server.Actions
         {
             serializer.DataField(ref _male, "male", null);
             serializer.DataField(ref _female, "female", null);
-            serializer.DataField(ref _wilhelm, "wilhelm", null);
+            serializer.DataField(ref _backup, "backup", null);
+            serializer.DataField(ref _message, "message", null);
             serializer.DataField(ref _cooldown, "cooldown", 10);
         }
 
@@ -52,9 +55,9 @@ namespace Content.Server.Actions
             if (!args.Performer.TryGetComponent<HumanoidAppearanceComponent>(out var humanoid)) return;
             if (!args.Performer.TryGetComponent<SharedActionsComponent>(out var actions)) return;
 
-            if (_random.Prob(.01f) && !string.IsNullOrWhiteSpace(_wilhelm))
+            if (_random.Prob(.01f) && !string.IsNullOrWhiteSpace(_backup))
             {
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(_wilhelm, args.Performer, AudioParams.Default.WithVolume(Volume));
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(_backup, args.Performer, AudioParams.Default.WithVolume(Volume));
             }
             else
             {
@@ -74,8 +77,6 @@ namespace Content.Server.Actions
                         throw new ArgumentOutOfRangeException();
                 }
             }
-
-
 
             actions.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(_cooldown));
         }
