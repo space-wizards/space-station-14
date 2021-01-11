@@ -684,6 +684,19 @@ namespace Content.Server.GameTicking
         /// </summary>
         private void _resettingCleanup()
         {
+            // Move everybody currently in the server to lobby.
+            foreach (var player in PlayerManager.GetAllPlayers())
+            {
+                _playerJoinLobby(player);
+            }
+
+            // Delete the minds of everybody.
+            // TODO: Maybe move this into a separate manager?
+            foreach (var unCastData in PlayerManager.GetAllPlayerData())
+            {
+                unCastData.ContentData()?.WipeMind();
+            }
+
             // Delete all entities.
             foreach (var entity in _entityManager.GetEntities().ToList())
             {
@@ -694,13 +707,6 @@ namespace Content.Server.GameTicking
 
             _mapManager.Restart();
 
-            // Delete the minds of everybody.
-            // TODO: Maybe move this into a separate manager?
-            foreach (var unCastData in PlayerManager.GetAllPlayerData())
-            {
-                unCastData.ContentData()?.WipeMind();
-            }
-
             // Clear up any game rules.
             foreach (var rule in _gameRules)
             {
@@ -708,12 +714,6 @@ namespace Content.Server.GameTicking
             }
 
             _gameRules.Clear();
-
-            // Move everybody currently in the server to lobby.
-            foreach (var player in PlayerManager.GetAllPlayers())
-            {
-                _playerJoinLobby(player);
-            }
 
             foreach (var system in _entitySystemManager.AllSystems)
             {
