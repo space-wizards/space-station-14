@@ -6,20 +6,17 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
+using Content.Shared.GameObjects.Components.Disposal;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.Components.Disposal;
-using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Mobs.State;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
@@ -51,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Disposal
     [ComponentReference(typeof(SharedDisposalUnitComponent))]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IInteractUsing))]
-    public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IActivate, IInteractUsing, IDragDropOn, IThrowCollide, IGasMixtureHolder
+    public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IActivate, IInteractUsing, IThrowCollide, IGasMixtureHolder
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -137,17 +134,16 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public GasMixture Air { get; set; } = default!;
 
-        public bool CanInsert(IEntity entity)
+        public override bool CanInsert(IEntity entity)
         {
-            if (!Anchored)
-            {
+            if (!base.CanInsert(entity))
                 return false;
-            }
 
             if (!entity.TryGetComponent(out IPhysicsComponent? physics) ||
                 !physics.CanCollide)
             {
-                if (!(entity.TryGetComponent(out IMobStateComponent? state) && state.IsDead())) {
+                if (entity.TryGetComponent(out IMobStateComponent? state) && state.IsDead())
+                {
                     return false;
                 }
             }
@@ -676,12 +672,14 @@ namespace Content.Server.GameObjects.Components.Disposal
             return TryDrop(eventArgs.User, eventArgs.Using);
         }
 
-        bool IDragDropOn.CanDragDropOn(DragDropEventArgs eventArgs)
+        public override bool CanDragDropOn(DragDropEventArgs eventArgs)
         {
+            // Base is redundant given this already calls the base CanInsert
+            // If that changes then update this
             return CanInsert(eventArgs.Dragged);
         }
 
-        bool IDragDropOn.DragDropOn(DragDropEventArgs eventArgs)
+        public override bool DragDropOn(DragDropEventArgs eventArgs)
         {
             _ = TryInsert(eventArgs.Dragged, eventArgs.User);
             return true;

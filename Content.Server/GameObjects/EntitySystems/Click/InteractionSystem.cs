@@ -71,6 +71,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             var interactionArgs = new DragDropEventArgs(performer, msg.DropLocation, dropped, target);
 
             // must be in range of both the target and the object they are drag / dropping
+            // Client also does this check but ya know we gotta validate it.
             if (!interactionArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return;
 
             // trigger dragdrops on the dropped entity

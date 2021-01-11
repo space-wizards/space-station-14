@@ -207,9 +207,7 @@ namespace Content.Server.GameObjects.Components.Strap
                     parent = parent.Parent;
                 }
 
-                var range = SharedInteractionSystem.InteractionRange / 2;
-
-                if (!user.InRangeUnobstructed(component, range))
+                if (!user.InRangeUnobstructed(component, buckle.Range))
                 {
                     return;
                 }
@@ -227,6 +225,12 @@ namespace Content.Server.GameObjects.Components.Strap
 
                 buckle.ToggleBuckle(user, component.Owner);
             }
+        }
+
+        public override bool DragDropOn(DragDropEventArgs eventArgs)
+        {
+            if (!eventArgs.Dragged.TryGetComponent(out BuckleComponent? buckleComponent)) return false;
+            return buckleComponent.TryBuckle(eventArgs.User, Owner);
         }
     }
 }
