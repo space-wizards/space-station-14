@@ -401,7 +401,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// <summary>
         ///     We didn't click on any entity, try doing an AfterInteract on the click location
         /// </summary>
-        private void InteractAfter(IEntity user, IEntity weapon, EntityCoordinates clickLocation, bool canReach)
+        private async void InteractAfter(IEntity user, IEntity weapon, EntityCoordinates clickLocation, bool canReach)
         {
             var message = new AfterInteractMessage(user, weapon, null, clickLocation, canReach);
             RaiseLocalEvent(message);
@@ -415,7 +415,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
             foreach (var afterInteract in afterInteracts)
             {
-                afterInteract.AfterInteract(afterInteractEventArgs);
+                await afterInteract.AfterInteract(afterInteractEventArgs);
             }
         }
 
@@ -804,7 +804,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// Will have two behaviors, either "uses" the weapon at range on the entity if it is capable of accepting that action
         /// Or it will use the weapon itself on the position clicked, regardless of what was there
         /// </summary>
-        public void RangedInteraction(IEntity user, IEntity weapon, IEntity attacked, EntityCoordinates clickLocation)
+        public async void RangedInteraction(IEntity user, IEntity weapon, IEntity attacked, EntityCoordinates clickLocation)
         {
             var rangedMsg = new RangedInteractMessage(user, weapon, attacked, clickLocation);
             RaiseLocalEvent(rangedMsg);
@@ -841,7 +841,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             //See if we have a ranged attack interaction
             foreach (var afterAttack in afterAttacks)
             {
-                afterAttack.AfterInteract(afterAttackEventArgs);
+                await afterAttack.AfterInteract(afterAttackEventArgs);
             }
         }
 
