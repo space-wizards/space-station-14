@@ -245,10 +245,10 @@
   - type: Projectile
     deleteOnCollide: false
   - type: Explosive
-    devastationRange: 1
+    devastationRange: 0
     heavyImpactRange: 2
-    lightImpactRange: 7
-    flashRange: 1
+    lightImpactRange: 3
+    flashRange: 4
   - type: PointLight
     radius: 1
     color: orange

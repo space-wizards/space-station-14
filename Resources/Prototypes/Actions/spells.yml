@@ -1,12 +1,13 @@
 ﻿- type: action
   actionType: Fireball
-  icon: Interface/Alerts/Human/human1.png
+  icon: Interface/Actions/Spells/fireball.png
   name: "Fireball"
   filters:
     - human
   description: "This is a [color=red]no-wiznerd fireball[/color]."
   behaviorType: TargetPoint
   behavior: !type:ProjectileSpell
-   castmessage: EL'NATH! 
-   spellprojectile: BulletGrenadeFrag
+   castmessage: ONI SOMA! 
+   spellprojectile: FireBallbullet
    trap: false
+   speed: 15
