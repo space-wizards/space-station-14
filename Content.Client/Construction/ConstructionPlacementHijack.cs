@@ -51,13 +51,14 @@ namespace Content.Client.Construction
         {
             base.StartHijack(manager);
 
-            if (_prototype?.Icon.DirFrame0() == null)
+            var frame = _prototype?.Icon.DirFrame0();
+            if (frame == null)
             {
                 manager.CurrentTextures = null;
             }
             else
             {
-                manager.CurrentTextures = new List<IDirectionalTextureProvider> {_prototype.Icon.DirFrame0()};
+                manager.CurrentTextures = new List<IDirectionalTextureProvider> {frame};
             }
         }
     }
