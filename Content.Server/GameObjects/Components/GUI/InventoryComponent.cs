@@ -7,6 +7,7 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects.Components.Inventory;
+using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
@@ -105,6 +106,46 @@ namespace Content.Server.GameObjects.Components.GUI
             }
         }
 
+        public override float WalkSpeedModifier
+        {
+            get
+            {
+                var mod = 1f;
+                foreach (var slot in _slotContainers.Values)
+                {
+                    if (slot.ContainedEntity != null)
+                    {
+                        foreach (var modifier in slot.ContainedEntity.GetAllComponents<IMoveSpeedModifier>())
+                        {
+                            mod *= modifier.WalkSpeedModifier;
+                        }
+                    }
+                }
+
+                return mod;
+            }
+        }
+
+        public override float SprintSpeedModifier
+        {
+            get
+            {
+                var mod = 1f;
+                foreach (var slot in _slotContainers.Values)
+                {
+                    if (slot.ContainedEntity != null)
+                    {
+                        foreach (var modifier in slot.ContainedEntity.GetAllComponents<IMoveSpeedModifier>())
+                        {
+                            mod *= modifier.SprintSpeedModifier;
+                        }
+                    }
+                }
+
+                return mod;
+            }
+        }
+
         bool IEffectBlocker.CanSlip()
         {
             if (Owner.TryGetComponent(out InventoryComponent inventoryComponent) &&
@@ -165,7 +206,7 @@ namespace Content.Server.GameObjects.Components.GUI
             return GetSlotItem<ItemComponent>(slot);
         }
 
-        public IEnumerable<T> LookupItems<T>() where T: Component
+        public IEnumerable<T> LookupItems<T>() where T : Component
         {
             return _slotContainers.Values.SelectMany(x => x.ContainedEntities.Select(e => e.GetComponentOrNull<T>()))
                 .Where(x => x != null);
@@ -185,6 +226,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 containedEntity = null;
                 Dirty();
             }
+
             return containedEntity?.GetComponent<T>();
         }
 
@@ -230,12 +272,16 @@ namespace Content.Server.GameObjects.Components.GUI
 
             Dirty();
 
+            UpdateMovementSpeed();
+
             return true;
         }
 
-        public bool Equip(Slots slot, ItemComponent item, bool mobCheck = true) => Equip(slot, item, mobCheck, out var _);
+        public bool Equip(Slots slot, ItemComponent item, bool mobCheck = true) =>
+            Equip(slot, item, mobCheck, out var _);
 
-        public bool Equip(Slots slot, IEntity entity, bool mobCheck = true) => Equip(slot, entity.GetComponent<ItemComponent>(), mobCheck);
+        public bool Equip(Slots slot, IEntity entity, bool mobCheck = true) =>
+            Equip(slot, entity.GetComponent<ItemComponent>(), mobCheck);
 
         /// <summary>
         ///     Checks whether an item can be put in the specified slot.
@@ -314,7 +360,17 @@ namespace Content.Server.GameObjects.Components.GUI
 
             Dirty();
 
+            UpdateMovementSpeed();
+
             return true;
+        }
+
+        private void UpdateMovementSpeed()
+        {
+            if (Owner.TryGetComponent(out MovementSpeedModifierComponent mod))
+            {
+                mod.RefreshMovementSpeedModifiers();
+            }
         }
 
         public void ForceUnequip(Slots slot)
@@ -452,7 +508,7 @@ namespace Content.Server.GameObjects.Components.GUI
                     var activeHand = hands.GetActiveHand;
                     if (activeHand != null && activeHand.Owner.TryGetComponent(out ItemComponent clothing))
                     {
-                        hands.Drop(hands.ActiveHand, doDropInteraction:false);
+                        hands.Drop(hands.ActiveHand, doDropInteraction: false);
                         if (!Equip(msg.Inventoryslot, clothing, true, out var reason))
                         {
                             hands.PutInHand(clothing);
@@ -461,6 +517,7 @@ namespace Content.Server.GameObjects.Components.GUI
                                 Owner.PopupMessageCursor(reason);
                         }
                     }
+
                     break;
                 }
                 case ClientInventoryUpdate.Use:
@@ -491,7 +548,9 @@ namespace Content.Server.GameObjects.Components.GUI
                     if (activeHand != null && GetSlotItem(msg.Inventoryslot) == null)
                     {
                         var canEquip = CanEquip(msg.Inventoryslot, activeHand, true, out var reason);
-                        _hoverEntity = new KeyValuePair<Slots, (EntityUid entity, bool fits)>(msg.Inventoryslot, (activeHand.Owner.Uid, canEquip));
+                        _hoverEntity =
+                            new KeyValuePair<Slots, (EntityUid entity, bool fits)>(msg.Inventoryslot,
+                                (activeHand.Owner.Uid, canEquip));
 
                         Dirty();
                     }
@@ -519,7 +578,8 @@ namespace Content.Server.GameObjects.Components.GUI
         }
 
         /// <inheritdoc />
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession session = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel,
+            ICommonSession session = null)
         {
             base.HandleNetworkMessage(message, netChannel, session);
 
