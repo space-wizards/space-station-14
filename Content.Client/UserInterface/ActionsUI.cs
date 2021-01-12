@@ -337,9 +337,9 @@ namespace Content.Client.UserInterface
                 actionSlot.EnableAction();
                 actionSlot.Cooldown = actionState.Cooldown;
 
-                // if we are targeting with an action now on cooldown, stop targeting
+                // if we are targeting for this action and it's now on cooldown, stop targeting if we're supposed to
                 if (SelectingTargetFor?.Action != null && SelectingTargetFor.Action == action &&
-                    actionState.IsOnCooldown(_gameTiming))
+                    actionState.IsOnCooldown(_gameTiming) && action.DeselectOnCooldown)
                 {
                     StopTargeting();
                 }
@@ -410,10 +410,10 @@ namespace Content.Client.UserInterface
                 // action is currently granted
                 actionSlot.EnableAction();
 
-                // if we are targeting with an action now on cooldown, stop targeting
+                // if we are targeting with an action now on cooldown, stop targeting if we should
                 if (SelectingTargetFor?.Action != null && SelectingTargetFor.Action == action &&
                     SelectingTargetFor.Item == itemEntity &&
-                    actionState.IsOnCooldown(_gameTiming))
+                    actionState.IsOnCooldown(_gameTiming) && action.DeselectOnCooldown)
                 {
                     StopTargeting();
                 }

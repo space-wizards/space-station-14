@@ -30,8 +30,6 @@ namespace Content.Shared.Actions
         [ViewVariables]
         public SpriteSpecifier IconOn { get; private set; }
 
-
-
         /// <summary>
         /// Name to show in UI. Accepts formatting.
         /// </summary>
@@ -61,6 +59,18 @@ namespace Content.Shared.Actions
         public bool Repeat { get; private set; }
 
         /// <summary>
+        /// For TargetEntity/TargetPoint actions, should the action be de-selected if currently selected (choosing a target)
+        /// when it goes on cooldown. Defaults to false.
+        /// </summary>
+        public bool DeselectOnCooldown { get; private set; }
+
+        /// <summary>
+        /// For TargetEntity actions, should the action be de-selected if the user doesn't click an entity when
+        /// selecting a target. Defaults to false.
+        /// </summary>
+        public bool DeselectWhenEntityNotClicked { get; private set; }
+
+        /// <summary>
         /// Filters that can be used to filter this item in action menu.
         /// </summary>
         public IEnumerable<string> Filters { get; private set; }
@@ -69,6 +79,12 @@ namespace Content.Shared.Actions
         /// Keywords that can be used to search this item in action menu.
         /// </summary>
         public IEnumerable<string> Keywords { get; private set; }
+
+        /// <summary>
+        /// True if this is an action that requires selecting a target
+        /// </summary>
+        public bool IsTargetAction =>
+            BehaviorType == BehaviorType.TargetEntity || BehaviorType == BehaviorType.TargetPoint;
 
         public virtual void LoadFrom(YamlMappingNode mapping)
         {
@@ -105,6 +121,9 @@ namespace Content.Shared.Actions
                                         " TargetEntity and TargetPoint behaviorType and its behaviorType is {1}",
                     Name, BehaviorType);
             }
+
+            serializer.DataField(this, x => x.DeselectOnCooldown, "deselectOnCooldown", false);
+            serializer.DataField(this, x => x.DeselectWhenEntityNotClicked, "deselectWhenEntityNotClicked", false);
 
             serializer.DataReadFunction("filters", new List<string>(),
                 rawTags =>

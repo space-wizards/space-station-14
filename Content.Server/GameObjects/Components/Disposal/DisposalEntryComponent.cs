@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             var holder = Owner.EntityManager.SpawnEntity(HolderPrototypeId, Owner.Transform.MapPosition);
             var holderComponent = holder.GetComponent<DisposalHolderComponent>();
 
-            foreach (var entity in from.ContainedEntities)
+            foreach (var entity in from.ContainedEntities.ToArray())
             {
                 holderComponent.TryInsert(entity);
             }

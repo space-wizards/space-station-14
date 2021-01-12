@@ -8,6 +8,7 @@ using System.Collections.Generic;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {
+    //TODO: Reimplement sounds for reactions
     public class ChemicalReactionSystem : EntitySystem
     {
         private IEnumerable<ReactionPrototype> _reactions;

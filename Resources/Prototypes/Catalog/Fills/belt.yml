@@ -21,7 +21,8 @@
   - type: StorageFill
     contents:
       - name: PowerDrill
-      - name: JawsOfLife
+      - name: Wirecutter
+      - name: Crowbar
       - name: WelderExperimental
       - name: Multitool
       - name: ApcExtensionCableStack

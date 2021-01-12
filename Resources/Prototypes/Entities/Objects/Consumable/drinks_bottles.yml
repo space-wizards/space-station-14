@@ -10,8 +10,26 @@
     transferAmount: 5
   - type: Sprite
     state: icon
-
+  - type: DamageOnLand
+    amount: 5
+  - type: DamageOtherOnHit
+    amount: 10
   - type: Spillable
+  - type: Damageable
+  - type: Destructible
+    thresholds:
+      5:
+        behaviors:
+          - !type:PlaySoundCollectionBehavior
+            soundCollection: GlassBreak
+          - !type:SpillBehavior { }
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              ShardGlass:
+                min: 1
+                max: 2
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
 
 - type: entity
   parent: DrinkBottleBaseFull

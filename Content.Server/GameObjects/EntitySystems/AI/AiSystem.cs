@@ -110,15 +110,16 @@ namespace Content.Server.GameObjects.EntitySystems.AI
 
             foreach (var processor in _awakeAi)
             {
-                if (count >= maxUpdates)
-                {
-                    break;
-                }
-
-                if (processor.SelfEntity.Deleted)
+                if (processor.SelfEntity.Deleted ||
+                    !processor.SelfEntity.HasComponent<AiControllerComponent>())
                 {
                     toRemove.Add(processor);
                     continue;
+                }
+
+                if (count >= maxUpdates)
+                {
+                    break;
                 }
 
                 processor.Update(frameTime);

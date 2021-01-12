@@ -11,6 +11,7 @@ using Content.Shared.GameObjects.Components.Body.Surgery;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -57,6 +58,7 @@ namespace Content.Server.GameObjects.Components.Body.Part
             base.OnRemoveMechanism(mechanism);
 
             _mechanismContainer.Remove(mechanism.Owner);
+            mechanism.Owner.RandomOffset(0.25f);
         }
 
         public override void Initialize()
