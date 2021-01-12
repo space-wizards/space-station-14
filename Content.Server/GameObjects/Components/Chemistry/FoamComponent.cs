@@ -24,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _foamedMetalPrototype, "foamedMetalPrototype", "");
+            serializer.DataField(ref _foamedMetalPrototype, "foamedMetalPrototype", string.Empty);
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent component)
@@ -126,7 +126,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
             Owner.SpawnTimer(600, () =>
             {
-                if (!String.IsNullOrEmpty(_foamedMetalPrototype))
+                if (!string.IsNullOrEmpty(_foamedMetalPrototype))
                 {
                     Owner.EntityManager.SpawnEntity(_foamedMetalPrototype, Owner.Transform.Coordinates);
                 }

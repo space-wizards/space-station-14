@@ -81,8 +81,10 @@ namespace Content.Server.Chemistry.ReactionEffects
 
             smokeComponent.TryAddSolution(solution);
             areaEffectComponent.Start(amount, _duration, _spreadDelay, _removeDelay);
-
-            EntitySystem.Get<AudioSystem>().PlayFromEntity(_smokeSound, solutionEntity, AudioHelpers.WithVariation(0.125f));
+            if (!string.IsNullOrEmpty(_smokeSound))
+            {
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(_smokeSound, solutionEntity, AudioHelpers.WithVariation(0.125f));
+            }
         }
     }
 }

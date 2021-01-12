@@ -109,7 +109,10 @@ namespace Content.Server.Chemistry.ReactionEffects
             foamComponent.TryAddSolution(solution);
             areaEffectComponent.Start(amount, _duration, _spreadDelay, _removeDelay);
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity(_foamSound, solutionEntity, AudioHelpers.WithVariation(0.125f));
+            if (!string.IsNullOrEmpty(_foamSound))
+            {
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(_foamSound, solutionEntity, AudioHelpers.WithVariation(0.125f));
+            }
         }
     }
 }
