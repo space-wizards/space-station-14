@@ -6,6 +6,7 @@ using Robust.Shared.Interfaces.GameObjects;
 namespace Content.Client.GameObjects.Components.Buckle
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedBuckleComponent))]
     public class BuckleComponent : SharedBuckleComponent
     {
         private bool _buckled;

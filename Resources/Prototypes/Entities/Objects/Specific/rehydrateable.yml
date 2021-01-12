@@ -15,7 +15,6 @@
     sprite: Objects/Consumable/Food/monkeycube.rsi
   - type: Rehydratable
     target: MonkeyMob_Content
-  - type: Grindable
 
 - type: entity
   parent: PlushieCarp

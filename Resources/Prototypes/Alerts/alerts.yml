@@ -15,6 +15,7 @@
     - category: Temperature
     - category: Hunger
     - category: Thirst
+    - alertType: Magboots
 
 - type: alert
   alertType: LowOxygen

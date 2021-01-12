@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   id: PipeBase
   name: Pipe
@@ -39,7 +39,7 @@
       nodeGroupID: Pipe
       pipeDirection: East
   - type: Icon
-    state: pipeHalf2
+    state: pipeHalf
 
 - type: entity
   parent: PipeBase
@@ -52,7 +52,7 @@
       nodeGroupID: Pipe
       pipeDirection: Lateral
   - type: Icon
-    state: pipeStraight2
+    state: pipeStraight
 
 - type: entity
   parent: PipeBase
@@ -65,7 +65,7 @@
       nodeGroupID: Pipe
       pipeDirection: SEBend
   - type: Icon
-    state: pipeBend2
+    state: pipeBend
 
 - type: entity
   parent: PipeBase
@@ -78,7 +78,7 @@
       nodeGroupID: Pipe
       pipeDirection: TEast
   - type: Icon
-    state: pipeTJunction2
+    state: pipeTJunction
 
 - type: entity
   parent: PipeBase
@@ -91,4 +91,4 @@
       nodeGroupID: Pipe
       pipeDirection: Fourway
   - type: Icon
-    state: pipeFourway2
+    state: pipeFourway

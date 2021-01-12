@@ -87,6 +87,8 @@ namespace Content.Client.GameObjects.Components
             {
                 foreach (var layer in sprite.AllLayers)
                 {
+                    if (!layer.Visible) continue;
+
                     if (layer.Texture != null)
                     {
                         if (_clickMapManager.IsOccluding(layer.Texture,
