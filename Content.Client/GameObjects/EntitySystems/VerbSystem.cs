@@ -196,8 +196,8 @@ namespace Content.Client.GameObjects.EntitySystems
                 }
             }
 
-            // Ordering the dictionary in the case you want to sort the context menu
-            var orderedStates = entitySpriteStates.ToList().OrderBy(e => e.Key.Item1);
+            var orderedStates = entitySpriteStates.ToList();
+            orderedStates.Sort((x, y) => string.CompareOrdinal(x.Value.First().Prototype.Name, y.Value.First().Prototype.Name));
 
             _currentEntityList = new EntityList();
             _currentEntityList.OnPopupHide += CloseAllMenus;
@@ -216,8 +216,13 @@ namespace Content.Client.GameObjects.EntitySystems
 
                 var debugEnabled = _userInterfaceManager.DebugMonitors.Visible;
                 _currentEntityList.List.AddChild(new EntityButtonStack(this, vEntity, debugEnabled));
-                _currentEntityList.EntitiesIn++;
+                _currentEntityList.StackEntitiesCount++;
                 first = false;
+            }
+
+            if (_currentEntityList.StackEntitiesCount == 0)
+            {
+                return false;
             }
 
             _userInterfaceManager.ModalRoot.AddChild(_currentEntityList);
@@ -447,7 +452,7 @@ namespace Content.Client.GameObjects.EntitySystems
         private sealed class EntityList : Popup
         {
             private const int MaximumItemsInContextMenu = 10;
-            public int EntitiesIn = 0;
+            public int StackEntitiesCount = 0;
 
             public VBoxContainer List { get; }
 
@@ -470,7 +475,7 @@ namespace Content.Client.GameObjects.EntitySystems
             protected override Vector2 CalculateMinimumSize()
             {
                 var size = base.CalculateMinimumSize();
-                size.Y = EntitiesIn > MaximumItemsInContextMenu ? MaximumItemsInContextMenu * 32 : size.Y;
+                size.Y = StackEntitiesCount > MaximumItemsInContextMenu ? MaximumItemsInContextMenu * 32 : size.Y;
                 return size;
             }
         }
@@ -584,6 +589,11 @@ namespace Content.Client.GameObjects.EntitySystems
                 if (args.Function == ContentKeyFunctions.ExamineEntity)
                 {
                     Get<ExamineSystem>().DoExamine(_entity);
+                    return;
+                }
+
+                if (args.Function == ContentKeyFunctions.MouseMiddle)
+                {
                     return;
                 }
 
