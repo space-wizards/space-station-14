@@ -1,8 +1,8 @@
 #nullable enable
-using Content.Shared.GameObjects.Components;
-using Content.Shared.Maps;
-using Content.Shared.Utility;
+using Content.Shared.Physics;
+using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -10,57 +10,13 @@ using Robust.Shared.Serialization;
 using System.Linq;
 
 namespace Content.Shared.Construction.ConstructionConditions
-{
+
+    [UsedImplicitly]
     public class WallmountCondition : IConstructionCondition
     {
         public void ExposeData(ObjectSerializer serializer) { }
 
         public bool Condition(IEntity user, EntityCoordinates location, Direction direction)
-        {
-            // check that player doesn't try to build object facing wall other side
-            bool invalidDirection = FacingWallOtherSide(user, location, direction);
-            if (invalidDirection)
-                return false;
-
-            // there is some weird bug with east directional wallmounts
-            // GetEntitiesInTile returns info about one tile left
-            if (direction == Direction.East)
-            {
-                location = location.Offset(Direction.West);
-            }
-
-            if (direction != Direction.North)
-            {
-                // check that building inside wall
-                var wallEnity = location.GetEntitiesInTile(true)
-                    .FirstOrDefault((e) => e.HasComponent<SharedWallComponent>());
-                if (wallEnity == null)
-                    return false;
-            }
-            else
-            {
-                // north is exception because of world projection
-                // wallmount wil be build one tile above the wall
-                var belowLocation = location.Offset(Direction.South);
-                var wallEnity = belowLocation.GetEntitiesInTile(true)
-                    .FirstOrDefault((e) => e.HasComponent<SharedWallComponent>());
-                if (wallEnity == null)
-                    return false;
-            }
-
-            // check that building doesn't facing adjacent wall
-            var dirLocation = location.Offset(direction);
-            var adjWallEntity = dirLocation.GetEntitiesInTile(true)
-                .FirstOrDefault((e) => e.HasComponent<SharedWallComponent>());
-            if (adjWallEntity != null)
-                return false;
-
-            // TODO: check that we doesn't intersect other wallmount
-
-            return true;
-        }
-
-        private bool FacingWallOtherSide(IEntity user, EntityCoordinates location, Direction bpDirection)
         {
             var entManager = IoCManager.Resolve<IEntityManager>();
 
@@ -72,8 +28,26 @@ namespace Content.Shared.Construction.ConstructionConditions
             var userToObject = (objWorldPosition - userWorldPosition);
 
             // dot product will be positive if user direction and blueprint are co-directed
-            var dotProd = Vector2.Dot(bpDirection.ToVec(), userToObject);
-            return dotProd > 0;
+            var dotProd = Vector2.Dot(direction.ToVec(), userToObject);
+            if (dotProd > 0)
+                return false;
+
+            // now we need to check that user actually tries to build wallmount on a wall 
+            var physics = IoCManager.Resolve<IPhysicsManager>();
+            var rUserToObj = new CollisionRay(userWorldPosition, userToObject.Normalized, (int) CollisionGroup.Walls);
+            var length = userToObject.Length;
+            var userToObjRaycastResults = physics.IntersectRay(user.Transform.MapID, rUserToObj, maxLength: length);
+            if (!userToObjRaycastResults.Any())
+                return false;
+
+            // get this wall entity
+            var targetWall = userToObjRaycastResults.First();
+
+            // check that we didn't try to build wallmount that facing another adjacent wall
+            var rAdjWall = new CollisionRay(objWorldPosition, direction.ToVec(), (int) CollisionGroup.Walls);
+            var adjWallRaycastResults = physics.IntersectRay(user.Transform.MapID, rAdjWall, maxLength: 0.5f,
+                ignoredEnt: targetWall.HitEntity);
+            return !adjWallRaycastResults.Any();
         }
     }
 }

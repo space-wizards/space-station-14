@@ -25,6 +25,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Walls
   - type: Occluder
     sizeX: 32
     sizeY: 32
@@ -34,7 +35,6 @@
   - type: IconSmooth
     key: walls
     base: solid
-  - type: Wall
 
 - type: entity
   id: brick_wall
