@@ -80,11 +80,11 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         [ViewVariables(VVAccess.ReadWrite)]
         [CustomYamlField("autoEngageTime")]
-        private TimeSpan _automaticEngageTime;
+        private TimeSpan _automaticEngageTime = default;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [CustomYamlField("flushDelay")]
-        private TimeSpan _flushDelay;
+        private TimeSpan _flushDelay = default;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [YamlField("entryDelay")]

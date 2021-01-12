@@ -36,9 +36,9 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
         // Get that juicy FPS hit sound
         [YamlField("soundHit")]
-        private string _soundHit;
+        private string _soundHit = default;
         [YamlField("soundHitSpecies")]
-        private string _soundHitSpecies;
+        private string _soundHitSpecies = default;
 
         private bool _damagedEntity;
 

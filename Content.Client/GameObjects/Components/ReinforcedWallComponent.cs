@@ -16,7 +16,7 @@ namespace Content.Client.GameObjects.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [YamlField("reinforcedBase")]
-        private string _reinforcedStateBase;
+        private string _reinforcedStateBase = default;
 
         protected override void Startup()
         {

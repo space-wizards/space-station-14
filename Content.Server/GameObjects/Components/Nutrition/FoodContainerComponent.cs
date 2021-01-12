@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         private AppearanceComponent _appearance;
         [YamlField("prototypes")]
-        private Dictionary<string, int> _prototypes;
+        private Dictionary<string, int> _prototypes = default;
         [YamlField("capacity")]
         private uint _capacity = 5;
 

@@ -45,7 +45,7 @@ namespace Content.Server.GameObjects.Components.Utensil
         /// </summary>
         [ViewVariables]
         [YamlField("breakChance")]
-        private float _breakChance;
+        private float _breakChance = default;
 
         /// <summary>
         /// The sound to be played if the utensil breaks.

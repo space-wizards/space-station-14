@@ -57,7 +57,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         [YamlField("openSounds")]
         private string _soundCollection = "canOpenSounds";
         [YamlField("pressurized")]
-        private bool _pressurized;
+        private bool _pressurized = default;
         [YamlField("burstSound")]
         private string _burstSound = "/Audio/Effects/flash_bang.ogg";
 

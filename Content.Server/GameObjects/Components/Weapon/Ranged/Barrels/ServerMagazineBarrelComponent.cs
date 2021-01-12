@@ -43,7 +43,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
         [ViewVariables] public MagazineType MagazineTypes => _magazineTypes;
         [CustomYamlField("types")]
-        private MagazineType _magazineTypes;
+        private MagazineType _magazineTypes = default;
         [ViewVariables] public BallisticCaliber Caliber => _caliber;
         [YamlField("caliber")]
         private BallisticCaliber _caliber = BallisticCaliber.Unspecified;
@@ -128,21 +128,21 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         // If the bolt needs to be open before we can insert / remove the mag (i.e. for LMGs)
         public bool MagNeedsOpenBolt => _magNeedsOpenBolt;
         [YamlField("magNeedsOpenBolt")]
-        private bool _magNeedsOpenBolt;
+        private bool _magNeedsOpenBolt = default;
 
         private AppearanceComponent _appearanceComponent;
 
         // Sounds
         [YamlField("soundBoltOpen")]
-        private string _soundBoltOpen;
+        private string _soundBoltOpen = default;
         [YamlField("soundBoltClosed")]
-        private string _soundBoltClosed;
+        private string _soundBoltClosed = default;
         [YamlField("soundRack")]
-        private string _soundRack;
+        private string _soundRack = default;
         [YamlField("soundMagInsert")]
-        private string _soundMagInsert;
+        private string _soundMagInsert = default;
         [YamlField("soundMagEject")]
-        private string _soundMagEject;
+        private string _soundMagEject = default;
         [YamlField("soundAutoEject")]
         private string _soundAutoEject = "/Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg";
 

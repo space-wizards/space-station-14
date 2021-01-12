@@ -36,7 +36,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         private IEnumerable<ReactionPrototype> _reactions;
         [YamlField("fillingState")]
-        private string _fillInitState;
+        private string _fillInitState = default;
         [YamlField("fillingSteps")]
         private int _fillInitSteps = 7;
         private string _fillPathString = "Objects/Specific/Chemistry/fillings.rsi";

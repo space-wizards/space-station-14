@@ -29,7 +29,7 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
     public class IconSmoothComponent : Component
     {
         [YamlField("key")]
-        private string _smoothKey;
+        private string _smoothKey = default;
         [YamlField("base")]
         private string _stateBase = "";
         [YamlField("mode")]

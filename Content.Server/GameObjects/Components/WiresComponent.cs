@@ -149,7 +149,7 @@ namespace Content.Server.GameObjects.Components
         private int _wireSeed;
         [ViewVariables]
         [YamlField("LayoutId")]
-        private string? _layoutId;
+        private string? _layoutId = default;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(WiresUiKey.Key);
 

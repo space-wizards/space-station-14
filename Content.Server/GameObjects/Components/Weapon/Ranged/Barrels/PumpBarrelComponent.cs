@@ -49,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         // Even a point having a chamber? I guess it makes some of the below code cleaner
         private ContainerSlot _chamberContainer;
         [CustomYamlField("spawnedAmmo")]
-        private Stack<IEntity> _spawnedAmmo;
+        private Stack<IEntity> _spawnedAmmo = default;
         private Container _ammoContainer;
 
         [ViewVariables]

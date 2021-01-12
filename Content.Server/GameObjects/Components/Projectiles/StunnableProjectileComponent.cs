@@ -18,11 +18,11 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
         // See stunnable for what these do
         [YamlField("stunAmount")]
-        private int _stunAmount;
+        private int _stunAmount = default;
         [YamlField("knockdownAmount")]
-        private int _knockdownAmount;
+        private int _knockdownAmount = default;
         [YamlField("slowdownAmount")]
-        private int _slowdownAmount;
+        private int _slowdownAmount = default;
 
         public override void Initialize()
         {

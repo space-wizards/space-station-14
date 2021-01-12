@@ -62,20 +62,20 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
         // Recoil / spray control
         [CustomYamlField("minAngle")]
-        private Angle _minAngle;
+        private Angle _minAngle = default;
         [CustomYamlField("maxAngle")]
-        private Angle _maxAngle;
+        private Angle _maxAngle = default;
         private Angle _currentAngle = Angle.Zero;
         /// <summary>
         /// How slowly the angle's theta decays per second in radians
         /// </summary>
         [CustomYamlField("angleDecay")]
-        private float _angleDecay;
+        private float _angleDecay = default;
         /// <summary>
         /// How quickly the angle's theta builds for every shot fired in radians
         /// </summary>
         [CustomYamlField("angleIncrease")]
-        private float _angleIncrease;
+        private float _angleIncrease = default;
         // Multiplies the ammo spread to get the final spread of each pellet
         [CustomYamlField("spreadRatio")]
         private float _spreadRatio = 1f;

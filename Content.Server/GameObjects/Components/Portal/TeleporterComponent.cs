@@ -45,7 +45,7 @@ namespace Content.Server.GameObjects.Components.Portal
         [ViewVariables] private TeleporterType _teleporterType = TeleporterType.Random;
         [ViewVariables] [YamlField("departure_sound")] private string _departureSound = "/Audio/Effects/teleport_departure.ogg";
         [ViewVariables] [YamlField("arrival_sound")] private string _arrivalSound = "/Audio/Effects/teleport_arrival.ogg";
-        [ViewVariables] [YamlField("cooldown_sound")] private string? _cooldownSound;
+        [ViewVariables] [YamlField("cooldown_sound")] private string? _cooldownSound = default;
         // If the direct OR random teleport will try to avoid hitting collidables
         [YamlField("avoid_walls")] [ViewVariables]
         private bool _avoidCollidable = true;

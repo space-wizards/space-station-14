@@ -47,9 +47,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         private ContainerSlot _powerCellContainer;
         private ContainerSlot _ammoContainer;
         [YamlField("powerCellPrototype")]
-        private string _powerCellPrototype;
+        private string _powerCellPrototype = default;
         [YamlField("powerCellRemovable")]
-        [ViewVariables] private bool _powerCellRemovable;
+        [ViewVariables] private bool _powerCellRemovable = default;
 
         public override int ShotsLeft
         {
@@ -85,9 +85,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
         // Sounds
         [YamlField("soundPowerCellInsert")]
-        private string _soundPowerCellInsert;
+        private string _soundPowerCellInsert = default;
         [YamlField("soundPowerCellEject")]
-        private string _soundPowerCellEject;
+        private string _soundPowerCellEject = default;
 
         public override ComponentState GetComponentState()
         {

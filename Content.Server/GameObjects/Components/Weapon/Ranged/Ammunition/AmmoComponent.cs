@@ -73,7 +73,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
         // How far apart each entity is if multiple are shot
         public float EvenSpreadAngle => _evenSpreadAngle;
         [CustomYamlField("ammoSpread")]
-        private float _evenSpreadAngle;
+        private float _evenSpreadAngle = default;
         /// <summary>
         /// How fast the shot entities travel
         /// </summary>

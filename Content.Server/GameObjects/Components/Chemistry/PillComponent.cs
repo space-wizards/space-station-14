@@ -31,10 +31,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         [ViewVariables]
         [YamlField("useSound")]
-        private string _useSound;
+        private string _useSound = default;
         [ViewVariables]
         [YamlField("trash")]
-        private string _trashPrototype;
+        private string _trashPrototype = default;
         [ViewVariables]
         private SolutionContainerComponent _contents;
         [ViewVariables]

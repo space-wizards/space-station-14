@@ -31,7 +31,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         private float _lastKickTime;
 
         [ComponentDependency]
-        private readonly EyeComponent? _eye;
+        private readonly EyeComponent? _eye = default;
 
         // Basically I needed a way to chain this effect for the attack lunge animation.
         // Sorry!

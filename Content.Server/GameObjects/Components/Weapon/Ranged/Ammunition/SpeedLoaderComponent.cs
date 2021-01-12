@@ -37,7 +37,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
         public int AmmoLeft => _spawnedAmmo.Count + _unspawnedCount;
 
         [YamlField("fillPrototype")]
-        private string _fillPrototype;
+        private string _fillPrototype = default;
 
         public override void Initialize()
         {

@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Pointing
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [YamlField("rogue")]
-        private bool _rogue;
+        private bool _rogue = default;
 
         protected override void Startup()
         {

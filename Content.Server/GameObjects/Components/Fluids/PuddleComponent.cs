@@ -106,7 +106,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         private int _spriteVariants = 1;
         // Whether the underlying solution color should be used
         [YamlField("recolor")]
-        private bool _recolor;
+        private bool _recolor = default;
 
         private bool Slippery => Owner.TryGetComponent(out SlipperyComponent slippery) && slippery.Slippery;
 
