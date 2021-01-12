@@ -51,39 +51,42 @@ namespace Content.Client.GameObjects.EntitySystems
 
             var attacker = EntityManager.GetEntity(msg.Attacker);
 
-            var lunge = attacker.EnsureComponent<MeleeLungeComponent>();
-            lunge.SetData(msg.Angle);
-
-            var entity = EntityManager.SpawnEntity(weaponArc.Prototype, attacker.Transform.Coordinates);
-            entity.Transform.LocalRotation = msg.Angle;
-
-            var weaponArcAnimation = entity.GetComponent<MeleeWeaponArcAnimationComponent>();
-            weaponArcAnimation.SetData(weaponArc, msg.Angle, attacker, msg.ArcFollowAttacker);
-
-            // Due to ISpriteComponent limitations, weapons that don't use an RSI won't have this effect.
-            if (EntityManager.TryGetEntity(msg.Source, out var source) && msg.TextureEffect && source.TryGetComponent(out ISpriteComponent sourceSprite)
-            && sourceSprite.BaseRSI?.Path != null)
+            if (!attacker.Deleted)
             {
-                var sys = Get<EffectSystem>();
-                var curTime = _gameTiming.CurTime;
-                var effect = new EffectSystemMessage
+                var lunge = attacker.EnsureComponent<MeleeLungeComponent>();
+                lunge.SetData(msg.Angle);
+
+                var entity = EntityManager.SpawnEntity(weaponArc.Prototype, attacker.Transform.Coordinates);
+                entity.Transform.LocalRotation = msg.Angle;
+
+                var weaponArcAnimation = entity.GetComponent<MeleeWeaponArcAnimationComponent>();
+                weaponArcAnimation.SetData(weaponArc, msg.Angle, attacker, msg.ArcFollowAttacker);
+
+                // Due to ISpriteComponent limitations, weapons that don't use an RSI won't have this effect.
+                if (EntityManager.TryGetEntity(msg.Source, out var source) && msg.TextureEffect && source.TryGetComponent(out ISpriteComponent sourceSprite)
+                    && sourceSprite.BaseRSI?.Path != null)
                 {
-                    EffectSprite = sourceSprite.BaseRSI.Path.ToString(),
-                    RsiState = sourceSprite.LayerGetState(0).Name,
-                    Coordinates = attacker.Transform.Coordinates,
-                    Color = Vector4.Multiply(new Vector4(255, 255, 255, 125), 1.0f),
-                    ColorDelta = Vector4.Multiply(new Vector4(0, 0, 0, -10), 1.0f),
-                    Velocity = msg.Angle.ToVec(),
-                    Acceleration = msg.Angle.ToVec() * 5f,
-                    Born = curTime,
-                    DeathTime = curTime.Add(TimeSpan.FromMilliseconds(300f)),
-                };
-                sys.CreateEffect(effect);
+                    var sys = Get<EffectSystem>();
+                    var curTime = _gameTiming.CurTime;
+                    var effect = new EffectSystemMessage
+                    {
+                        EffectSprite = sourceSprite.BaseRSI.Path.ToString(),
+                        RsiState = sourceSprite.LayerGetState(0).Name,
+                        Coordinates = attacker.Transform.Coordinates,
+                        Color = Vector4.Multiply(new Vector4(255, 255, 255, 125), 1.0f),
+                        ColorDelta = Vector4.Multiply(new Vector4(0, 0, 0, -10), 1.0f),
+                        Velocity = msg.Angle.ToVec(),
+                        Acceleration = msg.Angle.ToVec() * 5f,
+                        Born = curTime,
+                        DeathTime = curTime.Add(TimeSpan.FromMilliseconds(300f)),
+                    };
+                    sys.CreateEffect(effect);
+                }
             }
 
             foreach (var uid in msg.Hits)
             {
-                if (!EntityManager.TryGetEntity(uid, out var hitEntity))
+                if (!EntityManager.TryGetEntity(uid, out var hitEntity) || hitEntity.Deleted)
                 {
                     continue;
                 }

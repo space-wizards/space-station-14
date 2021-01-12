@@ -79,7 +79,7 @@ namespace Content.Server.GameObjects.Components.Recycling
             // Mobs are a special case!
             if (CanGib(entity))
             {
-                entity.Delete(); // TODO: Gib
+                entity.GetComponent<IBody>().Gib(true);
                 Bloodstain();
                 return;
             }

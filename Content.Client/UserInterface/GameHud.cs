@@ -322,6 +322,7 @@ namespace Content.Client.UserInterface
 
         private void ButtonTutorialOnOnToggled()
         {
+            _buttonTutorial.StyleClasses.Remove(TopButton.StyleClassRedTopButton);
             if (_tutorialWindow.IsOpen)
             {
                 if (!_tutorialWindow.IsAtFront())

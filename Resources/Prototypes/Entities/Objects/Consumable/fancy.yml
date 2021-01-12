@@ -1,0 +1,42 @@
+﻿- type: entity
+  name: "Base Cigarette"
+  id: BaseCigarette
+  parent: BaseItem
+  abstract: true
+  components:
+    - type: Sprite
+      sprite: Objects/Consumable/Fancy/mask_cig.rsi
+      netsync: false
+      state: icon
+    - type: Clothing
+      sprite: Objects/Consumable/Fancy/mask_cig.rsi
+      Slots: [ mask ]
+      HeldPrefix: unlit
+      size: 1
+    - type: Smoking
+      duration: 30
+    - type: Appearance
+      visuals:
+        - type: BurnStateVisualizer
+
+- type: entity
+  id: Cigarette
+  parent: BaseCigarette
+  name: cigarette
+  description: "If you want to get cancer, might as well do it in style."
+
+- type: entity
+  id: CigarettePack
+  parent: SmallboxItem
+  name: cigarette pack
+  description: "Pack of cigarettes"
+  components:
+    - type: Sprite
+      sprite: Objects/Consumable/Fancy/cigarettes.rsi
+      layers:
+        - state: cig
+    - type: StorageFill
+      contents:
+        - name: Cigarette
+          amount: 6
+
