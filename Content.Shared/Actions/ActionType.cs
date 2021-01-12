@@ -14,7 +14,9 @@ namespace Content.Shared.Actions
         DebugTargetPointRepeat,
         DebugTargetEntity,
         DebugTargetEntityRepeat,
-        Fireball
+        SpellFireball,
+        SpellTraps,
+        SpellCarp
     }
 
     /// <summary>

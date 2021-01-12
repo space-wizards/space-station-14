@@ -1,0 +1,40 @@
+- type: entity
+  id: FireBallbullet
+  name: fireballbullet
+  parent: BulletBase
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Projectiles/fireball.rsi
+    state: fireball
+  - type: ExplosiveProjectile
+  - type: Projectile
+    deleteOnCollide: false
+  - type: Explosive
+    devastationRange: 0
+    heavyImpactRange: 2
+    lightImpactRange: 3
+    flashRange: 4
+  - type: PointLight
+    radius: 1
+    color: orange
+    energy: 0.5
+
+- type: entity
+  id: TrapsEntitiy
+  name: Trap!
+  parent: BulletBase
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Projectiles/WizardTrap.rsi
+    state: trap
+  - type: StunnableProjectile
+    stunAmount: 5
+    knockdownAmount: 5
+  - type: PointLight
+    radius: 1
+    color: yellow
+    energy: 0.5

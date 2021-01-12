@@ -15,7 +15,9 @@
     innateActions:
       - HumanScream
       - Disarm
-      - Fireball
+      - SpellFireball
+      - SpellTraps
+      - SpellCarp
   - type: OverlayEffectsUI
   - type: Eye
     zoom: 0.5, 0.5

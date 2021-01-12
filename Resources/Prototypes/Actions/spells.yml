@@ -1,13 +1,47 @@
 ﻿- type: action
-  actionType: Fireball
+  actionType: SpellFireball
   icon: Interface/Actions/Spells/fireball.png
   name: "Fireball"
   filters:
     - human
-  description: "This is a [color=red]no-wiznerd fireball[/color]."
+  description: "Puts the fire at your fingertips! And explosive power!"
   behaviorType: TargetPoint
   behavior: !type:ProjectileSpell
    castmessage: ONI SOMA! 
    spellprojectile: FireBallbullet
+   range: 2
    trap: false
    speed: 15
+   ignorecaster: true
+
+- type: action
+  actionType: SpellTraps
+  icon: Interface/Actions/Spells/traps.png
+  name: "Traps!"
+  filters:
+    - human
+  description: "Snare your enemies with a magical trap! Semi-transperent."
+  behaviorType: TargetPoint
+  behavior: !type:ProjectileSpell
+   castmessage: CAVERE INSIDIAS!
+   spellprojectile: TrapsEntitiy
+   range: 4
+   trap: true
+   speed: 0
+   ignorecaster: false
+   
+- type: action
+  actionType: SpellCarp
+  icon: Mobs/Aliens/Carps/carp_magic.rsi/icon.png
+  name: "Carps!"
+  filters:
+    - human
+  description: "Open a portal into space dragon's lair to summon a carp imbued with magic!"
+  behaviorType: TargetPoint
+  behavior: !type:ProjectileSpell
+   castmessage: RI'FATA!
+   spellprojectile:  MagicarpMob_Content
+   range: 2
+   trap: true
+   speed: 0
+   ignorecaster: true

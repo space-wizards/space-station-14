@@ -8,7 +8,6 @@ using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
-using Content.Shared.Actions;
 
 namespace Content.Server.Actions
 {
@@ -23,6 +22,7 @@ namespace Content.Server.Actions
         public bool Stationary { get; private set; }
         public float VelocityMult { get; private set; }
         public float CoolDown { get; private set; }
+        public bool IgnoreCaster { get; private set; }
 
         public ProjectileSpell()
         {
@@ -36,6 +36,7 @@ namespace Content.Server.Actions
             serializer.DataField(this, x => x.Stationary, "trap", false); //Apply or not apply momentum to the projectile (If true, will spawn a stationary trap-like spell)
             serializer.DataField(this, x => x.VelocityMult, "speed", 10f); //Speed that is applied to the projectile
             serializer.DataField(this, x => x.CoolDown, "cooldown", 0f) ;
+            serializer.DataField(this, x => x.IgnoreCaster, "ignorecaster", false); //ignore caster or not
         }
 
         public void DoTargetPointAction(TargetPointActionEventArgs args)
@@ -52,8 +53,11 @@ namespace Content.Server.Actions
             physics.Status = BodyStatus.InAir;
 
             var projectileComponent = spawnedSpell.GetComponent<ProjectileComponent>();
-            projectileComponent.IgnoreEntity(args.Performer); //Ignore the caster of the projectile
-            //Actions.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(CoolDown));
+            if (IgnoreCaster == true)
+            {
+                projectileComponent.IgnoreEntity(args.Performer);
+            }
+            
 
             if (Stationary == true) //If the spell is a trap, the lower code won't apply
             {
@@ -65,7 +69,8 @@ namespace Content.Server.Actions
                 .EnsureController<BulletController>()
                 .LinearVelocity = direction * VelocityMult;
 
-            spawnedSpell.Transform.LocalRotation = args.Performer.Transform.LocalRotation;      
+            spawnedSpell.Transform.LocalRotation = args.Performer.Transform.LocalRotation;
+            //Actions.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(CoolDown));
         }
     }
 }
