@@ -2,8 +2,8 @@
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems.Click;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects.EntitySystemMessages;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.GameObjects.EntitySystemMessages;
 using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.EntitySystems

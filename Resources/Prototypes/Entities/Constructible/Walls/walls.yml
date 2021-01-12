@@ -17,6 +17,7 @@
   - type: Icon
     state: full
   - type: Physics
+    bodyType: Static
     shapes:
     - !type:PhysShapeAabb
       layer:
