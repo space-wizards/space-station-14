@@ -120,8 +120,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (!result)
                 return;
 
-            Logger.Debug("COLOR: "+contents.Color.ToHex());
-
             if (Owner.TryGetComponent(out AppearanceComponent appearance))
             {
                 appearance.SetData(SmokeVisuals.Color, contents.Color);
