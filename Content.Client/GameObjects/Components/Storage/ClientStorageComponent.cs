@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.Components.Items;
@@ -174,7 +174,7 @@ namespace Content.Client.GameObjects.Components.Storage
                     }
                 };
 
-                VSplitContainer = new VBoxContainer()
+                VSplitContainer = new VBoxContainer()   
                 {
                     MouseFilter = MouseFilterMode.Ignore,
                 };

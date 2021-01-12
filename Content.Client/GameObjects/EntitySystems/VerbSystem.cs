@@ -1,10 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
 using Content.Client.State;
 using Content.Client.UserInterface;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameObjects.Verbs;
@@ -42,6 +43,24 @@ namespace Content.Client.GameObjects.EntitySystems
     [UsedImplicitly]
     public sealed class VerbSystem : SharedVerbSystem, IResettingEntitySystem
     {
+        private class ContextMenuComparer<T> : IEqualityComparer<(T, IEnumerable<T>)>
+        {
+            bool IEqualityComparer<(T, IEnumerable<T>)>.Equals((T, IEnumerable<T>) x, (T, IEnumerable<T>) y)
+            {
+                return x.Item1.Equals(y.Item1) && Enumerable.SequenceEqual(x.Item2.OrderBy(t => t), y.Item2.OrderBy(t => t));
+            }
+
+            int IEqualityComparer<(T, IEnumerable<T>)>.GetHashCode((T, IEnumerable<T>) obj)
+            {
+                var hash = EqualityComparer<T>.Default.GetHashCode(obj.Item1);
+                foreach (var element in obj.Item2)
+                {
+                    hash ^= EqualityComparer<T>.Default.GetHashCode(element);
+                }
+                return hash;
+            }
+        }
+
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
@@ -155,27 +174,49 @@ namespace Content.Client.GameObjects.EntitySystems
                 return false;
             }
 
-            _currentEntityList = new EntityList();
-            _currentEntityList.OnPopupHide += CloseAllMenus;
-            var first = true;
+            var entitySpriteStates = new Dictionary<(string, IEnumerable<string>), List<IEntity>>(new ContextMenuComparer<string>());
             foreach (var entity in entities)
             {
                 if (!CanSeeOnContextMenu(entity))
                 {
                     continue;
                 }
+                
+                if (entity.TryGetComponent(out ISpriteComponent sprite))
+                {
+                    var currentState = (entity.Prototype.ID, sprite.AllLayers.Where(e => e.Visible).Select(s => s.RsiState.Name));
+                    if (!entitySpriteStates.ContainsKey(currentState))
+                    {
+                        entitySpriteStates.Add(currentState, new List<IEntity>() { entity });
+                    }
+                    else
+                    {
+                        entitySpriteStates[currentState].Add(entity);
+                    }
+                }
+            }
 
+            // Ordering the dictionary in the case you want to sort the context menu
+            var orderedStates = entitySpriteStates.ToList().OrderBy(e => e.Key.Item1);
+
+            _currentEntityList = new EntityList();
+            _currentEntityList.OnPopupHide += CloseAllMenus;
+
+            var first = true;
+            foreach (var (_, vEntity) in orderedStates)
+            {
                 if (!first)
                 {
                     _currentEntityList.List.AddChild(new PanelContainer
                     {
                         CustomMinimumSize = (0, 2),
-                        PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#333")}
+                        PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#333") }
                     });
                 }
 
                 var debugEnabled = _userInterfaceManager.DebugMonitors.Visible;
-                _currentEntityList.List.AddChild(new EntityButton(this, entity, debugEnabled));
+                _currentEntityList.List.AddChild(new EntityButtonStack(this, vEntity, debugEnabled));
+                _currentEntityList.EntitiesIn++;
                 first = false;
             }
 
@@ -405,15 +446,32 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private sealed class EntityList : Popup
         {
+            private const int MaximumItemsInContextMenu = 10;
+            public int EntitiesIn = 0;
+
             public VBoxContainer List { get; }
+
+            private ScrollContainer SList { get; }
 
             public EntityList()
             {
-                AddChild(new PanelContainer
+                SList = new ScrollContainer
                 {
-                    Children = {(List = new VBoxContainer())},
-                    PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#111E")}
-                });
+                    HScrollEnabled = false,
+                    Children = { new PanelContainer
+                    {
+                        Children = { (List = new VBoxContainer()) },
+                        PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#111E") }
+                    }}
+                };
+                AddChild(SList);
+            }
+
+            protected override Vector2 CalculateMinimumSize()
+            {
+                var size = base.CalculateMinimumSize();
+                size.Y = EntitiesIn > MaximumItemsInContextMenu ? MaximumItemsInContextMenu * 32 : size.Y;
+                return size;
             }
         }
 
@@ -431,22 +489,41 @@ namespace Content.Client.GameObjects.EntitySystems
             }
         }
 
-        private sealed class EntityButton : Control
+        private sealed class EntityButtonStack : Control
         {
             private readonly VerbSystem _master;
-            private readonly IEntity _entity;
-
-            public EntityButton(VerbSystem master, IEntity entity, bool showUid)
+            private readonly Stack<IEntity> _stackedEntities;
+            public EntityButtonStack(VerbSystem master, IEnumerable<IEntity> entities, bool showUid)
             {
                 _master = master;
-                _entity = entity;
+                _stackedEntities = new(entities);
+
+                var entity = _stackedEntities.Peek();
 
                 MouseFilter = MouseFilterMode.Stop;
 
-                var control = new HBoxContainer {SeparationOverride = 6};
+                var control = new HBoxContainer { SeparationOverride = 6 };
                 if (entity.TryGetComponent(out ISpriteComponent sprite))
                 {
-                    control.AddChild(new SpriteView {Sprite = sprite});
+                    var layoutContainer = new LayoutContainer();
+
+                    var spriteC = new SpriteView { Sprite = sprite };
+                    layoutContainer.AddChild(spriteC);
+
+                    if (_stackedEntities.Count > 1)
+                    {
+                        var textLabel = new Label
+                        {
+                            Text = _stackedEntities.Count.ToString(),
+                            StyleClasses = { StyleNano.StyleClassContextMenuCount }
+                        };
+                        LayoutContainer.SetAnchorPreset(textLabel, LayoutContainer.LayoutPreset.BottomRight);
+                        LayoutContainer.SetGrowHorizontal(textLabel, LayoutContainer.GrowDirection.Begin);
+                        LayoutContainer.SetGrowVertical(textLabel, LayoutContainer.GrowDirection.Begin);
+                        layoutContainer.AddChild(textLabel);
+                    }
+
+                    control.AddChild(layoutContainer);
                 }
 
                 var text = entity.Name;
@@ -458,7 +535,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 {
                     MarginLeftOverride = 4,
                     MarginRightOverride = 4,
-                    Children = {new Label {Text = text}}
+                    Children = { new Label { Text = text } }
                 });
 
                 AddChild(control);
@@ -470,10 +547,11 @@ namespace Content.Client.GameObjects.EntitySystems
 
                 if (args.Function == ContentKeyFunctions.OpenContextMenu)
                 {
-                    _master.OnContextButtonPressed(_entity);
+                    _master.OnContextButtonPressed(_stackedEntities.Pop());
                     return;
                 }
 
+                var _entity = _stackedEntities.Peek();
                 if (args.Function == EngineKeyFunctions.Use ||
                     args.Function == ContentKeyFunctions.Point ||
                     args.Function == ContentKeyFunctions.TryPullObject ||
@@ -524,6 +602,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     handle.DrawRect(PixelSizeBox, Color.DarkSlateGray);
                 }
             }
+
         }
 
         private sealed class VerbButton : BaseButton
