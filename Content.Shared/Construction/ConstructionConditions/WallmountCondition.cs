@@ -10,7 +10,7 @@ using Robust.Shared.Serialization;
 using System.Linq;
 
 namespace Content.Shared.Construction.ConstructionConditions
-
+{ 
     [UsedImplicitly]
     public class WallmountCondition : IConstructionCondition
     {
