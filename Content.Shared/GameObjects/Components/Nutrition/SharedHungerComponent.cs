@@ -2,6 +2,7 @@ using System;
 using Content.Shared.GameObjects.Components.Movement;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Nutrition
 {
@@ -11,6 +12,7 @@ namespace Content.Shared.GameObjects.Components.Nutrition
 
         public sealed override uint? NetID => ContentNetIDs.HUNGER;
 
+        [ViewVariables]
         public abstract HungerThreshold CurrentHungerThreshold { get; }
 
 
@@ -49,6 +51,7 @@ namespace Content.Shared.GameObjects.Components.Nutrition
         }
     }
 
+    [Serializable, NetSerializable]
     public enum HungerThreshold : byte
     {
         Overfed,

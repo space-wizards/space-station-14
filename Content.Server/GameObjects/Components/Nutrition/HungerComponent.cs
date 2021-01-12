@@ -178,14 +178,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public void OnUpdate(float frametime)
         {
             _currentHunger -= frametime * ActualDecayRate;
-            var calculatedHungerThreshold = GetHungerThreshold(_currentHunger);
-            // _trySound(calculatedThreshold);
-            if (calculatedHungerThreshold != _currentHungerThreshold)
-            {
-                _currentHungerThreshold = calculatedHungerThreshold;
-                HungerThresholdEffect();
-                Dirty();
-            }
+            UpdateCurrentThreshold();
 
             if (_currentHungerThreshold != HungerThreshold.Dead)
                 return;
@@ -202,11 +195,22 @@ namespace Content.Server.GameObjects.Components.Nutrition
             }
         }
 
+        private void UpdateCurrentThreshold()
+        {
+            var calculatedHungerThreshold = GetHungerThreshold(_currentHunger);
+            // _trySound(calculatedThreshold);
+            if (calculatedHungerThreshold != _currentHungerThreshold)
+            {
+                _currentHungerThreshold = calculatedHungerThreshold;
+                HungerThresholdEffect();
+                Dirty();
+            }
+        }
+
         public void ResetFood()
         {
-            _currentHungerThreshold = HungerThreshold.Okay;
-            _currentHunger = HungerThresholds[_currentHungerThreshold];
-            HungerThresholdEffect();
+            _currentHunger = HungerThresholds[HungerThreshold.Okay];
+            UpdateCurrentThreshold();
         }
 
         public override ComponentState GetComponentState()
