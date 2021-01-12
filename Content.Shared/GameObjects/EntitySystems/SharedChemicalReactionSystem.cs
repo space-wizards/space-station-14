@@ -8,8 +8,7 @@ using System.Collections.Generic;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {
-    //TODO: Reimplement sounds for reactions
-    public class ChemicalReactionSystem : EntitySystem
+    public abstract class SharedChemicalReactionSystem : EntitySystem
     {
         private IEnumerable<ReactionPrototype> _reactions;
 
@@ -56,7 +55,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         ///     Perform a reaction on a solution. This assumes all reaction criteria are met.
         ///     Removes the reactants from the solution, then returns a solution with all products.
         /// </summary>
-        private static Solution PerformReaction(Solution solution, IEntity owner, ReactionPrototype reaction, ReagentUnit unitReactions)
+        private Solution PerformReaction(Solution solution, IEntity owner, ReactionPrototype reaction, ReagentUnit unitReactions)
         {
             //Remove reactants
             foreach (var reactant in reaction.Reactants)
@@ -76,12 +75,17 @@ namespace Content.Shared.GameObjects.EntitySystems
             }
 
             // Trigger reaction effects
+            OnReaction(reaction, owner, unitReactions);
+
+            return products;
+        }
+
+        protected virtual void OnReaction(ReactionPrototype reaction, IEntity owner, ReagentUnit unitReactions)
+        {
             foreach (var effect in reaction.Effects)
             {
                 effect.React(owner, unitReactions.Double());
             }
-
-            return products;
         }
 
         /// <summary>
