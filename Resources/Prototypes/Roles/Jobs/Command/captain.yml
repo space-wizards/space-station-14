@@ -4,7 +4,7 @@
   head: true
   positions: 1
   startingGear: CaptainGear
-  department:
+  departments:
   - Command
   icon: "Captain"
   access:
@@ -48,3 +48,5 @@
     outerclothing: ClothingOuterHardsuitCap
     idcard: CaptainPDA
     ears: ClothingHeadsetAltCommand
+  satchel: ClothingBackpackSatchelCaptainFilled
+  duffelbag: ClothingBackpackDuffelCaptainFilled

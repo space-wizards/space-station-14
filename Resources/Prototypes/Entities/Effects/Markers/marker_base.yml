@@ -5,12 +5,13 @@
   - type: Marker
   - type: Clickable
   - type: InteractionOutline
-  - type: Physics
   - type: Sprite
     netsync: false
     visible: false
     sprite: Interface/Misc/markers.rsi
     state: cross_blue
+  placement:
+    mode: AlignTileAny
 
 
 

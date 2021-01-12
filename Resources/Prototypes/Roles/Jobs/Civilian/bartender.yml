@@ -3,7 +3,7 @@
   name: "bartender"
   positions: 1
   startingGear: BartenderGear
-  department:
+  departments:
   - Civilian
   icon: "Bartender"
   access:
@@ -21,3 +21,6 @@
     shoes: ClothingShoesColorBlack
     idcard: BartenderPDA
     ears: ClothingHeadsetService
+  innerclothingskirt: ClothingUniformJumpskirtBartender
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled

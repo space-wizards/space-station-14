@@ -9,6 +9,7 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -36,7 +37,17 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
                 Logger.Error("RadiationCollectorComponent created with no CollidableComponent");
                 return;
             }
-            _collidableComponent.AnchoredChanged += OnAnchoredChanged;
+        }
+
+        public override void HandleMessage(ComponentMessage message, IComponent component)
+        {
+            base.HandleMessage(message, component);
+            switch (message)
+            {
+                case AnchoredChangedMessage:
+                    OnAnchoredChanged();
+                    break;
+            }
         }
 
         private void OnAnchoredChanged()

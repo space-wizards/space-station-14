@@ -4,12 +4,15 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.GameObjects.Components.Clothing;
 using Content.Shared.GameObjects.Components.Inventory;
+using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Preferences.Appearance;
+using Robust.Client.Console;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 using static Content.Shared.GameObjects.Components.Inventory.SharedInventoryComponent.ClientInventoryMessage;
@@ -20,9 +23,12 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
     /// A character UI which shows items the user has equipped within his inventory
     /// </summary>
     [RegisterComponent]
+    [ComponentReference(typeof(SharedInventoryComponent))]
     public class ClientInventoryComponent : SharedInventoryComponent
     {
         private readonly Dictionary<Slots, IEntity> _slots = new();
+
+        public IReadOnlyDictionary<Slots, IEntity> AllSlots => _slots;
 
         [ViewVariables] public InventoryInterfaceController InterfaceController { get; private set; } = default!;
 
@@ -68,6 +74,11 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             {
                 _setSlot(slot, entity);
             }
+        }
+
+        public override bool IsEquipped(IEntity item)
+        {
+            return item != null && _slots.Values.Any(e => e == item);
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)

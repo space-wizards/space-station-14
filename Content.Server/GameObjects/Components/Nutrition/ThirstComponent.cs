@@ -5,6 +5,7 @@ using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Nutrition;
 using Robust.Shared.GameObjects;
@@ -183,18 +184,20 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 Dirty();
             }
 
-            if (_currentThirstThreshold == ThirstThreshold.Dead)
+            if (_currentThirstThreshold != ThirstThreshold.Dead)
+                return;
+
+            if (!Owner.TryGetComponent(out IDamageableComponent damageable))
+                return;
+
+            if (!Owner.TryGetComponent(out IMobStateComponent mobState))
+                return;
+
+            if (!mobState.IsDead())
             {
-                if (Owner.TryGetComponent(out IDamageableComponent damageable))
-                {
-                    if (damageable.CurrentState != DamageState.Dead)
-                    {
-                        damageable.ChangeDamage(DamageType.Blunt, 2, true, null);
-                    }
-                }
+                damageable.ChangeDamage(DamageType.Blunt, 2, true);
             }
         }
-
 
         public void ResetThirst()
         {
@@ -208,5 +211,4 @@ namespace Content.Server.GameObjects.Components.Nutrition
             return new ThirstComponentState(_currentThirstThreshold);
         }
     }
-
 }

@@ -27,6 +27,7 @@
     drawdepth: FloorObjects
   - type: SignalReceiver
     maxTransmitters: 1
+  - type: PowerReceiver
   - type: Conveyor
   - type: Appearance
     visuals:
@@ -34,7 +35,6 @@
       state_running: conveyor_started_cw
       state_stopped: conveyor_stopped_cw
       state_reversed: conveyor_started_cw_r
-  - type: PowerReceiver
   - type: Construction
     graph: ConveyorGraph
     node: entity

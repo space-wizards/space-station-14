@@ -10,8 +10,13 @@
   - type: SnapGrid
     offset: Center
   - type: Sprite
+  - type: Damageable
   - type: Destructible
-    thresholdvalue: 100
+    thresholds:
+      100:
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
   - type: GasCanisterPort
 
 - type: entity

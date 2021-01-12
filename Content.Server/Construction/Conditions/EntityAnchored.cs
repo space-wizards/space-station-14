@@ -25,15 +25,21 @@ namespace Content.Server.Construction.Conditions
             return physics.Anchored == Anchored;
         }
 
-        public void DoExamine(IEntity entity, FormattedMessage message, bool inDetailsRange)
+        public bool DoExamine(IEntity entity, FormattedMessage message, bool inDetailsRange)
         {
-            if (!entity.TryGetComponent(out IPhysicsComponent physics)) return;
+            if (!entity.TryGetComponent(out IPhysicsComponent physics)) return false;
 
-            if(Anchored && !physics.Anchored)
-                message.AddMarkup("First, anchor it.\n");
+            switch (Anchored)
+            {
+                case true when !physics.Anchored:
+                    message.AddMarkup("First, anchor it.\n");
+                    return true;
+                case false when physics.Anchored:
+                    message.AddMarkup("First, unanchor it.\n");
+                    return true;
+            }
 
-            if(!Anchored && physics.Anchored)
-                message.AddMarkup("First, unanchor it.\n");
+            return false;
         }
     }
 }

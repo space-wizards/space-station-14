@@ -1,11 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -34,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             }
         }
 
-        private EmergencyLightState _state = EmergencyLightState.Charging;
+        private EmergencyLightState _state = EmergencyLightState.Empty;
 
         [ViewVariables(VVAccess.ReadWrite)]
         private float _wattage;
@@ -54,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         /// <summary>
         ///     For attaching UpdateState() to events.
         /// </summary>
-        public void UpdateState(object sender, EventArgs e)
+        public void UpdateState(PowerChangedMessage e)
         {
             UpdateState();
         }
@@ -138,27 +137,15 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             }
         }
 
-        public override void Initialize()
+        public override void HandleMessage(ComponentMessage message, IComponent component)
         {
-            base.Initialize();
-
-            if (!Owner.EnsureComponent(out PowerReceiverComponent receiver))
+            base.HandleMessage(message, component);
+            switch (message)
             {
-                Logger.Warning($"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(PowerReceiverComponent)}");
+                case PowerChangedMessage powerChanged:
+                    UpdateState(powerChanged);
+                    break;
             }
-
-            receiver.OnPowerStateChanged += UpdateState;
-            State = EmergencyLightState.Charging;
-        }
-
-        public override void OnRemove()
-        {
-            if (Owner.TryGetComponent(out PowerReceiverComponent receiver))
-            {
-                receiver.OnPowerStateChanged -= UpdateState;
-            }
-
-            base.OnRemove();
         }
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)

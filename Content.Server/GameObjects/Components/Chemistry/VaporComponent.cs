@@ -1,16 +1,13 @@
 ﻿using System.Linq;
-using Content.Server.GameObjects.Components.Fluids;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
-using Microsoft.DiaSymReader;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -43,11 +40,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             base.Initialize();
 
-            if (!Owner.EnsureComponent(out SolutionContainerComponent _))
-            {
-                Logger.Warning(
-                    $"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(SolutionContainerComponent)}");
-            }
+            Owner.EnsureComponentWarn(out SolutionContainerComponent _);
         }
 
         public void Start(Vector2 dir, float velocity, EntityCoordinates target, float aliveTime)

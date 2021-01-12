@@ -35,11 +35,12 @@ namespace Content.Client.Instruments
         public InstrumentMenu(InstrumentBoundUserInterface owner)
         {
             IoCManager.InjectDependencies(this);
-            Title = Loc.GetString("Instrument");
 
             _owner = owner;
 
             _owner.Instrument.OnMidiPlaybackEnded += InstrumentOnMidiPlaybackEnded;
+
+            Title = _owner.Instrument.Owner.Name;
 
             var margin = new MarginContainer()
             {

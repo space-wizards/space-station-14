@@ -1,0 +1,19 @@
+- type: entity
+  name: nuclear authentication disk
+  parent: BaseItem
+  id: NukeDisk
+  description: GET DAT FUCKKEN DISK
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Misc/nukedisk.rsi
+    state: icon
+  - type: Item
+    size: 12
+    sprite: Objects/Misc/nukedisk.rsi
+    state: icon
+
+- type: entity
+  parent: NukeDisk
+  id: NukeDiskFake
+  description: GET DAT FUCK- wait a second...

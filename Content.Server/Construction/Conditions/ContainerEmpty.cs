@@ -29,13 +29,17 @@ namespace Content.Server.Construction.Conditions
             return container.ContainedEntities.Count == 0;
         }
 
-        public void DoExamine(IEntity entity, FormattedMessage message, bool inDetailsRange)
+        public bool DoExamine(IEntity entity, FormattedMessage message, bool inDetailsRange)
         {
             if (!entity.TryGetComponent(out ContainerManagerComponent? containerManager) ||
-                !containerManager.TryGetContainer(Container, out var container)) return;
+                !containerManager.TryGetContainer(Container, out var container)) return false;
 
-            if (container.ContainedEntities.Count != 0)
-                message.AddMarkup(Text);
+            if (container.ContainedEntities.Count == 0)
+                return false;
+
+            message.AddMarkup(Text);
+            return true;
+
         }
     }
 }

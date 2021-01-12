@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -91,12 +91,15 @@ namespace Content.Server.Database
         [Column("char_name")] public string CharacterName { get; set; } = null!;
         [Column("age")] public int Age { get; set; }
         [Column("sex")] public string Sex { get; set; } = null!;
+        [Column("gender")] public string Gender { get; set; } = null!;
         [Column("hair_name")] public string HairName { get; set; } = null!;
         [Column("hair_color")] public string HairColor { get; set; } = null!;
         [Column("facial_hair_name")] public string FacialHairName { get; set; } = null!;
         [Column("facial_hair_color")] public string FacialHairColor { get; set; } = null!;
         [Column("eye_color")] public string EyeColor { get; set; } = null!;
         [Column("skin_color")] public string SkinColor { get; set; } = null!;
+        [Column("clothing")] public string Clothing { get; set; } = null!;
+        [Column("backpack")] public string Backpack { get; set; } = null!;
         public List<Job> Jobs { get; } = new();
         public List<Antag> Antags { get; } = new();
 
@@ -119,7 +122,7 @@ namespace Content.Server.Database
 
     public enum DbJobPriority
     {
-        // These enum values HAVE to match the ones in JobPriority in Shared.
+        // These enum values HAVE to match the ones in JobPriority in Content.Shared
         Never = 0,
         Low = 1,
         Medium = 2,
