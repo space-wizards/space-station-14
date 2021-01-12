@@ -72,7 +72,7 @@ namespace Content.Client.UserInterface
                     (_leftPanel = ItemStatusPanel.FromSide(HandLocation.Left))
                 }
             });
-            _leftHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.svg.png");
+            _leftHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.png");
             _middleHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.png");
             _rightHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_r.png");
         }

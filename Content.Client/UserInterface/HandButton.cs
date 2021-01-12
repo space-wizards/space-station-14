@@ -17,6 +17,7 @@ namespace Content.Client.UserInterface
             AddChild(Blocked = new TextureRect
             {
                 Texture = blockedTexture,
+                TextureScale = (2, 2),
                 MouseFilter = MouseFilterMode.Stop,
                 Visible = false
             });

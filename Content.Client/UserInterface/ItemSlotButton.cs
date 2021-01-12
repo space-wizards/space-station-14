@@ -32,11 +32,12 @@ namespace Content.Client.UserInterface
 
         public ItemSlotButton(Texture texture, Texture storageTexture)
         {
-            CustomMinimumSize = (32, 32);
+            CustomMinimumSize = (64, 64);
 
             AddChild(Button = new TextureRect
             {
                 Texture = texture,
+                TextureScale = (2, 2),
                 MouseFilter = MouseFilterMode.Stop
             });
 
@@ -64,7 +65,7 @@ namespace Content.Client.UserInterface
             AddChild(StorageButton = new TextureButton
             {
                 TextureNormal = storageTexture,
-                Scale = (0.375f, 0.375f),
+                Scale = (0.75f, 0.75f),
                 SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
                 SizeFlagsVertical = SizeFlags.ShrinkEnd,
                 Visible = false,
