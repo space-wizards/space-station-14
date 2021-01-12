@@ -4,18 +4,18 @@ using Content.Server.GameObjects.Components.Body.Circulatory;
 using Content.Server.GameObjects.Components.Body.Respiratory;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
+using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Log;
 
 namespace Content.Server.GameObjects.Components.Chemistry
 {
     [RegisterComponent]
-    public class SmokeComponent : Component
+    public class SmokeComponent : SharedSmokeComponent
     {
-        public override string Name => "Smoke";
-
         public override void HandleMessage(ComponentMessage message, IComponent component)
         {
             base.HandleMessage(message, component);
@@ -38,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             foreach (var smokeEntity in spreadMessage.Spawned)
             {
                 if (smokeEntity.TryGetComponent(out SmokeComponent smokeComp) &&
-                    smokeEntity.TryGetComponent(out SolutionContainerComponent contents))
+                    Owner.TryGetComponent(out SolutionContainerComponent contents))
                 {
                     var solution = contents.Solution.Clone();
                     smokeComp.TryAddSolution(solution);
@@ -120,8 +120,12 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (!result)
                 return;
 
-            if (Owner.TryGetComponent(out SpriteComponent sprite))
-                sprite.Color = contents.SubstanceColor;
+            Logger.Debug("COLOR: "+contents.Color.ToHex());
+
+            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            {
+                appearance.SetData(SmokeVisuals.Color, contents.Color);
+            }
         }
     }
 }

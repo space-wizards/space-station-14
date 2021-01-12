@@ -236,6 +236,8 @@ namespace Content.Client
             "DamageOtherOnHit",
             "DamageOnLand",
             "Smoke",
+            "Foam",
+            "AreaEffect",
             "Recyclable"
         };
     }

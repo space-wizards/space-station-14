@@ -151,7 +151,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             if (Owner.TryGetComponent(out AppearanceComponent appearance))
             {
-                appearance.SetData(FoamVisuals.Color, contents.SubstanceColor.WithAlpha(0.80f));
+                appearance.SetData(FoamVisuals.Color, contents.Color.WithAlpha(0.80f));
             }
         }
     }

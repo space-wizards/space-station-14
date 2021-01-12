@@ -7,6 +7,9 @@
       drawdepth: Ghosts
       sprite: Effects/chemsmoke.rsi
       state: chemsmoke
+    - type: Appearance
+      visuals:
+        - type: SmokeVisualizer
     - type: Occluder
       sizeX: 32
       sizeY: 32
