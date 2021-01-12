@@ -72,9 +72,9 @@ namespace Content.Client.UserInterface
                     (_leftPanel = ItemStatusPanel.FromSide(HandLocation.Left))
                 }
             });
-            _leftHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.svg.96dpi.png");
-            _middleHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.svg.96dpi.png");
-            _rightHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_r.svg.96dpi.png");
+            _leftHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.svg.png");
+            _middleHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.png");
+            _rightHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_r.png");
         }
 
         private ItemStatusPanel GetItemPanel(Hand hand)
@@ -114,7 +114,7 @@ namespace Content.Client.UserInterface
         private void AddHand(Hand hand, HandLocation buttonLocation)
         {
             var buttonTexture = HandTexture(buttonLocation);
-            var storageTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/back.svg.96dpi.png");
+            var storageTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/back.png");
             var blockedTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/blocked.png");
             var button = new HandButton(buttonTexture, storageTexture, blockedTexture, buttonLocation);
             var slot = hand.Name;

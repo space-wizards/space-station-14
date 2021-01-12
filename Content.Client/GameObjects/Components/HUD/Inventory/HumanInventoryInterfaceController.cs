@@ -53,8 +53,8 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 
             void AddButton(out ItemSlotButton variable, Slots slot, string textureName)
             {
-                var texture = _resourceCache.GetTexture($"/Textures/Interface/Inventory/{textureName}.svg.96dpi.png");
-                var storageTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/back.svg.96dpi.png");
+                var texture = _resourceCache.GetTexture($"/Textures/Interface/Inventory/{textureName}.png");
+                var storageTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/back.png");
                 variable = new ItemSlotButton(texture, storageTexture)
                 {
                     OnPressed = (e) => AddToInventory(e, slot),
@@ -231,8 +231,8 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 
                 void AddButton(Slots slot, string textureName, Vector2 position)
                 {
-                    var texture = resourceCache.GetTexture($"/Textures/Interface/Inventory/{textureName}.svg.96dpi.png");
-                    var storageTexture = resourceCache.GetTexture("/Textures/Interface/Inventory/back.svg.96dpi.png");
+                    var texture = resourceCache.GetTexture($"/Textures/Interface/Inventory/{textureName}.png");
+                    var storageTexture = resourceCache.GetTexture("/Textures/Interface/Inventory/back.png");
                     var button = new ItemSlotButton(texture, storageTexture);
 
                     LayoutContainer.SetPosition(button, position);
