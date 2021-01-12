@@ -119,7 +119,7 @@
     shapes:
       - !type:PhysShapeAabb
         bounds: "-0.45, -0.3, 0.35, 0.3"
-        layer: [ MobMask ]
+        layer: [ Passable ]
 
 - type: entity
   name: wooden chair

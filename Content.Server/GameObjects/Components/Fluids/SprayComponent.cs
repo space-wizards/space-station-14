@@ -161,7 +161,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 if (vapor.TryGetComponent(out AppearanceComponent appearance)) // Vapor sprite should face down.
                 {
                     appearance.SetData(VaporVisuals.Rotation, -Angle.South + rotation);
-                    appearance.SetData(VaporVisuals.Color, contents.SubstanceColor.WithAlpha(1f));
+                    appearance.SetData(VaporVisuals.Color, contents.Color.WithAlpha(1f));
                     appearance.SetData(VaporVisuals.State, true);
                 }
 

@@ -534,6 +534,8 @@ entities:
     pos: -15.694785,24.608267
     rot: -1.5707963267948966 rad
     type: Transform
+  - caps: AddTo, RemoveFrom
+    type: SolutionContainer
 - uid: 60
   type: DisgustingSweptSoup
   components:
@@ -650,6 +652,8 @@ entities:
     pos: -3.470539,16.956116
     rot: -1.5707963267948966 rad
     type: Transform
+  - caps: AddTo, RemoveFrom
+    type: SolutionContainer
 - uid: 74
   type: Carpet
   components:
@@ -699,6 +703,8 @@ entities:
     pos: 8.439846,26.712742
     rot: 1.5707963267948966 rad
     type: Transform
+  - caps: AddTo, RemoveFrom
+    type: SolutionContainer
 - uid: 81
   type: Table
   components:
@@ -923,6 +929,8 @@ entities:
   - parent: 853
     pos: 8.661116,25.513401
     type: Transform
+  - caps: AddTo, RemoveFrom
+    type: SolutionContainer
 - uid: 114
   type: BoxDonkpocket
   components:
@@ -21192,16 +21200,16 @@ entities:
   - containers:
       machine_board:
         entities:
-        - 4273
+        - 4272
         type: Robust.Server.GameObjects.Components.Container.Container
       machine_parts:
         entities:
+        - 4273
         - 4274
         - 4275
         - 4276
         - 4277
         - 4278
-        - 4279
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 1044
@@ -22499,6 +22507,8 @@ entities:
     pos: -35.166924,-3.5
     rot: 3.141592653589793 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 1191
@@ -23011,10 +23021,8 @@ entities:
     pos: -5.5120974,-7.5
     rot: 1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11998.838
+  - startingCharge: 11999.417
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 1240
   type: Poweredlight
   components:
@@ -32228,6 +32236,8 @@ entities:
     pos: -8.476567,-17.420076
     rot: -1.5707963267948966 rad
     type: Transform
+  - caps: AddTo, RemoveFrom
+    type: SolutionContainer
 - uid: 2443
   type: TableWood
   components:
@@ -32677,10 +32687,8 @@ entities:
     pos: 9.5,27.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.004
+  - startingCharge: 11999.634
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2505
   type: SalternApc
   components:
@@ -32688,10 +32696,8 @@ entities:
     pos: -2.5,27.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11998.34
+  - startingCharge: 11999.3
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2506
   type: SalternApc
   components:
@@ -32699,10 +32705,8 @@ entities:
     pos: 9.5,22.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11998.008
+  - startingCharge: 11999.066
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2507
   type: SalternApc
   components:
@@ -32710,10 +32714,8 @@ entities:
     pos: 24.5,14.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.336
+  - startingCharge: 11999.733
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2508
   type: SalternApc
   components:
@@ -32721,10 +32723,8 @@ entities:
     pos: 28.5,14.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11998.838
+  - startingCharge: 11999.483
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2509
   type: SalternApc
   components:
@@ -32732,10 +32732,8 @@ entities:
     pos: 47.5,-1.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11982.172
+  - startingCharge: 11991.15
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2510
   type: SalternApc
   components:
@@ -32743,10 +32741,8 @@ entities:
     pos: 31.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11998.174
+  - startingCharge: 11999.15
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2511
   type: SalternApc
   components:
@@ -32754,10 +32750,8 @@ entities:
     pos: 43.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11998.506
+  - startingCharge: 11999.384
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2512
   type: SalternApc
   components:
@@ -32765,10 +32759,8 @@ entities:
     pos: 12.5,13.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11997.842
+  - startingCharge: 11999.116
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2513
   type: SalternApc
   components:
@@ -32776,10 +32768,8 @@ entities:
     pos: 7.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11998.008
+  - startingCharge: 11999.2
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2514
   type: SalternApc
   components:
@@ -32787,10 +32777,8 @@ entities:
     pos: 22.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11998.008
+  - startingCharge: 11999.066
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2515
   type: SalternApc
   components:
@@ -32798,22 +32786,20 @@ entities:
     pos: 16.5,2.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11998.672
+  - startingCharge: 11999.467
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2516
-  type: PoweredSmallLight
+  type: CrateEmergencyFire
   components:
   - parent: 853
-    pos: -15.498537,16.019438
+    pos: 22.5,13.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - powerLoad: 0
-    type: PowerReceiver
+  - IsPlaceable: False
+    type: PlaceableSurface
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      EntityStorageComponent:
+        type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 2517
   type: SalternApc
@@ -32822,10 +32808,8 @@ entities:
     pos: -3.5,15.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11998.838
+  - startingCharge: 11999.483
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2518
   type: SalternApc
   components:
@@ -32833,10 +32817,8 @@ entities:
     pos: -28.5,12.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11998.672
+  - startingCharge: 11999.4
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2519
   type: SalternApc
   components:
@@ -32844,10 +32826,8 @@ entities:
     pos: -39.5,11.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11998.672
+  - startingCharge: 11999.4
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2520
   type: SalternApc
   components:
@@ -32855,10 +32835,8 @@ entities:
     pos: -11.5,2.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11996.846
+  - startingCharge: 11998.483
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2521
   type: Table
   components:
@@ -32873,10 +32851,8 @@ entities:
     pos: -20.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.502
+  - startingCharge: 11999.75
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2523
   type: ApcExtensionCable
   components:
@@ -32898,10 +32874,8 @@ entities:
     pos: -1.5,-18.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11998.174
+  - startingCharge: 11999.083
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2526
   type: SalternApc
   components:
@@ -32909,10 +32883,8 @@ entities:
     pos: -9.75476,-21.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11992.338
+  - startingCharge: 11996.233
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2527
   type: SalternApc
   components:
@@ -32920,10 +32892,8 @@ entities:
     pos: -14.5,-16.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.17
+  - startingCharge: 11999.65
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2528
   type: ApcExtensionCable
   components:
@@ -33113,10 +33083,8 @@ entities:
     pos: -16.302551,15.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.668
+  - startingCharge: 11999.833
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2555
   type: ApcExtensionCable
   components:
@@ -34762,10 +34730,8 @@ entities:
     pos: -14.5,-8.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11998.506
+  - startingCharge: 11999.45
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2790
   type: ApcExtensionCable
   components:
@@ -40533,7 +40499,7 @@ entities:
     pos: 42.5,-0.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3319450
+  - startingCharge: 3200172
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -40546,7 +40512,7 @@ entities:
     pos: 27.5,13.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3319450
+  - startingCharge: 3200172
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -40559,7 +40525,7 @@ entities:
     pos: 11.5,24.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3319450
+  - startingCharge: 3200172
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -40572,25 +40538,19 @@ entities:
     pos: 21.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3319450
+  - startingCharge: 3200172
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
   - supplyRate: 6000
     type: PowerSupplier
 - uid: 3617
-  type: SalternSubstation
+  type: BedsheetSpawner
   components:
   - parent: 853
-    pos: -15.5,16.5
+    pos: -27.5,-4.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3319450
-    type: Battery
-  - drawRate: 8000
-    type: PowerConsumer
-  - supplyRate: 6000
-    type: PowerSupplier
 - uid: 3618
   type: SalternSubstation
   components:
@@ -40598,7 +40558,7 @@ entities:
     pos: -0.5,-22.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3319450
+  - startingCharge: 3200172
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -40618,7 +40578,7 @@ entities:
     pos: 0.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3319450
+  - startingCharge: 3200172
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -40631,7 +40591,7 @@ entities:
     pos: -21.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3319450
+  - startingCharge: 3200172
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -40644,7 +40604,7 @@ entities:
     pos: -32.5,7.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3319450
+  - startingCharge: 3200172
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -42483,6 +42443,8 @@ entities:
     pos: 44.486908,10
     rot: -1.5707963267948966 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3884
@@ -42491,6 +42453,8 @@ entities:
   - parent: 853
     pos: 47.22923,-3
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3885
@@ -42499,6 +42463,8 @@ entities:
   - parent: 853
     pos: 29.299644,-7.5
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3886
@@ -42508,6 +42474,8 @@ entities:
     pos: 31.467993,-4.5
     rot: 1.5707963267948966 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3887
@@ -42516,6 +42484,8 @@ entities:
   - parent: 853
     pos: 30.278831,9.5
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3888
@@ -42524,6 +42494,8 @@ entities:
   - parent: 853
     pos: 18.260162,9.5
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3889
@@ -42533,6 +42505,8 @@ entities:
     pos: 26.46292,-1
     rot: -1.5707963267948966 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3890
@@ -42542,6 +42516,8 @@ entities:
     pos: 17.399544,2
     rot: -1.5707963267948966 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3891
@@ -42550,6 +42526,8 @@ entities:
   - parent: 853
     pos: 7.2721233,-15.5
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3892
@@ -42558,6 +42536,8 @@ entities:
   - parent: 853
     pos: 7.3033733,-20.5
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3893
@@ -42567,6 +42547,8 @@ entities:
     pos: -10.487591,2
     rot: -1.5707963267948966 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3894
@@ -42576,6 +42558,8 @@ entities:
     pos: -2.7508366,15
     rot: -1.5707963267948966 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3895
@@ -42585,6 +42569,8 @@ entities:
     pos: 5.701264,16.5
     rot: 3.141592653589793 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3896
@@ -42593,6 +42579,8 @@ entities:
   - parent: 853
     pos: 6.2924953,10.5
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3897
@@ -42602,6 +42590,8 @@ entities:
     pos: 12.41432,9.5
     rot: 1.5707963267948966 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3898
@@ -42611,6 +42601,8 @@ entities:
     pos: 16.47682,3.5
     rot: 1.5707963267948966 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3899
@@ -42620,6 +42612,8 @@ entities:
     pos: -24.514448,12
     rot: -1.5707963267948966 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3900
@@ -42628,6 +42622,8 @@ entities:
   - parent: 853
     pos: -39.802197,11.207858
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3901
@@ -42637,6 +42633,8 @@ entities:
     pos: -22.347473,-1.5
     rot: 3.141592653589793 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3902
@@ -42645,6 +42643,8 @@ entities:
   - parent: 853
     pos: -20.745232,-0.5
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3903
@@ -42654,6 +42654,8 @@ entities:
     pos: -13.885857,-9
     rot: -1.5707963267948966 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3904
@@ -42670,6 +42672,8 @@ entities:
     pos: 10.68897,19.5
     rot: 3.141592653589793 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3906
@@ -42679,6 +42683,8 @@ entities:
     pos: 8.923345,28.5
     rot: 1.5707963267948966 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3907
@@ -42688,6 +42694,8 @@ entities:
     pos: -2.4985301,28.5
     rot: 1.5707963267948966 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3908
@@ -42696,6 +42704,8 @@ entities:
   - parent: 853
     pos: -2.7641551,26.5
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3909
@@ -42705,6 +42715,8 @@ entities:
     pos: 9.704595,26.5
     rot: 3.141592653589793 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3910
@@ -42714,6 +42726,8 @@ entities:
     pos: -12.509865,6
     rot: -1.5707963267948966 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3911
@@ -42777,31 +42791,19 @@ entities:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 3918
-  type: PoweredSmallLight
+  type: BedsheetSpawner
   components:
   - parent: 853
-    pos: -15.494916,16.030584
+    pos: -27.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - powerLoad: 0
-    type: PowerReceiver
-  - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
-    type: ContainerContainer
 - uid: 3919
-  type: PoweredSmallLight
+  type: BedsheetSpawner
   components:
   - parent: 853
-    pos: -15.494916,16.030584
+    pos: -27.5,-1.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - powerLoad: 0
-    type: PowerReceiver
-  - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
-    type: ContainerContainer
 - uid: 3920
   type: PoweredSmallLight
   components:
@@ -42822,10 +42824,8 @@ entities:
     pos: -12.5,12.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11998.174
+  - startingCharge: 11999.217
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 3922
   type: EmergencyLight
   components:
@@ -42833,6 +42833,8 @@ entities:
     pos: -13.5,-17
     rot: -1.5707963267948966 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3923
@@ -42842,6 +42844,8 @@ entities:
     pos: -10.5,-17
     rot: -1.5707963267948966 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3924
@@ -42851,6 +42855,8 @@ entities:
     pos: 5.7693076,-15.5
     rot: 3.141592653589793 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3925
@@ -42859,6 +42865,8 @@ entities:
   - parent: 853
     pos: 2.2274737,8.5
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3926
@@ -44116,6 +44124,8 @@ entities:
     pos: -4.4964724,-8
     rot: -1.5707963267948966 rad
     type: Transform
+  - startingCharge: 12224.357
+    type: Battery
 - uid: 4082
   type: AirlockMaint
   components:
@@ -44332,10 +44342,8 @@ entities:
     pos: -30.517641,-3.5
     rot: 3.141592653589793 rad
     type: Transform
-  - startingCharge: 11998.34
+  - startingCharge: 11999.233
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 4112
   type: Bed
   components:
@@ -44358,62 +44366,63 @@ entities:
     rot: 1.5707963267948966 rad
     type: Transform
 - uid: 4115
-  type: BedsheetNT
+  type: PoweredSmallLight
   components:
   - parent: 853
-    pos: -27.5,1.5
-    rot: 1.5707963267948966 rad
+    pos: -22.5,-16
+    rot: -1.5707963267948966 rad
     type: Transform
+  - powerLoad: 0
+    type: PowerReceiver
+  - containers:
+      light_bulb:
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - uid: 4116
-  type: BedsheetNT
+  type: AirlockMaintIntLocked
   components:
+  - name: Waste Disposal
+    type: MetaData
   - parent: 853
-    pos: -27.5,-1.5
-    rot: 1.5707963267948966 rad
+    pos: -24.5,-12.5
+    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4117
-  type: BedsheetNT
-  components:
-  - parent: 853
-    pos: -27.5,-4.5
-    rot: 1.5707963267948966 rad
-    type: Transform
-- uid: 4118
   type: TableWood
   components:
   - parent: 853
     pos: -30.5,-4.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 4119
+- uid: 4118
   type: TableWood
   components:
   - parent: 853
     pos: -30.5,-1.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 4120
+- uid: 4119
   type: TableWood
   components:
   - parent: 853
     pos: -30.5,1.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 4121
+- uid: 4120
   type: ChairWood
   components:
   - parent: 853
     pos: -30.5,-5.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 4122
+- uid: 4121
   type: ChairWood
   components:
   - parent: 853
     pos: -30.5,-2.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 4123
+- uid: 4122
   type: Poweredlight
   components:
   - parent: 853
@@ -44425,7 +44434,7 @@ entities:
       light_bulb:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- uid: 4124
+- uid: 4123
   type: Poweredlight
   components:
   - parent: 853
@@ -44438,7 +44447,7 @@ entities:
       light_bulb:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- uid: 4125
+- uid: 4124
   type: Poweredlight
   components:
   - parent: 853
@@ -44451,91 +44460,91 @@ entities:
       light_bulb:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- uid: 4126
+- uid: 4125
   type: CarpetGreen
   components:
   - parent: 853
     pos: -29.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4127
+- uid: 4126
   type: CarpetGreen
   components:
   - parent: 853
     pos: -29.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4128
+- uid: 4127
   type: CarpetGreen
   components:
   - parent: 853
     pos: -28.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4129
+- uid: 4128
   type: CarpetGreen
   components:
   - parent: 853
     pos: -28.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4130
+- uid: 4129
   type: CarpetGay
   components:
   - parent: 853
     pos: -29.5,-4.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4131
+- uid: 4130
   type: CarpetGay
   components:
   - parent: 853
     pos: -29.5,-5.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4132
+- uid: 4131
   type: CarpetGay
   components:
   - parent: 853
     pos: -28.5,-4.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4133
+- uid: 4132
   type: CarpetGay
   components:
   - parent: 853
     pos: -28.5,-5.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4134
+- uid: 4133
   type: CarpetBlue
   components:
   - parent: 853
     pos: -29.5,-1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4135
+- uid: 4134
   type: CarpetBlue
   components:
   - parent: 853
     pos: -29.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4136
+- uid: 4135
   type: CarpetBlue
   components:
   - parent: 853
     pos: -28.5,-1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4137
+- uid: 4136
   type: CarpetBlue
   components:
   - parent: 853
     pos: -28.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4138
+- uid: 4137
   type: BoxDonkpocket
   components:
   - parent: 853
@@ -44546,42 +44555,42 @@ entities:
       storagebase:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-- uid: 4139
+- uid: 4138
   type: TableR
   components:
   - parent: 853
     pos: 15.5,8.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4140
+- uid: 4139
   type: Bed
   components:
   - parent: 853
     pos: -2.5,7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4141
+- uid: 4140
   type: Bed
   components:
   - parent: 853
     pos: 0.5,7.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4141
+  type: BedsheetOrange
+  components:
+  - parent: 853
+    pos: -2.5,7.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4142
   type: BedsheetOrange
   components:
   - parent: 853
-    pos: -2.5,7.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 4143
-  type: BedsheetOrange
-  components:
-  - parent: 853
     pos: 0.5,7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4144
+- uid: 4143
   type: LockerGeneric
   components:
   - parent: 853
@@ -44594,7 +44603,7 @@ entities:
       EntityStorageComponent:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-- uid: 4145
+- uid: 4144
   type: LockerGeneric
   components:
   - parent: 853
@@ -44607,7 +44616,7 @@ entities:
       EntityStorageComponent:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-- uid: 4146
+- uid: 4145
   type: Poweredlight
   components:
   - parent: 853
@@ -44619,7 +44628,7 @@ entities:
       light_bulb:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- uid: 4147
+- uid: 4146
   type: Poweredlight
   components:
   - parent: 853
@@ -44631,7 +44640,7 @@ entities:
       light_bulb:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- uid: 4148
+- uid: 4147
   type: Poweredlight
   components:
   - parent: 853
@@ -44643,7 +44652,7 @@ entities:
       light_bulb:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- uid: 4149
+- uid: 4148
   type: Poweredlight
   components:
   - parent: 853
@@ -44654,14 +44663,14 @@ entities:
       light_bulb:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- uid: 4150
+- uid: 4149
   type: Rack
   components:
   - parent: 853
     pos: 31.5,-4.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4151
+- uid: 4150
   type: Poweredlight
   components:
   - parent: 853
@@ -44673,77 +44682,77 @@ entities:
       light_bulb:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- uid: 4152
+- uid: 4151
   type: hydroponicsTray
   components:
   - parent: 853
     pos: -18.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4153
+- uid: 4152
   type: hydroponicsTray
   components:
   - parent: 853
     pos: -19.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4154
+- uid: 4153
   type: hydroponicsTray
   components:
   - parent: 853
     pos: -20.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4155
+- uid: 4154
   type: hydroponicsTray
   components:
   - parent: 853
     pos: -20.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4156
+- uid: 4155
   type: hydroponicsTray
   components:
   - parent: 853
     pos: -20.5,-0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4157
+- uid: 4156
   type: hydroponicsTray
   components:
   - parent: 853
     pos: -19.5,-0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4158
+- uid: 4157
   type: hydroponicsTray
   components:
   - parent: 853
     pos: -18.5,-0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4159
+- uid: 4158
   type: solid_wall
   components:
   - parent: 853
     pos: 16.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4160
+- uid: 4159
   type: solid_wall
   components:
   - parent: 853
     pos: 12.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4161
+- uid: 4160
   type: solid_wall
   components:
   - parent: 853
     pos: 13.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4162
+- uid: 4161
   type: Morgue
   components:
   - parent: 853
@@ -44755,7 +44764,7 @@ entities:
       morgue_tray:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- uid: 4163
+- uid: 4162
   type: Morgue
   components:
   - parent: 853
@@ -44767,7 +44776,7 @@ entities:
       morgue_tray:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- uid: 4164
+- uid: 4163
   type: Morgue
   components:
   - parent: 853
@@ -44779,7 +44788,7 @@ entities:
       morgue_tray:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- uid: 4165
+- uid: 4164
   type: Morgue
   components:
   - parent: 853
@@ -44791,7 +44800,7 @@ entities:
       morgue_tray:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- uid: 4166
+- uid: 4165
   type: Morgue
   components:
   - parent: 853
@@ -44803,27 +44812,27 @@ entities:
       morgue_tray:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- uid: 4167
+- uid: 4166
   type: SignMorgue
   components:
   - parent: 853
     pos: 17.313038,-12.573634
     type: Transform
-- uid: 4168
+- uid: 4167
   type: TableMetal
   components:
   - parent: 853
     pos: 14.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4169
+- uid: 4168
   type: TableMetal
   components:
   - parent: 853
     pos: 15.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4170
+- uid: 4169
   type: CrayonBoxFilled
   components:
   - parent: 853
@@ -44834,7 +44843,7 @@ entities:
       storagebase:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-- uid: 4171
+- uid: 4170
   type: MagazinePistolSmgTopMounted
   components:
   - parent: 853
@@ -44845,7 +44854,7 @@ entities:
       RangedMagazine-magazine:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-- uid: 4172
+- uid: 4171
   type: MagazinePistolSmgTopMounted
   components:
   - parent: 853
@@ -44856,7 +44865,7 @@ entities:
       RangedMagazine-magazine:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-- uid: 4173
+- uid: 4172
   type: AirlockMedicalLocked
   components:
   - name: Morgue
@@ -44865,7 +44874,7 @@ entities:
     pos: 16.5,-15.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4174
+- uid: 4173
   type: computerBodyScanner
   components:
   - parent: 853
@@ -44875,36 +44884,36 @@ entities:
   - containers:
       board:
         entities:
-        - 4175
+        - 4174
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-- uid: 4175
+- uid: 4174
   type: BodyScannerComputerCircuitboard
   components:
-  - parent: 4174
+  - parent: 4173
     type: Transform
-- uid: 4176
+- uid: 4175
   type: Rack
   components:
   - parent: 853
     pos: 29.5,-4.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4177
+- uid: 4176
   type: BarSign
   components:
   - parent: 853
     pos: -5.5,2.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4178
+- uid: 4177
   type: SignBar
   components:
   - parent: 853
     pos: 0.7031777,2.4187772
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4179
+- uid: 4178
   type: Poweredlight
   components:
   - parent: 853
@@ -44917,7 +44926,7 @@ entities:
       light_bulb:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- uid: 4180
+- uid: 4179
   type: Poweredlight
   components:
   - parent: 853
@@ -44930,21 +44939,21 @@ entities:
       light_bulb:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- uid: 4181
+- uid: 4180
   type: MopBucket
   components:
   - parent: 853
     pos: -21.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4182
+- uid: 4181
   type: AMEJar
   components:
   - parent: 853
     pos: 38.585155,11.629917
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4183
+- uid: 4182
   type: KitchenReagentGrinder
   components:
   - parent: 853
@@ -44957,133 +44966,133 @@ entities:
       ReagentGrinder-entityContainerContainer:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-- uid: 4184
+- uid: 4183
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 26.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4185
+- uid: 4184
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 25.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4186
+- uid: 4185
   type: Carpet
   components:
   - parent: 853
     pos: -8.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4187
+- uid: 4186
   type: Carpet
   components:
   - parent: 853
     pos: -8.5,-0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4188
+- uid: 4187
   type: Carpet
   components:
   - parent: 853
     pos: -7.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4189
+- uid: 4188
   type: Carpet
   components:
   - parent: 853
     pos: -7.5,-0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4190
+- uid: 4189
   type: Carpet
   components:
   - parent: 853
     pos: -6.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4191
+- uid: 4190
   type: Carpet
   components:
   - parent: 853
     pos: -6.5,-0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4192
+- uid: 4191
   type: Carpet
   components:
   - parent: 853
     pos: -5.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4193
+- uid: 4192
   type: Carpet
   components:
   - parent: 853
     pos: -5.5,-0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4194
+- uid: 4193
   type: Carpet
   components:
   - parent: 853
     pos: -4.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4195
+- uid: 4194
   type: Carpet
   components:
   - parent: 853
     pos: -4.5,-0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4196
+- uid: 4195
   type: Carpet
   components:
   - parent: 853
     pos: -3.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4197
+- uid: 4196
   type: Carpet
   components:
   - parent: 853
     pos: -3.5,-0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4198
+- uid: 4197
   type: Carpet
   components:
   - parent: 853
     pos: -2.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4199
+- uid: 4198
   type: Carpet
   components:
   - parent: 853
     pos: -2.5,-0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4200
+- uid: 4199
   type: Carpet
   components:
   - parent: 853
     pos: -1.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4201
+- uid: 4200
   type: KitchenSpike
   components:
   - parent: 853
     pos: -9.5,-4.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4202
+- uid: 4201
   type: LockerFreezer
   components:
   - parent: 853
@@ -45096,7 +45105,7 @@ entities:
       EntityStorageComponent:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-- uid: 4203
+- uid: 4202
   type: LockerFreezer
   components:
   - parent: 853
@@ -45109,7 +45118,7 @@ entities:
       EntityStorageComponent:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-- uid: 4204
+- uid: 4203
   type: Poweredlight
   components:
   - parent: 853
@@ -45122,140 +45131,140 @@ entities:
       light_bulb:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- uid: 4205
+- uid: 4204
   type: Carpet
   components:
   - parent: 853
     pos: -8.5,-1.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 4206
+- uid: 4205
   type: Carpet
   components:
   - parent: 853
     pos: -7.5,-1.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 4207
+- uid: 4206
   type: Carpet
   components:
   - parent: 853
     pos: -6.5,-1.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 4208
+- uid: 4207
   type: reinforced_wall
   components:
   - parent: 853
     pos: -9.5,23.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 4209
+- uid: 4208
   type: reinforced_wall
   components:
   - parent: 853
     pos: -8.5,23.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 4210
+- uid: 4209
   type: reinforced_wall
   components:
   - parent: 853
     pos: -7.5,23.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 4211
+- uid: 4210
   type: SpawnPointHeadOfSecurity
   components:
   - parent: 853
     pos: -7.5,22.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4212
+- uid: 4211
   type: CarpetBlack
   components:
   - parent: 853
     pos: -6.5,22.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4213
+- uid: 4212
   type: CarpetBlack
   components:
   - parent: 853
     pos: -6.5,21.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4214
+- uid: 4213
   type: CarpetBlack
   components:
   - parent: 853
     pos: -6.5,20.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4215
+- uid: 4214
   type: CarpetBlack
   components:
   - parent: 853
     pos: -7.5,22.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4216
+- uid: 4215
   type: CarpetBlack
   components:
   - parent: 853
     pos: -7.5,21.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4217
+- uid: 4216
   type: CarpetBlack
   components:
   - parent: 853
     pos: -7.5,20.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4218
+- uid: 4217
   type: CarpetBlack
   components:
   - parent: 853
     pos: -8.5,22.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4219
+- uid: 4218
   type: CarpetBlack
   components:
   - parent: 853
     pos: -8.5,21.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4220
+- uid: 4219
   type: CarpetBlack
   components:
   - parent: 853
     pos: -8.5,20.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4221
+- uid: 4220
   type: Chair
   components:
   - parent: 853
     pos: -7.5,20.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 4222
+- uid: 4221
   type: Chair
   components:
   - parent: 853
     pos: -6.5,20.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 4223
+- uid: 4222
   type: TableWood
   components:
   - parent: 853
     pos: -8.5,21.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 4224
+- uid: 4223
   type: WeaponCapacitorRecharger
   components:
   - parent: 853
@@ -45268,103 +45277,103 @@ entities:
       WeaponCapacitorCharger-powerCellContainer:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- uid: 4225
+- uid: 4224
   type: Table
   components:
   - parent: 853
     pos: -4.5,14.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 4226
+- uid: 4225
   type: Table
   components:
   - parent: 853
     pos: -4.5,13.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 4227
+- uid: 4226
   type: Table
   components:
   - parent: 853
     pos: -5.5,13.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 4228
+- uid: 4227
   type: Table
   components:
   - parent: 853
     pos: -6.5,13.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 4229
+- uid: 4228
   type: Table
   components:
   - parent: 853
     pos: -7.5,13.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 4230
+- uid: 4229
   type: Table
   components:
   - parent: 853
     pos: -7.5,14.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 4231
+- uid: 4230
   type: Chair
   components:
   - parent: 853
     pos: -4.5,12.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 4232
+- uid: 4231
   type: Chair
   components:
   - parent: 853
     pos: -5.5,12.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 4233
+- uid: 4232
   type: Chair
   components:
   - parent: 853
     pos: -6.5,12.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 4234
+- uid: 4233
   type: Chair
   components:
   - parent: 853
     pos: -7.5,12.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 4235
+- uid: 4234
   type: Chair
   components:
   - parent: 853
     pos: -8.5,13.5
     type: Transform
-- uid: 4236
+- uid: 4235
   type: Chair
   components:
   - parent: 853
     pos: -8.5,14.5
     type: Transform
-- uid: 4237
+- uid: 4236
   type: Chair
   components:
   - parent: 853
     pos: -3.5,14.5
     rot: 3.141592653589793 rad
     type: Transform
-- uid: 4238
+- uid: 4237
   type: Chair
   components:
   - parent: 853
     pos: -3.5,13.5
     rot: 3.141592653589793 rad
     type: Transform
-- uid: 4239
+- uid: 4238
   type: BoxHandcuff
   components:
   - parent: 853
@@ -45375,7 +45384,7 @@ entities:
       storagebase:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-- uid: 4240
+- uid: 4239
   type: WeaponCapacitorRecharger
   components:
   - parent: 853
@@ -45388,7 +45397,7 @@ entities:
       WeaponCapacitorCharger-powerCellContainer:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- uid: 4241
+- uid: 4240
   type: BoxDonkpocket
   components:
   - parent: 853
@@ -45399,49 +45408,49 @@ entities:
       storagebase:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-- uid: 4242
+- uid: 4241
   type: RadioHandheld
   components:
   - parent: 853
     pos: -7.5,13.5
     rot: 3.141592653589793 rad
     type: Transform
-- uid: 4243
+- uid: 4242
   type: RadioHandheld
   components:
   - parent: 853
     pos: -4.5,13.5
     rot: 3.141592653589793 rad
     type: Transform
-- uid: 4244
+- uid: 4243
   type: RadioHandheld
   components:
   - parent: 853
     pos: 1.5,28.5
     rot: 3.141592653589793 rad
     type: Transform
-- uid: 4245
+- uid: 4244
   type: RadioHandheld
   components:
   - parent: 853
     pos: 26.5,8.5
     rot: 3.141592653589793 rad
     type: Transform
-- uid: 4246
+- uid: 4245
   type: Table
   components:
   - parent: 853
     pos: -7.5,-28.5
     rot: 3.141592653589793 rad
     type: Transform
-- uid: 4247
+- uid: 4246
   type: Table
   components:
   - parent: 853
     pos: -7.5,-29.5
     rot: 3.141592653589793 rad
     type: Transform
-- uid: 4248
+- uid: 4247
   type: KitchenMicrowave
   components:
   - parent: 853
@@ -45452,14 +45461,14 @@ entities:
       microwave_entity_container:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-- uid: 4249
+- uid: 4248
   type: ClothingHeadHelmetScaf
   components:
   - parent: 853
     pos: 13.5,24.5
     rot: 3.141592653589793 rad
     type: Transform
-- uid: 4250
+- uid: 4249
   type: ClothingBeltSecurityFilled
   components:
   - parent: 853
@@ -45470,35 +45479,35 @@ entities:
       storagebase:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-- uid: 4251
+- uid: 4250
   type: Shelf
   components:
   - parent: 853
     pos: -20.5,7.5
     rot: 3.141592653589793 rad
     type: Transform
-- uid: 4252
+- uid: 4251
   type: SprayBottleSpaceCleaner
   components:
   - parent: 853
     pos: -20.5,7.5
     rot: 3.141592653589793 rad
     type: Transform
-- uid: 4253
+- uid: 4252
   type: RCDAmmo
   components:
   - parent: 853
     pos: 32.5,-2.5
     rot: 3.141592653589793 rad
     type: Transform
-- uid: 4254
+- uid: 4253
   type: RCDAmmo
   components:
   - parent: 853
     pos: 32.812416,-2.3740568
     rot: 3.141592653589793 rad
     type: Transform
-- uid: 4255
+- uid: 4254
   type: SmgWt550
   components:
   - parent: 853
@@ -45512,19 +45521,19 @@ entities:
         type: Content.Server.GameObjects.ContainerSlot
       MagazineBarrel-magazine:
         entities:
-        - 4256
+        - 4255
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- uid: 4256
+- uid: 4255
   type: MagazinePistolSmgTopMounted
   components:
-  - parent: 4255
+  - parent: 4254
     type: Transform
   - containers:
       RangedMagazine-magazine:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-- uid: 4257
+- uid: 4256
   type: BodyBag_Container
   components:
   - parent: 853
@@ -45537,7 +45546,7 @@ entities:
       body_bag_label:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- uid: 4258
+- uid: 4257
   type: BodyBag_Container
   components:
   - parent: 853
@@ -45550,7 +45559,7 @@ entities:
       body_bag_label:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- uid: 4259
+- uid: 4258
   type: Poweredlight
   components:
   - parent: 853
@@ -45563,19 +45572,19 @@ entities:
       light_bulb:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- uid: 4260
+- uid: 4259
   type: TableMetal
   components:
   - parent: 853
     pos: -14.5,18.5
     type: Transform
-- uid: 4261
+- uid: 4260
   type: TableMetal
   components:
   - parent: 853
     pos: -14.5,19.5
     type: Transform
-- uid: 4262
+- uid: 4261
   type: BoxFlashbang
   components:
   - parent: 853
@@ -45585,63 +45594,63 @@ entities:
       storagebase:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-- uid: 4263
+- uid: 4262
   type: CarpetBlue
   components:
   - parent: 853
     pos: 8.5,20.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4264
+- uid: 4263
   type: CarpetBlue
   components:
   - parent: 853
     pos: 8.5,19.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4265
+- uid: 4264
   type: CarpetBlue
   components:
   - parent: 853
     pos: 8.5,18.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4266
+- uid: 4265
   type: CarpetBlue
   components:
   - parent: 853
     pos: 8.5,17.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4267
+- uid: 4266
   type: CarpetBlue
   components:
   - parent: 853
     pos: 9.5,20.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4268
+- uid: 4267
   type: CarpetBlue
   components:
   - parent: 853
     pos: 9.5,19.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4269
+- uid: 4268
   type: CarpetBlue
   components:
   - parent: 853
     pos: 9.5,18.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4270
+- uid: 4269
   type: CarpetBlue
   components:
   - parent: 853
     pos: 9.5,17.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4271
+- uid: 4270
   type: LampGold
   components:
   - parent: 853
@@ -45652,15 +45661,20 @@ entities:
       cellslot_cell_container:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- uid: 4272
+- uid: 4271
   type: Table
   components:
   - parent: 853
     pos: -10.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4273
+- uid: 4272
   type: ProtolatheMachineCircuitboard
+  components:
+  - parent: 1043
+    type: Transform
+- uid: 4273
+  type: MatterBinStockPart
   components:
   - parent: 1043
     type: Transform
@@ -45670,7 +45684,7 @@ entities:
   - parent: 1043
     type: Transform
 - uid: 4275
-  type: MatterBinStockPart
+  type: MicroManipulatorStockPart
   components:
   - parent: 1043
     type: Transform
@@ -45680,7 +45694,7 @@ entities:
   - parent: 1043
     type: Transform
 - uid: 4277
-  type: MicroManipulatorStockPart
+  type: Beaker
   components:
   - parent: 1043
     type: Transform
@@ -45690,291 +45704,286 @@ entities:
   - parent: 1043
     type: Transform
 - uid: 4279
-  type: Beaker
-  components:
-  - parent: 1043
-    type: Transform
-- uid: 4280
   type: TraitorDMRedemptionMachineSpawner
   components:
   - parent: 853
     pos: -18.5,25.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4281
+- uid: 4280
   type: TraitorDMRedemptionMachineSpawner
   components:
   - parent: 853
     pos: 10.5,13.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4282
+- uid: 4281
   type: TraitorDMRedemptionMachineSpawner
   components:
   - parent: 853
     pos: -9.5,-25.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4283
+- uid: 4282
   type: TraitorDMRedemptionMachineSpawner
   components:
   - parent: 853
     pos: 27.5,-1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4284
+- uid: 4283
   type: reinforced_wall
   components:
   - parent: 853
     pos: 52.5,-1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4285
+- uid: 4284
   type: reinforced_wall
   components:
   - parent: 853
     pos: 52.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4286
+- uid: 4285
   type: reinforced_wall
   components:
   - parent: 853
     pos: 52.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4287
+- uid: 4286
   type: reinforced_wall
   components:
   - parent: 853
     pos: 52.5,-4.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4288
+- uid: 4287
   type: reinforced_wall
   components:
   - parent: 853
     pos: 52.5,-5.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4289
+- uid: 4288
   type: reinforced_wall
   components:
   - parent: 853
     pos: 52.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4290
+- uid: 4289
   type: reinforced_wall
   components:
   - parent: 853
     pos: 52.5,-7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4291
+- uid: 4290
   type: SinguloGenerator
   components:
   - parent: 853
     pos: 49.5,-24.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4292
+- uid: 4291
   type: LowWall
   components:
   - parent: 853
     pos: 46.5,14.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4292
+  type: LowWall
+  components:
+  - parent: 853
+    pos: 47.5,14.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4293
   type: LowWall
   components:
   - parent: 853
-    pos: 47.5,14.5
+    pos: 48.5,14.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4294
   type: LowWall
   components:
   - parent: 853
-    pos: 48.5,14.5
+    pos: 49.5,14.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4295
   type: LowWall
   components:
   - parent: 853
-    pos: 49.5,14.5
+    pos: 50.5,14.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4296
   type: LowWall
   components:
   - parent: 853
-    pos: 50.5,14.5
+    pos: 51.5,14.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4297
   type: LowWall
   components:
   - parent: 853
-    pos: 51.5,14.5
+    pos: 51.5,13.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4298
   type: LowWall
   components:
   - parent: 853
-    pos: 51.5,13.5
+    pos: 51.5,12.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4299
   type: LowWall
   components:
   - parent: 853
-    pos: 51.5,12.5
+    pos: 51.5,11.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4300
   type: LowWall
   components:
   - parent: 853
-    pos: 51.5,11.5
+    pos: 51.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4301
   type: LowWall
   components:
   - parent: 853
-    pos: 51.5,10.5
+    pos: 51.5,9.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4302
   type: LowWall
   components:
   - parent: 853
-    pos: 51.5,9.5
+    pos: 51.5,8.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4303
   type: LowWall
   components:
   - parent: 853
-    pos: 51.5,8.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 4304
-  type: LowWall
-  components:
-  - parent: 853
     pos: 51.5,7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4305
+- uid: 4304
   type: reinforced_wall
   components:
   - parent: 853
     pos: 51.5,6.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4306
+- uid: 4305
   type: reinforced_wall
   components:
   - parent: 853
     pos: 45.5,14.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4307
+- uid: 4306
   type: ReinforcedWindow
   components:
   - parent: 853
     pos: 46.5,14.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4308
+- uid: 4307
   type: ReinforcedWindow
   components:
   - parent: 853
     pos: 47.5,14.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4309
+- uid: 4308
   type: ReinforcedWindow
   components:
   - parent: 853
     pos: 48.5,14.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4310
+- uid: 4309
   type: ReinforcedWindow
   components:
   - parent: 853
     pos: 49.5,14.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4311
+- uid: 4310
   type: ReinforcedWindow
   components:
   - parent: 853
     pos: 50.5,14.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4312
+- uid: 4311
   type: ReinforcedWindow
   components:
   - parent: 853
     pos: 51.5,14.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4313
+- uid: 4312
   type: ReinforcedWindow
   components:
   - parent: 853
     pos: 51.5,13.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4314
+- uid: 4313
   type: ReinforcedWindow
   components:
   - parent: 853
     pos: 51.5,12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4315
+- uid: 4314
   type: ReinforcedWindow
   components:
   - parent: 853
     pos: 51.5,11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4316
+- uid: 4315
   type: ReinforcedWindow
   components:
   - parent: 853
     pos: 51.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4317
+- uid: 4316
   type: ReinforcedWindow
   components:
   - parent: 853
     pos: 51.5,9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4318
+- uid: 4317
   type: ReinforcedWindow
   components:
   - parent: 853
     pos: 51.5,8.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4319
+- uid: 4318
   type: ReinforcedWindow
   components:
   - parent: 853
     pos: 51.5,7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4320
+- uid: 4319
   type: AirlockEngineeringLocked
   components:
   - name: Antimatter Engine
@@ -45983,7 +45992,7 @@ entities:
     pos: 45.5,8.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4321
+- uid: 4320
   type: AirlockEngineeringLocked
   components:
   - name: Antimatter Engine
@@ -45992,7 +46001,7 @@ entities:
     pos: 45.5,7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4322
+- uid: 4321
   type: Poweredlight
   components:
   - parent: 853
@@ -46004,119 +46013,119 @@ entities:
       light_bulb:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- uid: 4323
+- uid: 4322
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 45.5,8.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4324
+- uid: 4323
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 46.5,8.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4325
+- uid: 4324
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 46.5,12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4326
+- uid: 4325
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 47.5,9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4327
+- uid: 4326
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 47.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4328
+- uid: 4327
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 47.5,11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4329
+- uid: 4328
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 47.5,12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4330
+- uid: 4329
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 47.5,8.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4331
+- uid: 4330
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 47.5,7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4332
+- uid: 4331
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 49.5,12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4333
+- uid: 4332
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 49.5,11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4334
+- uid: 4333
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 49.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4335
+- uid: 4334
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 49.5,9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4336
+- uid: 4335
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 49.5,8.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4337
+- uid: 4336
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 49.5,7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4338
+- uid: 4337
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 48.5,9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4339
+- uid: 4338
   type: Poweredlight
   components:
   - parent: 853
@@ -46128,977 +46137,977 @@ entities:
       light_bulb:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- uid: 4340
+- uid: 4339
   type: HVWire
   components:
   - parent: 853
     pos: 42.5,7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4341
+- uid: 4340
   type: HVWire
   components:
   - parent: 853
     pos: 43.5,7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4342
+- uid: 4341
   type: HVWire
   components:
   - parent: 853
     pos: 44.5,7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4343
+- uid: 4342
   type: HVWire
   components:
   - parent: 853
     pos: 45.5,7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4344
+- uid: 4343
   type: HVWire
   components:
   - parent: 853
     pos: 46.5,7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4345
+- uid: 4344
   type: HVWire
   components:
   - parent: 853
     pos: 47.5,7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4346
+- uid: 4345
   type: HVWire
   components:
   - parent: 853
     pos: 48.5,7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4347
+- uid: 4346
   type: HVWire
   components:
   - parent: 853
     pos: 48.5,8.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4348
+- uid: 4347
   type: HVWire
   components:
   - parent: 853
     pos: 48.5,9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4349
+- uid: 4348
   type: HVWire
   components:
   - parent: 853
     pos: 48.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4350
+- uid: 4349
   type: HVWire
   components:
   - parent: 853
     pos: 48.5,11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4351
+- uid: 4350
   type: HVWire
   components:
   - parent: 853
     pos: 48.5,12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4352
+- uid: 4351
   type: reinforced_wall
   components:
   - parent: 853
     pos: 46.5,-8.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4353
+- uid: 4352
   type: reinforced_wall
   components:
   - parent: 853
     pos: 45.5,-8.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4354
+- uid: 4353
   type: reinforced_wall
   components:
   - parent: 853
     pos: 44.5,-8.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4355
+- uid: 4354
   type: reinforced_wall
   components:
   - parent: 853
     pos: 43.5,-8.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4356
+- uid: 4355
   type: reinforced_wall
   components:
   - parent: 853
     pos: 43.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4357
+- uid: 4356
   type: reinforced_wall
   components:
   - parent: 853
     pos: 43.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4358
+- uid: 4357
   type: reinforced_wall
   components:
   - parent: 853
     pos: 43.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4359
+- uid: 4358
   type: reinforced_wall
   components:
   - parent: 853
     pos: 43.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4360
+- uid: 4359
   type: reinforced_wall
   components:
   - parent: 853
     pos: 43.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4361
+- uid: 4360
   type: reinforced_wall
   components:
   - parent: 853
     pos: 43.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4362
+- uid: 4361
   type: reinforced_wall
   components:
   - parent: 853
     pos: 55.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4363
+- uid: 4362
   type: reinforced_wall
   components:
   - parent: 853
     pos: 55.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4364
+- uid: 4363
   type: reinforced_wall
   components:
   - parent: 853
     pos: 55.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4365
+- uid: 4364
   type: reinforced_wall
   components:
   - parent: 853
     pos: 55.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4366
+- uid: 4365
   type: reinforced_wall
   components:
   - parent: 853
     pos: 55.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4367
+- uid: 4366
   type: reinforced_wall
   components:
   - parent: 853
     pos: 55.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4368
+- uid: 4367
   type: reinforced_wall
   components:
   - parent: 853
     pos: 55.5,-8.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4369
+- uid: 4368
   type: reinforced_wall
   components:
   - parent: 853
     pos: 54.5,-8.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4370
+- uid: 4369
   type: reinforced_wall
   components:
   - parent: 853
     pos: 53.5,-8.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4371
+- uid: 4370
   type: reinforced_wall
   components:
   - parent: 853
     pos: 52.5,-8.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4372
+- uid: 4371
   type: reinforced_wall
   components:
   - parent: 853
     pos: 46.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4373
+- uid: 4372
   type: reinforced_wall
   components:
   - parent: 853
     pos: 46.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4374
+- uid: 4373
   type: reinforced_wall
   components:
   - parent: 853
     pos: 46.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4375
+- uid: 4374
   type: reinforced_wall
   components:
   - parent: 853
     pos: 52.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4376
+- uid: 4375
   type: reinforced_wall
   components:
   - parent: 853
     pos: 52.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4377
+- uid: 4376
   type: reinforced_wall
   components:
   - parent: 853
     pos: 52.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4378
+- uid: 4377
   type: LowWall
   components:
   - parent: 853
     pos: 46.5,-13.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4378
+  type: LowWall
+  components:
+  - parent: 853
+    pos: 46.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4379
   type: LowWall
   components:
   - parent: 853
-    pos: 46.5,-14.5
+    pos: 45.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4380
   type: LowWall
   components:
   - parent: 853
-    pos: 45.5,-14.5
+    pos: 47.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4381
   type: LowWall
   components:
   - parent: 853
-    pos: 47.5,-14.5
+    pos: 48.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4382
   type: LowWall
   components:
   - parent: 853
-    pos: 48.5,-14.5
+    pos: 49.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4383
   type: LowWall
   components:
   - parent: 853
-    pos: 49.5,-14.5
+    pos: 50.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4384
   type: LowWall
   components:
   - parent: 853
-    pos: 50.5,-14.5
+    pos: 51.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4385
   type: LowWall
   components:
   - parent: 853
-    pos: 51.5,-14.5
+    pos: 52.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4386
   type: LowWall
   components:
   - parent: 853
-    pos: 52.5,-14.5
+    pos: 52.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4387
   type: LowWall
   components:
   - parent: 853
-    pos: 52.5,-13.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 4388
-  type: LowWall
-  components:
-  - parent: 853
     pos: 53.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4389
+- uid: 4388
   type: ReinforcedWindow
   components:
   - parent: 853
     pos: 46.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4390
+- uid: 4389
   type: ReinforcedWindow
   components:
   - parent: 853
     pos: 46.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4391
+- uid: 4390
   type: ReinforcedWindow
   components:
   - parent: 853
     pos: 45.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4392
+- uid: 4391
   type: ReinforcedWindow
   components:
   - parent: 853
     pos: 47.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4393
+- uid: 4392
   type: ReinforcedWindow
   components:
   - parent: 853
     pos: 48.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4394
+- uid: 4393
   type: ReinforcedWindow
   components:
   - parent: 853
     pos: 52.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4395
+- uid: 4394
   type: ReinforcedWindow
   components:
   - parent: 853
     pos: 53.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4396
+- uid: 4395
   type: ReinforcedWindow
   components:
   - parent: 853
     pos: 52.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4397
+- uid: 4396
   type: ReinforcedWindow
   components:
   - parent: 853
     pos: 51.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4398
+- uid: 4397
   type: ReinforcedWindow
   components:
   - parent: 853
     pos: 50.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4399
+- uid: 4398
   type: ReinforcedWindow
   components:
   - parent: 853
     pos: 49.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4400
+- uid: 4399
   type: AirlockExternalLocked
   components:
   - parent: 853
     pos: 44.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4401
+- uid: 4400
   type: AirlockExternalLocked
   components:
   - parent: 853
     pos: 54.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4402
+- uid: 4401
   type: Emitter
   components:
   - parent: 853
     pos: 45.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4403
+- uid: 4402
   type: Emitter
   components:
   - parent: 853
     pos: 49.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4404
+- uid: 4403
   type: Emitter
   components:
   - parent: 853
     pos: 53.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4405
+- uid: 4404
   type: Emitter
   components:
   - parent: 853
     pos: 56.5,-20.5
     rot: 3.141592653589793 rad
     type: Transform
-- uid: 4406
+- uid: 4405
   type: Emitter
   components:
   - parent: 853
     pos: 56.5,-24.5
     rot: 3.141592653589793 rad
     type: Transform
-- uid: 4407
+- uid: 4406
   type: Emitter
   components:
   - parent: 853
     pos: 56.5,-28.5
     rot: 3.141592653589793 rad
     type: Transform
-- uid: 4408
+- uid: 4407
   type: Emitter
   components:
   - parent: 853
     pos: 53.5,-31.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 4409
+- uid: 4408
   type: Emitter
   components:
   - parent: 853
     pos: 49.5,-31.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 4410
+- uid: 4409
   type: Emitter
   components:
   - parent: 853
     pos: 45.5,-31.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 4411
+- uid: 4410
   type: Emitter
   components:
   - parent: 853
     pos: 42.5,-28.5
     type: Transform
-- uid: 4412
+- uid: 4411
   type: Emitter
   components:
   - parent: 853
     pos: 42.5,-24.5
     type: Transform
-- uid: 4413
+- uid: 4412
   type: Emitter
   components:
   - parent: 853
     pos: 42.5,-20.5
     type: Transform
-- uid: 4414
+- uid: 4413
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 44.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4415
+- uid: 4414
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 44.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4416
+- uid: 4415
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 44.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4417
+- uid: 4416
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 44.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4418
+- uid: 4417
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 45.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4419
+- uid: 4418
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 46.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4420
+- uid: 4419
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 54.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4421
+- uid: 4420
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 54.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4422
+- uid: 4421
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 54.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4423
+- uid: 4422
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 54.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4424
+- uid: 4423
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 53.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4425
+- uid: 4424
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 52.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4426
+- uid: 4425
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 51.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4427
+- uid: 4426
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 47.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4428
+- uid: 4427
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 48.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4429
+- uid: 4428
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 49.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4430
+- uid: 4429
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 50.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4431
+- uid: 4430
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 49.5,-8.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4431
+  type: ApcExtensionCable
+  components:
+  - parent: 853
+    pos: 49.5,-7.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4432
   type: ApcExtensionCable
   components:
   - parent: 853
-    pos: 49.5,-7.5
+    pos: 49.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4433
   type: ApcExtensionCable
   components:
   - parent: 853
-    pos: 49.5,-6.5
+    pos: 48.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4434
   type: ApcExtensionCable
   components:
   - parent: 853
-    pos: 48.5,-6.5
+    pos: 47.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4435
   type: ApcExtensionCable
   components:
   - parent: 853
-    pos: 47.5,-6.5
+    pos: 47.5,-5.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4436
   type: ApcExtensionCable
   components:
   - parent: 853
-    pos: 47.5,-5.5
+    pos: 47.5,-4.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4437
   type: ApcExtensionCable
   components:
   - parent: 853
-    pos: 47.5,-4.5
+    pos: 49.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4438
   type: ApcExtensionCable
   components:
   - parent: 853
-    pos: 49.5,-10.5
+    pos: 49.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4439
   type: ApcExtensionCable
   components:
   - parent: 853
-    pos: 49.5,-11.5
+    pos: 49.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4440
   type: ApcExtensionCable
   components:
   - parent: 853
-    pos: 49.5,-12.5
+    pos: 48.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4441
   type: ApcExtensionCable
   components:
   - parent: 853
-    pos: 48.5,-11.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 4442
-  type: ApcExtensionCable
-  components:
-  - parent: 853
     pos: 50.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4443
+- uid: 4442
   type: HVWire
   components:
   - parent: 853
     pos: 45.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4444
+- uid: 4443
   type: HVWire
   components:
   - parent: 853
     pos: 45.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4445
+- uid: 4444
   type: HVWire
   components:
   - parent: 853
     pos: 45.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4446
+- uid: 4445
   type: HVWire
   components:
   - parent: 853
     pos: 46.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4447
+- uid: 4446
   type: HVWire
   components:
   - parent: 853
     pos: 47.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4448
+- uid: 4447
   type: HVWire
   components:
   - parent: 853
     pos: 48.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4449
+- uid: 4448
   type: HVWire
   components:
   - parent: 853
     pos: 48.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4450
+- uid: 4449
   type: HVWire
   components:
   - parent: 853
     pos: 49.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4451
+- uid: 4450
   type: HVWire
   components:
   - parent: 853
     pos: 50.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4452
+- uid: 4451
   type: HVWire
   components:
   - parent: 853
     pos: 49.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4453
+- uid: 4452
   type: HVWire
   components:
   - parent: 853
     pos: 51.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4454
+- uid: 4453
   type: HVWire
   components:
   - parent: 853
     pos: 52.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4455
+- uid: 4454
   type: HVWire
   components:
   - parent: 853
     pos: 53.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4456
+- uid: 4455
   type: HVWire
   components:
   - parent: 853
     pos: 53.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4457
+- uid: 4456
   type: HVWire
   components:
   - parent: 853
     pos: 53.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4458
+- uid: 4457
   type: HVWire
   components:
   - parent: 853
     pos: 49.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4459
+- uid: 4458
   type: HVWire
   components:
   - parent: 853
     pos: 49.5,-8.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4460
+- uid: 4459
   type: HVWire
   components:
   - parent: 853
     pos: 49.5,-7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4461
+- uid: 4460
   type: HVWire
   components:
   - parent: 853
     pos: 49.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4462
+- uid: 4461
   type: HVWire
   components:
   - parent: 853
     pos: 48.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4463
+- uid: 4462
   type: HVWire
   components:
   - parent: 853
     pos: 47.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4464
+- uid: 4463
   type: HVWire
   components:
   - parent: 853
     pos: 47.5,-5.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4465
+- uid: 4464
   type: HVWire
   components:
   - parent: 853
     pos: 47.5,-4.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4466
+- uid: 4465
   type: HVWire
   components:
   - parent: 853
     pos: 47.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4467
+- uid: 4466
   type: HVWire
   components:
   - parent: 853
     pos: 47.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4468
+- uid: 4467
   type: HVWire
   components:
   - parent: 853
     pos: 48.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4469
+- uid: 4468
   type: HVWire
   components:
   - parent: 853
     pos: 48.5,-1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4470
+- uid: 4469
   type: HVWire
   components:
   - parent: 853
     pos: 48.5,-0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4471
+- uid: 4470
   type: HVWire
   components:
   - parent: 853
     pos: 48.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4472
+- uid: 4471
   type: HVWire
   components:
   - parent: 853
     pos: 48.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4473
+- uid: 4472
   type: HVWire
   components:
   - parent: 853
     pos: 47.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4474
+- uid: 4473
   type: HVWire
   components:
   - parent: 853
     pos: 46.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4475
+- uid: 4474
   type: HVWire
   components:
   - parent: 853
     pos: 45.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4476
+- uid: 4475
   type: HVWire
   components:
   - parent: 853
     pos: 44.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4477
+- uid: 4476
   type: AirlockExternalLocked
   components:
   - parent: 853
     pos: 46.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4478
+- uid: 4477
   type: AirlockExternalLocked
   components:
   - parent: 853
     pos: 52.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4479
+- uid: 4478
   type: AirlockEngineeringLocked
   components:
   - name: Singularity Engine
@@ -47107,47 +47116,47 @@ entities:
     pos: 49.5,-7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4480
+- uid: 4479
   type: SalternSmes
   components:
   - parent: 853
     pos: 45.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4481
+- uid: 4480
   type: SalternSmes
   components:
   - parent: 853
     pos: 53.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4482
+- uid: 4481
   type: SalternSubstation
   components:
   - parent: 853
     pos: 45.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3319414
+  - startingCharge: 3200136
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
   - supplyRate: 6000
     type: PowerSupplier
-- uid: 4483
+- uid: 4482
   type: SalternSubstation
   components:
   - parent: 853
     pos: 53.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3319414
+  - startingCharge: 3200136
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
   - supplyRate: 6000
     type: PowerSupplier
-- uid: 4484
+- uid: 4483
   type: Poweredlight
   components:
   - parent: 853
@@ -47160,7 +47169,7 @@ entities:
       light_bulb:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- uid: 4485
+- uid: 4484
   type: Poweredlight
   components:
   - parent: 853
@@ -47173,7 +47182,7 @@ entities:
       light_bulb:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- uid: 4486
+- uid: 4485
   type: Poweredlight
   components:
   - parent: 853
@@ -47186,7 +47195,7 @@ entities:
       light_bulb:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- uid: 4487
+- uid: 4486
   type: Poweredlight
   components:
   - parent: 853
@@ -47198,1596 +47207,1596 @@ entities:
       light_bulb:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- uid: 4488
+- uid: 4487
   type: MVWire
   components:
   - parent: 853
     pos: 45.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4489
+- uid: 4488
   type: MVWire
   components:
   - parent: 853
     pos: 45.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4490
+- uid: 4489
   type: MVWire
   components:
   - parent: 853
     pos: 53.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4491
+- uid: 4490
   type: MVWire
   components:
   - parent: 853
     pos: 53.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4492
+- uid: 4491
   type: MVWire
   components:
   - parent: 853
     pos: 52.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4493
+- uid: 4492
   type: MVWire
   components:
   - parent: 853
     pos: 51.5,-11.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4493
+  type: MVWire
+  components:
+  - parent: 853
+    pos: 51.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4494
   type: MVWire
   components:
   - parent: 853
-    pos: 51.5,-12.5
+    pos: 46.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4495
   type: MVWire
   components:
   - parent: 853
-    pos: 46.5,-11.5
+    pos: 47.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4496
   type: MVWire
   components:
   - parent: 853
-    pos: 47.5,-11.5
+    pos: 47.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4497
   type: MVWire
   components:
   - parent: 853
-    pos: 47.5,-12.5
+    pos: 47.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4498
   type: MVWire
   components:
   - parent: 853
-    pos: 47.5,-13.5
+    pos: 49.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4499
   type: MVWire
   components:
   - parent: 853
-    pos: 49.5,-13.5
+    pos: 48.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4500
   type: MVWire
   components:
   - parent: 853
-    pos: 48.5,-13.5
+    pos: 50.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4501
   type: MVWire
   components:
   - parent: 853
-    pos: 50.5,-13.5
+    pos: 51.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4502
   type: MVWire
   components:
   - parent: 853
-    pos: 51.5,-13.5
+    pos: 49.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4503
   type: MVWire
   components:
   - parent: 853
-    pos: 49.5,-14.5
+    pos: 49.5,-15.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4504
   type: MVWire
   components:
   - parent: 853
-    pos: 49.5,-15.5
+    pos: 49.5,-16.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4505
   type: MVWire
   components:
   - parent: 853
-    pos: 49.5,-16.5
+    pos: 49.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4506
   type: MVWire
   components:
   - parent: 853
-    pos: 49.5,-17.5
+    pos: 48.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4507
   type: MVWire
   components:
   - parent: 853
-    pos: 48.5,-17.5
+    pos: 47.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4508
   type: MVWire
   components:
   - parent: 853
-    pos: 47.5,-17.5
+    pos: 46.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4509
   type: MVWire
   components:
   - parent: 853
-    pos: 46.5,-17.5
+    pos: 45.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4510
   type: MVWire
   components:
   - parent: 853
-    pos: 45.5,-17.5
+    pos: 50.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4511
   type: MVWire
   components:
   - parent: 853
-    pos: 50.5,-17.5
+    pos: 51.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4512
   type: MVWire
   components:
   - parent: 853
-    pos: 51.5,-17.5
+    pos: 52.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4513
   type: MVWire
   components:
   - parent: 853
-    pos: 52.5,-17.5
+    pos: 53.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4514
   type: MVWire
   components:
   - parent: 853
-    pos: 53.5,-17.5
+    pos: 54.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4515
   type: MVWire
   components:
   - parent: 853
-    pos: 54.5,-17.5
+    pos: 55.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4516
   type: MVWire
   components:
   - parent: 853
-    pos: 55.5,-17.5
+    pos: 56.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4517
   type: MVWire
   components:
   - parent: 853
-    pos: 56.5,-17.5
+    pos: 56.5,-18.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4518
   type: MVWire
   components:
   - parent: 853
-    pos: 56.5,-18.5
+    pos: 56.5,-19.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4519
   type: MVWire
   components:
   - parent: 853
-    pos: 56.5,-19.5
+    pos: 56.5,-20.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4520
   type: MVWire
   components:
   - parent: 853
-    pos: 56.5,-20.5
+    pos: 56.5,-21.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4521
   type: MVWire
   components:
   - parent: 853
-    pos: 56.5,-21.5
+    pos: 56.5,-22.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4522
   type: MVWire
   components:
   - parent: 853
-    pos: 56.5,-22.5
+    pos: 56.5,-23.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4523
   type: MVWire
   components:
   - parent: 853
-    pos: 56.5,-23.5
+    pos: 56.5,-24.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4524
   type: MVWire
   components:
   - parent: 853
-    pos: 56.5,-24.5
+    pos: 56.5,-25.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4525
   type: MVWire
   components:
   - parent: 853
-    pos: 56.5,-25.5
+    pos: 56.5,-26.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4526
   type: MVWire
   components:
   - parent: 853
-    pos: 56.5,-26.5
+    pos: 56.5,-27.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4527
   type: MVWire
   components:
   - parent: 853
-    pos: 56.5,-27.5
+    pos: 56.5,-28.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4528
   type: MVWire
   components:
   - parent: 853
-    pos: 56.5,-28.5
+    pos: 56.5,-29.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4529
   type: MVWire
   components:
   - parent: 853
-    pos: 56.5,-29.5
+    pos: 56.5,-30.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4530
   type: MVWire
   components:
   - parent: 853
-    pos: 56.5,-30.5
+    pos: 56.5,-31.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4531
   type: MVWire
   components:
   - parent: 853
-    pos: 56.5,-31.5
+    pos: 55.5,-31.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4532
   type: MVWire
   components:
   - parent: 853
-    pos: 55.5,-31.5
+    pos: 54.5,-31.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4533
   type: MVWire
   components:
   - parent: 853
-    pos: 54.5,-31.5
+    pos: 53.5,-31.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4534
   type: MVWire
   components:
   - parent: 853
-    pos: 53.5,-31.5
+    pos: 52.5,-31.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4535
   type: MVWire
   components:
   - parent: 853
-    pos: 52.5,-31.5
+    pos: 51.5,-31.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4536
   type: MVWire
   components:
   - parent: 853
-    pos: 51.5,-31.5
+    pos: 50.5,-31.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4537
   type: MVWire
   components:
   - parent: 853
-    pos: 50.5,-31.5
+    pos: 49.5,-31.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4538
   type: MVWire
   components:
   - parent: 853
-    pos: 49.5,-31.5
+    pos: 48.5,-31.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4539
   type: MVWire
   components:
   - parent: 853
-    pos: 48.5,-31.5
+    pos: 47.5,-31.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4540
   type: MVWire
   components:
   - parent: 853
-    pos: 47.5,-31.5
+    pos: 46.5,-31.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4541
   type: MVWire
   components:
   - parent: 853
-    pos: 46.5,-31.5
+    pos: 45.5,-31.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4542
   type: MVWire
   components:
   - parent: 853
-    pos: 45.5,-31.5
+    pos: 44.5,-31.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4543
   type: MVWire
   components:
   - parent: 853
-    pos: 44.5,-31.5
+    pos: 43.5,-31.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4544
   type: MVWire
   components:
   - parent: 853
-    pos: 43.5,-31.5
+    pos: 42.5,-31.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4545
   type: MVWire
   components:
   - parent: 853
-    pos: 42.5,-31.5
+    pos: 42.5,-30.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4546
   type: MVWire
   components:
   - parent: 853
-    pos: 42.5,-30.5
+    pos: 42.5,-29.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4547
   type: MVWire
   components:
   - parent: 853
-    pos: 42.5,-29.5
+    pos: 42.5,-28.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4548
   type: MVWire
   components:
   - parent: 853
-    pos: 42.5,-28.5
+    pos: 42.5,-27.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4549
   type: MVWire
   components:
   - parent: 853
-    pos: 42.5,-27.5
+    pos: 42.5,-26.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4550
   type: MVWire
   components:
   - parent: 853
-    pos: 42.5,-26.5
+    pos: 42.5,-25.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4551
   type: MVWire
   components:
   - parent: 853
-    pos: 42.5,-25.5
+    pos: 42.5,-22.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4552
   type: MVWire
   components:
   - parent: 853
-    pos: 42.5,-22.5
+    pos: 42.5,-23.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4553
   type: MVWire
   components:
   - parent: 853
-    pos: 42.5,-23.5
+    pos: 42.5,-24.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4554
   type: MVWire
   components:
   - parent: 853
-    pos: 42.5,-24.5
+    pos: 42.5,-21.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4555
   type: MVWire
   components:
   - parent: 853
-    pos: 42.5,-21.5
+    pos: 42.5,-20.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4556
   type: MVWire
   components:
   - parent: 853
-    pos: 42.5,-20.5
+    pos: 42.5,-19.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4557
   type: MVWire
   components:
   - parent: 853
-    pos: 42.5,-19.5
+    pos: 42.5,-18.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4558
   type: MVWire
   components:
   - parent: 853
-    pos: 42.5,-18.5
+    pos: 42.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4559
   type: MVWire
   components:
   - parent: 853
-    pos: 42.5,-17.5
+    pos: 43.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4560
   type: MVWire
   components:
   - parent: 853
-    pos: 43.5,-17.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 4561
-  type: MVWire
-  components:
-  - parent: 853
     pos: 44.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4562
+- uid: 4561
   type: ContainmentFieldGenerator
   components:
   - parent: 853
     pos: 45.5,-20.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4563
+- uid: 4562
   type: ContainmentFieldGenerator
   components:
   - parent: 853
     pos: 49.5,-20.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4564
+- uid: 4563
   type: ContainmentFieldGenerator
   components:
   - parent: 853
     pos: 53.5,-20.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4565
+- uid: 4564
   type: ContainmentFieldGenerator
   components:
   - parent: 853
     pos: 53.5,-24.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4566
+- uid: 4565
   type: ContainmentFieldGenerator
   components:
   - parent: 853
     pos: 53.5,-28.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4567
+- uid: 4566
   type: ContainmentFieldGenerator
   components:
   - parent: 853
     pos: 49.5,-28.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4568
+- uid: 4567
   type: ContainmentFieldGenerator
   components:
   - parent: 853
     pos: 45.5,-28.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4569
+- uid: 4568
   type: ContainmentFieldGenerator
   components:
   - parent: 853
     pos: 45.5,-24.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4570
+- uid: 4569
   type: Catwalk
   components:
   - parent: 853
     pos: 53.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4571
+- uid: 4570
   type: Catwalk
   components:
   - parent: 853
     pos: 54.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4572
+- uid: 4571
   type: Catwalk
   components:
   - parent: 853
     pos: 54.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4573
+- uid: 4572
   type: Catwalk
   components:
   - parent: 853
     pos: 54.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4574
+- uid: 4573
   type: Catwalk
   components:
   - parent: 853
     pos: 54.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4575
+- uid: 4574
   type: Catwalk
   components:
   - parent: 853
     pos: 54.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4576
+- uid: 4575
   type: Catwalk
   components:
   - parent: 853
     pos: 53.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4577
+- uid: 4576
   type: Catwalk
   components:
   - parent: 853
     pos: 53.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4578
+- uid: 4577
   type: Catwalk
   components:
   - parent: 853
     pos: 45.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4579
+- uid: 4578
   type: Catwalk
   components:
   - parent: 853
     pos: 44.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4580
+- uid: 4579
   type: Catwalk
   components:
   - parent: 853
     pos: 44.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4581
+- uid: 4580
   type: Catwalk
   components:
   - parent: 853
     pos: 44.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4582
+- uid: 4581
   type: Catwalk
   components:
   - parent: 853
     pos: 45.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4583
+- uid: 4582
   type: Catwalk
   components:
   - parent: 853
     pos: 44.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4584
+- uid: 4583
   type: Catwalk
   components:
   - parent: 853
     pos: 44.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4585
+- uid: 4584
   type: Catwalk
   components:
   - parent: 853
     pos: 45.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4586
+- uid: 4585
   type: Catwalk
   components:
   - parent: 853
     pos: 47.5,-8.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4587
+- uid: 4586
   type: Catwalk
   components:
   - parent: 853
     pos: 49.5,-8.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4588
+- uid: 4587
   type: Catwalk
   components:
   - parent: 853
     pos: 48.5,-8.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4589
+- uid: 4588
   type: Catwalk
   components:
   - parent: 853
     pos: 50.5,-8.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4590
+- uid: 4589
   type: Catwalk
   components:
   - parent: 853
     pos: 51.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4591
+- uid: 4590
   type: HVWire
   components:
   - parent: 853
     pos: 49.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4592
+- uid: 4591
   type: Catwalk
   components:
   - parent: 853
     pos: 51.5,-8.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4593
+- uid: 4592
   type: Catwalk
   components:
   - parent: 853
     pos: 51.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4594
+- uid: 4593
   type: Catwalk
   components:
   - parent: 853
     pos: 51.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4595
+- uid: 4594
   type: Catwalk
   components:
   - parent: 853
     pos: 51.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4596
+- uid: 4595
   type: Catwalk
   components:
   - parent: 853
     pos: 50.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4597
+- uid: 4596
   type: Catwalk
   components:
   - parent: 853
     pos: 49.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4598
+- uid: 4597
   type: Catwalk
   components:
   - parent: 853
     pos: 48.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4599
+- uid: 4598
   type: Catwalk
   components:
   - parent: 853
     pos: 47.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4600
+- uid: 4599
   type: Catwalk
   components:
   - parent: 853
     pos: 47.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4601
+- uid: 4600
   type: Catwalk
   components:
   - parent: 853
     pos: 47.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4602
+- uid: 4601
   type: HVWire
   components:
   - parent: 853
     pos: 50.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4603
+- uid: 4602
   type: Catwalk
   components:
   - parent: 853
     pos: 47.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4604
+- uid: 4603
   type: RadiationCollector
   components:
   - parent: 853
     pos: 42.5,-23.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4604
+  type: RadiationCollector
+  components:
+  - parent: 853
+    pos: 42.5,-22.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4605
   type: RadiationCollector
   components:
   - parent: 853
-    pos: 42.5,-22.5
+    pos: 42.5,-21.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4606
   type: RadiationCollector
   components:
   - parent: 853
-    pos: 42.5,-21.5
+    pos: 42.5,-27.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4607
   type: RadiationCollector
   components:
   - parent: 853
-    pos: 42.5,-27.5
+    pos: 42.5,-26.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4608
   type: RadiationCollector
   components:
   - parent: 853
-    pos: 42.5,-26.5
+    pos: 42.5,-25.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4609
   type: RadiationCollector
   components:
   - parent: 853
-    pos: 42.5,-25.5
+    pos: 46.5,-31.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4610
   type: RadiationCollector
   components:
   - parent: 853
-    pos: 46.5,-31.5
+    pos: 47.5,-31.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4611
   type: RadiationCollector
   components:
   - parent: 853
-    pos: 47.5,-31.5
+    pos: 48.5,-31.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4612
   type: RadiationCollector
   components:
   - parent: 853
-    pos: 48.5,-31.5
+    pos: 50.5,-31.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4613
   type: RadiationCollector
   components:
   - parent: 853
-    pos: 50.5,-31.5
+    pos: 51.5,-31.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4614
   type: RadiationCollector
   components:
   - parent: 853
-    pos: 51.5,-31.5
+    pos: 52.5,-31.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4615
   type: RadiationCollector
   components:
   - parent: 853
-    pos: 52.5,-31.5
+    pos: 56.5,-27.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4616
   type: RadiationCollector
   components:
   - parent: 853
-    pos: 56.5,-27.5
+    pos: 56.5,-26.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4617
   type: RadiationCollector
   components:
   - parent: 853
-    pos: 56.5,-26.5
+    pos: 56.5,-25.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4618
   type: RadiationCollector
   components:
   - parent: 853
-    pos: 56.5,-25.5
+    pos: 56.5,-23.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4619
   type: RadiationCollector
   components:
   - parent: 853
-    pos: 56.5,-23.5
+    pos: 56.5,-22.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4620
   type: RadiationCollector
   components:
   - parent: 853
-    pos: 56.5,-22.5
+    pos: 56.5,-21.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4621
   type: RadiationCollector
   components:
   - parent: 853
-    pos: 56.5,-21.5
+    pos: 46.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4622
   type: RadiationCollector
   components:
   - parent: 853
-    pos: 46.5,-17.5
+    pos: 47.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4623
   type: RadiationCollector
   components:
   - parent: 853
-    pos: 47.5,-17.5
+    pos: 48.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4624
   type: RadiationCollector
   components:
   - parent: 853
-    pos: 48.5,-17.5
+    pos: 50.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4625
   type: RadiationCollector
   components:
   - parent: 853
-    pos: 50.5,-17.5
+    pos: 51.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4626
   type: RadiationCollector
   components:
   - parent: 853
-    pos: 51.5,-17.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 4627
-  type: RadiationCollector
-  components:
-  - parent: 853
     pos: 52.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4628
+- uid: 4627
   type: HVWire
   components:
   - parent: 853
     pos: 46.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4629
+- uid: 4628
   type: HVWire
   components:
   - parent: 853
     pos: 47.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4630
+- uid: 4629
   type: HVWire
   components:
   - parent: 853
     pos: 48.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4631
+- uid: 4630
   type: HVWire
   components:
   - parent: 853
     pos: 49.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4632
+- uid: 4631
   type: HVWire
   components:
   - parent: 853
     pos: 50.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4633
+- uid: 4632
   type: HVWire
   components:
   - parent: 853
     pos: 51.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4634
+- uid: 4633
   type: HVWire
   components:
   - parent: 853
     pos: 52.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4635
+- uid: 4634
   type: HVWire
   components:
   - parent: 853
     pos: 53.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4636
+- uid: 4635
   type: HVWire
   components:
   - parent: 853
     pos: 45.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4637
+- uid: 4636
   type: HVWire
   components:
   - parent: 853
     pos: 44.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4638
+- uid: 4637
   type: HVWire
   components:
   - parent: 853
     pos: 43.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4639
+- uid: 4638
   type: HVWire
   components:
   - parent: 853
     pos: 42.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4640
+- uid: 4639
   type: HVWire
   components:
   - parent: 853
     pos: 54.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4641
+- uid: 4640
   type: HVWire
   components:
   - parent: 853
     pos: 55.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4642
+- uid: 4641
   type: HVWire
   components:
   - parent: 853
     pos: 56.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4643
+- uid: 4642
   type: HVWire
   components:
   - parent: 853
     pos: 57.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4644
+- uid: 4643
   type: HVWire
   components:
   - parent: 853
     pos: 58.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4645
+- uid: 4644
   type: HVWire
   components:
   - parent: 853
     pos: 58.5,-18.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4646
+- uid: 4645
   type: HVWire
   components:
   - parent: 853
     pos: 58.5,-19.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4647
+- uid: 4646
   type: HVWire
   components:
   - parent: 853
     pos: 58.5,-20.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4648
+- uid: 4647
   type: HVWire
   components:
   - parent: 853
     pos: 58.5,-21.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4649
+- uid: 4648
   type: HVWire
   components:
   - parent: 853
     pos: 58.5,-22.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4650
+- uid: 4649
   type: HVWire
   components:
   - parent: 853
     pos: 57.5,-24.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4651
+- uid: 4650
   type: HVWire
   components:
   - parent: 853
     pos: 58.5,-24.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4652
+- uid: 4651
   type: HVWire
   components:
   - parent: 853
     pos: 58.5,-23.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4653
+- uid: 4652
   type: HVWire
   components:
   - parent: 853
     pos: 41.5,-24.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4654
+- uid: 4653
   type: HVWire
   components:
   - parent: 853
     pos: 40.5,-24.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4655
+- uid: 4654
   type: HVWire
   components:
   - parent: 853
     pos: 40.5,-23.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4656
+- uid: 4655
   type: HVWire
   components:
   - parent: 853
     pos: 40.5,-22.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4657
+- uid: 4656
   type: HVWire
   components:
   - parent: 853
     pos: 40.5,-21.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4658
+- uid: 4657
   type: HVWire
   components:
   - parent: 853
     pos: 40.5,-20.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4659
+- uid: 4658
   type: HVWire
   components:
   - parent: 853
     pos: 40.5,-19.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4660
+- uid: 4659
   type: HVWire
   components:
   - parent: 853
     pos: 40.5,-18.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4661
+- uid: 4660
   type: HVWire
   components:
   - parent: 853
     pos: 40.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4662
+- uid: 4661
   type: HVWire
   components:
   - parent: 853
     pos: 41.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4663
+- uid: 4662
   type: HVWire
   components:
   - parent: 853
     pos: 42.5,-24.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4664
+- uid: 4663
   type: HVWire
   components:
   - parent: 853
     pos: 42.5,-23.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4665
+- uid: 4664
   type: HVWire
   components:
   - parent: 853
     pos: 42.5,-22.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4666
+- uid: 4665
   type: HVWire
   components:
   - parent: 853
     pos: 42.5,-21.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4667
+- uid: 4666
   type: HVWire
   components:
   - parent: 853
     pos: 42.5,-25.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4668
+- uid: 4667
   type: HVWire
   components:
   - parent: 853
     pos: 42.5,-26.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4669
+- uid: 4668
   type: HVWire
   components:
   - parent: 853
     pos: 42.5,-27.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4670
+- uid: 4669
   type: HVWire
   components:
   - parent: 853
     pos: 56.5,-24.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4671
+- uid: 4670
   type: HVWire
   components:
   - parent: 853
     pos: 56.5,-23.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4672
+- uid: 4671
   type: HVWire
   components:
   - parent: 853
     pos: 56.5,-22.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4673
+- uid: 4672
   type: HVWire
   components:
   - parent: 853
     pos: 56.5,-21.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4674
+- uid: 4673
   type: HVWire
   components:
   - parent: 853
     pos: 56.5,-25.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4675
+- uid: 4674
   type: HVWire
   components:
   - parent: 853
     pos: 56.5,-26.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4676
+- uid: 4675
   type: HVWire
   components:
   - parent: 853
     pos: 56.5,-27.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4677
+- uid: 4676
   type: HVWire
   components:
   - parent: 853
     pos: 49.5,-16.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4678
+- uid: 4677
   type: HVWire
   components:
   - parent: 853
     pos: 49.5,-15.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4679
+- uid: 4678
   type: HVWire
   components:
   - parent: 853
     pos: 49.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4680
+- uid: 4679
   type: HVWire
   components:
   - parent: 853
     pos: 49.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4681
+- uid: 4680
   type: Catwalk
   components:
   - parent: 853
     pos: 47.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4682
+- uid: 4681
   type: Catwalk
   components:
   - parent: 853
     pos: 51.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4683
+- uid: 4682
   type: HVWire
   components:
   - parent: 853
     pos: 49.5,-31.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4684
+- uid: 4683
   type: HVWire
   components:
   - parent: 853
     pos: 48.5,-31.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4685
+- uid: 4684
   type: HVWire
   components:
   - parent: 853
     pos: 47.5,-31.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4686
+- uid: 4685
   type: HVWire
   components:
   - parent: 853
     pos: 46.5,-31.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4687
+- uid: 4686
   type: HVWire
   components:
   - parent: 853
     pos: 50.5,-31.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4688
+- uid: 4687
   type: HVWire
   components:
   - parent: 853
     pos: 51.5,-31.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4689
+- uid: 4688
   type: HVWire
   components:
   - parent: 853
     pos: 52.5,-31.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4690
+- uid: 4689
   type: HVWire
   components:
   - parent: 853
     pos: 49.5,-32.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4691
+- uid: 4690
   type: HVWire
   components:
   - parent: 853
     pos: 49.5,-33.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4692
+- uid: 4691
   type: HVWire
   components:
   - parent: 853
     pos: 48.5,-33.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4693
+- uid: 4692
   type: HVWire
   components:
   - parent: 853
     pos: 47.5,-33.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4694
+- uid: 4693
   type: HVWire
   components:
   - parent: 853
     pos: 46.5,-33.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4695
+- uid: 4694
   type: HVWire
   components:
   - parent: 853
     pos: 45.5,-33.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4696
+- uid: 4695
   type: HVWire
   components:
   - parent: 853
     pos: 44.5,-33.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4697
+- uid: 4696
   type: HVWire
   components:
   - parent: 853
     pos: 43.5,-33.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4698
+- uid: 4697
   type: HVWire
   components:
   - parent: 853
     pos: 42.5,-33.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4699
+- uid: 4698
   type: HVWire
   components:
   - parent: 853
     pos: 41.5,-33.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4700
+- uid: 4699
   type: HVWire
   components:
   - parent: 853
     pos: 40.5,-33.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4701
+- uid: 4700
   type: HVWire
   components:
   - parent: 853
     pos: 40.5,-32.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4702
+- uid: 4701
   type: HVWire
   components:
   - parent: 853
     pos: 40.5,-31.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4703
+- uid: 4702
   type: HVWire
   components:
   - parent: 853
     pos: 40.5,-30.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4704
+- uid: 4703
   type: HVWire
   components:
   - parent: 853
     pos: 40.5,-29.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4705
+- uid: 4704
   type: HVWire
   components:
   - parent: 853
     pos: 40.5,-28.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4706
+- uid: 4705
   type: HVWire
   components:
   - parent: 853
     pos: 40.5,-27.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4707
+- uid: 4706
   type: HVWire
   components:
   - parent: 853
     pos: 40.5,-26.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4708
+- uid: 4707
   type: HVWire
   components:
   - parent: 853
     pos: 40.5,-25.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4709
+- uid: 4708
   type: HVWire
   components:
   - parent: 853
     pos: 50.5,-33.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4710
+- uid: 4709
   type: HVWire
   components:
   - parent: 853
     pos: 51.5,-33.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4711
+- uid: 4710
   type: LowWall
   components:
   - parent: 853
     pos: 20.5,14.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4712
+- uid: 4711
   type: LowWall
   components:
   - parent: 853
     pos: 22.5,14.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4712
+  type: ReinforcedWindow
+  components:
+  - parent: 853
+    pos: 20.5,14.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4713
   type: ReinforcedWindow
   components:
   - parent: 853
-    pos: 20.5,14.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 4714
-  type: ReinforcedWindow
-  components:
-  - parent: 853
     pos: 22.5,14.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 4715
+- uid: 4714
   type: CrateMaterialsMetal
   components:
   - parent: 853
@@ -48800,7 +48809,7 @@ entities:
       EntityStorageComponent:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-- uid: 4716
+- uid: 4715
   type: CrateServiceReplacementLights
   components:
   - parent: 853
@@ -48813,39 +48822,17 @@ entities:
       EntityStorageComponent:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-- uid: 4717
-  type: CrateEmergencyFire
+- uid: 4716
+  type: SalternSubstation
   components:
   - parent: 853
-    pos: 22.5,13.5
+    pos: -15.5,16.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - IsPlaceable: False
-    type: PlaceableSurface
-  - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
-    type: ContainerContainer
-- uid: 4718
-  type: AirlockMaintIntLocked
-  components:
-  - name: Waste Disposal
-    type: MetaData
-  - parent: 853
-    pos: -24.5,-12.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 4719
-  type: PoweredSmallLight
-  components:
-  - parent: 853
-    pos: -22.5,-16
-    rot: -1.5707963267948966 rad
-    type: Transform
-  - powerLoad: 0
-    type: PowerReceiver
-  - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
-    type: ContainerContainer
+  - startingCharge: 3969174
+    type: Battery
+  - drawRate: 8000
+    type: PowerConsumer
+  - supplyRate: 6000
+    type: PowerSupplier
 ...

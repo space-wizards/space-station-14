@@ -1,110 +1,55 @@
 {
   "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/0ec86b44b11f5e2f45137d9f6c851b8942a26aa3",
   "size": {
     "x": 32,
     "y": 32
   },
-  "license": "CCBYNA3",
-  "copyright": "https://github.com/tgstation/tgstation",
   "states": [
     {
       "name": "random_bedsheet",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "sheetNT",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "sheetUSA",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "sheetblack",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "sheetblue",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "sheetbrown",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "sheetcaptain",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "sheetce",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "sheetcentcom",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "sheetclown",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "sheetcmo",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "sheetcosmos",
@@ -122,165 +67,75 @@
     },
     {
       "name": "sheetcult",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "sheetgreen",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "sheetgrey",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "sheethop",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "sheethos",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "sheetian",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "sheetmedical",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "sheetmime",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "sheetorange",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "sheetpurple",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "sheetqm",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "sheetrainbow",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "sheetrd",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "sheetred",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "sheetsyndie",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "sheetwhite",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "sheetwiz",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "sheetyellow",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     }
   ]
 }

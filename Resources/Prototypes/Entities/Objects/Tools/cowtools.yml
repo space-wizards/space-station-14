@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: haycutters
   parent: BaseItem
   id: Haycutters
@@ -114,7 +114,7 @@
     - type: ItemStatus
     - type: SolutionContainer
       maxVol: 50
-      caps: AddTo, NoExamine
+      caps: AddTo
       contents:
         reagents:
           - ReagentId: chem.WeldingFuel

@@ -20,7 +20,7 @@
   # Organs
   - type: SolutionContainer
     maxVol: 250
-    caps: AddTo, RemoveFrom, NoExamine
+    caps: AddTo, RemoveFrom
   - type: Bloodstream
     max_volume: 100
   # StatusEffects
@@ -161,6 +161,11 @@
       0: !type:NormalMobState {}
       100: !type:CriticalMobState {}
       200: !type:DeadMobState {}
+  - type: Destructible
+    thresholds:
+      400:
+        behaviors:
+          - !type:GibBehavior { }
   - type: HeatResistance
   - type: Appearance
     visuals:

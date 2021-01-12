@@ -137,6 +137,8 @@ namespace Content.Server.AI.Utility.AiLogic
         {
             var currentOp = CurrentAction?.ActionOperators.Peek();
             currentOp?.Shutdown(Outcome.Failed);
+            CurrentAction?.Shutdown();
+            CurrentAction = null;
         }
 
         public void MobStateChanged(MobStateChangedMessage message)

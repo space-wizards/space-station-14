@@ -1,6 +1,7 @@
 # TODO BODY: Part damage
 - type: entity
   id: PartHuman
+  parent: BaseItem
   name: "human body part"
   abstract: true
 
