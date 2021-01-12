@@ -127,6 +127,15 @@
       amount: -8
 
 - type: reagent
+  id: chem.FluorosulfuricAcid
+  name: fluorosulfuric acid
+  desc: An extremely corrosive chemical substance.
+  physicalDecs: strong-smelling
+  color: "#5050ff"
+  boilingPoint: 165
+  meltingPoint: -87
+
+- type: reagent
   id: chem.TableSalt
   name: table salt
   desc: Commonly known as salt, Sodium Chloride is often used to season food or kill borers instantly.
@@ -241,3 +250,13 @@
   meltingPoint: -80.7
   tileReactions:
     - !type:FlammableTileReaction {}
+
+- type: reagent
+  id: chem.Fluorosurfactant
+  name: fluorosurfactant
+  desc: A perfluoronated sulfonic acid that forms a foam when mixed with water.
+  physicalDesc: opaque
+  color: "#9e6b38"
+  boilingPoint: 190.0 # Perfluorooctanoic Acid.
+  meltingPoint: 45.0
+

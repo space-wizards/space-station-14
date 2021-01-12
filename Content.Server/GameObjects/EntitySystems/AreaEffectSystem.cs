@@ -9,34 +9,34 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    public class SmokeSystem : EntitySystem
+    public class AreaEffectSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        private readonly HashSet<SmokeInception> _smokeInceptions = new();
+        private readonly HashSet<AreaEffectInception> _inceptions = new();
 
-        private readonly HashSet<SmokeInception> _toRemove = new();
+        private readonly HashSet<AreaEffectInception> _toRemove = new();
 
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<SmokeInceptionCreatedMessage>(HandleSmokeInceptionCreatedMessage);
+            SubscribeLocalEvent<AreaEffectInceptionCreatedMessage>(HandleAreaEffectInceptionCreatedMessage);
         }
 
-        private void HandleSmokeInceptionCreatedMessage(SmokeInceptionCreatedMessage message)
+        private void HandleAreaEffectInceptionCreatedMessage(AreaEffectInceptionCreatedMessage message)
         {
-            _smokeInceptions.Add(message.Inception);
+            _inceptions.Add(message.Inception);
         }
 
         public override void Update(float frameTime)
         {
-            foreach (var smokeInception in _smokeInceptions)
+            foreach (var inception in _inceptions)
             {
-                if (smokeInception.InceptionUpdate(frameTime, _mapManager, _prototypeManager))
-                    _toRemove.Add(smokeInception);
+                if (inception.InceptionUpdate(frameTime, _mapManager, _prototypeManager))
+                    _toRemove.Add(inception);
             }
-            _smokeInceptions.ExceptWith(_toRemove);
+            _inceptions.ExceptWith(_toRemove);
             _toRemove.Clear();
         }
     }

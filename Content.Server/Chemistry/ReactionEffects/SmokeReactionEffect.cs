@@ -33,16 +33,19 @@ namespace Content.Server.Chemistry.ReactionEffects
         /// </summary>
         private float _spreadDelay;
 
+        private float _removeDelay;
+
         private string _smokePrototypeId;
         private string _smokeSound;
 
         public void ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(ref _rangeConstant, "rangeConstant",0f);
-            serializer.DataField(ref _rangeMultiplier, "rangeMultiplier",0.2f);
-            serializer.DataField(ref _maxRange, "maxRange", 15);
+            serializer.DataField(ref _rangeMultiplier, "rangeMultiplier",1.1f);
+            serializer.DataField(ref _maxRange, "maxRange", 10);
             serializer.DataField(ref _duration, "duration", 10f);
             serializer.DataField(ref _spreadDelay, "spreadDelay", 0.5f);
+            serializer.DataField(ref _removeDelay, "removeDelay", 0.5f);
             serializer.DataField(ref _smokeSound, "smokeSound",string.Empty);
             serializer.DataField(ref _smokePrototypeId, "smokePrototypeId", "Smoke");
         }
@@ -53,7 +56,8 @@ namespace Content.Server.Chemistry.ReactionEffects
                 return;
 
             var solution = contents.SplitSolution(contents.MaxVolume);
-            var amount = (int) Math.Round(_rangeConstant + intensity*_rangeMultiplier);
+            // We take the square root so it becomes harder to reach higher amount values
+            var amount = (int) Math.Round(_rangeConstant + _rangeMultiplier*Math.Sqrt(intensity));
             amount = Math.Min(amount, _maxRange);
 
             var mapManager = IoCManager.Resolve<IMapManager>();
@@ -62,13 +66,21 @@ namespace Content.Server.Chemistry.ReactionEffects
             var coords = grid.MapToGrid(solutionEntity.Transform.MapPosition);
             var ent = solutionEntity.EntityManager.SpawnEntity(_smokePrototypeId, coords.SnapToGrid());
 
-            if (!ent.TryGetComponent(out SmokeComponent smokeComponent))
+            if (!ent.TryGetComponent(out AreaEffectComponent areaEffectComponent))
             {
-                Logger.Error("Couldn't get SmokeComponent from " + ent.Name);
+                Logger.Error("Couldn't get AreaEffectComponent from " + _smokePrototypeId);
                 ent.Delete();
                 return;
             }
-            smokeComponent.Activate(solution, amount, _duration, _spreadDelay);
+            if (!ent.TryGetComponent(out SmokeComponent smokeComponent))
+            {
+                Logger.Error("Couldn't get SmokeComponent from " + _smokePrototypeId);
+                ent.Delete();
+                return;
+            }
+
+            smokeComponent.TryAddSolution(solution);
+            areaEffectComponent.Start(amount, _duration, _spreadDelay, _removeDelay);
 
             EntitySystem.Get<AudioSystem>().PlayFromEntity(_smokeSound, solutionEntity, AudioHelpers.WithVariation(0.125f));
         }

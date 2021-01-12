@@ -1,0 +1,188 @@
+﻿- type: entity
+  id: Smoke
+  name: smoke
+  abstract: true
+  components:
+    - type: Sprite
+      drawdepth: Ghosts
+      sprite: Effects/chemsmoke.rsi
+      state: chemsmoke
+    - type: Occluder
+      sizeX: 32
+      sizeY: 32
+    - type: SnapGrid
+      offset: Center
+    - type: AreaEffect
+    - type: Smoke
+    - type: SolutionContainer
+      maxVol: 600
+
+- type: entity
+  id: Foam
+  name: foam
+  abstract: true
+  components:
+    - type: Sprite
+      netsync: false
+      drawdepth: Ghosts
+      color: "#ffffffcc" #Add some transparency
+      sprite: Effects/foam.rsi
+      state: foam
+      layers:
+        - state: foam
+          map: ["enum.FoamVisualLayers.Base"]
+    - type: AnimationPlayer
+    - type: Appearance
+      visuals:
+        - type: FoamVisualizer
+          animation_time: 0.6
+          animation_state: foam-disolve
+    - type: SnapGrid
+      offset: Center
+    - type: Physics
+      shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.4,-0.4,0.4,0.4"
+        layer:
+        - MobImpassable
+    - type: AreaEffect
+    - type: Foam
+    - type: SolutionContainer
+      maxVol: 600
+    - type: Slippery
+
+- type: entity
+  id: IronMetalFoam
+  name: iron metal foam
+  abstract: true
+  components:
+    - type: Sprite
+      netsync: false
+      drawdepth: Ghosts
+      color: "#ffffffcc" #Add some transparency
+      sprite: Effects/foam.rsi
+      state: mfoam
+      layers:
+        - state: mfoam
+          map: ["enum.FoamVisualLayers.Base"]
+    - type: AnimationPlayer
+    - type: Appearance
+      visuals:
+        - type: FoamVisualizer
+          animation_time: 0.6
+          animation_state: mfoam-disolve
+    - type: SnapGrid
+      offset: Center
+    - type: Physics
+      shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.4,-0.4,0.4,0.4"
+        layer:
+        - MobImpassable
+    - type: AreaEffect
+    - type: Foam
+      foamedMetalPrototype: FoamedIronMetal
+    - type: SolutionContainer
+      maxVol: 600
+    - type: Slippery
+
+- type: entity
+  id: AluminiumMetalFoam
+  name: aluminium metal foam
+  abstract: true
+  components:
+    - type: Sprite
+      netsync: false
+      drawdepth: Ghosts
+      color: "#ffffffcc" #Add some transparency
+      sprite: Effects/foam.rsi
+      state: mfoam
+      layers:
+        - state: mfoam
+          map: ["enum.FoamVisualLayers.Base"]
+    - type: AnimationPlayer
+    - type: Appearance
+      visuals:
+        - type: FoamVisualizer
+          animation_time: 0.6
+          animation_state: mfoam-disolve
+    - type: SnapGrid
+      offset: Center
+    - type: Physics
+      shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.4,-0.4,0.4,0.4"
+        layer:
+        - MobImpassable
+    - type: AreaEffect
+    - type: Foam
+      foamedMetalPrototype: FoamedAluminiumMetal
+    - type: SolutionContainer
+      maxVol: 600
+    - type: Slippery
+
+- type: entity
+  id: BaseFoamedMetal
+  name: base foamed metal
+  description: Keeps the air in and the greytide out.
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+    snap:
+      - Wall
+  components:
+    - type: RCDDeconstructWhitelist
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Sprite
+      netsync: false
+      drawdepth: Walls
+    - type: Icon
+      state: full
+    - type: Physics
+      shapes:
+        - !type:PhysShapeAabb
+          layer:
+            - Opaque
+            - Impassable
+            - MobImpassable
+            - VaultImpassable
+            - SmallImpassable
+    - type: Occluder
+      sizeX: 32
+      sizeY: 32
+    - type: SnapGrid
+      offset: Center
+    - type: Airtight
+    - type: Damageable
+      resistances: metallicResistances
+    - type: Destructible
+      thresholds:
+        50:
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+
+- type: entity
+  id: FoamedIronMetal
+  name: foamed iron metal
+  parent: BaseFoamedMetal
+  components:
+    - type: Sprite
+      sprite: Effects/foam.rsi
+      state: ironfoam
+    - type: Icon
+      sprite: Effects/foam.rsi
+      state: ironfoam
+
+- type: entity
+  id: FoamedAluminiumMetal
+  name: foamed aluminium metal
+  parent: BaseFoamedMetal
+  components:
+    - type: Sprite
+      sprite: Effects/foam.rsi
+      state: metalfoam
+    - type: Icon
+      sprite: Effects/foam.rsi
+      state: metalfoam
