@@ -8,16 +8,13 @@
   },
   "states": [
     {
-      "name": "icon",
-      "directions": 1
+      "name": "icon"
     },
     {
-      "name": "visorlit",
-      "directions": 1
+      "name": "visorlit"
     },
     {
-      "name": "headlight",
-      "directions": 1
+      "name": "headlight"
     },
     {
       "name": "equipped-HELMET",
