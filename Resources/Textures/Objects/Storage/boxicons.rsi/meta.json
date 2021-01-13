@@ -9,7 +9,6 @@
   "states": [
     {
       "name": "beaker",
-      "directions": 1,
       "delays": [
         [
           1
@@ -18,7 +17,6 @@
     },
     {
       "name": "bodybags",
-      "directions": 1,
       "delays": [
         [
           1
@@ -27,7 +25,6 @@
     },
     {
       "name": "meson",
-      "directions": 1,
       "delays": [
         [
           1
@@ -36,7 +33,6 @@
     },
     {
       "name": "sechud",
-      "directions": 1,
       "delays": [
         [
           1
@@ -45,7 +41,6 @@
     },
     {
       "name": "box",
-      "directions": 1,
       "delays": [
         [
           1
@@ -54,7 +49,6 @@
     },
     {
       "name": "box_of_doom",
-      "directions": 1,
       "delays": [
         [
           1
@@ -63,7 +57,6 @@
     },
     {
       "name": "circuit",
-      "directions": 1,
       "delays": [
         [
           1
@@ -72,7 +65,6 @@
     },
     {
       "name": "disk_kit",
-      "directions": 1,
       "delays": [
         [
           1
@@ -81,7 +73,6 @@
     },
     {
       "name": "donk_kit",
-      "directions": 1,
       "delays": [
         [
           1
@@ -90,7 +81,6 @@
     },
     {
       "name": "flashbang",
-      "directions": 1,
       "delays": [
         [
           1
@@ -99,7 +89,6 @@
     },
     {
       "name": "glasses",
-      "directions": 1,
       "delays": [
         [
           1
@@ -108,7 +97,6 @@
     },
     {
       "name": "handcuff",
-      "directions": 1,
       "delays": [
         [
           1
@@ -117,7 +105,6 @@
     },
     {
       "name": "implant",
-      "directions": 1,
       "delays": [
         [
           1
@@ -126,7 +113,6 @@
     },
     {
       "name": "latex",
-      "directions": 1,
       "delays": [
         [
           1
@@ -135,7 +121,6 @@
     },
     {
       "name": "light",
-      "directions": 1,
       "delays": [
         [
           1
@@ -144,7 +129,6 @@
     },
     {
       "name": "lightmixed",
-      "directions": 1,
       "delays": [
         [
           1
@@ -153,7 +137,6 @@
     },
     {
       "name": "lighttube",
-      "directions": 1,
       "delays": [
         [
           1
@@ -162,7 +145,6 @@
     },
     {
       "name": "mousetraps",
-      "directions": 1,
       "delays": [
         [
           1
@@ -171,7 +153,6 @@
     },
     {
       "name": "pda",
-      "directions": 1,
       "delays": [
         [
           1
@@ -180,7 +161,6 @@
     },
     {
       "name": "pillbox",
-      "directions": 1,
       "delays": [
         [
           1
@@ -189,7 +169,6 @@
     },
     {
       "name": "solution_trays",
-      "directions": 1,
       "delays": [
         [
           1
@@ -198,7 +177,6 @@
     },
     {
       "name": "sterile",
-      "directions": 1,
       "delays": [
         [
           1
@@ -207,7 +185,6 @@
     },
     {
       "name": "syringe",
-      "directions": 1,
       "delays": [
         [
           1
