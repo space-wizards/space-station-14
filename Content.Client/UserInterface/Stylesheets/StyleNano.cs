@@ -675,7 +675,7 @@ namespace Content.Client.UserInterface.Stylesheets
                     new StyleProperty("font", notoSans15)
                 }),
 
-                // small label number when opening the context menu and items are stacked, this is the label of the count
+                // small number for the context menu
                 new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassContextMenuCount}, null, null), new[]
                 {
                     new StyleProperty("font", notoSans10),
