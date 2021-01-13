@@ -84,7 +84,10 @@ namespace Content.Client.Chat
                                                 SeparationOverride = 4,
                                                 Children =
                                                 {
-                                                    (_channelSelector = new OptionButton()),
+                                                    (_channelSelector = new OptionButton
+                                                    {
+                                                        HideTriangle = true
+                                                    }),
                                                     (Input = new HistoryLineEdit
                                                     {
                                                         SizeFlagsHorizontal = SizeFlags.FillExpand,
@@ -104,8 +107,6 @@ namespace Content.Client.Chat
             _channelSelector.AddItem("Local", (int) ChatChannel.Local);
             _channelSelector.AddItem("Radio", (int) ChatChannel.Radio);
             _channelSelector.AddItem("OOC", (int) ChatChannel.OOC);
-            Input.OnKeyBindDown += InputKeyBindDown;
-            Input.OnTextEntered += Input_OnTextEntered;
 
             AllButton = new Button
             {
@@ -152,6 +153,23 @@ namespace Content.Client.Chat
             DeadButton.OnToggled += OnFilterToggled;
         }
 
+        protected override void EnteredTree()
+        {
+            base.EnteredTree();
+            _channelSelector.OnItemSelected += OnChannelItemSelected;
+            Input.OnKeyBindDown += InputKeyBindDown;
+            Input.OnTextEntered += Input_OnTextEntered;
+        }
+
+        protected override void ExitedTree()
+        {
+            base.ExitedTree();
+            _channelSelector.OnItemSelected -= OnChannelItemSelected;
+            Input.OnKeyBindDown -= InputKeyBindDown;
+            Input.OnTextEntered -= Input_OnTextEntered;
+        }
+
+
         protected override void KeyBindDown(GUIBoundKeyEventArgs args)
         {
             base.KeyBindDown(args);
@@ -172,6 +190,13 @@ namespace Content.Client.Chat
                 args.Handle();
                 return;
             }
+        }
+
+        private void OnChannelItemSelected(OptionButton.ItemSelectedEventArgs args)
+        {
+            _channelSelector.SelectId(args.Id);
+
+            // TODO: Change the channel
         }
 
         public event TextSubmitHandler TextSubmitted;
