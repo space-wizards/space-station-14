@@ -12,13 +12,22 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Map;
+using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Chemistry
 {
+    /// <summary>
+    /// Handles messages from an <see cref="AreaEffectComponent"/> to implement foam behavior to its owner.
+    /// </summary>
     [RegisterComponent]
     public class FoamComponent : Component
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         public override string Name => "Foam";
 
         private string _foamedMetalPrototype;
@@ -61,22 +70,20 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         private void HandleReactMessage(AreaEffectReactMessage reactMessage)
         {
-            var averageExpositions = reactMessage.AverageExpositions;
-            var mapManager = reactMessage.MapManager;
-            var prototypeManager = reactMessage.PrototypeManager;
+            var averageExposures = reactMessage.AverageExposures;
 
             if (!Owner.TryGetComponent(out SolutionContainerComponent contents))
                 return;
 
-            var mapGrid = mapManager.GetGrid(Owner.Transform.GridID);
-            var tile = mapGrid.GetTileRef(Owner.Transform.Coordinates.ToVector2i(Owner.EntityManager, mapManager));
+            var mapGrid = _mapManager.GetGrid(Owner.Transform.GridID);
+            var tile = mapGrid.GetTileRef(Owner.Transform.Coordinates.ToVector2i(Owner.EntityManager, _mapManager));
 
-            var solutionFraction = 1 / Math.Floor(averageExpositions);
+            var solutionFraction = 1 / Math.Floor(averageExposures);
 
             foreach (var reagentQuantity in contents.ReagentList.ToArray())
             {
                 if (reagentQuantity.Quantity == ReagentUnit.Zero) continue;
-                var reagent = prototypeManager.Index<ReagentPrototype>(reagentQuantity.ReagentId);
+                var reagent = _prototypeManager.Index<ReagentPrototype>(reagentQuantity.ReagentId);
 
                 // React with the tile the foam is on
                 reagent.ReactionTile(tile, reagentQuantity.Quantity * solutionFraction);
@@ -122,6 +129,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         private void HandleKillMessage()
         {
+            if (Owner.Deleted)
+                return;
             if (Owner.TryGetComponent(out AppearanceComponent appearance))
             {
                 appearance.SetData(FoamVisuals.State, true);

@@ -81,15 +81,16 @@
     chem.Sugar:
       amount: 1
   effects:
-    - !type:SmokeReactionEffect
+    - !type:AreaReactionEffect
       rangeConstant: 0
       rangeMultiplier: 1.1 #Range formula: rangeConstant + rangeMultiplier*sqrt(ReactionUnits)
       maxRange: 10
       duration: 10
       spreadDelay: 0.5
       removeDelay: 0.5
-      smokePrototypeId: Smoke
-      smokeSound: /Audio/Effects/smoke.ogg
+      diluteReagents: false
+      prototypeId: Smoke
+      sound: /Audio/Effects/smoke.ogg
 
 - type: reaction
   id: react.Foam
@@ -99,17 +100,18 @@
     chem.Water:
       amount: 1
   effects:
-    - !type:FoamReactionEffect
+    - !type:AreaReactionEffect
       rangeConstant: 0
       rangeMultiplier: 1.1 #Range formula: rangeConstant + rangeMultiplier*sqrt(ReactionUnits)
       maxRange: 10
       duration: 10
       spreadDelay: 1
       removeDelay: 0
+      diluteReagents: true
       reagentDilutionStart: 4 #At what range should the reagents start diluting
       reagentDilutionFactor: 1
       reagentMaxConcentrationFactor: 2 #The reagents will get multiplied by this number if the range turns out to be 0
-      foamPrototypeId: Foam
+      prototypeId: Foam
 
 - type: reaction
   id: react.IronMetalFoam
@@ -121,17 +123,18 @@
     chem.FluorosulfuricAcid:
       amount: 1
   effects:
-    - !type:FoamReactionEffect
+    - !type:AreaReactionEffect
       rangeConstant: 0
       rangeMultiplier: 1.1
       maxRange: 10
       duration: 10
       spreadDelay: 1
       removeDelay: 0
+      diluteReagents: true
       reagentDilutionStart: 4
       reagentDilutionFactor: 1
       reagentMaxConcentrationFactor: 2
-      foamPrototypeId: IronMetalFoam
+      prototypeId: IronMetalFoam
 
 - type: reaction
   id: react.AluminiumMetalFoam
@@ -143,17 +146,18 @@
     chem.FluorosulfuricAcid:
       amount: 1
   effects:
-    - !type:FoamReactionEffect
+    - !type:AreaReactionEffect
       rangeConstant: 0
       rangeMultiplier: 1.1
       maxRange: 10
       duration: 10
       spreadDelay: 1
       removeDelay: 0
+      diluteReagents: true
       reagentDilutionStart: 4
       reagentDilutionFactor: 1
       reagentMaxConcentrationFactor: 2
-      foamPrototypeId: AluminiumMetalFoam
+      prototypeId: AluminiumMetalFoam
 
 - type: reaction
   id: react.TableSalt

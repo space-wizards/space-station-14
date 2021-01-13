@@ -9,13 +9,21 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Log;
+using Robust.Shared.Interfaces.Map;
+using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameObjects.Components.Chemistry
 {
+    /// <summary>
+    /// Handles messages from an <see cref="AreaEffectComponent"/> to implement smoke behavior to its owner.
+    /// </summary>
     [RegisterComponent]
     public class SmokeComponent : Component
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         public override string Name => "Smoke";
 
         public override void HandleMessage(ComponentMessage message, IComponent component)
@@ -50,22 +58,20 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         private void HandleReactMessage(AreaEffectReactMessage reactMessage)
         {
-            var averageExpositions = reactMessage.AverageExpositions;
-            var mapManager = reactMessage.MapManager;
-            var prototypeManager = reactMessage.PrototypeManager;
+            var averageExposures = reactMessage.AverageExposures;
 
             if (!Owner.TryGetComponent(out SolutionContainerComponent contents))
                 return;
 
-            var mapGrid = mapManager.GetGrid(Owner.Transform.GridID);
-            var tile = mapGrid.GetTileRef(Owner.Transform.Coordinates.ToVector2i(Owner.EntityManager, mapManager));
+            var mapGrid = _mapManager.GetGrid(Owner.Transform.GridID);
+            var tile = mapGrid.GetTileRef(Owner.Transform.Coordinates.ToVector2i(Owner.EntityManager, _mapManager));
 
-            var solutionFraction = 1 / Math.Floor(averageExpositions);
+            var solutionFraction = 1 / Math.Floor(averageExposures);
 
             foreach (var reagentQuantity in contents.ReagentList.ToArray())
             {
                 if (reagentQuantity.Quantity == ReagentUnit.Zero) continue;
-                var reagent = prototypeManager.Index<ReagentPrototype>(reagentQuantity.ReagentId);
+                var reagent = _prototypeManager.Index<ReagentPrototype>(reagentQuantity.ReagentId);
 
                 // React with the tile the smoke is on
                 reagent.ReactionTile(tile, reagentQuantity.Quantity * solutionFraction);
@@ -94,7 +100,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 foreach (var reagentQuantity in transferSolution.Contents.ToArray())
                 {
                     if (reagentQuantity.Quantity == ReagentUnit.Zero) continue;
-                    var reagent = prototypeManager.Index<ReagentPrototype>(reagentQuantity.ReagentId);
+                    var reagent = _prototypeManager.Index<ReagentPrototype>(reagentQuantity.ReagentId);
                     transferSolution.RemoveReagent(reagentQuantity.ReagentId,reagent.ReactionEntity(entity, ReactionMethod.Ingestion, reagentQuantity.Quantity));
                 }
 
@@ -104,6 +110,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         private void HandleKillMessage()
         {
+            if (Owner.Deleted)
+                return;
             Owner.Delete();
         }
 
