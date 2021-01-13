@@ -31,6 +31,7 @@ namespace Content.Client.UserInterface.Stylesheets
         public const string StyleClassActionSearchBox = "actionSearchBox";
         public const string StyleClassActionMenuItemRevoked = "actionMenuItemRevoked";
         public const string StyleClassChatLineEdit = "chatLineEdit";
+        public const string StyleClassChatFilterOptionButton = "chatFilterOptionButton";
 
 
         public const string StyleClassSliderRed = "Red";
@@ -193,6 +194,14 @@ namespace Content.Client.UserInterface.Stylesheets
              Texture = new AtlasTexture(buttonTex, UIBox2.FromDimensions((10, 0), (3, 24))),
             };
             topButtonSquare.SetPatchMargin(StyleBox.Margin.Horizontal, 0);
+
+            var chatFilterButtonTex = resCache.GetTexture("/Textures/Interface/Nano/chat_filter_button.svg.96dpi.png");
+            var chatFilterButton = new StyleBoxTexture
+            {
+                Texture = chatFilterButtonTex,
+            };
+            chatFilterButton.SetPatchMargin(StyleBox.Margin.All, 5);
+            chatFilterButton.SetPadding(StyleBox.Margin.All, 2);
 
             var textureInvertedTriangle = resCache.GetTexture("/Textures/Interface/Nano/inverted_triangle.svg.png");
 
@@ -1016,6 +1025,16 @@ namespace Content.Client.UserInterface.Stylesheets
                 new StyleRule(new SelectorElement(typeof(Slider), new []{StyleClassSliderBlue}, null, null), new []
                 {
                     new StyleProperty(Slider.StylePropertyFill, sliderFillBlue),
+                }),
+
+                // chat filter option button
+                new StyleRule(new SelectorElement(typeof(OptionButton), new[] {StyleClassChatFilterOptionButton}, null, null), new[]
+                {
+                    new StyleProperty(OptionButton.StylePropertyStyleBox, chatFilterButton),
+                }),
+                new StyleRule(new SelectorElement(typeof(Button), new[] {StyleClassChatFilterOptionButton}, null, null), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, chatFilterButton),
                 }),
 
                 // OptionButton

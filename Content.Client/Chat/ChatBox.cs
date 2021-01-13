@@ -86,7 +86,9 @@ namespace Content.Client.Chat
                                                 {
                                                     (_channelSelector = new OptionButton
                                                     {
-                                                        HideTriangle = true
+                                                        HideTriangle = true,
+                                                        StyleClasses = { StyleNano.StyleClassChatFilterOptionButton },
+                                                        OptionStyleClasses = { StyleNano.StyleClassChatFilterOptionButton }
                                                     }),
                                                     (Input = new HistoryLineEdit
                                                     {
