@@ -8,16 +8,13 @@
     "copyright": "Yeeye",
     "states": [
         {
-            "name": "icon",
-            "directions": 1
+            "name": "icon"
         },
         {
-            "name": "base",
-            "directions": 1
+            "name": "base"
         },
         {
-            "name": "mag-0",
-            "directions": 1
+            "name": "mag-0"
         },
         {
             "name": "inhand-left",

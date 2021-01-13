@@ -58,16 +58,13 @@
       ]
     },
     {
-      "name": "burnt-icon",
-      "directions": 1
+      "name": "burnt-icon"
     },
     {
-      "name": "icon",
-      "directions": 1
+      "name": "icon"
     },
     {
       "name": "lit-icon",
-      "directions": 1,
       "delays": [
         [
           0.1,

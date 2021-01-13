@@ -10,57 +10,45 @@
         {
             "name": "weaponcrate",
             "select": [],
-            "flags": {},
-            "directions": 1
+            "flags": {}
         },
         {
             "name": "weaponcrate_door",
             "select": [],
-            "flags": {},
-            "directions": 1
+            "flags": {}
         },
         {
             "name": "weaponcrate_icon",
             "select": [],
-            "flags": {},
-            "directions": 1
+            "flags": {}
         },
         {
             "name": "welded",
             "select": [],
-            "flags": {},
-            "directions": 1
+            "flags": {}
         },
         {
             "name": "unlocked",
             "select": [],
-            "flags": {},
-            "directions": 1
+            "flags": {}
         },
         {
             "name": "off",
             "select": [],
-            "flags": {},
-            "directions": 1
+            "flags": {}
         },
         {
             "name": "locked",
             "select": [],
-            "flags": {},
-            "directions": 1
+            "flags": {}
         },
         {
-            "name": "sparking",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [[0.1,0.1,0.1,0.1,0.1,0.1]]
+            "name": "sparking",            "delays": [[0.1,0.1,0.1,0.1,0.1,0.1]]
         },
         {
             "name": "weaponcrate_open",
             "select": [],
-            "flags": {},
-            "directions": 1
+            "flags": {}
         }
     ]
 }
