@@ -78,8 +78,7 @@
             ]
         },
         {
-            "name": "glass",
-            "directions": 1
+            "name": "glass"
         },
         {
             "name": "phoron-inhand-left",
@@ -118,12 +117,10 @@
             ]
         },
         {
-            "name": "phoron",
-            "directions": 1
+            "name": "phoron"
         },
         {
-            "name": "metal",
-            "directions": 1
+            "name": "metal"
         },
         {
             "name": "plasteel-inhand-left",
@@ -162,8 +159,7 @@
             ]
         },
         {
-            "name": "plasteel",
-            "directions": 1
+            "name": "plasteel"
         },
         {
         	"name": "rglass",
@@ -178,8 +174,7 @@
         	"directions": 4
         },
         {
-            "name": "researchicon",
-            "directions": 1
+            "name": "researchicon"
         }
     ]
 }

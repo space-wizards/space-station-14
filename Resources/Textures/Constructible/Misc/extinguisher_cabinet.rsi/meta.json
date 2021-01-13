@@ -9,7 +9,6 @@
     "states": [
         {
             "name": "extinguisher_closed",
-            "directions": 1,
             "delays": [
                 [
                     1.0
@@ -18,7 +17,6 @@
         },
         {
             "name": "extinguisher_empty",
-            "directions": 1,
             "delays": [
                 [
                     1.0
@@ -27,7 +25,6 @@
         },
         {
             "name": "extinguisher_full",
-            "directions": 1,
             "delays": [
                 [
                     1.0
@@ -36,7 +33,6 @@
         },
         {
             "name": "extinguisher_mini",
-            "directions": 1,
             "delays": [
                 [
                     1.0

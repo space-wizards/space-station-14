@@ -353,7 +353,6 @@
         },
         {
             "name": "panel_closing",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -368,7 +367,6 @@
         },
         {
             "name": "panel_open",
-            "directions": 1,
             "delays": [
                 [
                     1.0
@@ -377,7 +375,6 @@
         },
         {
             "name": "panel_opening",
-            "directions": 1,
             "delays": [
                 [
                     0.2,

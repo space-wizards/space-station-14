@@ -9,7 +9,6 @@
     "states": [
         {
             "name": "bag",
-            "directions": 1,
             "delays": [
                 [
                     1.0
@@ -18,7 +17,6 @@
         },
         {
             "name": "item",
-            "directions": 1,
             "delays": [
                 [
                     1.0
@@ -27,7 +25,6 @@
         },
         {
             "name": "label_overlay",
-            "directions": 1,
             "delays": [
                 [
                     1.0
@@ -36,7 +33,6 @@
         },
         {
             "name": "open_overlay",
-            "directions": 1,
             "delays": [
                 [
                     1.0

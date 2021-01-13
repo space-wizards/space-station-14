@@ -9,7 +9,6 @@
     "states": [
         {
             "name": "appendix",
-            "directions": 1,
             "delays": [
                 [
                     1.0
@@ -18,7 +17,6 @@
         },
         {
             "name": "appendixinflamed",
-            "directions": 1,
             "delays": [
                 [
                     1.0
@@ -27,7 +25,6 @@
         },
         {
             "name": "brain",
-            "directions": 1,
             "delays": [
                 [
                     1.0
@@ -36,7 +33,6 @@
         },
         {
             "name": "ears",
-            "directions": 1,
             "delays": [
                 [
                     1.0
@@ -45,7 +41,6 @@
         },
         {
             "name": "eyeballs",
-            "directions": 1,
             "delays": [
                 [
                     1.0
@@ -54,7 +49,6 @@
         },
         {
             "name": "heart-off",
-            "directions": 1,
             "delays": [
                 [
                     1.0
@@ -63,7 +57,6 @@
         },
         {
             "name": "heart-on",
-            "directions": 1,
             "delays": [
                 [
                     0.6,
@@ -74,7 +67,6 @@
         },
         {
             "name": "kidneys",
-            "directions": 1,
             "delays": [
                 [
                     1.0
@@ -83,7 +75,6 @@
         },
         {
             "name": "liver",
-            "directions": 1,
             "delays": [
                 [
                     1.0
@@ -92,7 +83,6 @@
         },
         {
             "name": "lungs",
-            "directions": 1,
             "delays": [
                 [
                     1.0
@@ -101,7 +91,6 @@
         },
         {
             "name": "stomach",
-            "directions": 1,
             "delays": [
                 [
                     1.0
@@ -110,7 +99,6 @@
         },
         {
             "name": "tonguenormal",
-            "directions": 1,
             "delays": [
                 [
                     1.0

@@ -9,7 +9,6 @@
     "states": [
         {
             "name": "mw",
-            "directions": 1,
             "delays": [
                 [
                     1.0
@@ -18,7 +17,6 @@
         },
         {
             "name": "mw_unlit",
-            "directions": 1,
             "delays": [
                 [
                     1.0
@@ -27,7 +25,6 @@
         },		
         {
             "name": "mw0",
-            "directions": 1,
             "delays": [
                 [
                     1.0
@@ -36,7 +33,6 @@
         },
         {
             "name": "mw_running_unlit",
-            "directions": 1,
             "delays": [
                 [
                     1.0,
@@ -46,7 +42,6 @@
         },
         {
             "name": "mwb",
-            "directions": 1,
             "delays": [
                 [
                     1.0
@@ -55,7 +50,6 @@
         },
         {
             "name": "mwbloody",
-            "directions": 1,
             "delays": [
                 [
                     1.0
@@ -64,7 +58,6 @@
         },
         {
             "name": "mwbloody0",
-            "directions": 1,
             "delays": [
                 [
                     1.0
@@ -73,7 +66,6 @@
         },
         {
             "name": "mwbloody1",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -83,7 +75,6 @@
         },
         {
             "name": "mwbloodyo",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -93,7 +84,6 @@
         },
         {
             "name": "mwo",
-            "directions": 1,
             "delays": [
                 [
                     0.1,

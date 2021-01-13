@@ -10,8 +10,7 @@
         {
             "name": "full",
             "select": [],
-            "flags": {},
-            "directions": 1
+            "flags": {}
         },
         {
             "name": "debug0",

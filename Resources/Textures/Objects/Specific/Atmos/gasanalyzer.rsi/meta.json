@@ -7,7 +7,6 @@
     "states": [
         {
             "name": "icon",
-            "directions": 1,
             "delays": [
                 [
                     1.0
@@ -16,7 +15,6 @@
         },
         {
             "name": "working",
-            "directions": 1,
             "delays": [
                 [
                     0.1,

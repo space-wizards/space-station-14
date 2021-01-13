@@ -9,7 +9,6 @@
     "states": [
         {
             "name": "d_analyzer",
-            "directions": 1,
             "delays": [
                 [
                     1.0
@@ -18,7 +17,6 @@
         },
         {
             "name": "d_analyzer_l",
-            "directions": 1,
             "delays": [
                 [
                     1.0
@@ -27,7 +25,6 @@
         },
         {
             "name": "d_analyzer_la",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -45,7 +42,6 @@
         },
         {
             "name": "d_analyzer_process",
-            "directions": 1,
             "delays": [
                 [
                     0.09,
@@ -80,7 +76,6 @@
         },
         {
             "name": "d_analyzer_t",
-            "directions": 1,
             "delays": [
                 [
                     1.0

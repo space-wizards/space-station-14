@@ -31,7 +31,6 @@
         },
         {
             "name": "rndpointsource-broken",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -42,7 +41,6 @@
         },
         {
             "name": "rndpointsource-off",
-            "directions": 1,
             "delays": [
                 [
                     1.0
@@ -51,7 +49,6 @@
         },
         {
             "name": "rndpointsource-icon",
-            "directions": 1,
             "delays": [
                 [
                     1.0

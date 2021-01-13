@@ -11,7 +11,6 @@
             "name": "normal",
             "select": [],
             "flags": {},
-            "directions": 1,
             "delays": [
                 [
                     1.0
@@ -22,7 +21,6 @@
             "name": "burned",
             "select": [],
             "flags": {},
-            "directions": 1,
             "delays": [
                 [
                     1.0
@@ -33,7 +31,6 @@
             "name": "broken",
             "select": [],
             "flags": {},
-            "directions": 1,
             "delays": [
                 [
                     1.0
