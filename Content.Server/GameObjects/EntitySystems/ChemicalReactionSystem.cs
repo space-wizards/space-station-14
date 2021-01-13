@@ -11,7 +11,7 @@ namespace Content.Server.GameObjects.EntitySystems.NewFolder
         {
             base.OnReaction(reaction, owner, unitReactions);
 
-            Get<AudioSystem>().PlayAtCoords("/Audio/Effects/Chemistry/bubbles.ogg", owner.Transform.Coordinates);
+            Get<AudioSystem>().PlayAtCoords(reaction.Sound, owner.Transform.Coordinates);
         }
     }
 }
