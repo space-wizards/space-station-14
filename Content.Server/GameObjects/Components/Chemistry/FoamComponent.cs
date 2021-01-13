@@ -17,14 +17,16 @@ using Robust.Shared.Serialization;
 namespace Content.Server.GameObjects.Components.Chemistry
 {
     [RegisterComponent]
-    public class FoamComponent : SharedFoamComponent
+    public class FoamComponent : Component
     {
+        public override string Name => "Foam";
+
         private string _foamedMetalPrototype;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _foamedMetalPrototype, "foamedMetalPrototype", string.Empty);
+            serializer.DataField(ref _foamedMetalPrototype, "foamedMetalPrototype", null);
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent component)

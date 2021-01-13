@@ -14,8 +14,10 @@ using Robust.Shared.Log;
 namespace Content.Server.GameObjects.Components.Chemistry
 {
     [RegisterComponent]
-    public class SmokeComponent : SharedSmokeComponent
+    public class SmokeComponent : Component
     {
+        public override string Name => "Smoke";
+
         public override void HandleMessage(ComponentMessage message, IComponent component)
         {
             base.HandleMessage(message, component);

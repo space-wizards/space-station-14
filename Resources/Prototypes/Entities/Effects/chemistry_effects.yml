@@ -4,7 +4,7 @@
   abstract: true
   components:
     - type: Sprite
-      drawdepth: Ghosts
+      drawdepth: Effects
       sprite: Effects/chemsmoke.rsi
       state: chemsmoke
     - type: Appearance
@@ -27,7 +27,7 @@
   components:
     - type: Sprite
       netsync: false
-      drawdepth: Ghosts
+      drawdepth: Effects
       color: "#ffffffcc" #Add some transparency
       sprite: Effects/foam.rsi
       state: foam
@@ -38,8 +38,8 @@
     - type: Appearance
       visuals:
         - type: FoamVisualizer
-          animation_time: 0.6
-          animation_state: foam-disolve
+          animationTime: 0.6
+          animationState: foam-dissolve
     - type: SnapGrid
       offset: Center
     - type: Physics
@@ -58,71 +58,39 @@
   id: IronMetalFoam
   name: iron metal foam
   abstract: true
+  parent: Foam
   components:
     - type: Sprite
-      netsync: false
-      drawdepth: Ghosts
-      color: "#ffffffcc" #Add some transparency
-      sprite: Effects/foam.rsi
       state: mfoam
       layers:
         - state: mfoam
           map: ["enum.FoamVisualLayers.Base"]
-    - type: AnimationPlayer
     - type: Appearance
       visuals:
         - type: FoamVisualizer
-          animation_time: 0.6
-          animation_state: mfoam-disolve
-    - type: SnapGrid
-      offset: Center
-    - type: Physics
-      shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.4"
-        layer:
-        - MobImpassable
-    - type: AreaEffect
+          animationTime: 0.6
+          animationState: mfoam-dissolve
     - type: Foam
       foamedMetalPrototype: FoamedIronMetal
-    - type: SolutionContainer
-      maxVol: 600
-    - type: Slippery
 
 - type: entity
   id: AluminiumMetalFoam
   name: aluminium metal foam
   abstract: true
+  parent: Foam
   components:
     - type: Sprite
-      netsync: false
-      drawdepth: Ghosts
-      color: "#ffffffcc" #Add some transparency
-      sprite: Effects/foam.rsi
       state: mfoam
       layers:
         - state: mfoam
           map: ["enum.FoamVisualLayers.Base"]
-    - type: AnimationPlayer
     - type: Appearance
       visuals:
         - type: FoamVisualizer
-          animation_time: 0.6
-          animation_state: mfoam-disolve
-    - type: SnapGrid
-      offset: Center
-    - type: Physics
-      shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.4"
-        layer:
-        - MobImpassable
-    - type: AreaEffect
+          animationTime: 0.6
+          animationState: mfoam-dissolve
     - type: Foam
       foamedMetalPrototype: FoamedAluminiumMetal
-    - type: SolutionContainer
-      maxVol: 600
-    - type: Slippery
 
 - type: entity
   id: BaseFoamedMetal

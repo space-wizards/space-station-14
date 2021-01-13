@@ -13,29 +13,29 @@ namespace Content.Client.GameObjects.Components.Chemistry
 {
     public class FoamVisualizer : AppearanceVisualizer
     {
-        private const string AnimationKey = "foamdisolve_animation";
-        private Animation FoamDisolve;
+        private const string AnimationKey = "foamdissolve_animation";
+        private Animation _foamDissolve;
         public override void LoadData(YamlMappingNode node)
         {
             base.LoadData(node);
 
             var delay = 0.6f;
-            var state = "foam-disolve";
+            var state = "foam-dissolve";
 
-            if (node.TryGetNode("animation_time", out var delayNode))
+            if (node.TryGetNode("animationTime", out var delayNode))
             {
                 delay = delayNode.AsFloat();
             }
 
-            if (node.TryGetNode("animation_state", out var stateNode))
+            if (node.TryGetNode("animationState", out var stateNode))
             {
                 state = stateNode.AsString();
             }
 
-            FoamDisolve = new Animation {Length = TimeSpan.FromSeconds(delay)};
+            _foamDissolve = new Animation {Length = TimeSpan.FromSeconds(delay)};
             {
                 var flick = new AnimationTrackSpriteFlick();
-                FoamDisolve.AnimationTracks.Add(flick);
+                _foamDissolve.AnimationTracks.Add(flick);
                 flick.LayerKey = FoamVisualLayers.Base;
                 flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame(state, 0f));
             }
@@ -44,10 +44,6 @@ namespace Content.Client.GameObjects.Components.Chemistry
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
-            if (component.Deleted)
-            {
-                return;
-            }
 
             if (component.TryGetData<bool>(FoamVisuals.State, out var state))
             {
@@ -56,7 +52,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
                     var animPlayer = component.Owner.GetComponent<AnimationPlayerComponent>();
 
                     if(!animPlayer.HasRunningAnimation(AnimationKey))
-                        animPlayer.Play(FoamDisolve, AnimationKey);
+                        animPlayer.Play(_foamDissolve, AnimationKey);
                 }
             }
 

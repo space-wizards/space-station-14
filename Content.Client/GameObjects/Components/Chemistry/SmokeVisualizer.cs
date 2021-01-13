@@ -11,11 +11,6 @@ namespace Content.Client.GameObjects.Components.Chemistry
         {
             base.OnChangeData(component);
 
-            if (component.Deleted)
-            {
-                return;
-            }
-
             if (component.TryGetData<Color>(SmokeVisuals.Color, out var color))
             {
                 var sprite = component.Owner.GetComponent<ISpriteComponent>();
