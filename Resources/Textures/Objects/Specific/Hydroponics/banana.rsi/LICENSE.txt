@@ -1,0 +1,4 @@
+Updated banana sprites are from tgstation.
+
+LICENSE: CC-BY-SA-3.0
+COPYRIGHT: Taken from tgstation at https://github.com/tgstation/tgstation/commit/6be7633abca9f1a51cab1020500cf0776ce78e5c
