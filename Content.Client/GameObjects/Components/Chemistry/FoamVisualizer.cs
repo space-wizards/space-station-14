@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Chemistry;
+using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.Components.Animations;
@@ -11,6 +12,7 @@ using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Chemistry
 {
+    [UsedImplicitly]
     public class FoamVisualizer : AppearanceVisualizer
     {
         private const string AnimationKey = "foamdissolve_animation";
@@ -33,12 +35,10 @@ namespace Content.Client.GameObjects.Components.Chemistry
             }
 
             _foamDissolve = new Animation {Length = TimeSpan.FromSeconds(delay)};
-            {
-                var flick = new AnimationTrackSpriteFlick();
-                _foamDissolve.AnimationTracks.Add(flick);
-                flick.LayerKey = FoamVisualLayers.Base;
-                flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame(state, 0f));
-            }
+            var flick = new AnimationTrackSpriteFlick();
+            _foamDissolve.AnimationTracks.Add(flick);
+            flick.LayerKey = FoamVisualLayers.Base;
+            flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame(state, 0f));
         }
 
         public override void OnChangeData(AppearanceComponent component)
@@ -49,17 +49,20 @@ namespace Content.Client.GameObjects.Components.Chemistry
             {
                 if (state)
                 {
-                    var animPlayer = component.Owner.GetComponent<AnimationPlayerComponent>();
-
-                    if(!animPlayer.HasRunningAnimation(AnimationKey))
-                        animPlayer.Play(_foamDissolve, AnimationKey);
+                    if (component.Owner.TryGetComponent(out AnimationPlayerComponent animPlayer))
+                    {
+                        if (!animPlayer.HasRunningAnimation(AnimationKey))
+                            animPlayer.Play(_foamDissolve, AnimationKey);
+                    }
                 }
             }
 
             if (component.TryGetData<Color>(FoamVisuals.Color, out var color))
             {
-                var sprite = component.Owner.GetComponent<ISpriteComponent>();
-                sprite.Color = color;
+                if (component.Owner.TryGetComponent(out ISpriteComponent sprite))
+                {
+                    sprite.Color = color;
+                }
             }
         }
     }

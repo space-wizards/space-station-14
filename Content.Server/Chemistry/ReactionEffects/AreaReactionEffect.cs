@@ -14,6 +14,9 @@ using Robust.Shared.Serialization;
 
 namespace Content.Server.Chemistry.ReactionEffects
 {
+    /// <summary>
+    /// Basically smoke and foam reactions.
+    /// </summary>
     [UsedImplicitly]
     public class AreaReactionEffect : IReactionEffect
     {
@@ -24,25 +27,55 @@ namespace Content.Server.Chemistry.ReactionEffects
         /// </summary>
         private float _rangeConstant;
         private float _rangeMultiplier;
-
         private int _maxRange;
 
-        private bool _diluteReagents;
-        private int _reagentDilutionStart;
-        private float _reagentDilutionFactor;
-        private float _reagentMaxConcentrationFactor;
         /// <summary>
-        /// How many seconds will the smoke stay, counting after fully spreading.
+        /// If true the reagents get diluted or concentrated depending on the range of the effect
+        /// </summary>
+        private bool _diluteReagents;
+
+        /// <summary>
+        /// At what range should the reagents volume stay the same. If the effect range is higher than this then the reagents
+        /// will get diluted. If the effect range is lower than this then the reagents will get concentrated.
+        /// </summary>
+        private int _reagentDilutionStart;
+
+        /// <summary>
+        /// Used to calculate dilution. Increasing this makes the reagents get more diluted. This means that a lower range
+        /// will be needed to make the reagents volume get closer to zero.
+        /// </summary>
+        private float _reagentDilutionFactor;
+
+        /// <summary>
+        /// Used to calculate concentration. Reagents get linearly more concentrated as the range goes from
+        /// _reagentDilutionStart to zero. When the range is zero the reagents volume gets multiplied by this.
+        /// </summary>
+        private float _reagentMaxConcentrationFactor;
+
+        /// <summary>
+        /// How many seconds will the effect stay, counting after fully spreading.
         /// </summary>
         private float _duration;
+
         /// <summary>
         /// How many seconds between each spread step.
         /// </summary>
         private float _spreadDelay;
 
+        /// <summary>
+        /// How many seconds between each remove step.
+        /// </summary>
         private float _removeDelay;
 
+        /// <summary>
+        /// The entity prototype that will be spawned as the effect. It needs an AreaEffectComponent and a SmokeComponent
+        /// or a FoamComponent.
+        /// </summary>
         private string _prototypeId;
+
+        /// <summary>
+        /// Sound that will get played when this reaction effect occurs.
+        /// </summary>
         private string _sound;
 
         public AreaReactionEffect()
@@ -100,6 +133,11 @@ namespace Content.Server.Chemistry.ReactionEffects
             if (!_mapManager.TryFindGridAt(solutionEntity.Transform.MapPosition, out var grid)) return;
 
             var coords = grid.MapToGrid(solutionEntity.Transform.MapPosition);
+            if (_prototypeId == null)
+            {
+                Logger.Error("prototypeId wasn't provided to AreaReactionEffect, check yaml");
+                return;
+            }
             var ent = solutionEntity.EntityManager.SpawnEntity(_prototypeId, coords.SnapToGrid());
 
             if (!ent.TryGetComponent(out AreaEffectComponent areaEffectComponent))

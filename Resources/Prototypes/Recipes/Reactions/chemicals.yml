@@ -90,7 +90,7 @@
       removeDelay: 0.5
       diluteReagents: false
       prototypeId: Smoke
-      sound: /Audio/Effects/smoke.ogg
+      sound: /Audio/Effects/smoke.ogg #Taken from https://github.com/tgstation/tgstation/blob/master/sound/effects/smoke.ogg
 
 - type: reaction
   id: react.Foam

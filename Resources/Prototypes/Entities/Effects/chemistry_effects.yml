@@ -108,8 +108,6 @@
     - type: Sprite
       netsync: false
       drawdepth: Walls
-    - type: Icon
-      state: full
     - type: Physics
       shapes:
         - !type:PhysShapeAabb
@@ -142,9 +140,6 @@
     - type: Sprite
       sprite: Effects/foam.rsi
       state: ironfoam
-    - type: Icon
-      sprite: Effects/foam.rsi
-      state: ironfoam
 
 - type: entity
   id: FoamedAluminiumMetal
@@ -152,8 +147,5 @@
   parent: BaseFoamedMetal
   components:
     - type: Sprite
-      sprite: Effects/foam.rsi
-      state: metalfoam
-    - type: Icon
       sprite: Effects/foam.rsi
       state: metalfoam

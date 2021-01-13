@@ -1,10 +1,12 @@
 ﻿using Content.Shared.GameObjects.Components.Chemistry;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Maths;
 
 namespace Content.Client.GameObjects.Components.Chemistry
 {
+    [UsedImplicitly]
     public class SmokeVisualizer : AppearanceVisualizer
     {
         public override void OnChangeData(AppearanceComponent component)
@@ -13,8 +15,10 @@ namespace Content.Client.GameObjects.Components.Chemistry
 
             if (component.TryGetData<Color>(SmokeVisuals.Color, out var color))
             {
-                var sprite = component.Owner.GetComponent<ISpriteComponent>();
-                sprite.Color = color;
+                if (component.Owner.TryGetComponent(out ISpriteComponent sprite))
+                {
+                    sprite.Color = color;
+                }
             }
         }
     }
