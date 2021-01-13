@@ -1,0 +1,50 @@
+- type: entity
+  abstract: true
+  id: GasFilterBase
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+    sprite: Constructible/Atmos/pipeitems.rsi
+    state: scrubber
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+      100:
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+
+- type: entity
+  parent: GasFilterBase
+  id: GasFilter
+  name: Gas Filter
+  description: It filters gases.
+  components:
+  - type: Sprite
+    sprite: Constructible/Atmos/pipe.rsi
+    state: pipeTJunction2
+  - type: Icon
+    sprite: Constructible/Atmos/pipe.rsi
+    state: pipeTJunction2
+  - type: NodeContainer
+    nodes:
+    - !type:PipeNode
+      nodeGroupID: Pipe
+      pipeDirection: South
+    - !type:PipeNode
+      nodeGroupID: Pipe
+      pipeDirection: East
+    - !type:PipeNode
+      nodeGroupID: Pipe
+      pipeDirection: North
+  - type: GasFilter
+    inletDirection: South
+    filterOutletDirection: East
+    outletDirection: North 
