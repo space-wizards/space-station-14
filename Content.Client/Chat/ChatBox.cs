@@ -1,4 +1,5 @@
-﻿using Content.Shared.Chat;
+﻿using Content.Client.UserInterface.Stylesheets;
+using Content.Shared.Chat;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -25,6 +26,8 @@ namespace Content.Client.Chat
         public Button AdminButton { get; }
         public Button DeadButton { get;  }
 
+        private readonly OptionButton _channelSelector;
+
         /// <summary>
         ///     Default formatting string for the ClientChatConsole.
         /// </summary>
@@ -45,34 +48,64 @@ namespace Content.Client.Chat
             AnchorRight = 1.0f;*/
             MouseFilter = MouseFilterMode.Stop;
 
-            var outerVBox = new VBoxContainer();
-
-            var panelContainer = new PanelContainer
+            AddChild(new VBoxContainer
             {
-                PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#25252aaa")},
-                SizeFlagsVertical = SizeFlags.FillExpand
-            };
-            var vBox = new VBoxContainer();
-            panelContainer.AddChild(vBox);
-            var hBox = new HBoxContainer();
+                Children =
+                {
+                    new PanelContainer
+                    {
+                        PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#25252aaa")},
+                        SizeFlagsVertical = SizeFlags.FillExpand,
+                        SizeFlagsHorizontal = SizeFlags.FillExpand,
+                        Children =
+                        {
+                            new VBoxContainer
+                            {
+                                Children =
+                                {
+                                    new MarginContainer
+                                    {
+                                        MarginLeftOverride = 4, MarginRightOverride = 4,
+                                        SizeFlagsVertical = SizeFlags.FillExpand,
+                                        Children =
+                                        {
+                                            (Contents = new OutputPanel())
+                                        }
+                                    },
+                                    new PanelContainer
+                                    {
+                                        StyleClasses = { StyleNano.StyleClassChatSubPanel },
+                                        SizeFlagsHorizontal = SizeFlags.FillExpand,
+                                        Children =
+                                        {
+                                            new HBoxContainer
+                                            {
+                                                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                                                SeparationOverride = 4,
+                                                Children =
+                                                {
+                                                    (_channelSelector = new OptionButton()),
+                                                    (Input = new HistoryLineEdit
+                                                    {
+                                                        SizeFlagsHorizontal = SizeFlags.FillExpand,
+                                                        StyleClasses = { StyleNano.StyleClassChatLineEdit }
+                                                    })
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                }
+            });
 
-            outerVBox.AddChild(panelContainer);
-            outerVBox.AddChild(hBox);
-
-
-            var contentMargin = new MarginContainer
-            {
-                MarginLeftOverride = 4, MarginRightOverride = 4,
-                SizeFlagsVertical = SizeFlags.FillExpand
-            };
-            Contents = new OutputPanel();
-            contentMargin.AddChild(Contents);
-            vBox.AddChild(contentMargin);
-
-            Input = new HistoryLineEdit();
+            _channelSelector.AddItem("Local", (int) ChatChannel.Local);
+            _channelSelector.AddItem("Radio", (int) ChatChannel.Radio);
+            _channelSelector.AddItem("OOC", (int) ChatChannel.OOC);
             Input.OnKeyBindDown += InputKeyBindDown;
             Input.OnTextEntered += Input_OnTextEntered;
-            vBox.AddChild(Input);
 
             AllButton = new Button
             {
@@ -117,14 +150,6 @@ namespace Content.Client.Chat
             OOCButton.OnToggled += OnFilterToggled;
             AdminButton.OnToggled += OnFilterToggled;
             DeadButton.OnToggled += OnFilterToggled;
-
-            hBox.AddChild(AllButton);
-            hBox.AddChild(LocalButton);
-            hBox.AddChild(DeadButton);
-            hBox.AddChild(OOCButton);
-            hBox.AddChild(AdminButton);
-
-            AddChild(outerVBox);
         }
 
         protected override void KeyBindDown(GUIBoundKeyEventArgs args)

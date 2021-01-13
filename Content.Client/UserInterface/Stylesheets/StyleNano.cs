@@ -16,6 +16,7 @@ namespace Content.Client.UserInterface.Stylesheets
     public sealed class StyleNano : StyleBase
     {
         public const string StyleClassBorderedWindowPanel = "BorderedWindowPanel";
+        public const string StyleClassChatSubPanel = "ChatSubPanel";
         public const string StyleClassTransparentBorderedWindowPanel = "TransparentBorderedWindowPanel";
         public const string StyleClassHotbarPanel = "HotbarPanel";
         public const string StyleClassTooltipPanel = "tooltipBox";
@@ -29,6 +30,7 @@ namespace Content.Client.UserInterface.Stylesheets
         public const string StyleClassHotbarSlotNumber = "hotbarSlotNumber";
         public const string StyleClassActionSearchBox = "actionSearchBox";
         public const string StyleClassActionMenuItemRevoked = "actionMenuItemRevoked";
+        public const string StyleClassChatLineEdit = "chatLineEdit";
 
 
         public const string StyleClassSliderRed = "Red";
@@ -201,6 +203,13 @@ namespace Content.Client.UserInterface.Stylesheets
             };
             lineEdit.SetPatchMargin(StyleBox.Margin.All, 3);
             lineEdit.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
+
+            var chatSubBGTex = resCache.GetTexture("/Textures/Interface/Nano/chat_sub_background.png");
+            var chatSubBG = new StyleBoxTexture
+            {
+                Texture = chatSubBGTex,
+            };
+            chatSubBG.SetPatchMargin(StyleBox.Margin.All, 2);
 
             var actionSearchBoxTex = resCache.GetTexture("/Textures/Interface/Nano/black_panel_dark_thin_border.png");
             var actionSearchBox = new StyleBoxTexture
@@ -563,6 +572,20 @@ namespace Content.Client.UserInterface.Stylesheets
                     new[]
                     {
                         new StyleProperty("font-color", Color.Gray),
+                    }),
+                // Chat lineedit - we don't actually draw a stylebox around the lineedit itself, we put it around the
+                // input + other buttons, so we must clear the default stylebox
+                new StyleRule(new SelectorElement(typeof(LineEdit), new[] {StyleClassChatLineEdit}, null, null),
+                    new[]
+                    {
+                        new StyleProperty(LineEdit.StylePropertyStyleBox, new StyleBoxEmpty()),
+                    }),
+
+                // chat subpanels (chat lineedit backing, popup backings)
+                new StyleRule(new SelectorElement(typeof(PanelContainer), new[] {StyleClassChatSubPanel}, null, null),
+                    new[]
+                    {
+                        new StyleProperty(PanelContainer.StylePropertyPanel, chatSubBG),
                     }),
 
                 // Action searchbox lineedit
