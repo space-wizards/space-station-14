@@ -8,40 +8,38 @@
     },
     "states": [
         {
-            "name": "full",
-            "select": [],
-            "flags": {}
+            "name": "full"
         },
         {
-            "name": "debug0"
+            "name": "debug0",
             "directions": 4
         },
         {
-            "name": "debug1"
+            "name": "debug1",
             "directions": 4
         },
         {
-            "name": "debug2"
+            "name": "debug2",
             "directions": 4
         },
         {
-            "name": "debug3"
+            "name": "debug3",
             "directions": 4
         },
         {
-            "name": "debug4"
+            "name": "debug4",
             "directions": 4
         },
         {
-            "name": "debug5"
+            "name": "debug5",
             "directions": 4
         },
         {
-            "name": "debug6"
+            "name": "debug6",
             "directions": 4
         },
         {
-            "name": "debug7"
+            "name": "debug7",
             "directions": 4
         }
     ]
