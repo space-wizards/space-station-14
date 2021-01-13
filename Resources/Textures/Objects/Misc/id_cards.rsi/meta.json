@@ -8,216 +8,163 @@
   },
   "states": [
     {
-      "name": "default",
-      "directions": 1
+      "name": "default"
     },
     {
-      "name": "centcom",
-      "directions": 1
+      "name": "centcom"
     },
     {
-      "name": "ert_chaplain",
-      "directions": 1
+      "name": "ert_chaplain"
     },
     {
-      "name": "ert_commander",
-      "directions": 1
+      "name": "ert_commander"
     },
     {
-      "name": "ert_engineer",
-      "directions": 1
+      "name": "ert_engineer"
     },
     {
-      "name": "ert_janitor",
-      "directions": 1
+      "name": "ert_janitor"
     },
     {
-      "name": "ert_medic",
-      "directions": 1
+      "name": "ert_medic"
     },
     {
-      "name": "ert_security",
-      "directions": 1
+      "name": "ert_security"
     },
     {
-      "name": "gold",
-      "directions": 1
+      "name": "gold"
     },
     {
-      "name": "idassistant",
-      "directions": 1
+      "name": "idassistant"
     },
     {
-      "name": "idatmospherictechnician",
-      "directions": 1
+      "name": "idatmospherictechnician"
     },
     {
-      "name": "idbartender",
-      "directions": 1
+      "name": "idbartender"
     },
     {
-      "name": "idbotanist",
-      "directions": 1
+      "name": "idbotanist"
     },
     {
-      "name": "idcaptain",
-      "directions": 1
+      "name": "idcaptain"
     },
     {
-      "name": "idcargotechnician",
-      "directions": 1
+      "name": "idcargotechnician"
     },
     {
-      "name": "idcentcom",
-      "directions": 1
+      "name": "idcentcom"
     },
     {
-      "name": "idchaplain",
-      "directions": 1
+      "name": "idchaplain"
     },
     {
-      "name": "idchemist",
-      "directions": 1
+      "name": "idchemist"
     },
     {
-      "name": "idchiefengineer",
-      "directions": 1
+      "name": "idchiefengineer"
     },
     {
-      "name": "idchiefmedicalofficer",
-      "directions": 1
+      "name": "idchiefmedicalofficer"
     },
     {
-      "name": "idclown",
-      "directions": 1
+      "name": "idclown"
     },
     {
-      "name": "idcook",
-      "directions": 1
+      "name": "idcook"
     },
     {
-      "name": "idcurator",
-      "directions": 1
+      "name": "idcurator"
     },
     {
-      "name": "iddetective",
-      "directions": 1
+      "name": "iddetective"
     },
     {
-      "name": "idgeneticist",
-      "directions": 1
+      "name": "idgeneticist"
     },
     {
-      "name": "idheadofpersonnel",
-      "directions": 1
+      "name": "idheadofpersonnel"
     },
     {
-      "name": "idheadofsecurity",
-      "directions": 1
+      "name": "idheadofsecurity"
     },
     {
-      "name": "idjanitor",
-      "directions": 1
+      "name": "idjanitor"
     },
     {
-      "name": "idlawyer",
-      "directions": 1
+      "name": "idlawyer"
     },
     {
-      "name": "idmedicaldoctor",
-      "directions": 1
+      "name": "idmedicaldoctor"
     },
     {
-      "name": "idmime",
-      "directions": 1
+      "name": "idmime"
     },
     {
-      "name": "idparamedic",
-      "directions": 1
+      "name": "idparamedic"
     },
     {
-      "name": "idprisoner",
-      "directions": 1
+      "name": "idprisoner"
     },
     {
-      "name": "idquartermaster",
-      "directions": 1
+      "name": "idquartermaster"
     },
     {
-      "name": "idresearchdirector",
-      "directions": 1
+      "name": "idresearchdirector"
     },
     {
-      "name": "idroboticist",
-      "directions": 1
+      "name": "idroboticist"
     },
     {
-      "name": "idscientist",
-      "directions": 1
+      "name": "idscientist"
     },
     {
-      "name": "idsecurityofficer",
-      "directions": 1
+      "name": "idsecurityofficer"
     },
     {
-      "name": "idshaftminer",
-      "directions": 1
+      "name": "idshaftminer"
     },
     {
-      "name": "idstationengineer",
-      "directions": 1
+      "name": "idstationengineer"
     },
     {
-      "name": "idunknown",
-      "directions": 1
+      "name": "idunknown"
     },
     {
-      "name": "idvirologist",
-      "directions": 1
+      "name": "idvirologist"
     },
     {
-      "name": "idwarden",
-      "directions": 1
+      "name": "idwarden"
     },
     {
-      "name": "orange",
-      "directions": 1
+      "name": "orange"
     },
     {
-      "name": "prisoner_001",
-      "directions": 1
+      "name": "prisoner_001"
     },
     {
-      "name": "prisoner_002",
-      "directions": 1
+      "name": "prisoner_002"
     },
     {
-      "name": "prisoner_003",
-      "directions": 1
+      "name": "prisoner_003"
     },
     {
-      "name": "prisoner_004",
-      "directions": 1
+      "name": "prisoner_004"
     },
     {
-      "name": "prisoner_005",
-      "directions": 1
+      "name": "prisoner_005"
     },
     {
-      "name": "prisoner_006",
-      "directions": 1
+      "name": "prisoner_006"
     },
     {
-      "name": "prisoner_007",
-      "directions": 1
+      "name": "prisoner_007"
     },
     {
-      "name": "silver",
-      "directions": 1
+      "name": "silver"
     },
     {
-      "name": "syndie",
-      "directions": 1
+      "name": "syndie"
     },
     {
       "name": "gold-inhand-left",

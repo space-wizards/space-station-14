@@ -9,7 +9,6 @@
   "states": [
     {
       "name": "bolted",
-      "directions": 1,
       "delays": [
         [
           1
@@ -18,7 +17,6 @@
     },
     {
       "name": "closed",
-      "directions": 1,
       "delays": [
         [
           1
@@ -27,7 +25,6 @@
     },
     {
       "name": "closed_unlit",
-      "directions": 1,
       "delays": [
         [
           1
@@ -36,7 +33,6 @@
     },
     {
       "name": "closing",
-      "directions": 1,
       "delays": [
         [
           0.2,
@@ -50,7 +46,6 @@
     },
     {
       "name": "closing_unlit",
-      "directions": 1,
       "delays": [
         [
           0.2,
@@ -64,7 +59,6 @@
     },
     {
       "name": "deny",
-      "directions": 1,
       "delays": [
         [
           0.1,
@@ -75,7 +69,6 @@
     },
     {
       "name": "deny_unlit",
-      "directions": 1,
       "delays": [
         [
           0.1,
@@ -86,7 +79,6 @@
     },
     {
       "name": "locked",
-      "directions": 1,
       "delays": [
         [
           1
@@ -95,7 +87,6 @@
     },
     {
       "name": "open",
-      "directions": 1,
       "delays": [
         [
           1
@@ -104,7 +95,6 @@
     },
     {
       "name": "opening",
-      "directions": 1,
       "delays": [
         [
           0.2,
@@ -118,7 +108,6 @@
     },
     {
       "name": "opening_unlit",
-      "directions": 1,
       "delays": [
         [
           0.2,
@@ -132,7 +121,6 @@
     },
     {
       "name": "panel_closing",
-      "directions": 1,
       "delays": [
         [
           0.1,
@@ -147,7 +135,6 @@
     },
     {
       "name": "panel_open",
-      "directions": 1,
       "delays": [
         [
           1
@@ -156,7 +143,6 @@
     },
     {
       "name": "panel_opening",
-      "directions": 1,
       "delays": [
         [
           0.2,
@@ -171,7 +157,6 @@
     },
     {
       "name": "welded",
-      "directions": 1,
       "delays": [
         [
           1
@@ -180,7 +165,6 @@
     },
     {
       "name": "welded_open",
-      "directions": 1,
       "delays": [
         [
           1

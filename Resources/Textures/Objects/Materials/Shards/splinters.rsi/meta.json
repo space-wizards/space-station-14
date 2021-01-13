@@ -9,30 +9,15 @@
     "states": [
         {
             "name": "splinterslarge",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "splintersmedium",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "splinterssmall",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         }
     ]
 }
