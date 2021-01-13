@@ -9,7 +9,6 @@
   "states": [
     {
       "name": "ai",
-      "directions": 1,
       "delays": [
         [
           1
@@ -18,7 +17,6 @@
     },
     {
       "name": "anomaly",
-      "directions": 1,
       "delays": [
         [
           1
@@ -27,7 +25,6 @@
     },
     {
       "name": "armory",
-      "directions": 1,
       "delays": [
         [
           1
@@ -36,7 +33,6 @@
     },
     {
       "name": "ass",
-      "directions": 1,
       "delays": [
         [
           1
@@ -45,7 +41,6 @@
     },
     {
       "name": "atmos",
-      "directions": 1,
       "delays": [
         [
           1
@@ -54,7 +49,6 @@
     },
     {
       "name": "atmos_air",
-      "directions": 1,
       "delays": [
         [
           1
@@ -63,7 +57,6 @@
     },
     {
       "name": "atmos_co2",
-      "directions": 1,
       "delays": [
         [
           1
@@ -72,7 +65,6 @@
     },
     {
       "name": "atmos_n2",
-      "directions": 1,
       "delays": [
         [
           1
@@ -81,7 +73,6 @@
     },
     {
       "name": "atmos_n2o",
-      "directions": 1,
       "delays": [
         [
           1
@@ -90,7 +81,6 @@
     },
     {
       "name": "atmos_o2",
-      "directions": 1,
       "delays": [
         [
           1
@@ -99,7 +89,6 @@
     },
     {
       "name": "atmos_phoron",
-      "directions": 1,
       "delays": [
         [
           1
@@ -108,7 +97,6 @@
     },
     {
       "name": "atmos_waste",
-      "directions": 1,
       "delays": [
         [
           1
@@ -117,7 +105,6 @@
     },
     {
       "name": "atmosplaque",
-      "directions": 1,
       "delays": [
         [
           1
@@ -126,7 +113,6 @@
     },
     {
       "name": "zumosplaque",
-      "directions": 1,
       "delays": [
         [
           1
@@ -135,7 +121,6 @@
     },
     {
       "name": "bar",
-      "directions": 1,
       "delays": [
         [
           1
@@ -144,7 +129,6 @@
     },
     {
       "name": "biblio",
-      "directions": 1,
       "delays": [
         [
           1
@@ -153,7 +137,6 @@
     },
     {
       "name": "bio",
-      "directions": 1,
       "delays": [
         [
           1
@@ -162,7 +145,6 @@
     },
     {
       "name": "biohazard",
-      "directions": 1,
       "delays": [
         [
           1
@@ -171,7 +153,6 @@
     },
     {
       "name": "bridge",
-      "directions": 1,
       "delays": [
         [
           1
@@ -180,7 +161,6 @@
     },
     {
       "name": "canisters",
-      "directions": 1,
       "delays": [
         [
           1
@@ -189,7 +169,6 @@
     },
     {
       "name": "cargo",
-      "directions": 1,
       "delays": [
         [
           1
@@ -198,7 +177,6 @@
     },
     {
       "name": "cargo_dock",
-      "directions": 1,
       "delays": [
         [
           1
@@ -207,7 +185,6 @@
     },
     {
       "name": "chapel",
-      "directions": 1,
       "delays": [
         [
           1
@@ -216,7 +193,6 @@
     },
     {
       "name": "chem",
-      "directions": 1,
       "delays": [
         [
           1
@@ -225,7 +201,6 @@
     },
     {
       "name": "chemistry1",
-      "directions": 1,
       "delays": [
         [
           1
@@ -234,7 +209,6 @@
     },
     {
       "name": "chemistry2",
-      "directions": 1,
       "delays": [
         [
           1
@@ -243,7 +217,6 @@
     },
     {
       "name": "commander",
-      "directions": 1,
       "delays": [
         [
           1
@@ -252,7 +225,6 @@
     },
     {
       "name": "conference_room",
-      "directions": 1,
       "delays": [
         [
           1
@@ -261,7 +233,6 @@
     },
     {
       "name": "corrosives",
-      "directions": 1,
       "delays": [
         [
           1
@@ -270,7 +241,6 @@
     },
     {
       "name": "cryogenics",
-      "directions": 1,
       "delays": [
         [
           1
@@ -279,7 +249,6 @@
     },
     {
       "name": "danger",
-      "directions": 1,
       "delays": [
         [
           1
@@ -288,7 +257,6 @@
     },
     {
       "name": "deathsposal",
-      "directions": 1,
       "delays": [
         [
           1
@@ -423,7 +391,6 @@
     },
     {
       "name": "dock",
-      "directions": 1,
       "delays": [
         [
           1
@@ -432,7 +399,6 @@
     },
     {
       "name": "doors",
-      "directions": 1,
       "delays": [
         [
           1
@@ -441,7 +407,6 @@
     },
     {
       "name": "drones",
-      "directions": 1,
       "delays": [
         [
           1
@@ -450,7 +415,6 @@
     },
     {
       "name": "electrical",
-      "directions": 1,
       "delays": [
         [
           1
@@ -459,7 +423,6 @@
     },
     {
       "name": "eng",
-      "directions": 1,
       "delays": [
         [
           1
@@ -468,7 +431,6 @@
     },
     {
       "name": "engine",
-      "directions": 1,
       "delays": [
         [
           1
@@ -477,7 +439,6 @@
     },
     {
       "name": "eva",
-      "directions": 1,
       "delays": [
         [
           1
@@ -486,7 +447,6 @@
     },
     {
       "name": "examroom",
-      "directions": 1,
       "delays": [
         [
           1
@@ -495,7 +455,6 @@
     },
     {
       "name": "explosives",
-      "directions": 1,
       "delays": [
         [
           1
@@ -504,7 +463,6 @@
     },
     {
       "name": "fire",
-      "directions": 1,
       "delays": [
         [
           1
@@ -513,7 +471,6 @@
     },
     {
       "name": "flammable",
-      "directions": 1,
       "delays": [
         [
           1
@@ -522,7 +479,6 @@
     },
     {
       "name": "cloning",
-      "directions": 1,
       "delays": [
         [
           1
@@ -531,7 +487,6 @@
     },
     {
       "name": "gravi",
-      "directions": 1,
       "delays": [
         [
           1
@@ -540,7 +495,6 @@
     },
     {
       "name": "hydro1",
-      "directions": 1,
       "delays": [
         [
           1
@@ -549,7 +503,6 @@
     },
     {
       "name": "hydro2",
-      "directions": 1,
       "delays": [
         [
           1
@@ -558,7 +511,6 @@
     },
     {
       "name": "hydro3",
-      "directions": 1,
       "delays": [
         [
           1
@@ -567,7 +519,6 @@
     },
     {
       "name": "interrogation",
-      "directions": 1,
       "delays": [
         [
           1
@@ -576,7 +527,6 @@
     },
     {
       "name": "laser",
-      "directions": 1,
       "delays": [
         [
           1
@@ -585,7 +535,6 @@
     },
     {
       "name": "magnetics",
-      "directions": 1,
       "delays": [
         [
           1
@@ -594,7 +543,6 @@
     },
     {
       "name": "mail",
-      "directions": 1,
       "delays": [
         [
           1
@@ -603,7 +551,6 @@
     },
     {
       "name": "medbay",
-      "directions": 1,
       "delays": [
         [
           1
@@ -612,7 +559,6 @@
     },
     {
       "name": "memetic",
-      "directions": 1,
       "delays": [
         [
           1
@@ -621,7 +567,6 @@
     },
     {
       "name": "miner_dock",
-      "directions": 1,
       "delays": [
         [
           1
@@ -630,7 +575,6 @@
     },
     {
       "name": "monkey_painting",
-      "directions": 1,
       "delays": [
         [
           1
@@ -639,7 +583,6 @@
     },
     {
       "name": "morgue",
-      "directions": 1,
       "delays": [
         [
           1
@@ -648,7 +591,6 @@
     },
     {
       "name": "nosmoking",
-      "directions": 1,
       "delays": [
         [
           1
@@ -657,7 +599,6 @@
     },
     {
       "name": "nosmoking2",
-      "directions": 1,
       "delays": [
         [
           1
@@ -666,7 +607,6 @@
     },
     {
       "name": "surgery",
-      "directions": 1,
       "delays": [
         [
           1
@@ -675,7 +615,6 @@
     },
     {
       "name": "optical",
-      "directions": 1,
       "delays": [
         [
           1
@@ -684,7 +623,6 @@
     },
     {
       "name": "oxidants",
-      "directions": 1,
       "delays": [
         [
           1
@@ -693,7 +631,6 @@
     },
     {
       "name": "pods",
-      "directions": 1,
       "delays": [
         [
           1
@@ -702,7 +639,6 @@
     },
     {
       "name": "prison",
-      "directions": 1,
       "delays": [
         [
           1
@@ -711,7 +647,6 @@
     },
     {
       "name": "radiation",
-      "directions": 1,
       "delays": [
         [
           1
@@ -720,7 +655,6 @@
     },
     {
       "name": "rnd",
-      "directions": 1,
       "delays": [
         [
           1
@@ -729,7 +663,6 @@
     },
     {
       "name": "robo",
-      "directions": 1,
       "delays": [
         [
           1
@@ -738,7 +671,6 @@
     },
     {
       "name": "sci",
-      "directions": 1,
       "delays": [
         [
           1
@@ -747,7 +679,6 @@
     },
     {
       "name": "science1",
-      "directions": 1,
       "delays": [
         [
           1
@@ -756,7 +687,6 @@
     },
     {
       "name": "science2",
-      "directions": 1,
       "delays": [
         [
           1
@@ -765,7 +695,6 @@
     },
     {
       "name": "secure",
-      "directions": 1,
       "delays": [
         [
           1
@@ -774,7 +703,6 @@
     },
     {
       "name": "securearea",
-      "directions": 1,
       "delays": [
         [
           1
@@ -783,7 +711,6 @@
     },
     {
       "name": "shield",
-      "directions": 1,
       "delays": [
         [
           1
@@ -792,7 +719,6 @@
     },
     {
       "name": "shock",
-      "directions": 1,
       "delays": [
         [
           1
@@ -801,7 +727,6 @@
     },
     {
       "name": "something-old1",
-      "directions": 1,
       "delays": [
         [
           1
@@ -810,7 +735,6 @@
     },
     {
       "name": "something-old2",
-      "directions": 1,
       "delays": [
         [
           1
@@ -819,7 +743,6 @@
     },
     {
       "name": "space",
-      "directions": 1,
       "delays": [
         [
           1
@@ -828,7 +751,6 @@
     },
     {
       "name": "telecoms",
-      "directions": 1,
       "delays": [
         [
           1
@@ -837,7 +759,6 @@
     },
     {
       "name": "toxin_res",
-      "directions": 1,
       "delays": [
         [
           1
@@ -846,7 +767,6 @@
     },
     {
       "name": "toxins",
-      "directions": 1,
       "delays": [
         [
           1
@@ -855,7 +775,6 @@
     },
     {
       "name": "virology",
-      "directions": 1,
       "delays": [
         [
           1
@@ -864,7 +783,6 @@
     },
     {
       "name": "xenobio",
-      "directions": 1,
       "delays": [
         [
           1
@@ -873,7 +791,6 @@
     },
     {
       "name": "xenobio2",
-      "directions": 1,
       "delays": [
         [
           1
@@ -882,7 +799,6 @@
     },
     {
       "name": "xenolab",
-      "directions": 1,
       "delays": [
         [
           1

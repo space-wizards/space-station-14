@@ -8,8 +8,7 @@
     "copyright": "https://github.com/discordia-space/CEV-Eris/raw/2acc4d34a894dbcc9dbf3779b696ddf296aa2c56/icons/obj/projectiles.dmi",
     "states": [
         {
-            "name": "base",
-            "directions": 1
+            "name": "base"
         }
     ]
 }

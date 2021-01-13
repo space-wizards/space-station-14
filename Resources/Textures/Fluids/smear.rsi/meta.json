@@ -8,32 +8,25 @@
     "copyright": "https://github.com/discordia-space/CEV-Eris/raw/aff0d780742ca3902d8b05f854c212c8cda32c4f/icons/effects/blood.dmi",
     "states": [
         {
-            "name": "smear-0",
-            "directions": 1
+            "name": "smear-0"
         },
         {
-            "name": "smear-1",
-            "directions": 1
+            "name": "smear-1"
         },
         {
-            "name": "smear-2",
-            "directions": 1
+            "name": "smear-2"
         },
         {
-            "name": "smear-3",
-            "directions": 1
+            "name": "smear-3"
         },
         {
-            "name": "smear-4",
-            "directions": 1
+            "name": "smear-4"
         },
         {
-            "name": "smear-5",
-            "directions": 1
+            "name": "smear-5"
         },
         {
-            "name": "smear-6",
-            "directions": 1
+            "name": "smear-6"
         }
     ]
 }

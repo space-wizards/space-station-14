@@ -8,16 +8,13 @@
     "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/commit/a7290010020e541ed6b57817a07023ca6bef26fe",
     "states": [
         {
-            "name": "broken",
-            "directions": 1
+            "name": "broken"
         },
         {
-            "name": "normal-unshaded",
-            "directions": 1
+            "name": "normal-unshaded"
         },
         {
-            "name": "off",
-            "directions": 1
+            "name": "off"
         }
     ]
 }

@@ -9,7 +9,6 @@
   "states": [
     {
       "name": "icon-0",
-      "directions": 1,
       "delays": [
         [
           1
@@ -18,7 +17,6 @@
     },
     {
       "name": "icon-1",
-      "directions": 1,
       "delays": [
         [
           1
@@ -27,7 +25,6 @@
     },
     {
       "name": "icon-2",
-      "directions": 1,
       "delays": [
         [
           1
@@ -114,7 +111,6 @@
     },
     {
       "name": "dead-0",
-      "directions": 1,
       "delays": [
         [
           1
@@ -123,7 +119,6 @@
     },
     {
       "name": "dead-1",
-      "directions": 1,
       "delays": [
         [
           1
@@ -132,7 +127,6 @@
     },
     {
       "name": "dead-2",
-      "directions": 1,
       "delays": [
         [
           1
@@ -141,7 +135,6 @@
     },
     {
       "name": "splat-0",
-      "directions": 1,
       "delays": [
         [
           1
@@ -150,7 +143,6 @@
     },
     {
       "name": "splat-1",
-      "directions": 1,
       "delays": [
         [
           1
@@ -159,7 +151,6 @@
     },
     {
       "name": "splat-2",
-      "directions": 1,
       "delays": [
         [
           1

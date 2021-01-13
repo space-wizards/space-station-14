@@ -8,16 +8,13 @@
   },
   "states": [
     {
-      "name": "cig",
-      "directions": 1
+      "name": "cig"
     },
     {
-      "name": "cig_empty",
-      "directions": 1
+      "name": "cig_empty"
     },
     {
-      "name": "cig_open",
-      "directions": 1
+      "name": "cig_open"
     }
   ]
 }

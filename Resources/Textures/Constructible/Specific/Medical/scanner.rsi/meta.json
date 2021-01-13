@@ -8,24 +8,19 @@
   },
   "states": [
     {
-      "name": "open",
-      "directions": 1
+      "name": "open"
     },
     {
-      "name": "closed",
-      "directions": 1
+      "name": "closed"
     },
     {
-      "name": "open_unpowered",
-      "directions": 1
+      "name": "open_unpowered"
     },
     {
-      "name": "closed_unpowered",
-      "directions": 1
+      "name": "closed_unpowered"
     },
     {
       "name": "occupied",
-      "directions": 1,
       "delays": [
         [
           0.1,
@@ -36,16 +31,13 @@
       ]
     },
     {
-      "name": "off_unlit",
-      "directions": 1
+      "name": "off_unlit"
     },
     {
-      "name": "occupied_unlit",
-      "directions": 1
+      "name": "occupied_unlit"
     },
     {
       "name": "idle_unlit",
-      "directions": 1,
       "delays": [
         [
           0.2,
@@ -55,7 +47,6 @@
     },
     {
       "name": "maint_unlit",
-      "directions": 1,
       "delays": [
         [
           0.2,
@@ -65,7 +56,6 @@
     },
     {
       "name": "red_unlit",
-      "directions": 1,
       "delays": [
         [
           0.2,

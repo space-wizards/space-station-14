@@ -9,7 +9,6 @@
   "states": [
     {
       "name": "holding",
-      "directions": 1,
       "delays": [
         [
           0.1,
@@ -65,7 +64,6 @@
     },
     {
       "name": "holding-unlit",
-      "directions": 1,
       "delays": [
         [
           0.1,
@@ -82,8 +80,7 @@
       "directions": 4
     },
     {
-      "name": "holding-broken",
-      "directions": 1
+      "name": "holding-broken"
     },
     {
       "name": "inhand-left",
