@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using Content.Client.GameObjects.Components;
 using Content.Client.State;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.Stylesheets;
@@ -68,13 +69,15 @@ namespace Content.Client.GameObjects.EntitySystems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
 
-        private EntityList _currentEntityList;
+        private ContextPopup _contextPopup;
+        private ContextPopup _contextPopupExt;
+
         private VerbPopup _currentVerbListRoot;
         private VerbPopup _currentGroupList;
 
         private EntityUid _currentEntity;
 
-        private bool IsAnyContextMenuOpen => _currentEntityList != null || _currentVerbListRoot != null;
+        private bool IsAnyContextMenuOpen => _contextPopup != null || _currentVerbListRoot != null || _contextPopupExt != null;
 
         private bool _playerCanSeeThroughContainers;
 
@@ -123,7 +126,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
             if (!entity.Uid.IsClientSide())
             {
-                _currentVerbListRoot.List.AddChild(new Label {Text = "Waiting on Server..."});
+                _currentVerbListRoot.List.AddChild(new Label { Text = "Waiting on Server..." });
                 RaiseNetworkEvent(new VerbSystemMessages.RequestVerbsMessage(_currentEntity));
             }
 
@@ -174,6 +177,9 @@ namespace Content.Client.GameObjects.EntitySystems
                 return false;
             }
 
+            // Objects are grouped based on their current appearance. For example a weapon without a
+            // magazine with a sprite layer showing that is different from the same weapon
+            // with a magazine in it.
             var entitySpriteStates = new Dictionary<(string, IEnumerable<string>), List<IEntity>>(new ContextMenuComparer<string>());
             foreach (var entity in entities)
             {
@@ -181,7 +187,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 {
                     continue;
                 }
-                
+
                 if (entity.TryGetComponent(out ISpriteComponent sprite))
                 {
                     var currentState = (entity.Prototype.ID, sprite.AllLayers.Where(e => e.Visible).Select(s => s.RsiState.Name));
@@ -196,40 +202,35 @@ namespace Content.Client.GameObjects.EntitySystems
                 }
             }
 
-            var orderedStates = entitySpriteStates.ToList();
-            orderedStates.Sort((x, y) => string.CompareOrdinal(x.Value.First().Prototype.Name, y.Value.First().Prototype.Name));
-
-            _currentEntityList = new EntityList();
-            _currentEntityList.OnPopupHide += CloseAllMenus;
-
-            var first = true;
-            foreach (var (_, vEntity) in orderedStates)
-            {
-                if (!first)
-                {
-                    _currentEntityList.List.AddChild(new PanelContainer
-                    {
-                        CustomMinimumSize = (0, 2),
-                        PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#333") }
-                    });
-                }
-
-                var debugEnabled = _userInterfaceManager.DebugMonitors.Visible;
-                _currentEntityList.List.AddChild(new EntityButtonStack(this, vEntity, debugEnabled));
-                _currentEntityList.StackEntitiesCount++;
-                first = false;
-            }
-
-            if (_currentEntityList.StackEntitiesCount == 0)
+            if (entitySpriteStates.Count == 0)
             {
                 return false;
             }
 
-            _userInterfaceManager.ModalRoot.AddChild(_currentEntityList);
+            var orderedStates = entitySpriteStates.ToList();
+            orderedStates.Sort((x, y) => string.CompareOrdinal(x.Value.First().Prototype.Name, y.Value.First().Prototype.Name));
 
-            var size = _currentEntityList.List.CombinedMinimumSize;
+            _contextPopup = new ContextPopup();
+            _contextPopup.OnPopupHide += CloseAllMenus;
+            var debugEnabled = _userInterfaceManager.DebugMonitors.Visible;
+
+            foreach (var (_, vEntity) in orderedStates)
+            {
+                if (vEntity.Count > 1)
+                {
+                    _contextPopup.AddElement(new MultiContextElement(this, vEntity, debugEnabled), true);
+                }
+                else
+                {
+                    _contextPopup.AddElement(new SingleContextElement(this, vEntity.First(), debugEnabled, true), true);
+                }
+            }
+
+            _userInterfaceManager.ModalRoot.AddChild(_contextPopup);
+
+            var size = _contextPopup.List.CombinedMinimumSize;
             var box = UIBox2.FromDimensions(_userInterfaceManager.MousePositionScaled, size);
-            _currentEntityList.Open(box);
+            _contextPopup.Open(box);
 
             return true;
         }
@@ -336,7 +337,7 @@ namespace Content.Client.GameObjects.EntitySystems
                         vBox.AddChild(new PanelContainer
                         {
                             CustomMinimumSize = (0, 2),
-                            PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#333")}
+                            PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#333") }
                         });
                     }
 
@@ -358,7 +359,7 @@ namespace Content.Client.GameObjects.EntitySystems
                             vBox.AddChild(new PanelContainer
                             {
                                 CustomMinimumSize = (0, 2),
-                                PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#333")}
+                                PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#333") }
                             });
                         }
 
@@ -371,7 +372,7 @@ namespace Content.Client.GameObjects.EntitySystems
             else
             {
                 var panel = new PanelContainer();
-                panel.AddChild(new Label {Text = "No verbs!"});
+                panel.AddChild(new Label { Text = "No verbs!" });
                 vBox.AddChild(panel);
             }
         }
@@ -425,16 +426,17 @@ namespace Content.Client.GameObjects.EntitySystems
             _currentEntity = EntityUid.Invalid;
         }
 
-        private void CloseEntityList()
+        private void CloseContextPopup()
         {
-            _currentEntityList?.Dispose();
-            _currentEntityList = null;
+            _contextPopup?.Dispose();
+            _contextPopup = null;
         }
 
         private void CloseAllMenus()
         {
             CloseVerbMenu();
-            CloseEntityList();
+            CloseContextPopup();
+            CloseContextPopupExt();
             CloseGroupMenu();
         }
 
@@ -444,23 +446,300 @@ namespace Content.Client.GameObjects.EntitySystems
             _currentGroupList = null;
         }
 
+        private void CloseContextPopupExt()
+        {
+            _contextPopupExt?.Dispose();
+            _contextPopupExt = null;
+        }
+
         private IEntity GetUserEntity()
         {
             return _playerManager.LocalPlayer.ControlledEntity;
         }
 
-        private sealed class EntityList : Popup
+        private abstract class ContextElement : Control
         {
-            private const int MaximumItemsInContextMenu = 10;
-            public int StackEntitiesCount = 0;
+            protected readonly VerbSystem VSystem;
+            protected readonly bool ShowUid;
+            protected readonly bool IsRoot;
+
+            public ContextElement(VerbSystem system, bool showUid, bool isRoot)
+            {
+                VSystem = system;
+                ShowUid = showUid;
+                IsRoot = isRoot;
+
+                MouseFilter = MouseFilterMode.Stop;
+            }
+
+            protected override void Draw(DrawingHandleScreen handle)
+            {
+                base.Draw(handle);
+
+                if (UserInterfaceManager.CurrentlyHovered == this)
+                {
+                    handle.DrawRect(PixelSizeBox, Color.DarkSlateGray);
+                }
+            }
+
+            protected void ContextKeyBindDown(GUIBoundKeyEventArgs args, IEntity entity, bool isSingle = true)
+            {
+                if (args.Function == ContentKeyFunctions.OpenContextMenu && isSingle)
+                {
+                    VSystem.OnContextButtonPressed(entity);
+                    return;
+                }
+
+                if (args.Function == ContentKeyFunctions.ExamineEntity && isSingle)
+                {
+                    Get<ExamineSystem>().DoExamine(entity);
+                    return;
+                }
+
+                if (args.Function == EngineKeyFunctions.Use ||
+                    args.Function == ContentKeyFunctions.Point ||
+                    args.Function == ContentKeyFunctions.TryPullObject ||
+                    args.Function == ContentKeyFunctions.MovePulledObject)
+                {
+                    // TODO: Remove an entity from the menu when it is deleted
+                    if (entity.Deleted)
+                    {
+                        VSystem.CloseAllMenus();
+                        return;
+                    }
+
+                    var inputSys = VSystem.EntitySystemManager.GetEntitySystem<InputSystem>();
+
+                    var func = args.Function;
+                    var funcId = VSystem._inputManager.NetworkBindMap.KeyFunctionID(args.Function);
+
+                    var message = new FullInputCmdMessage(VSystem._gameTiming.CurTick, VSystem._gameTiming.TickFraction, funcId,
+                        BoundKeyState.Down, entity.Transform.Coordinates, args.PointerLocation, entity.Uid);
+
+                    // client side command handlers will always be sent the local player session.
+                    var session = VSystem._playerManager.LocalPlayer.Session;
+                    inputSys.HandleInputCommand(session, func, message);
+
+                    VSystem.CloseAllMenus();
+                    return;
+                }
+
+                if (VSystem._itemSlotManager.OnButtonPressed(args, entity))
+                {
+                    VSystem.CloseAllMenus();
+                }
+            }
+        }
+
+        private sealed class SingleContextElement : ContextElement
+        {
+            private readonly IEntity _entity;
+            private InteractionOutlineComponent _outline;
+            private SpriteComponent _sprite;
+
+            private bool _drawOutline = false;
+            private int _oldDrawDepth;
+
+            public SingleContextElement(VerbSystem system, IEntity entity, bool showUid, bool isRoot) : base(system, showUid, isRoot)
+            {
+                _entity = entity;
+                var control = new HBoxContainer
+                {
+                    SeparationOverride = 6,
+                    Children =
+                    {
+                        new LayoutContainer
+                        {
+                            Children =
+                            {
+                                new SpriteView { Sprite = _entity.GetComponent<ISpriteComponent>() },
+                            }
+                        },
+                        new MarginContainer
+                        {
+                            MarginLeftOverride = 4,
+                            MarginRightOverride = 4,
+                            Children = { new Label { Text = ShowUid ? $"{entity.Name} ({entity.Uid})" : entity.Name } }
+                        }
+                    }
+                };
+                AddChild(control);
+
+                if (_entity.TryGetComponent(out _sprite))
+                {
+                    _oldDrawDepth = _sprite.DrawDepth;
+                }
+                _outline = _entity.GetComponentOrNull<InteractionOutlineComponent>();
+            }
+
+            protected override void MouseEntered()
+            {
+                base.MouseEntered();
+
+                if (VSystem._currentGroupList != null)
+                {
+                    VSystem.CloseGroupMenu();
+                }
+
+                if (IsRoot && VSystem._contextPopupExt != null)
+                {
+                    VSystem.CloseContextPopupExt();
+                }
+
+                if (_entity != null && !_entity.Deleted)
+                {
+                    var localPlayer = VSystem._playerManager.LocalPlayer;
+                    if (localPlayer != null && localPlayer.ControlledEntity != null)
+                    {
+                        _sprite.DrawDepth = (int) Shared.GameObjects.DrawDepth.HighlightedItems;
+                        _outline?.OnMouseEnter(localPlayer.InRangeUnobstructed(_entity, ignoreInsideBlocker: true));
+                    }
+                }
+                _drawOutline = true;
+            }
+
+            protected override void Draw(DrawingHandleScreen handle)
+            {
+                base.Draw(handle);
+                if (_entity != null && !_entity.Deleted && _drawOutline)
+                {
+                    var localPlayer = VSystem._playerManager.LocalPlayer;
+                    if (localPlayer != null && localPlayer.ControlledEntity != null)
+                    {
+                        _outline?.OnMouseEnter(localPlayer.InRangeUnobstructed(_entity, ignoreInsideBlocker: true));
+                    }
+                }
+            }
+
+            protected override void MouseExited()
+            {
+                base.MouseExited();
+                if (_entity != null && !_entity.Deleted)
+                {
+                    _sprite.DrawDepth = _oldDrawDepth;
+                    _outline?.OnMouseLeave();
+                }
+                _drawOutline = false;
+            }
+
+            protected override void KeyBindDown(GUIBoundKeyEventArgs args)
+            {
+                base.KeyBindDown(args);
+                ContextKeyBindDown(args, _entity);
+            }
+        }
+
+        private sealed class MultiContextElement : ContextElement
+        {
+            private readonly List<IEntity> _entities;
+            private CancellationTokenSource _openCancel;
+            private static readonly TimeSpan HoverDelay = TimeSpan.FromSeconds(0.2);
+
+            public MultiContextElement(VerbSystem system, IEnumerable<IEntity> entities, bool showUid) : base(system, showUid, true)
+            {
+                _entities = new(entities);
+
+                var entity = _entities.First();
+
+                var labelCount = new Label
+                {
+                    Text = _entities.Count.ToString(),
+                    StyleClasses = { StyleNano.StyleClassContextMenuCount },
+                };
+                LayoutContainer.SetAnchorPreset(labelCount, LayoutContainer.LayoutPreset.BottomRight);
+                LayoutContainer.SetGrowHorizontal(labelCount, LayoutContainer.GrowDirection.Begin);
+                LayoutContainer.SetGrowVertical(labelCount, LayoutContainer.GrowDirection.Begin);
+
+                var control = new HBoxContainer
+                {
+                    SeparationOverride = 6,
+                    Children =
+                    {
+                        new LayoutContainer
+                        {
+                            Children =
+                            {
+                                new SpriteView { Sprite = entity.GetComponent<ISpriteComponent>() },
+                                labelCount
+                            }
+                        },
+                        new MarginContainer
+                        {
+                            MarginLeftOverride = 4,
+                            MarginRightOverride = 4,
+                            Children = { new Label { Text = showUid ? $"{entity.Name} (---)" : entity.Name } }
+                        },
+                        new TextureRect
+                        {
+                            Texture = IoCManager.Resolve<IResourceCache>().GetTexture("/Textures/Interface/VerbIcons/group.svg.96dpi.png"),
+                            Stretch = TextureRect.StretchMode.KeepCentered,
+                        }
+                    }
+                };
+                AddChild(control);
+            }
+
+            protected override void KeyBindDown(GUIBoundKeyEventArgs args)
+            {
+                base.KeyBindDown(args);
+                // TODO: Get the next entity if the first one is unavailable (deleted / taken / out of range).
+                // TODO: Edit similar entities at the same time ?
+                ContextKeyBindDown(args, _entities.First(), false);
+            }
+
+            protected override void MouseEntered()
+            {
+                base.MouseEntered();
+
+                _openCancel = new CancellationTokenSource();
+
+                Timer.Spawn(HoverDelay, () =>
+                {
+                    if (VSystem._currentGroupList != null)
+                    {
+                        VSystem.CloseGroupMenu();
+                    }
+
+                    if (VSystem._contextPopupExt != null)
+                    {
+                        VSystem.CloseContextPopupExt();
+                    }
+
+                    VSystem._contextPopupExt = new ContextPopup();
+                    foreach (var entity in _entities)
+                    {
+                        if (!entity.Deleted)
+                        {
+                            VSystem._contextPopupExt.AddElement(new SingleContextElement(VSystem, entity, ShowUid, false), true);
+                        }
+                    }
+
+                    UserInterfaceManager.ModalRoot.AddChild(VSystem._contextPopupExt);
+
+                    var size = VSystem._contextPopupExt.List.CombinedMinimumSize;
+                    VSystem._contextPopupExt.Open(UIBox2.FromDimensions(GlobalPosition + (Width, 0), size));
+                }, _openCancel.Token);
+            }
+
+            protected override void MouseExited()
+            {
+                base.MouseExited();
+
+                _openCancel?.Cancel();
+                _openCancel = null;
+            }
+        }
+
+        private sealed class ContextPopup : Popup
+        {
+            private const int MaxItemsBeforeScroll = 10;
+            private int _contextElementCount = 0;
 
             public VBoxContainer List { get; }
 
-            private ScrollContainer SList { get; }
-
-            public EntityList()
+            public ContextPopup()
             {
-                SList = new ScrollContainer
+                AddChild(new ScrollContainer
                 {
                     HScrollEnabled = false,
                     Children = { new PanelContainer
@@ -468,14 +747,42 @@ namespace Content.Client.GameObjects.EntitySystems
                         Children = { (List = new VBoxContainer()) },
                         PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#111E") }
                     }}
-                };
-                AddChild(SList);
+                });
+            }
+
+            private void AddSeparation()
+            {
+                List.AddChild(new PanelContainer
+                {
+                    CustomMinimumSize = (0, 2),
+                    PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#333") }
+                });
+            }
+
+            public void AddElement(SingleContextElement e, bool addSeparation)
+            {
+                List.AddChild(e);
+                if (addSeparation)
+                {
+                    AddSeparation();
+                }
+                _contextElementCount++;
+            }
+
+            public void AddElement(MultiContextElement e, bool addSeparation)
+            {
+                List.AddChild(e);
+                if (addSeparation)
+                {
+                    AddSeparation();
+                }
+                _contextElementCount++;
             }
 
             protected override Vector2 CalculateMinimumSize()
             {
                 var size = base.CalculateMinimumSize();
-                size.Y = StackEntitiesCount > MaximumItemsInContextMenu ? MaximumItemsInContextMenu * 32 : size.Y;
+                size.Y = _contextElementCount > MaxItemsBeforeScroll ? MaxItemsBeforeScroll * 32 : size.Y;
                 return size;
             }
         }
@@ -492,127 +799,6 @@ namespace Content.Client.GameObjects.EntitySystems
                     PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#111E")}
                 });
             }
-        }
-
-        private sealed class EntityButtonStack : Control
-        {
-            private readonly VerbSystem _master;
-            private readonly Stack<IEntity> _stackedEntities;
-            public EntityButtonStack(VerbSystem master, IEnumerable<IEntity> entities, bool showUid)
-            {
-                _master = master;
-                _stackedEntities = new(entities);
-
-                var entity = _stackedEntities.Peek();
-
-                MouseFilter = MouseFilterMode.Stop;
-
-                var control = new HBoxContainer { SeparationOverride = 6 };
-                if (entity.TryGetComponent(out ISpriteComponent sprite))
-                {
-                    var layoutContainer = new LayoutContainer();
-
-                    var spriteC = new SpriteView { Sprite = sprite };
-                    layoutContainer.AddChild(spriteC);
-
-                    if (_stackedEntities.Count > 1)
-                    {
-                        var textLabel = new Label
-                        {
-                            Text = _stackedEntities.Count.ToString(),
-                            StyleClasses = { StyleNano.StyleClassContextMenuCount }
-                        };
-                        LayoutContainer.SetAnchorPreset(textLabel, LayoutContainer.LayoutPreset.BottomRight);
-                        LayoutContainer.SetGrowHorizontal(textLabel, LayoutContainer.GrowDirection.Begin);
-                        LayoutContainer.SetGrowVertical(textLabel, LayoutContainer.GrowDirection.Begin);
-                        layoutContainer.AddChild(textLabel);
-                    }
-
-                    control.AddChild(layoutContainer);
-                }
-
-                var text = entity.Name;
-                if (showUid)
-                {
-                    text = $"{text} ({entity.Uid})";
-                }
-                control.AddChild(new MarginContainer
-                {
-                    MarginLeftOverride = 4,
-                    MarginRightOverride = 4,
-                    Children = { new Label { Text = text } }
-                });
-
-                AddChild(control);
-            }
-
-            protected override void KeyBindDown(GUIBoundKeyEventArgs args)
-            {
-                base.KeyBindDown(args);
-
-                if (args.Function == ContentKeyFunctions.OpenContextMenu)
-                {
-                    _master.OnContextButtonPressed(_stackedEntities.Pop());
-                    return;
-                }
-
-                var _entity = _stackedEntities.Peek();
-                if (args.Function == EngineKeyFunctions.Use ||
-                    args.Function == ContentKeyFunctions.Point ||
-                    args.Function == ContentKeyFunctions.TryPullObject ||
-                    args.Function == ContentKeyFunctions.MovePulledObject)
-                {
-                    // TODO: Remove an entity from the menu when it is deleted
-                    if (_entity.Deleted)
-                    {
-                        _master.CloseAllMenus();
-                        return;
-                    }
-
-                    var inputSys = _master.EntitySystemManager.GetEntitySystem<InputSystem>();
-
-                    var func = args.Function;
-                    var funcId = _master._inputManager.NetworkBindMap.KeyFunctionID(args.Function);
-
-                    var message = new FullInputCmdMessage(_master._gameTiming.CurTick, _master._gameTiming.TickFraction, funcId, BoundKeyState.Down,
-                        _entity.Transform.Coordinates,
-                        args.PointerLocation, _entity.Uid);
-
-                    // client side command handlers will always be sent the local player session.
-                    var session = _master._playerManager.LocalPlayer.Session;
-                    inputSys.HandleInputCommand(session, func, message);
-
-                    _master.CloseAllMenus();
-                    return;
-                }
-
-                if (args.Function == ContentKeyFunctions.ExamineEntity)
-                {
-                    Get<ExamineSystem>().DoExamine(_entity);
-                    return;
-                }
-
-                if (args.Function == ContentKeyFunctions.MouseMiddle)
-                {
-                    return;
-                }
-
-                if (_master._itemSlotManager.OnButtonPressed(args, _entity))
-                {
-                    _master.CloseAllMenus();
-                }
-            }
-
-            protected override void Draw(DrawingHandleScreen handle)
-            {
-                base.Draw(handle);
-
-                if (UserInterfaceManager.CurrentlyHovered == this)
-                {
-                    handle.DrawRect(PixelSizeBox, Color.DarkSlateGray);
-                }
-            }
-
         }
 
         private sealed class VerbButton : BaseButton
