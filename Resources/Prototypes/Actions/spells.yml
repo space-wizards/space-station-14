@@ -12,6 +12,7 @@
    range: 2
    trap: false
    speed: 15
+   cooldown: 1
    ignorecaster: true
 
 - type: action
@@ -28,6 +29,7 @@
    range: 4
    trap: true
    speed: 0
+   cooldown: 1
    ignorecaster: false
    
 - type: action
@@ -43,5 +45,5 @@
    spellprojectile:  MagicarpMob_Content
    range: 2
    trap: true
-   speed: 0
+   cooldown: 1
    ignorecaster: true

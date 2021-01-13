@@ -1,6 +1,7 @@
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.Utility;
 using Content.Shared.Actions;
+using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Physics;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
@@ -34,43 +35,39 @@ namespace Content.Server.Actions
             serializer.DataField(this, x => x.CastMessage, "castmessage", "Instant action used."); //What player says upon casting the spell
             serializer.DataField(this, x => x.Projectile, "spellprojectile", null); //What projectile/Entity does the spell create
             serializer.DataField(this, x => x.Stationary, "trap", false); //Apply or not apply momentum to the projectile (If true, will spawn a stationary trap-like spell)
-            serializer.DataField(this, x => x.VelocityMult, "speed", 10f); //Speed that is applied to the projectile
-            serializer.DataField(this, x => x.CoolDown, "cooldown", 0f) ;
+            serializer.DataField(this, x => x.VelocityMult, "speed", 0f); //Speed that is applied to the projectile
+            serializer.DataField(this, x => x.CoolDown, "cooldown", 0f);
             serializer.DataField(this, x => x.IgnoreCaster, "ignorecaster", false); //ignore caster or not
         }
 
         public void DoTargetPointAction(TargetPointActionEventArgs args)
         {
-            var playerPosition = args.Performer.Transform.LocalPosition;
+            if (!args.Performer.TryGetComponent<SharedActionsComponent>(out var actions)) return;
+            actions.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(CoolDown)); //Set the spell on cooldown
+            var playerPosition = args.Performer.Transform.LocalPosition; //Set relative position of the entity of the spell (used later)
             var direction = (args.Target.Position - playerPosition).Normalized * 2; //Decides the general direction of the spell (used later) + how far it goes
             var coords = args.Performer.Transform.Coordinates.WithPosition(playerPosition + direction);
 
-            args.Performer.PopupMessageEveryone(CastMessage); //Speak the cast message
+            args.Performer.PopupMessageEveryone(CastMessage); //Speak the cast message out loud
 
             var spawnedSpell = _entityManager.SpawnEntity(Projectile, coords);
 
-            var physics = spawnedSpell.GetComponent<IPhysicsComponent>();
-            physics.Status = BodyStatus.InAir;
-
-            var projectileComponent = spawnedSpell.GetComponent<ProjectileComponent>();
-            if (IgnoreCaster == true)
+            if (spawnedSpell.TryGetComponent<ProjectileComponent>(out var projectileComponent)) //If it is specifically a projectile entity, then make it ignore the caster optionally
             {
-                projectileComponent.IgnoreEntity(args.Performer);
+                if (IgnoreCaster == true) //ignores or not the caster
+                {
+                    projectileComponent.IgnoreEntity(args.Performer);
+                }
+                if (Stationary == false) //Adds velocity to a none-stationary entity with a projectile component, based on what is specified in "speed"
+                {
+                    spawnedSpell
+                    .GetComponent<IPhysicsComponent>()
+                    .EnsureController<BulletController>()
+                    .LinearVelocity = direction * VelocityMult;
+                }
             }
-            
-
-            if (Stationary == true) //If the spell is a trap, the lower code won't apply
-            {
-                return;
-            }
-
-            spawnedSpell
-                .GetComponent<IPhysicsComponent>()
-                .EnsureController<BulletController>()
-                .LinearVelocity = direction * VelocityMult;
 
             spawnedSpell.Transform.LocalRotation = args.Performer.Transform.LocalRotation;
-            //Actions.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(CoolDown));
         }
     }
 }
