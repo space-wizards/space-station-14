@@ -112,7 +112,7 @@
       - name: Pen
       - name: CentcomPDA
   - type: Storage
-    capacity: 50
+    capacity: 55
 
 - type: entity
   parent: ClothingBackpackDuffelClown
