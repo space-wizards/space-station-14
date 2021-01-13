@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Appearance;
@@ -22,6 +22,7 @@ namespace Content.Client.UserInterface
             UpdateAgeEdit();
             UpdateNameEdit();
             UpdateHairPickers();
+            UpdateEyePickers();
         }
 
         private void RandomizeName()

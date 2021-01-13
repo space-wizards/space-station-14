@@ -799,6 +799,11 @@ namespace Content.Client.UserInterface
                 Profile.Appearance.FacialHairStyleName);
         }
 
+        private void UpdateEyePickers()
+        {
+            _eyesPicker.SetData(Profile.Appearance.EyeColor);
+        }
+
         private void UpdateSaveButton()
         {
             _saveButton.Disabled = Profile is null || !IsDirty;
@@ -823,6 +828,7 @@ namespace Content.Client.UserInterface
             UpdateBackpackControls();
             UpdateAgeEdit();
             UpdateHairPickers();
+            UpdateEyePickers();
             UpdateSaveButton();
             UpdateJobPriorities();
             UpdateAntagPreferences();
