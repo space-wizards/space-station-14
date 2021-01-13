@@ -45,27 +45,15 @@
         },
         {
             "name": "shard3",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "shard2",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "shard1",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         }
     ]
 }

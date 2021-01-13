@@ -9,35 +9,19 @@
     "states": [
         {
             "name": "extinguisher_closed",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "extinguisher_empty",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "extinguisher_full",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "extinguisher_mini",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         }
     ]
 }

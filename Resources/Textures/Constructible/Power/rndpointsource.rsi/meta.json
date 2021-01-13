@@ -41,19 +41,11 @@
         },
         {
             "name": "rndpointsource-off",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "rndpointsource-icon",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         }
     ]
 }

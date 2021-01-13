@@ -9,27 +9,15 @@
     "states": [
         {
             "name": "piecelarge",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "piecemedium",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "piecesmall",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         }
     ]
 }

@@ -9,19 +9,11 @@
     "states": [
         {
             "name": "empty",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "full",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "light-off",

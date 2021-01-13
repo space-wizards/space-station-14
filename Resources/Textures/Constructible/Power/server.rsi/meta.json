@@ -9,43 +9,23 @@
     "states": [
         {
             "name": "server",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "server-nopower",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "server-off",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "server-on",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "server_o",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         }
     ]
 }

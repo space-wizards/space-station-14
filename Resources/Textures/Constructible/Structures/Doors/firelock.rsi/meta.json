@@ -9,27 +9,15 @@
     "states": [
         {
             "name": "bolted",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "closed",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "closed_unlit",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "closing",
@@ -79,51 +67,27 @@
         },
         {
             "name": "frame1",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "frame2",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "frame3",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "frame4",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "locked",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "open",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "opening",
@@ -167,11 +131,7 @@
         },
         {
             "name": "panel_open",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "panel_opening",
@@ -189,19 +149,11 @@
         },
         {
             "name": "welded",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "welded_open",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         }
     ]
 }

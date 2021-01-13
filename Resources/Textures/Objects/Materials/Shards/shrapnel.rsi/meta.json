@@ -9,27 +9,15 @@
     "states": [
         {
             "name": "shrapnellarge",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "shrapnelmedium",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "shrapnelsmall",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         }
     ]
 }

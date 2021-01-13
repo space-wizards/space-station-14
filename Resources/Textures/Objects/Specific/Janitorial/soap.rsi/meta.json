@@ -9,51 +9,27 @@
     "states": [
         {
             "name": "soap",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "soapdeluxe",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "soapgibs",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "soapnt",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "soapomega",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "soapsyndie",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         }
     ]
 }

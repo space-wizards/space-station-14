@@ -9,35 +9,19 @@
     "states": [
         {
             "name": "bag",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "item",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "label_overlay",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "open_overlay",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         }
     ]
 }

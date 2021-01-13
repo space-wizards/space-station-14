@@ -9,11 +9,7 @@
     "states": [
         {
             "name": "potato_battery",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         }
     ]
 }

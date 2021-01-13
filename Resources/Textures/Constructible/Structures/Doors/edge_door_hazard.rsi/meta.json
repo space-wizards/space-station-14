@@ -367,11 +367,7 @@
         },
         {
             "name": "panel_open",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "panel_opening",

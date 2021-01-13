@@ -9,19 +9,11 @@
     "states": [
         {
             "name": "broken",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "normal",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "eject-unshaded",

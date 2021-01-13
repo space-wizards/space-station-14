@@ -82,35 +82,19 @@
         },
         {
             "name": "glowstick_base",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "glowstick_lit",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
 		{
             "name": "glowstick_glow",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "glowstick_unlit",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         }
     ]
 }

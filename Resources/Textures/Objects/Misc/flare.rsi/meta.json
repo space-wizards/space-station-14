@@ -81,9 +81,7 @@
             ]
         },
 		{
-            "name": "flare_burn",
-            "select": [],
-            "flags": {},
+            "name": "flare_burn"
             "delays": [
                 [
                     0.05,
@@ -95,35 +93,19 @@
         },
 		{
             "name": "flare_spent",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "flare_base",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "flare_unlit",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "icon",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         }
     ]
 }

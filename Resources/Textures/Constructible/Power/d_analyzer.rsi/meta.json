@@ -9,19 +9,11 @@
     "states": [
         {
             "name": "d_analyzer",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "d_analyzer_l",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "d_analyzer_la",
@@ -76,11 +68,7 @@
         },
         {
             "name": "d_analyzer_t",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         }
     ]
 }

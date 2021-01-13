@@ -62,19 +62,11 @@
         },
         {
             "name": "icon",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "rcd_ammo",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         }
     ]
 }

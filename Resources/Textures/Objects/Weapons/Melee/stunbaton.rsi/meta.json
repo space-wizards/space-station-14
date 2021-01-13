@@ -124,19 +124,11 @@
         },
         {
             "name": "stunbaton_off",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
                 {
             "name": "stunbaton_nocell",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
                 {
             "name": "stunbaton_on",

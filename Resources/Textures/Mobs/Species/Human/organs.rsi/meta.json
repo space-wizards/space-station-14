@@ -9,51 +9,27 @@
     "states": [
         {
             "name": "appendix",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "appendixinflamed",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "brain",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "ears",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "eyeballs",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "heart-off",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "heart-on",
@@ -67,43 +43,23 @@
         },
         {
             "name": "kidneys",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "liver",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "lungs",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "stomach",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "tonguenormal",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         }
     ]
 }

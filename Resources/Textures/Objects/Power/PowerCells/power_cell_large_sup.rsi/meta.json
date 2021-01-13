@@ -9,11 +9,7 @@
     "states": [
         {
             "name": "l_sup",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "l_sup_0",
@@ -26,35 +22,19 @@
         },
         {
             "name": "l_sup_100",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "l_sup_25",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "l_sup_50",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "l_sup_75",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         }
     ]
 }

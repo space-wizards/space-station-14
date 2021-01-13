@@ -9,11 +9,7 @@
     "states": [
         {
             "name": "flash",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "flashing",
@@ -27,11 +23,7 @@
         },
         {
             "name": "burnt",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "inhand-right",

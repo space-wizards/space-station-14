@@ -9,27 +9,15 @@
     "states": [
         {
             "name": "mw",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "mw_unlit",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },		
         {
             "name": "mw0",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "mw_running_unlit",
@@ -42,27 +30,15 @@
         },
         {
             "name": "mwb",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "mwbloody",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "mwbloody0",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "mwbloody1",

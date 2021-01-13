@@ -28,10 +28,7 @@
             "flags": {}
         },
         {
-            "name": "sparking",
-            "select": [],
-            "flags": {},
-            "delays": [[0.1,0.1,0.1,0.1,0.1,0.1]]
+            "name": "sparking",            "delays": [[0.1,0.1,0.1,0.1,0.1,0.1]]
         },
         {
             "name": "scicrate_open",

@@ -9,11 +9,7 @@
     "states": [
         {
             "name": "circuit_imprinter",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "circuit_imprinter_ani",
@@ -49,11 +45,7 @@
         },
         {
             "name": "circuit_imprinter_t",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         }
     ]
 }

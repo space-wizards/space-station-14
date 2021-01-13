@@ -9,11 +9,7 @@
     "states": [
         {
             "name": "control",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "control_critical",

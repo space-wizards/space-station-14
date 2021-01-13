@@ -7,11 +7,7 @@
     "states": [
         {
             "name": "lantern_off",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
           "name": "lantern_on",
@@ -24,11 +20,7 @@
         },
         {
             "name": "HandheldLightOnOverlay",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
           "name": "off-inhand-left",

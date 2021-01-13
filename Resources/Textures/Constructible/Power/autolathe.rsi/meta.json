@@ -7,19 +7,11 @@
     "states": [
         {
             "name": "autolathe",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "autolathe_unlit",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "autolathe_building",
@@ -135,11 +127,7 @@
         },
         {
             "name": "autolathe_panel",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         }
     ]
 }

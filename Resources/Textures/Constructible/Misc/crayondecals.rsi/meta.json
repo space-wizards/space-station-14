@@ -9,1067 +9,535 @@
     "states": [
         {
             "name": "0",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "1",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "2",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "3",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "4",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "5",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "6",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "7",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "8",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "9",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Blasto",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Clandestine",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Cyber",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Diablo",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Donk",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Gene",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Gib",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Max",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Newton",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "North",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Omni",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Osiron",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Prima",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Psyke",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Sirius",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Sleeping Carp",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Tunnel",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Waffle",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Zero-G",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "a",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "ampersand",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "amyjon",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "antilizard",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "arrow",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "b",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "beepsky",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "biohazard",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "blueprint",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "body",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "bottle",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "brush",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "c",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "carp",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "cat",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "chevron",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "clawprint",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "clown",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "comma",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "corgi",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "credit",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "cyka",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "d",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "danger",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "disk",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "dot",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "dwarf",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "e",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "electricdanger",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "end",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "engie",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "equals",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "evac",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "exclamationmark",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "f",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "face",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "fireaxe",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "firedanger",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "food",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "footprint",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "g",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "ghost",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "guy",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "h",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "heart",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "i",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "j",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "k",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "l",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "largebrush",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "like",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "line",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "m",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "matt",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "med",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "minus",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "n",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "nay",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "o",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "p",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "pawprint",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "peace",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "percent",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "plus",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "pound",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "prolizard",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "q",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "questionmark",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "r",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "radiation",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "revolution",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "rune1",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "rune2",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "rune3",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "rune4",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "rune5",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "rune6",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "s",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "safe",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "scroll",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "shop",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "shortline",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "shotgun",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "skull",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "slash",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "smallbrush",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "snake",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "space",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "splatter",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "star",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "stickman",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "t",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "taser",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "thinline",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "toilet",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "toolbox",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "trade",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "u",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "uboa",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "v",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "w",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "x",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "y",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "z",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         }
     ]
 }

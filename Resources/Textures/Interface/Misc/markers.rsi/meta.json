@@ -9,483 +9,243 @@
     "states": [
         {
             "name": "AI",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Assistant",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Atmospheric Technician",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Bartender",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Botanist",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Captain",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Cargo Technician",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Chaplain",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Chemist",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Chief Engineer",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Chief Medical Officer",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Clown",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Cook",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Curator",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Cyborg",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Detective",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Geneticist",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Head of Personnel",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Head of Security",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Janitor",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Lawyer",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Medical Doctor",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Mime",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Paramedic",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Prisoner",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Psychologist",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Quartermaster",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Research Director",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Roboticist",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Scientist",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Security Officer",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Shaft Miner",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Station Engineer",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Virologist",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Warden",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "cross_blue",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "cross_green",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "cross_pink",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "cross_red",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "observer_start",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "spawner_ai",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "spawner_grenade",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "spawner_hitscan",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "spawner_launcher",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "spawner_launcher_ammo",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "spawner_magnum_ammo",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "spawner_melee",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "spawner_pistol",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "spawner_pistol_ammo",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "spawner_revolver",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "spawner_rifle",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "spawner_rifle_ammo",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "spawner_shotgun",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "spawner_shotgun_ammo",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "spawner_smg",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "spawner_sniper",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "spawner_trash",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "spawner_xenoai",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "spawner_toy",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "spawner_figure",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         }
     ]
 }

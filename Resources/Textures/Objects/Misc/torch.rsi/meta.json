@@ -106,19 +106,11 @@
         },
         {
             "name": "torch",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "torch_empty",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "torch_on",

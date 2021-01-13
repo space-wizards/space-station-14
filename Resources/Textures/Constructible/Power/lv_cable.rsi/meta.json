@@ -9,131 +9,67 @@
     "states": [
         {
             "name": "lvcable_0",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "lvcable_1",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "lvcable_2",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "lvcable_3",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "lvcable_4",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "lvcable_5",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "lvcable_6",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "lvcable_7",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "lvcable_8",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "lvcable_9",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "lvcable_10",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "lvcable_11",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "lvcable_12",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "lvcable_13",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "lvcable_14",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "lvcable_15",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         }
     ]
 }

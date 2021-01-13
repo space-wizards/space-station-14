@@ -13,51 +13,35 @@
             "flags": {}
         },
         {
-            "name": "debug0",
-            "select": [],
-            "flags": {},
+            "name": "debug0"
             "directions": 4
         },
         {
-            "name": "debug1",
-            "select": [],
-            "flags": {},
+            "name": "debug1"
             "directions": 4
         },
         {
-            "name": "debug2",
-            "select": [],
-            "flags": {},
+            "name": "debug2"
             "directions": 4
         },
         {
-            "name": "debug3",
-            "select": [],
-            "flags": {},
+            "name": "debug3"
             "directions": 4
         },
         {
-            "name": "debug4",
-            "select": [],
-            "flags": {},
+            "name": "debug4"
             "directions": 4
         },
         {
-            "name": "debug5",
-            "select": [],
-            "flags": {},
+            "name": "debug5"
             "directions": 4
         },
         {
-            "name": "debug6",
-            "select": [],
-            "flags": {},
+            "name": "debug6"
             "directions": 4
         },
         {
-            "name": "debug7",
-            "select": [],
-            "flags": {},
+            "name": "debug7"
             "directions": 4
         }
     ]

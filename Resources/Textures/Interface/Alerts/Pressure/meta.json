@@ -9,35 +9,19 @@
     "states": [
         {
             "name": "highpressure1",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "highpressure2",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "lowpressure1",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "lowpressure2",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         }
     ]
 }

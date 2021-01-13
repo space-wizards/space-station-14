@@ -9,11 +9,7 @@
     "states": [
         {
             "name": "condisposal",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "conpipe-c",
@@ -179,19 +175,11 @@
         },
         {
             "name": "disposal",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "disposal-charging",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "disposal-flush",
@@ -229,19 +217,11 @@
         },
         {
             "name": "dispover-handle",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "dispover-ready",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "intake",

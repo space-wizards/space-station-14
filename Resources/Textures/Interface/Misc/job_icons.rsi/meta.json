@@ -7,275 +7,139 @@
     "states": [
         {
             "name": "Detective",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "QuarterMaster",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Botanist",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "AtmosphericTechnician",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Nanotrasen",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Prisoner",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Janitor",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Chemist",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "StationEngineer",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "SecurityOfficer",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "NoId",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "ChiefMedicalOfficer",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Roboticist",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Chaplain",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Lawyer",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Unknown",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Librarian",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "CargoTechnician",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Scientist",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Geneticist",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Clown",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Captain",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "HeadOfPersonnel",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Virologist",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "ShaftMiner",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Assistant",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "ChiefEngineer",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Bartender",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "HeadOfSecurity",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "MedicalDoctor",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Chef",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Warden",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "ResearchDirector",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "Mime",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         }
     ]
 }

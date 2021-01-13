@@ -9,19 +9,11 @@
     "states": [
         {
             "name": "lantern",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "lantern-on",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "off-inhand-left",

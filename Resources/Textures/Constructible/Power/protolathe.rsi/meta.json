@@ -9,19 +9,11 @@
     "states": [
         {
             "name": "protolathe",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "protolathe_unlit",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "protolathe_adamantine",
@@ -189,11 +181,7 @@
         },
         {
             "name": "protolathe_panel",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "protolathe_uranium",

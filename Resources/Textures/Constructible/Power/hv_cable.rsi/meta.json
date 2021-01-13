@@ -9,131 +9,67 @@
     "states": [
         {
             "name": "hvcable_0",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "hvcable_1",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "hvcable_2",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "hvcable_3",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "hvcable_4",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "hvcable_5",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "hvcable_6",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "hvcable_7",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "hvcable_8",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "hvcable_9",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "hvcable_10",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "hvcable_11",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "hvcable_12",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "hvcable_13",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "hvcable_14",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "hvcable_15",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         }
     ]
 }

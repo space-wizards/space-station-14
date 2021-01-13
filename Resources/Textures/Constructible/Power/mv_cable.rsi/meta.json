@@ -9,131 +9,67 @@
     "states": [
         {
             "name": "mvcable_0",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "mvcable_1",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "mvcable_2",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "mvcable_3",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "mvcable_4",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "mvcable_5",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "mvcable_6",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "mvcable_7",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "mvcable_8",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "mvcable_9",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "mvcable_10",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "mvcable_11",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "mvcable_12",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "mvcable_13",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "mvcable_14",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "mvcable_15",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         }
     ]
 }

@@ -7,307 +7,155 @@
     "states": [
         {
             "name": "black",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "blue",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "clowncan",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "clowncan2",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "clowncan2_cap",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "clowncan_cap",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "crayonblack",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "crayonblue",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "crayonbox",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "crayongreen",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "crayonmime",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "crayonorange",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "crayonpurple",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "crayonrainbow",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "crayonred",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "crayonwhite",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "crayonyellow",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "deathcan",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "deathcan2",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "deathcan2_cap",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "deathcan_cap",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "green",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "mimecan",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "mimecan2",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "mimecan2_cap",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "mimecan_cap",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "orange",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "purple",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "rainbowcan",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "rainbowcan2",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "rainbowcan2_cap",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "rainbowcan_cap",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "red",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "spraycan",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "spraycan_cap",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "spraycan_cap_colors",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "spraycan_colors",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "yellow",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         }
     ]
 }

@@ -9,139 +9,71 @@
     "states": [
         {
             "name": "shield_0",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "shield_1",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "shield_10",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "shield_11",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "shield_12",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "shield_13",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "shield_14",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "shield_15",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "shield_2",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "shield_3",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "shield_4",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "shield_5",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "shield_6",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "shield_7",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "shield_8",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "core",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "shield_9",
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },        
 	{
             "name": "core_weak",
