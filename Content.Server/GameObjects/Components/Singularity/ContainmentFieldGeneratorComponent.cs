@@ -14,6 +14,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.ViewVariables;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Singularity
 {
@@ -64,6 +65,7 @@ namespace Content.Server.GameObjects.Components.Singularity
         }
 
         private PhysicsComponent? _collidableComponent;
+        private PointLightComponent? _pointLightComponent;
 
         private Tuple<Direction, ContainmentFieldConnection>? _connection1;
         private Tuple<Direction, ContainmentFieldConnection>? _connection2;
@@ -79,6 +81,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                 Logger.Error("ContainmentFieldGeneratorComponent created with no CollidableComponent");
                 return;
             }
+            _pointLightComponent = Owner.GetComponentOrNull<PointLightComponent>();
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
@@ -168,7 +171,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                 {
                     Logger.Error("When trying to connect two Containmentfieldgenerators, the second one already had two connection but the check didn't catch it");
                 }
-
+                UpdateConnectionLights();
                 return true;
             }
 
@@ -180,9 +183,12 @@ namespace Content.Server.GameObjects.Components.Singularity
             if (_connection1?.Item2 == connection)
             {
                 _connection1 = null;
-            }else if (_connection2?.Item2 == connection)
+                UpdateConnectionLights();
+            }
+            else if (_connection2?.Item2 == connection)
             {
                 _connection2 = null;
+                UpdateConnectionLights();
             }
             else if(connection != null)
             {
@@ -195,6 +201,18 @@ namespace Content.Server.GameObjects.Components.Singularity
             if(collidedWith.HasComponent<EmitterBoltComponent>())
             {
                 ReceivePower(4);
+            }
+        }
+
+        public void UpdateConnectionLights()
+        {
+            if (_pointLightComponent != null)
+            {
+                bool res = (_connection1 != null) || (_connection2 != null);
+                // hmm, this will dirty things even if the value doesn't change.
+                // thus, is checking this a bad thing?
+                if (_pointLightComponent.Enabled != res)
+                    _pointLightComponent.Enabled = res;
             }
         }
 
