@@ -37,7 +37,7 @@ namespace Content.Shared.Chemistry
         /// </summary>
         public IReadOnlyList<IReactionEffect> Effects => _effects;
 
-        public string Sound { get; private set; }
+        public string Sound { get; private set; } = string.Empty;
 
         [Dependency] private readonly IModuleManager _moduleManager = default!;
 
