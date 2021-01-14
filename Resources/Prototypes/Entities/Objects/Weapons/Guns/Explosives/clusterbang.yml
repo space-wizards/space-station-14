@@ -20,6 +20,8 @@
   id: ClusterBangFull
   suffix: Full
   components:
+  - type: Sprite
+    state: base-3
   - type: ClusterFlash
     fillPrototype: GrenadeFlashBang
 

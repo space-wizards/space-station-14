@@ -37,6 +37,8 @@ namespace Content.Server.GameObjects.Components.Explosives
         [ViewVariables]
         private string? _fillPrototype;
 
+        private int _unspawnedCount;
+
         [ViewVariables]
         private int _maxGrenades;
 
@@ -91,7 +93,7 @@ namespace Content.Server.GameObjects.Components.Explosives
             base.Startup();
 
             if (_fillPrototype != null)
-                FillContainer();
+                _unspawnedCount = Math.Max(0, _maxGrenades - _grenadesContainer.ContainedEntities.Count);
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
@@ -105,7 +107,7 @@ namespace Content.Server.GameObjects.Components.Explosives
                 _countDown = true;
                 var random = IoCManager.Resolve<IRobustRandom>();
                 var delay = 20;
-                var grenadesWasInserted = _grenadesContainer.ContainedEntities.Count;
+                var grenadesWasInserted = _grenadesContainer.ContainedEntities.Count + _unspawnedCount;
                 var throwedCount = 0;
                 var segmentAngle = (int) (360 / grenadesWasInserted);
                 while (TryGetGrenade(out var grenade))
@@ -116,7 +118,7 @@ namespace Content.Server.GameObjects.Components.Explosives
                     var distance = (float)random.NextDouble() * _throwDistance;
                     var target = new EntityCoordinates(Owner.Uid, angle.ToVec().Normalized * distance);
 
-                    grenade.Throw(1f, target, grenade.Transform.Coordinates);
+                    grenade.Throw(0.5f, target, grenade.Transform.Coordinates);
 
                     grenade.SpawnTimer(delay, () =>
                     {
@@ -129,7 +131,7 @@ namespace Content.Server.GameObjects.Components.Explosives
                         }
                     });
 
-                    delay += random.Next(150, 300);
+                    delay += random.Next(550, 900);
                     throwedCount++;
                 }
 
@@ -138,17 +140,16 @@ namespace Content.Server.GameObjects.Components.Explosives
             return true;
         }
 
-        private void FillContainer(){
-            for (int x = 0; x != _maxGrenades; x++)
-            {
-                var grenade = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.MapPosition);
-                _grenadesContainer.Insert(grenade);
-            }
-            UpdateAppearance();
-        }
         private bool TryGetGrenade([NotNullWhen(true)] out IEntity? grenade)
         {
             grenade = null;
+
+            if (_unspawnedCount > 0)
+            {
+                _unspawnedCount--;
+                grenade = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.Coordinates);
+                return true;
+            }
 
             if (_grenadesContainer.ContainedEntities.Count > 0)
             {
