@@ -40,7 +40,7 @@
   icon: /Textures/Interface/Alerts/Pressure/highpressure.png
   maxSeverity: 2
   name: "[color=red]High Pressure[/color]"
-  description: "The air around you is [color=red]hazardously thick[/color]. A [color=green]fire suit[/color] would protect you."
+  description: "The air around you is [color=red]hazardously thick[/color]. A [color=green]pressurized suit[/color] would be enough protect you"
 
 - type: alert
   alertType: Fire
@@ -69,23 +69,21 @@
   alertType: Weightless
   icon: /Textures/Interface/Alerts/Weightless/weightless.png
   name: Weightless
-  description: >-
-    Gravity has ceased affecting you, and you're floating around aimlessly. You'll need something large and heavy, like a
-    wall or lattice, to push yourself off if you want to move. A jetpack would enable free range of motion. A pair of
-    magboots would let you walk around normally on the floor. Barring those, you can throw things, use a fire extinguisher,
-    or shoot a gun to move around via Newton's 3rd Law of Motion.
+  description: >
+    Gravity has ceased affecting you, and you're floating around aimlessly. Find something sturdy to hold onto, or throw or shoot something in a direction opposite of you. 
+    Mag-boots or jetpacks would help you move with more control
 
 - type: alert
   alertType: Stun
-  icon: /Textures/Objects/Weapons/Melee/stunbaton.rsi/stunbaton_off.png
+  icon: /Textures/Objects/Weapons/Melee/stunbaton.rsi/stunbaton_off.png #Should probably draw a proper icon
   name: "[color=yellow]Stunned[/color]"
-  description: "You're [color=yellow]stunned[/color]! Wait for it to wear off."
+  description: "You're [color=yellow]stunned[/color]! Something is impairing your ability to move or interact with objects"
 
 - type: alert
   alertType: Handcuffed
   icon: /Textures/Interface/Alerts/Handcuffed/Handcuffed.png
   name: "[color=yellow]Handcuffed[/color]"
-  description: "You're [color=yellow]handcuffed[/color] and can't act. If anyone drags you, you won't be able to move.."
+  description: "You're [color=yellow]handcuffed[/color] and can't use your hands. If anyone drags you, you won't be able to resist.."
 
 - type: alert
   alertType: Buckled
@@ -107,7 +105,7 @@
   category: Health
   icon: /Textures/Interface/Alerts/Human/humandead.png
   name: Dead
-  description: You're dead.
+  description: You're dead, note that you can still be revived!
 
 - type: alert
   alertType: HumanHealth
