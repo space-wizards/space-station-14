@@ -1,4 +1,4 @@
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+#nullable enable
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 
@@ -14,7 +14,8 @@ namespace Content.Shared.GameObjects.Components.GUI
 
         public bool CanDragDropOn(DragDropEventArgs eventArgs)
         {
-            return ActionBlockerSystem.CanInteract(Owner);
+            if (!eventArgs.Dragged.TryGetComponent(out SharedStrippableComponent? strippable)) return false;
+            return strippable.CanBeStripped(Owner);
         }
 
         public bool DragDropOn(DragDropEventArgs eventArgs)
