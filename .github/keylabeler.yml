@@ -1,0 +1,47 @@
+# Determines if we search the title (optional). Defaults to true.
+matchTitle: false
+
+# Determines if we search the body (optional). Defaults to true.
+matchBody: true
+
+# Determines if label matching is case sensitive (optional). Defaults to true.
+caseSensitive: false
+
+# Explicit keyword mappings to labels. Form of match:label. Required.
+labelMappings:
+    "[ATMOS]": "Feature: Atmospherics"
+    "[AUDIO]": "Feature: Audio"
+    "[CONSTRUCTION]": "Feature: Construction"
+    "[ENTITIES]": "Feature: Entities"
+    "[ENTITY]": "Feature: Entities"
+    "[ENTITY AI]": "Feature: Entity AI"
+    "[EVENTS]": "Feature: Events"
+    "[EVENT]": "Feature: Events"
+    "[INTERACTION]": "Feature: Interaction"
+    "[MEDICAL]": "Feature: Medical"
+    "[PHYSICS]": "Feature: Physics"
+    "[POWER]": "Feature: Power"
+    "[SPRITES]": "Feature: Sprites"
+    "[SPRITE]": "Feature: Sprites"
+    "[UI]": "Feature: UI"
+
+    "[BUG]": "Type: Bug"
+    "[CLEANUP]": "Type: Cleanup"
+    "[CLEAN]": "Type: Cleanup"
+    "[CLEANLINESS]": "Type: Cleanup"
+    "[DISCUSSION]": "Type: Discussion"
+    "[DISCUSS]": "Type: Discussion"
+    "[FEATURE]": "Type: Feature"
+    "[FEAT]": "Type: Feature"
+    "[IMPROVEMENT]": "Type: Improvement"
+    "[IMPROVE]": "Type: Improvement"
+    "[PERFORMANCE]": "Type: Performance"
+    "[PERF]": "Type: Performance"
+    "[REFACTOR]": "Type: Refactor"
+
+    "[HELP WANTED]": "Status: Help Wanted"
+    "[DO NOT MERGE]": "Status: DO NOT MERGE"
+    "[DNM]": "Status: DO NOT MERGE"
+
+    "[RESOURCES]": "Resources (No code)"
+    "[NOCODE]": "Resources (No code)"

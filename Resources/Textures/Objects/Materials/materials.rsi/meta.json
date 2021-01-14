@@ -8,92 +8,70 @@
     },
     "states": [
         {
-            "name": "alienhide",
-            "directions": 1
+            "name": "alienhide"
         },
         {
-            "name": "cathide",
-            "directions": 1
+            "name": "cathide"
         },
         {
-            "name": "corgihide",
-            "directions": 1
+            "name": "corgihide"
         },
         {
-            "name": "liggerhide",
-            "directions": 1
+            "name": "liggerhide"
         },
         {
-            "name": "monkeyhide",
-            "directions": 1
+            "name": "monkeyhide"
         },
         {
-            "name": "banananium",
-            "directions": 1
+            "name": "banananium"
         },
         {
-            "name": "diamond",
-            "directions": 1
+            "name": "diamond"
         },
         {
-            "name": "uranium",
-            "directions": 1
+            "name": "uranium"
         },
         {
-            "name": "wood_plank",
-            "directions": 1
+            "name": "wood_plank"
         },
         {
-            "name": "wool",
-            "directions": 1
+            "name": "wool"
         },
         {
-            "name": "copperbar_single",
-            "directions": 1
+            "name": "copperbar_single"
         },
         {
-            "name": "goldbar_10",
-            "directions": 1
+            "name": "goldbar_10"
         },
         {
-            "name": "goldbar_20",
-            "directions": 1
+            "name": "goldbar_20"
         },
         {
-            "name": "goldbar_30",
-            "directions": 1
+            "name": "goldbar_30"
         },
         {
-            "name": "leadbar_single",
-            "directions": 1
+            "name": "leadbar_single"
         },
         {
-            "name": "steelbar_single",
-            "directions": 1
+            "name": "steelbar_single"
         },
         {
-            "name": "tinbar_single",
-            "directions": 1
+            "name": "tinbar_single"
         },
         {
-            "name": "phoron_ore",
-            "directions": 1
+            "name": "phoron_ore"
         },
         {
-            "name": "phoron_sheet",
-            "directions": 1
+            "name": "phoron_sheet"
         },
         {
-            "name": "phoron_gem",
-            "directions": 1
+            "name": "phoron_gem"
         },
         {
-            "name": "spent_phoron_gem",
-            "directions": 1
+            "name": "spent_phoron_gem"
         },
         {
-            "name": "rods",
-            "directions": 1
+            "name": "rods"
         }
     ]
 }

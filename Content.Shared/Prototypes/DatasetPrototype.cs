@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using YamlDotNet.RepresentationModel;
 
-namespace Content.Server.Prototypes
+namespace Content.Shared.Prototypes
 {
     [Prototype("dataset")]
     public class DatasetPrototype : IPrototype, IIndexedPrototype

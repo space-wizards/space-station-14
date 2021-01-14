@@ -9,12 +9,7 @@
     "states": [
         {
             "name": "potato_battery",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         }
     ]
 }

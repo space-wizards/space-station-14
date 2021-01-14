@@ -327,6 +327,14 @@ namespace Content.Client.UserInterface.Controls
             DrawModeChanged();
         }
 
+        protected override void ControlFocusExited()
+        {
+            // lost focus for some reason, cancel the drag if there is one.
+            base.ControlFocusExited();
+            _actionsUI.DragDropHelper.EndDrag();
+            DrawModeChanged();
+        }
+
         /// <summary>
         /// Cancel current press without triggering the action
         /// </summary>

@@ -8,12 +8,10 @@
   },
   "states": [
     {
-      "name": "match_burnt",
-      "directions": 1
+      "name": "match_burnt"
     },
     {
       "name": "match_lit",
-      "directions": 1,
       "delays": [
         [
           0.2,
@@ -23,24 +21,19 @@
       ]
     },
     {
-      "name": "match_unlit",
-      "directions": 1
+      "name": "match_unlit"
     },
     {
-      "name": "matchbox",
-      "directions": 1
+      "name": "matchbox"
     },
     {
-      "name": "matchbox_almostempty",
-      "directions": 1
+      "name": "matchbox_almostempty"
     },
     {
-      "name": "matchbox_almostfull",
-      "directions": 1
+      "name": "matchbox_almostfull"
     },
     {
-      "name": "matchbox_e",
-      "directions": 1
+      "name": "matchbox_e"
     }
   ]
 }

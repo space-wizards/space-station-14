@@ -8,12 +8,10 @@
   },
   "states": [
     {
-      "name": "icon",
-      "directions": 1
+      "name": "icon"
     },
     {
-      "name": "icon-flash",
-      "directions": 1
+      "name": "icon-flash"
     },
     {
       "name": "off-equipped-HELMET",

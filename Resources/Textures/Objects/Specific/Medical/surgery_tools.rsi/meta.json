@@ -1,51 +1,27 @@
 {
-	"version": 1, 
+	"version": 1,
 	"size": {
-		"x": 32, 
+		"x": 32,
 		"y": 32
-	}, 
+	},
 	"states": [
 		{
-			"name": "scalpel", 
-			"directions": 1, 
-			"delays": [
-				[1.0]
-			]
+			"name": "scalpel"
 		},
 		{
-			"name": "retractor", 
-			"directions": 1, 
-			"delays": [
-				[1.0]
-			]
+			"name": "retractor"
 		},
 		{
-			"name": "bone_saw", 
-			"directions": 1, 
-			"delays": [
-				[1.0]
-			]
+			"name": "bone_saw"
 		},
 		{
-			"name": "hemostat", 
-			"directions": 1, 
-			"delays": [
-				[1.0]
-			]
+			"name": "hemostat"
 		},
 		{
-			"name": "drill", 
-			"directions": 1, 
-			"delays": [
-				[1.0]
-			]
+			"name": "drill"
 		},
 		{
-			"name": "cautery", 
-			"directions": 1, 
-			"delays": [
-				[1.0]
-			]
+			"name": "cautery"
 		}
 	]
 }
