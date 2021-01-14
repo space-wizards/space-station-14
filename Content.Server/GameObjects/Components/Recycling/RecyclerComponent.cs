@@ -3,17 +3,24 @@ using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Conveyor;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.Interfaces.Chat;
+using Content.Server.Interfaces.GameObjects;
+using Content.Server.Interfaces.GameTicking;
+using Content.Server.Players;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Recycling;
 using Content.Shared.Interfaces;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Map;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
@@ -180,23 +187,19 @@ namespace Content.Server.GameObjects.Components.Recycling
 
         public SuicideKind Suicide(IEntity victim, IChatManager chat)
         {
+            var mind = victim.PlayerSession()?.ContentData()?.Mind;
+
+            if (mind != null)
+            {
+                IoCManager.Resolve<IGameTicker>().OnGhostAttempt(mind, false);
+                mind.OwnedEntity.PopupMessage(Loc.GetString("You recycle yourself!"));
+            }
+
             victim.PopupMessageOtherClients(Loc.GetString("{0:theName} tries to recycle {0:themself}!", victim));
-            victim.PopupMessage(Loc.GetString("You recycle yourself!"));
 
             if (victim.TryGetComponent<IBody>(out var body))
             {
-                foreach (var part in body.Parts.Values)
-                {
-                    if (!body.TryDropPart(part, out var dropped))
-                    {
-                        continue;
-                    }
-
-                    foreach (var drop in dropped)
-                    {
-                        drop.Owner.Delete();
-                    }
-                }
+                body.Gib(true);
             }
 
             Bloodstain();

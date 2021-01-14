@@ -15,10 +15,14 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Timers;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using System.Threading;
+using Content.Server.Interfaces.GameTicking;
+using Content.Server.Players;
+using Robust.Server.Player;
+using Robust.Shared.GameObjects.Components.Timers;
+using Robust.Shared.IoC;
 
 namespace Content.Server.GameObjects.Components.Morgue
 {
@@ -90,7 +94,7 @@ namespace Content.Server.GameObjects.Components.Morgue
             _cremateCancelToken?.Cancel();
 
             _cremateCancelToken = new CancellationTokenSource();
-            Robust.Shared.Timers.Timer.Spawn(_burnMilis, () =>
+            Owner.SpawnTimer(_burnMilis, () =>
             {
                 if (Owner.Deleted)
                     return;
@@ -119,27 +123,27 @@ namespace Content.Server.GameObjects.Components.Morgue
 
         public SuicideKind Suicide(IEntity victim, IChatManager chat)
         {
-            // TODO: gibbing?
-            if (victim.TryGetComponent<IBody>(out var body))
-            {
-                foreach (var part in body.Parts.Values)
-                {
-                    if (!body.TryDropPart(part, out var dropped))
-                    {
-                        continue;
-                    }
+            var mind = victim.PlayerSession()?.ContentData()?.Mind;
 
-                    foreach (var drop in dropped)
-                    {
-                        Contents.Insert(drop.Owner);
-                    }
-                }
+            if (mind != null)
+            {
+                IoCManager.Resolve<IGameTicker>().OnGhostAttempt(mind, false);
+                mind.OwnedEntity.PopupMessage(Loc.GetString("You cremate yourself!"));
+            }
+
+            victim.PopupMessageOtherClients(Loc.GetString("{0:theName} is cremating {0:themself}!", victim));
+            EntitySystem.Get<SharedStandingStateSystem>().Down(victim, false, false, true);
+
+            if (CanInsert(victim))
+            {
+                Insert(victim);
+            }
+            else
+            {
+                victim.Delete();
             }
 
             Cremate();
-
-            victim.PopupMessageOtherClients(Loc.GetString("{0:theName} is cremating {0:themself}!", victim));
-            victim.PopupMessage(Loc.GetString("You cremate yourself!"));
 
             return SuicideKind.Heat;
         }
