@@ -214,16 +214,27 @@ namespace Content.Client.GameObjects.EntitySystems
             _contextPopup.OnPopupHide += CloseAllMenus;
             var debugEnabled = _userInterfaceManager.DebugMonitors.Visible;
 
+            var contextElements = new List<ContextElement>();
             foreach (var (_, vEntity) in orderedStates)
             {
                 if (vEntity.Count > 1)
                 {
-                    _contextPopup.AddElement(new MultiContextElement(this, vEntity, debugEnabled), true);
+                    var multiContextElement = new MultiContextElement(this, vEntity, debugEnabled);
+                    contextElements.Add(multiContextElement);
+                    _contextPopup.AddElement(multiContextElement, true);
                 }
                 else
                 {
-                    _contextPopup.AddElement(new SingleContextElement(this, vEntity.First(), debugEnabled, true), true);
+                    var singleContextElement = new SingleContextElement(this, vEntity.First(), debugEnabled, true);
+                    contextElements.Add(singleContextElement);
+                    _contextPopup.AddElement(singleContextElement, true);
                 }
+            }
+
+            var maxSizeX = contextElements.Max(e => e.Margin.CombinedMinimumSize.X);
+            foreach (var element in contextElements)
+            {
+                element.Margin.CustomMinimumSize = (maxSizeX, element.Margin.CombinedMinimumSize.Y);
             }
 
             _userInterfaceManager.ModalRoot.AddChild(_contextPopup);
@@ -462,6 +473,7 @@ namespace Content.Client.GameObjects.EntitySystems
             protected readonly VerbSystem VSystem;
             protected readonly bool ShowUid;
             protected readonly bool IsRoot;
+            public MarginContainer Margin { get; set; }
 
             public ContextElement(VerbSystem system, bool showUid, bool isRoot)
             {
@@ -470,6 +482,12 @@ namespace Content.Client.GameObjects.EntitySystems
                 IsRoot = isRoot;
 
                 MouseFilter = MouseFilterMode.Stop;
+
+                Margin = new MarginContainer
+                {
+                    MarginLeftOverride = 4,
+                    MarginRightOverride = 4,
+                };
             }
 
             protected override void Draw(DrawingHandleScreen handle)
@@ -543,6 +561,9 @@ namespace Content.Client.GameObjects.EntitySystems
             public SingleContextElement(VerbSystem system, IEntity entity, bool showUid, bool isRoot) : base(system, showUid, isRoot)
             {
                 _entity = entity;
+
+                Margin.AddChild(new Label { Text = ShowUid ? $"{entity.Name} ({entity.Uid})" : entity.Name });
+
                 var control = new HBoxContainer
                 {
                     SeparationOverride = 6,
@@ -555,12 +576,7 @@ namespace Content.Client.GameObjects.EntitySystems
                                 new SpriteView { Sprite = _entity.GetComponent<ISpriteComponent>() },
                             }
                         },
-                        new MarginContainer
-                        {
-                            MarginLeftOverride = 4,
-                            MarginRightOverride = 4,
-                            Children = { new Label { Text = ShowUid ? $"{entity.Name} ({entity.Uid})" : entity.Name } }
-                        }
+                        Margin
                     }
                 };
                 AddChild(control);
@@ -650,6 +666,8 @@ namespace Content.Client.GameObjects.EntitySystems
                 LayoutContainer.SetGrowHorizontal(labelCount, LayoutContainer.GrowDirection.Begin);
                 LayoutContainer.SetGrowVertical(labelCount, LayoutContainer.GrowDirection.Begin);
 
+                Margin.AddChild(new Label { Text = showUid ? $"{entity.Name} (---)" : entity.Name } );
+
                 var control = new HBoxContainer
                 {
                     SeparationOverride = 6,
@@ -663,12 +681,7 @@ namespace Content.Client.GameObjects.EntitySystems
                                 labelCount
                             }
                         },
-                        new MarginContainer
-                        {
-                            MarginLeftOverride = 4,
-                            MarginRightOverride = 4,
-                            Children = { new Label { Text = showUid ? $"{entity.Name} (---)" : entity.Name } }
-                        },
+                        Margin,
                         new TextureRect
                         {
                             Texture = IoCManager.Resolve<IResourceCache>().GetTexture("/Textures/Interface/VerbIcons/group.svg.96dpi.png"),
@@ -782,7 +795,7 @@ namespace Content.Client.GameObjects.EntitySystems
             protected override Vector2 CalculateMinimumSize()
             {
                 var size = base.CalculateMinimumSize();
-                size.Y = _contextElementCount > MaxItemsBeforeScroll ? MaxItemsBeforeScroll * 32 : size.Y;
+                size.Y = _contextElementCount > MaxItemsBeforeScroll ? MaxItemsBeforeScroll * 32 + MaxItemsBeforeScroll * 2 : size.Y;
                 return size;
             }
         }
