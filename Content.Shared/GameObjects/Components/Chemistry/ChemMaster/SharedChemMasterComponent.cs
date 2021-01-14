@@ -1,7 +1,9 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Shared.Chemistry;
+using Content.Shared.GameObjects.Components.Medical;
+using Content.Shared.GameObjects.Components.Observer;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
@@ -28,20 +30,19 @@ namespace Content.Shared.GameObjects.Components.Chemistry.ChemMaster
             /// <summary>
             /// A list of the reagents and their amounts within the beaker/reagent container, if applicable.
             /// </summary>
-            public readonly List<Solution.ReagentQuantity> ContainerReagents;
+            public readonly IReadOnlyList<Solution.ReagentQuantity> ContainerReagents;
             /// <summary>
             /// A list of the reagents and their amounts within the buffer, if applicable.
             /// </summary>
-            public readonly List<Solution.ReagentQuantity> BufferReagents;
+            public readonly IReadOnlyList<Solution.ReagentQuantity> BufferReagents;
             public readonly string DispenserName;
 
             public readonly bool BufferModeTransfer;
 
             public readonly ReagentUnit BufferCurrentVolume;
-            public readonly ReagentUnit BufferMaxVolume;
 
             public ChemMasterBoundUserInterfaceState(bool hasPower, bool hasBeaker, ReagentUnit beakerCurrentVolume, ReagentUnit beakerMaxVolume, string containerName,
-                string dispenserName, List<Solution.ReagentQuantity> containerReagents, List<Solution.ReagentQuantity> bufferReagents, bool bufferModeTransfer, ReagentUnit bufferCurrentVolume, ReagentUnit bufferMaxVolume)
+                string dispenserName, IReadOnlyList<Solution.ReagentQuantity> containerReagents, IReadOnlyList<Solution.ReagentQuantity> bufferReagents, bool bufferModeTransfer, ReagentUnit bufferCurrentVolume)
             {
                 HasPower = hasPower;
                 HasBeaker = hasBeaker;
@@ -53,7 +54,6 @@ namespace Content.Shared.GameObjects.Components.Chemistry.ChemMaster
                 BufferReagents = bufferReagents;
                 BufferModeTransfer = bufferModeTransfer;
                 BufferCurrentVolume = bufferCurrentVolume;
-                BufferMaxVolume = bufferMaxVolume;
             }
         }
 
@@ -102,7 +102,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry.ChemMaster
         }
 
         /// <summary>
-        /// Used in <see cref="UiButtonPressedMessage"/> to specify which button was pressed.
+        /// Used in <see cref="AcceptCloningChoiceMessage"/> to specify which button was pressed.
         /// </summary>
         public enum UiAction
         {

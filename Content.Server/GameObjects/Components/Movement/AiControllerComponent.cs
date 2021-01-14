@@ -1,8 +1,10 @@
 ﻿#nullable enable
+using Content.Server.AI.Utility.AiLogic;
 using Content.Server.GameObjects.EntitySystems.AI;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Roles;
+using Content.Shared.Preferences;
 using Robust.Server.AI;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
@@ -38,7 +40,7 @@ namespace Content.Server.GameObjects.Components.Movement
             }
         }
 
-        public AiLogicProcessor? Processor { get; set; }
+        public UtilityAi? Processor { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
         public string? StartingGearPrototype { get; set; }
@@ -68,7 +70,7 @@ namespace Content.Server.GameObjects.Components.Movement
             if (StartingGearPrototype != null)
             {
                 var startingGear = _prototypeManager.Index<StartingGearPrototype>(StartingGearPrototype);
-                _gameTicker.EquipStartingGear(Owner, startingGear);
+                _gameTicker.EquipStartingGear(Owner, startingGear, null);
             }
 
         }

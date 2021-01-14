@@ -14,6 +14,7 @@ using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
@@ -45,8 +46,6 @@ namespace Content.Server.GameObjects.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-
-            SubscribeLocalEvent<PlayerAttachSystemMessage>(PlayerAttached);
             SubscribeLocalEvent<PlayerDetachedSystemMessage>(PlayerDetached);
 
             _audioSystem = EntitySystemManager.GetEntitySystem<AudioSystem>();
@@ -64,21 +63,8 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        private static void PlayerAttached(PlayerAttachSystemMessage ev)
-        {
-            if (!ev.Entity.HasComponent<IMoverComponent>())
-            {
-                ev.Entity.AddComponent<PlayerInputMoverComponent>();
-            }
-        }
-
         private void PlayerDetached(PlayerDetachedSystemMessage ev)
         {
-            if (ev.Entity.HasComponent<PlayerInputMoverComponent>())
-            {
-                ev.Entity.RemoveComponent<PlayerInputMoverComponent>();
-            }
-
             if (ev.Entity.TryGetComponent(out IPhysicsComponent? physics) &&
                 physics.TryGetController(out MoverController controller) &&
                 !ev.Entity.IsWeightless())

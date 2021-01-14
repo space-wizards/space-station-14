@@ -1,8 +1,10 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Body.Part.Property;
 using Content.Shared.GameObjects.Components.Body.Preset;
@@ -10,7 +12,10 @@ using Content.Shared.GameObjects.Components.Body.Template;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Utility;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Containers;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -18,6 +23,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
+using Component = Robust.Shared.GameObjects.Component;
 
 namespace Content.Shared.GameObjects.Components.Body
 {
@@ -103,8 +109,7 @@ namespace Content.Shared.GameObjects.Components.Body
             {
                 if (part.IsVital && Parts.Count(x => x.Value.PartType == part.PartType) == 0)
                 {
-                    damageable.CurrentState = DamageState.Dead;
-                    damageable.ForceHealthChangedEvent();
+                    damageable.ChangeDamage(DamageType.Bloodloss, 300, true); // TODO BODY KILL
                 }
             }
 
@@ -196,17 +201,15 @@ namespace Content.Shared.GameObjects.Components.Body
         {
             DebugTools.AssertNotNull(part);
 
-            var pair = _parts.FirstOrDefault(kvPair => kvPair.Value == part);
+            (slotName, _) = _parts.FirstOrDefault(kvPair => kvPair.Value == part);
 
-            if (pair.Equals(default))
+            if (slotName == null)
             {
-                slotName = null;
                 return false;
             }
 
-            if (RemovePart(pair.Key))
+            if (RemovePart(slotName))
             {
-                slotName = pair.Key;
                 return true;
             }
 
@@ -310,10 +313,9 @@ namespace Content.Shared.GameObjects.Components.Body
         {
             // We enforce that there is only one of each value in the dictionary,
             // so we can iterate through the dictionary values to get the key from there.
-            var pair = Parts.FirstOrDefault(x => x.Value == part);
-            slot = pair.Key;
+            (slot, _) = Parts.FirstOrDefault(x => x.Value == part);
 
-            return !pair.Equals(default);
+            return slot != null;
         }
 
         public bool TryGetSlotType(string slot, out BodyPartType result)
@@ -698,6 +700,17 @@ namespace Content.Shared.GameObjects.Components.Body
                 {
                     TryAddPart(slot, newPart, true);
                 }
+            }
+        }
+
+        public virtual void Gib(bool gibParts = false)
+        {
+            foreach (var (_, part) in Parts)
+            {
+                RemovePart(part);
+
+                if (gibParts)
+                    part.Gib();
             }
         }
     }

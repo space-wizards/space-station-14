@@ -1,7 +1,6 @@
 ﻿#nullable enable
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body.Part;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Shared.GameObjects.Components.Body.Surgery
@@ -9,41 +8,41 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
     /// <summary>
     ///     Represents the current surgery state of a <see cref="IBodyPart"/>.
     /// </summary>
-    public abstract class SurgeryDataComponent : Component
+    public interface ISurgeryData : IComponent
     {
-        protected delegate void SurgeryAction(IBodyPartContainer container, ISurgeon surgeon, IEntity performer);
+        public delegate void SurgeryAction(IBodyPartContainer container, ISurgeon surgeon, IEntity performer);
 
         /// <summary>
         ///     The <see cref="IBodyPart"/> this
-        ///     <see cref="SurgeryDataComponent"/> is attached to.
+        ///     <see cref="ISurgeryData"/> is attached to.
         /// </summary>
-        protected IBodyPart? Parent => Owner.GetComponentOrNull<IBodyPart>();
+        public IBodyPart? Parent { get; }
 
         /// <summary>
         ///     The <see cref="BodyPartType"/> of the parent
         ///     <see cref="IBodyPart"/>.
         /// </summary>
-        protected BodyPartType? ParentType => Parent?.PartType;
+        public BodyPartType? ParentType { get; }
 
         /// <summary>
         ///     Returns a description of this entity.
         /// </summary>
         /// <returns>The description shown upon observing this entity.</returns>
-        public abstract string GetDescription();
+        public string GetDescription();
 
         /// <summary>
         ///     Returns whether a <see cref="IMechanism"/> can be added into the
-        ///     <see cref="IBodyPart"/> this <see cref="SurgeryDataComponent"/>
+        ///     <see cref="IBodyPart"/> this <see cref="ISurgeryData"/>
         ///     represents.
         /// </summary>
-        public abstract bool CanAddMechanism(IMechanism mechanism);
+        public bool CanAddMechanism(IMechanism mechanism);
 
         /// <summary>
         ///     Returns whether the given <see cref="IBodyPart"/> can be connected
-        ///     to the <see cref="IBodyPart"/> this <see cref="SurgeryDataComponent"/>
+        ///     to the <see cref="IBodyPart"/> this <see cref="ISurgeryData"/>
         ///     represents.
         /// </summary>
-        public abstract bool CanAttachBodyPart(IBodyPart part);
+        public bool CanAttachBodyPart(IBodyPart part);
 
         /// <summary>
         ///     Gets the delegate corresponding to the surgery step using the given
@@ -53,12 +52,12 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
         ///     The corresponding surgery action or null if no step can be
         ///     performed.
         /// </returns>
-        protected abstract SurgeryAction? GetSurgeryStep(SurgeryType toolType);
+        public SurgeryAction? GetSurgeryStep(SurgeryType toolType);
 
         /// <summary>
         ///     Returns whether the given <see cref="SurgeryType"/> can be used to
         ///     perform a surgery on the <see cref="IBodyPart"/> this
-        ///     <see cref="SurgeryDataComponent"/> represents.
+        ///     <see cref="ISurgeryData"/> represents.
         /// </summary>
         public bool CheckSurgery(SurgeryType toolType)
         {
@@ -80,17 +79,6 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
         /// <param name="performer">The entity performing the surgery.</param>
         /// <returns>True if successful, false otherwise.</returns>
         public bool PerformSurgery(SurgeryType surgeryType, IBodyPartContainer container, ISurgeon surgeon,
-            IEntity performer)
-        {
-            var step = GetSurgeryStep(surgeryType);
-
-            if (step == null)
-            {
-                return false;
-            }
-
-            step(container, surgeon, performer);
-            return true;
-        }
+            IEntity performer);
     }
 }

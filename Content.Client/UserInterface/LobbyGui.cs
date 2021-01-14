@@ -18,7 +18,7 @@ namespace Content.Client.UserInterface
         public Label StartTime { get; }
         public Button ReadyButton { get; }
         public Button ObserveButton { get; }
-        public Button CreditsButton { get; }
+        public Button OptionsButton { get; }
         public Button LeaveButton { get; }
         public ChatBox Chat { get; }
         public LobbyPlayerList OnlinePlayerList { get; }
@@ -72,8 +72,6 @@ namespace Content.Client.UserInterface
                             {
                                 Text = Loc.GetString("Lobby"),
                                 StyleClasses = {StyleNano.StyleClassLabelHeadingBigger},
-                                /*MarginBottom = 40,
-                                MarginLeft = 8,*/
                                 VAlign = Label.VAlignMode.Center
                             }
                         }
@@ -81,24 +79,20 @@ namespace Content.Client.UserInterface
                     (ServerName = new Label
                     {
                         StyleClasses = {StyleNano.StyleClassLabelHeadingBigger},
-                        /*MarginBottom = 40,
-                        GrowHorizontal = GrowDirection.Both,*/
                         VAlign = Label.VAlignMode.Center,
                         SizeFlagsHorizontal = SizeFlags.Expand | SizeFlags.ShrinkCenter
                     }),
-                    (CreditsButton = new Button
+                    (OptionsButton = new Button
                     {
                         SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
-                        Text = Loc.GetString("Credits"),
+                        Text = Loc.GetString("Options"),
                         StyleClasses = {StyleNano.StyleClassButtonBig},
-                        //GrowHorizontal = GrowDirection.Begin
                     }),
                     (LeaveButton = new Button
                     {
                         SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
                         Text = Loc.GetString("Leave"),
                         StyleClasses = {StyleNano.StyleClassButtonBig},
-                        //GrowHorizontal = GrowDirection.Begin
                     })
                 }
             };

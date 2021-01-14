@@ -6,7 +6,6 @@
   components:
   - type: SolutionContainer
     maxVol: 50
-    caps: AddTo, RemoveFrom
     contents:
       reagents:
       - ReagentId: chem.Flour

@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.GameTicking;
+using Content.Server.Mobs;
 using Content.Shared.Roles;
+using Content.Shared.Preferences;
 using Robust.Server.Interfaces.Player;
+using Robust.Server.Interfaces.Console;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
@@ -42,11 +45,14 @@ namespace Content.Server.Interfaces.GameTicking
         void ToggleReady(IPlayerSession player, bool ready);
         void ToggleDisallowLateJoin(bool disallowLateJoin);
 
+        /// <summary>proxy to GamePreset (actual handler)</summary>
+        bool OnGhostAttempt(Mind mind, bool canReturnGlobal);
+
         EntityCoordinates GetLateJoinSpawnPoint();
         EntityCoordinates GetJobSpawnPoint(string jobId);
         EntityCoordinates GetObserverSpawnPoint();
 
-        void EquipStartingGear(IEntity entity, StartingGearPrototype startingGear);
+        void EquipStartingGear(IEntity entity, StartingGearPrototype startingGear, HumanoidCharacterProfile profile);
 
         // GameRule system.
         T AddGameRule<T>() where T : GameRule, new();

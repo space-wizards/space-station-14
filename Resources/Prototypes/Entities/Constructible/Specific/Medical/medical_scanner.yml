@@ -1,0 +1,47 @@
+﻿- type: entity
+  id: MedicalScanner
+  name: medical scanner
+  description: A bulky medical scanner.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Constructible/Specific/Medical/scanner.rsi
+    layers:
+    - state: open
+      map: ["enum.MedicalScannerVisualLayers.Machine"]
+    - state: idle_unlit
+      map: ["enum.MedicalScannerVisualLayers.Terminal"]
+  - type: PowerReceiver
+  - type: Anchorable
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    mass: 25
+    anchored: true
+    shapes:
+    - !type:PhysShapeAabb
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+  - type: SnapGrid
+    offset: Center
+  - type: MedicalScanner
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+      100:
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+  - type: Appearance
+    visuals:
+    - type: MedicalScannerVisualizer
+  - type: UserInterface
+    interfaces:
+    - key: enum.MedicalScannerUiKey.Key
+      type: MedicalScannerBoundUserInterface

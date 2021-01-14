@@ -2,6 +2,8 @@
   id: Catwalk
   name: catwalk
   description: A catwalk for easier EVA maneuvering and cable placement.
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Clickable
   - type: InteractionOutline

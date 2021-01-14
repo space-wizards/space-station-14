@@ -52,6 +52,8 @@ namespace Content.Client.GameObjects.Components.Instruments
 
         private bool _allowProgramChange;
 
+        private bool _respectMidiLimits;
+
         /// <summary>
         ///     A queue of MidiEvents to be sent to the server.
         /// </summary>
@@ -239,6 +241,7 @@ namespace Content.Client.GameObjects.Components.Instruments
             serializer.DataField(ref _instrumentBank, "bank", (byte) 0);
             serializer.DataField(ref _allowPercussion, "allowPercussion", false);
             serializer.DataField(ref _allowProgramChange, "allowProgramChange", false);
+            serializer.DataField(ref _respectMidiLimits, "respectMidiLimits", true);
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
@@ -429,7 +432,9 @@ namespace Content.Client.GameObjects.Components.Instruments
 
             if (_midiEventBuffer.Count == 0) return;
 
-            var max = Math.Min(_instrumentSystem.MaxMidiEventsPerBatch, _instrumentSystem.MaxMidiEventsPerSecond - _sentWithinASec);
+            var max = _respectMidiLimits ?
+                Math.Min(_instrumentSystem.MaxMidiEventsPerBatch, _instrumentSystem.MaxMidiEventsPerSecond - _sentWithinASec)
+                : _midiEventBuffer.Count;
 
             if (max <= 0)
             {

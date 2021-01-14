@@ -7,7 +7,6 @@
   components:
   - type: SolutionContainer
     maxVol: 20
-    caps: AddTo, RemoveFrom
   - type: Pourable
     transferAmount: 5
   - type: Drink

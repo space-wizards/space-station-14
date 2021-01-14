@@ -4,6 +4,7 @@
   description: A vending machine containing multiple drinks for bartending.
   spriteName: boozeomat
   startingInventory:
+    DrinkGlass: 20
     DrinkAbsintheBottleFull: 3
     DrinkAlcoGreenFull: 3
     DrinkAleBottleFull: 3

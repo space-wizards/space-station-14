@@ -4,7 +4,7 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Nutrition;
 using Robust.Shared.GameObjects;
@@ -174,6 +174,25 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public void OnUpdate(float frametime)
         {
             _currentThirst -= frametime * ActualDecayRate;
+            UpdateCurrentThreshold();
+
+            if (_currentThirstThreshold != ThirstThreshold.Dead)
+                return;
+
+            if (!Owner.TryGetComponent(out IDamageableComponent damageable))
+                return;
+
+            if (!Owner.TryGetComponent(out IMobStateComponent mobState))
+                return;
+
+            if (!mobState.IsDead())
+            {
+                damageable.ChangeDamage(DamageType.Blunt, 2, true);
+            }
+        }
+
+        private void UpdateCurrentThreshold()
+        {
             var calculatedThirstThreshold = GetThirstThreshold(_currentThirst);
             // _trySound(calculatedThreshold);
             if (calculatedThirstThreshold != _currentThirstThreshold)
@@ -182,25 +201,12 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 ThirstThresholdEffect();
                 Dirty();
             }
-
-            if (_currentThirstThreshold == ThirstThreshold.Dead)
-            {
-                if (Owner.TryGetComponent(out IDamageableComponent damageable))
-                {
-                    if (damageable.CurrentState != DamageState.Dead)
-                    {
-                        damageable.ChangeDamage(DamageType.Blunt, 2, true, null);
-                    }
-                }
-            }
         }
-
 
         public void ResetThirst()
         {
-            _currentThirstThreshold = ThirstThreshold.Okay;
-            _currentThirst = ThirstThresholds[_currentThirstThreshold];
-            ThirstThresholdEffect();
+            _currentThirst = ThirstThresholds[ThirstThreshold.Okay];
+            UpdateCurrentThreshold();
         }
 
         public override ComponentState GetComponentState()
@@ -208,5 +214,4 @@ namespace Content.Server.GameObjects.Components.Nutrition
             return new ThirstComponentState(_currentThirstThreshold);
         }
     }
-
 }

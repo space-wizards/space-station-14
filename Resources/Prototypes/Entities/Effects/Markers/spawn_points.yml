@@ -1,21 +1,10 @@
 - type: entity
   name: spawn point
   id: SpawnPoint
+  parent: MarkerBase
   abstract: true
   components:
-  - type: Sprite
-    netsync: false
-    visible: false
-    sprite: Interface/Misc/markers.rsi
-    state: cross_blue
-
   - type: SpawnPoint
-  - type: Marker
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Physics
-  placement:
-    mode: AlignTileAny
 
 - type: entity
   name: latejoin spawn point

@@ -4,6 +4,7 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Nutrition;
 using Robust.Shared.GameObjects;
@@ -177,6 +178,25 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public void OnUpdate(float frametime)
         {
             _currentHunger -= frametime * ActualDecayRate;
+            UpdateCurrentThreshold();
+
+            if (_currentHungerThreshold != HungerThreshold.Dead)
+                return;
+
+            if (!Owner.TryGetComponent(out IDamageableComponent damageable))
+                return;
+
+            if (!Owner.TryGetComponent(out IMobStateComponent mobState))
+                return;
+
+            if (!mobState.IsDead())
+            {
+                damageable.ChangeDamage(DamageType.Blunt, 2, true);
+            }
+        }
+
+        private void UpdateCurrentThreshold()
+        {
             var calculatedHungerThreshold = GetHungerThreshold(_currentHunger);
             // _trySound(calculatedThreshold);
             if (calculatedHungerThreshold != _currentHungerThreshold)
@@ -185,23 +205,12 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 HungerThresholdEffect();
                 Dirty();
             }
-            if (_currentHungerThreshold == HungerThreshold.Dead)
-            {
-                if (Owner.TryGetComponent(out IDamageableComponent damageable))
-                {
-                    if (damageable.CurrentState != DamageState.Dead)
-                    {
-                        damageable.ChangeDamage(DamageType.Blunt, 2, true, null);
-                    }
-                }
-            }
         }
 
         public void ResetFood()
         {
-            _currentHungerThreshold = HungerThreshold.Okay;
-            _currentHunger = HungerThresholds[_currentHungerThreshold];
-            HungerThresholdEffect();
+            _currentHunger = HungerThresholds[HungerThreshold.Okay];
+            UpdateCurrentThreshold();
         }
 
         public override ComponentState GetComponentState()
@@ -209,6 +218,4 @@ namespace Content.Server.GameObjects.Components.Nutrition
             return new HungerComponentState(_currentHungerThreshold);
         }
     }
-
-
 }

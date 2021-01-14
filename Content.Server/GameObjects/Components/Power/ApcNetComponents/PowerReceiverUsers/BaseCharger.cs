@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
@@ -6,6 +6,7 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -52,19 +53,21 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             Owner.EnsureComponent<PowerReceiverComponent>();
             _container = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-powerCellContainer", Owner);
             // Default state in the visualizer is OFF, so when this gets powered on during initialization it will generally show empty
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
+        }
+
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+            switch (message)
             {
-                receiver.OnPowerStateChanged += PowerUpdate;
+                case PowerChangedMessage powerChanged:
+                    PowerUpdate(powerChanged);
+                    break;
             }
         }
 
         public override void OnRemove()
         {
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
-            {
-                receiver.OnPowerStateChanged -= PowerUpdate;
-            }
-
             _heldBattery = null;
 
             base.OnRemove();
@@ -113,7 +116,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             UpdateStatus();
         }
 
-        private void PowerUpdate(object? sender, PowerStateEventArgs eventArgs)
+        private void PowerUpdate(PowerChangedMessage eventArgs)
         {
             UpdateStatus();
         }

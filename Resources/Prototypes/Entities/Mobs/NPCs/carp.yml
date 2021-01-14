@@ -19,6 +19,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: carp
       sprite: Mobs/Aliens/Carps/carp_space.rsi
+  - type: Clickable
   - type: Physics
     anchored: false
     mass: 50
@@ -34,9 +35,11 @@
       - Opaque
       - MobImpassable
   - type: Damageable
-    criticalThreshold: 50
-    deadThreshold: 100
-  - type: MobStateManager
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      50: !type:CriticalMobState {}
+      100: !type:DeadMobState {}
   - type: HeatResistance
   - type: CombatMode
   - type: Teleportable

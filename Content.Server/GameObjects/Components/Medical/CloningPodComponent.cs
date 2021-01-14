@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System;
+using Content.Server.Eui;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
@@ -9,6 +10,8 @@ using Content.Server.Mobs;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Medical;
+using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Preferences;
 using Robust.Server.GameObjects;
@@ -33,6 +36,7 @@ namespace Content.Server.GameObjects.Components.Medical
     {
         [Dependency] private readonly IServerPreferencesManager _prefsManager = null!;
         [Dependency] private readonly IPlayerManager _playerManager = null!;
+        [Dependency] private readonly EuiManager _euiManager = null!;
 
         [ViewVariables]
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
@@ -163,8 +167,8 @@ namespace Content.Server.GameObjects.Components.Medical
                     }
 
                     var dead =
-                        mind.OwnedEntity.TryGetComponent<IDamageableComponent>(out var damageable) &&
-                        damageable.CurrentState == DamageState.Dead;
+                        mind.OwnedEntity.TryGetComponent<IMobStateComponent>(out var state) &&
+                        state.IsDead();
                     if (!dead) return;
 
 
@@ -177,9 +181,11 @@ namespace Content.Server.GameObjects.Components.Medical
                     _bodyContainer.Insert(mob);
                     _capturedMind = mind;
 
-                    Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local,
-                        new CloningStartedMessage(_capturedMind));
                     _status = CloningPodStatus.NoMind;
+
+                    var acceptMessage = new AcceptCloningEui(mob);
+                    _euiManager.OpenEui(acceptMessage, client);
+
                     UpdateAppearance();
 
                     break;
@@ -198,17 +204,6 @@ namespace Content.Server.GameObjects.Components.Medical
                     throw new ArgumentOutOfRangeException();
             }
         }
-
-        public class CloningStartedMessage : EntitySystemMessage
-        {
-            public CloningStartedMessage(Mind capturedMind)
-            {
-                CapturedMind = capturedMind;
-            }
-
-            public Mind CapturedMind { get; }
-        }
-
 
         private HumanoidCharacterProfile GetPlayerProfileAsync(NetUserId userId)
         {

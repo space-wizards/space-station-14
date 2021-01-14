@@ -1,0 +1,69 @@
+- type: entity
+  id: ToolboxEmergencyFilled
+  name: emergency toolbox
+  parent: ToolboxEmergency
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - name: ClothingMaskBreath
+        amount: 2
+      - name: FoodChocolateBar
+      - name: FlashlightLantern
+        amount: 2
+      - name: HarmonicaInstrument
+        prob: 0.15
+        orGroup: HarmonicaOrChocolate
+      - name: FoodChocolateBar
+        orGroup: HarmonicaOrChocolate
+
+- type: entity
+  id: ToolboxElectricalFilled
+  name: electrical toolbox
+  suffix: Filled
+  parent: ToolboxElectrical
+  components:
+  - type: StorageFill
+    contents:
+      - name: Screwdriver
+      - name: Crowbar
+      - name: Wirecutter
+      - name: ApcExtensionCableStack
+      - name: MVWireStack
+      - name: ClothingHandsGlovesColorYellow
+        prob: 0.05
+        orGroup: GlovesOrWires
+      - name: HVWireStack
+        orGroup: GlovesOrWires
+
+- type: entity
+  id: ToolboxSyndicateFilled
+  name: suspicious toolbox
+  suffix: Filled
+  parent: ToolboxSyndicate
+  components:
+  - type: StorageFill
+    contents:
+      - name: Screwdriver
+      - name: Wrench
+      - name: Welder
+      - name: Crowbar
+      - name: Multitool
+      - name: Wirecutter
+      - name: ClothingHandsGlovesCombat
+
+- type: entity
+  id: ToolboxGoldFilled
+  name: golden toolbox
+  parent: ToolboxGolden
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - name: GoldStack
+        amount: 5
+      - name: DrinkGoldenCup
+        prob: 0.05
+        orGroup: CupOrGold
+      - name: GoldStack
+        orGroup: CupOrGold
