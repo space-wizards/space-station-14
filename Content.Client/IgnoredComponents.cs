@@ -238,7 +238,8 @@ namespace Content.Client
             "Smoke",
             "Foam",
             "AreaEffect",
-            "Recyclable"
+            "Recyclable",
+            "GasFilter"
         };
     }
 }

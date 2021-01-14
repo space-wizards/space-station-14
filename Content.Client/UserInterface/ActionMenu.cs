@@ -282,6 +282,12 @@ namespace Content.Client.UserInterface
             _dragDropHelper.EndDrag();
         }
 
+        private void OnItemFocusExited(ActionMenuItem item)
+        {
+            // lost focus, cancel the drag if one is in progress
+            _dragDropHelper.EndDrag();
+        }
+
         private void OnItemPressed(BaseButton.ButtonEventArgs args)
         {
             if (args.Button is not ActionMenuItem actionMenuItem) return;
@@ -463,10 +469,9 @@ namespace Content.Client.UserInterface
             _actionList = actions.ToArray();
             foreach (var action in _actionList.OrderBy(act => act.Name.ToString()))
             {
-                var actionItem = new ActionMenuItem(action);
+                var actionItem = new ActionMenuItem(action, OnItemFocusExited);
                 _resultsGrid.Children.Add(actionItem);
                 actionItem.SetActionState(_actionsComponent.IsGranted(action));
-
                 actionItem.OnButtonDown += OnItemButtonDown;
                 actionItem.OnButtonUp += OnItemButtonUp;
                 actionItem.OnPressed += OnItemPressed;
