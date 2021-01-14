@@ -61,6 +61,7 @@
     resistances: defaultResistances
 #    criticalThreshold: 50
 #    deadThreshold: 120
+  - type: Input
 
 - type: entity
   id: LeftArmHuman
