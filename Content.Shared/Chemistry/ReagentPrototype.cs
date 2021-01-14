@@ -25,7 +25,7 @@ namespace Content.Shared.Chemistry
         private string _physicalDescription = string.Empty;
         private Color _substanceColor;
         private string _spritePath = string.Empty;
-        private List<IMetabolizable> _metabolism = new();
+        private List<IMetabolizable> _metabolism = new List<IMetabolizable> { new DefaultMetabolizable() };
         private List<ITileReaction> _tileReactions = new();
         private List<IPlantMetabolizable> _plantMetabolism = new();
         private float _customPlantMetabolism = 1f;
@@ -64,12 +64,6 @@ namespace Content.Shared.Chemistry
                 serializer.DataField(ref _metabolism, "metabolism", new List<IMetabolizable> { new DefaultMetabolizable() });
                 serializer.DataField(ref _tileReactions, "tileReactions", new List<ITileReaction> { });
                 serializer.DataField(ref _plantMetabolism, "plantMetabolism", new List<IPlantMetabolizable> { });
-            }
-            else
-            {
-                _metabolism = new List<IMetabolizable> { new DefaultMetabolizable() };
-                _tileReactions = new List<ITileReaction>(0);
-                _plantMetabolism = new List<IPlantMetabolizable>(0);
             }
         }
 
