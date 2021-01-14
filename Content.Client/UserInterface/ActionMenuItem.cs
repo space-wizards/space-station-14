@@ -1,5 +1,7 @@
 ﻿#nullable enable
 
+using System;
+using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Actions;
 using Robust.Client.UserInterface;
@@ -19,8 +21,11 @@ namespace Content.Client.UserInterface
 
         public BaseActionPrototype Action { get; private set; }
 
-        public ActionMenuItem(BaseActionPrototype action)
+        private Action<ActionMenuItem> _onControlFocusExited;
+
+        public ActionMenuItem(BaseActionPrototype action, Action<ActionMenuItem> onControlFocusExited)
         {
+            _onControlFocusExited = onControlFocusExited;
             Action = action;
 
             CustomMinimumSize = (64, 64);
@@ -36,6 +41,12 @@ namespace Content.Client.UserInterface
 
             TooltipDelay = CustomTooltipDelay;
             TooltipSupplier = SupplyTooltip;
+        }
+
+        protected override void ControlFocusExited()
+        {
+            base.ControlFocusExited();
+            _onControlFocusExited.Invoke(this);
         }
 
         private Control SupplyTooltip(Control? sender)

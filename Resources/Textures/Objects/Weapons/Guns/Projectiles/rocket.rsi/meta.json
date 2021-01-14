@@ -8,12 +8,10 @@
     "copyright": "https://github.com/discordia-space/CEV-Eris/raw/e1d495c3faf4642b6ec1c4be8acc7cd5bc51d785/icons/obj/guns/projectile/rocket.dmi",
     "states": [
         {
-            "name": "frag",
-            "directions": 1
+            "name": "frag"
         },
         {
-            "name": "smallfrag",
-            "directions": 1
+            "name": "smallfrag"
         }
     ]
 }

@@ -8,28 +8,22 @@
   },
   "states": [
     {
-      "name": "black",
-      "directions": 1
+      "name": "black"
     },
     {
-      "name": "black-1",
-      "directions": 1
+      "name": "black-1"
     },
     {
-      "name": "blue",
-      "directions": 1
+      "name": "blue"
     },
     {
-      "name": "blue-1",
-      "directions": 1
+      "name": "blue-1"
     },
     {
-      "name": "can-connector",
-      "directions": 1
+      "name": "can-connector"
     },
     {
       "name": "can-o0",
-      "directions": 1,
       "delays": [
         [
           0.2,
@@ -38,96 +32,73 @@
       ]
     },
     {
-      "name": "can-o1",
-      "directions": 1
+      "name": "can-o1"
     },
     {
-      "name": "can-o2",
-      "directions": 1
+      "name": "can-o2"
     },
     {
-      "name": "can-o3",
-      "directions": 1
+      "name": "can-o3"
     },
     {
-      "name": "can-oa1",
-      "directions": 1
+      "name": "can-oa1"
     },
     {
-      "name": "can-open",
-      "directions": 1
+      "name": "can-open"
     },
     {
-      "name": "grey",
-      "directions": 1
+      "name": "grey"
     },
     {
-      "name": "grey-1",
-      "directions": 1
+      "name": "grey-1"
     },
     {
-      "name": "orange",
-      "directions": 1
+      "name": "orange"
     },
     {
-      "name": "orange-1",
-      "directions": 1
+      "name": "orange-1"
     },
     {
-      "name": "red",
-      "directions": 1
+      "name": "red"
     },
     {
-      "name": "red-1",
-      "directions": 1
+      "name": "red-1"
     },
     {
-      "name": "redws",
-      "directions": 1
+      "name": "redws"
     },
     {
-      "name": "redws-1",
-      "directions": 1
+      "name": "redws-1"
     },
     {
-      "name": "yellow",
-      "directions": 1
+      "name": "yellow"
     },
     {
-      "name": "yellow-1",
-      "directions": 1
+      "name": "yellow-1"
     },
     {
-      "name": "green",
-      "directions": 1
+      "name": "green"
     },
     {
-      "name": "green-1",
-      "directions": 1
+      "name": "green-1"
     },
     {
-      "name": "darkblue",
-      "directions": 1
+      "name": "darkblue"
     },
     {
-      "name": "darkblue-1",
-      "directions": 1
+      "name": "darkblue-1"
     },
     {
-      "name": "freon",
-      "directions": 1
+      "name": "freon"
     },
     {
-      "name": "freon-1",
-      "directions": 1
+      "name": "freon-1"
     },
     {
-      "name": "water_vapor",
-      "directions": 1
+      "name": "water_vapor"
     },
     {
-      "name": "water_vapor-1",
-      "directions": 1
+      "name": "water_vapor-1"
     }
   ]
 }

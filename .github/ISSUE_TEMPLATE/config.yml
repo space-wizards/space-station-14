@@ -1,0 +1,7 @@
+contact_links:
+  - name: Report a Security Exploit
+    url: https://discord.gg/MwDDf6t
+    about: Please report serious security exploits and vulnerabilities to @PJB3005. (PJB#3482 on discord).
+  - name: Request a Feature
+    url: https://hackmd.io/@ss14/docs
+    about: Submit feature requests on our [discord server](https://discord.gg/ZBFGnb3) or checkout our design documentation on HackMD.

@@ -8,57 +8,38 @@
     },
     "states": [
         {
-            "name": "full",
-            "select": [],
-            "flags": {},
-            "directions": 1
+            "name": "full"
         },
         {
             "name": "carpet_0",
-            "select": [],
-            "flags": {},
             "directions": 4
         },
         {
             "name": "carpet_1",
-            "select": [],
-            "flags": {},
             "directions": 4
         },
         {
             "name": "carpet_2",
-            "select": [],
-            "flags": {},
             "directions": 4
         },
         {
             "name": "carpet_3",
-            "select": [],
-            "flags": {},
             "directions": 4
         },
         {
             "name": "carpet_4",
-            "select": [],
-            "flags": {},
             "directions": 4
         },
         {
             "name": "carpet_5",
-            "select": [],
-            "flags": {},
             "directions": 4
         },
         {
             "name": "carpet_6",
-            "select": [],
-            "flags": {},
             "directions": 4
         },
         {
             "name": "carpet_7",
-            "select": [],
-            "flags": {},
             "directions": 4
         }
     ]

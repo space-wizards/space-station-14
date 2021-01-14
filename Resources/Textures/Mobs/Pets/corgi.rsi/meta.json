@@ -45,7 +45,6 @@
     },
     {
       "name": "corgi_dead",
-      "directions": 1,
       "delays": [
         [
           1
@@ -72,7 +71,6 @@
     },
     {
       "name": "ian_dead",
-      "directions": 1,
       "delays": [
         [
           1
@@ -81,7 +79,6 @@
     },
     {
       "name": "corgi_deadcollar",
-      "directions": 1,
       "delays": [
         [
           1
@@ -90,7 +87,6 @@
     },
     {
       "name": "corgi_deadtag",
-      "directions": 1,
       "delays": [
         [
           1
@@ -117,7 +113,6 @@
     },
     {
       "name": "ian_shaved_dead",
-      "directions": 1,
       "delays": [
         [
           1
@@ -180,7 +175,6 @@
     },
     {
       "name": "lisa_dead",
-      "directions": 1,
       "delays": [
         [
           1
@@ -207,7 +201,6 @@
     },
     {
       "name": "lisa_shaved_dead",
-      "directions": 1,
       "delays": [
         [
           1
@@ -234,7 +227,6 @@
     },
     {
       "name": "narsian_dead",
-      "directions": 1,
       "delays": [
         [
           1
@@ -265,7 +257,6 @@
     },
     {
       "name": "old_ian_dead",
-      "directions": 1,
       "delays": [
         [
           1
@@ -296,7 +287,6 @@
     },
     {
       "name": "old_ian_shaved_dead",
-      "directions": 1,
       "delays": [
         [
           1
@@ -323,7 +313,6 @@
     },
     {
       "name": "puppy_dead",
-      "directions": 1,
       "delays": [
         [
           1
@@ -332,7 +321,6 @@
     },
     {
       "name": "puppy_deadcollar",
-      "directions": 1,
       "delays": [
         [
           1
@@ -341,7 +329,6 @@
     },
     {
       "name": "puppy_deadtag",
-      "directions": 1,
       "delays": [
         [
           1
@@ -368,7 +355,6 @@
     },
     {
       "name": "puppy_shaved_dead",
-      "directions": 1,
       "delays": [
         [
           1

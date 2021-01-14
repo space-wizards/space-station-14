@@ -7,7 +7,6 @@
   "states": [
     {
       "name": "tile_dark",
-      "directions": 1,
       "delays": [
         [
           1
@@ -16,7 +15,6 @@
     },
     {
       "name": "tile_dirty",
-      "directions": 1,
       "delays": [
         [
           1
@@ -25,7 +23,6 @@
     },
     {
       "name": "tile_gcircuit",
-      "directions": 1,
       "delays": [
         [
           1
@@ -34,7 +31,6 @@
     },
     {
       "name": "tile_hydro",
-      "directions": 1,
       "delays": [
         [
           1
@@ -43,7 +39,6 @@
     },
     {
       "name": "tile_plating",
-      "directions": 1,
       "delays": [
         [
           1
@@ -52,7 +47,6 @@
     },
     {
       "name": "tile_reinforced",
-      "directions": 1,
       "delays": [
         [
           1
@@ -61,7 +55,6 @@
     },
     {
       "name": "tile_rockvault",
-      "directions": 1,
       "delays": [
         [
           1
@@ -70,7 +63,6 @@
     },
     {
       "name": "tile_gold",
-      "directions": 1,
       "delays": [
         [
           1
@@ -79,7 +71,6 @@
     },
     {
       "name": "tile_showroom",
-      "directions": 1,
       "delays": [
         [
           1
@@ -88,7 +79,6 @@
     },
     {
       "name": "tile_snow",
-      "directions": 1,
       "delays": [
         [
           1
@@ -97,7 +87,6 @@
     },
     {
       "name": "tile_steel",
-      "directions": 1,
       "delays": [
         [
           1
@@ -106,7 +95,6 @@
     },
     {
       "name": "tile_steel_techfloor_grid",
-      "directions": 1,
       "delays": [
         [
           1
@@ -115,7 +103,6 @@
     },
     {
       "name": "tile_dark_techfloor_grid",
-      "directions": 1,
       "delays": [
         [
           1
@@ -124,7 +111,6 @@
     },
     {
       "name": "tile_white",
-      "directions": 1,
       "delays": [
         [
           1
@@ -133,7 +119,6 @@
     },
     {
       "name": "tile_white_monofloor",
-      "directions": 1,
       "delays": [
         [
           1
@@ -142,7 +127,6 @@
     },
     {
       "name": "tile_wood",
-      "directions": 1,
       "delays": [
         [
           1
@@ -151,7 +135,6 @@
     },
     {
       "name": "tile_carpet",
-      "directions": 1,
       "delays": [
         [
           1
