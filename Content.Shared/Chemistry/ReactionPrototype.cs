@@ -36,6 +36,8 @@ namespace Content.Shared.Chemistry
         /// </summary>
         public IReadOnlyList<IReactionEffect> Effects => _effects;
 
+        public string Sound { get; private set; }
+
         [Dependency] private readonly IModuleManager _moduleManager = default!;
 
         public void LoadFrom(YamlMappingNode mapping)
@@ -46,6 +48,7 @@ namespace Content.Shared.Chemistry
             serializer.DataField(ref _name, "name", string.Empty);
             serializer.DataField(ref _reactants, "reactants", new Dictionary<string, ReactantPrototype>());
             serializer.DataField(ref _products, "products", new Dictionary<string, ReagentUnit>());
+            serializer.DataField(this, x => x.Sound, "sound", "/Audio/Effects/Chemistry/bubbles.ogg");
 
             if (_moduleManager.IsServerModule)
             {

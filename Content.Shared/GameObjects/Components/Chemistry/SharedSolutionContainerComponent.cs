@@ -179,7 +179,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             if (!CanReact)
                 return;
 
-            EntitySystem.Get<ChemicalReactionSystem>()
+            EntitySystem.Get<SharedChemicalReactionSystem>()
                 .FullyReactSolution(Solution, Owner, MaxVolume);
         }
 
