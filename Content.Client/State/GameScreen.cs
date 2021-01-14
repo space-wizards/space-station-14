@@ -1,6 +1,7 @@
 using Content.Client.Chat;
 using Content.Client.Interfaces.Chat;
 using Content.Client.UserInterface;
+using Content.Shared.Chat;
 using Content.Shared.Input;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.UserInterface;
@@ -75,7 +76,7 @@ namespace Content.Client.State
 
             chat.Input.IgnoreNext = true;
             chat.Input.GrabKeyboardFocus();
-            chat.Input.InsertAtCursor("[");
+            chat.SelectChannel(ChatChannel.OOC);
         }
 
         internal static void FocusAdminChat(ChatBox chat)
@@ -87,7 +88,7 @@ namespace Content.Client.State
 
             chat.Input.IgnoreNext = true;
             chat.Input.GrabKeyboardFocus();
-            chat.Input.InsertAtCursor("]");
+            chat.SelectChannel(ChatChannel.AdminChat);
         }
     }
 }

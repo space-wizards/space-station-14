@@ -32,6 +32,8 @@
     <Compile Update="UserInterface\OptionsMenu.Audio.cs">
       <DependentUpon>OptionsMenu.cs</DependentUpon>
     </Compile>
+    <Compile Remove="Chat\ChannelSelection.cs" />
+    <Compile Remove="Chat\ChatChannelSelection.cs" />
   </ItemGroup>
 
   <Import Project="..\RobustToolbox\MSBuild\XamlIL.targets" />

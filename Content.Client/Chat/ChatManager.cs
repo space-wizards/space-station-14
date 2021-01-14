@@ -60,10 +60,11 @@ namespace Content.Client.Chat
         /// </summary>
         private int _maxMessageLength = 1000;
 
-        private const char ConCmdSlash = '/';
-        private const char OOCAlias = '[';
-        private const char MeAlias = '@';
-        private const char AdminChatAlias = ']';
+        public const char ConCmdSlash = '/';
+        public const char OOCAlias = '[';
+        public const char MeAlias = '@';
+        public const char AdminChatAlias = ']';
+        public const char RadioAlias = ';';
 
         private readonly List<StoredChatMessage> _filteredHistory = new();
 

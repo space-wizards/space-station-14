@@ -1,4 +1,7 @@
-﻿using Content.Client.UserInterface.Stylesheets;
+﻿# nullable enable
+
+using System;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Chat;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
@@ -16,6 +19,12 @@ namespace Content.Client.Chat
 
         public delegate void FilterToggledHandler(ChatBox chatBox, BaseButton.ButtonToggledEventArgs e);
 
+        public event TextSubmitHandler? TextSubmitted;
+
+        public event FilterToggledHandler? FilterToggled;
+
+        // TODO: Maybe don't expose so many of our controls if we don't really need to, makes this
+        // control a bit harder to understand
         public HistoryLineEdit Input { get; private set; }
         public OutputPanel Contents { get; }
 
@@ -26,16 +35,26 @@ namespace Content.Client.Chat
         public Button AdminButton { get; }
         public Button DeadButton { get;  }
 
+        /// <summary>
+        /// Will be Unspecified if set to Console
+        /// </summary>
+        private ChatChannel SelectedChannel => (ChatChannel) _channelSelector.SelectedId;
+
         private readonly OptionButton _channelSelector;
 
         /// <summary>
         ///     Default formatting string for the ClientChatConsole.
         /// </summary>
-        public string DefaultChatFormat { get; set; }
+        public string? DefaultChatFormat { get; set; }
 
         public bool ReleaseFocusOnEnter { get; set; } = true;
 
         public bool ClearOnEnter { get; set; } = true;
+
+        // when channel is changed temporarily due to typing an alias
+        // prefix, we save the current channel selection here to restore it when
+        // the message is sent
+        private ChatChannel? _savedSelectedChannel;
 
         public ChatBox()
         {
@@ -106,9 +125,19 @@ namespace Content.Client.Chat
                 }
             });
 
+
+            // TODO: possibly some of the channels should not be selectable, some of them should just change what the box says
+            // and not really be selectable since you'd never want to keep them selected
             _channelSelector.AddItem("Local", (int) ChatChannel.Local);
             _channelSelector.AddItem("Radio", (int) ChatChannel.Radio);
             _channelSelector.AddItem("OOC", (int) ChatChannel.OOC);
+            // TODO: Only allow this to show up if we are admin.
+            _channelSelector.AddItem("Admin", (int) ChatChannel.AdminChat);
+            _channelSelector.AddItem("Emote", (int) ChatChannel.Emotes);
+            // technically it's not a chat channel, but it is still possible to send console commands via
+            // chatbox
+            _channelSelector.AddItem("Console", (int) ChatChannel.Unspecified);
+
 
             AllButton = new Button
             {
@@ -161,6 +190,8 @@ namespace Content.Client.Chat
             _channelSelector.OnItemSelected += OnChannelItemSelected;
             Input.OnKeyBindDown += InputKeyBindDown;
             Input.OnTextEntered += Input_OnTextEntered;
+            Input.OnTextChanged += InputOnTextChanged;
+            Input.OnFocusExit += InputOnFocusExit;
         }
 
         protected override void ExitedTree()
@@ -169,6 +200,19 @@ namespace Content.Client.Chat
             _channelSelector.OnItemSelected -= OnChannelItemSelected;
             Input.OnKeyBindDown -= InputKeyBindDown;
             Input.OnTextEntered -= Input_OnTextEntered;
+            Input.OnTextChanged -= InputOnTextChanged;
+            Input.OnFocusExit -= InputOnFocusExit;
+        }
+
+        /// <summary>
+        /// Selects the indicated channel, clearing out any temporarily-selected channel
+        /// (any currently entered text is preserved).
+        /// </summary>
+        public void SelectChannel(ChatChannel toSelect)
+        {
+            // TODO: validate if allowed to chat in admin mode if selecting admin channel
+            _savedSelectedChannel = null;
+            _channelSelector.SelectId((int) toSelect);
         }
 
 
@@ -192,18 +236,69 @@ namespace Content.Client.Chat
                 args.Handle();
                 return;
             }
+
+            // if we temporarily selected another channel via a prefx, undo that when we backspace on an empty input
+            if (Input.Text.Length == 0 && _savedSelectedChannel.HasValue &&
+                args.Function == EngineKeyFunctions.TextBackspace)
+            {
+                _channelSelector.SelectId((int) _savedSelectedChannel);
+                _savedSelectedChannel = null;
+            }
+        }
+
+
+        private void InputOnTextChanged(LineEdit.LineEditEventArgs obj)
+        {
+            // switch temporarily to a different channel if an alias prefix has been entered.
+
+            // are we already temporarily switching to a channel?
+            if (_savedSelectedChannel.HasValue) return;
+
+            var trimmed = obj.Text.Trim();
+            if (trimmed.Length == 0 || trimmed.Length > 1) return;
+
+            var channel = GetChannelFromPrefix(trimmed[0]);
+            if (channel == null) return;
+            _savedSelectedChannel = SelectedChannel;
+            _channelSelector.SelectId((int) channel);
+            // we "ate" the prefix
+            Input.Text = "";
+        }
+
+        private static ChatChannel? GetChannelFromPrefix(char prefix)
+        {
+            return prefix switch
+            {
+                ChatManager.MeAlias => ChatChannel.Emotes,
+                ChatManager.RadioAlias => ChatChannel.Radio,
+                ChatManager.AdminChatAlias => ChatChannel.AdminChat,
+                ChatManager.OOCAlias => ChatChannel.OOC,
+                ChatManager.ConCmdSlash => ChatChannel.Unspecified,
+                _ => null
+            };
+        }
+
+        private static string GetPrefixFromChannel(ChatChannel channel)
+        {
+            char? prefixChar = channel switch
+            {
+                ChatChannel.Emotes => ChatManager.MeAlias,
+                ChatChannel.Radio => ChatManager.RadioAlias,
+                ChatChannel.AdminChat => ChatManager.AdminChatAlias,
+                ChatChannel.OOC => ChatManager.OOCAlias,
+                ChatChannel.Unspecified => ChatManager.ConCmdSlash,
+                _ => null
+            };
+
+            return prefixChar.ToString() ?? string.Empty;
         }
 
         private void OnChannelItemSelected(OptionButton.ItemSelectedEventArgs args)
         {
             _channelSelector.SelectId(args.Id);
-
-            // TODO: Change the channel
+            // we manually selected something so undo the temporary selection
+            _savedSelectedChannel = null;
         }
-
-        public event TextSubmitHandler TextSubmitted;
-
-        public event FilterToggledHandler FilterToggled;
 
         public void AddLine(string message, ChatChannel channel, Color color)
         {
@@ -219,6 +314,16 @@ namespace Content.Client.Chat
             Contents.AddMessage(formatted);
         }
 
+
+        private void InputOnFocusExit(LineEdit.LineEditEventArgs obj)
+        {
+            // undo the temporary selection, otherwise it will be odd if user
+            // comes back to it later only to have their selection cleared upon sending
+            if (!_savedSelectedChannel.HasValue) return;
+            _channelSelector.SelectId((int) _savedSelectedChannel);
+            _savedSelectedChannel = null;
+        }
+
         private void Input_OnTextEntered(LineEdit.LineEditEventArgs args)
         {
             // We set it there to true so it's set to false by TextSubmitted.Invoke if necessary
@@ -226,12 +331,18 @@ namespace Content.Client.Chat
 
             if (!string.IsNullOrWhiteSpace(args.Text))
             {
-                TextSubmitted?.Invoke(this, args.Text);
+                TextSubmitted?.Invoke(this, GetPrefixFromChannel((ChatChannel)_channelSelector.SelectedId)
+                                            + args.Text);
             }
 
             if (ClearOnEnter)
             {
                 Input.Clear();
+                if (_savedSelectedChannel.HasValue)
+                {
+                    _channelSelector.SelectId((int) _savedSelectedChannel);
+                    _savedSelectedChannel = null;
+                }
             }
 
             if (ReleaseFocusOnEnter)
