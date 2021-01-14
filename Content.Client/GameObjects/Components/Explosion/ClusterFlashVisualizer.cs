@@ -45,7 +45,7 @@ namespace Content.Client.GameObjects.Components.Explosion
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
             if (!component.TryGetData(ClusterFlashVisuals.GrenadesMax, out byte max))
             {
-                max = 3;
+                max = 4;
             }
 
             if (component.TryGetData(ClusterFlashVisuals.GrenadesCounter, out byte grenadesCounter))

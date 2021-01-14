@@ -40,9 +40,6 @@ namespace Content.Server.GameObjects.Components.Explosives
         [ViewVariables]
         private int _maxGrenades;
 
-        [ViewVariables]
-        private int _maxViewableGrenades;
-
         /// <summary>
         ///     How long until our grenades are shot out and armed.
         /// </summary>
@@ -79,7 +76,6 @@ namespace Content.Server.GameObjects.Components.Explosives
             serializer.DataField(ref _maxGrenades, "maxGrenadesCount", 4);
             serializer.DataField(ref _delay, "delay", 1.0f);
             serializer.DataField(ref _throwDistance, "distance", 3.0f);
-            serializer.DataField(ref _maxViewableGrenades, "maxView", 3);
         }
 
         public override void Initialize()
@@ -175,7 +171,7 @@ namespace Content.Server.GameObjects.Components.Explosives
             try
             {
                 appearance.SetData(ClusterFlashVisuals.GrenadesCounter, Convert.ToByte(_grenadesContainer.ContainedEntities.Count));
-                appearance.SetData(ClusterFlashVisuals.GrenadesCounter, Convert.ToByte(_maxViewableGrenades));
+                appearance.SetData(ClusterFlashVisuals.GrenadesMax, Convert.ToByte(_maxGrenades));
             }
             catch (OverflowException)
             {
