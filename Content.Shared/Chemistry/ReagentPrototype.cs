@@ -1,4 +1,5 @@
-﻿using System;
+#nullable enable
+using System;
 using System.Collections.Generic;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.Chemistry;
@@ -18,15 +19,15 @@ namespace Content.Shared.Chemistry
     {
         [Dependency] private readonly IModuleManager _moduleManager = default!;
 
-        private string _id;
-        private string _name;
-        private string _description;
-        private string _physicalDescription;
+        private string _id = string.Empty;
+        private string _name = string.Empty;
+        private string _description = string.Empty;
+        private string _physicalDescription = string.Empty;
         private Color _substanceColor;
-        private string _spritePath;
-        private List<IMetabolizable> _metabolism;
-        private List<ITileReaction> _tileReactions;
-        private List<IPlantMetabolizable> _plantMetabolism;
+        private string _spritePath = string.Empty;
+        private List<IMetabolizable> _metabolism = new();
+        private List<ITileReaction> _tileReactions = new();
+        private List<IPlantMetabolizable> _plantMetabolism = new();
         private float _customPlantMetabolism = 1f;
 
         public string ID => _id;

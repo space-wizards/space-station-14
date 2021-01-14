@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using Content.Server.Interfaces.Chemistry;
 using Content.Shared.Interfaces;
@@ -15,11 +16,11 @@ namespace Content.Shared.Chemistry
     [Prototype("reaction")]
     public class ReactionPrototype : IPrototype, IIndexedPrototype
     {
-        private string _id;
-        private string _name;
-        private Dictionary<string, ReactantPrototype> _reactants;
-        private Dictionary<string, ReagentUnit> _products;
-        private List<IReactionEffect> _effects;
+        private string _id = string.Empty;
+        private string _name = string.Empty;
+        private Dictionary<string, ReactantPrototype> _reactants = new();
+        private Dictionary<string, ReagentUnit> _products = new();
+        private List<IReactionEffect> _effects = new();
 
         public string ID => _id;
         public string Name => _name;
