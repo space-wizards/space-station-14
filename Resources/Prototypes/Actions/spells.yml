@@ -10,7 +10,6 @@
    castmessage: ONI SOMA! 
    spellprojectile: FireBallbullet
    range: 2
-   trap: false
    speed: 15
    cooldown: 1
    ignorecaster: true
@@ -27,7 +26,6 @@
    castmessage: CAVERE INSIDIAS!
    spellprojectile: TrapsEntitiy
    range: 4
-   trap: true
    speed: 0
    cooldown: 1
    ignorecaster: false
@@ -44,6 +42,6 @@
    castmessage: RI'FATA!
    spellprojectile:  MagicarpMob_Content
    range: 2
-   trap: true
+   speed: 0
    cooldown: 1
    ignorecaster: true

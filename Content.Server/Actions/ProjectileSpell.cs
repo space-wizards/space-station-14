@@ -19,8 +19,6 @@ namespace Content.Server.Actions
 
         public string CastMessage { get; private set; }
         public string Projectile { get; private set; }
-
-        public bool Stationary { get; private set; }
         public float VelocityMult { get; private set; }
         public float CoolDown { get; private set; }
         public bool IgnoreCaster { get; private set; }
@@ -34,7 +32,6 @@ namespace Content.Server.Actions
         {
             serializer.DataField(this, x => x.CastMessage, "castmessage", "Instant action used."); //What player says upon casting the spell
             serializer.DataField(this, x => x.Projectile, "spellprojectile", null); //What projectile/Entity does the spell create
-            serializer.DataField(this, x => x.Stationary, "trap", false); //Apply or not apply momentum to the projectile (If true, will spawn a stationary trap-like spell)
             serializer.DataField(this, x => x.VelocityMult, "speed", 0f); //Speed that is applied to the projectile
             serializer.DataField(this, x => x.CoolDown, "cooldown", 0f);
             serializer.DataField(this, x => x.IgnoreCaster, "ignorecaster", false); //ignore caster or not
@@ -58,16 +55,12 @@ namespace Content.Server.Actions
                 {
                     projectileComponent.IgnoreEntity(args.Performer);
                 }
-                if (Stationary == false) //Adds velocity to a none-stationary entity with a projectile component, based on what is specified in "speed"
-                {
-                    spawnedSpell
-                    .GetComponent<IPhysicsComponent>()
-                    .EnsureController<BulletController>()
-                    .LinearVelocity = direction * VelocityMult;
-                }
+                spawnedSpell
+                .GetComponent<IPhysicsComponent>()
+                .EnsureController<BulletController>()
+                .LinearVelocity = direction * VelocityMult;
             }
-
-            spawnedSpell.Transform.LocalRotation = args.Performer.Transform.LocalRotation;
+              spawnedSpell.Transform.LocalRotation = args.Performer.Transform.LocalRotation;
         }
     }
 }
