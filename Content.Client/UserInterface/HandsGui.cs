@@ -51,22 +51,7 @@ namespace Content.Client.UserInterface
                         Children =
                         {
                             (_topPanel = ItemStatusPanel.FromSide(HandLocation.Middle)),
-                            new PanelContainer
-                            {
-                                StyleClasses = { StyleNano.StyleClassInventorySlotBackground },
-                                Children =
-                                {
-                                    new VBoxContainer
-                                    {
-                                        Children =
-                                        {
-                                            (_handsContainer = new HBoxContainer {SeparationOverride = 4}),
-                                            // bottom padding
-                                            new Control{CustomMinimumSize = (0, 6)}
-                                        }
-                                    }
-                                }
-                            }
+                            (_handsContainer = new HBoxContainer())
                         }
                     }),
                     (_leftPanel = ItemStatusPanel.FromSide(HandLocation.Left))
