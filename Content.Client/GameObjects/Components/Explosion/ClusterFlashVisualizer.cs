@@ -1,4 +1,4 @@
-using Content.Shared.GameObjects.Components.Explosion;
+﻿using Content.Shared.GameObjects.Components.Explosion;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -43,20 +43,14 @@ namespace Content.Client.GameObjects.Components.Explosion
             base.OnChangeData(component);
 
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
-            if (!component.TryGetData(ClusterFlashVisuals.GrenadesMax, out int max))
+            if (!component.TryGetData(ClusterFlashVisuals.GrenadesMax, out byte max))
             {
                 max = 3;
             }
 
-            if (component.TryGetData(ClusterFlashVisuals.GrenadesCounter, out int grenadesCounter))
+            if (component.TryGetData(ClusterFlashVisuals.GrenadesCounter, out byte grenadesCounter))
             {
-                var level = 0;
-                if (grenadesCounter >= max){
-                    level = max;
-                }
-                else{
-                    level = grenadesCounter;
-                }
+                var level = ContentHelpers.RoundToLevels(grenadesCounter, max, _levels);
 
                 sprite.LayerSetState(ClusterFlashVisualLayers.Base, $"{_state}-{level}");
             }

@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Server.GameObjects.Components.Explosion;
 using Robust.Shared.GameObjects;
@@ -37,9 +37,6 @@ namespace Content.Server.GameObjects.Components.Explosives
         [ViewVariables]
         private string? _fillPrototype;
 
-        /// <summary>
-        ///     Maximum grenades in the container.
-        /// </summary>
         [ViewVariables]
         private int _maxGrenades;
 
@@ -103,22 +100,22 @@ namespace Content.Server.GameObjects.Components.Explosives
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
+            if (_countDown || ((_grenadesContainer.ContainedEntities.Count) <= 0 && (_fillPrototype == null)))
+                return false;
             Owner.SpawnTimer((int) (_delay * 1000), () =>
             {
-                if (Owner.Deleted || _countDown || ((_grenadesContainer.ContainedEntities.Count) <= 0 && (_fillPrototype == null)))
+                if (Owner.Deleted)
                     return;
-
                 _countDown = true;
                 var random = IoCManager.Resolve<IRobustRandom>();
                 var delay = 20;
                 var grenadesWasInserted = _grenadesContainer.ContainedEntities.Count;
+                var throwedCount = 0;
+                var segmentAngle = (int) (360 / grenadesWasInserted);
                 while (TryGetGrenade(out var grenade))
                 {
-                    var segmentAngle = Convert.ToInt32(360 / grenadesWasInserted);
-                    var throwedCount = grenadesWasInserted - _grenadesContainer.ContainedEntities.Count;
                     var angleMin = segmentAngle * throwedCount;
                     var angleMax = segmentAngle * (throwedCount + 1);
-                    // Okay ThrowHelper is actually disgusting and so is this
                     var angle = Angle.FromDegrees(random.Next(angleMin, angleMax));
                     var distance = (float)random.NextDouble() * _throwDistance;
                     var target = new EntityCoordinates(Owner.Uid, angle.ToVec().Normalized * distance);
@@ -137,6 +134,7 @@ namespace Content.Server.GameObjects.Components.Explosives
                     });
 
                     delay += random.Next(150, 300);
+                    throwedCount++;
                 }
 
                 Owner.Delete();
@@ -145,7 +143,8 @@ namespace Content.Server.GameObjects.Components.Explosives
         }
 
         private void FillContainer(){
-            for (int x = 0; x != _maxGrenades; x++){
+            for (int x = 0; x != _maxGrenades; x++)
+            {
                 var grenade = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.MapPosition);
                 _grenadesContainer.Insert(grenade);
             }
@@ -173,8 +172,15 @@ namespace Content.Server.GameObjects.Components.Explosives
         {
             if (!Owner.TryGetComponent(out AppearanceComponent? appearance)) return;
 
-            appearance.SetData(ClusterFlashVisuals.GrenadesCounter, _grenadesContainer.ContainedEntities.Count);
-            appearance.SetData(ClusterFlashVisuals.GrenadesMax, _maxViewableGrenades);
+            try
+            {
+                appearance.SetData(ClusterFlashVisuals.GrenadesCounter, Convert.ToByte(_grenadesContainer.ContainedEntities.Count));
+                appearance.SetData(ClusterFlashVisuals.GrenadesCounter, Convert.ToByte(_maxViewableGrenades));
+            }
+            catch (OverflowException)
+            {
+                return;
+            }
         }
     }
 }
