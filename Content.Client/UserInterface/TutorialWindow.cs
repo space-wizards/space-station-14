@@ -1,4 +1,5 @@
-﻿using Robust.Client.Graphics;
+﻿using Content.Client.Chat;
+using Robust.Client.Graphics;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.ResourceManagement;
@@ -20,7 +21,7 @@ namespace Content.Client.UserInterface
         private VBoxContainer VBox { get; }
 
         private const string IntroContents = @"Hi and welcome to Space Station 14! This tutorial will assume that you know a bit about how SS13 plays. It's mostly intended to lay out the controls and their differences from SS13.";
-        private const string GameplayContents = @"Some notes on gameplay. To talk in OOC, prefix your chat message with \[ or /ooc. Death is currently show as a black circle around the player. You can respawn via the respawn button in the sandbox menu. Instead of intents, we have ""combat mode"". Check controls above for its keybind. You can't attack anybody with it off, so no more hitting yourself with your own crowbar.";
+        private const string GameplayContents = @"Death is currently show as a black circle around the player. You can respawn via the respawn button in the sandbox menu. Instead of intents, we have ""combat mode"". Check controls above for its keybind. You can't attack anybody with it off, so no more hitting yourself with your own crowbar.";
         private const string FeedbackContents = @"If you have any feedback, questions, bug reports, etc..., do not be afraid to tell us! You can ask on Discord or heck, just write it in OOC! We'll catch it.";
         private const string SandboxSpawnerContents = @"[color=#ffffff]Entitiy spawn panel options:[/color]
 [color=#a4885c]Default[/color] spawns small entities like mugs without aligning them to anything, while aligning block entities like walls to the grid.
@@ -114,8 +115,7 @@ Hotbar Loadout 5: [color=#a4885c]{48}[/color]
 Hotbar Loadout 6: [color=#a4885c]{49}[/color]
 Hotbar Loadout 7: [color=#a4885c]{50}[/color]
 Hotbar Loadout 8: [color=#a4885c]{51}[/color]
-Hotbar Loadout 9: [color=#a4885c]{52}[/color]
-                ",
+Hotbar Loadout 9: [color=#a4885c]{52}[/color]",
                 Key(MoveUp), Key(MoveLeft), Key(MoveDown), Key(MoveRight),
                 Key(SwapHands),
                 Key(ActivateItemInHand),
@@ -166,6 +166,15 @@ Hotbar Loadout 9: [color=#a4885c]{52}[/color]
                 Key(Loadout7),
                 Key(Loadout8),
                 Key(Loadout9)));
+
+            // chat
+            VBox.AddChild(new Label { FontOverride = headerFont, Text = "\nChat" });
+            AddFormattedText(Loc.GetString(@"Prefix your chat message with these to direct the message to a particular channel.
+[color=#a4885c]{0}[/color] Radio
+[color=#a4885c]{1}[/color] OOC
+[color=#a4885c]{2}[/color] Emote
+[color=#a4885c]{3}[/color] Console Command
+[color=#a4885c]{4}[/color] Admin Chat", ChatManager.RadioAlias, @"\" + ChatManager.OOCAlias, ChatManager.MeAlias, ChatManager.ConCmdSlash, @"\" + ChatManager.AdminChatAlias));
 
             //Gameplay
             VBox.AddChild(new Label { FontOverride = headerFont, Text = "\nGameplay" });

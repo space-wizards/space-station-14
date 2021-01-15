@@ -316,7 +316,7 @@ namespace Content.Client.Chat
                 _ => null
             };
         }
-`
+
         private static string GetPrefixFromChannel(ChatChannel channel)
         {
             char? prefixChar = channel switch
