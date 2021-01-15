@@ -19,16 +19,16 @@ namespace Content.Shared.Chemistry
     {
         [Dependency] private readonly IModuleManager _moduleManager = default!;
 
-        private string _id = string.Empty;
-        private string _name = string.Empty;
-        private string _description = string.Empty;
-        private string _physicalDescription = string.Empty;
+        private string _id = default!;
+        private string _name = default!;
+        private string _description = default!;
+        private string _physicalDescription = default!;
         private Color _substanceColor;
-        private string _spritePath = string.Empty;
-        private List<IMetabolizable> _metabolism = new List<IMetabolizable> { new DefaultMetabolizable() };
-        private List<ITileReaction> _tileReactions = new();
-        private List<IPlantMetabolizable> _plantMetabolism = new();
-        private float _customPlantMetabolism = 1f;
+        private string _spritePath = default!;
+        private List<IMetabolizable> _metabolism = default!;
+        private List<ITileReaction> _tileReactions = default!;
+        private List<IPlantMetabolizable> _plantMetabolism = default!;
+        private float _customPlantMetabolism;
 
         public string ID => _id;
         public string Name => _name;
@@ -61,9 +61,17 @@ namespace Content.Shared.Chemistry
 
             if (_moduleManager.IsServerModule)
             {
+                //Implementations of the needed interfaces are currently server-only, so they cannot be read on client
                 serializer.DataField(ref _metabolism, "metabolism", new List<IMetabolizable> { new DefaultMetabolizable() });
                 serializer.DataField(ref _tileReactions, "tileReactions", new List<ITileReaction> { });
                 serializer.DataField(ref _plantMetabolism, "plantMetabolism", new List<IPlantMetabolizable> { });
+            }
+            else
+            {
+                //ensure the following fields cannot null since they can only be serialized on server right now
+                _metabolism = new List<IMetabolizable> { new DefaultMetabolizable() };
+                _tileReactions = new();
+                _plantMetabolism = new();
             }
         }
 
