@@ -1,12 +1,16 @@
 #nullable enable
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.Components.Interactable;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Random;
 using Robust.Shared.ViewVariables;
 using System.Threading.Tasks;
@@ -27,8 +31,17 @@ namespace Content.Server.GameObjects.Components.Watercloset
         [ViewVariables] public bool LidOpen => _lidOpen;
         [ViewVariables] public bool IsSeatUp => _isSeatUp;
 
+        public void MapInit()
+        {
+            // roll is toilet seat will be up or down
+            var random = IoCManager.Resolve<IRobustRandom>();
+            _isSeatUp = random.NextBool();
+            UpdateSprite();
+        }
+
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
+            // try pry open/close toilet lid
             if (!eventArgs.Using.TryGetComponent(out ToolComponent? tool))
                 return false;
 
@@ -46,10 +59,17 @@ namespace Content.Server.GameObjects.Components.Watercloset
             _isPrying = false;
 
 
+            // all cool - toggle lid
             _lidOpen = !_lidOpen;
             UpdateSprite();
 
             return true;
+        }
+
+        public void ToggleToiletSeat()
+        {
+            _isSeatUp = !_isSeatUp;
+            UpdateSprite();
         }
 
         private void UpdateSprite()
@@ -64,12 +84,25 @@ namespace Content.Server.GameObjects.Components.Watercloset
             }
         }
 
-        public void MapInit()
+        [Verb]
+        public sealed class ToiletSeatVerb : Verb<ToiletComponent>
         {
-            // roll is toilet seat will be up or down
-            var random = IoCManager.Resolve<IRobustRandom>();
-            _isSeatUp = random.NextBool();
-            UpdateSprite();
+            protected override void Activate(IEntity user, ToiletComponent component)
+            {
+                component.ToggleToiletSeat();
+            }
+
+            protected override void GetData(IEntity user, ToiletComponent component, VerbData data)
+            {
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
+                var text = component.IsSeatUp ? "Put seat down" : "Put seat up";
+                data.Text = Loc.GetString(text);
+            }
         }
     }
 }
