@@ -8,7 +8,7 @@
     "copyright": "Taken from cev-eris at commit https://github.com/discordia-space/CEV-Eris/commit/2cb66bae0e253e13d37f8939e0983bb94fee243e",
     "states": [
         {
-            "name": "open_toilet_seat_closed",
+            "name": "closed_toilet_seat_down",
             "directions": 4,
             "delays": [
                 [
@@ -26,7 +26,7 @@
             ]
         },
         {
-            "name": "open_toilet_seat_open",
+            "name": "closed_toilet_seat_up",
             "directions": 4,
             "delays": [
                 [
@@ -44,7 +44,7 @@
             ]
         },
         {
-            "name": "toilet_seat_closed",
+            "name": "open_toilet_seat_down",
             "directions": 4,
             "delays": [
                 [
@@ -62,7 +62,7 @@
             ]
         },
         {
-            "name": "toilet_seat_open",
+            "name": "open_toilet_seat_up",
             "directions": 4,
             "delays": [
                 [

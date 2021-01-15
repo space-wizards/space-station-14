@@ -6,4 +6,5 @@
   components:
   - type: Sprite
     sprite: Constructible/Watercloset/toilet.rsi
-    state: toilet_seat_closed
+    state: closed_toilet_seat_up
+  - type: Toilet
