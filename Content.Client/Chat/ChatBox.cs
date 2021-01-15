@@ -107,7 +107,8 @@ namespace Content.Client.Chat
                                                     {
                                                         HideTriangle = true,
                                                         StyleClasses = { StyleNano.StyleClassChatFilterOptionButton },
-                                                        OptionStyleClasses = { StyleNano.StyleClassChatFilterOptionButton }
+                                                        OptionStyleClasses = { StyleNano.StyleClassChatFilterOptionButton },
+                                                        CustomMinimumSize = (75, 0)
                                                     }),
                                                     (Input = new HistoryLineEdit
                                                     {
