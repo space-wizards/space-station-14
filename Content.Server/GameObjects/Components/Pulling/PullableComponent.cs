@@ -21,6 +21,7 @@ namespace Content.Server.GameObjects.Components.Pulling
             protected override void GetData(IEntity user, PullableComponent component, VerbData data)
             {
                 data.Visibility = VerbVisibility.Invisible;
+                data.IconTexture = "/Textures/Interface/VerbIcons/pull.svg.96dpi.png";
 
                 if (user == component.Owner)
                 {
