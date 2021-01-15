@@ -236,7 +236,7 @@ namespace Content.Client
             "DamageOtherOnHit",
             "DamageOnLand",
             "GasFilter",
-            "Recyclable",
+            "Recyclable"
         };
     }
 }
