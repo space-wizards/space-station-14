@@ -275,17 +275,23 @@
       - name: ClothingBeltMedical
         prob: 1
       - name: ClothingHeadHatSurgcapBlue
-        prob: 0.5
+        prob: 1
+        orGroup: Surgcaps
       - name: ClothingHeadHatSurgcapGreen
         prob: 0.1
+        orGroup: Surgcaps
       - name: ClothingHeadHatSurgcapPurple
         prob: 0.05
+        orGroup: Surgcaps
       - name: UniformScrubsColorBlue
         prob: 0.5
+        orGroup: Surgshrubs
       - name: UniformScrubsColorGreen
         prob: 0.1
+        orGroup: Surgshrubs
       - name: UniformScrubsColorPurple
         prob: 0.05
+        orGroup: Surgshrubs
       - name: ClothingMaskSterile
         prob: 1
         
