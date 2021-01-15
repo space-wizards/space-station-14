@@ -8,7 +8,7 @@
   - MY BODY IS IN THE AI CORE
   - Rogue Cyborg
   - IT'S MALF
-  - { AINAME } Minion {###}
+#  - { AINAME } Minion {###}
   - Terminator
   - Robocop
   - Johnny
@@ -45,9 +45,9 @@
   - Boop II
   - Buzz
   - Buzz II
+  - C'MON TARS
   - 3000 JIGGAWATTS
-  - Jojo Refrence
-  - Outbreak Handling Unit {###}
+#  - Outbreak Handling Unit {###}
   - ITS ROGAINE
   - Nokia
   - YES-Man
