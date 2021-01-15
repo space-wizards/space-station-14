@@ -128,14 +128,14 @@ namespace Content.Client.UserInterface
             RootControl = new LayoutContainer();
             LayoutContainer.SetAnchorPreset(RootControl, LayoutContainer.LayoutPreset.Wide);
 
-            var escapeTexture = _resourceCache.GetTexture("/Textures/Interface/hamburger.svg.96dpi.png");
-            var characterTexture = _resourceCache.GetTexture("/Textures/Interface/character.svg.96dpi.png");
-            var inventoryTexture = _resourceCache.GetTexture("/Textures/Interface/inventory.svg.96dpi.png");
-            var craftingTexture = _resourceCache.GetTexture("/Textures/Interface/hammer.svg.96dpi.png");
-            var actionsTexture = _resourceCache.GetTexture("/Textures/Interface/fist.svg.96dpi.png");
-            var adminTexture = _resourceCache.GetTexture("/Textures/Interface/gavel.svg.96dpi.png");
-            var tutorialTexture = _resourceCache.GetTexture("/Textures/Interface/tutorial.svg.96dpi.png");
-            var sandboxTexture = _resourceCache.GetTexture("/Textures/Interface/sandbox.svg.96dpi.png");
+            var escapeTexture = _resourceCache.GetTexture("/Textures/Interface/hamburger.svg.192dpi.png");
+            var characterTexture = _resourceCache.GetTexture("/Textures/Interface/character.svg.192dpi.png");
+            var inventoryTexture = _resourceCache.GetTexture("/Textures/Interface/inventory.svg.192dpi.png");
+            var craftingTexture = _resourceCache.GetTexture("/Textures/Interface/hammer.svg.192dpi.png");
+            var actionsTexture = _resourceCache.GetTexture("/Textures/Interface/fist.svg.192dpi.png");
+            var adminTexture = _resourceCache.GetTexture("/Textures/Interface/gavel.svg.192dpi.png");
+            var tutorialTexture = _resourceCache.GetTexture("/Textures/Interface/tutorial.svg.192dpi.png");
+            var sandboxTexture = _resourceCache.GetTexture("/Textures/Interface/sandbox.svg.192dpi.png");
 
             _topButtonsContainer = new HBoxContainer
             {
@@ -473,6 +473,7 @@ namespace Content.Client.UserInterface
                             new Control {CustomMinimumSize = (0, VertPad)},
                             (_textureRect = new TextureRect
                             {
+                                TextureScale = (0.5f, 0.5f),
                                 Texture = texture,
                                 SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
                                 SizeFlagsVertical = SizeFlags.Expand | SizeFlags.ShrinkCenter,
