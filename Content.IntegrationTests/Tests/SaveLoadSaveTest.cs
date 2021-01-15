@@ -58,13 +58,17 @@ namespace Content.IntegrationTests.Tests
                 var failed = TestContext.CurrentContext.Result.Assertions.FirstOrDefault();
                 if (failed != null)
                 {
-                    var path1 = Path.Combine(userData.RootDir!,rp1.ToRelativeSystemPath());
-                    var path2 = Path.Combine(userData.RootDir!,rp2.ToRelativeSystemPath());
-                    TestContext.AddTestAttachment(path1);
-                    TestContext.AddTestAttachment(path2);
+                    var oneTmp = Path.GetTempFileName();
+                    var twoTmp = Path.GetTempFileName();
+
+                    File.WriteAllText(oneTmp, one);
+                    File.WriteAllText(twoTmp, two);
+
+                    TestContext.AddTestAttachment(oneTmp, "First save file");
+                    TestContext.AddTestAttachment(twoTmp, "Second save file");
                     TestContext.Error.WriteLine("Complete output:");
-                    TestContext.Error.WriteLine(path1);
-                    TestContext.Error.WriteLine(path2);
+                    TestContext.Error.WriteLine(oneTmp);
+                    TestContext.Error.WriteLine(twoTmp);
                 }
             });
         }

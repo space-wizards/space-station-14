@@ -9,12 +9,7 @@
     "states": [
         {
             "name": "box",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         }
     ]
 }

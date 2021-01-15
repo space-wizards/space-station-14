@@ -112,9 +112,9 @@ namespace Content.Server.GameObjects.Components.Culinary
             TryUseUtensil(eventArgs.User, eventArgs.Target);
         }
 
-        private void TryUseUtensil(IEntity user, IEntity target)
+        private void TryUseUtensil(IEntity user, IEntity? target)
         {
-            if (!target.TryGetComponent(out FoodComponent? food))
+            if (target == null || !target.TryGetComponent(out FoodComponent? food))
             {
                 return;
             }

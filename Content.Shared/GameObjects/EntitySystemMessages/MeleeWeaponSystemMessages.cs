@@ -30,5 +30,18 @@ namespace Content.Shared.GameObjects.EntitySystemMessages
             public bool TextureEffect { get; }
             public bool ArcFollowAttacker { get; }
         }
+
+        [Serializable, NetSerializable]
+        public sealed class PlayLungeAnimationMessage : EntitySystemMessage
+        {
+            public Angle Angle { get; }
+            public EntityUid Source { get; }
+
+            public PlayLungeAnimationMessage(Angle angle, EntityUid source)
+            {
+                Angle = angle;
+                Source = source;
+            }
+        }
     }
 }

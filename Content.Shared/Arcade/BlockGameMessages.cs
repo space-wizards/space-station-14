@@ -59,9 +59,6 @@ namespace Content.Shared.Arcade
         }
 
         [Serializable, NetSerializable]
-        public class BlockGameUserUnregisterMessage : BoundUserInterfaceMessage{}
-
-        [Serializable, NetSerializable]
         public class BlockGameSetScreenMessage : BoundUserInterfaceMessage
         {
             public readonly BlockGameScreen Screen;

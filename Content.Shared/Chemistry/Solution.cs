@@ -63,6 +63,11 @@ namespace Content.Shared.Chemistry
                 () => _contents);
         }
 
+        public bool ContainsReagent(string reagentId)
+        {
+            return ContainsReagent(reagentId, out _);
+        }
+
         public bool ContainsReagent(string reagentId, out ReagentUnit quantity)
         {
             foreach (var reagent in Contents)

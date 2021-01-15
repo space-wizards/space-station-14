@@ -69,7 +69,7 @@ namespace Content.Server.GameTicking
                     if (playerEntity.TryGetComponent(out IDamageableComponent? damageable))
                     {
                         //todo: what if they dont breathe lol
-                        damageable.ChangeDamage(DamageType.Asphyxiation, 100, true);
+                        damageable.SetDamage(DamageType.Asphyxiation, 200, playerEntity);
                     }
                 }
                 else

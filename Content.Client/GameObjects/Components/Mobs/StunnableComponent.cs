@@ -12,12 +12,6 @@ namespace Content.Client.GameObjects.Components.Mobs
     [ComponentReference(typeof(SharedStunnableComponent))]
     public class StunnableComponent : SharedStunnableComponent
     {
-        protected override void OnInteractHand()
-        {
-            EntitySystem.Get<AudioSystem>()
-                .Play("/Audio/Effects/thudswoosh.ogg", Owner, AudioHelpers.WithVariation(0.25f));
-        }
-
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);

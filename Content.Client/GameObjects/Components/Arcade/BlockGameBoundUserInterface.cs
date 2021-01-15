@@ -21,7 +21,6 @@ namespace Content.Client.GameObjects.Components.Arcade
             base.Open();
 
             _menu = new BlockGameMenu(this);
-            _menu.OnClose += () => SendMessage(new BlockGameMessages.BlockGameUserUnregisterMessage());
             _menu.OnClose += Close;
             _menu.OpenCentered();
         }

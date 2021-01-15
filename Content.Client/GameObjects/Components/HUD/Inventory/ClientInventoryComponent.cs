@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.GameObjects.Components.Clothing;
 using Content.Shared.GameObjects.Components.Inventory;
+using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Preferences.Appearance;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
@@ -78,6 +79,46 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             return item != null && _slots.Values.Any(e => e == item);
         }
 
+        public override float WalkSpeedModifier
+        {
+            get
+            {
+                var mod = 1f;
+                foreach (var slot in _slots.Values)
+                {
+                    if (slot != null)
+                    {
+                        foreach (var modifier in slot.GetAllComponents<IMoveSpeedModifier>())
+                        {
+                            mod *= modifier.WalkSpeedModifier;
+                        }
+                    }
+                }
+
+                return mod;
+            }
+        }
+
+        public override float SprintSpeedModifier
+        {
+            get
+            {
+                var mod = 1f;
+                foreach (var slot in _slots.Values)
+                {
+                    if (slot != null)
+                    {
+                        foreach (var modifier in slot.GetAllComponents<IMoveSpeedModifier>())
+                        {
+                            mod *= modifier.SprintSpeedModifier;
+                        }
+                    }
+                }
+
+                return mod;
+            }
+        }
+
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
@@ -116,6 +157,11 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                     _clearSlot(slot);
                     _slots.Remove(slot);
                 }
+            }
+
+            if (Owner.TryGetComponent(out MovementSpeedModifierComponent? mod))
+            {
+                mod.RefreshMovementSpeedModifiers();
             }
         }
 

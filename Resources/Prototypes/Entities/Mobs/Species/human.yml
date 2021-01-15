@@ -125,6 +125,7 @@
       layer:
       - Opaque
       - MobImpassable
+  - type: PlayerInputMover
   - type: AtmosExposed
   - type: Flammable
     fireSpread: true
@@ -161,6 +162,11 @@
       0: !type:NormalMobState {}
       100: !type:CriticalMobState {}
       200: !type:DeadMobState {}
+  - type: Destructible
+    thresholds:
+      400:
+        behaviors:
+          - !type:GibBehavior { }
   - type: HeatResistance
   - type: Appearance
     visuals:

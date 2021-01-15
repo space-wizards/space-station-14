@@ -8,8 +8,7 @@
   },
   "states": [
     {
-      "name": "icon",
-      "directions": 1
+      "name": "icon"
     },
     {
       "name": "equipped-HAND",

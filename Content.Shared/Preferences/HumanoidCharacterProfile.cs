@@ -228,7 +228,7 @@ namespace Content.Shared.Preferences
             string name;
             if (string.IsNullOrEmpty(profile.Name))
             {
-                name = "John Doe";
+                name = "Urist McHands";
             }
             else if (profile.Name.Length > MaxNameLength)
             {
@@ -287,7 +287,7 @@ namespace Content.Shared.Preferences
         }
 
         public string Summary =>
-            Loc.GetString("{0}, {1} years old human. {2:Their} pronouns are {2:they}/{2:them}.", Name, Age, this);
+             Loc.GetString(" This is {0}. {2:They} {2:are} {1} years old.", Name, Age, this); 
 
         public bool MemberwiseEquals(ICharacterProfile maybeOther)
         {
