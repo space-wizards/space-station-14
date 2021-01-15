@@ -1,0 +1,9 @@
+- type: entity
+  name: toilet
+  id: Toilet
+  parent: SeatBase
+  description: The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean.
+  components:
+  - type: Sprite
+    sprite: Constructible/Watercloset/toilet.rsi
+    state: toilet_seat_closed
