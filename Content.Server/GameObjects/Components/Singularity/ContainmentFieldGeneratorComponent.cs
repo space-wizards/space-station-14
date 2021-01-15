@@ -7,6 +7,7 @@ using Content.Server.Utility;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
@@ -64,25 +65,14 @@ namespace Content.Server.GameObjects.Components.Singularity
             }
         }
 
-        private PhysicsComponent? _collidableComponent;
-        private PointLightComponent? _pointLightComponent;
+        [ComponentDependency] private readonly PhysicsComponent? _collidableComponent = default;
+        [ComponentDependency] private readonly PointLightComponent? _pointLightComponent = default;
 
         private Tuple<Direction, ContainmentFieldConnection>? _connection1;
         private Tuple<Direction, ContainmentFieldConnection>? _connection2;
 
         public bool CanRepell(IEntity toRepell) => _connection1?.Item2?.CanRepell(toRepell) == true ||
                                                    _connection2?.Item2?.CanRepell(toRepell) == true;
-
-        public override void Initialize()
-        {
-            base.Initialize();
-            if (!Owner.TryGetComponent(out _collidableComponent))
-            {
-                Logger.Error("ContainmentFieldGeneratorComponent created with no CollidableComponent");
-                return;
-            }
-            _pointLightComponent = Owner.GetComponentOrNull<PointLightComponent>();
-        }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
@@ -208,11 +198,8 @@ namespace Content.Server.GameObjects.Components.Singularity
         {
             if (_pointLightComponent != null)
             {
-                bool res = (_connection1 != null) || (_connection2 != null);
-                // hmm, this will dirty things even if the value doesn't change.
-                // thus, is checking this a bad thing?
-                if (_pointLightComponent.Enabled != res)
-                    _pointLightComponent.Enabled = res;
+                bool hasAnyConnection = (_connection1 != null) || (_connection2 != null);
+                _pointLightComponent.Enabled = hasAnyConnection;
             }
         }
 
