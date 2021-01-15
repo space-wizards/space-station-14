@@ -107,7 +107,7 @@
     contents:
       - name: NukeDisk
         prob: 1
-      - name: CaptainPDA
+      - name: CaptainIDCard
         prob: 1
       - name: ClothingHeadHatCaptain
         prob: 1
