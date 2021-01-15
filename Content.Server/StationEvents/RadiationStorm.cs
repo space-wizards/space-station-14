@@ -62,13 +62,6 @@ namespace Content.Server.StationEvents
             ResetTimeUntilPulse();
             _timeElapsed = 0.0f;
             _pulsesRemaining = _robustRandom.Next(30, 100);
-
-            var componentManager = IoCManager.Resolve<IComponentManager>();
-
-            foreach (var overlay in componentManager.EntityQuery<ServerOverlayEffectsComponent>())
-            {
-                overlay.AddOverlay(SharedOverlayID.RadiationPulseOverlay);
-            }
         }
 
         public override void Shutdown()
@@ -78,13 +71,6 @@ namespace Content.Server.StationEvents
             // IOC uninject?
             _entityManager = null;
             _robustRandom = null;
-
-            var componentManager = IoCManager.Resolve<IComponentManager>();
-
-            foreach (var overlay in componentManager.EntityQuery<ServerOverlayEffectsComponent>())
-            {
-                overlay.RemoveOverlay(SharedOverlayID.RadiationPulseOverlay);
-            }
         }
 
         public override void Update(float frameTime)

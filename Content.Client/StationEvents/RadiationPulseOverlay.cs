@@ -47,7 +47,7 @@ namespace Content.Client.StationEvents
         // TODO: When worldHandle can do DrawCircle change this.
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
-        public RadiationPulseOverlay() : base(nameof(SharedOverlayID.RadiationPulseOverlay))
+        public RadiationPulseOverlay() : base(nameof(RadiationPulseOverlay))
         {
             IoCManager.InjectDependencies(this);
             _lastTick = _gameTiming.CurTime;

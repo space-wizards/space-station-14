@@ -1,6 +1,7 @@
 using Content.Server.Administration;
 using Content.Server.Interfaces;
 using Content.Shared;
+using Content.Shared.Network.NetMessages;
 using Content.Shared.Administration;
 using Content.Shared.Interfaces;
 using Robust.Server.Interfaces.Console;
@@ -28,6 +29,8 @@ namespace Content.Server
             _netManager.RegisterNetMessage<MsgDoNotifyCursor>(nameof(MsgDoNotifyCursor));
             _netManager.RegisterNetMessage<MsgDoNotifyCoordinates>(nameof(MsgDoNotifyCoordinates));
             _netManager.RegisterNetMessage<MsgDoNotifyEntity>(nameof(MsgDoNotifyEntity));
+            // Ideally, would be moved to somewhere more appropriate, but where?
+            _netManager.RegisterNetMessage<MsgFlash>(nameof(MsgFlash));
 
             _initialized = true;
         }

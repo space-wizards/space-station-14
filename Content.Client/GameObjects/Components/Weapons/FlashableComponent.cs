@@ -22,7 +22,7 @@ namespace Content.Client.GameObjects.Components.Weapons
         private CancellationTokenSource _cancelToken;
         private TimeSpan _startTime;
         private double _duration;
-        private FlashOverlay _overlay;
+        private FlashWhiteOverlay _overlay;
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
@@ -79,7 +79,7 @@ namespace Content.Client.GameObjects.Components.Weapons
             else
             {
                 var overlayManager = IoCManager.Resolve<IOverlayManager>();
-                _overlay = new FlashOverlay(_duration);
+                _overlay = new FlashWhiteOverlay(_duration);
                 overlayManager.AddOverlay(_overlay);
             }
 
@@ -102,14 +102,14 @@ namespace Content.Client.GameObjects.Components.Weapons
         }
     }
 
-    public sealed class FlashOverlay : Overlay
+    public sealed class FlashWhiteOverlay : Overlay
     {
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;
         private readonly IGameTiming _timer;
         private readonly IClyde _displayManager;
         public TimeSpan StartTime { get; set; }
         public double Duration { get; set; }
-        public FlashOverlay(double duration) : base(nameof(FlashOverlay))
+        public FlashWhiteOverlay(double duration) : base(nameof(FlashWhiteOverlay))
         {
             _timer = IoCManager.Resolve<IGameTiming>();
             _displayManager = IoCManager.Resolve<IClyde>();

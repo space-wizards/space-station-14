@@ -4,13 +4,17 @@ using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Network.NetMessages;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.Interfaces.Player;
+using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
@@ -130,20 +134,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         // TODO: Check if target can be flashed (e.g. things like sunglasses would block a flash)
         private void Flash(IEntity entity, IEntity user, int flashDuration)
         {
-            if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlayEffectsComponent))
+            if (entity.TryGetComponent(out IActorComponent actor))
             {
-                if (!overlayEffectsComponent.TryModifyOverlay(nameof(SharedOverlayID.FlashOverlay),
-                    overlay =>
-                    {
-                        if (overlay.TryGetOverlayParameter<TimedOverlayParameter>(out var timed))
-                        {
-                            timed.Length += flashDuration;
-                        }
-                    }))
-                {
-                    var container = new OverlayContainer(SharedOverlayID.FlashOverlay, new TimedOverlayParameter(flashDuration));
-                    overlayEffectsComponent.AddOverlay(container);
-                }
+                var netMgr = IoCManager.Resolve<IServerNetManager>();
+                var netMessage = netMgr.CreateNetMessage<MsgFlash>();
+                netMessage.TimeMilliseconds = flashDuration;
+                netMgr.ServerSendMessage(netMessage, actor.playerSession.ConnectedClient);
             }
 
             if (entity.TryGetComponent(out StunnableComponent stunnableComponent))
