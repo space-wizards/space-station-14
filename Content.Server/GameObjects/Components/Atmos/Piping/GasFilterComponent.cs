@@ -148,7 +148,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Filters
 
         private void UpdateAppearance()
         {
-            _appearance?.SetData(FilterVisuals.VisualState, new FilterVisualState());
+            _appearance?.SetData(FilterVisuals.VisualState, new FilterVisualState(FilterEnabled));
         }
 
         private void SetPipes()
