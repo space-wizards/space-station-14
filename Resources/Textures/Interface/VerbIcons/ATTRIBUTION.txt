@@ -4,3 +4,7 @@ outfit - Freepik
 examine - Freepik
 point - Freepik
 pull - Freepik
+
+pickup - Hand by Alexander Wiefel from the Noun Project
+
+Last updated by Swept

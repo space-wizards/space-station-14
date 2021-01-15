@@ -1,4 +1,4 @@
-﻿using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Throw;
 using Content.Shared.GameObjects;
@@ -119,7 +119,8 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                     return;
                 }
 
-                data.Text = Loc.GetString("Pick Up");
+                data.Text = Loc.GetString("Pick up");
+                data.IconTexture = "/Textures/Interface/VerbIcons/pickup.svg.96dpi.png";
             }
 
             protected override void Activate(IEntity user, ItemComponent component)
