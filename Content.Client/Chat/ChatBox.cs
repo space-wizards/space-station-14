@@ -1,13 +1,17 @@
 ﻿# nullable enable
 
 using System;
+using Content.Client.Administration;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Chat;
+using Robust.Client.Console;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 
@@ -55,16 +59,13 @@ namespace Content.Client.Chat
         // prefix, we save the current channel selection here to restore it when
         // the message is sent
         private ChatChannel? _savedSelectedChannel;
+        private readonly IClientConGroupController _groupController;
+
 
         public ChatBox()
         {
-            /*MarginLeft = -475.0f;
-            MarginTop = 10.0f;
-            MarginRight = -10.0f;
-            MarginBottom = 235.0f;
+            _groupController = IoCManager.Resolve<IClientConGroupController>();
 
-            AnchorLeft = 1.0f;
-            AnchorRight = 1.0f;*/
             MouseFilter = MouseFilterMode.Stop;
 
             AddChild(new VBoxContainer
@@ -126,19 +127,7 @@ namespace Content.Client.Chat
                 }
             });
 
-
-            // TODO: possibly some of the channels should not be selectable, some of them should just change what the box says
-            // and not really be selectable since you'd never want to keep them selected
-            _channelSelector.AddItem("Local", (int) ChatChannel.Local);
-            _channelSelector.AddItem("Radio", (int) ChatChannel.Radio);
-            _channelSelector.AddItem("OOC", (int) ChatChannel.OOC);
-            // TODO: Only allow this to show up if we are admin.
-            _channelSelector.AddItem("Admin", (int) ChatChannel.AdminChat);
-            _channelSelector.AddItem("Emote", (int) ChatChannel.Emotes);
-            // technically it's not a chat channel, but it is still possible to send console commands via
-            // chatbox
-            _channelSelector.AddItem("Console", (int) ChatChannel.Unspecified);
-
+            RepopulateChannelSelector();
 
             AllButton = new Button
             {
@@ -193,6 +182,7 @@ namespace Content.Client.Chat
             Input.OnTextEntered += Input_OnTextEntered;
             Input.OnTextChanged += InputOnTextChanged;
             Input.OnFocusExit += InputOnFocusExit;
+            _groupController.ConGroupUpdated += RepopulateChannelSelector;
         }
 
         protected override void ExitedTree()
@@ -203,6 +193,35 @@ namespace Content.Client.Chat
             Input.OnTextEntered -= Input_OnTextEntered;
             Input.OnTextChanged -= InputOnTextChanged;
             Input.OnFocusExit -= InputOnFocusExit;
+            _groupController.ConGroupUpdated -= RepopulateChannelSelector;
+        }
+
+
+        private void RepopulateChannelSelector()
+        {
+            var selected = (ChatChannel) _channelSelector.SelectedId;
+            _channelSelector.Clear();
+            // TODO: possibly some of the channels should not be selectable, some of them should just change what the box says
+            // and not really be selectable since you'd never want to keep them selected
+            _channelSelector.AddItem("Local", (int) ChatChannel.Local);
+            _channelSelector.AddItem("Radio", (int) ChatChannel.Radio);
+            _channelSelector.AddItem("OOC", (int) ChatChannel.OOC);
+            if (_groupController.CanCommand("asay"))
+            {
+                _channelSelector.AddItem("Admin", (int) ChatChannel.AdminChat);
+            }
+            else
+            {
+                // downgrade our selection / saved channel if we lost asay privs
+                if (selected == ChatChannel.AdminChat) selected = ChatChannel.OOC;
+                if (_savedSelectedChannel == ChatChannel.AdminChat) _savedSelectedChannel = ChatChannel.OOC;
+            }
+            _channelSelector.AddItem("Emote", (int) ChatChannel.Emotes);
+            // technically it's not a chat channel, but it is still possible to send console commands via
+            // chatbox
+            _channelSelector.AddItem("Console", (int) ChatChannel.Unspecified);
+
+            SafelySelectChannel(selected);
         }
 
         /// <summary>
@@ -211,11 +230,30 @@ namespace Content.Client.Chat
         /// </summary>
         public void SelectChannel(ChatChannel toSelect)
         {
-            // TODO: validate if allowed to chat in admin mode if selecting admin channel
             _savedSelectedChannel = null;
-            _channelSelector.SelectId((int) toSelect);
+            SafelySelectChannel(toSelect);
         }
 
+        private void SafelySelectChannel(ChatChannel toSelect)
+        {
+            // in case we try to select admin chat when we can't, default to OOC.
+            if (toSelect == ChatChannel.AdminChat && !CanAdminChat())
+            {
+                toSelect = ChatChannel.OOC;
+            }
+
+            if (!_channelSelector.TrySelectId((int) toSelect))
+            {
+                Logger.Warning("coding error, tried to select chat channel not in the channel selector, defaulting to OOC: {0}",
+                    toSelect);
+                toSelect = ChatChannel.OOC;
+            };
+        }
+
+        private bool CanAdminChat()
+        {
+            return _groupController.CanCommand("asay");
+        }
 
         protected override void KeyBindDown(GUIBoundKeyEventArgs args)
         {
@@ -242,7 +280,7 @@ namespace Content.Client.Chat
             if (Input.Text.Length == 0 && _savedSelectedChannel.HasValue &&
                 args.Function == EngineKeyFunctions.TextBackspace)
             {
-                _channelSelector.SelectId((int) _savedSelectedChannel);
+                SafelySelectChannel(_savedSelectedChannel.Value);
                 _savedSelectedChannel = null;
             }
         }
@@ -261,12 +299,12 @@ namespace Content.Client.Chat
             var channel = GetChannelFromPrefix(trimmed[0]);
             if (channel == null) return;
             _savedSelectedChannel = SelectedChannel;
-            _channelSelector.SelectId((int) channel);
+            SafelySelectChannel(channel.Value);
             // we "ate" the prefix
             Input.Text = "";
         }
 
-        private static ChatChannel? GetChannelFromPrefix(char prefix)
+        private ChatChannel? GetChannelFromPrefix(char prefix)
         {
             return prefix switch
             {
@@ -274,11 +312,11 @@ namespace Content.Client.Chat
                 ChatManager.RadioAlias => ChatChannel.Radio,
                 ChatManager.AdminChatAlias => ChatChannel.AdminChat,
                 ChatManager.OOCAlias => ChatChannel.OOC,
-                ChatManager.ConCmdSlash => ChatChannel.Unspecified,
+                ChatManager.ConCmdSlash => _groupController.CanCommand("asay") ? ChatChannel.Unspecified : null,
                 _ => null
             };
         }
-
+`
         private static string GetPrefixFromChannel(ChatChannel channel)
         {
             char? prefixChar = channel switch
@@ -296,7 +334,7 @@ namespace Content.Client.Chat
 
         private void OnChannelItemSelected(OptionButton.ItemSelectedEventArgs args)
         {
-            _channelSelector.SelectId(args.Id);
+            SafelySelectChannel((ChatChannel) args.Id);
             // we manually selected something so undo the temporary selection
             _savedSelectedChannel = null;
         }
@@ -321,7 +359,7 @@ namespace Content.Client.Chat
             // undo the temporary selection, otherwise it will be odd if user
             // comes back to it later only to have their selection cleared upon sending
             if (!_savedSelectedChannel.HasValue) return;
-            _channelSelector.SelectId((int) _savedSelectedChannel);
+            SafelySelectChannel(_savedSelectedChannel.Value);
             _savedSelectedChannel = null;
         }
 
@@ -341,7 +379,7 @@ namespace Content.Client.Chat
                 Input.Clear();
                 if (_savedSelectedChannel.HasValue)
                 {
-                    _channelSelector.SelectId((int) _savedSelectedChannel);
+                    SafelySelectChannel(_savedSelectedChannel.Value);
                     _savedSelectedChannel = null;
                 }
             }
