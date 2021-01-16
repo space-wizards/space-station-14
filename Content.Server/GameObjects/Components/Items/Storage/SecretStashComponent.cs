@@ -82,7 +82,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             if (_itemContainer.ContainedEntity == null)
                 return false;
 
-            Owner.PopupMessage(user, Loc.GetString("There was something in there!"));
+            Owner.PopupMessage(user, Loc.GetString("There was something inside {0}!", _secretPartName));
 
             if (user.TryGetComponent(out HandsComponent? hands))
             {
@@ -98,6 +98,10 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             return true;
         }
 
+        /// <summary>
+        /// Is there something inside secret stash item container?
+        /// </summary>
+        /// <returns></returns>
         public bool HasItemInside()
         {
             return _itemContainer.ContainedEntity != null;

@@ -10,3 +10,16 @@
   - type: Toilet
   - type: SecretStash
     secretPartName: toilet cistern
+  - type: SolutionContainer
+    maxVol: 250
+    contents:
+      reagents:
+      - ReagentId: chem.Water
+        Quantity: 180
+      - ReagentId: chem.Toxin
+        Quantity: 20
+  - type: Physics
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.45, -0.45, 0.05, 0.45"
+      layer: [ Passable ]

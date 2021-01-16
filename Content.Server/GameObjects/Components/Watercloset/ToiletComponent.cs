@@ -1,7 +1,12 @@
 #nullable enable
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.Interfaces.Chat;
+using Content.Server.Interfaces.GameObjects;
 using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Server.Utility;
+using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
@@ -24,18 +29,17 @@ using System.Threading.Tasks;
 namespace Content.Server.GameObjects.Components.Watercloset
 {
     [RegisterComponent]
-    public class ToiletComponent : Component, IInteractUsing, IInteractHand, IMapInit, IExamine
+    public class ToiletComponent : Component, IInteractUsing,
+        IInteractHand, IMapInit, IExamine, ISuicideAct
     {
         public sealed override string Name => "Toilet";
 
         private const float PryLidTime = 1f;
 
         private bool _isPrying = false;
-        private bool _lidOpen = false;
-        private bool _isSeatUp = false;
 
-        [ViewVariables] public bool LidOpen => _lidOpen;
-        [ViewVariables] public bool IsSeatUp => _isSeatUp;
+        [ViewVariables] public bool LidOpen { get; private set; }
+        [ViewVariables] public bool IsSeatUp { get; private set; }
 
         [ViewVariables] private SecretStashComponent _secretStash = default!;
 
@@ -49,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Watercloset
         {
             // roll is toilet seat will be up or down
             var random = IoCManager.Resolve<IRobustRandom>();
-            _isSeatUp = random.NextDouble() > 0.5f;
+            IsSeatUp = random.NextDouble() > 0.5f;
             UpdateSprite();
         }
 
@@ -73,13 +77,13 @@ namespace Content.Server.GameObjects.Components.Watercloset
                 _isPrying = false;
 
                 // all cool - toggle lid
-                _lidOpen = !_lidOpen;
+                LidOpen = !LidOpen;
                 UpdateSprite();
 
                 return true;
             }
             // maybe player trying to hide something inside cistern?
-            else if (_lidOpen)
+            else if (LidOpen)
             {
                 return _secretStash.TryHideItem(eventArgs.User, eventArgs.Using);
             }
@@ -89,30 +93,33 @@ namespace Content.Server.GameObjects.Components.Watercloset
 
         public bool InteractHand(InteractHandEventArgs eventArgs)
         {
-            if (_lidOpen)
+            // trying get something from stash?
+            if (LidOpen)
             {
                 var gotItem = _secretStash.TryGetItem(eventArgs.User);
-                return gotItem;
+
+                if (gotItem)
+                    return true;
             }
 
-            return false;
+            ToggleToiletSeat();
+            return true;
         }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            if (inDetailsRange && _lidOpen)
+            if (inDetailsRange && LidOpen)
             {
-                message.AddMarkup(Loc.GetString("The cistern lid seems to be open."));
                 if (_secretStash.HasItemInside())
                 {
-                    message.AddMarkup(Loc.GetString("\nThere is [color=darkgreen]someting[/color] inside cistern!"));
+                    message.AddMarkup(Loc.GetString("There is [color=darkgreen]someting[/color] inside cistern!"));
                 }
             }
         }
 
         public void ToggleToiletSeat()
         {
-            _isSeatUp = !_isSeatUp;
+            IsSeatUp = !IsSeatUp;
             UpdateSprite();
         }
 
@@ -121,32 +128,38 @@ namespace Content.Server.GameObjects.Components.Watercloset
             if (Owner.TryGetComponent(out SpriteComponent? sprite))
             {
                 var state = string.Format("{0}_toilet_{1}",
-                    _lidOpen ? "open" : "closed",
-                    _isSeatUp ? "seat_up" : "seat_down");
+                    LidOpen ? "open" : "closed",
+                    IsSeatUp ? "seat_up" : "seat_down");
 
                 sprite.LayerSetState(0, state);
             }
         }
 
-        [Verb]
-        public sealed class ToiletSeatVerb : Verb<ToiletComponent>
+        public SuicideKind Suicide(IEntity victim, IChatManager chat)
         {
-            protected override void Activate(IEntity user, ToiletComponent component)
+            // check that victim even have head
+            if (victim.TryGetComponent<IBody>(out var body) &&
+                body.GetPartsOfType(BodyPartType.Head).Count != 0)
             {
-                component.ToggleToiletSeat();
+                var othersMessage = Loc.GetString("{0:theName} sticks their head into {1:theName} and flushes it!", victim, Owner);
+                victim.PopupMessageOtherClients(othersMessage);
+
+                var selfMessage = Loc.GetString("You stick your head into {0:theName} and flushes it!", Owner);
+                victim.PopupMessage(selfMessage);
+
+                return SuicideKind.Asphyxiation;
             }
-
-            protected override void GetData(IEntity user, ToiletComponent component, VerbData data)
+            else
             {
-                if (!ActionBlockerSystem.CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
+                var othersMessage = Loc.GetString("{0:theName} bashes themselves with {1:theName}!", victim, Owner);
+                victim.PopupMessageOtherClients(othersMessage);
 
-                var text = component.IsSeatUp ? "Put seat down" : "Put seat up";
-                data.Text = Loc.GetString(text);
+                var selfMessage = Loc.GetString("You bashes themselves with {0:theName}!", Owner);
+                victim.PopupMessage(selfMessage);
+
+                return SuicideKind.Blunt;
             }
         }
+
     }
 }
