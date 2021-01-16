@@ -17,74 +17,33 @@ namespace Content.Server.GameObjects.Components
     [RegisterComponent]
     public class PottedPlantHideComponent : Component, IInteractUsing, IInteractHand
     {
-        private const int MaxItemSize = (int) ReferenceSizes.Pocket;
-
         public override string Name => "PottedPlantHide";
 
-        [ViewVariables] private ContainerSlot _itemContainer;
+        [ViewVariables] private SecretStashComponent _secretStash = default!;
 
         public override void Initialize()
         {
             base.Initialize();
-
-            _itemContainer =
-                ContainerManagerComponent.Ensure<ContainerSlot>("potted_plant_hide", Owner, out _);
+            _secretStash = Owner.EnsureComponent<SecretStashComponent>();
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (_itemContainer.ContainedEntity != null)
-            {
-                Rustle();
-
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("There's already something in here?!"));
-                return false;
-            }
-
-            var size = eventArgs.Using.GetComponent<ItemComponent>().Size;
-
-            // TODO: use proper text macro system for this.
-
-            if (size > MaxItemSize)
-            {
-                Owner.PopupMessage(eventArgs.User,
-                    Loc.GetString("{0:TheName} is too big to fit in the plant!", eventArgs.Using));
-                return false;
-            }
-
-            var handsComponent = eventArgs.User.GetComponent<IHandsComponent>();
-
-            if (!handsComponent.Drop(eventArgs.Using, _itemContainer))
-            {
-                return false;
-            }
-
-            Owner.PopupMessage(eventArgs.User, Loc.GetString("You hide {0:theName} in the plant.", eventArgs.Using));
             Rustle();
-            return true;
+            return _secretStash.TryHideItem(eventArgs.User, eventArgs.Using);
         }
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
             Rustle();
 
-            if (_itemContainer.ContainedEntity == null)
+            var gotItem = _secretStash.TryGetItem(eventArgs.User);
+            if (!gotItem)
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("You root around in the roots."));
-                return true;
             }
 
-            Owner.PopupMessage(eventArgs.User, Loc.GetString("There was something in there!"));
-            if (eventArgs.User.TryGetComponent(out HandsComponent hands))
-            {
-                hands.PutInHandOrDrop(_itemContainer.ContainedEntity.GetComponent<ItemComponent>());
-            }
-            else if (_itemContainer.Remove(_itemContainer.ContainedEntity))
-            {
-                _itemContainer.ContainedEntity.Transform.Coordinates = Owner.Transform.Coordinates;
-            }
-
-            return true;
+            return gotItem;
         }
 
         private void Rustle()

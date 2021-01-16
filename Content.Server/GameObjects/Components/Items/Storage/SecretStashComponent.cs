@@ -57,7 +57,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             if (item.Size > _maxItemSize)
             {
                 Owner.PopupMessage(user,
-                    Loc.GetString("{0:TheName} is too big to fit in {1}.!", itemToHide, _secretPartName));
+                    Loc.GetString("{0:TheName} is too big to fit in {1}!", itemToHide, _secretPartName));
                 return false;
             }
 

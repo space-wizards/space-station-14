@@ -9,7 +9,7 @@
     state: closed_toilet_seat_up
   - type: Toilet
   - type: SecretStash
-    secretPartName: toilet cistern
+    secretPartName: the toilet cistern
   - type: SolutionContainer
     maxVol: 250
     contents:
