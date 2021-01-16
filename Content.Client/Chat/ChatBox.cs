@@ -1,7 +1,5 @@
 ﻿# nullable enable
 
-using System;
-using Content.Client.Administration;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.Chat;
@@ -63,7 +61,7 @@ namespace Content.Client.Chat
         private ChatChannel? _savedSelectedChannel;
         private readonly IClientConGroupController _groupController;
 
-        private readonly ContainerButton _filterButton;
+        private readonly FilterButton _filterButton;
 
 
         public ChatBox()
@@ -71,9 +69,6 @@ namespace Content.Client.Chat
             _groupController = IoCManager.Resolve<IClientConGroupController>();
 
             MouseFilter = MouseFilterMode.Stop;
-
-            var filterTexture = IoCManager.Resolve<IResourceCache>()
-                .GetTexture("/Textures/Interface/Nano/filter.svg.96dpi.png");
 
             AddChild(new VBoxContainer
             {
@@ -123,18 +118,9 @@ namespace Content.Client.Chat
                                                         SizeFlagsHorizontal = SizeFlags.FillExpand,
                                                         StyleClasses = { StyleNano.StyleClassChatLineEdit }
                                                     }),
-                                                    (_filterButton = new ContainerButton
+                                                    (_filterButton = new FilterButton
                                                     {
-                                                        StyleClasses = { StyleNano.StyleClassChatFilterOptionButton },
-                                                        Children =
-                                                        {
-                                                            new TextureRect
-                                                            {
-                                                                Texture = filterTexture,
-                                                                SizeFlagsVertical = SizeFlags.ShrinkCenter,
-                                                                SizeFlagsHorizontal = SizeFlags.ShrinkCenter
-                                                            }
-                                                        }
+                                                        StyleClasses = { StyleNano.StyleClassChatFilterOptionButton }
                                                     })
                                                 }
                                             }
@@ -414,5 +400,67 @@ namespace Content.Client.Chat
         {
             FilterToggled?.Invoke(this, args);
         }
+    }
+
+    public sealed class FilterButton : ContainerButton
+    {
+        private static readonly Color ColorNormal = Color.FromHex("#7b7e9e");
+        private static readonly Color ColorHovered = Color.FromHex("#9699bb");
+        private static readonly Color ColorPressed = Color.FromHex("#789B8C");
+
+        private readonly TextureRect _textureRect;
+
+        public FilterButton()
+        {
+
+            var filterTexture = IoCManager.Resolve<IResourceCache>()
+                .GetTexture("/Textures/Interface/Nano/filter.svg.96dpi.png");
+
+            AddChild(
+                (_textureRect = new TextureRect
+                {
+                    Texture = filterTexture,
+                    SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                    SizeFlagsHorizontal = SizeFlags.ShrinkCenter
+                })
+            );
+
+            ToggleMode = true;
+        }
+
+        private void UpdateChildColors()
+        {
+            if (_textureRect == null) return;
+            switch (DrawMode)
+            {
+                case DrawModeEnum.Normal:
+                    _textureRect.ModulateSelfOverride = ColorNormal;
+                    break;
+
+                case DrawModeEnum.Pressed:
+                    _textureRect.ModulateSelfOverride = ColorPressed;
+                    break;
+
+                case DrawModeEnum.Hover:
+                    _textureRect.ModulateSelfOverride = ColorHovered;
+                    break;
+
+                case DrawModeEnum.Disabled:
+                    break;
+            }
+        }
+
+        protected override void DrawModeChanged()
+        {
+            base.DrawModeChanged();
+            UpdateChildColors();
+        }
+
+        protected override void StylePropertiesChanged()
+        {
+            base.StylePropertiesChanged();
+            UpdateChildColors();
+        }
+
     }
 }
