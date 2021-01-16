@@ -49,7 +49,7 @@ namespace Content.IntegrationTests
 
             // Connecting to Discord is a massive waste of time.
             // Basically just makes the CI logs a mess.
-            options.CVarOverrides["discord.enabled"] = "true";
+            options.CVarOverrides["discord.enabled"] = "false";
 
             return base.StartClient(options);
         }

@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using Content.Server.Interfaces.Chemistry;
 using Content.Shared.Interfaces;
@@ -15,11 +16,11 @@ namespace Content.Shared.Chemistry
     [Prototype("reaction")]
     public class ReactionPrototype : IPrototype, IIndexedPrototype
     {
-        private string _id;
-        private string _name;
-        private Dictionary<string, ReactantPrototype> _reactants;
-        private Dictionary<string, ReagentUnit> _products;
-        private List<IReactionEffect> _effects;
+        private string _id = default!;
+        private string _name = default!;
+        private Dictionary<string, ReactantPrototype> _reactants = default!;
+        private Dictionary<string, ReagentUnit> _products = default!;
+        private List<IReactionEffect> _effects = default!;
 
         public string ID => _id;
         public string Name => _name;
@@ -36,7 +37,7 @@ namespace Content.Shared.Chemistry
         /// </summary>
         public IReadOnlyList<IReactionEffect> Effects => _effects;
 
-        public string Sound { get; private set; }
+        public string? Sound { get; private set; }
 
         [Dependency] private readonly IModuleManager _moduleManager = default!;
 
@@ -55,6 +56,10 @@ namespace Content.Shared.Chemistry
                 //TODO: Don't have a check for if this is the server
                 //Some implementations of IReactionEffect can't currently be moved to shared, so this is here to prevent the client from breaking when reading server-only IReactionEffects.
                 serializer.DataField(ref _effects, "effects", new List<IReactionEffect>());
+            }
+            else
+            {
+                _effects = new(); //To ensure _effects isn't null since it is only serializable on the server right snow
             }
         }
     }
