@@ -1,27 +1,23 @@
 #nullable enable
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.Components.Strap;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects;
-using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using System.Threading.Tasks;
@@ -100,6 +96,14 @@ namespace Content.Server.GameObjects.Components.Watercloset
 
                 if (gotItem)
                     return true;
+            }
+
+            // just want to up/down seat?
+            // check that nobody seats on seat right now 
+            if (Owner.TryGetComponent(out StrapComponent? strap))
+            {
+                if (strap.BuckledEntities.Count != 0)
+                    return false;
             }
 
             ToggleToiletSeat();
