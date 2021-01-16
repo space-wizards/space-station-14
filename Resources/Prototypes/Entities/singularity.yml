@@ -85,6 +85,12 @@
   - type: ContainmentFieldGenerator
   - type: Anchorable
   - type: Pullable
+  - type: PointLight
+    enabled: false
+    color: "#4080FF"
+    radius: 32
+    energy: 2.0
+    softness: 32.0
 
 - type: entity
   name: Containment Field
