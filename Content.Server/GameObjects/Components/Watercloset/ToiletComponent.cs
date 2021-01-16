@@ -3,6 +3,7 @@ using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Interactable;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
@@ -16,17 +17,17 @@ using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using System.Threading.Tasks;
 
 namespace Content.Server.GameObjects.Components.Watercloset
 {
     [RegisterComponent]
-    public class ToiletComponent : Component, IInteractUsing, IMapInit
+    public class ToiletComponent : Component, IInteractUsing, IInteractHand, IMapInit, IExamine
     {
         public sealed override string Name => "Toilet";
 
-        private const int MaxItemSize = (int) ReferenceSizes.Pocket;
         private const float PryLidTime = 1f;
 
         private bool _isPrying = false;
@@ -84,6 +85,29 @@ namespace Content.Server.GameObjects.Components.Watercloset
             }
 
             return false;
+        }
+
+        public bool InteractHand(InteractHandEventArgs eventArgs)
+        {
+            if (_lidOpen)
+            {
+                var gotItem = _secretStash.TryGetItem(eventArgs.User);
+                return gotItem;
+            }
+
+            return false;
+        }
+
+        public void Examine(FormattedMessage message, bool inDetailsRange)
+        {
+            if (inDetailsRange && _lidOpen)
+            {
+                message.AddMarkup(Loc.GetString("The cistern lid seems to be open."));
+                if (_secretStash.HasItemInside())
+                {
+                    message.AddMarkup(Loc.GetString("\nThere is [color=darkgreen]someting[/color] inside cistern!"));
+                }
+            }
         }
 
         public void ToggleToiletSeat()

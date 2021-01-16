@@ -98,6 +98,11 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             return true;
         }
 
+        public bool HasItemInside()
+        {
+            return _itemContainer.ContainedEntity != null;
+        }
+
         public void OnDestroy(DestructionEventArgs eventArgs)
         {
             // drop item inside
