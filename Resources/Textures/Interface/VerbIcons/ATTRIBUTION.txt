@@ -1,10 +1,22 @@
-anchor - Freepik
-cross - Freepik
-outfit - Freepik
-examine - Freepik
-point - Freepik
-pull - Freepik
 
-pickup - Hand by Alexander Wiefel from the Noun Project
+pickup - "Hand" icon by Alexander Wiefel from thenounproject.com
+lock - "padlock" icon by Adrien Coquet from thenounproject.com
+unlock - "padlock" icon by Adrien Coquet from thenounproject.com
+pull - "pull" by Catalina Montes from thenounproject.com
+
+- Public Domain Icons -
+examine
+settings
+spill
+outfit
+rejuvenate
+sentient
+anchor
+point
+flush 
+ejectid
+
+Public Domain Icons
+US National Park Service
 
 Last updated by Swept
