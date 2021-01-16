@@ -73,7 +73,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         /// <summary>
         /// Try get item and place it in users hand
-        /// If user can take it by hands - will just drop item from container
+        /// If user can't take it by hands, will drop item from container
         /// </summary>
         /// <param name="user"></param>
         /// <returns>True if user recieved item</returns>
