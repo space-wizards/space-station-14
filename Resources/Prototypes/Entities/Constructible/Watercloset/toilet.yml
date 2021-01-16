@@ -18,7 +18,9 @@
     - !type:PhysShapeAabb
       bounds: "-0.45, -0.45, 0.05, 0.45"
       layer: [ Passable ]
-
+  - type: Construction
+    graph: toilet
+    node: toilet
 
 - type: entity
   id: Toilet
