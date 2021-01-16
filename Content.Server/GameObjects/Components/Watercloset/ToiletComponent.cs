@@ -1,10 +1,14 @@
 #nullable enable
 using Content.Server.GameObjects.Components.Interactable;
+using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -22,48 +26,64 @@ namespace Content.Server.GameObjects.Components.Watercloset
     {
         public sealed override string Name => "Toilet";
 
-        private bool _isPrying = false;
-        private float _pryLidTime = 1f;
+        private const int MaxItemSize = (int) ReferenceSizes.Pocket;
+        private const float PryLidTime = 1f;
 
+        private bool _isPrying = false;
         private bool _lidOpen = false;
-        private bool _isSeatUp;
+        private bool _isSeatUp = false;
 
         [ViewVariables] public bool LidOpen => _lidOpen;
         [ViewVariables] public bool IsSeatUp => _isSeatUp;
+
+        [ViewVariables] private SecretStashComponent _secretStash = default!;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            _secretStash = Owner.EnsureComponent<SecretStashComponent>();
+        }
 
         public void MapInit()
         {
             // roll is toilet seat will be up or down
             var random = IoCManager.Resolve<IRobustRandom>();
-            _isSeatUp = random.NextBool();
+            _isSeatUp = random.NextDouble() > 0.5f;
             UpdateSprite();
         }
 
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            // try pry open/close toilet lid
-            if (!eventArgs.Using.TryGetComponent(out ToolComponent? tool))
-                return false;
-
-            // check if someone is already prying toilet
-            if (_isPrying)
-                return false;
-            _isPrying = true;
-
-            if (!await tool.UseTool(eventArgs.User, Owner, _pryLidTime, ToolQuality.Prying))
+            // are player trying open/close toilet lid?
+            if (eventArgs.Using.TryGetComponent(out ToolComponent? tool)
+                && tool!.HasQuality(ToolQuality.Prying))
             {
+                // check if someone is already prying this toilet
+                if (_isPrying)
+                    return false;
+                _isPrying = true;
+
+                if (!await tool.UseTool(eventArgs.User, Owner, PryLidTime, ToolQuality.Prying))
+                {
+                    _isPrying = false;
+                    return false;
+                }
+
                 _isPrying = false;
-                return false;
+
+                // all cool - toggle lid
+                _lidOpen = !_lidOpen;
+                UpdateSprite();
+
+                return true;
+            }
+            // maybe player trying to hide something?
+            else if (_lidOpen)
+            {
+                return _secretStash.TryHideItem(eventArgs.User, eventArgs.Using);
             }
 
-            _isPrying = false;
-
-
-            // all cool - toggle lid
-            _lidOpen = !_lidOpen;
-            UpdateSprite();
-
-            return true;
+            return false;
         }
 
         public void ToggleToiletSeat()

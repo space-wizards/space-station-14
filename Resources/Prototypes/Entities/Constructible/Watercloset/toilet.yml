@@ -8,3 +8,5 @@
     sprite: Constructible/Watercloset/toilet.rsi
     state: closed_toilet_seat_up
   - type: Toilet
+  - type: SecretStash
+    secretPartName: toilet cistern
