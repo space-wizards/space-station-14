@@ -6,7 +6,6 @@ using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.Components.Power
 {
-    //TODO: make these wires not visible on right-click
     [RegisterComponent]
     public class DummyWireComponent : Component
     {
