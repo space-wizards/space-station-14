@@ -54,7 +54,7 @@ namespace Content.IntegrationTests.Tests
             }
 
             Assert.Multiple(() => {
-                Assert.That(one, Is.EqualTo(two));
+                Assert.That(two, Is.EqualTo(one));
                 var failed = TestContext.CurrentContext.Result.Assertions.FirstOrDefault();
                 if (failed != null)
                 {
