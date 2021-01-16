@@ -156,9 +156,10 @@
   - type: SubFloorHide 
   
 - type: entity
+  abstract: true
   parent: BaseDummyWire
   id: HVDummyWire
-  name: HV Dummy Wire
+  name: HV Connector Wire
   components:
   - type: Sprite
     sprite: Constructible/Power/hv_cable.rsi
@@ -171,9 +172,10 @@
     key: hv_cables
     
 - type: entity
+  abstract: true
   parent: BaseDummyWire
   id: MVDummyWire
-  name: MV Dummy Wire
+  name: MV Connector Wire
   components:
   - type: Sprite
     sprite: Constructible/Power/mv_cable.rsi
@@ -187,9 +189,10 @@
     key: mv_cables
     
 - type: entity
+  abstract: true
   parent: BaseDummyWire
   id: LVDummyWire
-  name: LV Dummy Wire
+  name: LV Connector Wire
   components:
   - type: Sprite
     sprite: Constructible/Power/lv_cable.rsi
