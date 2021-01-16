@@ -3,9 +3,11 @@
 using System;
 using Content.Client.Administration;
 using Content.Client.UserInterface.Stylesheets;
+using Content.Client.Utility;
 using Content.Shared.Chat;
 using Robust.Client.Console;
 using Robust.Client.Graphics.Drawing;
+using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
@@ -61,12 +63,17 @@ namespace Content.Client.Chat
         private ChatChannel? _savedSelectedChannel;
         private readonly IClientConGroupController _groupController;
 
+        private readonly ContainerButton _filterButton;
+
 
         public ChatBox()
         {
             _groupController = IoCManager.Resolve<IClientConGroupController>();
 
             MouseFilter = MouseFilterMode.Stop;
+
+            var filterTexture = IoCManager.Resolve<IResourceCache>()
+                .GetTexture("/Textures/Interface/Nano/filter.svg.96dpi.png");
 
             AddChild(new VBoxContainer
             {
@@ -107,14 +114,27 @@ namespace Content.Client.Chat
                                                     (_channelSelector = new OptionButton
                                                     {
                                                         HideTriangle = true,
-                                                        StyleClasses = { StyleNano.StyleClassChatFilterOptionButton },
-                                                        OptionStyleClasses = { StyleNano.StyleClassChatFilterOptionButton },
+                                                        StyleClasses = { StyleNano.StyleClassChatChannelSelectorOptionButton },
+                                                        OptionStyleClasses = { StyleNano.StyleClassChatChannelSelectorOptionButton },
                                                         CustomMinimumSize = (75, 0)
                                                     }),
                                                     (Input = new HistoryLineEdit
                                                     {
                                                         SizeFlagsHorizontal = SizeFlags.FillExpand,
                                                         StyleClasses = { StyleNano.StyleClassChatLineEdit }
+                                                    }),
+                                                    (_filterButton = new ContainerButton
+                                                    {
+                                                        StyleClasses = { StyleNano.StyleClassChatFilterOptionButton },
+                                                        Children =
+                                                        {
+                                                            new TextureRect
+                                                            {
+                                                                Texture = filterTexture,
+                                                                SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                                                                SizeFlagsHorizontal = SizeFlags.ShrinkCenter
+                                                            }
+                                                        }
                                                     })
                                                 }
                                             }

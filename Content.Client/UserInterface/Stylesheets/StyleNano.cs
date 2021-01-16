@@ -31,6 +31,7 @@ namespace Content.Client.UserInterface.Stylesheets
         public const string StyleClassActionSearchBox = "actionSearchBox";
         public const string StyleClassActionMenuItemRevoked = "actionMenuItemRevoked";
         public const string StyleClassChatLineEdit = "chatLineEdit";
+        public const string StyleClassChatChannelSelectorOptionButton = "chatSelectorOptionButton";
         public const string StyleClassChatFilterOptionButton = "chatFilterOptionButton";
 
 
@@ -195,7 +196,15 @@ namespace Content.Client.UserInterface.Stylesheets
             };
             topButtonSquare.SetPatchMargin(StyleBox.Margin.Horizontal, 0);
 
-            var chatFilterButtonTex = resCache.GetTexture("/Textures/Interface/Nano/chat_filter_button.svg.96dpi.png");
+            var chatChannelButtonTex = resCache.GetTexture("/Textures/Interface/Nano/rounded_button.svg.96dpi.png");
+            var chatChannelButton = new StyleBoxTexture
+            {
+                Texture = chatChannelButtonTex,
+            };
+            chatChannelButton.SetPatchMargin(StyleBox.Margin.All, 5);
+            chatChannelButton.SetPadding(StyleBox.Margin.All, 2);
+
+            var chatFilterButtonTex = resCache.GetTexture("/Textures/Interface/Nano/rounded_button_bordered.svg.96dpi.png");
             var chatFilterButton = new StyleBoxTexture
             {
                 Texture = chatFilterButtonTex,
@@ -1027,14 +1036,35 @@ namespace Content.Client.UserInterface.Stylesheets
                     new StyleProperty(Slider.StylePropertyFill, sliderFillBlue),
                 }),
 
-                // chat filter option button
-                new StyleRule(new SelectorElement(typeof(OptionButton), new[] {StyleClassChatFilterOptionButton}, null, null), new[]
+                // chat channel option button
+                new StyleRule(new SelectorElement(typeof(OptionButton), new[] {StyleClassChatChannelSelectorOptionButton}, null, null), new[]
                 {
-                    new StyleProperty(OptionButton.StylePropertyStyleBox, chatFilterButton),
+                    new StyleProperty(OptionButton.StylePropertyStyleBox, chatChannelButton),
                 }),
-                new StyleRule(new SelectorElement(typeof(Button), new[] {StyleClassChatFilterOptionButton}, null, null), new[]
+                new StyleRule(new SelectorElement(typeof(Button), new[] {StyleClassChatChannelSelectorOptionButton}, null, null), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, chatChannelButton),
+                }),
+                // chat filter button
+                new StyleRule(new SelectorElement(typeof(ContainerButton), new[] {StyleClassChatFilterOptionButton}, null, null), new[]
                 {
                     new StyleProperty(ContainerButton.StylePropertyStyleBox, chatFilterButton),
+                }),
+                new StyleRule(new SelectorElement(typeof(ContainerButton), new[] {StyleClassChatFilterOptionButton}, null, new[] {ContainerButton.StylePseudoClassNormal}), new[]
+                {
+                    new StyleProperty(Control.StylePropertyModulateSelf, ButtonColorDefault),
+                }),
+                new StyleRule(new SelectorElement(typeof(ContainerButton), new[] {StyleClassChatFilterOptionButton}, null, new[] {ContainerButton.StylePseudoClassHover}), new[]
+                {
+                    new StyleProperty(Control.StylePropertyModulateSelf, ButtonColorHovered),
+                }),
+                new StyleRule(new SelectorElement(typeof(ContainerButton), new[] {StyleClassChatFilterOptionButton}, null, new[] {ContainerButton.StylePseudoClassPressed}), new[]
+                {
+                    new StyleProperty(Control.StylePropertyModulateSelf, ButtonColorPressed),
+                }),
+                new StyleRule(new SelectorElement(typeof(ContainerButton), new[] {StyleClassChatFilterOptionButton}, null, new[] {ContainerButton.StylePseudoClassDisabled}), new[]
+                {
+                    new StyleProperty(Control.StylePropertyModulateSelf, ButtonColorDisabled),
                 }),
 
                 // OptionButton
