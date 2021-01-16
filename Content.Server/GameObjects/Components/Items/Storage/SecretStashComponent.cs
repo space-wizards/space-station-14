@@ -1,6 +1,7 @@
 #nullable enable
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.GameObjects;
@@ -15,7 +16,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
     /// Logic for secret single slot stash, like plant pot or toilet cistern
     /// </summary>
     [RegisterComponent]
-    public class SecretStashComponent : Component
+    public class SecretStashComponent : Component, IDestroyAct
     {
         public override string Name => "SecretStash";
 
@@ -37,11 +38,11 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         }
 
         /// <summary>
-        /// Tries hide item inside secret stash from hands of user
+        /// Tries to hide item inside secret stash from hands of user
         /// </summary>
         /// <param name="user"></param>
         /// <param name="itemToHide"></param>
-        /// <returns>True if item was hidden</returns>
+        /// <returns>True if item was hidden inside stash</returns>
         public bool TryHideItem(IEntity user, IEntity itemToHide)
         {
             if (_itemContainer.ContainedEntity != null)
@@ -95,6 +96,15 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             }
 
             return true;
+        }
+
+        public void OnDestroy(DestructionEventArgs eventArgs)
+        {
+            // drop item inside
+            if (_itemContainer.ContainedEntity != null)
+            {
+                _itemContainer.ContainedEntity.Transform.Coordinates = Owner.Transform.Coordinates;
+            }
         }
     }
 }

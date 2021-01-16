@@ -54,7 +54,7 @@ namespace Content.Server.GameObjects.Components.Watercloset
 
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            // are player trying open/close toilet lid?
+            // are player trying place or lift of cistern lid?
             if (eventArgs.Using.TryGetComponent(out ToolComponent? tool)
                 && tool!.HasQuality(ToolQuality.Prying))
             {
@@ -77,7 +77,7 @@ namespace Content.Server.GameObjects.Components.Watercloset
 
                 return true;
             }
-            // maybe player trying to hide something?
+            // maybe player trying to hide something inside cistern?
             else if (_lidOpen)
             {
                 return _secretStash.TryHideItem(eventArgs.User, eventArgs.Using);
