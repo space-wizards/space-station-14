@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -23,9 +24,20 @@ namespace Content.Server.GameObjects.Components.Disposal
             var holder = Owner.EntityManager.SpawnEntity(HolderPrototypeId, Owner.Transform.MapPosition);
             var holderComponent = holder.GetComponent<DisposalHolderComponent>();
 
+            string GetTag(IEntity entity)
+            {
+                return entity?.GetComponentOrNull<DisposalTagComponent>()?.Tag;
+            }
+
+            var tag = GetTag(from.ContainedEntities.FirstOrDefault());
+
             foreach (var entity in from.ContainedEntities.ToArray())
             {
-                holderComponent.TryInsert(entity);
+                if (GetTag(entity) == tag)
+                {
+                    holderComponent.TryInsert(entity);
+                    entity.RemoveComponent<DisposalTagComponent>();
+                }
             }
 
             holderComponent.Air.Merge(from.Air);

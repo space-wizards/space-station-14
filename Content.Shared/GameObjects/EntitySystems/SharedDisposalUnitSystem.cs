@@ -13,11 +13,6 @@ namespace Content.Shared.GameObjects.EntitySystems
             {
                 comp.Update(frameTime);
             }
-
-            foreach (var comp in ComponentManager.EntityQuery<SharedDisposalMailingUnitComponent>())
-            {
-                comp.Update(frameTime);
-            }
         }
     }
 }
