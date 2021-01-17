@@ -23,9 +23,14 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
-  - type: Destructible
-    deadThreshold: 10
+  - type: Damageable
     resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+      10:
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
   - type: SolutionContainer
     maxVol: 1500
     caps: RemoveFrom

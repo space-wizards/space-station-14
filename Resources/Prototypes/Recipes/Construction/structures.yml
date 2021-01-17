@@ -12,6 +12,9 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked { }
 
 - type: construction
   name: wall
@@ -27,6 +30,9 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked {}
 
 - type: construction
   name: reinforced wall
@@ -42,6 +48,9 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked {}
 
 - type: construction
   name: low wall
@@ -52,7 +61,8 @@
   category: Structures
   description: A low wall used for mounting windows.
   conditions:
-    - !type:NoWindowsInTile { }
+    - !type:NoWindowsInTile {}
+    - !type:TileNotBlocked {}
   icon:
     sprite: Constructible/Structures/Walls/low_wall.rsi
     state: metal
@@ -70,6 +80,7 @@
   description: Clear. Must be built on top of a low wall.
   conditions:
     - !type:LowWallInTile {}
+    - !type:NoWindowsInTile {}
   icon:
     sprite: Constructible/Structures/Windows/window.rsi
     state: full
@@ -87,6 +98,7 @@
   description: Clear but tough. Must be built on top of a low wall.
   conditions:
     - !type:LowWallInTile {}
+    - !type:NoWindowsInTile {}
   icon:
     sprite: Constructible/Structures/Windows/reinforced_window.rsi
     state: full
@@ -104,9 +116,98 @@
   description: Clear and even tougher, with an orange tint. Must be built on top of a low wall.
   conditions:
     - !type:LowWallInTile {}
+    - !type:NoWindowsInTile {}
   icon:
     sprite: Constructible/Structures/Windows/phoron_window.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
+
+- type: construction
+  name: Firelock
+  id: Firelock
+  graph: Firelock
+  startNode: start
+  targetNode: Firelock
+  category: Structures
+  description: This is a firelock - it locks an area when a fire alarm in the area is triggered. Don't get squished!
+  icon:
+    sprite: Constructible/Structures/Doors/firelock.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked {}
+
+- type: construction
+  name: Table Frame
+  id: TableFrame
+  graph: Tables
+  startNode: start
+  targetNode: TableFrame
+  category: Structures
+  description: A sturdy frame used in the construction of tables
+  icon:
+    sprite: Constructible/Structures/Tables/frame.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked {}
+
+- type: construction
+  name: Poker Table
+  id: PokerTable
+  graph: Tables
+  startNode: start
+  targetNode: PokerTable
+  category: Structures
+  description: A square piece of wood standing on four legs. (What did you expect?)
+  icon:
+    sprite: Constructible/Structures/Tables/carpet.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked {}
+
+- type: construction
+  name: Catwalk
+  id: Catwalk
+  graph: Catwalk
+  startNode: start
+  targetNode: Catwalk
+  category: Structures
+  description: Just like a lattice. Except it looks better.
+  conditions:
+    - !type:TileNotBlocked {}
+    - !type:TileType
+      targets:
+        - lattice
+        - plating
+        - underplating
+  icon:
+    sprite: Constructible/Tiles/catwalk.rsi
+    state: catwalk_preview
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+
+- type: construction
+  name: APC
+  id: apc
+  graph: apc
+  startNode: start
+  targetNode: apc
+  category: Structures
+  description: Area Power Controller (APC). Controls power. In an area.
+  icon:
+    sprite: Constructible/Power/apc.rsi
+    state: apc0
+  objectType: Structure
+  placementMode: AlignWallProper
+  canBuildInImpassable: true

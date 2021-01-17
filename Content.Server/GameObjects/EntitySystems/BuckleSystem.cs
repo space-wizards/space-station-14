@@ -26,6 +26,14 @@ namespace Content.Server.GameObjects.EntitySystems
             SubscribeLocalEvent<EntRemovedFromContainerMessage>(ContainerModified);
         }
 
+        public override void Update(float frameTime)
+        {
+            foreach (var comp in ComponentManager.EntityQuery<BuckleComponent>(false))
+            {
+                comp.Update();
+            }
+        }
+
         public override void Shutdown()
         {
             base.Shutdown();
@@ -86,8 +94,8 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
             }
 
-            var contained = ContainerHelpers.TryGetContainer(buckle.Owner, out var ownContainer);
-            var strapContained = ContainerHelpers.TryGetContainer(strap.Owner, out var strapContainer);
+            var contained = buckle.Owner.TryGetContainer(out var ownContainer);
+            var strapContained = strap.Owner.TryGetContainer(out var strapContainer);
 
             if (contained != strapContained || ownContainer != strapContainer)
             {

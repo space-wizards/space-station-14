@@ -4,6 +4,7 @@ using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -223,7 +224,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             if (_chamberContainer.ContainedEntity == null && manual)
             {
                 BoltOpen = true;
-                if (ContainerHelpers.TryGetContainer(Owner, out var container))
+                if (Owner.TryGetContainer(out var container))
                 {
                     Owner.PopupMessage(container.Owner, Loc.GetString("Bolt opened"));
                 }

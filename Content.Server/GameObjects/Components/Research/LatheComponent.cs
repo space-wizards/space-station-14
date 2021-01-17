@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,10 +26,10 @@ namespace Content.Server.GameObjects.Components.Research
     [ComponentReference(typeof(IActivate))]
     public class LatheComponent : SharedLatheComponent, IInteractUsing, IActivate
     {
-        public const int VolumePerSheet = 3750;
+        public const int VolumePerSheet = 100;
 
         [ViewVariables]
-        public Queue<LatheRecipePrototype> Queue { get; } = new Queue<LatheRecipePrototype>();
+        public Queue<LatheRecipePrototype> Queue { get; } = new();
 
         [ViewVariables]
         public bool Producing { get; private set; }

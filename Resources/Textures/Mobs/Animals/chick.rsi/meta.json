@@ -9,7 +9,6 @@
   "states": [
     {
       "name": "dead",
-      "directions": 1,
       "delays": [
         [
           1
@@ -36,7 +35,6 @@
     },
     {
       "name": "chick_gib",
-      "directions": 1,
       "delays": [
         [
           0.6,

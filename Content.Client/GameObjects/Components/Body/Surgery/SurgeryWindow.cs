@@ -19,7 +19,7 @@ namespace Content.Client.GameObjects.Components.Body.Surgery
 
         public SurgeryWindow()
         {
-            Title = Loc.GetString("Select surgery target...");
+            Title = Loc.GetString("Surgery");
             RectClipContent = true;
 
             var vSplitContainer = new VBoxContainer
@@ -76,8 +76,6 @@ namespace Content.Client.GameObjects.Components.Body.Surgery
         public Button Button { get; }
 
         private SpriteView SpriteView { get; }
-
-        private Control EntityControl { get; }
 
         private Label DisplayText { get; }
 

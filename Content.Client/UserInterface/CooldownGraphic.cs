@@ -14,7 +14,7 @@ namespace Content.Client.UserInterface
 
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
 
-        private ShaderInstance _shader;
+        private readonly ShaderInstance _shader;
 
         public CooldownGraphic()
         {

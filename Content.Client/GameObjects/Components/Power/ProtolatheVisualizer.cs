@@ -1,5 +1,6 @@
 ﻿using System;
 using Content.Shared.GameObjects.Components.Power;
+using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.Components.Animations;
@@ -9,6 +10,7 @@ using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Power
 {
+    [UsedImplicitly]
     public class ProtolatheVisualizer : AppearanceVisualizer
     {
         private const string AnimationKey = "protolathe_animation";
@@ -110,7 +112,7 @@ namespace Content.Client.GameObjects.Components.Power
             var glowingPartsVisible = !(component.TryGetData(PowerDeviceVisuals.Powered, out bool powered) && !powered);
             sprite.LayerSetVisible(ProtolatheVisualLayers.BaseUnlit, glowingPartsVisible);
         }
-        public enum ProtolatheVisualLayers
+        public enum ProtolatheVisualLayers : byte
         {
             Base,
             BaseUnlit,

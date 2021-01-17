@@ -14,6 +14,7 @@ using Content.Server.Interfaces.PDA;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.PDA;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -35,7 +36,7 @@ namespace Content.Server.GameObjects.Components.PDA
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IAccess))]
-    public class PDAComponent : SharedPDAComponent, IInteractUsing, IActivate, IUse, IAccess
+    public class PDAComponent : SharedPDAComponent, IInteractUsing, IActivate, IUse, IAccess, IMapInit
     {
         [Dependency] private readonly IPDAUplinkManager _uplinkManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -54,7 +55,9 @@ namespace Content.Server.GameObjects.Components.PDA
         [ViewVariables] public bool IdSlotEmpty => _idSlot.ContainedEntity == null;
         [ViewVariables] public bool PenSlotEmpty => _penSlot.ContainedEntity == null;
 
-        [ViewVariables] private UplinkAccount? _syndicateUplinkAccount;
+        private UplinkAccount? _syndicateUplinkAccount;
+
+        [ViewVariables] public UplinkAccount? SyndicateUplinkAccount => _syndicateUplinkAccount;
 
         [ViewVariables] private readonly PdaAccessSet _accessSet;
 
@@ -83,6 +86,11 @@ namespace Content.Server.GameObjects.Components.PDA
                 UserInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
             }
 
+            UpdatePDAAppearance();
+        }
+
+        public void MapInit()
+        {
             if (!string.IsNullOrEmpty(_startingIdCard))
             {
                 var idCard = _entityManager.SpawnEntity(_startingIdCard, Owner.Transform.Coordinates);
@@ -96,8 +104,6 @@ namespace Content.Server.GameObjects.Components.PDA
                 var pen = _entityManager.SpawnEntity(_startingPen, Owner.Transform.Coordinates);
                 _penSlot.Insert(pen);
             }
-
-            UpdatePDAAppearance();
         }
 
         private void UserInterfaceOnReceiveMessage(ServerBoundUserInterfaceMessage message)
@@ -431,6 +437,7 @@ namespace Content.Server.GameObjects.Components.PDA
         }
 
         ISet<string> IAccess.Tags => _accessSet;
+
         bool IAccess.IsReadOnly => true;
 
         void IAccess.SetTags(IEnumerable<string> newTags)
@@ -441,7 +448,7 @@ namespace Content.Server.GameObjects.Components.PDA
         private sealed class PdaAccessSet : ISet<string>
         {
             private readonly PDAComponent _pdaComponent;
-            private static readonly HashSet<string> EmptySet = new HashSet<string>();
+            private static readonly HashSet<string> EmptySet = new();
 
             public PdaAccessSet(PDAComponent pdaComponent)
             {

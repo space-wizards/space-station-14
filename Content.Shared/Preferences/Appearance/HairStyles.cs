@@ -11,7 +11,7 @@ namespace Content.Shared.Preferences.Appearance
         public const string DefaultHairStyle = "Bald";
         public const string DefaultFacialHairStyle = "Shaved";
 
-        public static readonly Dictionary<string, string> HairStylesMap = new Dictionary<string, string>
+        public static readonly Dictionary<string, string> HairStylesMap = new()
         {
             {"Afro", "afro"},
             {"Afro 2", "afro2"},
@@ -190,7 +190,7 @@ namespace Content.Shared.Preferences.Appearance
             {"Wisp", "wisp"},
         };
 
-        public static readonly Dictionary<string, string> FacialHairStylesMap = new Dictionary<string, string>()
+        public static readonly Dictionary<string, string> FacialHairStylesMap = new()
         {
             {"Beard (Abraham Lincoln)", "abe"},
             {"Beard (Broken Man)", "brokenman"},

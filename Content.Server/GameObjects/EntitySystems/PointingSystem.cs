@@ -1,9 +1,11 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.Components.Pointing;
 using Content.Server.Players;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Input;
 using Content.Shared.Interfaces;
 using Content.Shared.Utility;
@@ -40,7 +42,7 @@ namespace Content.Server.GameObjects.EntitySystems
         ///     A dictionary of players to the last time that they
         ///     pointed at something.
         /// </summary>
-        private readonly Dictionary<ICommonSession, TimeSpan> _pointers = new Dictionary<ICommonSession, TimeSpan>();
+        private readonly Dictionary<ICommonSession, TimeSpan> _pointers = new();
 
         private const float PointingRange = 15f;
 
@@ -78,7 +80,13 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public bool InRange(IEntity pointer, EntityCoordinates coordinates)
         {
-            return pointer.InRangeUnOccluded(coordinates, 15, e => e == pointer);
+            if (pointer.HasComponent<GhostComponent>()){
+                return pointer.Transform.Coordinates.InRange(EntityManager, coordinates, 15);
+            }
+            else
+            {
+                return pointer.InRangeUnOccluded(coordinates, 15, e => e == pointer);
+            }         
         }
 
         public bool TryPoint(ICommonSession? session, EntityCoordinates coords, EntityUid uid)

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Content.Client.Interfaces.Chat;
 using Content.Client.UserInterface;
 using Content.Shared.GameObjects.Components.Observer;
 using Robust.Client.GameObjects;
@@ -19,8 +20,9 @@ namespace Content.Client.GameObjects.Components.Observer
         [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IComponentManager _componentManager = default!;
-        public List<string> WarpNames = new List<string>();
-        public Dictionary<EntityUid,string> PlayerNames = new Dictionary<EntityUid,string>();
+        [Dependency] private readonly IChatManager _chatManager = default!;
+        public List<string> WarpNames = new();
+        public Dictionary<EntityUid,string> PlayerNames = new();
 
         private GhostGui? _gui ;
 
@@ -83,6 +85,7 @@ namespace Content.Client.GameObjects.Components.Observer
                     _gameHud.HandsContainer.AddChild(_gui);
                     SetGhostVisibility(true);
                     _isAttached = true;
+                    _chatManager.ToggleDeadChatButtonVisibility(true);
 
                     break;
 
@@ -90,6 +93,7 @@ namespace Content.Client.GameObjects.Components.Observer
                     _gui!.Parent?.RemoveChild(_gui);
                     SetGhostVisibility(false);
                     _isAttached = false;
+                    _chatManager.ToggleDeadChatButtonVisibility(false);
                     break;
             }
         }
@@ -106,7 +110,7 @@ namespace Content.Client.GameObjects.Components.Observer
         {
             base.HandleComponentState(curState, nextState);
 
-            if (!(curState is GhostComponentState state)) return;
+            if (curState is not GhostComponentState state) return;
 
             CanReturnToBody = state.CanReturnToBody;
 

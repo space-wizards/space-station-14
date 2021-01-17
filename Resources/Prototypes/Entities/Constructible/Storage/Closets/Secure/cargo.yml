@@ -7,7 +7,5 @@
     visuals:
     - type: StorageVisualizer
       state: qm
-  - type: Icon
-    state: qm_icon
   - type: AccessReader
     access: [["Quartermaster"]]

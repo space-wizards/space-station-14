@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
@@ -50,7 +50,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         public virtual void ExposeData(ObjectSerializer serializer)
         {
-            serializer.DataField(this, x => NodeGroupID, "nodeGroupID", NodeGroupID.Default);
+            serializer.DataField(this, x => x.NodeGroupID, "nodeGroupID", NodeGroupID.Default);
         }
 
         public virtual void Initialize(IEntity owner)
@@ -66,17 +66,29 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             if (Owner.TryGetComponent<IPhysicsComponent>(out var physics))
             {
                 AnchorUpdate();
-                physics.AnchoredChanged += AnchorUpdate;
+            }
+        }
+
+        public void AnchorUpdate()
+        {
+            if (Anchored)
+            {
+                if (_needsGroup)
+                {
+                    TryAssignGroupIfNeeded();
+                    CombineGroupWithReachable();
+                }
+            }
+            else
+            {
+                NodeGroup.RemoveNode(this);
+                ClearNodeGroup();
             }
         }
 
         public void OnContainerRemove()
         {
             _deleting = true;
-            if (Owner.TryGetComponent<IPhysicsComponent>(out var physics))
-            {
-                physics.AnchoredChanged -= AnchorUpdate;
-            }
             NodeGroup.RemoveNode(this);
         }
 
@@ -152,23 +164,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         private INodeGroup MakeNewGroup()
         {
             return _nodeGroupFactory.MakeNodeGroup(this);
-        }
-
-        private void AnchorUpdate()
-        {
-            if (Anchored)
-            {
-                if (_needsGroup)
-                {
-                    TryAssignGroupIfNeeded();
-                    CombineGroupWithReachable();
-                }
-            }
-            else
-            {
-                NodeGroup.RemoveNode(this);
-                ClearNodeGroup();
-            }
         }
     }
 }

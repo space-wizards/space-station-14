@@ -1,5 +1,7 @@
+using Content.Server.Administration;
 using Content.Server.Interfaces;
 using Content.Shared;
+using Content.Shared.Administration;
 using Content.Shared.Interfaces;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.GameObjects;
@@ -69,24 +71,6 @@ namespace Content.Server
             netMessage.Message = message;
 
             _netManager.ServerSendMessage(netMessage, actor.playerSession.ConnectedClient);
-        }
-
-        public class PopupMsgCommand : IClientCommand
-        {
-            public string Command => "srvpopupmsg";
-            public string Description => "";
-            public string Help => "";
-
-            public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
-            {
-                var entityMgr = IoCManager.Resolve<IEntityManager>();
-
-                var source = EntityUid.Parse(args[0]);
-                var viewer = EntityUid.Parse(args[1]);
-                var msg = args[2];
-
-                entityMgr.GetEntity(source).PopupMessage(entityMgr.GetEntity(viewer), msg);
-            }
         }
     }
 }

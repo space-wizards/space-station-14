@@ -1,16 +1,27 @@
-﻿#nullable enable
+#nullable enable
 using System.Threading.Tasks;
+using Content.Server.GameObjects.Components.Atmos;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Clothing;
 using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Power;
+using Content.Shared.Actions;
+using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
+using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
@@ -27,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Interactable
     [RegisterComponent]
     internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IInteractUsing
     {
-        [ViewVariables(VVAccess.ReadWrite)] public float Wattage { get; set; } = 10f;
+        [ViewVariables(VVAccess.ReadWrite)] public float Wattage { get; set; }
         [ViewVariables] private PowerCellSlotComponent _cellSlot = default!;
         private PowerCellComponent? Cell => _cellSlot.Cell;
 
@@ -43,6 +54,8 @@ namespace Content.Server.GameObjects.Components.Interactable
         [ViewVariables(VVAccess.ReadWrite)] public string? TurnOnFailSound;
         [ViewVariables(VVAccess.ReadWrite)] public string? TurnOffSound;
 
+        [ComponentDependency] private readonly ItemActionsComponent? _itemActions = null;
+
         /// <summary>
         ///     Client-side ItemStatus level
         /// </summary>
@@ -51,7 +64,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(this, x => x.Wattage, "wattage", 10f);
+            serializer.DataField(this, x => x.Wattage, "wattage", 3f);
             serializer.DataField(ref TurnOnSound, "turnOnSound", "/Audio/Items/flashlight_toggle.ogg");
             serializer.DataField(ref TurnOnFailSound, "turnOnFailSound", "/Audio/Machines/button.ogg");
             serializer.DataField(ref TurnOffSound, "turnOffSound", "/Audio/Items/flashlight_toggle.ogg");
@@ -65,6 +78,12 @@ namespace Content.Server.GameObjects.Components.Interactable
             _cellSlot = Owner.EnsureComponent<PowerCellSlotComponent>();
 
             Dirty();
+        }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+            Owner.EntityManager.EventBus.QueueEvent(EventSource.Local, new DeactivateHandheldLightMessage(this));
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
@@ -96,8 +115,9 @@ namespace Content.Server.GameObjects.Components.Interactable
         ///     Illuminates the light if it is not active, extinguishes it if it is active.
         /// </summary>
         /// <returns>True if the light's status was toggled, false otherwise.</returns>
-        private bool ToggleStatus(IEntity user)
+        public bool ToggleStatus(IEntity user)
         {
+            if (!ActionBlockerSystem.CanUse(user)) return false;
             return Activated ? TurnOff() : TurnOn(user);
         }
 
@@ -110,6 +130,8 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             SetState(false);
             Activated = false;
+            UpdateLightAction();
+            Owner.EntityManager.EventBus.QueueEvent(EventSource.Local, new DeactivateHandheldLightMessage(this));
 
             if (makeNoise)
             {
@@ -130,6 +152,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             {
                 if (TurnOnFailSound != null) EntitySystem.Get<AudioSystem>().PlayFromEntity(TurnOnFailSound, Owner);
                 Owner.PopupMessage(user, Loc.GetString("Cell missing..."));
+                UpdateLightAction();
                 return false;
             }
 
@@ -140,11 +163,14 @@ namespace Content.Server.GameObjects.Components.Interactable
             {
                 if (TurnOnFailSound != null) EntitySystem.Get<AudioSystem>().PlayFromEntity(TurnOnFailSound, Owner);
                 Owner.PopupMessage(user, Loc.GetString("Dead cell..."));
+                UpdateLightAction();
                 return false;
             }
 
             Activated = true;
+            UpdateLightAction();
             SetState(true);
+            Owner.EntityManager.EventBus.QueueEvent(EventSource.Local, new ActivateHandheldLightMessage(this));
 
             if (TurnOnSound != null) EntitySystem.Get<AudioSystem>().PlayFromEntity(TurnOnSound, Owner);
             return true;
@@ -164,13 +190,18 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             if (Owner.TryGetComponent(out ClothingComponent? clothing))
             {
-                clothing.ClothingEquippedPrefix = on ? "On" : "Off";
+                clothing.ClothingEquippedPrefix = on ? "on" : "off";
             }
 
             if (Owner.TryGetComponent(out ItemComponent? item))
             {
                 item.EquippedPrefix = on ? "on" : "off";
             }
+        }
+
+        private void UpdateLightAction()
+        {
+            _itemActions?.Toggle(ItemActionType.ToggleLight, Activated);
         }
 
         public void OnUpdate(float frameTime)
@@ -225,6 +256,59 @@ namespace Content.Server.GameObjects.Components.Interactable
         public override ComponentState GetComponentState()
         {
             return new HandheldLightComponentState(GetLevel());
+        }
+
+        [Verb]
+        public sealed class ToggleLightVerb : Verb<HandheldLightComponent>
+        {
+            protected override void GetData(IEntity user, HandheldLightComponent component, VerbData data)
+            {
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
+                data.Text = Loc.GetString("Toggle light");
+            }
+
+            protected override void Activate(IEntity user, HandheldLightComponent component)
+            {
+                component.ToggleStatus(user);
+            }
+        }
+    }
+
+    [UsedImplicitly]
+    public class ToggleLightAction : IToggleItemAction
+    {
+        public void ExposeData(ObjectSerializer serializer) {}
+
+        public bool DoToggleAction(ToggleItemActionEventArgs args)
+        {
+            if (!args.Item.TryGetComponent<HandheldLightComponent>(out var lightComponent)) return false;
+            if (lightComponent.Activated == args.ToggledOn) return false;
+            return lightComponent.ToggleStatus(args.Performer);
+        }
+    }
+
+    internal sealed class ActivateHandheldLightMessage : EntitySystemMessage
+    {
+        public HandheldLightComponent Component { get; }
+
+        public ActivateHandheldLightMessage(HandheldLightComponent component)
+        {
+            Component = component;
+        }
+    }
+
+    internal sealed class DeactivateHandheldLightMessage : EntitySystemMessage
+    {
+        public HandheldLightComponent Component { get; }
+
+        public DeactivateHandheldLightMessage(HandheldLightComponent component)
+        {
+            Component = component;
         }
     }
 }

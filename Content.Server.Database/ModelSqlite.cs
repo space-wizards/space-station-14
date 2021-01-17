@@ -21,6 +21,14 @@ namespace Content.Server.Database
                 options.UseSqlite("dummy connection string");
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<SqlitePlayer>()
+                .HasIndex(p => p.LastSeenUserName);
+        }
+
         public SqliteServerDbContext(DbContextOptions<ServerDbContext> options) : base(options)
         {
         }

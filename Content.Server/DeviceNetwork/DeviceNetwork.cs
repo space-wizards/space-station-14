@@ -1,22 +1,21 @@
-﻿using Content.Server.Interfaces;
+﻿using System;
+using Content.Server.Interfaces;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
-using System;
 using System.Collections.Generic;
 
-namespace Content.Server.DeviceNetwork
+namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
 {
-    public delegate void OnReceiveNetMessage(int frequency, string sender, NetworkPayload payload, Metadata metadata, bool broadcast);
+    public delegate void OnReceiveNetMessage(int frequency, string sender, IReadOnlyDictionary<string, string> payload, Metadata metadata, bool broadcast);
 
     public class DeviceNetwork : IDeviceNetwork
     {
         private const int PACKAGES_PER_TICK = 30;
-        private const int MAX_PACKET_COUNT = 100;
-        private const int MAX_DATA_COUNT = 100;
 
         [Dependency] private readonly IRobustRandom _random = default!;
-        private readonly Dictionary<int, List<NetworkDevice>> _devices = new Dictionary<int, List<NetworkDevice>>();
-        private readonly Queue<NetworkPacket> _packets = new Queue<NetworkPacket>();
+
+        private readonly Dictionary<int, List<NetworkDevice>> _devices = new();
+        private readonly Queue<NetworkPackage> _packages = new();
 
         /// <inheritdoc/>
         public DeviceNetworkConnection Register(int netId, int frequency, OnReceiveNetMessage messageHandler, bool receiveAll = false)
@@ -43,10 +42,10 @@ namespace Content.Server.DeviceNetwork
 
         public void Update()
         {
-            var count = Math.Min(PACKAGES_PER_TICK, _packets.Count);
+            var count = Math.Min(PACKAGES_PER_TICK, _packages.Count);
             for (var i = 0; i < count; i++)
             {
-                var package = _packets.Dequeue();
+                var package = _packages.Dequeue();
 
                 if (package.Broadcast)
                 {
@@ -58,23 +57,23 @@ namespace Content.Server.DeviceNetwork
             }
         }
 
-        public bool EnqueuePackage(int netId, int frequency, string address, NetworkPayload payload, string sender, Metadata metadata, bool broadcast = false)
+        public bool EnqueuePackage(int netId, int frequency, string address, IReadOnlyDictionary<string, string> data, string sender, Metadata metadata, bool broadcast = false)
         {
-            if (!_devices.ContainsKey(netId) || payload.Count > MAX_DATA_COUNT || _packets.Count > MAX_PACKET_COUNT)
+            if (!_devices.ContainsKey(netId))
                 return false;
 
-            var packet = new NetworkPacket()
+            var package = new NetworkPackage()
             {
                 NetId = netId,
                 Frequency = frequency,
                 Address = address,
                 Broadcast = broadcast,
-                Payload = payload,
+                Data = data,
                 Sender = sender,
                 Metadata = metadata
             };
-            
-            _packets.Enqueue(packet);
+
+            _packages.Enqueue(package);
             return true;
         }
 
@@ -133,7 +132,7 @@ namespace Content.Server.DeviceNetwork
         {
             var devices = DevicesForFrequency(netId, frequency);
 
-            var device = devices.Find(device => device.Address == address);
+            var device = devices.Find(dvc => dvc.Address == address);
 
             return device;
         }
@@ -148,31 +147,31 @@ namespace Content.Server.DeviceNetwork
             return result;
         }
 
-        private void BroadcastPackage(NetworkPacket packet)
+        private void BroadcastPackage(NetworkPackage package)
         {
-            var devices = DevicesForFrequency(packet.NetId, packet.Frequency);
-            SendToDevices(devices, packet, true);
+            var devices = DevicesForFrequency(package.NetId, package.Frequency);
+            SendToDevices(devices, package, true);
         }
 
-        private void SendPackage(NetworkPacket packet)
+        private void SendPackage(NetworkPackage package)
         {
-            var devices = DevicesWithReceiveAll(packet.NetId, packet.Frequency);
-            var device = DeviceWithAddress(packet.NetId, packet.Frequency, packet.Address);
+            var devices = DevicesWithReceiveAll(package.NetId, package.Frequency);
+            var device = DeviceWithAddress(package.NetId, package.Frequency, package.Address);
 
             devices.Add(device);
 
-            SendToDevices(devices, packet, false);
+            SendToDevices(devices, package, false);
         }
 
-        private void SendToDevices(List<NetworkDevice> devices, NetworkPacket packet, bool broadcast)
+        private void SendToDevices(List<NetworkDevice> devices, NetworkPackage package, bool broadcast)
         {
             for (var index = 0; index < devices.Count; index++)
             {
                 var device = devices[index];
-                if (device.Address == packet.Sender)
+                if (device.Address == package.Sender)
                     continue;
 
-                device.ReceiveNetMessage(packet.Frequency, packet.Sender, packet.Payload, packet.Metadata, broadcast);
+                device.ReceiveNetMessage(package.Frequency, package.Sender, package.Data, package.Metadata, broadcast);
             }
         }
 
@@ -184,13 +183,13 @@ namespace Content.Server.DeviceNetwork
             public bool ReceiveAll;
         }
 
-        internal class NetworkPacket
+        internal class NetworkPackage
         {
             public int NetId;
             public int Frequency;
             public string Address;
             public bool Broadcast;
-            public NetworkPayload Payload { get; set; }
+            public IReadOnlyDictionary<string, string> Data { get; set; }
             public Metadata Metadata;
             public string Sender;
         }

@@ -19,7 +19,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 
     public class PowerNetManager : IPowerNetManager
     {
-        private readonly HashSet<IPowerNet> _dirtyPowerNets = new HashSet<IPowerNet>();
+        private readonly HashSet<IPowerNet> _dirtyPowerNets = new();
 
         public void AddDirtyPowerNet(IPowerNet powerNet)
         {

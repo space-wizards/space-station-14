@@ -17,7 +17,7 @@ namespace Content.Server.GameTicking
     public partial class GameTicker
     {
         [ViewVariables]
-        private readonly Dictionary<string, int> _spawnedPositions = new Dictionary<string, int>();
+        private readonly Dictionary<string, int> _spawnedPositions = new();
 
         private Dictionary<IPlayerSession, string> AssignJobs(List<IPlayerSession> available,
             Dictionary<NetUserId, HumanoidCharacterProfile> profiles)
@@ -45,7 +45,11 @@ namespace Content.Server.GameTicking
                                 .Where(j =>
                                 {
                                     var (jobId, priority) = j;
-                                    var job = _prototypeManager.Index<JobPrototype>(jobId);
+                                    if (!_prototypeManager.TryIndex(jobId, out JobPrototype job))
+                                    {
+                                        // Job doesn't exist, probably old data?
+                                        return false;
+                                    }
                                     if (job.IsHead != heads)
                                     {
                                         return false;

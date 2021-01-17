@@ -1,10 +1,19 @@
-﻿namespace Content.Shared.Atmos
+using Robust.Shared.Maths;
+using Robust.Shared.Serialization;
+using System;
+
+namespace Content.Shared.Atmos
 {
     /// <summary>
     ///     Class to store atmos constants.
     /// </summary>
-    public class Atmospherics
+    public static class Atmospherics
     {
+        static Atmospherics()
+        {
+            AdjustedNumberOfGases = MathHelper.NextMultipleOf(TotalNumberOfGases, 4);
+        }
+
         #region ATMOS
         /// <summary>
         ///     The universal gas constant, in kPa*L/(K*mol)
@@ -144,7 +153,13 @@
         /// <summary>
         ///     Total number of gases. Increase this if you want to add more!
         /// </summary>
-        public const byte TotalNumberOfGases = 6;
+        public const int TotalNumberOfGases = 6;
+
+        /// <summary>
+        ///     This is the actual length of the gases arrays in mixtures.
+        ///     Set to the closest multiple of 4 relative to <see cref="TotalNumberOfGases"/> for SIMD reasons.
+        /// </summary>
+        public static readonly int AdjustedNumberOfGases;
 
         /// <summary>
         ///     Amount of heat released per mole of burnt hydrogen or tritium (hydrogen isotope)
@@ -233,6 +248,7 @@
     /// <summary>
     ///     Gases to Ids. Keep these updated with the prototypes!
     /// </summary>
+    [Serializable, NetSerializable]
     public enum Gas : sbyte
     {
         Oxygen = 0,

@@ -35,17 +35,15 @@ namespace Content.Server.GameObjects.Components.Singularity
     [ComponentReference(typeof(IActivate))]
     public class EmitterComponent : Component, IActivate, IInteractUsing
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
-        [ComponentDependency] private AppearanceComponent? _appearance;
-        [ComponentDependency] private AccessReader? _accessReader;
+        [ComponentDependency] private readonly AppearanceComponent? _appearance = default;
+        [ComponentDependency] private readonly AccessReader? _accessReader = default;
 
         public override string Name => "Emitter";
 
         private CancellationTokenSource? _timerCancel;
 
-        private PhysicsComponent _collidableComponent = default!;
         private PowerConsumerComponent _powerConsumer = default!;
 
         // whether the power switch is in "on"
@@ -81,19 +79,11 @@ namespace Content.Server.GameObjects.Components.Singularity
         {
             base.Initialize();
 
-            if (!Owner.TryGetComponent(out _collidableComponent!))
-            {
-                Logger.Error($"EmitterComponent {Owner} created with no CollidableComponent");
-                return;
-            }
-
             if (!Owner.TryGetComponent(out _powerConsumer!))
             {
                 Logger.Error($"EmitterComponent {Owner} created with no PowerConsumerComponent");
                 return;
             }
-
-            _collidableComponent.AnchoredChanged += OnAnchoredChanged;
             _powerConsumer.OnReceivedPowerChanged += OnReceivedPowerChanged;
         }
 
@@ -114,9 +104,20 @@ namespace Content.Server.GameObjects.Components.Singularity
             }
         }
 
-        private void OnAnchoredChanged()
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
-            if (_collidableComponent.Anchored)
+            base.HandleMessage(message, component);
+            switch (message)
+            {
+                case AnchoredChangedMessage anchoredChanged:
+                    OnAnchoredChanged(anchoredChanged);
+                    break;
+            }
+        }
+
+        private void OnAnchoredChanged(AnchoredChangedMessage anchoredChanged)
+        {
+            if (anchoredChanged.Anchored)
                 Owner.SnapToGrid();
         }
 
@@ -170,7 +171,7 @@ namespace Content.Server.GameObjects.Components.Singularity
             return Task.FromResult(true);
         }
 
-        private void SwitchOff()
+        public void SwitchOff()
         {
             _isOn = false;
             _powerConsumer.DrawRate = 0;
@@ -178,7 +179,7 @@ namespace Content.Server.GameObjects.Components.Singularity
             UpdateAppearance();
         }
 
-        private void SwitchOn()
+        public void SwitchOn()
         {
             _isOn = true;
             _powerConsumer.DrawRate = _powerUseActive;
@@ -251,7 +252,7 @@ namespace Content.Server.GameObjects.Components.Singularity
 
         private void Fire()
         {
-            var projectile = _entityManager.SpawnEntity(_boltType, Owner.Transform.Coordinates);
+            var projectile = Owner.EntityManager.SpawnEntity(_boltType, Owner.Transform.Coordinates);
 
             if (!projectile.TryGetComponent<PhysicsComponent>(out var physicsComponent))
             {

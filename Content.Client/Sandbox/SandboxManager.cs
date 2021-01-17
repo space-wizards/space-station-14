@@ -20,23 +20,25 @@ namespace Content.Client.Sandbox
     // Layout for the SandboxWindow
     public class SandboxWindow : SS14Window
     {
-        public Button RespawnButton;
-        public Button SpawnEntitiesButton;
-        public Button SpawnTilesButton;
-        public Button GiveFullAccessButton;  //A button that just puts a captain's ID in your hands.
-        public Button GiveAghostButton;
-        public Button ToggleLightButton;
-        public Button ToggleFovButton;
-        public Button ToggleShadowsButton;
-        public Button SuicideButton;
-        public Button ToggleSubfloorButton;
-        public Button ShowMarkersButton; //Shows spawn points
-        public Button ShowBbButton; //Shows bounding boxes
-        public Button MachineLinkingButton; // Enables/disables machine linking mode.
+        public readonly Button RespawnButton;
+        public readonly Button SpawnEntitiesButton;
+        public readonly Button SpawnTilesButton;
+        public readonly Button GiveFullAccessButton;  //A button that just puts a captain's ID in your hands.
+        public readonly Button GiveAghostButton;
+        public readonly Button ToggleLightButton;
+        public readonly Button ToggleFovButton;
+        public readonly Button ToggleShadowsButton;
+        public readonly Button SuicideButton;
+        public readonly Button ToggleSubfloorButton;
+        public readonly Button ShowMarkersButton; //Shows spawn points
+        public readonly Button ShowBbButton; //Shows bounding boxes
+        public readonly Button MachineLinkingButton; // Enables/disables machine linking mode.
+        private readonly IGameHud _gameHud;
 
         public SandboxWindow()
         {
             Resizable = false;
+            _gameHud = IoCManager.Resolve<IGameHud>();
 
             Title = "Sandbox Panel";
 
@@ -76,12 +78,26 @@ namespace Content.Client.Sandbox
             ShowMarkersButton = new Button { Text = Loc.GetString("Show Spawns"), ToggleMode = true };
             vBox.AddChild(ShowMarkersButton);
 
-            ShowBbButton = new Button { Text = Loc.GetString("Show Bb"), ToggleMode = true };
+            ShowBbButton = new Button { Text = Loc.GetString("Show BB"), ToggleMode = true };
             vBox.AddChild(ShowBbButton);
 
             MachineLinkingButton = new Button { Text = Loc.GetString("Link machines"), ToggleMode = true };
             vBox.AddChild(MachineLinkingButton);
         }
+
+
+        protected override void EnteredTree()
+        {
+            base.EnteredTree();
+            _gameHud.SandboxButtonDown = true;
+        }
+
+        protected override void ExitedTree()
+        {
+            base.ExitedTree();
+            _gameHud.SandboxButtonDown = false;
+        }
+
     }
 
     internal class SandboxManager : SharedSandboxManager, ISandboxManager
@@ -103,7 +119,6 @@ namespace Content.Client.Sandbox
         private EntitySpawnWindow _spawnWindow;
         private TileSpawnWindow _tilesSpawnWindow;
         private bool _sandboxWindowToggled;
-        private bool SpawnEntitiesButton { get; set; }
 
         public void Initialize()
         {
@@ -198,7 +213,6 @@ namespace Content.Client.Sandbox
         private void WindowOnOnClose()
         {
             _window = null;
-            _gameHud.SandboxButtonDown = false;
             _sandboxWindowToggled = false;
         }
 
