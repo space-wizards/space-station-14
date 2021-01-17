@@ -1,6 +1,8 @@
 ﻿# nullable enable
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.Chat;
@@ -40,6 +42,21 @@ namespace Content.Client.Chat
         public Button AdminButton { get; }
         public Button DeadButton { get;  }
 
+        // order in which the available channel filters show up
+        private static readonly IReadOnlyList<ChatChannel> ChannelFilters = new List<ChatChannel>
+        {
+            ChatChannel.Local, ChatChannel.Radio, ChatChannel.OOC, ChatChannel.Dead, ChatChannel.AdminChat,
+            ChatChannel.Server
+        };
+
+        // channel filters which being enabled by default
+        private static readonly HashSet<ChatChannel> DefaultChannelFilter = new()
+        {
+            ChatChannel.Local, ChatChannel.Radio, ChatChannel.OOC, ChatChannel.AdminChat, ChatChannel.Dead,
+            ChatChannel.Server
+        };
+        private const float FilterPopupWidth = 110;
+
         /// <summary>
         /// Will be Unspecified if set to Console
         /// </summary>
@@ -64,8 +81,9 @@ namespace Content.Client.Chat
         private readonly FilterButton _filterButton;
         private readonly Popup _filterPopup;
         private readonly PanelContainer _filterPopupPanel;
+        private readonly VBoxContainer _filterVBox;
 
-        private const float FilterPopupWidth = 110;
+
 
 
         public ChatBox()
@@ -151,26 +169,18 @@ namespace Content.Client.Chat
                                 Children =
                                 {
                                     new Control{CustomMinimumSize = (10,0)},
-                                    new VBoxContainer
+                                    (_filterVBox = new VBoxContainer
                                     {
-                                        SeparationOverride = 10,
-                                        Children =
-                                        {
-                                            new Control{CustomMinimumSize = (10,0)},
-                                            new CheckBox {Text = "Local"},
-                                            new CheckBox {Text = "Radio"},
-                                            new CheckBox {Text = "OOC"},
-                                            new CheckBox {Text = "Admin"},
-                                            new CheckBox {Text = "Server"},
-                                            new Control{CustomMinimumSize = (10,0)},
-                                        }
-                                    }
+                                        SeparationOverride = 10
+                                    })
                                 }
                             }
                         }
                     })
                 }
             };
+
+            RepopulateChannelFilter(true);
 
             RepopulateChannelSelector();
 
@@ -245,6 +255,35 @@ namespace Content.Client.Chat
             _filterPopup.OnPopupHide -= OnPopupHide;
         }
 
+        private void RepopulateChannelFilter(bool resetToDefault = false)
+        {
+            // TODO: Save previous selections
+            HashSet<ChatChannel> selectedChannels;
+            if (resetToDefault)
+            {
+                selectedChannels = DefaultChannelFilter;
+            }
+            else
+            {
+                selectedChannels = new HashSet<ChatChannel>();
+                foreach (var child in _filterVBox.Children)
+                {
+                    if (child is not ChannelFilterCheckbox checkbox) continue;
+                    if (checkbox.Pressed) selectedChannels.Add(checkbox.Channel);
+                }
+            }
+
+            _filterVBox.Children.Clear();
+            _filterVBox.AddChild(new Control {CustomMinimumSize = (10, 0)});
+            foreach (var channelFilter in ChannelFilters)
+            {
+                _filterVBox.AddChild(new ChannelFilterCheckbox(channelFilter)
+                {
+                    Pressed = selectedChannels.Contains(channelFilter)
+                });
+            }
+            _filterVBox.AddChild(new Control {CustomMinimumSize = (10, 0)});
+        }
 
         private void RepopulateChannelSelector()
         {
@@ -545,5 +584,25 @@ namespace Content.Client.Chat
             UpdateChildColors();
         }
 
+    }
+
+    public sealed class ChannelFilterCheckbox : CheckBox
+    {
+        public ChatChannel Channel { get; }
+
+        public ChannelFilterCheckbox(ChatChannel channel)
+        {
+            Channel = channel;
+
+            var name = channel switch
+            {
+                ChatChannel.AdminChat => "Admin",
+                ChatChannel.Unspecified => throw new InvalidOperationException(
+                    "cannot create chat filter for Unspecified"),
+                _ => channel.ToString()
+            };
+
+            Text = name;
+        }
     }
 }
