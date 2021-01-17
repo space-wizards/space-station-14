@@ -61,7 +61,7 @@ namespace Content.Server.Commands.GameTicking
             shell.ExecuteCommand(player, "aghost");
             shell.ExecuteCommand(player, $"tp 0 0 {mapId}");
 
-            var newGrid = mapManager.GetAllGrids().OrderByDescending(g => g.Index).First();
+            var newGrid = mapManager.GetAllGrids().OrderByDescending(g => (int) g.Index).First();
             var pauseManager = IoCManager.Resolve<IPauseManager>();
 
             pauseManager.SetMapPaused(newGrid.ParentMapId, true);
