@@ -39,10 +39,10 @@
     inletDirection: West
     outletDirection: East
   - type: Sprite
-    state: pumpPressure2
+    state: pumpPressure
   - type: Icon
-    state: pumpPressure2
+    state: pumpPressure
   - type: Appearance
     visuals:
     - type: PumpVisualizer
-      pumpEnabledState: pumpPressure2On
+      pumpEnabledState: pumpPressureOn
