@@ -31,12 +31,13 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             var tag = GetTag(from.ContainedEntities.FirstOrDefault());
 
+            if(tag != null) holderComponent.Tags.Add(tag);
             foreach (var entity in from.ContainedEntities.ToArray())
             {
                 if (GetTag(entity) == tag)
                 {
                     holderComponent.TryInsert(entity);
-                    entity.RemoveComponent<DisposalTagComponent>();
+                    if(entity.HasComponent<DisposalTagComponent>()) entity.RemoveComponent<DisposalTagComponent>();
                 }
             }
 

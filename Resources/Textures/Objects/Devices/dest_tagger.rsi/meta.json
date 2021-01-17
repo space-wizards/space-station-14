@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "GPLv3",
+  "copyright": "https://github.com/vgstation-coders/vgstation13/blob/e3d4b9d3fa7eabfaa978f06a878c384adf29016c/icons/obj/device.dmi",
+  "states": [
+    {
+      "name": "tagger",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    }
+  ]
+}

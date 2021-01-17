@@ -68,16 +68,19 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// <param name="obj">A user interface message from the client.</param>
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
-            var msg = (UiActionMessage) obj.Message;
-
-            if (!PlayerCanUseDisposalTagger(obj.Session))
-                return;
-
-            //Check for correct message and ignore maleformed strings
-            if (msg.Action == UiAction.Ok && TagRegex.IsMatch(msg.Tag))
+            switch (obj.Message)
             {
-                    _tag = msg.Tag;
-                    ClickSound();
+                case UiActionMessage msg:
+                    if (!PlayerCanUseDisposalTagger(obj.Session))
+                        return;
+
+                    //Check for correct message and ignore maleformed strings
+                    if (msg.Action == UiAction.Ok && TagRegex.IsMatch(msg.Tag))
+                    {
+                        _tag = msg.Tag;
+                        ClickSound();
+                    }
+                    return;
             }
         }
 

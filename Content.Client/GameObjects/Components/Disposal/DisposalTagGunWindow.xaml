@@ -1,0 +1,8 @@
+<cc:SS14Window
+    xmlns:cc="clr-namespace:Robust.Client.UserInterface.CustomControls;assembly=Robust.Client"
+    xmlns:c="clr-namespace:Robust.Client.UserInterface.Controls;assembly=Robust.Client">
+    <c:VBoxContainer>
+        <c:Label Text="Set label:" SizeFlagsHorizontal="ShrinkCenter"/>
+        <c:LineEdit Name="lineEdit"/>
+    </c:VBoxContainer>
+</cc:SS14Window>
