@@ -12,6 +12,8 @@ using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Utility;
 using Content.Shared.GameObjects.Components.Pulling;
+using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Physics.Broadphase;
 using static Content.Shared.GameObjects.EntitySystems.SharedInteractionSystem;
 
 namespace Content.Shared.Physics.Pull
@@ -79,7 +81,7 @@ namespace Content.Shared.Physics.Pull
             var ray = new CollisionRay(origin, velocity, (int) CollisionGroup.AllMask);
             bool Predicate(IEntity e) => e != ControlledComponent.Owner;
             var rayResults =
-                _physicsManager.IntersectRayWithPredicate(mapId, ray, DistBeforeStopPull, Predicate);
+                EntitySystem.Get<SharedBroadPhaseSystem>().IntersectRayWithPredicate(mapId, ray, DistBeforeStopPull, Predicate);
 
             return rayResults.Any();
         }

@@ -1,10 +1,12 @@
 ﻿using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Broadphase;
 
 namespace Content.Shared.Physics
 {
@@ -29,10 +31,12 @@ namespace Content.Shared.Physics
                 return;
             }
 
+            var broadPhase = EntitySystem.Get<SharedBroadPhaseSystem>();
+
             if (ControlledComponent.Owner.IsWeightless())
             {
                 if (ActionBlockerSystem.CanMove(ControlledComponent.Owner)
-                    && ControlledComponent.IsColliding(Vector2.Zero, false))
+                    && broadPhase.IsColliding(ControlledComponent, Vector2.Zero, false))
                 {
                     Stop();
                 }

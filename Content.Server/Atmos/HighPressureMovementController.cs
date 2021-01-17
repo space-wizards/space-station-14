@@ -15,7 +15,6 @@ namespace Content.Server.Atmos
     public class HighPressureMovementController : FrictionController
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
-        public override IPhysicsComponent? ControlledComponent { protected get; set; }
 
         private const float MoveForcePushRatio = 1f;
         private const float MoveForceForcePushRatio = 1f;

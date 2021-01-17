@@ -8,8 +8,6 @@ namespace Content.Shared.Physics
 {
     public class MoverController : VirtualController
     {
-        public override IPhysicsComponent? ControlledComponent { protected get; set; }
-
         public void Move(Vector2 velocityDirection, float speed)
         {
             if (ControlledComponent?.Owner.IsWeightless() ?? false)

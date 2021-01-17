@@ -48,7 +48,7 @@ namespace Content.Server.Throw
                 return;
             }
 
-            if (!thrownEnt.TryGetComponent(out IPhysicsComponent colComp))
+            if (!thrownEnt.TryGetComponent(out PhysicsComponent colComp))
                 return;
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
@@ -66,10 +66,10 @@ namespace Content.Server.Throw
             {
                 projComp = thrownEnt.AddComponent<ThrownItemComponent>();
 
-                if (colComp.PhysicsShapes.Count == 0)
-                    colComp.PhysicsShapes.Add(new PhysShapeAabb());
+                if (colComp.Fixtures.Count == 0)
+                    colComp.AddFixture(new Fixture(colComp, new PhysShapeAabb()));
 
-                colComp.PhysicsShapes[0].CollisionMask |= (int) CollisionGroup.ThrownItem;
+                colComp.Fixtures[0].CollisionMask |= (int) CollisionGroup.ThrownItem;
                 colComp.Status = BodyStatus.InAir;
             }
 

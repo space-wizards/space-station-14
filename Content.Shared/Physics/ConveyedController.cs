@@ -11,8 +11,6 @@ namespace Content.Shared.Physics
 {
     public class ConveyedController : VirtualController
     {
-        public override IPhysicsComponent? ControlledComponent { protected get; set; }
-
         public void Move(Vector2 velocityDirection, float speed, Vector2 itemRelativeToConveyor)
         {
             if (ControlledComponent?.Owner.IsWeightless() ?? false)

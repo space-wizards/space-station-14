@@ -135,12 +135,12 @@ namespace Content.Shared.GameObjects.Components.Movement
 
             physics.Hard = false;
 
-            var shape = physics.PhysicsShapes.FirstOrDefault();
+            var fixtures = physics.Fixtures.FirstOrDefault();
 
-            if (shape != null)
+            if (fixtures != null)
             {
-                shape.CollisionLayer |= (int) CollisionGroup.SmallImpassable;
-                shape.CollisionMask = (int) CollisionGroup.None;
+                fixtures.CollisionLayer |= (int) CollisionGroup.SmallImpassable;
+                fixtures.CollisionMask = (int) CollisionGroup.None;
             }
         }
 

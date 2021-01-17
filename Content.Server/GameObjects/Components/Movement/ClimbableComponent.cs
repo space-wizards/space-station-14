@@ -20,6 +20,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -171,7 +172,7 @@ namespace Content.Server.GameObjects.Components.Movement
 
             var result = await EntitySystem.Get<DoAfterSystem>().DoAfter(doAfterEventArgs);
 
-            if (result != DoAfterStatus.Cancelled && entityToMove.TryGetComponent(out IPhysicsComponent body) && body.PhysicsShapes.Count >= 1)
+            if (result != DoAfterStatus.Cancelled && entityToMove.TryGetComponent(out PhysicsComponent body) && body.Fixtures.Count >= 1)
             {
                 var direction = (Owner.Transform.WorldPosition - entityToMove.Transform.WorldPosition).Normalized;
                 var endPoint = Owner.Transform.WorldPosition;
@@ -216,7 +217,7 @@ namespace Content.Server.GameObjects.Components.Movement
 
             var result = await EntitySystem.Get<DoAfterSystem>().DoAfter(doAfterEventArgs);
 
-            if (result != DoAfterStatus.Cancelled && user.TryGetComponent(out IPhysicsComponent body) && body.PhysicsShapes.Count >= 1)
+            if (result != DoAfterStatus.Cancelled && user.TryGetComponent(out PhysicsComponent body) && body.Fixtures.Count >= 1)
             {
                 var direction = (Owner.Transform.WorldPosition - user.Transform.WorldPosition).Normalized;
                 var endPoint = Owner.Transform.WorldPosition;

@@ -26,6 +26,8 @@ using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timers.Timer;
@@ -312,15 +314,16 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private void CheckCrush()
         {
-            if (!Owner.TryGetComponent(out IPhysicsComponent? body))
+            if (!Owner.TryGetComponent(out IPhysBody? body))
                 return;
 
             // Crush
-            foreach (var e in body.GetCollidingEntities(Vector2.Zero, false))
+            foreach (var otherBody in body.GetCollidingEntities(Vector2.Zero, false))
             {
+                var e = otherBody.Entity;
+
                 if (!e.TryGetComponent(out StunnableComponent? stun)
-                    || !e.TryGetComponent(out IDamageableComponent? damage)
-                    || !e.TryGetComponent(out IPhysicsComponent? otherBody))
+                    || !e.TryGetComponent(out IDamageableComponent? damage))
                     continue;
 
                 var percentage = otherBody.WorldAABB.IntersectPercentage(body.WorldAABB);
@@ -386,11 +389,11 @@ namespace Content.Server.GameObjects.Components.Doors
         public bool Close()
         {
             bool shouldCheckCrush = false;
-            if (Owner.TryGetComponent(out IPhysicsComponent? physics))
+            if (Owner.TryGetComponent(out PhysicsComponent? physics))
                 physics.CanCollide = true;
 
             if (_canCrush && physics != null &&
-                physics.IsColliding(Vector2.Zero, false))
+                EntitySystem.Get<SharedBroadPhaseSystem>().IsColliding(physics, Vector2.Zero, false))
             {
                 if (Safety)
                 {

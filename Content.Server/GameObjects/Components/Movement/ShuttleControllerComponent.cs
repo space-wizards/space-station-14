@@ -14,6 +14,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -69,12 +70,12 @@ namespace Content.Server.GameObjects.Components.Movement
                 Owner.EntityManager.TryGetEntity(grid.GridEntityId, out var gridEntity))
             {
                 //TODO: Switch to shuttle component
-                if (!gridEntity.TryGetComponent(out IPhysicsComponent? physics))
+                if (!gridEntity.TryGetComponent(out PhysicsComponent? physics))
                 {
                     physics = gridEntity.AddComponent<PhysicsComponent>();
                     physics.Mass = 1;
                     physics.CanCollide = true;
-                    physics.PhysicsShapes.Add(new PhysShapeGrid(grid));
+                    physics.AddFixture(new Fixture(physics, new PhysShapeGrid(grid)));
                 }
 
                 var controller = physics.EnsureController<ShuttleController>();

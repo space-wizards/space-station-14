@@ -1,7 +1,9 @@
-﻿using Robust.Shared.Interfaces.Physics;
+﻿using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Broadphase;
 
 namespace Content.Shared.Physics
 {
@@ -23,9 +25,11 @@ namespace Content.Shared.Physics
                 return;
             }
 
+            var broadPhase = EntitySystem.Get<SharedBroadPhaseSystem>();
+
             if (_physicsManager.IsWeightless(ControlledComponent.Owner.Transform.Coordinates))
             {
-                if (ControlledComponent.IsColliding(Vector2.Zero, false))
+                if (broadPhase.IsColliding(ControlledComponent, Vector2.Zero, false))
                 {
                     Stop();
                 }
