@@ -1,14 +1,13 @@
 #nullable enable
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 using System.Collections.Generic;
 
-namespace Content.Server.GameObjects.Components.Power
+namespace Content.Client.GameObjects.Components.Power
 {
     [RegisterComponent]
-    public class DummyWireComponent : Component, IMapInit
+    public class DummyWireComponent : Component
     {
         public override string Name => "DummyWire";
 
@@ -22,7 +21,13 @@ namespace Content.Server.GameObjects.Components.Power
             serializer.DataField(ref _dummyWireProtos, "prototype", new List<string> { "HVDummyWire" });
         }
 
-        void IMapInit.MapInit()
+        public override void Initialize()
+        {
+            base.Initialize();
+            SpawnWires();
+        }
+
+        private void SpawnWires()
         {
             foreach (var proto in _dummyWireProtos)
             {
