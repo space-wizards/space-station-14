@@ -273,15 +273,21 @@ namespace Content.Client.Chat
                 //_filterPopup.Open(box);
                 _filterPopup.Open();
             }
+            else
+            {
+                _filterPopup.Close();
+            }
         }
 
         private void OnPopupHide()
         {
             UserInterfaceManager.ModalRoot.RemoveChild(_filterPopup);
-            // need the AttemptingPress check because the popup is hidden automatically on keydown anywhere
-            // (including the button), but we don't fire this OnToggled event until keyup, so without this
-            // check it would reopen the filter popup if you clicked directly on the button
-            if (!_filterButton.AttemptingPress)
+            // this weird check here is because the hiding of the popup happens prior to the filter button
+            // receiving the keydown, which would cause it to then become unpressed
+            // and reopen immediately. To avoid this, if the popup was hidden due to clicking on the filter button,
+            // we will not auto-unpress the button, instead leaving it up to the button toggle logic
+            // (and this requires the button to be set to EnableAllKeybinds = true)
+            if (UserInterfaceManager.CurrentlyHovered != _filterButton)
             {
                 _filterButton.Pressed = false;
             }
@@ -472,6 +478,10 @@ namespace Content.Client.Chat
             var filterTexture = IoCManager.Resolve<IResourceCache>()
                 .GetTexture("/Textures/Interface/Nano/filter.svg.96dpi.png");
 
+            Mode = ActionMode.Press;
+            // needed so the popup is untoggled regardless of which key is pressed when hovering this button
+            EnableAllKeybinds = true;
+
             AddChild(
                 (_textureRect = new TextureRect
                 {
@@ -481,6 +491,13 @@ namespace Content.Client.Chat
                 })
             );
             ToggleMode = true;
+        }
+
+        protected override void KeyBindDown(GUIBoundKeyEventArgs args)
+        {
+            // needed since we need EnableAllKeybinds - don't double-send both UI click and Use
+            if (args.Function == EngineKeyFunctions.Use) return;
+            base.KeyBindDown(args);
         }
 
         private void UpdateChildColors()
