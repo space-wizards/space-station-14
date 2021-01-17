@@ -18,6 +18,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using System.Threading.Tasks;
@@ -49,7 +50,7 @@ namespace Content.Server.GameObjects.Components.Watercloset
         {
             // roll is toilet seat will be up or down
             var random = IoCManager.Resolve<IRobustRandom>();
-            IsSeatUp = random.NextDouble() > 0.5f;
+            IsSeatUp = random.Prob(0.5f);
             UpdateSprite();
         }
 
