@@ -1,21 +1,13 @@
-using System;
-using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Doors;
-using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.Interfaces.GameObjects.Components.Doors;
-using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Doors;
-using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
 using Robust.Shared.ViewVariables;
-
 using Content.Server.Atmos;
 using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects.Systems;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {

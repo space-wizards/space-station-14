@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading;
 using Content.Server.GameObjects.Components.Suspicion;
 using Content.Server.GameObjects.EntitySystems;
@@ -50,7 +50,7 @@ namespace Content.Server.GameTicking.GameRules
 
             EntitySystem.Get<AudioSystem>().PlayGlobal("/Audio/Misc/tatoralert.ogg", AudioParams.Default, Predicate);
 
-            EntitySystem.Get<DoorSystem>().AccessType = DoorSystem.AccessTypes.AllowAllNoExternal;
+            EntitySystem.Get<ServerDoorSystem>().AccessType = ServerDoorSystem.AccessTypes.AllowAllNoExternal;
 
             Timer.SpawnRepeating(DeadCheckDelay, CheckWinConditions, _checkTimerCancel.Token);
 
@@ -63,7 +63,7 @@ namespace Content.Server.GameTicking.GameRules
 
             _gameTicker.OnRunLevelChanged -= RunLevelChanged;
 
-            EntitySystem.Get<DoorSystem>().AccessType = DoorSystem.AccessTypes.Id;
+            EntitySystem.Get<ServerDoorSystem>().AccessType = ServerDoorSystem.AccessTypes.Id;
 
             _checkTimerCancel.Cancel();
         }

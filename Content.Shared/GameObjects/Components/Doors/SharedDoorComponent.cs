@@ -6,39 +6,75 @@ using Robust.Shared.IoC;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Physics;
 
 namespace Content.Shared.GameObjects.Components.Doors
 {
     /// <summary>
     ///     Used for clientside "prediction" of door opens, preventing jarring mispredicts. Bare-bones.
-    ///     Most actual behavior is handled serverside, by <see cref="ServerDoorComponent"/> The server tells
+    ///     Most actual behavior is handled serverside, by ServerDoorComponent. The server tells
     ///     the client that the door is opening in N seconds, and the client turns the door's collision off in N seconds. 
     /// </summary>
-    public abstract class SharedDoorComponent : Component
+    public abstract class SharedDoorComponent : Component, ICollideSpecial
     {
-        //        public override string Name => "No idea.";
+        public override string Name => "Door";
         public override uint? NetID => ContentNetIDs.DOOR;
 
         [ViewVariables]
         protected DoorState _state = DoorState.Closed;
 
-        // closing time until impassable
-        protected TimeSpan CloseTimeOne = TimeSpan.FromSeconds(0.6f);
-        // closing time until fully open
-        protected TimeSpan CloseTimeTwo = TimeSpan.FromSeconds(0.3f);
-        // opening time until passable
-        protected TimeSpan OpenTimeOne = TimeSpan.FromSeconds(0.6f);
-        // opening time until fully open
-        protected TimeSpan OpenTimeTwo = TimeSpan.FromSeconds(0.3f);
+        /// <summary>
+        /// Closing time until impassable.
+        /// </summary>
+        protected TimeSpan CloseTimeOne = TimeSpan.FromSeconds(0.4f);
+        /// <summary>
+        /// Closing time until fully closed.
+        /// </summary>
+        protected TimeSpan CloseTimeTwo = TimeSpan.FromSeconds(0.2f);
+        /// <summary>
+        /// Opening time until passable.
+        /// </summary>
+        protected TimeSpan OpenTimeOne = TimeSpan.FromSeconds(0.4f);
+        /// <summary>
+        /// Opening time until fully open.
+        /// </summary>
+        protected TimeSpan OpenTimeTwo = TimeSpan.FromSeconds(0.2f);
+        /// <summary>
+        /// Time to finish denying.
+        /// </summary>
         protected static TimeSpan DenyTime => TimeSpan.FromSeconds(0.45f);
 
         [ViewVariables(VVAccess.ReadWrite)] private bool _occludes;
         public bool Occludes => _occludes;
 
         /// <summary>
-        /// Used by <see cref="ServerDoorComponent"/> to get the CurTime for the client to use to synchronize a "timer" with, and by <see cref="ClientDoorComponent"/> to know the CurTime to correctly use the "timer".
+        /// Used by ServerDoorComponent to get the CurTime for the client to use to know when to open, and by ClientDoorComponent to know the CurTime to correctly open.
         /// </summary>
         [Dependency] protected IGameTiming GameTiming = default!;
+
+        /// <summary>
+        /// The time the door began to open or close, if the door is opening or closing, or null if it is neither.
+        /// </summary>
+        protected TimeSpan? StateChangeStartTime = null;
+
+        // secret real value of CurrentlyCrushing
+        private EntityUid? _currentlyCrushing = null;
+        /// <summary>
+        /// The EntityUid of the entity we're currently crushing, or null if we aren't crushing anyone. Reset to null in OnPartialOpen().
+        /// </summary>
+        protected EntityUid? CurrentlyCrushing
+        {
+            get => _currentlyCrushing;
+            set
+            {
+                if (_currentlyCrushing == value)
+                {
+                    return;
+                }
+                _currentlyCrushing = value;
+                Dirty();
+            }
+        } 
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -49,29 +85,38 @@ namespace Content.Shared.GameObjects.Components.Doors
 
             serializer.DataReadWriteFunction(
                 "CloseTimeOne",
-                0.6f,
+                0.4f,
                 seconds => CloseTimeOne = TimeSpan.FromSeconds(seconds),
                 () => CloseTimeOne.TotalSeconds);
 
             serializer.DataReadWriteFunction(
                 "CloseTimeTwo",
-                0.3f,
+                0.2f,
                 seconds => CloseTimeTwo = TimeSpan.FromSeconds(seconds),
                 () => CloseTimeOne.TotalSeconds);
 
             serializer.DataReadWriteFunction(
                 "OpenTimeOne",
-                0.6f,
+                0.4f,
                 seconds => OpenTimeOne = TimeSpan.FromSeconds(seconds),
                 () => CloseTimeOne.TotalSeconds);
 
             serializer.DataReadWriteFunction(
                 "OpenTimeTwo",
-                0.3f,
+                0.2f,
                 seconds => OpenTimeTwo = TimeSpan.FromSeconds(seconds),
                 () => CloseTimeOne.TotalSeconds);
         }
 
+        // stops us colliding with people we're crushing, to prevent hitbox clipping and jank
+        public bool PreventCollide(IPhysBody collidedwith)
+        {
+            return CurrentlyCrushing == collidedwith.Entity.Uid;
+        }
+
+        /// <summary>
+        /// Called when the door first begins to open.
+        /// </summary>
         protected virtual void OnStartOpen()
         {
             if (Occludes && Owner.TryGetComponent(out OccluderComponent? occluder))
@@ -80,14 +125,22 @@ namespace Content.Shared.GameObjects.Components.Doors
             }
         }
 
+        /// <summary>
+        /// Called when the door is partially opened.
+        /// </summary>
         protected virtual void OnPartialOpen()
         {
             if (Owner.TryGetComponent(out IPhysicsComponent? physics))
             {
                 physics.CanCollide = false;
             }
+            // we can't be crushing anyone anymore, since we're opening
+            CurrentlyCrushing = null;
         }
 
+        /// <summary>
+        /// Called when the door is partially closed.
+        /// </summary>
         protected virtual void OnPartialClose()
         {
             if (Owner.TryGetComponent(out IPhysicsComponent? physics))
@@ -96,6 +149,9 @@ namespace Content.Shared.GameObjects.Components.Doors
             }
         }
 
+        /// <summary>
+        /// Called when the door is fully closed.
+        /// </summary>
         protected virtual void OnFullClose()
         {
             if (_occludes && Owner.TryGetComponent(out OccluderComponent? occluder))
@@ -103,6 +159,8 @@ namespace Content.Shared.GameObjects.Components.Doors
                 occluder.Enabled = true;
             }
         }
+
+        public virtual void OnUpdate(float frameTime) { }
 
         // KEEP THIS IN SYNC WITH THE METHOD DAMMIT
         [NetSerializable]
@@ -140,34 +198,7 @@ namespace Content.Shared.GameObjects.Components.Doors
         Opening,
         Closing,
         Deny,
-        Welded,
-        // used to force-stop the closing animation if necessary
-        EndAnimations
-    }
-    public class ClientDoorComponent : SharedDoorComponent
-    {
-        public override string Name => "Blagh.";
-
-
-
-
-
-
-    }
-
-    [Serializable, NetSerializable]
-    public class DoorComponentState : ComponentState
-    {
-        public readonly SharedDoorComponent.DoorState DoorState;
-        public readonly TimeSpan? StartTime;
-        public readonly TimeSpan? Duration;
-
-        public DoorComponentState(uint netID, SharedDoorComponent.DoorState doorState, TimeSpan? startTime, TimeSpan? duration) : base(netID)
-        {
-            DoorState = doorState;
-            StartTime = startTime;
-            Duration = duration;
-        }
+        Welded
     }
 
     [NetSerializable]
@@ -177,5 +208,34 @@ namespace Content.Shared.GameObjects.Components.Doors
         VisualState,
         Powered,
         BoltLights
+    }
+
+    [Serializable, NetSerializable]
+    public class DoorComponentState : ComponentState
+    {
+        public readonly SharedDoorComponent.DoorState DoorState;
+        public readonly TimeSpan? StartTime;
+        public readonly TimeSpan? CurTime;
+        public readonly EntityUid? CurrentlyCrushing;
+
+        public DoorComponentState(SharedDoorComponent.DoorState doorState, TimeSpan? startTime, TimeSpan? curTime, EntityUid? currentlyCrushing) : base(ContentNetIDs.DOOR)
+        {
+            DoorState = doorState;
+            StartTime = startTime;
+            CurTime = curTime;
+            CurrentlyCrushing = currentlyCrushing;
+        }
+    }
+
+    public sealed class DoorStateMessage : EntitySystemMessage
+    {
+        public SharedDoorComponent Component { get; }
+        public SharedDoorComponent.DoorState State { get; }
+
+        public DoorStateMessage(SharedDoorComponent component, SharedDoorComponent.DoorState state)
+        {
+            Component = component;
+            State = state;
+        }
     }
 }

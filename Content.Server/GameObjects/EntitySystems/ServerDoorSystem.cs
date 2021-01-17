@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Doors;
+using System;
+using Content.Shared.GameObjects.Components.Doors;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
+using Content.Shared.GameObjects.EntitySystems;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
-    [UsedImplicitly]
-    class DoorSystem : EntitySystem
+    /// <summary>
+    /// Used on the server side to automatically close open-doors that auto-close by calling OnUpdate on them.
+    /// </summary>
+    class ServerDoorSystem : SharedDoorSystem
     {
         /// <summary>
         ///     Determines the base access behavior of all doors on the station.
@@ -35,44 +35,28 @@ namespace Content.Server.GameObjects.EntitySystems
             AllowAll
         }
 
-        private readonly List<ServerDoorComponent> _activeDoors = new();
-
         public override void Initialize()
         {
             base.Initialize();
 
             AccessType = AccessTypes.Id;
-            SubscribeLocalEvent<DoorStateMessage>(HandleDoorState);
         }
 
-        private void HandleDoorState(DoorStateMessage message)
+        protected override void HandleDoorState(DoorStateMessage message)
         {
             switch (message.State)
             {
-                case ServerDoorComponent.DoorState.Closed:
-                    _activeDoors.Remove(message.Component);
+                case SharedDoorComponent.DoorState.Closed:
+                    ActiveDoors.Remove(message.Component);
                     break;
-                case ServerDoorComponent.DoorState.Open:
-                    _activeDoors.Add(message.Component);
+                case SharedDoorComponent.DoorState.Open:
+                    ActiveDoors.Add(message.Component);
                     break;
-                case ServerDoorComponent.DoorState.Closing:
-                case ServerDoorComponent.DoorState.Opening:
+                case SharedDoorComponent.DoorState.Closing:
+                case SharedDoorComponent.DoorState.Opening:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
-            }
-        }
-
-        /// <inheritdoc />
-        public override void Update(float frameTime)
-        {
-            for (var i = _activeDoors.Count - 1; i >= 0; i--)
-            {
-                var comp = _activeDoors[i];
-                if (comp.Deleted)
-                    _activeDoors.RemoveAt(i);
-
-                comp.OnUpdate(frameTime);
             }
         }
     }

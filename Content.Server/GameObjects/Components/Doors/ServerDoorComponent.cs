@@ -2,7 +2,6 @@
 using System;
 using System.Linq;
 using System.Threading;
-using Content.Server.Atmos;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.Atmos;
@@ -27,6 +26,7 @@ using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timers.Timer;
@@ -37,24 +37,32 @@ namespace Content.Server.GameObjects.Components.Doors
     [ComponentReference(typeof(IActivate))]
     public class ServerDoorComponent : SharedDoorComponent, IActivate, ICollideBehavior, IInteractUsing
     {
-        public override string Name => "Door";
-
         public DoorState State
         {
             get => _state;
             private set
             {
                 if (_state == value)
+                {
                     return;
+                }
 
                 _state = value;
+                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new DoorStateMessage(this, State));
 
                 SetAppearance(DoorStateToDoorVisualState(State));
-                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new DoorStateMessage(this, State));
-                if(Owner.TryGetComponent(out IDoorCheck? doorCheck))
+                StateChangeStartTime = State switch
+                {
+                    DoorState.Open or DoorState.Closed => null,
+                    DoorState.Opening or DoorState.Closing => GameTiming.CurTime,
+                    _ => throw new ArgumentOutOfRangeException(),
+                };
+
+                if (Owner.TryGetComponent(out IDoorCheck? doorCheck))
                 {
                     doorCheck.OnStateChange(State);
                 }
+                Dirty();
             }
         }
 
@@ -68,8 +76,16 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private const int DoorCrushDamage = 15;
         private const float DoorStunTime = 5f;
+
+        private bool _canCrush = true;
+        private bool _safety = true;
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool Safety = true;
+        public bool Safety
+        {
+            get => _safety || !_canCrush;
+            set => _safety = value;
+        }
+
 
         [ViewVariables(VVAccess.ReadWrite)] private bool _bumpOpen;
 
@@ -92,15 +108,14 @@ namespace Content.Server.GameObjects.Components.Doors
         }
         private bool _isWeldedShut;
 
-        private bool _canWeldShut = true;
+        private bool _weldable = true;
+        private bool CanWeldShut => _weldable && State == DoorState.Closed;
 
         /// <summary>
         ///     Whether something is currently using a welder on this so DoAfter isn't spammed.
         /// </summary>
         private bool _beingWelded = false;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        private bool _canCrush = true;
 
         private bool _startOpen = false;
 
@@ -109,14 +124,19 @@ namespace Content.Server.GameObjects.Components.Doors
             base.ExposeData(serializer);
 
             // note -- these two need to be finished up later in Startup(), due to other components not being finished until then.
-            // also, an airlock won't start open if its prototype says it's welded shut.
+            // also, an airlock won't start open if its prototype says it's welded shut, or start welded shut if it isn't weldable.
             serializer.DataField(ref _isWeldedShut, "welded", false);
             serializer.DataField(ref _startOpen, "startOpen", false);
 
-            serializer.DataField(ref Safety, "Safety", true);
+            // Whether the door can be welded shut.
+            serializer.DataField(ref _weldable, "weldable", true);
             serializer.DataField(ref AutoClose, "AutoClose", true);
             serializer.DataField(ref _bumpOpen, "bumpOpen", true);
+
+            // Whether the door will crush at all. In order to crush, safety must be false AND canCrush must be true.
             serializer.DataField(ref _canCrush, "canCrush", true);
+            // Whether safety is on by default.
+            serializer.DataField(ref _safety, "safety", true);
         }
 
         // necessary to ensure that prototype-loaded welded / open-by-default doors behave correctly
@@ -124,7 +144,7 @@ namespace Content.Server.GameObjects.Components.Doors
         {
             base.Startup();
 
-            if (IsWeldedShut)
+            if (IsWeldedShut && CanWeldShut)
             {
                 SetAppearance(DoorVisualState.Welded);
             }
@@ -231,14 +251,14 @@ namespace Content.Server.GameObjects.Components.Doors
                 return true;
             }
 
-            var doorSystem = EntitySystem.Get<DoorSystem>();
+            var doorSystem = EntitySystem.Get<ServerDoorSystem>();
             var isAirlockExternal = HasAccessType("External");
 
             return doorSystem.AccessType switch
             {
-                DoorSystem.AccessTypes.AllowAll => true,
-                DoorSystem.AccessTypes.AllowAllIdExternal => isAirlockExternal || accessReader.IsAllowed(user),
-                DoorSystem.AccessTypes.AllowAllNoExternal => !isAirlockExternal,
+                ServerDoorSystem.AccessTypes.AllowAll => true,
+                ServerDoorSystem.AccessTypes.AllowAllIdExternal => isAirlockExternal || accessReader.IsAllowed(user),
+                ServerDoorSystem.AccessTypes.AllowAllNoExternal => !isAirlockExternal,
                 _ => accessReader.IsAllowed(user)
             };
         }
@@ -264,34 +284,18 @@ namespace Content.Server.GameObjects.Components.Doors
 
         public void Open()
         {
-            // Closing allowed due to need to open while door is closing if crushing somebody with safety on
-            if (!(State == DoorState.Closed || State == DoorState.Closing))
-            {
-                return;
-            }
-
             State = DoorState.Opening;
-
             OnStartOpen();
 
             _cancellationTokenSource?.Cancel();
             _cancellationTokenSource = new();
-
             Owner.SpawnTimer(OpenTimeOne, async () =>
             {
                 OnPartialOpen();
-                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new AccessReaderChangeMessage(Owner, false));
-
                 await Timer.Delay(OpenTimeTwo, _cancellationTokenSource.Token);
 
                 State = DoorState.Open;
             }, _cancellationTokenSource.Token);
-        }
-
-        protected override void OnStartOpen()
-        {
-            _canWeldShut = false;
-            base.OnStartOpen();
         }
 
         protected override void OnPartialOpen()
@@ -301,6 +305,7 @@ namespace Content.Server.GameObjects.Components.Doors
                 airtight.AirBlocked = false;
             }
             base.OnPartialOpen();
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new AccessReaderChangeMessage(Owner, false));
         }
 
         private void QuickOpen()
@@ -367,6 +372,10 @@ namespace Content.Server.GameObjects.Components.Doors
             return SafetyCheck();
         }
 
+        /// <summary>
+        /// Checks if we are allowed to crush people, and if something is colliding with the door.
+        /// </summary>
+        /// <returns>True if nothing is colliding with us, and false if something is.</returns>
         public bool SafetyCheck()
         {
             if (Safety && Owner.TryGetComponent(out IPhysicsComponent? physics))
@@ -388,31 +397,20 @@ namespace Content.Server.GameObjects.Components.Doors
         {
             State = DoorState.Closing;
             _openTimeCounter = 0;
+
             _cancellationTokenSource?.Cancel();
             _cancellationTokenSource = new();
-
             Owner.SpawnTimer(CloseTimeOne, async () =>
             {
                 // if somebody walked into the door as it was closing, and we don't crush things
-                if (!SafetyCheck() || !_canCrush)
+                if (!SafetyCheck())
                 {
-                    SetAppearance(DoorVisualState.EndAnimations);
                     Open();
                     return;
                 }
 
-                // otherwise...
                 OnPartialClose();
-
-                if (_canCrush)
-                {
-                    TryCrush();
-                }
-
-                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new AccessReaderChangeMessage(Owner, true));
-
                 await Timer.Delay(CloseTimeTwo, _cancellationTokenSource.Token);
-
                 OnFullClose();
 
                 State = DoorState.Closed;
@@ -421,28 +419,30 @@ namespace Content.Server.GameObjects.Components.Doors
 
         protected override void OnPartialClose()
         {
-            if (Owner.TryGetComponent(out AirtightComponent? airtight))
+            base.OnPartialClose();
+
+            var becomeAirtight = true;
+            if (!Safety)
+            {
+                // crushes people inside of the door, temporarily turning off collisions with them while doing so, to avoid jank
+                becomeAirtight = !TryCrush();
+            }
+            if (becomeAirtight && Owner.TryGetComponent(out AirtightComponent? airtight))
             {
                 airtight.AirBlocked = true;
             }
-            base.OnPartialClose();
-        }
 
-        protected override void OnFullClose()
-        {
-            base.OnFullClose();
-            _canWeldShut = true;
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new AccessReaderChangeMessage(Owner, true));
         }
-
-        #endregion
 
         /// <summary>
         /// Crushes everyone colliding with us by more than 10%. Not the same as checking if we should try to crush people; we will.
         /// </summary>
-        private void TryCrush()
+        /// <returns>True if we crushed somebody, false if we did not.</returns>
+        private bool TryCrush()
         {
             if (!Owner.TryGetComponent(out IPhysicsComponent? physics))
-                return;
+                return false;
 
             // Crush
             foreach (var e in physics.GetCollidingEntities(Vector2.Zero, false))
@@ -457,14 +457,19 @@ namespace Content.Server.GameObjects.Components.Doors
                 if (percentage < 0.1f)
                     continue;
 
+                CurrentlyCrushing = e.Uid;
+
                 damage.ChangeDamage(DamageType.Blunt, DoorCrushDamage, false, Owner);
                 stun.Paralyze(DoorStunTime);
 
                 // If we hit someone, open up after stun (opens right when stun ends)
                 Owner.SpawnTimer(TimeSpan.FromSeconds(DoorStunTime) - OpenTimeOne - OpenTimeTwo, Open);
-                break;
+                return true;
             }
+            return false;
         }
+
+        #endregion
 
         public void Deny()
         {
@@ -485,28 +490,7 @@ namespace Content.Server.GameObjects.Components.Doors
             }, _cancellationTokenSource.Token);
         }
 
-        // Should only be used to send a DoorComponentState to the client for it to predict opening/closing.
-        public override DoorComponentState GetComponentState()
-        {
-            TimeSpan? startTime = null;
-            TimeSpan? duration = null;
-
-            switch (State)
-            {
-                case DoorState.Opening:
-                    startTime = GameTiming.CurTime;
-                    duration = OpenTimeOne;
-                    break;
-                case DoorState.Closing:
-                    startTime = GameTiming.CurTime;
-                    duration = CloseTimeOne;
-                    break;
-            }
-
-            return new DoorComponentState((uint)NetID!, State, startTime, duration);
-        }
-
-        public void OnUpdate(float frameTime)
+        public override void OnUpdate(float frameTime)
         {
             if (State != DoorState.Open)
             {
@@ -578,12 +562,12 @@ namespace Content.Server.GameObjects.Components.Doors
             }
 
             // for welding doors
-            if (_canWeldShut && tool.Owner.TryGetComponent(out WelderComponent? welder) && welder.WelderLit)
+            if (CanWeldShut && tool.Owner.TryGetComponent(out WelderComponent? welder) && welder.WelderLit)
             {
                 if(!_beingWelded)
                 {
                     _beingWelded = true;
-                    if(await welder.UseTool(eventArgs.User, Owner, 3f, ToolQuality.Welding, 3f, () => _canWeldShut))
+                    if(await welder.UseTool(eventArgs.User, Owner, 3f, ToolQuality.Welding, 3f, () => CanWeldShut))
                     {
                         _beingWelded = false;
                         IsWeldedShut = !IsWeldedShut;
@@ -598,17 +582,10 @@ namespace Content.Server.GameObjects.Components.Doors
             }
             return false;
         }
-    }
 
-    public sealed class DoorStateMessage : EntitySystemMessage
-    {
-        public ServerDoorComponent Component { get; }
-        public SharedDoorComponent.DoorState State { get; }
-
-        public DoorStateMessage(ServerDoorComponent component, SharedDoorComponent.DoorState state)
+        public override ComponentState GetComponentState()
         {
-            Component = component;
-            State = state;
+            return new DoorComponentState(State, StateChangeStartTime, GameTiming.CurTime, CurrentlyCrushing);
         }
     }
 }

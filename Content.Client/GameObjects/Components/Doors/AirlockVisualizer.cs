@@ -117,42 +117,39 @@ namespace Content.Client.GameObjects.Components.Doors
             var weldedVisible = false;
             switch (state)
             {
+                case DoorVisualState.Open:
+                    sprite.LayerSetState(DoorVisualLayers.Base, "open");
+                    unlitVisible = false;
+                    break;
                 case DoorVisualState.Closed:
                     sprite.LayerSetState(DoorVisualLayers.Base, "closed");
                     sprite.LayerSetState(DoorVisualLayers.BaseUnlit, "closed_unlit");
                     sprite.LayerSetState(DoorVisualLayers.BaseBolted, "bolted");
                     sprite.LayerSetState(WiresVisualizer.WiresVisualLayers.MaintenancePanel, "panel_open");
                     break;
-                case DoorVisualState.Closing:
-                    if (!animPlayer.HasRunningAnimation(AnimationKey))
-                    {
-                        animPlayer.Play(CloseAnimation, AnimationKey);
-                    }
-                    break;
                 case DoorVisualState.Opening:
-                    if (!animPlayer.HasRunningAnimation(AnimationKey))
-                    {
-                        animPlayer.Play(OpenAnimation, AnimationKey);
-                    }
-                    break;
-                case DoorVisualState.Open:
-                    sprite.LayerSetState(DoorVisualLayers.Base, "open");
-                    unlitVisible = false;
-                    break;
-                case DoorVisualState.Deny:
-                    if (!animPlayer.HasRunningAnimation(AnimationKey))
-                    {
-                        animPlayer.Play(DenyAnimation, AnimationKey);
-                    }
-                    break;
-                case DoorVisualState.Welded:
-                    weldedVisible = true;
-                    break;
-                case DoorVisualState.EndAnimations:
                     if (animPlayer.HasRunningAnimation(AnimationKey))
                     {
                         animPlayer.Stop(AnimationKey);
                     }
+                    animPlayer.Play(OpenAnimation, AnimationKey);
+                    break;
+                case DoorVisualState.Closing:
+                    if (animPlayer.HasRunningAnimation(AnimationKey))
+                    {
+                        animPlayer.Stop(AnimationKey);
+                    }
+                    animPlayer.Play(CloseAnimation, AnimationKey);
+                    break;
+                case DoorVisualState.Deny:
+                    if (animPlayer.HasRunningAnimation(AnimationKey))
+                    {
+                        animPlayer.Stop(AnimationKey);
+                    }
+                    animPlayer.Play(DenyAnimation, AnimationKey);
+                    break;
+                case DoorVisualState.Welded:
+                    weldedVisible = true;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
