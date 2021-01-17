@@ -55,7 +55,11 @@ namespace Content.Client.GameObjects.Components.Explosion
 
             if (component.TryGetData(ClusterFlashVisuals.GrenadesCounter, out byte grenadesCounter))
             {
-                var level = ContentHelpers.RoundToLevels(grenadesCounter, max, _levels);
+                int level = grenadesCounter;
+                if (level > max || level < 0)
+                {
+                    return;
+                }
 
                 sprite.LayerSetState(ClusterFlashVisualLayers.Base, $"{_state}-{level}");
             }
