@@ -65,6 +65,8 @@ namespace Content.Client.Chat
         private readonly Popup _filterPopup;
         private readonly PanelContainer _filterPopupPanel;
 
+        private const float FilterPopupWidth = 110;
+
 
         public ChatBox()
         {
@@ -144,15 +146,25 @@ namespace Content.Client.Chat
                         StyleClasses = {StyleNano.StyleClassBorderedWindowPanel},
                         Children =
                         {
-                            new VBoxContainer
+                            new HBoxContainer
                             {
                                 Children =
                                 {
-                                    new CheckBox {Text = "Local"},
-                                    new CheckBox {Text = "Radio"},
-                                    new CheckBox {Text = "OOC"},
-                                    new CheckBox {Text = "Admin"},
-                                    new CheckBox {Text = "Server"}
+                                    new Control{CustomMinimumSize = (10,0)},
+                                    new VBoxContainer
+                                    {
+                                        SeparationOverride = 10,
+                                        Children =
+                                        {
+                                            new Control{CustomMinimumSize = (10,0)},
+                                            new CheckBox {Text = "Local"},
+                                            new CheckBox {Text = "Radio"},
+                                            new CheckBox {Text = "OOC"},
+                                            new CheckBox {Text = "Admin"},
+                                            new CheckBox {Text = "Server"},
+                                            new Control{CustomMinimumSize = (10,0)},
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -268,10 +280,9 @@ namespace Content.Client.Chat
             {
                 var globalPos = _filterButton.GlobalPosition;
                 var (minX, minY) = _filterPopupPanel.CombinedMinimumSize;
-                var box = UIBox2.FromDimensions(globalPos, (Math.Max(minX, Width), minY));
+                var box = UIBox2.FromDimensions(globalPos - (FilterPopupWidth, 0), (Math.Max(minX, FilterPopupWidth), minY));
                 UserInterfaceManager.ModalRoot.AddChild(_filterPopup);
-                //_filterPopup.Open(box);
-                _filterPopup.Open();
+                _filterPopup.Open(box);
             }
             else
             {
