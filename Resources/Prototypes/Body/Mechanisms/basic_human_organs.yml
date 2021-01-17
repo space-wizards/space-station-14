@@ -1,5 +1,24 @@
 - type: entity
+  id: BaseMechanism
+  parent: BaseItem
+  name: "base mechanism"
+  abstract: true
+  components:
+    - type: Mechanism
+
+- type: entity
+  id: BaseHumanOrgan
+  parent: BaseMechanism
+  name: "base human organ"
+  abstract: true
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Mobs/Species/Human/organs.rsi
+
+- type: entity
   id: BrainHuman
+  parent: BaseHumanOrgan
   name: "human brain"
   description: "The source of incredible, unending intelligence. Honk."
   components:
@@ -13,9 +32,11 @@
     compatibility: Biological
     behaviors:
     - !type:BrainBehavior {}
+  - type: Input
 
 - type: entity
   id: EyesHuman
+  parent: BaseHumanOrgan
   name: "human eyes"
   description: "Ocular organ capable of turning light into a colorful visual."
   components:
@@ -30,6 +51,7 @@
 
 - type: entity
   id: HeartHuman
+  parent: BaseHumanOrgan
   name: "human heart"
   description: "Pumps blood throughout a body. Essential for any entity with blood."
   components:
@@ -46,6 +68,7 @@
 
 - type: entity
   id: LungsHuman
+  parent: BaseHumanOrgan
   name: "human lungs"
   description: "Filters oxygen from an atmosphere, which is then sent into the bloodstream to be used as an electron carrier."
   components:
@@ -62,6 +85,7 @@
 
 - type: entity
   id: StomachHuman
+  parent: BaseHumanOrgan
   name: "human stomach"
   description: "Gross. This is hard to stomach."
   components:
@@ -82,6 +106,7 @@
 
 - type: entity
   id: LiverHuman
+  parent: BaseHumanOrgan
   name: "human liver"
   description: "Filters impurities out of a bloodstream and provides other important functionality to a human."
   components:
@@ -96,6 +121,7 @@
 
 - type: entity
   id: KidneysHuman
+  parent: BaseHumanOrgan
   name: "human kidneys"
   description: "Filters toxins out of a bloodstream."
   components:

@@ -20,7 +20,7 @@
   # Organs
   - type: SolutionContainer
     maxVol: 250
-    caps: AddTo, RemoveFrom, NoExamine
+    caps: AddTo, RemoveFrom
   - type: Bloodstream
     max_volume: 100
   # StatusEffects
@@ -125,6 +125,7 @@
       layer:
       - Opaque
       - MobImpassable
+  - type: PlayerInputMover
   - type: AtmosExposed
   - type: Flammable
     fireSpread: true
@@ -161,6 +162,11 @@
       0: !type:NormalMobState {}
       100: !type:CriticalMobState {}
       200: !type:DeadMobState {}
+  - type: Destructible
+    thresholds:
+      400:
+        behaviors:
+          - !type:GibBehavior { }
   - type: HeatResistance
   - type: Appearance
     visuals:
@@ -195,11 +201,11 @@
     interfaces:
     - key: enum.StrippingUiKey.Key
       type: StrippableBoundUserInterface
-    - key: enum.AcceptCloningUiKey.Key
-      type: AcceptCloningBoundUserInterface
   - type: Puller
   - type: Butcherable
     meat: FoodMeat
+  - type: Recyclable
+    safe: false
 
 - type: entity
   save: false

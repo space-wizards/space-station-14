@@ -1,10 +1,11 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
@@ -13,14 +14,15 @@ using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystemMessages;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Network;
-using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
@@ -39,12 +41,15 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         private const string LoggerName = "Storage";
 
         private Container? _storage;
+        private readonly Dictionary<IEntity, int> _sizeCache = new();
 
         private bool _occludesLight;
         private bool _storageInitialCalculated;
         private int _storageUsed;
         private int _storageCapacityMax;
         public readonly HashSet<IPlayerSession> SubscribedSessions = new();
+
+        public string? StorageSoundCollection { get; set; }
 
         [ViewVariables]
         public override IReadOnlyList<IEntity>? StoredEntities => _storage?.ContainedEntities;
@@ -135,11 +140,17 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 return;
             }
 
+            PlaySoundCollection(StorageSoundCollection);
             EnsureInitialCalculated();
 
             Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) had entity (UID {message.Entity.Uid}) inserted into it.");
 
-            _storageUsed += message.Entity.GetComponent<StorableComponent>().Size;
+            var size = 0;
+            if (message.Entity.TryGetComponent(out StorableComponent? storable))
+                size = storable.Size;
+
+            _storageUsed += size;
+            _sizeCache[message.Entity] = size;
 
             UpdateClientInventories();
         }
@@ -155,15 +166,15 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
             Logger.DebugS(LoggerName, $"Storage (UID {Owner}) had entity (UID {message.Entity}) removed from it.");
 
-            if (!message.Entity.TryGetComponent(out StorableComponent? storable))
+            if (!_sizeCache.TryGetValue(message.Entity, out var size))
             {
-                Logger.WarningS(LoggerName, $"Removed entity {message.Entity} without a StorableComponent from storage {Owner} at {Owner.Transform.MapPosition}");
+                Logger.WarningS(LoggerName, $"Removed entity {message.Entity} without a cached size from storage {Owner} at {Owner.Transform.MapPosition}");
 
                 RecalculateStorageUsed();
                 return;
             }
 
-            _storageUsed -= storable.Size;
+            _storageUsed -= size;
 
             UpdateClientInventories();
         }
@@ -207,6 +218,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         /// <param name="entity">The entity to open the UI for</param>
         public void OpenStorageUI(IEntity entity)
         {
+            PlaySoundCollection(StorageSoundCollection);
             EnsureInitialCalculated();
 
             var userSession = entity.GetComponent<BasicActorComponent>().playerSession;
@@ -331,6 +343,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
             serializer.DataField(ref _storageCapacityMax, "capacity", 10000);
             serializer.DataField(ref _occludesLight, "occludesLight", true);
+            serializer.DataField(this, x => x.StorageSoundCollection, "storageSoundCollection", string.Empty);
             //serializer.DataField(ref StorageUsed, "used", 0);
         }
 
@@ -493,6 +506,18 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                     exAct.OnExplosion(eventArgs);
                 }
             }
+        }
+
+        protected void PlaySoundCollection(string? name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return;
+            }
+
+            var file = AudioHelpers.GetRandomFileFromSoundCollection(name);
+            EntitySystem.Get<AudioSystem>()
+                .PlayFromEntity(file, Owner, AudioParams.Default);
         }
     }
 }

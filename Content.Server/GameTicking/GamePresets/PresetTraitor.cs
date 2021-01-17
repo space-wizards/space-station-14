@@ -10,10 +10,10 @@ using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs.Roles.Traitor;
 using Content.Server.Objectives.Interfaces;
 using Content.Server.Players;
-using Content.Server.Prototypes;
 using Content.Shared;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.PDA;
+using Content.Shared.Prototypes;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.Random;
@@ -73,11 +73,11 @@ namespace Content.Server.GameTicking.GamePresets
 
             foreach (var player in list)
             {
-                if (!readyProfiles.ContainsKey(player.UserId))
+                if (!ReadyProfiles.ContainsKey(player.UserId))
                 {
                     continue;
                 }
-                var profile = readyProfiles[player.UserId];
+                var profile = ReadyProfiles[player.UserId];
                 if (profile.AntagPreferences.Contains("Traitor"))
                 {
                     prefList.Add(player);

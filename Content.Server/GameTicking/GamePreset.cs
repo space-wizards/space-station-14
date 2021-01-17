@@ -1,5 +1,5 @@
 #nullable enable annotations
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Shared.Preferences;
 using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Mobs;
@@ -14,7 +14,7 @@ using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Shared.Network;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Console;
-﻿using Robust.Server.Interfaces.Player;
+using Robust.Server.Interfaces.Player;
 using Robust.Shared.IoC;
 
 namespace Content.Server.GameTicking
@@ -28,7 +28,7 @@ namespace Content.Server.GameTicking
         public virtual string ModeTitle => "Sandbox";
         public virtual string Description => "Secret!";
         public virtual bool DisallowLateJoin => false;
-        public Dictionary<NetUserId, HumanoidCharacterProfile> readyProfiles;
+        public Dictionary<NetUserId, HumanoidCharacterProfile> ReadyProfiles = new();
 
         public virtual void OnGameStarted() { }
 
@@ -69,7 +69,7 @@ namespace Content.Server.GameTicking
                     if (playerEntity.TryGetComponent(out IDamageableComponent? damageable))
                     {
                         //todo: what if they dont breathe lol
-                        damageable.ChangeDamage(DamageType.Asphyxiation, 100, true);
+                        damageable.SetDamage(DamageType.Asphyxiation, 200, playerEntity);
                     }
                 }
                 else

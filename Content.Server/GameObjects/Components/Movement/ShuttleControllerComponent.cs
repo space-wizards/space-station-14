@@ -145,15 +145,7 @@ namespace Content.Server.GameObjects.Components.Movement
             mind.Mind.Visit(Owner);
             _controller = entity;
 
-            status.ShowAlert(_pilotingAlertType, onClickAlert: OnClickAlert);
-        }
-
-        private void OnClickAlert(ClickAlertEventArgs args)
-        {
-            if (args.Player.TryGetComponent(out ShuttleControllerComponent? controller))
-            {
-                controller.RemoveController();
-            }
+            status.ShowAlert(_pilotingAlertType);
         }
 
         /// <summary>

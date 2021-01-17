@@ -9,12 +9,7 @@
     "states": [
         {
             "name": "full",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "head_f",

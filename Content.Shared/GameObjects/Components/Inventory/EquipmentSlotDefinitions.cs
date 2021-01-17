@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Shared.GameObjects.Components.Items;
 using JetBrains.Annotations;
 using Robust.Shared.Serialization;
 
@@ -26,7 +27,7 @@ namespace Content.Shared.GameObjects.Components.Inventory
         ///     Uniquely identifies a single slot in an inventory.
         /// </summary>
         [Serializable, NetSerializable]
-        public enum Slots
+        public enum Slots : byte
         {
             NONE = 0,
             HEAD,
@@ -148,6 +149,5 @@ namespace Content.Shared.GameObjects.Components.Inventory
             "Hands_left",
             "Hands_right",
         };
-
     }
 }

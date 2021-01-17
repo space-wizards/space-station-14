@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Disposal;
@@ -231,10 +231,6 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             Contents = ContainerManagerComponent.Ensure<Container>(Name, Owner);
             Owner.EnsureComponent<AnchorableComponent>();
-
-            var physics = Owner.EnsureComponent<PhysicsComponent>();
-
-            physics.AnchoredChanged += AnchoredChanged;
         }
 
         protected override void Startup()
@@ -254,9 +250,6 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             base.OnRemove();
 
-            var physics = Owner.EnsureComponent<PhysicsComponent>();
-            physics.AnchoredChanged -= AnchoredChanged;
-
             Disconnect();
         }
 
@@ -274,6 +267,10 @@ namespace Content.Server.GameObjects.Components.Disposal
 
                     _lastClang = _gameTiming.CurTime;
                     EntitySystem.Get<AudioSystem>().PlayAtCoords(_clangSound, Owner.Transform.Coordinates);
+                    break;
+
+                case AnchoredChangedMessage:
+                    AnchoredChanged();
                     break;
             }
         }

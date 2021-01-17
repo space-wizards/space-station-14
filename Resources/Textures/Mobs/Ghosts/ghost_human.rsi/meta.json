@@ -8,7 +8,6 @@
     "states": [
         {
             "name": "animated",
-            "directions": 1,
             "delays": [[
                 0.2,
                 0.2,
@@ -26,7 +25,6 @@
         },
         {
             "name": "icon",
-            "directions": 1,
             "delays": [[
                 1.0,
             ]]

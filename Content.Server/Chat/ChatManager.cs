@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Administration;
 using Content.Server.GameObjects.Components.GUI;
@@ -11,6 +11,7 @@ using Content.Server.Interfaces.Chat;
 using Content.Shared.Chat;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
@@ -51,7 +52,7 @@ namespace Content.Server.Chat
         public void Initialize()
         {
             _netManager.RegisterNetMessage<MsgChatMessage>(MsgChatMessage.NAME);
-            _netManager.RegisterNetMessage<ChatMaxMsgLengthMessage>(ChatMaxMsgLengthMessage.NAME, _onMaxLengthRequest);
+            _netManager.RegisterNetMessage<ChatMaxMsgLengthMessage>(ChatMaxMsgLengthMessage.NAME, OnMaxLengthRequest);
 
             // Tell all the connected players the chat's character limit
             var msg = _netManager.CreateNetMessage<ChatMaxMsgLengthMessage>();
@@ -70,12 +71,12 @@ namespace Content.Server.Chat
             _netManager.ServerSendToAll(msg);
         }
 
-        public void DispatchStationAnnouncement(string message)
+        public void DispatchStationAnnouncement(string message, string sender = "CentComm")
         {
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Radio;
             msg.Message = message;
-            msg.MessageWrap = "Centcom Announcement:\n{0}";
+            msg.MessageWrap = $"{sender} Announcement:\n{{0}}";
             _netManager.ServerSendToAll(msg);
         }
 
@@ -211,9 +212,7 @@ namespace Content.Server.Chat
                 return;
             }
 
-            var clients = _playerManager
-                .GetPlayersBy(x => x.AttachedEntity != null && x.AttachedEntity.HasComponent<GhostComponent>())
-                .Select(p => p.ConnectedClient);
+            var clients = GetDeadChatClients();
 
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Dead;
@@ -221,6 +220,32 @@ namespace Content.Server.Chat
             msg.MessageWrap = $"{Loc.GetString("DEAD")}: {player.AttachedEntity.Name}: {{0}}";
             msg.SenderEntity = player.AttachedEntityUid.GetValueOrDefault();
             _netManager.ServerSendToMany(msg, clients.ToList());
+        }
+
+        public void SendAdminDeadChat(IPlayerSession player, string message)
+        {
+            // Check if message exceeds the character limit
+            if (message.Length > MaxMessageLength)
+            {
+                DispatchServerMessage(player, Loc.GetString(MaxLengthExceededMessage, MaxMessageLength));
+                return;
+            }
+
+            var clients = GetDeadChatClients();
+
+            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
+            msg.Channel = ChatChannel.Dead;
+            msg.Message = message;
+            msg.MessageWrap = $"{Loc.GetString("ADMIN")}:(${player.ConnectedClient.UserName}): {{0}}";
+            _netManager.ServerSendToMany(msg, clients.ToList());
+        }
+
+        private IEnumerable<INetChannel> GetDeadChatClients()
+        {
+            return _playerManager
+                .GetPlayersBy(x => x.AttachedEntity != null && x.AttachedEntity.HasComponent<GhostComponent>())
+                .Select(p => p.ConnectedClient)
+                .Union(_adminManager.ActiveAdmins.Select(p => p.ConnectedClient));
         }
 
         public void SendAdminChat(IPlayerSession player, string message)
@@ -264,7 +289,7 @@ namespace Content.Server.Chat
             _netManager.ServerSendToAll(msg);
         }
 
-        private void _onMaxLengthRequest(ChatMaxMsgLengthMessage msg)
+        private void OnMaxLengthRequest(ChatMaxMsgLengthMessage msg)
         {
             var response = _netManager.CreateNetMessage<ChatMaxMsgLengthMessage>();
             response.MaxMessageLength = MaxMessageLength;

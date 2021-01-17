@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Content.Server.GameTicking;
 using Content.Server.Mobs;
 using Content.Shared.Roles;
+using Content.Shared.Preferences;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Interfaces.Console;
 using Robust.Shared.Interfaces.GameObjects;
@@ -51,7 +52,7 @@ namespace Content.Server.Interfaces.GameTicking
         EntityCoordinates GetJobSpawnPoint(string jobId);
         EntityCoordinates GetObserverSpawnPoint();
 
-        void EquipStartingGear(IEntity entity, StartingGearPrototype startingGear);
+        void EquipStartingGear(IEntity entity, StartingGearPrototype startingGear, HumanoidCharacterProfile profile);
 
         // GameRule system.
         T AddGameRule<T>() where T : GameRule, new();

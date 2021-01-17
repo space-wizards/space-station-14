@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Destructible;
+using Content.Server.GameObjects.Components.Destructible.Thresholds;
+using Content.Server.GameObjects.Components.Destructible.Thresholds.Behavior;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using NUnit.Framework;
@@ -18,9 +20,15 @@ namespace Content.IntegrationTests.Tests.Destructible
     [TestOf(typeof(Threshold))]
     public class DestructibleTests : ContentIntegrationTest
     {
+        private static readonly string SpawnedEntityId = "DestructibleTestsSpawnedEntity";
         private static readonly string DestructibleEntityId = "DestructibleTestsDestructibleEntity";
+        private static readonly string DestructibleDestructionEntityId = "DestructibleTestsDestructibleDestructionEntity";
 
         private static readonly string Prototypes = $@"
+- type: entity
+  id: {SpawnedEntityId}
+  name: {SpawnedEntityId}
+
 - type: entity
   id: {DestructibleEntityId}
   name: {DestructibleEntityId}
@@ -29,15 +37,39 @@ namespace Content.IntegrationTests.Tests.Destructible
   - type: Destructible
     thresholds:
       20:
-        TriggersOnce: false
+        triggersOnce: false
       50:
-        Sound: /Audio/Effects/woodhit.ogg
-        Spawn:
-          WoodPlank:
-            Min: 1
-            Max: 1
-        Acts: [""Breakage""]
-        TriggersOnce: false
+        triggersOnce: false
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound: /Audio/Effects/woodhit.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            {SpawnedEntityId}:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [""Breakage""]
+  - type: TestThresholdListener
+
+- type: entity
+  id: {DestructibleDestructionEntityId}
+  name: {DestructibleDestructionEntityId}
+  components:
+  - type: Damageable
+  - type: Destructible
+    thresholds:
+      50:
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound: /Audio/Effects/woodhit.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            {SpawnedEntityId}:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior # This must come last as it destroys the entity.
+          acts: [""Destruction""]
   - type: TestThresholdListener
 ";
 
@@ -77,7 +109,7 @@ namespace Content.IntegrationTests.Tests.Destructible
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var sMapManager = server.ResolveDependency<IMapManager>();
 
-            IEntity sDestructibleEntity = null;
+            IEntity sDestructibleEntity;
             IDamageableComponent sDamageableComponent = null;
             DestructibleComponent sDestructibleComponent = null;
             TestThresholdListenerComponent sThresholdListenerComponent = null;
@@ -121,10 +153,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 var threshold = msg.Threshold;
 
                 // Check that it matches the YAML prototype
-                Assert.That(threshold.Acts, Is.EqualTo(0));
-                Assert.That(threshold.Sound, Is.Null.Or.Empty);
-                Assert.That(threshold.Spawn, Is.Null);
-                Assert.That(threshold.SoundCollection, Is.Null.Or.Empty);
+                Assert.That(threshold.Behaviors, Is.Empty);
                 Assert.That(threshold.Triggered, Is.True);
 
                 sThresholdListenerComponent.ThresholdsReached.Clear();
@@ -142,14 +171,19 @@ namespace Content.IntegrationTests.Tests.Destructible
                 threshold = msg.Threshold;
 
                 // Check that it matches the YAML prototype
-                Assert.That(threshold.Acts, Is.EqualTo((int) ThresholdActs.Breakage));
-                Assert.That(threshold.Sound, Is.EqualTo("/Audio/Effects/woodhit.ogg"));
-                Assert.That(threshold.Spawn, Is.Not.Null);
-                Assert.That(threshold.Spawn.Count, Is.EqualTo(1));
-                Assert.That(threshold.Spawn.Single().Key, Is.EqualTo("WoodPlank"));
-                Assert.That(threshold.Spawn.Single().Value.Min, Is.EqualTo(1));
-                Assert.That(threshold.Spawn.Single().Value.Max, Is.EqualTo(1));
-                Assert.That(threshold.SoundCollection, Is.Null.Or.Empty);
+                Assert.That(threshold.Behaviors, Has.Count.EqualTo(3));
+
+                var soundThreshold = (PlaySoundBehavior) threshold.Behaviors[0];
+                var spawnThreshold = (SpawnEntitiesBehavior) threshold.Behaviors[1];
+                var actsThreshold = (DoActsBehavior) threshold.Behaviors[2];
+
+                Assert.That(actsThreshold.Acts, Is.EqualTo(ThresholdActs.Breakage));
+                Assert.That(soundThreshold.Sound, Is.EqualTo("/Audio/Effects/woodhit.ogg"));
+                Assert.That(spawnThreshold.Spawn, Is.Not.Null);
+                Assert.That(spawnThreshold.Spawn.Count, Is.EqualTo(1));
+                Assert.That(spawnThreshold.Spawn.Single().Key, Is.EqualTo(SpawnedEntityId));
+                Assert.That(spawnThreshold.Spawn.Single().Value.Min, Is.EqualTo(1));
+                Assert.That(spawnThreshold.Spawn.Single().Value.Max, Is.EqualTo(1));
                 Assert.That(threshold.Triggered, Is.True);
 
                 sThresholdListenerComponent.ThresholdsReached.Clear();
@@ -192,14 +226,20 @@ namespace Content.IntegrationTests.Tests.Destructible
                 threshold = msg.Threshold;
 
                 // Check that it matches the YAML prototype
-                Assert.That(threshold.Acts, Is.EqualTo((int) ThresholdActs.Breakage));
-                Assert.That(threshold.Sound, Is.EqualTo("/Audio/Effects/woodhit.ogg"));
-                Assert.That(threshold.Spawn, Is.Not.Null);
-                Assert.That(threshold.Spawn.Count, Is.EqualTo(1));
-                Assert.That(threshold.Spawn.Single().Key, Is.EqualTo("WoodPlank"));
-                Assert.That(threshold.Spawn.Single().Value.Min, Is.EqualTo(1));
-                Assert.That(threshold.Spawn.Single().Value.Max, Is.EqualTo(1));
-                Assert.That(threshold.SoundCollection, Is.Null.Or.Empty);
+                Assert.That(threshold.Behaviors, Has.Count.EqualTo(3));
+
+                soundThreshold = (PlaySoundBehavior) threshold.Behaviors[0];
+                spawnThreshold = (SpawnEntitiesBehavior) threshold.Behaviors[1];
+                actsThreshold = (DoActsBehavior) threshold.Behaviors[2];
+
+                // Check that it matches the YAML prototype
+                Assert.That(actsThreshold.Acts, Is.EqualTo(ThresholdActs.Breakage));
+                Assert.That(soundThreshold.Sound, Is.EqualTo("/Audio/Effects/woodhit.ogg"));
+                Assert.That(spawnThreshold.Spawn, Is.Not.Null);
+                Assert.That(spawnThreshold.Spawn.Count, Is.EqualTo(1));
+                Assert.That(spawnThreshold.Spawn.Single().Key, Is.EqualTo(SpawnedEntityId));
+                Assert.That(spawnThreshold.Spawn.Single().Value.Min, Is.EqualTo(1));
+                Assert.That(spawnThreshold.Spawn.Single().Value.Max, Is.EqualTo(1));
                 Assert.That(threshold.Triggered, Is.True);
 
                 // Reset thresholds reached
@@ -227,11 +267,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 threshold = msg.Threshold;
 
                 // Check that it matches the YAML prototype
-                Assert.That(threshold.Acts, Is.EqualTo(0));
-                Assert.That(threshold.Sound, Is.Null.Or.Empty);
-                Assert.That(threshold.Spawn, Is.Null);
-                Assert.That(threshold.SoundCollection, Is.Null.Or.Empty);
-                Assert.That(threshold.Triggered, Is.True);
+                Assert.That(threshold.Behaviors, Is.Empty);
 
                 // Verify the second one, should be the highest one (50)
                 msg = sThresholdListenerComponent.ThresholdsReached[1];
@@ -242,15 +278,20 @@ namespace Content.IntegrationTests.Tests.Destructible
 
                 threshold = msg.Threshold;
 
+                Assert.That(threshold.Behaviors, Has.Count.EqualTo(3));
+
+                soundThreshold = (PlaySoundBehavior) threshold.Behaviors[0];
+                spawnThreshold = (SpawnEntitiesBehavior) threshold.Behaviors[1];
+                actsThreshold = (DoActsBehavior) threshold.Behaviors[2];
+
                 // Check that it matches the YAML prototype
-                Assert.That(threshold.Acts, Is.EqualTo((int) ThresholdActs.Breakage));
-                Assert.That(threshold.Sound, Is.EqualTo("/Audio/Effects/woodhit.ogg"));
-                Assert.That(threshold.Spawn, Is.Not.Null);
-                Assert.That(threshold.Spawn.Count, Is.EqualTo(1));
-                Assert.That(threshold.Spawn.Single().Key, Is.EqualTo("WoodPlank"));
-                Assert.That(threshold.Spawn.Single().Value.Min, Is.EqualTo(1));
-                Assert.That(threshold.Spawn.Single().Value.Max, Is.EqualTo(1));
-                Assert.That(threshold.SoundCollection, Is.Null.Or.Empty);
+                Assert.That(actsThreshold.Acts, Is.EqualTo(ThresholdActs.Breakage));
+                Assert.That(soundThreshold.Sound, Is.EqualTo("/Audio/Effects/woodhit.ogg"));
+                Assert.That(spawnThreshold.Spawn, Is.Not.Null);
+                Assert.That(spawnThreshold.Spawn.Count, Is.EqualTo(1));
+                Assert.That(spawnThreshold.Spawn.Single().Key, Is.EqualTo(SpawnedEntityId));
+                Assert.That(spawnThreshold.Spawn.Single().Value.Min, Is.EqualTo(1));
+                Assert.That(spawnThreshold.Spawn.Single().Value.Max, Is.EqualTo(1));
                 Assert.That(threshold.Triggered, Is.True);
 
                 // Reset thresholds reached
@@ -288,6 +329,85 @@ namespace Content.IntegrationTests.Tests.Destructible
 
                 // They shouldn't have been triggered by changing TriggersOnce
                 Assert.That(sThresholdListenerComponent.ThresholdsReached, Is.Empty);
+            });
+        }
+
+        [Test]
+        public async Task DestructibleDestructionTest()
+        {
+            var server = StartServerDummyTicker(new ServerContentIntegrationOption
+            {
+                ExtraPrototypes = Prototypes,
+                ContentBeforeIoC = () =>
+                {
+                    IoCManager.Resolve<IComponentFactory>().Register<TestThresholdListenerComponent>();
+                }
+            });
+
+            await server.WaitIdleAsync();
+
+            var sEntityManager = server.ResolveDependency<IEntityManager>();
+            var sMapManager = server.ResolveDependency<IMapManager>();
+
+            IEntity sDestructibleEntity = null;
+            IDamageableComponent sDamageableComponent = null;
+            DestructibleComponent sDestructibleComponent = null;
+            TestThresholdListenerComponent sThresholdListenerComponent = null;
+
+            await server.WaitPost(() =>
+            {
+                var mapId = new MapId(1);
+                var coordinates = new MapCoordinates(0, 0, mapId);
+                sMapManager.CreateMap(mapId);
+
+                sDestructibleEntity = sEntityManager.SpawnEntity(DestructibleDestructionEntityId, coordinates);
+                sDamageableComponent = sDestructibleEntity.GetComponent<IDamageableComponent>();
+                sDestructibleComponent = sDestructibleEntity.GetComponent<DestructibleComponent>();
+                sThresholdListenerComponent = sDestructibleEntity.GetComponent<TestThresholdListenerComponent>();
+            });
+
+            await server.WaitAssertion(() =>
+            {
+                var coordinates = sDestructibleEntity.Transform.Coordinates;
+
+                Assert.DoesNotThrow(() =>
+                {
+                    Assert.True(sDamageableComponent.ChangeDamage(DamageClass.Brute, 50, true));
+                });
+
+                Assert.That(sThresholdListenerComponent.ThresholdsReached.Count, Is.EqualTo(1));
+
+                var threshold = sThresholdListenerComponent.ThresholdsReached[0].Threshold;
+
+                Assert.That(threshold.Triggered, Is.True);
+                Assert.That(threshold.Behaviors.Count, Is.EqualTo(3));
+
+                var spawnEntitiesBehavior = (SpawnEntitiesBehavior) threshold.Behaviors.Single(b => b is SpawnEntitiesBehavior);
+
+                Assert.That(spawnEntitiesBehavior.Spawn.Count, Is.EqualTo(1));
+                Assert.That(spawnEntitiesBehavior.Spawn.Keys.Single(), Is.EqualTo(SpawnedEntityId));
+                Assert.That(spawnEntitiesBehavior.Spawn.Values.Single(), Is.EqualTo(new MinMax {Min = 1, Max = 1}));
+
+                var entitiesInRange = sEntityManager.GetEntitiesInRange(coordinates, 2);
+                var found = false;
+
+                foreach (var entity in entitiesInRange)
+                {
+                    if (entity.Prototype == null)
+                    {
+                        continue;
+                    }
+
+                    if (entity.Prototype.Name != SpawnedEntityId)
+                    {
+                        continue;
+                    }
+
+                    found = true;
+                    break;
+                }
+
+                Assert.That(found, Is.True);
             });
         }
     }

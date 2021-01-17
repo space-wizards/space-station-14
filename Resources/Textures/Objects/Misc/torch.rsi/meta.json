@@ -106,25 +106,14 @@
         },
         {
             "name": "torch",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "torch_empty",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "torch_on",
-            "directions": 1,
             "delays": [
                 [
                     0.1,

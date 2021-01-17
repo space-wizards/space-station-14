@@ -3,13 +3,12 @@
 #  name: "chaplain"
 #  positions: 1
 #  startingGear: ChaplainGear
-#  department:
+#  departments:
 #  - Civilian
 #  icon: "Chaplain"
 #  access:
 #  - Chapel
 #  - Maintenance
-
 #- type: startingGear
 #  id: ChaplainGear
 #  equipment:
@@ -18,3 +17,5 @@
 #    shoes: ClothingShoesColorBlack
 #    idcard: ChaplainPDA
 #    ears: ClothingHeadsetService
+#  innerclothingskirt: ClothingUniformJumpskirtChaplain
+

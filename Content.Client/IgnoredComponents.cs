@@ -1,4 +1,4 @@
-﻿namespace Content.Client
+namespace Content.Client
 {
     public static class IgnoredComponents
     {
@@ -169,6 +169,9 @@
             "Flammable",
             "CreamPie",
             "CreamPied",
+            "Smoking",
+            "Matchstick",
+            "Matchbox",
             "BlockGameArcade",
             "KitchenSpike",
             "Butcherable",
@@ -210,6 +213,8 @@
             "CrematoriumEntityStorage",
             "RandomArcade",
             "RandomSpriteState",
+            "DebugEquip",
+            "InnateActions",
             "ReagentGrinder",
             "Grindable",
             "Juiceable",
@@ -221,7 +226,17 @@
             "Machine",
             "MachinePart",
             "MachineFrame",
-            "MachineBoard"
+            "MachineBoard",
+            "ChemicalAmmo",
+            "BiologicalSurgeryData",
+            "CargoTelepad",
+            "TraitorDeathMatchRedemption",
+            "GlassBeaker",
+            "SliceableFood",
+            "DamageOtherOnHit",
+            "DamageOnLand",
+            "GasFilter",
+            "Recyclable"
         };
     }
 }
