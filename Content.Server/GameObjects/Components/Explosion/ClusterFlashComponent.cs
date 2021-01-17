@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Server.GameObjects.Components.Explosion;
 using Robust.Shared.GameObjects;
@@ -21,6 +21,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Log;
 
 namespace Content.Server.GameObjects.Components.Explosives
 {
@@ -179,7 +180,7 @@ namespace Content.Server.GameObjects.Components.Explosives
             }
             catch (OverflowException)
             {
-                return;
+                Logger.Log(LogLevel.Warning, "Overflow in clusterbang appearance");
             }
         }
     }

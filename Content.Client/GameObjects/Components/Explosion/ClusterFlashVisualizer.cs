@@ -1,4 +1,4 @@
-﻿using Content.Shared.GameObjects.Components.Explosion;
+using Content.Shared.GameObjects.Components.Explosion;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -13,7 +13,6 @@ namespace Content.Client.GameObjects.Components.Explosion
     // ReSharper disable once InconsistentNaming
     public class ClusterFlashVisualizer : AppearanceVisualizer
     {
-        private int _levels;
         private string _state;
 
         public override void LoadData(YamlMappingNode node)
@@ -22,11 +21,6 @@ namespace Content.Client.GameObjects.Components.Explosion
             if (node.TryGetNode("state", out var state))
             {
                 _state = state.AsString();
-            }
-
-            if (node.TryGetNode("levels", out var levels))
-            {
-                _levels = levels.AsInt();
             }
         }
 
@@ -48,20 +42,9 @@ namespace Content.Client.GameObjects.Components.Explosion
                 return;
             }
 
-            if (!component.TryGetData(ClusterFlashVisuals.GrenadesMax, out byte max))
-            {
-                max = 3;
-            }
-
             if (component.TryGetData(ClusterFlashVisuals.GrenadesCounter, out byte grenadesCounter))
             {
-                int level = grenadesCounter;
-                if (level > max || level < 0)
-                {
-                    return;
-                }
-
-                sprite.LayerSetState(ClusterFlashVisualLayers.Base, $"{_state}-{level}");
+                sprite.LayerSetState(ClusterFlashVisualLayers.Base, $"{_state}-{grenadesCounter}");
             }
         }
 
