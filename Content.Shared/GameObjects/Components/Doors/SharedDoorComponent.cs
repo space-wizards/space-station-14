@@ -44,9 +44,6 @@ namespace Content.Shared.GameObjects.Components.Doors
         /// </summary>
         protected static TimeSpan DenyTime => TimeSpan.FromSeconds(0.45f);
 
-        [ViewVariables(VVAccess.ReadWrite)] private bool _occludes;
-        public bool Occludes => _occludes;
-
         /// <summary>
         /// Used by ServerDoorComponent to get the CurTime for the client to use to know when to open, and by ClientDoorComponent to know the CurTime to correctly open.
         /// </summary>
@@ -81,8 +78,6 @@ namespace Content.Shared.GameObjects.Components.Doors
             base.ExposeData(serializer);
 
 
-            serializer.DataField(ref _occludes, "occludes", true);
-
             serializer.DataReadWriteFunction(
                 "CloseTimeOne",
                 0.4f,
@@ -115,17 +110,6 @@ namespace Content.Shared.GameObjects.Components.Doors
         }
 
         /// <summary>
-        /// Called when the door first begins to open.
-        /// </summary>
-        protected virtual void OnStartOpen()
-        {
-            if (Occludes && Owner.TryGetComponent(out OccluderComponent? occluder))
-            {
-                occluder.Enabled = false;
-            }
-        }
-
-        /// <summary>
         /// Called when the door is partially opened.
         /// </summary>
         protected virtual void OnPartialOpen()
@@ -146,17 +130,6 @@ namespace Content.Shared.GameObjects.Components.Doors
             if (Owner.TryGetComponent(out IPhysicsComponent? physics))
             {
                 physics.CanCollide = true;
-            }
-        }
-
-        /// <summary>
-        /// Called when the door is fully closed.
-        /// </summary>
-        protected virtual void OnFullClose()
-        {
-            if (_occludes && Owner.TryGetComponent(out OccluderComponent? occluder))
-            {
-                occluder.Enabled = true;
             }
         }
 

@@ -10,25 +10,8 @@ namespace Content.Client.GameObjects.Components.Doors
     [RegisterComponent]
     public class ClientDoorComponent : SharedDoorComponent
     {
-        private DoorState State
-        {
-            get => _state;
-            set
-            {
-                if (_state == value)
-                {
-                    return;
-                }
-
-                _state = value;
-                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new DoorStateMessage(this, State));
-            }
-        }
-
         private bool _stateChangeHasProgressed = false;
-
-        private TimeSpan _timeOne;
-        private TimeSpan _timeTwo;
+        private TimeSpan _timeOffset;
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
@@ -40,29 +23,26 @@ namespace Content.Client.GameObjects.Components.Doors
             }
 
             CurrentlyCrushing = doorCompState.CurrentlyCrushing;
-            State = doorCompState.DoorState;
             StateChangeStartTime = doorCompState.StartTime;
+            if (_state != doorCompState.DoorState)
+            {
+                _state = doorCompState.DoorState;
+                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new DoorStateMessage(this, _state));
+            }
 
-            if(StateChangeStartTime == null)
+            if (StateChangeStartTime == null)
             {
                 return;
             }
 
-            switch (State)
+            _timeOffset = _state switch
             {
-                case DoorState.Opening:
-                    _timeOne = OpenTimeOne;
-                    _timeTwo = OpenTimeTwo;
-                    break;
-                case DoorState.Closing:
-                    _timeOne = CloseTimeOne;
-                    _timeTwo = CloseTimeTwo;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+                DoorState.Opening => OpenTimeOne,
+                DoorState.Closing => CloseTimeOne,
+                _ => throw new ArgumentOutOfRangeException(),
+            };
 
-            if (doorCompState.CurTime >= StateChangeStartTime + _timeOne)
+            if (doorCompState.CurTime >= StateChangeStartTime + _timeOffset)
             {
                 _stateChangeHasProgressed = true;
                 return;
@@ -73,28 +53,11 @@ namespace Content.Client.GameObjects.Components.Doors
 
         public override void OnUpdate(float frameTime)
         {
-            if (_stateChangeHasProgressed)
+            if (!_stateChangeHasProgressed)
             {
-                if (GameTiming.CurTime < StateChangeStartTime + _timeOne + _timeTwo) return;
+                if (GameTiming.CurTime < StateChangeStartTime + _timeOffset) return;
 
-                if (State == DoorState.Opening)
-                {
-                    State = DoorState.Open;
-                }
-                else
-                {
-                    OnFullClose();
-                    State = DoorState.Closed;
-                }
-
-                StateChangeStartTime = null;
-            }
-
-            else
-            {
-                if (GameTiming.CurTime < StateChangeStartTime + _timeOne) return;
-
-                if (State == DoorState.Opening)
+                if (_state == DoorState.Opening)
                 {
                     OnPartialOpen();
                 }
@@ -104,9 +67,8 @@ namespace Content.Client.GameObjects.Components.Doors
                 }
 
                 _stateChangeHasProgressed = true;
+                Dirty();
             }
-
-            Dirty();
         }
     }
 }

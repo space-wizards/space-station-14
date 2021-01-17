@@ -86,6 +86,8 @@ namespace Content.Server.GameObjects.Components.Doors
             set => _safety = value;
         }
 
+        [ViewVariables(VVAccess.ReadWrite)] private bool _occludes;
+        public bool Occludes => _occludes;
 
         [ViewVariables(VVAccess.ReadWrite)] private bool _bumpOpen;
 
@@ -130,8 +132,15 @@ namespace Content.Server.GameObjects.Components.Doors
 
             // Whether the door can be welded shut.
             serializer.DataField(ref _weldable, "weldable", true);
+
+            // Whether the door will automatically close if left open.
             serializer.DataField(ref AutoClose, "AutoClose", true);
+
+            // Whether the door will open when it is bumped into.
             serializer.DataField(ref _bumpOpen, "bumpOpen", true);
+
+            // Whether the door blocks light.
+            serializer.DataField(ref _occludes, "occludes", true);
 
             // Whether the door will crush at all. In order to crush, safety must be false AND canCrush must be true.
             serializer.DataField(ref _canCrush, "canCrush", true);
@@ -285,7 +294,10 @@ namespace Content.Server.GameObjects.Components.Doors
         public void Open()
         {
             State = DoorState.Opening;
-            OnStartOpen();
+            if (Occludes && Owner.TryGetComponent(out OccluderComponent? occluder))
+            {
+                occluder.Enabled = false;
+            }
 
             _cancellationTokenSource?.Cancel();
             _cancellationTokenSource = new();
@@ -310,7 +322,10 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private void QuickOpen()
         {
-            OnStartOpen();
+            if (Occludes && Owner.TryGetComponent(out OccluderComponent? occluder))
+            {
+                occluder.Enabled = false;
+            }
             OnPartialOpen();
             State = DoorState.Open;
         }
@@ -411,7 +426,10 @@ namespace Content.Server.GameObjects.Components.Doors
 
                 OnPartialClose();
                 await Timer.Delay(CloseTimeTwo, _cancellationTokenSource.Token);
-                OnFullClose();
+                if (Occludes && Owner.TryGetComponent(out OccluderComponent? occluder))
+                {
+                    occluder.Enabled = true;
+                }
 
                 State = DoorState.Closed;
             }, _cancellationTokenSource.Token);
