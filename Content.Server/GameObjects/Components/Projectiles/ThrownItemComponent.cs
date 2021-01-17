@@ -47,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             }
             if (entity.TryGetComponent(out IDamageableComponent damage))
             {
-                damage.ChangeDamage(DamageType.Blunt, 2, false, Owner);
+                damage.ChangeDamage(DamageType.Blunt, 1, false, Owner);
             }
 
             // Stop colliding with mobs, this mimics not having enough velocity to do damage
