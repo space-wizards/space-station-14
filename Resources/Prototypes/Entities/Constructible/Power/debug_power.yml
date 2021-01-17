@@ -12,9 +12,10 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.5, -0.5, 0.5, 0.5"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5, -0.5, 0.5, 0.5"
       layer: [MobMask, Opaque]
   - type: SnapGrid
     offset: Center
@@ -46,9 +47,10 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.5, -0.5, 0.5, 0.5"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5, -0.5, 0.5, 0.5"
       layer: [MobMask, Opaque]
   - type: SnapGrid
     offset: Center
@@ -73,9 +75,10 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.5, -0.5, 0.5, 0.5"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5, -0.5, 0.5, 0.5"
       layer: [MobMask, Opaque]
   - type: SnapGrid
     offset: Center
@@ -115,9 +118,10 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.5, -0.5, 0.5, 0.5"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5, -0.5, 0.5, 0.5"
       layer: [MobMask, Opaque]
   - type: SnapGrid
     offset: Center

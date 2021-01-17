@@ -20,8 +20,9 @@
     state: full
   - type: Physics
     bodyType: Static
-    shapes:
-    - !type:PhysShapeAabb
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
       layer:
       - Impassable
       - MobImpassable

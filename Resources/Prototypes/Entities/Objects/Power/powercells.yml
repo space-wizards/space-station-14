@@ -1,4 +1,4 @@
-# Power cells
+﻿# Power cells
 
 - type: entity
   id: PowerCellBase
@@ -7,9 +7,10 @@
   components:
   - type: Physics
     anchored: false
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.15,-0.3,0.2,0.3" # TODO: these are placeholder values
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.15,-0.3,0.2,0.3" # TODO: these are placeholder values
       layer:
       - Clickable
   - type: PowerCell
@@ -317,9 +318,10 @@
   - type: InteractionOutline
   - type: Physics
     mass: 5
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.25,-0.25,0.25,0.25"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
       mask: [Impassable]
       layer: [Clickable]
 
@@ -345,9 +347,10 @@
   - type: InteractionOutline
   - type: Physics
     mass: 5
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.25,-0.25,0.25,0.25"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
       mask: [Impassable]
       layer: [Clickable]
 
@@ -372,8 +375,9 @@
   - type: InteractionOutline
   - type: Physics
     mass: 5
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.25,-0.25,0.25,0.25"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
       mask: [Impassable]
       layer: [Clickable]

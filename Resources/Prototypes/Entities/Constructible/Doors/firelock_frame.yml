@@ -12,9 +12,10 @@
     - type: Clickable
     - type: InteractionOutline
     - type: Physics
-      shapes:
-        - !type:PhysShapeAabb
-          bounds: "-0.49,-0.49,0.49,0.49"
+      fixtures:
+        - shape:
+            !type:PhysShapeAabb
+              bounds: "-0.49,-0.49,0.49,0.49"
           mask:
             - Impassable
           layer:

@@ -20,7 +20,7 @@
     bodyType: Static
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+          !type:PhysShapeAabb {}
       layer:
       - Opaque
       - Impassable

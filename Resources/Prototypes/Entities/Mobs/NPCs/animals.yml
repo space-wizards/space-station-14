@@ -23,9 +23,10 @@
   - type: Physics
     anchored: false
     mass: 50
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.30,-0.25,0.40,0.25"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.30,-0.25,0.40,0.25"
       mask:
       - Impassable
       - VaultImpassable
@@ -78,9 +79,10 @@
   - type: Physics
     anchored: false
     mass: 90
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.90,-0.50,0.05,0.50"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.90,-0.50,0.05,0.50"
       mask:
       - Impassable
       - VaultImpassable
@@ -111,9 +113,10 @@
   - type: Physics
     anchored: false
     mass: 20
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.45,-0.20,0.10,0.20"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.45,-0.20,0.10,0.20"
       mask:
       - Impassable
       - VaultImpassable
@@ -147,9 +150,10 @@
   - type: Physics
     anchored: false
     mass: 5
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.20,-0.20,0.20,0.20"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.20,-0.20,0.20,0.20"
       mask:
       - Impassable
       - VaultImpassable
@@ -193,9 +197,10 @@
   - type: Physics
     anchored: false
     mass: 5
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.20,-0.20,0.20,0.20"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.20,-0.20,0.20,0.20"
       mask:
       - Impassable
       - VaultImpassable
@@ -230,9 +235,10 @@
   - type: Physics
     anchored: false
     mass: 5
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.10,-0.10,0.10,0.10"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.10,-0.10,0.10,0.10"
       mask:
       - Impassable
       - VaultImpassable
@@ -263,9 +269,10 @@
   - type: Physics
     anchored: false
     mass: 20
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.60,-0.50,0.05,0.50"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.60,-0.50,0.05,0.50"
       mask:
       - Impassable
       - VaultImpassable
@@ -297,9 +304,10 @@
   - type: Physics
     anchored: false
     mass: 20
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.45,-0.35,0.45,0.35"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.45,-0.35,0.45,0.35"
       mask:
       - Impassable
       - VaultImpassable
@@ -334,9 +342,10 @@
   - type: Physics
     anchored: false
     mass: 20
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.30,-0.35,0.35,0.35"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.30,-0.35,0.35,0.35"
       mask:
       - Impassable
       - VaultImpassable
@@ -367,9 +376,10 @@
   - type: Physics
     anchored: false
     mass: 10
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.30,-0.30,0.25,0.30"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.30,-0.30,0.25,0.30"
       mask:
       - Impassable
       - VaultImpassable
@@ -403,9 +413,10 @@
   - type: Physics
     anchored: false
     mass: 10
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.30,-0.40,0.45,0.40"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.30,-0.40,0.45,0.40"
       mask:
       - Impassable
       - VaultImpassable
@@ -436,9 +447,10 @@
   - type: Physics
     anchored: false
     mass: 10
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.40,-0.35,0.20,0.35"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.40,-0.35,0.20,0.35"
       mask:
       - Impassable
       - VaultImpassable
@@ -469,9 +481,10 @@
   - type: Physics
     anchored: false
     mass: 10
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.50,-0.30,0.35,0.30"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.50,-0.30,0.35,0.30"
       mask:
       - Impassable
       - VaultImpassable
