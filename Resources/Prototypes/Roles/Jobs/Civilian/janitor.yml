@@ -3,7 +3,7 @@
   name: "janitor"
   positions: 1
   startingGear: JanitorGear
-  department:
+  departments:
   - Civilian
   icon: "Janitor"
   access:
@@ -13,10 +13,13 @@
 - type: startingGear
   id: JanitorGear
   equipment:
-    innerclothing: UniformJanitor
-    backpack: BackpackClothingFilled
-    shoes: ShoesGaloshes
-    head: HatPurplesoft
+    innerclothing: ClothingUniformJumpsuitJanitor
+    backpack: ClothingBackpackFilled
+    shoes: ClothingShoesGaloshes
+    head: ClothingHeadHatPurplesoft
     idcard: JanitorPDA
-    ears: HeadsetService
+    ears: ClothingHeadsetService
     belt: ClothingBeltJanitorFilled
+  innerclothingskirt: ClothingUniformJumpskirtJanitor
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled

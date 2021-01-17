@@ -7,25 +7,14 @@
     "states": [
         {
             "name": "autolathe",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "autolathe_unlit",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "autolathe_building",
-            "directions": 1,
             "delays": [
                 [
                     0.055,
@@ -42,7 +31,6 @@
         },
         {
             "name": "autolathe_building_unlit",
-            "directions": 1,
             "delays": [
                 [
                     0.055,
@@ -59,7 +47,6 @@
         },
         {
             "name": "autolathe_inserting_metal_plate",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -76,7 +63,6 @@
         },
         {
             "name": "autolathe_inserting_glass_plate",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -93,7 +79,6 @@
         },
         {
             "name": "autolathe_inserting_phoron_sheet",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -110,7 +95,6 @@
         },
         {
             "name": "autolathe_inserting_gold_plate",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -127,7 +111,6 @@
         },
         {
             "name": "autolathe_inserting_unlit",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -144,12 +127,7 @@
         },
         {
             "name": "autolathe_panel",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         }
     ]
 }

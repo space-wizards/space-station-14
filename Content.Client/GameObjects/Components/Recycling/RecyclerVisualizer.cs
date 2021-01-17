@@ -61,7 +61,7 @@ namespace Content.Client.GameObjects.Components.Recycling
         }
     }
 
-    public enum RecyclerVisualLayers
+    public enum RecyclerVisualLayers : byte
     {
         Bloody
     }

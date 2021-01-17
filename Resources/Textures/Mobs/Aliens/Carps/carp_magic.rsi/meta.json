@@ -9,7 +9,6 @@
   "states": [
     {
       "name": "icon",
-      "directions": 1,
       "delays": [
         [
           1
@@ -18,7 +17,6 @@
     },
     {
       "name": "dead",
-      "directions": 1,
       "delays": [
         [
           1
@@ -53,7 +51,6 @@
     },
     {
       "name": "magicarp_gib",
-      "directions": 1,
       "delays": [
         [
           0.1,

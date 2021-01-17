@@ -1,0 +1,36 @@
+- type: cargoProduct
+  name: "packaged antimatter reactor crate"
+  id: cargo.enginesameshielding
+  description: "9 parts for the main body of an antimatter reactor, or for expanding an existing one."
+  icon:
+    sprite: Objects/Power/AME/ame_part.rsi
+    state: box
+  product: CrateEngineeringAMEShielding
+  cost: 1500
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  name: "antimatter containment jar crate"
+  id: cargo.enginesamejar
+  description: "3 antimatter jars, for fuelling an antimatter reactor."
+  icon:
+    sprite: Objects/Power/AME/ame_jar.rsi
+    state: jar
+  product: CrateEngineeringAMEJar
+  cost: 600
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  name: "antimatter control unit crate"
+  id: cargo.enginesamecontrol
+  description: "The control unit of an antimatter reactor."
+  icon:
+    sprite: Constructible/Power/ame_controller.rsi
+    state: control
+  product: CrateEngineeringAMEControl
+  cost: 500
+  category: Engineering
+  group: market
+

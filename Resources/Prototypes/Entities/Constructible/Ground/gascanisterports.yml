@@ -10,20 +10,31 @@
   - type: SnapGrid
     offset: Center
   - type: Sprite
+    sprite: Constructible/Atmos/gascanisterport.rsi
+    state: gasCanisterPort
+  - type: Icon
+    sprite: Constructible/Atmos/gascanisterport.rsi
+    state: gasCanisterPort
+  - type: Appearance
+    visuals:
+    - type: PipeVisualizer
+      pipeRSI: Constructible/Atmos/pipe.rsi
+  - type: Damageable
   - type: Destructible
-    thresholdvalue: 100
+    thresholds:
+      100:
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
   - type: GasCanisterPort
 
 - type: entity
   parent: GasCanisterPortBase
-  id: FourwayGasCanisterPort
-  name: Fourway Gas Canister Port
+  id: GasCanisterPort
+  name: Gas Canister Port
   components:
   - type: NodeContainer
     nodes:
     - !type:PipeNode
       nodeGroupID: Pipe
-      pipeDirection: Fourway
-  - type: Sprite
-    sprite: Constructible/Power/smes.rsi
-    state: smes
+      pipeDirection: East

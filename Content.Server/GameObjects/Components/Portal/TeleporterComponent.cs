@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Content.Shared.GameObjects.Components.Portal;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -22,7 +23,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Portal
 {
     [RegisterComponent]
-    public class TeleporterComponent : Component, IAfterInteract
+    public class TeleporterComponent : Component, IAfterInteract 
     {
         [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
         [Dependency] private readonly IRobustRandom _spreadRandom = default!;
@@ -77,7 +78,7 @@ namespace Content.Server.GameObjects.Components.Portal
             _state = newState;
         }
 
-        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (_teleporterType == TeleporterType.Directed)
             {

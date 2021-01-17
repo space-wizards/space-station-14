@@ -1,10 +1,11 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.StationEvents;
 using Content.Shared.Atmos;
+using Content.Shared.Roles;
 using Robust.Client.Console;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.Placement;
@@ -30,33 +31,35 @@ namespace Content.Client.UserInterface.AdminMenu
         public readonly TabContainer MasterTabContainer;
         public readonly VBoxContainer PlayerList;
         public readonly Label PlayerCount;
+        private readonly IGameHud _gameHud;
 
         protected override Vector2? CustomSize => (500, 250);
 
-        private readonly List<CommandButton> _adminButtons = new List<CommandButton>
+        private readonly List<CommandButton> _adminButtons = new()
         {
             new KickCommandButton(),
             new DirectCommandButton("Admin Ghost", "aghost"),
             new TeleportCommandButton(),
+            new DirectCommandButton("Permissions Panel", "permissions"),
         };
-        private readonly List<CommandButton> _adminbusButtons = new List<CommandButton>
+        private readonly List<CommandButton> _adminbusButtons = new()
         {
             new SpawnEntitiesCommandButton(),
             new SpawnTilesCommandButton(),
-            new StationEventsCommandButton(),
+            new StationEventsCommandButton()
         };
-        private readonly List<CommandButton> _debugButtons = new List<CommandButton>
+        private readonly List<CommandButton> _debugButtons = new()
         {
             new AddAtmosCommandButton(),
             new FillGasCommandButton(),
         };
-        private readonly List<CommandButton> _roundButtons = new List<CommandButton>
+        private readonly List<CommandButton> _roundButtons = new()
         {
             new DirectCommandButton("Start Round", "startround"),
             new DirectCommandButton("End Round", "endround"),
             new DirectCommandButton("Restart Round", "restartround"),
         };
-        private readonly List<CommandButton> _serverButtons = new List<CommandButton>
+        private readonly List<CommandButton> _serverButtons = new()
         {
             new DirectCommandButton("Reboot", "restart"),
             new DirectCommandButton("Shutdown", "shutdown"),
@@ -205,6 +208,7 @@ namespace Content.Client.UserInterface.AdminMenu
 
         public AdminMenuWindow() //TODO: search for buttons?
         {
+            _gameHud = IoCManager.Resolve<IGameHud>();
             Title = Loc.GetString("Admin Menu");
 
             #region PlayerList
@@ -375,6 +379,19 @@ namespace Content.Client.UserInterface.AdminMenu
             IoCManager.Resolve<IStationEventManager>().RequestEvents();
         }
 
+        protected override void ExitedTree()
+        {
+            base.ExitedTree();
+            _gameHud.AdminButtonDown = false;
+
+        }
+
+        protected override void EnteredTree()
+        {
+            base.EnteredTree();
+            _gameHud.AdminButtonDown = true;
+        }
+
         #region CommandButtonBaseClass
         private abstract class CommandButton
         {
@@ -463,22 +480,23 @@ namespace Content.Client.UserInterface.AdminMenu
             public override string RequiredCommand => "events";
             public override string? SubmitText => "Run";
 
-            private readonly CommandUIDropDown _eventsDropDown = new CommandUIDropDown
+            private readonly CommandUIDropDown _eventsDropDown = new()
             {
                 Name = "Event",
                 GetData = () =>
                 {
-                    var events = IoCManager.Resolve<IStationEventManager>().StationEvents;
-                    if (events == null)
-                        return new List<object> { "Not loaded" };
-                    events.Add("Random");
+                    var events = IoCManager.Resolve<IStationEventManager>().StationEvents.ToList();
+                    if (events.Count == 0)
+                        events.Add(Loc.GetString("Not loaded"));
+                    else
+                        events.Add(Loc.GetString("Random"));
                     return events.ToList<object>();
                 },
                 GetDisplayName = (obj) => (string) obj,
                 GetValueFromData = (obj) => ((string) obj).ToLower(),
             };
 
-            public override List<CommandUIControl> UI => new List<CommandUIControl>
+            public override List<CommandUIControl> UI => new()
             {
                 _eventsDropDown,
                 new CommandUIButton
@@ -510,19 +528,19 @@ namespace Content.Client.UserInterface.AdminMenu
             public override string Name => "Kick";
             public override string RequiredCommand => "kick";
 
-            private readonly CommandUIDropDown _playerDropDown = new CommandUIDropDown
+            private readonly CommandUIDropDown _playerDropDown = new()
             {
                 Name = "Player",
                 GetData = () => IoCManager.Resolve<IPlayerManager>().Sessions.ToList<object>(),
                 GetDisplayName = (obj) => $"{((IPlayerSession) obj).Name} ({((IPlayerSession) obj).AttachedEntity?.Name})",
                 GetValueFromData = (obj) => ((IPlayerSession) obj).Name,
             };
-            private readonly CommandUILineEdit _reason = new CommandUILineEdit
+            private readonly CommandUILineEdit _reason = new()
             {
                 Name = "Reason"
             };
 
-            public override List<CommandUIControl> UI => new List<CommandUIControl>
+            public override List<CommandUIControl> UI => new()
             {
                 _playerDropDown,
                 _reason
@@ -539,7 +557,7 @@ namespace Content.Client.UserInterface.AdminMenu
             public override string Name => "Teleport";
             public override string RequiredCommand => "tpto";
 
-            private readonly CommandUIDropDown _playerDropDown = new CommandUIDropDown
+            private readonly CommandUIDropDown _playerDropDown = new()
             {
                 Name = "Player",
                 GetData = () => IoCManager.Resolve<IPlayerManager>().Sessions.ToList<object>(),
@@ -547,7 +565,7 @@ namespace Content.Client.UserInterface.AdminMenu
                 GetValueFromData = (obj) => ((IPlayerSession) obj).Name,
             };
 
-            public override List<CommandUIControl> UI => new List<CommandUIControl>
+            public override List<CommandUIControl> UI => new()
             {
                 _playerDropDown
             };
@@ -563,7 +581,7 @@ namespace Content.Client.UserInterface.AdminMenu
             public override string Name => "Add Atmos";
             public override string RequiredCommand => "addatmos";
 
-            private readonly CommandUIDropDown _grid = new CommandUIDropDown
+            private readonly CommandUIDropDown _grid = new()
             {
                 Name = "Grid",
                 GetData = () => IoCManager.Resolve<IMapManager>().GetAllGrids().Where(g => (int) g.Index != 0).ToList<object>(),
@@ -571,7 +589,7 @@ namespace Content.Client.UserInterface.AdminMenu
                 GetValueFromData = (obj) => ((IMapGrid) obj).Index.ToString(),
             };
 
-            public override List<CommandUIControl> UI => new List<CommandUIControl>
+            public override List<CommandUIControl> UI => new()
             {
                 _grid,
             };
@@ -587,7 +605,7 @@ namespace Content.Client.UserInterface.AdminMenu
             public override string Name => "Fill Gas";
             public override string RequiredCommand => "fillgas";
 
-            private readonly CommandUIDropDown _grid = new CommandUIDropDown
+            private readonly CommandUIDropDown _grid = new()
             {
                 Name = "Grid",
                 GetData = () => IoCManager.Resolve<IMapManager>().GetAllGrids().Where(g => (int) g.Index != 0).ToList<object>(),
@@ -595,7 +613,7 @@ namespace Content.Client.UserInterface.AdminMenu
                 GetValueFromData = (obj) => ((IMapGrid) obj).Index.ToString(),
             };
 
-            private readonly CommandUIDropDown _gas = new CommandUIDropDown
+            private readonly CommandUIDropDown _gas = new()
             {
                 Name = "Gas",
                 GetData = () =>
@@ -607,12 +625,12 @@ namespace Content.Client.UserInterface.AdminMenu
                 GetValueFromData = (obj) => ((GasPrototype) obj).ID.ToString(),
             };
 
-            private CommandUISpinBox _amount = new CommandUISpinBox
+            private readonly CommandUISpinBox _amount = new()
             {
                 Name = "Amount"
             };
 
-            public override List<CommandUIControl> UI => new List<CommandUIControl>
+            public override List<CommandUIControl> UI => new()
             {
                 _grid,
                 _gas,

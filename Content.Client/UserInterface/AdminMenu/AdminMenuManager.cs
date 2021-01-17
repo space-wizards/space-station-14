@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Content.Client.Administration;
 using Content.Shared.Input;
 using Robust.Client.Console;
 using Robust.Client.Interfaces.Input;
@@ -11,14 +12,16 @@ namespace Content.Client.UserInterface.AdminMenu
 {
     internal class AdminMenuManager : IAdminMenuManager
     {
-        [Dependency] private INetManager _netManager = default!;
+        [Dependency] private readonly INetManager _netManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IGameHud _gameHud = default!;
+        [Dependency] private readonly IClientAdminManager _clientAdminManager = default!;
         [Dependency] private readonly IClientConGroupController _clientConGroupController = default!;
 
         private SS14Window _window;
         private List<SS14Window> _commandWindows;
 
-        public void Initialize() 
+        public void Initialize()
         {
             _commandWindows = new List<SS14Window>();
             // Reset the AdminMenu Window on disconnect
@@ -26,6 +29,30 @@ namespace Content.Client.UserInterface.AdminMenu
 
             _inputManager.SetInputCommand(ContentKeyFunctions.OpenAdminMenu,
                 InputCmdHandler.FromDelegate(session => Toggle()));
+
+            _clientAdminManager.AdminStatusUpdated += () =>
+            {
+                // when status changes, show the top button if we can open admin menu.
+                // if we can't or we lost admin status, close it and hide the button.
+                _gameHud.AdminButtonVisible = CanOpen();
+                if (!_gameHud.AdminButtonVisible)
+                {
+                    Close();
+                }
+            };
+            _gameHud.AdminButtonToggled += (open) =>
+            {
+                if (open)
+                {
+                    TryOpen();
+                }
+                else
+                {
+                    Close();
+                }
+            };
+            _gameHud.AdminButtonVisible = CanOpen();
+            _gameHud.AdminButtonDown = false;
         }
 
         public void ResetWindow()

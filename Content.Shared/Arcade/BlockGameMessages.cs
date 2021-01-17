@@ -59,9 +59,6 @@ namespace Content.Shared.Arcade
         }
 
         [Serializable, NetSerializable]
-        public class BlockGameUserUnregisterMessage : BoundUserInterfaceMessage{}
-
-        [Serializable, NetSerializable]
         public class BlockGameSetScreenMessage : BoundUserInterfaceMessage
         {
             public readonly BlockGameScreen Screen;
@@ -123,7 +120,7 @@ namespace Content.Shared.Arcade
 
             public int CompareTo(object? obj)
             {
-                if (!(obj is HighScoreEntry entry)) return 0;
+                if (obj is not HighScoreEntry entry) return 0;
                 return Score.CompareTo(entry.Score);
             }
         }

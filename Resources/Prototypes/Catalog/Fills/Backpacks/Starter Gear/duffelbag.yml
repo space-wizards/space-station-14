@@ -1,0 +1,75 @@
+- type: entity
+  abstract: true
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelFilled
+  components:
+  - type: StorageFill
+    contents:
+      - name: BoxSurvival
+
+- type: entity
+  abstract: true
+  parent: ClothingBackpackDuffelClown
+  id: ClothingBackpackDuffelClownFilled
+  components:
+  - type: StorageFill
+    contents:
+      - name: BoxHug
+
+- type: entity
+  abstract: true
+  parent: ClothingBackpackDuffelSecurity
+  id: ClothingBackpackDuffelSecurityFilled
+  components:
+  - type: StorageFill
+    contents:
+      - name: BoxSurvival
+      - name: Stunbaton
+      - name: Flash
+
+- type: entity
+  abstract: true
+  parent: ClothingBackpackDuffelMedical
+  id: ClothingBackpackDuffelMedicalFilled
+  components:
+  - type: StorageFill
+    contents:
+      - name: BoxSurvival
+
+- type: entity
+  abstract: true
+  parent: ClothingBackpackDuffelCaptain
+  id: ClothingBackpackDuffelCaptainFilled
+  components:
+  - type: StorageFill
+    contents:
+      - name: BoxSurvival
+      #- name: StationCharter
+      #- name: TelescopicBaton
+
+- type: entity
+  abstract: true
+  parent: ClothingBackpackDuffelEngineering
+  id: ClothingBackpackDuffelEngineeringFilled
+  components:
+  - type: StorageFill
+    contents:
+      - name: BoxSurvival
+
+#- type: entity
+#  abstract: true
+#  parent: ClothingBackpackDuffelScience
+#  id: ClothingBackpackDuffelScienceFilled
+#  components:
+#  - type: StorageFill
+#    contents:
+#      - name: BoxSurvival
+
+#- type: entity
+#  abstract: true
+#  parent: ClothingBackpackDuffelChemistry
+#  id: ClothingBackpackDuffelChemistryFilled
+#  components:
+#  - type: StorageFill
+#    contents:
+#      - name: BoxSurvival

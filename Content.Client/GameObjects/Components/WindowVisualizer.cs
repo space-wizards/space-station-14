@@ -1,11 +1,11 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Client.GameObjects.Components
 {
@@ -17,24 +17,29 @@ namespace Content.Client.GameObjects.Components
             base.OnChangeData(component);
 
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
-            var snapGrid = component.Owner.GetComponent<SnapGridComponent>();
+            if (!component.Owner.TryGetComponent(out SnapGridComponent? snapGrid))
+                return;
+
             var lowWall = FindLowWall(snapGrid);
-            if (lowWall == null) return;
+            if (lowWall == null)
+                return;
 
             if (component.TryGetData(WindowVisuals.Damage, out float fraction))
             {
                 var level = Math.Min(ContentHelpers.RoundToLevels(fraction, 1, 7), 5);
                 if (level == 0)
                 {
-                    foreach (WindowDamageLayers val in Enum.GetValues(typeof(WindowDamageLayers)))
+                    foreach (var val in Enum.GetValues(typeof(WindowDamageLayers)))
                     {
-                        sprite.LayerSetVisible(val, false);
+                        if (val == null) continue;
+                        sprite.LayerSetVisible((WindowDamageLayers) val, false);
                     }
                     return;
                 }
-                foreach (WindowDamageLayers val in Enum.GetValues(typeof(WindowDamageLayers)))
+                foreach (var val in Enum.GetValues(typeof(WindowDamageLayers)))
                 {
-                    sprite.LayerSetVisible(val, true);
+                    if (val == null) continue;
+                    sprite.LayerSetVisible((WindowDamageLayers) val, true);
                 }
 
                 sprite.LayerSetState(WindowDamageLayers.DamageNE, $"{(int) lowWall.LastCornerNE}_{level}");
@@ -45,11 +50,11 @@ namespace Content.Client.GameObjects.Components
             }
         }
 
-        private static LowWallComponent FindLowWall(SnapGridComponent snapGrid)
+        private static LowWallComponent? FindLowWall(SnapGridComponent snapGrid)
         {
             foreach (var entity in snapGrid.GetLocal())
             {
-                if (entity.TryGetComponent(out LowWallComponent lowWall))
+                if (entity.TryGetComponent(out LowWallComponent? lowWall))
                 {
                     return lowWall;
                 }

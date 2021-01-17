@@ -1,10 +1,8 @@
 ﻿using Content.Shared.Chat;
-using Robust.Client.Console;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
@@ -25,6 +23,7 @@ namespace Content.Client.Chat
         public Button LocalButton { get; }
         public Button OOCButton { get; }
         public Button AdminButton { get; }
+        public Button DeadButton { get;  }
 
         /// <summary>
         ///     Default formatting string for the ClientChatConsole.
@@ -97,29 +96,33 @@ namespace Content.Client.Chat
                 ToggleMode = true,
             };
 
-            var groupController = IoCManager.Resolve<IClientConGroupController>();
-            if(groupController.CanCommand("asay"))
+            AdminButton = new Button
             {
-                AdminButton = new Button
-                {
-                    Text = Loc.GetString("Admin"),
-                    Name = "Admin",
-                    ToggleMode = true,
-                };
-            }
+                Text = Loc.GetString("Admin"),
+                Name = "Admin",
+                ToggleMode = true,
+                Visible = false
+            };
+
+            DeadButton = new Button
+            {
+                Text = Loc.GetString("Dead"),
+                Name = "Dead",
+                ToggleMode = true,
+                Visible = false
+            };
 
             AllButton.OnToggled += OnFilterToggled;
             LocalButton.OnToggled += OnFilterToggled;
             OOCButton.OnToggled += OnFilterToggled;
+            AdminButton.OnToggled += OnFilterToggled;
+            DeadButton.OnToggled += OnFilterToggled;
 
             hBox.AddChild(AllButton);
             hBox.AddChild(LocalButton);
+            hBox.AddChild(DeadButton);
             hBox.AddChild(OOCButton);
-            if(AdminButton != null)
-            {
-                AdminButton.OnToggled += OnFilterToggled;
-                hBox.AddChild(AdminButton);
-            }
+            hBox.AddChild(AdminButton);
 
             AddChild(outerVBox);
         }

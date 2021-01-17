@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Utility;
@@ -9,6 +9,7 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 
@@ -42,7 +43,16 @@ namespace Content.Server.GameObjects.Components.Command
 
         private void UpdateBoundInterface()
         {
-            UserInterface?.SetState(new CommunicationsConsoleInterfaceState(RoundEndSystem.ExpectedCountdownEnd));
+            if (!Deleted)
+                UserInterface?.SetState(new CommunicationsConsoleInterfaceState(RoundEndSystem.ExpectedCountdownEnd));
+        }
+
+        public override void OnRemove()
+        {
+            RoundEndSystem.OnRoundEndCountdownStarted -= UpdateBoundInterface;
+            RoundEndSystem.OnRoundEndCountdownCancelled -= UpdateBoundInterface;
+            RoundEndSystem.OnRoundEndCountdownFinished -= UpdateBoundInterface;
+            base.OnRemove();
         }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage obj)
@@ -68,11 +78,12 @@ namespace Content.Server.GameObjects.Components.Command
         {
             if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
                 return;
-
+/*
             if (!Powered)
             {
                 return;
             }
+*/
             OpenUserInterface(actor.playerSession);
         }
     }

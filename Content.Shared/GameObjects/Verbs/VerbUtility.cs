@@ -86,7 +86,7 @@ namespace Content.Shared.GameObjects.Verbs
         {
             if (!user.IsInSameOrNoContainer(target))
             {
-                if (!ContainerHelpers.TryGetContainer(target, out var container) ||
+                if (!target.TryGetContainer(out var container) ||
                     container.Owner != user)
                 {
                     return false;

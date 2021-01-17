@@ -12,10 +12,12 @@ namespace Content.Client.UserInterface.Stylesheets
         public const string ClassHighDivider = "HighDivider";
         public const string StyleClassLabelHeading = "LabelHeading";
         public const string StyleClassLabelSubText = "LabelSubText";
+        public const string StyleClassItalic = "Italic";
 
         public const string ButtonOpenRight = "OpenRight";
         public const string ButtonOpenLeft = "OpenLeft";
         public const string ButtonOpenBoth = "OpenBoth";
+        public const string ButtonSquare = "ButtonSquare";
 
         public const string ButtonCaution = "Caution";
 
@@ -27,10 +29,12 @@ namespace Content.Client.UserInterface.Stylesheets
         protected StyleBoxTexture BaseButtonOpenRight { get; }
         protected StyleBoxTexture BaseButtonOpenLeft { get; }
         protected StyleBoxTexture BaseButtonOpenBoth { get; }
+        protected StyleBoxTexture BaseButtonSquare { get; }
 
         protected StyleBase(IResourceCache resCache)
         {
             var notoSans12 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 12);
+            var notoSans12Italic = resCache.GetFont("/Fonts/NotoSans/NotoSans-Italic.ttf", 12);
 
             // Button styles.
             var buttonTex = resCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
@@ -68,6 +72,15 @@ namespace Content.Client.UserInterface.Stylesheets
             BaseButtonOpenBoth.SetPadding(StyleBox.Margin.Right, 2);
             BaseButtonOpenBoth.SetPadding(StyleBox.Margin.Left, 1);
 
+            BaseButtonSquare = new StyleBoxTexture(BaseButton)
+            {
+                Texture = new AtlasTexture(buttonTex, UIBox2.FromDimensions((10, 0), (3, 24))),
+            };
+            BaseButtonSquare.SetPatchMargin(StyleBox.Margin.Horizontal, 0);
+            BaseButtonSquare.SetContentMarginOverride(StyleBox.Margin.Horizontal, 8);
+            BaseButtonSquare.SetPadding(StyleBox.Margin.Right, 2);
+            BaseButtonSquare.SetPadding(StyleBox.Margin.Left, 1);
+
             BaseRules = new[]
             {
                 // Default font.
@@ -76,6 +89,14 @@ namespace Content.Client.UserInterface.Stylesheets
                     new[]
                     {
                         new StyleProperty("font", notoSans12),
+                    }),
+
+                // Default font.
+                new StyleRule(
+                    new SelectorElement(null, new[] {StyleClassItalic}, null, null),
+                    new[]
+                    {
+                        new StyleProperty("font", notoSans12Italic),
                     }),
             };
         }

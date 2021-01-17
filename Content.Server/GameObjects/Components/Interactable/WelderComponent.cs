@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Threading.Tasks;
 using Content.Server.Atmos;
@@ -28,7 +28,8 @@ namespace Content.Server.GameObjects.Components.Interactable
     [RegisterComponent]
     [ComponentReference(typeof(ToolComponent))]
     [ComponentReference(typeof(IToolComponent))]
-    public class WelderComponent : ToolComponent, IExamine, IUse, ISuicideAct, ISolutionChange
+    [ComponentReference(typeof(IHotItem))]
+    public class WelderComponent : ToolComponent, IExamine, IUse, ISuicideAct, ISolutionChange, IHotItem
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
@@ -71,6 +72,11 @@ namespace Content.Server.GameObjects.Components.Interactable
                 _welderLit = value;
                 Dirty();
             }
+        }
+
+        bool IHotItem.IsCurrentlyHot()
+        {
+            return WelderLit;
         }
 
         public override void Initialize()
@@ -285,5 +291,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         {
             Dirty();
         }
+
+
     }
 }

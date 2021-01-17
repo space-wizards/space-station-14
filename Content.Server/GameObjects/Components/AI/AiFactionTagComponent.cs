@@ -15,7 +15,7 @@ namespace Content.Server.GameObjects.Components.AI
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            
+
             serializer.DataReadWriteFunction(
                 "factions",
                 new List<Faction>(),
@@ -40,7 +40,7 @@ namespace Content.Server.GameObjects.Components.AI
     public enum Faction
     {
         None = 0,
-        NanoTransen = 1 << 0,
+        NanoTrasen = 1 << 0,
         SimpleHostile = 1 << 1,
         SimpleNeutral = 1 << 2,
         Syndicate = 1 << 3,

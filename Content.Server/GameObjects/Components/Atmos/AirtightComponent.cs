@@ -1,14 +1,10 @@
 ﻿#nullable enable
-using System;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Atmos;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -30,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         [ViewVariables]
         private int _currentAirBlockedDirection;
         private bool _airBlocked = true;
-        private bool _fixVacuum = false;
+        private bool _fixVacuum;
 
         [ViewVariables]
         private bool _rotateAirBlocked = true;
@@ -85,10 +81,9 @@ namespace Content.Server.GameObjects.Components.Atmos
             // Using the SnapGrid is critical for performance, and thus if it is absent the component
             // will not be airtight. A warning is much easier to track down than the object magically
             // not being airtight, so log one if the SnapGrid component is missing.
-            if (!Owner.EnsureComponent(out SnapGridComponent _))
-                Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition} didn't have a {nameof(SnapGridComponent)}");
+            Owner.EnsureComponentWarn(out SnapGridComponent _);
 
-            if(_fixAirBlockedDirectionInitialize)
+            if (_fixAirBlockedDirectionInitialize)
                 RotateEvent(new RotateEvent(Owner, Angle.Zero, Owner.Transform.LocalRotation));
 
             UpdatePosition();
@@ -113,7 +108,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             for (var i = 0; i < Atmospherics.Directions; i++)
             {
                 var direction = (AtmosDirection) (1 << i);
-                if (!myDirection.HasFlag(direction)) continue;
+                if (!myDirection.IsFlagSet(direction)) continue;
                 var angle = direction.ToAngle();
                 angle += myAngle;
                 newAirBlockedDirs |= angle.ToAtmosDirectionCardinal();
@@ -147,7 +142,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             UpdatePosition(_lastPosition.Item1, _lastPosition.Item2);
 
             if (_fixVacuum)
-                _atmosphereSystem.GetGridAtmosphere(_lastPosition.Item1)?.FixVacuum(_lastPosition.Item2);
+                _atmosphereSystem.GetGridAtmosphere(_lastPosition.Item1).FixVacuum(_lastPosition.Item2);
         }
 
         private void OnTransformMove()
@@ -170,8 +165,6 @@ namespace Content.Server.GameObjects.Components.Atmos
         private void UpdatePosition(GridId gridId, Vector2i pos)
         {
             var gridAtmos = _atmosphereSystem.GetGridAtmosphere(gridId);
-
-            if (gridAtmos == null) return;
 
             gridAtmos.UpdateAdjacentBits(pos);
             gridAtmos.Invalidate(pos);

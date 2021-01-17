@@ -1,5 +1,6 @@
 ﻿using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -9,8 +10,6 @@ namespace Content.Shared.Physics
 {
     public class ThrowKnockbackController : VirtualController
     {
-        [Dependency] private readonly IPhysicsManager _physicsManager = default!;
-
         public ThrowKnockbackController()
         {
             IoCManager.InjectDependencies(this);

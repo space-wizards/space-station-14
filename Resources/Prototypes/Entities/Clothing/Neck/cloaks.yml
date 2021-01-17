@@ -1,124 +1,88 @@
 - type: entity
-  parent: Clothing
-  id: CloakClothing
-  name: cloak
-  abstract: true
-  description:
-  components:
-  - type: Clothing
-    size: 10
-    QuickEquip: true
-    Slots:
-    - neck
-
-- type: entity
-  parent: CloakClothing
-  id: CapCloak
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakCap
   name: captain's cloak
-  description: A pompous and comfy blue cloak with a nice gold trim.
+  description: A pompous and comfy blue cloak with a nice gold trim, while not particularly valuable as your other posessions, it sure is fancy.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Cloaks/cap_cloak.rsi
-    state: capcloak
-
+    sprite: Clothing/Neck/Cloaks/cap.rsi
   - type: Clothing
-    sprite: Clothing/Neck/Cloaks/cap_cloak.rsi
-    HeldPrefix: capcloak
+    sprite: Clothing/Neck/Cloaks/cap.rsi
 
 - type: entity
-  parent: CloakClothing
-  id: HosCloak
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakHos
   name: HoS's cloak
-  description: An exquisite dark and red cloak of a Head of Security.
+  description: An exquisite dark and red cloak fitting for those who can assert dominance over wrongdoers. Take a stab at being civil in prosecution!
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Cloaks/hos_cloak.rsi
-    state: hoscloak
-
+    sprite: Clothing/Neck/Cloaks/hos.rsi
   - type: Clothing
-    sprite: Clothing/Neck/Cloaks/hos_cloak.rsi
-    HeldPrefix: hoscloak
+    sprite: Clothing/Neck/Cloaks/hos.rsi
 
 - type: entity
-  parent: CloakClothing
-  id: CeCloak
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakCe
   name: CE's cloak
-  description: A dark green cloak with light blue ornaments.
+  description: A dark green cloak with light blue ornaments, given to those who proved themselves to master the precise art of engineering.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Cloaks/ce_cloak.rsi
-    state: cecloak
-
+    sprite: Clothing/Neck/Cloaks/ce.rsi
   - type: Clothing
-    sprite: Clothing/Neck/Cloaks/ce_cloak.rsi
-    HeldPrefix: cecloak
+    sprite: Clothing/Neck/Cloaks/ce.rsi
+
 
 - type: entity
-  parent: CloakClothing
-  id: CmoCloak
+  parent: ClothingNeckBase
+  id: ClothingCloakCmo
   name: CMO's cloak
-  description: A sterile blue cloak with a green cross.
+  description: A sterile blue cloak with a green cross, radiating with a sense of duty and willingness to help others.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Cloaks/cmo_cloak.rsi
-    state: cmocloak
-
+    sprite: Clothing/Neck/Cloaks/cmo.rsi
   - type: Clothing
-    sprite: Clothing/Neck/Cloaks/cmo_cloak.rsi
-    HeldPrefix: cmocloak
+    sprite: Clothing/Neck/Cloaks/cmo.rsi
 
 - type: entity
-  parent: CloakClothing
-  id: RdCloak
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakRd
   name: RD's cloak
-  description: A white cloak with violet stripes.
+  description: A white cloak with violet stripes, showing your status as the arbiter of cutting-edge technology.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Cloaks/rd_cloak.rsi
-    state: rdcloak
-
+    sprite: Clothing/Neck/Cloaks/rd.rsi
   - type: Clothing
-    sprite: Clothing/Neck/Cloaks/rd_cloak.rsi
-    HeldPrefix: rdcloak
+    sprite: Clothing/Neck/Cloaks/rd.rsi
 
 - type: entity
-  parent: CloakClothing
-  id: QmCloak
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakQm
   name: QM's cloak
-  description: A strong brown cloak with a reflective stripe.
+  description: A strong brown cloak with a reflective stripe, while not as fancy as others, it does show your managing skills.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Cloaks/qm_cloak.rsi
-    state: qmcloak
-
+    sprite: Clothing/Neck/Cloaks/qm.rsi
   - type: Clothing
-    sprite: Clothing/Neck/Cloaks/qm_cloak.rsi
-    HeldPrefix: qmcloak
+    sprite: Clothing/Neck/Cloaks/qm.rsi
 
 - type: entity
-  parent: CloakClothing
-  id: HopCloak
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakHop
   name: HoP's cloak
-  description: A blue cloak with red shoudlers and gold buttons.
+  description: A blue cloak with red shoudlers and gold buttons, proving you are the gatekeeper to any airlock on the station.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Cloaks/hop_cloak.rsi
-    state: hopcloak
-
+    sprite: Clothing/Neck/Cloaks/hop.rsi
   - type: Clothing
-    sprite: Clothing/Neck/Cloaks/hop_cloak.rsi
-    HeldPrefix: hopcloak
+    sprite: Clothing/Neck/Cloaks/hop.rsi
 
 - type: entity
-  parent: CloakClothing
-  id: HeraldCloak
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakHerald
   name: Herald's cloak
   description: An evil-looking red cloak with spikes on its shoulders.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Cloaks/herald_cloak.rsi
-    state: heraldcloak
-
+    sprite: Clothing/Neck/Cloaks/herald.rsi
   - type: Clothing
-    sprite: Clothing/Neck/Cloaks/herald_cloak.rsi
-    HeldPrefix: heraldcloak
+    sprite: Clothing/Neck/Cloaks/herald.rsi

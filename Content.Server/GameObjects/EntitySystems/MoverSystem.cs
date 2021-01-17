@@ -14,6 +14,7 @@ using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
@@ -35,7 +36,6 @@ namespace Content.Server.GameObjects.EntitySystems
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private AudioSystem _audioSystem = default!;
 
@@ -46,8 +46,6 @@ namespace Content.Server.GameObjects.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-
-            SubscribeLocalEvent<PlayerAttachSystemMessage>(PlayerAttached);
             SubscribeLocalEvent<PlayerDetachedSystemMessage>(PlayerDetached);
 
             _audioSystem = EntitySystemManager.GetEntitySystem<AudioSystem>();
@@ -57,28 +55,16 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var (moverComponent, collidableComponent) in EntityManager.ComponentManager.EntityQuery<IMoverComponent, IPhysicsComponent>(false))
+            foreach (var (moverComponent, collidableComponent) in EntityManager.ComponentManager
+                .EntityQuery<IMoverComponent, IPhysicsComponent>(false))
             {
                 var entity = moverComponent.Owner;
                 UpdateKinematics(entity.Transform, moverComponent, collidableComponent);
             }
         }
 
-        private static void PlayerAttached(PlayerAttachSystemMessage ev)
-        {
-            if (!ev.Entity.HasComponent<IMoverComponent>())
-            {
-                ev.Entity.AddComponent<PlayerInputMoverComponent>();
-            }
-        }
-
         private void PlayerDetached(PlayerDetachedSystemMessage ev)
         {
-            if (ev.Entity.HasComponent<PlayerInputMoverComponent>())
-            {
-                ev.Entity.RemoveComponent<PlayerInputMoverComponent>();
-            }
-
             if (ev.Entity.TryGetComponent(out IPhysicsComponent? physics) &&
                 physics.TryGetController(out MoverController controller) &&
                 !ev.Entity.IsWeightless())
@@ -94,7 +80,7 @@ namespace Content.Server.GameObjects.EntitySystems
             if (_mapManager.GridExists(mover.LastPosition.GetGridId(EntityManager)))
             {
                 // Can happen when teleporting between grids.
-                if (!transform.Coordinates.TryDistance(_entityManager, mover.LastPosition, out var distance))
+                if (!transform.Coordinates.TryDistance(EntityManager, mover.LastPosition, out var distance))
                 {
                     mover.LastPosition = transform.Coordinates;
                     return;
@@ -142,24 +128,19 @@ namespace Content.Server.GameObjects.EntitySystems
             var grid = _mapManager.GetGrid(coordinates.GetGridId(EntityManager));
             var tile = grid.GetTileRef(coordinates);
 
-            // If the coordinates have a catwalk, it's always catwalk.
-            string soundCollectionName;
-            var catwalk = false;
-            foreach (var maybeCatwalk in grid.GetSnapGridCell(tile.GridIndices, SnapGridOffset.Center))
+            // If the coordinates have a FootstepModifier component
+            // i.e. component that emit sound on footsteps emit that sound
+            string? soundCollectionName = null;
+            foreach (var maybeFootstep in grid.GetSnapGridCell(tile.GridIndices, SnapGridOffset.Center))
             {
-                if (maybeCatwalk.Owner.HasComponent<CatwalkComponent>())
+                if (maybeFootstep.Owner.TryGetComponent(out FootstepModifierComponent? footstep))
                 {
-                    catwalk = true;
+                    soundCollectionName = footstep._soundCollectionName;
                     break;
                 }
             }
-
-            if (catwalk)
-            {
-                // Catwalk overrides tile sound.s
-                soundCollectionName = "footstep_catwalk";
-            }
-            else
+            // if there is no FootstepModifierComponent, determine sound based on tiles
+            if (soundCollectionName == null)
             {
                 // Walking on a tile.
                 var def = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body.Surgery;
+using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -23,11 +24,11 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         private IBody? _body;
 
         // TODO BODY Remove
-        private List<string> _mechanismIds = new List<string>();
+        private List<string> _mechanismIds = new();
         public IReadOnlyList<string> MechanismIds => _mechanismIds;
 
         [ViewVariables]
-        private HashSet<IMechanism> _mechanisms = new HashSet<IMechanism>();
+        private readonly HashSet<IMechanism> _mechanisms = new();
 
         [ViewVariables]
         public IBody? Body
@@ -89,9 +90,8 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         [ViewVariables]
         public BodyPartSymmetry Symmetry { get; private set; }
 
-        // TODO BODY
         [ViewVariables]
-        public SurgeryDataComponent? SurgeryDataComponent => Owner.GetComponentOrNull<SurgeryDataComponent>();
+        public ISurgeryData? SurgeryDataComponent => Owner.GetComponentOrNull<ISurgeryData>();
 
         protected virtual void OnAddMechanism(IMechanism mechanism)
         {
@@ -154,7 +154,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         {
             base.HandleComponentState(curState, nextState);
 
-            if (!(curState is BodyPartComponentState state))
+            if (curState is not BodyPartComponentState state)
             {
                 return;
             }
@@ -314,6 +314,14 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         protected virtual void OnAddedToBody(IBody body) { }
 
         protected virtual void OnRemovedFromBody(IBody old) { }
+
+        public virtual void Gib()
+        {
+            foreach (var mechanism in _mechanisms)
+            {
+                RemoveMechanism(mechanism);
+            }
+        }
     }
 
     [Serializable, NetSerializable]

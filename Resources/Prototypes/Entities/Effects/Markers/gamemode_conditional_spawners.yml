@@ -1,21 +1,10 @@
 - type: entity
   name: base conditional spawner
   id: BaseConditionalSpawner
+  parent: MarkerBase
   abstract: true
   components:
-    - type: Sprite
-      netsync: false
-      visible: false
-      sprite: Interface/Misc/markers.rsi
-      state: cross_blue
-
-    - type: Marker
-    - type: Clickable
-    - type: InteractionOutline
-    - type: Physics
     - type: ConditionalSpawner
-  placement:
-    mode: AlignTileAny
 
 - type: entity
   name: Suspicion Rifle Spawner
@@ -344,3 +333,22 @@
       chance: 0.95
       gameRules:
         - RuleSuspicion
+
+- type: entity
+  name: Traitor DeathMatch PDA Redemption Machine Spawner
+  id: TraitorDMRedemptionMachineSpawner
+  parent: BaseConditionalSpawner
+  components:
+    - type: Sprite
+      netsync: false
+      visible: false
+      sprite: Objects/Misc/traitordm.rsi
+      state: redemption
+
+    - type: ConditionalSpawner
+      prototypes:
+        - TraitorDMRedemptionMachine
+      chance: 1.0
+      gameRules:
+        - RuleTraitorDeathMatch
+

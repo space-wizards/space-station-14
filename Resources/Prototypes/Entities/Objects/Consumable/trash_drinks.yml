@@ -1,4 +1,4 @@
-﻿# These can still be used as containers
+# These can still be used as containers
 - type: entity
   name: base empty bottle
   parent: BaseItem
@@ -12,7 +12,6 @@
 
   - type: SolutionContainer
     maxVol: 10
-    caps: AddTo, RemoveFrom
   - type: Pourable
     transferAmount: 5
   - type: Drink

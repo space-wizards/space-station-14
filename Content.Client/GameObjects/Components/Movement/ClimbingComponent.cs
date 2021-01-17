@@ -4,11 +4,14 @@ using Robust.Shared.GameObjects;
 namespace Content.Client.GameObjects.Components.Movement
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedClimbingComponent))]
     public class ClimbingComponent : SharedClimbingComponent
     {
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            if (!(curState is ClimbModeComponentState climbModeState) || Body == null)
+            base.HandleComponentState(curState, nextState);
+
+            if (curState is not ClimbModeComponentState climbModeState || Body == null)
             {
                 return;
             }

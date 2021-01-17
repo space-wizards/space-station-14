@@ -25,6 +25,7 @@ namespace Content.Shared.Maps
         public float Friction { get; set; }
         public float ThermalConductivity { get; set; }
         public string ItemDropPrototypeName { get; private set; }
+        public bool IsSpace { get; private set; }
 
         public void AssignTileId(ushort id)
         {
@@ -46,6 +47,11 @@ namespace Content.Shared.Maps
                 BaseTurfs = baseTurfNode.Select(i => i.ToString()).ToList();
             else
                 BaseTurfs = new List<string>();
+
+            if (mapping.TryGetNode("is_space", out node))
+            {
+                IsSpace = node.AsBool();
+            }
 
             if (mapping.TryGetNode("can_crowbar", out node))
             {

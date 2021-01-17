@@ -113,7 +113,7 @@ namespace Content.Client.GameObjects.Components
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public enum WindowDamageLayers
+    public enum WindowDamageLayers : byte
     {
         DamageSE,
         DamageNE,

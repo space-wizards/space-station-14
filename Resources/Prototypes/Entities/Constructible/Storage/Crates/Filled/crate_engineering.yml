@@ -1,0 +1,45 @@
+- type: entity
+  id: CrateEngineeringGear
+  name: engineering gear crate
+  parent: CrateEngineering
+  components:
+  - type: StorageFill
+    contents:
+      - name: ClothingBeltUtility
+        amount: 2
+      - name: ClothingEyesGlassesMeson
+        amount: 2
+      - name: ClothingHeadHatHardhatYellow
+        amount: 2
+      - name: ClothingHeadHatWeldingMaskFlame # Replace with regular welding mask when we have it.
+        amount: 2
+      - name: ClothingOuterVestHazard
+        amount: 3
+      - name: ClothingHandsGlovesColorYellow
+        amount: 2
+
+- type: entity
+  id: CrateEngineeringToolbox
+  name: toolbox crate
+  parent: CrateEngineering
+  components:
+  - type: StorageFill
+    contents:
+      - name: ToolboxMechanical
+        amount: 2
+      - name: ToolboxElectricalFilled
+        amount: 2
+
+#- type: entity
+#  id: CrateEngineeringPowercell
+#  name:  ame crate
+#  parent: CrateElectrical
+#  components:
+#  - type: StorageFill
+#    contents:
+#      - name: PowerCellLargeStandard
+#        amount: 3
+#      - name: PowerCellMediumStandard
+#        amount: 3
+#      - name: PowerCellSmallAutorecharge
+#        amount: 3

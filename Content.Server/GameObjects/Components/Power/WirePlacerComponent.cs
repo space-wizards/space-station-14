@@ -8,13 +8,13 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using System.Threading.Tasks;
 
 namespace Content.Server.GameObjects.Components.Power
 {
     [RegisterComponent]
     internal class WirePlacerComponent : Component, IAfterInteract
     {
-        [Dependency] private readonly IServerEntityManager _entityManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
 
         /// <inheritdoc />
@@ -34,10 +34,10 @@ namespace Content.Server.GameObjects.Components.Power
         }
 
         /// <inheritdoc />
-        public void AfterInteract(AfterInteractEventArgs eventArgs)
+        public async Task AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return;
-            if(!_mapManager.TryGetGrid(eventArgs.ClickLocation.GetGridId(_entityManager), out var grid))
+            if(!_mapManager.TryGetGrid(eventArgs.ClickLocation.GetGridId(Owner.EntityManager), out var grid))
                 return;
             var snapPos = grid.SnapGridCellFor(eventArgs.ClickLocation, SnapGridOffset.Center);
             var snapCell = grid.GetSnapGridCell(snapPos, SnapGridOffset.Center);
@@ -52,7 +52,7 @@ namespace Content.Server.GameObjects.Components.Power
             }
             if (Owner.TryGetComponent(out StackComponent stack) && !stack.Use(1))
                 return;
-            _entityManager.SpawnEntity(_wirePrototypeID, grid.GridTileToLocal(snapPos));
+            Owner.EntityManager.SpawnEntity(_wirePrototypeID, grid.GridTileToLocal(snapPos));
         }
     }
 }

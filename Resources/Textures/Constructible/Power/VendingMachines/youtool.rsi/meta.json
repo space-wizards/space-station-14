@@ -8,12 +8,10 @@
 
     "states": [
         {
-            "name": "broken",
-            "directions": 1
+            "name": "broken"
         },
         {
             "name": "deny-unshaded",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -27,7 +25,6 @@
         },
         {
             "name": "eject",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -39,7 +36,6 @@
         },
         {
             "name": "eject-unshaded",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -50,16 +46,13 @@
             ]
         },
         {
-            "name": "normal-unshaded",
-            "directions": 1
+            "name": "normal-unshaded"
         },
         {
-            "name": "off",
-            "directions": 1
+            "name": "off"
         },
         {
-            "name": "panel",
-            "directions": 1
+            "name": "panel"
         }
     ],
     "version": 1

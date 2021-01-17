@@ -8,8 +8,7 @@
     "copyright": "https://github.com/discordia-space/CEV-Eris/raw/c4f3f5c97c361e66cc93219702ea11f49b9d41bb/icons/obj/guns/projectile/shotgun.dmi",
     "states": [
         {
-            "name": "icon",
-            "directions": 1
+            "name": "icon"
         },
         {
             "name": "inhand-left",

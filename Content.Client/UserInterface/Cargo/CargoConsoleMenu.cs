@@ -23,7 +23,7 @@ namespace Content.Client.UserInterface.Cargo
         public event Action<BaseButton.ButtonEventArgs> OnOrderApproved;
         public event Action<BaseButton.ButtonEventArgs> OnOrderCanceled;
 
-        private List<string> _categoryStrings = new List<string>();
+        private readonly List<string> _categoryStrings = new();
 
         private Label _accountNameLabel { get; set; }
         private Label _pointsLabel { get; set; }
@@ -109,7 +109,8 @@ namespace Content.Client.UserInterface.Cargo
             var buttons = new HBoxContainer();
             CallShuttleButton = new Button()
             {
-                Text = Loc.GetString("Call Shuttle"),
+                //Text = Loc.GetString("Call Shuttle"),
+                Text = Loc.GetString("Activate Telepad"), //Shuttle code pending
                 TextAlign = Label.AlignMode.Center,
                 SizeFlagsHorizontal = SizeFlags.FillExpand
             };
