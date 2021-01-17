@@ -24,15 +24,6 @@ namespace Content.Client.GameObjects.Components.Explosion
             }
         }
 
-        public override void InitializeEntity(IEntity entity)
-        {
-            base.InitializeEntity(entity);
-            if (entity.TryGetComponent<ISpriteComponent>(out var sprite))
-            {
-                sprite.LayerMapSet(ClusterFlashVisualLayers.Base, sprite.AddLayerState($"{_state}-0"));
-            }
-        }
-
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
@@ -44,13 +35,8 @@ namespace Content.Client.GameObjects.Components.Explosion
 
             if (component.TryGetData(ClusterFlashVisuals.GrenadesCounter, out byte grenadesCounter))
             {
-                sprite.LayerSetState(ClusterFlashVisualLayers.Base, $"{_state}-{grenadesCounter}");
+                sprite.LayerSetState(0, $"{_state}-{grenadesCounter}");
             }
-        }
-
-        private enum ClusterFlashVisualLayers : byte
-        {
-            Base
         }
     }
 }
