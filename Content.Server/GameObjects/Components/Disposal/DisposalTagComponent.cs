@@ -1,5 +1,6 @@
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -12,6 +13,12 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         [ViewVariables(VVAccess.ReadWrite)]
         public string Tag;
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+            serializer.DataField(ref Tag, "tag", null);
+        }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
