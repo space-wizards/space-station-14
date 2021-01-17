@@ -33,6 +33,7 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -126,7 +127,8 @@ namespace Content.Client.GameObjects.EntitySystems
 
             if (!entity.Uid.IsClientSide())
             {
-                _currentVerbListRoot.List.AddChild(new Label { Text = "Waiting on Server..." });
+
+                _currentVerbListRoot.List.AddChild(new Label { Text = Loc.GetString("Waiting on Server...") });
                 RaiseNetworkEvent(new VerbSystemMessages.RequestVerbsMessage(_currentEntity));
             }
 
@@ -188,7 +190,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     continue;
                 }
 
-                if (entity.TryGetComponent(out ISpriteComponent sprite))
+                if (entity.Prototype != null && entity.TryGetComponent(out ISpriteComponent sprite))
                 {
                     var currentState = (entity.Prototype.ID, sprite.AllLayers.Where(e => e.Visible).Select(s => s.RsiState.Name));
                     if (!entitySpriteStates.ContainsKey(currentState))
@@ -383,7 +385,7 @@ namespace Content.Client.GameObjects.EntitySystems
             else
             {
                 var panel = new PanelContainer();
-                panel.AddChild(new Label { Text = "No verbs!" });
+                panel.AddChild(new Label { Text = Loc.GetString("No verbs!") });
                 vBox.AddChild(panel);
             }
         }
@@ -392,7 +394,7 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             var button = new VerbButton
             {
-                Text = data.Text,
+                Text = Loc.GetString(data.Text),
                 Disabled = data.Disabled
             };
 
@@ -426,7 +428,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
             return new VerbGroupButton(this, verbButtons, icon)
             {
-                Text = text,
+                Text = Loc.GetString(text),
             };
         }
 
@@ -562,7 +564,8 @@ namespace Content.Client.GameObjects.EntitySystems
             {
                 _entity = entity;
 
-                Margin.AddChild(new Label { Text = ShowUid ? $"{entity.Name} ({entity.Uid})" : entity.Name });
+                var text = Loc.GetString(ShowUid ? $"{entity.Name} ({entity.Uid})" : entity.Name);
+                Margin.AddChild(new Label { Text = text });
 
                 var control = new HBoxContainer
                 {
@@ -659,14 +662,15 @@ namespace Content.Client.GameObjects.EntitySystems
 
                 var labelCount = new Label
                 {
-                    Text = _entities.Count.ToString(),
+                    Text = Loc.GetString(_entities.Count.ToString()),
                     StyleClasses = { StyleNano.StyleClassContextMenuCount },
                 };
                 LayoutContainer.SetAnchorPreset(labelCount, LayoutContainer.LayoutPreset.BottomRight);
                 LayoutContainer.SetGrowHorizontal(labelCount, LayoutContainer.GrowDirection.Begin);
                 LayoutContainer.SetGrowVertical(labelCount, LayoutContainer.GrowDirection.Begin);
 
-                Margin.AddChild(new Label { Text = showUid ? $"{entity.Name} (---)" : entity.Name } );
+                var text = showUid ? $"{entity.Name} (---)" : entity.Name;
+                Margin.AddChild(new Label { Text = Loc.GetString(text) } );
 
                 var control = new HBoxContainer
                 {

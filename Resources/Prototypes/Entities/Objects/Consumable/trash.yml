@@ -10,7 +10,7 @@
 
 # Trash mountain
 - type: entity
-  name: 4 no raisins (trash)
+  name: 4no raisins (trash)
   parent: TrashBase
   id: TrashRaisins
   components:
