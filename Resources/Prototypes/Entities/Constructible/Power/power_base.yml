@@ -38,8 +38,8 @@
     supplyRate: 3000
   - type: Anchorable
   - type: Pullable
-  - type: DummyWire
-    prototype:
+  - type: ClientEntitySpawner
+    prototypes:
     - HVDummyWire
 
 - type: entity
@@ -96,8 +96,8 @@
     activeSupplyRate: 1000
   - type: Anchorable
   - type: Pullable
-  - type: DummyWire
-    prototype:
+  - type: ClientEntitySpawner
+    prototypes:
     - HVDummyWire
     
 - type: entity
@@ -154,8 +154,8 @@
     activeSupplyRate: 1000
   - type: Anchorable
   - type: Pullable
-  - type: DummyWire
-    prototype:
+  - type: ClientEntitySpawner
+    prototypes:
     - HVDummyWire
     - MVDummyWire
   
@@ -211,8 +211,8 @@
   - type: Construction
     graph: apc
     node: apc
-  - type: DummyWire
-    prototype:
+  - type: ClientEntitySpawner
+    prototypes:
     - MVDummyWire
     - LVDummyWire
     
@@ -263,6 +263,6 @@
           acts: ["Breakage"]
   - type: Anchorable
   - type: Pullable
-  - type: DummyWire
-    prototype:
+  - type: ClientEntitySpawner
+    prototypes:
     - HVDummyWire

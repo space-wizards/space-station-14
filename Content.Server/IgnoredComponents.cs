@@ -18,7 +18,7 @@ namespace Content.Server
             "Clickable",
             "RadiatingLight",
             "Icon",
-            "DummyWire"
+            "ClientEntitySpawner"
         };
 
     }
