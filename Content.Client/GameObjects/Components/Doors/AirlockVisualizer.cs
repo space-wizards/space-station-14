@@ -115,6 +115,11 @@ namespace Content.Client.GameObjects.Components.Doors
             var unlitVisible = true;
             var boltedVisible = false;
             var weldedVisible = false;
+
+            if (animPlayer.HasRunningAnimation(AnimationKey))
+            {
+                animPlayer.Stop(AnimationKey);
+            }
             switch (state)
             {
                 case DoorVisualState.Open:
@@ -128,24 +133,12 @@ namespace Content.Client.GameObjects.Components.Doors
                     sprite.LayerSetState(WiresVisualizer.WiresVisualLayers.MaintenancePanel, "panel_open");
                     break;
                 case DoorVisualState.Opening:
-                    if (animPlayer.HasRunningAnimation(AnimationKey))
-                    {
-                        animPlayer.Stop(AnimationKey);
-                    }
                     animPlayer.Play(OpenAnimation, AnimationKey);
                     break;
                 case DoorVisualState.Closing:
-                    if (animPlayer.HasRunningAnimation(AnimationKey))
-                    {
-                        animPlayer.Stop(AnimationKey);
-                    }
                     animPlayer.Play(CloseAnimation, AnimationKey);
                     break;
                 case DoorVisualState.Deny:
-                    if (animPlayer.HasRunningAnimation(AnimationKey))
-                    {
-                        animPlayer.Stop(AnimationKey);
-                    }
                     animPlayer.Play(DenyAnimation, AnimationKey);
                     break;
                 case DoorVisualState.Welded:
