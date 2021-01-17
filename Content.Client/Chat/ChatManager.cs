@@ -68,12 +68,18 @@ namespace Content.Client.Chat
 
         private readonly List<StoredChatMessage> _filteredHistory = new();
 
-        // Filter Button States
-        private bool _allState;
-        private bool _localState;
-        private bool _oocState;
-        private bool _adminState;
-        private bool _deadState;
+
+        // channel filters which are initially enabled by default
+        private static readonly IReadOnlySet<ChatChannel> DefaultChannelFilter = new HashSet<ChatChannel>
+        {
+            ChatChannel.Local, ChatChannel.Radio, ChatChannel.OOC, ChatChannel.AdminChat, ChatChannel.Dead,
+            ChatChannel.Server
+        };
+
+        // currently enabled channel filters. Note that these are persisted here, at the manager,
+        // rather than the chatbox so that these settings persist between instances of different
+        // chatboxes
+        private readonly HashSet<ChatChannel> _enabledChannels = new();
 
         // Flag Enums for holding filtered channels
         private ChatChannel _filteredChannels;
@@ -114,6 +120,11 @@ namespace Content.Client.Chat
 
             // When connexion is achieved, request the max chat message length
             _netManager.Connected += RequestMaxLength;
+
+            foreach (var defaultChannel in DefaultChannelFilter)
+            {
+                _enabledChannels.Add(defaultChannel);
+            }
         }
 
         public void FrameUpdate(FrameEventArgs delta)
@@ -168,11 +179,8 @@ namespace Content.Client.Chat
                 _currentChatBox.TextSubmitted += OnChatBoxTextSubmitted;
                 _currentChatBox.FilterToggled += OnFilterButtonToggled;
 
-                _currentChatBox.AllButton.Pressed = !_allState;
-                _currentChatBox.LocalButton.Pressed = !_localState;
-                _currentChatBox.OOCButton.Pressed = !_oocState;
-                _currentChatBox.AdminButton.Pressed = !_adminState;
-                _currentChatBox.DeadButton.Pressed = !_deadState;
+                _currentChatBox.SetChannelFilters(_enabledChannels);
+
                 AdminStatusUpdated();
             }
 

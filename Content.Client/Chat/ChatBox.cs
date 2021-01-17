@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.Chat;
@@ -13,7 +12,6 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
@@ -24,7 +22,7 @@ namespace Content.Client.Chat
     {
         public delegate void TextSubmitHandler(ChatBox chatBox, string text);
 
-        public delegate void FilterToggledHandler(ChatBox chatBox, BaseButton.ButtonToggledEventArgs e);
+        public delegate void FilterToggledHandler(ChatChannel toggled, bool enabled);
 
         public event TextSubmitHandler? TextSubmitted;
 
@@ -35,13 +33,6 @@ namespace Content.Client.Chat
         public HistoryLineEdit Input { get; private set; }
         public OutputPanel Contents { get; }
 
-        // Buttons for filtering
-        public Button AllButton { get; }
-        public Button LocalButton { get; }
-        public Button OOCButton { get; }
-        public Button AdminButton { get; }
-        public Button DeadButton { get;  }
-
         // order in which the available channel filters show up
         private static readonly IReadOnlyList<ChatChannel> ChannelFilters = new List<ChatChannel>
         {
@@ -49,12 +40,6 @@ namespace Content.Client.Chat
             ChatChannel.Server
         };
 
-        // channel filters which being enabled by default
-        private static readonly HashSet<ChatChannel> DefaultChannelFilter = new()
-        {
-            ChatChannel.Local, ChatChannel.Radio, ChatChannel.OOC, ChatChannel.AdminChat, ChatChannel.Dead,
-            ChatChannel.Server
-        };
         private const float FilterPopupWidth = 110;
 
         /// <summary>
@@ -180,53 +165,9 @@ namespace Content.Client.Chat
                 }
             };
 
-            RepopulateChannelFilter(true);
+            RepopulateChannelFilter();
 
             RepopulateChannelSelector();
-
-            AllButton = new Button
-            {
-                Text = Loc.GetString("All"),
-                Name = "ALL",
-                SizeFlagsHorizontal = SizeFlags.ShrinkEnd | SizeFlags.Expand,
-                ToggleMode = true,
-            };
-
-            LocalButton = new Button
-            {
-                Text = Loc.GetString("Local"),
-                Name = "Local",
-                ToggleMode = true,
-            };
-
-            OOCButton = new Button
-            {
-                Text = Loc.GetString("OOC"),
-                Name = "OOC",
-                ToggleMode = true,
-            };
-
-            AdminButton = new Button
-            {
-                Text = Loc.GetString("Admin"),
-                Name = "Admin",
-                ToggleMode = true,
-                Visible = false
-            };
-
-            DeadButton = new Button
-            {
-                Text = Loc.GetString("Dead"),
-                Name = "Dead",
-                ToggleMode = true,
-                Visible = false
-            };
-
-            AllButton.OnToggled += OnFilterToggled;
-            LocalButton.OnToggled += OnFilterToggled;
-            OOCButton.OnToggled += OnFilterToggled;
-            AdminButton.OnToggled += OnFilterToggled;
-            DeadButton.OnToggled += OnFilterToggled;
         }
 
         protected override void EnteredTree()
@@ -255,34 +196,30 @@ namespace Content.Client.Chat
             _filterPopup.OnPopupHide -= OnPopupHide;
         }
 
-        private void RepopulateChannelFilter(bool resetToDefault = false)
+        public void SetChannelFilters(IReadOnlySet<ChatChannel> enabledChannels)
         {
-            // TODO: Save previous selections
-            HashSet<ChatChannel> selectedChannels;
-            if (resetToDefault)
-            {
-                selectedChannels = DefaultChannelFilter;
-            }
-            else
-            {
-                selectedChannels = new HashSet<ChatChannel>();
-                foreach (var child in _filterVBox.Children)
-                {
-                    if (child is not ChannelFilterCheckbox checkbox) continue;
-                    if (checkbox.Pressed) selectedChannels.Add(checkbox.Channel);
-                }
-            }
-
             _filterVBox.Children.Clear();
             _filterVBox.AddChild(new Control {CustomMinimumSize = (10, 0)});
             foreach (var channelFilter in ChannelFilters)
             {
                 _filterVBox.AddChild(new ChannelFilterCheckbox(channelFilter)
                 {
-                    Pressed = selectedChannels.Contains(channelFilter)
+                    Pressed = enabledChannels.Contains(channelFilter)
                 });
             }
             _filterVBox.AddChild(new Control {CustomMinimumSize = (10, 0)});
+        }
+
+        private void RepopulateChannelFilter()
+        {
+            var selectedChannels = new HashSet<ChatChannel>();
+            foreach (var child in _filterVBox.Children)
+            {
+                if (child is not ChannelFilterCheckbox checkbox) continue;
+                if (checkbox.Pressed) selectedChannels.Add(checkbox.Channel);
+            }
+
+            SetChannelFilters(selectedChannels);
         }
 
         private void RepopulateChannelSelector()
