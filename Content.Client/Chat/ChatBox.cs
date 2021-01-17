@@ -1,5 +1,6 @@
 ﻿# nullable enable
 
+using System;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.Chat;
@@ -60,8 +61,9 @@ namespace Content.Client.Chat
         // the message is sent
         private ChatChannel? _savedSelectedChannel;
         private readonly IClientConGroupController _groupController;
-
         private readonly FilterButton _filterButton;
+        private readonly Popup _filterPopup;
+        private readonly PanelContainer _filterPopupPanel;
 
 
         public ChatBox()
@@ -133,6 +135,31 @@ namespace Content.Client.Chat
                 }
             });
 
+            _filterPopup = new Popup
+            {
+                Children =
+                {
+                    (_filterPopupPanel = new PanelContainer
+                    {
+                        StyleClasses = {StyleNano.StyleClassBorderedWindowPanel},
+                        Children =
+                        {
+                            new VBoxContainer
+                            {
+                                Children =
+                                {
+                                    new CheckBox {Text = "Local"},
+                                    new CheckBox {Text = "Radio"},
+                                    new CheckBox {Text = "OOC"},
+                                    new CheckBox {Text = "Admin"},
+                                    new CheckBox {Text = "Server"}
+                                }
+                            }
+                        }
+                    })
+                }
+            };
+
             RepopulateChannelSelector();
 
             AllButton = new Button
@@ -189,6 +216,8 @@ namespace Content.Client.Chat
             Input.OnTextChanged += InputOnTextChanged;
             Input.OnFocusExit += InputOnFocusExit;
             _groupController.ConGroupUpdated += RepopulateChannelSelector;
+            _filterButton.OnToggled += FilterButtonOnOnToggled;
+            _filterPopup.OnPopupHide += OnPopupHide;
         }
 
         protected override void ExitedTree()
@@ -200,6 +229,8 @@ namespace Content.Client.Chat
             Input.OnTextChanged -= InputOnTextChanged;
             Input.OnFocusExit -= InputOnFocusExit;
             _groupController.ConGroupUpdated -= RepopulateChannelSelector;
+            _filterButton.OnToggled -= FilterButtonOnOnToggled;
+            _filterPopup.OnPopupHide -= OnPopupHide;
         }
 
 
@@ -228,6 +259,32 @@ namespace Content.Client.Chat
             _channelSelector.AddItem("Console", (int) ChatChannel.Unspecified);
 
             SafelySelectChannel(selected);
+        }
+
+
+        private void FilterButtonOnOnToggled(BaseButton.ButtonToggledEventArgs obj)
+        {
+            if (obj.Pressed)
+            {
+                var globalPos = _filterButton.GlobalPosition;
+                var (minX, minY) = _filterPopupPanel.CombinedMinimumSize;
+                var box = UIBox2.FromDimensions(globalPos, (Math.Max(minX, Width), minY));
+                UserInterfaceManager.ModalRoot.AddChild(_filterPopup);
+                //_filterPopup.Open(box);
+                _filterPopup.Open();
+            }
+        }
+
+        private void OnPopupHide()
+        {
+            UserInterfaceManager.ModalRoot.RemoveChild(_filterPopup);
+            // need the AttemptingPress check because the popup is hidden automatically on keydown anywhere
+            // (including the button), but we don't fire this OnToggled event until keyup, so without this
+            // check it would reopen the filter popup if you clicked directly on the button
+            if (!_filterButton.AttemptingPress)
+            {
+                _filterButton.Pressed = false;
+            }
         }
 
         /// <summary>
@@ -412,7 +469,6 @@ namespace Content.Client.Chat
 
         public FilterButton()
         {
-
             var filterTexture = IoCManager.Resolve<IResourceCache>()
                 .GetTexture("/Textures/Interface/Nano/filter.svg.96dpi.png");
 
@@ -424,7 +480,6 @@ namespace Content.Client.Chat
                     SizeFlagsHorizontal = SizeFlags.ShrinkCenter
                 })
             );
-
             ToggleMode = true;
         }
 
