@@ -119,6 +119,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             if (UserInterface != null)
             {
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
+                UserInterface.OnClosed += UnRegisterPlayerSession;
             }
             _game = new BlockGame(this);
         }
@@ -136,9 +137,6 @@ namespace Content.Server.GameObjects.Components.Arcade
         {
             switch (obj.Message)
             {
-                case BlockGameMessages.BlockGameUserUnregisterMessage unregisterMessage:
-                    UnRegisterPlayerSession(obj.Session);
-                    break;
                 case BlockGameMessages.BlockGamePlayerActionMessage playerActionMessage:
                     if (obj.Session != _player) break;
 

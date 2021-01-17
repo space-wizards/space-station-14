@@ -8,7 +8,7 @@
    "copyright":"Taken from https://github.com/tgstation/tgstation at commit 57cd1d59ca019dd0e7811ac451f295f818e573da",
    "states":[
       {
-         "name":"pipeTJunction2",
+         "name":"pipeTJunction",
          "directions":4,
          "delays":[
             [
@@ -26,7 +26,7 @@
          ]
       },
       {
-         "name":"pipeHalf2",
+         "name":"pipeHalf",
          "directions":4,
          "delays":[
             [
@@ -44,7 +44,7 @@
          ]
       },
       {
-         "name":"pipeBend2",
+         "name":"pipeBend",
          "directions":4,
          "delays":[
             [
@@ -62,7 +62,7 @@
          ]
       },
       {
-         "name":"pipeFourway2",
+         "name":"pipeFourway",
          "directions":1,
          "delays":[
             [
@@ -71,7 +71,7 @@
          ]
       },
       {
-         "name":"pipeStraight2",
+         "name":"pipeStraight",
          "directions":4,
          "delays":[
             [

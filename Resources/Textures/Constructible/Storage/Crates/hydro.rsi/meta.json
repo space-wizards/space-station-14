@@ -10,39 +10,30 @@
         {
             "name": "hydrocrate",
             "select": [],
-            "flags": {},
-            "directions": 1
+            "flags": {}
         },
         {
             "name": "hydrocrate_door",
             "select": [],
-            "flags": {},
-            "directions": 1
+            "flags": {}
         },
         {
             "name": "hydrocrate_icon",
             "select": [],
-            "flags": {},
-            "directions": 1
+            "flags": {}
         },
         {
             "name": "welded",
             "select": [],
-            "flags": {},
-            "directions": 1
+            "flags": {}
         },
         {
-            "name": "sparking",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [[0.1,0.1,0.1,0.1,0.1,0.1]]
+            "name": "sparking",            "delays": [[0.1,0.1,0.1,0.1,0.1,0.1]]
         },
         {
             "name": "hydrocrate_open",
             "select": [],
-            "flags": {},
-            "directions": 1
+            "flags": {}
         }
     ]
 }

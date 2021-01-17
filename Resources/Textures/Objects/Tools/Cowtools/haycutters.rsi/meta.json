@@ -9,7 +9,6 @@
     "states": [
         {
             "name": "haycutters",
-            "directions": 1,
             "delays": [
                 [
                     1

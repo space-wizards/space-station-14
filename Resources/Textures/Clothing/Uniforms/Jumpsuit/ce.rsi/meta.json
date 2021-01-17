@@ -8,12 +8,10 @@
   },
   "states": [
     {
-      "name": "icon",
-      "directions": 1
+      "name": "icon"
     },
     {
-      "name": "s",
-      "directions": 1
+      "name": "s"
     },
     {
       "name": "equipped-INNERCLOTHING",

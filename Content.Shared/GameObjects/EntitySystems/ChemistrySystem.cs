@@ -36,6 +36,9 @@ namespace Content.Shared.GameObjects.EntitySystems
             foreach (var solutionChangeArg in solutionChangeArgs)
             {
                 solutionChangeArg.SolutionChanged(eventArgs);
+
+                if (owner.Deleted)
+                    return;
             }
         }
     }

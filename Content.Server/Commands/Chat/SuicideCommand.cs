@@ -38,7 +38,7 @@ namespace Content.Server.Commands.Chat
             var kind = suicide.Suicide(target, chat);
             if (kind != SuicideKind.Special)
             {
-                damageableComponent.ChangeDamage(kind switch
+                damageableComponent.SetDamage(kind switch
                     {
                         SuicideKind.Blunt => DamageType.Blunt,
                         SuicideKind.Slash => DamageType.Slash,
@@ -52,8 +52,7 @@ namespace Content.Server.Commands.Chat
                         SuicideKind.Bloodloss => DamageType.Bloodloss,
                         _ => DamageType.Blunt
                     },
-                500,
-                true, source);
+                200, source);
             }
         }
 
@@ -119,7 +118,7 @@ namespace Content.Server.Commands.Chat
             var selfMessage = Loc.GetString("You attempt to bite your own tongue!");
             owner.PopupMessage(selfMessage);
 
-            dmgComponent.ChangeDamage(DamageType.Piercing, 500, true, owner);
+            dmgComponent.SetDamage(DamageType.Piercing, 200, owner);
 
             // Prevent the player from returning to the body. Yes, this is an ugly hack.
             var ghost = new Ghost(){CanReturn = false};

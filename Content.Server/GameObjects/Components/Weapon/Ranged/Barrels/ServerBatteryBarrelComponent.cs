@@ -8,7 +8,6 @@ using Content.Server.GameObjects.Components.Projectiles;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -39,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         [ViewVariables] private string _ammoPrototype;
 
         [ViewVariables] public IEntity PowerCellEntity => _powerCellContainer.ContainedEntity;
-        public BatteryComponent PowerCell => _powerCellContainer.ContainedEntity.GetComponent<BatteryComponent>();
+        public BatteryComponent PowerCell => _powerCellContainer.ContainedEntity?.GetComponent<BatteryComponent>();
         private ContainerSlot _powerCellContainer;
         private ContainerSlot _ammoContainer;
         private string _powerCellPrototype;

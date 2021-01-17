@@ -22,12 +22,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         public PipeDirection PipeDirection { get => _pipeDirection; set => SetPipeDirection(value); }
         private PipeDirection _pipeDirection;
 
-        /// <summary>
-        ///     Controls what visuals are applied in <see cref="PipeVisualizer"/>.
-        /// </summary>
-        public ConduitLayer ConduitLayer => _conduitLayer;
-        private ConduitLayer _conduitLayer;
-
         [ViewVariables]
         private IPipeNet _pipeNet = PipeNet.NullNet;
 
@@ -69,7 +63,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             base.ExposeData(serializer);
             serializer.DataField(ref _pipeDirection, "pipeDirection", PipeDirection.None);
             serializer.DataField(this, x => x.LocalAir, "gasMixture", new GasMixture(DefaultVolume));
-            serializer.DataField(ref _conduitLayer, "conduitLayer", ConduitLayer.Two);
         }
 
         public override void Initialize(IEntity owner)
@@ -138,7 +131,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         private void UpdateAppearance()
         {
-            _appearance?.SetData(PipeVisuals.VisualState, new PipeVisualState(PipeDirection, ConduitLayer));
+            _appearance?.SetData(PipeVisuals.VisualState, new PipeVisualState(PipeDirection));
         }
 
         private void SetPipeDirection(PipeDirection pipeDirection)

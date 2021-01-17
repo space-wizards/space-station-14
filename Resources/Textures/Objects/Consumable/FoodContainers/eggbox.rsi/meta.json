@@ -8,56 +8,43 @@
     "copyright": "https://github.com/discordia-space/CEV-Eris/raw/9c980cb9bc84d07b1c210c5447798af525185f80/icons/obj/food.dmi",
     "states": [
         {
-            "name": "eggbox-0",
-            "directions": 1
+            "name": "eggbox-0"
         },
         {
-            "name": "eggbox-1",
-            "directions": 1
+            "name": "eggbox-1"
         },
         {
-            "name": "eggbox-2",
-            "directions": 1
+            "name": "eggbox-2"
         },
         {
-            "name": "eggbox-3",
-            "directions": 1
+            "name": "eggbox-3"
         },
         {
-            "name": "eggbox-4",
-            "directions": 1
+            "name": "eggbox-4"
         },
         {
-            "name": "eggbox-5",
-            "directions": 1
+            "name": "eggbox-5"
         },
         {
-            "name": "eggbox-6",
-            "directions": 1
+            "name": "eggbox-6"
         },
         {
-            "name": "eggbox-7",
-            "directions": 1
+            "name": "eggbox-7"
         },
         {
-            "name": "eggbox-8",
-            "directions": 1
+            "name": "eggbox-8"
         },
         {
-            "name": "eggbox-9",
-            "directions": 1
+            "name": "eggbox-9"
         },
         {
-            "name": "eggbox-10",
-            "directions": 1
+            "name": "eggbox-10"
         },
         {
-            "name": "eggbox-11",
-            "directions": 1
+            "name": "eggbox-11"
         },
         {
-            "name": "eggbox-12",
-            "directions": 1
+            "name": "eggbox-12"
         },
         {
           "name": "inhand-right",
