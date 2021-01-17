@@ -1,8 +1,8 @@
-<cc:SS14Window
+<cc:SS14Window Title="Set Tag"
     xmlns:cc="clr-namespace:Robust.Client.UserInterface.CustomControls;assembly=Robust.Client"
     xmlns:c="clr-namespace:Robust.Client.UserInterface.Controls;assembly=Robust.Client">
     <c:VBoxContainer>
-        <c:Label Text="Set label:" SizeFlagsHorizontal="ShrinkCenter"/>
+        <c:Label Text="Set tag:" SizeFlagsHorizontal="ShrinkCenter"/>
         <c:LineEdit Name="lineEdit"/>
     </c:VBoxContainer>
 </cc:SS14Window>

@@ -3,12 +3,15 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Input;
+using Robust.Shared.Maths;
 
 namespace Content.Client.GameObjects.Components.Disposal
 {
     [GenerateTypedNameReferences]
     public partial class DisposalTagGunWindow : SS14Window
     {
+        protected override Vector2 CalculateMinimumSize() => new Vector2(100, 100);
+
         public LineEdit LineEdit => lineEdit;
     }
 }
