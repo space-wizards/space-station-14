@@ -2,10 +2,11 @@
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.DeviceNetworkConnections
 {
+    [RegisterComponent]
     public class WiredNetworkConnectionComponent : BaseNetworkConnectionComponent
     {
         public const string WIRENET = "powernet";

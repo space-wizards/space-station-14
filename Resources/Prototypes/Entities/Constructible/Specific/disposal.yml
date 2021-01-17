@@ -350,13 +350,13 @@
       map: ["enum.DisposalUnitVisualLayers.Handle"]
     - state: dispover-ready
       map: ["enum.DisposalUnitVisualLayers.Light"]
-
   - type: PowerReceiver
   - type: Configuration
     keys:
     - Tag
   - type: DisposalMailingUnit
     flushTime: 2
+  - type: WiredNetworkConnection
   - type: Clickable
   - type: InteractionOutline
   - type: Physics

@@ -8,7 +8,6 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -28,15 +27,30 @@ namespace Content.Server.GameObjects.Components
 
         private Regex _validation;
 
-        public event Action<Dictionary<string, string>> OnConfigUpdate;
-
         public override void Initialize()
         {
             base.Initialize();
-
             if (UserInterface != null)
             {
                 UserInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
+            }
+        }
+
+        public override void OnAdd()
+        {
+            base.OnAdd();
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
+            }
+        }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage -= UserInterfaceOnReceiveMessage;
             }
         }
 
@@ -96,7 +110,7 @@ namespace Content.Server.GameObjects.Components
                     _config[key] = value;
                 }
 
-                OnConfigUpdate(_config);
+                SendMessage(new ConfigUpdatedComponentMessage(_config));
             }
          }
 

@@ -6,12 +6,11 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.DeviceNetwork;
+using Content.Server.GameObjects.Components.DeviceNetworkConnections;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.EntitySystems.DeviceNetwork;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
-using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
@@ -95,9 +94,6 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// </summary>
         [ViewVariables]
         private Container _container = default!;
-
-        [ViewVariables]
-        private WiredNetworkConnection? _connection;
 
         [ViewVariables] public IReadOnlyList<IEntity> ContainedEntities => _container.ContainedEntities;
 
@@ -312,16 +308,13 @@ namespace Content.Server.GameObjects.Components.Disposal
             UpdateVisualState(true);
             UpdateInterface();
 
-            if (_connection != null)
-            {
-                var data = NetworkPayload.Create(
-                    ( NetworkUtils.COMMAND, NET_CMD_SENT ),
-                    ( NET_SRC, _tag ),
-                    ( NET_TARGET, _target )
-                );
+            var data = NetworkPayload.Create(
+                ( NetworkUtils.COMMAND, NET_CMD_SENT ),
+                ( NET_SRC, _tag ),
+                ( NET_TARGET, _target )
+            );
 
-                _connection.Broadcast(_connection.Frequency, data);
-            }
+            SendMessage(new BaseNetworkConnectionComponent.BroadcastComponentMessage(data));
 
             return true;
         }
@@ -349,7 +342,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 ( NetworkUtils.COMMAND, NET_CMD_REQUEST )
             );
 
-            _connection?.Broadcast(_connection.Frequency, payload);
+            SendMessage(new BaseNetworkConnectionComponent.BroadcastComponentMessage(payload));
         }
 
         private void TryEjectContents()
@@ -603,7 +596,6 @@ namespace Content.Server.GameObjects.Components.Disposal
                 UserInterface.OnReceiveMessage += OnUiReceiveMessage;
             }
 
-            _connection = new WiredNetworkConnection(OnReceiveNetMessage, false, Owner);
             UpdateInterface();
         }
 
@@ -656,9 +648,6 @@ namespace Content.Server.GameObjects.Components.Disposal
             _automaticEngageToken = null;
 
             _container = null!;
-
-            _connection!.Close();
-
             base.OnRemove();
         }
 
@@ -682,14 +671,18 @@ namespace Content.Server.GameObjects.Components.Disposal
                     _lastExitAttempt = _gameTiming.CurTime;
                     Remove(msg.Entity);
                     break;
+                case BaseNetworkConnectionComponent.PacketReceivedComponentMessage msg:
+                    OnPacketReceived(msg);
+                    break;
+
             }
         }
 
-        private void OnReceiveNetMessage(int frequency, string sender, NetworkPayload payload, object _, bool broadcast)
+        private void OnPacketReceived(BaseNetworkConnectionComponent.PacketReceivedComponentMessage msg)
         {
-            if (payload.TryGetValue(NetworkUtils.COMMAND, out var command) && Powered)
+            if (msg.Payload.TryGetValue(NetworkUtils.COMMAND, out var command) && Powered)
             {
-                if (command == NET_CMD_RESPONSE && payload.TryGetValue(NET_TAG, out var tag))
+                if (command == NET_CMD_RESPONSE && msg.Payload.TryGetValue(NET_TAG, out var tag))
                 {
                     _targetList.Add(tag);
                     UpdateInterface(false);
@@ -705,7 +698,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                         (NET_TAG, _tag)
                    );
 
-                    _connection?.Send(frequency, sender, data);
+                    SendMessage(new BaseNetworkConnectionComponent.SendComponentMessage(msg.Sender, data));
                 }
             }
         }
