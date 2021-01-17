@@ -1,4 +1,4 @@
-﻿using Content.Server.DeviceNetwork;
+using Content.Server.DeviceNetwork;
 
 namespace Content.Server.Interfaces
 {

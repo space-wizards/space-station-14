@@ -1,12 +1,12 @@
-﻿using System;
+using System;
 using Content.Server.Interfaces;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using System.Collections.Generic;
 
-namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
+namespace Content.Server.DeviceNetwork
 {
-    public delegate void OnReceiveNetMessage(int frequency, string sender, IReadOnlyDictionary<string, string> payload, Metadata metadata, bool broadcast);
+    public delegate void OnReceiveNetMessage(int frequency, string sender, NetworkPayload payload, Metadata metadata, bool broadcast);
 
     public class DeviceNetwork : IDeviceNetwork
     {
@@ -57,7 +57,7 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
             }
         }
 
-        public bool EnqueuePackage(int netId, int frequency, string address, IReadOnlyDictionary<string, string> data, string sender, Metadata metadata, bool broadcast = false)
+        public bool EnqueuePackage(int netId, int frequency, string address, NetworkPayload data, string sender, Metadata metadata, bool broadcast = false)
         {
             if (!_devices.ContainsKey(netId))
                 return false;
@@ -189,7 +189,7 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
             public int Frequency;
             public string Address;
             public bool Broadcast;
-            public IReadOnlyDictionary<string, string> Data { get; set; }
+            public NetworkPayload Data { get; set; }
             public Metadata Metadata;
             public string Sender;
         }

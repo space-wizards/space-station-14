@@ -1,4 +1,4 @@
-﻿using Content.Server.Interfaces;
+using Content.Server.Interfaces;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.DeviceNetwork
