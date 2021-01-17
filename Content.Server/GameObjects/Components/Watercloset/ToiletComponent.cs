@@ -116,7 +116,7 @@ namespace Content.Server.GameObjects.Components.Watercloset
             {
                 if (_secretStash.HasItemInside())
                 {
-                    message.AddMarkup(Loc.GetString("There is [color=darkgreen]someting[/color] inside cistern!"));
+                    message.AddMarkup(Loc.GetString("There is [color=darkgreen]something[/color] inside cistern!"));
                 }
             }
         }
@@ -148,7 +148,7 @@ namespace Content.Server.GameObjects.Components.Watercloset
                 var othersMessage = Loc.GetString("{0:theName} sticks their head into {1:theName} and flushes it!", victim, Owner);
                 victim.PopupMessageOtherClients(othersMessage);
 
-                var selfMessage = Loc.GetString("You stick your head into {0:theName} and flushes it!", Owner);
+                var selfMessage = Loc.GetString("You stick your head into {0:theName} and flush it!", Owner);
                 victim.PopupMessage(selfMessage);
 
                 return SuicideKind.Asphyxiation;
@@ -158,7 +158,7 @@ namespace Content.Server.GameObjects.Components.Watercloset
                 var othersMessage = Loc.GetString("{0:theName} bashes themselves with {1:theName}!", victim, Owner);
                 victim.PopupMessageOtherClients(othersMessage);
 
-                var selfMessage = Loc.GetString("You bashes themselves with {0:theName}!", Owner);
+                var selfMessage = Loc.GetString("You bashes yourself with {0:theName}!", Owner);
                 victim.PopupMessage(selfMessage);
 
                 return SuicideKind.Blunt;
