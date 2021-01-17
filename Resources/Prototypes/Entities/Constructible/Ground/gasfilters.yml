@@ -9,9 +9,6 @@
   - type: Physics
   - type: SnapGrid
     offset: Center
-  - type: Sprite
-    sprite: Constructible/Atmos/pipeitems.rsi
-    state: scrubber
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
@@ -28,11 +25,11 @@
   description: It filters gases.
   components:
   - type: Sprite
-    sprite: Constructible/Atmos/pipe.rsi
-    state: pipeTJunction2
+    sprite: Constructible/Atmos/gasfilter.rsi
+    state: gasFilter
   - type: Icon
-    sprite: Constructible/Atmos/pipe.rsi
-    state: pipeTJunction2
+    sprite: Constructible/Atmos/gasfilter.rsi
+    state: gasFilter
   - type: NodeContainer
     nodes:
     - !type:PipeNode
@@ -48,3 +45,7 @@
     inletDirection: South
     filterOutletDirection: East
     outletDirection: North 
+  - type: Appearance
+    visuals:
+    - type: GasFilterVisualizer
+      filerEnabledState: gasFilterOn
