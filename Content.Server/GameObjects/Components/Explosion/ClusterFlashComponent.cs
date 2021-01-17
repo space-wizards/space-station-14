@@ -176,7 +176,6 @@ namespace Content.Server.GameObjects.Components.Explosives
             try
             {
                 appearance.SetData(ClusterFlashVisuals.GrenadesCounter, Convert.ToByte(_grenadesContainer.ContainedEntities.Count + _unspawnedCount));
-                appearance.SetData(ClusterFlashVisuals.GrenadesMax, Convert.ToByte(_maxGrenades));
             }
             catch (OverflowException)
             {
