@@ -159,7 +159,7 @@ namespace Content.Client.GameObjects.Components.Items
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
-            if (!(curState is HandsComponentState state))
+            if (curState is not HandsComponentState state)
             {
                 return;
             }
