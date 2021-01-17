@@ -33,19 +33,24 @@ namespace Content.Client.GameObjects.Components.Explosion
         public override void InitializeEntity(IEntity entity)
         {
             base.InitializeEntity(entity);
-            var sprite = entity.GetComponent<ISpriteComponent>();
-
-            sprite.LayerMapSet(ClusterFlashVisualLayers.Base, sprite.AddLayerState($"{_state}-0"));
+            if (entity.TryGetComponent<ISpriteComponent>(out var sprite))
+            {
+                sprite.LayerMapSet(ClusterFlashVisualLayers.Base, sprite.AddLayerState($"{_state}-0"));
+            }
         }
 
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
 
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
+            if (!component.Owner.TryGetComponent<ISpriteComponent>(out var sprite))
+            {
+                return;
+            }
+
             if (!component.TryGetData(ClusterFlashVisuals.GrenadesMax, out byte max))
             {
-                max = 4;
+                max = 3;
             }
 
             if (component.TryGetData(ClusterFlashVisuals.GrenadesCounter, out byte grenadesCounter))

@@ -75,7 +75,7 @@ namespace Content.Server.GameObjects.Components.Explosives
             base.ExposeData(serializer);
 
             serializer.DataField(ref _fillPrototype, "fillPrototype", null);
-            serializer.DataField(ref _maxGrenades, "maxGrenadesCount", 4);
+            serializer.DataField(ref _maxGrenades, "maxGrenadesCount", 3);
             serializer.DataField(ref _delay, "delay", 1.0f);
             serializer.DataField(ref _throwDistance, "distance", 3.0f);
         }
