@@ -7,7 +7,6 @@ using Robust.Client.Graphics.Overlays;
 using Robust.Client.Graphics.Shaders;
 using Robust.Client.Interfaces.Graphics;
 using Robust.Shared.Interfaces.Timing;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -18,7 +17,6 @@ namespace Content.Client.Graphics.Overlays
 {
     public class FlashOverlay : Overlay
     {
-        [Dependency] private readonly IClientNetManager _netManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IClyde _displayManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -26,31 +24,30 @@ namespace Content.Client.Graphics.Overlays
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;
         private readonly ShaderInstance _shader;
         private double _startTime = -1;
-        private int _lastsFor = 1;
+        private double _lastsFor = 1;
         private Texture _screenshotTexture;
 
         public FlashOverlay() : base(nameof(FlashOverlay))
         {
             IoCManager.InjectDependencies(this);
             _shader = _prototypeManager.Index<ShaderPrototype>("FlashedEffect").Instance().Duplicate();
+        }
 
-            _startTime = _gameTiming.CurTime.TotalMilliseconds;
-
-            _netManager.RegisterNetMessage<MsgFlash>(nameof(MsgFlash), message => {
-                _displayManager.Screenshot(ScreenshotType.BeforeUI, image =>
-                {
-                    var rgba32Image = image.CloneAs<Rgba32>(Configuration.Default);
-                    _screenshotTexture = _displayManager.LoadTextureFromImage(rgba32Image);
-                });
-                _startTime = _gameTiming.CurTime.TotalMilliseconds;
-                _lastsFor = message.TimeMilliseconds;
+        public void ReceiveFlash(double duration)
+        {
+            _displayManager.Screenshot(ScreenshotType.BeforeUI, image =>
+            {
+                var rgba32Image = image.CloneAs<Rgba32>(Configuration.Default);
+                _screenshotTexture = _displayManager.LoadTextureFromImage(rgba32Image);
             });
+            _startTime = _gameTiming.CurTime.TotalSeconds;
+            _lastsFor = duration;
         }
 
         protected override void Draw(DrawingHandleBase handle, OverlaySpace currentSpace)
         {
-            var percentComplete = (float) ((_gameTiming.CurTime.TotalMilliseconds - _startTime) / _lastsFor);
-            if (percentComplete > 1.0f)
+            var percentComplete = (float) ((_gameTiming.CurTime.TotalSeconds - _startTime) / _lastsFor);
+            if (percentComplete >= 1.0f)
                 return;
             handle.UseShader(_shader);
             _shader?.SetParameter("percentComplete", percentComplete);

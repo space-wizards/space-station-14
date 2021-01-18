@@ -132,14 +132,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         }
 
         // TODO: Check if target can be flashed (e.g. things like sunglasses would block a flash)
+        // TODO: Merge with the code in FlashableComponent
         private void Flash(IEntity entity, IEntity user, int flashDuration)
         {
-            if (entity.TryGetComponent(out IActorComponent actor))
+            if (entity.TryGetComponent(out FlashableComponent flashable))
             {
-                var netMgr = IoCManager.Resolve<IServerNetManager>();
-                var netMessage = netMgr.CreateNetMessage<MsgFlash>();
-                netMessage.TimeMilliseconds = flashDuration;
-                netMgr.ServerSendMessage(netMessage, actor.playerSession.ConnectedClient);
+                flashable.Flash(flashDuration / 1000d);
             }
 
             if (entity.TryGetComponent(out StunnableComponent stunnableComponent))
