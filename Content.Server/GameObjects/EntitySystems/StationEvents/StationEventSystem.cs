@@ -207,7 +207,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
         {
             base.Update(frameTime);
 
-            if (!Enabled)
+            if (!Enabled && CurrentEvent == null)
             {
                 return;
             }

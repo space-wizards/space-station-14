@@ -8,24 +8,19 @@
   },
   "states": [
     {
-      "name": "substation",
-      "directions": 1
+      "name": "substation"
     },
     {
-      "name": "full",
-      "directions": 1
+      "name": "full"
     },
     {
-      "name": "charging",
-      "directions": 1
+      "name": "charging"
     },
     {
-      "name": "dead",
-      "directions": 1
+      "name": "dead"
     },
     {
       "name": "screen",
-      "directions": 1,
       "delays": [
         [
           0.15,

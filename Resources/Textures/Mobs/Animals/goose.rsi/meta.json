@@ -27,7 +27,6 @@
     },
     {
       "name": "dead",
-      "directions": 1,
       "delays": [
         [
           1

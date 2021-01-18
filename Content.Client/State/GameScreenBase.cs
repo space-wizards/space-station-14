@@ -27,7 +27,7 @@ namespace Content.Client.State
     // OH GOD.
     // Ok actually it's fine.
     // Instantiated dynamically through the StateManager, Dependencies will be resolved.
-    public partial class GameScreenBase : Robust.Client.State.State
+    public partial class GameScreenBase : Robust.Client.State.State, IEntityEventSubscriber
     {
         [Dependency] protected readonly IClientEntityManager EntityManager = default!;
         [Dependency] protected readonly IInputManager InputManager = default!;
@@ -38,17 +38,29 @@ namespace Content.Client.State
         [Dependency] protected readonly IMapManager MapManager = default!;
         [Dependency] protected readonly IUserInterfaceManager UserInterfaceManager = default!;
         [Dependency] protected readonly IConfigurationManager ConfigurationManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+
+        private IEventBus _eventBus => _entityManager.EventBus;
 
         private IEntity _lastHoveredEntity;
+
+        private bool _outlineEnabled = true;
 
         public override void Startup()
         {
             InputManager.KeyBindStateChanged += OnKeyBindStateChanged;
+            _eventBus.SubscribeEvent<OutlineToggleMessage>(EventSource.Local, this, HandleOutlineToggle);
         }
 
         public override void Shutdown()
         {
             InputManager.KeyBindStateChanged -= OnKeyBindStateChanged;
+            _eventBus.UnsubscribeEvent<OutlineToggleMessage>(EventSource.Local, this);
+        }
+
+        private void HandleOutlineToggle(OutlineToggleMessage message)
+        {
+            _outlineEnabled = message.Enabled;
         }
 
         public override void FrameUpdate(FrameEventArgs e)
@@ -72,7 +84,7 @@ namespace Content.Client.State
             }
 
             InteractionOutlineComponent outline;
-            if(!ConfigurationManager.GetCVar(CCVars.OutlineEnabled))
+            if(!_outlineEnabled || !ConfigurationManager.GetCVar(CCVars.OutlineEnabled))
             {
                 if(entityToClick != null && entityToClick.TryGetComponent(out outline))
                 {

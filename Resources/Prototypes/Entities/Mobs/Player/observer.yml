@@ -17,6 +17,7 @@
       mask:
       - GhostImpassable
     status: InAir
+  - type: PlayerInputMover
   - type: Eye
     zoom: 0.5, 0.5
     drawFov: false

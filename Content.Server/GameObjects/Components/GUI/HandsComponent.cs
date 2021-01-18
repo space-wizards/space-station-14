@@ -4,22 +4,31 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.Components.Pulling;
 using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Server.Interfaces.GameObjects;
 using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Server.Utility;
+using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.GameObjects.Components.Pulling;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Content.Shared.Interfaces;
 using Content.Shared.Physics.Pull;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystemMessages;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
@@ -32,7 +41,7 @@ namespace Content.Server.GameObjects.Components.GUI
     [ComponentReference(typeof(IHandsComponent))]
     [ComponentReference(typeof(ISharedHandsComponent))]
     [ComponentReference(typeof(SharedHandsComponent))]
-    public class HandsComponent : SharedHandsComponent, IHandsComponent, IBodyPartAdded, IBodyPartRemoved
+    public class HandsComponent : SharedHandsComponent, IHandsComponent, IBodyPartAdded, IBodyPartRemoved, IDisarmedAct
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
@@ -717,6 +726,43 @@ namespace Content.Server.GameObjects.Components.GUI
             }
 
             RemoveHand(args.Slot);
+        }
+
+        bool IDisarmedAct.Disarmed(DisarmedActEventArgs eventArgs)
+        {
+            if (BreakPulls())
+                return false;
+
+            var source = eventArgs.Source;
+
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/thudswoosh.ogg", source,
+                AudioHelpers.WithVariation(0.025f));
+
+            if (ActiveHand != null && Drop(ActiveHand, false))
+            {
+                source.PopupMessageOtherClients(Loc.GetString("{0} disarms {1}!", source.Name, eventArgs.Target.Name));
+                source.PopupMessageCursor(Loc.GetString("You disarm {0}!", eventArgs.Target.Name));
+            }
+            else
+            {
+                source.PopupMessageOtherClients(Loc.GetString("{0} shoves {1}!", source.Name, eventArgs.Target.Name));
+                source.PopupMessageCursor(Loc.GetString("You shove {0}!", eventArgs.Target.Name));
+            }
+
+            return true;
+        }
+
+        // We want this to be the last disarm act to run.
+        int IDisarmedAct.Priority => int.MaxValue;
+
+        private bool BreakPulls()
+        {
+            // What is this API??
+            if (!Owner.TryGetComponent(out SharedPullerComponent? puller)
+                || puller.Pulling == null || !puller.Pulling.TryGetComponent(out PullableComponent? pullable))
+                return false;
+
+            return pullable.TryStopPull();
         }
     }
 

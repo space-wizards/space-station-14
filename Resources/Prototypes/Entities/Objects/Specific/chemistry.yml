@@ -13,7 +13,7 @@
   - type: SolutionContainer
     fillingState: beaker
     maxVol: 50
-    caps: AddTo, RemoveFrom, FitsInDispenser # can add and remove solutions and fits in the chemmaster.
+    caps: CanExamine, AddTo, RemoveFrom, FitsInDispenser # can add and remove solutions and fits in the chemmaster.
   - type: Pourable
     transferAmount: 5.0
   - type: Spillable
@@ -34,7 +34,7 @@
   - type: SolutionContainer
     fillingState: beakerlarge
     maxVol: 100
-    caps: AddTo, RemoveFrom, FitsInDispenser
+    caps: CanExamine, AddTo, RemoveFrom, FitsInDispenser
   - type: Pourable
     transferAmount: 5.0
   - type: Spillable
@@ -53,7 +53,6 @@
     fillingState: dropper
     fillingSteps: 2
     maxVol: 5
-    caps: AddTo, RemoveFrom
   - type: Pourable
     transferAmount: 5.0
   - type: Spillable
@@ -71,7 +70,6 @@
     fillingState: syringe
     fillingSteps: 5
     maxVol: 15
-    caps: AddTo, RemoveFrom
   - type: Injector
     injectOnly: false
   - type: Spillable
@@ -87,7 +85,6 @@
   - type: Drink
   - type: SolutionContainer
     maxVol: 30
-    caps: AddTo, RemoveFrom
   - type: Pourable
     transferAmount: 5
   - type: Spillable
@@ -104,4 +101,4 @@
   - type: Pill
   - type: SolutionContainer
     maxVol: 50
-    caps: RemoveFrom
+    caps: None

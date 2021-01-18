@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Suspicion;
+using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    public class SuspicionRoleSystem : EntitySystem
+    public class SuspicionRoleSystem : EntitySystem, IResettingEntitySystem
     {
         private readonly HashSet<SuspicionRoleComponent> _traitors = new();
 
@@ -46,6 +47,11 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             _traitors.Clear();
             base.Shutdown();
+        }
+
+        public void Reset()
+        {
+            _traitors.Clear();
         }
     }
 }

@@ -45,10 +45,6 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 // Raise an event.
                 EntitySystem.Get<InteractionSystem>().ThrowCollideInteraction(User, Owner, entity, Owner.Transform.Coordinates);
             }
-            if (entity.TryGetComponent(out IDamageableComponent damage))
-            {
-                damage.ChangeDamage(DamageType.Blunt, 10, false, Owner);
-            }
 
             // Stop colliding with mobs, this mimics not having enough velocity to do damage
             // after impacting the first object.
