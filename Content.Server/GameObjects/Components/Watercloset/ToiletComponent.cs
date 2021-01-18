@@ -159,7 +159,7 @@ namespace Content.Server.GameObjects.Components.Watercloset
                 var othersMessage = Loc.GetString("{0:theName} bashes themselves with {1:theName}!", victim, Owner);
                 victim.PopupMessageOtherClients(othersMessage);
 
-                var selfMessage = Loc.GetString("You bashes yourself with {0:theName}!", Owner);
+                var selfMessage = Loc.GetString("You bash yourself with {0:theName}!", Owner);
                 victim.PopupMessage(selfMessage);
 
                 return SuicideKind.Blunt;
