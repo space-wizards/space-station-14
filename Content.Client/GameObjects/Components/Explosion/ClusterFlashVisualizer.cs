@@ -33,7 +33,7 @@ namespace Content.Client.GameObjects.Components.Explosion
                 return;
             }
 
-            if (component.TryGetData(ClusterFlashVisuals.GrenadesCounter, out byte grenadesCounter))
+            if (component.TryGetData(ClusterFlashVisuals.GrenadesCounter, out int grenadesCounter))
             {
                 sprite.LayerSetState(0, $"{_state}-{grenadesCounter}");
             }

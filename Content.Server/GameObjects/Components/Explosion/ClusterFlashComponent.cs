@@ -38,8 +38,14 @@ namespace Content.Server.GameObjects.Components.Explosives
         [ViewVariables]
         private string? _fillPrototype;
 
+        /// <summary>
+        ///     If we have a pre-fill how many more can we spawn.
+        /// </summary>
         private int _unspawnedCount;
 
+        /// <summary>
+        ///     Maximum grenades in the container.
+        /// </summary>
         [ViewVariables]
         private int _maxGrenades;
 
@@ -60,7 +66,6 @@ namespace Content.Server.GameObjects.Components.Explosives
         /// </summary>
         private bool _countDown;
 
-        // I'm suss on this bit
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
         {
             if (_grenadesContainer.ContainedEntities.Count >= _maxGrenades || !args.Using.HasComponent<FlashExplosiveComponent>())
@@ -102,7 +107,7 @@ namespace Content.Server.GameObjects.Components.Explosives
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (_countDown || ((_grenadesContainer.ContainedEntities.Count) <= 0 && (_fillPrototype == null)))
+            if (_countDown || (_grenadesContainer.ContainedEntities.Count + _unspawnedCount) <= 0)
                 return false;
             Owner.SpawnTimer((int) (_delay * 1000), () =>
             {
@@ -111,15 +116,15 @@ namespace Content.Server.GameObjects.Components.Explosives
                 _countDown = true;
                 var random = IoCManager.Resolve<IRobustRandom>();
                 var delay = 20;
-                var grenadesWasInserted = _grenadesContainer.ContainedEntities.Count + _unspawnedCount;
-                var throwedCount = 0;
-                var segmentAngle = (int) (360 / grenadesWasInserted);
+                var grenadesInserted = _grenadesContainer.ContainedEntities.Count + _unspawnedCount;
+                var thrownCount = 0;
+                var segmentAngle = (int) (360 / grenadesInserted);
                 while (TryGetGrenade(out var grenade))
                 {
-                    var angleMin = segmentAngle * throwedCount;
-                    var angleMax = segmentAngle * (throwedCount + 1);
+                    var angleMin = segmentAngle * thrownCount;
+                    var angleMax = segmentAngle * (thrownCount + 1);
                     var angle = Angle.FromDegrees(random.Next(angleMin, angleMax));
-                    var distance = (float)random.NextDouble() * _throwDistance;
+                    var distance = (float)random.NextFloat() * _throwDistance;
                     var target = new EntityCoordinates(Owner.Uid, angle.ToVec().Normalized * distance);
 
                     grenade.Throw(0.5f, target, grenade.Transform.Coordinates);
@@ -136,7 +141,7 @@ namespace Content.Server.GameObjects.Components.Explosives
                     });
 
                     delay += random.Next(550, 900);
-                    throwedCount++;
+                    thrownCount++;
                 }
 
                 Owner.Delete();
@@ -173,14 +178,7 @@ namespace Content.Server.GameObjects.Components.Explosives
         {
             if (!Owner.TryGetComponent(out AppearanceComponent? appearance)) return;
 
-            try
-            {
-                appearance.SetData(ClusterFlashVisuals.GrenadesCounter, Convert.ToByte(_grenadesContainer.ContainedEntities.Count + _unspawnedCount));
-            }
-            catch (OverflowException)
-            {
-                Logger.Log(LogLevel.Warning, "Overflow in clusterbang appearance");
-            }
+            appearance.SetData(ClusterFlashVisuals.GrenadesCounter, _grenadesContainer.ContainedEntities.Count + _unspawnedCount);
         }
     }
 }
