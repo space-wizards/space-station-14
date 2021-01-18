@@ -22,7 +22,6 @@
   - type: Appearance
     visuals:
     - type: PipeVisualizer
-      pipeRSI: Constructible/Atmos/pipe.rsi
   - type: Icon
     sprite: Constructible/Atmos/pipe.rsi
 
