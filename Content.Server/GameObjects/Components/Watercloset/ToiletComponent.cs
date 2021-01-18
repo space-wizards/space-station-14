@@ -5,6 +5,7 @@ using Content.Server.GameObjects.Components.Strap;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Utility;
+using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Interactable;
@@ -12,8 +13,10 @@ using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -125,6 +128,9 @@ namespace Content.Server.GameObjects.Components.Watercloset
         public void ToggleToiletSeat()
         {
             IsSeatUp = !IsSeatUp;
+            EntitySystem.Get<AudioSystem>()
+                .PlayFromEntity("/Audio/Effects/toilet_seat_down.ogg", Owner, AudioHelpers.WithVariation(0.05f));
+
             UpdateSprite();
         }
 
