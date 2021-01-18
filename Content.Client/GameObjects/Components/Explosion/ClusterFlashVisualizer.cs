@@ -1,11 +1,9 @@
 using Content.Shared.GameObjects.Components.Explosion;
-using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
-using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Client.GameObjects.Components.Explosion
 {

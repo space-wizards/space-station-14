@@ -12,8 +12,6 @@ using Content.Server.GameObjects.Components.Trigger.TimerTrigger;
 using Content.Server.Throw;
 using Robust.Server.GameObjects;
 using Content.Shared.GameObjects.Components.Explosion;
-using Content.Shared.Physics;
-using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -21,7 +19,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.ViewVariables;
-using Robust.Shared.Log;
 
 namespace Content.Server.GameObjects.Components.Explosives
 {
