@@ -34,7 +34,7 @@
   name: lizard plushie
   parent: BaseItem
   id: PlushieLizard
-  description: An adorable stuffed toy that resembles a lizardperson.
+  description: An adorable stuffed toy that resembles a lizardperson. Made by CentCom as a token initiative to combat speciesism in work environments. "Welcome your new colleges as you do this plush, with open arms!"
   components:
   - type: Toys
   - type: LoopingSound
