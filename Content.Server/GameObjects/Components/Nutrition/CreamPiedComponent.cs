@@ -1,4 +1,4 @@
-﻿using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Nutrition;
@@ -42,7 +42,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             switch (reagent.ID)
             {
                 case "chem.SpaceCleaner":
-                case "chem.H2O":
+                case "chem.Water":
                     Wash();
                     break;
             }
@@ -52,7 +52,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         public void HitBy(ThrowCollideEventArgs eventArgs)
         {
-            if (!eventArgs.Thrown.TryGetComponent(out CreamPieComponent creamPie) || CreamPied) return;
+            if (!eventArgs.Thrown.HasComponent<CreamPieComponent>() || CreamPied) return;
 
             CreamPied = true;
             Owner.PopupMessage(Loc.GetString("You have been creamed by {0:theName}!", eventArgs.Thrown));

@@ -4,7 +4,7 @@
   positions: 3
   spawnPositions: 2
   startingGear: ScientistGear
-  department:
+  departments:
   - Science
   icon: "Scientist"
   access:
@@ -15,8 +15,11 @@
   id: ScientistGear
   equipment:
     innerclothing: ClothingUniformJumpsuitScientist
-    backpack: ClothingBackpackFilled
+    backpack: ClothingBackpackScienceFilled
     shoes: ClothingShoesColorWhite
     outerclothing: ClothingOuterCoatLab
     idcard: SciencePDA
     ears: ClothingHeadsetScience
+  innerclothingskirt: ClothingUniformJumpskirtScientist
+  satchel: ClothingBackpackSatchelScienceFilled
+  duffelbag: ClothingBackpackDuffelFilled

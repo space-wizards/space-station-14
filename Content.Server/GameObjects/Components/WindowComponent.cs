@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Content.Server.Utility;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components;
@@ -10,7 +11,9 @@ using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components
@@ -19,57 +22,46 @@ namespace Content.Server.GameObjects.Components
     [ComponentReference(typeof(SharedWindowComponent))]
     public class WindowComponent : SharedWindowComponent, IExamine, IInteractHand
     {
-        private int? Damage
+        private int _maxDamage;
+
+        public override void ExposeData(ObjectSerializer serializer)
         {
-            get
+            base.ExposeData(serializer);
+
+            serializer.DataField(ref _maxDamage, "maxDamage", 100);
+        }
+
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+
+            switch (message)
             {
-                if (!Owner.TryGetComponent(out IDamageableComponent damageableComponent)) return null;
-                return damageableComponent.TotalDamage;
+                case DamageChangedMessage msg:
+                {
+                    var current = msg.Damageable.TotalDamage;
+                    UpdateVisuals(current);
+                    break;
+                }
             }
         }
 
-        private int? MaxDamage
+        private void UpdateVisuals(int currentDamage)
         {
-            get
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
-                if (!Owner.TryGetComponent(out IDamageableComponent damageableComponent)) return null;
-                return damageableComponent.Thresholds[DamageState.Dead];
+                appearance.SetData(WindowVisuals.Damage, (float) currentDamage / _maxDamage);
             }
         }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-            if (Owner.TryGetComponent(out IDamageableComponent damageableComponent))
-            {
-                damageableComponent.HealthChangedEvent += OnDamage;
-            }
-        }
-
-        private void OnDamage(HealthChangedEventArgs eventArgs)
-        {
-            int current = eventArgs.Damageable.TotalDamage;
-            int max = eventArgs.Damageable.Thresholds[DamageState.Dead];
-            if (eventArgs.Damageable.CurrentState == DamageState.Dead) return;
-            UpdateVisuals(current, max);
-        }
-
-        private void UpdateVisuals(int currentDamage, int maxDamage)
-        {
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
-            {
-                appearance.SetData(WindowVisuals.Damage, (float) currentDamage / maxDamage);
-            }
-        }
-
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            int? damage = Damage;
-            int? maxDamage = MaxDamage;
-            if (damage == null || maxDamage == null) return;
-            float fraction = ((damage == 0 || maxDamage == 0) ? 0f : (float) damage / maxDamage) ?? 0f;
-            int level = Math.Min(ContentHelpers.RoundToLevels(fraction, 1, 7), 5);
+            var damage = Owner.GetComponentOrNull<IDamageableComponent>()?.TotalDamage;
+            if (damage == null) return;
+            var fraction = ((damage == 0 || _maxDamage == 0)
+                ? 0f
+                : (float) damage / _maxDamage);
+            var level = Math.Min(ContentHelpers.RoundToLevels(fraction, 1, 7), 5);
             switch (level)
             {
                 case 0:

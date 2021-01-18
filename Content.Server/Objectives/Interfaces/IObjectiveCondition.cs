@@ -1,35 +1,47 @@
-﻿using Content.Server.Mobs;
+﻿#nullable enable
+using System;
+using Content.Server.Mobs;
 using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Interfaces
 {
-    public interface IObjectiveCondition : IExposeData
+    public interface IObjectiveCondition : IExposeData, IEquatable<IObjectiveCondition>
     {
+        /// <summary>
+        /// Returns a copy of the IObjectiveCondition which is assigned to the mind.
+        /// </summary>
+        /// <param name="mind">Mind to assign to.</param>
+        /// <returns>The new IObjectiveCondition.</returns>
+        IObjectiveCondition GetAssigned(Mind mind);
+
         /// <summary>
         /// Returns the title of the condition.
         /// </summary>
-        string GetTitle();
+        string Title { get; }
 
         /// <summary>
         /// Returns the description of the condition.
         /// </summary>
-        string GetDescription();
+        string Description { get; }
 
         /// <summary>
         /// Returns a SpriteSpecifier to be used as an icon for the condition.
         /// </summary>
-        SpriteSpecifier GetIcon();
+        SpriteSpecifier Icon { get; }
 
         /// <summary>
-        /// Returns the current progress of the condition in %.
+        /// Returns the current progress of the condition in % from 0 to 1.
         /// </summary>
         /// <returns>Current progress in %.</returns>
-        float GetProgress(Mind mind);
+        float Progress { get; }
 
         /// <summary>
         /// Returns a difficulty of the condition.
         /// </summary>
-        float GetDifficulty();
+        float Difficulty { get; }
+
+        void IExposeData.ExposeData(ObjectSerializer serializer){}
     }
 }

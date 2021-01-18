@@ -28,7 +28,7 @@ namespace Content.Server.Mobs
     {
         private readonly ISet<Role> _roles = new HashSet<Role>();
 
-        private readonly List<ObjectivePrototype> _objectives = new();
+        private readonly List<Objective> _objectives = new();
 
         /// <summary>
         ///     Creates the new mind attached to a specific player session.
@@ -81,7 +81,7 @@ namespace Content.Server.Mobs
         ///     An enumerable over all the objectives this mind has.
         /// </summary>
         [ViewVariables]
-        public IEnumerable<ObjectivePrototype> AllObjectives => _objectives;
+        public IEnumerable<Objective> AllObjectives => _objectives;
 
         /// <summary>
         ///     The session of the player owning this mind.
@@ -156,9 +156,12 @@ namespace Content.Server.Mobs
         /// <summary>
         /// Adds an objective to this mind.
         /// </summary>
-        public bool TryAddObjective(ObjectivePrototype objective)
+        public bool TryAddObjective(ObjectivePrototype objectivePrototype)
         {
-            if (!objective.CanBeAssigned(this))
+            if (!objectivePrototype.CanBeAssigned(this))
+                return false;
+            var objective = objectivePrototype.GetObjective(this);
+            if (_objectives.Contains(objective))
                 return false;
             _objectives.Add(objective);
             return true;

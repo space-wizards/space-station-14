@@ -9,16 +9,10 @@
     "states": [
         {
             "name": "grinder-a0",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "grinder-a1",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -30,16 +24,10 @@
         },
         {
             "name": "grinder-b0",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "grinder-b1",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -53,25 +41,14 @@
         },
         {
             "name": "grinder-o0",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "grinder-o0bld",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "grinder-o1",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -83,7 +60,6 @@
         },
         {
             "name": "grinder-o1bld",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -95,34 +71,18 @@
         },
         {
             "name": "separator-",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "separator-0",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "separator-A0",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "separator-A1",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -134,16 +94,10 @@
         },
         {
             "name": "separator-AO0",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "separator-AO1",
-            "directions": 1,
             "delays": [
                 [
                     0.3,
@@ -154,21 +108,11 @@
         },
         {
             "name": "separator-B0",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "separator-BO0",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         }
     ]
 }

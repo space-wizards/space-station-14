@@ -1,6 +1,10 @@
 - type: damageContainer
+  id: allDamageContainer
+  supportAll: true
+
+- type: damageContainer
   id: biologicalDamageContainer
-  activeDamageClasses:
+  supportedClasses:
   - Brute
   - Burn
   - Toxin
@@ -9,6 +13,6 @@
 
 - type: damageContainer
   id: metallicDamageContainer
-  activeDamageClasses:
+  supportedClasses:
   - Brute
   - Burn

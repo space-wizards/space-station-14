@@ -18,7 +18,6 @@ namespace Content.Client.UserInterface.Suspicion
     public class SuspicionGui : Control
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private readonly VBoxContainer _container;
         private readonly Button _roleButton;
@@ -58,14 +57,11 @@ namespace Content.Client.UserInterface.Suspicion
                 return;
             }
 
-            var allies = string.Join(", ",
-                role.Allies.Select(uid => _entityManager.GetEntity(uid).Name));
+            var allies = string.Join(", ", role.Allies.Select(tuple => tuple.name));
             var message = role.Allies.Count switch
             {
                 0 => Loc.GetString("You have no allies"),
-                1 => Loc.GetString("Your ally is {0}", allies),
-                var n when n > 2 => Loc.GetString("Your allies are {0}", allies),
-                _ => throw new ArgumentException($"Invalid number of allies: {role.Allies.Count}")
+                var n => Loc.GetPluralString("Your ally is {0}", "Your allies are {0}", n, allies),
             };
 
             role.Owner.PopupMessage(message);

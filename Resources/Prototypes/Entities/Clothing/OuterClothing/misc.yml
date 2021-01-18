@@ -11,6 +11,18 @@
 
 - type: entity
   parent: ClothingOuterBase
+  id: ClothingOuterApronBotanist
+  name: apron
+  suffix: Botanical
+  description: A thick blue-apron, perfect for insulating your soft flesh from spills, soil and thorns.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Misc/apronbotanist.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Misc/apronbotanist.rsi
+
+- type: entity
+  parent: ClothingOuterBase
   id: ClothingOuterApronChef
   name: apron
   suffix: Chef

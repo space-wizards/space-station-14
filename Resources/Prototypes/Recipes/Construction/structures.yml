@@ -12,6 +12,9 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked { }
 
 - type: construction
   name: wall
@@ -27,6 +30,9 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked {}
 
 - type: construction
   name: reinforced wall
@@ -42,6 +48,9 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked {}
 
 - type: construction
   name: low wall
@@ -52,7 +61,8 @@
   category: Structures
   description: A low wall used for mounting windows.
   conditions:
-    - !type:NoWindowsInTile { }
+    - !type:NoWindowsInTile {}
+    - !type:TileNotBlocked {}
   icon:
     sprite: Constructible/Structures/Walls/low_wall.rsi
     state: metal
@@ -70,6 +80,7 @@
   description: Clear. Must be built on top of a low wall.
   conditions:
     - !type:LowWallInTile {}
+    - !type:NoWindowsInTile {}
   icon:
     sprite: Constructible/Structures/Windows/window.rsi
     state: full
@@ -87,6 +98,7 @@
   description: Clear but tough. Must be built on top of a low wall.
   conditions:
     - !type:LowWallInTile {}
+    - !type:NoWindowsInTile {}
   icon:
     sprite: Constructible/Structures/Windows/reinforced_window.rsi
     state: full
@@ -104,6 +116,7 @@
   description: Clear and even tougher, with an orange tint. Must be built on top of a low wall.
   conditions:
     - !type:LowWallInTile {}
+    - !type:NoWindowsInTile {}
   icon:
     sprite: Constructible/Structures/Windows/phoron_window.rsi
     state: full
@@ -124,6 +137,9 @@
     state: closed
   objectType: Structure
   placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked {}
 
 - type: construction
   name: Table Frame
@@ -138,6 +154,9 @@
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked {}
 
 - type: construction
   name: Poker Table
@@ -152,6 +171,9 @@
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked {}
 
 - type: construction
   name: Catwalk
@@ -162,6 +184,7 @@
   category: Structures
   description: Just like a lattice. Except it looks better.
   conditions:
+    - !type:TileNotBlocked {}
     - !type:TileType
       targets:
         - lattice
@@ -172,6 +195,7 @@
     state: catwalk_preview
   objectType: Structure
   placementMode: SnapgridCenter
+  canBuildInImpassable: false
 
 - type: construction
   name: APC
@@ -186,3 +210,4 @@
     state: apc0
   objectType: Structure
   placementMode: AlignWallProper
+  canBuildInImpassable: true

@@ -4,7 +4,7 @@
   positions: 3
   spawnPositions: 2
   startingGear: StationEngineerGear
-  department:
+  departments:
   - Engineering
   icon: "StationEngineer"
   access:
@@ -23,3 +23,6 @@
     idcard: EngineerPDA
     belt: ClothingBeltUtilityFilled
     ears: ClothingHeadsetEngineering
+  innerclothingskirt: ClothingUniformJumpskirtEngineering
+  satchel: ClothingBackpackSatchelEngineeringFilled
+  duffelbag: ClothingBackpackDuffelEngineeringFilled

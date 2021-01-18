@@ -1,14 +1,10 @@
 ﻿using System.IO;
-using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.Utility;
 using NUnit.Framework;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.Tests.Server.GameObjects.Components.Mobs
@@ -48,23 +44,23 @@ namespace Content.Tests.Server.GameObjects.Components.Mobs
             var alertsComponent = new ServerAlertsComponent();
             alertsComponent = IoCManager.InjectDependencies(alertsComponent);
 
-            Assert.That(alertManager.TryGetWithEncoded(AlertType.LowPressure, out var lowpressure, out var lpencoded));
-            Assert.That(alertManager.TryGetWithEncoded(AlertType.HighPressure, out var highpressure, out var hpencoded));
+            Assert.That(alertManager.TryGet(AlertType.LowPressure, out var lowpressure));
+            Assert.That(alertManager.TryGet(AlertType.HighPressure, out var highpressure));
 
             alertsComponent.ShowAlert(AlertType.LowPressure);
             var alertState = alertsComponent.GetComponentState() as AlertsComponentState;
             Assert.NotNull(alertState);
-            Assert.That(alertState.Alerts.Length, Is.EqualTo(1));
-            Assert.That(alertState.Alerts[0], Is.EqualTo(new AlertState{AlertEncoded = lpencoded}));
+            Assert.That(alertState.Alerts.Count, Is.EqualTo(1));
+            Assert.That(alertState.Alerts.ContainsKey(lowpressure.AlertKey));
 
             alertsComponent.ShowAlert(AlertType.HighPressure);
             alertState = alertsComponent.GetComponentState() as AlertsComponentState;
-            Assert.That(alertState.Alerts.Length, Is.EqualTo(1));
-            Assert.That(alertState.Alerts[0], Is.EqualTo(new AlertState{AlertEncoded = hpencoded}));
+            Assert.That(alertState.Alerts.Count, Is.EqualTo(1));
+            Assert.That(alertState.Alerts.ContainsKey(highpressure.AlertKey));
 
             alertsComponent.ClearAlertCategory(AlertCategory.Pressure);
             alertState = alertsComponent.GetComponentState() as AlertsComponentState;
-            Assert.That(alertState.Alerts.Length, Is.EqualTo(0));
+            Assert.That(alertState.Alerts.Count, Is.EqualTo(0));
         }
     }
 }

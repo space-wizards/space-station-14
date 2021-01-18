@@ -15,22 +15,23 @@ namespace Content.Server.Objectives
         [ViewVariables]
         public string ID { get; private set; }
 
-        [ViewVariables(VVAccess.ReadWrite)]
+        [ViewVariables]
         public string Issuer { get; private set; }
 
         [ViewVariables]
         public float Probability { get; private set; }
 
         [ViewVariables]
-        public IReadOnlyList<IObjectiveCondition> Conditions => _conditions;
-        [ViewVariables]
-        public IReadOnlyList<IObjectiveRequirement> Requirements => _requirements;
-
-        [ViewVariables]
-        public float Difficulty => _difficultyOverride ?? _conditions.Sum(c => c.GetDifficulty());
+        public float Difficulty => _difficultyOverride ?? _conditions.Sum(c => c.Difficulty);
 
         private List<IObjectiveCondition> _conditions = new();
         private List<IObjectiveRequirement> _requirements = new();
+
+        [ViewVariables]
+        public IReadOnlyList<IObjectiveCondition> Conditions => _conditions;
+
+        [ViewVariables]
+        public bool CanBeDuplicateAssignment { get; private set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
         private float? _difficultyOverride = null;
@@ -40,6 +41,14 @@ namespace Content.Server.Objectives
             foreach (var requirement in _requirements)
             {
                 if (!requirement.CanBeAssigned(mind)) return false;
+            }
+
+            if (!CanBeDuplicateAssignment)
+            {
+                foreach (var objective in mind.AllObjectives)
+                {
+                    if (objective.Prototype.ID == ID) return false;
+                }
             }
 
             return true;
@@ -52,9 +61,15 @@ namespace Content.Server.Objectives
             ser.DataField(this, x => x.ID, "id", string.Empty);
             ser.DataField(this, x => x.Issuer, "issuer", "Unknown");
             ser.DataField(this, x => x.Probability, "prob", 0.3f);
-            ser.DataField(this, x => x._conditions, "conditions", new List<IObjectiveCondition>());
-            ser.DataField(this, x => x._requirements, "requirements", new List<IObjectiveRequirement>());
-            ser.DataField(this, x => x._difficultyOverride, "difficultyOverride", null);
+            ser.DataField(ref _conditions, "conditions", new List<IObjectiveCondition>());
+            ser.DataField(ref _requirements, "requirements", new List<IObjectiveRequirement>());
+            ser.DataField(ref _difficultyOverride, "difficultyOverride", null);
+            ser.DataField(this, x => x.CanBeDuplicateAssignment, "canBeDuplicate", false);
+        }
+
+        public Objective GetObjective(Mind mind)
+        {
+            return new(this, mind);
         }
     }
 }

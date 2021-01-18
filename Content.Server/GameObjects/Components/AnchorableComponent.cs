@@ -42,7 +42,7 @@ namespace Content.Server.GameObjects.Components
         /// <param name="utilizing">The tool being used, can be null if forcing it</param>
         /// <param name="force">Whether or not to check if the tool is valid</param>
         /// <returns>true if it is valid, false otherwise</returns>
-        private async Task<bool> Valid(IEntity user, IEntity? utilizing, [MaybeNullWhen(false)] bool force = false)
+        private async Task<bool> Valid(IEntity user, IEntity? utilizing, [NotNullWhen(true)] bool force = false)
         {
             if (!Owner.HasComponent<IPhysicsComponent>())
             {

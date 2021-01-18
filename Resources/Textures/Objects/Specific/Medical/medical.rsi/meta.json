@@ -6,46 +6,22 @@
 	},
 	"states": [
 		{
-			"name": "brutepack",
-			"directions": 1,
-			"delays": [
-				[1.0]
-			]
+			"name": "brutepack"
 		},
 		{
-			"name": "cast",
-			"directions": 1,
-			"delays": [
-				[1.0]
-			]
+			"name": "cast"
 		},
 		{
-			"name": "gauze",
-			"directions": 1,
-			"delays": [
-				[1.0]
-			]
+			"name": "gauze"
 		},
 		{
-			"name": "medkit_r",
-			"directions": 1,
-			"delays": [
-				[1.0]
-			]
+			"name": "medkit_r"
 		},
 		{
-			"name": "morphine",
-			"directions": 1,
-			"delays": [
-				[1.0]
-			]
+			"name": "morphine"
 		},
 		{
-			"name": "ointment", 
-			"directions": 1,
-			"delays": [
-				[1.0]
-			]
+			"name": "ointment"
 		}
 	]
 }

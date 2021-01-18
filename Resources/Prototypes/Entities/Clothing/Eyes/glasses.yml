@@ -19,6 +19,8 @@
     sprite: Clothing/Eyes/Glasses/gar.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/gar.rsi
+  - type: MeleeWeapon
+    damage: 10
 
 - type: entity
   parent: ClothingEyesBase
@@ -32,6 +34,9 @@
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/gar.rsi
     HeldPrefix: alt
+    ClothingPrefix: alt
+  - type: MeleeWeapon
+    damage: 10
 
 - type: entity
   parent: ClothingEyesBase
@@ -44,7 +49,9 @@
     state: icon-super
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/gar.rsi
-    HeldPrefix: super
+    ClothingPrefix: super
+  - type: MeleeWeapon
+    damage: 10
 
 - type: entity
   parent: ClothingEyesBase

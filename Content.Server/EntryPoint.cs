@@ -10,6 +10,7 @@ using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Interfaces.PDA;
 using Content.Server.Sandbox;
+using Content.Shared.Actions;
 using Content.Shared.Kitchen;
 using Content.Shared.Alert;
 using Robust.Server.Interfaces.Player;
@@ -64,6 +65,7 @@ namespace Content.Server
 
             var logManager = IoCManager.Resolve<ILogManager>();
             logManager.GetSawmill("Storage").Level = LogLevel.Info;
+            logManager.GetSawmill("db.ef").Level = LogLevel.Info;
 
             IoCManager.Resolve<IConnectionManager>().Initialize();
             IoCManager.Resolve<IServerDbManager>().Init();
@@ -80,6 +82,7 @@ namespace Content.Server
             _gameTicker.Initialize();
             IoCManager.Resolve<RecipeManager>().Initialize();
             IoCManager.Resolve<AlertManager>().Initialize();
+            IoCManager.Resolve<ActionManager>().Initialize();
             IoCManager.Resolve<BlackboardManager>().Initialize();
             IoCManager.Resolve<ConsiderationsManager>().Initialize();
             IoCManager.Resolve<IPDAUplinkManager>().Initialize();

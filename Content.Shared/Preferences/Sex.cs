@@ -1,4 +1,4 @@
-namespace Content.Shared.Preferences
+﻿namespace Content.Shared.Preferences
 {
     public enum Sex
     {

@@ -1,0 +1,41 @@
+- type: latheRecipe
+  id: MopItem
+  icon: Objects/Specific/Janitorial/mop.rsi
+  result: MopItem
+  completetime: 500
+  materials:
+    steel: 10
+    glass: 40
+
+- type: latheRecipe
+  id: MopBucket
+  icon: Objects/Specific/Janitorial/janitorial.rsi
+  result: MopBucket
+  completetime: 500
+  materials:
+    steel: 20
+    glass: 60
+
+- type: latheRecipe
+  id: Bucket
+  icon: Objects/Specific/Janitorial/janitorial.rsi
+  result: Bucket
+  completetime: 500
+  materials:
+    steel: 60
+
+- type: latheRecipe
+  id: WetFloorSign
+  icon: Objects/Specific/Janitorial/wet_floor_sign.rsi
+  result: WetFloorSign
+  completetime: 500
+  materials:
+    glass: 60
+
+- type: latheRecipe
+  id: SprayBottle
+  icon: Objects/Specific/Janitorial/janitorial.rsi
+  result: SprayBottle
+  completetime: 500
+  materials:
+    glass: 50
