@@ -1,9 +1,9 @@
-﻿using Content.Shared.GameObjects.Components.Atmos;
+using Content.Shared.GameObjects.Components.Atmos;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Utility;
+using Robust.Shared.Serialization;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Atmos
@@ -16,7 +16,9 @@ namespace Content.Client.GameObjects.Components.Atmos
         public override void LoadData(YamlMappingNode node)
         {
             base.LoadData(node);
-            _pumpEnabledState = node.GetNode("pumpEnabledState").ToString();
+
+            var serializer = YamlObjectSerializer.NewReader(node);
+            serializer.DataField(ref _pumpEnabledState, "pumpEnabledState", "pumpPressureOn");
         }
 
         public override void InitializeEntity(IEntity entity)
