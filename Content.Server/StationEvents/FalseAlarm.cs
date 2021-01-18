@@ -18,8 +18,11 @@ namespace Content.Server.StationEvents
             var stationEventSystem = EntitySystem.Get<StationEventSystem>();
             var randomEvent = stationEventSystem.PickRandomEvent();
 
-            StartAnnouncement = randomEvent.StartAnnouncement;
-            StartAudio = randomEvent.StartAudio;
+            if (randomEvent != null)
+            {
+                StartAnnouncement = randomEvent.StartAnnouncement;
+                StartAudio = randomEvent.StartAudio;
+            }
 
             base.Announce();
         }

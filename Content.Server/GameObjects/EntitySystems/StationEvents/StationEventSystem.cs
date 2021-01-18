@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,7 +35,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
-        public StationEvent CurrentEvent { get; private set; }
+        public StationEvent? CurrentEvent { get; private set; }
         public IReadOnlyCollection<StationEvent> StationEvents => _stationEvents;
 
         private readonly List<StationEvent> _stationEvents = new();
@@ -136,7 +137,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
         /// <summary>
         /// Randomly picks a valid event.
         /// </summary>
-        public StationEvent PickRandomEvent()
+        public StationEvent? PickRandomEvent()
         {
             var availableEvents = AvailableEvents(true);
             return FindEvent(availableEvents);
@@ -271,7 +272,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
         /// Pick a random event from the available events at this time, also considering their weightings.
         /// </summary>
         /// <returns></returns>
-        private StationEvent FindEvent(List<StationEvent> availableEvents)
+        private StationEvent? FindEvent(List<StationEvent> availableEvents)
         {
             if (availableEvents.Count == 0)
             {
@@ -361,7 +362,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
 
         public void Reset()
         {
-            if (CurrentEvent != null && CurrentEvent.Running)
+            if (CurrentEvent?.Running == true)
             {
                 CurrentEvent.Shutdown();
                 CurrentEvent = null;

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using System.Threading;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using JetBrains.Annotations;
@@ -22,14 +23,21 @@ namespace Content.Server.StationEvents
             "Abnormal activity detected in the station's powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.");
         protected override string EndAnnouncement => Loc.GetString(
             "Power has been restored to the station. We apologize for the inconvenience.");
-        public override string StartAudio => "/Audio/Announcements/power_off.ogg";
+        public override string? StartAudio => "/Audio/Announcements/power_off.ogg";
 
-        protected override float StartAfter => 3.0f;
+        // If you need EndAudio it's down below. Not set here because we can't play it at the normal time without spamming sounds.
 
+        protected override float StartAfter => 12.0f;
 
-        private CancellationTokenSource _announceCancelToken;
+        private CancellationTokenSource? _announceCancelToken;
 
         private readonly List<IEntity> _powered = new();
+
+        public override void Announce()
+        {
+            base.Announce();
+            EndAfter = IoCManager.Resolve<IRobustRandom>().Next(60, 120);
+        }
 
         public override void Startup()
         {
@@ -41,7 +49,6 @@ namespace Content.Server.StationEvents
                 _powered.Add(component.Owner);
             }
 
-            EndAfter = IoCManager.Resolve<IRobustRandom>().Next(60, 120);
             base.Startup();
         }
 
@@ -51,12 +58,13 @@ namespace Content.Server.StationEvents
             {
                 if (entity.Deleted) continue;
 
-                if (entity.TryGetComponent(out PowerReceiverComponent powerReceiverComponent))
+                if (entity.TryGetComponent(out PowerReceiverComponent? powerReceiverComponent))
                 {
                     powerReceiverComponent.PowerDisabled = false;
                 }
             }
 
+            // Can't use the default EndAudio
             _announceCancelToken?.Cancel();
             _announceCancelToken = new CancellationTokenSource();
             Timer.Spawn(3000, () =>
@@ -64,6 +72,7 @@ namespace Content.Server.StationEvents
                 EntitySystem.Get<AudioSystem>().PlayGlobal("/Audio/Announcements/power_on.ogg");
             }, _announceCancelToken.Token);
             _powered.Clear();
+
             base.Shutdown();
         }
     }

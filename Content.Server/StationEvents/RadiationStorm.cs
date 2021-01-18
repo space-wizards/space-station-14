@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿#nullable enable
+using JetBrains.Annotations;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.StationEvents;
 using Content.Server.Interfaces.GameTicking;
@@ -29,7 +30,7 @@ namespace Content.Server.StationEvents
         protected override string EndAnnouncement => Loc.GetString(
             "The radiation threat has passed. Please return to your workplaces.");
         public override string StartAudio => "/Audio/Announcements/radiation.ogg";
-        protected override float StartAfter => 3.0f;
+        protected override float StartAfter => 10.0f;
 
         // Event specific details
         private float _timeUntilPulse;
@@ -39,6 +40,12 @@ namespace Content.Server.StationEvents
         private void ResetTimeUntilPulse()
         {
             _timeUntilPulse = _robustRandom.NextFloat() * (MaxPulseDelay - MinPulseDelay) + MinPulseDelay;
+        }
+
+        public override void Announce()
+        {
+            base.Announce();
+            EndAfter = _robustRandom.Next(30, 80) + StartAfter; // We want to be forgiving about the radstorm.
         }
 
         public override void Startup()
@@ -52,16 +59,11 @@ namespace Content.Server.StationEvents
                 overlay.AddOverlay(SharedOverlayID.RadiationPulseOverlay);
             }
 
-            EndAfter = _robustRandom.Next(30, 80) + StartAfter; // We want to be forgiving about the radstorm.
             base.Startup();
         }
 
         public override void Shutdown()
         {
-            // IOC uninject?
-            _entityManager = null;
-            _robustRandom = null;
-
             var componentManager = IoCManager.Resolve<IComponentManager>();
 
             foreach (var overlay in componentManager.EntityQuery<ServerOverlayEffectsComponent>())
@@ -75,7 +77,7 @@ namespace Content.Server.StationEvents
         {
             base.Update(frameTime);
 
-            if (!Started) return;
+            if (!Started || !Running) return;
 
             _timeUntilPulse -= frameTime;
 

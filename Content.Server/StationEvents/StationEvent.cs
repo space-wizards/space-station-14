@@ -18,7 +18,7 @@ namespace Content.Server.StationEvents
         /// <summary>
         ///     If the event has started and is currently running.
         /// </summary>
-        public bool Running { get; protected set; }
+        public bool Running { get; set; }
 
         /// <summary>
         ///     Human-readable name for the event.
@@ -48,7 +48,7 @@ namespace Content.Server.StationEvents
         /// <summary>
         ///     Ending audio of the event.
         /// </summary>
-        protected virtual string? EndAudio { get; } = null;
+        public virtual string? EndAudio { get; } = null;
 
         /// <summary>
         ///     In minutes, when is the first round time this event can start
@@ -94,7 +94,7 @@ namespace Content.Server.StationEvents
         protected bool Started { get; set; } = false;
 
         /// <summary>
-        ///     Has this event commenced (announcement may or may not be used).
+        ///     Has this event commenced (announcement may or may not be used)?
         /// </summary>
         private bool Announced { get; set; } = false;
 
@@ -108,7 +108,8 @@ namespace Content.Server.StationEvents
         }
 
         /// <summary>
-        ///     Called once as soon as an event is active. Used to announce the event.
+        ///     Called once as soon as an event is active.
+        ///     Can also be used for some initial setup.
         /// </summary>
         public virtual void Announce()
         {
@@ -124,6 +125,7 @@ namespace Content.Server.StationEvents
             }
 
             Announced = true;
+            Running = true;
         }
 
         /// <summary>
@@ -144,7 +146,6 @@ namespace Content.Server.StationEvents
 
             Started = false;
             Announced = false;
-            Running = false;
             Elapsed = 0;
         }
 
@@ -163,7 +164,7 @@ namespace Content.Server.StationEvents
 
             if (EndAfter <= Elapsed)
             {
-                Shutdown();
+                Running = false;
             }
         }
     }
