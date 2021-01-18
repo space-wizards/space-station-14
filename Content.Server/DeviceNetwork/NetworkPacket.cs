@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace Content.Server.DeviceNetwork
 {
-    public class NetworkPayload : Dictionary<string, string>, IDictionary<string, string>
+    public class NetworkPayload : Dictionary<string, string>
     {
         public const int MAX_STRING_SIZE = 100;
 
@@ -22,7 +22,7 @@ namespace Content.Server.DeviceNetwork
             {
                 if(data[index].Item1.Length <= MAX_STRING_SIZE && data[index].Item2.Length <= MAX_STRING_SIZE)
                 {
-                    packet.Add(data[index].Item1, data[index].Item2);
+                    packet.TryAdd(data[index].Item1, data[index].Item2);
                 }
             }
             return packet;

@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.DeviceNetwork
 {
-    public class Metadata : Dictionary<string, object>
+    public static class Metadata
     {
-        public bool TryParseMetadata<T>(string key, [NotNullWhen(true)] out T data)
+        public static bool TryParseMetadata<T>(this Dictionary<string, object> metadata, string key, [NotNullWhen(true)] out T data)
         {
-            if(TryGetValue(key, out var value) && value is T typedValue)
+            if(metadata.TryGetValue(key, out var value) && value is T typedValue)
             {
                 data = typedValue;
                 return true;

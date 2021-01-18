@@ -1,11 +1,15 @@
-﻿using Content.Server.DeviceNetwork;
+using Content.Server.DeviceNetwork;
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Robust.Shared.GameObjects;
+using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.Components.DeviceNetworkConnections
 {
+    /// <summary>
+    /// Sends and receives device network messages over a wired connection. Devices sending and receiving need to be connected using power power cables. Connections can go through LV, MV and HV wires.
+    /// </summary>
     [RegisterComponent]
     public class WiredNetworkConnectionComponent : BaseNetworkConnectionComponent
     {
@@ -16,7 +20,11 @@ namespace Content.Server.GameObjects.Components.DeviceNetworkConnections
         protected override int DeviceNetID => NetworkUtils.WIRED;
         protected override int DeviceNetFrequency => 0;
 
-        protected override bool CanReceive(int frequency, string sender, NetworkPayload payload, Metadata metadata, bool broadcast)
+        /// <summary>
+        /// Checks if the message was sent from a device that is on the same WireNet.
+        /// <seealso cref="NodeGroupID.WireNet"/>
+        /// </summary>
+        protected override bool CanReceive(int frequency, string sender, NetworkPayload payload, Dictionary<string, object> metadata, bool broadcast)
         {
 
             if (Owner.TryGetComponent<PowerReceiverComponent>(out var powerReceiver)
@@ -29,13 +37,13 @@ namespace Content.Server.GameObjects.Components.DeviceNetworkConnections
             return false;
         }
 
-        protected override Metadata GetMetadata()
+        protected override Dictionary<string, object> GetMetadata()
         {
 
             if (Owner.TryGetComponent<PowerReceiverComponent>(out var powerReceiver)
                 && TryGetWireNet(powerReceiver, out var net))
             {
-                var metadata = new Metadata
+                var metadata = new Dictionary<string, object>
                 {
                     {WIRENET, net }
                 };
@@ -43,7 +51,7 @@ namespace Content.Server.GameObjects.Components.DeviceNetworkConnections
                 return metadata;
             }
 
-            return new Metadata();
+            return new Dictionary<string, object>();
         }
 
         protected override NetworkPayload ManipulatePayload(NetworkPayload payload)
@@ -51,7 +59,13 @@ namespace Content.Server.GameObjects.Components.DeviceNetworkConnections
             return payload;
         }
 
-        private bool TryGetWireNet(PowerReceiverComponent powerReceiver, out INodeGroup net)
+        /// <summary>
+        /// Looks for a node group with the id: <see cref="NodeGroupID.WireNet"/> on the connected power provider.
+        /// </summary>
+        /// <param name="powerReceiver"></param>
+        /// <param name="net"></param>
+        /// <returns></returns>
+        private static bool TryGetWireNet(PowerReceiverComponent powerReceiver, out INodeGroup net)
         {
             if (powerReceiver.Provider is PowerProviderComponent && powerReceiver.Provider.ProviderOwner.TryGetComponent<NodeContainerComponent>(out var nodeContainer))
             {

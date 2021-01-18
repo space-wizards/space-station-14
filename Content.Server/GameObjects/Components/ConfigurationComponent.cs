@@ -1,4 +1,4 @@
-﻿using Content.Server.GameObjects.Components.Interactable;
+using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
@@ -71,7 +71,7 @@ namespace Content.Server.GameObjects.Components
                 (list) => FillConfiguration(list, _config, ""),
                 () => _config.Keys.ToList());
 
-            serializer.DataReadFunction("vailidation", "^[a-zA-Z0-9 ]*$", value => _validation = new Regex("^[a-zA-Z0-9 ]*$", RegexOptions.Compiled));
+            serializer.DataReadFunction("validation", "^[a-zA-Z0-9 ]*$", value => _validation = new Regex("^[a-zA-Z0-9 ]*$", RegexOptions.Compiled));
         }
 
         public string GetConfig(string name)
@@ -123,10 +123,7 @@ namespace Content.Server.GameObjects.Components
 
         private void UpdateUserInterface()
         {
-            if (UserInterface == null)
-                return;
-
-            UserInterface.SetState(new ConfigurationBoundUserInterfaceState(_config));
+            UserInterface?.SetState(new ConfigurationBoundUserInterfaceState(_config));
         }
 
         private void OpenUserInterface(IActorComponent actor)

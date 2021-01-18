@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Content.Server.DeviceNetwork
 {
-    public delegate void OnReceiveNetMessage(int frequency, string sender, NetworkPayload payload, Metadata metadata, bool broadcast);
+    public delegate void OnReceiveNetMessage(int frequency, string sender, NetworkPayload payload, Dictionary<string, object> metadata, bool broadcast);
 
     public class DeviceNetwork : IDeviceNetwork
     {
@@ -57,7 +57,7 @@ namespace Content.Server.DeviceNetwork
             }
         }
 
-        public bool EnqueuePackage(int netId, int frequency, string address, NetworkPayload data, string sender, Metadata metadata, bool broadcast = false)
+        public bool EnqueuePackage(int netId, int frequency, string address, NetworkPayload data, string sender, Dictionary<string, object> metadata, bool broadcast = false)
         {
             if (!_devices.ContainsKey(netId))
                 return false;
@@ -190,7 +190,7 @@ namespace Content.Server.DeviceNetwork
             public string Address;
             public bool Broadcast;
             public NetworkPayload Data { get; set; }
-            public Metadata Metadata;
+            public Dictionary<string, object> Metadata;
             public string Sender;
         }
     }

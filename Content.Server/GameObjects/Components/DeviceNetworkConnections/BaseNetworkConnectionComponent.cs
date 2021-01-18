@@ -1,16 +1,17 @@
-﻿using Content.Server.DeviceNetwork;
+using Content.Server.DeviceNetwork;
 using Content.Server.Interfaces;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.Components.DeviceNetworkConnections
 {
     public abstract class BaseNetworkConnectionComponent : Component
     {
-        [Dependency] private readonly IDeviceNetwork _network;
+        [Dependency] private readonly IDeviceNetwork _network = default!;
 
         private const int UNDEFINED = -1;
 
@@ -47,6 +48,7 @@ namespace Content.Server.GameObjects.Components.DeviceNetworkConnections
         {
             base.HandleMessage(message, component);
 
+            //Those if statements ensure that the message was meant to be sent from this connection.
             switch (message)
             {
                 case SendComponentMessage msg:
@@ -84,7 +86,7 @@ namespace Content.Server.GameObjects.Components.DeviceNetworkConnections
             return Connection.Broadcast(frequency, data, metadata);
         }
 
-        private void OnReceiveDeviceNetMessage(int frequency, string sender, NetworkPayload payload, Metadata metadata, bool broadcast)
+        private void OnReceiveDeviceNetMessage(int frequency, string sender, NetworkPayload payload, Dictionary<string, object> metadata, bool broadcast)
         {
             if (CanReceive(frequency, sender, payload, metadata, broadcast))
             {
@@ -92,10 +94,19 @@ namespace Content.Server.GameObjects.Components.DeviceNetworkConnections
             }
         }
 
-        protected abstract bool CanReceive(int frequency, string sender, NetworkPayload payload, Metadata metadata, bool broadcast);
+        protected abstract bool CanReceive(int frequency, string sender, NetworkPayload payload, Dictionary<string, object> metadata, bool broadcast);
         protected abstract NetworkPayload ManipulatePayload(NetworkPayload payload);
-        protected abstract Metadata GetMetadata();
 
+        /// <summary>
+        /// Collect the mesages metadata. Information that is required but not part of the message itself.
+        /// </summary>
+        /// <returns></returns>
+        protected abstract Dictionary<string, object> GetMetadata();
+
+
+        /// <summary>
+        /// The connection component sends the <see cref="NetworkPayload"/> to the specified address if it receives this message.
+        /// </summary>
         public class SendComponentMessage : ComponentMessage
         {
             public string Address { get; }
@@ -112,6 +123,9 @@ namespace Content.Server.GameObjects.Components.DeviceNetworkConnections
             }
         }
 
+        /// <summary>
+        /// The connection component sends the <see cref="NetworkPayload"/> to all addresses on the same network
+        /// </summary>
         public class BroadcastComponentMessage : ComponentMessage
         {
             public NetworkPayload Payload { get; }
@@ -127,21 +141,20 @@ namespace Content.Server.GameObjects.Components.DeviceNetworkConnections
         }
 
         /// <summary>
-        /// This component message gets sent when the connection receives a device network packet.
-        /// 
+        /// This component message gets sent when the connection component receives a device network packet.
         /// </summary>
         public class PacketReceivedComponentMessage : ComponentMessage
         {
             public string Sender { get; }
             public NetworkPayload Payload { get; }
-            public Metadata Metadata { get; }
+            public Dictionary<string, object> Metadata { get; }
             public bool Broadcast { get; }
             public int Frequency { get; }
             public string OwnAddress { get; }
             public int OwnNetID { get; }
             public int OwnFrequency { get; }
 
-            public PacketReceivedComponentMessage(string sender, NetworkPayload payload, Metadata metadata, bool broadcast, int frequency, string ownAddress, int ownNetID, int ownFrequency)
+            public PacketReceivedComponentMessage(string sender, NetworkPayload payload, Dictionary<string, object> metadata, bool broadcast, int frequency, string ownAddress, int ownNetID, int ownFrequency)
             {
                 Sender = sender;
                 Payload = payload;

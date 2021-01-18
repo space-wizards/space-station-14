@@ -1,8 +1,10 @@
 using Content.Server.Interfaces;
 using Robust.Shared.ViewVariables;
+using System.Collections.Generic;
 
 namespace Content.Server.DeviceNetwork
 {
+    /// <inheritdoc cref="IDeviceNetworkConnection"/>
     public class DeviceNetworkConnection : IDeviceNetworkConnection
     {
         private readonly DeviceNetwork _network;
@@ -32,7 +34,7 @@ namespace Content.Server.DeviceNetwork
             Frequency = frequency;
         }
 
-        public bool Send(int frequency, string address, NetworkPayload payload, Metadata metadata)
+        public bool Send(int frequency, string address, NetworkPayload payload, Dictionary<string, object> metadata)
         {
             return Open && _network.EnqueuePackage(_netId, frequency, address, payload, Address, metadata);
         }
@@ -47,7 +49,7 @@ namespace Content.Server.DeviceNetwork
             return Send(0, address, payload);
         }
 
-        public bool Broadcast(int frequency, NetworkPayload payload, Metadata metadata)
+        public bool Broadcast(int frequency, NetworkPayload payload, Dictionary<string, object> metadata)
         {
             return Open && _network.EnqueuePackage(_netId, frequency, "", payload, Address, metadata, true);
         }
