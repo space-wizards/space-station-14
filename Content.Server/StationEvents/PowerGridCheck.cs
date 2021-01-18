@@ -16,36 +16,33 @@ namespace Content.Server.StationEvents
     public sealed class PowerGridCheck : StationEvent
     {
         public override string Name => "PowerGridCheck";
-        public override StationEventWeight Weight => StationEventWeight.Normal;
+        public override float Weight => WeightNormal;
         public override int? MaxOccurrences => 3;
-        protected override string StartAnnouncement => Loc.GetString(
+        public override string StartAnnouncement => Loc.GetString(
             "Abnormal activity detected in the station's powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.");
         protected override string EndAnnouncement => Loc.GetString(
             "Power has been restored to the station. We apologize for the inconvenience.");
-        protected override string StartAudio => "/Audio/Announcements/power_off.ogg";
-        protected override float AnnounceWhen => 3.0f;
+        public override string StartAudio => "/Audio/Announcements/power_off.ogg";
+
+        protected override float StartAfter => 3.0f;
 
 
         private CancellationTokenSource _announceCancelToken;
 
-        private readonly List<IEntity> _powered = new List<IEntity>();
+        private readonly List<IEntity> _powered = new();
 
         public override void Startup()
         {
-            base.Startup();
-            EndWhen = IoCManager.Resolve<IRobustRandom>().Next(60, 120);
-        }
-
-        public override void Start()
-        {
             var componentManager = IoCManager.Resolve<IComponentManager>();
 
-            foreach (PowerReceiverComponent component in componentManager.EntityQuery<PowerReceiverComponent>())
+            foreach (var component in componentManager.EntityQuery<PowerReceiverComponent>())
             {
                 component.PowerDisabled = true;
                 _powered.Add(component.Owner);
             }
-            base.Start();
+
+            EndAfter = IoCManager.Resolve<IRobustRandom>().Next(60, 120);
+            base.Startup();
         }
 
         public override void Shutdown()

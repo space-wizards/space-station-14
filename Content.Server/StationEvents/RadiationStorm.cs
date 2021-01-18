@@ -24,14 +24,14 @@ namespace Content.Server.StationEvents
         [Dependency] private IRobustRandom _robustRandom = default!;
 
         public override string Name => "RadiationStorm";
-        protected override string StartAnnouncement => Loc.GetString(
+        public override string StartAnnouncement => Loc.GetString(
             "High levels of radiation detected near the station. Evacuate any areas containing abnormal green energy fields.");
         protected override string EndAnnouncement => Loc.GetString(
             "The radiation threat has passed. Please return to your workplaces.");
-        protected override string StartAudio => "/Audio/Announcements/radiation.ogg";
+        public override string StartAudio => "/Audio/Announcements/radiation.ogg";
         protected override float StartAfter => 3.0f;
-        protected override float AnnounceWhen => 1.0f;
 
+        // Event specific details
         private float _timeUntilPulse;
         private const float MinPulseDelay = 0.2f;
         private const float MaxPulseDelay = 0.8f;
@@ -43,12 +43,6 @@ namespace Content.Server.StationEvents
 
         public override void Startup()
         {
-            base.Startup();
-            EndWhen = _robustRandom.Next(30, 80) + StartAfter; // We want to be forgiving about the radstorm.
-        }
-        
-        public override void Start()
-        {
             ResetTimeUntilPulse();
 
             var componentManager = IoCManager.Resolve<IComponentManager>();
@@ -57,7 +51,9 @@ namespace Content.Server.StationEvents
             {
                 overlay.AddOverlay(SharedOverlayID.RadiationPulseOverlay);
             }
-            base.Start();
+
+            EndAfter = _robustRandom.Next(30, 80) + StartAfter; // We want to be forgiving about the radstorm.
+            base.Startup();
         }
 
         public override void Shutdown()
@@ -75,8 +71,12 @@ namespace Content.Server.StationEvents
             base.Shutdown();
         }
 
-        public override void Tick(float frameTime)
+        public override void Update(float frameTime)
         {
+            base.Update(frameTime);
+
+            if (!Started) return;
+
             _timeUntilPulse -= frameTime;
 
             if (_timeUntilPulse <= 0.0f)

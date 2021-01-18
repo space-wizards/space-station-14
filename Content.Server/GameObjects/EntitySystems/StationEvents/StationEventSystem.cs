@@ -5,7 +5,6 @@ using System.Text;
 using Content.Server.GameTicking;
 using Content.Server.StationEvents;
 using Content.Server.Interfaces.GameTicking;
-using Content.Server.Interfaces.Chat;
 using Content.Shared;
 using Content.Shared.GameTicking;
 using Content.Shared.Network.NetMessages;
@@ -106,8 +105,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
 
                 CurrentEvent?.Shutdown();
                 CurrentEvent = stationEvent;
-                _chat.SendAdminAnnouncement(Loc.GetString("Running event manualy: ") + CurrentEvent.Name);
-                stationEvent.Startup();
+                stationEvent.Announce();
                 return Loc.GetString("Running event ") + stationEvent.Name;
             }
 
@@ -130,7 +128,6 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
 
             CurrentEvent?.Shutdown();
             CurrentEvent = randomEvent;
-            _chat.SendAdminAnnouncement(Loc.GetString("Running event immediately: ") + CurrentEvent.Name);
             CurrentEvent.Startup();
 
             return Loc.GetString("Running ") + randomEvent.Name;
@@ -257,12 +254,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
             else
             {
                 CurrentEvent = stationEvent;
-                // todo:
-                // make this text have a button that can cancel the event
-                // add a 10 second delay before running (select and run)
-                // broadcast to dchat (once the event starts)
-                _chat.SendAdminAnnouncement(Loc.GetString("Running event: ") + CurrentEvent.Name);
-                CurrentEvent.Startup();
+                CurrentEvent.Announce();
             }
         }
 
@@ -363,7 +355,6 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
 
         public override void Shutdown()
         {
-            // should we shutdown the event before calling the parent shutdown?
             CurrentEvent?.Shutdown();
             base.Shutdown();
         }
