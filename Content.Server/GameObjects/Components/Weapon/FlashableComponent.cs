@@ -14,6 +14,8 @@ namespace Content.Server.GameObjects.Components.Weapon
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
+        public override bool PlayerOnlyState => true;
+
         private double _duration;
         private TimeSpan _lastFlash;
 
