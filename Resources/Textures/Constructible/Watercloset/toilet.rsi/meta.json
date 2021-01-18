@@ -9,75 +9,19 @@
     "states": [
         {
             "name": "closed_toilet_seat_down",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "closed_toilet_seat_up",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "open_toilet_seat_down",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "open_toilet_seat_up",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         }
     ]
 }
