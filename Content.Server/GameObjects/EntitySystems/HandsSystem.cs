@@ -19,6 +19,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
@@ -115,16 +116,23 @@ namespace Content.Server.GameObjects.EntitySystems
             if (!ent.TryGetComponent(out HandsComponent handsComp))
                 return false;
 
-            if (handsComp.GetActiveHand == null)
+            if (handsComp.ActiveHand == null || handsComp.GetActiveHand == null)
                 return false;
 
-            var entCoords = ent.Transform.Coordinates.Position;
-            var entToDesiredDropCoords = coords.Position - entCoords;
-            var targetLength = Math.Min(entToDesiredDropCoords.Length, SharedInteractionSystem.InteractionRange - 0.001f); // InteractionRange is reduced due to InRange not dealing with floating point error
-            var newCoords = coords.WithPosition(entToDesiredDropCoords.Normalized * targetLength + entCoords).ToMap(EntityManager);
-            var rayLength = Get<SharedInteractionSystem>().UnobstructedDistance(ent.Transform.MapPosition, newCoords, ignoredEnt: ent);
+            var entMap = ent.Transform.MapPosition;
+            var targetPos = coords.ToMapPos(EntityManager);
+            var dropVector = targetPos - entMap.Position;
+            var targetVector = Vector2.Zero;
 
-            handsComp.Drop(handsComp.ActiveHand, coords.WithPosition(entCoords + entToDesiredDropCoords.Normalized * rayLength));
+            if (dropVector != Vector2.Zero)
+            {
+                var targetLength = MathF.Min(dropVector.Length, SharedInteractionSystem.InteractionRange - 0.001f); // InteractionRange is reduced due to InRange not dealing with floating point error
+                var newCoords = coords.WithPosition(dropVector.Normalized * targetLength + entMap.Position).ToMap(EntityManager);
+                var rayLength = Get<SharedInteractionSystem>().UnobstructedDistance(entMap, newCoords, ignoredEnt: ent);
+                targetVector = dropVector.Normalized * rayLength;
+            }
+
+            handsComp.Drop(handsComp.ActiveHand, coords.WithPosition(entMap.Position + targetVector));
 
             return true;
         }
