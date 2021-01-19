@@ -238,7 +238,8 @@ namespace Content.Client
             "GasFilter",
             "Recyclable",
             "SecretStash",
-            "Toilet"
+            "Toilet",
+            "ClusterFlash"
         };
     }
 }

@@ -16,7 +16,7 @@
   - type: Storage
     capacity: 100
     storageSoundCollection : storageRustle
-    
+
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelEngineering
@@ -71,6 +71,39 @@
     sprite: Clothing/Back/Duffels/security.rsi
   - type: Clothing
     sprite: Clothing/Back/Duffels/security.rsi
+
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelChemistry
+  name: chemistry duffel bag
+  description: "A large duffel bag for holding extra beakers and test tubes."
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/chemistry.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Duffels/chemistry.rsi
+
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelMime
+  name: mime duffel bag
+  description: "A large duffel bag for holding... mime... stuff."
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/mime.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Duffels/mime.rsi
+
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelScience
+  name: science duffel bag
+  description: "A large duffel bag for holding extra science related goods."
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/science.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Duffels/science.rsi
 
 - type: entity
   parent: ClothingBackpackDuffel

@@ -138,3 +138,60 @@
               max: 1
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
+
+#Dummy wires
+
+- type: entity
+  abstract: true
+  id: BaseDummyWire
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+    drawdepth: BelowFloor
+  - type: IconSmooth
+    mode: CardinalFlags
+  - type: SubFloorHide 
+  
+- type: entity
+  abstract: true
+  parent: BaseDummyWire
+  id: HVDummyWire
+  name: HV Connector Wire
+  components:
+  - type: Sprite
+    sprite: Constructible/Power/hv_cable.rsi
+    state: hvcable_0
+  - type: IconSmooth
+    base: hvcable_
+    key: hv_cables
+    
+- type: entity
+  abstract: true
+  parent: BaseDummyWire
+  id: MVDummyWire
+  name: MV Connector Wire
+  components:
+  - type: Sprite
+    sprite: Constructible/Power/mv_cable.rsi
+    state: mvcable_0
+    color: Yellow
+  - type: IconSmooth
+    base: mvcable_
+    key: mv_cables
+    
+- type: entity
+  abstract: true
+  parent: BaseDummyWire
+  id: LVDummyWire
+  name: LV Connector Wire
+  components:
+  - type: Sprite
+    sprite: Constructible/Power/lv_cable.rsi
+    state: lvcable_0
+    color: Green
+  - type: IconSmooth
+    base: lvcable_
+    key: lv_cables
