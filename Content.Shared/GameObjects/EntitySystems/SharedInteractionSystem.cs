@@ -141,7 +141,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                     continue;
                 }
 
-                var bBox = p.WorldAABB;
+                var bBox = p.GetWorldAABB();
 
                 if (bBox.Contains(origin.Position) || bBox.Contains(other.Position))
                 {

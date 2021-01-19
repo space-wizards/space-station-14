@@ -326,7 +326,7 @@ namespace Content.Server.GameObjects.Components.Doors
                     || !e.TryGetComponent(out IDamageableComponent? damage))
                     continue;
 
-                var percentage = otherBody.WorldAABB.IntersectPercentage(body.WorldAABB);
+                var percentage = otherBody.GetWorldAABB().IntersectPercentage(body.GetWorldAABB());
 
                 if (percentage < 0.1f)
                     continue;

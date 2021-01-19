@@ -192,7 +192,7 @@ namespace Content.Server.GameObjects.Components.Singularity
 
             if (entity.TryGetComponent<IMapGridComponent>(out var mapGridComponent))
             {
-                foreach (var tile in mapGridComponent.Grid.GetTilesIntersecting(((IPhysBody) _collidableComponent).WorldAABB))
+                foreach (var tile in mapGridComponent.Grid.GetTilesIntersecting(((IPhysBody) _collidableComponent).GetWorldAABB()))
                 {
                     mapGridComponent.Grid.SetTile(tile.GridIndices, Tile.Empty);
                     Energy++;

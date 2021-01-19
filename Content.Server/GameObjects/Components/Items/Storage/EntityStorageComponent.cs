@@ -260,8 +260,8 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             if (entity == Owner) return false;
             if (entity.TryGetComponent(out IPhysicsComponent? entityPhysicsComponent))
             {
-                if(MaxSize < entityPhysicsComponent.WorldAABB.Size.X
-                    || MaxSize < entityPhysicsComponent.WorldAABB.Size.Y)
+                if(MaxSize < entityPhysicsComponent.GetWorldAABB().Size.X
+                    || MaxSize < entityPhysicsComponent.GetWorldAABB().Size.Y)
                 {
                     return false;
                 }

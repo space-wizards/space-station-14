@@ -33,7 +33,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        
+
         public IReadOnlyDictionary<GridId, Dictionary<Vector2i, PathfindingChunk>> Graph => _graph;
         private readonly Dictionary<GridId, Dictionary<Vector2i, PathfindingChunk>> _graph = new();
 
@@ -85,7 +85,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 
             foreach (var update in _collidableUpdateQueue)
             {
-                var entity = EntityManager.GetEntity(update.Owner);
+                if (!EntityManager.TryGetEntity(update.Owner, out var entity)) continue;
+
                 if (update.CanCollide)
                 {
                     HandleEntityAdd(entity);

@@ -87,7 +87,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
                     continue;
                 }
 
-                var worldBox = physics.WorldAABB;
+                var worldBox = physics.GetWorldAABB();
 
                 // if not on screen, or too small, continue
                 if (!worldBox.Intersects(in viewport) || worldBox.IsEmpty())
@@ -95,7 +95,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
                     continue;
                 }
 
-                var screenCoordinates = _eyeManager.WorldToScreen(physics.WorldAABB.TopLeft + (0, 0.5f));
+                var screenCoordinates = _eyeManager.WorldToScreen(physics.GetWorldAABB().TopLeft + (0, 0.5f));
                 DrawString(screen, _font, screenCoordinates, _traitorText, Color.OrangeRed);
             }
         }
