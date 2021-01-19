@@ -18,6 +18,7 @@
         - !type:DoActsBehavior
           acts: ["Destruction"]
   - type: Sprite
+    netsync: false
     sprite: Constructible/Atmos/pump.rsi
     layers:
     - sprite: Constructible/Atmos/pipe.rsi

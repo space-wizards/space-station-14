@@ -19,6 +19,7 @@
         - !type:DoActsBehavior
           acts: ["Destruction"]
   - type: Sprite
+    netsync: false
   - type: Appearance
     visuals:
     - type: PipeVisualizer
