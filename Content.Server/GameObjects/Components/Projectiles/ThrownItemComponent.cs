@@ -50,7 +50,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             // after impacting the first object.
             // For realism this should actually be changed when the velocity of the object is less than a threshold.
             // This would allow ricochets off walls, and weird gravity effects from slowing the object.
-            if (Owner.TryGetComponent(out IPhysicsComponent body) && body.PhysicsShapes.Count >= 1)
+            if (!Owner.Deleted && Owner.TryGetComponent(out IPhysicsComponent body) && body.PhysicsShapes.Count >= 1)
             {
                 _shouldCollide = false;
             }
