@@ -56,14 +56,23 @@
     contents:
       - name: BoxSurvival
 
-#- type: entity
-#  abstract: true
-#  parent: ClothingBackpackDuffelScience
-#  id: ClothingBackpackDuffelScienceFilled
-#  components:
-#  - type: StorageFill
-#    contents:
-#      - name: BoxSurvival
+- type: entity
+  abstract: true
+  parent: ClothingBackpackDuffelScience
+  id: ClothingBackpackDuffelScienceFilled
+  components:
+  - type: StorageFill
+    contents:
+      - name: BoxSurvival
+
+- type: entity
+  abstract: true
+  parent: ClothingBackpackDuffelMime
+  id: ClothingBackpackDuffelMimeFilled
+  components:
+  - type: StorageFill
+    contents:
+      - name: BoxSurvival
 
 #- type: entity
 #  abstract: true

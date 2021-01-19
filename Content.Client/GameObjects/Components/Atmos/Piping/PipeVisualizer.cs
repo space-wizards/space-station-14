@@ -10,6 +10,7 @@ using Robust.Shared.GameObjects.Components.Renderable;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -18,14 +19,18 @@ namespace Content.Client.GameObjects.Components.Atmos
     [UsedImplicitly]
     public class PipeVisualizer : AppearanceVisualizer
     {
+        private string _rsiString;
+
         private RSI _pipeRSI;
 
         public override void LoadData(YamlMappingNode node)
         {
             base.LoadData(node);
 
-            var rsiString = node.GetNode("pipeRSI").ToString();
-            var rsiPath = SharedSpriteComponent.TextureRoot / rsiString;
+            var serializer = YamlObjectSerializer.NewReader(node);
+            serializer.DataField(ref _rsiString, "rsiString", "Constructible/Atmos/pipe.rsi");
+
+            var rsiPath = SharedSpriteComponent.TextureRoot / _rsiString;
             try
             {
                 var resourceCache = IoCManager.Resolve<IResourceCache>();

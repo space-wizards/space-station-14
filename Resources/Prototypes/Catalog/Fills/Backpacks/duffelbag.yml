@@ -1,7 +1,7 @@
 - type: entity
   parent: ClothingBackpackDuffelMedical
   id: ClothingBackpackDuffelSurgeryFilled
-  name: surgical duffelbag
+  name: surgical duffel bag
   description: "A large duffel bag for holding extra medical supplies - this one seems to be designed for holding surgical tools."
   components:
   - type: StorageFill
@@ -16,7 +16,7 @@
 - type: entity
   parent: ClothingBackpackDuffelSyndicateMedical
   id: ClothingBackpackDuffelSyndicateFilledMedical
-  name: syndicate surgical duffelbag
+  name: syndicate surgical duffel bag
   description: "A large duffel bag for holding extra medical supplies - this one seems to be designed for holding surgical tools."
   components:
   - type: StorageFill
@@ -86,7 +86,7 @@
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelSyndicateCostumeCentcom
-  name: Centcom official costume duffelbag
+  name: Centcom official costume duffel bag
   description: "Contains a full CentCom Official uniform set, headset and clipboard included. The headset comes without an encryption key."
   components:
   - type: StorageFill
@@ -105,7 +105,7 @@
 - type: entity
   parent: ClothingBackpackDuffelClown
   id: ClothingBackpackDuffelSyndicateCostumeClown
-  name: clown costume duffelbag
+  name: clown costume duffel bag
   description: "Contains a complete Clown outfit."
   components:
   - type: StorageFill

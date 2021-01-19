@@ -18,9 +18,15 @@
         - !type:DoActsBehavior
           acts: ["Destruction"]
   - type: Sprite
+    netsync: false
     sprite: Constructible/Atmos/pump.rsi
-  - type: Icon
-    sprite: Constructible/Atmos/pump.rsi
+    layers:
+    - sprite: Constructible/Atmos/pipe.rsi
+      state: pipeStraight
+    - state: pumpPressure
+  - type: Appearance
+    visuals:
+    - type: PumpVisualizer
 
 - type: entity
   parent: PumpBase
@@ -38,11 +44,4 @@
   - type: PressurePump
     inletDirection: West
     outletDirection: East
-  - type: Sprite
-    state: pumpPressure
-  - type: Icon
-    state: pumpPressure
-  - type: Appearance
-    visuals:
-    - type: PumpVisualizer
-      pumpEnabledState: pumpPressureOn
+    
