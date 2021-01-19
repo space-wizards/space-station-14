@@ -19,10 +19,10 @@
           acts: ["Destruction"]
   - type: Sprite
     sprite: Constructible/Atmos/pump.rsi
-    state: pumpPressure
-  - type: Icon
-    sprite: Constructible/Atmos/pump.rsi
-    state: pumpPressure
+    layers:
+    - sprite: Constructible/Atmos/pipe.rsi
+      state: pipeStraight
+    - state: pumpPressure
   - type: Appearance
     visuals:
     - type: PumpVisualizer

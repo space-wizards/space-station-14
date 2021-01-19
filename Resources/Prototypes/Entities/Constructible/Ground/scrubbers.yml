@@ -19,7 +19,10 @@
           acts: ["Destruction"]
   - type: Sprite
     sprite: Constructible/Atmos/scrubber.rsi
-    state: scrubOff
+    layers:
+    - sprite: Constructible/Atmos/pipe.rsi
+      state: pipeHalf
+    - state: scrubOff
   - type: Appearance
     visuals:
     - type: SiphonVisualizer

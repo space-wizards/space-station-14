@@ -19,7 +19,10 @@
           acts: ["Destruction"]
   - type: Sprite
     sprite: Constructible/Atmos/vent.rsi
-    state: ventOff
+    layers:
+    - sprite: Constructible/Atmos/pipe.rsi
+      state: pipeHalf
+    - state: ventOff      
   - type: Appearance
     visuals:
     - type: VentVisualizer

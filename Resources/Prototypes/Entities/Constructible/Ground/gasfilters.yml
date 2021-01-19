@@ -18,11 +18,11 @@
         - !type:DoActsBehavior
           acts: ["Destruction"]
   - type: Sprite
+    sprite: Constructible/Atmos/gasfilter.rsi
     layers:
     - sprite: Constructible/Atmos/pipe.rsi
       state: pipeTJunction
-    - sprite: Constructible/Atmos/gasfilter.rsi
-      state: gasFilter
+    - state: gasFilter
   - type: Appearance
     visuals:
     - type: GasFilterVisualizer
