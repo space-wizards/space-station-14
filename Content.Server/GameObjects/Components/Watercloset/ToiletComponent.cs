@@ -9,6 +9,7 @@ using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Interactable;
+using Content.Shared.GameObjects.Components.Watercloset;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -136,13 +137,10 @@ namespace Content.Server.GameObjects.Components.Watercloset
 
         private void UpdateSprite()
         {
-            if (Owner.TryGetComponent(out SpriteComponent? sprite))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
-                var state = string.Format("{0}_toilet_{1}",
-                    LidOpen ? "open" : "closed",
-                    IsSeatUp ? "seat_up" : "seat_down");
-
-                sprite.LayerSetState(0, state);
+                appearance.SetData(ToiletVisuals.LidOpen, LidOpen);
+                appearance.SetData(ToiletVisuals.SeatUp, IsSeatUp);
             }
         }
 
