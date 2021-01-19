@@ -24,6 +24,7 @@
         Error,
         ToggleInternals,
         ToggleLight,
+        ToggleMagboots,
         DebugInstant,
         DebugToggle,
         DebugTargetPoint,

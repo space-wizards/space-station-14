@@ -12,8 +12,6 @@
       - name: Cautery
       - name: Retractor
       - name: Scalpel
-  - type: Storage
-    capacity: 30
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateMedical
@@ -29,8 +27,6 @@
       - name: Cautery
       - name: Retractor
       - name: Scalpel
-  - type: Storage
-    capacity: 30
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
@@ -44,8 +40,6 @@
       - name: MagazineShotgun
       - name: MagazineShotgunBeanbag
 #     - name: ThermalImagingGoggles
-  - type: Storage
-    capacity: 100
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
@@ -59,8 +53,6 @@
       - name: MagazinePistolSmg
         amount: 2
 #     - name: SMGSuppressor
-  - type: Storage
-    capacity: 100
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
@@ -72,8 +64,6 @@
     contents:
       - name: LMGL6
       - name: MagazineLRifleBox
-  - type: Storage
-    capacity: 100
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
@@ -111,8 +101,6 @@
       - name: Paper
       - name: Pen
       - name: CentcomPDA
-  - type: Storage
-    capacity: 50
 
 - type: entity
   parent: ClothingBackpackDuffelClown
@@ -128,5 +116,3 @@
       - name: BikeHorn
       - name: ClownPDA
       - name: ClothingHeadsetService
-  - type: Storage
-    capacity: 30

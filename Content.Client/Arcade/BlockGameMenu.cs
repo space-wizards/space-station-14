@@ -458,7 +458,7 @@ namespace Content.Client.Arcade
             return grid;
         }
 
-        protected override void FocusExited()
+        protected override void KeyboardFocusExited()
         {
             if (!IsOpen) return;
             if(_gameOver) return;

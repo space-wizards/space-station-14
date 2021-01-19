@@ -1,4 +1,6 @@
-﻿using Robust.Shared.Maths;
+using Robust.Shared.Maths;
+using Robust.Shared.Serialization;
+using System;
 
 namespace Content.Shared.Atmos
 {
@@ -246,6 +248,7 @@ namespace Content.Shared.Atmos
     /// <summary>
     ///     Gases to Ids. Keep these updated with the prototypes!
     /// </summary>
+    [Serializable, NetSerializable]
     public enum Gas : sbyte
     {
         Oxygen = 0,

@@ -45,16 +45,12 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 // Raise an event.
                 EntitySystem.Get<InteractionSystem>().ThrowCollideInteraction(User, Owner, entity, Owner.Transform.Coordinates);
             }
-            if (entity.TryGetComponent(out IDamageableComponent damage))
-            {
-                damage.ChangeDamage(DamageType.Blunt, 10, false, Owner);
-            }
 
             // Stop colliding with mobs, this mimics not having enough velocity to do damage
             // after impacting the first object.
             // For realism this should actually be changed when the velocity of the object is less than a threshold.
             // This would allow ricochets off walls, and weird gravity effects from slowing the object.
-            if (Owner.TryGetComponent(out PhysicsComponent body) && body.Fixtures.Count >= 1)
+            if (!Owner.Deleted && Owner.TryGetComponent(out PhysicsComponent body) && body.Fixtures.Count >= 1)
             {
                 _shouldCollide = false;
             }

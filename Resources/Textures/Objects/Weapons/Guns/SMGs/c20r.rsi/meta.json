@@ -8,28 +8,22 @@
     "copyright": "https://github.com/discordia-space/CEV-Eris/raw/d1120fc8287cca2632e834069b5019bf941a0170/icons/obj/guns/projectile/cr20.dmi",
     "states": [
         {
-            "name": "icon",
-            "directions": 1
+            "name": "icon"
         },
         {
-            "name": "base",
-            "directions": 1
+            "name": "base"
         },
         {
-            "name": "bolt-closed",
-            "directions": 1
+            "name": "bolt-closed"
         },
         {
-            "name": "bolt-open",
-            "directions": 1
+            "name": "bolt-open"
         },
         {
-            "name": "mag-0",
-            "directions": 1
+            "name": "mag-0"
         },
         {
-            "name": "suppressor",
-            "directions": 1
+            "name": "suppressor"
         },
         {
             "name": "inhand-left",

@@ -3,15 +3,25 @@ using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Conveyor;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.Interfaces.Chat;
+using Content.Server.Interfaces.GameObjects;
+using Content.Server.Interfaces.GameTicking;
+using Content.Server.Players;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Recycling;
+using Content.Shared.Interfaces;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Map;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -20,7 +30,7 @@ namespace Content.Server.GameObjects.Components.Recycling
 {
     // TODO: Add sound and safe beep
     [RegisterComponent]
-    public class RecyclerComponent : Component, ICollideBehavior
+    public class RecyclerComponent : Component, ICollideBehavior, ISuicideAct
     {
         public override string Name => "Recycler";
 
@@ -173,6 +183,28 @@ namespace Content.Server.GameObjects.Components.Recycling
         void ICollideBehavior.CollideWith(IEntity collidedWith)
         {
             Recycle(collidedWith);
+        }
+
+        public SuicideKind Suicide(IEntity victim, IChatManager chat)
+        {
+            var mind = victim.PlayerSession()?.ContentData()?.Mind;
+
+            if (mind != null)
+            {
+                IoCManager.Resolve<IGameTicker>().OnGhostAttempt(mind, false);
+                mind.OwnedEntity.PopupMessage(Loc.GetString("You recycle yourself!"));
+            }
+
+            victim.PopupMessageOtherClients(Loc.GetString("{0:theName} tries to recycle {0:themself}!", victim));
+
+            if (victim.TryGetComponent<IBody>(out var body))
+            {
+                body.Gib(true);
+            }
+
+            Bloodstain();
+
+            return SuicideKind.Bloodloss;
         }
     }
 }

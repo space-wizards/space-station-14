@@ -8,12 +8,10 @@
     "copyright": "https://github.com/discordia-space/CEV-Eris/raw/e1a3cbe9ba2e6e29b7f1cad1bb456b390aac936d/icons/obj/guns/projectile.dmi",
     "states": [
         {
-            "name": "icon",
-            "directions": 1
+            "name": "icon"
         },
         {
             "name": "base",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -23,7 +21,6 @@
         },
         {
             "name": "base-unshaded",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -33,7 +30,6 @@
         },
         {
             "name": "mag-0",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -43,7 +39,6 @@
         },
         {
             "name": "mag-unshaded-0",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -53,7 +48,6 @@
         },
         {
             "name": "mag-1",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -63,7 +57,6 @@
         },
         {
             "name": "mag-unshaded-1",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -73,7 +66,6 @@
         },
         {
             "name": "mag-2",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -83,7 +75,6 @@
         },
         {
             "name": "mag-unshaded-2",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -93,7 +84,6 @@
         },
         {
             "name": "mag-3",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -103,7 +93,6 @@
         },
         {
             "name": "mag-unshaded-3",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -113,7 +102,6 @@
         },
         {
             "name": "mag-4",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -123,7 +111,6 @@
         },
         {
             "name": "mag-unshaded-4",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -133,7 +120,6 @@
         },
         {
             "name": "mag-5",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -143,7 +129,6 @@
         },
         {
             "name": "mag-unshaded-5",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
