@@ -85,7 +85,7 @@ namespace Content.Client.GameObjects.Components.Observer
                     _gameHud.HandsContainer.AddChild(_gui);
                     SetGhostVisibility(true);
                     _isAttached = true;
-                    _chatManager.ToggleDeadChatButtonVisibility(true);
+                    _chatManager.SetDeadChatAvailable(true);
 
                     break;
 
@@ -93,7 +93,7 @@ namespace Content.Client.GameObjects.Components.Observer
                     _gui!.Parent?.RemoveChild(_gui);
                     SetGhostVisibility(false);
                     _isAttached = false;
-                    _chatManager.ToggleDeadChatButtonVisibility(false);
+                    _chatManager.SetDeadChatAvailable(false);
                     break;
             }
         }

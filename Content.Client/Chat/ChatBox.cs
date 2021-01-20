@@ -2,8 +2,10 @@
 
 using System;
 using System.Collections.Generic;
+using Content.Client.Administration;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
+using Content.Shared.Administration;
 using Content.Shared.Chat;
 using Robust.Client.Console;
 using Robust.Client.Graphics.Drawing;
@@ -34,7 +36,7 @@ namespace Content.Client.Chat
         public OutputPanel Contents { get; }
 
         // order in which the available channel filters show up
-        private static readonly IReadOnlyList<ChatChannel> ChannelFilters = new List<ChatChannel>
+        private static readonly IReadOnlyList<ChatChannel> ChannelFilterOrder = new List<ChatChannel>
         {
             ChatChannel.Local, ChatChannel.Radio, ChatChannel.OOC, ChatChannel.Dead, ChatChannel.AdminChat,
             ChatChannel.Server
@@ -67,14 +69,14 @@ namespace Content.Client.Chat
         private readonly Popup _filterPopup;
         private readonly PanelContainer _filterPopupPanel;
         private readonly VBoxContainer _filterVBox;
-
-
-
+        private readonly IClientAdminManager _adminManager;
+        // TODO: Remove this
+        private bool _canDeadChat;
 
         public ChatBox()
         {
             _groupController = IoCManager.Resolve<IClientConGroupController>();
-
+            _adminManager = IoCManager.Resolve<IClientAdminManager>();
             MouseFilter = MouseFilterMode.Stop;
 
             AddChild(new VBoxContainer
@@ -164,10 +166,6 @@ namespace Content.Client.Chat
                     })
                 }
             };
-
-            RepopulateChannelFilter();
-
-            RepopulateChannelSelector();
         }
 
         protected override void EnteredTree()
@@ -178,9 +176,12 @@ namespace Content.Client.Chat
             Input.OnTextEntered += Input_OnTextEntered;
             Input.OnTextChanged += InputOnTextChanged;
             Input.OnFocusExit += InputOnFocusExit;
+            // TODO: Rely on chatmanager instead to sub to this and keep us updated via a method call here
             _groupController.ConGroupUpdated += RepopulateChannelSelector;
-            _filterButton.OnToggled += FilterButtonOnOnToggled;
+            _filterButton.OnToggled += FilterButtonToggled;
             _filterPopup.OnPopupHide += OnPopupHide;
+            RepopulateChannelFilter();
+            RepopulateChannelSelector();
         }
 
         protected override void ExitedTree()
@@ -192,22 +193,62 @@ namespace Content.Client.Chat
             Input.OnTextChanged -= InputOnTextChanged;
             Input.OnFocusExit -= InputOnFocusExit;
             _groupController.ConGroupUpdated -= RepopulateChannelSelector;
-            _filterButton.OnToggled -= FilterButtonOnOnToggled;
+            _filterButton.OnToggled -= FilterButtonToggled;
             _filterPopup.OnPopupHide -= OnPopupHide;
+            foreach (var child in _filterVBox.Children)
+            {
+                if (child is not ChannelFilterCheckbox checkbox) continue;
+                checkbox.OnToggled -= OnFilterCheckboxToggled;
+            }
+
         }
 
-        public void SetChannelFilters(IReadOnlySet<ChatChannel> enabledChannels)
+        public void SetChannelPermissions(HashSet<ChatChannel> selectableChannels, HashSet<ChatChannel> filterableChannels,
+            Dictionary<ChatChannel, bool> channelFilters)
         {
+            // TODO: Implement
+            // TODO: Make sure we are appropriatley calling OnFilterToggled callback
+            // if we need to here.
+
+            // make sure we preserve current settings if we have them
+            // and we properly respect enabledChannels vs filterableChannels (some channels
+            // may be enabled/disabled but not currently filterable and thus should be ommitted from UI)
+
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Sets which filters are enabled / disabled. NOT the same as setting
+        /// what filters are ABLE to be enabled / disabled.
+        /// </summary>
+        public void SetChannelFilters(IReadOnlyDictionary<ChatChannel, bool> enabledChannels)
+        {
+            // TODO: Remove this method, use above one instead
             _filterVBox.Children.Clear();
             _filterVBox.AddChild(new Control {CustomMinimumSize = (10, 0)});
-            foreach (var channelFilter in ChannelFilters)
+            foreach (var channelFilter in ChannelFilterOrder)
             {
-                _filterVBox.AddChild(new ChannelFilterCheckbox(channelFilter)
+                if (channelFilter == ChatChannel.AdminChat && !_adminManager.HasFlag(AdminFlags.Admin))
+                    continue;
+
+                if (channelFilter == ChatChannel.Dead && !_adminManager.HasFlag(AdminFlags.Admin)
+                    && !_canDeadChat)
+                    continue;
+
+                var newCheckBox = new ChannelFilterCheckbox(channelFilter)
                 {
-                    Pressed = enabledChannels.Contains(channelFilter)
-                });
+                    Pressed = enabledChannels.TryGetValue(channelFilter, out var enabled) && enabled
+                };
+                newCheckBox.OnToggled += OnFilterCheckboxToggled;
+                _filterVBox.AddChild(newCheckBox);
             }
             _filterVBox.AddChild(new Control {CustomMinimumSize = (10, 0)});
+        }
+
+        private void OnFilterCheckboxToggled(BaseButton.ButtonToggledEventArgs obj)
+        {
+            if (obj.Button is not ChannelFilterCheckbox checkbox) return;
+            FilterToggled?.Invoke(checkbox.Channel, checkbox.Pressed);
         }
 
         private void RepopulateChannelFilter()
@@ -231,6 +272,7 @@ namespace Content.Client.Chat
             _channelSelector.AddItem("Local", (int) ChatChannel.Local);
             _channelSelector.AddItem("Radio", (int) ChatChannel.Radio);
             _channelSelector.AddItem("OOC", (int) ChatChannel.OOC);
+            // TODO: Dead chat, admins are allowed to see it regardless of status
             if (_groupController.CanCommand("asay"))
             {
                 _channelSelector.AddItem("Admin", (int) ChatChannel.AdminChat);
@@ -250,7 +292,7 @@ namespace Content.Client.Chat
         }
 
 
-        private void FilterButtonOnOnToggled(BaseButton.ButtonToggledEventArgs obj)
+        private void FilterButtonToggled(BaseButton.ButtonToggledEventArgs obj)
         {
             if (obj.Pressed)
             {
@@ -444,11 +486,6 @@ namespace Content.Client.Chat
             {
                 Input.ReleaseKeyboardFocus();
             }
-        }
-
-        private void OnFilterToggled(BaseButton.ButtonToggledEventArgs args)
-        {
-            FilterToggled?.Invoke(this, args);
         }
     }
 
