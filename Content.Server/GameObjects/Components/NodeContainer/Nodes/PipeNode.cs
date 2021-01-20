@@ -12,27 +12,34 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 {
+    //TODO: Make ConnectedDirections set properly
+
     /// <summary>
     ///     Connects with other <see cref="PipeNode"/>s whose <see cref="PipeNode.PipeDirection"/>
     ///     correctly correspond.
     /// </summary>
     public class PipeNode : Node, IGasMixtureHolder, IRotatableNode
     {
+        [ViewVariables(VVAccess.ReadWrite)]
+        public PipeDirection SetPipeDirectionAndSprite { get => PipeDirection; set => AdjustPipeDirectionAndSprite(value); }
+
         [ViewVariables]
-        public PipeDirection PipeDirection { get => _pipeDirection; set => SetPipeDirection(value); }
-        private PipeDirection _pipeDirection;
+        public PipeDirection PipeDirection { get; private set; }
 
         /// <summary>
         ///     The directions in which this node is connected to other nodes.
         /// </summary>
-        [ViewVariables]
-        private PipeDirection ConnectedDirections { get; set; }
+        [ViewVariables(VVAccess.ReadWrite)]
+        private PipeDirection ConnectedDirections { get => _connectedDirections; set { _connectedDirections = value; UpdateAppearance(); } }
+        private PipeDirection _connectedDirections;
 
         [ViewVariables]
         private IPipeNet _pipeNet = PipeNet.NullNet;
 
         [ViewVariables]
         private bool _needsPipeNet = true;
+
+        private bool AdjustingSprite { get; set; }
 
         /// <summary>
         ///     The gases in this pipe.
@@ -67,7 +74,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _pipeDirection, "pipeDirection", PipeDirection.None);
+            serializer.DataField(this, x => x.PipeDirection, "pipeDirection", PipeDirection.None);
             serializer.DataField(this, x => x.LocalAir, "gasMixture", new GasMixture(DefaultVolume));
         }
 
@@ -92,8 +99,13 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         void IRotatableNode.RotateEvent(RotateEvent ev)
         {
+            if (AdjustingSprite)
+                return;
+
             var diff = ev.NewRotation - ev.OldRotation;
             PipeDirection = PipeDirection.RotatePipeDirection(diff);
+            RefreshNodeGroup();
+            UpdateAppearance();
         }
 
         protected override IEnumerable<Node> GetReachableNodes()
@@ -104,7 +116,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
                 var ownNeededConnection = pipeDirection;
                 var theirNeededConnection = ownNeededConnection.GetOpposite();
-                if (!_pipeDirection.HasDirection(ownNeededConnection))
+                if (!PipeDirection.HasDirection(ownNeededConnection))
                 {
                     continue;
                 }
@@ -120,7 +132,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
                     {
                         foreach (var node in container.Nodes)
                         {
-                            if (node is PipeNode pipeNode && pipeNode._pipeDirection.HasDirection(theirNeededConnection))
+                            if (node is PipeNode pipeNode && pipeNode.PipeDirection.HasDirection(theirNeededConnection))
                             {
                                 pipeNodesInDirection.Add(pipeNode);
                             }
@@ -137,14 +149,35 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         private void UpdateAppearance()
         {
-            _appearance?.SetData(PipeVisuals.VisualState, new PipeVisualState(PipeDirection, PipeDirection.Fourway));
+            _appearance?.SetData(PipeVisuals.VisualState, new PipeVisualState(PipeDirection.PipeDirectionToPipeShape(), ConnectedDirections));
         }
 
-        private void SetPipeDirection(PipeDirection pipeDirection)
+        /// <summary>
+        ///     Changes the directions of this pipe while ensuring the sprite is correctly rotated.
+        /// </summary>
+        public void AdjustPipeDirectionAndSprite(PipeDirection newDir)
         {
-            _pipeDirection = pipeDirection;
+            AdjustingSprite = true;
+
+            var baseDir = newDir.PipeDirectionToPipeShape().ToBaseDirection();
+
+            var newAngle = Angle.FromDegrees(0);
+
+            for (double angle = 0; angle <= 270; angle += 90)  //iterate through angles of cardinal 
+            {
+                if (baseDir.RotatePipeDirection(Angle.FromDegrees(angle)) == newDir) //finds what angle the entity needs to be rotated from the base to be set to the correct direction
+                {
+                    newAngle = Angle.FromDegrees(angle);
+                    break;
+                }
+            }
+
+            Owner.Transform.LocalRotation = Angle.FromDegrees(0);
+            Owner.Transform.LocalRotation = newAngle;
+            PipeDirection = newDir;
             RefreshNodeGroup();
             UpdateAppearance();
+            AdjustingSprite = false;
         }
     }
 }

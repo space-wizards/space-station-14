@@ -20,9 +20,11 @@
           acts: ["Destruction"]
   - type: Sprite
     netsync: false
+  - type: Icon
     sprite: Constructible/Atmos/pipe.rsi
   - type: Appearance
     visuals:
+    - type: PipeVisualizer
     - type: PipeConnectorVisualizer
 
 #Note: The PipeDirection of the PipeNode should be the east-facing version, because the entity starts at an angle of 0 (east)
@@ -32,7 +34,7 @@
   id: PipeHalf
   suffix: Half
   components:
-  - type: Sprite
+  - type: Icon
     state: pipeHalf
   - type: NodeContainer
     nodes:
@@ -45,7 +47,7 @@
   id: PipeStraight
   suffix: Straight
   components:
-  - type: Sprite
+  - type: Icon
     state: pipeStraight
   - type: NodeContainer
     nodes:
@@ -58,7 +60,7 @@
   id: PipeBend
   suffix: Bend
   components:
-  - type: Sprite
+  - type: Icon
     state: pipeBend
   - type: NodeContainer
     nodes:
@@ -71,7 +73,7 @@
   id: PipeTJunction
   suffix: TJunction
   components:
-  - type: Sprite
+  - type: Icon
     state: pipeTJunction 
   - type: NodeContainer
     nodes:
@@ -84,7 +86,7 @@
   id: PipeFourway
   suffix: Fourway
   components:
-  - type: Sprite
+  - type: Icon
     state: pipeFourway 
   - type: NodeContainer
     nodes:
