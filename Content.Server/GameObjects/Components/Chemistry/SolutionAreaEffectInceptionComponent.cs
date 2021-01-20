@@ -5,14 +5,19 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Chemistry
 {
+    /// <summary>
+    /// The "mastermind" of a SolutionAreaEffect group. It gets updated by the SolutionAreaEffectSystem and tells the
+    /// group when to spread, react and remove itself. This makes the group act like a single unit.
+    /// </summary>
+    /// <remarks> It should only be manually added to an entity by the <see cref="SolutionAreaEffectComponent"/> and not with a prototype.</remarks>
     [RegisterComponent]
-    public class AreaEffectInceptionComponent : Component
+    public class SolutionAreaEffectInceptionComponent : Component
     {
         public override string Name => "AreaEffectInception";
 
         private const float ReactionDelay = 0.5f;
 
-        private readonly HashSet<AreaEffectComponent> _group = new();
+        private readonly HashSet<SolutionAreaEffectComponent> _group = new();
 
         [ViewVariables] private float _lifeTimer;
         [ViewVariables] private float _spreadTimer;
@@ -76,7 +81,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 {
                     _spreadTimer -= _spreadDelay;
 
-                    var outerEffects = new HashSet<AreaEffectComponent>(_group.Where(effect => effect.Amount == _amountCounterSpreading));
+                    var outerEffects = new HashSet<SolutionAreaEffectComponent>(_group.Where(effect => effect.Amount == _amountCounterSpreading));
                     foreach (var effect in outerEffects)
                     {
                         effect.Spread();
@@ -99,7 +104,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 {
                     _spreadTimer -= _removeDelay;
 
-                    var outerEffects = new HashSet<AreaEffectComponent>(_group.Where(effect => effect.Amount == _amountCounterRemoving));
+                    var outerEffects = new HashSet<SolutionAreaEffectComponent>(_group.Where(effect => effect.Amount == _amountCounterRemoving));
                     foreach (var effect in outerEffects)
                     {
                         effect.Kill();
@@ -121,13 +126,13 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
         }
 
-        public void Add(AreaEffectComponent effect)
+        public void Add(SolutionAreaEffectComponent effect)
         {
             _group.Add(effect);
             effect.Inception = this;
         }
 
-        public void Remove(AreaEffectComponent effect)
+        public void Remove(SolutionAreaEffectComponent effect)
         {
             _group.Remove(effect);
             effect.Inception = null;

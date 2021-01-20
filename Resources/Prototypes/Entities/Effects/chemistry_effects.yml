@@ -15,8 +15,7 @@
       sizeY: 32
     - type: SnapGrid
       offset: Center
-    - type: AreaEffect
-    - type: Smoke
+    - type: SmokeSolutionAreaEffect
     - type: SolutionContainer
       maxVol: 600
 
@@ -48,8 +47,7 @@
         bounds: "-0.4,-0.4,0.4,0.4"
         layer:
         - MobImpassable
-    - type: AreaEffect
-    - type: Foam
+    - type: FoamSolutionAreaEffect
     - type: SolutionContainer
       maxVol: 600
     - type: Slippery
@@ -70,7 +68,7 @@
         - type: FoamVisualizer
           animationTime: 0.6
           animationState: mfoam-dissolve
-    - type: Foam
+    - type: FoamSolutionAreaEffect
       foamedMetalPrototype: FoamedIronMetal
 
 - type: entity
@@ -89,7 +87,7 @@
         - type: FoamVisualizer
           animationTime: 0.6
           animationState: mfoam-dissolve
-    - type: Foam
+    - type: FoamSolutionAreaEffect
       foamedMetalPrototype: FoamedAluminiumMetal
 
 - type: entity

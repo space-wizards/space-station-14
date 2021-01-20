@@ -235,9 +235,8 @@ namespace Content.Client
             "SliceableFood",
             "DamageOtherOnHit",
             "DamageOnLand",
-            "Smoke",
-            "Foam",
-            "AreaEffect",
+            "SmokeSolutionAreaEffect",
+            "FoamSolutionAreaEffect",
             "GasFilter",
             "Recyclable"
         };

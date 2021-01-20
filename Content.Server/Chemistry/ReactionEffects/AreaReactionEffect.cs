@@ -18,7 +18,7 @@ namespace Content.Server.Chemistry.ReactionEffects
     /// Basically smoke and foam reactions.
     /// </summary>
     [UsedImplicitly]
-    public class AreaReactionEffect : IReactionEffect
+    public abstract class AreaReactionEffect : IReactionEffect
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
 
@@ -78,7 +78,7 @@ namespace Content.Server.Chemistry.ReactionEffects
         /// </summary>
         private string _sound;
 
-        public AreaReactionEffect()
+        protected AreaReactionEffect()
         {
             IoCManager.InjectDependencies(this);
         }
@@ -97,6 +97,9 @@ namespace Content.Server.Chemistry.ReactionEffects
             serializer.DataField(ref _removeDelay, "removeDelay", 0.5f);
             serializer.DataField(ref _sound, "sound", null);
             serializer.DataField(ref _prototypeId, "prototypeId", null);
+
+            if (_prototypeId == null)
+                Logger.Error("prototypeId wasn't provided to AreaReactionEffect, check yaml");
         }
 
         public void React(IEntity solutionEntity, double intensity)
@@ -134,31 +137,19 @@ namespace Content.Server.Chemistry.ReactionEffects
 
             var coords = grid.MapToGrid(solutionEntity.Transform.MapPosition);
             if (_prototypeId == null)
-            {
-                Logger.Error("prototypeId wasn't provided to AreaReactionEffect, check yaml");
                 return;
-            }
+
             var ent = solutionEntity.EntityManager.SpawnEntity(_prototypeId, coords.SnapToGrid());
 
-            if (!ent.TryGetComponent(out AreaEffectComponent areaEffectComponent))
+            var areaEffectComponent = GetAreaEffectComponent(ent);
+
+            if (areaEffectComponent == null)
             {
-                Logger.Error("Couldn't get AreaEffectComponent from " + _prototypeId);
                 ent.Delete();
                 return;
             }
-            if (ent.TryGetComponent(out SmokeComponent smokeComponent))
-            {
-                smokeComponent.TryAddSolution(solution);
-            }
-            else if (ent.TryGetComponent(out FoamComponent foamComponent))
-            {
-                foamComponent.TryAddSolution(solution);
-            }
-            else
-            {
-                Logger.Error("Couldn't get FoamComponent or SmokeComponent from " + _prototypeId);
-            }
 
+            areaEffectComponent.TryAddSolution(solution);
             areaEffectComponent.Start(amount, _duration, _spreadDelay, _removeDelay);
 
             if (!string.IsNullOrEmpty(_sound))
@@ -166,5 +157,7 @@ namespace Content.Server.Chemistry.ReactionEffects
                 EntitySystem.Get<AudioSystem>().PlayFromEntity(_sound, solutionEntity, AudioHelpers.WithVariation(0.125f));
             }
         }
+
+        protected abstract SolutionAreaEffectComponent GetAreaEffectComponent(IEntity entity);
     }
 }

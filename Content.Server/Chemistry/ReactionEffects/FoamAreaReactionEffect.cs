@@ -1,0 +1,15 @@
+﻿using Content.Server.GameObjects.Components.Chemistry;
+using JetBrains.Annotations;
+using Robust.Shared.Interfaces.GameObjects;
+
+namespace Content.Server.Chemistry.ReactionEffects
+{
+    [UsedImplicitly]
+    public class FoamAreaReactionEffect : AreaReactionEffect
+    {
+        protected override SolutionAreaEffectComponent GetAreaEffectComponent(IEntity entity)
+        {
+            return !entity.TryGetComponent(out FoamSolutionAreaEffectComponent comp) ? null : comp;
+        }
+    }
+}
