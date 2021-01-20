@@ -17,6 +17,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.ViewVariables;
 using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.Components.Singularity
 {
