@@ -237,6 +237,8 @@ namespace Content.Client
             "DamageOnLand",
             "GasFilter",
             "Recyclable",
+            "SecretStash",
+            "Toilet",
             "ClusterFlash"
         };
     }
