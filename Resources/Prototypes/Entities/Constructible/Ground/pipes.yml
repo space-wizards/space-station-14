@@ -21,6 +21,9 @@
   - type: Sprite
     netsync: false
     sprite: Constructible/Atmos/pipe.rsi
+  - type: Appearance
+    visuals:
+    - type: PipeConnectorVisualizer
 
 #Note: The PipeDirection of the PipeNode should be the east-facing version, because the entity starts at an angle of 0 (east)
 

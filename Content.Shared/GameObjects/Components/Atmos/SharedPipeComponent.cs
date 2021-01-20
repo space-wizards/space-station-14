@@ -15,9 +15,12 @@ namespace Content.Shared.GameObjects.Components.Atmos
     {
         public readonly PipeDirection PipeDirection;
 
-        public PipeVisualState(PipeDirection pipeDirection)
+        public readonly PipeDirection ConnectedDirections;
+
+        public PipeVisualState(PipeDirection pipeDirection, PipeDirection connectedDirections)
         {
             PipeDirection = pipeDirection;
+            ConnectedDirections = connectedDirections;
         }
     }
 

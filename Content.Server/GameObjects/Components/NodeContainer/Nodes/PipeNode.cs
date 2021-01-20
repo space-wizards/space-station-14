@@ -22,6 +22,12 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         public PipeDirection PipeDirection { get => _pipeDirection; set => SetPipeDirection(value); }
         private PipeDirection _pipeDirection;
 
+        /// <summary>
+        ///     The directions in which this node is connected to other nodes.
+        /// </summary>
+        [ViewVariables]
+        private PipeDirection ConnectedDirections { get; set; }
+
         [ViewVariables]
         private IPipeNet _pipeNet = PipeNet.NullNet;
 
@@ -131,7 +137,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         private void UpdateAppearance()
         {
-            _appearance?.SetData(PipeVisuals.VisualState, new PipeVisualState(PipeDirection));
+            _appearance?.SetData(PipeVisuals.VisualState, new PipeVisualState(PipeDirection, PipeDirection.Fourway));
         }
 
         private void SetPipeDirection(PipeDirection pipeDirection)
