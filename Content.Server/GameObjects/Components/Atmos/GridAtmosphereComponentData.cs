@@ -31,7 +31,11 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
         }
 
-        [CustomYamlField("Tiles")] private List<GridAtmosphereComponentData.IntermediateTileAtmosphere> TilesReceiver = new();
+        [CustomYamlField("Tiles")] private List<GridAtmosphereComponentData.IntermediateTileAtmosphere>? TilesReceiver
+        {
+            get;
+            set;
+        } = null;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -42,6 +46,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                     !serializer.TryReadDataField("tiles", out Dictionary<Vector2i, int>? tiles))
                     return;
 
+                TilesReceiver ??= new List<IntermediateTileAtmosphere>();
                 TilesReceiver.Clear();
 
                 foreach (var (indices, mix) in tiles!)
@@ -56,8 +61,10 @@ namespace Content.Server.GameObjects.Components.Atmos
                         throw;
                     }
                 }
+
+                if (TilesReceiver.Count == 0) TilesReceiver = null;
             }
-            else if (serializer.Writing)
+            else if (serializer.Writing && TilesReceiver != null)
             {
                 var uniqueMixes = new List<GasMixture>();
                 var uniqueMixHash = new Dictionary<GasMixture, int>();
