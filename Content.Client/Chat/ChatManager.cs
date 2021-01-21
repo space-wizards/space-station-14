@@ -132,11 +132,25 @@ namespace Content.Client.Chat
         public void PostInject()
         {
             _adminMgr.AdminStatusUpdated += UpdateChannelPermissions;
-            // TODO: Is it safe to assume we have a local player by the time we reach here? If not, add an event
-            // in playermanager to sub to when LocalPlayer is assigned. I think it should be okay because
-            // this happens in postinit and playermgr happens in init/preinit
-            _playerManager.LocalPlayer!.EntityAttached += OnLocalPlayerEntityAttached;
-            _playerManager.LocalPlayer!.EntityDetached += OnLocalPlayerEntityDetached;
+            _playerManager.LocalPlayerChanged += OnLocalPlayerChanged;
+            OnLocalPlayerChanged(new LocalPlayerChangedEventArgs(null, _playerManager.LocalPlayer));
+        }
+
+        private void OnLocalPlayerChanged(LocalPlayerChangedEventArgs obj)
+        {
+            if (obj.OldPlayer != null)
+            {
+                obj.OldPlayer.EntityAttached -= OnLocalPlayerEntityAttached;
+                obj.OldPlayer.EntityDetached -= OnLocalPlayerEntityDetached;
+            }
+
+            if (obj.NewPlayer != null)
+            {
+                obj.NewPlayer.EntityAttached += OnLocalPlayerEntityAttached;
+                obj.NewPlayer.EntityDetached += OnLocalPlayerEntityDetached;
+            }
+
+            UpdateChannelPermissions();
         }
 
         private void OnLocalPlayerEntityAttached(EntityAttachedEventArgs obj)
@@ -172,7 +186,7 @@ namespace Content.Client.Chat
 
             // Can only send local / radio / emote when attached to a non-ghost entity.
             // TODO: this logic seems kinda janky (checking if NOT controlling a ghost), is there a better way to check this?
-            if (!_playerManager?.LocalPlayer?.ControlledEntity?.HasComponent<GhostComponent>() ?? false)
+            if (!_playerManager.LocalPlayer?.ControlledEntity?.HasComponent<GhostComponent>() ?? false)
             {
                 _selectableChannels.Add(ChatChannel.Local);
                 _selectableChannels.Add(ChatChannel.Radio);
@@ -207,8 +221,8 @@ namespace Content.Client.Chat
             }
             else
             {
-                _selectableChannels.Add(ChatChannel.AdminChat);
-                _filterableChannels.Add(ChatChannel.AdminChat);
+                _selectableChannels.Remove(ChatChannel.AdminChat);
+                _filterableChannels.Remove(ChatChannel.AdminChat);
             }
 
             // let our chatbox know all the new settings
@@ -279,7 +293,7 @@ namespace Content.Client.Chat
                 _currentChatBox.TextSubmitted += OnChatBoxTextSubmitted;
                 _currentChatBox.FilterToggled += OnFilterButtonToggled;
 
-                _currentChatBox.SetChannelFilters(_channelFilters); ;
+                _currentChatBox.SetChannelPermissions(_selectableChannels, _filterableChannels, _channelFilters);
             }
 
             RepopulateChat(_filteredHistory);

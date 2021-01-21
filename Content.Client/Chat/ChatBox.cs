@@ -30,16 +30,20 @@ namespace Content.Client.Chat
 
         public event FilterToggledHandler? FilterToggled;
 
-        // TODO: Maybe don't expose so many of our controls if we don't really need to, makes this
-        // control a bit harder to understand
         public HistoryLineEdit Input { get; private set; }
         public OutputPanel Contents { get; }
 
-        // order in which the available channel filters show up
+        // order in which the available channel filters show up when available
         private static readonly IReadOnlyList<ChatChannel> ChannelFilterOrder = new List<ChatChannel>
         {
-            ChatChannel.Local, ChatChannel.Radio, ChatChannel.OOC, ChatChannel.Dead, ChatChannel.AdminChat,
+            ChatChannel.Local, ChatChannel.Emotes, ChatChannel.Radio, ChatChannel.OOC, ChatChannel.Dead, ChatChannel.AdminChat,
             ChatChannel.Server
+        };
+
+        // order in which the channels show up in the channel selector
+        private static readonly IReadOnlyList<ChatChannel> ChannelSelectorOrder = new List<ChatChannel>
+        {
+            ChatChannel.Local, ChatChannel.Emotes, ChatChannel.Radio, ChatChannel.OOC, ChatChannel.Dead, ChatChannel.AdminChat
         };
 
         private const float FilterPopupWidth = 110;
@@ -64,18 +68,14 @@ namespace Content.Client.Chat
         // prefix, we save the current channel selection here to restore it when
         // the message is sent
         private ChatChannel? _savedSelectedChannel;
-        private readonly IClientConGroupController _groupController;
         private readonly FilterButton _filterButton;
         private readonly Popup _filterPopup;
         private readonly PanelContainer _filterPopupPanel;
         private readonly VBoxContainer _filterVBox;
         private readonly IClientAdminManager _adminManager;
-        // TODO: Remove this
-        private bool _canDeadChat;
 
         public ChatBox()
         {
-            _groupController = IoCManager.Resolve<IClientConGroupController>();
             _adminManager = IoCManager.Resolve<IClientAdminManager>();
             MouseFilter = MouseFilterMode.Stop;
 
@@ -176,12 +176,8 @@ namespace Content.Client.Chat
             Input.OnTextEntered += Input_OnTextEntered;
             Input.OnTextChanged += InputOnTextChanged;
             Input.OnFocusExit += InputOnFocusExit;
-            // TODO: Rely on chatmanager instead to sub to this and keep us updated via a method call here
-            _groupController.ConGroupUpdated += RepopulateChannelSelector;
             _filterButton.OnToggled += FilterButtonToggled;
             _filterPopup.OnPopupHide += OnPopupHide;
-            RepopulateChannelFilter();
-            RepopulateChannelSelector();
         }
 
         protected override void ExitedTree()
@@ -192,7 +188,6 @@ namespace Content.Client.Chat
             Input.OnTextEntered -= Input_OnTextEntered;
             Input.OnTextChanged -= InputOnTextChanged;
             Input.OnFocusExit -= InputOnFocusExit;
-            _groupController.ConGroupUpdated -= RepopulateChannelSelector;
             _filterButton.OnToggled -= FilterButtonToggled;
             _filterPopup.OnPopupHide -= OnPopupHide;
             foreach (var child in _filterVBox.Children)
@@ -203,46 +198,75 @@ namespace Content.Client.Chat
 
         }
 
-        public void SetChannelPermissions(HashSet<ChatChannel> selectableChannels, HashSet<ChatChannel> filterableChannels,
-            Dictionary<ChatChannel, bool> channelFilters)
-        {
-            // TODO: Implement
-            // TODO: Make sure we are appropriatley calling OnFilterToggled callback
-            // if we need to here.
-
-            // make sure we preserve current settings if we have them
-            // and we properly respect enabledChannels vs filterableChannels (some channels
-            // may be enabled/disabled but not currently filterable and thus should be ommitted from UI)
-
-            throw new NotImplementedException();
-        }
-
         /// <summary>
-        /// Sets which filters are enabled / disabled. NOT the same as setting
-        /// what filters are ABLE to be enabled / disabled.
+        /// Update the available filters / selectable channels and the current filter settings using the provided
+        /// data.
         /// </summary>
-        public void SetChannelFilters(IReadOnlyDictionary<ChatChannel, bool> enabledChannels)
+        /// <param name="selectableChannels">channels currently selectable to send on</param>
+        /// <param name="filterableChannels">channels currently able ot filter on</param>
+        /// <param name="channelFilters">current settings for the channel filters, this SHOULD always have an entry if
+        /// there is a corresponding entry in filterableChannels, but it may also have additional
+        /// entries (which should not be presented to the user)</param>
+        public void SetChannelPermissions(IReadOnlySet<ChatChannel> selectableChannels, IReadOnlySet<ChatChannel> filterableChannels,
+            IReadOnlyDictionary<ChatChannel, bool> channelFilters)
         {
-            // TODO: Remove this method, use above one instead
+            // update the channel selector
+            var selected = (ChatChannel) _channelSelector.SelectedId;
+            _channelSelector.Clear();
+            foreach (var selectableChannel in ChannelSelectorOrder)
+            {
+                if (!selectableChannels.Contains(selectableChannel)) continue;
+                _channelSelector.AddItem(ChannelDisplayName(selectableChannel) , (int) selectableChannel);
+            }
+            // console channel is always selectable and represented via Unspecified
+            _channelSelector.AddItem("Console", (int) ChatChannel.Unspecified);
+
+
+            if (_savedSelectedChannel.HasValue && _savedSelectedChannel.Value != ChatChannel.Unspecified &&
+                !selectableChannels.Contains(_savedSelectedChannel.Value))
+            {
+                // we just lost our saved selected channel, the current one will become permanent
+                _savedSelectedChannel = null;
+            }
+
+            if (!selectableChannels.Contains(selected) && selected != ChatChannel.Unspecified)
+            {
+                // our previously selected channel no longer exists, default back to OOC, which should always be available
+                SafelySelectChannel(ChatChannel.OOC);
+            }
+            else
+            {
+                SafelySelectChannel(selected);
+            }
+
+            // update the channel filters
             _filterVBox.Children.Clear();
             _filterVBox.AddChild(new Control {CustomMinimumSize = (10, 0)});
             foreach (var channelFilter in ChannelFilterOrder)
             {
-                if (channelFilter == ChatChannel.AdminChat && !_adminManager.HasFlag(AdminFlags.Admin))
-                    continue;
-
-                if (channelFilter == ChatChannel.Dead && !_adminManager.HasFlag(AdminFlags.Admin)
-                    && !_canDeadChat)
-                    continue;
-
+                if (!filterableChannels.Contains(channelFilter)) continue;
                 var newCheckBox = new ChannelFilterCheckbox(channelFilter)
                 {
-                    Pressed = enabledChannels.TryGetValue(channelFilter, out var enabled) && enabled
+                    // shouldn't happen, but if there's no explicit enable setting provided, default to enabled
+                    Pressed = !channelFilters.TryGetValue(channelFilter, out var enabled) || enabled
                 };
                 newCheckBox.OnToggled += OnFilterCheckboxToggled;
                 _filterVBox.AddChild(newCheckBox);
             }
             _filterVBox.AddChild(new Control {CustomMinimumSize = (10, 0)});
+
+
+        }
+
+        private string ChannelDisplayName(ChatChannel channel)
+        {
+            return channel switch
+            {
+                ChatChannel.AdminChat => "Admin",
+                ChatChannel.Unspecified => throw new InvalidOperationException(
+                    "cannot create chat filter for Unspecified"),
+                _ => channel.ToString()
+            };
         }
 
         private void OnFilterCheckboxToggled(BaseButton.ButtonToggledEventArgs obj)
@@ -250,47 +274,6 @@ namespace Content.Client.Chat
             if (obj.Button is not ChannelFilterCheckbox checkbox) return;
             FilterToggled?.Invoke(checkbox.Channel, checkbox.Pressed);
         }
-
-        private void RepopulateChannelFilter()
-        {
-            var selectedChannels = new HashSet<ChatChannel>();
-            foreach (var child in _filterVBox.Children)
-            {
-                if (child is not ChannelFilterCheckbox checkbox) continue;
-                if (checkbox.Pressed) selectedChannels.Add(checkbox.Channel);
-            }
-
-            SetChannelFilters(selectedChannels);
-        }
-
-        private void RepopulateChannelSelector()
-        {
-            var selected = (ChatChannel) _channelSelector.SelectedId;
-            _channelSelector.Clear();
-            // TODO: possibly some of the channels should not be selectable, some of them should just change what the box says
-            // and not really be selectable since you'd never want to keep them selected
-            _channelSelector.AddItem("Local", (int) ChatChannel.Local);
-            _channelSelector.AddItem("Radio", (int) ChatChannel.Radio);
-            _channelSelector.AddItem("OOC", (int) ChatChannel.OOC);
-            // TODO: Dead chat, admins are allowed to see it regardless of status
-            if (_groupController.CanCommand("asay"))
-            {
-                _channelSelector.AddItem("Admin", (int) ChatChannel.AdminChat);
-            }
-            else
-            {
-                // downgrade our selection / saved channel if we lost asay privs
-                if (selected == ChatChannel.AdminChat) selected = ChatChannel.OOC;
-                if (_savedSelectedChannel == ChatChannel.AdminChat) _savedSelectedChannel = ChatChannel.OOC;
-            }
-            _channelSelector.AddItem("Emote", (int) ChatChannel.Emotes);
-            // technically it's not a chat channel, but it is still possible to send console commands via
-            // chatbox
-            _channelSelector.AddItem("Console", (int) ChatChannel.Unspecified);
-
-            SafelySelectChannel(selected);
-        }
-
 
         private void FilterButtonToggled(BaseButton.ButtonToggledEventArgs obj)
         {
@@ -324,7 +307,8 @@ namespace Content.Client.Chat
 
         /// <summary>
         /// Selects the indicated channel, clearing out any temporarily-selected channel
-        /// (any currently entered text is preserved).
+        /// (any currently entered text is preserved). If the specified channel is not selectable,
+        /// will just maintain current selection.
         /// </summary>
         public void SelectChannel(ChatChannel toSelect)
         {
@@ -332,25 +316,9 @@ namespace Content.Client.Chat
             SafelySelectChannel(toSelect);
         }
 
-        private void SafelySelectChannel(ChatChannel toSelect)
+        private bool SafelySelectChannel(ChatChannel toSelect)
         {
-            // in case we try to select admin chat when we can't, default to OOC.
-            if (toSelect == ChatChannel.AdminChat && !CanAdminChat())
-            {
-                toSelect = ChatChannel.OOC;
-            }
-
-            if (!_channelSelector.TrySelectId((int) toSelect))
-            {
-                Logger.Warning("coding error, tried to select chat channel not in the channel selector, defaulting to OOC: {0}",
-                    toSelect);
-                toSelect = ChatChannel.OOC;
-            };
-        }
-
-        private bool CanAdminChat()
-        {
-            return _groupController.CanCommand("asay");
+            return _channelSelector.TrySelectId((int) toSelect);
         }
 
         protected override void KeyBindDown(GUIBoundKeyEventArgs args)
@@ -395,14 +363,13 @@ namespace Content.Client.Chat
             if (trimmed.Length == 0 || trimmed.Length > 1) return;
 
             var channel = GetChannelFromPrefix(trimmed[0]);
-            if (channel == null) return;
+            if (channel == null || !SafelySelectChannel(channel.Value)) return;
+            // we ate the prefix and auto-switched (temporarily) to the channel with that prefix
             _savedSelectedChannel = SelectedChannel;
-            SafelySelectChannel(channel.Value);
-            // we "ate" the prefix
             Input.Text = "";
         }
 
-        private ChatChannel? GetChannelFromPrefix(char prefix)
+        private static ChatChannel? GetChannelFromPrefix(char prefix)
         {
             return prefix switch
             {
@@ -410,7 +377,7 @@ namespace Content.Client.Chat
                 ChatManager.RadioAlias => ChatChannel.Radio,
                 ChatManager.AdminChatAlias => ChatChannel.AdminChat,
                 ChatManager.OOCAlias => ChatChannel.OOC,
-                ChatManager.ConCmdSlash => _groupController.CanCommand("asay") ? ChatChannel.Unspecified : null,
+                ChatManager.ConCmdSlash => ChatChannel.Unspecified,
                 _ => null
             };
         }
@@ -450,7 +417,6 @@ namespace Content.Client.Chat
             formatted.Pop();
             Contents.AddMessage(formatted);
         }
-
 
         private void InputOnFocusExit(LineEdit.LineEditEventArgs obj)
         {
