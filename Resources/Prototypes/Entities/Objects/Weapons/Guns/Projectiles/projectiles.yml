@@ -16,7 +16,7 @@
     edgeslide: false
     fixtures:
     - shape:
-        !type:PhysShapeAabb:
+        !type:PhysShapeAabb
           bounds: "-0.1,-0.1,0.1,0.1"
       hard: false
       layer: [Clickable]

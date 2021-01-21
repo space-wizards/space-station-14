@@ -11,7 +11,8 @@
       - shape:
           !type:PhysShapeAabb
             bounds: "-0.5, -0.5, 0.5, 0.5"
-        layer: [ Underplating ]
+        layer:
+        - Underplating
   - type: InteractionOutline
   - type: SnapGrid
     offset: Center
@@ -154,8 +155,8 @@
     drawdepth: BelowFloor
   - type: IconSmooth
     mode: CardinalFlags
-  - type: SubFloorHide 
-  
+  - type: SubFloorHide
+
 - type: entity
   abstract: true
   parent: BaseDummyWire
@@ -168,7 +169,7 @@
   - type: IconSmooth
     base: hvcable_
     key: hv_cables
-    
+
 - type: entity
   abstract: true
   parent: BaseDummyWire
@@ -182,7 +183,7 @@
   - type: IconSmooth
     base: mvcable_
     key: mv_cables
-    
+
 - type: entity
   abstract: true
   parent: BaseDummyWire
