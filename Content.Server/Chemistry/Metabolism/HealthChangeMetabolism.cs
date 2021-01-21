@@ -11,7 +11,7 @@ namespace Content.Server.Chemistry.Metabolism
 {
     /// <summary>
     /// Default metabolism for medicine reagents. Attempts to find a DamegableComponent on the target,
-    /// and to update it's damage values.
+    /// and to update its damage values.
     /// </summary>
     class HealthChangeMetabolism : IMetabolizable
     {
