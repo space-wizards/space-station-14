@@ -14,7 +14,7 @@
 - type: entity
   parent: GasGeneratorBase
   id: GasGenerator
-  name: Gas Generator
+  name: gas generator
   description: Fabricates gas.
   components:
   - type: Sprite
