@@ -1,4 +1,6 @@
+#nullable enable
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.Interfaces;
@@ -12,8 +14,6 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 {
-    //TODO: Make ConnectedDirections set properly
-
     /// <summary>
     ///     Connects with other <see cref="PipeNode"/>s whose <see cref="PipeNode.PipeDirection"/>
     ///     correctly correspond.
@@ -62,12 +62,12 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         ///     Only for usage by <see cref="IPipeNet"/>s.
         /// </summary>
         [ViewVariables]
-        public GasMixture LocalAir { get; set; }
+        public GasMixture LocalAir { get; set; } = default!;
 
         [ViewVariables]
         public float Volume => LocalAir.Volume;
 
-        private AppearanceComponent _appearance;
+        private AppearanceComponent? _appearance;
 
         private const float DefaultVolume = 1;
 
@@ -112,38 +112,74 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         {
             for (var i = 0; i < PipeDirectionHelpers.PipeDirections; i++)
             {
-                var pipeDirection = (PipeDirection) (1 << i);
+                var pipeDir = (PipeDirection) (1 << i);
 
-                var ownNeededConnection = pipeDirection;
-                var theirNeededConnection = ownNeededConnection.GetOpposite();
-                if (!PipeDirection.HasDirection(ownNeededConnection))
-                {
+                if (!PipeDirection.HasDirection(pipeDir))
                     continue;
-                }
 
-                var pipeNodesInDirection = new List<PipeNode>();
+                foreach (var pipe in LinkableNodesInDirection(pipeDir))
+                    yield return pipe;
+            }
+        }
 
-                var entities = Owner.GetComponent<SnapGridComponent>()
-                    .GetInDir(pipeDirection.ToDirection());
+        private IEnumerable<PipeNode> LinkableNodesInDirection(PipeDirection pipeDir)
+        {
+            foreach (var pipe in PipesInDirection(pipeDir))
+            {
+                if (pipe.PipeDirection.HasDirection(pipeDir.GetOpposite()))
+                    yield return pipe;
+            }
+        }
 
-                foreach (var entity in entities)
+        private IEnumerable<PipeNode> PipesInDirection(PipeDirection pipeDir)
+        {
+            var entities = Owner.GetComponent<SnapGridComponent>()
+                .GetInDir(pipeDir.ToDirection());
+
+            foreach (var entity in entities)
+            {
+                if (!entity.TryGetComponent<NodeContainerComponent>(out var container))
+                    continue;
+
+                foreach (var node in container.Nodes)
                 {
-                    if (entity.TryGetComponent<NodeContainerComponent>(out var container))
+                    if (node is PipeNode pipe)
+                        yield return pipe;
+                }
+            }
+        }
+
+        private void OnConnectedDirectionsNeedsUpdating()
+        {
+            UpdateConnectedDirections();
+            UpdateAdjacentConnectedDirections();
+        }
+
+        private void UpdateConnectedDirections()
+        {
+            ConnectedDirections = PipeDirection.None;
+            for (var i = 0; i < PipeDirectionHelpers.PipeDirections; i++)
+            {
+                var pipeDir = (PipeDirection) (1 << i);
+                foreach (var pipe in LinkableNodesInDirection(pipeDir))
+                {
+                    if (pipe.Connectable && pipe.NodeGroupID == NodeGroupID)
                     {
-                        foreach (var node in container.Nodes)
-                        {
-                            if (node is PipeNode pipeNode && pipeNode.PipeDirection.HasDirection(theirNeededConnection))
-                            {
-                                pipeNodesInDirection.Add(pipeNode);
-                            }
-                        }
+                        ConnectedDirections |= pipeDir;
+                        break;
                     }
                 }
+            }
+            UpdateAppearance();
+        }
 
-                foreach (var pipeNode in pipeNodesInDirection)
-                {
-                    yield return pipeNode;
-                }
+        private void UpdateAdjacentConnectedDirections()
+        {
+            for (var i = 0; i < PipeDirectionHelpers.PipeDirections; i++)
+            {
+                var pipeDir = (PipeDirection) (1 << i);
+                foreach (var pipe in LinkableNodesInDirection(pipeDir))
+                    pipe.UpdateConnectedDirections();
             }
         }
 

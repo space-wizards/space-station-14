@@ -37,7 +37,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         /// <summary>
         ///     If this node should be considered for connection by other nodes.
         /// </summary>
-        private bool Connectable => !_deleting && Anchored;
+        public bool Connectable => !_deleting && Anchored;
 
         private bool Anchored => !Owner.TryGetComponent<IPhysicsComponent>(out var physics) || physics.Anchored;
 
