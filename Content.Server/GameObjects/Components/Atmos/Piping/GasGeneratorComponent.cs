@@ -11,6 +11,9 @@ using System.Linq;
 
 namespace Content.Server.GameObjects.Components.Atmos.Piping
 {
+    /// <summary>
+    ///     Generates gas in the attached pipe.
+    /// </summary>
     [RegisterComponent]
     public class GasGeneratorComponent : Component
     {
