@@ -13,7 +13,6 @@
       },
       {
          "name":"ventOn",
-         "directions":1,
          "delays":[ [ 0.08, 0.08, 0.08, 0.08 ] ]
       }
    ]

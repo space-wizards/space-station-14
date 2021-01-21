@@ -21,7 +21,6 @@
       },
       {
          "name":"pipeFourway",
-         "directions":1
       },
       {
          "name":"pipeStraight",
@@ -29,19 +28,15 @@
       },
       {
          "name":"pipeConnectorSouth",
-         "directions":1
       },
       {
          "name":"pipeConnectorNorth",
-         "directions":1
       },
       {
          "name":"pipeConnectorEast",
-         "directions":1
       },
       {
          "name":"pipeConnectorWest",
-         "directions":1
       }
    ]
 }
