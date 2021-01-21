@@ -17,19 +17,23 @@
         behaviors:
         - !type:DoActsBehavior
           acts: ["Destruction"]
-
+  - type: Sprite
+    netsync: false
+    sprite: Constructible/Atmos/gasfilter.rsi
+    layers:
+    - sprite: Constructible/Atmos/pipe.rsi
+      state: pipeTJunction
+    - state: gasFilter
+  - type: Appearance
+    visuals:
+    - type: GasFilterVisualizer
+    
 - type: entity
   parent: GasFilterBase
   id: GasFilter
   name: Gas Filter
   description: It filters gases.
   components:
-  - type: Sprite
-    sprite: Constructible/Atmos/gasfilter.rsi
-    state: gasFilter
-  - type: Icon
-    sprite: Constructible/Atmos/gasfilter.rsi
-    state: gasFilter
   - type: NodeContainer
     nodes:
     - !type:PipeNode
@@ -45,7 +49,3 @@
     inletDirection: South
     filterOutletDirection: East
     outletDirection: North 
-  - type: Appearance
-    visuals:
-    - type: GasFilterVisualizer
-      filerEnabledState: gasFilterOn

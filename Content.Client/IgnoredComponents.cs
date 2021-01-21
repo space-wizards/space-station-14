@@ -236,7 +236,10 @@ namespace Content.Client
             "DamageOtherOnHit",
             "DamageOnLand",
             "GasFilter",
-            "Recyclable"
+            "Recyclable",
+            "SecretStash",
+            "Toilet",
+            "ClusterFlash"
         };
     }
 }
