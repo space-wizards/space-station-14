@@ -13,7 +13,7 @@
    version="1.1"
    id="svg8"
    inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
-   sodipodi:docname="item_status_left.svg"
+   sodipodi:docname="item_status_middle.svg"
    inkscape:export-filename="C:\ss14\space-station-14\Resources\Textures\Interface\Nano\item_status_left.svg.96dpi.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96">
@@ -26,9 +26,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="45.254834"
-     inkscape:cx="2.2968017"
-     inkscape:cy="9.7979333"
+     inkscape:zoom="256"
+     inkscape:cx="0.27981532"
+     inkscape:cy="1.9876937"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -92,9 +92,9 @@
     <path
        id="rect815-9"
        style="opacity:1;vector-effect:none;fill:#24242b;fill-opacity:0.95;fill-rule:nonzero;stroke:#3a4051;stroke-width:0.449792;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       d="m 26.373445,212.94994 h 3.704167 0.753402 v -1.5875 l -2.870068,-2.64583 h -0.748275 -0.839226"
+       d="m 26.598004,212.94994 h 3.479608 0.753402 v -1.5875 l -2.870068,-2.64583 h -0.748275 -0.614667 z"
        inkscape:export-xdpi="96.000008"
        inkscape:export-ydpi="96.000008"
-       sodipodi:nodetypes="ccccccc" />
+       sodipodi:nodetypes="cccccccc" />
   </g>
 </svg>

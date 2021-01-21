@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Content.Client.GameObjects.Components.Items;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Input;
@@ -20,8 +21,6 @@ namespace Content.Client.UserInterface
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
-
-        private readonly TextureRect _activeHandRect;
 
         private readonly Texture _leftHandTexture;
         private readonly Texture _middleHandTexture;
@@ -52,24 +51,14 @@ namespace Content.Client.UserInterface
                         Children =
                         {
                             (_topPanel = ItemStatusPanel.FromSide(HandLocation.Middle)),
-                            (_handsContainer = new HBoxContainer {SeparationOverride = 0})
+                            (_handsContainer = new HBoxContainer())
                         }
                     }),
                     (_leftPanel = ItemStatusPanel.FromSide(HandLocation.Left))
                 }
             });
-
-            var textureHandActive = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_active.png");
-
-            // Active hand
-            _activeHandRect = new TextureRect
-            {
-                Texture = textureHandActive,
-                TextureScale = (2, 2)
-            };
-
             _leftHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.png");
-            _middleHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_middle.png");
+            _middleHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.png");
             _rightHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_r.png");
         }
 
@@ -119,13 +108,6 @@ namespace Content.Client.UserInterface
             button.OnStoragePressed += args => _OnStoragePressed(args, slot);
 
             _handsContainer.AddChild(button);
-
-            if (_activeHandRect.Parent == null)
-            {
-                button.AddChild(_activeHandRect);
-                _activeHandRect.SetPositionInParent(1);
-            }
-
             hand.Button = button;
         }
 
@@ -135,11 +117,6 @@ namespace Content.Client.UserInterface
 
             if (button != null)
             {
-                if (button.Children.Contains(_activeHandRect))
-                {
-                    button.RemoveChild(_activeHandRect);
-                }
-
                 _handsContainer.RemoveChild(button);
             }
         }
@@ -186,14 +163,8 @@ namespace Content.Client.UserInterface
                 hand.Button!.Button.Texture = HandTexture(hand.Location);
                 hand.Button!.SetPositionInParent(i);
                 _itemSlotManager.SetItemSlot(hand.Button, hand.Entity);
-            }
 
-            _activeHandRect.Parent?.RemoveChild(_activeHandRect);
-            component.GetHand(component.ActiveIndex)?.Button?.AddChild(_activeHandRect);
-
-            if (hands.Length > 0)
-            {
-                _activeHandRect.SetPositionInParent(1);
+                hand.Button!.SetActiveHand(component.ActiveIndex == hand.Name);
             }
 
             _leftPanel.SetPositionFirst();
