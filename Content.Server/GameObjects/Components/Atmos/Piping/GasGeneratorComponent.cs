@@ -82,7 +82,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
             Pipe = container.Nodes.OfType<PipeNode>().FirstOrDefault();
             if (Pipe == null)
             {
-                Logger.Error($"{typeof(GasGeneratorComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
+                Logger.Error($"{nameof(GasGeneratorComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
                 return;
             }
         }
