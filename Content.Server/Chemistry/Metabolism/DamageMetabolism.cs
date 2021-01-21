@@ -13,7 +13,7 @@ namespace Content.Server.Chemistry.Metabolism
     /// Default metabolism for medicine reagents. Attempts to find a DamegableComponent on the target,
     /// and to update its damage values.
     /// </summary>
-    class HealthChangeMetabolism : IMetabolizable
+    public class DamageMetabolism : IMetabolizable
     {
         //Rate of metabolism in units / second
         private ReagentUnit _metabolismRate;
@@ -22,8 +22,8 @@ namespace Content.Server.Chemistry.Metabolism
 
         //How much damage is changed when 1u of the reagent is metabolized
         private float _healthChangePerSec;
-        private DamageClass _healthChangeType;
-        private DamageClass HealthChangeType => _healthChangeType;
+        private damageClass _healthChangeType;
+        private damageClass HealthChangeType => _healthChangeType;
         public float HealthChangePerSec => _healthChangePerSec;
 
         void IExposeData.ExposeData(ObjectSerializer serializer)
@@ -37,11 +37,9 @@ namespace Content.Server.Chemistry.Metabolism
         ReagentUnit IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime)
         {
             var metabolismAmount = MetabolismRate * tickTime;
-
             if (solutionEntity.TryGetComponent(out DamageableComponent health))
-
                 health.ChangeDamage(HealthChangeType, (int) (metabolismAmount.Float() * HealthChangePerSec), true);
-
+                
             return metabolismAmount;
         }
     }
