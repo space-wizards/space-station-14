@@ -9,7 +9,6 @@
    "states":[
       {
          "name":"scrubOff",
-         "directions":4
       },
       {
          "name":"scrubOn",
