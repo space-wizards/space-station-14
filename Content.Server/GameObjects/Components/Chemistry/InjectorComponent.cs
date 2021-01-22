@@ -251,7 +251,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             targetSolution.TryAddSolution(removedSolution);
 
-            Owner.PopupMessage(user, Loc.GetString("You transfter {0}u to {1:theName}", removedSolution.TotalVolume, targetSolution.Owner));
+            Owner.PopupMessage(user, Loc.GetString("You transfer {0}u to {1:theName}", removedSolution.TotalVolume, targetSolution.Owner));
             Dirty();
         }
 
