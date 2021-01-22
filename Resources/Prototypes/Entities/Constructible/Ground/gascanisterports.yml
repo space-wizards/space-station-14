@@ -16,6 +16,9 @@
     - sprite: Constructible/Atmos/pipe.rsi
       state: pipeHalf
     - state: gasCanisterPort
+  - type: Appearance
+    visuals:
+    - type: PipeConnectorVisualizer
   - type: Damageable
   - type: Destructible
     thresholds:

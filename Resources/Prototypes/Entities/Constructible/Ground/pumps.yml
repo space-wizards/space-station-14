@@ -26,6 +26,7 @@
     - state: pumpPressure
   - type: Appearance
     visuals:
+    - type: PipeConnectorVisualizer
     - type: PumpVisualizer
 
 - type: entity
