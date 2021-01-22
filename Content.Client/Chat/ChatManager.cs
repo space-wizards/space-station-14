@@ -427,12 +427,12 @@ namespace Content.Client.Chat
             if (enabled)
             {
                 _channelFilters[channel] = true;
-                _filteredChannels |= channel;
+                _filteredChannels &= ~channel;
             }
             else
             {
                 _channelFilters[channel] = false;
-                _filteredChannels &= ~channel;
+                _filteredChannels |= channel;
             }
 
             RepopulateChat(_filteredHistory);

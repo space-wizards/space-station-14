@@ -363,9 +363,10 @@ namespace Content.Client.Chat
             if (trimmed.Length == 0 || trimmed.Length > 1) return;
 
             var channel = GetChannelFromPrefix(trimmed[0]);
+            var prevChannel = SelectedChannel;
             if (channel == null || !SafelySelectChannel(channel.Value)) return;
             // we ate the prefix and auto-switched (temporarily) to the channel with that prefix
-            _savedSelectedChannel = SelectedChannel;
+            _savedSelectedChannel = prevChannel;
             Input.Text = "";
         }
 
