@@ -38,7 +38,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         ///     Used by <see cref="PipeVisualState"/>.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        private PipeDirection ConnectedDirections { get => _connectedDirections; set { _connectedDirections = value; UpdateAppearance(); } }
+        private PipeDirection ConnectedDirections { get => _connectedDirections; set { _connectedDirections = value; UpdateAppearance(); } } //TODO: fix bugs with this not getting set correctly
         private PipeDirection _connectedDirections;
 
         /// <summary>
@@ -264,18 +264,21 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
             var newAngle = Angle.FromDegrees(0);
 
-            for (double angle = 0; angle <= 270; angle += 90)  //iterate through angles of cardinal 
+            for (var i = 0; i < PipeDirectionHelpers.PipeDirections; i++)
             {
-                if (baseDir.RotatePipeDirection(Angle.FromDegrees(angle)) == newDir) //finds what angle the entity needs to be rotated from the base to be set to the correct direction
+                var pipeDir = (PipeDirection) (1 << i);
+                var angle = pipeDir.ToAngle();
+                if (baseDir.RotatePipeDirection(angle) == newDir) //finds what angle the entity needs to be rotated from the base to be set to the correct direction
                 {
-                    newAngle = Angle.FromDegrees(angle);
+                    newAngle = angle;
                     break;
                 }
             }
 
-            Owner.Transform.LocalRotation = Angle.FromDegrees(0);
+            Owner.Transform.LocalRotation = Angle.Zero;
             Owner.Transform.LocalRotation = newAngle;
             PipeDirection = newDir;
+
             RefreshNodeGroup();
             OnConnectedDirectionsNeedsUpdating();
             UpdateAppearance();
