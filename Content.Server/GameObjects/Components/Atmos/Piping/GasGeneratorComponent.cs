@@ -19,9 +19,15 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
     {
         public override string Name => "GasGenerator";
 
+        /// <summary>
+        ///     If the generator is producing gas.
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public bool GeneratorEnabled { get; set; }
 
+        /// <summary>
+        ///     What gas is being generated.
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public Gas GeneratedGas { get; set; }
 
@@ -31,9 +37,15 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         [ViewVariables(VVAccess.ReadWrite)]
         public float GasGenerationRate { get; set; }
 
+        /// <summary>
+        ///     The pipe pressure above which the generator stops producing gas.
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public float GeneratorPressureCap { get; set; }
 
+        /// <summary>
+        ///     The pipe to which generated gas is added.
+        /// </summary>
         [ViewVariables]
         private PipeNode? Pipe { get; set; }
 
