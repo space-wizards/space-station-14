@@ -108,7 +108,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         public override void OnContainerRemove()
         {
             base.OnContainerRemove();
-            OnConnectedDirectionsNeedsUpdating();
+            UpdateAdjacentConnectedDirections();
         }
 
         public void JoinPipeNet(IPipeNet pipeNet)
@@ -219,7 +219,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         }
 
         /// <summary>
-        ///     Calls <see cref="UpdateConnectedDirections"/> all adjacent pipes.
+        ///     Calls <see cref="UpdateConnectedDirections"/> on all adjacent pipes,
+        ///     to update their <see cref="ConnectedDirections"/> when this pipe is changed.
         /// </summary>
         private void UpdateAdjacentConnectedDirections()
         {
@@ -231,9 +232,25 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             }
         }
 
+        /// <summary>
+        ///     Updates the <see cref="AppearanceComponent"/>.
+        ///     Gets the combined <see cref="ConnectedDirections"/> of every pipe on this entity, so the visualizer on this entity can draw the pipe connections.
+        /// </summary>
         private void UpdateAppearance()
         {
-            _appearance?.SetData(PipeVisuals.VisualState, new PipeVisualState(PipeDirection.PipeDirectionToPipeShape(), ConnectedDirections));
+            var netConnectedDirections = PipeDirection.None;
+            if (Owner.TryGetComponent<NodeContainerComponent>(out var container))
+            {
+                foreach (var node in container.Nodes)
+                {
+                    if (node is PipeNode pipe)
+                    {
+                        netConnectedDirections |= pipe.ConnectedDirections;
+                    }
+                }
+            }
+
+            _appearance?.SetData(PipeVisuals.VisualState, new PipeVisualState(PipeDirection.PipeDirectionToPipeShape(), netConnectedDirections));
         }
 
         /// <summary>
