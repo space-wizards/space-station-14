@@ -66,7 +66,6 @@ namespace Content.Client.Chat
 
         private readonly List<StoredChatMessage> _filteredHistory = new();
 
-        // TODO: Maybe wrap all this stuff up into a class, it's making this class a bit large
         // currently enabled channel filters set by the user. If an entry is not in this
         // list it has not been explicitly set yet, thus will default to enabled when it first
         // becomes filterable (added to _filterableChannels)
@@ -163,15 +162,11 @@ namespace Content.Client.Chat
             UpdateChannelPermissions();
         }
 
+        // go through all of the various channels and update filter / select permissions
+        // appropriately, also enabling them if our enabledChannels dict doesn't have an entry
+        // for any newly-granted channels
         private void UpdateChannelPermissions()
         {
-            // we go through all of the various channels and update filter / select permissions
-            // appropriately, also enabling them if our enabledChannels dict doesn't have an entry
-            // for any newly-granted channels
-
-            // TODO: Maybe wrap all this state up in a class, it's kinda making the ChatManager a bit large and
-            // this method is a bit easy to mess up
-
             // can always send/recieve OOC
             _selectableChannels.Add(ChatChannel.OOC);
             AddFilterableChannel(ChatChannel.OOC);
@@ -185,7 +180,7 @@ namespace Content.Client.Chat
             AddFilterableChannel(ChatChannel.Emotes);
 
             // Can only send local / radio / emote when attached to a non-ghost entity.
-            // TODO: this logic seems kinda janky (checking if NOT controlling a ghost), is there a better way to check this?
+            // TODO: this logic is iffy (checking if controlling something that's NOT a ghost), is there a better way to check this?
             if (!_playerManager.LocalPlayer?.ControlledEntity?.HasComponent<GhostComponent>() ?? false)
             {
                 _selectableChannels.Add(ChatChannel.Local);
