@@ -59,7 +59,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             _nodeGroupFactory = IoCManager.Resolve<INodeGroupFactory>();
         }
 
-        public void OnContainerStartup()
+        public virtual void OnContainerStartup()
         {
             TryAssignGroupIfNeeded();
             CombineGroupWithReachable();

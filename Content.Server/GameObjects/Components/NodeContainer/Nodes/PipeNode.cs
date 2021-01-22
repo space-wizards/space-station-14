@@ -38,7 +38,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         ///     Used by <see cref="PipeVisualState"/>.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        private PipeDirection ConnectedDirections { get => _connectedDirections; set { _connectedDirections = value; UpdateAppearance(); } } //TODO: fix bugs with this not getting set correctly
+        private PipeDirection ConnectedDirections { get => _connectedDirections; set { _connectedDirections = value; UpdateAppearance(); } }
         private PipeDirection _connectedDirections;
 
         /// <summary>
@@ -101,8 +101,13 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         {
             base.Initialize(owner);
             Owner.TryGetComponent(out _appearance);
-            UpdateAppearance();
+        }
+
+        public override void OnContainerStartup()
+        {
+            base.OnContainerStartup();
             OnConnectedDirectionsNeedsUpdating();
+            UpdateAppearance();
         }
 
         public override void OnContainerRemove()
