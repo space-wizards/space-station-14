@@ -86,7 +86,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             }
         }
 
-        public void OnContainerRemove()
+        public virtual void OnContainerRemove()
         {
             _deleting = true;
             NodeGroup.RemoveNode(this);

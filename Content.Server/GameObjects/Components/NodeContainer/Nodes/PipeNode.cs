@@ -1,6 +1,5 @@
 #nullable enable
 using System.Collections.Generic;
-using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.Interfaces;
@@ -15,31 +14,51 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 {
     /// <summary>
-    ///     Connects with other <see cref="PipeNode"/>s whose <see cref="PipeNode.PipeDirection"/>
+    ///     Connects with other <see cref="PipeNode"/>s whose <see cref="PipeDirection"/>
     ///     correctly correspond.
     /// </summary>
     public class PipeNode : Node, IGasMixtureHolder, IRotatableNode
     {
+        /// <summary>
+        ///     Modifies the <see cref="PipeDirection"/> of this pipe, and ensures the sprite is correctly rotated.
+        ///     This is a property for the sake of calling the method via ViewVariables.
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public PipeDirection SetPipeDirectionAndSprite { get => PipeDirection; set => AdjustPipeDirectionAndSprite(value); }
 
+        /// <summary>
+        ///     The directions in which this pipe can connect to other pipes around it.
+        ///     Used to check if this pipe can connect to another pipe in a given direction.
+        /// </summary>
         [ViewVariables]
         public PipeDirection PipeDirection { get; private set; }
 
         /// <summary>
         ///     The directions in which this node is connected to other nodes.
+        ///     Used by <see cref="PipeVisualState"/>.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         private PipeDirection ConnectedDirections { get => _connectedDirections; set { _connectedDirections = value; UpdateAppearance(); } }
         private PipeDirection _connectedDirections;
 
+        /// <summary>
+        ///     The <see cref="IPipeNet"/> this pipe is a part of. Set to <see cref="PipeNet.NullNet"/> when not in an <see cref="IPipeNet"/>.
+        /// </summary>
         [ViewVariables]
         private IPipeNet _pipeNet = PipeNet.NullNet;
 
+        /// <summary>
+        ///     If <see cref="_pipeNet"/> is set to <see cref="PipeNet.NullNet"/>.
+        ///     When true, this pipe may be storing gas in <see cref="LocalAir"/>.
+        /// </summary>
         [ViewVariables]
         private bool _needsPipeNet = true;
 
-        private bool AdjustingSprite { get; set; }
+        /// <summary>
+        ///     Prevents rotation events from re-calculating the <see cref="IPipeNet"/>.
+        ///     Used while rotating the sprite to the correct orientation while not affecting the pipe.
+        /// </summary>
+        private bool IgnoreRotation { get; set; }
 
         /// <summary>
         ///     The gases in this pipe.
@@ -83,6 +102,13 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             base.Initialize(owner);
             Owner.TryGetComponent(out _appearance);
             UpdateAppearance();
+            OnConnectedDirectionsNeedsUpdating();
+        }
+
+        public override void OnContainerRemove()
+        {
+            base.OnContainerRemove();
+            OnConnectedDirectionsNeedsUpdating();
         }
 
         public void JoinPipeNet(IPipeNet pipeNet)
@@ -97,14 +123,18 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             _needsPipeNet = true;
         }
 
+        /// <summary>
+        ///     Rotates the <see cref="PipeDirection"/> when the entity is rotated, and re-calculates the <see cref="IPipeNet"/>.
+        /// </summary>
         void IRotatableNode.RotateEvent(RotateEvent ev)
         {
-            if (AdjustingSprite)
+            if (IgnoreRotation)
                 return;
 
             var diff = ev.NewRotation - ev.OldRotation;
             PipeDirection = PipeDirection.RotatePipeDirection(diff);
             RefreshNodeGroup();
+            OnConnectedDirectionsNeedsUpdating();
             UpdateAppearance();
         }
 
@@ -122,6 +152,9 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             }
         }
 
+        /// <summary>
+        ///     Gets the pipes that can connect to us from entities on the tile adjacent in a direction.
+        /// </summary>
         private IEnumerable<PipeNode> LinkableNodesInDirection(PipeDirection pipeDir)
         {
             foreach (var pipe in PipesInDirection(pipeDir))
@@ -131,6 +164,9 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             }
         }
 
+        /// <summary>
+        ///     Gets the pipes from entities on the tile adjacent in a direction.
+        /// </summary>
         private IEnumerable<PipeNode> PipesInDirection(PipeDirection pipeDir)
         {
             var entities = Owner.GetComponent<SnapGridComponent>()
@@ -149,12 +185,18 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             }
         }
 
+        /// <summary>
+        ///     Updates the <see cref="ConnectedDirections"/> of this and all sorrounding pipes.
+        /// </summary>
         private void OnConnectedDirectionsNeedsUpdating()
         {
             UpdateConnectedDirections();
             UpdateAdjacentConnectedDirections();
         }
 
+        /// <summary>
+        ///     Checks what directions there are connectable pipes in, to update <see cref="ConnectedDirections"/>.
+        /// </summary>
         private void UpdateConnectedDirections()
         {
             ConnectedDirections = PipeDirection.None;
@@ -170,9 +212,11 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
                     }
                 }
             }
-            UpdateAppearance();
         }
 
+        /// <summary>
+        ///     Calls <see cref="UpdateConnectedDirections"/> on surrounding pipes.
+        /// </summary>
         private void UpdateAdjacentConnectedDirections()
         {
             for (var i = 0; i < PipeDirectionHelpers.PipeDirections; i++)
@@ -193,7 +237,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         /// </summary>
         public void AdjustPipeDirectionAndSprite(PipeDirection newDir)
         {
-            AdjustingSprite = true;
+            IgnoreRotation = true;
 
             var baseDir = newDir.PipeDirectionToPipeShape().ToBaseDirection();
 
@@ -212,8 +256,9 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             Owner.Transform.LocalRotation = newAngle;
             PipeDirection = newDir;
             RefreshNodeGroup();
+            OnConnectedDirectionsNeedsUpdating();
             UpdateAppearance();
-            AdjustingSprite = false;
+            IgnoreRotation = false;
         }
     }
 }
