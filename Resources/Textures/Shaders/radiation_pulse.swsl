@@ -1,0 +1,31 @@
+const highp float brightness = 2.0;
+const highp float PI = 3.1415926535;
+const highp vec4 unit = vec4(1.0);
+const highp vec4 zero = vec4(0.0);
+void fragment() {
+	if (distance(UV,vec2(0.5)) > 0.5) 
+	{
+		COLOR = vec4(0.0);
+	}
+	else 
+	{
+		highp float z = TIME;
+		highp vec2 uv = UV.xy;
+		highp vec2 p = uv;
+		p -= 0.5;
+		highp float l = length(p);
+		
+		highp float B = mod(z - l, PI * 2.0);
+		uv *= sin(B * B);
+		
+		highp vec4 c = unit - vec4((length(uv - 5.0))) * l;
+		c = mix(zero, c, brightness);
+		c.g = max(c.r, max(c.b, c.g)) * 2.0;
+
+		if (c.g < l) {
+			discard;
+		}
+
+		COLOR = vec4(c);
+	}
+}

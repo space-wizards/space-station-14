@@ -1,4 +1,3 @@
-using System;
 using Content.Shared.GameObjects.Components;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
@@ -8,6 +7,7 @@ using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using System;
 
 namespace Content.Server.GameObjects.Components.StationEvents
 {
@@ -85,8 +85,8 @@ namespace Content.Server.GameObjects.Components.StationEvents
             serializer.DataField(this, x => x.Range, "range", 5.0f);
             serializer.DataField(this, x => x.Draw, "draw", true);
             serializer.DataField(this, x => x.Decay, "decay", true);
-            serializer.DataField(this, x => x.MaxPulseLifespan, "maxPulseLifespan", 2.5f);
-            serializer.DataField(this, x => x.MinPulseLifespan, "minPulseLifespan", 0.8f);
+            serializer.DataField(this, x => x.MaxPulseLifespan, "maxPulseLifespan", 6.0f);
+            serializer.DataField(this, x => x.MinPulseLifespan, "minPulseLifespan", 3.0f);
         }
 
         public void DoPulse()
@@ -98,7 +98,7 @@ namespace Content.Server.GameObjects.Components.StationEvents
                 _endTime = currentTime + TimeSpan.FromSeconds(_duration);
             }
 
-            if(!string.IsNullOrEmpty(Sound))
+            if (!string.IsNullOrEmpty(Sound))
                 EntitySystem.Get<AudioSystem>().PlayAtCoords(Sound, Owner.Transform.Coordinates);
 
             Dirty();
@@ -106,7 +106,7 @@ namespace Content.Server.GameObjects.Components.StationEvents
 
         public override ComponentState GetComponentState()
         {
-            return new RadiationPulseState(_radsPerSecond, _range, Draw, Decay, _endTime);
+            return new RadiationPulseState(_radsPerSecond, _range, _draw, _decay, _endTime);
         }
 
         public void Update(float frameTime)
@@ -114,7 +114,7 @@ namespace Content.Server.GameObjects.Components.StationEvents
             if (!Decay || Owner.Deleted)
                 return;
 
-            if(_duration <= 0f)
+            if (_duration <= 0f)
                 Owner.Delete();
 
             _duration -= frameTime;
