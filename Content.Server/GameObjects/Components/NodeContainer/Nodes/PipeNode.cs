@@ -203,6 +203,10 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             for (var i = 0; i < PipeDirectionHelpers.PipeDirections; i++)
             {
                 var pipeDir = (PipeDirection) (1 << i);
+
+                if (!PipeDirection.HasDirection(pipeDir))
+                    continue;
+
                 foreach (var pipe in LinkableNodesInDirection(pipeDir))
                 {
                     if (pipe.Connectable && pipe.NodeGroupID == NodeGroupID)
@@ -215,7 +219,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         }
 
         /// <summary>
-        ///     Calls <see cref="UpdateConnectedDirections"/> on surrounding pipes.
+        ///     Calls <see cref="UpdateConnectedDirections"/> all adjacent pipes.
         /// </summary>
         private void UpdateAdjacentConnectedDirections()
         {
