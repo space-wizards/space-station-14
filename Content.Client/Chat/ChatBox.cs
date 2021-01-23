@@ -5,16 +5,13 @@ using System.Collections.Generic;
 using Content.Client.Administration;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
-using Content.Shared.Administration;
 using Content.Shared.Chat;
-using Robust.Client.Console;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 
@@ -47,6 +44,7 @@ namespace Content.Client.Chat
         };
 
         private const float FilterPopupWidth = 110;
+        private const int DragMarginSize = 7;
 
         /// <summary>
         /// Will be Unspecified if set to Console
@@ -72,11 +70,12 @@ namespace Content.Client.Chat
         private readonly Popup _filterPopup;
         private readonly PanelContainer _filterPopupPanel;
         private readonly VBoxContainer _filterVBox;
-        private readonly IClientAdminManager _adminManager;
+        private DragMode _currentDrag = DragMode.None;
+        private Vector2 _dragOffsetTopLeft;
+        private Vector2 _dragOffsetBottomRight;
 
         public ChatBox()
         {
-            _adminManager = IoCManager.Resolve<IClientAdminManager>();
             MouseFilter = MouseFilterMode.Stop;
 
             AddChild(new VBoxContainer
@@ -197,6 +196,7 @@ namespace Content.Client.Chat
             }
 
         }
+
 
         /// <summary>
         /// Update the available filters / selectable channels and the current filter settings using the provided
@@ -325,12 +325,37 @@ namespace Content.Client.Chat
         {
             base.KeyBindDown(args);
 
-            if (!args.CanFocus)
+            if (args.Function == EngineKeyFunctions.UIClick)
+            {
+                _currentDrag = GetDragModeFor(args.RelativePosition);
+
+                if (_currentDrag != DragMode.None)
+                {
+                    _dragOffsetTopLeft = args.PointerLocation.Position / UIScale - Position;
+                    _dragOffsetBottomRight = Position + Size - args.PointerLocation.Position / UIScale;
+                }
+            }
+
+            if (args.CanFocus)
+            {
+                Input.GrabKeyboardFocus();
+            }
+        }
+
+        protected override void KeyBindUp(GUIBoundKeyEventArgs args)
+        {
+            base.KeyBindUp(args);
+
+            if (args.Function != EngineKeyFunctions.UIClick)
             {
                 return;
             }
 
-            Input.GrabKeyboardFocus();
+            _dragOffsetTopLeft = _dragOffsetBottomRight = Vector2.Zero;
+            _currentDrag = DragMode.None;
+
+            // If this is done in MouseDown, Godot won't fire MouseUp as you need focus to receive MouseUps.
+            UserInterfaceManager.KeyboardFocused?.ReleaseKeyboardFocus();
         }
 
         private void InputKeyBindDown(GUIBoundKeyEventArgs args)
@@ -348,6 +373,94 @@ namespace Content.Client.Chat
             {
                 SafelySelectChannel(_savedSelectedChannel.Value);
                 _savedSelectedChannel = null;
+            }
+        }
+
+        // TODO: this drag and drop stuff is somewhat duplicated from Robust but also modified
+        [Flags]
+        private enum DragMode : byte
+        {
+            None = 0,
+            Bottom = 1 << 1,
+            Left = 1 << 2
+        }
+
+        private DragMode GetDragModeFor(Vector2 relativeMousePos)
+        {
+            var mode = DragMode.None;
+
+            if (relativeMousePos.Y > Size.Y - DragMarginSize)
+            {
+                mode = DragMode.Bottom;
+            }
+
+            if (relativeMousePos.X < DragMarginSize)
+            {
+                mode |= DragMode.Left;
+            }
+
+            return mode;
+        }
+
+        protected override void MouseMove(GUIMouseMoveEventArgs args)
+        {
+            base.MouseMove(args);
+
+            if (Parent == null)
+            {
+                return;
+            }
+
+            if (_currentDrag == DragMode.None)
+            {
+                var cursor = CursorShape.Arrow;
+                var previewDragMode = GetDragModeFor(args.RelativePosition);
+                switch (previewDragMode)
+                {
+                    case DragMode.Bottom:
+                        cursor = CursorShape.VResize;
+                        break;
+
+                    case DragMode.Left:
+                        cursor = CursorShape.HResize;
+                        break;
+
+                    case DragMode.Bottom | DragMode.Left:
+                        cursor = CursorShape.Crosshair;
+                        break;
+                }
+
+                DefaultCursorShape = cursor;
+            }
+            else
+            {
+                var top = Rect.Top;
+                var bottom = Rect.Bottom;
+                var left = Rect.Left;
+                var right = Rect.Right;
+                var (minSizeX, minSizeY) = CombinedMinimumSize;
+                if ((_currentDrag & DragMode.Bottom) == DragMode.Bottom)
+                {
+                    bottom = Math.Max(args.GlobalPosition.Y + _dragOffsetBottomRight.Y, top + minSizeY);
+                }
+
+                if ((_currentDrag & DragMode.Left) == DragMode.Left)
+                {
+                    var maxX = right - minSizeX;
+                    left = Math.Min(args.GlobalPosition.X - _dragOffsetTopLeft.X, maxX);
+                }
+
+                var rect = new UIBox2(left, top, right, bottom);
+                LayoutContainer.SetPosition(this, rect.TopLeft);
+                LayoutContainer.SetSize(this, rect.Size);
+            }
+        }
+
+        protected override void MouseExited()
+        {
+            if (_currentDrag == DragMode.None)
+            {
+                DefaultCursorShape = CursorShape.Arrow;
             }
         }
 
