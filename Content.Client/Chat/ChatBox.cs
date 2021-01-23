@@ -46,7 +46,7 @@ namespace Content.Client.Chat
 
         private const float FilterPopupWidth = 110;
         private const int DragMarginSize = 7;
-        private const float MinHeight = 64;
+        private const float MinHeight = 128;
         private const int MinWidth = 200;
         private const int MinDistanceFromBottom = 255;
         private const int MinLeft = 500;
@@ -449,24 +449,45 @@ namespace Content.Client.Chat
                 if ((_currentDrag & DragMode.Bottom) == DragMode.Bottom)
                 {
                     bottom = Math.Max(args.GlobalPosition.Y + _dragOffsetBottomRight.Y, top + minSizeY);
-                    // clamp so it doesn't go too high or low (leave space for alerts UI)
-                    bottom = Math.Clamp(bottom, MinHeight, Parent.Size.Y - MinDistanceFromBottom);
                 }
 
                 if ((_currentDrag & DragMode.Left) == DragMode.Left)
                 {
                     var maxX = right - minSizeX;
                     left = Math.Min(args.GlobalPosition.X - _dragOffsetTopLeft.X, maxX);
-                    // clamp so it doesn't go too left or right (leave space for top left menu buttons)
-                    left = Math.Clamp(left, MinLeft, Parent.Size.X - MinWidth);
-
                 }
 
-                var rect = new UIBox2(left, top, right, bottom);
-                LayoutContainer.SetPosition(this, rect.TopLeft);
-                LayoutContainer.SetSize(this, rect.Size);
-                OnResized?.Invoke();
+                ClampSize(left, bottom);
             }
+        }
+
+        protected override void Resized()
+        {
+            base.Resized();
+            ClampSize(Rect.Left, Rect.Bottom);
+        }
+
+        protected override void UIScaleChanged()
+        {
+            base.UIScaleChanged();
+            ClampSize(Rect.Left, Rect.Bottom);
+        }
+
+        private void ClampSize(float desiredLeft, float desiredBottom)
+        {
+            if (Parent == null) return;
+            var top = Rect.Top;
+            var right = Rect.Right;
+
+            // clamp so it doesn't go too high or low (leave space for alerts UI)
+            desiredBottom = Math.Clamp(desiredBottom, MinHeight, Parent.Size.Y - MinDistanceFromBottom);
+
+            desiredLeft = Math.Clamp(desiredLeft, MinLeft, Parent.Size.X - MinWidth);
+
+            var rect = new UIBox2(desiredLeft, top, right, desiredBottom);
+            LayoutContainer.SetPosition(this, rect.TopLeft);
+            LayoutContainer.SetSize(this, rect.Size);
+            OnResized?.Invoke();
         }
 
         protected override void MouseExited()
