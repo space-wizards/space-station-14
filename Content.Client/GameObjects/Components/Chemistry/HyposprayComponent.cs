@@ -35,9 +35,6 @@ namespace Content.Client.GameObjects.Components.Chemistry
             return new StatusControl(this);
         }
 
-        /// <summary>
-        /// Item status control for injectors
-        /// </summary>
         private sealed class StatusControl : Control
         {
             private readonly HyposprayComponent _parent;
