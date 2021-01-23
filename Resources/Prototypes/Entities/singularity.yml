@@ -14,7 +14,7 @@
       - AllMask
     mass: 5
   - type: Singularity
-  - type: RadiationPulse
+  - type: RadiationPulseSingularity
     range: 15
     decay: false
   - type: Sprite

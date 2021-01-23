@@ -1,8 +1,8 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.StationEvents;
 using Content.Server.GameObjects.Components.Observer;
+using Content.Server.GameObjects.Components.Radiation;
 using Content.Shared.GameObjects;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
@@ -75,7 +75,7 @@ namespace Content.Server.GameObjects.Components.Singularity
 
                 _level = value;
 
-                if(_radiationPulseComponent != null) _radiationPulseComponent.RadsPerSecond = 10 * value;
+                if(_radiationPulseComponent != null) _radiationPulseComponent.Energy = 10 * value;
 
                 _spriteComponent?.LayerSetRSI(0, "Effects/Singularity/singularity_" + _level + ".rsi");
                 _spriteComponent?.LayerSetState(0, "singularity_" + _level);

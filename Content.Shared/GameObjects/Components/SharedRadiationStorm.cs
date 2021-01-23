@@ -6,41 +6,63 @@ namespace Content.Shared.GameObjects.Components
 {
     public abstract class SharedRadiationPulseComponent : Component
     {
-        public override string Name => "RadiationPulse";
-        public override uint? NetID => ContentNetIDs.RADIATION_PULSE;
-
-        public virtual float RadsPerSecond { get; set; }
-
         /// <summary>
-        /// Radius of the pulse from its position
+        /// The energy emitted by the radiation pulse. Used to
+        /// damage and in power collection (i.e Radiation Collector).
         /// </summary>
-        public virtual float Range { get; set; }
-
-        public virtual bool Decay { get; set; }
-        public virtual bool Draw { get; set; }
-
-        public virtual TimeSpan EndTime { get; }
+        public virtual float Energy { get; set; }
+        /// <summary>
+        /// Radius of the pulse from its position.
+        /// </summary>
+        public virtual float Range { get; protected set; }
+        /// <summary>
+        /// Whether the entity has a limited lifespan.
+        /// </summary>
+        protected virtual bool Decay { get; set; }
+        /// <summary>
+        /// When the radiation pulse's entity will be deleted
+        /// </summary>
+        public virtual TimeSpan EndTime { get; protected set; }
+        /// <summary>
+        /// When the radiation pulse was initialized.
+        /// </summary>
+        public virtual TimeSpan StartTime { get; protected set; }
+        /// <summary>
+        /// The period before emitting radiation.
+        /// </summary>
+        public virtual float Cooldown { get; protected set; }
     }
 
     /// <summary>
-    /// For syncing the pulse's lifespan between client and server for the overlay
+    /// For syncing the radiation pulse anomaly lifespan
+    /// and the client's light behaviour animation
     /// </summary>
     [Serializable, NetSerializable]
-    public class RadiationPulseState : ComponentState
+    public class RadiationPulseAnomalyState : ComponentState
     {
-        public readonly float RadsPerSecond;
         public readonly float Range;
-        public readonly bool Draw;
-        public readonly bool Decay;
+        public readonly TimeSpan StartTime;
         public readonly TimeSpan EndTime;
 
-        public RadiationPulseState(float radsPerSecond, float range, bool draw, bool decay, TimeSpan endTime) : base(ContentNetIDs.RADIATION_PULSE)
+        public RadiationPulseAnomalyState(float range, TimeSpan startTime, TimeSpan endTime) : base(ContentNetIDs.RADIATION_PULSE)
         {
-            RadsPerSecond = radsPerSecond;
             Range = range;
-            Draw = draw;
-            Decay = decay;
+            StartTime = startTime;
             EndTime = endTime;
         }
     }
+
+    [Serializable, NetSerializable]
+    public enum RadiationPulseVisual
+    {
+        State
+    }
+
+    [Serializable, NetSerializable]
+    public enum RadiationPulseVisuals
+    {
+        None,
+        Visible
+    }
+
 }

@@ -1,7 +1,5 @@
-﻿#nullable enable
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.StationEvents;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Utility;
@@ -11,6 +9,7 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 
@@ -20,9 +19,14 @@ namespace Content.Server.StationEvents
     public sealed class RadiationStorm : StationEvent
     {
         // Based on Goonstation style radiation storm with some TG elements (announcer, etc.)
+        // Based on a more local Goonstation style radiation storm but using SS14 elements li
 
-        [Dependency] private IEntityManager _entityManager = default!;
-        [Dependency] private IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default;
+        [Dependency] private readonly IRobustRandom _robustRandom = default;
+
+        [Dependency] private readonly IPauseManager _pauseManager = default;
+        [Dependency] private readonly IGameTicker _gameTicker = default;
+        [Dependency] private readonly IMapManager _mapManager = default;
 
         public override string Name => "RadiationStorm";
         public override string StartAnnouncement => Loc.GetString(
@@ -32,10 +36,24 @@ namespace Content.Server.StationEvents
         public override string StartAudio => "/Audio/Announcements/radiation.ogg";
         protected override float StartAfter => 10.0f;
 
-        // Event specific details
+        /// <summary>
+        /// How long until the next pulse.
+        /// </summary>
         private float _timeUntilPulse;
-        private const float MinPulseDelay = 0.2f;
-        private const float MaxPulseDelay = 0.8f;
+
+        /// <summary>
+        /// Minimum pulse delay between pulses.
+        /// </summary>
+        private const float MinPulseDelay = 0.5f;
+        /// <summary>
+        /// Maximum pulse delay between pulses.
+        /// </summary>
+        private const float MaxPulseDelay = 2.0f;
+
+        /// <summary>
+        /// Map grid where the event takes place.
+        /// </summary>
+        private IMapGrid _eventMapGrid;
 
         private void ResetTimeUntilPulse()
         {
@@ -50,27 +68,9 @@ namespace Content.Server.StationEvents
 
         public override void Startup()
         {
+            _eventMapGrid = _mapManager.GetGrid(_gameTicker.DefaultGridId);
             ResetTimeUntilPulse();
-
-            var componentManager = IoCManager.Resolve<IComponentManager>();
-
-            foreach (var overlay in componentManager.EntityQuery<ServerOverlayEffectsComponent>())
-            {
-                overlay.AddOverlay(SharedOverlayID.RadiationPulseOverlay);
-            }
-
             base.Startup();
-        }
-
-        public override void Shutdown()
-        {
-            var componentManager = IoCManager.Resolve<IComponentManager>();
-
-            foreach (var overlay in componentManager.EntityQuery<ServerOverlayEffectsComponent>())
-            {
-                overlay.RemoveOverlay(SharedOverlayID.RadiationPulseOverlay);
-            }
-            base.Shutdown();
         }
 
         public override void Update(float frameTime)
@@ -83,25 +83,20 @@ namespace Content.Server.StationEvents
 
             if (_timeUntilPulse <= 0.0f)
             {
-                var pauseManager = IoCManager.Resolve<IPauseManager>();
-                var gameTicker = IoCManager.Resolve<IGameTicker>();
-                var defaultGrid = IoCManager.Resolve<IMapManager>().GetGrid(gameTicker.DefaultGridId);
-
-                if (pauseManager.IsGridPaused(defaultGrid))
+                if (_pauseManager.IsGridPaused(_eventMapGrid))
+                {
                     return;
-
-                SpawnPulse(defaultGrid);
+                }
+                SpawnRadiationAnomaly();
+                ResetTimeUntilPulse();
             }
         }
 
-        private void SpawnPulse(IMapGrid mapGrid)
+        private void SpawnRadiationAnomaly()
         {
-            if (!TryFindRandomGrid(mapGrid, out var coordinates))
+            if (!TryFindRandomGrid(_eventMapGrid, out var coordinates))
                 return;
-
-            var pulse = _entityManager.SpawnEntity("RadiationPulse", coordinates);
-            pulse.GetComponent<RadiationPulseComponent>().DoPulse();
-            ResetTimeUntilPulse();
+            _entityManager.SpawnEntity("RadiationPulse", coordinates);
         }
 
         private bool TryFindRandomGrid(IMapGrid mapGrid, out EntityCoordinates coordinates)
@@ -115,7 +110,7 @@ namespace Content.Server.StationEvents
             var randomX = _robustRandom.Next((int) mapGrid.WorldBounds.Left, (int) mapGrid.WorldBounds.Right);
             var randomY = _robustRandom.Next((int) mapGrid.WorldBounds.Bottom, (int) mapGrid.WorldBounds.Top);
 
-            coordinates = mapGrid.ToCoordinates(randomX, randomY);
+            coordinates = _eventMapGrid.ToCoordinates(randomX + 0.5f, randomY + 0.5f);
 
             // TODO: Need to get valid tiles? (maybe just move right if the tile we chose is invalid?)
             if (!coordinates.IsValid(_entityManager))

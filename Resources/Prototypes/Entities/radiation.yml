@@ -1,7 +1,18 @@
 - type: entity
-  name: shimmering anomaly
+  name: "Radiation Anomaly"
   id: RadiationPulse
-  abstract: true
   description: Looking at this anomaly makes you feel strange, like something is pushing at your eyes.
+  placement:
+    mode: SnapgridCenter
   components:
-  - type: RadiationPulse
+  - type: Sprite
+    sprite: _dev
+    state: empty
+  - type: PointLight
+    enabled: false
+  - type: LightBehaviour
+  - type: RadiationPulseAnomaly
+  - type: Appearance
+    visuals:
+    - type: RadiationPulseVisualizer
+      shader: RadPulseAnomaly

@@ -338,7 +338,58 @@ namespace Content.Client.GameObjects.Components
                 throw new InvalidOperationException($"{nameof(ColorCycleBehaviour)} has less than 2 colors to cycle");
             }
         }
+    }
 
+    /// <summary>
+    /// A light behaviour that goes from M - S - M
+    /// where M is the color and the S is M * Levels / 2
+    /// </summary>
+    [UsedImplicitly]
+    public class FadesInOutNLevelBehaviour : LightBehaviourAnimationTrack
+    {
+        public Color MainColor { get; set; }
+        private Color SubColor { get; set; }
+        public int Levels { get; set; }
+
+        public override void OnInitialize()
+        {
+            base.OnInitialize();
+            Property = "Color";
+            SubColor = new Color(MainColor.R * Levels, MainColor.G * Levels, MainColor.B * Levels, MainColor.A);
+        }
+
+        public override (int KeyFrameIndex, float FramePlayingTime) AdvancePlayback(
+           object context, int prevKeyFrameIndex, float prevPlayingTime, float frameTime)
+        {
+            var playingTime = prevPlayingTime + frameTime;
+            var interpolateValue = playingTime / MaxTime;
+
+            if (interpolateValue < 0.5)
+            {
+                switch (InterpolateMode)
+                {
+                    case AnimationInterpolationMode.Linear:
+                        ApplyProperty(InterpolateLinear(MainColor, SubColor, interpolateValue));
+                        break;
+                    default:
+                        ApplyProperty(MainColor);
+                        break;
+                }
+            }
+            else
+            {
+                switch (InterpolateMode)
+                {
+                    case AnimationInterpolationMode.Linear:
+                        ApplyProperty(InterpolateLinear(SubColor, MainColor, interpolateValue));
+                        break;
+                    default:
+                        ApplyProperty(SubColor);
+                        break;
+                }
+            }
+            return (-1, playingTime);
+        }
     }
     #endregion
 
@@ -495,7 +546,7 @@ namespace Content.Client.GameObjects.Components
         /// <summary>
         /// Add a new light behaviour to the component and start it immediately unless otherwise specified.
         /// </summary>
-        public void AddNewLightBehaviour(LightBehaviourAnimationTrack behaviour, bool playImmediately = true)
+        public void AddNewLightBehaviour(LightBehaviourAnimationTrack behaviour, PointLightComponent pLight, bool playImmediately = true)
         {
             int key = 0;
 
@@ -508,8 +559,9 @@ namespace Content.Client.GameObjects.Components
             {
                 AnimationTracks = { behaviour }
             };
-
+            _lightComponent = pLight;
             behaviour.Initialize(_lightComponent);
+
             var container = new AnimationContainer(key, animation, behaviour);
             _animations.Add(container);
 

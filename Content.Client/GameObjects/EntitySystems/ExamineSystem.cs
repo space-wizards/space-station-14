@@ -68,8 +68,14 @@ namespace Content.Client.GameObjects.EntitySystems
 
         public async void DoExamine(IEntity entity)
         {
-            const float minWidth = 300;
             CloseTooltip();
+
+            if (entity.Deleted)
+            {
+                return;
+            }
+
+            const float minWidth = 300;
 
             var popupPos = _userInterfaceManager.MousePositionScaled;
 

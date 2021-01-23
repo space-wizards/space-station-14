@@ -1,8 +1,6 @@
 using System;
-using System.Threading;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
-using Content.Shared.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Singularity;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -14,7 +12,6 @@ using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
-using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 {
@@ -90,11 +87,11 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
             SetAppearance(RadiationCollectorVisualState.Deactivating);
         }
 
-        public void RadiationAct(float frameTime, SharedRadiationPulseComponent radiation)
+        public void RadiationAct(SharedRadiationPulseComponent radiation)
         {
             if (!_enabled) return;
 
-            SupplyRate = (int) (frameTime * radiation.RadsPerSecond * 3000f);
+            SupplyRate = (int) (radiation.Cooldown * radiation.Energy * 1000.0f);
         }
 
         protected void SetAppearance(RadiationCollectorVisualState state)
