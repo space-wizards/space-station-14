@@ -1,6 +1,4 @@
-﻿using JetBrains.Annotations;
-using Robust.Shared;
-using Robust.Shared.GameObjects;
+﻿using Robust.Shared.Analyzers;
 
 namespace Content.Shared.Interfaces.GameObjects.Components
 {

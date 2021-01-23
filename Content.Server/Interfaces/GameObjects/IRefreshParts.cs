@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Construction;
-using Robust.Shared;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Analyzers;
 
 namespace Content.Server.Interfaces.GameObjects
 {

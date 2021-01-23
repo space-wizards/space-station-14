@@ -1,7 +1,6 @@
-﻿using System;
-using Content.Shared.GameObjects.Components.Inventory;
+﻿using Content.Shared.GameObjects.Components.Inventory;
 using JetBrains.Annotations;
-using Robust.Shared;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 

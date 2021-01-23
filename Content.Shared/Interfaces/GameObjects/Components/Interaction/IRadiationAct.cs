@@ -1,5 +1,5 @@
 ﻿using Content.Shared.GameObjects.Components;
-using Robust.Shared;
+using Robust.Shared.Analyzers;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Shared.Interfaces.GameObjects.Components

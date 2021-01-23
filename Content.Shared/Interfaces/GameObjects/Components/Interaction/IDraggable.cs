@@ -1,5 +1,5 @@
 ﻿using System;
-using Robust.Shared;
+using Robust.Shared.Analyzers;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 
