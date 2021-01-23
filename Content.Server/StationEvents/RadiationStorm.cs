@@ -24,10 +24,6 @@ namespace Content.Server.StationEvents
         [Dependency] private readonly IEntityManager _entityManager = default;
         [Dependency] private readonly IRobustRandom _robustRandom = default;
 
-        [Dependency] private readonly IPauseManager _pauseManager = default;
-        [Dependency] private readonly IGameTicker _gameTicker = default;
-        [Dependency] private readonly IMapManager _mapManager = default;
-
         public override string Name => "RadiationStorm";
         public override string StartAnnouncement => Loc.GetString(
             "High levels of radiation detected near the station. Evacuate any areas containing abnormal green energy fields.");
@@ -50,11 +46,6 @@ namespace Content.Server.StationEvents
         /// </summary>
         private const float MaxPulseDelay = 2.0f;
 
-        /// <summary>
-        /// Map grid where the event takes place.
-        /// </summary>
-        private IMapGrid _eventMapGrid;
-
         private void ResetTimeUntilPulse()
         {
             _timeUntilPulse = _robustRandom.NextFloat() * (MaxPulseDelay - MinPulseDelay) + MinPulseDelay;
@@ -68,7 +59,6 @@ namespace Content.Server.StationEvents
 
         public override void Startup()
         {
-            _eventMapGrid = _mapManager.GetGrid(_gameTicker.DefaultGridId);
             ResetTimeUntilPulse();
             base.Startup();
         }
@@ -83,18 +73,20 @@ namespace Content.Server.StationEvents
 
             if (_timeUntilPulse <= 0.0f)
             {
-                if (_pauseManager.IsGridPaused(_eventMapGrid))
-                {
+                var pauseManager = IoCManager.Resolve<IPauseManager>();
+                var gameTicker = IoCManager.Resolve<IGameTicker>();
+                var defaultGrid = IoCManager.Resolve<IMapManager>().GetGrid(gameTicker.DefaultGridId);
+                if (pauseManager.IsGridPaused(defaultGrid))
                     return;
-                }
-                SpawnRadiationAnomaly();
+
+                SpawnRadiationAnomaly(defaultGrid);
                 ResetTimeUntilPulse();
             }
         }
 
-        private void SpawnRadiationAnomaly()
+        private void SpawnRadiationAnomaly(IMapGrid mapGrid)
         {
-            if (!TryFindRandomGrid(_eventMapGrid, out var coordinates))
+            if (!TryFindRandomGrid(mapGrid, out var coordinates))
                 return;
             _entityManager.SpawnEntity("RadiationPulse", coordinates);
         }
@@ -110,7 +102,7 @@ namespace Content.Server.StationEvents
             var randomX = _robustRandom.Next((int) mapGrid.WorldBounds.Left, (int) mapGrid.WorldBounds.Right);
             var randomY = _robustRandom.Next((int) mapGrid.WorldBounds.Bottom, (int) mapGrid.WorldBounds.Top);
 
-            coordinates = _eventMapGrid.ToCoordinates(randomX + 0.5f, randomY + 0.5f);
+            coordinates = mapGrid.ToCoordinates(randomX + 0.5f, randomY + 0.5f);
 
             // TODO: Need to get valid tiles? (maybe just move right if the tile we chose is invalid?)
             if (!coordinates.IsValid(_entityManager))
