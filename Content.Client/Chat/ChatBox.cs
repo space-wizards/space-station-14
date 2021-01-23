@@ -6,12 +6,14 @@ using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.Chat;
 using Robust.Client.Graphics.Drawing;
+using Robust.Client.Interfaces.Graphics;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Chat
@@ -78,9 +80,16 @@ namespace Content.Client.Chat
         private DragMode _currentDrag = DragMode.None;
         private Vector2 _dragOffsetTopLeft;
         private Vector2 _dragOffsetBottomRight;
+        private readonly IClyde _clyde;
 
         public ChatBox()
         {
+            // TODO: Find a better way. Probably not "supposed" to inject IClyde, but I give up.
+            // I can't find any other way to allow this control to properly resize when the
+            // window is resized. Resized() isn't reliably called when resizing the window,
+            // and layoutcontainer anchor / margin don't seem to adjust how we need
+            // them to when the window is resized.
+            _clyde = IoCManager.Resolve<IClyde>();
             MouseFilter = MouseFilterMode.Stop;
 
             AddChild(new VBoxContainer
@@ -184,6 +193,13 @@ namespace Content.Client.Chat
             Input.OnFocusExit += InputOnFocusExit;
             _filterButton.OnToggled += FilterButtonToggled;
             _filterPopup.OnPopupHide += OnPopupHide;
+            _clyde.OnWindowResized += ClydeOnOnWindowResized;
+        }
+
+        private void ClydeOnOnWindowResized(WindowResizedEventArgs obj)
+        {
+            // TODO: Do we need this?
+            // ClampSize();
         }
 
         protected override void ExitedTree()
@@ -196,6 +212,7 @@ namespace Content.Client.Chat
             Input.OnFocusExit -= InputOnFocusExit;
             _filterButton.OnToggled -= FilterButtonToggled;
             _filterPopup.OnPopupHide -= OnPopupHide;
+            _clyde.OnWindowResized -= ClydeOnOnWindowResized;
             foreach (var child in _filterVBox.Children)
             {
                 if (child is not ChannelFilterCheckbox checkbox) continue;
@@ -460,31 +477,28 @@ namespace Content.Client.Chat
                 ClampSize(left, bottom);
             }
         }
+        //
+        // protected override void UIScaleChanged()
+        // {
+        //     base.UIScaleChanged();
+        //     ClampSize();
+        // }
 
-        protected override void Resized()
+        private void ClampSize(float? desiredLeft = null, float? desiredBottom = null)
         {
-            base.Resized();
-            ClampSize(Rect.Left, Rect.Bottom);
-        }
-
-        protected override void UIScaleChanged()
-        {
-            base.UIScaleChanged();
-            ClampSize(Rect.Left, Rect.Bottom);
-        }
-
-        private void ClampSize(float desiredLeft, float desiredBottom)
-        {
+            // TODO: Use margin (and maybe anchor) setting instead of setpos / setsize in LC
             if (Parent == null) return;
             var top = Rect.Top;
             var right = Rect.Right;
+            var left = desiredLeft ?? Rect.Left;
+            var bottom = desiredBottom ?? Rect.Bottom;
 
             // clamp so it doesn't go too high or low (leave space for alerts UI)
-            desiredBottom = Math.Clamp(desiredBottom, MinHeight, Parent.Size.Y - MinDistanceFromBottom);
+            bottom = Math.Clamp(bottom, MinHeight, Parent.Size.Y - MinDistanceFromBottom);
 
-            desiredLeft = Math.Clamp(desiredLeft, MinLeft, Parent.Size.X - MinWidth);
+            left = Math.Clamp(left, MinLeft, Parent.Size.X - MinWidth);
 
-            var rect = new UIBox2(desiredLeft, top, right, desiredBottom);
+            var rect = new UIBox2(left, top, right, bottom);
             LayoutContainer.SetPosition(this, rect.TopLeft);
             LayoutContainer.SetSize(this, rect.Size);
             OnResized?.Invoke();
