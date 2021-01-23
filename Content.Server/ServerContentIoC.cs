@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration;
+using Content.Server.Administration;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.WorldState;
 using Content.Server.Cargo;
@@ -38,7 +38,6 @@ namespace Content.Server
             IoCManager.Register<IChatManager, ChatManager>();
             IoCManager.Register<IMoMMILink, MoMMILink>();
             IoCManager.Register<ISandboxManager, SandboxManager>();
-            IoCManager.Register<ICargoOrderDataManager, CargoOrderDataManager>();
             IoCManager.Register<IModuleManager, ServerModuleManager>();
             IoCManager.Register<IServerPreferencesManager, ServerPreferencesManager>();
             IoCManager.Register<IServerDbManager, ServerDbManager>();

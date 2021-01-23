@@ -7,13 +7,14 @@
   drawdepth: Mobs
   components:
   - type: Mind
-    show_examine_info: true
+    showExamineInfo: true
   - type: Input
     context: "human"
   - type: Alerts
   - type: Actions
     innateActions:
       - HumanScream
+      - Disarm
   - type: OverlayEffectsUI
   - type: Eye
     zoom: 0.5, 0.5

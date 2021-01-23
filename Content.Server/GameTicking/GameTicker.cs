@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -31,7 +30,6 @@ using Robust.Server.Interfaces.Maps;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Server.ServerStatus;
-using Robust.Server.Interfaces.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Configuration;
@@ -70,7 +68,7 @@ namespace Content.Server.GameTicking
         public const float PresetFailedCooldownIncrease = 30f;
         private const string PlayerPrototypeName = "HumanMob_Content";
         private const string ObserverPrototypeName = "MobObserver";
-        private static TimeSpan _roundStartTimeSpan;
+        private TimeSpan _roundStartTimeSpan;
 
         [ViewVariables] private readonly List<GameRule> _gameRules = new();
         [ViewVariables] private readonly List<ManifestEntry> _manifest = new();
@@ -82,9 +80,9 @@ namespace Content.Server.GameTicking
 
         [ViewVariables] private Type _presetType;
 
-        [ViewVariables] private DateTime _pauseTime;
+        [ViewVariables] private TimeSpan _pauseTime;
         [ViewVariables] private bool _roundStartCountdownHasNotStartedYetDueToNoPlayers;
-        private DateTime _roundStartTimeUtc;
+        [ViewVariables] private TimeSpan _roundStartTime;
         [ViewVariables] private GameRunLevel _runLevel;
         [ViewVariables(VVAccess.ReadWrite)] private EntityCoordinates _spawnPoint;
 
@@ -177,7 +175,7 @@ namespace Content.Server.GameTicking
 
             if (RunLevel != GameRunLevel.PreRoundLobby ||
                 Paused ||
-                _roundStartTimeUtc > DateTime.UtcNow ||
+                _roundStartTime > _gameTiming.CurTime ||
                 _roundStartCountdownHasNotStartedYetDueToNoPlayers)
             {
                 return;
@@ -211,10 +209,12 @@ namespace Content.Server.GameTicking
             }
             else
             {
+                Preset = null;
+
                 if (PlayerManager.PlayerCount == 0)
                     _roundStartCountdownHasNotStartedYetDueToNoPlayers = true;
                 else
-                    _roundStartTimeUtc = DateTime.UtcNow + LobbyDuration;
+                    _roundStartTime = _gameTiming.CurTime + LobbyDuration;
 
                 _sendStatusToAll();
 
@@ -529,10 +529,10 @@ namespace Content.Server.GameTicking
                 return false;
             }
 
-            _roundStartTimeUtc += time;
+            _roundStartTime += time;
 
             var lobbyCountdownMessage = _netManager.CreateNetMessage<MsgTickerLobbyCountdown>();
-            lobbyCountdownMessage.StartTime = _roundStartTimeUtc;
+            lobbyCountdownMessage.StartTime = _roundStartTime;
             lobbyCountdownMessage.Paused = Paused;
             _netManager.ServerSendToAll(lobbyCountdownMessage);
 
@@ -552,15 +552,15 @@ namespace Content.Server.GameTicking
 
             if (pause)
             {
-                _pauseTime = DateTime.UtcNow;
+                _pauseTime = _gameTiming.CurTime;
             }
             else if (_pauseTime != default)
             {
-                _roundStartTimeUtc += DateTime.UtcNow - _pauseTime;
+                _roundStartTime += _gameTiming.CurTime - _pauseTime;
             }
 
             var lobbyCountdownMessage = _netManager.CreateNetMessage<MsgTickerLobbyCountdown>();
-            lobbyCountdownMessage.StartTime = _roundStartTimeUtc;
+            lobbyCountdownMessage.StartTime = _roundStartTime;
             lobbyCountdownMessage.Paused = Paused;
             _netManager.ServerSendToAll(lobbyCountdownMessage);
 
@@ -681,6 +681,19 @@ namespace Content.Server.GameTicking
         /// </summary>
         private void _resettingCleanup()
         {
+            // Move everybody currently in the server to lobby.
+            foreach (var player in PlayerManager.GetAllPlayers())
+            {
+                _playerJoinLobby(player);
+            }
+
+            // Delete the minds of everybody.
+            // TODO: Maybe move this into a separate manager?
+            foreach (var unCastData in PlayerManager.GetAllPlayerData())
+            {
+                unCastData.ContentData()?.WipeMind();
+            }
+
             // Delete all entities.
             foreach (var entity in _entityManager.GetEntities().ToList())
             {
@@ -691,13 +704,6 @@ namespace Content.Server.GameTicking
 
             _mapManager.Restart();
 
-            // Delete the minds of everybody.
-            // TODO: Maybe move this into a separate manager?
-            foreach (var unCastData in PlayerManager.GetAllPlayerData())
-            {
-                unCastData.ContentData()?.WipeMind();
-            }
-
             // Clear up any game rules.
             foreach (var rule in _gameRules)
             {
@@ -705,12 +711,6 @@ namespace Content.Server.GameTicking
             }
 
             _gameRules.Clear();
-
-            // Move everybody currently in the server to lobby.
-            foreach (var player in PlayerManager.GetAllPlayers())
-            {
-                _playerJoinLobby(player);
-            }
 
             foreach (var system in _entitySystemManager.AllSystems)
             {
@@ -763,7 +763,7 @@ namespace Content.Server.GameTicking
                     if (LobbyEnabled && _roundStartCountdownHasNotStartedYetDueToNoPlayers)
                     {
                         _roundStartCountdownHasNotStartedYetDueToNoPlayers = false;
-                        _roundStartTimeUtc = DateTime.UtcNow + LobbyDuration;
+                        _roundStartTime = _gameTiming.CurTime + LobbyDuration;
                     }
 
                     break;
@@ -1017,7 +1017,7 @@ namespace Content.Server.GameTicking
             _playersInLobby.TryGetValue(session, out var status);
             var msg = _netManager.CreateNetMessage<MsgTickerLobbyStatus>();
             msg.IsRoundStarted = RunLevel != GameRunLevel.PreRoundLobby;
-            msg.StartTime = _roundStartTimeUtc;
+            msg.StartTime = _roundStartTime;
             msg.YouAreReady = status == PlayerStatus.Ready;
             msg.Paused = Paused;
             return msg;

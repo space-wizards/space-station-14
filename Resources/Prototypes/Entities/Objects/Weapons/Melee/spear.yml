@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: spear
   parent: BaseItem
   id: Spear
@@ -22,7 +22,6 @@
   - type: MeleeChemicalInjector
   - type: SolutionContainer
     maxVol: 5
-    caps: AddTo, RemoveFrom
   - type: Pourable
 
 - type: MeleeWeaponAnimation

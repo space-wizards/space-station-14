@@ -164,11 +164,13 @@ binds:
   key: Left
   mod1: Control
   canRepeat: true
+  allowSubCombs: true
 - function: TextCursorWordRight
   type: State
   key: Right
   mod1: Control
   canRepeat: true
+  allowSubCombs: true
 - function: TextCursorBegin
   type: State
   key: Home
@@ -181,32 +183,38 @@ binds:
   key: Left
   mod1: Shift
   canRepeat: true
+  allowSubCombs: true
 - function: TextCursorSelectRight
   type: State
   key: Right
   mod1: Shift
   canRepeat: true
+  allowSubCombs: true
 - function: TextCursorSelectWordLeft
   type: State
   key: Left
   mod1: Shift
   mod2: Control
   canRepeat: true
+  allowSubCombs: true
 - function: TextCursorSelectWordRight
   type: State
   key: Right
   mod1: Shift
   mod2: Control
   canRepeat: true
+  allowSubCombs: true
 - function: TextCursorSelectBegin
   type: State
   mod1: Shift
   key: Home
+  allowSubCombs: true
 - function: TextCursorSelectEnd
   type: State
   mod1: Shift
   key: End
   canRepeat: true
+  allowSubCombs: true
 - function: TextBackspace
   type: State
   key: BackSpace
@@ -221,18 +229,22 @@ binds:
   type: State
   key: A
   mod1: Control
+  allowSubCombs: true
 - function: TextCopy
   type: State
   key: C
   mod1: Control
+  allowSubCombs: true
 - function: TextCut
   type: State
   key: X
   mod1: Control
+  allowSubCombs: true
 - function: TextPaste
   type: State
   key: V
   mod1: Control
+  allowSubCombs: true
 - function: TextHistoryPrev
   type: State
   key: Up
@@ -303,7 +315,7 @@ binds:
   key: Z
 - function: OpenAbilitiesMenu
   type: State
-  key: Equal
+  key: K
 - function: Hotbar0
   type: State
   key: Num0

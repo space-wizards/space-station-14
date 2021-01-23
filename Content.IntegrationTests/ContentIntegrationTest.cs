@@ -4,6 +4,7 @@ using Content.Client;
 using Content.Client.Interfaces.Parallax;
 using Content.Server;
 using Content.Server.Interfaces.GameTicking;
+using Content.Shared;
 using NUnit.Framework;
 using Robust.Server.Interfaces.Maps;
 using Robust.Server.Interfaces.Timing;
@@ -48,7 +49,7 @@ namespace Content.IntegrationTests
 
             // Connecting to Discord is a massive waste of time.
             // Basically just makes the CI logs a mess.
-            options.CVarOverrides["discord.enabled"] = "true";
+            options.CVarOverrides["discord.enabled"] = "false";
 
             return base.StartClient(options);
         }
@@ -75,6 +76,9 @@ namespace Content.IntegrationTests
                     }
                 });
             };
+
+            // Avoid funny race conditions with the database.
+            options.CVarOverrides[CCVars.DatabaseSynchronous.Name] = "true";
 
             return base.StartServer(options);
         }

@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Linq;
 using System.Threading;
@@ -470,7 +470,8 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 return;
             }
 
-            foreach (var entity in Contents.ContainedEntities)
+            var containedEntities = Contents.ContainedEntities.ToList();
+            foreach (var entity in containedEntities)
             {
                 var exActs = entity.GetAllComponents<IExAct>().ToArray();
                 foreach (var exAct in exActs)

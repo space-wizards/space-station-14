@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -140,6 +140,10 @@ namespace Content.Server.Database
             if (Enum.TryParse<ClothingPreference>(profile.Clothing, true, out var clothingVal))
                 clothing = clothingVal;
 
+            var backpack = BackpackPreference.Backpack;
+            if (Enum.TryParse<BackpackPreference>(profile.Backpack, true, out var backpackVal))
+                backpack = backpackVal;
+
             var gender = sex == Sex.Male ? Gender.Male : Gender.Female;
             if (Enum.TryParse<Gender>(profile.Gender, true, out var genderVal))
                 gender = genderVal;
@@ -159,6 +163,7 @@ namespace Content.Server.Database
                     Color.FromHex(profile.SkinColor)
                 ),
                 clothing,
+                backpack,
                 jobs,
                 (PreferenceUnavailableMode) profile.PreferenceUnavailable,
                 antags.ToList()
@@ -182,6 +187,7 @@ namespace Content.Server.Database
                 EyeColor = appearance.EyeColor.ToHex(),
                 SkinColor = appearance.SkinColor.ToHex(),
                 Clothing = humanoid.Clothing.ToString(),
+                Backpack = humanoid.Backpack.ToString(),
                 Slot = slot,
                 PreferenceUnavailable = (DbPreferenceUnavailableMode) humanoid.PreferenceUnavailable
             };

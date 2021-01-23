@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -16,6 +16,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
@@ -119,9 +120,18 @@ namespace Content.Server.GameObjects.Components.PA
                 Logger.Error("ParticleAcceleratorControlBox was created without PowerReceiverComponent");
                 return;
             }
-
-            _powerReceiverComponent.OnPowerStateChanged += OnPowerStateChanged;
             _powerReceiverComponent.Load = 250;
+        }
+
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+            switch (message)
+            {
+                case PowerChangedMessage powerChanged:
+                    OnPowerStateChanged(powerChanged);
+                    break;
+            }
         }
 
         protected override void Startup()
@@ -133,7 +143,7 @@ namespace Content.Server.GameObjects.Components.PA
 
         // This is the power state for the PA control box itself.
         // Keep in mind that the PA itself can keep firing as long as the HV cable under the power box has... power.
-        private void OnPowerStateChanged(object? sender, PowerStateEventArgs e)
+        private void OnPowerStateChanged(PowerChangedMessage e)
         {
             UpdateAppearance();
 

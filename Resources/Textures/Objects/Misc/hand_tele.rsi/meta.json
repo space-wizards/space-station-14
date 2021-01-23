@@ -9,7 +9,6 @@
     "states": [
         {
             "name": "charging",
-            "directions": 1,
             "delays": [
                 [
                     1.0,
@@ -21,7 +20,6 @@
         },
         {
             "name": "ready",
-            "directions": 1,
             "delays": [
                 [
                     5.0,

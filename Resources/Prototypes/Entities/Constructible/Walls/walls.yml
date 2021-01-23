@@ -50,13 +50,13 @@
     thresholds:
       300:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:SpawnEntitiesBehavior
           spawn:
             Girder:
               min: 1
               max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: brick
@@ -76,13 +76,13 @@
     thresholds:
       300:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:SpawnEntitiesBehavior
           spawn:
             Girder:
               min: 1
               max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: clock
@@ -102,13 +102,13 @@
     thresholds:
       300:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:SpawnEntitiesBehavior
           spawn:
             Girder:
               min: 1
               max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: clown
@@ -129,13 +129,13 @@
     thresholds:
       300:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:SpawnEntitiesBehavior
           spawn:
             Girder:
               min: 1
               max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: cult
@@ -155,13 +155,13 @@
     thresholds:
       300:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:SpawnEntitiesBehavior
           spawn:
             Girder:
               min: 1
               max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: debug
@@ -181,13 +181,13 @@
     thresholds:
       300:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:SpawnEntitiesBehavior
           spawn:
             Girder:
               min: 1
               max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: diamond
@@ -208,13 +208,13 @@
     thresholds:
       300:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:SpawnEntitiesBehavior
           spawn:
             Girder:
               min: 1
               max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: gold
@@ -234,13 +234,13 @@
     thresholds:
       300:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:SpawnEntitiesBehavior
           spawn:
             Girder:
               min: 1
               max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: ice
@@ -260,13 +260,13 @@
     thresholds:
       300:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:SpawnEntitiesBehavior
           spawn:
             Girder:
               min: 1
               max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: metal
@@ -286,13 +286,13 @@
     thresholds:
       300:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:SpawnEntitiesBehavior
           spawn:
             Girder:
               min: 1
               max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: plasma
@@ -312,13 +312,13 @@
     thresholds:
       300:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:SpawnEntitiesBehavior
           spawn:
             Girder:
               min: 1
               max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: plastic
@@ -371,13 +371,13 @@
     thresholds:
       1000:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:SpawnEntitiesBehavior
           spawn:
             Girder:
               min: 1
               max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: riveted
@@ -397,13 +397,13 @@
     thresholds:
       300:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:SpawnEntitiesBehavior
           spawn:
             Girder:
               min: 1
               max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: sandstone
@@ -423,13 +423,13 @@
     thresholds:
       300:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:SpawnEntitiesBehavior
           spawn:
             Girder:
               min: 1
               max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: silver
@@ -477,13 +477,13 @@
     thresholds:
       300:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:SpawnEntitiesBehavior
           spawn:
             Girder:
               min: 1
               max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: uranium
@@ -503,13 +503,13 @@
     thresholds:
       300:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:SpawnEntitiesBehavior
           spawn:
             Girder:
               min: 1
               max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: wood

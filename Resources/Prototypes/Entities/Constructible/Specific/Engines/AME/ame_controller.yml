@@ -43,6 +43,7 @@
     visuals:
     - type: AMEControllerVisualizer
   - type: NodeContainer
+    examinable: true
     nodes:
     - !type:AdjacentNode
       nodeGroupID: AMEngine

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -99,6 +99,7 @@ namespace Content.Server.Database
         [Column("eye_color")] public string EyeColor { get; set; } = null!;
         [Column("skin_color")] public string SkinColor { get; set; } = null!;
         [Column("clothing")] public string Clothing { get; set; } = null!;
+        [Column("backpack")] public string Backpack { get; set; } = null!;
         public List<Job> Jobs { get; } = new();
         public List<Antag> Antags { get; } = new();
 

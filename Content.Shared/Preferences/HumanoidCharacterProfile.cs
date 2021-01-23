@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +34,7 @@ namespace Content.Shared.Preferences
             Gender gender,
             HumanoidCharacterAppearance appearance,
             ClothingPreference clothing,
+            BackpackPreference backpack,
             Dictionary<string, JobPriority> jobPriorities,
             PreferenceUnavailableMode preferenceUnavailable,
             List<string> antagPreferences)
@@ -44,6 +45,7 @@ namespace Content.Shared.Preferences
             Gender = gender;
             Appearance = appearance;
             Clothing = clothing;
+            Backpack = backpack;
             _jobPriorities = jobPriorities;
             PreferenceUnavailable = preferenceUnavailable;
             _antagPreferences = antagPreferences;
@@ -54,7 +56,7 @@ namespace Content.Shared.Preferences
             HumanoidCharacterProfile other,
             Dictionary<string, JobPriority> jobPriorities,
             List<string> antagPreferences)
-            : this(other.Name, other.Age, other.Sex, other.Gender, other.Appearance, other.Clothing,
+            : this(other.Name, other.Age, other.Sex, other.Gender, other.Appearance, other.Clothing, other.Backpack,
                 jobPriorities, other.PreferenceUnavailable, antagPreferences)
         {
         }
@@ -72,10 +74,11 @@ namespace Content.Shared.Preferences
             Gender gender,
             HumanoidCharacterAppearance appearance,
             ClothingPreference clothing,
+            BackpackPreference backpack,
             IReadOnlyDictionary<string, JobPriority> jobPriorities,
             PreferenceUnavailableMode preferenceUnavailable,
             IReadOnlyList<string> antagPreferences)
-            : this(name, age, sex, gender, appearance, clothing, new Dictionary<string, JobPriority>(jobPriorities),
+            : this(name, age, sex, gender, appearance, clothing, backpack, new Dictionary<string, JobPriority>(jobPriorities),
                 preferenceUnavailable, new List<string>(antagPreferences))
         {
         }
@@ -98,7 +101,7 @@ namespace Content.Shared.Preferences
             var name = $"{firstName} {lastName}";
             var age = random.Next(MinimumAge, MaximumAge);
 
-            return new HumanoidCharacterProfile(name, age, sex, gender, HumanoidCharacterAppearance.Random(sex), ClothingPreference.Jumpsuit,
+            return new HumanoidCharacterProfile(name, age, sex, gender, HumanoidCharacterAppearance.Random(sex), ClothingPreference.Jumpsuit, BackpackPreference.Backpack,
                 new Dictionary<string, JobPriority>
                 {
                     {SharedGameTicker.OverflowJob, JobPriority.High}
@@ -112,6 +115,7 @@ namespace Content.Shared.Preferences
         public ICharacterAppearance CharacterAppearance => Appearance;
         public HumanoidCharacterAppearance Appearance { get; private set; }
         public ClothingPreference Clothing { get; private set; }
+        public BackpackPreference Backpack { get; private set; }
         public IReadOnlyDictionary<string, JobPriority> JobPriorities => _jobPriorities;
         public IReadOnlyList<string> AntagPreferences => _antagPreferences;
         public PreferenceUnavailableMode PreferenceUnavailable { get; private set; }
@@ -145,7 +149,10 @@ namespace Content.Shared.Preferences
         {
             return new(this) { Clothing = clothing };
         }
-
+        public HumanoidCharacterProfile WithBackpackPreference(BackpackPreference backpack)
+        {
+            return new(this) { Backpack = backpack };
+        }
         public HumanoidCharacterProfile WithJobPriorities(IEnumerable<KeyValuePair<string, JobPriority>> jobPriorities)
         {
             return new(this, new Dictionary<string, JobPriority>(jobPriorities), _antagPreferences);
@@ -221,7 +228,7 @@ namespace Content.Shared.Preferences
             string name;
             if (string.IsNullOrEmpty(profile.Name))
             {
-                name = "John Doe";
+                name = "Urist McHands";
             }
             else if (profile.Name.Length > MaxNameLength)
             {
@@ -254,6 +261,14 @@ namespace Content.Shared.Preferences
                 _ => ClothingPreference.Jumpsuit // Invalid enum values.
             };
 
+            var backpack = profile.Backpack switch
+            {
+                BackpackPreference.Backpack => BackpackPreference.Backpack,
+                BackpackPreference.Satchel => BackpackPreference.Satchel,
+                BackpackPreference.Duffelbag => BackpackPreference.Duffelbag,
+                _ => BackpackPreference.Backpack // Invalid enum values.
+            };
+
             var priorities = new Dictionary<string, JobPriority>(profile.JobPriorities
                 .Where(p => prototypeManager.HasIndex<JobPrototype>(p.Key) && p.Value switch
                 {
@@ -268,11 +283,11 @@ namespace Content.Shared.Preferences
                 .Where(prototypeManager.HasIndex<AntagPrototype>)
                 .ToList();
 
-            return new HumanoidCharacterProfile(name, age, sex, gender, appearance, clothing, priorities, prefsUnavailableMode, antags);
+            return new HumanoidCharacterProfile(name, age, sex, gender, appearance, clothing, backpack, priorities, prefsUnavailableMode, antags);
         }
 
         public string Summary =>
-            Loc.GetString("{0}, {1} years old human. {2:Their} pronouns are {2:they}/{2:them}.", Name, Age, this);
+             Loc.GetString(" This is {0}. {2:They} {2:are} {1} years old.", Name, Age, this); 
 
         public bool MemberwiseEquals(ICharacterProfile maybeOther)
         {
@@ -283,6 +298,7 @@ namespace Content.Shared.Preferences
             if (Gender != other.Gender) return false;
             if (PreferenceUnavailable != other.PreferenceUnavailable) return false;
             if (Clothing != other.Clothing) return false;
+            if (Backpack != other.Backpack) return false;
             if (!_jobPriorities.SequenceEqual(other._jobPriorities)) return false;
             if (!_antagPreferences.SequenceEqual(other._antagPreferences)) return false;
             return Appearance.MemberwiseEquals(other.Appearance);
@@ -302,7 +318,8 @@ namespace Content.Shared.Preferences
                     Sex,
                     Gender,
                     Appearance,
-                    Clothing
+                    Clothing,
+                    Backpack
                 ),
                 PreferenceUnavailable,
                 _jobPriorities,

@@ -81,7 +81,6 @@
     },
     {
       "name": "rcl-0",
-      "directions": 1,
       "delays": [
         [
           1
@@ -90,7 +89,6 @@
     },
     {
       "name": "rcl-10",
-      "directions": 1,
       "delays": [
         [
           1
@@ -99,7 +97,6 @@
     },
     {
       "name": "rcl-20",
-      "directions": 1,
       "delays": [
         [
           1
@@ -108,7 +105,6 @@
     },
     {
       "name": "rcl-30",
-      "directions": 1,
       "delays": [
         [
           1

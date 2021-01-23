@@ -2,7 +2,7 @@
   name: nuclear authentication disk
   parent: BaseItem
   id: NukeDisk
-  description: GET DAT FUCKKEN DISK
+  description: A nuclear auth disk, capable of arming a nuke if used along with a code. Note from nanotrasen reads "THIS IS YOUR MOST IMPORTANT POSESSION, SECURE DAT FUKKEN DISK!"
   components:
   - type: Sprite
     netsync: false
@@ -16,4 +16,4 @@
 - type: entity
   parent: NukeDisk
   id: NukeDiskFake
-  description: GET DAT FUCK- wait a second...
+  description: A nuclear auth disk, capable of.. WAIT THIS IS JUST PAINTED PLASTIC, FUCK-

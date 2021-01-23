@@ -38,7 +38,7 @@
     drawWarnings: false
   - type: SolutionContainer
     maxVol: 200
-    caps: AddTo, NoExamine
+    caps: AddTo
   - type: Pourable
   - type: SnapGrid
     offset: Center

@@ -32,15 +32,15 @@
     thresholds:
       15:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:PlaySoundCollectionBehavior
-          soundCollection: WindowBreak
+          soundCollection: GlassBreak
         - !type:SpawnEntitiesBehavior
           spawn:
             ShardGlass:
               min: 1
               max: 2
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: SnapGrid
     offset: Center
   - type: Airtight
@@ -70,15 +70,15 @@
     thresholds:
       75:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:PlaySoundCollectionBehavior
-          soundCollection: WindowBreak
+          soundCollection: GlassBreak
         - !type:SpawnEntitiesBehavior
           spawn:
             ShardGlassReinforced:
               min: 1
               max: 2
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: Window
     base: rwindow
     maxDamage: 75
@@ -102,15 +102,15 @@
     thresholds:
       100:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:PlaySoundCollectionBehavior
-          soundCollection: WindowBreak
+          soundCollection: GlassBreak
         - !type:SpawnEntitiesBehavior
           spawn:
             ShardGlassPhoron:
               min: 1
               max: 2
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     resistances: metallicResistances
   - type: Window
     base: pwindow
@@ -118,10 +118,3 @@
   - type: Construction
     graph: window
     node: phoronWindow
-
-- type: soundCollection
-  id: WindowBreak
-  files:
-  - /Audio/Effects/glass_break1.ogg
-  - /Audio/Effects/glass_break2.ogg
-  - /Audio/Effects/glass_break3.ogg
