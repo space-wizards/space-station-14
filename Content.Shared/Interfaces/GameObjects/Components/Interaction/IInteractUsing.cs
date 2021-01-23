@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Robust.Shared;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
@@ -12,6 +13,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     /// who is in range and has unobstructed reach of the target entity (allows inside blockers). This includes
     /// clicking on an object in the world as well as clicking on an object in inventory.
     /// </summary>
+    [RequiresExplicitImplementation]
     public interface IInteractUsing
     {
         /// <summary>

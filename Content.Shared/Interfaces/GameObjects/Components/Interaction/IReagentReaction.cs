@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Chemistry;
+using Robust.Shared;
 
 namespace Content.Shared.Interfaces.GameObjects.Components
 {
@@ -9,6 +10,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         Ingestion,
     }
 
+    [RequiresExplicitImplementation]
     public interface IReagentReaction
     {
         ReagentUnit ReagentReactTouch(ReagentPrototype reagent, ReagentUnit volume) => ReagentUnit.Zero;

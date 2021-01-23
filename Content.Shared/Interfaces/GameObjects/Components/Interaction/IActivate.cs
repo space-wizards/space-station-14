@@ -1,5 +1,6 @@
 using System;
 using JetBrains.Annotations;
+using Robust.Shared;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 
@@ -12,6 +13,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     ///     object in inventory. Unlike IUse, this can be performed on entities that aren't in the active hand,
     ///     even when the active hand is currently holding something else.
     /// </summary>
+    [RequiresExplicitImplementation]
     public interface IActivate
     {
         /// <summary>

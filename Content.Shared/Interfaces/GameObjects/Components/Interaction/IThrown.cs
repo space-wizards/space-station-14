@@ -1,5 +1,6 @@
 ﻿using System;
 using JetBrains.Annotations;
+using Robust.Shared;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 
@@ -8,6 +9,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     /// <summary>
     ///     This interface gives components behavior when thrown.
     /// </summary>
+    [RequiresExplicitImplementation]
     public interface IThrown
     {
         void Thrown(ThrownEventArgs eventArgs);

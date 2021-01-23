@@ -1,5 +1,6 @@
 ﻿using System;
 using JetBrains.Annotations;
+using Robust.Shared;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
@@ -9,6 +10,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     /// <summary>
     ///     This interface gives components behavior when landing after being thrown.
     /// </summary>
+    [RequiresExplicitImplementation]
     public interface ILand
     {
         void Land(LandEventArgs eventArgs);

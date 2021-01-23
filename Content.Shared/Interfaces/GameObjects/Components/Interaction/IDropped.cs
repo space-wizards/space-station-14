@@ -1,5 +1,6 @@
 ﻿using System;
 using JetBrains.Annotations;
+using Robust.Shared;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 
@@ -8,6 +9,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     /// <summary>
     ///     This interface gives components behavior when they're dropped by a mob.
     /// </summary>
+    [RequiresExplicitImplementation]
     public interface IDropped
     {
         void Dropped(DroppedEventArgs eventArgs);

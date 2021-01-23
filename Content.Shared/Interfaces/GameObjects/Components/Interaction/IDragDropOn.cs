@@ -1,9 +1,12 @@
+using Robust.Shared;
+
 namespace Content.Shared.Interfaces.GameObjects.Components
 {
     /// <summary>
     ///     This interface allows the component's entity to be dragged and dropped
     ///     onto by another entity and gives it behavior when that occurs.
     /// </summary>
+    [RequiresExplicitImplementation]
     public interface IDragDropOn
     {
         /// <summary>

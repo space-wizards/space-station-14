@@ -1,10 +1,12 @@
 ﻿using System;
+using Robust.Shared;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 
 namespace Content.Shared.Interfaces.GameObjects.Components
 {
+    [RequiresExplicitImplementation]
     public interface IThrowCollide
     {
         void HitBy(ThrowCollideEventArgs eventArgs) {}
