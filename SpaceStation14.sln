@@ -90,7 +90,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamlX", "RobustToolbox\Xaml
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamlX.Runtime", "RobustToolbox\XamlX\src\XamlX.Runtime\XamlX.Runtime.csproj", "{440426C1-8DCA-43F6-967F-94439B8DAF47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Analyzer", "RobustToolbox\Robust.Analyzer\Robust.Analyzer.csproj", "{1BEB8C8B-9ACD-4DB4-B97D-56331EE0AA89}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Analyzers", "RobustToolbox\Robust.Analyzers\Robust.Analyzers.csproj", "{1BEB8C8B-9ACD-4DB4-B97D-56331EE0AA89}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
