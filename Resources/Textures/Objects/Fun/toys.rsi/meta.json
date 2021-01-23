@@ -9,7 +9,6 @@
   "states": [
     {
       "name": "carpplush",
-      "directions": 1,
       "delays": [
         [
           1
@@ -18,7 +17,6 @@
     },
     {
       "name": "narplush",
-      "directions": 1,
       "delays": [
         [
           1
@@ -27,7 +25,6 @@
     },
     {
       "name": "plushie_h",
-      "directions": 1,
       "delays": [
         [
           1
@@ -36,7 +33,6 @@
     },
     {
       "name": "plushie_lizard",
-      "directions": 1,
       "delays": [
         [
           1
@@ -45,7 +41,6 @@
     },
     {
       "name": "plushie_nuke",
-      "directions": 1,
       "delays": [
         [
           1
@@ -54,7 +49,6 @@
     },
     {
       "name": "plushie_slime",
-      "directions": 1,
       "delays": [
         [
           1
@@ -63,7 +57,6 @@
     },
     {
       "name": "plushie_snake",
-      "directions": 1,
       "delays": [
         [
           1
@@ -72,7 +65,6 @@
     },
     {
       "name": "doll",
-      "directions": 1,
       "delays": [
         [
           1
@@ -153,7 +145,6 @@
     },
     {
       "name": "AI",
-      "directions": 1,
       "delays": [
         [
           1
@@ -162,7 +153,6 @@
     },
     {
       "name": "base",
-      "directions": 1,
       "delays": [
         [
           1
@@ -171,7 +161,6 @@
     },
     {
       "name": "bolt-closed",
-      "directions": 1,
       "delays": [
         [
           1
@@ -180,7 +169,6 @@
     },
     {
       "name": "bolt-open",
-      "directions": 1,
       "delays": [
         [
           1
@@ -189,7 +177,6 @@
     },
     {
       "name": "deathripleytoy",
-      "directions": 1,
       "delays": [
         [
           1
@@ -198,7 +185,6 @@
     },
     {
       "name": "durandprize",
-      "directions": 1,
       "delays": [
         [
           1
@@ -207,7 +193,6 @@
     },
     {
       "name": "fireripleytoy",
-      "directions": 1,
       "delays": [
         [
           1
@@ -216,7 +201,6 @@
     },
     {
       "name": "foamblade",
-      "directions": 1,
       "delays": [
         [
           1
@@ -225,7 +209,6 @@
     },
     {
       "name": "foamcrossbow",
-      "directions": 1,
       "delays": [
         [
           1
@@ -234,7 +217,6 @@
     },
     {
       "name": "foamdart",
-      "directions": 1,
       "delays": [
         [
           1
@@ -243,7 +225,6 @@
     },
     {
       "name": "griffinprize",
-      "directions": 1,
       "delays": [
         [
           1
@@ -252,7 +233,6 @@
     },
     {
       "name": "foambox",
-      "directions": 1,
       "delays": [
         [
           1
@@ -261,7 +241,6 @@
     },
     {
       "name": "gygaxtoy",
-      "directions": 1,
       "delays": [
         [
           1
@@ -270,7 +249,6 @@
     },
     {
       "name": "honkprize",
-      "directions": 1,
       "delays": [
         [
           1
@@ -279,7 +257,6 @@
     },
     {
       "name": "ian",
-      "directions": 1,
       "delays": [
         [
           1
@@ -288,7 +265,6 @@
     },
     {
       "name": "marauderprize",
-      "directions": 1,
       "delays": [
         [
           1
@@ -297,7 +273,6 @@
     },
     {
       "name": "maulerprize",
-      "directions": 1,
       "delays": [
         [
           1
@@ -306,7 +281,6 @@
     },
     {
       "name": "nuketoy",
-      "directions": 1,
       "delays": [
         [
           0.1,
@@ -316,7 +290,6 @@
     },
     {
       "name": "odysseusprize",
-      "directions": 1,
       "delays": [
         [
           1
@@ -325,7 +298,6 @@
     },
     {
       "name": "owlprize",
-      "directions": 1,
       "delays": [
         [
           1
@@ -334,7 +306,6 @@
     },
     {
       "name": "phazonprize",
-      "directions": 1,
       "delays": [
         [
           1
@@ -343,7 +314,6 @@
     },
     {
       "name": "reticenceprize",
-      "directions": 1,
       "delays": [
         [
           1
@@ -352,7 +322,6 @@
     },
     {
       "name": "ripleytoy",
-      "directions": 1,
       "delays": [
         [
           1
@@ -361,7 +330,6 @@
     },
     {
       "name": "seraphprize",
-      "directions": 1,
       "delays": [
         [
           1
@@ -370,7 +338,6 @@
     },
     {
       "name": "skeletonprize",
-      "directions": 1,
       "delays": [
         [
           1
@@ -379,7 +346,6 @@
     },
     {
       "name": "snappop",
-      "directions": 1,
       "delays": [
         [
           1
@@ -388,7 +354,6 @@
     },
     {
       "name": "spbox",
-      "directions": 1,
       "delays": [
         [
           1
@@ -397,7 +362,6 @@
     },
     {
       "name": "toy_mouse",
-      "directions": 1,
       "delays": [
         [
           1
@@ -406,7 +370,6 @@
     },
     {
       "name": "capbullet",
-      "directions": 1,
       "delays": [
         [
           1
@@ -595,7 +558,6 @@
     },
     {
       "name": "synb",
-      "directions": 1,
       "delays": [
         [
           1
@@ -604,7 +566,6 @@
     },
     {
       "name": "corgib",
-      "directions": 1,
       "delays": [
         [
           1
@@ -613,7 +574,6 @@
     },
     {
       "name": "football",
-      "directions": 1,
       "delays": [
         [
           1
@@ -658,7 +618,6 @@
     },
     {
       "name": "basketball",
-      "directions": 1,
       "delays": [
         [
           1

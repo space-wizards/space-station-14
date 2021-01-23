@@ -9,16 +9,6 @@
   - type: Physics
   - type: SnapGrid
     offset: Center
-
-  - type: Sprite
-    sprite: Constructible/Atmos/pipeitems.rsi
-    state: vent
-  - type: Appearance
-    visuals:
-    - type: PipeVisualizer
-      pipeRSI: Constructible/Atmos/pipe.rsi
-    - type: VentVisualizer
-      ventRSI: Constructible/Atmos/vent.rsi
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
@@ -27,7 +17,17 @@
         behaviors:
         - !type:DoActsBehavior
           acts: ["Destruction"]
-
+  - type: Sprite
+    netsync: false
+    sprite: Constructible/Atmos/vent.rsi
+    layers:
+    - sprite: Constructible/Atmos/pipe.rsi
+      state: pipeHalf
+    - state: ventOff      
+  - type: Appearance
+    visuals:
+    - type: VentVisualizer
+    
 - type: entity
   parent: VentBase
   id: Vent

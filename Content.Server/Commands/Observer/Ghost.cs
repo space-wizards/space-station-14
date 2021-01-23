@@ -31,7 +31,7 @@ namespace Content.Server.Commands.Observer
                 return;
             }
 
-            var mind = player!.ContentData()?.Mind;
+            var mind = player.ContentData()?.Mind;
             if (mind == null)
             {
                 shell?.SendText(player, "You have no Mind, you can't ghost.");

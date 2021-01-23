@@ -8,16 +8,13 @@
     "copyright":"Taken from https://github.com/tgstation/tgstation",
     "states":[
         {
-            "name":"on",
-            "directions": 1
+            "name":"on"
         },
         {
-            "name": "off",
-            "directions": 1
+            "name": "off"
         },
         {
-            "name": "broken",
-            "directions": 1
+            "name": "broken"
         }
     ]
 }

@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Chemistry;
@@ -147,7 +147,7 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
             }
 
             // Add solution to _stomachContents
-            solutionComponent.TryAddSolution(solution, false, true);
+            solutionComponent.TryAddSolution(solution);
             // Add each reagent to _reagentDeltas. Used to track how long each reagent has been in the stomach
             foreach (var reagent in solution.Contents)
             {

@@ -7,7 +7,7 @@ using Content.Server.GameObjects.Components.Body.Behavior;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Utensil;
+using Content.Server.GameObjects.Components.Culinary;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.Interfaces;
@@ -26,7 +26,6 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Nutrition
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IAfterInteract))]
     public class FoodComponent : Component, IUse, IAfterInteract
     {
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;

@@ -34,7 +34,7 @@
   name: lizard plushie
   parent: BaseItem
   id: PlushieLizard
-  description: An adorable stuffed toy that resembles a lizardperson.
+  description: An adorable stuffed toy that resembles a lizardperson. Made by CentCom as a token initiative to combat speciesism in work environments. "Welcome your new colleges as you do this plush, with open arms!"
   components:
   - type: Toys
   - type: LoopingSound
@@ -528,7 +528,6 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: foamblade
-
   - type: MeleeWeapon
     range: 2.0
     arcwidth: 0
@@ -538,6 +537,15 @@
     sprite: Objects/Fun/toys.rsi
     HeldPrefix: foamblade
   - type: ItemCooldown
+
+- type: entity
+  name: foamblade
+  parent: FoamBlade
+  id: FoamBladeAdminbus
+  suffix: adminbused
+  components:
+    - type: MeleeWeapon
+      damage: 1000
 
 # MISC
 

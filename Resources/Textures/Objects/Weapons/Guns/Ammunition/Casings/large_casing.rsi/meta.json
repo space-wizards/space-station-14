@@ -8,12 +8,10 @@
     "copyright": "https://github.com/discordia-space/CEV-Eris/raw/8a848cde3e8610455f77704e861e5a06315a3b0e/icons/obj/ammo.dmi",
     "states": [
         {
-            "name": "base",
-            "directions": 1
+            "name": "base"
         },
         {
-            "name": "spent",
-            "directions": 1
+            "name": "spent"
         }
     ]
 }

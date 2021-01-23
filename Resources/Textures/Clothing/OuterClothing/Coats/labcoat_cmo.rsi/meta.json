@@ -8,12 +8,10 @@
   },
   "states": [
     {
-      "name": "icon",
-      "directions": 1
+      "name": "icon"
     },
     {
-      "name": "icon-open",
-      "directions": 1
+      "name": "icon-open"
     },
     {
       "name": "equipped-OUTERCLOTHING",

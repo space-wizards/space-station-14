@@ -4,6 +4,7 @@ using Content.Server.GameObjects.Components.Observer;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.StationEvents;
+using Content.Server.GameObjects.Components.Observer;
 using Content.Shared.GameObjects;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects.EntitySystems;
@@ -192,7 +193,7 @@ namespace Content.Server.GameObjects.Components.Singularity
         }
 
         private readonly List<IEntity> _previousPulledEntities = new();
-        public void PullUpdate()
+        public void CleanupPulledEntities()
         {
             foreach (var previousPulledEntity in _previousPulledEntities)
             {
@@ -202,7 +203,11 @@ namespace Content.Server.GameObjects.Components.Singularity
                 controller.StopPull();
             }
             _previousPulledEntities.Clear();
+        }
 
+        public void PullUpdate()
+        {
+            CleanupPulledEntities();
             var entitiesToPull = Owner.EntityManager.GetEntitiesInRange(Owner.Transform.Coordinates, Level * 10);
             foreach (var entity in entitiesToPull)
             {
@@ -211,6 +216,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                 if (entity.HasComponent<SingularityComponent>()) continue;
                 if (!entity.Transform.ParentUid.IsValid()) continue; //Don't move root node of grid (root node has no parent)
                 if (!entity.TryGetComponent<PhysicsComponent>(out var collidableComponent)) continue;
+                if (entity.HasComponent<GhostComponent>()) continue;
                 var controller = collidableComponent.EnsureController<SingularityPullController>();
                 if(Owner.Transform.Coordinates.EntityId != entity.Transform.Coordinates.EntityId) continue;
                 var vec = (Owner.Transform.Coordinates - entity.Transform.Coordinates).Position;
@@ -284,6 +290,7 @@ namespace Content.Server.GameObjects.Components.Singularity
         {
             _playingSound?.Stop();
             _audioSystem.PlayAtCoords("/Audio/Effects/singularity_collapse.ogg", Owner.Transform.Coordinates);
+            CleanupPulledEntities();
             base.OnRemove();
         }
     }

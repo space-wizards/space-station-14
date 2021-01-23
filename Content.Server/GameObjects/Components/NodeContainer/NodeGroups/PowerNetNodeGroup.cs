@@ -29,6 +29,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
     [NodeGroup(NodeGroupID.HVPower, NodeGroupID.MVPower)]
     public class PowerNetNodeGroup : BaseNetConnectorNodeGroup<BasePowerNetComponent, IPowerNet>, IPowerNet
     {
+        private static readonly Priority[] CachedPriorities = (Priority[]) Enum.GetValues(typeof(Priority));
+
         [Dependency] private readonly IPowerNetManager _powerNetManager = default!;
 
         [ViewVariables]
@@ -121,7 +123,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         public void UpdateConsumerReceivedPower()
         {
             var remainingSupply = _totalSupply;
-            foreach (Priority priority in Enum.GetValues(typeof(Priority)))
+            foreach (var priority in CachedPriorities)
             {
                 var categoryPowerDemand = _drawByPriority[priority];
                 if (remainingSupply >= categoryPowerDemand) //can fully power all in category

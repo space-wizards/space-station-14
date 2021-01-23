@@ -1,10 +1,11 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.StationEvents;
 using Content.Shared.Atmos;
+using Content.Shared.Roles;
 using Robust.Client.Console;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.Placement;
@@ -30,6 +31,7 @@ namespace Content.Client.UserInterface.AdminMenu
         public readonly TabContainer MasterTabContainer;
         public readonly VBoxContainer PlayerList;
         public readonly Label PlayerCount;
+        private readonly IGameHud _gameHud;
 
         protected override Vector2? CustomSize => (500, 250);
 
@@ -44,7 +46,7 @@ namespace Content.Client.UserInterface.AdminMenu
         {
             new SpawnEntitiesCommandButton(),
             new SpawnTilesCommandButton(),
-            new StationEventsCommandButton(),
+            new StationEventsCommandButton()
         };
         private readonly List<CommandButton> _debugButtons = new()
         {
@@ -206,6 +208,7 @@ namespace Content.Client.UserInterface.AdminMenu
 
         public AdminMenuWindow() //TODO: search for buttons?
         {
+            _gameHud = IoCManager.Resolve<IGameHud>();
             Title = Loc.GetString("Admin Menu");
 
             #region PlayerList
@@ -374,6 +377,19 @@ namespace Content.Client.UserInterface.AdminMenu
             Contents.AddChild(MasterTabContainer);
             //Request station events, so we can use them later
             IoCManager.Resolve<IStationEventManager>().RequestEvents();
+        }
+
+        protected override void ExitedTree()
+        {
+            base.ExitedTree();
+            _gameHud.AdminButtonDown = false;
+
+        }
+
+        protected override void EnteredTree()
+        {
+            base.EnteredTree();
+            _gameHud.AdminButtonDown = true;
         }
 
         #region CommandButtonBaseClass

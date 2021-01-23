@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
@@ -65,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             serializer.DataField(this, x => x.Arc, "arc", "default");
             serializer.DataField(this, x => x.ClickArc, "clickArc", "punch");
             serializer.DataField(this, x => x._hitSound, "hitSound", "/Audio/Weapons/genhit1.ogg");
-            serializer.DataField(this, x => x._missSound, "hitSound", "/Audio/Weapons/punchmiss.ogg");
+            serializer.DataField(this, x => x._missSound, "missSound", "/Audio/Weapons/punchmiss.ogg");
             serializer.DataField(this, x => x.ArcCooldownTime, "arcCooldownTime", 1f);
             serializer.DataField(this, x => x.CooldownTime, "cooldownTime", 1f);
             serializer.DataField(this, x => x.DamageType, "damageType", DamageType.Blunt);

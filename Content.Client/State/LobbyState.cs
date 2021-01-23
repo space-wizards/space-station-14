@@ -13,6 +13,7 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
@@ -35,6 +36,7 @@ namespace Content.Client.State
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         [ViewVariables] private CharacterSetupGui _characterSetup;
         [ViewVariables] private LobbyGui _lobby;
@@ -144,10 +146,11 @@ namespace Content.Client.State
             }
             else
             {
-                var difference = _clientGameTicker.StartTime - DateTime.UtcNow;
-                if (difference.Ticks < 0)
+                var difference = _clientGameTicker.StartTime - _gameTiming.CurTime;
+                var seconds = difference.TotalSeconds;
+                if (seconds < 0)
                 {
-                    if (difference.TotalSeconds < -5)
+                    if (seconds < -5)
                     {
                         text = Loc.GetString("Right Now?");
                     }
@@ -158,7 +161,7 @@ namespace Content.Client.State
                 }
                 else
                 {
-                    text = $"{(int) Math.Floor(difference.TotalMinutes)}:{difference.Seconds:D2}";
+                    text = $"{(int) Math.Floor(difference.TotalMinutes / 60)}:{difference.Seconds:D2}";
                 }
             }
 
@@ -178,8 +181,10 @@ namespace Content.Client.State
                         _clientGameTicker.Status.Remove(p.Key);
                 }
             }
+
             UpdatePlayerList();
         }
+
         private void LobbyReadyUpdated() => UpdatePlayerList();
 
         private void LobbyStatusUpdated()
@@ -224,8 +229,6 @@ namespace Content.Client.State
 
             foreach (var session in _playerManager.Sessions.OrderBy(s => s.Name))
             {
-
-
                 var readyState = "";
                 // Don't show ready state if we're ingame
                 if (!_clientGameTicker.IsGameStarted)
@@ -244,6 +247,7 @@ namespace Content.Client.State
                         _ => "",
                     };
                 }
+
                 _lobby.OnlinePlayerList.AddItem(session.Name, readyState);
             }
         }

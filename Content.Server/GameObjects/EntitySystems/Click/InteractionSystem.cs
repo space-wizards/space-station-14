@@ -71,6 +71,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             var interactionArgs = new DragDropEventArgs(performer, msg.DropLocation, dropped, target);
 
             // must be in range of both the target and the object they are drag / dropping
+            // Client also does this check but ya know we gotta validate it.
             if (!interactionArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return;
 
             // trigger dragdrops on the dropped entity
@@ -401,7 +402,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// <summary>
         ///     We didn't click on any entity, try doing an AfterInteract on the click location
         /// </summary>
-        private void InteractAfter(IEntity user, IEntity weapon, EntityCoordinates clickLocation, bool canReach)
+        private async void InteractAfter(IEntity user, IEntity weapon, EntityCoordinates clickLocation, bool canReach)
         {
             var message = new AfterInteractMessage(user, weapon, null, clickLocation, canReach);
             RaiseLocalEvent(message);
@@ -411,11 +412,11 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             var afterInteracts = weapon.GetAllComponents<IAfterInteract>().ToList();
-            var afterInteractEventArgs = new AfterInteractEventArgs { User = user, ClickLocation = clickLocation, CanReach = canReach };
+            var afterInteractEventArgs = new AfterInteractEventArgs(user, clickLocation, null, canReach);
 
             foreach (var afterInteract in afterInteracts)
             {
-                afterInteract.AfterInteract(afterInteractEventArgs);
+                await afterInteract.AfterInteract(afterInteractEventArgs);
             }
         }
 
@@ -460,10 +461,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
             // If we aren't directly attacking the nearby object, lets see if our item has an after attack we can do
             var afterAttacks = weapon.GetAllComponents<IAfterInteract>().ToList();
-            var afterAttackEventArgs = new AfterInteractEventArgs
-            {
-                User = user, ClickLocation = clickLocation, Target = attacked, CanReach = true
-            };
+            var afterAttackEventArgs = new AfterInteractEventArgs(user, clickLocation, attacked, canReach: true);
 
             foreach (var afterAttack in afterAttacks)
             {
@@ -804,7 +802,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// Will have two behaviors, either "uses" the weapon at range on the entity if it is capable of accepting that action
         /// Or it will use the weapon itself on the position clicked, regardless of what was there
         /// </summary>
-        public void RangedInteraction(IEntity user, IEntity weapon, IEntity attacked, EntityCoordinates clickLocation)
+        public async void RangedInteraction(IEntity user, IEntity weapon, IEntity attacked, EntityCoordinates clickLocation)
         {
             var rangedMsg = new RangedInteractMessage(user, weapon, attacked, clickLocation);
             RaiseLocalEvent(rangedMsg);
@@ -833,15 +831,12 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return;
 
             var afterAttacks = weapon.GetAllComponents<IAfterInteract>().ToList();
-            var afterAttackEventArgs = new AfterInteractEventArgs
-            {
-                User = user, ClickLocation = clickLocation, Target = attacked, CanReach = false
-            };
+            var afterAttackEventArgs = new AfterInteractEventArgs(user, clickLocation, attacked, canReach: false);
 
             //See if we have a ranged attack interaction
             foreach (var afterAttack in afterAttacks)
             {
-                afterAttack.AfterInteract(afterAttackEventArgs);
+                await afterAttack.AfterInteract(afterAttackEventArgs);
             }
         }
 

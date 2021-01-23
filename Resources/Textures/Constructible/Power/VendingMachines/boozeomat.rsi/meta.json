@@ -8,12 +8,10 @@
     "copyright": "Taken from https://github.com/discordia-space/CEV-Eris/commit/e107a20eb3e8def075a7d967dbf91426accabcbe",
     "states": [
         {
-            "name": "broken",
-            "directions": 1
+            "name": "broken"
         },
         {
             "name": "deny-unshaded",
-            "directions": 1,
             "delays": [
                 [
                     0.2,
@@ -29,7 +27,6 @@
         },
         {
             "name": "normal-unshaded",
-            "directions": 1,
             "delays": [
                 [
                     0.2,
@@ -44,8 +41,7 @@
             ]
         },
         {
-            "name": "off",
-            "directions": 1
+            "name": "off"
         }
     ]
 }
