@@ -280,8 +280,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
                 }
             }
 
-            Owner.Transform.LocalRotation = Angle.Zero;
-            Owner.Transform.LocalRotation = newAngle;
+            Owner.Transform.LocalRotation = newAngle; //rotate the entity so the sprite's new state will be of the correct direction
             PipeDirection = newDir;
 
             RefreshNodeGroup();
