@@ -3,7 +3,7 @@ using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
-using Robust.Server.Interfaces.Console;
+using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -15,7 +15,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Commands.Body
 {
     [AdminCommand(AdminFlags.Fun)]
-    class AddHandCommand : IClientCommand
+    class AddHandCommand : IServerCommand
     {
         public const string DefaultHandPrototype = "LeftHandHuman";
 
@@ -23,11 +23,11 @@ namespace Content.Server.Commands.Body
         public string Description => "Adds a hand to your entity.";
         public string Help => $"Usage: {Command} <entityUid> <handPrototypeId> / {Command} <entityUid> / {Command} <handPrototypeId> / {Command}";
 
-        public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IServerConsoleShell shell, IPlayerSession? player, string[] args)
         {
             if (args.Length > 1)
             {
-                shell.SendText(player, Help);
+                shell.WriteLine(Help);
                 return;
             }
 
@@ -43,13 +43,13 @@ namespace Content.Server.Commands.Body
                 {
                     if (player == null)
                     {
-                        shell.SendText(player, "Only a player can run this command without arguments.");
+                        shell.WriteLine("Only a player can run this command without arguments.");
                         return;
                     }
 
                     if (player.AttachedEntity == null)
                     {
-                        shell.SendText(player, "You don't have an entity to add a hand to.");
+                        shell.WriteLine("You don't have an entity to add a hand to.");
                         return;
                     }
 
@@ -63,7 +63,7 @@ namespace Content.Server.Commands.Body
                     {
                         if (!entityManager.TryGetEntity(uid, out var parsedEntity))
                         {
-                            shell.SendText(player, $"No entity found with uid {uid}");
+                            shell.WriteLine($"No entity found with uid {uid}");
                             return;
                         }
 
@@ -74,14 +74,13 @@ namespace Content.Server.Commands.Body
                     {
                         if (player == null)
                         {
-                            shell.SendText(player,
-                                "You must specify an entity to add a hand to when using this command from the server terminal.");
+                            shell.WriteLine("You must specify an entity to add a hand to when using this command from the server terminal.");
                             return;
                         }
 
                         if (player.AttachedEntity == null)
                         {
-                            shell.SendText(player, "You don't have an entity to add a hand to.");
+                            shell.WriteLine("You don't have an entity to add a hand to.");
                             return;
                         }
 
@@ -95,13 +94,13 @@ namespace Content.Server.Commands.Body
                 {
                     if (!EntityUid.TryParse(args[0], out var uid))
                     {
-                        shell.SendText(player, $"{args[0]} is not a valid entity uid.");
+                        shell.WriteLine($"{args[0]} is not a valid entity uid.");
                         return;
                     }
 
                     if (!entityManager.TryGetEntity(uid, out var parsedEntity))
                     {
-                        shell.SendText(player, $"No entity exists with uid {uid}.");
+                        shell.WriteLine($"No entity exists with uid {uid}.");
                         return;
                     }
 
@@ -109,7 +108,7 @@ namespace Content.Server.Commands.Body
 
                     if (!prototypeManager.HasIndex<EntityPrototype>(args[1]))
                     {
-                        shell.SendText(player, $"No hand entity exists with id {args[1]}.");
+                        shell.WriteLine($"No hand entity exists with id {args[1]}.");
                         return;
                     }
 
@@ -119,7 +118,7 @@ namespace Content.Server.Commands.Body
                 }
                 default:
                 {
-                    shell.SendText(player, Help);
+                    shell.WriteLine(Help);
                     return;
                 }
             }
@@ -129,13 +128,13 @@ namespace Content.Server.Commands.Body
                 var random = IoCManager.Resolve<IRobustRandom>();
                 var text = $"You have no body{(random.Prob(0.2f) ? " and you must scream." : ".")}";
 
-                shell.SendText(player, text);
+                shell.WriteLine(text);
                 return;
             }
 
             if (!hand.TryGetComponent(out IBodyPart? part))
             {
-                shell.SendText(player, $"Hand entity {hand} does not have a {nameof(IBodyPart)} component.");
+                shell.WriteLine($"Hand entity {hand} does not have a {nameof(IBodyPart)} component.");
                 return;
             }
 
@@ -144,7 +143,7 @@ namespace Content.Server.Commands.Body
                 ? $"Added hand to entity {entity.Name}"
                 : $"Error occurred trying to add a hand to entity {entity.Name}";
 
-            shell.SendText(player, response);
+            shell.WriteLine(response);
         }
     }
 }

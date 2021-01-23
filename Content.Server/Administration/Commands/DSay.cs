@@ -1,6 +1,6 @@
 using Content.Server.Interfaces.Chat;
 using Content.Shared.Administration;
-using Robust.Server.Interfaces.Console;
+using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -8,7 +8,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    class DSay : IClientCommand
+    class DSay : IServerCommand
     {
         public string Command => "dsay";
 
@@ -16,11 +16,11 @@ namespace Content.Server.Administration.Commands
 
         public string Help => Loc.GetString($"Usage: {Command} <message>");
 
-        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        public void Execute(IServerConsoleShell shell, IPlayerSession player, string[] args)
         {
             if (player == null)
             {
-                shell.SendText((IPlayerSession) null, "Only players can use this command");
+                shell.WriteLine("Only players can use this command");
                 return;
             }
 

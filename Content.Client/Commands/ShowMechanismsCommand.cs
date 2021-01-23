@@ -1,13 +1,12 @@
 ﻿using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Robust.Client.Console;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.Console;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Client.Commands
 {
-    public class ShowMechanismsCommand : IConsoleCommand
+    public class ShowMechanismsCommand : IClientCommand
     {
         public const string CommandName = "showmechanisms";
 
@@ -16,7 +15,7 @@ namespace Content.Client.Commands
         public string Description => "Makes mechanisms visible, even when they shouldn't be.";
         public string Help => $"{Command}";
 
-        public bool Execute(IDebugConsole console, params string[] args)
+        public bool Execute(IClientConsoleShell shell, string[] args)
         {
             var componentManager = IoCManager.Resolve<IComponentManager>();
             var mechanisms = componentManager.EntityQuery<IMechanism>();
@@ -29,7 +28,7 @@ namespace Content.Client.Commands
                 }
             }
 
-            IoCManager.Resolve<IClientConsole>().ProcessCommand("showcontainedcontext");
+            IoCManager.Resolve<IClientConsoleHost>().ProcessCommand("showcontainedcontext");
 
             return false;
         }

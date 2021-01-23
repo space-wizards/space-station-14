@@ -102,7 +102,7 @@ namespace Content.Client.Sandbox
 
     internal class SandboxManager : SharedSandboxManager, ISandboxManager
     {
-        [Dependency] private readonly IClientConsole _console = default!;
+        [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
         [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IClientNetManager _netManager = default!;
         [Dependency] private readonly IPlacementManager _placementManager = default!;
@@ -314,37 +314,37 @@ namespace Content.Client.Sandbox
 
         private void ToggleLight()
         {
-            _console.ProcessCommand("togglelight");
+            _consoleHost.ProcessCommand("togglelight");
         }
 
         private void ToggleFov()
         {
-            _console.ProcessCommand("togglefov");
+            _consoleHost.ProcessCommand("togglefov");
         }
 
         private void ToggleShadows()
         {
-            _console.ProcessCommand("toggleshadows");
+            _consoleHost.ProcessCommand("toggleshadows");
         }
 
         private void ToggleSubFloor()
         {
-            _console.ProcessCommand("showsubfloor");
+            _consoleHost.ProcessCommand("showsubfloor");
         }
 
         private void ShowMarkers()
         {
-            _console.ProcessCommand("showmarkers");
+            _consoleHost.ProcessCommand("showmarkers");
         }
 
         private void ShowBb()
         {
-            _console.ProcessCommand("showbb");
+            _consoleHost.ProcessCommand("showbb");
         }
 
         private void LinkMachines()
         {
-            _console.ProcessCommand("signallink");
+            _consoleHost.ProcessCommand("signallink");
         }
     }
 }

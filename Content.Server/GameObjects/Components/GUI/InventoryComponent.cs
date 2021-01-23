@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Administration.Commands;
@@ -15,7 +15,6 @@ using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Robust.Server.Console;
 using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
@@ -686,9 +685,10 @@ namespace Content.Server.GameObjects.Components.GUI
                 var entityId = target.Uid.ToString();
 
                 var command = new SetOutfitCommand();
-                var shell = IoCManager.Resolve<IConsoleShell>();
+                var host = IoCManager.Resolve<IServerConsoleHost>();
                 var args = new string[] {entityId};
-                command.Execute(shell, user.PlayerSession(), args);
+                var session = user.PlayerSession();
+                command.Execute(new ConsoleShellAdapter(host, session), session, args);
             }
 
             private static bool CanCommand(IEntity user)

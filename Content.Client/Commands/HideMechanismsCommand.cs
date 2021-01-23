@@ -1,20 +1,19 @@
 ﻿using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Robust.Client.Console;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.Console;
 using Robust.Shared.Containers;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Client.Commands
 {
-    public class HideMechanismsCommand : IConsoleCommand
+    public class HideMechanismsCommand : IClientCommand
     {
         public string Command => "hidemechanisms";
         public string Description => $"Reverts the effects of {ShowMechanismsCommand.CommandName}";
         public string Help => $"{Command}";
 
-        public bool Execute(IDebugConsole console, params string[] args)
+        public bool Execute(IClientConsoleShell shell, string[] args)
         {
             var componentManager = IoCManager.Resolve<IComponentManager>();
             var mechanisms = componentManager.EntityQuery<IMechanism>();
@@ -41,7 +40,7 @@ namespace Content.Client.Commands
                 }
             }
 
-            IoCManager.Resolve<IClientConsole>().ProcessCommand("hidecontainedcontext");
+            IoCManager.Resolve<IClientConsoleHost>().ProcessCommand("hidecontainedcontext");
 
             return false;
         }

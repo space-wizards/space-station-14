@@ -1,20 +1,20 @@
 ﻿#nullable enable
 using Content.Server.Administration;
 using Content.Server.Interfaces.Chat;
-using Robust.Server.Interfaces.Console;
+using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Commands.Chat
 {
     [AnyCommand]
-    internal class OOCCommand : IClientCommand
+    internal class OOCCommand : IServerCommand
     {
         public string Command => "ooc";
         public string Description => "Send Out Of Character chat messages.";
         public string Help => "ooc <text>";
 
-        public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IServerConsoleShell shell, IPlayerSession? player, string[] args)
         {
             if (args.Length < 1)
                 return;

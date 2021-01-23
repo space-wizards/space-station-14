@@ -3,7 +3,7 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Shared.Administration;
 using Content.Shared.Roles;
-using Robust.Server.Interfaces.Console;
+using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -14,7 +14,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    class SetOutfitCommand : IClientCommand
+    class SetOutfitCommand : IServerCommand
     {
         public string Command => "setoutfit";
 
@@ -22,17 +22,17 @@ namespace Content.Server.Administration.Commands
 
         public string Help => Loc.GetString("Usage: {0} <entityUid> | {0} <entityUid> <outfitId>", Command);
 
-        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        public void Execute(IServerConsoleShell shell, IPlayerSession player, string[] args)
         {
             if (args.Length < 1)
             {
-                shell.SendText(player, Loc.GetString("Wrong number of arguments."));
+                shell.WriteLine(Loc.GetString("Wrong number of arguments."));
                 return;
             }
 
             if (!int.TryParse(args[0], out var entityUid))
             {
-                shell.SendText(player, Loc.GetString("EntityUid must be a number."));
+                shell.WriteLine(Loc.GetString("EntityUid must be a number."));
                 return;
             }
 
@@ -42,7 +42,7 @@ namespace Content.Server.Administration.Commands
 
             if (!eUid.IsValid() || !entityManager.EntityExists(eUid))
             {
-                shell.SendText(player, Loc.GetString("Invalid entity ID."));
+                shell.WriteLine(Loc.GetString("Invalid entity ID."));
                 return;
             }
 
@@ -50,7 +50,7 @@ namespace Content.Server.Administration.Commands
 
             if (!target.TryGetComponent<InventoryComponent>(out var inventoryComponent))
             {
-                shell.SendText(player, Loc.GetString("Target entity does not have an inventory!"));
+                shell.WriteLine(Loc.GetString("Target entity does not have an inventory!"));
                 return;
             }
 
@@ -65,7 +65,7 @@ namespace Content.Server.Administration.Commands
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             if (!prototypeManager.TryIndex<StartingGearPrototype>(args[1], out var startingGear))
             {
-                shell.SendText(player, Loc.GetString("Invalid outfit id"));
+                shell.WriteLine(Loc.GetString("Invalid outfit id"));
                 return;
             }
 

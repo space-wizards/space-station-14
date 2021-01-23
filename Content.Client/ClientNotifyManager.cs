@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Content.Client.Interfaces;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared;
-using Robust.Client.Interfaces.Console;
+using Robust.Client.Console;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.UserInterface;
@@ -162,13 +162,13 @@ namespace Content.Client
         }
     }
 
-    public class PopupMessageCommand : IConsoleCommand
+    public class PopupMessageCommand : IClientCommand
     {
         public string Command => "popupmsg";
         public string Description => "";
         public string Help => "";
 
-        public bool Execute(IDebugConsole console, params string[] args)
+        public bool Execute(IClientConsoleShell shell, string[] args)
         {
             var arg = args[0];
             var mgr = IoCManager.Resolve<IClientNotifyManager>();

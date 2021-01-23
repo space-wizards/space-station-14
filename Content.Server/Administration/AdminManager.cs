@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,7 +12,6 @@ using Content.Shared;
 using Content.Shared.Administration;
 using Content.Shared.Network.NetMessages;
 using Robust.Server.Console;
-using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
@@ -37,7 +36,7 @@ namespace Content.Server.Administration
         [Dependency] private readonly IServerNetManager _netMgr = default!;
         [Dependency] private readonly IConGroupController _conGroup = default!;
         [Dependency] private readonly IResourceManager _res = default!;
-        [Dependency] private readonly IConsoleShell _consoleShell = default!;
+        [Dependency] private readonly IServerConsoleHost _consoleHost = default!;
         [Dependency] private readonly IChatManager _chat = default!;
 
         private readonly Dictionary<IPlayerSession, AdminReg> _admins = new();
@@ -171,7 +170,7 @@ namespace Content.Server.Administration
             _netMgr.RegisterNetMessage<MsgUpdateAdminStatus>(MsgUpdateAdminStatus.NAME);
 
             // Cache permissions for loaded console commands with the requisite attributes.
-            foreach (var (cmdName, cmd) in _consoleShell.AvailableCommands)
+            foreach (var (cmdName, cmd) in _consoleHost.AvailableCommands)
             {
                 var (isAvail, flagsReq) = GetRequiredFlag(cmd);
 
@@ -420,7 +419,7 @@ namespace Content.Server.Administration
             return false;
         }
 
-        private static (bool isAvail, AdminFlags[] flagsReq) GetRequiredFlag(IClientCommand cmd)
+        private static (bool isAvail, AdminFlags[] flagsReq) GetRequiredFlag(IServerCommand cmd)
         {
             var type = cmd.GetType();
             if (Attribute.IsDefined(type, typeof(AnyCommandAttribute)))

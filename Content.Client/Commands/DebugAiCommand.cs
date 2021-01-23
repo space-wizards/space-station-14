@@ -1,6 +1,6 @@
 using Content.Client.GameObjects.EntitySystems.AI;
 using JetBrains.Annotations;
-using Robust.Client.Interfaces.Console;
+using Robust.Client.Console;
 using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Client.Commands
@@ -9,14 +9,14 @@ namespace Content.Client.Commands
     /// This is used to handle the tooltips above AI mobs
     /// </summary>
     [UsedImplicitly]
-    internal sealed class DebugAiCommand : IConsoleCommand
+    internal sealed class DebugAiCommand : IClientCommand
     {
         // ReSharper disable once StringLiteralTypo
         public string Command => "debugai";
         public string Description => "Handles all tooltip debugging above AI mobs";
         public string Help => "debugai [hide/paths/thonk]";
 
-        public bool Execute(IDebugConsole console, params string[] args)
+        public bool Execute(IClientConsoleShell shell, string[] args)
         {
 #if DEBUG
             if (args.Length < 1)

@@ -1,6 +1,6 @@
 ﻿#nullable enable
 using Content.Shared.Administration;
-using Robust.Server.Interfaces.Console;
+using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -9,17 +9,17 @@ using Robust.Shared.IoC;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public class DeleteEntitiesWithId : IClientCommand
+    public class DeleteEntitiesWithId : IServerCommand
     {
         public string Command => "deleteewi";
         public string Description => "Deletes entities with the specified prototype ID.";
         public string Help => $"Usage: {Command} <prototypeID>";
 
-        public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IServerConsoleShell shell, IPlayerSession? player, string[] args)
         {
             if (args.Length != 1)
             {
-                shell.SendText(player, Help);
+                shell.WriteLine(Help);
                 return;
             }
 
@@ -35,7 +35,7 @@ namespace Content.Server.Administration.Commands
                 i++;
             }
 
-            shell.SendText(player, $"Deleted all entities with id {id}. Occurrences: {i}");
+            shell.WriteLine($"Deleted all entities with id {id}. Occurrences: {i}");
         }
     }
 }

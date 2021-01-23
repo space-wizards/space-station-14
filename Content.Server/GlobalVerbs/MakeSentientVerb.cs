@@ -2,7 +2,6 @@ using Content.Server.Commands;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Verbs;
 using Robust.Server.Console;
-using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -42,7 +41,8 @@ namespace Content.Server.GlobalVerbs
             if (!groupController.CanCommand(player, "makesentient"))
                 return;
 
-            new MakeSentientCommand().Execute(IoCManager.Resolve<IConsoleShell>(), player,
+            var host = IoCManager.Resolve<IServerConsoleHost>();
+            new MakeSentientCommand().Execute(new ConsoleShellAdapter(host, player), player,
                 new[] {target.Uid.ToString()});
         }
     }

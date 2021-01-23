@@ -3,7 +3,7 @@ using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
 using Content.Shared.Administration;
-using Robust.Server.Interfaces.Console;
+using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -11,17 +11,17 @@ using Robust.Shared.IoC;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public class AGhost : IClientCommand
+    public class AGhost : IServerCommand
     {
         public string Command => "aghost";
         public string Description => "Makes you an admin ghost.";
         public string Help => "aghost";
 
-        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        public void Execute(IServerConsoleShell shell, IPlayerSession player, string[] args)
         {
             if (player == null)
             {
-                shell.SendText((IPlayerSession) null, "Nah");
+                shell.WriteLine("Nah");
                 return;
             }
 
@@ -29,7 +29,7 @@ namespace Content.Server.Administration.Commands
 
             if (mind == null)
             {
-                shell.SendText(player, "You can't ghost here!");
+                shell.WriteLine("You can't ghost here!");
                 return;
             }
 

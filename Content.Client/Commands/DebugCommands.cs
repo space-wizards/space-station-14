@@ -1,8 +1,9 @@
+using System;
 using Content.Client.GameObjects.Components;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.Interfaces;
 using Content.Shared.GameObjects;
-using Robust.Client.Interfaces.Console;
+using Robust.Client.Console;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -10,14 +11,14 @@ using Robust.Shared.IoC;
 
 namespace Content.Client.Commands
 {
-    internal sealed class ShowMarkersCommand : IConsoleCommand
+    internal sealed class ShowMarkersCommand : IClientCommand
     {
         // ReSharper disable once StringLiteralTypo
         public string Command => "showmarkers";
         public string Description => "Toggles visibility of markers such as spawn points.";
         public string Help => "";
 
-        public bool Execute(IDebugConsole console, params string[] args)
+        public bool Execute(IClientConsoleShell shell, string[] args)
         {
             EntitySystem.Get<MarkerSystem>()
                 .MarkersVisible ^= true;
@@ -26,14 +27,14 @@ namespace Content.Client.Commands
         }
     }
 
-    internal sealed class ShowSubFloor : IConsoleCommand
+    internal sealed class ShowSubFloor : IClientCommand
     {
         // ReSharper disable once StringLiteralTypo
         public string Command => "showsubfloor";
         public string Description => "Makes entities below the floor always visible.";
         public string Help => $"Usage: {Command}";
 
-        public bool Execute(IDebugConsole console, params string[] args)
+        public bool Execute(IClientConsoleShell shell, string[] args)
         {
             EntitySystem.Get<SubFloorHideSystem>()
                 .EnableAll ^= true;
@@ -42,14 +43,14 @@ namespace Content.Client.Commands
         }
     }
 
-    internal sealed class ShowSubFloorForever : IConsoleCommand
+    internal sealed class ShowSubFloorForever : IClientCommand
     {
         // ReSharper disable once StringLiteralTypo
         public string Command => "showsubfloorforever";
         public string Description => "Makes entities below the floor always visible until the client is restarted.";
         public string Help => $"Usage: {Command}";
 
-        public bool Execute(IDebugConsole console, params string[] args)
+        public bool Execute(IClientConsoleShell shell, string[] args)
         {
             EntitySystem.Get<SubFloorHideSystem>()
                 .EnableAll = true;
@@ -69,13 +70,13 @@ namespace Content.Client.Commands
         }
     }
 
-    internal sealed class NotifyCommand : IConsoleCommand
+    internal sealed class NotifyCommand : IClientCommand
     {
         public string Command => "notify";
         public string Description => "Send a notify client side.";
         public string Help => "notify <message>";
 
-        public bool Execute(IDebugConsole console, params string[] args)
+        public bool Execute(IClientConsoleShell shell, string[] args)
         {
             var message = args[0];
 
@@ -86,22 +87,22 @@ namespace Content.Client.Commands
         }
     }
 
-    internal sealed class MappingCommand : IConsoleCommand
+    internal sealed class MappingCommand : IClientCommand
     {
         public string Command => "mapping";
         public string Description => "Creates and teleports you to a new uninitialized map for mapping.";
         public string Help => $"Usage: {Command} <mapname> / {Command} <id> <mapname>";
 
-        public bool Execute(IDebugConsole console, params string[] args)
+        public bool Execute(IClientConsoleShell shell, string[] args)
         {
             if (args.Length == 0)
             {
-                console.AddLine(Help);
+                shell.WriteLine(Help);
                 return false;
             }
 
-            console.Commands["togglelight"].Execute(console);
-            console.Commands["showsubfloorforever"].Execute(console);
+            shell.RegisteredCommands["togglelight"].Execute(shell, Array.Empty<string>());
+            shell.RegisteredCommands["showsubfloorforever"].Execute(shell, Array.Empty<string>());
 
             return true;
         }

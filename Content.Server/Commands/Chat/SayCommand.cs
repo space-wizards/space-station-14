@@ -3,7 +3,7 @@ using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Players;
-using Robust.Server.Interfaces.Console;
+using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.IoC;
@@ -11,17 +11,17 @@ using Robust.Shared.IoC;
 namespace Content.Server.Commands.Chat
 {
     [AnyCommand]
-    internal class SayCommand : IClientCommand
+    internal class SayCommand : IServerCommand
     {
         public string Command => "say";
         public string Description => "Send chat messages to the local channel or a specified radio channel.";
         public string Help => "say <text>";
 
-        public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IServerConsoleShell shell, IPlayerSession? player, string[] args)
         {
             if (player == null)
             {
-                shell.SendText(player, "This command cannot be run from the server.");
+                shell.WriteLine("This command cannot be run from the server.");
                 return;
             }
 
@@ -40,7 +40,7 @@ namespace Content.Server.Commands.Chat
 
             if (playerEntity == null)
             {
-                shell.SendText(player, "You don't have an entity!");
+                shell.WriteLine("You don't have an entity!");
                 return;
             }
 
@@ -52,7 +52,7 @@ namespace Content.Server.Commands.Chat
 
                 if (mindComponent == null)
                 {
-                    shell.SendText(player, "You don't have a mind!");
+                    shell.WriteLine("You don't have a mind!");
                     return;
                 }
 

@@ -3,7 +3,7 @@ using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
-using Robust.Server.Interfaces.Console;
+using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
@@ -13,13 +13,13 @@ using Robust.Shared.Map;
 namespace Content.Server.Commands.Atmos
 {
     [AdminCommand(AdminFlags.Debug)]
-    public class FillGas : IClientCommand
+    public class FillGas : IServerCommand
     {
         public string Command => "fillgas";
         public string Description => "Adds gas to all tiles in a grid.";
         public string Help => "fillgas <GridId> <Gas> <moles>";
 
-        public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IServerConsoleShell shell, IPlayerSession? player, string[] args)
         {
             if (args.Length < 3) return;
             if(!int.TryParse(args[0], out var id)
@@ -32,7 +32,7 @@ namespace Content.Server.Commands.Atmos
 
             if (!gridId.IsValid() || !mapMan.TryGetGrid(gridId, out var gridComp))
             {
-                shell.SendText(player, "Invalid grid ID.");
+                shell.WriteLine("Invalid grid ID.");
                 return;
             }
 
@@ -40,13 +40,13 @@ namespace Content.Server.Commands.Atmos
 
             if (!entMan.TryGetEntity(gridComp.GridEntityId, out var grid))
             {
-                shell.SendText(player, "Failed to get grid entity.");
+                shell.WriteLine("Failed to get grid entity.");
                 return;
             }
 
             if (!grid.HasComponent<GridAtmosphereComponent>())
             {
-                shell.SendText(player, "Grid doesn't have an atmosphere.");
+                shell.WriteLine("Grid doesn't have an atmosphere.");
                 return;
             }
 

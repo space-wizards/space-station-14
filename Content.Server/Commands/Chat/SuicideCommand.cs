@@ -12,7 +12,7 @@ using Content.Server.Utility;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.Interfaces;
-using Robust.Server.Interfaces.Console;
+using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Interfaces.GameObjects;
@@ -22,7 +22,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.Commands.Chat
 {
     [AnyCommand]
-    internal class SuicideCommand : IClientCommand
+    internal class SuicideCommand : IServerCommand
     {
         public string Command => "suicide";
 
@@ -56,11 +56,11 @@ namespace Content.Server.Commands.Chat
             }
         }
 
-        public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IServerConsoleShell shell, IPlayerSession? player, string[] args)
         {
             if (player == null)
             {
-                shell.SendText(player, "You cannot run this command from the server.");
+                shell.WriteLine("You cannot run this command from the server.");
                 return;
             }
 
@@ -72,7 +72,7 @@ namespace Content.Server.Commands.Chat
 
             if (owner == null)
             {
-                shell.SendText(player, "You don't have a mind!");
+                shell.WriteLine("You don't have a mind!");
                 return;
             }
 
