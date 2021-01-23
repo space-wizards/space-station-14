@@ -45,6 +45,10 @@ namespace Content.Client.Chat
 
         private const float FilterPopupWidth = 110;
         private const int DragMarginSize = 7;
+        private const float MinHeight = 64;
+        private const int MinWidth = 200;
+        private const int MinDistanceFromBottom = 255;
+        private const int MinLeft = 500;
 
         /// <summary>
         /// Will be Unspecified if set to Console
@@ -442,12 +446,17 @@ namespace Content.Client.Chat
                 if ((_currentDrag & DragMode.Bottom) == DragMode.Bottom)
                 {
                     bottom = Math.Max(args.GlobalPosition.Y + _dragOffsetBottomRight.Y, top + minSizeY);
+                    // clamp so it doesn't go too high or low (leave space for alerts UI)
+                    bottom = Math.Clamp(bottom, MinHeight, Parent.Size.Y - MinDistanceFromBottom);
                 }
 
                 if ((_currentDrag & DragMode.Left) == DragMode.Left)
                 {
                     var maxX = right - minSizeX;
                     left = Math.Min(args.GlobalPosition.X - _dragOffsetTopLeft.X, maxX);
+                    // clamp so it doesn't go too left or right (leave space for top left menu buttons)
+                    left = Math.Clamp(left, MinLeft, Parent.Size.X - MinWidth);
+
                 }
 
                 var rect = new UIBox2(left, top, right, bottom);
