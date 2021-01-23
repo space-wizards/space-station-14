@@ -2,6 +2,7 @@
 using Content.Shared.GameObjects.Components.Doors;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.ViewVariables;
 using System;
 
 namespace Content.Client.GameObjects.Components.Doors
@@ -28,6 +29,7 @@ namespace Content.Client.GameObjects.Components.Doors
             {
                 _state = doorCompState.DoorState;
                 Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new DoorStateMessage(this, _state));
+                SetAppearance(DoorStateToDoorVisualState(_state));
             }
 
             if (StateChangeStartTime == null)

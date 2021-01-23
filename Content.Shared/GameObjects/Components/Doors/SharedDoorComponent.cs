@@ -7,6 +7,7 @@ using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Robust.Shared.Physics;
+using Robust.Shared.GameObjects.Components.Appearance;
 
 namespace Content.Shared.GameObjects.Components.Doors
 {
@@ -103,6 +104,14 @@ namespace Content.Shared.GameObjects.Components.Doors
                 () => CloseTimeOne.TotalSeconds);
         }
 
+        protected void SetAppearance(DoorVisualState state)
+        {
+            if (Owner.TryGetComponent(out SharedAppearanceComponent? appearance))
+            {
+                appearance.SetData(DoorVisuals.VisualState, state);
+            }
+        }
+
         // stops us colliding with people we're crushing, to prevent hitbox clipping and jank
         public bool PreventCollide(IPhysBody collidedwith)
         {
@@ -158,7 +167,6 @@ namespace Content.Shared.GameObjects.Components.Doors
                 _ => throw new ArgumentOutOfRangeException(),
             };
         }
-
     }
 
     // KEEP THIS IN SYNC WITH THE METHOD DAMMIT
@@ -188,10 +196,10 @@ namespace Content.Shared.GameObjects.Components.Doors
     {
         public readonly SharedDoorComponent.DoorState DoorState;
         public readonly TimeSpan? StartTime;
-        public readonly TimeSpan? CurTime;
+        public readonly TimeSpan CurTime;
         public readonly EntityUid? CurrentlyCrushing;
 
-        public DoorComponentState(SharedDoorComponent.DoorState doorState, TimeSpan? startTime, TimeSpan? curTime, EntityUid? currentlyCrushing) : base(ContentNetIDs.DOOR)
+        public DoorComponentState(SharedDoorComponent.DoorState doorState, TimeSpan? startTime, TimeSpan curTime, EntityUid? currentlyCrushing) : base(ContentNetIDs.DOOR)
         {
             DoorState = doorState;
             StartTime = startTime;

@@ -50,7 +50,6 @@ namespace Content.Server.GameObjects.Components.Doors
                 _state = value;
                 Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new DoorStateMessage(this, State));
 
-                SetAppearance(DoorStateToDoorVisualState(State));
                 StateChangeStartTime = State switch
                 {
                     DoorState.Open or DoorState.Closed => null,
@@ -168,14 +167,6 @@ namespace Content.Server.GameObjects.Components.Doors
             _cancellationTokenSource?.Cancel();
 
             base.OnRemove();
-        }
-
-        private void SetAppearance(DoorVisualState state)
-        {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
-            {
-                appearance.SetData(DoorVisuals.VisualState, state);
-            }
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
