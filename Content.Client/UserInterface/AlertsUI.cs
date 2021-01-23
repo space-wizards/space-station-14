@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Content.Client.Chat;
+using Content.Client.Interfaces.Chat;
 using Content.Client.UserInterface.Stylesheets;
-using Robust.Client.Interfaces.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Client.UserInterface
@@ -12,10 +13,14 @@ namespace Content.Client.UserInterface
     /// </summary>
     public sealed class AlertsUI : Control
     {
+        private const float ChatSeparation = 24f;
         public GridContainer Grid { get; }
+
+        private readonly IChatManager _chatManager;
 
         public AlertsUI()
         {
+            _chatManager = IoCManager.Resolve<IChatManager>();
             LayoutContainer.SetGrowHorizontal(this, LayoutContainer.GrowDirection.Begin);
             LayoutContainer.SetGrowVertical(this, LayoutContainer.GrowDirection.End);
             LayoutContainer.SetAnchorTop(this, 0f);
@@ -38,6 +43,36 @@ namespace Content.Client.UserInterface
                 ExpandBackwards = true
             };
             panelContainer.AddChild(Grid);
+
+
+        }
+
+        protected override void EnteredTree()
+        {
+            base.EnteredTree();
+            _chatManager.OnChatBoxResized += OnChatResized;
+            OnChatResized();
+        }
+
+        protected override void ExitedTree()
+        {
+            base.ExitedTree();
+            _chatManager.OnChatBoxResized -= OnChatResized;
+        }
+
+
+        private void OnChatResized()
+        {
+            // resize us to fit just below the chatbox
+            if (_chatManager.CurrentChatBox != null)
+            {
+                LayoutContainer.SetMarginTop(this, _chatManager.CurrentChatBox.SizeBox.Bottom + ChatSeparation);
+            }
+            else
+            {
+                LayoutContainer.SetMarginTop(this, 250);
+            }
+
         }
 
         protected override void Resized()

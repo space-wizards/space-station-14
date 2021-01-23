@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using Content.Client.Administration;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.Chat;
@@ -29,6 +28,8 @@ namespace Content.Client.Chat
 
         public HistoryLineEdit Input { get; private set; }
         public OutputPanel Contents { get; }
+
+        public event Action? OnResized;
 
         // order in which the available channel filters show up when available
         private static readonly IReadOnlyList<ChatChannel> ChannelFilterOrder = new List<ChatChannel>
@@ -169,6 +170,8 @@ namespace Content.Client.Chat
                     })
                 }
             };
+
+            OnResized?.Invoke();
         }
 
         protected override void EnteredTree()
@@ -462,6 +465,7 @@ namespace Content.Client.Chat
                 var rect = new UIBox2(left, top, right, bottom);
                 LayoutContainer.SetPosition(this, rect.TopLeft);
                 LayoutContainer.SetSize(this, rect.Size);
+                OnResized?.Invoke();
             }
         }
 

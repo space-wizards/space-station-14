@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Content.Client.Administration;
 using Content.Client.GameObjects.Components.Observer;
@@ -97,6 +98,15 @@ namespace Content.Client.Chat
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IClientAdminManager _adminMgr = default!;
+
+        /// <summary>
+        /// Current chat box control. This can be modified, so do not depend on saving a reference to this.
+        /// </summary>
+        public ChatBox? CurrentChatBox => _currentChatBox;
+        /// <summary>
+        /// Invoked when CurrentChatBox is resized (including after setting initial default size)
+        /// </summary>
+        public event Action? OnChatBoxResized;
 
         private ChatBox? _currentChatBox;
         private Control _speechBubbleRoot = null!;
@@ -280,6 +290,7 @@ namespace Content.Client.Chat
             {
                 _currentChatBox.TextSubmitted -= OnChatBoxTextSubmitted;
                 _currentChatBox.FilterToggled -= OnFilterButtonToggled;
+                _currentChatBox.OnResized -= ChatBoxOnResized;
             }
 
             _currentChatBox = chatBox;
@@ -287,11 +298,17 @@ namespace Content.Client.Chat
             {
                 _currentChatBox.TextSubmitted += OnChatBoxTextSubmitted;
                 _currentChatBox.FilterToggled += OnFilterButtonToggled;
+                _currentChatBox.OnResized += ChatBoxOnResized;
 
                 _currentChatBox.SetChannelPermissions(_selectableChannels, _filterableChannels, _channelFilters);
             }
 
             RepopulateChat(_filteredHistory);
+        }
+
+        private void ChatBoxOnResized()
+        {
+            OnChatBoxResized?.Invoke();
         }
 
         public void RemoveSpeechBubble(EntityUid entityUid, SpeechBubble bubble)
