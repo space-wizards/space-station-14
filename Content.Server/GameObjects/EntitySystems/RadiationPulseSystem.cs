@@ -14,9 +14,6 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     public sealed class RadiationPulseSystem : EntitySystem
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IRobustRandom _robustRandom = default!;
-
         private readonly Dictionary<IComponent, float> _frequencyTrigger = new();
 
         public override void Initialize()
