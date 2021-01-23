@@ -201,19 +201,11 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             // TODO: Account for partial transfer.
 
-            foreach (var (reagentId, quantity) in removedSolution.Contents)
-            {
-                if(!_prototypeManager.TryIndex(reagentId, out ReagentPrototype reagent)) continue;
-                removedSolution.RemoveReagent(reagentId, reagent.ReactionEntity(solution.Owner, ReactionMethod.Injection, quantity));
-            }
+            removedSolution.DoEntityReaction(solution.Owner, ReactionMethod.Injection);
 
             solution.TryAddSolution(removedSolution);
 
-            foreach (var (reagentId, quantity) in removedSolution.Contents)
-            {
-                if(!_prototypeManager.TryIndex(reagentId, out ReagentPrototype reagent)) continue;
-                reagent.ReactionEntity(targetBloodstream.Owner, ReactionMethod.Injection, quantity);
-            }
+            removedSolution.DoEntityReaction(targetBloodstream.Owner, ReactionMethod.Injection);
 
             Owner.PopupMessage(user, Loc.GetString("You inject {0}u into {1:theName}!", removedSolution.TotalVolume, targetBloodstream.Owner));
             Dirty();
@@ -243,11 +235,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return;
             }
 
-            foreach (var (reagentId, quantity) in removedSolution.Contents)
-            {
-                if(!_prototypeManager.TryIndex(reagentId, out ReagentPrototype reagent)) continue;
-                removedSolution.RemoveReagent(reagentId, reagent.ReactionEntity(targetSolution.Owner, ReactionMethod.Injection, quantity));
-            }
+            removedSolution.DoEntityReaction(targetSolution.Owner, ReactionMethod.Injection);
 
             targetSolution.TryAddSolution(removedSolution);
 
