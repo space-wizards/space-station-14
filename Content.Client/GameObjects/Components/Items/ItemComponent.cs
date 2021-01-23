@@ -88,7 +88,7 @@ namespace Content.Client.GameObjects.Components.Items
 
         bool IDraggable.CanDrop(CanDropEventArgs args)
         {
-            return args.Target.HasComponent<DisposalUnitComponent>();
+            return args.Target.HasComponent<OldDisposalUnitComponent>();
         }
 
         public bool Drop(DragDropEventArgs args)

@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Body;
@@ -17,9 +17,9 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Disposal
 {
-    public abstract class SharedDisposalUnitComponent : Component, ICollideSpecial, IDragDropOn
+    public abstract class OldSharedDisposalUnitComponent : Component, ICollideSpecial, IDragDropOn
     {
-        public override string Name => "DisposalUnit";
+        public override string Name => "OldDisposalUnit";
 
         private readonly List<IEntity> _intersecting = new();
 

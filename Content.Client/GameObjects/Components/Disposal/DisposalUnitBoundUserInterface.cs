@@ -2,7 +2,7 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Shared.GameObjects.Components.UserInterface;
-using static Content.Shared.GameObjects.Components.Disposal.SharedDisposalUnitComponent;
+using static Content.Shared.GameObjects.Components.Disposal.OldSharedDisposalUnitComponent;
 
 namespace Content.Client.GameObjects.Components.Disposal
 {

@@ -5,12 +5,12 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using static Content.Shared.GameObjects.Components.Disposal.SharedDisposalUnitComponent;
+using static Content.Shared.GameObjects.Components.Disposal.OldSharedDisposalUnitComponent;
 
 namespace Content.Client.GameObjects.Components.Disposal
 {
     /// <summary>
-    /// Client-side UI used to control a <see cref="SharedDisposalUnitComponent"/>
+    /// Client-side UI used to control a <see cref="OldSharedDisposalUnitComponent"/>
     /// </summary>
     public class DisposalUnitWindow : SS14Window
     {

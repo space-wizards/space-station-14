@@ -18,7 +18,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public override string Name => "DisposalEntry";
 
-        public bool TryInsert(DisposalUnitComponent from)
+        public bool TryInsert(OldDisposalUnitComponent from)
         {
             var holder = Owner.EntityManager.SpawnEntity(HolderPrototypeId, Owner.Transform.MapPosition);
             var holderComponent = holder.GetComponent<DisposalHolderComponent>();

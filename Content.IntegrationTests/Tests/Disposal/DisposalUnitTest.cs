@@ -15,10 +15,10 @@ namespace Content.IntegrationTests.Tests.Disposal
     [TestFixture]
     [TestOf(typeof(DisposalHolderComponent))]
     [TestOf(typeof(DisposalEntryComponent))]
-    [TestOf(typeof(DisposalUnitComponent))]
+    [TestOf(typeof(OldDisposalUnitComponent))]
     public class DisposalUnitTest : ContentIntegrationTest
     {
-        private void UnitInsert(DisposalUnitComponent unit, bool result, params IEntity[] entities)
+        private void UnitInsert(OldDisposalUnitComponent unit, bool result, params IEntity[] entities)
         {
             foreach (var entity in entities)
             {
@@ -36,7 +36,7 @@ namespace Content.IntegrationTests.Tests.Disposal
             }
         }
 
-        private void UnitContains(DisposalUnitComponent unit, bool result, params IEntity[] entities)
+        private void UnitContains(OldDisposalUnitComponent unit, bool result, params IEntity[] entities)
         {
             foreach (var entity in entities)
             {
@@ -44,13 +44,13 @@ namespace Content.IntegrationTests.Tests.Disposal
             }
         }
 
-        private void UnitInsertContains(DisposalUnitComponent unit, bool result, params IEntity[] entities)
+        private void UnitInsertContains(OldDisposalUnitComponent unit, bool result, params IEntity[] entities)
         {
             UnitInsert(unit, result, entities);
             UnitContains(unit, result, entities);
         }
 
-        private void Flush(DisposalUnitComponent unit, bool result, DisposalEntryComponent? entry = null, params IEntity[] entities)
+        private void Flush(OldDisposalUnitComponent unit, bool result, DisposalEntryComponent? entry = null, params IEntity[] entities)
         {
             Assert.That(unit.ContainedEntities, Is.SupersetOf(entities));
             Assert.That(entities.Length, Is.EqualTo(unit.ContainedEntities.Count));
@@ -102,7 +102,7 @@ namespace Content.IntegrationTests.Tests.Disposal
 
             IEntity human;
             IEntity wrench;
-            DisposalUnitComponent unit;
+            OldDisposalUnitComponent unit;
             DisposalEntryComponent entry;
 
             server.Assert(async () =>

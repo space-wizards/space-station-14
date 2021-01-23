@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.UserInterface;
@@ -7,7 +7,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.GameObjects.Components.Disposal
 {
-    public abstract class SharedDisposalMailingUnitComponent : SharedDisposalUnitComponent
+    public abstract class SharedDisposalMailingUnitComponent : OldSharedDisposalUnitComponent
     {
         public override string Name => "DisposalMailingUnit";
 

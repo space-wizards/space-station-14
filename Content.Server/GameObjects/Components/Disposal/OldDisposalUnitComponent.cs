@@ -45,10 +45,10 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Disposal
 {
     [RegisterComponent]
-    [ComponentReference(typeof(SharedDisposalUnitComponent))]
+    [ComponentReference(typeof(OldSharedDisposalUnitComponent))]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IInteractUsing))]
-    public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IActivate, IInteractUsing, IThrowCollide, IGasMixtureHolder
+    public class OldDisposalUnitComponent : OldSharedDisposalUnitComponent, IInteractHand, IActivate, IInteractUsing, IThrowCollide, IGasMixtureHolder
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -698,9 +698,9 @@ namespace Content.Server.GameObjects.Components.Disposal
         }
 
         [Verb]
-        private sealed class SelfInsertVerb : Verb<DisposalUnitComponent>
+        private sealed class SelfInsertVerb : Verb<OldDisposalUnitComponent>
         {
-            protected override void GetData(IEntity user, DisposalUnitComponent component, VerbData data)
+            protected override void GetData(IEntity user, OldDisposalUnitComponent component, VerbData data)
             {
                 data.Visibility = VerbVisibility.Invisible;
 
@@ -714,16 +714,16 @@ namespace Content.Server.GameObjects.Components.Disposal
                 data.Text = Loc.GetString("Jump inside");
             }
 
-            protected override void Activate(IEntity user, DisposalUnitComponent component)
+            protected override void Activate(IEntity user, OldDisposalUnitComponent component)
             {
                 _ = component.TryInsert(user, user);
             }
         }
 
         [Verb]
-        private sealed class FlushVerb : Verb<DisposalUnitComponent>
+        private sealed class FlushVerb : Verb<OldDisposalUnitComponent>
         {
-            protected override void GetData(IEntity user, DisposalUnitComponent component, VerbData data)
+            protected override void GetData(IEntity user, OldDisposalUnitComponent component, VerbData data)
             {
                 data.Visibility = VerbVisibility.Invisible;
 
@@ -737,7 +737,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 data.Text = Loc.GetString("Flush");
             }
 
-            protected override void Activate(IEntity user, DisposalUnitComponent component)
+            protected override void Activate(IEntity user, OldDisposalUnitComponent component)
             {
                 component.Engaged = true;
                 component.TryFlush();

@@ -8,7 +8,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
-using static Content.Shared.GameObjects.Components.Disposal.SharedDisposalUnitComponent;
+using static Content.Shared.GameObjects.Components.Disposal.OldSharedDisposalUnitComponent;
 
 namespace Content.Client.GameObjects.Components.Disposal
 {

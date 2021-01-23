@@ -1,12 +1,12 @@
-﻿using Content.Shared.GameObjects.Components.Disposal;
+using Content.Shared.GameObjects.Components.Disposal;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 
 namespace Content.Client.GameObjects.Components.Disposal
 {
     [RegisterComponent]
-    [ComponentReference(typeof(SharedDisposalUnitComponent))]
-    public class DisposalUnitComponent : SharedDisposalUnitComponent
+    [ComponentReference(typeof(OldSharedDisposalUnitComponent))]
+    public class OldDisposalUnitComponent : OldSharedDisposalUnitComponent
     {
         public override bool DragDropOn(DragDropEventArgs eventArgs)
         {
