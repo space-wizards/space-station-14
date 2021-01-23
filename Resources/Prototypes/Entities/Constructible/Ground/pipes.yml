@@ -20,12 +20,12 @@
           acts: ["Destruction"]
   - type: Sprite
     netsync: false
-  - type: Icon
-    sprite: Constructible/Atmos/pipe.rsi
   - type: Appearance
     visuals:
     - type: PipeVisualizer
     - type: PipeConnectorVisualizer
+  - type: Icon
+    sprite: Constructible/Atmos/pipe.rsi
 
 #Note: The PipeDirection of the PipeNode should be the east-facing version, because the entity starts at an angle of 0 (east)
 
@@ -34,62 +34,62 @@
   id: PipeHalf
   suffix: Half
   components:
-  - type: Icon
-    state: pipeHalf
   - type: NodeContainer
     nodes:
     - !type:PipeNode
       nodeGroupID: Pipe
       pipeDirection: East
+  - type: Icon
+    state: pipeHalf
 
 - type: entity
   parent: PipeBase
   id: PipeStraight
   suffix: Straight
   components:
-  - type: Icon
-    state: pipeStraight
   - type: NodeContainer
     nodes:
     - !type:PipeNode
       nodeGroupID: Pipe
       pipeDirection: Lateral
-
+  - type: Icon
+    state: pipeStraight
+    
 - type: entity
   parent: PipeBase
   id: PipeBend
   suffix: Bend
   components:
-  - type: Icon
-    state: pipeBend
   - type: NodeContainer
     nodes:
     - !type:PipeNode
       nodeGroupID: Pipe
       pipeDirection: SEBend
-
+  - type: Icon
+    state: pipeBend
+    
 - type: entity
   parent: PipeBase
   id: PipeTJunction
   suffix: TJunction
   components:
-  - type: Icon
-    state: pipeTJunction 
   - type: NodeContainer
     nodes:
     - !type:PipeNode
       nodeGroupID: Pipe
       pipeDirection: TEast
-
+  - type: Icon
+    state: pipeTJunction
+    
 - type: entity
   parent: PipeBase
   id: PipeFourway
   suffix: Fourway
   components:
-  - type: Icon
-    state: pipeFourway 
   - type: NodeContainer
     nodes:
     - !type:PipeNode
       nodeGroupID: Pipe
       pipeDirection: Fourway
+  - type: Icon
+    state: pipeFourway
