@@ -38,12 +38,13 @@ namespace Content.Server.GameObjects.EntitySystems
                     return false;
                 }
                 _frequencyTrigger[component] -= frameTime;
+                return true;
             }
             else
             {
                 _frequencyTrigger.Add(component, component.Cooldown);
+                return false;
             }
-            return true;
         }
 
         public override void Update(float frameTime)
