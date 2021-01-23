@@ -63,7 +63,7 @@ namespace Content.Client.GameObjects.Components
                             new FadesInOutNLevelBehaviour()
                             {
                                 MainColor = Color.Green,
-                                Levels = 10,
+                                Levels = 20,
                                 MaxDuration = (float)((radiationPulse.EndTime - radiationPulse.StartTime).TotalSeconds)
                             }, pointLight
                         );
