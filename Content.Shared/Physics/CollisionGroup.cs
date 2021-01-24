@@ -28,7 +28,6 @@ namespace Content.Shared.Physics
 
         MobMask = Impassable | MobImpassable | VaultImpassable | SmallImpassable,
         ThrownItem = MobImpassable | Impassable,
-        SwingAttack = Opaque | Impassable | MobImpassable,
         // 32 possible groups
         AllMask = -1,
     }
