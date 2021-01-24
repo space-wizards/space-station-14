@@ -13,32 +13,31 @@ namespace Content.Client.Commands
         public string Command => "atvrange";
         public string Description => "Sets the atmos debug range (as two floats, start [red] and end [blue])";
         public string Help => "atvrange <start> <end>";
-        public bool Execute(IClientConsoleShell shell, string argStr, string[] args)
+        public void Execute(IClientConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 2)
             {
                 shell.WriteLine(Help);
-                return false;
+                return;
             }
             if (!float.TryParse(args[0], out var xStart))
             {
                 shell.WriteLine("Bad float START");
-                return false;
+                return;
             }
             if (!float.TryParse(args[1], out var xEnd))
             {
                 shell.WriteLine("Bad float END");
-                return false;
+                return;
             }
             if (xStart == xEnd)
             {
                 shell.WriteLine("Scale cannot be zero, as this would cause a division by zero in AtmosDebugOverlay.");
-                return false;
+                return;
             }
             var sys = EntitySystem.Get<AtmosDebugOverlaySystem>();
             sys.CfgBase = xStart;
             sys.CfgScale = xEnd - xStart;
-            return false;
         }
     }
 
@@ -48,17 +47,17 @@ namespace Content.Client.Commands
         public string Command => "atvmode";
         public string Description => "Sets the atmos debug mode. This will automatically reset the scale.";
         public string Help => "atvmode <TotalMoles/GasMoles/Temperature> [<gas ID (for GasMoles)>]";
-        public bool Execute(IClientConsoleShell shell, string argStr, string[] args)
+        public void Execute(IClientConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 1)
             {
                 shell.WriteLine(Help);
-                return false;
+                return;
             }
             if (!Enum.TryParse<AtmosDebugOverlayMode>(args[0], out var xMode))
             {
                 shell.WriteLine("Invalid mode");
-                return false;
+                return;
             }
             int xSpecificGas = 0;
             float xBase = 0;
@@ -68,12 +67,12 @@ namespace Content.Client.Commands
                 if (args.Length != 2)
                 {
                     shell.WriteLine("A target gas must be provided for this mode.");
-                    return false;
+                    return;
                 }
                 if (!AtmosCommandUtils.TryParseGasID(args[1], out xSpecificGas))
                 {
                     shell.WriteLine("Gas ID not parsable or out of range.");
-                    return false;
+                    return;
                 }
             }
             else
@@ -81,7 +80,7 @@ namespace Content.Client.Commands
                 if (args.Length != 1)
                 {
                     shell.WriteLine("No further information is required for this mode.");
-                    return false;
+                    return;
                 }
                 if (xMode == AtmosDebugOverlayMode.Temperature)
                 {
@@ -95,7 +94,6 @@ namespace Content.Client.Commands
             sys.CfgSpecificGas = xSpecificGas;
             sys.CfgBase = xBase;
             sys.CfgScale = xScale;
-            return false;
         }
     }
 
@@ -105,21 +103,20 @@ namespace Content.Client.Commands
         public string Command => "atvcbm";
         public string Description => "Changes from red/green/blue to greyscale";
         public string Help => "atvcbm <true/false>";
-        public bool Execute(IClientConsoleShell shell, string argStr, string[] args)
+        public void Execute(IClientConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
             {
                 shell.WriteLine(Help);
-                return false;
+                return;
             }
             if (!bool.TryParse(args[0], out var xFlag))
             {
                 shell.WriteLine("Invalid flag");
-                return false;
+                return;
             }
             var sys = EntitySystem.Get<AtmosDebugOverlaySystem>();
             sys.CfgCBM = xFlag;
-            return false;
         }
     }
 }

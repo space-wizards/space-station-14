@@ -13,7 +13,7 @@ namespace Content.Client.Commands
 
         public string Help => "";
 
-        public bool Execute(IClientConsoleShell shell, string argStr, string[] args)
+        public void Execute(IClientConsoleShell shell, string argStr, string[] args)
         {
             var configurationManager = IoCManager.Resolve<IConfigurationManager>();
             var cvar = CCVars.OutlineEnabled;
@@ -21,8 +21,6 @@ namespace Content.Client.Commands
 
             configurationManager.SetCVar(cvar, !old);
             shell.WriteLine($"Draw outlines set to: {configurationManager.GetCVar(cvar)}");
-
-            return false;
         }
     }
 }

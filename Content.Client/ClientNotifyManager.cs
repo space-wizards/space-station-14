@@ -168,12 +168,11 @@ namespace Content.Client
         public string Description => "";
         public string Help => "";
 
-        public bool Execute(IClientConsoleShell shell, string argStr, string[] args)
+        public void Execute(IClientConsoleShell shell, string argStr, string[] args)
         {
             var arg = args[0];
             var mgr = IoCManager.Resolve<IClientNotifyManager>();
             mgr.PopupMessage(arg);
-            return false;
         }
     }
 }
