@@ -66,7 +66,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                 return;
             }
 
-            
+
             if (combined.LengthSquared < 0.001 || !ActionBlockerSystem.CanMove(mover.Owner) && !weightless)
             {
                 if (physics.TryGetController(out MoverController controller))
@@ -156,7 +156,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             {
                 foreach (var comp in owner.GetAllComponents<IRelayMoveInput>())
                 {
-                    comp.MoveInputPressed(session, dir);
+                    comp.MoveInputPressed(session, dir, state);
                 }
             }
 

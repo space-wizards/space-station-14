@@ -36,7 +36,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             // Same as GasTankSystem
             _timer += frameTime;
-            if (_timer < Interval) return;
+            // if (_timer < Interval) return;
             _timer = 0f;
 
             foreach (var jetpackComponent in EntityManager.ComponentManager.EntityQuery<JetpackComponent>())

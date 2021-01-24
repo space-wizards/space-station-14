@@ -5,6 +5,6 @@ namespace Content.Shared.GameObjects.Components.Movement
 {
     public interface IRelayMoveInput
     {
-        void MoveInputPressed(ICommonSession session, Direction dir);
+        void MoveInputPressed(ICommonSession session, Direction dir, bool state);
     }
 }

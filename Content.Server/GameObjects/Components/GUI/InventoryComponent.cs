@@ -43,7 +43,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public event Action OnItemChanged;
 
-        public event Action<ICommonSession, Direction> OnInventoryRelayMove;
+        public event Action<ICommonSession, Direction, bool> OnInventoryRelayMove;
 
         public override void Initialize()
         {
@@ -602,9 +602,9 @@ namespace Content.Server.GameObjects.Components.GUI
             return false;
         }
 
-        void IRelayMoveInput.MoveInputPressed(ICommonSession session, Direction dir)
+        void IRelayMoveInput.MoveInputPressed(ICommonSession session, Direction dir, bool state)
         {
-            OnInventoryRelayMove?.Invoke(session, dir);
+            OnInventoryRelayMove?.Invoke(session, dir, state);
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         private string _equippedPrefix;
 
-        public Action<ICommonSession, Direction> OnInventoryRelayMove;
+        public Action<ICommonSession, Direction, bool> OnInventoryRelayMove;
 
         public string EquippedPrefix
         {

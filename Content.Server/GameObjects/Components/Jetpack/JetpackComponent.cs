@@ -26,6 +26,8 @@ using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System;
+using System.Collections.Generic;
+using Robust.Shared.Log;
 
 namespace Content.Server.GameObjects.Components.Jetpack
 {
@@ -34,54 +36,50 @@ namespace Content.Server.GameObjects.Components.Jetpack
     {
         public override string Name => "Jetpack";
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float VolumeUsage { get; set; } = Atmospherics.BreathVolume;
+        [ViewVariables(VVAccess.ReadWrite)] private float VolumeUsage { get; set; } = Atmospherics.BreathVolume;
 
-        [ViewVariables]
-        [ComponentDependency]
-        private readonly GasTankComponent? _gasTank = default!;
+        [ViewVariables] [ComponentDependency] private readonly GasTankComponent? _gasTank = default!;
 
-        [ComponentDependency]
-        private readonly ItemComponent? _itemComponent = default!;
+        [ComponentDependency] private readonly ItemComponent? _itemComponent = default!;
 
-        [ComponentDependency]
-        private readonly SpriteComponent? _sprite = default!;
+        [ComponentDependency] private readonly SpriteComponent? _sprite = default!;
 
-        [ComponentDependency]
-        private readonly ClothingComponent? _clothing = default!;
+        [ComponentDependency] private readonly ClothingComponent? _clothing = default!;
 
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        private bool _active = false;
+        private bool _active;
 
-        private IEntity? _user = default!;
+        private float _jetpackSpeed = 5f;
 
-        private EffectSystem? _effectSystem = default!;
+        private IEntity? _user;
+
+        private EffectSystem? _effectSystem;
 
         private readonly TimeSpan _effectCooldown = TimeSpan.FromSeconds(0.3);
         private TimeSpan _lastEffectTime = TimeSpan.FromSeconds(0);
+
+        private readonly IDictionary<Direction, bool> _dirStates = new Dictionary<Direction, bool>();
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Active
         {
             get => _active;
-            set
+            private set
             {
                 _active = value;
                 var state = "icon" + (Active ? "-on" : "");
                 _sprite?.LayerSetState(0, state);
                 if (_clothing != null)
                     _clothing.ClothingEquippedPrefix = Active ? "on" : null;
-                if (_user != null && _user.TryGetComponent<IPhysicsComponent>(out var physics))
+                if (_user == null || !_user.TryGetComponent<IPhysicsComponent>(out var physics)) return;
+                if (Active)
                 {
-                    if (Active)
-                    {
-                        physics.EnsureController<JetpackController>();
-                    }
-                    else
-                    {
-                        physics.TryRemoveController<JetpackController>();
-                    }
+                    physics.EnsureController<JetpackController>();
+                }
+                else
+                {
+                    physics.TryRemoveController<JetpackController>();
                 }
             }
         }
@@ -94,10 +92,17 @@ namespace Content.Server.GameObjects.Components.Jetpack
             if (_itemComponent != null) _itemComponent.OnInventoryRelayMove += OnInventoryRelayMove;
         }
 
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+            serializer.DataField(ref _jetpackSpeed, "jetpackSpeed", 5f);
+        }
+
         public void HandleMoveEvent(MoveEvent moveEvent)
         {
             // If the jetpack is equipped and the _user is on a tile with no gravity, we create the particles
-            if (Active && _effectCooldown + _lastEffectTime < _gameTiming.CurTime && _user != null && _user.IsWeightless())
+            if (Active && _effectCooldown + _lastEffectTime < _gameTiming.CurTime && _user != null &&
+                _user.IsWeightless())
             {
                 CreateParticles(moveEvent.NewPosition);
             }
@@ -128,6 +133,10 @@ namespace Content.Server.GameObjects.Components.Jetpack
                 return;
             if (_gasTank?.Air?.Pressure <= VolumeUsage)
                 Active = false;
+            foreach (var (dir, state) in _dirStates)
+            {
+                DoMovement(dir, state);
+            }
         }
 
         public void ToggleJetpack()
@@ -151,14 +160,21 @@ namespace Content.Server.GameObjects.Components.Jetpack
             _user = null;
         }
 
-        void OnInventoryRelayMove(ICommonSession session, Direction dir)
+        private void OnInventoryRelayMove(ICommonSession session, Direction dir, bool state)
         {
-            if (!Active || _user == null || !_user.TryGetComponent<IPhysicsComponent>(out var physics)) return;
+            _dirStates[dir] = state;
+            DoMovement(dir, state);
+        }
 
+        private void DoMovement(Direction dir, bool state)
+        {
+            if (!Active || !state || _user == null ||
+                !_user.TryGetComponent<IPhysicsComponent>(out var physics)) return;
             if (ActionBlockerSystem.CanMove(_user) && _user.IsWeightless())
             {
                 var controller = physics.EnsureController<JetpackController>();
-                controller.Push(dir.ToVec(), 10);
+                var newVel = controller.LinearVelocity.GetDir().ToVec() + dir.ToVec();
+                controller.Push(newVel, _jetpackSpeed);
                 _user.Transform.LocalRotation = dir.ToAngle();
                 _gasTank?.RemoveAirVolume(VolumeUsage);
             }

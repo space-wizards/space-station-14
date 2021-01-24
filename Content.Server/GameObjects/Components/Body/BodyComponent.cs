@@ -79,7 +79,7 @@ namespace Content.Server.GameObjects.Components.Body
             }
         }
 
-        void IRelayMoveInput.MoveInputPressed(ICommonSession session, Direction dir)
+        void IRelayMoveInput.MoveInputPressed(ICommonSession session, Direction dir, bool state)
         {
             if (Owner.TryGetComponent(out IMobStateComponent? mobState) &&
                 mobState.IsDead())

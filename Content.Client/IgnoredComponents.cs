@@ -184,6 +184,7 @@ namespace Content.Client
             "SeedExtractor",
             "Produce",
             "Log",
+            "Jetpack",
             "Hoe",
             "Seed",
             "BotanySharp",
