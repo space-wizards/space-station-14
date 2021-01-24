@@ -48,6 +48,8 @@ namespace Content.Server.GameObjects.Components.Atmos
             return 0.25f;
         }
 
+        public bool BlockActivate(ActivateEventArgs eventArgs) => true;
+
         public void OnStartPry(InteractUsingEventArgs eventArgs)
         {
             if (Owner.GetComponent<ServerDoorComponent>().State == SharedDoorComponent.DoorState.Closed && IsHoldingPressure())
