@@ -302,6 +302,8 @@ namespace Content.Client.GameObjects.EntitySystems
 
             foreach (var entity in entities)
             {
+                if (entity == _dragDropHelper.Dragged) continue;
+
                 // check if it's able to be dropped on by current dragged entity
                 var dropArgs = new DragDropEventArgs(_dragger, args.Coordinates, _dragDropHelper.Dragged, entity);
                 var valid = true;
@@ -381,10 +383,9 @@ namespace Content.Client.GameObjects.EntitySystems
             var pvsEntities = EntityManager.GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds, true);
             foreach (var pvsEntity in pvsEntities)
             {
-                if (!pvsEntity.TryGetComponent(out ISpriteComponent? inRangeSprite)) continue;
-
-                // can't highlight if there's no sprite or it's not visible
-                if (inRangeSprite.Visible == false) continue;
+                if (!pvsEntity.TryGetComponent(out ISpriteComponent? inRangeSprite) ||
+                    !inRangeSprite.Visible ||
+                    pvsEntity == _dragDropHelper.Dragged) continue;
 
                 var valid = (bool?) null;
                 // check if it's able to be dropped on by current dragged entity
