@@ -26,4 +26,4 @@
     ears: ClothingHeadsetService
   innerclothingskirt: ClothingUniformJumpskirtMime
   satchel: ClothingBackpackSatchelFilled
-  duffelbag: ClothingBackpackDuffelFilled
+  duffelbag: ClothingBackpackDuffelMimeFilled

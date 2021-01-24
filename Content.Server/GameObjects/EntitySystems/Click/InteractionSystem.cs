@@ -315,14 +315,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
             var item = hands.GetActiveHand?.Owner;
 
-            if (ActionBlockerSystem.CanChangeDirection(player))
-            {
-                var diff = coordinates.ToMapPos(EntityManager) - playerTransform.MapPosition.Position;
-                if (diff.LengthSquared > 0.01f)
-                {
-                    playerTransform.LocalRotation = new Angle(diff);
-                }
-            }
+            ClickFace(player, coordinates);
 
             if (!ActionBlockerSystem.CanInteract(player))
             {
@@ -396,6 +389,18 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             else
             {
                 Interaction(player, attacked);
+            }
+        }
+
+        private void ClickFace(IEntity player, EntityCoordinates coordinates)
+        {
+            if (ActionBlockerSystem.CanChangeDirection(player))
+            {
+                var diff = coordinates.ToMapPos(EntityManager) - player.Transform.MapPosition.Position;
+                if (diff.LengthSquared > 0.01f)
+                {
+                    player.Transform.LocalRotation = new Angle(diff);
+                }
             }
         }
 
@@ -849,6 +854,8 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                     $"Player named {player.Name} clicked on a map he isn't located on");
                 return;
             }
+
+            ClickFace(player, coordinates);
 
             if (!ActionBlockerSystem.CanAttack(player) ||
                 (!wideAttack && !player.InRangeUnobstructed(coordinates, ignoreInsideBlocker: true)))

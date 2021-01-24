@@ -9,16 +9,6 @@
   - type: Physics
   - type: SnapGrid
     offset: Center
-
-  - type: Sprite
-    sprite: Constructible/Atmos/pipeitems.rsi
-    state: scrubber
-  - type: Appearance
-    visuals:
-    - type: PipeVisualizer
-      pipeRSI: Constructible/Atmos/pipe.rsi
-    - type: SiphonVisualizer
-      siphonRSI: Constructible/Atmos/scrubber.rsi
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
@@ -27,7 +17,17 @@
         behaviors:
         - !type:DoActsBehavior
           acts: ["Destruction"]
-
+  - type: Sprite
+    netsync: false
+    sprite: Constructible/Atmos/scrubber.rsi
+    layers:
+    - sprite: Constructible/Atmos/pipe.rsi
+      state: pipeHalf
+    - state: scrubOff
+  - type: Appearance
+    visuals:
+    - type: SiphonVisualizer
+      
 - type: entity
   parent: ScrubberBase
   id: Scrubber

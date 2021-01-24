@@ -91,7 +91,7 @@
 
 - type: entity
   name: pill
-  parent: FoodBase
+  parent: BaseItem
   id: pill
   description: It's not a suppository.
   components:

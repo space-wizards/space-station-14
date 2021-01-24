@@ -1,3 +1,12 @@
+---
+name: Report an Issue
+about: "..."
+title: ''
+labels: ''
+assignees: ''
+
+---
+
 <!-- To automatically tag this issue, add the uppercase label(s) surrounded by brackets below, for example: [LABEL] -->
 
 ## Description
