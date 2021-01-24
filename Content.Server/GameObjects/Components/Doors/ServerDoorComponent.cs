@@ -76,12 +76,13 @@ namespace Content.Server.GameObjects.Components.Doors
         private const int DoorCrushDamage = 15;
         private const float DoorStunTime = 5f;
 
-        private bool _canCrush = true;
+        [ViewVariables(VVAccess.ReadOnly)]
+        private bool _inhibitCrush = false;
         private bool _safety = true;
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Safety
         {
-            get => _safety || !_canCrush;
+            get => (_safety || _inhibitCrush);
             set => _safety = value;
         }
 
@@ -143,8 +144,8 @@ namespace Content.Server.GameObjects.Components.Doors
             // Whether the door blocks light.
             serializer.DataField(ref _occludes, "occludes", true);
 
-            // Whether the door will crush at all. In order to crush, safety must be false AND canCrush must be true.
-            serializer.DataField(ref _canCrush, "canCrush", true);
+            // Whether the door will crush at all. In order to crush, safety AND inhibitCrush must both be false.
+            serializer.DataField(ref _inhibitCrush, "inhibitCrush", false);
             // Whether safety is on by default.
             serializer.DataField(ref _safety, "safety", true);
         }
@@ -386,7 +387,7 @@ namespace Content.Server.GameObjects.Components.Doors
         /// <summary>
         /// Checks if we are allowed to crush people, and if something is colliding with the door.
         /// </summary>
-        /// <returns>True if nothing is colliding with us, and false if something is.</returns>
+        /// <returns>True if we shouldn't worry about something colliding with us, false if we should.</returns>
         public bool SafetyCheck()
         {
             if (Safety && Owner.TryGetComponent(out IPhysicsComponent? physics))

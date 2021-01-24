@@ -42,7 +42,7 @@
       OpenTimeOne: 0.1
       OpenTimeTwo: 0.6
       startOpen: true
-      Safety: false
+      safety: false
       AutoClose: false
       bumpOpen: false
     - type: Firelock
@@ -94,7 +94,7 @@
   components:
     - type: Door
       occludes: false
-      canCrush: false
+      inhibitCrush: true
     - type: Sprite
       sprite: Constructible/Structures/Doors/edge_door_hazard.rsi
     - type: Airtight
