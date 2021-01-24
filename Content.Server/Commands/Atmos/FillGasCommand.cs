@@ -19,7 +19,7 @@ namespace Content.Server.Commands.Atmos
         public string Description => "Adds gas to all tiles in a grid.";
         public string Help => "fillgas <GridId> <Gas> <moles>";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 3) return;
             if(!int.TryParse(args[0], out var id)

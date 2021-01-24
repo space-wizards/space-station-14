@@ -91,7 +91,7 @@ namespace Content.Server.GameObjects.Components.Body
             {
                 var host = IoCManager.Resolve<IServerConsoleHost>();
 
-                new Ghost().Execute(new ConsoleShellAdapter(host, session), Array.Empty<string>());
+                new Ghost().Execute(new ConsoleShellAdapter(host, session), string.Empty, Array.Empty<string>());
             }
         }
 

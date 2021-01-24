@@ -16,7 +16,7 @@ namespace Content.Server.Administration.Commands
 
         public string Help => Loc.GetString($"Usage: {Command} <message>");
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player == null)

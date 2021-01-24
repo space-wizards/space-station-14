@@ -18,7 +18,7 @@ namespace Content.Server.Commands.Actions
         public string Description => "Sets a cooldown on an action for a player, defaulting to current player";
         public string Help => "coolaction <actionType> <seconds> <name or userID, omit for current player>";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player == null) return;

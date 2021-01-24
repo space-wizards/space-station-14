@@ -13,7 +13,7 @@ namespace Content.Client.Commands
 
         public string Help => "";
 
-        public bool Execute(IClientConsoleShell shell, string[] args)
+        public bool Execute(IClientConsoleShell shell, string argStr, string[] args)
         {
             var configurationManager = IoCManager.Resolve<IConfigurationManager>();
             var cvar = CCVars.OutlineEnabled;

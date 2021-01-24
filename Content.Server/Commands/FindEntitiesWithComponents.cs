@@ -18,7 +18,7 @@ namespace Content.Server.Commands
         public string Description => "Finds entities with all of the specified components.";
         public string Help => $"{Command} <componentName1> <componentName2>...";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length == 0)
             {

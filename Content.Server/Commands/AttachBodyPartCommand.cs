@@ -19,7 +19,7 @@ namespace Content.Server.Commands
         public string Description => "Attaches a body part to you or someone else.";
         public string Help => $"{Command} <partEntityUid> / {Command} <entityUid> <partEntityUid>";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             var entityManager = IoCManager.Resolve<IEntityManager>();

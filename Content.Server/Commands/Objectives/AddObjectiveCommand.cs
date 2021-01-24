@@ -16,7 +16,7 @@ namespace Content.Server.Commands.Objectives
         public string Command => "addobjective";
         public string Description => "Adds an objective to the player's mind.";
         public string Help => "addobjective <username> <objectiveID>";
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 2)
             {

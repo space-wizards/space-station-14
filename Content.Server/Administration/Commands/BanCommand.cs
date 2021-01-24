@@ -17,7 +17,7 @@ namespace Content.Server.Administration.Commands
         public string Description => "Bans somebody";
         public string Help => "Usage: <name or user ID> <reason> <duration in minutes, or 0 for permanent ban>";
 
-        public async void Execute(IServerConsoleShell shell, string[] args)
+        public async void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             var plyMgr = IoCManager.Resolve<IPlayerManager>();

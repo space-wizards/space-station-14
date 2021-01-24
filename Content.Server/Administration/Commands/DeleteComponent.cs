@@ -14,7 +14,7 @@ namespace Content.Server.Administration.Commands
         public string Description => "Deletes all instances of the specified component.";
         public string Help => $"Usage: {Command} <name>";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             switch (args.Length)
             {

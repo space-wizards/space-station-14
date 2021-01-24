@@ -15,7 +15,7 @@ namespace Content.Server.Commands.Objectives
         public string Command => "lsobjectives";
         public string Description => "Lists all objectives in a players mind.";
         public string Help => "lsobjectives [<username>]";
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             IPlayerData? data;

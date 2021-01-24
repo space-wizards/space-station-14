@@ -20,7 +20,7 @@ namespace Content.Server.Commands.Atmos
         public string Description => "Adds gas at a certain position.";
         public string Help => "addgas <X> <Y> <GridId> <Gas> <moles>";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 5) return;
             if(!int.TryParse(args[0], out var x)

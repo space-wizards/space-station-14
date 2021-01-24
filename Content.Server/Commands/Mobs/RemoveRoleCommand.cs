@@ -21,7 +21,7 @@ namespace Content.Server.Commands.Mobs
 
         public string Help => "rmrole <session ID> <Role Type>\nThat role type is the actual C# type name.";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 2)
             {

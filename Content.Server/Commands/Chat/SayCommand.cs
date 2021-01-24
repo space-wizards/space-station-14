@@ -17,7 +17,7 @@ namespace Content.Server.Commands.Chat
         public string Description => "Send chat messages to the local channel or a specified radio channel.";
         public string Help => "say <text>";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player == null)

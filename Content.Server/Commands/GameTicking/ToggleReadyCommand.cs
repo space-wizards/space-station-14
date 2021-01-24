@@ -13,7 +13,7 @@ namespace Content.Server.Commands.GameTicking
         public string Description => "";
         public string Help => "";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player == null)

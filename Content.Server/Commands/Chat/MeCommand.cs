@@ -16,7 +16,7 @@ namespace Content.Server.Commands.Chat
         public string Description => "Perform an action.";
         public string Help => "me <text>";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player == null)

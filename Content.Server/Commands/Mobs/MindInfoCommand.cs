@@ -17,7 +17,7 @@ namespace Content.Server.Commands.Mobs
 
         public string Help => "mindinfo <session ID>";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
             {

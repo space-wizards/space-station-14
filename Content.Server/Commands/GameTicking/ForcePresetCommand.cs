@@ -15,7 +15,7 @@ namespace Content.Server.Commands.GameTicking
         public string Description => "Forces a specific game preset to start for the current lobby.";
         public string Help => $"Usage: {Command} <preset>";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var ticker = IoCManager.Resolve<IGameTicker>();
             if (ticker.RunLevel != GameRunLevel.PreRoundLobby)

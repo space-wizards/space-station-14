@@ -56,7 +56,7 @@ namespace Content.Server.Commands.Chat
             }
         }
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player == null)
@@ -123,7 +123,7 @@ namespace Content.Server.Commands.Chat
 
             // Prevent the player from returning to the body. Yes, this is an ugly hack.
             var ghost = new Ghost(){CanReturn = false};
-            ghost.Execute(shell, Array.Empty<string>());
+            ghost.Execute(shell, argStr, Array.Empty<string>());
         }
     }
 }

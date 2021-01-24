@@ -15,7 +15,7 @@ namespace Content.Server.Commands.Atmos
         public string Description => "Prints a list of gases and their indices.";
         public string Help => "listgases";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
 

@@ -19,7 +19,7 @@ namespace Content.Server.Commands.GameTicking
         public string Description => "Puts an underplating tile below every wall on a grid.";
         public string Help => $"Usage: {Command} <gridId> | {Command}";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             GridId gridId;

@@ -15,7 +15,7 @@ namespace Content.Server.Administration.Commands
         public string Description => "Opens the admin permissions panel.";
         public string Help => "Usage: permissions";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player == null)

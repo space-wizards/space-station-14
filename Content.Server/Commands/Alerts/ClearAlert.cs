@@ -17,7 +17,7 @@ namespace Content.Server.Commands.Alerts
         public string Description => "Clears an alert for a player, defaulting to current player";
         public string Help => "clearalert <alertType> <name or userID, omit for current player>";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player?.AttachedEntity == null)

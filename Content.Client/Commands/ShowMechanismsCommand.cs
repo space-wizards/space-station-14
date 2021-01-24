@@ -15,7 +15,7 @@ namespace Content.Client.Commands
         public string Description => "Makes mechanisms visible, even when they shouldn't be.";
         public string Help => $"{Command}";
 
-        public bool Execute(IClientConsoleShell shell, string[] args)
+        public bool Execute(IClientConsoleShell shell, string argStr, string[] args)
         {
             var componentManager = IoCManager.Resolve<IComponentManager>();
             var mechanisms = componentManager.EntityQuery<IMechanism>();

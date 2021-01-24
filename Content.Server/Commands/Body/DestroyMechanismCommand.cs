@@ -17,7 +17,7 @@ namespace Content.Server.Commands.Body
         public string Description => "Destroys a mechanism from your entity";
         public string Help => $"Usage: {Command} <mechanism>";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player == null)

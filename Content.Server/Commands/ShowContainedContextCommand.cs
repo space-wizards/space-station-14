@@ -18,7 +18,7 @@ namespace Content.Server.Commands
         public string Description => "Makes contained entities visible on the context menu, even when they shouldn't be.";
         public string Help => $"{Command}";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player == null)

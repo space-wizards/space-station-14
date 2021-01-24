@@ -168,7 +168,7 @@ namespace Content.Client
         public string Description => "";
         public string Help => "";
 
-        public bool Execute(IClientConsoleShell shell, string[] args)
+        public bool Execute(IClientConsoleShell shell, string argStr, string[] args)
         {
             var arg = args[0];
             var mgr = IoCManager.Resolve<IClientNotifyManager>();

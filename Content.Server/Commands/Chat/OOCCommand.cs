@@ -14,7 +14,7 @@ namespace Content.Server.Commands.Chat
         public string Description => "Send Out Of Character chat messages.";
         public string Help => "ooc <text>";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (args.Length < 1)

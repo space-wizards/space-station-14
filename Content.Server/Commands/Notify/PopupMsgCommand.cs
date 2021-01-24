@@ -16,7 +16,7 @@ namespace Content.Server.Commands.Notify
         public string Description => "";
         public string Help => "";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var entityMgr = IoCManager.Resolve<IEntityManager>();
 

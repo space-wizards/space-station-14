@@ -13,7 +13,7 @@ namespace Content.Client.Commands
         public string Command => "atvrange";
         public string Description => "Sets the atmos debug range (as two floats, start [red] and end [blue])";
         public string Help => "atvrange <start> <end>";
-        public bool Execute(IClientConsoleShell shell, string[] args)
+        public bool Execute(IClientConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 2)
             {
@@ -48,7 +48,7 @@ namespace Content.Client.Commands
         public string Command => "atvmode";
         public string Description => "Sets the atmos debug mode. This will automatically reset the scale.";
         public string Help => "atvmode <TotalMoles/GasMoles/Temperature> [<gas ID (for GasMoles)>]";
-        public bool Execute(IClientConsoleShell shell, string[] args)
+        public bool Execute(IClientConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 1)
             {
@@ -105,7 +105,7 @@ namespace Content.Client.Commands
         public string Command => "atvcbm";
         public string Description => "Changes from red/green/blue to greyscale";
         public string Help => "atvcbm <true/false>";
-        public bool Execute(IClientConsoleShell shell, string[] args)
+        public bool Execute(IClientConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
             {

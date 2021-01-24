@@ -19,7 +19,7 @@ namespace Content.Server.Commands.Atmos
         public string Description => "Removes an amount of gases.";
         public string Help => "removegas <X> <Y> <GridId> <amount> <ratio>\nIf <ratio> is true, amount will be treated as the ratio of gas to be removed.";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 5) return;
             if(!int.TryParse(args[0], out var x)

@@ -18,7 +18,7 @@ namespace Content.Server.Commands.GameTicking
         public string Command => "golobby";
         public string Description => "Enables the lobby and restarts the round.";
         public string Help => $"Usage: {Command} / {Command} <preset>";
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             Type? preset = null;
             var presetName = string.Join(" ", args);

@@ -19,7 +19,7 @@ namespace Content.Server.Commands.Atmos
         public string Description => "Adds unimulated atmos support to a grid.";
         public string Help => $"{Command} <GridId>";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 1)
             {

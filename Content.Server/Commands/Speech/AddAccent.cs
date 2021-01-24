@@ -18,7 +18,7 @@ namespace Content.Server.Commands.Speech
         public string Description => "Add a speech component to the current player";
         public string Help => $"{Command} <component>/?";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player?.AttachedEntity == null)

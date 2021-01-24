@@ -23,7 +23,7 @@ namespace Content.Server.Administration.Commands
             "warp <location>\nLocations you can teleport to are predefined by the map. " +
             "You can specify '?' as location to get a list of valid locations.";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player == null)

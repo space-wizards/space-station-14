@@ -16,7 +16,7 @@ namespace Content.Server.Commands.Actions
         public string Command => "grantaction";
         public string Description => "Grants an action to a player, defaulting to current player";
         public string Help => "grantaction <actionType> <name or userID, omit for current player>";
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player == null) return;

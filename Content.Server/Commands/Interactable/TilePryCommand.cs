@@ -21,7 +21,7 @@ namespace Content.Server.Commands.Interactable
         public string Description => "Pries up all tiles in a radius around the user.";
         public string Help => $"Usage: {Command} <radius>";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player?.AttachedEntity == null)

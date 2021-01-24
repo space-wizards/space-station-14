@@ -13,7 +13,7 @@ namespace Content.Server.Administration.Commands
         public string Description => "Grants client temporary full host admin privileges. Use this to bootstrap admins.";
         public string Help => "Usage promotehost <player>";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
             {

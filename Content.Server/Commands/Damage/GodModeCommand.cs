@@ -18,7 +18,7 @@ namespace Content.Server.Commands.Damage
         public string Description => "Makes your entity or another invulnerable to almost anything. May have irreversible changes.";
         public string Help => $"Usage: {Command} / {Command} <entityUid>";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             IEntity entity;

@@ -16,7 +16,7 @@ namespace Content.Server.Commands
         public string Command => "removeextracomponents";
         public string Description => "Removes all components from all entities of the specified id if that component is not in its prototype.\nIf no id is specified, it matches all entities.";
         public string Help => $"{Command} <entityId> / {Command}";
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var id = args.Length == 0 ? null : string.Join(" ", args);
             var entityManager = IoCManager.Resolve<IEntityManager>();

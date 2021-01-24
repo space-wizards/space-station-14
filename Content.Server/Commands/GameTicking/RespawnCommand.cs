@@ -13,7 +13,7 @@ namespace Content.Server.Commands.GameTicking
         public string Description => "Respawns a player, kicking them back to the lobby.";
         public string Help => "respawn [player]";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (args.Length > 1)

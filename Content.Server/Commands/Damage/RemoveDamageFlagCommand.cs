@@ -13,7 +13,7 @@ namespace Content.Server.Commands.Damage
         public override string Description => "Removes a damage flag from your entity or another.";
         public override string Help => $"Usage: {Command} <flag> / {Command} <entityUid> <flag>";
 
-        public override void Execute(IServerConsoleShell shell, string[] args)
+        public override void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (!TryGetEntity(shell, player, args, false, out var entity, out var flag, out var damageable))

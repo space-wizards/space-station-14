@@ -15,7 +15,7 @@ namespace Content.Server.Commands.Chat
         public string Description => "Send chat messages to the private admin chat channel.";
         public string Help => "asay <text>";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (args.Length < 1)

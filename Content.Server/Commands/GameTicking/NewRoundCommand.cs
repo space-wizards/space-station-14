@@ -15,7 +15,7 @@ namespace Content.Server.Commands.GameTicking
         public string Description => "Moves the server from PostRound to a new PreRoundLobby.";
         public string Help => String.Empty;
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var ticker = IoCManager.Resolve<IGameTicker>();
             ticker.RestartRound();

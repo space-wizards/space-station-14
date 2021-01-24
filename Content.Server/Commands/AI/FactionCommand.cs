@@ -19,7 +19,7 @@ namespace Content.Server.Commands.AI
         public string Help => "faction <source> <friendly/hostile> target\n" +
                               "faction <source> list: hostile factions";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length == 0)
             {

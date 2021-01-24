@@ -13,7 +13,7 @@ namespace Content.Server.Administration.Commands
         public string Description => "Re-admins you if you previously de-adminned.";
         public string Help => "Usage: readmin";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player == null)

@@ -18,7 +18,7 @@ namespace Content.Server.Commands.Disposal
         public string Description => Loc.GetString("Shows all the directions that a tube can connect in.");
         public string Help => $"Usage: {Command} <entityUid>";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player?.AttachedEntity == null)

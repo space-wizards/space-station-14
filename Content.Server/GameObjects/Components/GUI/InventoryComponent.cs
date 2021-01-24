@@ -688,7 +688,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 var host = IoCManager.Resolve<IServerConsoleHost>();
                 var args = new string[] {entityId};
                 var session = user.PlayerSession();
-                command.Execute(new ConsoleShellAdapter(host, session), args);
+                command.Execute(new ConsoleShellAdapter(host, session), $"{command.Command} {entityId}", args);
             }
 
             private static bool CanCommand(IEntity user)

@@ -11,7 +11,7 @@ namespace Content.Client.Commands
         public string Description => "Opens the credits window";
         public string Help => "credits";
 
-        public bool Execute(IClientConsoleShell shell, string[] args)
+        public bool Execute(IClientConsoleShell shell, string argStr, string[] args)
         {
             new CreditsWindow().Open();
             return false;

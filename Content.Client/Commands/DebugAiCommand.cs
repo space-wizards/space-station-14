@@ -16,7 +16,7 @@ namespace Content.Client.Commands
         public string Description => "Handles all tooltip debugging above AI mobs";
         public string Help => "debugai [hide/paths/thonk]";
 
-        public bool Execute(IClientConsoleShell shell, string[] args)
+        public bool Execute(IClientConsoleShell shell, string argStr, string[] args)
         {
 #if DEBUG
             if (args.Length < 1)

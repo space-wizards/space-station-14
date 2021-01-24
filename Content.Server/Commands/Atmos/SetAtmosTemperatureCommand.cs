@@ -19,7 +19,7 @@ namespace Content.Server.Commands.Atmos
         public string Description => "Sets a grid's temperature (in kelvin).";
         public string Help => "Usage: setatmostemp <GridId> <Temperature>";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 2) return;
             if(!int.TryParse(args[0], out var id)

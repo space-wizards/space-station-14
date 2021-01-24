@@ -28,7 +28,7 @@ namespace Content.Server.Administration.Commands
             }
         }
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (args.Length < 1 && player != null) //Try to heal the users mob if applicable

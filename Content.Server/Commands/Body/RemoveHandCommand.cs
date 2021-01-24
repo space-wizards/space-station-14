@@ -19,7 +19,7 @@ namespace Content.Server.Commands.Body
         public string Description => "Removes a hand from your entity.";
         public string Help => $"Usage: {Command}";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player == null)

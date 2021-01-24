@@ -14,7 +14,7 @@ namespace Content.Server.Commands.GameTicking
         public string Description => "Allows or disallows latejoining during mid-game.";
         public string Help => $"Usage: {Command} <disallow>";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
             {

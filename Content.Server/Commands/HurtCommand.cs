@@ -154,7 +154,7 @@ namespace Content.Server.Commands
             }
         }
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             bool ignoreResistances;

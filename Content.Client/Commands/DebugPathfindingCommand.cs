@@ -13,7 +13,7 @@ namespace Content.Client.Commands
         public string Description => "Toggles visibility of pathfinding debuggers.";
         public string Help => "pathfinder [hide/nodes/routes/graph/regioncache/regions]";
 
-        public bool Execute(IClientConsoleShell shell, string[] args)
+        public bool Execute(IClientConsoleShell shell, string argStr, string[] args)
         {
 #if DEBUG
             if (args.Length < 1)

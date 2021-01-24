@@ -27,7 +27,7 @@ namespace Content.Server.Commands.StationEvents
         private const string RunHelp =
             "run <eventName/random>: start a particular event now; <eventName> is case-insensitive and not localized";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (args.Length == 0)

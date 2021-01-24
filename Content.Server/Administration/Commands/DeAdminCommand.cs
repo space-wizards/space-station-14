@@ -16,7 +16,7 @@ namespace Content.Server.Administration.Commands
         public string Description => "Temporarily de-admins you so you can experience the round as a normal player.";
         public string Help => "Usage: deadmin\nUse readmin to re-admin after using this.";
 
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player == null)

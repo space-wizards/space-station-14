@@ -23,7 +23,7 @@ namespace Content.Server.Commands.GameTicking
         {
             IoCManager.InjectDependencies(this);
         }
-        public void Execute(IServerConsoleShell shell, string[] args)
+        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             var output = string.Join(".", args);
