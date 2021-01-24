@@ -51,7 +51,7 @@ namespace Content.Client.UserInterface
         {
             base.EnteredTree();
             _chatManager.OnChatBoxResized += OnChatResized;
-            OnChatResized();
+            OnChatResized(new ChatResizedEventArgs(ChatBox.InitialChatBottom));
         }
 
         protected override void ExitedTree()
@@ -61,12 +61,12 @@ namespace Content.Client.UserInterface
         }
 
 
-        private void OnChatResized()
+        private void OnChatResized(ChatResizedEventArgs chatResizedEventArgs)
         {
             // resize us to fit just below the chatbox
             if (_chatManager.CurrentChatBox != null)
             {
-                LayoutContainer.SetMarginTop(this, _chatManager.CurrentChatBox.SizeBox.Bottom + ChatSeparation);
+                LayoutContainer.SetMarginTop(this, chatResizedEventArgs.NewBottom + ChatSeparation);
             }
             else
             {

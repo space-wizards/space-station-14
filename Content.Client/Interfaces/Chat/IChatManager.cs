@@ -7,6 +7,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Interfaces.Chat
 {
+
     public interface IChatManager
     {
         void Initialize();
@@ -25,6 +26,6 @@ namespace Content.Client.Interfaces.Chat
         /// <summary>
         /// Invoked when CurrentChatBox is resized (including after setting initial default size)
         /// </summary>
-        event Action? OnChatBoxResized;
+        event Action<ChatResizedEventArgs>? OnChatBoxResized;
     }
 }

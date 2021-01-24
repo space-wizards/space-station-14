@@ -28,12 +28,6 @@ namespace Content.Client.State
 
             _gameChat = new ChatBox(false);
 
-            _userInterfaceManager.StateRoot.AddChild(_gameChat);
-            LayoutContainer.SetAnchorAndMarginPreset(_gameChat, LayoutContainer.LayoutPreset.TopRight, margin: 10);
-            LayoutContainer.SetAnchorAndMarginPreset(_gameChat, LayoutContainer.LayoutPreset.TopRight, margin: 10);
-            LayoutContainer.SetMarginLeft(_gameChat, -475);
-            LayoutContainer.SetMarginBottom(_gameChat, 235);
-
             _userInterfaceManager.StateRoot.AddChild(_gameHud.RootControl);
             _chatManager.SetChatBox(_gameChat);
             _gameChat.DefaultChatFormat = "say \"{0}\"";

@@ -106,7 +106,7 @@ namespace Content.Client.Chat
         /// <summary>
         /// Invoked when CurrentChatBox is resized (including after setting initial default size)
         /// </summary>
-        public event Action? OnChatBoxResized;
+        public event Action<ChatResizedEventArgs>? OnChatBoxResized;
 
         private ChatBox? _currentChatBox;
         private Control _speechBubbleRoot = null!;
@@ -306,9 +306,9 @@ namespace Content.Client.Chat
             RepopulateChat(_filteredHistory);
         }
 
-        private void ChatBoxOnResized()
+        private void ChatBoxOnResized(ChatResizedEventArgs chatResizedEventArgs)
         {
-            OnChatBoxResized?.Invoke();
+            OnChatBoxResized?.Invoke(chatResizedEventArgs);
         }
 
         public void RemoveSpeechBubble(EntityUid entityUid, SpeechBubble bubble)

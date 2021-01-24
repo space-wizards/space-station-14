@@ -20,6 +20,8 @@ namespace Content.Client.Chat
 {
     public class ChatBox : MarginContainer
     {
+        public const float InitialChatBottom = 235;
+
         public delegate void TextSubmitHandler(ChatBox chatBox, string text);
 
         public delegate void FilterToggledHandler(ChatChannel toggled, bool enabled);
@@ -31,7 +33,7 @@ namespace Content.Client.Chat
         public HistoryLineEdit Input { get; private set; }
         public OutputPanel Contents { get; }
 
-        public event Action? OnResized;
+        public event Action<ChatResizedEventArgs>? OnResized;
 
         // order in which the available channel filters show up when available
         private static readonly IReadOnlyList<ChatChannel> ChannelFilterOrder = new List<ChatChannel>
@@ -84,16 +86,22 @@ namespace Content.Client.Chat
         private readonly bool _lobbyMode;
         private byte _clampIn;
 
+        /// <summary>
+        /// When lobbyMode is false, will position / add to correct location in StateRoot and
+        /// be resizable.
+        /// wWen true, will leave layout up to parent and not be resizable.
+        /// </summary>
         public ChatBox(bool lobbyMode)
         {
             _lobbyMode = lobbyMode;
-            // TODO: Find a better way. Probably not "supposed" to inject IClyde, but I give up.
+            // TODO: Revisit the resizing stuff after https://github.com/space-wizards/RobustToolbox/issues/1392 is done,
+            // Probably not "supposed" to inject IClyde, but I give up.
             // I can't find any other way to allow this control to properly resize when the
             // window is resized. Resized() isn't reliably called when resizing the window,
             // and layoutcontainer anchor / margin don't seem to adjust how we need
             // them to when the window is resized. We need it to be able to resize
-            // within some bounds so that it doesn't overlap other UI elements, but current
-            // LayoutContainer.
+            // within some bounds so that it doesn't overlap other UI elements, while still
+            // being freely resizable within those bounds.
             _clyde = IoCManager.Resolve<IClyde>();
             MouseFilter = MouseFilterMode.Stop;
 
@@ -185,7 +193,15 @@ namespace Content.Client.Chat
                 }
             };
 
-            OnResized?.Invoke();
+            if (!lobbyMode)
+            {
+                UserInterfaceManager.StateRoot.AddChild(this);
+                LayoutContainer.SetAnchorAndMarginPreset(this, LayoutContainer.LayoutPreset.TopRight, margin: 10);
+                LayoutContainer.SetAnchorAndMarginPreset(this, LayoutContainer.LayoutPreset.TopRight, margin: 10);
+                LayoutContainer.SetMarginLeft(this, -475);
+                LayoutContainer.SetMarginBottom(this, InitialChatBottom);
+                OnResized?.Invoke(new ChatResizedEventArgs(InitialChatBottom));
+            }
         }
 
         protected override void EnteredTree()
@@ -203,18 +219,16 @@ namespace Content.Client.Chat
 
         private void ClydeOnOnWindowResized(WindowResizedEventArgs obj)
         {
-            // TODO: Do we need this? Can we use Resized?
             ClampAfterDelay();
         }
 
         protected override void FrameUpdate(FrameEventArgs args)
         {
             base.FrameUpdate(args);
-            // TODO: find a better way to do this.
             // we do the clamping after a delay (after UI scale / window resize)
             // because we need to wait for our parent container to properly resize
             // first, so we can calculate where we should go. If we do it right away,
-            // we won't have the correct values to adjust our margins.
+            // we won't have the correct values from the parent to know how to adjust our margins.
             if (_clampIn <= 0) return;
             _clampIn -= 1;
             if (_clampIn == 0) ClampSize();
@@ -516,13 +530,32 @@ namespace Content.Client.Chat
             var bottom = desiredBottom ?? Rect.Bottom;
 
             // clamp so it doesn't go too high or low (leave space for alerts UI)
-            bottom = Math.Clamp(bottom, MinHeight, Parent.Size.Y - MinDistanceFromBottom);
+            var maxBottom = Parent.Size.Y - MinDistanceFromBottom;
+            if (maxBottom <= MinHeight)
+            {
+                // we can't fit in our given space (window made awkwardly small), so give up
+                // and overlap at our min height
+                bottom = MinHeight;
+            }
+            else
+            {
+                bottom = Math.Clamp(bottom, MinHeight, maxBottom);
+            }
 
-            left = Math.Clamp(left, MinLeft, Parent.Size.X - MinWidth);
+            var maxLeft = Parent.Size.X - MinWidth;
+            if (maxLeft <= MinLeft)
+            {
+                // window too narrow, give up and overlap at our max left
+                left = maxLeft;
+            }
+            else
+            {
+                left = Math.Clamp(left, MinLeft, maxLeft);
+            }
 
             LayoutContainer.SetMarginLeft(this, -((right + 10) - left));
             LayoutContainer.SetMarginBottom(this, bottom);
-            OnResized?.Invoke();
+            OnResized?.Invoke(new ChatResizedEventArgs(bottom));
         }
 
         protected override void MouseExited()
@@ -726,6 +759,18 @@ namespace Content.Client.Chat
             };
 
             Text = name;
+        }
+    }
+
+    public readonly struct ChatResizedEventArgs
+    {
+        /// new bottom that the chat rect is going to have in virtual pixels
+        /// after the imminent relayout
+        public readonly float NewBottom;
+
+        public ChatResizedEventArgs(float newBottom)
+        {
+            NewBottom = newBottom;
         }
     }
 }
