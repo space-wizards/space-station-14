@@ -26,11 +26,6 @@ namespace Content.Server.GameObjects.Components.Mobs.State
                 status.ShowAlert(AlertType.HumanDead);
             }
 
-            if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlayComponent))
-            {
-                overlayComponent.AddOverlay(SharedOverlayID.CircleMaskOverlay);
-            }
-
             if (entity.TryGetComponent(out StunnableComponent stun))
             {
                 stun.CancelAll();
@@ -51,11 +46,6 @@ namespace Content.Server.GameObjects.Components.Mobs.State
             if (entity.TryGetComponent(out IPhysicsComponent physics))
             {
                 physics.CanCollide = true;
-            }
-
-            if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlay))
-            {
-                overlay.ClearOverlays();
             }
         }
     }
