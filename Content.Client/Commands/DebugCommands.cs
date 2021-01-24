@@ -93,8 +93,8 @@ namespace Content.Client.Commands
                 return;
             }
 
-            shell.RegisteredCommands["togglelight"].Execute(shell, string.Empty, Array.Empty<string>());
-            shell.RegisteredCommands["showsubfloorforever"].Execute(shell, string.Empty, Array.Empty<string>());
+            shell.ConsoleHost.RegisteredCommands["togglelight"].Execute(shell, string.Empty, Array.Empty<string>());
+            shell.ConsoleHost.RegisteredCommands["showsubfloorforever"].Execute(shell, string.Empty, Array.Empty<string>());
 
             shell.RemoteExecuteCommand(argStr);
         }
