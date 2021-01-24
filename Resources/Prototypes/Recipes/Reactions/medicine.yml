@@ -13,9 +13,9 @@
 - type: reaction
   id: react.Alkysine
   reactants:
-    chem.Cl:
+    chem.Chlorine:
       amount: 1
-    chem.N:
+    chem.Nitrogen:
       amount: 1
     chem.Dylovene:
       amount: 1
@@ -25,11 +25,11 @@
 - type: reaction
   id: react.Dylovene
   reactants:
-    chem.Si:
+    chem.Silicon:
       amount: 1
-    chem.N:
+    chem.Nitrogen:
       amount: 1
-    chem.K:
+    chem.Potassium:
       amount: 1
   products:
     chem.Dylovene: 3
@@ -39,7 +39,7 @@
   reactants:
     chem.Hyronalin:
       amount: 1
-    chem.H:
+    chem.Hydrogen:
       amount: 1
   products:
     chem.Arithrazine: 2
@@ -49,7 +49,7 @@
   reactants:
     chem.Inaprovaline:
       amount: 1
-    chem.C:
+    chem.Carbon:
       amount: 1
   products:
     chem.Bicaridine: 2
@@ -59,9 +59,9 @@
   reactants:
     chem.Dexalin:
       amount: 1
-    chem.H2O:
+    chem.Water:
       amount: 1
-    chem.O:
+    chem.Oxygen:
       amount: 1
   products:
     chem.Cryoxadone: 3
@@ -71,9 +71,9 @@
   reactants:
     chem.Cryoxadone:
       amount: 1
-    chem.Na:
+    chem.Sodium:
       amount: 1
-    chem.Plasma:
+    chem.Phoron:
       amount: 5
       catalyst: true
   products:
@@ -84,7 +84,7 @@
   reactants:
     chem.MindbreakerToxin:
       amount: 5
-    chem.C:
+    chem.Carbon:
       amount: 5
   products:
     chem.Citalopram: 10
@@ -94,9 +94,9 @@
   reactants:
     chem.Kelotane:
       amount: 1
-    chem.O:
+    chem.Oxygen:
       amount: 1
-    chem.P:
+    chem.Phosphorus:
       amount: 1
   products:
     chem.Dermaline: 3
@@ -104,9 +104,9 @@
 - type: reaction
   id: react.Dexalin
   reactants:
-    chem.O:
+    chem.Oxygen:
       amount: 2
-    chem.Plasma:
+    chem.Phoron:
       amount: 5
       catalyst: true
   products:
@@ -117,9 +117,9 @@
   reactants:
     chem.Dexalin:
       amount: 1
-    chem.C:
+    chem.Carbon:
       amount: 1
-    chem.Fe:
+    chem.Iron:
       amount: 1
   products:
     chem.DexalinPlus: 3
@@ -127,11 +127,11 @@
 - type: reaction
   id: react.Ethylredoxrazine
   reactants:
-    chem.O:
+    chem.Oxygen:
       amount: 1
     chem.Dylovene:
       amount: 1
-    chem.C:
+    chem.Carbon:
       amount: 1
   products:
     chem.Ethylredoxrazine: 3
@@ -141,9 +141,9 @@
   reactants:
     chem.Glucose:
       amount: 1
-    chem.P:
+    chem.Phosphorus:
       amount: 1
-    chem.S:
+    chem.Sulfur:
       amount: 1
   products:
     chem.Hyperzine: 3
@@ -151,7 +151,7 @@
 - type: reaction
   id: react.Hyronalin
   reactants:
-    chem.Ra:
+    chem.Radium:
       amount: 1
     chem.Dylovene:
       amount: 1
@@ -161,9 +161,9 @@
 - type: reaction
   id: react.Imidazoline
   reactants:
-    chem.H:
+    chem.Hydrogen:
       amount: 1
-    chem.C:
+    chem.Carbon:
       amount: 1
     chem.Dylovene:
       amount: 1
@@ -175,9 +175,9 @@
   reactants:
     chem.Dylovene:
       amount: 1
-    chem.C:
+    chem.Carbon:
       amount: 1
-    chem.H2O:
+    chem.Water:
       amount: 1
   products:
     chem.Inacusiate: 3
@@ -185,9 +185,9 @@
 - type: reaction
   id: react.Inaprovaline
   reactants:
-    chem.O:
+    chem.Oxygen:
       amount: 1
-    chem.C:
+    chem.Carbon:
       amount: 1
     chem.Glucose:
       amount: 1
@@ -197,9 +197,9 @@
 - type: reaction
   id: react.Kelotane
   reactants:
-    chem.Si:
+    chem.Silicon:
       amount: 1
-    chem.C:
+    chem.Carbon:
       amount: 1
   products:
     chem.Kelotane: 2
@@ -207,11 +207,11 @@
 - type: reaction
   id: react.Leporazine
   reactants:
-    chem.Si:
+    chem.Silicon:
       amount: 1
-    chem.Cu:
+    chem.Copper:
       amount: 1
-    chem.Plasma:
+    chem.Phoron:
       amount: 5
       catalyst: true
   products:
@@ -220,13 +220,13 @@
 - type: reaction
   id: react.Methylin
   reactants:
-    chem.H:
+    chem.Hydrogen:
       amount: 1
-    chem.Cl:
+    chem.Chlorine:
       amount: 1
     chem.Ethanol:
       amount: 1
-    chem.F:
+    chem.Fluorine:
       amount: 5
       catalyst: true
   products:
@@ -239,7 +239,7 @@
       amount: 1
     chem.Tramadol:
       amount: 1
-    chem.Plasma:
+    chem.Phoron:
       amount: 1
   products:
     chem.Oxycodone: 3
@@ -261,7 +261,7 @@
   reactants:
     chem.MindbreakerToxin:
       amount: 5
-    chem.O:
+    chem.Oxygen:
       amount: 5
     chem.Inaprovaline:
       amount: 5
@@ -273,7 +273,7 @@
   reactants:
     chem.Arithrazine:
       amount: 1
-    chem.C:
+    chem.Carbon:
       amount: 1
   products:
     chem.Ryetalyn: 2
@@ -291,11 +291,11 @@
 - type: reaction
   id: react.Synaptizine
   reactants:
-    chem.Li:
+    chem.Lithium:
       amount: 1
     chem.Glucose:
       amount: 1
-    chem.H2O:
+    chem.Water:
       amount: 1
   products:
     chem.Synaptizine: 3
@@ -307,7 +307,7 @@
       amount: 1
     chem.Ethanol:
       amount: 1
-    chem.O:
+    chem.Oxygen:
       amount: 1
   products:
     chem.Tramadol: 3
@@ -325,11 +325,11 @@
 - type: reaction
   id: react.Vaccine
   reactants:
-    chem.Al:
+    chem.Aluminium:
       amount: 1
     chem.Glucose:
       amount: 1
-    chem.H2O:
+    chem.Water:
       amount: 1
   products:
     chem.Vaccine: 3
@@ -349,9 +349,9 @@
   reactants:
     chem.Ethanol:
       amount: 1
-    chem.Cl:
+    chem.Chlorine:
       amount: 3
-    chem.H2O:
+    chem.Water:
       amount: 1
   products:
     chem.ChloralHydrate: 5
@@ -371,9 +371,9 @@
 - type: reaction
   id: react.Cryptobiolin
   reactants:
-    chem.K:
+    chem.Potassium:
       amount: 1
-    chem.O:
+    chem.Oxygen:
       amount: 1
     chem.Glucose:
       amount: 1
@@ -393,9 +393,9 @@
 - type: reaction
   id: react.Impedrezene
   reactants:
-    chem.Hg:
+    chem.Mercury:
       amount: 1
-    chem.O:
+    chem.Oxygen:
       amount: 1
     chem.Glucose:
       amount: 1
@@ -407,7 +407,7 @@
   reactants:
     chem.Ammonia:
       amount: 1
-    chem.Plasma:
+    chem.Phoron:
       amount: 1
   products:
     chem.Lexorin: 2
@@ -419,7 +419,7 @@
       amount: 1
     chem.Ethanol:
       amount: 1
-    chem.Ra:
+    chem.Radium:
       amount: 1
   products:
     chem.Lipozine: 3
@@ -427,9 +427,9 @@
 - type: reaction
   id: react.MindbreakerToxin
   reactants:
-    chem.Si:
+    chem.Silicon:
       amount: 1
-    chem.H:
+    chem.Hydrogen:
       amount: 1
     chem.Dylovene:
       amount: 1
@@ -453,7 +453,7 @@
       amount: 1
     chem.Dylovene:
       amount: 1
-    chem.Cl:
+    chem.Chlorine:
       amount: 1
   products:
     chem.Sterilizine: 3
@@ -461,11 +461,11 @@
 - type: reaction
   id: react.SpaceDrugs
   reactants:
-    chem.Hg:
+    chem.Mercury:
       amount: 1
     chem.Glucose:
       amount: 1
-    chem.Li:
+    chem.Lithium:
       amount: 1
   products:
     chem.SpaceDrugs: 3

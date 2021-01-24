@@ -38,9 +38,16 @@
 - type: reagent
   id: chem.Vodka
   name: vodka
-  desc: The glass contain wodka. Xynta.
+  desc: The glass contain wodka. Хуита.
   physicalDesc: strong-smelling
   color: "#d1d1d155"
+
+- type: reagent
+  id: chem.Rum
+  name: rum
+  desc: Popular with the sailors. Not very popular with anyone else.
+  physicalDesc: strong-smelling
+  color: "#664300"
 
 - type: reagent
   id: chem.Moonshine
