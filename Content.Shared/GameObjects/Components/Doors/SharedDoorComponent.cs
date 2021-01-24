@@ -11,18 +11,16 @@ using Robust.Shared.GameObjects.Components.Appearance;
 
 namespace Content.Shared.GameObjects.Components.Doors
 {
-    /// <summary>
-    ///     Used for clientside "prediction" of door opens, preventing jarring mispredicts. Bare-bones.
-    ///     Most actual behavior is handled serverside, by ServerDoorComponent. The server tells
-    ///     the client that the door is opening in N seconds, and the client turns the door's collision off in N seconds. 
-    /// </summary>
     public abstract class SharedDoorComponent : Component, ICollideSpecial
     {
         public override string Name => "Door";
         public override uint? NetID => ContentNetIDs.DOOR;
 
-        private DoorState _state = DoorState.Closed;
         [ViewVariables]
+        private DoorState _state = DoorState.Closed;
+        /// <summary>
+        /// The current state of the door -- whether it is open, closed, opening, or closing.
+        /// </summary>
         public virtual DoorState State
         {
             get => _state;
@@ -36,7 +34,14 @@ namespace Content.Shared.GameObjects.Components.Doors
                 _state = value;
 
                 Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new DoorStateMessage(this, State));
-                SetAppearance(DoorStateToDoorVisualState(State));
+                SetAppearance(State switch
+                {
+                    DoorState.Open => DoorVisualState.Open,
+                    DoorState.Closed => DoorVisualState.Closed,
+                    DoorState.Opening => DoorVisualState.Opening,
+                    DoorState.Closing => DoorVisualState.Closing,
+                    _ => throw new ArgumentOutOfRangeException(),
+                });
             }
         }
 
@@ -158,9 +163,12 @@ namespace Content.Shared.GameObjects.Components.Doors
             }
         }
 
+        /// <summary>
+        /// Used to update the door at periodic intervals. Serves a different purpose on client side vs. server side.
+        /// </summary>
+        /// <param name="frameTime"></param>
         public virtual void OnUpdate(float frameTime) { }
 
-        // KEEP THIS IN SYNC WITH THE METHOD DAMMIT
         [NetSerializable]
         [Serializable]
         public enum DoorState
@@ -171,21 +179,8 @@ namespace Content.Shared.GameObjects.Components.Doors
             Closing,
         }
 
-        // KEEP THIS IN SYNC WITH THE ENUMS DAMMIT
-        public static DoorVisualState DoorStateToDoorVisualState(DoorState doorState)
-        {
-            return doorState switch
-            {
-                DoorState.Open => DoorVisualState.Open,
-                DoorState.Closed => DoorVisualState.Closed,
-                DoorState.Opening => DoorVisualState.Opening,
-                DoorState.Closing => DoorVisualState.Closing,
-                _ => throw new ArgumentOutOfRangeException(),
-            };
-        }
     }
 
-    // KEEP THIS IN SYNC WITH THE METHOD DAMMIT
     [NetSerializable]
     [Serializable]
     public enum DoorVisualState

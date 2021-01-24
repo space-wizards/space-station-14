@@ -17,7 +17,6 @@ using Content.Shared.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -26,7 +25,6 @@ using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timers.Timer;
@@ -39,6 +37,7 @@ namespace Content.Server.GameObjects.Components.Doors
     {
         public override DoorState State
         {
+            get => base.State;
             protected set
             {
                 if (State == value)
@@ -63,6 +62,9 @@ namespace Content.Server.GameObjects.Components.Doors
             }
         }
 
+        /// <summary>
+        /// The amount of time the door has been open. Used to automatically close the door if it autocloses.
+        /// </summary>
         [ViewVariables]
         private float _openTimeCounter;
         [ViewVariables(VVAccess.ReadWrite)]
@@ -115,7 +117,9 @@ namespace Content.Server.GameObjects.Components.Doors
         /// </summary>
         private bool _beingWelded = false;
 
-
+        /// <summary>
+        /// Whether the door starts open when it's first loaded.
+        /// </summary>
         private bool _startOpen = false;
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -280,6 +284,9 @@ namespace Content.Server.GameObjects.Components.Doors
             return true;
         }
 
+        /// <summary>
+        /// Opens the door. Does not check if this is possible.
+        /// </summary>
         public void Open()
         {
             State = DoorState.Opening;
@@ -397,6 +404,9 @@ namespace Content.Server.GameObjects.Components.Doors
             return true;
         }
 
+        /// <summary>
+        /// Closes the door. Does not check if this is possible.
+        /// </summary>
         public void Close()
         {
             State = DoorState.Closing;
@@ -443,7 +453,7 @@ namespace Content.Server.GameObjects.Components.Doors
         }
 
         /// <summary>
-        /// Crushes everyone colliding with us by more than 10%. Not the same as checking if we should try to crush people; we will.
+        /// Crushes everyone colliding with us by more than 10%.
         /// </summary>
         /// <returns>True if we crushed somebody, false if we did not.</returns>
         private bool TryCrush()
@@ -513,7 +523,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
             if(Owner.TryGetComponent(out IDoorCheck? doorCheck))
             {
-                realCloseTime = doorCheck.GetPryTime() ?? realCloseTime;
+                realCloseTime = doorCheck.GetCloseSpeed() ?? realCloseTime;
             }
 
             if (_openTimeCounter > realCloseTime)

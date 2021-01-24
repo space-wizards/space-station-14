@@ -7,6 +7,9 @@ using System;
 
 namespace Content.Client.GameObjects.Components.Doors
 {
+    /// <summary>
+    /// Bare-bones client-side door component; used to stop door-based mispredicts.
+    /// </summary>
     [UsedImplicitly]
     [RegisterComponent]
     public class ClientDoorComponent : SharedDoorComponent

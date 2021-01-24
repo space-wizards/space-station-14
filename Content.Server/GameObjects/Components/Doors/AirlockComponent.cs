@@ -1,14 +1,10 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Threading;
-using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.Interfaces.GameObjects.Components.Doors;
-using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Doors;
-using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -23,10 +19,12 @@ using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.SharedWiresComponent;
 using static Content.Shared.GameObjects.Components.SharedWiresComponent.WiresAction;
-using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameObjects.Components.Doors
 {
+    /// <summary>
+    /// Companion component to AirlockComponent that handles firelock-specific behavior.
+    /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IDoorCheck))]
     public class AirlockComponent : Component, IWires, IDoorCheck
@@ -85,7 +83,6 @@ namespace Content.Server.GameObjects.Components.Doors
         }
 
         private const float AutoCloseDelayFast = 1;
-        // True => AutoCloseDelay; False => AutoCloseDelayFast
         [ViewVariables(VVAccess.ReadWrite)]
         private bool _normalCloseSpeed = true;
 

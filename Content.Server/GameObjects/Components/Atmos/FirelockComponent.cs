@@ -4,13 +4,15 @@ using Content.Shared.GameObjects.Components.Doors;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.ViewVariables;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
+    /// <summary>
+    /// Companion component to ServerDoorComponent that handles firelock-specific behavior.
+    /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IDoorCheck))]
     public class FirelockComponent : Component, IDoorCheck
