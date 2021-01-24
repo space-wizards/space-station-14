@@ -354,7 +354,7 @@
     chem.Water:
       amount: 1
   products:
-    chem.ChloralHydrate: 5
+    chem.ChloralHydrate: 1
 
 - type: reaction
   id: react.Creatine #Add nutriment as ingredient (amount = 1) once that's a thing
