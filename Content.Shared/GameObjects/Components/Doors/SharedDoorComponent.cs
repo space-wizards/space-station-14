@@ -21,8 +21,24 @@ namespace Content.Shared.GameObjects.Components.Doors
         public override string Name => "Door";
         public override uint? NetID => ContentNetIDs.DOOR;
 
+        private DoorState _state = DoorState.Closed;
         [ViewVariables]
-        protected DoorState _state = DoorState.Closed;
+        public virtual DoorState State
+        {
+            get => _state;
+            protected set
+            {
+                if (_state == value)
+                {
+                    return;
+                }
+
+                _state = value;
+
+                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new DoorStateMessage(this, State));
+                SetAppearance(DoorStateToDoorVisualState(State));
+            }
+        }
 
         /// <summary>
         /// Closing time until impassable.

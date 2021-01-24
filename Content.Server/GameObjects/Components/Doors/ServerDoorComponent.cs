@@ -37,18 +37,16 @@ namespace Content.Server.GameObjects.Components.Doors
     [ComponentReference(typeof(IActivate))]
     public class ServerDoorComponent : SharedDoorComponent, IActivate, ICollideBehavior, IInteractUsing
     {
-        public DoorState State
+        public override DoorState State
         {
-            get => _state;
-            private set
+            protected set
             {
-                if (_state == value)
+                if (State == value)
                 {
                     return;
                 }
 
-                _state = value;
-                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new DoorStateMessage(this, State));
+                base.State = value;
 
                 StateChangeStartTime = State switch
                 {

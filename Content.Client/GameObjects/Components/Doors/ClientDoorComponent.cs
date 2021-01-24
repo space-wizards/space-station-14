@@ -25,19 +25,14 @@ namespace Content.Client.GameObjects.Components.Doors
 
             CurrentlyCrushing = doorCompState.CurrentlyCrushing;
             StateChangeStartTime = doorCompState.StartTime;
-            if (_state != doorCompState.DoorState)
-            {
-                _state = doorCompState.DoorState;
-                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new DoorStateMessage(this, _state));
-                SetAppearance(DoorStateToDoorVisualState(_state));
-            }
+            State = doorCompState.DoorState;
 
             if (StateChangeStartTime == null)
             {
                 return;
             }
 
-            _timeOffset = _state switch
+            _timeOffset = State switch
             {
                 DoorState.Opening => OpenTimeOne,
                 DoorState.Closing => CloseTimeOne,
@@ -59,7 +54,7 @@ namespace Content.Client.GameObjects.Components.Doors
             {
                 if (GameTiming.CurTime < StateChangeStartTime + _timeOffset) return;
 
-                if (_state == DoorState.Opening)
+                if (State == DoorState.Opening)
                 {
                     OnPartialOpen();
                 }
