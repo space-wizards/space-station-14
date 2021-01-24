@@ -222,18 +222,6 @@ namespace Content.Client.Chat
             ClampAfterDelay();
         }
 
-        protected override void FrameUpdate(FrameEventArgs args)
-        {
-            base.FrameUpdate(args);
-            // we do the clamping after a delay (after UI scale / window resize)
-            // because we need to wait for our parent container to properly resize
-            // first, so we can calculate where we should go. If we do it right away,
-            // we won't have the correct values from the parent to know how to adjust our margins.
-            if (_clampIn <= 0) return;
-            _clampIn -= 1;
-            if (_clampIn == 0) ClampSize();
-        }
-
         protected override void ExitedTree()
         {
             base.ExitedTree();
@@ -381,7 +369,7 @@ namespace Content.Client.Chat
         {
             base.KeyBindDown(args);
 
-            if (args.Function == EngineKeyFunctions.UIClick)
+            if (args.Function == EngineKeyFunctions.UIClick && !_lobbyMode)
             {
                 _currentDrag = GetDragModeFor(args.RelativePosition);
 
@@ -402,7 +390,7 @@ namespace Content.Client.Chat
         {
             base.KeyBindUp(args);
 
-            if (args.Function != EngineKeyFunctions.UIClick)
+            if (args.Function != EngineKeyFunctions.UIClick || _lobbyMode)
             {
                 return;
             }
@@ -462,7 +450,7 @@ namespace Content.Client.Chat
         {
             base.MouseMove(args);
 
-            if (Parent == null)
+            if (Parent == null || _lobbyMode)
             {
                 return;
             }
@@ -518,12 +506,26 @@ namespace Content.Client.Chat
 
         private void ClampAfterDelay()
         {
-            _clampIn = 2;
+            if (!_lobbyMode)
+                _clampIn = 2;
+        }
+
+        protected override void FrameUpdate(FrameEventArgs args)
+        {
+            base.FrameUpdate(args);
+            if (_lobbyMode) return;
+            // we do the clamping after a delay (after UI scale / window resize)
+            // because we need to wait for our parent container to properly resize
+            // first, so we can calculate where we should go. If we do it right away,
+            // we won't have the correct values from the parent to know how to adjust our margins.
+            if (_clampIn <= 0) return;
+            _clampIn -= 1;
+            if (_clampIn == 0) ClampSize();
         }
 
         private void ClampSize(float? desiredLeft = null, float? desiredBottom = null)
         {
-            if (Parent == null) return;
+            if (Parent == null || _lobbyMode) return;
             var top = Rect.Top;
             var right = Rect.Right;
             var left = desiredLeft ?? Rect.Left;
@@ -560,7 +562,7 @@ namespace Content.Client.Chat
 
         protected override void MouseExited()
         {
-            if (_currentDrag == DragMode.None)
+            if (_currentDrag == DragMode.None && !_lobbyMode)
             {
                 DefaultCursorShape = CursorShape.Arrow;
             }
