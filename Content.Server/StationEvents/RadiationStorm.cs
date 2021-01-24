@@ -1,12 +1,11 @@
+﻿#nullable enable
+using JetBrains.Annotations;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.StationEvents;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Utility;
-using JetBrains.Annotations;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Timing;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
@@ -26,24 +25,14 @@ namespace Content.Server.StationEvents
         [Dependency] private IRobustRandom _robustRandom = default!;
 
         public override string Name => "RadiationStorm";
-
-        protected override string StartAnnouncement => Loc.GetString(
+        public override string StartAnnouncement => Loc.GetString(
             "High levels of radiation detected near the station. Evacuate any areas containing abnormal green energy fields.");
-
         protected override string EndAnnouncement => Loc.GetString(
             "The radiation threat has passed. Please return to your workplaces.");
+        public override string StartAudio => "/Audio/Announcements/radiation.ogg";
+        protected override float StartAfter => 10.0f;
 
-        /// <summary>
-        /// How long until the radiation storm starts
-        /// </summary>
-        private const float StartupTime = 5;
-
-        /// <summary>
-        /// How long the radiation storm has been running for
-        /// </summary>
-        private float _timeElapsed;
-
-        private int _pulsesRemaining;
+        // Event specific details
         private float _timeUntilPulse;
         private const float MinPulseDelay = 0.2f;
         private const float MaxPulseDelay = 0.8f;
@@ -53,15 +42,15 @@ namespace Content.Server.StationEvents
             _timeUntilPulse = _robustRandom.NextFloat() * (MaxPulseDelay - MinPulseDelay) + MinPulseDelay;
         }
 
+        public override void Announce()
+        {
+            base.Announce();
+            EndAfter = _robustRandom.Next(30, 80) + StartAfter; // We want to be forgiving about the radstorm.
+        }
+
         public override void Startup()
         {
-            base.Startup();
-            EntitySystem.Get<AudioSystem>().PlayGlobal("/Audio/Announcements/radiation.ogg");
-            IoCManager.InjectDependencies(this);
-
             ResetTimeUntilPulse();
-            _timeElapsed = 0.0f;
-            _pulsesRemaining = _robustRandom.Next(30, 100);
 
             var componentManager = IoCManager.Resolve<IComponentManager>();
 
@@ -69,42 +58,26 @@ namespace Content.Server.StationEvents
             {
                 overlay.AddOverlay(SharedOverlayID.RadiationPulseOverlay);
             }
+
+            base.Startup();
         }
 
         public override void Shutdown()
         {
-            base.Shutdown();
-
-            // IOC uninject?
-            _entityManager = null;
-            _robustRandom = null;
-
             var componentManager = IoCManager.Resolve<IComponentManager>();
 
             foreach (var overlay in componentManager.EntityQuery<ServerOverlayEffectsComponent>())
             {
                 overlay.RemoveOverlay(SharedOverlayID.RadiationPulseOverlay);
             }
+            base.Shutdown();
         }
 
         public override void Update(float frameTime)
         {
-            _timeElapsed += frameTime;
+            base.Update(frameTime);
 
-            if (_pulsesRemaining == 0)
-            {
-                Running = false;
-            }
-
-            if (!Running)
-            {
-                return;
-            }
-
-            if (_timeElapsed < StartupTime)
-            {
-                return;
-            }
+            if (!Started || !Running) return;
 
             _timeUntilPulse -= frameTime;
 
@@ -129,7 +102,6 @@ namespace Content.Server.StationEvents
             var pulse = _entityManager.SpawnEntity("RadiationPulse", coordinates);
             pulse.GetComponent<RadiationPulseComponent>().DoPulse();
             ResetTimeUntilPulse();
-            _pulsesRemaining -= 1;
         }
 
         private bool TryFindRandomGrid(IMapGrid mapGrid, out EntityCoordinates coordinates)

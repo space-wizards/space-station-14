@@ -9,9 +9,6 @@
   - type: Physics
   - type: SnapGrid
     offset: Center
-  - type: Sprite
-    sprite: Constructible/Atmos/pipeitems.rsi
-    state: scrubber
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
@@ -20,19 +17,23 @@
         behaviors:
         - !type:DoActsBehavior
           acts: ["Destruction"]
-
+  - type: Sprite
+    netsync: false
+    sprite: Constructible/Atmos/gasfilter.rsi
+    layers:
+    - sprite: Constructible/Atmos/pipe.rsi
+      state: pipeTJunction
+    - state: gasFilter
+  - type: Appearance
+    visuals:
+    - type: GasFilterVisualizer
+    
 - type: entity
   parent: GasFilterBase
   id: GasFilter
   name: Gas Filter
   description: It filters gases.
   components:
-  - type: Sprite
-    sprite: Constructible/Atmos/pipe.rsi
-    state: pipeTJunction2
-  - type: Icon
-    sprite: Constructible/Atmos/pipe.rsi
-    state: pipeTJunction2
   - type: NodeContainer
     nodes:
     - !type:PipeNode

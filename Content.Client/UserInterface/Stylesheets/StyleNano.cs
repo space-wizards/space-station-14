@@ -16,6 +16,8 @@ namespace Content.Client.UserInterface.Stylesheets
     public sealed class StyleNano : StyleBase
     {
         public const string StyleClassBorderedWindowPanel = "BorderedWindowPanel";
+        public const string StyleClassInventorySlotBackground = "InventorySlotBackground";
+        public const string StyleClassHandSlotHighlight = "HandSlotHighlight";
         public const string StyleClassTransparentBorderedWindowPanel = "TransparentBorderedWindowPanel";
         public const string StyleClassHotbarPanel = "HotbarPanel";
         public const string StyleClassTooltipPanel = "tooltipBox";
@@ -102,6 +104,21 @@ namespace Content.Client.UserInterface.Stylesheets
                 Texture = borderedWindowBackgroundTex,
             };
             borderedWindowBackground.SetPatchMargin(StyleBox.Margin.All, 2);
+
+            var invSlotBgTex = resCache.GetTexture("/Textures/Interface/Inventory/inv_slot_background.png");
+            var invSlotBg = new StyleBoxTexture
+            {
+                Texture = invSlotBgTex,
+            };
+            invSlotBg.SetPatchMargin(StyleBox.Margin.All, 2);
+            invSlotBg.SetContentMarginOverride(StyleBox.Margin.All, 0);
+
+            var handSlotHighlightTex = resCache.GetTexture("/Textures/Interface/Inventory/hand_slot_highlight.png");
+            var handSlotHighlight = new StyleBoxTexture
+            {
+                Texture = handSlotHighlightTex,
+            };
+            handSlotHighlight.SetPatchMargin(StyleBox.Margin.All, 2);
 
             var borderedTransparentWindowBackgroundTex = resCache.GetTexture("/Textures/Interface/Nano/transparent_window_background_bordered.png");
             var borderedTransparentWindowBackground = new StyleBoxTexture
@@ -384,6 +401,20 @@ namespace Content.Client.UserInterface.Stylesheets
                     new[]
                     {
                         new StyleProperty(PanelContainer.StylePropertyPanel, borderedTransparentWindowBackground),
+                    }),
+                // inventory slot background
+                new StyleRule(
+                    new SelectorElement(null, new[] {StyleClassInventorySlotBackground}, null, null),
+                    new[]
+                    {
+                        new StyleProperty(PanelContainer.StylePropertyPanel, invSlotBg),
+                    }),
+                // hand slot highlight
+                new StyleRule(
+                    new SelectorElement(null, new[] {StyleClassHandSlotHighlight}, null, null),
+                    new[]
+                    {
+                        new StyleProperty(PanelContainer.StylePropertyPanel, handSlotHighlight),
                     }),
                 // Hotbar background
                 new StyleRule(new SelectorElement(typeof(PanelContainer), new[] {StyleClassHotbarPanel}, null, null),

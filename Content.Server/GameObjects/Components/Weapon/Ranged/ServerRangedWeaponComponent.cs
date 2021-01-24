@@ -161,9 +161,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
 
             _lastFireTime = curTime;
 
-            if (ClumsyCheck &&
-                user.HasComponent<ClumsyComponent>() &&
-                _random.Prob(ClumsyExplodeChance))
+            if (ClumsyCheck && ClumsyComponent.TryRollClumsy(user, ClumsyExplodeChance))
             {
                 var soundSystem = EntitySystem.Get<AudioSystem>();
                 soundSystem.PlayAtCoords("/Audio/Items/bikehorn.ogg",
