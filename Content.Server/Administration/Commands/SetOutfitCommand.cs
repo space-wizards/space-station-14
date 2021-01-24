@@ -3,8 +3,8 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Shared.Administration;
 using Content.Shared.Roles;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -14,7 +14,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    class SetOutfitCommand : IServerCommand
+    class SetOutfitCommand : IConsoleCommand
     {
         public string Command => "setoutfit";
 
@@ -22,7 +22,7 @@ namespace Content.Server.Administration.Commands
 
         public string Help => Loc.GetString("Usage: {0} <entityUid> | {0} <entityUid> <outfitId>", Command);
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 1)
             {

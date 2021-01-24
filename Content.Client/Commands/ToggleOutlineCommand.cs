@@ -1,11 +1,11 @@
 using Content.Shared;
-using Robust.Client.Console;
+using Robust.Shared.Console;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.IoC;
 
 namespace Content.Client.Commands
 {
-    public class ToggleOutlineCommand : IClientCommand
+    public class ToggleOutlineCommand : IConsoleCommand
     {
         public string Command => "toggleoutline";
 
@@ -13,7 +13,7 @@ namespace Content.Client.Commands
 
         public string Help => "";
 
-        public void Execute(IClientConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var configurationManager = IoCManager.Resolve<IConfigurationManager>();
             var cvar = CCVars.OutlineEnabled;

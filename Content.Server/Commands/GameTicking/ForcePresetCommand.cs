@@ -2,20 +2,20 @@
 using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.Administration;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Commands.GameTicking
 {
     [AdminCommand(AdminFlags.Server)]
-    class ForcePresetCommand : IServerCommand
+    class ForcePresetCommand : IConsoleCommand
     {
         public string Command => "forcepreset";
         public string Description => "Forces a specific game preset to start for the current lobby.";
         public string Help => $"Usage: {Command} <preset>";
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var ticker = IoCManager.Resolve<IGameTicker>();
             if (ticker.RunLevel != GameRunLevel.PreRoundLobby)

@@ -4,21 +4,21 @@ using System.Linq;
 using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Mobs.Speech;
 using Content.Shared.Administration;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Commands.Speech
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class AddAccent : IServerCommand
+    public class AddAccent : IConsoleCommand
     {
         public string Command => "addaccent";
         public string Description => "Add a speech component to the current player";
         public string Help => $"{Command} <component>/?";
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player?.AttachedEntity == null)

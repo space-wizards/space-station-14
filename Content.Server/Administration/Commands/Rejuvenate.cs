@@ -1,7 +1,7 @@
 using Content.Server.GlobalVerbs;
 using Content.Shared.Administration;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -10,7 +10,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    class Rejuvenate : IServerCommand
+    class Rejuvenate : IConsoleCommand
     {
         public string Command => "rejuvenate";
         public string Description
@@ -28,7 +28,7 @@ namespace Content.Server.Administration.Commands
             }
         }
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (args.Length < 1 && player != null) //Try to heal the users mob if applicable

@@ -1,19 +1,20 @@
-using Content.Shared.GameObjects.Components.Body.Mechanism;
+﻿using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Robust.Client.Console;
 using Robust.Client.GameObjects;
+using Robust.Shared.Console;
 using Robust.Shared.Containers;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Client.Commands
 {
-    public class HideMechanismsCommand : IClientCommand
+    public class HideMechanismsCommand : IConsoleCommand
     {
         public string Command => "hidemechanisms";
         public string Description => $"Reverts the effects of {ShowMechanismsCommand.CommandName}";
         public string Help => $"{Command}";
 
-        public void Execute(IClientConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var componentManager = IoCManager.Resolve<IComponentManager>();
             var mechanisms = componentManager.EntityQuery<IMechanism>();

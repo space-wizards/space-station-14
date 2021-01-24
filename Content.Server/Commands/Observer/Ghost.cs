@@ -8,22 +8,22 @@ using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs.State;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Commands.Observer
 {
     [AnyCommand]
-    public class Ghost : IServerCommand
+    public class Ghost : IConsoleCommand
     {
         public string Command => "ghost";
         public string Description => "Give up on life and become a ghost.";
         public string Help => "ghost";
         public bool CanReturn { get; set; } = true;
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player == null)

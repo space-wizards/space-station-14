@@ -2,20 +2,20 @@
 using Content.Server.Administration;
 using Content.Server.GameObjects.EntitySystems.Atmos;
 using Content.Shared.Administration;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.Commands.Atmos
 {
     [AdminCommand(AdminFlags.Debug)]
-    public class ShowAtmos : IServerCommand
+    public class ShowAtmos : IConsoleCommand
     {
         public string Command => "showatmos";
         public string Description => "Toggles seeing atmos debug overlay.";
         public string Help => $"Usage: {Command}";
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player == null)

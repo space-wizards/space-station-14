@@ -2,8 +2,8 @@
 using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Disposal;
 using Content.Shared.Administration;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -12,13 +12,13 @@ using Robust.Shared.Localization;
 namespace Content.Server.Commands.Disposal
 {
     [AdminCommand(AdminFlags.Debug)]
-    public class TubeConnectionsCommand : IServerCommand
+    public class TubeConnectionsCommand : IConsoleCommand
     {
         public string Command => "tubeconnections";
         public string Description => Loc.GetString("Shows all the directions that a tube can connect in.");
         public string Help => $"Usage: {Command} <entityUid>";
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player?.AttachedEntity == null)

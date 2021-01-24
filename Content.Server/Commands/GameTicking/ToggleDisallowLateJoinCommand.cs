@@ -1,20 +1,20 @@
 ﻿using Content.Server.Administration;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.Administration;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Commands.GameTicking
 {
     [AdminCommand(AdminFlags.Server)]
-    class ToggleDisallowLateJoinCommand : IServerCommand
+    class ToggleDisallowLateJoinCommand : IConsoleCommand
     {
         public string Command => "toggledisallowlatejoin";
         public string Description => "Allows or disallows latejoining during mid-game.";
         public string Help => $"Usage: {Command} <disallow>";
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
             {

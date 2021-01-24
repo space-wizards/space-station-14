@@ -4,22 +4,22 @@ using Content.Server.Administration;
 using Content.Server.GameObjects.Components.AI;
 using Content.Server.GameObjects.EntitySystems.AI;
 using Content.Shared.Administration;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Localization;
 
 namespace Content.Server.Commands.AI
 {
     [AdminCommand(AdminFlags.Fun)]
-    public sealed class FactionCommand : IServerCommand
+    public sealed class FactionCommand : IConsoleCommand
     {
         public string Command => "factions";
         public string Description => "Update / list factional relationships for NPCs.";
         public string Help => "faction <source> <friendly/hostile> target\n" +
                               "faction <source> list: hostile factions";
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length == 0)
             {

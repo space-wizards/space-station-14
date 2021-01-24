@@ -3,8 +3,8 @@ using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.Administration;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -12,13 +12,13 @@ using Robust.Shared.IoC;
 namespace Content.Server.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class MakeSentientCommand : IServerCommand
+    public class MakeSentientCommand : IConsoleCommand
     {
         public string Command => "makesentient";
         public string Description => "Makes an entity sentient (able to be controlled by a player)";
         public string Help => "makesentient <entity id>";
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
             {

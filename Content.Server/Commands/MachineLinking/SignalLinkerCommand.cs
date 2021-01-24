@@ -1,15 +1,15 @@
 using Content.Server.Administration;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Administration;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Commands.MachineLinking
 {
     [AdminCommand(AdminFlags.Debug)]
-    public class SignalLinkerCommand : IServerCommand
+    public class SignalLinkerCommand : IConsoleCommand
     {
         public string Command => "signallink";
 
@@ -17,7 +17,7 @@ namespace Content.Server.Commands.MachineLinking
 
         public string Help => "signallink (on/off)";
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             bool? enable = null;

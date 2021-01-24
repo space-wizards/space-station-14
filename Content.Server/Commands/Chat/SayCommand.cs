@@ -3,21 +3,21 @@ using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Players;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Commands.Chat
 {
     [AnyCommand]
-    internal class SayCommand : IServerCommand
+    internal class SayCommand : IConsoleCommand
     {
         public string Command => "say";
         public string Description => "Send chat messages to the local channel or a specified radio channel.";
         public string Help => "say <text>";
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player == null)

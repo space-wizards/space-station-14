@@ -2,19 +2,19 @@
 using Content.Server.Administration;
 using Content.Server.Players;
 using Content.Shared.Administration;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Commands.Objectives
 {
     [AdminCommand(AdminFlags.Admin)]
-    public class RemoveObjectiveCommand : IServerCommand
+    public class RemoveObjectiveCommand : IConsoleCommand
     {
         public string Command => "rmobjective";
         public string Description => "Removes an objective from the player's mind.";
         public string Help => "rmobjective <username> <index>";
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 2)
             {

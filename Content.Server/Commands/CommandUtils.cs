@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
@@ -18,7 +19,7 @@ namespace Content.Server.Commands
         /// Gets the player session for the player with the indicated id,
         /// sending a failure to the performer if unable to.
         /// </summary>
-        public static bool TryGetSessionByUsernameOrId(IServerConsoleShell shell,
+        public static bool TryGetSessionByUsernameOrId(IConsoleShell shell,
             string usernameOrId, IPlayerSession performer, [NotNullWhen(true)] out IPlayerSession? session)
         {
             var plyMgr = IoCManager.Resolve<IPlayerManager>();
@@ -38,7 +39,7 @@ namespace Content.Server.Commands
         /// Gets the attached entity for the player session with the indicated id,
         /// sending a failure to the performer if unable to.
         /// </summary>
-        public static bool TryGetAttachedEntityByUsernameOrId(IServerConsoleShell shell,
+        public static bool TryGetAttachedEntityByUsernameOrId(IConsoleShell shell,
             string usernameOrId, IPlayerSession performer, [NotNullWhen(true)]  out IEntity? attachedEntity)
         {
             attachedEntity = null;

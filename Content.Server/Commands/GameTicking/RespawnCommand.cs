@@ -1,19 +1,19 @@
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 
 namespace Content.Server.Commands.GameTicking
 {
-    class RespawnCommand : IServerCommand
+    class RespawnCommand : IConsoleCommand
     {
         public string Command => "respawn";
         public string Description => "Respawns a player, kicking them back to the lobby.";
         public string Help => "respawn [player]";
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (args.Length > 1)

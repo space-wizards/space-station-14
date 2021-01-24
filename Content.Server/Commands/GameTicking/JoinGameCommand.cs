@@ -3,15 +3,15 @@ using Content.Server.Administration;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.Roles;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Commands.GameTicking
 {
     [AnyCommand]
-    class JoinGameCommand : IServerCommand
+    class JoinGameCommand : IConsoleCommand
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -23,7 +23,7 @@ namespace Content.Server.Commands.GameTicking
         {
             IoCManager.InjectDependencies(this);
         }
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             var output = string.Join(".", args);

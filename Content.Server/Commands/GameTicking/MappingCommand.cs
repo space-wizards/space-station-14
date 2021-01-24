@@ -1,9 +1,9 @@
 using System.Linq;
 using Content.Server.Administration;
 using Content.Shared.Administration;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Interfaces.Timing;
+using Robust.Shared.Console;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Utility;
@@ -11,13 +11,13 @@ using Robust.Shared.Utility;
 namespace Content.Server.Commands.GameTicking
 {
     [AdminCommand(AdminFlags.Server | AdminFlags.Mapping)]
-    class MappingCommand : IServerCommand
+    class MappingCommand : IConsoleCommand
     {
         public string Command => "mapping";
         public string Description => "Creates and teleports you to a new uninitialized map for mapping.";
         public string Help => $"Usage: {Command} <mapname> / {Command} <id> <mapname>";
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player == null)

@@ -1,14 +1,14 @@
 using Content.Server.Interfaces.Chat;
 using Content.Shared.Administration;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    class DSay : IServerCommand
+    class DSay : IConsoleCommand
     {
         public string Command => "dsay";
 
@@ -16,7 +16,7 @@ namespace Content.Server.Administration.Commands
 
         public string Help => Loc.GetString($"Usage: {Command} <message>");
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player == null)

@@ -3,8 +3,8 @@ using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
@@ -13,13 +13,13 @@ using Robust.Shared.Map;
 namespace Content.Server.Commands.Atmos
 {
     [AdminCommand(AdminFlags.Debug)]
-    public class FillGas : IServerCommand
+    public class FillGas : IConsoleCommand
     {
         public string Command => "fillgas";
         public string Description => "Adds gas to all tiles in a grid.";
         public string Help => "fillgas <GridId> <Gas> <moles>";
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 3) return;
             if(!int.TryParse(args[0], out var id)

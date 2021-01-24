@@ -4,20 +4,20 @@ using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.Actions;
 using Content.Shared.Administration;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Commands.Actions
 {
     [AdminCommand(AdminFlags.Debug)]
-    public sealed class RevokeAction : IServerCommand
+    public sealed class RevokeAction : IConsoleCommand
     {
         public string Command => "revokeaction";
         public string Description => "Revokes an action from a player, defaulting to current player";
         public string Help => "revokeaction <actionType> <name or userID, omit for current player>";
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player == null) return;

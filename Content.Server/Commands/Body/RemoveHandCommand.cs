@@ -4,8 +4,8 @@ using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
@@ -13,13 +13,13 @@ using Robust.Shared.Random;
 namespace Content.Server.Commands.Body
 {
     [AdminCommand(AdminFlags.Fun)]
-    class RemoveHandCommand : IServerCommand
+    class RemoveHandCommand : IConsoleCommand
     {
         public string Command => "removehand";
         public string Description => "Removes a hand from your entity.";
         public string Help => $"Usage: {Command}";
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player == null)

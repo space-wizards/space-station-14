@@ -6,8 +6,8 @@ using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -15,7 +15,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    class HurtCommand : IServerCommand
+    class HurtCommand : IConsoleCommand
     {
         public string Command => "hurt";
         public string Description => "Ouch";
@@ -42,7 +42,7 @@ namespace Content.Server.Commands
 
         private delegate void Damage(IDamageableComponent damageable, bool ignoreResistances);
 
-        private bool TryParseEntity(IServerConsoleShell shell, IPlayerSession? player, string arg,
+        private bool TryParseEntity(IConsoleShell shell, IPlayerSession? player, string arg,
             [NotNullWhen(true)] out IEntity? entity)
         {
             entity = null;
@@ -82,7 +82,7 @@ namespace Content.Server.Commands
         }
 
         private bool TryParseDamageArgs(
-            IServerConsoleShell shell,
+            IConsoleShell shell,
             IPlayerSession? player,
             string[] args,
             [NotNullWhen(true)] out Damage? func)
@@ -154,7 +154,7 @@ namespace Content.Server.Commands
             }
         }
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             bool ignoreResistances;

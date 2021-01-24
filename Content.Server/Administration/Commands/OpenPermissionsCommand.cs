@@ -1,7 +1,7 @@
 using Content.Server.Eui;
 using Content.Shared.Administration;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.IoC;
 
 #nullable enable
@@ -9,13 +9,13 @@ using Robust.Shared.IoC;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Permissions)]
-    public sealed class OpenPermissionsCommand : IServerCommand
+    public sealed class OpenPermissionsCommand : IConsoleCommand
     {
         public string Command => "permissions";
         public string Description => "Opens the admin permissions panel.";
         public string Help => "Usage: permissions";
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player == null)

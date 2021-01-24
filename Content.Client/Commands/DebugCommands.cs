@@ -3,50 +3,50 @@ using Content.Client.GameObjects.Components;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.Interfaces;
 using Content.Shared.GameObjects;
-using Robust.Client.Console;
 using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Shared.Console;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Client.Commands
 {
-    internal sealed class ShowMarkersCommand : IClientCommand
+    internal sealed class ShowMarkersCommand : IConsoleCommand
     {
         // ReSharper disable once StringLiteralTypo
         public string Command => "showmarkers";
         public string Description => "Toggles visibility of markers such as spawn points.";
         public string Help => "";
 
-        public void Execute(IClientConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             EntitySystem.Get<MarkerSystem>()
                 .MarkersVisible ^= true;
         }
     }
 
-    internal sealed class ShowSubFloor : IClientCommand
+    internal sealed class ShowSubFloor : IConsoleCommand
     {
         // ReSharper disable once StringLiteralTypo
         public string Command => "showsubfloor";
         public string Description => "Makes entities below the floor always visible.";
         public string Help => $"Usage: {Command}";
 
-        public void Execute(IClientConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             EntitySystem.Get<SubFloorHideSystem>()
                 .EnableAll ^= true;
         }
     }
 
-    internal sealed class ShowSubFloorForever : IClientCommand
+    internal sealed class ShowSubFloorForever : IConsoleCommand
     {
         // ReSharper disable once StringLiteralTypo
         public string Command => "showsubfloorforever";
         public string Description => "Makes entities below the floor always visible until the client is restarted.";
         public string Help => $"Usage: {Command}";
 
-        public void Execute(IClientConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             EntitySystem.Get<SubFloorHideSystem>()
                 .EnableAll = true;
@@ -64,13 +64,13 @@ namespace Content.Client.Commands
         }
     }
 
-    internal sealed class NotifyCommand : IClientCommand
+    internal sealed class NotifyCommand : IConsoleCommand
     {
         public string Command => "notify";
         public string Description => "Send a notify client side.";
         public string Help => "notify <message>";
 
-        public void Execute(IClientConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var message = args[0];
 
@@ -79,13 +79,13 @@ namespace Content.Client.Commands
         }
     }
 
-    internal sealed class MappingCommand : IClientCommand
+    internal sealed class MappingCommand : IConsoleCommand
     {
         public string Command => "mapping";
         public string Description => "Creates and teleports you to a new uninitialized map for mapping.";
         public string Help => $"Usage: {Command} <mapname> / {Command} <id> <mapname>";
 
-        public void Execute(IClientConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length == 0)
             {

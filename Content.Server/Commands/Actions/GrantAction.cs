@@ -4,19 +4,19 @@ using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.Actions;
 using Content.Shared.Administration;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Commands.Actions
 {
     [AdminCommand(AdminFlags.Debug)]
-    public sealed class GrantAction : IServerCommand
+    public sealed class GrantAction : IConsoleCommand
     {
         public string Command => "grantaction";
         public string Description => "Grants an action to a player, defaulting to current player";
         public string Help => "grantaction <actionType> <name or userID, omit for current player>";
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player == null) return;

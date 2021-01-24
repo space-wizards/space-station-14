@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using Content.Client.Interfaces;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared;
-using Robust.Client.Console;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Console;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
@@ -162,13 +162,13 @@ namespace Content.Client
         }
     }
 
-    public class PopupMessageCommand : IClientCommand
+    public class PopupMessageCommand : IConsoleCommand
     {
         public string Command => "popupmsg";
         public string Description => "";
         public string Help => "";
 
-        public void Execute(IClientConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var arg = args[0];
             var mgr = IoCManager.Resolve<IClientNotifyManager>();

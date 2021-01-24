@@ -14,6 +14,7 @@ using Content.Shared.Network.NetMessages;
 using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
+using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.Network;
@@ -419,7 +420,7 @@ namespace Content.Server.Administration
             return false;
         }
 
-        private static (bool isAvail, AdminFlags[] flagsReq) GetRequiredFlag(IServerCommand cmd)
+        private static (bool isAvail, AdminFlags[] flagsReq) GetRequiredFlag(IConsoleCommand cmd)
         {
             var type = cmd.GetType();
             if (Attribute.IsDefined(type, typeof(AnyCommandAttribute)))

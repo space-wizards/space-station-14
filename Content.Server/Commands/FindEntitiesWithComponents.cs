@@ -3,8 +3,8 @@ using System;
 using System.Collections.Generic;
 using Content.Server.Administration;
 using Content.Shared.Administration;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -12,13 +12,13 @@ using Robust.Shared.IoC;
 namespace Content.Server.Commands
 {
     [AdminCommand(AdminFlags.Mapping)]
-    public class FindEntitiesWithComponents : IServerCommand
+    public class FindEntitiesWithComponents : IConsoleCommand
     {
         public string Command => "findentitieswithcomponents";
         public string Description => "Finds entities with all of the specified components.";
         public string Help => $"{Command} <componentName1> <componentName2>...";
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length == 0)
             {

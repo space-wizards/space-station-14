@@ -4,8 +4,8 @@ using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
@@ -14,13 +14,13 @@ using Robust.Shared.Map;
 namespace Content.Server.Commands.Atmos
 {
     [AdminCommand(AdminFlags.Debug)]
-    public class DeleteGasCommand : IServerCommand
+    public class DeleteGasCommand : IConsoleCommand
     {
         public string Command => "deletegas";
         public string Description => "Removes all gases from a grid, or just of one type if specified.";
         public string Help => $"Usage: {Command} <GridId> <Gas> / {Command} <GridId> / {Command} <Gas> / {Command}";
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             GridId gridId;

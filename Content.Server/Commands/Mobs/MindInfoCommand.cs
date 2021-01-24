@@ -2,14 +2,14 @@
 using Content.Server.Administration;
 using Content.Server.Players;
 using Content.Shared.Administration;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Commands.Mobs
 {
     [AdminCommand(AdminFlags.Admin)]
-    public class MindInfoCommand : IServerCommand
+    public class MindInfoCommand : IConsoleCommand
     {
         public string Command => "mindinfo";
 
@@ -17,7 +17,7 @@ namespace Content.Server.Commands.Mobs
 
         public string Help => "mindinfo <session ID>";
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
             {

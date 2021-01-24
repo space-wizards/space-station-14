@@ -1,8 +1,8 @@
 ﻿using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Interfaces;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -10,13 +10,13 @@ using Robust.Shared.IoC;
 namespace Content.Server.Commands.Notify
 {
     [AdminCommand(AdminFlags.Debug)]
-    public class PopupMsgCommand : IServerCommand
+    public class PopupMsgCommand : IConsoleCommand
     {
         public string Command => "srvpopupmsg";
         public string Description => "";
         public string Help => "";
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var entityMgr = IoCManager.Resolve<IEntityManager>();
 

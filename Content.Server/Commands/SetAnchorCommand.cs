@@ -1,8 +1,8 @@
 #nullable enable
 using Content.Server.Administration;
 using Content.Shared.Administration;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
@@ -11,12 +11,12 @@ using Robust.Shared.IoC;
 namespace Content.Server.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public class SetAnchorCommand : IServerCommand
+    public class SetAnchorCommand : IConsoleCommand
     {
         public string Command => "setanchor";
         public string Description => "Sets the anchoring state of an entity.";
         public string Help => "setanchor <entity id> <value (optional)>";
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length == 0 || args.Length > 2)
             {

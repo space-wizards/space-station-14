@@ -1,5 +1,5 @@
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.IoC;
 
 #nullable enable
@@ -7,13 +7,13 @@ using Robust.Shared.IoC;
 namespace Content.Server.Administration.Commands
 {
     [AnyCommand]
-    public class ReAdminCommand : IServerCommand
+    public class ReAdminCommand : IConsoleCommand
     {
         public string Command => "readmin";
         public string Description => "Re-admins you if you previously de-adminned.";
         public string Help => "Usage: readmin";
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player == null)

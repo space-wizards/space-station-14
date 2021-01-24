@@ -1,8 +1,8 @@
 using System;
 using Content.Server.Database;
 using Content.Shared.Administration;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 
@@ -11,13 +11,13 @@ using Robust.Shared.Network;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Ban)]
-    public sealed class BanCommand : IServerCommand
+    public sealed class BanCommand : IConsoleCommand
     {
         public string Command => "ban";
         public string Description => "Bans somebody";
         public string Help => "Usage: <name or user ID> <reason> <duration in minutes, or 0 for permanent ban>";
 
-        public async void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public async void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             var plyMgr = IoCManager.Resolve<IPlayerManager>();

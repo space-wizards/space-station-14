@@ -3,19 +3,19 @@ using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Players;
 using Content.Shared.Administration;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Commands.Objectives
 {
     [AdminCommand(AdminFlags.Admin)]
-    public class ListObjectivesCommand : IServerCommand
+    public class ListObjectivesCommand : IConsoleCommand
     {
         public string Command => "lsobjectives";
         public string Description => "Lists all objectives in a players mind.";
         public string Help => "lsobjectives [<username>]";
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             IPlayerData? data;

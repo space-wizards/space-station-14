@@ -3,17 +3,17 @@ using Content.Client.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects.Systems;
 using Content.Shared.Atmos;
 using System;
-using Robust.Client.Console;
+using Robust.Shared.Console;
 
 namespace Content.Client.Commands
 {
     [UsedImplicitly]
-    internal sealed class AtvRangeCommand : IClientCommand
+    internal sealed class AtvRangeCommand : IConsoleCommand
     {
         public string Command => "atvrange";
         public string Description => "Sets the atmos debug range (as two floats, start [red] and end [blue])";
         public string Help => "atvrange <start> <end>";
-        public void Execute(IClientConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 2)
             {
@@ -42,12 +42,12 @@ namespace Content.Client.Commands
     }
 
     [UsedImplicitly]
-    internal sealed class AtvModeCommand : IClientCommand
+    internal sealed class AtvModeCommand : IConsoleCommand
     {
         public string Command => "atvmode";
         public string Description => "Sets the atmos debug mode. This will automatically reset the scale.";
         public string Help => "atvmode <TotalMoles/GasMoles/Temperature> [<gas ID (for GasMoles)>]";
-        public void Execute(IClientConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 1)
             {
@@ -98,12 +98,12 @@ namespace Content.Client.Commands
     }
 
     [UsedImplicitly]
-    internal sealed class AtvCBMCommand : IClientCommand
+    internal sealed class AtvCBMCommand : IConsoleCommand
     {
         public string Command => "atvcbm";
         public string Description => "Changes from red/green/blue to greyscale";
         public string Help => "atvcbm <true/false>";
-        public void Execute(IClientConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
             {

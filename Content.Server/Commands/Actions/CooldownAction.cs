@@ -4,21 +4,21 @@ using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.Actions;
 using Content.Shared.Administration;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Commands.Actions
 {
     [AdminCommand(AdminFlags.Debug)]
-    public sealed class CooldownAction : IServerCommand
+    public sealed class CooldownAction : IConsoleCommand
     {
         public string Command => "coolaction";
         public string Description => "Sets a cooldown on an action for a player, defaulting to current player";
         public string Help => "coolaction <actionType> <seconds> <name or userID, omit for current player>";
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player == null) return;

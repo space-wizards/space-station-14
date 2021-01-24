@@ -6,8 +6,8 @@ using Content.Server.GameObjects.Components.Singularity;
 using Content.Server.GameObjects.Components.PA;
 using Content.Shared.Administration;
 using Content.Shared.GameObjects.Components;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -15,13 +15,13 @@ using Robust.Shared.IoC;
 namespace Content.Server.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public class StartSingularityEngineCommand : IServerCommand
+    public class StartSingularityEngineCommand : IConsoleCommand
     {
         public string Command => "startsingularityengine";
         public string Description => "Automatically turns on the particle accelerator and containment field emitters.";
         public string Help => $"{Command}";
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 0)
             {

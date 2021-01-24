@@ -3,8 +3,8 @@ using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Shared.Administration;
 using Content.Shared.Maps;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -15,13 +15,13 @@ namespace Content.Server.Commands.Interactable
     /// <see cref="TilePryingComponent.TryPryTile"/>
     /// </summary>
     [AdminCommand(AdminFlags.Debug)]
-    class TilePryCommand : IServerCommand
+    class TilePryCommand : IConsoleCommand
     {
         public string Command => "tilepry";
         public string Description => "Pries up all tiles in a radius around the user.";
         public string Help => $"Usage: {Command} <radius>";
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player?.AttachedEntity == null)

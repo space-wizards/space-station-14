@@ -3,8 +3,8 @@ using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
@@ -15,7 +15,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Commands.Body
 {
     [AdminCommand(AdminFlags.Fun)]
-    class AddHandCommand : IServerCommand
+    class AddHandCommand : IConsoleCommand
     {
         public const string DefaultHandPrototype = "LeftHandHuman";
 
@@ -23,7 +23,7 @@ namespace Content.Server.Commands.Body
         public string Description => "Adds a hand to your entity.";
         public string Help => $"Usage: {Command} <entityUid> <handPrototypeId> / {Command} <entityUid> / {Command} <handPrototypeId> / {Command}";
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (args.Length > 1)

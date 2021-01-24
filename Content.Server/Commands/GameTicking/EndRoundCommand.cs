@@ -3,20 +3,20 @@ using Content.Server.Administration;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.Administration;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Commands.GameTicking
 {
     [AdminCommand(AdminFlags.Server)]
-    class EndRoundCommand : IServerCommand
+    class EndRoundCommand : IConsoleCommand
     {
         public string Command => "endround";
         public string Description => "Ends the round and moves the server to PostRound.";
         public string Help => String.Empty;
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var ticker = IoCManager.Resolve<IGameTicker>();
 

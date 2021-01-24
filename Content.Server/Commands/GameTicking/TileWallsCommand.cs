@@ -1,8 +1,8 @@
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Maps;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
@@ -12,14 +12,14 @@ using Robust.Shared.Map;
 namespace Content.Server.Commands.GameTicking
 {
     [AdminCommand(AdminFlags.Mapping)]
-    class TileWallsCommand : IServerCommand
+    class TileWallsCommand : IConsoleCommand
     {
         // ReSharper disable once StringLiteralTypo
         public string Command => "tilewalls";
         public string Description => "Puts an underplating tile below every wall on a grid.";
         public string Help => $"Usage: {Command} <gridId> | {Command}";
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             GridId gridId;

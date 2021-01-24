@@ -2,15 +2,15 @@
 using Content.Server.Administration;
 using Content.Server.GameObjects.EntitySystems.StationEvents;
 using Content.Shared.Administration;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Localization;
 
 namespace Content.Server.Commands.StationEvents
 {
     [AdminCommand(AdminFlags.Server)]
-    public sealed class StationEventCommand : IServerCommand
+    public sealed class StationEventCommand : IConsoleCommand
     {
         public string Command => "events";
         public string Description => "Provides admin control to station events";
@@ -27,7 +27,7 @@ namespace Content.Server.Commands.StationEvents
         private const string RunHelp =
             "run <eventName/random>: start a particular event now; <eventName> is case-insensitive and not localized";
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (args.Length == 0)
@@ -69,7 +69,7 @@ namespace Content.Server.Commands.StationEvents
             }
         }
 
-        private void Run(IServerConsoleShell shell, IPlayerSession? player, string eventName)
+        private void Run(IConsoleShell shell, IPlayerSession? player, string eventName)
         {
             var stationSystem = EntitySystem.Get<StationEventSystem>();
 
@@ -99,7 +99,7 @@ namespace Content.Server.Commands.StationEvents
             shell.WriteLine(resultText);
         }
 
-        private void Pause(IServerConsoleShell shell, IPlayerSession? player)
+        private void Pause(IConsoleShell shell, IPlayerSession? player)
         {
             var stationEventSystem = EntitySystem.Get<StationEventSystem>();
 
@@ -114,7 +114,7 @@ namespace Content.Server.Commands.StationEvents
             }
         }
 
-        private void Resume(IServerConsoleShell shell, IPlayerSession? player)
+        private void Resume(IConsoleShell shell, IPlayerSession? player)
         {
             var stationEventSystem = EntitySystem.Get<StationEventSystem>();
 
@@ -129,7 +129,7 @@ namespace Content.Server.Commands.StationEvents
             }
         }
 
-        private void Stop(IServerConsoleShell shell, IPlayerSession? player)
+        private void Stop(IConsoleShell shell, IPlayerSession? player)
         {
             var resultText = EntitySystem.Get<StationEventSystem>().StopEvent();
             shell.WriteLine(resultText);

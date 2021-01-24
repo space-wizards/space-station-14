@@ -3,19 +3,19 @@ using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Nutrition;
 using Content.Shared.Administration;
 using Content.Shared.GameObjects.Components.Nutrition;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 
 namespace Content.Server.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public class Hungry : IServerCommand
+    public class Hungry : IConsoleCommand
     {
         public string Command => "hungry";
         public string Description => "Makes you hungry.";
         public string Help => $"{Command}";
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player == null)

@@ -1,20 +1,20 @@
 ﻿using Content.Server.Administration;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.Administration;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Commands.GameTicking
 {
     [AdminCommand(AdminFlags.Server)]
-    class SetGamePresetCommand : IServerCommand
+    class SetGamePresetCommand : IConsoleCommand
     {
         public string Command => "setgamepreset";
         public string Description => "";
         public string Help => "";
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
             {

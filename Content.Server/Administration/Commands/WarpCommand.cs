@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Markers;
 using Content.Shared.Administration;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
@@ -14,7 +14,7 @@ using Robust.Shared.Map;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public class WarpCommand : IServerCommand
+    public class WarpCommand : IConsoleCommand
     {
         public string Command => "warp";
         public string Description => "Teleports you to predefined areas on the map.";
@@ -23,7 +23,7 @@ namespace Content.Server.Administration.Commands
             "warp <location>\nLocations you can teleport to are predefined by the map. " +
             "You can specify '?' as location to get a list of valid locations.";
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player == null)

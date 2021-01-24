@@ -2,8 +2,8 @@
 using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Shared.Administration;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
@@ -13,13 +13,13 @@ using Robust.Shared.Maths;
 namespace Content.Server.Commands.Atmos
 {
     [AdminCommand(AdminFlags.Debug)]
-    public class RemoveGasCommand : IServerCommand
+    public class RemoveGasCommand : IConsoleCommand
     {
         public string Command => "removegas";
         public string Description => "Removes an amount of gases.";
         public string Help => "removegas <X> <Y> <GridId> <amount> <ratio>\nIf <ratio> is true, amount will be treated as the ratio of gas to be removed.";
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 5) return;
             if(!int.TryParse(args[0], out var x)

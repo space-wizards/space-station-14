@@ -3,8 +3,8 @@ using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
@@ -13,13 +13,13 @@ using Robust.Shared.Map;
 namespace Content.Server.Commands.Atmos
 {
     [AdminCommand(AdminFlags.Debug)]
-    public class SetAtmosTemperatureCommand : IServerCommand
+    public class SetAtmosTemperatureCommand : IConsoleCommand
     {
         public string Command => "setatmostemp";
         public string Description => "Sets a grid's temperature (in kelvin).";
         public string Help => "Usage: setatmostemp <GridId> <Temperature>";
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 2) return;
             if(!int.TryParse(args[0], out var id)

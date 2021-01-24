@@ -1,19 +1,19 @@
 using Content.Client.GameObjects.EntitySystems.AI;
 using JetBrains.Annotations;
-using Robust.Client.Console;
+using Robust.Shared.Console;
 using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Client.Commands
 {
     [UsedImplicitly]
-    internal sealed class DebugPathfindingCommand : IClientCommand
+    internal sealed class DebugPathfindingCommand : IConsoleCommand
     {
         // ReSharper disable once StringLiteralTypo
         public string Command => "pathfinder";
         public string Description => "Toggles visibility of pathfinding debuggers.";
         public string Help => "pathfinder [hide/nodes/routes/graph/regioncache/regions]";
 
-        public void Execute(IClientConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
 #if DEBUG
             if (args.Length < 1)

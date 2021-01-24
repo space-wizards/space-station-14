@@ -2,24 +2,24 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.GameObjects.Components.Damage;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Commands.Damage
 {
-    public abstract class DamageFlagCommand : IServerCommand
+    public abstract class DamageFlagCommand : IConsoleCommand
     {
         public abstract string Command { get; }
         public abstract string Description { get; }
         public abstract string Help { get; }
 
-        public abstract void Execute(IServerConsoleShell shell, string argStr, string[] args);
+        public abstract void Execute(IConsoleShell shell, string argStr, string[] args);
 
         public bool TryGetEntity(
-            IServerConsoleShell shell,
+            IConsoleShell shell,
             IPlayerSession? player,
             string[] args,
             bool adding,

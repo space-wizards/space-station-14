@@ -12,8 +12,8 @@ using Content.Server.Utility;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.Interfaces;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -22,7 +22,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.Commands.Chat
 {
     [AnyCommand]
-    internal class SuicideCommand : IServerCommand
+    internal class SuicideCommand : IConsoleCommand
     {
         public string Command => "suicide";
 
@@ -56,7 +56,7 @@ namespace Content.Server.Commands.Chat
             }
         }
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player == null)

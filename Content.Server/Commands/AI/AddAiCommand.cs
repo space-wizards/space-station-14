@@ -4,8 +4,8 @@ using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.EntitySystems.AI;
 using Content.Shared.Administration;
 using Content.Shared.GameObjects.Components.Movement;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -14,7 +14,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Commands.AI
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class AddAiCommand : IServerCommand
+    public class AddAiCommand : IConsoleCommand
     {
         public string Command => "addai";
         public string Description => "Add an ai component with a given processor to an entity.";
@@ -22,7 +22,7 @@ namespace Content.Server.Commands.AI
                               + "\n    processorId: Class that inherits AiLogicProcessor and has an AiLogicProcessor attribute."
                               + "\n    entityID: Uid of entity to add the AiControllerComponent to. Open its VV menu to find this.";
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if(args.Length != 2)
             {

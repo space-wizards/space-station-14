@@ -2,19 +2,19 @@
 using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.Administration;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Server)]
-    public class ReadyAll : IServerCommand
+    public class ReadyAll : IConsoleCommand
     {
         public string Command => "readyall";
         public string Description => "Readies up all players in the lobby.";
         public string Help => $"{Command} | ̣{Command} <ready>";
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var ready = true;
 

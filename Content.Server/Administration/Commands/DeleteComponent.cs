@@ -1,20 +1,20 @@
 ﻿#nullable enable
 using Content.Shared.Administration;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public class DeleteComponent : IServerCommand
+    public class DeleteComponent : IConsoleCommand
     {
         public string Command => "deletecomponent";
         public string Description => "Deletes all instances of the specified component.";
         public string Help => $"Usage: {Command} <name>";
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             switch (args.Length)
             {

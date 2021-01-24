@@ -4,20 +4,20 @@ using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.Administration;
 using Content.Shared.Alert;
-using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Commands.Alerts
 {
     [AdminCommand(AdminFlags.Debug)]
-    public sealed class ClearAlert : IServerCommand
+    public sealed class ClearAlert : IConsoleCommand
     {
         public string Command => "clearalert";
         public string Description => "Clears an alert for a player, defaulting to current player";
         public string Help => "clearalert <alertType> <name or userID, omit for current player>";
 
-        public void Execute(IServerConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player?.AttachedEntity == null)

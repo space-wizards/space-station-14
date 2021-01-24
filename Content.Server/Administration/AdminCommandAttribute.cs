@@ -1,7 +1,7 @@
 ﻿using System;
 using Content.Shared.Administration;
 using JetBrains.Annotations;
-using Robust.Server.Console;
+using Robust.Shared.Console;
 
 namespace Content.Server.Administration
 {
@@ -13,7 +13,7 @@ namespace Content.Server.Administration
     /// </remarks>
     /// <seealso cref="AnyCommandAttribute"/>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    [BaseTypeRequired(typeof(IServerCommand))]
+    [BaseTypeRequired(typeof(IConsoleCommand))]
     [MeansImplicitUse]
     public sealed class AdminCommandAttribute : Attribute
     {
