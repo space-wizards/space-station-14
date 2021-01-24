@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Nutrition;
 using Content.Shared.Administration;
@@ -15,8 +15,9 @@ namespace Content.Server.Commands
         public string Description => "Makes you hungry.";
         public string Help => $"{Command}";
 
-        public void Execute(IServerConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             if (player == null)
             {
                 shell.WriteLine("You cannot use this command unless you are a player.");

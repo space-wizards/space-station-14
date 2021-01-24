@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Players;
@@ -15,8 +15,9 @@ namespace Content.Server.Commands.Objectives
         public string Command => "lsobjectives";
         public string Description => "Lists all objectives in a players mind.";
         public string Help => "lsobjectives [<username>]";
-        public void Execute(IServerConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             IPlayerData? data;
             if (args.Length == 0 && player != null)
             {

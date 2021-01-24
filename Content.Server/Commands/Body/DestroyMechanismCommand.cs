@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.GameObjects.Components.Body;
@@ -17,8 +17,9 @@ namespace Content.Server.Commands.Body
         public string Description => "Destroys a mechanism from your entity";
         public string Help => $"Usage: {Command} <mechanism>";
 
-        public void Execute(IServerConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             if (player == null)
             {
                 shell.WriteLine("Only a player can run this command.");

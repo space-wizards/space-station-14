@@ -16,7 +16,7 @@ namespace Content.Server.Commands.Damage
         public abstract string Description { get; }
         public abstract string Help { get; }
 
-        public abstract void Execute(IServerConsoleShell shell, IPlayerSession? player, string[] args);
+        public abstract void Execute(IServerConsoleShell shell, string[] args);
 
         public bool TryGetEntity(
             IServerConsoleShell shell,

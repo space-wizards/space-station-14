@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Disposal;
 using Content.Shared.Administration;
@@ -18,8 +18,9 @@ namespace Content.Server.Commands.Disposal
         public string Description => Loc.GetString("Shows all the directions that a tube can connect in.");
         public string Help => $"Usage: {Command} <entityUid>";
 
-        public void Execute(IServerConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             if (player?.AttachedEntity == null)
             {
                 shell.WriteLine(Loc.GetString("Only players can use this command"));

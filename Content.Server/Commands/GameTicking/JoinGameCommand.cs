@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.Administration;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
@@ -23,8 +23,9 @@ namespace Content.Server.Commands.GameTicking
         {
             IoCManager.InjectDependencies(this);
         }
-        public void Execute(IServerConsoleShell shell, IPlayerSession player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             var output = string.Join(".", args);
             if (player == null)
             {

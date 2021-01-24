@@ -21,7 +21,7 @@ namespace Content.Server.Commands
         public string Description => "Automatically turns on the particle accelerator and containment field emitters.";
         public string Help => $"{Command}";
 
-        public void Execute(IServerConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
             if (args.Length != 0)
             {

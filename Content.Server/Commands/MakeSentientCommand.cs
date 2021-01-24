@@ -18,7 +18,7 @@ namespace Content.Server.Commands
         public string Description => "Makes an entity sentient (able to be controlled by a player)";
         public string Help => "makesentient <entity id>";
 
-        public void Execute(IServerConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
             if (args.Length != 1)
             {

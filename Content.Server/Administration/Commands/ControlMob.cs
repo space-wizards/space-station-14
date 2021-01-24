@@ -18,8 +18,9 @@ namespace Content.Server.Administration.Commands
         public string Description => Loc.GetString("Transfers user mind to the specified entity.");
         public string Help => Loc.GetString("Usage: controlmob <mobUid>.");
 
-        public void Execute(IServerConsoleShell shell, IPlayerSession player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             if (player == null)
             {
                 shell.WriteLine("Server cannot do this.");

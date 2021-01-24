@@ -14,7 +14,7 @@ namespace Content.Server.Administration.Commands
         public string Command => "readyall";
         public string Description => "Readies up all players in the lobby.";
         public string Help => $"{Command} | ̣{Command} <ready>";
-        public void Execute(IServerConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
             var ready = true;
 

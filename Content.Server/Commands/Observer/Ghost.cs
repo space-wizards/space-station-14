@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Observer;
@@ -23,8 +23,9 @@ namespace Content.Server.Commands.Observer
         public string Help => "ghost";
         public bool CanReturn { get; set; } = true;
 
-        public void Execute(IServerConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             if (player == null)
             {
                 shell?.WriteLine("You have no session, you can't ghost.");

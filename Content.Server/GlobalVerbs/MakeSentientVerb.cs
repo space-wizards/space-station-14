@@ -42,7 +42,7 @@ namespace Content.Server.GlobalVerbs
                 return;
 
             var host = IoCManager.Resolve<IServerConsoleHost>();
-            new MakeSentientCommand().Execute(new ConsoleShellAdapter(host, player), player,
+            new MakeSentientCommand().Execute(new ConsoleShellAdapter(host, player),
                 new[] {target.Uid.ToString()});
         }
     }

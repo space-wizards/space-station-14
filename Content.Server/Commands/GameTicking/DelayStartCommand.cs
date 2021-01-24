@@ -16,7 +16,7 @@ namespace Content.Server.Commands.GameTicking
         public string Description => "Delays the round start.";
         public string Help => $"Usage: {Command} <seconds>\nPauses/Resumes the countdown if no argument is provided.";
 
-        public void Execute(IServerConsoleShell shell, IPlayerSession player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
             var ticker = IoCManager.Resolve<IGameTicker>();
             if (ticker.RunLevel != GameRunLevel.PreRoundLobby)

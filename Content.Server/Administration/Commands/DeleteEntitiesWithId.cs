@@ -15,7 +15,7 @@ namespace Content.Server.Administration.Commands
         public string Description => "Deletes entities with the specified prototype ID.";
         public string Help => $"Usage: {Command} <prototypeID>";
 
-        public void Execute(IServerConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
             if (args.Length != 1)
             {

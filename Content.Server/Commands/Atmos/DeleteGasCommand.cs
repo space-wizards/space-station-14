@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Atmos;
@@ -20,8 +20,9 @@ namespace Content.Server.Commands.Atmos
         public string Description => "Removes all gases from a grid, or just of one type if specified.";
         public string Help => $"Usage: {Command} <GridId> <Gas> / {Command} <GridId> / {Command} <Gas> / {Command}";
 
-        public void Execute(IServerConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             GridId gridId;
             Gas? gas = null;
 

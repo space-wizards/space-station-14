@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Markers;
 using Content.Shared.Administration;
@@ -23,8 +23,9 @@ namespace Content.Server.Administration.Commands
             "warp <location>\nLocations you can teleport to are predefined by the map. " +
             "You can specify '?' as location to get a list of valid locations.";
 
-        public void Execute(IServerConsoleShell shell, IPlayerSession player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             if (player == null)
             {
                 shell.WriteLine("Only players can use this command");

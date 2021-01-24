@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.Administration;
 using Content.Server.Interfaces.Chat;
 using Robust.Server.Console;
@@ -14,8 +14,9 @@ namespace Content.Server.Commands.Chat
         public string Description => "Send Out Of Character chat messages.";
         public string Help => "ooc <text>";
 
-        public void Execute(IServerConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             if (args.Length < 1)
                 return;
 

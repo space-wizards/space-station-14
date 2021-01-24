@@ -1,4 +1,4 @@
-﻿using Content.Server.Interfaces.GameTicking;
+using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
 using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
@@ -13,8 +13,9 @@ namespace Content.Server.Commands.GameTicking
         public string Description => "Respawns a player, kicking them back to the lobby.";
         public string Help => "respawn [player]";
 
-        public void Execute(IServerConsoleShell shell, IPlayerSession player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             if (args.Length > 1)
             {
                 shell.WriteLine("Must provide <= 1 argument.");

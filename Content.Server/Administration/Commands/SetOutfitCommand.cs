@@ -22,7 +22,7 @@ namespace Content.Server.Administration.Commands
 
         public string Help => Loc.GetString("Usage: {0} <entityUid> | {0} <entityUid> <outfitId>", Command);
 
-        public void Execute(IServerConsoleShell shell, IPlayerSession player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
             if (args.Length < 1)
             {
@@ -58,6 +58,7 @@ namespace Content.Server.Administration.Commands
             {
                 var eui = IoCManager.Resolve<EuiManager>();
                 var ui = new SetOutfitEui(target);
+                var player = shell.Player as IPlayerSession;
                 eui.OpenEui(ui, player);
                 return;
             }

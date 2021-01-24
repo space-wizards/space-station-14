@@ -16,8 +16,9 @@ namespace Content.Server.Administration.Commands
 
         public string Help => Loc.GetString($"Usage: {Command} <message>");
 
-        public void Execute(IServerConsoleShell shell, IPlayerSession player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             if (player == null)
             {
                 shell.WriteLine("Only players can use this command");

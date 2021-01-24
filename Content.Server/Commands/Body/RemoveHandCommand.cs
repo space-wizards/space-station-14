@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Linq;
 using Content.Server.Administration;
 using Content.Shared.Administration;
@@ -19,8 +19,9 @@ namespace Content.Server.Commands.Body
         public string Description => "Removes a hand from your entity.";
         public string Help => $"Usage: {Command}";
 
-        public void Execute(IServerConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             if (player == null)
             {
                 shell.WriteLine("Only a player can run this command.");

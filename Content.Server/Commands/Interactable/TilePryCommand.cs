@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Shared.Administration;
@@ -21,8 +21,9 @@ namespace Content.Server.Commands.Interactable
         public string Description => "Pries up all tiles in a radius around the user.";
         public string Help => $"Usage: {Command} <radius>";
 
-        public void Execute(IServerConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             if (player?.AttachedEntity == null)
             {
                 return;

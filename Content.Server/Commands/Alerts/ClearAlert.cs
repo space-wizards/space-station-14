@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Mobs;
@@ -17,8 +17,9 @@ namespace Content.Server.Commands.Alerts
         public string Description => "Clears an alert for a player, defaulting to current player";
         public string Help => "clearalert <alertType> <name or userID, omit for current player>";
 
-        public void Execute(IServerConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             if (player?.AttachedEntity == null)
             {
                 shell.WriteLine("You don't have an entity.");

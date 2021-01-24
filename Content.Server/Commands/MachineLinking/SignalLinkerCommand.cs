@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration;
+using Content.Server.Administration;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Administration;
 using Robust.Server.Console;
@@ -17,8 +17,9 @@ namespace Content.Server.Commands.MachineLinking
 
         public string Help => "signallink (on/off)";
 
-        public void Execute(IServerConsoleShell shell, IPlayerSession player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             bool? enable = null;
             if (args.Length > 0)
             {

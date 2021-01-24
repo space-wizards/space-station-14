@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.GameObjects.Components.Body;
@@ -23,8 +23,9 @@ namespace Content.Server.Commands.Body
         public string Description => "Adds a hand to your entity.";
         public string Help => $"Usage: {Command} <entityUid> <handPrototypeId> / {Command} <entityUid> / {Command} <handPrototypeId> / {Command}";
 
-        public void Execute(IServerConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             if (args.Length > 1)
             {
                 shell.WriteLine(Help);

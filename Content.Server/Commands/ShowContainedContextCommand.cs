@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.Administration;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Administration;
@@ -18,8 +18,9 @@ namespace Content.Server.Commands
         public string Description => "Makes contained entities visible on the context menu, even when they shouldn't be.";
         public string Help => $"{Command}";
 
-        public void Execute(IServerConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             if (player == null)
             {
                 shell.WriteLine("You need to be a player to use this command.");

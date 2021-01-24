@@ -22,7 +22,7 @@ namespace Content.Server.Commands.AI
                               + "\n    processorId: Class that inherits AiLogicProcessor and has an AiLogicProcessor attribute."
                               + "\n    entityID: Uid of entity to add the AiControllerComponent to. Open its VV menu to find this.";
 
-        public void Execute(IServerConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
             if(args.Length != 2)
             {

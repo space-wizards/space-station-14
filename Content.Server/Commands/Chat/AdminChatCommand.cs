@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.Administration;
 using Content.Server.Interfaces.Chat;
 using Content.Shared.Administration;
@@ -15,8 +15,9 @@ namespace Content.Server.Commands.Chat
         public string Description => "Send chat messages to the private admin chat channel.";
         public string Help => "asay <text>";
 
-        public void Execute(IServerConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             if (args.Length < 1)
                 return;
 

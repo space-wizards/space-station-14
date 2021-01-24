@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Linq;
 using Content.Server.Administration;
@@ -56,8 +56,9 @@ namespace Content.Server.Commands.Chat
             }
         }
 
-        public void Execute(IServerConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             if (player == null)
             {
                 shell.WriteLine("You cannot run this command from the server.");
@@ -122,7 +123,7 @@ namespace Content.Server.Commands.Chat
 
             // Prevent the player from returning to the body. Yes, this is an ugly hack.
             var ghost = new Ghost(){CanReturn = false};
-            ghost.Execute(shell, player, Array.Empty<string>());
+            ghost.Execute(shell, Array.Empty<string>());
         }
     }
 }

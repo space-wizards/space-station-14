@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration;
+using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Maps;
 using Robust.Server.Console;
@@ -19,8 +19,9 @@ namespace Content.Server.Commands.GameTicking
         public string Description => "Puts an underplating tile below every wall on a grid.";
         public string Help => $"Usage: {Command} <gridId> | {Command}";
 
-        public void Execute(IServerConsoleShell shell, IPlayerSession player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             GridId gridId;
 
             switch (args.Length)

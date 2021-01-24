@@ -16,7 +16,7 @@ namespace Content.Server.Commands
         public string Command => "setanchor";
         public string Description => "Sets the anchoring state of an entity.";
         public string Help => "setanchor <entity id> <value (optional)>";
-        public void Execute(IServerConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
             if (args.Length == 0 || args.Length > 2)
             {

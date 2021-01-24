@@ -17,8 +17,9 @@ namespace Content.Server.Commands.GameTicking
         public string Description => "Creates and teleports you to a new uninitialized map for mapping.";
         public string Help => $"Usage: {Command} <mapname> / {Command} <id> <mapname>";
 
-        public void Execute(IServerConsoleShell shell, IPlayerSession player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             if (player == null)
             {
                 shell.WriteLine("Only players can use this command");

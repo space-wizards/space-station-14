@@ -21,7 +21,7 @@ namespace Content.Server.Commands.Mobs
 
         public string Help => "addrole <session ID> <Role Type>\nThat role type is the actual C# type name.";
 
-        public void Execute(IServerConsoleShell shell, IPlayerSession player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
             if (args.Length != 2)
             {

@@ -1,4 +1,4 @@
-﻿using Content.Server.GlobalVerbs;
+using Content.Server.GlobalVerbs;
 using Content.Shared.Administration;
 using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
@@ -28,8 +28,9 @@ namespace Content.Server.Administration.Commands
             }
         }
 
-        public void Execute(IServerConsoleShell shell, IPlayerSession player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             if (args.Length < 1 && player != null) //Try to heal the users mob if applicable
             {
                 shell.WriteLine(Loc.GetString("Healing the user's mob since no arguments were provided."));

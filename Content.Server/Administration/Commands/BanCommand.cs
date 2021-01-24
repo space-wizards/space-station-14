@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Server.Database;
 using Content.Shared.Administration;
 using Robust.Server.Console;
@@ -17,8 +17,9 @@ namespace Content.Server.Administration.Commands
         public string Description => "Bans somebody";
         public string Help => "Usage: <name or user ID> <reason> <duration in minutes, or 0 for permanent ban>";
 
-        public async void Execute(IServerConsoleShell shell, IPlayerSession? player, string[] args)
+        public async void Execute(IServerConsoleShell shell, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             var plyMgr = IoCManager.Resolve<IPlayerManager>();
             var dbMan = IoCManager.Resolve<IServerDbManager>();
 

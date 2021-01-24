@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.Chat;
@@ -17,8 +17,9 @@ namespace Content.Server.Commands.Chat
         public string Description => "Send chat messages to the local channel or a specified radio channel.";
         public string Help => "say <text>";
 
-        public void Execute(IServerConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             if (player == null)
             {
                 shell.WriteLine("This command cannot be run from the server.");

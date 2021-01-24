@@ -40,7 +40,7 @@ namespace Content.IntegrationTests.Tests.Commands
                 tickBeforeRestart = entityManager.CurrentTick;
 
                 var command = new NewRoundCommand();
-                command.Execute(null, null, new string[] { });
+                command.Execute(null, new string[] { });
 
                 if (lobbyEnabled)
                 {

@@ -1,4 +1,4 @@
-﻿using Content.Server.Commands.Observer;
+using Content.Server.Commands.Observer;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
@@ -17,8 +17,9 @@ namespace Content.Server.Administration.Commands
         public string Description => "Makes you an admin ghost.";
         public string Help => "aghost";
 
-        public void Execute(IServerConsoleShell shell, IPlayerSession player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             if (player == null)
             {
                 shell.WriteLine("Nah");

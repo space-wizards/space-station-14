@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Mobs;
@@ -17,8 +17,9 @@ namespace Content.Server.Commands.Alerts
         public string Description => "Shows an alert for a player, defaulting to current player";
         public string Help => "showalert <alertType> <severity, -1 if no severity> <name or userID, omit for current player>";
 
-        public void Execute(IServerConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             if (player == null)
             {
                 shell.WriteLine("You cannot run this command from the server.");

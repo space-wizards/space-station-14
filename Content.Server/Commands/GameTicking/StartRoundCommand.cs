@@ -16,7 +16,7 @@ namespace Content.Server.Commands.GameTicking
         public string Description => "Ends PreRoundLobby state and starts the round.";
         public string Help => String.Empty;
 
-        public void Execute(IServerConsoleShell shell, IPlayerSession player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
             var ticker = IoCManager.Resolve<IGameTicker>();
 

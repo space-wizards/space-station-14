@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.Administration;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Players;
@@ -16,8 +16,9 @@ namespace Content.Server.Commands.Chat
         public string Description => "Perform an action.";
         public string Help => "me <text>";
 
-        public void Execute(IServerConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             if (player == null)
             {
                 shell.WriteLine("This command cannot be run from the server.");

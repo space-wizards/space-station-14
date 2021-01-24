@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.Administration;
 using Content.Server.GameObjects.EntitySystems.StationEvents;
 using Content.Shared.Administration;
@@ -27,8 +27,9 @@ namespace Content.Server.Commands.StationEvents
         private const string RunHelp =
             "run <eventName/random>: start a particular event now; <eventName> is case-insensitive and not localized";
 
-        public void Execute(IServerConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             if (args.Length == 0)
             {
                 shell.WriteLine($"Invalid amount of arguments.\n{Help}");

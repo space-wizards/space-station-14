@@ -14,7 +14,7 @@ namespace Content.Server.Commands.Objectives
         public string Command => "rmobjective";
         public string Description => "Removes an objective from the player's mind.";
         public string Help => "rmobjective <username> <index>";
-        public void Execute(IServerConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IServerConsoleShell shell, string[] args)
         {
             if (args.Length != 2)
             {
