@@ -180,7 +180,7 @@ namespace Content.Client.UserInterface
                         SizeFlagsVertical = SizeFlags.FillExpand,
                         Children =
                         {
-                            (Chat = new ChatBox
+                            (Chat = new ChatBox(true)
                             {
                                 Input = {PlaceHolder = Loc.GetString("Say something!")}
                             })

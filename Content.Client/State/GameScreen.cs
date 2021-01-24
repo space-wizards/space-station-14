@@ -26,7 +26,7 @@ namespace Content.Client.State
         {
             base.Startup();
 
-            _gameChat = new ChatBox();
+            _gameChat = new ChatBox(false);
 
             _userInterfaceManager.StateRoot.AddChild(_gameChat);
             LayoutContainer.SetAnchorAndMarginPreset(_gameChat, LayoutContainer.LayoutPreset.TopRight, margin: 10);

@@ -81,14 +81,19 @@ namespace Content.Client.Chat
         private Vector2 _dragOffsetTopLeft;
         private Vector2 _dragOffsetBottomRight;
         private readonly IClyde _clyde;
+        private readonly bool _lobbyMode;
+        private byte _clampIn;
 
-        public ChatBox()
+        public ChatBox(bool lobbyMode)
         {
+            _lobbyMode = lobbyMode;
             // TODO: Find a better way. Probably not "supposed" to inject IClyde, but I give up.
             // I can't find any other way to allow this control to properly resize when the
             // window is resized. Resized() isn't reliably called when resizing the window,
             // and layoutcontainer anchor / margin don't seem to adjust how we need
-            // them to when the window is resized.
+            // them to when the window is resized. We need it to be able to resize
+            // within some bounds so that it doesn't overlap other UI elements, but current
+            // LayoutContainer.
             _clyde = IoCManager.Resolve<IClyde>();
             MouseFilter = MouseFilterMode.Stop;
 
@@ -198,8 +203,21 @@ namespace Content.Client.Chat
 
         private void ClydeOnOnWindowResized(WindowResizedEventArgs obj)
         {
-            // TODO: Do we need this?
-            // ClampSize();
+            // TODO: Do we need this? Can we use Resized?
+            ClampAfterDelay();
+        }
+
+        protected override void FrameUpdate(FrameEventArgs args)
+        {
+            base.FrameUpdate(args);
+            // TODO: find a better way to do this.
+            // we do the clamping after a delay (after UI scale / window resize)
+            // because we need to wait for our parent container to properly resize
+            // first, so we can calculate where we should go. If we do it right away,
+            // we won't have the correct values to adjust our margins.
+            if (_clampIn <= 0) return;
+            _clampIn -= 1;
+            if (_clampIn == 0) ClampSize();
         }
 
         protected override void ExitedTree()
@@ -477,16 +495,20 @@ namespace Content.Client.Chat
                 ClampSize(left, bottom);
             }
         }
-        //
-        // protected override void UIScaleChanged()
-        // {
-        //     base.UIScaleChanged();
-        //     ClampSize();
-        // }
+
+        protected override void UIScaleChanged()
+        {
+            base.UIScaleChanged();
+            ClampAfterDelay();
+        }
+
+        private void ClampAfterDelay()
+        {
+            _clampIn = 2;
+        }
 
         private void ClampSize(float? desiredLeft = null, float? desiredBottom = null)
         {
-            // TODO: Use margin (and maybe anchor) setting instead of setpos / setsize in LC
             if (Parent == null) return;
             var top = Rect.Top;
             var right = Rect.Right;
@@ -498,9 +520,8 @@ namespace Content.Client.Chat
 
             left = Math.Clamp(left, MinLeft, Parent.Size.X - MinWidth);
 
-            var rect = new UIBox2(left, top, right, bottom);
-            LayoutContainer.SetPosition(this, rect.TopLeft);
-            LayoutContainer.SetSize(this, rect.Size);
+            LayoutContainer.SetMarginLeft(this, -((right + 10) - left));
+            LayoutContainer.SetMarginBottom(this, bottom);
             OnResized?.Invoke();
         }
 
