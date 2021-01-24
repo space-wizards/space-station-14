@@ -1,4 +1,12 @@
 - type: reagent
+  id: chem.Absinthe
+  name: absinthe
+  desc: One sip of this and you just know you're gonna have a good time.
+  spritePath: absintheglass.rsi
+  color: "#33EE00"
+  physicalDesc: strong-smelling
+
+- type: reagent
   id: chem.Whiskey
   name: whiskey
   desc: An alcoholic beverage made from fermented grain mash
@@ -38,9 +46,18 @@
 - type: reagent
   id: chem.Vodka
   name: vodka
-  desc: The glass contain wodka. Хуита.
+  desc: The glass contain wodka. Хуета.
   physicalDesc: strong-smelling
   color: "#d1d1d155"
+  spritePath: ginvodkaglass.rsi
+
+- type: reagent
+  id: chem.Gin
+  name: gin
+  desc: A crystal clear glass of Griffeater gin.
+  physicalDesc: strong-smelling
+  color: "#664300"
+  spritePath: ginvodkaglass.rsi
 
 - type: reagent
   id: chem.Rum
@@ -48,6 +65,7 @@
   desc: Popular with the sailors. Not very popular with anyone else.
   physicalDesc: strong-smelling
   color: "#664300"
+  spritePath: rumglass.rsi
 
 - type: reagent
   id: chem.Moonshine
