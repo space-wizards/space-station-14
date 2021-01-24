@@ -239,7 +239,8 @@ namespace Content.Client
             "Recyclable",
             "SecretStash",
             "Toilet",
-            "ClusterFlash"
+            "ClusterFlash",
+            "GasGenerator"
         };
     }
 }
