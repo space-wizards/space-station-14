@@ -10,9 +10,7 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -26,8 +24,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
     [RegisterComponent]
     public class InjectorComponent : SharedInjectorComponent, IAfterInteract, IUse, ISolutionChange
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
         /// <summary>
         /// Whether or not the injector is able to draw from containers or if it's a single use
         /// device that can only inject.
@@ -48,13 +44,23 @@ namespace Content.Server.GameObjects.Components.Chemistry
         [ViewVariables]
         private ReagentUnit _initialMaxVolume;
 
+        private InjectorToggleMode _toggleState;
+
         /// <summary>
         /// The state of the injector. Determines it's attack behavior. Containers must have the
         /// right SolutionCaps to support injection/drawing. For InjectOnly injectors this should
         /// only ever be set to Inject
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        private InjectorToggleMode _toggleState;
+        public InjectorToggleMode ToggleState
+        {
+            get => _toggleState;
+            set
+            {
+                _toggleState = value;
+                Dirty();
+            }
+        }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -62,7 +68,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
             serializer.DataField(ref _injectOnly, "injectOnly", false);
             serializer.DataField(ref _initialMaxVolume, "initialMaxVolume", ReagentUnit.New(15));
             serializer.DataField(ref _transferAmount, "transferAmount", ReagentUnit.New(5));
+            serializer.DataField(ref _toggleState, "toggleState", _injectOnly ? InjectorToggleMode.Inject : InjectorToggleMode.Draw);
         }
+
         protected override void Startup()
         {
             base.Startup();
@@ -87,14 +95,14 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             string msg;
-            switch (_toggleState)
+            switch (ToggleState)
             {
                 case InjectorToggleMode.Inject:
-                    _toggleState = InjectorToggleMode.Draw;
+                    ToggleState = InjectorToggleMode.Draw;
                     msg = "Now drawing";
                     break;
                 case InjectorToggleMode.Draw:
-                    _toggleState = InjectorToggleMode.Inject;
+                    ToggleState = InjectorToggleMode.Inject;
                     msg = "Now injecting";
                     break;
                 default:
@@ -102,8 +110,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             Owner.PopupMessage(user, Loc.GetString(msg));
-
-            Dirty();
         }
 
         /// <summary>
@@ -125,7 +131,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             // Handle injecting/drawing for solutions
             if (targetEntity.TryGetComponent<SolutionContainerComponent>(out var targetSolution))
             {
-                if (_toggleState == InjectorToggleMode.Inject)
+                if (ToggleState == InjectorToggleMode.Inject)
                 {
                     if (solution.CanRemoveSolutions && targetSolution.CanAddSolutions)
                     {
@@ -136,7 +142,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                         eventArgs.User.PopupMessage(eventArgs.User, Loc.GetString("You aren't able to transfer to {0:theName}!", targetSolution.Owner));
                     }
                 }
-                else if (_toggleState == InjectorToggleMode.Draw)
+                else if (ToggleState == InjectorToggleMode.Draw)
                 {
                     if (targetSolution.CanRemoveSolutions && solution.CanAddSolutions)
                     {
@@ -150,7 +156,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
             else // Handle injecting into bloodstream
             {
-                if (targetEntity.TryGetComponent(out BloodstreamComponent? bloodstream) && _toggleState == InjectorToggleMode.Inject)
+                if (targetEntity.TryGetComponent(out BloodstreamComponent? bloodstream) && ToggleState == InjectorToggleMode.Inject)
                 {
                     if (solution.CanRemoveSolutions)
                     {
@@ -209,6 +215,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             Owner.PopupMessage(user, Loc.GetString("You inject {0}u into {1:theName}!", removedSolution.TotalVolume, targetBloodstream.Owner));
             Dirty();
+            AfterInject();
         }
 
         private void TryInject(SolutionContainerComponent targetSolution, IEntity user)
@@ -241,6 +248,16 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             Owner.PopupMessage(user, Loc.GetString("You transfer {0}u to {1:theName}", removedSolution.TotalVolume, targetSolution.Owner));
             Dirty();
+            AfterInject();
+        }
+
+        private void AfterInject()
+        {
+            // Automatically set syringe to draw after completely draining it.
+            if (Owner.GetComponent<SolutionContainerComponent>().CurrentVolume == 0)
+            {
+                ToggleState = InjectorToggleMode.Draw;
+            }
         }
 
         private void TryDraw(SolutionContainerComponent targetSolution, IEntity user)
@@ -269,9 +286,19 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             Owner.PopupMessage(user, Loc.GetString("Drew {0}u from {1:theName}", removedSolution.TotalVolume, targetSolution.Owner));
             Dirty();
+            AfterDraw();
         }
 
-        public void SolutionChanged(SolutionChangeEventArgs eventArgs)
+        private void AfterDraw()
+        {
+            // Automatically set syringe to inject after completely filling it.
+            if (Owner.GetComponent<SolutionContainerComponent>().EmptyVolume == 0)
+            {
+                ToggleState = InjectorToggleMode.Inject;
+            }
+        }
+
+        void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs)
         {
             Dirty();
         }
@@ -283,7 +310,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             var currentVolume = solution?.CurrentVolume ?? ReagentUnit.Zero;
             var maxVolume = solution?.MaxVolume ?? ReagentUnit.Zero;
 
-            return new InjectorComponentState(currentVolume, maxVolume, _toggleState);
+            return new InjectorComponentState(currentVolume, maxVolume, ToggleState);
         }
     }
 }
