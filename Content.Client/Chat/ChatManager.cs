@@ -5,6 +5,7 @@ using Content.Client.GameObjects.Components.Observer;
 using Content.Client.Interfaces.Chat;
 using Content.Shared.Administration;
 using Content.Shared.Chat;
+using JetBrains.Annotations;
 using Robust.Client.Console;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.UserInterface;
@@ -91,7 +92,15 @@ namespace Content.Client.Chat
         // Flag Enums for holding filtered channels
         private ChatChannel _filteredChannels;
 
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        private readonly Dictionary<ChatChannel, byte> _unreadMessages = new();
+        /// <summary>
+        /// For currently disabled chat filters,
+        /// unread messages (messages receieved since the channel has been filtered
+        /// out). Never goes above 10 (9+ should be shown when at 10)
+        /// </summary>
+        public IReadOnlyDictionary<ChatChannel, byte> UnreadMessages => _unreadMessages;
+
+        private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IClientNetManager _netManager = default!;
         [Dependency] private readonly IClientConsole _console = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -331,6 +340,13 @@ namespace Content.Client.Chat
             if (IsFiltered(message.Channel))
             {
                 Logger.Debug($"Message filtered: {message.Channel}: {message.Message}");
+                // accumulate unread
+                if (!_unreadMessages.TryGetValue(message.Channel, out var count))
+                {
+                    count = 0;
+                }
+                count = (byte) Math.Min(count + 1, 10);
+                _unreadMessages[message.Channel] = count;
                 return;
             }
 
@@ -440,6 +456,7 @@ namespace Content.Client.Chat
             {
                 _channelFilters[channel] = true;
                 _filteredChannels &= ~channel;
+                _unreadMessages.Remove(channel);
             }
             else
             {

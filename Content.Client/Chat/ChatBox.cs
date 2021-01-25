@@ -217,11 +217,6 @@ namespace Content.Client.Chat
             _clyde.OnWindowResized += ClydeOnOnWindowResized;
         }
 
-        private void ClydeOnOnWindowResized(WindowResizedEventArgs obj)
-        {
-            ClampAfterDelay();
-        }
-
         protected override void ExitedTree()
         {
             base.ExitedTree();
@@ -504,6 +499,11 @@ namespace Content.Client.Chat
             ClampAfterDelay();
         }
 
+        private void ClydeOnOnWindowResized(WindowResizedEventArgs obj)
+        {
+            ClampAfterDelay();
+        }
+
         private void ClampAfterDelay()
         {
             if (!_lobbyMode)
@@ -748,7 +748,7 @@ namespace Content.Client.Chat
     {
         public ChatChannel Channel { get; }
 
-        public ChannelFilterCheckbox(ChatChannel channel)
+        public ChannelFilterCheckbox(ChatChannel channel, byte? unreadCount = null)
         {
             Channel = channel;
 
