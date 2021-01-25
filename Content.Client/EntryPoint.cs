@@ -155,7 +155,6 @@ namespace Content.Client
             overlayMgr.AddOverlay(new GradientCircleMaskOverlay());
             overlayMgr.AddOverlay(new CircleMaskOverlay());
             overlayMgr.AddOverlay(new FlashOverlay());
-            overlayMgr.AddOverlay(new RadiationPulseOverlay());
             IoCManager.Resolve<IChatManager>().Initialize();
             IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();
