@@ -1,7 +1,5 @@
 ﻿using JetBrains.Annotations;
-using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Interfaces.GameTicking;
-using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Utility;
 using Robust.Server.Interfaces.Timing;
 using Robust.Shared.Interfaces.GameObjects;
@@ -9,7 +7,6 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 
@@ -18,8 +15,8 @@ namespace Content.Server.StationEvents
     [UsedImplicitly]
     public sealed class RadiationStorm : StationEvent
     {
-        // Based on Goonstation style radiation storm with some TG elements (announcer, etc.)
-        // Based on a more local Goonstation style radiation storm but using SS14 elements li
+        // Based on a more local Goonstation style radiation storms with some TG elements
+        // but taking advantage of SS14 elements.
 
         [Dependency] private readonly IEntityManager _entityManager = default;
         [Dependency] private readonly IRobustRandom _robustRandom = default;
