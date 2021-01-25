@@ -107,7 +107,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
 
             if (!Owner.TryGetComponent<NodeContainerComponent>(out var container))
             {
-                Logger.Error($"{typeof(BasePumpComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} did not have a {nameof(NodeContainerComponent)}.");
+                Logger.Error($"{nameof(BasePumpComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} did not have a {nameof(NodeContainerComponent)}.");
                 return;
             }
             var pipeNodes = container.Nodes.OfType<PipeNode>();
@@ -115,7 +115,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
             _outletPipe = pipeNodes.Where(pipe => pipe.PipeDirection == _initialOutletDirection).FirstOrDefault();
             if (_inletPipe == null || _outletPipe == null)
             {
-                Logger.Error($"{typeof(BasePumpComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
+                Logger.Error($"{nameof(BasePumpComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
                 return;
             }
         }

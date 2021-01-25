@@ -85,12 +85,6 @@ namespace Content.Server.GameTicking
             var ghostComponent = ghost.GetComponent<GhostComponent>();
             ghostComponent.CanReturnToBody = canReturn;
 
-            if (playerEntity != null &&
-                playerEntity.TryGetComponent(out ServerOverlayEffectsComponent? overlayComponent))
-            {
-                overlayComponent.RemoveOverlay(SharedOverlayID.CircleMaskOverlay);
-            }
-
             if (canReturn)
                 mind.Visit(ghost);
             else

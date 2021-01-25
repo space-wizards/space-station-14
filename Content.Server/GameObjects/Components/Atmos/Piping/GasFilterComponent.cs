@@ -171,7 +171,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Filters
 
             if (_inletPipe == null || _filterOutletPipe == null || _outletPipe == null)
             {
-                Logger.Error($"{typeof(GasFilterComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
+                Logger.Error($"{nameof(GasFilterComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
                 return;
             }
         }

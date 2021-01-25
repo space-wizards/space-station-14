@@ -196,6 +196,7 @@
   - type: Pullable
   - type: DoAfter
   - type: CreamPied
+  - type: Stripping
   - type: Strippable
   - type: UserInterface
     interfaces:
