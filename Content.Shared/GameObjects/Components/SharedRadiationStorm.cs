@@ -53,16 +53,15 @@ namespace Content.Shared.GameObjects.Components
     }
 
     [Serializable, NetSerializable]
-    public enum RadiationPulseVisual
+    public enum RadiationPulseVisual : byte
     {
         State
     }
 
     [Serializable, NetSerializable]
-    public enum RadiationPulseVisuals
+    public enum RadiationPulseVisuals : byte
     {
         None,
         Visible
     }
-
 }

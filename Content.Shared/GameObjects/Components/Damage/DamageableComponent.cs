@@ -468,9 +468,9 @@ namespace Content.Shared.GameObjects.Components.Damage
             Dirty();
         }
 
-        public void RadiationAct(SharedRadiationPulseComponent radiation)
+        public void RadiationAct(SharedRadiationPulseComponent radiation, float ratio)
         {
-            var totalDamage = Math.Max((int)(radiation.Cooldown * radiation.Energy), 1);
+            var totalDamage = Math.Max((int)(ratio * radiation.Cooldown * radiation.Energy), 1);
             ChangeDamage(DamageType.Radiation, totalDamage, false, radiation.Owner);
         }
 

@@ -5,6 +5,6 @@ namespace Content.Shared.Interfaces.GameObjects.Components
 {
     public interface IRadiationAct : IComponent
     {
-        void RadiationAct(SharedRadiationPulseComponent radiation);
+        void RadiationAct(SharedRadiationPulseComponent radiation, float ratio);
     }
 }

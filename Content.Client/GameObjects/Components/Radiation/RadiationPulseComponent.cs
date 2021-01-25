@@ -8,6 +8,15 @@ namespace Content.Client.GameObjects.Components.Radiation
     [ComponentReference(typeof(SharedRadiationPulseComponent))]
     public abstract class RadiationPulseComponent : SharedRadiationPulseComponent
     {
+    }
+
+    [RegisterComponent]
+    [ComponentReference(typeof(RadiationPulseComponent))]
+    public sealed class RadiationPulseAnomaly : RadiationPulseComponent
+    {
+        public override uint? NetID => ContentNetIDs.RADIATION_PULSE;
+        public override string Name => "RadiationPulseAnomaly";
+
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
@@ -21,20 +30,5 @@ namespace Content.Client.GameObjects.Components.Radiation
             StartTime = state.StartTime;
             EndTime = state.EndTime;
         }
-    }
-
-    [RegisterComponent]
-    [ComponentReference(typeof(RadiationPulseComponent))]
-    public sealed class RadiationPulseAnomaly : RadiationPulseComponent
-    {
-        public override string Name => "RadiationPulseAnomaly";
-        public override uint? NetID => ContentNetIDs.RADIATION_PULSE;
-    }
-
-    [RegisterComponent]
-    [ComponentReference(typeof(RadiationPulseComponent))]
-    public sealed class RadiationPulseSingularity : RadiationPulseComponent
-    {
-        public override string Name => "RadiationPulseSingularity";
     }
 }

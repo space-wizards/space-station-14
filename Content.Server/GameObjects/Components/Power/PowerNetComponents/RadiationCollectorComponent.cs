@@ -87,11 +87,11 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
             SetAppearance(RadiationCollectorVisualState.Deactivating);
         }
 
-        public void RadiationAct(SharedRadiationPulseComponent radiation)
+        public void RadiationAct(SharedRadiationPulseComponent radiation, float ratio)
         {
             if (!_enabled) return;
 
-            SupplyRate = (int) (radiation.Cooldown * radiation.Energy * 1000.0f);
+            SupplyRate = (int) (ratio * radiation.Cooldown * radiation.Energy * 1000.0f);
         }
 
         protected void SetAppearance(RadiationCollectorVisualState state)

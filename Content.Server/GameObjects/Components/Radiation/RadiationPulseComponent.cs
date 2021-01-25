@@ -32,16 +32,14 @@ namespace Content.Server.GameObjects.Components.Radiation
 
         private bool _decay;
         private float _duration;
+        private float _timeLeftUntilRadiation;
 
         public override float Energy
         {
             get => _energy;
-            set
-            {
-                _energy = value;
-                Dirty();
-            }
+            set => _energy = value;
         }
+
         public override float Range
         {
             get => _range;
@@ -105,7 +103,8 @@ namespace Content.Server.GameObjects.Components.Radiation
             _duration = _random.NextFloat() * (MaxPulseLifespan - MinPulseLifespan) + MinPulseLifespan;
             _startTime = _gameTiming.CurTime;
 
-            ComputeCooldown();
+            Cooldown = _random.NextFloat() * (MaxCooldownAct - MinCooldownAct) + MinCooldownAct;
+            _timeLeftUntilRadiation = 0.0f;
 
             if (Decay)
             {
@@ -115,11 +114,6 @@ namespace Content.Server.GameObjects.Components.Radiation
                     EntitySystem.Get<AudioSystem>().PlayAtCoords(Sound, Owner.Transform.Coordinates);
                 }
             }
-        }
-
-        protected virtual void ComputeCooldown()
-        {
-            Cooldown = _random.NextFloat() * (MaxCooldownAct - MinCooldownAct) + MinCooldownAct;
         }
 
         private void UpdateEndTime()
@@ -141,6 +135,8 @@ namespace Content.Server.GameObjects.Components.Radiation
 
         public void Update(float frameTime)
         {
+            _timeLeftUntilRadiation += frameTime;
+
             if (!Decay || Owner.Deleted)
             {
                 return;
@@ -154,6 +150,24 @@ namespace Content.Server.GameObjects.Components.Radiation
             _duration -= frameTime;
         }
 
+        /// <summary>
+        /// Checks if the radiation pulse can radiate entities around it.
+        /// If the period between pulses was bigger than the cooldown,
+        /// the ratio will adjust the amount of radiation done.
+        /// </summary>
+        public bool OnCooldown(out float ratio)
+        {
+            if (_timeLeftUntilRadiation >= Cooldown)
+            {
+                ratio = _timeLeftUntilRadiation / Cooldown;
+                _timeLeftUntilRadiation = 0.0f;
+                return false;
+            }
+
+            ratio = default;
+            return true;
+        }
+
         public abstract bool CanRadiate(IEntity entity);
     }
 
@@ -161,8 +175,8 @@ namespace Content.Server.GameObjects.Components.Radiation
     [ComponentReference(typeof(RadiationPulseComponent))]
     public sealed class RadiationPulseAnomaly : RadiationPulseComponent
     {
-        public override string Name => "RadiationPulseAnomaly";
         public override uint? NetID => ContentNetIDs.RADIATION_PULSE;
+        public override string Name => "RadiationPulseAnomaly";
 
         public override void Initialize()
         {
