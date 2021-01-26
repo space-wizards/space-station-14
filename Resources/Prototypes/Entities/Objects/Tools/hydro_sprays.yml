@@ -15,6 +15,9 @@
       reagents:
         - ReagentId: chem.PlantBGone
           Quantity: 100
+  - type: Item
+    sprite: Objects/Tools/Hydroponics/sprays.rsi
+    HeldPrefix: plantbgone
 
 - type: entity
   name: weed spray
@@ -39,6 +42,8 @@
   - type: ItemCooldown
   - type: Spray
     transferAmount: 1
+  - type: Item
+    sprite: Objects/Tools/Hydroponics/sprays.rsi
 
 - type: entity
   name: pest spray
@@ -56,3 +61,5 @@
       reagents:
         - ReagentId: chem.PestKiller
           Quantity: 50
+  - type: Item
+    sprite: Objects/Tools/Hydroponics/sprays.rsi
