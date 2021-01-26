@@ -1,4 +1,4 @@
-﻿using Content.Server.GameObjects.Components.Disposal;
+using Content.Server.GameObjects.Components.Disposal;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 
@@ -11,6 +11,11 @@ namespace Content.Server.GameObjects.EntitySystems
         public override void Update(float frameTime)
         {
             foreach (var comp in ComponentManager.EntityQuery<DisposalHolderComponent>())
+            {
+                comp.Update(frameTime);
+            }
+
+            foreach (var comp in ComponentManager.EntityQuery<DisposalInserterComponent>())
             {
                 comp.Update(frameTime);
             }

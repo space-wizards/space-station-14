@@ -1,4 +1,8 @@
 #nullable enable
+using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.GameObjects.Components.Mobs.State;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Timers;
@@ -10,45 +14,61 @@ using System.Threading;
 
 namespace Content.Shared.GameObjects.Components
 {
-    public class SharedEntityInputComponent : Component, ICollideSpecial
+    public abstract class SharedEntityInputComponent : Component, ICollideSpecial, IDragDropOn
     {
         public override string Name => "EntityInput";
 
         private readonly List<IEntity> _intersecting = new();
 
-        /// <summary>
-        /// The time between updating the list of intersecting entities.
-        /// </summary>
-        private const int UpdateDelay = 20;
+        public virtual bool CanInsert(IEntity entity)
+        {
+            if (!entity.TryGetComponent(out IPhysicsComponent? physics) || !physics.CanCollide)
+            {
+                if (entity.TryGetComponent(out IMobStateComponent? state) && state.IsDead())
+                {
+                    return false;
+                }
+            }
 
-        private CancellationTokenSource? _updateToken;
+            if (!entity.HasComponent<IItemComponent>() && !entity.HasComponent<IBody>())
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public virtual bool CanDragDropOn(DragDropEventArgs eventArgs)
+        {
+            return CanInsert(eventArgs.Dragged);
+        }
+
+        public abstract bool DragDropOn(DragDropEventArgs eventArgs);
+
+        public void Update()
+        {
+            UpdateIntersecting();
+        }
 
         /// <summary>
         /// Prevents entities from colliding until the exit the collider
         /// </summary>
         bool ICollideSpecial.PreventCollide(IPhysBody collided)
         {
-            if (IsExiting(collided.Entity)) return true;
+            var entity = collided.Entity;
             if (!Owner.TryGetComponent(out IContainerManager? manager)) return false;
+            if (_intersecting.Contains(entity)) return true;
 
-            if (manager.ContainsEntity(collided.Entity))
+            if (manager.ContainsEntity(entity))
             {
-                if (!_intersecting.Contains(collided.Entity))
+                if (!_intersecting.Contains(entity))
                 {
-                    _intersecting.Add(collided.Entity);
-                    _updateToken?.Cancel();
-                    _updateToken = null;
-
-                    StartUpdateTimer();
+                    _intersecting.Add(entity);
                 }
                 return true;
             }
-            return false;
-        }
 
-        private bool IsExiting(IEntity entity)
-        {
-            return _intersecting.Contains(entity);
+            return false;
         }
 
         /// <summary>
@@ -66,17 +86,6 @@ namespace Content.Shared.GameObjects.Components
                 if (!Owner.EntityManager.IsIntersecting(entity, Owner))
                     _intersecting.RemoveAt(i);
             }
-
-            if(_intersecting.Count != 0)
-            {
-                StartUpdateTimer();
-            }
-        }
-
-        private void StartUpdateTimer()
-        {
-            _updateToken = new CancellationTokenSource();
-            Owner.SpawnTimer(UpdateDelay, UpdateIntersecting, _updateToken.Token);
         }
     }
 }

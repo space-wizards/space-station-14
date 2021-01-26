@@ -1,16 +1,16 @@
-﻿using Content.Shared.GameObjects.Components.Disposal;
+using Content.Shared.GameObjects.Components.Disposal;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using static Content.Shared.GameObjects.Components.Disposal.OldSharedDisposalUnitComponent;
+using Content.Shared.GameObjects.Components.Disposal.DisposalUnit;
 
-namespace Content.Client.GameObjects.Components.Disposal
+namespace Content.Client.GameObjects.Components.Disposal.DisposalUnit
 {
     /// <summary>
-    /// Client-side UI used to control a <see cref="OldSharedDisposalUnitComponent"/>
+    /// Client-side UI used to control a <see cref="SharedDisposalUnitComponent"/>
     /// </summary>
     public class DisposalUnitWindow : SS14Window
     {
@@ -92,7 +92,7 @@ namespace Content.Client.GameObjects.Components.Disposal
             });
         }
 
-        private void UpdatePressureBar(float pressure)
+        public void UpdatePressureBar(float pressure)
         {
             _pressureBar.Value = pressure;
 
@@ -135,8 +135,8 @@ namespace Content.Client.GameObjects.Components.Disposal
         public void UpdateState(DisposalUnitBoundUserInterfaceState state)
         {
             Title = state.UnitName;
-            _unitState.Text = state.UnitState;
-            UpdatePressureBar(state.Pressure);
+            var unitState = state.UnitState;
+            _unitState.Text = Loc.GetString($"{unitState}");
             Power.Pressed = state.Powered;
             Engage.Pressed = state.Engaged;
         }

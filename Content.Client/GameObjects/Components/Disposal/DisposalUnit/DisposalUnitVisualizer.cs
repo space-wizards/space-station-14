@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -8,9 +8,9 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
-using static Content.Shared.GameObjects.Components.Disposal.OldSharedDisposalUnitComponent;
+using static Content.Shared.GameObjects.Components.Disposal.DisposalUnit.SharedDisposalUnitComponent;
 
-namespace Content.Client.GameObjects.Components.Disposal
+namespace Content.Client.GameObjects.Components.Disposal.DisposalUnit
 {
     [UsedImplicitly]
     public class DisposalUnitVisualizer : AppearanceVisualizer
@@ -40,6 +40,7 @@ namespace Content.Client.GameObjects.Components.Disposal
                 return;
             }
 
+            var animPlayer = appearance.Owner.GetComponent<AnimationPlayerComponent>();
             switch (state)
             {
                 case VisualState.UnAnchored:
@@ -49,12 +50,16 @@ namespace Content.Client.GameObjects.Components.Disposal
                     sprite.LayerSetState(DisposalUnitVisualLayers.Base, _stateAnchored);
                     break;
                 case VisualState.Charging:
-                    sprite.LayerSetState(DisposalUnitVisualLayers.Base, _stateCharging);
+
+                    if(!animPlayer.HasRunningAnimation(AnimationKey))
+                    {
+                        sprite.LayerSetState(DisposalUnitVisualLayers.Base, _stateCharging);
+                    }
+
                     break;
                 case VisualState.Flushing:
                     sprite.LayerSetState(DisposalUnitVisualLayers.Base, _stateAnchored);
 
-                    var animPlayer = appearance.Owner.GetComponent<AnimationPlayerComponent>();
 
                     if (!animPlayer.HasRunningAnimation(AnimationKey))
                     {

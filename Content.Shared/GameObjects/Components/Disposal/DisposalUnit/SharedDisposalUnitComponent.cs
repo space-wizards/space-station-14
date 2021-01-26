@@ -12,9 +12,6 @@ namespace Content.Shared.GameObjects.Components.Disposal.DisposalUnit
 
         public override string Name => "DisposalUnit";
 
-        [ViewVariables]
-        public bool Anchored => !Owner.TryGetComponent(out IPhysicsComponent? physics) || physics.Anchored;
-
         [Serializable, NetSerializable]
         public enum Visuals
         {
@@ -46,13 +43,6 @@ namespace Content.Shared.GameObjects.Components.Disposal.DisposalUnit
             Charging,
             Full,
             Ready
-        }
-
-        [Serializable, NetSerializable]
-        public enum PressureState
-        {
-            Ready,
-            Pressurizing
         }
 
         [Serializable, NetSerializable]

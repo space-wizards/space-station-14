@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: DisposalPipeBase
   abstract: true
   placement:
@@ -125,7 +125,10 @@
       map: ["enum.DisposalUnitVisualLayers.Light"]
   - type: PowerReceiver
   - type: DisposalUnit
-    flushTime: 2
+  - type: DisposalInserter
+    containerName: DisposalUnit
+  - type: EntityInput
+    containerName: DisposalUnit
   - type: Clickable
   - type: InteractionOutline
   - type: Physics

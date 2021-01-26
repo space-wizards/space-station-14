@@ -1,4 +1,5 @@
 using Content.Shared.GameObjects.Components;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 
 namespace Content.Client.GameObjects.Components
@@ -10,5 +11,9 @@ namespace Content.Client.GameObjects.Components
     [ComponentReference(typeof(SharedEntityInputComponent))]
     public class EntityInputComponent : SharedEntityInputComponent
     {
+        public override bool DragDropOn(DragDropEventArgs eventArgs)
+        {
+            return true;
+        }
     }
 }

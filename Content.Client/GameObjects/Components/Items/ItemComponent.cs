@@ -1,4 +1,4 @@
-﻿using Content.Client.GameObjects.Components.Disposal;
+using Content.Client.GameObjects.Components.Disposal;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -88,7 +88,7 @@ namespace Content.Client.GameObjects.Components.Items
 
         bool IDraggable.CanDrop(CanDropEventArgs args)
         {
-            return args.Target.HasComponent<OldDisposalUnitComponent>();
+            return args.Target.HasComponent<EntityInputComponent>();
         }
 
         public bool Drop(DragDropEventArgs args)

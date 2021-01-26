@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Random;
@@ -18,7 +18,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public override string Name => "DisposalEntry";
 
-        public bool TryInsert(OldDisposalUnitComponent from)
+        public bool TryInsert(DisposalInserterComponent from)
         {
             var holder = Owner.EntityManager.SpawnEntity(HolderPrototypeId, Owner.Transform.MapPosition);
             var holderComponent = holder.GetComponent<DisposalHolderComponent>();

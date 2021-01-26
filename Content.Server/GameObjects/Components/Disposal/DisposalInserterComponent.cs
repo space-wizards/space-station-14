@@ -24,7 +24,6 @@ using System.Threading;
 
 namespace Content.Server.GameObjects.Components.Disposal
 {
-    //TODO: Implement outgoing messages
     //TODO: Write documentation
     /// <summary>
     /// 
@@ -35,10 +34,16 @@ namespace Content.Server.GameObjects.Components.Disposal
         [ComponentDependency]
         public readonly PowerReceiverComponent? PowerReceiver = null;
 
+        [ComponentDependency]
+        public readonly IPhysicsComponent? Physics = null;
+
+        [ComponentDependency]
+        public readonly SnapGridComponent? SnapGrid = null;
+
         public override string Name => "DisposalInserter";
 
         [ViewVariables]
-        public bool Anchored => !Owner.TryGetComponent(out IPhysicsComponent? physics) || physics.Anchored;
+        public bool Anchored => Physics != null && Physics.Anchored;
 
         /// <summary>
         /// Used by the disposal entry component to get the entities from the inserter
@@ -60,6 +65,9 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         private float _engagePressure;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        private int _pumpRate;
 
         /// <summary>
         /// The time it takes until the inserter engages itself after an entity was inserted
@@ -84,16 +92,22 @@ namespace Content.Server.GameObjects.Components.Disposal
         [ViewVariables]
         private Container _container = default!;
 
-        //[ViewVariables]
-        //private PressureState State => _pressure >= 1 ? PressureState.Ready : PressureState.Pressurizing;
+        private bool _pressurized = false;
 
-        //Init stuff
+        private bool _flushed = false;
 
         /// <summary>
         /// 
         /// </summary>
         public void Update(float frameTime)
         {
+            if(_flushed)
+            {
+                SendMessage(new InserterFlushedMessage());
+                _flushed = false;
+                return;
+            }
+
             if (!Powered || Air.Pressure < _engagePressure && !Pressurize(frameTime))
             {
                 return;
@@ -101,14 +115,17 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             if(Air.Pressure >= _engagePressure)
             {
-                if (Engaged)
+                if (Powered && !_pressurized)
                 {
-                    TryFlush();
+                    SendMessage(new PressureChangedMessage(Air.Pressure, _engagePressure));
+                    _pressurized = true;
                 }
-            }
-            else
-            {
-                SendMessage(new PressureChangedMessage(Air.Pressure));
+
+                if (Engaged && CanFlush())
+                {
+                    Owner.SpawnTimer(_flushDelay, () => TryFlush());
+                    Engaged = false;
+                }
             }
         }
 
@@ -120,6 +137,8 @@ namespace Content.Server.GameObjects.Components.Disposal
             {
                 _container = ContainerManagerComponent.Ensure<Container>(_containerID, Owner);
             }
+
+            SendMessage(new PressureChangedMessage(Air.Pressure, _engagePressure));
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -131,6 +150,12 @@ namespace Content.Server.GameObjects.Components.Disposal
                 101.0f,
                 engagePressure => _engagePressure = engagePressure,
                 () => _engagePressure);
+
+            serializer.DataReadWriteFunction(
+                "pumpRate",
+                1,
+                pumpRate => _pumpRate = pumpRate,
+                () => _pumpRate);
 
             serializer.DataReadWriteFunction(
                 "automaticEngageTime",
@@ -150,28 +175,26 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public bool TryFlush()
         {
-            if (!CanFlush() || !Owner.TryGetComponent(out SnapGridComponent? snapGrid))
+            if (!CanFlush() || SnapGrid == null)
             {
                 return false;
             }
 
-            var entry = snapGrid.GetLocal().FirstOrDefault(entity => entity.HasComponent<DisposalEntryComponent>());
+            var entry = SnapGrid.GetLocal().FirstOrDefault(entity => entity.HasComponent<DisposalEntryComponent>());
 
             if (entry == null)
             {
                 return false;
             }
 
-            SendMessage(new InserterFlushedMessage());
-
             var entryComponent = entry.GetComponent<DisposalEntryComponent>();
 
-            //entryComponent.TryInsert(this);
+            entryComponent.TryInsert(this);
 
             _automaticEngageToken?.Cancel();
             _automaticEngageToken = null;
 
-            Engaged = false;
+            _flushed = true;
 
             return true;
         }
@@ -216,8 +239,8 @@ namespace Content.Server.GameObjects.Components.Disposal
                     }
                     break;
 
-                case EngageInserterMessage:
-                    TryQueueEngage();
+                case EngageInserterMessage engageMessage:
+                    Engaged = engageMessage.Engage;
                     break;
             }
         }
@@ -228,18 +251,23 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// <returns>true if the inserter was able to increase its pressure</returns>
         private bool Pressurize(float frameTime)
         {
-            if (!Owner.Transform.Coordinates.TryGetTileAtmosphere(out var tileAtmos) || tileAtmos.Air == null || tileAtmos.Air.Temperature > 0)
+            if (!Owner.Transform.Coordinates.TryGetTileAtmosphere(out var tileAtmos) || tileAtmos.Air == null || tileAtmos.Air.Temperature <= 0)
             {
                 return false;
             }
 
-            var tileAir = tileAtmos.Air;
-            var transferMoles = 0.1f * (0.05f * Atmospherics.OneAtmosphere * 1.01f - Air.Pressure) * Air.Volume / (tileAir.Temperature * Atmospherics.R) * frameTime;
+            _pressurized = false;
 
-            Air = tileAir.Remove(transferMoles);
+            var tileAir = tileAtmos.Air;
+            //var transferMoles = 0.1f * (0.05f * Atmospherics.OneAtmosphere - Air.Pressure) * Air.Volume / (tileAir.Temperature * Atmospherics.R);
+            var volumeRatio = Math.Clamp(_pumpRate / tileAir.Volume, 0, 1);
+            
+            Air.Merge(tileAir.RemoveRatio(volumeRatio));
 
             var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
             atmosSystem.GetGridAtmosphere(Owner.Transform.GridID)?.Invalidate(tileAtmos.GridIndices);
+
+            SendMessage(new PressureChangedMessage(Air.Pressure, _engagePressure));
 
             return true;
         }
@@ -265,16 +293,6 @@ namespace Content.Server.GameObjects.Components.Disposal
         private bool CanFlush()
         {
             return Air.Pressure >= _engagePressure && Powered && Anchored;
-        }
-
-        private void ToggleEngage()
-        {
-            Engaged ^= true;
-
-            if (Engaged && CanFlush())
-            {
-                Owner.SpawnTimer(_flushDelay, () => TryFlush());
-            }
         }
 
         private void PowerStateChanged(PowerChangedMessage args)
@@ -319,14 +337,24 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
 
             public float Pressure { get; }
+            public float TargetPressure { get; }
 
-            public PressureChangedMessage(float pressure)
+            public PressureChangedMessage(float pressure, float targetPressure)
             {
                 Pressure = pressure;
+                TargetPressure = targetPressure;
             }
         }
 
-        public class EngageInserterMessage : ComponentMessage {}
+        public class EngageInserterMessage : ComponentMessage
+        {
+            public bool Engage { get; }
+
+            public EngageInserterMessage(bool engage)
+            {
+                Engage = engage;
+            }
+        }
 
         public class InserterFlushedMessage : ComponentMessage {}
     }

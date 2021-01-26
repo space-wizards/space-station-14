@@ -36,6 +36,8 @@ namespace Content.Server.GameObjects.Components
         [Dependency]
         private readonly IGameTiming _gameTiming = default!;
 
+        [Dependency] readonly IRobustRandom _random = default!;
+
         [ViewVariables]
         public IReadOnlyList<IEntity> ContainedEntities => _container.ContainedEntities;
 
@@ -67,24 +69,6 @@ namespace Content.Server.GameObjects.Components
 
             serializer.DataField(ref _containerID, "containerName", Name);
             serializer.DataField(ref _entryDelay, "entryDelay", 0.5f);
-        }
-
-        public bool CanInsert(IEntity entity)
-        {
-            if (!entity.TryGetComponent(out IPhysicsComponent? physics) || !physics.CanCollide)
-            {
-                if (entity.TryGetComponent(out IMobStateComponent? state) && state.IsDead())
-                {
-                    return false;
-                }
-            }
-
-            if (!entity.HasComponent<ItemComponent>() && !entity.HasComponent<IBody>())
-            {
-                return false;
-            }
-
-            return _container.CanInsert(entity);
         }
 
         public override void OnRemove()
@@ -146,7 +130,13 @@ namespace Content.Server.GameObjects.Components
 
             }
 
+            SendMessage(new EntityInsertetMessage(entity));
             return _container.Insert(entity);
+        }
+
+        public override bool CanInsert(IEntity entity)
+        {
+            return base.CanInsert(entity) && _container.CanInsert(entity);
         }
 
         protected override void Startup()
@@ -171,6 +161,7 @@ namespace Content.Server.GameObjects.Components
                 return false;
             }
 
+            SendMessage(new EntityInsertetMessage(entity));
             return true;
         }
 
@@ -179,7 +170,6 @@ namespace Content.Server.GameObjects.Components
             _container.Remove(entity);
         }
 
-        //TODO: Call this when receiving an EjectContentMessage
         private void TryEjectContents()
         {
             foreach (var entity in _container.ContainedEntities.ToArray())
@@ -193,12 +183,7 @@ namespace Content.Server.GameObjects.Components
             return TryDrop(eventArgs.User, eventArgs.Using);
         }
 
-        public bool CanDragDropOn(DragDropEventArgs eventArgs)
-        {
-            return CanInsert(eventArgs.Dragged);
-        }
-
-        public bool DragDropOn(DragDropEventArgs eventArgs)
+        public override bool DragDropOn(DragDropEventArgs eventArgs)
         {
             _ = TryInsert(eventArgs.Dragged, eventArgs.User);
             return true;
@@ -206,12 +191,12 @@ namespace Content.Server.GameObjects.Components
 
         void IThrowCollide.HitBy(ThrowCollideEventArgs eventArgs)
         {
-            if (!CanInsert(eventArgs.Thrown) ||
-                IoCManager.Resolve<IRobustRandom>().NextDouble() > 0.75 ||
-                !_container.Insert(eventArgs.Thrown))
+            if (!CanInsert(eventArgs.Thrown) || _random.NextDouble() > 0.75 || !_container.Insert(eventArgs.Thrown))
             {
                 return;
             }
+
+            SendMessage(new EntityInsertetMessage(eventArgs.Thrown));
         }
 
         [Verb]
@@ -261,5 +246,15 @@ namespace Content.Server.GameObjects.Components
         }
 
         public class EjectInputContentsMessage : ComponentMessage {}
+
+        public class EntityInsertetMessage : ComponentMessage
+        {
+            public IEntity Entity { get; }
+
+            public EntityInsertetMessage(IEntity entity)
+            {
+                Entity = entity;
+            }
+        }
     }
 }
