@@ -8,6 +8,7 @@
     - type: Sprite
       state: produce
     - type: Produce
+    - type: Grindable
 
 - type: entity
   name: wheat
@@ -27,7 +28,6 @@
             Quantity: 5
     - type: Produce
       seed: wheat
-    - type: Grindable
 
 - type: entity
   name: sugarcane
@@ -47,7 +47,6 @@
             Quantity: 5
     - type: Produce
       seed: sugarcane
-    - type: Grindable
 
 - type: entity
   name: tower-cap log
@@ -81,7 +80,6 @@
       sprite: Objects/Specific/Hydroponics/banana.rsi
     - type: Produce
       seed: banana
-    - type: Grindable
     - type: Juiceable
       result:
         reagents:
@@ -104,7 +102,6 @@
       sprite: Objects/Specific/Hydroponics/carrot.rsi
     - type: Produce
       seed: carrots
-    - type: Grindable
     - type: Juiceable
       result:
         reagents:
@@ -127,7 +124,6 @@
       sprite: Objects/Specific/Hydroponics/lemon.rsi
     - type: Produce
       seed: lemon
-    - type: Grindable
     - type: Juiceable
       result:
         reagents:
@@ -150,7 +146,6 @@
       sprite: Objects/Specific/Hydroponics/potato.rsi
     - type: Produce
       seed: potato
-    - type: Grindable
     - type: Juiceable
       result:
         reagents:
@@ -173,7 +168,6 @@
       sprite: Objects/Specific/Hydroponics/tomato.rsi
     - type: Produce
       seed: tomato
-    - type: Grindable
     - type: Juiceable
       result:
         reagents:
@@ -196,7 +190,6 @@
       sprite: Objects/Specific/Hydroponics/eggplant.rsi
     - type: Produce
       seed: eggplant
-    - type: Grindable
 
 - type: entity
   name: apple
@@ -214,7 +207,6 @@
       sprite: Objects/Specific/Hydroponics/apple.rsi
     - type: Produce
       seed: apple
-    - type: Grindable
     - type: Juiceable
       result:
         reagents:
@@ -238,7 +230,6 @@
       sprite: Objects/Specific/Hydroponics/corn.rsi
     - type: Produce
       seed: corn
-    - type: Grindable
 
 - type: entity
   name: chanterelle cluster
@@ -256,4 +247,3 @@
       sprite: Objects/Specific/Hydroponics/chanterelle.rsi
     - type: Produce
       seed: chanterelle
-    - type: Grindable

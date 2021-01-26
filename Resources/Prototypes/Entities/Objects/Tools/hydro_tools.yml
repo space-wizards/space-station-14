@@ -6,9 +6,11 @@
   components:
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/hoe.rsi
+    state: icon
   - type: ItemCooldown
   - type: MeleeWeapon
   - type: Item
+    sprite: Objects/Tools/Hydroponics/hoe.rsi
   - type: Hoe
 
 - type: entity
@@ -19,10 +21,12 @@
   components:
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/scythe.rsi
+    state: icon
   - type: ItemCooldown
   - type: MeleeWeapon
   - type: BotanySharp
   - type: Item
+    sprite: Objects/Tools/Hydroponics/scythe.rsi
 
 - type: entity
   name: hatchet
@@ -32,7 +36,9 @@
   components:
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/hatchet.rsi
+    state: icon
   - type: ItemCooldown
   - type: MeleeWeapon
   - type: BotanySharp
   - type: Item
+    sprite: Objects/Tools/Hydroponics/hatchet.rsi
