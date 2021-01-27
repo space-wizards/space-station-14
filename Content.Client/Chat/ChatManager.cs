@@ -92,15 +92,14 @@ namespace Content.Client.Chat
         // Flag Enums for holding filtered channels
         private ChatChannel _filteredChannels;
 
-        private readonly Dictionary<ChatChannel, byte> _unreadMessages = new();
         /// <summary>
         /// For currently disabled chat filters,
-        /// unread messages (messages receieved since the channel has been filtered
+        /// unread messages (messages received since the channel has been filtered
         /// out). Never goes above 10 (9+ should be shown when at 10)
         /// </summary>
-        public IReadOnlyDictionary<ChatChannel, byte> UnreadMessages => _unreadMessages;
+        private readonly Dictionary<ChatChannel, byte> _unreadMessages = new();
 
-        private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IClientNetManager _netManager = default!;
         [Dependency] private readonly IClientConsole _console = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -240,7 +239,7 @@ namespace Content.Client.Chat
             }
 
             // let our chatbox know all the new settings
-            _currentChatBox?.SetChannelPermissions(_selectableChannels, _filterableChannels, _channelFilters);
+            _currentChatBox?.SetChannelPermissions(_selectableChannels, _filterableChannels, _channelFilters, _unreadMessages);
         }
 
         /// <summary>
@@ -309,7 +308,7 @@ namespace Content.Client.Chat
                 _currentChatBox.FilterToggled += OnFilterButtonToggled;
                 _currentChatBox.OnResized += ChatBoxOnResized;
 
-                _currentChatBox.SetChannelPermissions(_selectableChannels, _filterableChannels, _channelFilters);
+                _currentChatBox.SetChannelPermissions(_selectableChannels, _filterableChannels, _channelFilters, _unreadMessages);
             }
 
             RepopulateChat(_filteredHistory);
@@ -341,12 +340,14 @@ namespace Content.Client.Chat
             {
                 Logger.Debug($"Message filtered: {message.Channel}: {message.Message}");
                 // accumulate unread
+                if (message.Read) return;
                 if (!_unreadMessages.TryGetValue(message.Channel, out var count))
                 {
                     count = 0;
                 }
                 count = (byte) Math.Min(count + 1, 10);
                 _unreadMessages[message.Channel] = count;
+                _currentChatBox?.UpdateUnreadMessageCounts(_unreadMessages);
                 return;
             }
 
@@ -376,7 +377,10 @@ namespace Content.Client.Chat
                     break;
             }
 
-            _currentChatBox?.AddLine(messageText, message.Channel, color);
+            if (_currentChatBox == null) return;
+            _currentChatBox.AddLine(messageText, message.Channel, color);
+            // TODO: Can make this "smarter" later by only setting it false when the message has been scrolled to
+            message.Read = true;
         }
 
         private void OnChatBoxTextSubmitted(ChatBox chatBox, string text)
@@ -457,6 +461,7 @@ namespace Content.Client.Chat
                 _channelFilters[channel] = true;
                 _filteredChannels &= ~channel;
                 _unreadMessages.Remove(channel);
+                _currentChatBox?.UpdateUnreadMessageCounts(_unreadMessages);
             }
             else
             {

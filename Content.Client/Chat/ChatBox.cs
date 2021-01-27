@@ -246,8 +246,9 @@ namespace Content.Client.Chat
         /// <param name="channelFilters">current settings for the channel filters, this SHOULD always have an entry if
         /// there is a corresponding entry in filterableChannels, but it may also have additional
         /// entries (which should not be presented to the user)</param>
+        /// <param name="unreadMessages">unread message counts for each disabled channel, values 10 or higher will show as 9+</param>
         public void SetChannelPermissions(IReadOnlySet<ChatChannel> selectableChannels, IReadOnlySet<ChatChannel> filterableChannels,
-            IReadOnlyDictionary<ChatChannel, bool> channelFilters)
+            IReadOnlyDictionary<ChatChannel, bool> channelFilters, IReadOnlyDictionary<ChatChannel, byte> unreadMessages)
         {
             // update the channel selector
             var selected = (ChatChannel) _channelSelector.SelectedId;
@@ -284,7 +285,12 @@ namespace Content.Client.Chat
             foreach (var channelFilter in ChannelFilterOrder)
             {
                 if (!filterableChannels.Contains(channelFilter)) continue;
-                var newCheckBox = new ChannelFilterCheckbox(channelFilter)
+                byte? unreadCount = null;
+                if (unreadMessages.TryGetValue(channelFilter, out var unread))
+                {
+                    unreadCount = unread;
+                }
+                var newCheckBox = new ChannelFilterCheckbox(channelFilter, unreadCount)
                 {
                     // shouldn't happen, but if there's no explicit enable setting provided, default to enabled
                     Pressed = !channelFilters.TryGetValue(channelFilter, out var enabled) || enabled
@@ -293,8 +299,26 @@ namespace Content.Client.Chat
                 _filterVBox.AddChild(newCheckBox);
             }
             _filterVBox.AddChild(new Control {CustomMinimumSize = (10, 0)});
+        }
 
-
+        /// <summary>
+        /// Update the unread message counts in the filters based on the provided data.
+        /// </summary>
+        /// <param name="unreadMessages">counts for each channel, any values above 9 will show as 9+</param>
+        public void UpdateUnreadMessageCounts(IReadOnlyDictionary<ChatChannel, byte> unreadMessages)
+        {
+            foreach (var channelFilter in _filterVBox.Children)
+            {
+                if (channelFilter is not ChannelFilterCheckbox filterCheckbox) continue;
+                if (unreadMessages.TryGetValue(filterCheckbox.Channel, out var unread))
+                {
+                    filterCheckbox.UpdateUnreadCount(unread);
+                }
+                else
+                {
+                    filterCheckbox.UpdateUnreadCount(null);
+                }
+            }
         }
 
         private string ChannelDisplayName(ChatChannel channel)
@@ -748,19 +772,36 @@ namespace Content.Client.Chat
     {
         public ChatChannel Channel { get; }
 
-        public ChannelFilterCheckbox(ChatChannel channel, byte? unreadCount = null)
+        public ChannelFilterCheckbox(ChatChannel channel, byte? unreadCount)
         {
             Channel = channel;
 
-            var name = channel switch
+            UpdateText(unreadCount);
+        }
+
+        private void UpdateText(byte? unread)
+        {
+            var name = Channel switch
             {
                 ChatChannel.AdminChat => "Admin",
                 ChatChannel.Unspecified => throw new InvalidOperationException(
                     "cannot create chat filter for Unspecified"),
-                _ => channel.ToString()
+                _ => Channel.ToString()
             };
 
-            Text = name;
+            if (unread > 0)
+            {
+                Text = name + " (" + (unread > 9 ? "9+" : unread) + ")";
+            }
+            else
+            {
+                Text = name;
+            }
+        }
+
+        public void UpdateUnreadCount(byte? unread)
+        {
+            UpdateText(unread);
         }
     }
 
