@@ -23,7 +23,7 @@ namespace Content.Server.Chemistry.ReactionEffects
         [Dependency] private readonly IMapManager _mapManager = default!;
 
         /// <summary>
-        /// Used for calculating the spread range of the smoke based on the intensity of the reaction.
+        /// Used for calculating the spread range of the effect based on the intensity of the reaction.
         /// </summary>
         private float _rangeConstant;
         private float _rangeMultiplier;
@@ -68,8 +68,7 @@ namespace Content.Server.Chemistry.ReactionEffects
         private float _removeDelay;
 
         /// <summary>
-        /// The entity prototype that will be spawned as the effect. It needs an AreaEffectComponent and a SmokeComponent
-        /// or a FoamComponent.
+        /// The entity prototype that will be spawned as the effect. It needs a component derived from SolutionAreaEffectComponent.
         /// </summary>
         private string _prototypeId;
 
@@ -136,8 +135,6 @@ namespace Content.Server.Chemistry.ReactionEffects
             if (!_mapManager.TryFindGridAt(solutionEntity.Transform.MapPosition, out var grid)) return;
 
             var coords = grid.MapToGrid(solutionEntity.Transform.MapPosition);
-            if (_prototypeId == null)
-                return;
 
             var ent = solutionEntity.EntityManager.SpawnEntity(_prototypeId, coords.SnapToGrid());
 
@@ -145,6 +142,7 @@ namespace Content.Server.Chemistry.ReactionEffects
 
             if (areaEffectComponent == null)
             {
+                Logger.Error("Couldn't get AreaEffectComponent from " + _prototypeId);
                 ent.Delete();
                 return;
             }

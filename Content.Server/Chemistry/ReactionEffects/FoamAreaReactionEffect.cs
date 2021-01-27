@@ -9,7 +9,7 @@ namespace Content.Server.Chemistry.ReactionEffects
     {
         protected override SolutionAreaEffectComponent GetAreaEffectComponent(IEntity entity)
         {
-            return !entity.TryGetComponent(out FoamSolutionAreaEffectComponent comp) ? null : comp;
+            return entity.GetComponentOrNull<FoamSolutionAreaEffectComponent>();
         }
     }
 }

@@ -32,7 +32,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         public SolutionAreaEffectInceptionComponent? Inception { get; set; }
 
         /// <summary>
-        /// Adds an <see cref="SolutionAreaEffectInceptionComponent"/> to this entity so the effect starts spreading and reacting.
+        /// Adds an <see cref="SolutionAreaEffectInceptionComponent"/> to owner so the effect starts spreading and reacting.
         /// </summary>
         /// <param name="amount">The range of the effect</param>
         /// <param name="duration"></param>
@@ -54,8 +54,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
         }
 
         /// <summary>
-        /// Gets called by an AreaEffectInceptionComponent. "Clones" Owner into the four directions and calls UpdateVisuals()
-        /// on each of them.
+        /// Gets called by an AreaEffectInceptionComponent. "Clones" Owner into the four directions and copies the
+        /// solution into each of them.
         /// </summary>
         public void Spread()
         {
@@ -143,7 +143,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 if (reagentQuantity.Quantity == ReagentUnit.Zero) continue;
                 var reagent = PrototypeManager.Index<ReagentPrototype>(reagentQuantity.ReagentId);
 
-                // React with the tile the smoke is on
+                // React with the tile the effect is on
                 reagent.ReactionTile(tile, reagentQuantity.Quantity * solutionFraction);
 
                 // Touch every entity on the tile
