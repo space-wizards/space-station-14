@@ -21,27 +21,25 @@ namespace Content.Client.GameObjects.Components.Atmos
     [UsedImplicitly]
     public class PipeVisualizer : AppearanceVisualizer
     {
-        private string _rsiString;
-
         private RSI _pipeRSI;
 
         public override void LoadData(YamlMappingNode node)
         {
             base.LoadData(node);
-
             var serializer = YamlObjectSerializer.NewReader(node);
-            serializer.DataField(ref _rsiString, "rsiString", "Constructible/Atmos/pipe.rsi");
 
-            var rsiPath = SharedSpriteComponent.TextureRoot / _rsiString;
-            try
+            var rsiString = serializer.ReadDataField("rsi", "Constructible/Atmos/pipe.rsi");
+            if (!string.IsNullOrWhiteSpace(rsiString))
             {
-                var resourceCache = IoCManager.Resolve<IResourceCache>();
-                var resource = resourceCache.GetResource<RSIResource>(rsiPath);
-                _pipeRSI = resource.RSI;
-            }
-            catch (Exception e)
-            {
-                Logger.ErrorS("go.ventvisualizer", "Unable to load RSI '{0}'. Trace:\n{1}", rsiPath, e);
+                var rsiPath = SharedSpriteComponent.TextureRoot / rsiString;
+                try
+                {
+                    _pipeRSI = IoCManager.Resolve<IResourceCache>().GetResource<RSIResource>(rsiPath).RSI;
+                }
+                catch (Exception e)
+                {
+                    Logger.ErrorS($"{nameof(PipeVisualizer)}", $"Unable to load RSI {rsiPath}. Trace:\n{e}");
+                }
             }
         }
 

@@ -20,28 +20,27 @@ namespace Content.Client.GameObjects.Components.Atmos
     {
         private string _baseState;
 
-        private string _rsiString;
-
-        private RSI _rsi;
+        private RSI _connectorRsi;
 
         public override void LoadData(YamlMappingNode node)
         {
             base.LoadData(node);
-
             var serializer = YamlObjectSerializer.NewReader(node);
-            serializer.DataField(ref _baseState, "baseState", "pipeConnector");
-            serializer.DataField(ref _rsiString, "rsi", "Constructible/Atmos/pipe.rsi");
 
-            var rsiPath = SharedSpriteComponent.TextureRoot / _rsiString;
-            try
+            serializer.DataField(ref _baseState, "baseState", "pipeConnector");
+
+            var rsiString = serializer.ReadDataField("rsi", "Constructible/Atmos/pipe.rsi");
+            if (!string.IsNullOrWhiteSpace(rsiString))
             {
-                var resourceCache = IoCManager.Resolve<IResourceCache>();
-                var resource = resourceCache.GetResource<RSIResource>(rsiPath);
-                _rsi = resource.RSI;
-            }
-            catch (Exception e)
-            {
-                Logger.ErrorS("go.ventvisualizer", "Unable to load RSI '{0}'. Trace:\n{1}", rsiPath, e);
+                var rsiPath = SharedSpriteComponent.TextureRoot / rsiString;
+                try
+                {
+                    _connectorRsi = IoCManager.Resolve<IResourceCache>().GetResource<RSIResource>(rsiPath).RSI;
+                }
+                catch (Exception e)
+                {
+                    Logger.ErrorS($"{nameof(PipeConnectorVisualizer)}", $"Unable to load RSI {rsiPath}. Trace:\n{e}");
+                }
             }
         }
 
@@ -56,7 +55,7 @@ namespace Content.Client.GameObjects.Components.Atmos
             {
                 sprite.LayerMapReserveBlank(layerKey);
                 var layer = sprite.LayerMapGet(layerKey);
-                sprite.LayerSetRSI(layer, _rsi);
+                sprite.LayerSetRSI(layer, _connectorRsi);
                 var layerState = _baseState + ((PipeDirection) layerKey).ToString();
                 sprite.LayerSetState(layer, layerState);
             }

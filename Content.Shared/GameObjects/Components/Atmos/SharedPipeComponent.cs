@@ -25,6 +25,7 @@ namespace Content.Shared.GameObjects.Components.Atmos
     }
 
     [Flags]
+    [Serializable, NetSerializable]
     public enum PipeDirection
     {
         None = 0,
