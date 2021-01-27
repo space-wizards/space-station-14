@@ -435,6 +435,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 }
 
                 component.OpenVerbGetData(user, component, data);
+                data.IconTexture = "/Textures/Interface/VerbIcons/close.svg.96dpi.png";
             }
 
             /// <inheritdoc />
