@@ -238,7 +238,8 @@ namespace Content.Client
             "GasFilter",
             "Recyclable",
             "DisposalUnit",
-            "DisposalInserter"
+            "DisposalInserter",
+            "MailingUnit"
         };
     }
 }
