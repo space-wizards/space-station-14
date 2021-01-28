@@ -110,13 +110,12 @@ namespace Content.Client.Chat
         /// <summary>
         /// Current chat box control. This can be modified, so do not depend on saving a reference to this.
         /// </summary>
-        public ChatBox? CurrentChatBox => _currentChatBox;
+        public ChatBox? CurrentChatBox { get; private set; }
         /// <summary>
         /// Invoked when CurrentChatBox is resized (including after setting initial default size)
         /// </summary>
         public event Action<ChatResizedEventArgs>? OnChatBoxResized;
 
-        private ChatBox? _currentChatBox;
         private Control _speechBubbleRoot = null!;
 
         /// <summary>
@@ -239,7 +238,7 @@ namespace Content.Client.Chat
             }
 
             // let our chatbox know all the new settings
-            _currentChatBox?.SetChannelPermissions(_selectableChannels, _filterableChannels, _channelFilters, _unreadMessages);
+            CurrentChatBox?.SetChannelPermissions(_selectableChannels, _filterableChannels, _channelFilters, _unreadMessages);
         }
 
         /// <summary>
@@ -294,21 +293,21 @@ namespace Content.Client.Chat
 
         public void SetChatBox(ChatBox chatBox)
         {
-            if (_currentChatBox != null)
+            if (CurrentChatBox != null)
             {
-                _currentChatBox.TextSubmitted -= OnChatBoxTextSubmitted;
-                _currentChatBox.FilterToggled -= OnFilterButtonToggled;
-                _currentChatBox.OnResized -= ChatBoxOnResized;
+                CurrentChatBox.TextSubmitted -= OnChatBoxTextSubmitted;
+                CurrentChatBox.FilterToggled -= OnFilterButtonToggled;
+                CurrentChatBox.OnResized -= ChatBoxOnResized;
             }
 
-            _currentChatBox = chatBox;
-            if (_currentChatBox != null)
+            CurrentChatBox = chatBox;
+            if (CurrentChatBox != null)
             {
-                _currentChatBox.TextSubmitted += OnChatBoxTextSubmitted;
-                _currentChatBox.FilterToggled += OnFilterButtonToggled;
-                _currentChatBox.OnResized += ChatBoxOnResized;
+                CurrentChatBox.TextSubmitted += OnChatBoxTextSubmitted;
+                CurrentChatBox.FilterToggled += OnFilterButtonToggled;
+                CurrentChatBox.OnResized += ChatBoxOnResized;
 
-                _currentChatBox.SetChannelPermissions(_selectableChannels, _filterableChannels, _channelFilters, _unreadMessages);
+                CurrentChatBox.SetChannelPermissions(_selectableChannels, _filterableChannels, _channelFilters, _unreadMessages);
             }
 
             RepopulateChat(_filteredHistory);
@@ -347,7 +346,7 @@ namespace Content.Client.Chat
                 }
                 count = (byte) Math.Min(count + 1, 10);
                 _unreadMessages[message.Channel] = count;
-                _currentChatBox?.UpdateUnreadMessageCounts(_unreadMessages);
+                CurrentChatBox?.UpdateUnreadMessageCounts(_unreadMessages);
                 return;
             }
 
@@ -377,15 +376,15 @@ namespace Content.Client.Chat
                     break;
             }
 
-            if (_currentChatBox == null) return;
-            _currentChatBox.AddLine(messageText, message.Channel, color);
+            if (CurrentChatBox == null) return;
+            CurrentChatBox.AddLine(messageText, message.Channel, color);
             // TODO: Can make this "smarter" later by only setting it false when the message has been scrolled to
             message.Read = true;
         }
 
         private void OnChatBoxTextSubmitted(ChatBox chatBox, string text)
         {
-            DebugTools.Assert(chatBox == _currentChatBox);
+            DebugTools.Assert(chatBox == CurrentChatBox);
 
             if (string.IsNullOrWhiteSpace(text))
                 return;
@@ -393,11 +392,11 @@ namespace Content.Client.Chat
             // Check if message is longer than the character limit
             if (text.Length > _maxMessageLength)
             {
-                if (_currentChatBox != null)
+                if (CurrentChatBox != null)
                 {
                     string locWarning = Loc.GetString("Your message exceeds {0} character limit", _maxMessageLength);
-                    _currentChatBox.AddLine(locWarning, ChatChannel.Server, Color.Orange);
-                    _currentChatBox.ClearOnEnter = false; // The text shouldn't be cleared if it hasn't been sent
+                    CurrentChatBox.AddLine(locWarning, ChatChannel.Server, Color.Orange);
+                    CurrentChatBox.ClearOnEnter = false; // The text shouldn't be cleared if it hasn't been sent
                 }
                 return;
             }
@@ -445,8 +444,8 @@ namespace Content.Client.Chat
                 }
                 default:
                 {
-                    var conInput = _currentChatBox?.DefaultChatFormat != null
-                        ? string.Format(_currentChatBox.DefaultChatFormat, CommandParsing.Escape(text))
+                    var conInput = CurrentChatBox?.DefaultChatFormat != null
+                        ? string.Format(CurrentChatBox.DefaultChatFormat, CommandParsing.Escape(text))
                         : text;
                     _console.ProcessCommand(conInput);
                     break;
@@ -461,7 +460,7 @@ namespace Content.Client.Chat
                 _channelFilters[channel] = true;
                 _filteredChannels &= ~channel;
                 _unreadMessages.Remove(channel);
-                _currentChatBox?.UpdateUnreadMessageCounts(_unreadMessages);
+                CurrentChatBox?.UpdateUnreadMessageCounts(_unreadMessages);
             }
             else
             {
@@ -474,12 +473,12 @@ namespace Content.Client.Chat
 
         private void RepopulateChat(IEnumerable<StoredChatMessage> filteredMessages)
         {
-            if (_currentChatBox == null)
+            if (CurrentChatBox == null)
             {
                 return;
             }
 
-            _currentChatBox.Contents.Clear();
+            CurrentChatBox.Contents.Clear();
 
             foreach (var msg in filteredMessages)
             {

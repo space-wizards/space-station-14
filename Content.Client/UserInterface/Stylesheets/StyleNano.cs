@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Content.Client.Chat;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Utility;
@@ -31,7 +32,7 @@ namespace Content.Client.UserInterface.Stylesheets
         public const string StyleClassActionSearchBox = "actionSearchBox";
         public const string StyleClassActionMenuItemRevoked = "actionMenuItemRevoked";
         public const string StyleClassChatLineEdit = "chatLineEdit";
-        public const string StyleClassChatChannelSelectorOptionButton = "chatSelectorOptionButton";
+        public const string StyleClassChatChannelSelectorButton = "chatSelectorOptionButton";
         public const string StyleClassChatFilterOptionButton = "chatFilterOptionButton";
 
 
@@ -1036,14 +1037,10 @@ namespace Content.Client.UserInterface.Stylesheets
                     new StyleProperty(Slider.StylePropertyFill, sliderFillBlue),
                 }),
 
-                // chat channel option button
-                new StyleRule(new SelectorElement(typeof(OptionButton), new[] {StyleClassChatChannelSelectorOptionButton}, null, null), new[]
+                // chat channel option selector
+                new StyleRule(new SelectorElement(typeof(Button), new[] {StyleClassChatChannelSelectorButton}, null, null), new[]
                 {
-                    new StyleProperty(OptionButton.StylePropertyStyleBox, chatChannelButton),
-                }),
-                new StyleRule(new SelectorElement(typeof(Button), new[] {StyleClassChatChannelSelectorOptionButton}, null, null), new[]
-                {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, chatChannelButton),
+                    new StyleProperty(Button.StylePropertyStyleBox, chatChannelButton),
                 }),
                 // chat filter button
                 new StyleRule(new SelectorElement(typeof(ContainerButton), new[] {StyleClassChatFilterOptionButton}, null, null), new[]

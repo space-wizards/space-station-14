@@ -12,6 +12,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -58,9 +59,7 @@ namespace Content.Client.Chat
         /// <summary>
         /// Will be Unspecified if set to Console
         /// </summary>
-        private ChatChannel SelectedChannel => (ChatChannel) _channelSelector.SelectedId;
-
-        private readonly OptionButton _channelSelector;
+        private ChatChannel _selectedChannel;
 
         /// <summary>
         ///     Default formatting string for the ClientChatConsole.
@@ -75,6 +74,9 @@ namespace Content.Client.Chat
         // prefix, we save the current channel selection here to restore it when
         // the message is sent
         private ChatChannel? _savedSelectedChannel;
+
+        private readonly Button _channelSelector;
+        private readonly HBoxContainer _channelSelectorHBox;
         private readonly FilterButton _filterButton;
         private readonly Popup _filterPopup;
         private readonly PanelContainer _filterPopupPanel;
@@ -85,6 +87,9 @@ namespace Content.Client.Chat
         private readonly IClyde _clyde;
         private readonly bool _lobbyMode;
         private byte _clampIn;
+        // currently known selectable channels as provided by ChatManager,
+        // never contains Unspecified (which corresponds to Console which is always available)
+        private IReadOnlySet<ChatChannel> _selectableChannels;
 
         /// <summary>
         /// When lobbyMode is false, will position / add to correct location in StateRoot and
@@ -141,12 +146,12 @@ namespace Content.Client.Chat
                                                 SeparationOverride = 4,
                                                 Children =
                                                 {
-                                                    (_channelSelector = new OptionButton
+                                                    (_channelSelector = new Button
                                                     {
-                                                        HideTriangle = true,
-                                                        StyleClasses = { StyleNano.StyleClassChatChannelSelectorOptionButton },
-                                                        OptionStyleClasses = { StyleNano.StyleClassChatChannelSelectorOptionButton },
-                                                        CustomMinimumSize = (75, 0)
+                                                        StyleClasses = { StyleNano.StyleClassChatChannelSelectorButton },
+                                                        CustomMinimumSize = (75, 0),
+                                                        Text = Loc.GetString("OOC"),
+                                                        ToggleMode = true
                                                     }),
                                                     (Input = new HistoryLineEdit
                                                     {
@@ -165,6 +170,10 @@ namespace Content.Client.Chat
                             }
                         }
                     },
+                    (_channelSelectorHBox = new HBoxContainer
+                    {
+                        SeparationOverride = 4
+                    })
                 }
             });
 
@@ -207,7 +216,7 @@ namespace Content.Client.Chat
         protected override void EnteredTree()
         {
             base.EnteredTree();
-            _channelSelector.OnItemSelected += OnChannelItemSelected;
+            _channelSelector.OnToggled += OnChannelSelectorToggled;
             Input.OnKeyBindDown += InputKeyBindDown;
             Input.OnTextEntered += Input_OnTextEntered;
             Input.OnTextChanged += InputOnTextChanged;
@@ -220,7 +229,7 @@ namespace Content.Client.Chat
         protected override void ExitedTree()
         {
             base.ExitedTree();
-            _channelSelector.OnItemSelected -= OnChannelItemSelected;
+            _channelSelector.OnToggled -= OnChannelSelectorToggled;
             Input.OnKeyBindDown -= InputKeyBindDown;
             Input.OnTextEntered -= Input_OnTextEntered;
             Input.OnTextChanged -= InputOnTextChanged;
@@ -228,12 +237,27 @@ namespace Content.Client.Chat
             _filterButton.OnToggled -= FilterButtonToggled;
             _filterPopup.OnPopupHide -= OnPopupHide;
             _clyde.OnWindowResized -= ClydeOnOnWindowResized;
+            UnsubFilterItems();
+            UnsubChannelItems();
+
+        }
+
+        private void UnsubFilterItems()
+        {
             foreach (var child in _filterVBox.Children)
             {
                 if (child is not ChannelFilterCheckbox checkbox) continue;
                 checkbox.OnToggled -= OnFilterCheckboxToggled;
             }
+        }
 
+        private void UnsubChannelItems()
+        {
+            foreach (var child in _channelSelectorHBox.Children)
+            {
+                if (child is not ChannelItemButton button) continue;
+                button.OnPressed -= OnChannelSelectorItemPressed;
+            }
         }
 
 
@@ -250,16 +274,17 @@ namespace Content.Client.Chat
         public void SetChannelPermissions(IReadOnlySet<ChatChannel> selectableChannels, IReadOnlySet<ChatChannel> filterableChannels,
             IReadOnlyDictionary<ChatChannel, bool> channelFilters, IReadOnlyDictionary<ChatChannel, byte> unreadMessages)
         {
+            _selectableChannels = selectableChannels;
             // update the channel selector
-            var selected = (ChatChannel) _channelSelector.SelectedId;
-            _channelSelector.Clear();
+            UnsubChannelItems();
+            _channelSelectorHBox.RemoveAllChildren();
             foreach (var selectableChannel in ChannelSelectorOrder)
             {
                 if (!selectableChannels.Contains(selectableChannel)) continue;
-                _channelSelector.AddItem(ChannelDisplayName(selectableChannel) , (int) selectableChannel);
+                _channelSelectorHBox.AddChild(new ChannelItemButton(selectableChannel));
             }
             // console channel is always selectable and represented via Unspecified
-            _channelSelector.AddItem("Console", (int) ChatChannel.Unspecified);
+            _channelSelector.AddChild(new ChannelItemButton(ChatChannel.Unspecified));
 
 
             if (_savedSelectedChannel.HasValue && _savedSelectedChannel.Value != ChatChannel.Unspecified &&
@@ -269,17 +294,18 @@ namespace Content.Client.Chat
                 _savedSelectedChannel = null;
             }
 
-            if (!selectableChannels.Contains(selected) && selected != ChatChannel.Unspecified)
+            if (!selectableChannels.Contains(_selectedChannel) && _selectedChannel != ChatChannel.Unspecified)
             {
                 // our previously selected channel no longer exists, default back to OOC, which should always be available
                 SafelySelectChannel(ChatChannel.OOC);
             }
             else
             {
-                SafelySelectChannel(selected);
+                SafelySelectChannel(_selectedChannel);
             }
 
             // update the channel filters
+            UnsubFilterItems();
             _filterVBox.Children.Clear();
             _filterVBox.AddChild(new Control {CustomMinimumSize = (10, 0)});
             foreach (var channelFilter in ChannelFilterOrder)
@@ -381,7 +407,14 @@ namespace Content.Client.Chat
 
         private bool SafelySelectChannel(ChatChannel toSelect)
         {
-            return _channelSelector.TrySelectId((int) toSelect);
+            if (toSelect == ChatChannel.Unspecified ||
+                _selectableChannels.Contains(toSelect))
+            {
+                _channelSelector.Text = ChannelSelectorName(toSelect);
+                return true;
+            }
+            // keep current setting
+            return false;
         }
 
         protected override void KeyBindDown(GUIBoundKeyEventArgs args)
@@ -639,11 +672,29 @@ namespace Content.Client.Chat
             return prefixChar.ToString() ?? string.Empty;
         }
 
-        private void OnChannelItemSelected(OptionButton.ItemSelectedEventArgs args)
+        private void OnChannelSelectorToggled(BaseButton.ButtonToggledEventArgs buttonToggledEventArgs)
         {
+            // TODO: Filter button-style logic for showing / hiding items
             SafelySelectChannel((ChatChannel) args.Id);
             // we manually selected something so undo the temporary selection
             _savedSelectedChannel = null;
+        }
+
+
+        private void OnChannelSelectorItemPressed(BaseButton.ButtonEventArgs obj)
+        {
+            // TODO:
+            throw new NotImplementedException();
+        }
+
+        public static string ChannelSelectorName(ChatChannel channel)
+        {
+            return channel switch
+            {
+                ChatChannel.AdminChat => Loc.GetString("Admin"),
+                ChatChannel.Unspecified => Loc.GetString("Console"),
+                _ => Loc.GetString(channel.ToString())
+            };
         }
 
         public void AddLine(string message, ChatChannel channel, Color color)
@@ -768,9 +819,22 @@ namespace Content.Client.Chat
 
     }
 
+    public sealed class ChannelItemButton : Button
+    {
+        public readonly ChatChannel Channel;
+
+        public ChannelItemButton(ChatChannel channel)
+        {
+            Channel = channel;
+            // TODO: Does this work? Style is applied to Button not this subclass
+            SetOnlyStyleClass(StyleNano.StyleClassChatChannelSelectorButton);
+            Text = ChatBox.ChannelSelectorName(channel);
+        }
+    }
+
     public sealed class ChannelFilterCheckbox : CheckBox
     {
-        public ChatChannel Channel { get; }
+        public readonly ChatChannel Channel;
 
         public ChannelFilterCheckbox(ChatChannel channel, byte? unreadCount)
         {
@@ -783,10 +847,10 @@ namespace Content.Client.Chat
         {
             var name = Channel switch
             {
-                ChatChannel.AdminChat => "Admin",
+                ChatChannel.AdminChat => Loc.GetString("Admin"),
                 ChatChannel.Unspecified => throw new InvalidOperationException(
                     "cannot create chat filter for Unspecified"),
-                _ => Channel.ToString()
+                _ => Loc.GetString(Channel.ToString())
             };
 
             if (unread > 0)
