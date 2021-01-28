@@ -1,4 +1,4 @@
-﻿using Content.Server.Interfaces;
+using Content.Server.Interfaces;
 
 namespace Content.Server.DeviceNetwork
 { 
@@ -18,7 +18,7 @@ namespace Content.Server.DeviceNetwork
         /// <summary>
         /// Handles responding to pings.
         /// </summary>
-        public static void PingResponse<T>(T connection, string sender, NetworkPayload payload, string message = "") where T : IDeviceNetworkConnection
+        public static void PingResponse<T>(T connection, string sender, NetworkPayload payload, string message = "") where T : DeviceNetworkConnection
         {
             if (payload.TryGetValue(COMMAND, out var command) && command == PING)
             {
