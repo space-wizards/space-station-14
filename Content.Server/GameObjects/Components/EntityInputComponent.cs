@@ -39,7 +39,7 @@ namespace Content.Server.GameObjects.Components
         [Dependency] readonly IRobustRandom _random = default!;
 
         [ViewVariables]
-        public IReadOnlyList<IEntity> ContainedEntities => _container.ContainedEntities;
+        public IReadOnlyList<IEntity> ContainedEntities => _container != null  ? _container.ContainedEntities : new List<IEntity>();
 
         /// <summary>
         ///     The delay for an entity trying to move out of this unit.

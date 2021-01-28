@@ -346,9 +346,9 @@
         layer: [ Underplating ]
 
 - type: entity
-  id: DisposalMailingUnit
-  name: disposal mailing unit
-  description: A pneumatic waste disposal unit
+  id: MailingUnit
+  name: mailing unit
+  description: A pneumatic package drop box
   placement:
     mode: SnapgridCenter
     snap:
@@ -368,8 +368,13 @@
   - type: Configuration
     keys:
     - Tag
-  - type: DisposalMailingUnit
-    flushTime: 2
+  - type: MailingUnit
+  - type: DisposalInserter
+    containerName: MailinglUnit
+    automaticEngageTime: 0
+    manualInsertMode: true
+  - type: EntityInput
+    containerName: MailinglUnit
   - type: WiredNetworkConnection
   - type: Clickable
   - type: InteractionOutline
@@ -415,8 +420,8 @@
       flush_time: 2
   - type: UserInterface
     interfaces:
-    - key: enum.DisposalMailingUnitUiKey.Key
-      type: DisposalMailingUnitBoundUserInterface
+    - key: enum.MailingUnitUiKey.Key
+      type: MailingUnitBoundUserInterface
     - key: enum.ConfigurationUiKey.Key
       type: ConfigurationBoundUserInterface
   - type: Pullable

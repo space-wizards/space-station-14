@@ -55,13 +55,13 @@ namespace Content.Server.GameObjects.Components.Disposal
         public bool ContainsEntities => Inserter != null && Inserter.ContainedEntities.Count > 0;
 
         [ViewVariables]
-        private BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalUnitUiKey.Key);
+        protected BoundUserInterface? UserInterface;
 
         [ViewVariables]
-        private PressureState _state = PressureState.Pressurizing;
+        protected PressureState State = PressureState.Pressurizing;
 
         [ViewVariables]
-        private bool _engaged = false;
+        protected bool Engaged = false;
 
         private float _pressure = 0f;
 
@@ -72,6 +72,8 @@ namespace Content.Server.GameObjects.Components.Disposal
         public override void Initialize()
         {
             base.Initialize();
+
+            UserInterface = Owner.GetUIOrNull(DisposalUnitUiKey.Key);
 
             if (UserInterface != null)
             {
@@ -114,10 +116,10 @@ namespace Content.Server.GameObjects.Components.Disposal
                 case PressureChangedMessage pressureChanged:
                     PressureChanged(pressureChanged);
                     break;
-                case InserterFlushedMessage:
-                    UpdateVisualState(true);
-                    _engaged = false;
-                    _flushed = true;
+                case InserterFlushedMessage flush:
+                    Engaged = false;
+                    UpdateVisualState(!flush.Failed);
+                    _flushed = !flush.Failed;
                     UpdateInterface();
                     break;
                 case EntityInputComponent.EntityInsertetMessage insertedMessage:
@@ -130,6 +132,74 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             base.Startup();
             UpdateVisualState();
+        }
+
+        protected static bool PlayerCanUse(IEntity? player)
+        {
+            if (player == null)
+            {
+                return false;
+            }
+
+            if (!ActionBlockerSystem.CanInteract(player) || !ActionBlockerSystem.CanUse(player))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        protected virtual void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
+        {
+            if (obj.Session.AttachedEntity == null || !PlayerCanUse(obj.Session.AttachedEntity))
+            {
+                return;
+            }
+
+            if (obj.Message is not UiButtonPressedMessage message)
+            {
+                return;
+            }
+
+            switch (message.Button)
+            {
+                case UiButton.Eject:
+                    SendMessage(new EntityInputComponent.EjectInputContentsMessage());
+                    UpdateVisualState();
+                    break;
+                case UiButton.Engage:
+                    ToggleEngage();
+                    break;
+                case UiButton.Power:
+                    TogglePower();
+                    EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        protected virtual bool OpenUiForUser(ITargetedInteractEventArgs eventArgs)
+        {
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            {
+                return false;
+            }
+
+            if (IsValidInteraction(eventArgs))
+            {
+                UserInterface?.Open(actor.playerSession);
+                UserInterface?.SendMessage(new DisposalUnitPressureChangedMessage(_pressure, _targetPressure));
+                return true;
+            }
+
+            return false;
+        }
+
+        protected virtual void UpdateInterface()
+        {
+            var state = new DisposalUnitBoundUserInterfaceState(Owner.Name, State, Powered, Engaged);
+            UserInterface?.SetState(state);
         }
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
@@ -165,23 +235,6 @@ namespace Content.Server.GameObjects.Components.Disposal
             return true;
         }
 
-        private bool OpenUiForUser(ITargetedInteractEventArgs eventArgs)
-        {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
-            {
-                return false;
-            }
-
-            if (IsValidInteraction(eventArgs))
-            {
-                UserInterface?.Open(actor.playerSession);
-                UserInterface?.SendMessage(new DisposalUnitPressureChangedMessage(_pressure, _targetPressure));
-                return true;
-            }
-
-            return false;
-        }
-
         private void PressureChanged(PressureChangedMessage pressureChanged)
         {
             //This is neccesarry so that the apprearance component has eneough time to receive the flushing visual state
@@ -194,9 +247,9 @@ namespace Content.Server.GameObjects.Components.Disposal
             _pressure = pressureChanged.Pressure;
             _targetPressure = pressureChanged.TargetPressure;
 
-            var oldState = _state;
-            _state = _pressure >= _targetPressure ? PressureState.Ready : PressureState.Pressurizing;
-            if (oldState != _state)
+            var oldState = State;
+            State = _pressure >= _targetPressure ? PressureState.Ready : PressureState.Pressurizing;
+            if (oldState != State)
             {
                 UpdateInterface();
                 UpdateVisualState();
@@ -215,62 +268,6 @@ namespace Content.Server.GameObjects.Components.Disposal
             UpdateVisualState();
         }
 
-        private static bool PlayerCanUse(IEntity? player)
-        {
-            if (player == null)
-            {
-                return false;
-            }
-
-            if (!ActionBlockerSystem.CanInteract(player) || !ActionBlockerSystem.CanUse(player))
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        private void UpdateInterface()
-        {
-            var state = new DisposalUnitBoundUserInterfaceState(Owner.Name, _state, Powered, _engaged);
-            UserInterface?.SetState(state);
-        }
-
-        private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
-        {
-            if (obj.Session.AttachedEntity == null)
-            {
-                return;
-            }
-
-            if (!PlayerCanUse(obj.Session.AttachedEntity))
-            {
-                return;
-            }
-
-            if (obj.Message is not UiButtonPressedMessage message)
-            {
-                return;
-            }
-
-            switch (message.Button)
-            {
-                case UiButton.Eject:
-                    SendMessage(new EntityInputComponent.EjectInputContentsMessage());
-                    UpdateVisualState();
-                    break;
-                case UiButton.Engage:
-                    ToggleEngage();
-                    break;
-                case UiButton.Power:
-                    TogglePower();
-                    EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-
         private void TogglePower()
         {
             if(PowerReceiver != null)
@@ -283,8 +280,8 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private void ToggleEngage()
         {
-            _engaged ^= true;
-            SendMessage(new EngageInserterMessage(_engaged));
+            Engaged ^= true;
+            SendMessage(new EngageInserterMessage(Engaged));
             UpdateVisualState();
         }
 
@@ -311,10 +308,10 @@ namespace Content.Server.GameObjects.Components.Disposal
             {
                 Appearance.SetData(Visuals.VisualState, VisualState.Flushing);
                 Appearance.SetData(Visuals.Light, LightState.Off);
-                Appearance.SetData(Visuals.Handle, _engaged ? HandleState.Engaged : HandleState.Normal);
+                Appearance.SetData(Visuals.Handle, Engaged ? HandleState.Engaged : HandleState.Normal);
                 return;
             }
-            else if (_state == PressureState.Pressurizing)
+            else if (State == PressureState.Pressurizing)
             {
                 Appearance.SetData(Visuals.VisualState, VisualState.Charging);
             }
@@ -323,7 +320,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 Appearance.SetData(Visuals.VisualState, VisualState.Anchored);
             }
 
-            Appearance.SetData(Visuals.Handle, _engaged ? HandleState.Engaged : HandleState.Normal);
+            Appearance.SetData(Visuals.Handle, Engaged ? HandleState.Engaged : HandleState.Normal);
 
             if (!Powered)
             {
@@ -331,13 +328,13 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return;
             }
 
-            if (ContainsEntities && _state != PressureState.Pressurizing)
+            if (ContainsEntities && State != PressureState.Pressurizing)
             {
                 Appearance.SetData(Visuals.Light, LightState.Full);
                 return;
             }
 
-            Appearance.SetData(Visuals.Light, _state == PressureState.Pressurizing ? LightState.Charging : LightState.Ready);
+            Appearance.SetData(Visuals.Light, State == PressureState.Pressurizing ? LightState.Charging : LightState.Ready);
         }
     }
 }

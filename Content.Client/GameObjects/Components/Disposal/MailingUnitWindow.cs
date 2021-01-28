@@ -1,4 +1,4 @@
-﻿using Content.Shared.GameObjects.Components.Disposal;
+using Content.Shared.GameObjects.Components.Disposal.MailingUnit;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -6,14 +6,13 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using System.Collections.Generic;
-using static Content.Shared.GameObjects.Components.Disposal.SharedDisposalMailingUnitComponent;
 
 namespace Content.Client.GameObjects.Components.Disposal
 {
     /// <summary>
-    /// Client-side UI used to control a <see cref="SharedDisposalMailingUnitComponent"/>
+    /// Client-side UI used to control a <see cref="MailingUnitComponent"/>
     /// </summary>
-    public class DisposalMailingUnitWindow : SS14Window
+    public class MailingUnitWindow : SS14Window
     {
         private readonly Label _unitState;
         private readonly ProgressBar _pressureBar;
@@ -23,12 +22,12 @@ namespace Content.Client.GameObjects.Components.Disposal
         public readonly Button Power;
 
         public readonly ItemList TargetListContainer;
-        public List<string> TargetList;
+        public IReadOnlyList<string> TargetList;
         private readonly Label _tagLabel;
 
         protected override Vector2? CustomSize => (460, 220);
 
-        public DisposalMailingUnitWindow()
+        public MailingUnitWindow()
         {
             TargetList = new List<string>();
             Contents.AddChild(new HBoxContainer
@@ -64,19 +63,37 @@ namespace Content.Client.GameObjects.Components.Disposal
                                         {
                                             new Label {Text = Loc.GetString("Pressure:")},
                                             new Control {CustomMinimumSize = (4, 0)},
-                                            (_pressureBar = new ProgressBar
+                                            new VBoxContainer
                                             {
-                                                CustomMinimumSize = (100, 20),
-                                                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                                                MinValue = 0,
-                                                MaxValue = 1,
-                                                Page = 0,
-                                                Value = 0.5f,
+                                                SizeFlagsVertical = SizeFlags.FillExpand,
                                                 Children =
                                                 {
-                                                    (_pressurePercentage = new Label())
+                                                    new Control {CustomMinimumSize = (0, 10)},
+                                                    (_pressureBar = new ProgressBar
+                                                    {
+                                                        CustomMinimumSize = (150, 30),
+                                                        SizeFlagsHorizontal = SizeFlags.FillExpand,
+                                                        SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                                                        MinValue = 0,
+                                                        MaxValue = 1,
+                                                        Page = 0,
+                                                        Value = 0.5f,
+                                                        Children =
+                                                        {
+                                                            new VBoxContainer
+                                                            {
+                                                                SizeFlagsVertical = SizeFlags.Fill,
+                                                                Children =
+                                                                {
+                                                                    new Control {SizeFlagsVertical = SizeFlags.Fill},
+                                                                    (_pressurePercentage = new Label {SizeFlagsVertical = SizeFlags.ShrinkCenter}),
+                                                                    new Control {SizeFlagsVertical = SizeFlags.Fill}
+                                                                }
+                                                            }
+                                                        }
+                                                    })
                                                 }
-                                            })
+                                            }
                                         }
                                     },
                                     new Control {CustomMinimumSize = (0, 10)},
@@ -221,7 +238,7 @@ namespace Content.Client.GameObjects.Components.Disposal
             });
         }
 
-        private void UpdatePressureBar(float pressure)
+        public void UpdatePressureBar(float pressure)
         {
             _pressureBar.Value = pressure;
 
@@ -261,11 +278,11 @@ namespace Content.Client.GameObjects.Components.Disposal
             _pressurePercentage.Text = $" {percentage:0}%";
         }
 
-        public void UpdateState(DisposalMailingUnitBoundUserInterfaceState state)
+        public void UpdateState(MailingUnitBoundUserInterfaceState state)
         {
             Title = state.UnitName;
-            _unitState.Text = state.UnitState;
-            UpdatePressureBar(state.Pressure);
+            var unitState = state.UnitState;
+            _unitState.Text = Loc.GetString($"{unitState}"); ;
             Power.Pressed = state.Powered;
             Engage.Pressed = state.Engaged;
             PopulateTargetList(state.Tags);
@@ -273,7 +290,7 @@ namespace Content.Client.GameObjects.Components.Disposal
             TargetList = state.Tags;
         }
 
-        private void PopulateTargetList(List<string> tags)
+        private void PopulateTargetList(IReadOnlyList<string> tags)
         {
             TargetListContainer.Clear();
             foreach (var target in tags)

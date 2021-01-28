@@ -24,6 +24,20 @@ using System.Threading;
 
 namespace Content.Server.GameObjects.Components.Disposal
 {
+    /// <summary>
+    /// Called before trying to flush. Use for extra can flush checks.
+    /// </summary>
+    /// <returns>Inserter won't flush if false</returns>
+    //public delegate bool OnPreFlushCheck();
+
+    /// <summary>
+    /// Is called before the default way of inserting entities into the disposal entry.
+    /// Use when you want to handle inserting differently.
+    /// </summary>
+    /// <param name="entry"></param>
+    /// <returns>Whether inserting was handeled</returns>
+    //public delegate bool OnHandleInsert(DisposalEntryComponent entry);
+
     //TODO: Write documentation
     /// <summary>
     /// 
@@ -49,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// Used by the disposal entry component to get the entities from the inserter
         /// </summary>
         [ViewVariables]
-        public IReadOnlyList<IEntity> ContainedEntities => _container.ContainedEntities;
+        public IReadOnlyList<IEntity> ContainedEntities => _container != null ? _container.ContainedEntities : new List<IEntity>();
 
         [ViewVariables]
         public bool Powered => PowerReceiver != null && PowerReceiver.Powered;
@@ -58,6 +72,12 @@ namespace Content.Server.GameObjects.Components.Disposal
         public GasMixture Air { get; set; } = default!;
 
         public bool Engaged { get; set; }
+
+        /// <summary>
+        /// When the inserter is in manual mode it sends a <see cref="ManualFlushReadyMessage"/> event and inserts when receiving a <see cref="ManualInsertMessage"/>
+        /// </summary>
+        [ViewVariables]
+        public bool ManualMode = false;
 
         /// <summary>
         ///     The engage pressure of this inserter.
@@ -93,24 +113,33 @@ namespace Content.Server.GameObjects.Components.Disposal
         private Container _container = default!;
 
         private bool _pressurized = false;
-
-        private bool _flushed = false;
+        private bool _manualFlushReady = false;
+        private bool _queuedFlush = false;
+        private bool _flush = false;
 
         /// <summary>
         /// 
         /// </summary>
         public void Update(float frameTime)
         {
-            if(_flushed)
-            {
-                SendMessage(new InserterFlushedMessage());
-                _flushed = false;
-                return;
-            }
-
             if (!Powered || Air.Pressure < _engagePressure && !Pressurize(frameTime))
             {
                 return;
+            }
+
+            if(_flush || _queuedFlush)
+            {
+                var flushFailed = !TryFlush();
+                if(flushFailed)
+                {
+                    SendMessage(new InserterFlushedMessage(true));
+                    if(_queuedFlush)
+                    {
+                        TryQueueEngage();
+                    }
+                }
+                _flush = false;
+                _queuedFlush = false;
             }
 
             if(Air.Pressure >= _engagePressure)
@@ -123,22 +152,10 @@ namespace Content.Server.GameObjects.Components.Disposal
 
                 if (Engaged && CanFlush())
                 {
-                    Owner.SpawnTimer(_flushDelay, () => TryFlush());
+                    Owner.SpawnTimer(_flushDelay, () => { _flush = true; });
                     Engaged = false;
                 }
             }
-        }
-
-        protected override void Startup()
-        {
-            base.Startup();
-
-            if (_container == default!)
-            {
-                _container = ContainerManagerComponent.Ensure<Container>(_containerID, Owner);
-            }
-
-            SendMessage(new PressureChangedMessage(Air.Pressure, _engagePressure));
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -171,30 +188,32 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             serializer.DataField(this, x => x.Air, "air", new GasMixture(Atmospherics.CellVolume / 2));
             serializer.DataField(ref _containerID, "containerName", Name);
+            serializer.DataField(ref ManualMode, "manualInsertMode", false);
         }
 
         public bool TryFlush()
         {
-            if (!CanFlush() || SnapGrid == null)
+            if (!CanFlush() || !TryGetEntry(out var entry))
             {
                 return false;
             }
 
-            var entry = SnapGrid.GetLocal().FirstOrDefault(entity => entity.HasComponent<DisposalEntryComponent>());
+            _automaticEngageToken?.Cancel();
+            _automaticEngageToken = null;
 
-            if (entry == null)
+            if (ManualMode)
             {
-                return false;
+                _manualFlushReady = true;
+                SendMessage(new ManualFlushReadyMessage());
+                return true;
             }
 
             var entryComponent = entry.GetComponent<DisposalEntryComponent>();
 
             entryComponent.TryInsert(this);
 
-            _automaticEngageToken?.Cancel();
-            _automaticEngageToken = null;
-
-            _flushed = true;
+            _manualFlushReady = false;
+            SendMessage(new InserterFlushedMessage());
 
             return true;
         }
@@ -242,7 +261,62 @@ namespace Content.Server.GameObjects.Components.Disposal
                 case EngageInserterMessage engageMessage:
                     Engaged = engageMessage.Engage;
                     break;
+
+                case ManualInsertMessage insertMessage:
+                    if(ManualMode)
+                    {
+                        ManualInsert(insertMessage.Holder);
+                    }
+                    break;
             }
+        }
+
+        protected override void Startup()
+        {
+            base.Startup();
+
+            if (_container == default!)
+            {
+                _container = ContainerManagerComponent.Ensure<Container>(_containerID, Owner);
+            }
+
+            SendMessage(new PressureChangedMessage(Air.Pressure, _engagePressure));
+        }
+
+        private void ManualInsert(IEntity holder)
+        {
+            if (!_manualFlushReady || !CanFlush() || !TryGetEntry(out var entry) || !holder.TryGetComponent<DisposalHolderComponent>(out var holderComponent))
+            {
+                SendMessage(new InserterFlushedMessage(true));
+                return;
+            }
+
+            var entryComponent = entry.GetComponent<DisposalEntryComponent>();
+
+            entryComponent.TryInsert(holderComponent, Air);
+
+            _manualFlushReady = false;
+            SendMessage(new InserterFlushedMessage());
+        }
+
+        private bool TryGetEntry(out IEntity entry)
+        {
+            if (SnapGrid == null)
+            {
+                entry = default!;
+                return false;
+            }
+
+            var entity = SnapGrid.GetLocal().FirstOrDefault(entity => entity.HasComponent<DisposalEntryComponent>());
+
+            if (entity == null)
+            {
+                entry = default!;
+                return false;
+            }
+
+            entry = entity;
+            return true;
         }
 
         /// <summary>
@@ -274,20 +348,14 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private void TryQueueEngage()
         {
-            if (!Powered && ContainedEntities.Count == 0)
+            if (!Powered && ContainedEntities.Count == 0 || _automaticEngageTime == TimeSpan.Zero)
             {
                 return;
             }
 
             _automaticEngageToken = new CancellationTokenSource();
 
-            Owner.SpawnTimer(_automaticEngageTime, () =>
-            {
-                if (!TryFlush())
-                {
-                    TryQueueEngage();
-                }
-            }, _automaticEngageToken.Token);
+            Owner.SpawnTimer(_automaticEngageTime, () => { _queuedFlush = true; }, _automaticEngageToken.Token);
         }
 
         private bool CanFlush()
@@ -297,16 +365,14 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private void PowerStateChanged(PowerChangedMessage args)
         {
-            if (!args.Powered)
+            if (!args.Powered || !Engaged)
             {
                 _automaticEngageToken?.Cancel();
                 _automaticEngageToken = null;
+                return;
             }
 
-            if (Engaged && !TryFlush())
-            {
-                TryQueueEngage();
-            }
+            _queuedFlush = true;
         }
 
         [Verb]
@@ -316,8 +382,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             {
                 data.Visibility = VerbVisibility.Invisible;
 
-                if (!ActionBlockerSystem.CanInteract(user) ||
-                    component.ContainedEntities.Contains(user))
+                if (!ActionBlockerSystem.CanInteract(user) || component.ContainedEntities.Contains(user) || component.ManualMode)
                 {
                     return;
                 }
@@ -333,6 +398,9 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
         }
 
+        /// <summary>
+        /// Gets sent when the pressure inside the inserter changes
+        /// </summary>
         public class PressureChangedMessage : ComponentMessage
         {
 
@@ -346,6 +414,9 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
         }
 
+        /// <summary>
+        /// The inserter engages or disengages when it receives this message
+        /// </summary>
         public class EngageInserterMessage : ComponentMessage
         {
             public bool Engage { get; }
@@ -356,6 +427,35 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
         }
 
-        public class InserterFlushedMessage : ComponentMessage {}
+        /// <summary>
+        /// Is sent when the inserter has flushed
+        /// </summary>
+        public class InserterFlushedMessage : ComponentMessage {
+            public bool Failed { get; }
+
+            public InserterFlushedMessage(bool failed = false)
+            {
+                Failed = failed;
+            }
+        }
+
+        /// <summary>
+        /// Is sent when the inserter is in manual mode, has been engaged and is ready to flush
+        /// </summary>
+        public class ManualFlushReadyMessage : ComponentMessage {}
+
+        /// <summary>
+        /// The inserter inserts the given disposal holder when it`s in manual mode and received this message
+        /// </summary>
+        public class ManualInsertMessage : ComponentMessage
+        {
+            public IEntity Holder { get; }
+
+            public ManualInsertMessage(IEntity holder)
+            {
+                Holder = holder;
+            }
+        }
+
     }
 }

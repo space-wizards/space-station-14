@@ -43,19 +43,36 @@ namespace Content.Client.GameObjects.Components.Disposal.DisposalUnit
                         Children =
                         {
                             new Label {Text = Loc.GetString("Pressure:")},
-                            (_pressureBar = new ProgressBar
+                            new VBoxContainer
                             {
-                                CustomMinimumSize = (200, 20),
-                                SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
-                                MinValue = 0,
-                                MaxValue = 1,
-                                Page = 0,
-                                Value = 0.5f,
+                                SizeFlagsVertical = SizeFlags.FillExpand,
                                 Children =
                                 {
-                                    (_pressurePercentage = new Label())
+                                    new Control {CustomMinimumSize = (0, 10)},
+                                    (_pressureBar = new ProgressBar
+                                    {
+                                        CustomMinimumSize = (200, 30),
+                                        SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
+                                        MinValue = 0,
+                                        MaxValue = 1,
+                                        Page = 0,
+                                        Value = 0.5f,
+                                        Children =
+                                        {
+                                            new VBoxContainer
+                                            {
+                                                SizeFlagsVertical = SizeFlags.Fill,
+                                                Children =
+                                                {
+                                                    new Control {SizeFlagsVertical = SizeFlags.Fill},
+                                                    (_pressurePercentage = new Label {SizeFlagsVertical = SizeFlags.ShrinkCenter}),
+                                                    new Control {SizeFlagsVertical = SizeFlags.Fill}
+                                                }
+                                            }
+                                        }
+                                    })
                                 }
-                            })
+                            }
                         }
                     },
                     new Control {CustomMinimumSize = (0, 10)},

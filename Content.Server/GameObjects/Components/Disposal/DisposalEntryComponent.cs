@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Content.Server.Atmos;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -28,14 +29,17 @@ namespace Content.Server.GameObjects.Components.Disposal
                 holderComponent.TryInsert(entity);
             }
 
-            holderComponent.Air.Merge(from.Air);
-            from.Air.Clear();
-
-            return TryInsert(holderComponent);
+            return TryInsert(holderComponent, from.Air);
         }
 
-        public bool TryInsert(DisposalHolderComponent holder)
+        public bool TryInsert(DisposalHolderComponent holder, GasMixture fromAir = default)
         {
+            if (fromAir != default)
+            {
+                holder.Air.Merge(fromAir);
+                fromAir.Clear();
+            }
+
             if (!Contents.Insert(holder.Owner))
             {
                 return false;
