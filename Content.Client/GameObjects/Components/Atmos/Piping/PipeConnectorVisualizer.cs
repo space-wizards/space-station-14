@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using Content.Shared.GameObjects.Components.Atmos;
 using JetBrains.Annotations;
@@ -18,9 +19,9 @@ namespace Content.Client.GameObjects.Components.Atmos
     [UsedImplicitly]
     public class PipeConnectorVisualizer : AppearanceVisualizer
     {
-        private string _baseState;
+        private string _baseState = default!;
 
-        private RSI _connectorRsi;
+        private RSI _connectorRsi = default!;
 
         public override void LoadData(YamlMappingNode node)
         {
@@ -48,7 +49,7 @@ namespace Content.Client.GameObjects.Components.Atmos
         {
             base.InitializeEntity(entity);
 
-            if (!entity.TryGetComponent(out ISpriteComponent sprite))
+            if (!entity.TryGetComponent<ISpriteComponent>(out var sprite))
                 return;
 
             foreach (Layer layerKey in Enum.GetValues(typeof(Layer)))
@@ -65,7 +66,7 @@ namespace Content.Client.GameObjects.Components.Atmos
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent(out ISpriteComponent sprite))
+            if (!component.Owner.TryGetComponent<ISpriteComponent>(out var sprite))
                 return;
 
             if (!component.TryGetData(PipeVisuals.VisualState, out PipeVisualState state))

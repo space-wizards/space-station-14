@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using Content.Shared.GameObjects.Components.Atmos;
 using JetBrains.Annotations;
@@ -21,7 +22,7 @@ namespace Content.Client.GameObjects.Components.Atmos
     [UsedImplicitly]
     public class PipeVisualizer : AppearanceVisualizer
     {
-        private RSI _pipeRSI;
+        private RSI _pipeRSI = default!;
 
         public override void LoadData(YamlMappingNode node)
         {
@@ -46,7 +47,7 @@ namespace Content.Client.GameObjects.Components.Atmos
         public override void InitializeEntity(IEntity entity)
         {
             base.InitializeEntity(entity);
-            if (!entity.TryGetComponent(out ISpriteComponent sprite)) return;
+            if (!entity.TryGetComponent<ISpriteComponent>(out var sprite)) return;
             sprite.LayerMapReserveBlank(Layer.PipeBase);
             var pipeBaseLayer = sprite.LayerMapGet(Layer.PipeBase);
             sprite.LayerSetRSI(pipeBaseLayer, _pipeRSI);
@@ -56,7 +57,7 @@ namespace Content.Client.GameObjects.Components.Atmos
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
-            if (!component.Owner.TryGetComponent(out ISpriteComponent sprite)) return;
+            if (!component.Owner.TryGetComponent<ISpriteComponent>(out var sprite)) return;
             if (!component.TryGetData(PipeVisuals.VisualState, out PipeVisualState pipeVisualState)) return;
             var pipeBase = sprite.LayerMapGet(Layer.PipeBase);
             var pipeBaseStateId = GetPipeBaseStateId(pipeVisualState);
