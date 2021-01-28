@@ -17,6 +17,7 @@ using Robust.Server.Console;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Console;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -688,7 +689,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 var host = IoCManager.Resolve<IServerConsoleHost>();
                 var args = new string[] {entityId};
                 var session = user.PlayerSession();
-                command.Execute(new ConsoleShellAdapter(host, session), $"{command.Command} {entityId}", args);
+                command.Execute(new ConsoleShell(host, session), $"{command.Command} {entityId}", args);
             }
 
             private static bool CanCommand(IEntity user)

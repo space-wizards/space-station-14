@@ -13,6 +13,7 @@ using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Audio;
+using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.IoC;
@@ -91,7 +92,7 @@ namespace Content.Server.GameObjects.Components.Body
             {
                 var host = IoCManager.Resolve<IServerConsoleHost>();
 
-                new Ghost().Execute(new ConsoleShellAdapter(host, session), string.Empty, Array.Empty<string>());
+                new Ghost().Execute(new ConsoleShell(host, session), string.Empty, Array.Empty<string>());
             }
         }
 

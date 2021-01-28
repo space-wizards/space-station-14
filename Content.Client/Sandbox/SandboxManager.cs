@@ -314,37 +314,37 @@ namespace Content.Client.Sandbox
 
         private void ToggleLight()
         {
-            _consoleHost.ProcessCommand("togglelight");
+            _consoleHost.ExecuteCommand("togglelight");
         }
 
         private void ToggleFov()
         {
-            _consoleHost.ProcessCommand("togglefov");
+            _consoleHost.ExecuteCommand("togglefov");
         }
 
         private void ToggleShadows()
         {
-            _consoleHost.ProcessCommand("toggleshadows");
+            _consoleHost.ExecuteCommand("toggleshadows");
         }
 
         private void ToggleSubFloor()
         {
-            _consoleHost.ProcessCommand("showsubfloor");
+            _consoleHost.ExecuteCommand("showsubfloor");
         }
 
         private void ShowMarkers()
         {
-            _consoleHost.ProcessCommand("showmarkers");
+            _consoleHost.ExecuteCommand("showmarkers");
         }
 
         private void ShowBb()
         {
-            _consoleHost.ProcessCommand("showbb");
+            _consoleHost.ExecuteCommand("showbb");
         }
 
         private void LinkMachines()
         {
-            _consoleHost.ProcessCommand("signallink");
+            _consoleHost.ExecuteCommand("signallink");
         }
     }
 }

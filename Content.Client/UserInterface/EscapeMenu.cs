@@ -50,13 +50,13 @@ namespace Content.Client.UserInterface
 
         private void OnQuitButtonClicked(BaseButton.ButtonEventArgs args)
         {
-            _consoleHost.ProcessCommand("quit");
+            _consoleHost.ExecuteCommand("quit");
             Dispose();
         }
 
         private void OnDisconnectButtonClicked(BaseButton.ButtonEventArgs args)
         {
-            _consoleHost.ProcessCommand("disconnect");
+            _consoleHost.ExecuteCommand("disconnect");
             Dispose();
         }
 

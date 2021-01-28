@@ -87,7 +87,7 @@ namespace Content.Client.State
                 _userInterfaceManager.StateRoot.AddChild(_characterSetup);
             };
 
-            _lobby.ObserveButton.OnPressed += args => _consoleHost.ProcessCommand("observe");
+            _lobby.ObserveButton.OnPressed += args => _consoleHost.ExecuteCommand("observe");
             _lobby.ReadyButton.OnPressed += args =>
             {
                 if (!_clientGameTicker.IsGameStarted)
@@ -104,7 +104,7 @@ namespace Content.Client.State
                 SetReady(args.Pressed);
             };
 
-            _lobby.LeaveButton.OnPressed += args => _consoleHost.ProcessCommand("disconnect");
+            _lobby.LeaveButton.OnPressed += args => _consoleHost.ExecuteCommand("disconnect");
             _lobby.OptionsButton.OnPressed += args => new OptionsMenu().Open();
 
             UpdatePlayerList();
@@ -259,7 +259,7 @@ namespace Content.Client.State
                 return;
             }
 
-            _consoleHost.ProcessCommand($"toggleready {newReady}");
+            _consoleHost.ExecuteCommand($"toggleready {newReady}");
             UpdatePlayerList();
         }
     }

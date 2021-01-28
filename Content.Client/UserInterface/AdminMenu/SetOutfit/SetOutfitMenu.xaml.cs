@@ -49,7 +49,7 @@ namespace Content.Client.UserInterface.AdminMenu.SetOutfit
             if (TargetEntityId == null || _selectedOutfit == null)
                 return;
             var command = $"setoutfit {TargetEntityId} {_selectedOutfit.ID}";
-            _consoleHost.ProcessCommand(command);
+            _consoleHost.ExecuteCommand(command);
             Close();
         }
 

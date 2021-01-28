@@ -3,6 +3,7 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Verbs;
 using Robust.Server.Console;
 using Robust.Server.Interfaces.GameObjects;
+using Robust.Shared.Console;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -44,7 +45,7 @@ namespace Content.Server.GlobalVerbs
             var host = IoCManager.Resolve<IServerConsoleHost>();
             var cmd = new MakeSentientCommand();
             var uidStr = target.Uid.ToString();
-            cmd.Execute(new ConsoleShellAdapter(host, player), $"{cmd.Command} {uidStr}",
+            cmd.Execute(new ConsoleShell(host, player), $"{cmd.Command} {uidStr}",
                 new[] {uidStr});
         }
     }

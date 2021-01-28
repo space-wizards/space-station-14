@@ -29,7 +29,7 @@ namespace Content.Client.Commands
                 }
             }
 
-            IoCManager.Resolve<IClientConsoleHost>().ProcessCommand("showcontainedcontext");
+            IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand("showcontainedcontext");
         }
     }
 }

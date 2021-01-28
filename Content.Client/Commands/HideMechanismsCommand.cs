@@ -41,7 +41,7 @@ namespace Content.Client.Commands
                 }
             }
 
-            IoCManager.Resolve<IClientConsoleHost>().ProcessCommand("hidecontainedcontext");
+            IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand("hidecontainedcontext");
         }
     }
 }

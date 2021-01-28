@@ -147,7 +147,7 @@ namespace Content.Client.UserInterface
             SelectedId += jobId =>
             {
                 Logger.InfoS("latejoin", $"Late joining as ID: {jobId}");
-                _consoleHost.ProcessCommand($"joingame {CommandParsing.Escape(jobId)}");
+                _consoleHost.ExecuteCommand($"joingame {CommandParsing.Escape(jobId)}");
                 Close();
             };
 
