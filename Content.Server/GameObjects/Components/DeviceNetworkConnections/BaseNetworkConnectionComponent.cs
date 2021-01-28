@@ -16,6 +16,8 @@ namespace Content.Server.GameObjects.Components.DeviceNetworkConnections
         private const int UNDEFINED = -1;
 
         private bool _receiveAll;
+        private bool _handlePings;
+        private string _pingResponse;
 
         protected abstract int DeviceNetID { get; }
         protected abstract int DeviceNetFrequency { get; }
@@ -41,7 +43,8 @@ namespace Content.Server.GameObjects.Components.DeviceNetworkConnections
             base.ExposeData(serializer);
 
             serializer.DataField(ref _receiveAll, "ReceiveAll", false);
-
+            serializer.DataField(ref _handlePings, "RespondToPings", false);
+            serializer.DataField(ref _pingResponse, "PingResponse", "");
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent component)
@@ -86,10 +89,19 @@ namespace Content.Server.GameObjects.Components.DeviceNetworkConnections
             return Connection.Broadcast(frequency, data, metadata);
         }
 
+        private void HandlePing(int frequency, string sender, NetworkPayload payload)
+        {
+            if (_handlePings)
+            {
+                NetworkUtils.PingResponse(frequency, Connection, sender, payload, _pingResponse);
+            }
+        }
+
         private void OnReceiveDeviceNetMessage(int frequency, string sender, NetworkPayload payload, Dictionary<string, object> metadata, bool broadcast)
         {
             if (CanReceive(frequency, sender, payload, metadata, broadcast))
             {
+                HandlePing(frequency, sender, payload);
                 SendMessage(new PacketReceivedComponentMessage(sender, payload, metadata, broadcast, frequency, Address, DeviceNetID, Frequency));
             }
         }
