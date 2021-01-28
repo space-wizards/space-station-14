@@ -2,6 +2,7 @@ using Content.Server.DeviceNetwork;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 using System;
 using System.Collections.Generic;
 
@@ -38,7 +39,7 @@ namespace Content.Server.GameObjects.Components.DeviceNetworkConnections
         /// </summary>
         protected override bool CanReceive(int frequency, string sender, NetworkPayload payload, Dictionary<string, object> metadata, bool broadcast)
         {
-            if (metadata.TryParseMetadata<Vector2>(WIRELESS_POSITION, out var position))
+            if (metadata.TryCastValue<Vector2>(WIRELESS_POSITION, out var position))
             {
                 var ownPosition = Owner.Transform.WorldPosition;
                 var distance = (ownPosition - position).Length;

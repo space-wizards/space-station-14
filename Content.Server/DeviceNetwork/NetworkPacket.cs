@@ -1,3 +1,4 @@
+using Robust.Shared.Log;
 using System.Collections.Generic;
 
 namespace Content.Server.DeviceNetwork
@@ -22,7 +23,10 @@ namespace Content.Server.DeviceNetwork
             {
                 if(data[index].Item1.Length <= MAX_STRING_SIZE && data[index].Item2.Length <= MAX_STRING_SIZE)
                 {
-                    packet.TryAdd(data[index].Item1, data[index].Item2);
+                    if (!packet.TryAdd(data[index].Item1, data[index].Item2))
+                    {
+                        Logger.Error($"Duplicate device network payload entry: {data[index].Item1}");
+                    }
                 }
             }
             return packet;

@@ -3,6 +3,7 @@ using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Utility;
 using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.Components.DeviceNetworkConnections
@@ -29,7 +30,7 @@ namespace Content.Server.GameObjects.Components.DeviceNetworkConnections
 
             if (Owner.TryGetComponent<PowerReceiverComponent>(out var powerReceiver)
                 && TryGetWireNet(powerReceiver, out var ownNet)
-                && metadata.TryParseMetadata<INodeGroup>(WIRENET, out var senderNet))
+                && metadata.TryCastValue<INodeGroup>(WIRENET, out var senderNet))
             {
                 return ownNet.Equals(senderNet);
             }
