@@ -30,7 +30,7 @@ namespace Content.Server.GameObjects.Components.DeviceNetworkConnections
 
             if (Owner.TryGetComponent<PowerReceiverComponent>(out var powerReceiver)
                 && TryGetWireNet(powerReceiver, out var ownNet)
-                && metadata.TryCastValue<INodeGroup>(WIRENET, out var senderNet))
+                && metadata.TryCastValue<INodeGroup, string, object>(WIRENET, out var senderNet))
             {
                 return ownNet.Equals(senderNet);
             }

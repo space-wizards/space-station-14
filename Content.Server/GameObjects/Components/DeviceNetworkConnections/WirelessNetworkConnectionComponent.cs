@@ -39,7 +39,7 @@ namespace Content.Server.GameObjects.Components.DeviceNetworkConnections
         /// </summary>
         protected override bool CanReceive(int frequency, string sender, NetworkPayload payload, Dictionary<string, object> metadata, bool broadcast)
         {
-            if (metadata.TryCastValue<Vector2>(WIRELESS_POSITION, out var position))
+            if (metadata.TryCastValue<Vector2, string, object>(WIRELESS_POSITION, out var position))
             {
                 var ownPosition = Owner.Transform.WorldPosition;
                 var distance = (ownPosition - position).Length;
