@@ -1,16 +1,13 @@
 #nullable enable
 using Content.Server.GameObjects.Components.Interactable;
-using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Interactable;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.Console;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
-using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -19,7 +16,6 @@ using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -35,7 +31,7 @@ namespace Content.Server.GameObjects.Components
         [ViewVariables]
         private readonly Dictionary<string, string> _config = new();
 
-        private Regex _validation = new Regex("^[a-zA-Z0-9 ]*$", RegexOptions.Compiled);
+        private Regex? _validation = null;
 
         public override void Initialize()
         {
@@ -127,7 +123,7 @@ namespace Content.Server.GameObjects.Components
         {
             UpdateUserInterface();
             UserInterface?.Open(actor.playerSession);
-            UserInterface?.SendMessage(new ValidationUpdateMessage(_validation.ToString()), actor.playerSession);
+            UserInterface?.SendMessage(new ValidationUpdateMessage(_validation?.ToString()), actor.playerSession);
         }
 
         private static void FillConfiguration<T>(List<string> list, Dictionary<string, T> configuration, T value){
