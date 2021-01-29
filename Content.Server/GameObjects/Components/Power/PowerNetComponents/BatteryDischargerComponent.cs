@@ -15,7 +15,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         public override string Name => "BatteryDischarger";
 
         [ViewVariables]
-        [ComponentDependency] private readonly BatteryComponent? _battery;
+        [ComponentDependency] private readonly BatteryComponent? _battery = default!;
 
         [ViewVariables]
         [ComponentDependency] private readonly PowerSupplierComponent? _supplier = default!;
