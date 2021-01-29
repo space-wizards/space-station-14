@@ -20,7 +20,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
     /// <summary>
     ///     Holds a <see cref="Solution"/> with a limited volume.
     /// </summary>
-    public abstract class SharedSolutionContainerComponent : Component, IExamine
+    public abstract class SharedSolutionContainerComponent : Component, IExamine, ISolutionInteractionsComponent
     {
         public override string Name => "SolutionContainer";
 
@@ -60,9 +60,11 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 
         public bool CanUseWithChemDispenser => Capabilities.HasCap(SolutionContainerCaps.FitsInDispenser);
 
-        public bool CanAddSolutions => Capabilities.HasCap(SolutionContainerCaps.AddTo);
+        public bool CanInject => Capabilities.HasCap(SolutionContainerCaps.Injectable) || CanRefill;
+        public bool CanDraw => Capabilities.HasCap(SolutionContainerCaps.Drawable) || CanDrain;
 
-        public bool CanRemoveSolutions => Capabilities.HasCap(SolutionContainerCaps.RemoveFrom);
+        public bool CanRefill => Capabilities.HasCap(SolutionContainerCaps.Refillable);
+        public bool CanDrain => Capabilities.HasCap(SolutionContainerCaps.Drainable);
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -71,7 +73,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             serializer.DataField(this, x => x.CanReact, "canReact", true);
             serializer.DataField(this, x => x.MaxVolume, "maxVol", ReagentUnit.New(0));
             serializer.DataField(this, x => x.Solution, "contents", new Solution());
-            serializer.DataField(this, x => x.Capabilities, "caps", SolutionContainerCaps.AddTo | SolutionContainerCaps.RemoveFrom | SolutionContainerCaps.CanExamine);
+            serializer.DataField(this, x => x.Capabilities, "caps", SolutionContainerCaps.None);
         }
 
         public void RemoveAllSolution()
@@ -207,6 +209,43 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             var messageString = "It contains a [color={0}]{1}[/color] " + (ReagentList.Count == 1 ? "chemical." : "mixture of chemicals.");
 
             message.AddMarkup(Loc.GetString(messageString, colorHex, Loc.GetString(proto.PhysicalDescription)));
+        }
+
+        ReagentUnit ISolutionInteractionsComponent.RefillSpaceAvailable => EmptyVolume;
+        ReagentUnit ISolutionInteractionsComponent.InjectSpaceAvailable => EmptyVolume;
+        ReagentUnit ISolutionInteractionsComponent.DrawAvailable => CurrentVolume;
+        ReagentUnit ISolutionInteractionsComponent.DrainAvailable => CurrentVolume;
+
+        void ISolutionInteractionsComponent.Refill(Solution solution)
+        {
+            if (!CanRefill)
+                return;
+
+            TryAddSolution(solution);
+        }
+
+        void ISolutionInteractionsComponent.Inject(Solution solution)
+        {
+            if (!CanInject)
+                return;
+
+            TryAddSolution(solution);
+        }
+
+        Solution ISolutionInteractionsComponent.Draw(ReagentUnit amount)
+        {
+            if (!CanDraw)
+                return new Solution();
+
+            return SplitSolution(amount);
+        }
+
+        Solution ISolutionInteractionsComponent.Drain(ReagentUnit amount)
+        {
+            if (!CanDrain)
+                return new Solution();
+
+            return SplitSolution(amount);
         }
 
         private void UpdateAppearance()

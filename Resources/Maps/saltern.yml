@@ -534,8 +534,6 @@ entities:
     pos: -15.694785,24.608267
     rot: -1.5707963267948966 rad
     type: Transform
-  - caps: AddTo, RemoveFrom
-    type: SolutionContainer
 - uid: 60
   type: DisgustingSweptSoup
   components:
@@ -652,8 +650,6 @@ entities:
     pos: -3.470539,16.956116
     rot: -1.5707963267948966 rad
     type: Transform
-  - caps: AddTo, RemoveFrom
-    type: SolutionContainer
 - uid: 74
   type: Carpet
   components:
@@ -703,8 +699,6 @@ entities:
     pos: 8.439846,26.712742
     rot: 1.5707963267948966 rad
     type: Transform
-  - caps: AddTo, RemoveFrom
-    type: SolutionContainer
 - uid: 81
   type: Table
   components:
@@ -929,8 +923,6 @@ entities:
   - parent: 853
     pos: 8.661116,25.513401
     type: Transform
-  - caps: AddTo, RemoveFrom
-    type: SolutionContainer
 - uid: 114
   type: BoxDonkpocket
   components:
@@ -32236,8 +32228,6 @@ entities:
     pos: -8.476567,-17.420076
     rot: -1.5707963267948966 rad
     type: Transform
-  - caps: AddTo, RemoveFrom
-    type: SolutionContainer
 - uid: 2443
   type: TableWood
   components:
