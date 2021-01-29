@@ -19,12 +19,12 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         private int _activeDrawRate;
 
         [ViewVariables]
-        [ComponentDependency] private readonly BatteryComponent? _battery;
+        [ComponentDependency] private BatteryComponent? _battery;
 
         [ViewVariables]
         public PowerConsumerComponent? Consumer => _consumer;
 
-        [ComponentDependency] private readonly PowerConsumerComponent? _consumer;
+        [ComponentDependency] private PowerConsumerComponent? _consumer;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -35,6 +35,8 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         public override void Initialize()
         {
             base.Initialize();
+            _battery = Owner.EnsureComponentWarn<BatteryComponent>();
+            _consumer = Owner.EnsureComponentWarn<PowerConsumerComponent>();
             UpdateDrawRate();
         }
 

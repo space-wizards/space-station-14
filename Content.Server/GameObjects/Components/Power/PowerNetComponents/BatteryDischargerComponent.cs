@@ -15,10 +15,10 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         public override string Name => "BatteryDischarger";
 
         [ViewVariables]
-        [ComponentDependency] private readonly BatteryComponent? _battery;
+        [ComponentDependency] private BatteryComponent? _battery;
 
         [ViewVariables]
-        [ComponentDependency] private readonly PowerSupplierComponent? _supplier;
+        [ComponentDependency] private PowerSupplierComponent? _supplier;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public int ActiveSupplyRate { get => _activeSupplyRate; set => SetActiveSupplyRate(value); }
@@ -33,6 +33,8 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         public override void Initialize()
         {
             base.Initialize();
+            _battery = Owner.EnsureComponentWarn<BatteryComponent>();
+            _supplier = Owner.EnsureComponentWarn<PowerSupplierComponent>();
             UpdateSupplyRate();
         }
 
