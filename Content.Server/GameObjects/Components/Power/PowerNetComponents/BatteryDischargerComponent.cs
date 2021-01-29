@@ -18,7 +18,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         [ComponentDependency] private readonly BatteryComponent? _battery;
 
         [ViewVariables]
-        [ComponentDependency] private readonly PowerSupplierComponent? _supplier;
+        [ComponentDependency] private readonly PowerSupplierComponent? _supplier = default!;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public int ActiveSupplyRate { get => _activeSupplyRate; set => SetActiveSupplyRate(value); }
