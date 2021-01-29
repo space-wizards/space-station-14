@@ -1,3 +1,4 @@
+#nullable enable
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Utility;
@@ -29,25 +30,16 @@ namespace Content.Server.GameObjects.Components
     [ComponentReference(typeof(SharedConfigurationComponent))]
     public class ConfigurationComponent : SharedConfigurationComponent, IInteractUsing
     {
-        [ViewVariables] private BoundUserInterface UserInterface => Owner.GetUIOrNull(ConfigurationUiKey.Key);
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ConfigurationUiKey.Key);
 
         [ViewVariables]
         private readonly Dictionary<string, string> _config = new();
 
-        private Regex _validation;
+        private Regex _validation = new Regex("^[a-zA-Z0-9 ]*$", RegexOptions.Compiled);
 
         public override void Initialize()
         {
             base.Initialize();
-            if (UserInterface != null)
-            {
-                UserInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
-            }
-        }
-
-        public override void OnAdd()
-        {
-            base.OnAdd();
             if (UserInterface != null)
             {
                 UserInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
@@ -74,9 +66,15 @@ namespace Content.Server.GameObjects.Components
             serializer.DataReadFunction("validation", "^[a-zA-Z0-9 ]*$", value => _validation = new Regex("^[a-zA-Z0-9 ]*$", RegexOptions.Compiled));
         }
 
-        public string GetConfig(string name)
+        public bool TryGetConfig(string name, out string value)
         {
-            return _config.GetValueOrDefault(name);
+            if (_config.TryGetValue(name, out var foundValue))
+            {
+                value = foundValue;
+                return true;
+            }
+            value = default!;
+            return false;
         }
 
         protected override void Startup()
@@ -87,7 +85,7 @@ namespace Content.Server.GameObjects.Components
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (UserInterface == null || !eventArgs.User.TryGetComponent(out IActorComponent actor))
+            if (UserInterface == null || !eventArgs.User.TryGetComponent(out IActorComponent? actor))
                 return false;
 
             if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
@@ -109,12 +107,11 @@ namespace Content.Server.GameObjects.Components
             {
                 foreach (var key in config.Keys)
                 {
-                    var value = msg.Config.GetValueOrDefault(key);
-
-                    if (_validation != null && !_validation.IsMatch(value) && value != "")
+                    if (msg.Config.TryGetValue(key, out var value) && _validation != null && !_validation.IsMatch(value) && value != "")
                         continue;
 
-                    _config[key] = value;
+                    if(value != null)
+                        _config[key] = value;
                 }
 
                 SendMessage(new ConfigUpdatedComponentMessage(_config));
@@ -129,8 +126,8 @@ namespace Content.Server.GameObjects.Components
         private void OpenUserInterface(IActorComponent actor)
         {
             UpdateUserInterface();
-            UserInterface.Open(actor.playerSession);
-            UserInterface.SendMessage(new ValidationUpdateMessage(_validation.ToString()), actor.playerSession);
+            UserInterface?.Open(actor.playerSession);
+            UserInterface?.SendMessage(new ValidationUpdateMessage(_validation.ToString()), actor.playerSession);
         }
 
         private static void FillConfiguration<T>(List<string> list, Dictionary<string, T> configuration, T value){
@@ -159,7 +156,7 @@ namespace Content.Server.GameObjects.Components
 
             protected override void Activate(IEntity user, ConfigurationComponent component)
             {
-                if (user.TryGetComponent(out IActorComponent actor))
+                if (user.TryGetComponent(out IActorComponent? actor))
                 {
                     component.OpenUserInterface(actor);
                 }
