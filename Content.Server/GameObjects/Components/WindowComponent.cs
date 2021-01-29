@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Content.Server.Utility;
 using Content.Shared.Audio;
@@ -6,6 +6,7 @@ using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.GameObjects.Components.Destructible;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
@@ -50,7 +51,12 @@ namespace Content.Server.GameObjects.Components
         {
             if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
-                appearance.SetData(WindowVisuals.Damage, (float) currentDamage / _maxDamage);
+                if (Owner.TryGetComponent(out DestructibleComponent? destructible))
+                {
+                    var damageThreshold = destructible.LowestToHighestThresholds.FirstOrNull()?.Key;
+                    if (damageThreshold == null) return;
+                    appearance.SetData(WindowVisuals.Damage, (float) currentDamage / damageThreshold);
+                }
             }
         }
 
