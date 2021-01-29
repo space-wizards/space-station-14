@@ -19,7 +19,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         private int _activeDrawRate;
 
         [ViewVariables]
-        [ComponentDependency] private readonly BatteryComponent? _battery;
+        [ComponentDependency] private readonly BatteryComponent? _battery = default!;
 
         [ViewVariables]
         public PowerConsumerComponent? Consumer => _consumer;
