@@ -15,6 +15,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -38,6 +39,7 @@ namespace Content.Client.UserInterface.AdminMenu
         private readonly List<CommandButton> _adminButtons = new()
         {
             new KickCommandButton(),
+            new BwoinkCommandButton(),
             new DirectCommandButton("Admin Ghost", "aghost"),
             new TeleportCommandButton(),
             new DirectCommandButton("Permissions Panel", "permissions"),
@@ -552,6 +554,30 @@ namespace Content.Client.UserInterface.AdminMenu
             }
         }
 
+        private class BwoinkCommandButton : UICommandButton
+        {
+            public override string Name => "Bwoink";
+            public override string RequiredCommand => "kick";
+
+            private readonly CommandUIDropDown _playerDropDown = new()
+            {
+                Name = "Player",
+                GetData = () => IoCManager.Resolve<IPlayerManager>().Sessions.ToList<object>(),
+                GetDisplayName = (obj) => $"{((IPlayerSession) obj).Name} ({((IPlayerSession) obj).AttachedEntity?.Name})",
+                GetValueFromData = (obj) => ((IPlayerSession) obj).Name,
+            };
+
+            public override List<CommandUIControl> UI => new()
+            {
+                _playerDropDown,
+            };
+
+            public override void Submit()
+            {
+                IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<BwoinkSystem>().EnsureWindow(((IPlayerSession) _playerDropDown.GetValueData()).UserId);
+            }
+        }
+
         private class TeleportCommandButton : UICommandButton
         {
             public override string Name => "Teleport";
@@ -674,9 +700,14 @@ namespace Content.Client.UserInterface.AdminMenu
                 return Control;
             }
 
+            public object GetValueData()
+            {
+                return Data![((OptionButton)Control!).SelectedId];
+            }
+
             public override string GetValue()
             {
-                return GetValueFromData!(Data![((OptionButton)Control!).SelectedId]);
+                return GetValueFromData!(GetValueData());
             }
         }
         private class CommandUICheckBox : CommandUIControl
