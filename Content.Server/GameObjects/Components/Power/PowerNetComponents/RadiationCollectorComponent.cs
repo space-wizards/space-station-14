@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         private bool _enabled;
         private TimeSpan _coolDownEnd;
 
-        [ComponentDependency] private readonly PhysicsComponent? _collidableComponent;
+        [ComponentDependency] private readonly PhysicsComponent? _collidableComponent = default!;
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
