@@ -24,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         [ViewVariables]
         public PowerConsumerComponent? Consumer => _consumer;
 
-        [ComponentDependency] private readonly PowerConsumerComponent? _consumer;
+        [ComponentDependency] private readonly PowerConsumerComponent? _consumer = default!;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
