@@ -15,10 +15,10 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         public override string Name => "BatteryDischarger";
 
         [ViewVariables]
-        [ComponentDependency] private BatteryComponent? _battery;
+        [ComponentDependency] private BatteryComponent? _battery = default!;
 
         [ViewVariables]
-        [ComponentDependency] private PowerSupplierComponent? _supplier;
+        [ComponentDependency] private PowerSupplierComponent? _supplier = default!;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public int ActiveSupplyRate { get => _activeSupplyRate; set => SetActiveSupplyRate(value); }
