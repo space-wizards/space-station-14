@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -176,9 +176,11 @@ namespace Content.Server.GameObjects.Components.GUI
 
             Dirty();
 
+            var position = item.Owner.Transform.Coordinates;
             var success = hand.Container.Insert(item.Owner);
             if (success)
             {
+                SendNetworkMessage(new AnimatePickupEntityMessage(item.Owner.Uid, position));
                 item.Owner.Transform.LocalPosition = Vector2.Zero;
                 OnItemChanged?.Invoke();
             }

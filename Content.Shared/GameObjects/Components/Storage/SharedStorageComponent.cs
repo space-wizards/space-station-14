@@ -1,12 +1,14 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Storage
@@ -97,6 +99,22 @@ namespace Content.Shared.GameObjects.Components.Storage
         public InsertEntityMessage()
         {
             Directed = true;
+        }
+    }
+
+    /// <summary>
+    /// Component message for displaying an animation of entities flying into a storage entity
+    /// </summary>
+    [Serializable, NetSerializable]
+    public class AnimateInsertingEntitiesMessage : ComponentMessage
+    {
+        public readonly EntityUid[] StoredEntities;
+        public readonly EntityCoordinates[] EntityPositions;
+        public AnimateInsertingEntitiesMessage(EntityUid[] storedEntities, EntityCoordinates[] entityPositions)
+        {
+            Directed = true;
+            StoredEntities = storedEntities;
+            EntityPositions = entityPositions;
         }
     }
 
