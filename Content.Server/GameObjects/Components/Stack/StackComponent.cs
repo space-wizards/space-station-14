@@ -6,6 +6,7 @@ using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.Interfaces.GameObjects;
@@ -32,6 +33,21 @@ namespace Content.Server.GameObjects.Components.Stack
             {
                 _throwIndividually = value;
                 Dirty();
+            }
+        }
+
+        public override int Count
+        {
+            get => base.Count;
+            set
+            {
+                base.Count = value;
+
+                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+                {
+                    var percentile = (float) Count / MaxCount;
+                    appearance.SetData(StackVisuals.Count, percentile);
+                }
             }
         }
 

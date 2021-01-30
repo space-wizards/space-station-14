@@ -19,6 +19,7 @@
   - type: WirePlacer
   - type: Clickable
 
+
 - type: entity
   id: HVWireStack
   parent: CableStack
@@ -35,6 +36,13 @@
   - type: WirePlacer
     wirePrototypeID: HVWire
     blockingWireType: HighVoltage
+  - type: Appearance
+    visuals:
+      - type: StackVisualizer
+        spritestates:
+          - coilhv-10
+          - coilhv-20
+          - coilhv-30
 
 - type: entity
   parent: HVWireStack

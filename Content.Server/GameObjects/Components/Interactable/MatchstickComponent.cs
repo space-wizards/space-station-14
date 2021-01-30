@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         private string? _igniteSound;
 
         /// <summary>
-        /// Point light component. Gives matches a glow in dark effect.
+        /// Point light component. Gives matches a glow-in-the-dark effect.
         /// </summary>
         [ComponentDependency]
         private readonly PointLightComponent? _pointLightComponent = default!;
