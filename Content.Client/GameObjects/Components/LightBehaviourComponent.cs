@@ -382,7 +382,7 @@ namespace Content.Client.GameObjects.Components
     {
         private const string KeyPrefix = nameof(LightBehaviourComponent);
 
-        public class AnimationContainer
+        public class AnimationContainer : IDeepClone
         {
             public AnimationContainer(int key, Animation animation, LightBehaviourAnimationTrack track)
             {
@@ -395,6 +395,11 @@ namespace Content.Client.GameObjects.Components
             public int Key { get; set; }
             public Animation Animation { get; set; }
             public LightBehaviourAnimationTrack LightBehaviour { get; set; }
+            public IDeepClone DeepClone()
+            {
+                return new AnimationContainer(Key, IDeepClone.CloneValue(Animation),
+                    IDeepClone.CloneValue(LightBehaviour));
+            }
         }
 
         [ViewVariables(VVAccess.ReadOnly)]
