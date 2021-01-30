@@ -34,7 +34,6 @@ namespace Content.Server.GameObjects.Components.Atmos
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    [CustomDataClass(typeof(GasCanisterComponentData))]
     public class GasCanisterComponent : Component, IGasMixtureHolder, IActivate
     {
         public override string Name => "GasCanister";
@@ -51,8 +50,8 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// What <see cref="GasMixture"/> the canister contains.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [CustomYamlField("gasMixture")]
-        public GasMixture Air { get; set; } = null!;
+        [YamlField("gasMixture")]
+        public GasMixture Air { get; set; } = new (DefaultVolume);
 
         [ViewVariables]
         public bool Anchored => !Owner.TryGetComponent<IPhysicsComponent>(out var physics) || physics.Anchored;

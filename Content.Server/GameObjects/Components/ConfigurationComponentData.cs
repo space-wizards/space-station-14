@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -8,14 +9,15 @@ namespace Content.Server.GameObjects.Components
 {
     public partial class ConfigurationComponentData
     {
-        [CustomYamlField("config")] public readonly Dictionary<string, string> Config = new();
+        [CustomYamlField("config")] public Dictionary<string, string>? Config;
 
         [CustomYamlField("validation")]
-        public Regex Validation;
+        public Regex? Validation;
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
+            Config ??= new();
             serializer.DataReadWriteFunction("keys", new List<string>(),
                 (list) =>
                 {
@@ -25,9 +27,11 @@ namespace Content.Server.GameObjects.Components
                     }
                 },
                 () => Config.Keys.ToList());
+            if (Config.Count == 0) Config = null;
 
-            serializer.DataReadFunction("validation", "^[a-zA-Z0-9 ]*$",
-                value => Validation = new Regex(value, RegexOptions.Compiled));
+            serializer.DataReadWriteFunction("validation", null,
+                val => Validation = val != null ? new Regex(val, RegexOptions.Compiled) : null,
+                () => Validation?.ToString());
         }
     }
 }

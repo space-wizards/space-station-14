@@ -8,12 +8,13 @@ namespace Content.Server.GameObjects.Components.AI
     public partial class AiFactionTagComponentData
     {
         [CustomYamlField("factions")]
-        public Faction Factions { get; private set; } = Faction.None;
+        public Faction? Factions { get; private set; }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
+            Factions ??= Faction.None;
             serializer.DataReadWriteFunction(
                 "factions",
                 new List<Faction>(),
@@ -31,6 +32,8 @@ namespace Content.Server.GameObjects.Components.AI
 
                     return writeFactions;
                 });
+
+            if (Factions == Faction.None) Factions = null;
         }
     }
 }

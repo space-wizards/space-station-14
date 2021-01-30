@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using Robust.Client.Animations;
 using Robust.Shared.Prototypes;
@@ -8,7 +9,7 @@ namespace Content.Client.GameObjects.Components
     public partial class LightBehaviourComponentData
     {
         [CustomYamlField("animations")]
-        public List<LightBehaviourComponent.AnimationContainer> _animations = new();
+        public List<LightBehaviourComponent.AnimationContainer>? Animations;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -17,6 +18,7 @@ namespace Content.Client.GameObjects.Components
             var behaviours = serializer.ReadDataField("behaviours", new List<LightBehaviourAnimationTrack>());
             var key = 0;
 
+            Animations = new List<LightBehaviourComponent.AnimationContainer>();
             foreach (var behaviour in behaviours)
             {
                 var animation = new Animation()
@@ -24,9 +26,11 @@ namespace Content.Client.GameObjects.Components
                     AnimationTracks = { behaviour }
                 };
 
-                _animations.Add(new LightBehaviourComponent.AnimationContainer(key, animation, behaviour));
+                Animations.Add(new LightBehaviourComponent.AnimationContainer(key, animation, behaviour));
                 key++;
             }
+
+            if (Animations.Count == 0) Animations = null;
         }
     }
 }

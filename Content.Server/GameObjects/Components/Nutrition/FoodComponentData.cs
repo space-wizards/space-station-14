@@ -8,12 +8,13 @@ namespace Content.Server.GameObjects.Components.Nutrition
 {
     public partial class FoodComponentData
     {
-        [CustomYamlField("utensilsNeeded")] public UtensilType UtensilsNeeded;
+        [CustomYamlField("utensilsNeeded")] public UtensilType? UtensilsNeeded;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
+            UtensilsNeeded ??= UtensilType.None;
             serializer.DataReadWriteFunction(
                 "utensils",
                 new List<UtensilType>(),
@@ -32,6 +33,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
                     return types;
                 });
+            if (UtensilsNeeded == UtensilType.None) UtensilsNeeded = null;
         }
     }
 }

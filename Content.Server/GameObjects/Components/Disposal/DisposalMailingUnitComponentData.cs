@@ -7,10 +7,10 @@ namespace Content.Server.GameObjects.Components.Disposal
     public partial class DisposalMailingUnitComponentData
     {
         [CustomYamlField("autoEngageTime")]
-        public TimeSpan AutomaticEngageTime;
+        public TimeSpan? AutomaticEngageTime;
 
         [CustomYamlField("flushDelay")]
-        public TimeSpan FlushDelay;
+        public TimeSpan? FlushDelay;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -19,14 +19,14 @@ namespace Content.Server.GameObjects.Components.Disposal
             serializer.DataReadWriteFunction(
                 "automaticEngageTime",
                 30,
-                seconds => AutomaticEngageTime = TimeSpan.FromSeconds(seconds),
-                () => (int) AutomaticEngageTime.TotalSeconds);
+                seconds => AutomaticEngageTime = seconds != null ? TimeSpan.FromSeconds((int)seconds) : null,
+                () => (int?) AutomaticEngageTime?.TotalSeconds);
 
             serializer.DataReadWriteFunction(
                 "flushDelay",
                 3,
-                seconds => FlushDelay = TimeSpan.FromSeconds(seconds),
-                () => (int) FlushDelay.TotalSeconds);
+                seconds => FlushDelay = seconds != null ? TimeSpan.FromSeconds((int)seconds) : null,
+                () => (int?) FlushDelay?.TotalSeconds);
         }
     }
 }

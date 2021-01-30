@@ -59,7 +59,7 @@ namespace Content.Server.GameObjects.Components.Buckle
         /// </summary>
         [ViewVariables]
         [CustomYamlField("delay")]
-        private TimeSpan _unbuckleDelay  = default;
+        private TimeSpan _unbuckleDelay  = TimeSpan.FromSeconds(0.25f);
 
         /// <summary>
         ///     The time that this entity buckled at.

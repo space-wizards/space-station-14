@@ -37,7 +37,7 @@ namespace Content.Server.GameObjects.Components
         private readonly Dictionary<string, string> _config = new();
 
         [CustomYamlField("validation")]
-        private Regex _validation;
+        private Regex _validation = new ("^[a-zA-Z0-9 ]*$", RegexOptions.Compiled);
 
         public override void OnAdd()
         {

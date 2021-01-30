@@ -1,5 +1,6 @@
 ﻿using System;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -10,7 +11,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Shared.Prototypes.Cargo
 {
     [NetSerializable, Serializable, Prototype("cargoProduct")]
-    public class CargoProductPrototype : IPrototype, IIndexedPrototype
+    public class CargoProductPrototype : IPrototype, IIndexedPrototype, IDeepClone
     {
         private string _id;
         private string _name;
@@ -107,6 +108,21 @@ namespace Content.Shared.Prototypes.Cargo
             serializer.DataField(ref _pointCost, "cost", 0);
             serializer.DataField(ref _category, "category", string.Empty);
             serializer.DataField(ref _group, "group", string.Empty);
+        }
+
+        public IDeepClone DeepClone()
+        {
+            return new CargoProductPrototype()
+            {
+                _name = _name,
+                _category = _category,
+                _description = _description,
+                _icon = IDeepClone.CloneValue(_icon),
+                _product = _product,
+                _pointCost = _pointCost,
+                _id = _id,
+                _group = _group
+            };
         }
     }
 }

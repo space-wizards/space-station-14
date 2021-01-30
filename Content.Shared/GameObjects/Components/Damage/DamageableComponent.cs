@@ -44,7 +44,7 @@ namespace Content.Shared.GameObjects.Components.Damage
         // TODO DAMAGE Use as default values, specify overrides in a separate property through yaml for better (de)serialization
         [ViewVariables] [CustomYamlField("damageContainer")] public string DamageContainerId { get; set; } = default!;
 
-        [ViewVariables] [CustomYamlField("resistances")] private ResistanceSet Resistances { get; set; } = default!;
+        [ViewVariables] [CustomYamlField("resistances")] private ResistanceSet Resistances { get; set; } = new ResistanceSet();
 
         // TODO DAMAGE Cache this
         [ViewVariables] public int TotalDamage => _damageList.Values.Sum();

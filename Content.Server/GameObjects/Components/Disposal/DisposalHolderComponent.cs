@@ -20,7 +20,6 @@ namespace Content.Server.GameObjects.Components.Disposal
 {
     // TODO: Add gas
     [RegisterComponent]
-    [CustomDataClass(typeof(DisposalHolderComponentData))]
     public class DisposalHolderComponent : Component, IGasMixtureHolder
     {
         public override string Name => "DisposalHolder";
@@ -56,8 +55,8 @@ namespace Content.Server.GameObjects.Components.Disposal
         public HashSet<string> Tags { get; set; } = new();
 
         [ViewVariables]
-        [CustomYamlField("air")]
-        public GasMixture Air { get; set; } = null!;
+        [YamlField("air")]
+        public GasMixture Air { get; set; } = new GasMixture(Atmospherics.CellVolume);
 
         public override void Initialize()
         {

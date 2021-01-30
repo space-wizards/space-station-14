@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -11,7 +12,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Shared.Research
 {
     [NetSerializable, Serializable, Prototype("latheRecipe")]
-    public class LatheRecipePrototype : IPrototype, IIndexedPrototype
+    public class LatheRecipePrototype : IPrototype, IIndexedPrototype, IDeepClone
     {
         private string _name;
         private string _id;
@@ -102,6 +103,20 @@ namespace Content.Shared.Research
             serializer.DataField(ref _result, "result", null);
             serializer.DataField(ref _completeTime, "completetime", 2500);
             serializer.DataField(ref _requiredMaterials, "materials", new Dictionary<string, int>());
+        }
+
+        public IDeepClone DeepClone()
+        {
+            return new LatheRecipePrototype
+            {
+                _name = _name,
+                _id = _id,
+                _description = _description,
+                _icon = IDeepClone.CloneValue(_icon),
+                _result = _result,
+                _completeTime = _completeTime,
+                _requiredMaterials = IDeepClone.CloneValue(_requiredMaterials)
+            };
         }
     }
 }

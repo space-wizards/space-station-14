@@ -9,28 +9,28 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
     public partial class AmmoComponentData
     {
         [CustomYamlField("projectilesFired")]
-        public int ProjectilesFired = 1;
+        public int? ProjectilesFired;
 
         [CustomYamlField("ammoSpread")]
-        public float EvenSpreadAngle;
+        public float? EvenSpreadAngle;
 
         [CustomYamlField("isProjectile")]
-        public bool AmmoIsProjectile;
+        public bool? AmmoIsProjectile;
 
         [CustomYamlField("caseless")]
-        private bool Caseless;
+        private bool? Caseless;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
             // For shotty of whatever as well
-            serializer.DataField(ref ProjectilesFired, "projectilesFired", 1);
+            serializer.DataField(ref ProjectilesFired, "projectilesFired", null);
             // Used for shotty to determine overall pellet spread
-            serializer.DataField(ref EvenSpreadAngle, "ammoSpread", 0);
-            serializer.DataField(ref AmmoIsProjectile, "isProjectile", false);
-            serializer.DataField(ref Caseless, "caseless", false);
+            serializer.DataField(ref EvenSpreadAngle, "ammoSpread", null);
+            serializer.DataField(ref AmmoIsProjectile, "isProjectile", null);
+            serializer.DataField(ref Caseless, "caseless", null);
             // Being both caseless and shooting yourself doesn't make sense
-            DebugTools.Assert(!(AmmoIsProjectile && Caseless));
+            DebugTools.Assert(!(AmmoIsProjectile == true && Caseless == true));
 
             if (ProjectilesFired < 1)
             {

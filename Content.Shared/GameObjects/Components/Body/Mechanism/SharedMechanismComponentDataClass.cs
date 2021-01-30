@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
     public partial class SharedMechanismComponentDataClass
     {
         [CustomYamlField("behaviours")]
-        public Dictionary<Type, IMechanismBehavior> _behaviors = new();
+        public Dictionary<Type, IMechanismBehavior>? _behaviors;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -23,6 +24,7 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
 
             if (moduleManager.IsServerModule)
             {
+                _behaviors ??= new();
                 serializer.DataReadWriteFunction(
                     "behaviors",
                     null!,
@@ -47,6 +49,7 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
                         }
                     },
                     () => _behaviors.Values.ToList());
+                if (_behaviors.Count == 0) _behaviors = null;
             }
         }
     }

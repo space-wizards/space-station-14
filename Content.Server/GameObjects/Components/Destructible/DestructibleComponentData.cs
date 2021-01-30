@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Destructible.Thresholds;
 using Robust.Shared.Prototypes;
@@ -8,7 +9,7 @@ namespace Content.Server.GameObjects.Components.Destructible
     public partial class DestructibleComponentData
     {
         [CustomYamlField("thresholds")]
-        public SortedDictionary<int, Threshold> LowestToHighestThresholds = new();
+        public SortedDictionary<int, Threshold>? LowestToHighestThresholds;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -17,8 +18,9 @@ namespace Content.Server.GameObjects.Components.Destructible
             serializer.DataReadWriteFunction(
                 "thresholds",
                 new Dictionary<int, Threshold>(),
-                thresholds => LowestToHighestThresholds = new SortedDictionary<int, Threshold>(thresholds),
-                () => new Dictionary<int, Threshold>(LowestToHighestThresholds));
+                thresholds => LowestToHighestThresholds = thresholds != null ? new SortedDictionary<int, Threshold>(thresholds) : null,
+                () => LowestToHighestThresholds == null ? null : new Dictionary<int, Threshold>(LowestToHighestThresholds));
+            if (LowestToHighestThresholds?.Count == 0) LowestToHighestThresholds = null;
         }
     }
 }

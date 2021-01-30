@@ -1,3 +1,4 @@
+#nullable enable
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -7,7 +8,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
     public partial class RevolverBarrelComponentData
     {
         [CustomYamlField("ammoSlots")]
-        public IEntity[] AmmoSlots;
+        public IEntity[]? AmmoSlots;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -16,8 +17,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             serializer.DataReadWriteFunction(
                 "capacity",
                 6,
-                cap => AmmoSlots = new IEntity[cap],
-                () => AmmoSlots.Length);
+                cap => AmmoSlots = cap != null ? new IEntity[(int)cap] : null,
+                () => AmmoSlots?.Length);
         }
     }
 }

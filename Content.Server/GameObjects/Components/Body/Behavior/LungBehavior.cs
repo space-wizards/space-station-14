@@ -37,6 +37,11 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
 
         [ViewVariables] public float CycleDelay { get; set; }
 
+        public LungBehavior()
+        {
+            IoCManager.InjectDependencies(this);
+        }
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);

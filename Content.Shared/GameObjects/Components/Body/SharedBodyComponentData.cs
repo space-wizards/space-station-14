@@ -15,16 +15,16 @@ namespace Content.Shared.GameObjects.Components.Body
         [CustomYamlField("templateName")] public string? TemplateName;
 
         [CustomYamlField("connections")]
-        public Dictionary<string, List<string>> Connections = new();
+        public Dictionary<string, List<string>>? Connections;
 
         [CustomYamlField("slots")]
-        public Dictionary<string, BodyPartType> Slots = new();
+        public Dictionary<string, BodyPartType>? Slots;
 
         [CustomYamlField("centerSlot")]
         public string? _centerSlot;
 
         [CustomYamlField("partIds")]
-        public Dictionary<string, string> _partIds = new();
+        public Dictionary<string, string>? _partIds;
 
         [CustomYamlField("presetName")]
         public string? PresetName { get; private set; }
@@ -33,7 +33,7 @@ namespace Content.Shared.GameObjects.Components.Body
         {
             base.ExposeData(serializer);
 
-            var _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
             serializer.DataReadWriteFunction(
                 "template",
@@ -45,7 +45,7 @@ namespace Content.Shared.GameObjects.Components.Body
                         return;
                     }
 
-                    var template = _prototypeManager.Index<BodyTemplatePrototype>(name);
+                    var template = prototypeManager.Index<BodyTemplatePrototype>(name);
 
                     Connections = template.Connections;
                     Slots = template.Slots;
@@ -65,13 +65,14 @@ namespace Content.Shared.GameObjects.Components.Body
                         return;
                     }
 
-                    var preset = _prototypeManager.Index<BodyPresetPrototype>(name);
+                    var preset = prototypeManager.Index<BodyPresetPrototype>(name);
 
                     _partIds = preset.PartIDs;
                     PresetName = preset.Name;
                 },
                 () => PresetName);
 
+            Connections ??= new();
             serializer.DataReadWriteFunction(
                 "connections",
                 new Dictionary<string, List<string>>(),
@@ -83,7 +84,9 @@ namespace Content.Shared.GameObjects.Components.Body
                     }
                 },
                 () => Connections);
+            if (Connections.Count == 0) Connections = null;
 
+            Slots ??= new();
             serializer.DataReadWriteFunction(
                 "slots",
                 new Dictionary<string, BodyPartType>(),
@@ -95,6 +98,7 @@ namespace Content.Shared.GameObjects.Components.Body
                     }
                 },
                 () => Slots);
+            if (Slots.Count == 0) Slots = null;
 
             // TODO BODY Move to template or somewhere else
             serializer.DataReadWriteFunction(
@@ -103,6 +107,7 @@ namespace Content.Shared.GameObjects.Components.Body
                 slot => _centerSlot = slot,
                 () => _centerSlot);
 
+            _partIds ??= new();
             serializer.DataReadWriteFunction(
                 "partIds",
                 new Dictionary<string, string>(),
@@ -114,10 +119,13 @@ namespace Content.Shared.GameObjects.Components.Body
                     }
                 },
                 () => _partIds);
+            if (_partIds.Count == 0) _partIds = null;
 
             // Our prototypes don't force the user to define a BodyPart connection twice. E.g. Head: Torso v.s. Torso: Head.
             // The user only has to do one. We want it to be that way in the code, though, so this cleans that up.
             var cleanedConnections = new Dictionary<string, List<string>>();
+            Slots ??= new();
+            Connections ??= new();
             foreach (var targetSlotName in Slots.Keys)
             {
                 var tempConnections = new List<string>();
@@ -146,6 +154,9 @@ namespace Content.Shared.GameObjects.Components.Body
             }
 
             Connections = cleanedConnections;
+
+            if (Connections.Count == 0) Connections = null;
+            if (Slots.Count == 0) Slots = null;
         }
     }
 }

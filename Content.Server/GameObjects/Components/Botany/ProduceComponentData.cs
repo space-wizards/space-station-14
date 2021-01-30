@@ -1,3 +1,4 @@
+#nullable enable
 using Content.Server.Botany;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
@@ -7,7 +8,7 @@ namespace Content.Server.GameObjects.Components.Botany
 {
     public partial class ProduceComponentData
     {
-        [CustomYamlField("Seed")] public Seed Seed;
+        [CustomYamlField("Seed")] public Seed? Seed;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -15,7 +16,7 @@ namespace Content.Server.GameObjects.Components.Botany
 
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
-            serializer.DataReadFunction<string>("seed", null,
+            serializer.DataReadFunction<string?>("seed", null,
                 (s) =>
                 {
                     if(!string.IsNullOrEmpty(s))

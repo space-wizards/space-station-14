@@ -4,6 +4,7 @@ using Content.Server.Construction;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -56,10 +57,19 @@ namespace Content.Server.GameObjects.Components.Construction
     }
 
     [Serializable]
-    public struct ComponentPartInfo
+    public struct ComponentPartInfo : IDeepClone
     {
         public int Amount;
         public string ExamineName;
         public string DefaultPrototype;
+        public IDeepClone DeepClone()
+        {
+            return new ComponentPartInfo()
+            {
+                Amount = Amount,
+                ExamineName = ExamineName,
+                DefaultPrototype = DefaultPrototype
+            };
+        }
     }
 }
