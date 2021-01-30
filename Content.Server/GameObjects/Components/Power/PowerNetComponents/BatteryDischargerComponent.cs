@@ -3,6 +3,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using System;
 
 namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 {
@@ -33,8 +34,8 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         public override void Initialize()
         {
             base.Initialize();
-            _battery = Owner.EnsureComponentWarn<BatteryComponent>();
-            _supplier = Owner.EnsureComponentWarn<PowerSupplierComponent>();
+            Owner.EnsureComponentWarn<BatteryComponent>();
+            Owner.EnsureComponentWarn<PowerSupplierComponent>();
             UpdateSupplyRate();
         }
 
