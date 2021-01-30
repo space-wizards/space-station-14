@@ -13,10 +13,12 @@ namespace Content.Server.Construction.Completions
     public class SnapToGrid : IGraphAction
     {
         public SnapGridOffset Offset { get; private set; } = SnapGridOffset.Center;
+        public bool ZeroRotation { get; private set; } = false;
 
         public void ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.Offset, "offset", SnapGridOffset.Center);
+            serializer.DataField(this, x => x.ZeroRotation, "zeroRotation", false);
         }
 
         public async Task PerformAction(IEntity entity, IEntity? user)
@@ -24,6 +26,10 @@ namespace Content.Server.Construction.Completions
             if (entity.Deleted) return;
 
             entity.SnapToGrid(Offset);
+            if (ZeroRotation)
+            {
+                entity.Transform.LocalRotation = 0;
+            }
         }
     }
 }

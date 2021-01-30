@@ -6,7 +6,8 @@
       edges:
         - to: TableFrame
           completed:
-            - !type:SnapToGrid { }
+            - !type:SnapToGrid
+              snapRotation: true
           steps:
             - material: MetalRod
               amount: 2

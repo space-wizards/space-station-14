@@ -6,7 +6,8 @@
       edges:
         - to: Catwalk
           completed:
-          - !type:SnapToGrid { }
+            - !type:SnapToGrid
+              zeroRotation: true
           steps:
             - material: MetalRod
               amount: 2
