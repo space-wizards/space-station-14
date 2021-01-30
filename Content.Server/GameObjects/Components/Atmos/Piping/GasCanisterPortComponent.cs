@@ -83,13 +83,13 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         {
             if (!Owner.TryGetComponent<NodeContainerComponent>(out var container))
             {
-                Logger.Error($"{typeof(GasCanisterPortComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} did not have a {nameof(NodeContainerComponent)}.");
+                Logger.Error($"{nameof(GasCanisterPortComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} did not have a {nameof(NodeContainerComponent)}.");
                 return;
             }
             _gasPort = container.Nodes.OfType<PipeNode>().FirstOrDefault();
             if (_gasPort == null)
             {
-                Logger.Error($"{typeof(GasCanisterPortComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
+                Logger.Error($"{nameof(GasCanisterPortComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
                 return;
             }
         }

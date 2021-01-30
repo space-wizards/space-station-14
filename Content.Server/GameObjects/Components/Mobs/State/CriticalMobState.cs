@@ -20,11 +20,6 @@ namespace Content.Server.GameObjects.Components.Mobs.State
                 appearance.SetData(DamageStateVisuals.State, DamageState.Critical);
             }
 
-            if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlay))
-            {
-                overlay.AddOverlay(SharedOverlayID.GradientCircleMaskOverlay);
-            }
-
             if (entity.TryGetComponent(out StunnableComponent stun))
             {
                 stun.CancelAll();
@@ -36,11 +31,6 @@ namespace Content.Server.GameObjects.Components.Mobs.State
         public override void ExitState(IEntity entity)
         {
             base.ExitState(entity);
-
-            if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlay))
-            {
-                overlay.ClearOverlays();
-            }
         }
     }
 }

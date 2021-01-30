@@ -35,7 +35,7 @@
   - type: Clothing
     sprite: Clothing/Belt/ce.rsi
   - type: Storage
-    capacity: 60
+    capacity: 100
 
 - type: entity
   parent: ClothingBeltBase

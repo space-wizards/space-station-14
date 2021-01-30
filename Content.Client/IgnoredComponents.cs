@@ -235,7 +235,12 @@ namespace Content.Client
             "SliceableFood",
             "DamageOtherOnHit",
             "DamageOnLand",
-            "Recyclable"
+            "GasFilter",
+            "Recyclable",
+            "SecretStash",
+            "Toilet",
+            "ClusterFlash",
+            "GasGenerator"
         };
     }
 }

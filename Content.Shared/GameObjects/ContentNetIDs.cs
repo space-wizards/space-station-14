@@ -3,7 +3,8 @@
     // Starting from 1000 to avoid crossover with engine.
     public static class ContentNetIDs
     {
-        // 1000
+        // As a CMO main I hereby declare the hypospray worthy of ID #1000.
+        public const uint HYPOSPRAY = 1000;
         public const uint DESTRUCTIBLE = 1001;
         public const uint MAGAZINE_BARREL = 1002;
         public const uint HANDS = 1003;

@@ -66,7 +66,8 @@ namespace Content.Client.UserInterface
 
         Control HandsContainer { get; }
         Control SuspicionContainer { get; }
-        Control InventoryQuickButtonContainer { get; }
+        Control RightInventoryQuickButtonContainer { get; }
+        Control LeftInventoryQuickButtonContainer { get; }
 
         bool CombatPanelVisible { get; set; }
         bool CombatModeActive { get; set; }
@@ -100,7 +101,8 @@ namespace Content.Client.UserInterface
 
         public Control HandsContainer { get; private set; }
         public Control SuspicionContainer { get; private set; }
-        public Control InventoryQuickButtonContainer { get; private set; }
+        public Control RightInventoryQuickButtonContainer { get; private set; }
+        public Control LeftInventoryQuickButtonContainer { get; private set; }
 
         public bool CombatPanelVisible
         {
@@ -128,14 +130,14 @@ namespace Content.Client.UserInterface
             RootControl = new LayoutContainer();
             LayoutContainer.SetAnchorPreset(RootControl, LayoutContainer.LayoutPreset.Wide);
 
-            var escapeTexture = _resourceCache.GetTexture("/Textures/Interface/hamburger.svg.96dpi.png");
-            var characterTexture = _resourceCache.GetTexture("/Textures/Interface/character.svg.96dpi.png");
-            var inventoryTexture = _resourceCache.GetTexture("/Textures/Interface/inventory.svg.96dpi.png");
-            var craftingTexture = _resourceCache.GetTexture("/Textures/Interface/hammer.svg.96dpi.png");
-            var actionsTexture = _resourceCache.GetTexture("/Textures/Interface/fist.svg.96dpi.png");
-            var adminTexture = _resourceCache.GetTexture("/Textures/Interface/gavel.svg.96dpi.png");
-            var tutorialTexture = _resourceCache.GetTexture("/Textures/Interface/tutorial.svg.96dpi.png");
-            var sandboxTexture = _resourceCache.GetTexture("/Textures/Interface/sandbox.svg.96dpi.png");
+            var escapeTexture = _resourceCache.GetTexture("/Textures/Interface/hamburger.svg.192dpi.png");
+            var characterTexture = _resourceCache.GetTexture("/Textures/Interface/character.svg.192dpi.png");
+            var inventoryTexture = _resourceCache.GetTexture("/Textures/Interface/inventory.svg.192dpi.png");
+            var craftingTexture = _resourceCache.GetTexture("/Textures/Interface/hammer.svg.192dpi.png");
+            var actionsTexture = _resourceCache.GetTexture("/Textures/Interface/fist.svg.192dpi.png");
+            var adminTexture = _resourceCache.GetTexture("/Textures/Interface/gavel.svg.192dpi.png");
+            var tutorialTexture = _resourceCache.GetTexture("/Textures/Interface/tutorial.svg.192dpi.png");
+            var sandboxTexture = _resourceCache.GetTexture("/Textures/Interface/sandbox.svg.192dpi.png");
 
             _topButtonsContainer = new HBoxContainer
             {
@@ -260,21 +262,6 @@ namespace Content.Client.UserInterface
             _inputManager.SetInputCommand(ContentKeyFunctions.OpenTutorial,
                 InputCmdHandler.FromDelegate(s => ButtonTutorialOnOnToggled()));
 
-            var inventoryContainer = new HBoxContainer
-            {
-                SeparationOverride = 10
-            };
-
-            RootControl.AddChild(inventoryContainer);
-
-            LayoutContainer.SetGrowHorizontal(inventoryContainer, LayoutContainer.GrowDirection.Begin);
-            LayoutContainer.SetGrowVertical(inventoryContainer, LayoutContainer.GrowDirection.Begin);
-            LayoutContainer.SetAnchorAndMarginPreset(inventoryContainer, LayoutContainer.LayoutPreset.BottomRight);
-
-            InventoryQuickButtonContainer = new MarginContainer
-            {
-                SizeFlagsVertical = Control.SizeFlags.ShrinkEnd
-            };
 
             _combatPanelContainer = new VBoxContainer
             {
@@ -289,23 +276,40 @@ namespace Content.Client.UserInterface
                 }
             };
 
+            LayoutContainer.SetGrowHorizontal(_combatPanelContainer, LayoutContainer.GrowDirection.Begin);
+            LayoutContainer.SetGrowVertical(_combatPanelContainer, LayoutContainer.GrowDirection.Begin);
+            LayoutContainer.SetAnchorAndMarginPreset(_combatPanelContainer, LayoutContainer.LayoutPreset.BottomRight);
+            LayoutContainer.SetMarginBottom(_combatPanelContainer, -10f);
+            RootControl.AddChild(_combatPanelContainer);
+
             _combatModeButton.OnToggled += args => OnCombatModeChanged?.Invoke(args.Pressed);
             _targetingDoll.OnZoneChanged += args => OnTargetingZoneChanged?.Invoke(args);
 
-            inventoryContainer.Children.Add(InventoryQuickButtonContainer);
-            inventoryContainer.Children.Add(_combatPanelContainer);
-
+            var centerBottomContainer = new HBoxContainer
+            {
+                SeparationOverride = 5
+            };
+            LayoutContainer.SetAnchorAndMarginPreset(centerBottomContainer, LayoutContainer.LayoutPreset.CenterBottom);
+            LayoutContainer.SetGrowHorizontal(centerBottomContainer, LayoutContainer.GrowDirection.Both);
+            LayoutContainer.SetGrowVertical(centerBottomContainer, LayoutContainer.GrowDirection.Begin);
+            LayoutContainer.SetMarginBottom(centerBottomContainer, -10f);
+            RootControl.AddChild(centerBottomContainer);
 
             HandsContainer = new MarginContainer
             {
                 SizeFlagsVertical = Control.SizeFlags.ShrinkEnd
             };
-
-            RootControl.AddChild(HandsContainer);
-
-            LayoutContainer.SetAnchorAndMarginPreset(HandsContainer, LayoutContainer.LayoutPreset.CenterBottom);
-            LayoutContainer.SetGrowHorizontal(HandsContainer, LayoutContainer.GrowDirection.Both);
-            LayoutContainer.SetGrowVertical(HandsContainer, LayoutContainer.GrowDirection.Begin);
+            RightInventoryQuickButtonContainer = new MarginContainer
+            {
+                SizeFlagsVertical = Control.SizeFlags.ShrinkEnd
+            };
+            LeftInventoryQuickButtonContainer = new MarginContainer
+            {
+                SizeFlagsVertical = Control.SizeFlags.ShrinkEnd
+            };
+            centerBottomContainer.AddChild(LeftInventoryQuickButtonContainer);
+            centerBottomContainer.AddChild(HandsContainer);
+            centerBottomContainer.AddChild(RightInventoryQuickButtonContainer);
 
             SuspicionContainer = new MarginContainer
             {
@@ -473,6 +477,7 @@ namespace Content.Client.UserInterface
                             new Control {CustomMinimumSize = (0, VertPad)},
                             (_textureRect = new TextureRect
                             {
+                                TextureScale = (0.5f, 0.5f),
                                 Texture = texture,
                                 SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
                                 SizeFlagsVertical = SizeFlags.Expand | SizeFlags.ShrinkCenter,
