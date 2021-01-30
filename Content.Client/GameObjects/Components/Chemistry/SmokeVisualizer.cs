@@ -1,4 +1,5 @@
-﻿using Content.Shared.GameObjects.Components.Chemistry;
+﻿#nullable enable
+using Content.Shared.GameObjects.Components.Chemistry;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
@@ -15,7 +16,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
 
             if (component.TryGetData<Color>(SmokeVisuals.Color, out var color))
             {
-                if (component.Owner.TryGetComponent(out ISpriteComponent sprite))
+                if (component.Owner.TryGetComponent(out ISpriteComponent? sprite))
                 {
                     sprite.Color = color;
                 }

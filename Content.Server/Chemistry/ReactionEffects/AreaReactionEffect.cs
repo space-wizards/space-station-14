@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.Interfaces.Chemistry;
 using Content.Server.Utility;
@@ -70,12 +71,12 @@ namespace Content.Server.Chemistry.ReactionEffects
         /// <summary>
         /// The entity prototype that will be spawned as the effect. It needs a component derived from SolutionAreaEffectComponent.
         /// </summary>
-        private string _prototypeId;
+        private string? _prototypeId;
 
         /// <summary>
         /// Sound that will get played when this reaction effect occurs.
         /// </summary>
-        private string _sound;
+        private string? _sound;
 
         protected AreaReactionEffect()
         {
@@ -103,7 +104,7 @@ namespace Content.Server.Chemistry.ReactionEffects
 
         public void React(IEntity solutionEntity, double intensity)
         {
-            if (!solutionEntity.TryGetComponent(out SolutionContainerComponent contents))
+            if (!solutionEntity.TryGetComponent(out SolutionContainerComponent? contents))
                 return;
 
             var solution = contents.SplitSolution(contents.MaxVolume);
@@ -156,6 +157,6 @@ namespace Content.Server.Chemistry.ReactionEffects
             }
         }
 
-        protected abstract SolutionAreaEffectComponent GetAreaEffectComponent(IEntity entity);
+        protected abstract SolutionAreaEffectComponent? GetAreaEffectComponent(IEntity entity);
     }
 }

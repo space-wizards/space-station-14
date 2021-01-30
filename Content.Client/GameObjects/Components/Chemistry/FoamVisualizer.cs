@@ -1,5 +1,5 @@
-﻿using System;
-using Content.Shared.GameObjects.Components;
+﻿#nullable enable
+using System;
 using Content.Shared.GameObjects.Components.Chemistry;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
@@ -16,7 +16,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
     public class FoamVisualizer : AppearanceVisualizer
     {
         private const string AnimationKey = "foamdissolve_animation";
-        private Animation _foamDissolve;
+        private Animation _foamDissolve = new();
         public override void LoadData(YamlMappingNode node)
         {
             base.LoadData(node);
@@ -49,7 +49,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
             {
                 if (state)
                 {
-                    if (component.Owner.TryGetComponent(out AnimationPlayerComponent animPlayer))
+                    if (component.Owner.TryGetComponent(out AnimationPlayerComponent? animPlayer))
                     {
                         if (!animPlayer.HasRunningAnimation(AnimationKey))
                             animPlayer.Play(_foamDissolve, AnimationKey);
@@ -59,7 +59,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
 
             if (component.TryGetData<Color>(FoamVisuals.Color, out var color))
             {
-                if (component.Owner.TryGetComponent(out ISpriteComponent sprite))
+                if (component.Owner.TryGetComponent(out ISpriteComponent? sprite))
                 {
                     sprite.Color = color;
                 }

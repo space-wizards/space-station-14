@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.Body.Circulatory;
+﻿#nullable enable
+using Content.Server.GameObjects.Components.Body.Circulatory;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Shared.Chemistry;
@@ -18,7 +19,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
     {
         public override string Name => "FoamSolutionAreaEffect";
 
-        private string _foamedMetalPrototype;
+        private string? _foamedMetalPrototype;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -28,7 +29,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         protected override void UpdateVisuals()
         {
-            if (Owner.TryGetComponent(out AppearanceComponent appearance) &&
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance) &&
                 SolutionContainerComponent != null)
             {
                 appearance.SetData(FoamVisuals.Color, SolutionContainerComponent.Color.WithAlpha(0.80f));
@@ -37,13 +38,16 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         protected override void ReactWithEntity(IEntity entity, double solutionFraction)
         {
-            if (!entity.TryGetComponent(out BloodstreamComponent bloodstream))
+            if (SolutionContainerComponent == null)
+                return;
+
+            if (!entity.TryGetComponent(out BloodstreamComponent? bloodstream))
                 return;
 
             // TODO: Add a permeability property to clothing
             // For now it just adds to protection for each clothing equipped
             var protection = 0f;
-            if (entity.TryGetComponent(out InventoryComponent inventory))
+            if (entity.TryGetComponent(out InventoryComponent? inventory))
             {
                 foreach (var slot in inventory.Slots)
                 {
@@ -69,7 +73,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             if (Owner.Deleted)
                 return;
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(FoamVisuals.State, true);
             }

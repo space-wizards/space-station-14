@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿#nullable enable
+using System.Linq;
 using Content.Server.GameObjects.Components.Body.Circulatory;
 using Content.Server.GameObjects.Components.Body.Respiratory;
 using Content.Shared.Chemistry;
@@ -18,7 +19,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         protected override void UpdateVisuals()
         {
-            if (Owner.TryGetComponent(out AppearanceComponent appearance) &&
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance) &&
                 SolutionContainerComponent != null)
             {
                 appearance.SetData(SmokeVisuals.Color, SolutionContainerComponent.Color);
@@ -27,10 +28,13 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         protected override void ReactWithEntity(IEntity entity, double solutionFraction)
         {
-            if (!entity.TryGetComponent(out BloodstreamComponent bloodstream))
+            if (SolutionContainerComponent == null)
                 return;
 
-            if (entity.TryGetComponent(out InternalsComponent internals) &&
+            if (!entity.TryGetComponent(out BloodstreamComponent? bloodstream))
+                return;
+
+            if (entity.TryGetComponent(out InternalsComponent? internals) &&
                 internals.AreInternalsWorking())
                 return;
 
