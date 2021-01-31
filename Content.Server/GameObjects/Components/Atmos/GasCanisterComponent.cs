@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Atmos.Piping;
@@ -92,7 +92,6 @@ namespace Content.Server.GameObjects.Components.Atmos
             if (Owner.TryGetComponent<IPhysicsComponent>(out var physics))
             {
                 AnchorUpdate();
-                physics.AnchoredChanged += AnchorUpdate;
             }
             if (UserInterface != null)
             {
@@ -107,15 +106,22 @@ namespace Content.Server.GameObjects.Components.Atmos
             UpdateAppearance();
         }
 
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+            switch (message)
+            {
+                case AnchoredChangedMessage:
+                    AnchorUpdate();
+                    break;
+            }
+        }
+
         #region Connector port methods
 
         public override void OnRemove()
         {
             base.OnRemove();
-            if (Owner.TryGetComponent<IPhysicsComponent>(out var physics))
-            {
-                physics.AnchoredChanged -= AnchorUpdate;
-            }
             if (UserInterface != null)
             {
                 UserInterface.OnReceiveMessage -= OnUiReceiveMessage;

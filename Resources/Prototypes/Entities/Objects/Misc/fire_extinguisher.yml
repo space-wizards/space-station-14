@@ -14,10 +14,10 @@
       size: 10
     - type: SolutionContainer
       maxVol: 100
-      caps: AddTo, RemoveFrom, NoExamine
+      caps: AddTo, RemoveFrom
       contents:
         reagents:
-          - ReagentId: chem.H2O
+          - ReagentId: chem.Water
             Quantity: 100
     - type: ItemCooldown
     - type: Spray

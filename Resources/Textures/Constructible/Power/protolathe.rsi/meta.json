@@ -9,25 +9,14 @@
     "states": [
         {
             "name": "protolathe",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "protolathe_unlit",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "protolathe_adamantine",
-            "directions": 1,
             "delays": [
                 [
                     0.088,
@@ -44,7 +33,6 @@
         },
         {
             "name": "protolathe_bananium",
-            "directions": 1,
             "delays": [
                 [
                     0.088,
@@ -61,7 +49,6 @@
         },
         {
             "name": "protolathe_diamond",
-            "directions": 1,
             "delays": [
                 [
                     0.088,
@@ -78,7 +65,6 @@
         },
         {
             "name": "protolathe_glass",
-            "directions": 1,
             "delays": [
                 [
                     0.088,
@@ -95,7 +81,6 @@
         },
         {
             "name": "protolathe_gold",
-            "directions": 1,
             "delays": [
                 [
                     0.088,
@@ -112,7 +97,6 @@
         },
         {
             "name": "protolathe_metal",
-            "directions": 1,
             "delays": [
                 [
                     0.088,
@@ -129,7 +113,6 @@
         },
         {
             "name": "protolathe_phoron",
-            "directions": 1,
             "delays": [
                 [
                     0.088,
@@ -146,7 +129,6 @@
         },
         {
             "name": "protolathe_building",
-            "directions": 1,
             "delays": [
                 [
                     0.05,
@@ -167,7 +149,6 @@
         },
         {
             "name": "protolathe_silver",
-            "directions": 1,
             "delays": [
                 [
                     0.088,
@@ -184,7 +165,6 @@
         },
         {
             "name": "protolathe_solid plasma",
-            "directions": 1,
             "delays": [
                 [
                     0.088,
@@ -201,16 +181,10 @@
         },
         {
             "name": "protolathe_panel",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "protolathe_uranium",
-            "directions": 1,
             "delays": [
                 [
                     0.088,

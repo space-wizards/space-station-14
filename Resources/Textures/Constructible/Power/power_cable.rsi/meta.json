@@ -8,68 +8,52 @@
 	"copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/fcf375d7d9ce6ceed5c7face899725e5655ab640",
 	"states": [
 		{
-			"name": "cable_0",
-			"directions": 1
+			"name": "cable_0"
 		},
 		{
-			"name": "cable_1",
-			"directions": 1
+			"name": "cable_1"
 		},
 		{
-			"name": "cable_2",
-			"directions": 1
+			"name": "cable_2"
 		},
 		{
-			"name": "cable_3",
-			"directions": 1
+			"name": "cable_3"
 		},
 		{
-			"name": "cable_4",
-			"directions": 1
+			"name": "cable_4"
 		},
 		{
-			"name": "cable_5",
-			"directions": 1
+			"name": "cable_5"
 		},
 		{
-			"name": "cable_6",
-			"directions": 1
+			"name": "cable_6"
 		},
 		{
-			"name": "cable_7",
-			"directions": 1
+			"name": "cable_7"
 		},
 		{
-			"name": "cable_8",
-			"directions": 1
+			"name": "cable_8"
 		},
 		{
-			"name": "cable_9",
-			"directions": 1
+			"name": "cable_9"
 		},
 		{
-			"name": "cable_10",
-			"directions": 1
+			"name": "cable_10"
 		},
 		{
-			"name": "cable_11",
-			"directions": 1
+			"name": "cable_11"
 		},
 		{
-			"name": "cable_12",
-			"directions": 1
+			"name": "cable_12"
 		},
 		{
-			"name": "cable_13",
-			"directions": 1
+			"name": "cable_13"
 		},
 		{
-			"name": "cable_14",
-			"directions": 1
+			"name": "cable_14"
 		},
 		{
-			"name": "cable_15",
-			"directions": 1
+			"name": "cable_15"
 		},
 	]
 }

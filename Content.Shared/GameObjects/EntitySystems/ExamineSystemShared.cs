@@ -6,7 +6,6 @@ using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
@@ -161,7 +160,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         public static bool InRangeUnOccluded(AfterInteractEventArgs args, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
             var originPos = args.User.Transform.MapPosition;
-            var otherPos = args.Target.Transform.MapPosition;
+            var otherPos = args.Target?.Transform.MapPosition ?? args.ClickLocation.ToMap(args.User.EntityManager);
 
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }

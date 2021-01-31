@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
@@ -59,16 +59,22 @@ namespace Content.Server.GameObjects.Components.Power.AME
 
             Owner.TryGetComponent(out _appearance);
 
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
-            {
-                receiver.OnPowerStateChanged += OnPowerChanged;
-            }
-
             Owner.TryGetComponent(out _powerSupplier);
 
             _injecting = false;
             InjectionAmount = 2;
             _jarSlot = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-fuelJarContainer", Owner);
+        }
+
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+            switch (message)
+            {
+                case PowerChangedMessage powerChanged:
+                    OnPowerChanged(powerChanged);
+                    break;
+            }
         }
 
         internal void OnUpdate(float frameTime)
@@ -127,7 +133,7 @@ namespace Content.Server.GameObjects.Components.Power.AME
             }
         }
 
-        private void OnPowerChanged(object? sender, PowerStateEventArgs e)
+        private void OnPowerChanged(PowerChangedMessage e)
         {
             UpdateUserInterface();
         }

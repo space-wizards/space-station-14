@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Body.Behavior;
 using Content.Server.GameObjects.Components.Nutrition;
-using Content.Server.GameObjects.Components.Utensil;
+using Content.Server.GameObjects.Components.Culinary;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.Interfaces;
@@ -21,7 +21,6 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Chemistry
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IAfterInteract))]
     public class PillComponent : FoodComponent, IUse, IAfterInteract
     {
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
@@ -104,11 +103,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             // TODO: Account for partial transfer.
 
-            foreach (var (reagentId, quantity) in split.Contents)
-            {
-                if (!_prototypeManager.TryIndex(reagentId, out ReagentPrototype reagent)) continue;
-                split.RemoveReagent(reagentId, reagent.ReactionEntity(trueTarget, ReactionMethod.Ingestion, quantity));
-            }
+            split.DoEntityReaction(trueTarget, ReactionMethod.Ingestion);
 
             firstStomach.TryTransferSolution(split);
 

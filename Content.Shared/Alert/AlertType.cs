@@ -45,6 +45,7 @@
         Parched,
         Pulled,
         Pulling,
+        Magboots,
         Debug1,
         Debug2,
         Debug3,

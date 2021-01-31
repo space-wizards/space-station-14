@@ -3,7 +3,6 @@
     public enum Sex
     {
         Male,
-        Female,
-        Classified
+        Female
     }
 }

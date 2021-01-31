@@ -1,4 +1,4 @@
-﻿using Robust.Server.Interfaces.Player;
+using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.Interfaces.Chat
@@ -16,7 +16,8 @@ namespace Content.Server.Interfaces.Chat
         ///     Station announcement to every player
         /// </summary>
         /// <param name="message"></param>
-        void DispatchStationAnnouncement(string message);
+        /// <param name="sender"></param>
+        void DispatchStationAnnouncement(string message, string sender = "CentComm");
 
         void DispatchServerMessage(IPlayerSession player, string message);
 
@@ -26,6 +27,7 @@ namespace Content.Server.Interfaces.Chat
         void SendOOC(IPlayerSession player, string message);
         void SendAdminChat(IPlayerSession player, string message);
         void SendDeadChat(IPlayerSession player, string message);
+        void SendAdminDeadChat(IPlayerSession player, string message);
 
         void SendHookOOC(string sender, string message);
 

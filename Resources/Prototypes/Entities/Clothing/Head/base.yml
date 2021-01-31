@@ -29,3 +29,33 @@
     - type: PressureProtection
       highPressureMultiplier: 0.5
       lowPressureMultiplier: 100
+
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHardsuitWithLightBase
+  name: base hardsuit helmet with light
+  abstract: true
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+    - state: icon-flash
+      visible: false
+  - type: Clothing
+    HeldPrefix: off
+    ClothingPrefix: off
+  - type: PointLight
+    enabled: false
+    radius: 3
+  - type: LoopingSound
+  - type: Appearance
+    visuals:
+      - type: FlashLightVisualizer
+  - type: ItemActions
+    actions:
+      - actionType: ToggleLight
+    # right now there is no power system for hardsuits
+    # so hardsuit helmet just have small battery inside 
+  - type: HandheldLight
+  - type: PowerCellSlot
+    startingCellType: PowerCellSmallHigh

@@ -9,7 +9,6 @@
 #  access:
 #  - Chapel
 #  - Maintenance
-
 #- type: startingGear
 #  id: ChaplainGear
 #  equipment:
@@ -18,3 +17,5 @@
 #    shoes: ClothingShoesColorBlack
 #    idcard: ChaplainPDA
 #    ears: ClothingHeadsetService
+#  innerclothingskirt: ClothingUniformJumpskirtChaplain
+

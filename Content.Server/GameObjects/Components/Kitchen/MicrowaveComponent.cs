@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,6 @@ using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Utility;
@@ -15,6 +14,7 @@ using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Power;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Kitchen;
@@ -32,7 +32,6 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Kitchen
@@ -441,7 +440,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
             foreach (var reagent in recipe.IngredientsReagents)
             {
-                if (!solution.ContainsReagent(reagent.Key, out var amount))
+                if (!solution.Solution.ContainsReagent(reagent.Key, out var amount))
                 {
                     return MicrowaveSuccessState.RecipeFail;
                 }

@@ -38,6 +38,7 @@
       - SmallImpassable
   - type: EntityStorage
   - type: PlaceableSurface
+    placeCentered: true
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible

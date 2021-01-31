@@ -30,7 +30,6 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Nutrition
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IAfterInteract))]
     public class DrinkComponent : Component, IUse, IAfterInteract, ISolutionChange, IExamine, ILand
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -182,11 +181,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             // TODO: Account for partial transfer.
 
-            foreach (var (reagentId, quantity) in split.Contents)
-            {
-                if (!_prototypeManager.TryIndex(reagentId, out ReagentPrototype reagent)) continue;
-                split.RemoveReagent(reagentId, reagent.ReactionEntity(target, ReactionMethod.Ingestion, quantity));
-            }
+            split.DoEntityReaction(target, ReactionMethod.Ingestion);
 
             firstStomach.TryTransferSolution(split);
 

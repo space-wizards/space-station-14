@@ -1,6 +1,7 @@
 #nullable enable
 using Content.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Maths;
 
 namespace Content.Client.GameObjects.Components
 {
@@ -9,6 +10,8 @@ namespace Content.Client.GameObjects.Components
     public class PlaceableSurfaceComponent : SharedPlaceableSurfaceComponent
     {
         private bool _isPlaceable;
+        private bool _placeCentered;
+        private Vector2 _positionOffset;
 
         public override bool IsPlaceable
         {
@@ -22,7 +25,36 @@ namespace Content.Client.GameObjects.Components
 
                 _isPlaceable = value;
 
-                Dirty();
+            }
+        }
+
+        public override bool PlaceCentered
+        {
+            get => _placeCentered;
+            set
+            {
+                if (_placeCentered == value)
+                {
+                    return;
+                }
+
+                _placeCentered = value;
+
+            }
+        }
+
+        public override Vector2 PositionOffset
+        {
+            get => _positionOffset;
+            set
+            {
+                if (_positionOffset.EqualsApprox(value))
+                {
+                    return;
+                }
+
+                _positionOffset = value;
+
             }
         }
 
@@ -36,6 +68,8 @@ namespace Content.Client.GameObjects.Components
             }
 
             _isPlaceable = state.IsPlaceable;
+            _placeCentered = state.PlaceCentered;
+            _positionOffset = state.PositionOffset;
         }
     }
 }
