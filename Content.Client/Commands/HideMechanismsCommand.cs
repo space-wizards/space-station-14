@@ -17,7 +17,7 @@ namespace Content.Client.Commands
         public bool Execute(IDebugConsole console, params string[] args)
         {
             var componentManager = IoCManager.Resolve<IComponentManager>();
-            var mechanisms = componentManager.EntityQuery<IMechanism>();
+            var mechanisms = componentManager.EntityQuery<IMechanism>(true);
 
             foreach (var mechanism in mechanisms)
             {

@@ -43,7 +43,7 @@ namespace Content.Server.StationEvents
         {
             var componentManager = IoCManager.Resolve<IComponentManager>();
 
-            foreach (var component in componentManager.EntityQuery<PowerReceiverComponent>())
+            foreach (var component in componentManager.EntityQuery<PowerReceiverComponent>(true))
             {
                 component.PowerDisabled = true;
                 _powered.Add(component.Owner);

@@ -9,7 +9,7 @@ namespace Content.Server.GameObjects.EntitySystems
     {
         public override void Update(float frameTime)
         {
-            foreach (var comp in ComponentManager.EntityQuery<LatheComponent>())
+            foreach (var comp in ComponentManager.EntityQuery<LatheComponent>(true))
             {
                 if (comp.Producing == false && comp.Queue.Count > 0)
                 {

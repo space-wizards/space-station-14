@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects.EntitySystems
             if (_timer < Interval) return;
             _timer = 0f;
 
-            foreach (var gasTank in EntityManager.ComponentManager.EntityQuery<GasTankComponent>())
+            foreach (var gasTank in EntityManager.ComponentManager.EntityQuery<GasTankComponent>(true))
             {
                 gasTank.Update();
             }
