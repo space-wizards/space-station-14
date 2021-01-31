@@ -695,6 +695,22 @@ namespace Content.Server.GameObjects.Components.Botany
                 return true;
             }
 
+            if (usingItem.HasComponent<ShovelComponent>())
+            {
+                if (Seed != null)
+                {
+                    user.PopupMessageCursor(Loc.GetString("You remove the plant from the {0}.", Owner.Name));
+                    user.PopupMessageOtherClients(Loc.GetString("{0} removes the plant.", user.Name));
+                    RemovePlant();
+                }
+                else
+                {
+                    user.PopupMessageCursor(Loc.GetString("There is no plant to remove."));
+                }
+
+                return true;
+            }
+
             if (usingItem.TryGetComponent(out SolutionContainerComponent? solution) && solution.CanRemoveSolutions)
             {
                 var amount = 5f;
