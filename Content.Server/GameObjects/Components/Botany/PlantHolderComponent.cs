@@ -780,6 +780,26 @@ namespace Content.Server.GameObjects.Components.Botany
                 return DoHarvest(user);
             }
 
+            if (usingItem.HasComponent<ProduceComponent>())
+            {
+                user.PopupMessageCursor(Loc.GetString("You compost {1:theName} into {0:theName}.", Owner, usingItem));
+                user.PopupMessageOtherClients(Loc.GetString("{0:TheName} composts {1:theName} into {2:theName}.", user, usingItem, Owner));
+
+                if (usingItem.TryGetComponent(out SolutionContainerComponent? solution2))
+                {
+                    // This deliberately discards overfill.
+                    _solutionContainer?.TryAddSolution(solution2.SplitSolution(solution2.Solution.TotalVolume));
+
+                    SkipAging++; // We're forcing an update cycle, so one age hasn't passed.
+                    ForceUpdate = true;
+                    Update();
+                }
+
+                usingItem.Delete();
+
+                return true;
+            }
+
             return false;
         }
 
