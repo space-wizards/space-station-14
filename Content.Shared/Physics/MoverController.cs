@@ -8,24 +8,14 @@ namespace Content.Shared.Physics
 {
     public class MoverController : VirtualController
     {
-        public void Move(Vector2 velocityDirection, float speed)
+        public void Move(Vector2 velocityDirection)
         {
-            if (ControlledComponent?.Owner.IsWeightless() ?? false)
-            {
-                return;
-            }
-
-            Push(velocityDirection, speed);
-        }
-
-        public void Push(Vector2 velocityDirection, float speed)
-        {
-            LinearVelocity = velocityDirection * speed;
+            Impulse = velocityDirection;
         }
 
         public void StopMoving()
         {
-            LinearVelocity = Vector2.Zero;
+            Impulse = Vector2.Zero;
         }
     }
 }

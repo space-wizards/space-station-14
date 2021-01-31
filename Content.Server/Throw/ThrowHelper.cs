@@ -14,6 +14,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Dynamics.Shapes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Throw

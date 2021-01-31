@@ -20,6 +20,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Dynamics.Shapes;
 using Robust.Shared.Timers;
 
 namespace Content.Server.GameObjects.Components.Singularity
