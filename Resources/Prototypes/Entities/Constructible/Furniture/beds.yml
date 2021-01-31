@@ -11,7 +11,10 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.45, -0.45, 0.05, 0.45"
-      layer: [ Passable ]
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     sprite: Constructible/Misc/furniture.rsi
     state: bed
