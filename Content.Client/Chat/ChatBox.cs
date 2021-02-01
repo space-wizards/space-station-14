@@ -869,7 +869,6 @@ namespace Content.Client.Chat
         public ChannelItemButton(ChatChannel channel)
         {
             Channel = channel;
-            // TODO: Does this work? Style is applied to Button not this subclass
             AddStyleClass(StyleNano.StyleClassChatChannelSelectorButton);
             Text = ChatBox.ChannelSelectorName(channel);
         }
