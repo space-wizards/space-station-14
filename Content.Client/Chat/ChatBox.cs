@@ -2,6 +2,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
+using Content.Client.UserInterface;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.Chat;
@@ -75,6 +77,7 @@ namespace Content.Client.Chat
         // the message is sent
         private ChatChannel? _savedSelectedChannel;
 
+        private readonly Popup _channelSelectorPopup;
         private readonly Button _channelSelector;
         private readonly HBoxContainer _channelSelectorHBox;
         private readonly FilterButton _filterButton;
@@ -89,7 +92,7 @@ namespace Content.Client.Chat
         private byte _clampIn;
         // currently known selectable channels as provided by ChatManager,
         // never contains Unspecified (which corresponds to Console which is always available)
-        private IReadOnlySet<ChatChannel> _selectableChannels;
+        private IReadOnlySet<ChatChannel> _selectableChannels = ImmutableHashSet<ChatChannel>.Empty;
 
         /// <summary>
         /// When lobbyMode is false, will position / add to correct location in StateRoot and
@@ -110,70 +113,60 @@ namespace Content.Client.Chat
             _clyde = IoCManager.Resolve<IClyde>();
             MouseFilter = MouseFilterMode.Stop;
 
-            AddChild(new VBoxContainer
+            AddChild(new PanelContainer
             {
+                PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#25252aaa")},
+                SizeFlagsVertical = SizeFlags.FillExpand,
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
                 Children =
                 {
-                    new PanelContainer
+                    new VBoxContainer
                     {
-                        PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#25252aaa")},
-                        SizeFlagsVertical = SizeFlags.FillExpand,
-                        SizeFlagsHorizontal = SizeFlags.FillExpand,
                         Children =
                         {
-                            new VBoxContainer
+                            new MarginContainer
                             {
+                                MarginLeftOverride = 4, MarginRightOverride = 4,
+                                SizeFlagsVertical = SizeFlags.FillExpand,
                                 Children =
                                 {
-                                    new MarginContainer
+                                    (Contents = new OutputPanel())
+                                }
+                            },
+                            new PanelContainer
+                            {
+                                StyleClasses = { StyleNano.StyleClassChatSubPanel },
+                                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                                Children =
+                                {
+                                    new HBoxContainer
                                     {
-                                        MarginLeftOverride = 4, MarginRightOverride = 4,
-                                        SizeFlagsVertical = SizeFlags.FillExpand,
-                                        Children =
-                                        {
-                                            (Contents = new OutputPanel())
-                                        }
-                                    },
-                                    new PanelContainer
-                                    {
-                                        StyleClasses = { StyleNano.StyleClassChatSubPanel },
                                         SizeFlagsHorizontal = SizeFlags.FillExpand,
+                                        SeparationOverride = 4,
                                         Children =
                                         {
-                                            new HBoxContainer
+                                            (_channelSelector = new Button
+                                            {
+                                                StyleClasses = { StyleNano.StyleClassChatChannelSelectorButton },
+                                                CustomMinimumSize = (75, 0),
+                                                Text = Loc.GetString("OOC"),
+                                                ToggleMode = true
+                                            }),
+                                            (Input = new HistoryLineEdit
                                             {
                                                 SizeFlagsHorizontal = SizeFlags.FillExpand,
-                                                SeparationOverride = 4,
-                                                Children =
-                                                {
-                                                    (_channelSelector = new Button
-                                                    {
-                                                        StyleClasses = { StyleNano.StyleClassChatChannelSelectorButton },
-                                                        CustomMinimumSize = (75, 0),
-                                                        Text = Loc.GetString("OOC"),
-                                                        ToggleMode = true
-                                                    }),
-                                                    (Input = new HistoryLineEdit
-                                                    {
-                                                        SizeFlagsHorizontal = SizeFlags.FillExpand,
-                                                        StyleClasses = { StyleNano.StyleClassChatLineEdit }
-                                                    }),
-                                                    (_filterButton = new FilterButton
-                                                    {
-                                                        StyleClasses = { StyleNano.StyleClassChatFilterOptionButton }
-                                                    })
-                                                }
-                                            }
+                                                StyleClasses = { StyleNano.StyleClassChatLineEdit }
+                                            }),
+                                            (_filterButton = new FilterButton
+                                            {
+                                                StyleClasses = { StyleNano.StyleClassChatFilterOptionButton }
+                                            })
                                         }
                                     }
                                 }
                             }
                         }
-                    },
-                    (_channelSelectorHBox = new HBoxContainer
-                    {
-                        SeparationOverride = 4
-                    })
+                    }
                 }
             });
 
@@ -202,6 +195,17 @@ namespace Content.Client.Chat
                 }
             };
 
+            _channelSelectorPopup = new Popup
+            {
+                Children =
+                {
+                    (_channelSelectorHBox = new HBoxContainer
+                    {
+                        SeparationOverride = 4
+                    })
+                }
+            };
+
             if (!lobbyMode)
             {
                 UserInterfaceManager.StateRoot.AddChild(this);
@@ -222,7 +226,8 @@ namespace Content.Client.Chat
             Input.OnTextChanged += InputOnTextChanged;
             Input.OnFocusExit += InputOnFocusExit;
             _filterButton.OnToggled += FilterButtonToggled;
-            _filterPopup.OnPopupHide += OnPopupHide;
+            _channelSelectorPopup.OnPopupHide += OnChannelSelectorPopupHide;
+            _filterPopup.OnPopupHide += OnFilterPopupHide;
             _clyde.OnWindowResized += ClydeOnOnWindowResized;
         }
 
@@ -235,7 +240,8 @@ namespace Content.Client.Chat
             Input.OnTextChanged -= InputOnTextChanged;
             Input.OnFocusExit -= InputOnFocusExit;
             _filterButton.OnToggled -= FilterButtonToggled;
-            _filterPopup.OnPopupHide -= OnPopupHide;
+            _channelSelectorPopup.OnPopupHide -= OnChannelSelectorPopupHide;
+            _filterPopup.OnPopupHide -= OnFilterPopupHide;
             _clyde.OnWindowResized -= ClydeOnOnWindowResized;
             UnsubFilterItems();
             UnsubChannelItems();
@@ -281,10 +287,14 @@ namespace Content.Client.Chat
             foreach (var selectableChannel in ChannelSelectorOrder)
             {
                 if (!selectableChannels.Contains(selectableChannel)) continue;
-                _channelSelectorHBox.AddChild(new ChannelItemButton(selectableChannel));
+                var newButton = new ChannelItemButton(selectableChannel);
+                newButton.OnPressed += OnChannelSelectorItemPressed;
+                _channelSelectorHBox.AddChild(newButton);
             }
             // console channel is always selectable and represented via Unspecified
-            _channelSelector.AddChild(new ChannelItemButton(ChatChannel.Unspecified));
+            var consoleButton = new ChannelItemButton(ChatChannel.Unspecified);
+            consoleButton.OnPressed += OnChannelSelectorItemPressed;
+            _channelSelectorHBox.AddChild(consoleButton);
 
 
             if (_savedSelectedChannel.HasValue && _savedSelectedChannel.Value != ChatChannel.Unspecified &&
@@ -358,15 +368,18 @@ namespace Content.Client.Chat
             };
         }
 
-        private void OnFilterCheckboxToggled(BaseButton.ButtonToggledEventArgs obj)
+        private void OnFilterCheckboxToggled(BaseButton.ButtonToggledEventArgs args)
         {
-            if (obj.Button is not ChannelFilterCheckbox checkbox) return;
+            if (args.Button is not ChannelFilterCheckbox checkbox) return;
             FilterToggled?.Invoke(checkbox.Channel, checkbox.Pressed);
         }
 
-        private void FilterButtonToggled(BaseButton.ButtonToggledEventArgs obj)
+
+        // TODO: Reduce the code dupe between both popups + their buttons, possibly refactor into a shared class
+
+        private void FilterButtonToggled(BaseButton.ButtonToggledEventArgs args)
         {
-            if (obj.Pressed)
+            if (args.Pressed)
             {
                 var globalPos = _filterButton.GlobalPosition;
                 var (minX, minY) = _filterPopupPanel.CombinedMinimumSize;
@@ -380,7 +393,23 @@ namespace Content.Client.Chat
             }
         }
 
-        private void OnPopupHide()
+        private void OnChannelSelectorToggled(BaseButton.ButtonToggledEventArgs args)
+        {
+            if (args.Pressed)
+            {
+                var globalLeft = GlobalPosition.X;
+                var globalBot = GlobalPosition.Y + Height;
+                var box = UIBox2.FromDimensions((globalLeft, globalBot), (SizeBox.Width, AlertsUI.ChatSeparation));
+                UserInterfaceManager.ModalRoot.AddChild(_channelSelectorPopup);
+                _channelSelectorPopup.Open(box);
+            }
+            else
+            {
+                _channelSelectorPopup.Close();
+            }
+        }
+
+        private void OnFilterPopupHide()
         {
             UserInterfaceManager.ModalRoot.RemoveChild(_filterPopup);
             // this weird check here is because the hiding of the popup happens prior to the filter button
@@ -393,6 +422,26 @@ namespace Content.Client.Chat
                 _filterButton.Pressed = false;
             }
         }
+
+        private void OnChannelSelectorPopupHide()
+        {
+            // same as above for why we need this
+            UserInterfaceManager.ModalRoot.RemoveChild(_channelSelectorPopup);
+            if (UserInterfaceManager.CurrentlyHovered != _channelSelector)
+            {
+                _channelSelector.Pressed = false;
+            }
+        }
+
+
+
+        private void OnChannelSelectorItemPressed(BaseButton.ButtonEventArgs obj)
+        {
+            if (obj.Button is not ChannelItemButton button) return;
+            SafelySelectChannel(button.Channel);
+            _channelSelectorPopup.Close();
+        }
+
 
         /// <summary>
         /// Selects the indicated channel, clearing out any temporarily-selected channel
@@ -410,6 +459,7 @@ namespace Content.Client.Chat
             if (toSelect == ChatChannel.Unspecified ||
                 _selectableChannels.Contains(toSelect))
             {
+                _selectedChannel = toSelect;
                 _channelSelector.Text = ChannelSelectorName(toSelect);
                 return true;
             }
@@ -637,7 +687,7 @@ namespace Content.Client.Chat
             if (trimmed.Length == 0 || trimmed.Length > 1) return;
 
             var channel = GetChannelFromPrefix(trimmed[0]);
-            var prevChannel = SelectedChannel;
+            var prevChannel = _selectedChannel;
             if (channel == null || !SafelySelectChannel(channel.Value)) return;
             // we ate the prefix and auto-switched (temporarily) to the channel with that prefix
             _savedSelectedChannel = prevChannel;
@@ -670,21 +720,6 @@ namespace Content.Client.Chat
             };
 
             return prefixChar.ToString() ?? string.Empty;
-        }
-
-        private void OnChannelSelectorToggled(BaseButton.ButtonToggledEventArgs buttonToggledEventArgs)
-        {
-            // TODO: Filter button-style logic for showing / hiding items
-            SafelySelectChannel((ChatChannel) args.Id);
-            // we manually selected something so undo the temporary selection
-            _savedSelectedChannel = null;
-        }
-
-
-        private void OnChannelSelectorItemPressed(BaseButton.ButtonEventArgs obj)
-        {
-            // TODO:
-            throw new NotImplementedException();
         }
 
         public static string ChannelSelectorName(ChatChannel channel)
@@ -727,7 +762,7 @@ namespace Content.Client.Chat
 
             if (!string.IsNullOrWhiteSpace(args.Text))
             {
-                TextSubmitted?.Invoke(this, GetPrefixFromChannel((ChatChannel)_channelSelector.SelectedId)
+                TextSubmitted?.Invoke(this, GetPrefixFromChannel(_selectedChannel)
                                             + args.Text);
             }
 
@@ -827,7 +862,7 @@ namespace Content.Client.Chat
         {
             Channel = channel;
             // TODO: Does this work? Style is applied to Button not this subclass
-            SetOnlyStyleClass(StyleNano.StyleClassChatChannelSelectorButton);
+            AddStyleClass(StyleNano.StyleClassChatChannelSelectorButton);
             Text = ChatBox.ChannelSelectorName(channel);
         }
     }

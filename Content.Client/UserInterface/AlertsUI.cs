@@ -13,7 +13,7 @@ namespace Content.Client.UserInterface
     /// </summary>
     public sealed class AlertsUI : Control
     {
-        private const float ChatSeparation = 24f;
+        public const float ChatSeparation = 38f;
         public GridContainer Grid { get; }
 
         private readonly IChatManager _chatManager;
