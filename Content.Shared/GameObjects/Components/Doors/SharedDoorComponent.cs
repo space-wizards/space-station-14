@@ -169,8 +169,7 @@ namespace Content.Shared.GameObjects.Components.Doors
         /// <param name="frameTime"></param>
         public virtual void OnUpdate(float frameTime) { }
 
-        [NetSerializable]
-        [Serializable]
+        [Serializable, NetSerializable]
         public enum DoorState
         {
             Open,
@@ -181,8 +180,7 @@ namespace Content.Shared.GameObjects.Components.Doors
 
     }
 
-    [NetSerializable]
-    [Serializable]
+    [Serializable, NetSerializable]
     public enum DoorVisualState
     {
         Open,
@@ -193,8 +191,7 @@ namespace Content.Shared.GameObjects.Components.Doors
         Welded
     }
 
-    [NetSerializable]
-    [Serializable]
+    [Serializable, NetSerializable]
     public enum DoorVisuals
     {
         VisualState,
