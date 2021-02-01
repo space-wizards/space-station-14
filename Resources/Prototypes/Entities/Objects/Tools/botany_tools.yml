@@ -121,7 +121,7 @@
   components:
     - type: Sprite
       sprite: Constructible/Hydroponics/hydro_tools.rsi
-      state: spade
+      state: shovel
     - type: ItemCooldown
     - type: MeleeWeapon
     - type: Shovel
