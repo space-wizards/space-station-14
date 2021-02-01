@@ -10,7 +10,7 @@ using Robust.Shared.Serialization;
 namespace Content.Server.Chemistry.Metabolism
 {
     /// <summary>
-    /// Default metabolism for medicine reagents. Attempts to find a DamegableComponent on the target,
+    /// Default metabolism for medicine reagents. Attempts to find a DamageableComponent on the target,
     /// and to update its damage values.
     /// </summary>
     public class DamageMetabolism : IMetabolizable
@@ -22,9 +22,9 @@ namespace Content.Server.Chemistry.Metabolism
 
         //How much damage is changed when 1u of the reagent is metabolized
         private float _healthChangePerSec;
+        public float HealthChangePerSec => _healthChangePerSec;
         private damageClass _healthChangeType;
         private damageClass HealthChangeType => _healthChangeType;
-        public float HealthChangePerSec => _healthChangePerSec;
 
         void IExposeData.ExposeData(ObjectSerializer serializer)
         {
