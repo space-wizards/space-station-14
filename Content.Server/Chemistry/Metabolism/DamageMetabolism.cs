@@ -37,7 +37,7 @@ namespace Content.Server.Chemistry.Metabolism
         ReagentUnit IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime)
         {
             var metabolismAmount = MetabolismRate * tickTime;
-            if (solutionEntity.TryGetComponent(out DamageableComponent health))
+            if (solutionEntity.TryGetComponent(out IDamageableComponent health))
                 health.ChangeDamage(HealthChangeType, (int) (metabolismAmount.Float() * HealthChangePerSec), true);
                 
             return metabolismAmount;
