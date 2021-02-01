@@ -639,6 +639,13 @@ namespace Content.Server.GameObjects.Components.Botany
                 Seed = Seed.Diverge(modified);
         }
 
+        private void ForceUpdateByExternalCause()
+        {
+            SkipAging++; // We're forcing an update cycle, so one age hasn't passed.
+            ForceUpdate = true;
+            Update();
+        }
+
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             var user = eventArgs.User;
@@ -731,9 +738,7 @@ namespace Content.Server.GameObjects.Components.Botany
 
                 _solutionContainer?.TryAddSolution(split);
 
-                SkipAging++; // We're forcing an update cycle, so one age hasn't passed.
-                ForceUpdate = true;
-                Update();
+                ForceUpdateByExternalCause();
 
                 return true;
             }
@@ -768,9 +773,7 @@ namespace Content.Server.GameObjects.Components.Botany
 
                 // Just in case.
                 CheckLevelSanity();
-                SkipAging++; // We're forcing an update cycle, so one age hasn't passed.
-                ForceUpdate = true;
-                Update();
+                ForceUpdateByExternalCause();
 
                 return true;
             }
@@ -790,9 +793,7 @@ namespace Content.Server.GameObjects.Components.Botany
                     // This deliberately discards overfill.
                     _solutionContainer?.TryAddSolution(solution2.SplitSolution(solution2.Solution.TotalVolume));
 
-                    SkipAging++; // We're forcing an update cycle, so one age hasn't passed.
-                    ForceUpdate = true;
-                    Update();
+                    ForceUpdateByExternalCause();
                 }
 
                 usingItem.Delete();
