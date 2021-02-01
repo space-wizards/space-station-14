@@ -145,7 +145,7 @@ namespace Content.Client.Chat
                                         SeparationOverride = 4,
                                         Children =
                                         {
-                                            (_channelSelector = new Button
+                                            (_channelSelector = new ChannelSelectorButton
                                             {
                                                 StyleClasses = { StyleNano.StyleClassChatChannelSelectorButton },
                                                 CustomMinimumSize = (75, 0),
@@ -221,11 +221,11 @@ namespace Content.Client.Chat
         {
             base.EnteredTree();
             _channelSelector.OnToggled += OnChannelSelectorToggled;
+            _filterButton.OnToggled += OnFilterButtonToggled;
             Input.OnKeyBindDown += InputKeyBindDown;
             Input.OnTextEntered += Input_OnTextEntered;
             Input.OnTextChanged += InputOnTextChanged;
             Input.OnFocusExit += InputOnFocusExit;
-            _filterButton.OnToggled += FilterButtonToggled;
             _channelSelectorPopup.OnPopupHide += OnChannelSelectorPopupHide;
             _filterPopup.OnPopupHide += OnFilterPopupHide;
             _clyde.OnWindowResized += ClydeOnOnWindowResized;
@@ -235,11 +235,11 @@ namespace Content.Client.Chat
         {
             base.ExitedTree();
             _channelSelector.OnToggled -= OnChannelSelectorToggled;
+            _filterButton.OnToggled -= OnFilterButtonToggled;
             Input.OnKeyBindDown -= InputKeyBindDown;
             Input.OnTextEntered -= Input_OnTextEntered;
             Input.OnTextChanged -= InputOnTextChanged;
             Input.OnFocusExit -= InputOnFocusExit;
-            _filterButton.OnToggled -= FilterButtonToggled;
             _channelSelectorPopup.OnPopupHide -= OnChannelSelectorPopupHide;
             _filterPopup.OnPopupHide -= OnFilterPopupHide;
             _clyde.OnWindowResized -= ClydeOnOnWindowResized;
@@ -357,17 +357,6 @@ namespace Content.Client.Chat
             }
         }
 
-        private string ChannelDisplayName(ChatChannel channel)
-        {
-            return channel switch
-            {
-                ChatChannel.AdminChat => "Admin",
-                ChatChannel.Unspecified => throw new InvalidOperationException(
-                    "cannot create chat filter for Unspecified"),
-                _ => channel.ToString()
-            };
-        }
-
         private void OnFilterCheckboxToggled(BaseButton.ButtonToggledEventArgs args)
         {
             if (args.Button is not ChannelFilterCheckbox checkbox) return;
@@ -375,9 +364,7 @@ namespace Content.Client.Chat
         }
 
 
-        // TODO: Reduce the code dupe between both popups + their buttons, possibly refactor into a shared class
-
-        private void FilterButtonToggled(BaseButton.ButtonToggledEventArgs args)
+        private void OnFilterButtonToggled(BaseButton.ButtonToggledEventArgs args)
         {
             if (args.Pressed)
             {
@@ -411,29 +398,27 @@ namespace Content.Client.Chat
 
         private void OnFilterPopupHide()
         {
-            UserInterfaceManager.ModalRoot.RemoveChild(_filterPopup);
-            // this weird check here is because the hiding of the popup happens prior to the filter button
-            // receiving the keydown, which would cause it to then become unpressed
-            // and reopen immediately. To avoid this, if the popup was hidden due to clicking on the filter button,
-            // we will not auto-unpress the button, instead leaving it up to the button toggle logic
-            // (and this requires the button to be set to EnableAllKeybinds = true)
-            if (UserInterfaceManager.CurrentlyHovered != _filterButton)
-            {
-                _filterButton.Pressed = false;
-            }
+            OnPopupHide(_filterPopup, _filterButton);
         }
 
         private void OnChannelSelectorPopupHide()
         {
-            // same as above for why we need this
-            UserInterfaceManager.ModalRoot.RemoveChild(_channelSelectorPopup);
-            if (UserInterfaceManager.CurrentlyHovered != _channelSelector)
-            {
-                _channelSelector.Pressed = false;
-            }
+            OnPopupHide(_channelSelectorPopup, _channelSelector);
         }
 
-
+        private void OnPopupHide(Control popup, BaseButton button)
+        {
+            UserInterfaceManager.ModalRoot.RemoveChild(popup);
+            // this weird check here is because the hiding of the popup happens prior to the button
+            // receiving the keydown, which would cause it to then become unpressed
+            // and reopen immediately. To avoid this, if the popup was hidden due to clicking on the button,
+            // we will not auto-unpress the button, instead leaving it up to the button toggle logic
+            // (and this requires the button to be set to EnableAllKeybinds = true)
+            if (UserInterfaceManager.CurrentlyHovered != button)
+            {
+                button.Pressed = false;
+            }
+        }
 
         private void OnChannelSelectorItemPressed(BaseButton.ButtonEventArgs obj)
         {
@@ -783,6 +768,29 @@ namespace Content.Client.Chat
         }
     }
 
+    /// <summary>
+    /// Only needed to avoid the issue where right click on the button closes the popup
+    /// but leaves the button highlighted.
+    /// </summary>
+    public sealed class ChannelSelectorButton : Button
+    {
+        public ChannelSelectorButton()
+        {
+            // needed so the popup is untoggled regardless of which key is pressed when hovering this button.
+            // If we don't have this, then right clicking the button while it's toggled on will hide
+            // the popup but keep the button toggled on
+            Mode = ActionMode.Press;
+            EnableAllKeybinds = true;
+        }
+
+        protected override void KeyBindDown(GUIBoundKeyEventArgs args)
+        {
+            // needed since we need EnableAllKeybinds - don't double-send both UI click and Use
+            if (args.Function == EngineKeyFunctions.Use) return;
+            base.KeyBindDown(args);
+        }
+    }
+
     public sealed class FilterButton : ContainerButton
     {
         private static readonly Color ColorNormal = Color.FromHex("#7b7e9e");
@@ -796,8 +804,8 @@ namespace Content.Client.Chat
             var filterTexture = IoCManager.Resolve<IResourceCache>()
                 .GetTexture("/Textures/Interface/Nano/filter.svg.96dpi.png");
 
+            // needed for same reason as ChannelSelectorButton
             Mode = ActionMode.Press;
-            // needed so the popup is untoggled regardless of which key is pressed when hovering this button
             EnableAllKeybinds = true;
 
             AddChild(
