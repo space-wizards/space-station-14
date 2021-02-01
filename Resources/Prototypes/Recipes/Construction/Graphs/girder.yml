@@ -7,7 +7,7 @@
         - to: girder
           completed:
             - !type:SnapToGrid
-              zeroRotation: true
+              southRotation: true
           steps:
             - material: Metal
               amount: 2
@@ -37,7 +37,7 @@
         - to: wall
           completed:
             - !type:SnapToGrid
-              zeroRotation: true
+              southRotation: true
           conditions:
             - !type:EntityAnchored {}
           steps:
@@ -47,7 +47,7 @@
         - to: reinforcedGirder
           completed:
             - !type:SnapToGrid
-              zeroRotation: true
+              southRotation: true
           conditions:
             - !type:EntityAnchored {}
           steps:
@@ -76,7 +76,7 @@
         - to: reinforcedWall
           completed:
             - !type:SnapToGrid
-              zeroRotation: true
+              southRotation: true
           conditions:
             - !type:EntityAnchored { }
           steps:
@@ -87,7 +87,7 @@
         - to: girder
           completed:
             - !type:SnapToGrid
-              zeroRotation: true
+              southRotation: true
           conditions:
             - !type:EntityAnchored { }
           steps:

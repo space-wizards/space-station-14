@@ -7,7 +7,7 @@
         - to: TableFrame
           completed:
             - !type:SnapToGrid
-              snapRotation: true
+              southRotation: true
           steps:
             - material: MetalRod
               amount: 2
