@@ -98,3 +98,32 @@
     - type: MeleeWeapon
     - type: BotanySharp
     - type: Item
+
+- type: entity
+  name: spade
+  parent: BaseItem
+  id: Spade
+  description: A small tool for digging and moving dirt.
+  components:
+    - type: Sprite
+      sprite: Constructible/Hydroponics/hydro_tools.rsi
+      state: spade
+    - type: ItemCooldown
+    - type: MeleeWeapon
+    - type: Shovel
+    - type: Item
+
+- type: entity
+  name: shovel
+  parent: BaseItem
+  id: Shovel
+  description: A large tool for digging and moving dirt.
+  components:
+    - type: Sprite
+      sprite: Constructible/Hydroponics/hydro_tools.rsi
+      state: shovel
+    - type: ItemCooldown
+    - type: MeleeWeapon
+    - type: Shovel
+    - type: Item
+

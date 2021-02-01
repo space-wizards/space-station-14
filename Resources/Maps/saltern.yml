@@ -48835,4 +48835,18 @@ entities:
     type: PowerConsumer
   - supplyRate: 6000
     type: PowerSupplier
+- uid: 4717
+  type: Spade
+  components:
+  - parent: 853
+    pos: -20.5,-1.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4718
+  type: Bucket
+  components:
+  - parent: 853
+    pos: -20.5,-1.5
+    rot: -1.5707963267948966 rad
+    type: Transform
 ...
