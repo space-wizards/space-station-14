@@ -50,7 +50,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             {
                 return new ToolEntry
                 {
-                    Behavior = Behavior,
+                    Behavior = IDeepClone.CloneValue(Behavior),
                     _sound = _sound,
                     _sprite = _sprite,
                     _state = _state,

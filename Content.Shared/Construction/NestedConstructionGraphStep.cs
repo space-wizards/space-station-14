@@ -41,18 +41,9 @@ namespace Content.Shared.Construction
 
         public override IDeepClone DeepClone()
         {
-            var newSteps = new List<List<ConstructionGraphStep>>();
-            foreach (var innerlist in Steps)
-            {
-                var newInnerList = new List<ConstructionGraphStep>();
-                foreach (var step in innerlist)
-                {
-                    newInnerList.Add((ConstructionGraphStep)step.DeepClone());
-                }
-                newSteps.Add(newInnerList);
-            }
-
-            return new NestedConstructionGraphStep {Steps = newSteps};
+            var obj = LazyDeepClone<NestedConstructionGraphStep>();
+            obj.Steps = IDeepClone.CloneValue(Steps);
+            return obj;
         }
     }
 }

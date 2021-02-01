@@ -65,9 +65,9 @@ namespace Content.Client.GameObjects.Components.Conveyor
         {
             return new ConveyorVisualizer
             {
-                _stateReversed = IDeepClone.CloneValue(_stateReversed),
-                _stateRunning = IDeepClone.CloneValue(_stateRunning),
-                _stateStopped = IDeepClone.CloneValue(_stateStopped)
+                _stateReversed = _stateReversed,
+                _stateRunning = _stateRunning,
+                _stateStopped = _stateStopped
             };
         }
     }

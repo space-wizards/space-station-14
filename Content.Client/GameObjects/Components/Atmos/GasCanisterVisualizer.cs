@@ -68,7 +68,7 @@ namespace Content.Client.GameObjects.Components.Atmos
         {
             return new GasCanisterVisualizer
             {
-                _stateConnected = IDeepClone.CloneValue(_stateConnected),
+                _stateConnected = _stateConnected,
                 _statePressure = IDeepClone.CloneValue(_statePressure)
             };
         }

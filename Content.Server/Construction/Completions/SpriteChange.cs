@@ -40,7 +40,7 @@ namespace Content.Server.Construction.Completions
             return new SpriteChange
             {
                 Layer = Layer,
-                SpriteSpecifier = SpriteSpecifier
+                SpriteSpecifier = IDeepClone.CloneValue(SpriteSpecifier)
             };
         }
     }

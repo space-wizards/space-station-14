@@ -25,6 +25,16 @@ namespace Content.Shared.Construction
         }
 
         public abstract void DoExamine(FormattedMessage message, bool inDetailsRange);
+
+        protected T LazyDeepClone<T>() where T : ConstructionGraphStep, new()
+        {
+            return new T
+            {
+                DoAfter = DoAfter,
+                _completed = IDeepClone.CloneValue(_completed)
+            };
+        }
+
         public abstract IDeepClone DeepClone();
     }
 }

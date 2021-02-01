@@ -253,7 +253,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         {
             return new ItemActionConfig
             {
-                ActionType = ActionType,
+                ActionType = IDeepClone.CloneValue(ActionType),
                 Enabled = Enabled
             };
         }

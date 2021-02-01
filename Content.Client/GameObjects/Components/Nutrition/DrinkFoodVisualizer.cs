@@ -46,7 +46,7 @@ namespace Content.Client.GameObjects.Components.Nutrition
         {
             return new DrinkFoodVisualizer
             {
-                _steps = IDeepClone.CloneValue(_steps)
+                _steps = _steps
             };
         }
     }

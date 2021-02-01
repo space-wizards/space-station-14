@@ -39,7 +39,7 @@ namespace Content.Shared.Construction.ConstructionConditions
 
         public IDeepClone DeepClone()
         {
-            return new TileType {TargetTiles = TargetTiles};
+            return new TileType {TargetTiles = IDeepClone.CloneValue(TargetTiles)};
         }
     }
 }

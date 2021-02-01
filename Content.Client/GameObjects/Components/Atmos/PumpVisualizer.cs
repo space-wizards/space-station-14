@@ -46,7 +46,7 @@ namespace Content.Client.GameObjects.Components.Atmos
         {
             return new PumpVisualizer
             {
-                _pumpEnabledState = IDeepClone.CloneValue(_pumpEnabledState)
+                _pumpEnabledState = _pumpEnabledState
             };
         }
 

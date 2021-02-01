@@ -28,10 +28,7 @@ namespace Content.Server.Objectives.Conditions
 
         public override IDeepClone DeepClone()
         {
-            return new KillRandomPersonCondition
-            {
-                Target = Target
-            };
+            return new KillRandomPersonCondition();
         }
     }
 }

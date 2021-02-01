@@ -43,8 +43,8 @@ namespace Content.Client.GameObjects.Components.Fluids
         {
             return new SprayVisualizer
             {
-                _safetyOffState = IDeepClone.CloneValue(_safetyOffState),
-                _safetyOnState = IDeepClone.CloneValue(_safetyOnState)
+                _safetyOffState = _safetyOffState,
+                _safetyOnState = _safetyOnState
             };
         }
 

@@ -129,9 +129,9 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         public override IDeepClone DeepClone()
         {
             var node = LazyDeepClone<PipeNode>();
-            node._pipeDirection = _pipeDirection;
-            node._conduitLayer = _conduitLayer;
-            node.LocalAir = (GasMixture)LocalAir.DeepClone();
+            node._pipeDirection = IDeepClone.CloneValue(_pipeDirection);
+            node._conduitLayer = IDeepClone.CloneValue(_conduitLayer);
+            node.LocalAir = IDeepClone.CloneValue(LocalAir);
             return node;
         }
 

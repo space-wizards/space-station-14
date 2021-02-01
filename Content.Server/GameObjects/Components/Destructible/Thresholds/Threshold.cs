@@ -58,7 +58,7 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds
         {
             return new Threshold
             {
-                Behaviors = (List<IThresholdBehavior>) IDeepClone.CloneValue(Behaviors)!,
+                Behaviors = IDeepClone.CloneValue(Behaviors)!,
                 Triggered = Triggered,
                 TriggersOnce = TriggersOnce
             };

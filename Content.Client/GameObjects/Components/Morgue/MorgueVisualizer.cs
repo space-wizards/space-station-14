@@ -80,11 +80,11 @@ namespace Content.Client.GameObjects.Components.Storage
         {
             return new MorgueVisualizer
             {
-                _lightContents = IDeepClone.CloneValue(_lightContents)!,
-                _lightMob = IDeepClone.CloneValue(_lightMob)!,
-                _lightSoul = IDeepClone.CloneValue(_lightSoul)!,
-                _stateClosed = IDeepClone.CloneValue(_stateClosed)!,
-                _stateOpen = IDeepClone.CloneValue(_stateOpen)!
+                _lightContents = _lightContents,
+                _lightMob = _lightMob,
+                _lightSoul = _lightSoul,
+                _stateClosed = _stateClosed,
+                _stateOpen = _stateOpen
             };
         }
     }

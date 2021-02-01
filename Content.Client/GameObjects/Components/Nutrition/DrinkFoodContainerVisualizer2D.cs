@@ -70,8 +70,8 @@ namespace Content.Client.GameObjects.Components.Nutrition
             return new FoodContainerVisualizer
             {
                 _mode = IDeepClone.CloneValue(_mode),
-                _steps = IDeepClone.CloneValue(_steps),
-                _baseState = IDeepClone.CloneValue(_baseState)
+                _steps = _steps,
+                _baseState = _baseState
             };
         }
     }

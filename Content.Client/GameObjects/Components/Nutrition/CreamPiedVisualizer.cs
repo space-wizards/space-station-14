@@ -49,7 +49,7 @@ namespace Content.Client.GameObjects.Components.Nutrition
         {
             return new CreamPiedVisualizer
             {
-                _state = IDeepClone.CloneValue(_state)
+                _state = _state
             };
         }
 

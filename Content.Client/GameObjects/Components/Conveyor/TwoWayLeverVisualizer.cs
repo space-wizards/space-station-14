@@ -66,9 +66,9 @@ namespace Content.Client.GameObjects.Components.Conveyor
         {
             return new TwoWayLeverVisualizer
             {
-                _stateForward = IDeepClone.CloneValue(_stateForward),
-                _stateOff = IDeepClone.CloneValue(_stateOff),
-                _stateReversed = IDeepClone.CloneValue(_stateReversed)
+                _stateForward = _stateForward,
+                _stateOff = _stateOff,
+                _stateReversed = _stateReversed
             };
         }
     }

@@ -75,10 +75,10 @@ namespace Content.Client.GameObjects.Components.Morgue
         {
             return new CrematoriumVisualizer
             {
-                _lightBurning = IDeepClone.CloneValue(_lightBurning)!,
-                _lightContents = IDeepClone.CloneValue(_lightContents)!,
-                _stateClosed = IDeepClone.CloneValue(_stateClosed)!,
-                _stateOpen = IDeepClone.CloneValue(_stateOpen)!
+                _lightBurning = _lightBurning,
+                _lightContents = _lightContents,
+                _stateClosed = _stateClosed,
+                _stateOpen = _stateOpen
             };
         }
     }

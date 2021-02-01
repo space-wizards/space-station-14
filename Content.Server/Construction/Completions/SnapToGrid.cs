@@ -29,7 +29,7 @@ namespace Content.Server.Construction.Completions
 
         public IDeepClone DeepClone()
         {
-            return new SnapToGrid {Offset = Offset};
+            return new SnapToGrid {Offset = IDeepClone.CloneValue(Offset)};
         }
     }
 }

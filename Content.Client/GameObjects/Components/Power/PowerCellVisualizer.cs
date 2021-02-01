@@ -49,7 +49,7 @@ namespace Content.Client.GameObjects.Components.Power
         {
             return new PowerCellVisualizer
             {
-                _prefix = IDeepClone.CloneValue(_prefix)
+                _prefix = _prefix
             };
         }
 

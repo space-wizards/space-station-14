@@ -63,7 +63,7 @@ namespace Content.Shared.Damage.ResistanceSet
         {
             return new ResistanceSet
             {
-                _resistances = (Dictionary<DamageType, ResistanceSetSettings>) IDeepClone.CloneValue(_resistances),
+                _resistances = IDeepClone.CloneValue(_resistances),
                 ID = ID
             };
         }
@@ -87,7 +87,7 @@ namespace Content.Shared.Damage.ResistanceSet
 
         public IDeepClone DeepClone()
         {
-            return this;
+            return new ResistanceSetSettings(Coefficient, FlatReduction);
         }
     }
 }

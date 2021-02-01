@@ -27,7 +27,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             public IDeepClone DeepClone()
             {
-                return new IntermediateTileAtmosphere(Indicies, (GasMixture)GasMixture.DeepClone());
+                return new IntermediateTileAtmosphere(IDeepClone.CloneValue(Indicies), IDeepClone.CloneValue(GasMixture)!);
             }
         }
 

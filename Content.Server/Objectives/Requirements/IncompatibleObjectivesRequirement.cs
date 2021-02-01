@@ -32,7 +32,7 @@ namespace Content.Server.Objectives.Requirements
         {
             return new IncompatibleObjectivesRequirement
             {
-                _incompatibleObjectives = _incompatibleObjectives.ShallowClone()
+                _incompatibleObjectives = IDeepClone.CloneValue(_incompatibleObjectives)
             };
         }
     }

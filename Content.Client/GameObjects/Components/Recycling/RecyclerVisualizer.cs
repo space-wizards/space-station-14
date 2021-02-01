@@ -65,8 +65,8 @@ namespace Content.Client.GameObjects.Components.Recycling
         {
             return new RecyclerVisualizer
             {
-                _stateBloody = IDeepClone.CloneValue(_stateBloody),
-                _stateClean = IDeepClone.CloneValue(_stateClean)
+                _stateBloody = _stateBloody,
+                _stateClean = _stateClean
             };
         }
     }

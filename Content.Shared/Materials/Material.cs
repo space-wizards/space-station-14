@@ -116,7 +116,7 @@ namespace Content.Shared.Materials
             return new Material
             {
                 _name = _name,
-                _color = _color,
+                _color = IDeepClone.CloneValue(_color),
                 _density = _density,
                 _electricResistivity = _electricResistivity,
                 _thermalConductivity = _thermalConductivity,
@@ -125,7 +125,7 @@ namespace Content.Shared.Materials
                 _hardness = _hardness,
                 _sharpDamage = _sharpDamage,
                 _bluntDamage = _bluntDamage,
-                _icon = _icon
+                _icon = IDeepClone.CloneValue(_icon)
             };
         }
     }

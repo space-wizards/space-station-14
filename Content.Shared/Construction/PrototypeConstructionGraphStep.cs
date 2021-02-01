@@ -31,7 +31,9 @@ namespace Content.Shared.Construction
 
         public override IDeepClone DeepClone()
         {
-            return new PrototypeConstructionGraphStep {Prototype = Prototype};
+            var obj = LazyDeepClone<PrototypeConstructionGraphStep>();
+            obj.Prototype = Prototype;
+            return obj;
         }
     }
 }

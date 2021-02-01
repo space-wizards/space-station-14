@@ -15,7 +15,6 @@ namespace Content.Shared.Construction
             base.ExposeData(serializer);
 
             serializer.DataField(this, x => x.Component, "component", string.Empty);
-
         }
 
         public override bool EntityValid(IEntity entity)
@@ -38,7 +37,9 @@ namespace Content.Shared.Construction
 
         public override IDeepClone DeepClone()
         {
-            return new ComponentConstructionGraphStep {Component = Component};
+            var obj = LazyDeepClone<ComponentConstructionGraphStep>();
+            obj.Component = Component;
+            return obj;
         }
     }
 }

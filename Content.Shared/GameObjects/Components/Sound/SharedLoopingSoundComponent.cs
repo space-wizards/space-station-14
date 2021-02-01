@@ -127,7 +127,7 @@ namespace Content.Shared.GameObjects.Components.Sound
                 Delay = Delay,
                 RandomDelay = RandomDelay,
                 Times = Times,
-                AudioParams = AudioParams
+                AudioParams = IDeepClone.CloneValue(AudioParams)
             };
         }
     }

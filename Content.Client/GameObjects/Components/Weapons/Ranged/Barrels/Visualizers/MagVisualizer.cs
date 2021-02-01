@@ -114,10 +114,10 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels.Visualize
         {
             return new MagVisualizer
             {
-                _magLoaded = IDeepClone.CloneValue(_magLoaded),
-                _magState = IDeepClone.CloneValue(_magState),
-                _magSteps = IDeepClone.CloneValue(_magSteps),
-                _zeroVisible = IDeepClone.CloneValue(_zeroVisible)
+                _magLoaded = _magLoaded,
+                _magState = _magState,
+                _magSteps = _magSteps,
+                _zeroVisible = _zeroVisible
             };
         }
     }

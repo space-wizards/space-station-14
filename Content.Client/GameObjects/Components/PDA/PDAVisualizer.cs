@@ -69,7 +69,7 @@ namespace Content.Client.GameObjects.Components.PDA
         {
             return new PDAVisualizer
             {
-                _state = IDeepClone.CloneValue(_state)
+                _state = _state
             };
         }
     }

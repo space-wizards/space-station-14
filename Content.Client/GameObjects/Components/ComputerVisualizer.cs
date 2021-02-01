@@ -92,11 +92,11 @@ namespace Content.Client.GameObjects.Components
         {
             return new ComputerVisualizer
             {
-                BodyState = IDeepClone.CloneValue(BodyState),
-                KeyboardState = IDeepClone.CloneValue(KeyboardState),
-                ScreenBroken = IDeepClone.CloneValue(ScreenBroken),
-                ScreenState = IDeepClone.CloneValue(ScreenState),
-                BodyBrokenState = IDeepClone.CloneValue(BodyBrokenState)
+                BodyState = BodyState,
+                KeyboardState = KeyboardState,
+                ScreenBroken = ScreenBroken,
+                ScreenState = ScreenState,
+                BodyBrokenState = BodyBrokenState
             };
         }
 

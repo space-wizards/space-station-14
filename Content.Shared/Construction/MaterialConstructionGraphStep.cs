@@ -33,11 +33,10 @@ namespace Content.Shared.Construction
 
         public override IDeepClone DeepClone()
         {
-            return new MaterialConstructionGraphStep
-            {
-                Material = Material,
-                Amount = Amount
-            };
+            var obj = LazyDeepClone<MaterialConstructionGraphStep>();
+            obj.Material = IDeepClone.CloneValue(Material);
+            obj.Amount = Amount;
+            return obj;
         }
 
         public override bool EntityValid(IEntity entity)

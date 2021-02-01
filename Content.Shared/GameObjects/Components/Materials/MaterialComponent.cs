@@ -50,7 +50,7 @@ namespace Content.Shared.GameObjects.Components.Materials
 
             public IDeepClone DeepClone()
             {
-                return new MaterialDataEntry {Key = Key, Value = Value};
+                return new MaterialDataEntry {Key = IDeepClone.CloneValue(Key), Value = Value};
             }
         }
     }

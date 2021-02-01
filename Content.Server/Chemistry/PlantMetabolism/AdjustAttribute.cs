@@ -55,6 +55,7 @@ namespace Content.Server.Chemistry.PlantMetabolism
         }
 
         public abstract void Metabolize(IEntity plantHolder, float customPlantMetabolism = 1f);
+
         public abstract IDeepClone DeepClone();
     }
 }

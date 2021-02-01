@@ -159,14 +159,14 @@ namespace Content.Client.GameObjects.Components.Disposal
             return new DisposalUnitVisualizer
             {
                 _flushAnimation = IDeepClone.CloneValue(_flushAnimation),
-                _overlayCharging = IDeepClone.CloneValue(_overlayCharging),
-                _overlayEngaged = IDeepClone.CloneValue(_overlayEngaged),
-                _overlayFull = IDeepClone.CloneValue(_overlayFull),
-                _overlayReady = IDeepClone.CloneValue(_overlayReady),
-                _stateAnchored = IDeepClone.CloneValue(_stateAnchored),
-                _stateCharging = IDeepClone.CloneValue(_stateCharging),
-                _stateFlush = IDeepClone.CloneValue(_stateFlush),
-                _stateUnAnchored = IDeepClone.CloneValue(_stateUnAnchored)
+                _overlayCharging = _overlayCharging,
+                _overlayEngaged = _overlayEngaged,
+                _overlayFull = _overlayFull,
+                _overlayReady = _overlayReady,
+                _stateAnchored = _stateAnchored,
+                _stateCharging = _stateCharging,
+                _stateFlush = _stateFlush,
+                _stateUnAnchored = _stateUnAnchored
             };
         }
     }

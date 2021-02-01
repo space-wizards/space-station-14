@@ -54,7 +54,7 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behavior
         {
             return new SpawnEntitiesBehavior
             {
-                Spawn = Spawn.ShallowClone()
+                Spawn = IDeepClone.CloneValue(Spawn)!
             };
         }
     }

@@ -72,10 +72,10 @@ namespace Content.Client.GameObjects.Components.Atmos
         {
             return new FireVisualizer
             {
-                _sprite = IDeepClone.CloneValue(_sprite),
-                _alternateState = IDeepClone.CloneValue(_alternateState),
-                _normalState = IDeepClone.CloneValue(_normalState),
-                _fireStackAlternateState = IDeepClone.CloneValue(_fireStackAlternateState)
+                _sprite = _sprite,
+                _alternateState = _alternateState,
+                _normalState = _normalState,
+                _fireStackAlternateState = _fireStackAlternateState
             };
         }
 

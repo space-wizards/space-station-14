@@ -77,9 +77,9 @@ namespace Content.Client.GameObjects.Components.Disposal
         {
             return new DisposalVisualizer
             {
-                _stateAnchored = IDeepClone.CloneValue(_stateAnchored),
-                _stateBroken = IDeepClone.CloneValue(_stateBroken),
-                _stateFree = IDeepClone.CloneValue(_stateFree)
+                _stateAnchored = _stateAnchored,
+                _stateBroken = _stateBroken,
+                _stateFree = _stateFree
             };
         }
     }

@@ -91,9 +91,9 @@ namespace Content.Client.GameObjects.Components.Storage
         {
             return new StorageVisualizer
             {
-                _stateBase = IDeepClone.CloneValue(_stateBase),
-                _stateClosed = IDeepClone.CloneValue(_stateClosed),
-                _stateOpen = IDeepClone.CloneValue(_stateOpen)
+                _stateBase = _stateBase,
+                _stateClosed = _stateClosed,
+                _stateOpen = _stateOpen
             };
         }
     }

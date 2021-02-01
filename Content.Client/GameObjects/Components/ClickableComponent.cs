@@ -139,11 +139,11 @@ namespace Content.Client.GameObjects.Components
             {
                 return new DirBoundData
                 {
-                    All = All,
-                    North = North,
-                    South = South,
-                    East = East,
-                    West = West
+                    All = IDeepClone.CloneValue(All),
+                    North = IDeepClone.CloneValue(North),
+                    South = IDeepClone.CloneValue(South),
+                    East = IDeepClone.CloneValue(East),
+                    West = IDeepClone.CloneValue(West)
                 };
             }
         }

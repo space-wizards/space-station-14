@@ -147,8 +147,8 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
             return new LungBehavior
             {
                 CycleDelay = CycleDelay,
-                Air = (GasMixture) Air.DeepClone(),
-                GaspPopupCooldown = GaspPopupCooldown
+                Air = IDeepClone.CloneValue(Air)!,
+                GaspPopupCooldown = IDeepClone.CloneValue(GaspPopupCooldown)
             };
         }
 

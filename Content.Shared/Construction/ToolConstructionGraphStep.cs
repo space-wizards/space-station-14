@@ -35,12 +35,11 @@ namespace Content.Shared.Construction
 
         public override IDeepClone DeepClone()
         {
-            return new ToolConstructionGraphStep
-            {
-                Tool = Tool,
-                Fuel = Fuel,
-                ExamineOverride = ExamineOverride
-            };
+            var obj = LazyDeepClone<ToolConstructionGraphStep>();
+            obj.Tool = IDeepClone.CloneValue(Tool);
+            obj.Fuel = Fuel;
+            obj.ExamineOverride = ExamineOverride;
+            return obj;
         }
     }
 }

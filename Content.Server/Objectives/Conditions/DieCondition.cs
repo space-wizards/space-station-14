@@ -54,10 +54,7 @@ namespace Content.Server.Objectives.Conditions
 
         public IDeepClone DeepClone()
         {
-            return new DieCondition
-            {
-                _mind = _mind
-            };
+            return new DieCondition();
         }
     }
 }

@@ -43,7 +43,7 @@ namespace Content.Server.Chemistry.Metabolism
             return new DefaultDrink
             {
                 _hydrationFactor = _hydrationFactor,
-                _metabolismRate = _metabolismRate
+                _metabolismRate = IDeepClone.CloneValue(_metabolismRate)
             };
         }
     }

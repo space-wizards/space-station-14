@@ -95,7 +95,6 @@ namespace Content.Server.Objectives.Conditions
         {
             return new StealCondition
             {
-                _mind = _mind,
                 _amount = _amount,
                 _prototypeId = _prototypeId
             };

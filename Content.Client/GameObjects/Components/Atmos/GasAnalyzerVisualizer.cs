@@ -56,8 +56,8 @@ namespace Content.Client.GameObjects.Components.Atmos
         {
             return new GasAnalyzerVisualizer
             {
-                _stateOff = IDeepClone.CloneValue(_stateOff),
-                _stateWorking = IDeepClone.CloneValue(_stateWorking)
+                _stateOff = _stateOff,
+                _stateWorking = _stateWorking
             };
         }
     }

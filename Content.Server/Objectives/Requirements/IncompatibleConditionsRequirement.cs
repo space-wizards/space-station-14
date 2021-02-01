@@ -35,7 +35,7 @@ namespace Content.Server.Objectives.Requirements
         {
             return new IncompatibleConditionsRequirement
             {
-                _incompatibleConditions = _incompatibleConditions.ShallowClone()
+                _incompatibleConditions = IDeepClone.CloneValue(_incompatibleConditions)
             };
         }
     }

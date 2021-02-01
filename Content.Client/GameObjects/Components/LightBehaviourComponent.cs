@@ -43,6 +43,22 @@ namespace Content.Client.GameObjects.Components
 
         private float _maxTime = default;
 
+        protected T LazyDeepClone<T>() where T : LightBehaviourAnimationTrack, new()
+        {
+            return new T()
+            {
+                ID = ID,
+                Enabled = Enabled,
+                EndValue = EndValue,
+                InterpolateMode = IDeepClone.CloneValue(InterpolateMode),
+                IsLooped = IsLooped,
+                StartValue = StartValue,
+                MinDuration = MinDuration,
+                MaxDuration = MaxDuration,
+                Property = Property
+            };
+        }
+
         public virtual void ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.ID, "id", string.Empty);
@@ -174,7 +190,7 @@ namespace Content.Client.GameObjects.Components
 
         public override IDeepClone DeepClone()
         {
-            return new PulseBehaviour();
+            return LazyDeepClone<PulseBehaviour>();
         }
     }
 
@@ -215,7 +231,7 @@ namespace Content.Client.GameObjects.Components
 
         public override IDeepClone DeepClone()
         {
-            return new FadeBehaviour();
+            return LazyDeepClone<FadeBehaviour>();
         }
     }
 
@@ -257,13 +273,12 @@ namespace Content.Client.GameObjects.Components
 
         public override IDeepClone DeepClone()
         {
-            return new RandomizeBehaviour
-            {
-                _randomValue1 = _randomValue1,
-                _randomValue2 = _randomValue2,
-                _randomValue3 = _randomValue3,
-                _randomValue4 = _randomValue4
-            };
+            var obj = LazyDeepClone<RandomizeBehaviour>();
+            obj._randomValue1 = IDeepClone.CloneValue(_randomValue1);
+            obj._randomValue2 = IDeepClone.CloneValue(_randomValue2);
+            obj._randomValue3 = IDeepClone.CloneValue(_randomValue3);
+            obj._randomValue4 = IDeepClone.CloneValue(_randomValue4);
+            return obj;
         }
 
         public override (int KeyFrameIndex, float FramePlayingTime) AdvancePlayback(
@@ -317,11 +332,10 @@ namespace Content.Client.GameObjects.Components
 
         public override IDeepClone DeepClone()
         {
-            return new ColorCycleBehaviour
-            {
-                _colorIndex = IDeepClone.CloneValue(_colorIndex),
-                ColorsToCycle = IDeepClone.CloneValue(ColorsToCycle)
-            };
+            var obj = LazyDeepClone<ColorCycleBehaviour>();
+            obj._colorIndex = _colorIndex;
+            obj.ColorsToCycle = IDeepClone.CloneValue(ColorsToCycle);
+            return obj;
         }
 
         public override (int KeyFrameIndex, float FramePlayingTime) AdvancePlayback(

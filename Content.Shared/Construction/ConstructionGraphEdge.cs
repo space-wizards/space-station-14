@@ -103,9 +103,9 @@ namespace Content.Shared.Construction
             return new ConstructionGraphEdge
             {
                 Target = Target,
-                _steps = _steps,
-                _completed = _completed,
-                _conditions = _conditions
+                _steps = IDeepClone.CloneValue(_steps),
+                _completed = IDeepClone.CloneValue(_completed),
+                _conditions = IDeepClone.CloneValue(_conditions)
             };
         }
     }

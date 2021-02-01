@@ -42,7 +42,7 @@ namespace Content.Server.Chemistry.Metabolism
         {
             return new DefaultFood
             {
-                _metabolismRate = _metabolismRate,
+                _metabolismRate = IDeepClone.CloneValue(_metabolismRate),
                 _nutritionFactor = _nutritionFactor
             };
         }

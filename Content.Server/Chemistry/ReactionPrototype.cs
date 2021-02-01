@@ -74,7 +74,7 @@ namespace Content.Server.Chemistry
         {
             return new ReactantPrototype
             {
-                _amount = _amount,
+                _amount = IDeepClone.CloneValue(_amount),
                 _catalyst = _catalyst
             };
         }

@@ -73,7 +73,13 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
             public IDeepClone DeepClone()
             {
-                return this;
+                return new StorageFillEntry()
+                {
+                    PrototypeName = PrototypeName,
+                    Amount = Amount,
+                    GroupId = GroupId,
+                    SpawnProbability = SpawnProbability
+                };
             }
         }
     }
