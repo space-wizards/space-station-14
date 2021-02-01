@@ -42,8 +42,7 @@
             ]
         },
         {
-            "name": "spear",
-            "directions": 1
+            "name": "spear"
         }
     ]
 }

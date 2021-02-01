@@ -8,16 +8,13 @@
   },
   "states": [
     {
-      "name": "icon",
-      "directions": 1
+      "name": "icon"
     },
     {
-      "name": "icon-alt",
-      "directions": 1
+      "name": "icon-alt"
     },
     {
-      "name": "icon-super",
-      "directions": 1
+      "name": "icon-super"
     },
     {
       "name": "equipped-EYES",

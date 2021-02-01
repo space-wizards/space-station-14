@@ -18,7 +18,6 @@ namespace Content.Client.UserInterface.Suspicion
     public class SuspicionGui : Control
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private readonly VBoxContainer _container;
         private readonly Button _roleButton;

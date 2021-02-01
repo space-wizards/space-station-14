@@ -232,6 +232,8 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
             KnockdownTimer -= _helpKnockdownRemove;
 
+            OnInteractHand();
+
             SetAlert();
             Dirty();
 

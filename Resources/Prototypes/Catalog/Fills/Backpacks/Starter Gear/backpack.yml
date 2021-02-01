@@ -67,6 +67,24 @@
 
 - type: entity
   abstract: true
+  parent: ClothingBackpackHydroponics
+  id: ClothingBackpackHydroponicsFilled
+  components:
+  - type: StorageFill
+    contents:
+      - name: BoxSurvival
+
+- type: entity
+  abstract: true
+  parent: ClothingBackpackMime
+  id: ClothingBackpackMimeFilled
+  components:
+  - type: StorageFill
+    contents:
+      - name: BoxSurvival
+
+- type: entity
+  abstract: true
   parent: ClothingBackpackChemistry
   id: ClothingBackpackChemistryFilled
   components:

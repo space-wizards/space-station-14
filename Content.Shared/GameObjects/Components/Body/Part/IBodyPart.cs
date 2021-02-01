@@ -116,5 +116,10 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         ///     false otherwise.
         /// </returns>
         bool DeleteMechanism(IMechanism mechanism);
+
+        /// <summary>
+        ///     Gibs the body part.
+        /// </summary>
+        void Gib();
     }
 }

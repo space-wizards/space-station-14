@@ -33,10 +33,12 @@ namespace Content.Client.Sandbox
         public readonly Button ShowMarkersButton; //Shows spawn points
         public readonly Button ShowBbButton; //Shows bounding boxes
         public readonly Button MachineLinkingButton; // Enables/disables machine linking mode.
+        private readonly IGameHud _gameHud;
 
         public SandboxWindow()
         {
             Resizable = false;
+            _gameHud = IoCManager.Resolve<IGameHud>();
 
             Title = "Sandbox Panel";
 
@@ -82,6 +84,20 @@ namespace Content.Client.Sandbox
             MachineLinkingButton = new Button { Text = Loc.GetString("Link machines"), ToggleMode = true };
             vBox.AddChild(MachineLinkingButton);
         }
+
+
+        protected override void EnteredTree()
+        {
+            base.EnteredTree();
+            _gameHud.SandboxButtonDown = true;
+        }
+
+        protected override void ExitedTree()
+        {
+            base.ExitedTree();
+            _gameHud.SandboxButtonDown = false;
+        }
+
     }
 
     internal class SandboxManager : SharedSandboxManager, ISandboxManager
@@ -197,7 +213,6 @@ namespace Content.Client.Sandbox
         private void WindowOnOnClose()
         {
             _window = null;
-            _gameHud.SandboxButtonDown = false;
             _sandboxWindowToggled = false;
         }
 

@@ -22,14 +22,9 @@ using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Network;
-using Robust.Shared.Interfaces.Random;
-using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Players;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -46,6 +41,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         private const string LoggerName = "Storage";
 
         private Container? _storage;
+        private readonly Dictionary<IEntity, int> _sizeCache = new();
 
         private bool _occludesLight;
         private bool _storageInitialCalculated;
@@ -149,7 +145,12 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
             Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) had entity (UID {message.Entity.Uid}) inserted into it.");
 
-            _storageUsed += message.Entity.GetComponent<StorableComponent>().Size;
+            var size = 0;
+            if (message.Entity.TryGetComponent(out StorableComponent? storable))
+                size = storable.Size;
+
+            _storageUsed += size;
+            _sizeCache[message.Entity] = size;
 
             UpdateClientInventories();
         }
@@ -165,15 +166,15 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
             Logger.DebugS(LoggerName, $"Storage (UID {Owner}) had entity (UID {message.Entity}) removed from it.");
 
-            if (!message.Entity.TryGetComponent(out StorableComponent? storable))
+            if (!_sizeCache.TryGetValue(message.Entity, out var size))
             {
-                Logger.WarningS(LoggerName, $"Removed entity {message.Entity} without a StorableComponent from storage {Owner} at {Owner.Transform.MapPosition}");
+                Logger.WarningS(LoggerName, $"Removed entity {message.Entity} without a cached size from storage {Owner} at {Owner.Transform.MapPosition}");
 
                 RecalculateStorageUsed();
                 return;
             }
 
-            _storageUsed -= storable.Size;
+            _storageUsed -= size;
 
             UpdateClientInventories();
         }

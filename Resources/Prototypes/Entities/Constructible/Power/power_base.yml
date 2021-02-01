@@ -38,6 +38,9 @@
     supplyRate: 3000
   - type: Anchorable
   - type: Pullable
+  - type: ClientEntitySpawner
+    prototypes:
+    - HVDummyWire
 
 - type: entity
   id: BaseSmes
@@ -93,7 +96,10 @@
     activeSupplyRate: 1000
   - type: Anchorable
   - type: Pullable
-
+  - type: ClientEntitySpawner
+    prototypes:
+    - HVDummyWire
+    
 - type: entity
   id: BaseSubstation
   description: Reduces the voltage of electricity put into it.
@@ -148,7 +154,11 @@
     activeSupplyRate: 1000
   - type: Anchorable
   - type: Pullable
-
+  - type: ClientEntitySpawner
+    prototypes:
+    - HVDummyWire
+    - MVDummyWire
+  
 - type: entity
   id: BaseApc
   description: A control terminal for the area's electrical systems.
@@ -201,7 +211,11 @@
   - type: Construction
     graph: apc
     node: apc
-
+  - type: ClientEntitySpawner
+    prototypes:
+    - MVDummyWire
+    - LVDummyWire
+    
 - type: entity
   id: SolarPanel
   name: solar panel
@@ -249,3 +263,6 @@
           acts: ["Breakage"]
   - type: Anchorable
   - type: Pullable
+  - type: ClientEntitySpawner
+    prototypes:
+    - HVDummyWire

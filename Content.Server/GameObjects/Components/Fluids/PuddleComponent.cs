@@ -286,7 +286,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             Color newColor;
             if (_recolor)
             {
-                newColor = _contents.SubstanceColor.WithAlpha(cappedScale);
+                newColor = _contents.Color.WithAlpha(cappedScale);
             }
             else
             {

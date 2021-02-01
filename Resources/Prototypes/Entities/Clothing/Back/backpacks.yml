@@ -96,7 +96,7 @@
 
 - type: entity
   parent: ClothingBackpack
-  id: ClothingBackpackBotany
+  id: ClothingBackpackHydroponics
   name: botany backpack
   description: It's a backpack made of all-natural fibers.
   components:

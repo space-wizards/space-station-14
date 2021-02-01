@@ -32,6 +32,7 @@ namespace Content.Client.UserInterface
         private readonly ActionManager _actionManager;
         private readonly IEntityManager _entityManager;
         private readonly IGameTiming _gameTiming;
+        private readonly IGameHud _gameHud;
 
         private readonly ActionSlot[] _slots;
 
@@ -80,13 +81,15 @@ namespace Content.Client.UserInterface
             _actionManager = IoCManager.Resolve<ActionManager>();
             _entityManager = IoCManager.Resolve<IEntityManager>();
             _gameTiming = IoCManager.Resolve<IGameTiming>();
+            _gameHud = IoCManager.Resolve<IGameHud>();
             _menu = new ActionMenu(_actionsComponent, this);
+
             LayoutContainer.SetGrowHorizontal(this, LayoutContainer.GrowDirection.End);
             LayoutContainer.SetGrowVertical(this, LayoutContainer.GrowDirection.End);
             LayoutContainer.SetAnchorTop(this, 0f);
             LayoutContainer.SetAnchorBottom(this, 0.8f);
-            LayoutContainer.SetMarginLeft(this, 10);
-            LayoutContainer.SetMarginTop(this, 100);
+            LayoutContainer.SetMarginLeft(this, 13);
+            LayoutContainer.SetMarginTop(this, 110);
 
             SizeFlagsHorizontal = SizeFlags.None;
             SizeFlagsVertical = SizeFlags.FillExpand;
@@ -208,6 +211,9 @@ namespace Content.Client.UserInterface
             _lockButton.OnPressed += OnLockPressed;
             _settingsButton.OnPressed += OnToggleActionsMenu;
             _loadoutContainer.OnKeyBindDown += OnHotbarPaginate;
+            _gameHud.ActionsButtonToggled += OnToggleActionsMenuTopButton;
+            _gameHud.ActionsButtonDown = false;
+            _gameHud.ActionsButtonVisible = true;
         }
 
         protected override void ExitedTree()
@@ -218,6 +224,9 @@ namespace Content.Client.UserInterface
             _lockButton.OnPressed -= OnLockPressed;
             _settingsButton.OnPressed -= OnToggleActionsMenu;
             _loadoutContainer.OnKeyBindDown -= OnHotbarPaginate;
+            _gameHud.ActionsButtonToggled -= OnToggleActionsMenuTopButton;
+            _gameHud.ActionsButtonDown = false;
+            _gameHud.ActionsButtonVisible = false;
         }
 
         protected override Vector2 CalculateMinimumSize()
@@ -328,9 +337,9 @@ namespace Content.Client.UserInterface
                 actionSlot.EnableAction();
                 actionSlot.Cooldown = actionState.Cooldown;
 
-                // if we are targeting with an action now on cooldown, stop targeting
+                // if we are targeting for this action and it's now on cooldown, stop targeting if we're supposed to
                 if (SelectingTargetFor?.Action != null && SelectingTargetFor.Action == action &&
-                    actionState.IsOnCooldown(_gameTiming))
+                    actionState.IsOnCooldown(_gameTiming) && action.DeselectOnCooldown)
                 {
                     StopTargeting();
                 }
@@ -401,10 +410,10 @@ namespace Content.Client.UserInterface
                 // action is currently granted
                 actionSlot.EnableAction();
 
-                // if we are targeting with an action now on cooldown, stop targeting
+                // if we are targeting with an action now on cooldown, stop targeting if we should
                 if (SelectingTargetFor?.Action != null && SelectingTargetFor.Action == action &&
                     SelectingTargetFor.Item == itemEntity &&
-                    actionState.IsOnCooldown(_gameTiming))
+                    actionState.IsOnCooldown(_gameTiming) && action.DeselectOnCooldown)
                 {
                     StopTargeting();
                 }
@@ -493,6 +502,13 @@ namespace Content.Client.UserInterface
 
         private void OnToggleActionsMenu(BaseButton.ButtonEventArgs args)
         {
+            ToggleActionsMenu();
+        }
+
+
+        private void OnToggleActionsMenuTopButton(bool open)
+        {
+            if (open == _menu.IsOpen) return;
             ToggleActionsMenu();
         }
 

@@ -1,4 +1,5 @@
-﻿using Content.Server.Atmos;
+#nullable enable
+using Content.Server.Atmos;
 using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
@@ -9,11 +10,14 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
     ///     Adds itself to a <see cref="IGridAtmosphereComponent"/> to be updated by.
     ///     TODO: Make compatible with unanchoring/anchoring. Currently assumes that the Owner does not move.
     /// </summary>
-    public abstract class PipeNetDeviceComponent : Component
+    [RegisterComponent]
+    public class PipeNetDeviceComponent : Component
     {
-        public abstract void Update();
+        public override string Name => "PipeNetDevice";
 
-        protected IGridAtmosphereComponent JoinedGridAtmos { get; private set; }
+        private IGridAtmosphereComponent? JoinedGridAtmos { get; set; }
+
+        private PipeNetUpdateMessage _cachedUpdateMessage = new();
 
         public override void Initialize()
         {
@@ -25,6 +29,11 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         {
             base.OnRemove();
             LeaveGridAtmos();
+        }
+
+        public void Update()
+        {
+            SendMessage(_cachedUpdateMessage);
         }
 
         private void JoinGridAtmos()
@@ -40,5 +49,10 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
             JoinedGridAtmos?.RemovePipeNetDevice(this);
             JoinedGridAtmos = null;
         }
+    }
+
+    public class PipeNetUpdateMessage : ComponentMessage
+    {
+
     }
 }

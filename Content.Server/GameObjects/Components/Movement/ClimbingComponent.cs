@@ -9,6 +9,7 @@ using Robust.Shared.Maths;
 namespace Content.Server.GameObjects.Components.Movement
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedClimbingComponent))]
     public class ClimbingComponent : SharedClimbingComponent
     {
         private bool _isClimbing;

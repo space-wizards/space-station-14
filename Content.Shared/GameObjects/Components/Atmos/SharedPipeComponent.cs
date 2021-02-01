@@ -14,12 +14,10 @@ namespace Content.Shared.GameObjects.Components.Atmos
     public class PipeVisualState
     {
         public readonly PipeDirection PipeDirection;
-        public readonly ConduitLayer ConduitLayer;
 
-        public PipeVisualState(PipeDirection pipeDirection, ConduitLayer conduitLayer)
+        public PipeVisualState(PipeDirection pipeDirection)
         {
             PipeDirection = pipeDirection;
-            ConduitLayer = conduitLayer;
         }
     }
 
@@ -63,13 +61,6 @@ namespace Content.Shared.GameObjects.Components.Atmos
         Bend,
         TJunction,
         Fourway
-    }
-
-    public enum ConduitLayer
-    {
-        One = 1,
-        Two = 2,
-        Three = 3,
     }
 
     public static class PipeDirectionHelpers

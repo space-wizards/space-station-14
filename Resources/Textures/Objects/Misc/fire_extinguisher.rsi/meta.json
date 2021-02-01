@@ -9,21 +9,11 @@
     "states": [
         {
             "name": "fire_extinguisher_open",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "fire_extinguisher_closed",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "inhand-right",

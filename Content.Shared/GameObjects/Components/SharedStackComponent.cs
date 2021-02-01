@@ -27,10 +27,6 @@ namespace Content.Shared.GameObjects.Components
                 _count = value;
                 if (_count <= 0)
                 {
-                    if (Owner.TryGetContainerMan(out var containerManager))
-                    {
-                        containerManager.Remove(Owner);
-                    }
                     Owner.Delete();
                 }
 
