@@ -1,8 +1,11 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.GameObjects.EntitySystems;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -48,6 +51,34 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         public static readonly IApcNet NullNet = new NullApcNet();
 
+        private IGridPowerComponent? GridPower => EntitySystem.Get<GridPowerSystem>().GetGridPower(GridId);
+
+        public override void Initialize(Node sourceNode)
+        {
+            base.Initialize(sourceNode);
+
+            GridPower?.AddApcNet(this);
+        }
+
+        protected override void OnRemoveNode(Node node)
+        {
+            base.OnRemoveNode(node);
+
+            RemoveFromGridPower();
+        }
+
+        protected override void AfterRemake(IEnumerable<INodeGroup> newGroups)
+        {
+            base.AfterRemake(newGroups);
+
+            RemoveFromGridPower();
+        }
+
+        private void RemoveFromGridPower()
+        {
+            GridPower?.RemoveApcNet(this);
+        }
+
         #region IApcNet Methods
 
         protected override void SetNetConnectorNet(BaseApcNetComponent netConnectorComponent)
@@ -57,7 +88,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         public void AddApc(ApcComponent apc)
         {
-            if (!apc.Owner.TryGetComponent<BatteryComponent>(out var battery))
+            if (!apc.Owner.TryGetComponent(out BatteryComponent? battery))
             {
                 return;
             }
