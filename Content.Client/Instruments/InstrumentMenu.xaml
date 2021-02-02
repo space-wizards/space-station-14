@@ -13,7 +13,7 @@
                 <ui:Control SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="2" />
                 <uic:Button Name="StopButton" Text="Stop" TextAlign="Center" SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="1"/>
             </uic:HBoxContainer>
-            <uic:HBoxContainer SizeFlagsVertical="Fill" SizeFlagsHorizontal="FillExpand">
+            <uic:HBoxContainer SizeFlagsVertical="ShrinkEnd" SizeFlagsHorizontal="FillExpand">
                 <ui:Control SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="0.125"/>
                 <uic:Slider Name="PlaybackSlider" SizeFlagsHorizontal="FillExpand" />
                 <ui:Control SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="0.125"/>

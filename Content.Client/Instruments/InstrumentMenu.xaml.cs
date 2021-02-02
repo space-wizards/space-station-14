@@ -49,7 +49,7 @@ namespace Content.Client.Instruments
             LoopButton.Disabled = !_owner.Instrument.IsMidiOpen;
             LoopButton.Pressed = _owner.Instrument.LoopMidi;
             StopButton.Disabled = !_owner.Instrument.IsMidiOpen;
-            PlaybackSlider.Visible = _owner.Instrument.IsMidiOpen;
+            PlaybackSlider.MouseFilter = _owner.Instrument.IsMidiOpen ? MouseFilterMode.Pass : MouseFilterMode.Ignore;
 
             if (!_midiManager.IsAvailable)
             {
@@ -92,8 +92,8 @@ namespace Content.Client.Instruments
             LoopButton.Disabled = disabled;
             StopButton.Disabled = disabled;
 
-            // Hide or show the playback slider.
-            PlaybackSlider.Visible = !disabled;
+            // Whether to allow the slider to receive events..
+            PlaybackSlider.MouseFilter = !disabled ? MouseFilterMode.Pass : MouseFilterMode.Ignore;
         }
 
         private async void MidiFileButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
@@ -192,6 +192,13 @@ namespace Content.Client.Instruments
         protected override void Update(FrameEventArgs args)
         {
             base.Update(args);
+
+            if (!_owner.Instrument.IsMidiOpen)
+            {
+                PlaybackSlider.MaxValue = 1;
+                PlaybackSlider.SetValueWithoutEvent(0);
+                return;
+            }
 
             if (PlaybackSlider.Grabbed) return;
 
