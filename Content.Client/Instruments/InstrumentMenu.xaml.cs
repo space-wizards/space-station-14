@@ -14,6 +14,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Containers;
+using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
@@ -182,8 +183,9 @@ namespace Content.Client.Instruments
             _owner.Instrument.PlayerTick = (int)Math.Ceiling(PlaybackSlider.Value);
         }
 
-        private void PlaybackSliderKeyUp(GUIBoundKeyEventArgs obj)
+        private void PlaybackSliderKeyUp(GUIBoundKeyEventArgs args)
         {
+            if (args.Function != EngineKeyFunctions.UIClick) return;
             _owner.Instrument.PlayerTick = (int)Math.Ceiling(PlaybackSlider.Value);
         }
 
