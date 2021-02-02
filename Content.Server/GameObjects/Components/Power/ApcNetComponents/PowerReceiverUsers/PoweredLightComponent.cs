@@ -153,7 +153,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         /// <summary>
         ///     For attaching UpdateLight() to events.
         /// </summary>
-        public void UpdateLight(object? sender, EventArgs e)
+        public void UpdateLight(object? sender, EventArgs? e)
         {
             UpdateLight();
         }
