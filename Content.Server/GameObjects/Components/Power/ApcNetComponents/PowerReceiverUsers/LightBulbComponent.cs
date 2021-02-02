@@ -43,7 +43,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         ///     Invoked whenever the state of the light bulb changes.
         /// </summary>
         public event EventHandler<EventArgs>? OnLightBulbStateChange;
-        public event EventHandler<EventArgs>? OnLightColorChange;
+        public event EventHandler<EventArgs?>? OnLightColorChange;
 
         private Color _color = Color.White;
 
@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             set
             {
                 _color = value;
-                OnLightColorChange?.Invoke(this, new EventArgs());
+                OnLightColorChange?.Invoke(this, null);
                 UpdateColor();
             }
         }
