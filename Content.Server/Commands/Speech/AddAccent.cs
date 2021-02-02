@@ -1,34 +1,35 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Linq;
 using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Mobs.Speech;
 using Content.Shared.Administration;
-using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Commands.Speech
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class AddAccent : IClientCommand
+    public class AddAccent : IConsoleCommand
     {
         public string Command => "addaccent";
         public string Description => "Add a speech component to the current player";
         public string Help => $"{Command} <component>/?";
 
-        public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             if (player?.AttachedEntity == null)
             {
-                shell.SendText(player, "You don't have an entity!");
+                shell.WriteLine("You don't have an entity!");
                 return;
             }
 
             if (args.Length == 0)
             {
-                shell.SendText(player, Help);
+                shell.WriteLine(Help);
                 return;
             }
 
@@ -44,7 +45,7 @@ namespace Content.Server.Commands.Speech
                 {
                     msg += $"{compFactory.GetRegistration(s).Name}\n";
                 }
-                shell.SendText(player, msg);
+                shell.WriteLine(msg);
             }
             else
             {
@@ -58,7 +59,7 @@ namespace Content.Server.Commands.Speech
                 }
                 catch (Exception)
                 {
-                    shell.SendText(player, $"Accent {name} not found. Try {Command} ? to get a list of all appliable accents.");
+                    shell.WriteLine($"Accent {name} not found. Try {Command} ? to get a list of all appliable accents.");
                     return;
                 }
 
@@ -66,7 +67,7 @@ namespace Content.Server.Commands.Speech
                 try
                 {
                     var comp = player.AttachedEntity.GetComponent(type);
-                    shell.SendText(player, "You already have this accent!");
+                    shell.WriteLine("You already have this accent!");
                     return;
                 }
                 catch (Exception)

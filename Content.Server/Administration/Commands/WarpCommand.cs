@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Markers;
 using Content.Shared.Administration;
-using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
@@ -14,7 +14,7 @@ using Robust.Shared.Map;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public class WarpCommand : IClientCommand
+    public class WarpCommand : IConsoleCommand
     {
         public string Command => "warp";
         public string Description => "Teleports you to predefined areas on the map.";
@@ -23,17 +23,18 @@ namespace Content.Server.Administration.Commands
             "warp <location>\nLocations you can teleport to are predefined by the map. " +
             "You can specify '?' as location to get a list of valid locations.";
 
-        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             if (player == null)
             {
-                shell.SendText((IPlayerSession) null, "Only players can use this command");
+                shell.WriteLine("Only players can use this command");
                 return;
             }
 
             if (args.Length != 1)
             {
-                shell.SendText(player, "Expected a single argument.");
+                shell.WriteLine("Expected a single argument.");
                 return;
             }
 
@@ -48,13 +49,13 @@ namespace Content.Server.Administration.Commands
                         .OrderBy(p => p)
                         .Distinct());
 
-                shell.SendText(player, locations);
+                shell.WriteLine(locations);
             }
             else
             {
                 if (player.Status != SessionStatus.InGame || player.AttachedEntity == null)
                 {
-                    shell.SendText(player, "You are not in-game!");
+                    shell.WriteLine("You are not in-game!");
                     return;
                 }
 
@@ -121,7 +122,7 @@ namespace Content.Server.Administration.Commands
                 }
                 else
                 {
-                    shell.SendText(player, "That location does not exist!");
+                    shell.WriteLine("That location does not exist!");
                 }
             }
         }

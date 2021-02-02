@@ -6,7 +6,6 @@ using Content.Shared.Roles;
 using Content.Shared.Preferences;
 using Content.Server.Mobs;
 using Robust.Server.Interfaces.Player;
-using Robust.Server.Interfaces.Console;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;

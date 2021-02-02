@@ -1,20 +1,21 @@
-﻿using Content.Server.Administration;
+using Content.Server.Administration;
 using Content.Server.Interfaces.GameTicking;
-using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Commands.GameTicking
 {
     [AnyCommand]
-    class ToggleReadyCommand : IClientCommand
+    class ToggleReadyCommand : IConsoleCommand
     {
         public string Command => "toggleready";
         public string Description => "";
         public string Help => "";
 
-        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             if (player == null)
             {
                 return;

@@ -1,4 +1,5 @@
-﻿using System;
+#nullable enable
+using System;
 using System.Linq;
 using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Shared.Physics;
