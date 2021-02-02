@@ -20,4 +20,4 @@
   - type: Anchorable
   - type: Pullable
   - type: ReagentTank
-    TankType: Fuel
+    tankType: Fuel

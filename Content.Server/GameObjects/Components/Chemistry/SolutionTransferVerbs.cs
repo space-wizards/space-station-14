@@ -1,4 +1,5 @@
-﻿using Content.Server.Administration;
+﻿using System.Diagnostics.CodeAnalysis;
+using Content.Server.Administration;
 using Content.Server.Eui;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Shared.Administration;
@@ -17,20 +18,41 @@ using Robust.Shared.Localization;
 
 namespace Content.Server.GameObjects.Components.Chemistry
 {
+    internal abstract class SolutionTransferVerbBase : GlobalVerb
+    {
+        protected static bool GetHeldSolution(
+            IEntity holder,
+            [NotNullWhen(true)]
+            out IEntity? held,
+            [NotNullWhen(true)]
+            out ISolutionInteractionsComponent? heldSolution)
+        {
+            if (!holder.TryGetComponent(out HandsComponent? hands)
+                || hands.GetActiveHand == null
+                || !hands.GetActiveHand.Owner.TryGetComponent(out heldSolution))
+            {
+                held = null;
+                heldSolution = null;
+                return false;
+            }
+
+            held = heldSolution.Owner;
+            return true;
+        }
+    }
+
     /// <summary>
     ///     Transfers solution from the held container to the target container.
     /// </summary>
     [GlobalVerb]
-    internal sealed class SolutionFillTargetVerb : GlobalVerb
+    internal sealed class SolutionFillTargetVerb : SolutionTransferVerbBase
     {
         public override void GetData(IEntity user, IEntity target, VerbData data)
         {
             if (!target.TryGetComponent(out ISolutionInteractionsComponent? targetSolution) ||
                 !ActionBlockerSystem.CanInteract(user) ||
-                !user.TryGetComponent<HandsComponent>(out var hands) ||
-                hands.GetActiveHand == null ||
-                hands.GetActiveHand.Owner == target ||
-                !hands.GetActiveHand.Owner.TryGetComponent(out ISolutionInteractionsComponent? sourceSolution) ||
+                !GetHeldSolution(user, out var source, out var sourceSolution) ||
+                source != target ||
                 !sourceSolution.CanDrain ||
                 !targetSolution.CanRefill)
             {
@@ -38,25 +60,18 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return;
             }
 
-            var heldEntityName = hands.GetActiveHand.Owner.Prototype?.Name ?? Loc.GetString("<Item>");
-            var myName = target.Prototype?.Name ?? Loc.GetString("<Item>");
-
-            var locHeldEntityName = Loc.GetString(heldEntityName);
-            var locMyName = Loc.GetString(myName);
-
             data.Visibility = VerbVisibility.Visible;
-            data.Text = Loc.GetString("Transfer liquid from [{0}] to [{1}].", locHeldEntityName, locMyName);
+            data.Text = Loc.GetString("Transfer liquid from [{0}] to [{1}].", source.Name, target.Name);
         }
 
         public override void Activate(IEntity user, IEntity target)
         {
-            if (!user.TryGetComponent<HandsComponent>(out var hands) || hands.GetActiveHand == null)
+            if (!GetHeldSolution(user, out _, out var handSolutionComp))
             {
                 return;
             }
 
-            if (!hands.GetActiveHand.Owner.TryGetComponent(out ISolutionInteractionsComponent? handSolutionComp) ||
-                !handSolutionComp.CanDrain ||
+            if (!handSolutionComp.CanDrain ||
                 !target.TryGetComponent(out ISolutionInteractionsComponent? targetComp) ||
                 !targetComp.CanRefill)
             {
@@ -82,16 +97,13 @@ namespace Content.Server.GameObjects.Components.Chemistry
     ///     Transfers solution from a target container to the held container.
     /// </summary>
     [GlobalVerb]
-    internal sealed class SolutionDrainTargetVerb : GlobalVerb
+    internal sealed class SolutionDrainTargetVerb : SolutionTransferVerbBase
     {
         public override void GetData(IEntity user, IEntity target, VerbData data)
         {
             if (!target.TryGetComponent(out ISolutionInteractionsComponent? sourceSolution) ||
                 !ActionBlockerSystem.CanInteract(user) ||
-                !user.TryGetComponent<HandsComponent>(out var hands) ||
-                hands.GetActiveHand == null ||
-                hands.GetActiveHand.Owner == target ||
-                !hands.GetActiveHand.Owner.TryGetComponent(out ISolutionInteractionsComponent? targetSolution) ||
+                !GetHeldSolution(user, out var held, out var targetSolution) ||
                 !sourceSolution.CanDrain ||
                 !targetSolution.CanRefill)
             {
@@ -99,25 +111,18 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return;
             }
 
-            var heldEntityName = hands.GetActiveHand.Owner.Prototype?.Name ?? Loc.GetString("<Item>");
-            var myName = target.Prototype?.Name ?? Loc.GetString("<Item>");
-
-            var locHeldEntityName = heldEntityName;
-            var locMyName = myName;
-
             data.Visibility = VerbVisibility.Visible;
-            data.Text = Loc.GetString("Transfer liquid from [{0}] to [{1}].", locMyName, locHeldEntityName);
+            data.Text = Loc.GetString("Transfer liquid from [{0}] to [{1}].", held.Name, target.Name);
         }
 
         public override void Activate(IEntity user, IEntity target)
         {
-            if (!user.TryGetComponent<HandsComponent>(out var hands) || hands.GetActiveHand == null)
+            if (!GetHeldSolution(user, out _, out var targetComp))
             {
                 return;
             }
 
-            if (!hands.GetActiveHand.Owner.TryGetComponent(out ISolutionInteractionsComponent? targetComp) ||
-                !targetComp.CanRefill ||
+            if (!targetComp.CanRefill ||
                 !target.TryGetComponent(out ISolutionInteractionsComponent? sourceComp) ||
                 !sourceComp.CanDrain)
             {

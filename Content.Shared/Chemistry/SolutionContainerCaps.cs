@@ -26,11 +26,13 @@ namespace Content.Shared.Chemistry
 
         /// <summary>
         ///     Reagents can be easily added via all reagent containers.
+        ///     Think pouring something into another beaker or into the gas tank of a car.
         /// </summary>
         Refillable = 1 << 2,
 
         /// <summary>
         ///     Reagents can be easily removed through any reagent container.
+        ///     Think pouring this or draining from a water tank.
         /// </summary>
         Drainable = 1 << 3,
 

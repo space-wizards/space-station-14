@@ -22,31 +22,14 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(this, c => c.TransferAmount, "TransferAmount", ReagentUnit.New(10));
-            serializer.DataField(this, c => c.TankType, "TankType", ReagentTankType.Unspecified);
+            serializer.DataField(this, c => c.TransferAmount, "transferAmount", ReagentUnit.New(10));
+            serializer.DataField(this, c => c.TankType, "tankType", ReagentTankType.Unspecified);
         }
     }
 
-    public enum ReagentTankType
+    public enum ReagentTankType : byte
     {
         Unspecified,
         Fuel
     }
-
-    public struct ExplosionStrength
-    {
-        public int Dev;
-        public int Heavy;
-        public int Light;
-        public int Flash;
-    }
-
-    /*
-    - type: WeldingTankComponent
-      explosionStrength:
-        dev: 1
-        heavy: 3
-        light: 5
-        flash: 7
-     */
 }
