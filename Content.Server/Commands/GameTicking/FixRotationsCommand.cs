@@ -3,8 +3,8 @@ using Content.Shared.GameObjects.Components;
 using Content.Server.GameObjects.Components;
 using Content.Shared.Administration;
 using Content.Shared.Maps;
-using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -16,15 +16,17 @@ using Robust.Shared.Maths;
 namespace Content.Server.Commands.GameTicking
 {
     [AdminCommand(AdminFlags.Mapping)]
-    class FixRotationsCommand : IClientCommand
+    class FixRotationsCommand : IConsoleCommand
     {
         // ReSharper disable once StringLiteralTypo
         public string Command => "fixrotations";
         public string Description => "Sets the rotation of all occluders, low walls and windows to south.";
         public string Help => $"Usage: {Command} <gridId> | {Command}";
 
-        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        public void Execute(IConsoleShell shell, string argsOther, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
+
             GridId gridId;
 
             switch (args.Length)
@@ -32,7 +34,7 @@ namespace Content.Server.Commands.GameTicking
                 case 0:
                     if (player?.AttachedEntity == null)
                     {
-                        shell.SendText((IPlayerSession) null, "Only a player can run this command.");
+                        shell.WriteLine("Only a player can run this command.");
                         return;
                     }
 
@@ -41,28 +43,28 @@ namespace Content.Server.Commands.GameTicking
                 case 1:
                     if (!int.TryParse(args[0], out var id))
                     {
-                        shell.SendText(player, $"{args[0]} is not a valid integer.");
+                        shell.WriteLine($"{args[0]} is not a valid integer.");
                         return;
                     }
 
                     gridId = new GridId(id);
                     break;
                 default:
-                    shell.SendText(player, Help);
+                    shell.WriteLine(Help);
                     return;
             }
 
             var mapManager = IoCManager.Resolve<IMapManager>();
             if (!mapManager.TryGetGrid(gridId, out var grid))
             {
-                shell.SendText(player, $"No grid exists with id {gridId}");
+                shell.WriteLine($"No grid exists with id {gridId}");
                 return;
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
             if (!entityManager.TryGetEntity(grid.GridEntityId, out var gridEntity))
             {
-                shell.SendText(player, $"Grid {gridId} doesn't have an associated grid entity.");
+                shell.WriteLine($"Grid {gridId} doesn't have an associated grid entity.");
                 return;
             }
 
@@ -92,7 +94,7 @@ namespace Content.Server.Commands.GameTicking
                 }
             }
 
-            shell.SendText(player, $"Changed {changed} entities. If things seem wrong, reconnect.");
+            shell.WriteLine($"Changed {changed} entities. If things seem wrong, reconnect.");
         }
     }
 }
