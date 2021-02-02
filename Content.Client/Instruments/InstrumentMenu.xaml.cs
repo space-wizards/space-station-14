@@ -99,7 +99,7 @@ namespace Content.Client.Instruments
         private async void MidiFileButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
         {
             var filters = new FileDialogFilters(new FileDialogFilters.Group("mid", "midi"));
-            var file = await _fileDialogManager.OpenFile(filters);
+            await using var file = await _fileDialogManager.OpenFile(filters);
 
             // The following checks are only in place to prevent players from playing MIDI songs locally.
             // There are equivalents for these checks on the server.
