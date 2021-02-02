@@ -4,8 +4,8 @@ using Content.Server.Administration;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared;
 using Content.Shared.Administration;
-using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -13,12 +13,12 @@ using Robust.Shared.Localization;
 namespace Content.Server.Commands.GameTicking
 {
     [AdminCommand(AdminFlags.Server)]
-    public class GoLobbyCommand : IClientCommand
+    public class GoLobbyCommand : IConsoleCommand
     {
         public string Command => "golobby";
         public string Description => "Enables the lobby and restarts the round.";
         public string Help => $"Usage: {Command} / {Command} <preset>";
-        public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             Type? preset = null;
             var presetName = string.Join(" ", args);
@@ -29,7 +29,7 @@ namespace Content.Server.Commands.GameTicking
             {
                 if (!ticker.TryGetPreset(presetName, out preset))
                 {
-                    shell.SendText(player, $"No preset found with name {presetName}");
+                    shell.WriteLine($"No preset found with name {presetName}");
                     return;
                 }
             }
@@ -44,7 +44,7 @@ namespace Content.Server.Commands.GameTicking
                 ticker.SetStartPreset(preset);
             }
 
-            shell.SendText(player, $"Enabling the lobby and restarting the round.{(preset == null ? "" : $"\nPreset set to {presetName}")}");
+            shell.WriteLine($"Enabling the lobby and restarting the round.{(preset == null ? "" : $"\nPreset set to {presetName}")}");
         }
     }
 }

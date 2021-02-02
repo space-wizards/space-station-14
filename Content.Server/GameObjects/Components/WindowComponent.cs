@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Content.Server.Utility;
 using Content.Shared.Audio;
@@ -6,6 +6,7 @@ using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.GameObjects.Components.Destructible;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
@@ -13,7 +14,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components
@@ -22,14 +22,6 @@ namespace Content.Server.GameObjects.Components
     [ComponentReference(typeof(SharedWindowComponent))]
     public class WindowComponent : SharedWindowComponent, IExamine, IInteractHand
     {
-        private int _maxDamage;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _maxDamage, "maxDamage", 100);
-        }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
@@ -50,18 +42,24 @@ namespace Content.Server.GameObjects.Components
         {
             if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
-                appearance.SetData(WindowVisuals.Damage, (float) currentDamage / _maxDamage);
+                if (Owner.TryGetComponent(out DestructibleComponent? destructible))
+                {
+                    var damageThreshold = destructible.LowestToHighestThresholds.FirstOrNull()?.Key;
+                    if (damageThreshold == null) return;
+                    appearance.SetData(WindowVisuals.Damage, (float) currentDamage / damageThreshold);
+                }
             }
         }
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
             var damage = Owner.GetComponentOrNull<IDamageableComponent>()?.TotalDamage;
-            if (damage == null) return;
-            var fraction = ((damage == 0 || _maxDamage == 0)
+            var damageThreshold = Owner.GetComponentOrNull<DestructibleComponent>()?.LowestToHighestThresholds.FirstOrNull()?.Key;
+            if (damage == null || damageThreshold == null) return;
+            var fraction = ((damage == 0 || damageThreshold == 0)
                 ? 0f
-                : (float) damage / _maxDamage);
-            var level = Math.Min(ContentHelpers.RoundToLevels(fraction, 1, 7), 5);
+                : (float) damage / damageThreshold);
+            var level = Math.Min(ContentHelpers.RoundToLevels((double) fraction, 1, 7), 5);
             switch (level)
             {
                 case 0:

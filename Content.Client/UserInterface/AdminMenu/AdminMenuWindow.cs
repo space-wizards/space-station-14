@@ -440,7 +440,7 @@ namespace Content.Client.UserInterface.AdminMenu
 
             public override void ButtonPressed(ButtonEventArgs args)
             {
-                IoCManager.Resolve<IClientConsole>().ProcessCommand(RequiredCommand);
+                IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand(RequiredCommand);
             }
         }
         #endregion
@@ -504,7 +504,7 @@ namespace Content.Client.UserInterface.AdminMenu
                     Name = "Pause",
                     Handler = () =>
                     {
-                        IoCManager.Resolve<IClientConsole>().ProcessCommand("events pause");
+                        IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand("events pause");
                     },
                 },
                 new CommandUIButton
@@ -512,14 +512,14 @@ namespace Content.Client.UserInterface.AdminMenu
                     Name = "Resume",
                     Handler = () =>
                     {
-                        IoCManager.Resolve<IClientConsole>().ProcessCommand("events resume");
+                        IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand("events resume");
                     },
                 },
             };
 
             public override void Submit()
             {
-                IoCManager.Resolve<IClientConsole>().ProcessCommand($"events run \"{_eventsDropDown.GetValue()}\"");
+                IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand($"events run \"{_eventsDropDown.GetValue()}\"");
             }
         }
 
@@ -548,7 +548,7 @@ namespace Content.Client.UserInterface.AdminMenu
 
             public override void Submit()
             {
-                IoCManager.Resolve<IClientConsole>().ProcessCommand($"kick \"{_playerDropDown.GetValue()}\" \"{CommandParsing.Escape(_reason.GetValue())}\"");
+                IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand($"kick \"{_playerDropDown.GetValue()}\" \"{CommandParsing.Escape(_reason.GetValue())}\"");
             }
         }
 
@@ -572,7 +572,7 @@ namespace Content.Client.UserInterface.AdminMenu
 
             public override void Submit()
             {
-                IoCManager.Resolve<IClientConsole>().ProcessCommand($"tpto \"{_playerDropDown.GetValue()}\"");
+                IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand($"tpto \"{_playerDropDown.GetValue()}\"");
             }
         }
 
@@ -596,7 +596,7 @@ namespace Content.Client.UserInterface.AdminMenu
 
             public override void Submit()
             {
-                IoCManager.Resolve<IClientConsole>().ProcessCommand($"addatmos {_grid.GetValue()}");
+                IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand($"addatmos {_grid.GetValue()}");
             }
         }
 
@@ -639,7 +639,7 @@ namespace Content.Client.UserInterface.AdminMenu
 
             public override void Submit()
             {
-                IoCManager.Resolve<IClientConsole>().ProcessCommand($"fillgas {_grid.GetValue()} {_gas.GetValue()} {_amount.GetValue()}");
+                IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand($"fillgas {_grid.GetValue()} {_gas.GetValue()} {_amount.GetValue()}");
             }
         }
         #endregion

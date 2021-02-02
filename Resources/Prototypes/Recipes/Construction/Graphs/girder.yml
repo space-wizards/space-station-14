@@ -6,7 +6,8 @@
       edges:
         - to: girder
           completed:
-            - !type:SnapToGrid { }
+            - !type:SnapToGrid
+              southRotation: true
           steps:
             - material: Metal
               amount: 2
@@ -35,7 +36,8 @@
 
         - to: wall
           completed:
-            - !type:SnapToGrid {}
+            - !type:SnapToGrid
+              southRotation: true
           conditions:
             - !type:EntityAnchored {}
           steps:
@@ -44,7 +46,8 @@
 
         - to: reinforcedGirder
           completed:
-            - !type:SnapToGrid { }
+            - !type:SnapToGrid
+              southRotation: true
           conditions:
             - !type:EntityAnchored {}
           steps:
@@ -72,7 +75,8 @@
       edges:
         - to: reinforcedWall
           completed:
-            - !type:SnapToGrid { }
+            - !type:SnapToGrid
+              southRotation: true
           conditions:
             - !type:EntityAnchored { }
           steps:
@@ -82,7 +86,8 @@
 
         - to: girder
           completed:
-            - !type:SnapToGrid { }
+            - !type:SnapToGrid
+              southRotation: true
           conditions:
             - !type:EntityAnchored { }
           steps:

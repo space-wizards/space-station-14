@@ -2,14 +2,14 @@
 using Content.Server.Administration;
 using Content.Server.Players;
 using Content.Shared.Administration;
-using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Commands.Mobs
 {
     [AdminCommand(AdminFlags.Admin)]
-    public class MindInfoCommand : IClientCommand
+    public class MindInfoCommand : IConsoleCommand
     {
         public string Command => "mindinfo";
 
@@ -17,11 +17,11 @@ namespace Content.Server.Commands.Mobs
 
         public string Help => "mindinfo <session ID>";
 
-        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
             {
-                shell.SendText(player, "Expected exactly 1 argument.");
+                shell.WriteLine("Expected exactly 1 argument.");
                 return;
             }
 
@@ -37,11 +37,11 @@ namespace Content.Server.Commands.Mobs
                     builder.AppendFormat("{0} ", role.Name);
                 }
 
-                shell.SendText(player, builder.ToString());
+                shell.WriteLine(builder.ToString());
             }
             else
             {
-                shell.SendText(player, "Can't find that mind");
+                shell.WriteLine("Can't find that mind");
             }
         }
     }
