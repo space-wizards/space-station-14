@@ -52,15 +52,17 @@ namespace Content.Shared.Physics.Controllers
 
             // Regular movement.
             var total = (walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed);
-            if (total == Vector2.Zero) return;
 
-            Accelerate(frameTime, physicsComponent, total);
+            if (total != Vector2.Zero)
+            {
+                Accelerate(frameTime, physicsComponent, total);
+                transform.LocalRotation = total.GetDir().ToAngle();
+            }
 
             // TODO: Like I said on PhysicsIsland damping is megasketch. Just to make players feel better to play
             // we'll use our own friction here coz fuck it why not
             Friction(frameTime, physicsComponent, total);
 
-            transform.LocalRotation = total.GetDir().ToAngle();
             HandleFootsteps(mover);
         }
 
@@ -109,10 +111,24 @@ namespace Content.Shared.Physics.Controllers
             physicsComponent.LinearVelocity += wishDir.Normalized * accelSpeed;
         }
 
+        /// <summary>
+        ///     Artificial player friction to make movement feel snappier.
+        /// </summary>
+        /// <param name="frameTime"></param>
+        /// <param name="physicsComponent"></param>
+        /// <param name="wishDir"></param>
         private void Friction(float frameTime, PhysicsComponent physicsComponent, Vector2 wishDir)
         {
             // If we have no control can't slow our movement down then.
-            if (!ActionBlockerSystem.CanMove(physicsComponent.Owner)) return;
+            if (!ActionBlockerSystem.CanMove(physicsComponent.Owner) || physicsComponent.LinearVelocity == Vector2.Zero) return;
+
+            var friction = physicsComponent.LinearVelocity.Normalized * frameTime * 40;
+            if (friction.Length > physicsComponent.LinearVelocity.Length)
+            {
+                friction = friction.Normalized * physicsComponent.LinearVelocity.Length;
+            }
+
+            physicsComponent.LinearVelocity -= friction;
         }
 
         protected virtual void HandleFootsteps(IMoverComponent mover) {}
