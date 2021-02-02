@@ -116,7 +116,7 @@ namespace Content.Client.Instruments
                 return;
 
             MidiStopButtonOnPressed(null);
-            var memStream = new MemoryStream((int) file.Length);
+            await using var memStream = new MemoryStream((int) file.Length);
             // 100ms delay is due to a race condition or something idk.
             // While we're waiting, load it into memory.
             await Task.WhenAll(Timer.Delay(100), file.CopyToAsync(memStream));
