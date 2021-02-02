@@ -1,4 +1,5 @@
-﻿using System;
+#nullable enable
+using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;

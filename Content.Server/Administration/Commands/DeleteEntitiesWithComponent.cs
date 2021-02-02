@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Shared.Administration;
-using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -11,7 +11,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    class DeleteEntitiesWithComponent : IClientCommand
+    class DeleteEntitiesWithComponent : IConsoleCommand
     {
         public string Command => "deleteewc";
         public string Description
@@ -29,11 +29,11 @@ namespace Content.Server.Administration.Commands
             }
         }
 
-        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 1)
             {
-                shell.SendText(player, Help);
+                shell.WriteLine(Help);
                 return;
             }
 
@@ -54,7 +54,7 @@ namespace Content.Server.Administration.Commands
                 count += 1;
             }
 
-            shell.SendText(player, Loc.GetString("Deleted {0} entities", count));
+            shell.WriteLine(Loc.GetString("Deleted {0} entities", count));
         }
     }
 }

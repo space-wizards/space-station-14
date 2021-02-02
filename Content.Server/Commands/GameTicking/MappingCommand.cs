@@ -1,9 +1,9 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Administration;
 using Content.Shared.Administration;
-using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Interfaces.Timing;
+using Robust.Shared.Console;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Utility;
@@ -11,17 +11,18 @@ using Robust.Shared.Utility;
 namespace Content.Server.Commands.GameTicking
 {
     [AdminCommand(AdminFlags.Server | AdminFlags.Mapping)]
-    class MappingCommand : IClientCommand
+    class MappingCommand : IConsoleCommand
     {
         public string Command => "mapping";
         public string Description => "Creates and teleports you to a new uninitialized map for mapping.";
         public string Help => $"Usage: {Command} <mapname> / {Command} <id> <mapname>";
 
-        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             if (player == null)
             {
-                shell.SendText(player, "Only players can use this command");
+                shell.WriteLine("Only players can use this command");
                 return;
             }
 
@@ -34,7 +35,7 @@ namespace Content.Server.Commands.GameTicking
                 case 1:
                     if (player.AttachedEntity == null)
                     {
-                        shell.SendText(player, "The map name argument cannot be omitted if you have no entity.");
+                        shell.WriteLine("The map name argument cannot be omitted if you have no entity.");
                         return;
                     }
 
@@ -44,7 +45,7 @@ namespace Content.Server.Commands.GameTicking
                 case 2:
                     if (!int.TryParse(args[0], out var id))
                     {
-                        shell.SendText(player, $"{args[0]} is not a valid integer.");
+                        shell.WriteLine($"{args[0]} is not a valid integer.");
                         return;
                     }
 
@@ -52,21 +53,21 @@ namespace Content.Server.Commands.GameTicking
                     mapName = args[1];
                     break;
                 default:
-                    shell.SendText(player, Help);
+                    shell.WriteLine(Help);
                     return;
             }
 
-            shell.ExecuteCommand(player, $"addmap {mapId} false");
-            shell.ExecuteCommand(player, $"loadbp {mapId} \"{CommandParsing.Escape(mapName)}\" true");
-            shell.ExecuteCommand(player, "aghost");
-            shell.ExecuteCommand(player, $"tp 0 0 {mapId}");
+            shell.ExecuteCommand($"addmap {mapId} false");
+            shell.ExecuteCommand($"loadbp {mapId} \"{CommandParsing.Escape(mapName)}\" true");
+            shell.ExecuteCommand("aghost");
+            shell.ExecuteCommand($"tp 0 0 {mapId}");
 
             var newGrid = mapManager.GetAllGrids().OrderByDescending(g => (int) g.Index).First();
             var pauseManager = IoCManager.Resolve<IPauseManager>();
 
             pauseManager.SetMapPaused(newGrid.ParentMapId, true);
 
-            shell.SendText(player, $"Created unloaded map from file {mapName} with id {mapId}. Use \"savebp {newGrid.Index} foo.yml\" to save the new grid as a map.");
+            shell.WriteLine($"Created unloaded map from file {mapName} with id {mapId}. Use \"savebp {newGrid.Index} foo.yml\" to save the new grid as a map.");
         }
     }
 }

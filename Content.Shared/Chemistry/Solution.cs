@@ -321,7 +321,7 @@ namespace Content.Shared.Chemistry
         {
             var proto = IoCManager.Resolve<IPrototypeManager>();
 
-            foreach (var (reagentId, quantity) in _contents)
+            foreach (var (reagentId, quantity) in _contents.ToArray())
             {
                 if (!proto.TryIndex(reagentId, out ReagentPrototype reagent))
                     continue;

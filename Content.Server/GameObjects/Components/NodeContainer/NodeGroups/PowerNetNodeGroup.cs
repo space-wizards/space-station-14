@@ -1,4 +1,5 @@
-﻿using System;
+#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Content.Server.GameObjects.Components.Power.PowerNetComponents;

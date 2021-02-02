@@ -1,11 +1,11 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Body.Part;
 using Content.Shared.Administration;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
-using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -13,14 +13,15 @@ using Robust.Shared.IoC;
 namespace Content.Server.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class AttachBodyPartCommand : IClientCommand
+    public class AttachBodyPartCommand : IConsoleCommand
     {
         public string Command => "attachbodypart";
         public string Description => "Attaches a body part to you or someone else.";
         public string Help => $"{Command} <partEntityUid> / {Command} <entityUid> <partEntityUid>";
 
-        public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
             IEntity entity;
@@ -31,19 +32,19 @@ namespace Content.Server.Commands
                 case 1:
                     if (player == null)
                     {
-                        shell.SendText(player, $"You need to specify an entity to attach the part to if you aren't a player.\n{Help}");
+                        shell.WriteLine($"You need to specify an entity to attach the part to if you aren't a player.\n{Help}");
                         return;
                     }
 
                     if (player.AttachedEntity == null)
                     {
-                        shell.SendText(player, $"You need to specify an entity to attach the part to if you aren't attached to an entity.\n{Help}");
+                        shell.WriteLine($"You need to specify an entity to attach the part to if you aren't attached to an entity.\n{Help}");
                         return;
                     }
 
                     if (!EntityUid.TryParse(args[0], out partUid))
                     {
-                        shell.SendText(player, $"{args[0]} is not a valid entity uid.");
+                        shell.WriteLine($"{args[0]} is not a valid entity uid.");
                         return;
                     }
 
@@ -53,50 +54,50 @@ namespace Content.Server.Commands
                 case 2:
                     if (!EntityUid.TryParse(args[0], out var entityUid))
                     {
-                        shell.SendText(player, $"{args[0]} is not a valid entity uid.");
+                        shell.WriteLine($"{args[0]} is not a valid entity uid.");
                         return;
                     }
 
                     if (!EntityUid.TryParse(args[1], out partUid))
                     {
-                        shell.SendText(player, $"{args[1]} is not a valid entity uid.");
+                        shell.WriteLine($"{args[1]} is not a valid entity uid.");
                         return;
                     }
 
                     if (!entityManager.TryGetEntity(entityUid, out var tempEntity))
                     {
-                        shell.SendText(player, $"{entityUid} is not a valid entity.");
+                        shell.WriteLine($"{entityUid} is not a valid entity.");
                         return;
                     }
 
                     entity = tempEntity;
                     break;
                 default:
-                    shell.SendText(player, Help);
+                    shell.WriteLine(Help);
                     return;
             }
 
             if (!entity.TryGetComponent(out IBody? body))
             {
-                shell.SendText(player, $"Entity {entity.Name} with uid {entity.Uid} does not have a {nameof(IBody)} component.");
+                shell.WriteLine($"Entity {entity.Name} with uid {entity.Uid} does not have a {nameof(IBody)} component.");
                 return;
             }
 
             if (!entityManager.TryGetEntity(partUid, out var partEntity))
             {
-                shell.SendText(player, $"{partUid} is not a valid entity.");
+                shell.WriteLine($"{partUid} is not a valid entity.");
                 return;
             }
 
             if (!partEntity.TryGetComponent(out IBodyPart? part))
             {
-                shell.SendText(player, $"Entity {partEntity.Name} with uid {args[0]} does not have a {nameof(IBodyPart)} component.");
+                shell.WriteLine($"Entity {partEntity.Name} with uid {args[0]} does not have a {nameof(IBodyPart)} component.");
                 return;
             }
 
             if (body.HasPart(part))
             {
-                shell.SendText(player, $"Body part {partEntity.Name} with uid {partEntity.Uid} is already attached to entity {entity.Name} with uid {entity.Uid}");
+                shell.WriteLine($"Body part {partEntity.Name} with uid {partEntity.Uid} is already attached to entity {entity.Name} with uid {entity.Uid}");
                 return;
             }
 

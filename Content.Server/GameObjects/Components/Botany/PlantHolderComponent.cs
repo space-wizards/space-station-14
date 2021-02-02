@@ -640,6 +640,13 @@ namespace Content.Server.GameObjects.Components.Botany
                 Seed = Seed.Diverge(modified);
         }
 
+        private void ForceUpdateByExternalCause()
+        {
+            SkipAging++; // We're forcing an update cycle, so one age hasn't passed.
+            ForceUpdate = true;
+            Update();
+        }
+
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             var user = eventArgs.User;
@@ -696,6 +703,22 @@ namespace Content.Server.GameObjects.Components.Botany
                 return true;
             }
 
+            if (usingItem.HasComponent<ShovelComponent>())
+            {
+                if (Seed != null)
+                {
+                    user.PopupMessageCursor(Loc.GetString("You remove the plant from the {0}.", Owner.Name));
+                    user.PopupMessageOtherClients(Loc.GetString("{0} removes the plant.", user.Name));
+                    RemovePlant();
+                }
+                else
+                {
+                    user.PopupMessageCursor(Loc.GetString("There is no plant to remove."));
+                }
+
+                return true;
+            }
+
             if (usingItem.TryGetComponent(out ISolutionInteractionsComponent? solution) && solution.CanDrain)
             {
                 var amount = ReagentUnit.New(5);
@@ -721,9 +744,7 @@ namespace Content.Server.GameObjects.Components.Botany
 
                 _solutionContainer?.TryAddSolution(split);
 
-                SkipAging++; // We're forcing an update cycle, so one age hasn't passed.
-                ForceUpdate = true;
-                Update();
+                ForceUpdateByExternalCause();
 
                 return true;
             }
@@ -758,9 +779,7 @@ namespace Content.Server.GameObjects.Components.Botany
 
                 // Just in case.
                 CheckLevelSanity();
-                SkipAging++; // We're forcing an update cycle, so one age hasn't passed.
-                ForceUpdate = true;
-                Update();
+                ForceUpdateByExternalCause();
 
                 return true;
             }
@@ -768,6 +787,24 @@ namespace Content.Server.GameObjects.Components.Botany
             if (usingItem.HasComponent<BotanySharpComponent>())
             {
                 return DoHarvest(user);
+            }
+
+            if (usingItem.HasComponent<ProduceComponent>())
+            {
+                user.PopupMessageCursor(Loc.GetString("You compost {1:theName} into {0:theName}.", Owner, usingItem));
+                user.PopupMessageOtherClients(Loc.GetString("{0:TheName} composts {1:theName} into {2:theName}.", user, usingItem, Owner));
+
+                if (usingItem.TryGetComponent(out SolutionContainerComponent? solution2))
+                {
+                    // This deliberately discards overfill.
+                    _solutionContainer?.TryAddSolution(solution2.SplitSolution(solution2.Solution.TotalVolume));
+
+                    ForceUpdateByExternalCause();
+                }
+
+                usingItem.Delete();
+
+                return true;
             }
 
             return false;
