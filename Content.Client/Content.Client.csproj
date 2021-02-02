@@ -33,6 +33,9 @@
       <DependentUpon>OptionsMenu.cs</DependentUpon>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="GameObjects\Components\Items\Storage" />
+  </ItemGroup>
 
   <Import Project="..\RobustToolbox\MSBuild\XamlIL.targets" />
 </Project>

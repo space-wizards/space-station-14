@@ -90,6 +90,7 @@
         public const uint ACTIONS = 1083;
         public const uint DAMAGEABLE = 1084;
         public const uint MAGBOOTS = 1085;
+        public const uint SINGLE_ITEM_STORAGE = 1083;
 
         // Net IDs for integration tests.
         public const uint PREDICTION_TEST = 10001;

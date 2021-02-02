@@ -15,41 +15,38 @@ namespace Content.Client.GameObjects.Components
     [UsedImplicitly]
     public class StackVisualizer : AppearanceVisualizer
     {
-        private readonly List<string> _spriteStates = new();
-        private bool _isOverlay;
+        private readonly List<string> _opaqueSprites = new();
+        private readonly List<string> _transparentSprites = new();
 
         public override void LoadData(YamlMappingNode mapping)
         {
             base.LoadData(mapping);
 
-
-            if (mapping.TryGetNode("overlay", out YamlNode? overlay))
+            if (mapping.TryGetNode<YamlSequenceNode>("transparentLayers", out var transparentLayers))
             {
-                _isOverlay = overlay.AsBool();
+                foreach (var yamlNode in transparentLayers)
+                {
+                    _transparentSprites.Add(((YamlScalarNode) yamlNode).Value!);
+                }
             }
 
-            if (!mapping.TryGetNode("spritestates", out YamlSequenceNode? stepsMapping))
+            if (mapping.TryGetNode<YamlSequenceNode>("opaqueLayers", out var opaqueLayers))
             {
-                return;
+                foreach (var yamlNode in opaqueLayers)
+                {
+                    _opaqueSprites.Add(((YamlScalarNode) yamlNode).Value!);
+                }
             }
-
-
-            foreach (var yamlNode in stepsMapping)
-            {
-                var spriteState = ((YamlScalarNode) yamlNode).Value;
-                _spriteStates.Add(spriteState!);
-            }
-
         }
 
         public override void InitializeEntity(IEntity entity)
         {
             base.InitializeEntity(entity);
 
-            if (_isOverlay
+            if (_transparentSprites.Count > 0
                 && entity.TryGetComponent<ISpriteComponent>(out var spriteComponent))
             {
-                foreach (var sprite in _spriteStates)
+                foreach (var sprite in _transparentSprites)
                 {
                     var rsiPath = spriteComponent.BaseRSI!.Path!;
                     spriteComponent.LayerMapReserveBlank(sprite);
@@ -75,17 +72,19 @@ namespace Content.Client.GameObjects.Components
                     return;
                 }
 
-                int roundToLevels = ContentHelpers.RoundToNearestIndex(actual, maxCount, _spriteStates.Count);
-                if (_isOverlay)
+                if (_opaqueSprites.Count > 0)
                 {
-                    for (int i = 0; i < roundToLevels; i++)
-                    {
-                        spriteComponent.LayerSetVisible(_spriteStates[i], true);
-                    }
+                    var activeLayer = ContentHelpers.RoundToNearestIndex(actual, maxCount, _opaqueSprites.Count);
+                    spriteComponent.LayerSetState(0, _opaqueSprites[activeLayer]);
                 }
-                else
+
+                if (_transparentSprites.Count > 0)
                 {
-                    spriteComponent.LayerSetState(0, _spriteStates[roundToLevels]);
+                    var activeTill = ContentHelpers.RoundToNearestIndex(actual, maxCount, _transparentSprites.Count);
+                    for (var i = 0; i < _transparentSprites.Count; i++)
+                    {
+                        spriteComponent.LayerSetVisible(_transparentSprites[i], i <= activeTill);
+                    }
                 }
             }
         }
