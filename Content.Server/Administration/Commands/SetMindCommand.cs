@@ -3,8 +3,8 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Mobs;
 using Content.Server.Players;
 using Content.Shared.Administration;
-using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -13,7 +13,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    class SetMindCommand : IClientCommand
+    class SetMindCommand : IConsoleCommand
     {
         public string Command => "setmind";
 
@@ -21,17 +21,17 @@ namespace Content.Server.Administration.Commands
 
         public string Help => Loc.GetString("Usage: {0} <entityUid> <username>", Command);
 
-        public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 2)
             {
-                shell.SendText(player, Loc.GetString("Wrong number of arguments."));
+                shell.WriteLine(Loc.GetString("Wrong number of arguments."));
                 return;
             }
 
             if (!int.TryParse(args[0], out var entityUid))
             {
-                shell.SendText(player, Loc.GetString("EntityUid must be a number."));
+                shell.WriteLine(Loc.GetString("EntityUid must be a number."));
                 return;
             }
 
@@ -41,7 +41,7 @@ namespace Content.Server.Administration.Commands
 
             if (!eUid.IsValid() || !entityManager.EntityExists(eUid))
             {
-                shell.SendText(player, Loc.GetString("Invalid entity ID."));
+                shell.WriteLine(Loc.GetString("Invalid entity ID."));
                 return;
             }
 
@@ -49,13 +49,13 @@ namespace Content.Server.Administration.Commands
 
             if (!target.TryGetComponent<MindComponent>(out var mindComponent))
             {
-                shell.SendText(player, Loc.GetString("Target entity does not have a mind (did you forget to make sentient?)"));
+                shell.WriteLine(Loc.GetString("Target entity does not have a mind (did you forget to make sentient?)"));
                 return;
             }
 
             if (!IoCManager.Resolve<IPlayerManager>().TryGetSessionByUsername(args[1], out var session))
             {
-                shell.SendText(player, Loc.GetString("Target player does not exist"));
+                shell.WriteLine(Loc.GetString("Target player does not exist"));
                 return;
             }
 
@@ -63,7 +63,7 @@ namespace Content.Server.Administration.Commands
             var playerCData = session.ContentData();
             if (playerCData == null)
             {
-                shell.SendText(player, Loc.GetString("Target player does not have content data (wtf?)"));
+                shell.WriteLine(Loc.GetString("Target player does not have content data (wtf?)"));
                 return;
             }
 
