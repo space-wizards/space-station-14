@@ -19,6 +19,8 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Timers;
+using Robust.Shared.Timing;
+using Range = Robust.Client.UserInterface.Controls.Range;
 
 namespace Content.Client.Instruments
 {
@@ -46,6 +48,7 @@ namespace Content.Client.Instruments
             LoopButton.Disabled = !_owner.Instrument.IsMidiOpen;
             LoopButton.Pressed = _owner.Instrument.LoopMidi;
             StopButton.Disabled = !_owner.Instrument.IsMidiOpen;
+            MediaPlayerHBox.Visible = _owner.Instrument.IsMidiOpen;
 
             if (!_midiManager.IsAvailable)
             {
@@ -74,6 +77,8 @@ namespace Content.Client.Instruments
             FileButton.OnPressed += MidiFileButtonOnOnPressed;
             LoopButton.OnToggled += MidiLoopButtonOnOnToggled;
             StopButton.OnPressed += MidiStopButtonOnPressed;
+            PlaybackSlider.OnValueChanged += PlaybackSliderSeek;
+            PlaybackSlider.OnKeyBindUp += PlaybackSliderKeyUp;
         }
 
         private void InstrumentOnMidiPlaybackEnded()
@@ -85,6 +90,9 @@ namespace Content.Client.Instruments
         {
             LoopButton.Disabled = disabled;
             StopButton.Disabled = disabled;
+
+            // Hide or show media controls.
+            MediaPlayerHBox.Visible = !disabled;
         }
 
         private async void MidiFileButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
@@ -164,6 +172,29 @@ namespace Content.Client.Instruments
         private void MidiLoopButtonOnOnToggled(BaseButton.ButtonToggledEventArgs obj)
         {
             _owner.Instrument.LoopMidi = obj.Pressed;
+        }
+
+        private void PlaybackSliderSeek(Range _)
+        {
+            // Do not seek while still grabbing.
+            if (PlaybackSlider.Grabbed) return;
+
+            _owner.Instrument.PlayerTick = (int)Math.Ceiling(PlaybackSlider.Value);
+        }
+
+        private void PlaybackSliderKeyUp(GUIBoundKeyEventArgs obj)
+        {
+            _owner.Instrument.PlayerTick = (int)Math.Ceiling(PlaybackSlider.Value);
+        }
+
+        protected override void Update(FrameEventArgs args)
+        {
+            base.Update(args);
+
+            if (PlaybackSlider.Grabbed) return;
+
+            PlaybackSlider.MaxValue = _owner.Instrument.PlayerTotalTick;
+            PlaybackSlider.SetValueWithoutEvent(_owner.Instrument.PlayerTick);
         }
     }
 }

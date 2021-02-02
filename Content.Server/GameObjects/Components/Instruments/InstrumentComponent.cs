@@ -23,6 +23,7 @@ using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -386,14 +387,12 @@ namespace Content.Server.GameObjects.Components.Instruments
 
                 UserInterface?.CloseAll();
 
+                EntitySystem.Get<StandingStateSystem>().DropAllItemsInHands(mob, false);
+
                 if (mob != null && mob.TryGetComponent(out StunnableComponent? stun))
                 {
                     stun.Stun(1);
                     Clean();
-                }
-                else
-                {
-                    EntitySystem.Get<StandingStateSystem>().DropAllItemsInHands(mob, false);
                 }
 
                 InstrumentPlayer = null;
