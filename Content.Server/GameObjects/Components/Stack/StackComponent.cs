@@ -36,6 +36,7 @@ namespace Content.Server.GameObjects.Components.Stack
             }
         }
 
+        [ViewVariables(VVAccess.ReadWrite)]
         public override int Count
         {
             get => base.Count;
@@ -43,10 +44,10 @@ namespace Content.Server.GameObjects.Components.Stack
             {
                 base.Count = value;
 
-                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+                if (!Owner.Deleted && Owner.TryGetComponent(out AppearanceComponent? appearance))
                 {
-                    var percentile = (float) Count / MaxCount;
-                    appearance.SetData(StackVisuals.Count, percentile);
+                    appearance.SetData(StackVisuals.Actual, Count);
+                    appearance.SetData(StackVisuals.MaxCount, MaxCount);
                 }
             }
         }

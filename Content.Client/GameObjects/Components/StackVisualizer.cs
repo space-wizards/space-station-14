@@ -2,8 +2,11 @@
 
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -12,24 +15,48 @@ namespace Content.Client.GameObjects.Components
     [UsedImplicitly]
     public class StackVisualizer : AppearanceVisualizer
     {
-        private List<string> _spritestates = new();
-        private int _spriteCount;
+        private readonly List<string> _spriteStates = new();
+        private bool _isOverlay;
 
         public override void LoadData(YamlMappingNode mapping)
         {
             base.LoadData(mapping);
+
+
+            if (mapping.TryGetNode("overlay", out YamlNode? overlay))
+            {
+                _isOverlay = overlay.AsBool();
+            }
 
             if (!mapping.TryGetNode("spritestates", out YamlSequenceNode? stepsMapping))
             {
                 return;
             }
 
+
             foreach (var yamlNode in stepsMapping)
             {
                 var spriteState = ((YamlScalarNode) yamlNode).Value;
-                _spritestates.Add(spriteState!);
+                _spriteStates.Add(spriteState!);
             }
-            _spriteCount = _spritestates.Count;
+
+        }
+
+        public override void InitializeEntity(IEntity entity)
+        {
+            base.InitializeEntity(entity);
+
+            if (_isOverlay
+                && entity.TryGetComponent<ISpriteComponent>(out var spriteComponent))
+            {
+                foreach (var sprite in _spriteStates)
+                {
+                    var rsiPath = spriteComponent.BaseRSI!.Path!;
+                    spriteComponent.LayerMapReserveBlank(sprite);
+                    spriteComponent.LayerSetSprite(sprite, new SpriteSpecifier.Rsi(rsiPath, sprite));
+                    spriteComponent.LayerSetVisible(sprite, false);
+                }
+            }
         }
 
         public override void OnChangeData(AppearanceComponent component)
@@ -38,23 +65,29 @@ namespace Content.Client.GameObjects.Components
 
             if (component.Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))
             {
-                if (component.TryGetData(StackVisuals.Count, out float data))
+                if (!component.TryGetData<int>(StackVisuals.Actual, out var actual))
                 {
-                    spriteComponent.LayerSetState(0, _spritestates[extractIndex(data)] );
+                    return;
+                }
+
+                if (!component.TryGetData<int>(StackVisuals.MaxCount, out var maxCount))
+                {
+                    return;
+                }
+
+                int roundToLevels = ContentHelpers.RoundToNearestIndex(actual, maxCount, _spriteStates.Count);
+                if (_isOverlay)
+                {
+                    for (int i = 0; i < roundToLevels; i++)
+                    {
+                        spriteComponent.LayerSetVisible(_spriteStates[i], true);
+                    }
+                }
+                else
+                {
+                    spriteComponent.LayerSetState(0, _spriteStates[roundToLevels]);
                 }
             }
-
-        }
-
-        private int extractIndex(float percentile)
-        {
-            var index = (int) (percentile * _spriteCount);
-            if (index >= _spriteCount)
-            {
-                index = 0;
-            }
-
-            return index;
         }
     }
 }

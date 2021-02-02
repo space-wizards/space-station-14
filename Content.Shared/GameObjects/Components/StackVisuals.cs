@@ -6,6 +6,7 @@ namespace Content.Shared.GameObjects.Components
     [Serializable, NetSerializable]
     public enum StackVisuals : byte
     {
-        Count
+        Actual,
+        MaxCount
     }
 }
