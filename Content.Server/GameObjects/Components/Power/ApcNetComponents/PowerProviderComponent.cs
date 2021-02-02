@@ -1,6 +1,6 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -20,7 +20,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         void UpdateReceiverLoad(int oldLoad, int newLoad);
 
-        public IEntity ProviderOwner { get; }
+        public IEntity? ProviderOwner { get; }
 
         public bool HasApcPower { get; }
     }
@@ -172,7 +172,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
             public void AddReceiver(PowerReceiverComponent receiver) { }
             public void RemoveReceiver(PowerReceiverComponent receiver) { }
             public void UpdateReceiverLoad(int oldLoad, int newLoad) { }
-            public IEntity ProviderOwner => default;
+            public IEntity? ProviderOwner => default;
         }
     }
 }

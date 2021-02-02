@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
@@ -6,8 +6,8 @@ using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
-using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -15,7 +15,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    class HurtCommand : IClientCommand
+    class HurtCommand : IConsoleCommand
     {
         public string Command => "hurt";
         public string Description => "Ouch";
@@ -53,7 +53,7 @@ namespace Content.Server.Commands
 
                 if (playerEntity == null)
                 {
-                    shell.SendText(player, $"You must have a player entity to use this command without specifying an entity.\n{Help}");
+                    shell.WriteLine($"You must have a player entity to use this command without specifying an entity.\n{Help}");
                     return false;
                 }
 
@@ -63,7 +63,7 @@ namespace Content.Server.Commands
 
             if (!EntityUid.TryParse(arg, out var entityUid))
             {
-                shell.SendText(player, $"{arg} is not a valid entity uid.\n{Help}");
+                shell.WriteLine($"{arg} is not a valid entity uid.\n{Help}");
 
                 return false;
             }
@@ -72,7 +72,7 @@ namespace Content.Server.Commands
 
             if (!entityManager.TryGetEntity(entityUid, out var parsedEntity))
             {
-                shell.SendText(player, $"No entity found with uid {entityUid}");
+                shell.WriteLine($"No entity found with uid {entityUid}");
 
                 return false;
             }
@@ -89,7 +89,7 @@ namespace Content.Server.Commands
         {
             if (!int.TryParse(args[1], out var amount))
             {
-                shell.SendText(player, $"{args[1]} is not a valid damage integer.");
+                shell.WriteLine($"{args[1]} is not a valid damage integer.");
 
                 func = null;
                 return false;
@@ -101,20 +101,19 @@ namespace Content.Server.Commands
                 {
                     if (!damageable.DamageClasses.ContainsKey(damageClass))
                     {
-                        shell.SendText(player, $"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} can not be damaged with damage class {damageClass}");
+                        shell.WriteLine($"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} can not be damaged with damage class {damageClass}");
 
                         return;
                     }
 
                     if (!damageable.ChangeDamage(damageClass, amount, ignoreResistances))
                     {
-                        shell.SendText(player, $"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} received no damage.");
+                        shell.WriteLine($"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} received no damage.");
 
                         return;
                     }
 
-                    shell.SendText(player,
-                        $"Damaged entity {damageable.Owner.Name} with id {damageable.Owner.Uid} for {amount} {damageClass} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
+                    shell.WriteLine($"Damaged entity {damageable.Owner.Name} with id {damageable.Owner.Uid} for {amount} {damageClass} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
                 };
 
                 return true;
@@ -126,37 +125,38 @@ namespace Content.Server.Commands
                 {
                     if (!damageable.DamageTypes.ContainsKey(damageType))
                     {
-                        shell.SendText(player, $"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} can not be damaged with damage class {damageType}");
+                        shell.WriteLine($"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} can not be damaged with damage class {damageType}");
 
                         return;
                     }
 
                     if (!damageable.ChangeDamage(damageType, amount, ignoreResistances))
                     {
-                        shell.SendText(player, $"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} received no damage.");
+                        shell.WriteLine($"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} received no damage.");
 
                         return;
                     }
 
-                    shell.SendText(player, $"Damaged entity {damageable.Owner.Name} with id {damageable.Owner.Uid} for {amount} {damageType} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
+                    shell.WriteLine($"Damaged entity {damageable.Owner.Name} with id {damageable.Owner.Uid} for {amount} {damageType} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
                 };
 
                 return true;
             }
             else
             {
-                shell.SendText(player, $"{args[0]} is not a valid damage class or type.");
+                shell.WriteLine($"{args[0]} is not a valid damage class or type.");
 
                 var types = DamageTypes();
-                shell.SendText(player, types);
+                shell.WriteLine(types);
 
                 func = null;
                 return false;
             }
         }
 
-        public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             bool ignoreResistances;
             IEntity entity;
             Damage? damageFunc;
@@ -172,12 +172,12 @@ namespace Content.Server.Commands
                         types = types.Replace('e', 'é');
                     }
 
-                    shell.SendText(player, types);
+                    shell.WriteLine(types);
 
                     return;
                 // Not enough args
                 case var n when n < 2:
-                    shell.SendText(player, $"Invalid number of arguments ({args.Length}).\n{Help}");
+                    shell.WriteLine($"Invalid number of arguments ({args.Length}).\n{Help}");
                     return;
                 case var n when n >= 2 && n <= 4:
                     if (!TryParseDamageArgs(shell, player, args, out damageFunc))
@@ -198,7 +198,7 @@ namespace Content.Server.Commands
                     {
                         if (!bool.TryParse(args[3], out ignoreResistances))
                         {
-                            shell.SendText(player, $"{args[3]} is not a valid boolean value for ignoreResistances.\n{Help}");
+                            shell.WriteLine($"{args[3]} is not a valid boolean value for ignoreResistances.\n{Help}");
                             return;
                         }
                     }
@@ -209,13 +209,13 @@ namespace Content.Server.Commands
 
                     break;
                 default:
-                    shell.SendText(player, $"Invalid amount of arguments ({args.Length}).\n{Help}");
+                    shell.WriteLine($"Invalid amount of arguments ({args.Length}).\n{Help}");
                     return;
             }
 
             if (!entity.TryGetComponent(out IDamageableComponent? damageable))
             {
-                shell.SendText(player, $"Entity {entity.Name} with id {entity.Uid} does not have a {nameof(IDamageableComponent)}.");
+                shell.WriteLine($"Entity {entity.Name} with id {entity.Uid} does not have a {nameof(IDamageableComponent)}.");
                 return;
             }
 

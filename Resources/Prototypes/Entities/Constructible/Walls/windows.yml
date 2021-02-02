@@ -46,7 +46,6 @@
   - type: Airtight
   - type: Window
     base: window
-    maxDamage: 15
   - type: Construction
     graph: window
     node: window
@@ -81,7 +80,6 @@
           acts: [ "Destruction" ]
   - type: Window
     base: rwindow
-    maxDamage: 75
   - type: Construction
     graph: window
     node: reinforcedWindow
@@ -114,7 +112,6 @@
     resistances: metallicResistances
   - type: Window
     base: pwindow
-    maxDamage: 100
   - type: Construction
     graph: window
     node: phoronWindow

@@ -5,6 +5,9 @@ pipeline {
         stage('Setup') {
             steps {
                 sh 'git submodule update --init --recursive'
+                // Do a git fetch to make sure tags in the engine get pulled in if they've been added later.
+                // Can happen if somebody forgot to tag the engine then tried to fix it by tagging later.
+                sh 'git submodule foreach \\"git fetch\\"'
             }
         }
         stage('Build') {

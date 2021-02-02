@@ -1,4 +1,5 @@
-﻿using System;
+#nullable enable
+using System;
 using Content.Server.Explosions;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Shared.GameObjects.Components.Power;
@@ -10,8 +11,6 @@ using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-
-#nullable enable
 
 namespace Content.Server.GameObjects.Components.Power
 {

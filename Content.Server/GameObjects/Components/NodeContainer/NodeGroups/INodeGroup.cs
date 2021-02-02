@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+#nullable enable
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
