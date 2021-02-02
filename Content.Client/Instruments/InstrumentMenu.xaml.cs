@@ -48,7 +48,7 @@ namespace Content.Client.Instruments
             LoopButton.Disabled = !_owner.Instrument.IsMidiOpen;
             LoopButton.Pressed = _owner.Instrument.LoopMidi;
             StopButton.Disabled = !_owner.Instrument.IsMidiOpen;
-            MediaPlayerHBox.Visible = _owner.Instrument.IsMidiOpen;
+            PlaybackSlider.Visible = _owner.Instrument.IsMidiOpen;
 
             if (!_midiManager.IsAvailable)
             {
@@ -91,8 +91,8 @@ namespace Content.Client.Instruments
             LoopButton.Disabled = disabled;
             StopButton.Disabled = disabled;
 
-            // Hide or show media controls.
-            MediaPlayerHBox.Visible = !disabled;
+            // Hide or show the playback slider.
+            PlaybackSlider.Visible = !disabled;
         }
 
         private async void MidiFileButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
