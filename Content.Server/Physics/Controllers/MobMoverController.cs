@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Server.GameObjects.Components;
+#nullable enable
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
@@ -8,17 +7,12 @@ using Content.Server.GameObjects.Components.Sound;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Maps;
-using Content.Shared.Physics;
-using JetBrains.Annotations;
-using Robust.Server.GameObjects;
+using Content.Shared.Physics.Controllers;
 using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -27,10 +21,9 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Physics.Controllers
 {
-    [UsedImplicitly]
-    internal class MoverSystem : SharedMoverSystem
+    public class MobMoverController : SharedMobMoverController
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
@@ -42,34 +35,23 @@ namespace Content.Server.GameObjects.EntitySystems
         private const float StepSoundMoveDistanceRunning = 2;
         private const float StepSoundMoveDistanceWalking = 1.5f;
 
-        /// <inheritdoc />
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<PlayerDetachedSystemMessage>(PlayerDetached);
-
-            _audioSystem = EntitySystemManager.GetEntitySystem<AudioSystem>();
-
-            UpdatesBefore.Add(typeof(PhysicsSystem));
+            _audioSystem = EntitySystem.Get<AudioSystem>();
         }
 
-        public override void Update(float frameTime)
+        public override void UpdateBeforeSolve(float frameTime)
         {
-            foreach (var (moverComponent, collidableComponent) in EntityManager.ComponentManager
-                .EntityQuery<IMoverComponent, IPhysicsComponent>(false))
+            base.UpdateBeforeSolve(frameTime);
+            foreach (var (mover, physics) in ComponentManager.EntityQuery<SharedPlayerInputMoverComponent, PhysicsComponent>(false))
             {
-                var entity = moverComponent.Owner;
-                UpdateKinematics(entity.Transform, moverComponent, collidableComponent);
+                UpdateKinematics(frameTime, mover.Owner.Transform, mover, physics);
             }
-        }
 
-        private void PlayerDetached(PlayerDetachedSystemMessage ev)
-        {
-            if (ev.Entity.TryGetComponent(out IPhysicsComponent? physics) &&
-                physics.TryGetController(out MoverController controller) &&
-                !ev.Entity.IsWeightless())
+            foreach (var (mover, physics) in ComponentManager.EntityQuery<AiControllerComponent, PhysicsComponent>(false))
             {
-                controller.StopMoving();
+                UpdateKinematics(frameTime, mover.Owner.Transform, mover, physics);
             }
         }
 
@@ -166,5 +148,6 @@ namespace Content.Server.GameObjects.EntitySystems
                 Logger.ErrorS("sound", $"Unable to find sound collection for {soundCollectionName}");
             }
         }
+
     }
 }

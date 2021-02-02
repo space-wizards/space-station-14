@@ -1,30 +1,20 @@
 ﻿#nullable enable
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.Physics;
-using Content.Shared.Physics.Pull;
-using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.Physics;
-using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {
-    public abstract class SharedMoverSystem : EntitySystem
+    /// <summary>
+    ///     Handles converting inputs into movement.
+    /// </summary>
+    public sealed class SharedMoverSystem : EntitySystem
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] protected readonly IPhysicsManager PhysicsManager = default!;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -49,113 +39,6 @@ namespace Content.Shared.GameObjects.EntitySystems
             CommandBinds.Unregister<SharedMoverSystem>();
             base.Shutdown();
         }
-
-        //TODO: reorganize this to make more logical sense
-        protected void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, IPhysicsComponent physics)
-        {
-            physics.EnsureController<MoverController>();
-
-            var weightless = transform.Owner.IsWeightless();
-
-            if (weightless)
-            {
-                // No gravity: is our entity touching anything?
-                var touching = IsAroundCollider(transform, mover, physics);
-
-                if (!touching)
-                {
-                    transform.LocalRotation = physics.LinearVelocity.GetDir().ToAngle();
-                    return;
-                }
-            }
-
-            // TODO: movement check.
-            var (walkDir, sprintDir) = mover.VelocityDir;
-            var combined = walkDir + sprintDir;
-            if (combined.LengthSquared < 0.001 || !ActionBlockerSystem.CanMove(mover.Owner) && !weightless)
-            {
-                if (physics.TryGetController(out MoverController controller))
-                {
-                    controller.StopMoving();
-                }
-            }
-            else if (ActionBlockerSystem.CanMove(mover.Owner))
-            {
-                if (weightless)
-                {
-                    if (physics.TryGetController(out MoverController controller))
-                    {
-                        if (combined == Vector2.Zero)
-                        {
-                            controller.Move(combined * 1000);
-                        }
-                        else
-                        {
-                            controller.Move(combined.Normalized * mover.CurrentPushSpeed * 1000);
-                        }
-                    }
-
-                    transform.LocalRotation = physics.LinearVelocity.GetDir().ToAngle();
-                    return;
-                }
-
-                var total = walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed;
-
-                {
-                    if (physics.TryGetController(out MoverController controller))
-                    {
-                        controller.Move(total * 50);
-                    }
-                }
-
-                transform.LocalRotation = total.GetDir().ToAngle();
-
-                HandleFootsteps(mover);
-            }
-        }
-
-        protected virtual void HandleFootsteps(IMoverComponent mover)
-        {
-
-        }
-
-        private bool IsAroundCollider(ITransformComponent transform, IMoverComponent mover,
-            IPhysicsComponent collider)
-        {
-            foreach (var entity in _entityManager.GetEntitiesInRange(transform.Owner, mover.GrabRange, true))
-            {
-                if (entity == transform.Owner)
-                {
-                    continue; // Don't try to push off of yourself!
-                }
-
-                if (!entity.TryGetComponent<IPhysicsComponent>(out var otherCollider) ||
-                    !otherCollider.CanCollide ||
-                    (collider.CollisionMask & otherCollider.CollisionLayer) == 0)
-                {
-                    continue;
-                }
-
-                // Don't count pulled entities
-                if (otherCollider.HasController<PullController>())
-                {
-                    continue;
-                }
-
-                // TODO: Item check.
-                var touching = ((collider.CollisionMask & otherCollider.CollisionLayer) != 0x0
-                                || (otherCollider.CollisionMask & collider.CollisionLayer) != 0x0) // Ensure collision
-                               && !entity.HasComponent<IItemComponent>(); // This can't be an item
-
-                if (touching)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
 
         private static void HandleDirChange(ICommonSession? session, Direction dir, ushort subTick, bool state)
         {
