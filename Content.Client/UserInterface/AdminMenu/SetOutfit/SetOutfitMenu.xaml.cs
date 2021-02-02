@@ -22,7 +22,7 @@ namespace Content.Client.UserInterface.AdminMenu.SetOutfit
     public partial class SetOutfitMenu : SS14Window
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IClientConsole _console = default!;
+        [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
 
         public EntityUid? TargetEntityId { get; set; }
         protected override Vector2? CustomSize => (250, 320);
@@ -49,7 +49,7 @@ namespace Content.Client.UserInterface.AdminMenu.SetOutfit
             if (TargetEntityId == null || _selectedOutfit == null)
                 return;
             var command = $"setoutfit {TargetEntityId} {_selectedOutfit.ID}";
-            _console.ProcessCommand(command);
+            _consoleHost.ExecuteCommand(command);
             Close();
         }
 

@@ -13,7 +13,6 @@ using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Shared.Network;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.IoC;
 
