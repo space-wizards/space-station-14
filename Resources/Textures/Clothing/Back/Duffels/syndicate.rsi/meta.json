@@ -8,16 +8,13 @@
   },
   "states": [
     {
-      "name": "icon",
-      "directions": 1
+      "name": "icon"
     },
     {
-      "name": "icon-ammo",
-      "directions": 1
+      "name": "icon-ammo"
     },
     {
-      "name": "icon-med",
-      "directions": 1
+      "name": "icon-med"
     },
     {
       "name": "equipped-BACKPACK",

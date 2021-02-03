@@ -1,0 +1,29 @@
+- type: constructionGraph
+  id: toilet
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: toilet
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Metal
+              amount: 5
+              doAfter: 1
+    - node: toilet
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SteelSheet1
+              amount: 5
+            - !type:EmptyAllContainers {}              
+            - !type:DeleteEntity {}
+          conditions:
+            - !type:EntityAnchored
+              anchored: false
+            - !type:ToiletLidClosed {}  
+          steps:
+            - tool: Welding
+              doAfter: 2

@@ -161,8 +161,17 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 case UiButton.SetDispenseAmount10:
                     _dispenseAmount = ReagentUnit.New(10);
                     break;
+                case UiButton.SetDispenseAmount15:
+                    _dispenseAmount = ReagentUnit.New(15);
+                    break;
+                case UiButton.SetDispenseAmount20:
+                    _dispenseAmount = ReagentUnit.New(20);
+                    break;
                 case UiButton.SetDispenseAmount25:
                     _dispenseAmount = ReagentUnit.New(25);
+                    break;
+                case UiButton.SetDispenseAmount30:
+                    _dispenseAmount = ReagentUnit.New(30);
                     break;
                 case UiButton.SetDispenseAmount50:
                     _dispenseAmount = ReagentUnit.New(50);

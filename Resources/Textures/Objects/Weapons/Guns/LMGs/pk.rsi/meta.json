@@ -8,44 +8,34 @@
     "copyright": "https://github.com/discordia-space/CEV-Eris/blob/237d8f7894617007d75c71d5d9feb4354c78debd/icons/obj/guns/lmg.dmi",
     "states": [
         {
-            "name": "icon",
-            "directions": 1
+            "name": "icon"
         },
         {
-            "name": "base",
-            "directions": 1
+            "name": "base"
         },
         {
-            "name": "bolt-closed",
-            "directions": 1
+            "name": "bolt-closed"
         },
         {
-            "name": "bolt-open",
-            "directions": 1
+            "name": "bolt-open"
         },
         {
-            "name": "mag-0",
-            "directions": 1
+            "name": "mag-0"
         },
         {
-            "name": "mag-1",
-            "directions": 1
+            "name": "mag-1"
         },
         {
-            "name": "mag-2",
-            "directions": 1
+            "name": "mag-2"
         },
         {
-            "name": "mag-3",
-            "directions": 1
+            "name": "mag-3"
         },
         {
-            "name": "mag-4",
-            "directions": 1
+            "name": "mag-4"
         },
         {
-            "name": "mag-5",
-            "directions": 1
+            "name": "mag-5"
         },
         {
             "name": "inhand-left",

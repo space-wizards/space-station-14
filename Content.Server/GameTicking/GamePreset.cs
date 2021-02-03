@@ -13,7 +13,6 @@ using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Shared.Network;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.IoC;
 
@@ -84,12 +83,6 @@ namespace Content.Server.GameTicking
 
             var ghostComponent = ghost.GetComponent<GhostComponent>();
             ghostComponent.CanReturnToBody = canReturn;
-
-            if (playerEntity != null &&
-                playerEntity.TryGetComponent(out ServerOverlayEffectsComponent? overlayComponent))
-            {
-                overlayComponent.RemoveOverlay(SharedOverlayID.CircleMaskOverlay);
-            }
 
             if (canReturn)
                 mind.Visit(ghost);

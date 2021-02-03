@@ -8,12 +8,10 @@
   },
   "states": [
     {
-      "name": "pod_0",
-      "directions": 1
+      "name": "pod_0"
     },
     {
       "name": "pod_1",
-      "directions": 1,
       "delays": [
         [
           0.1,
@@ -25,7 +23,6 @@
     },
     {
       "name": "pod_e",
-      "directions": 1,
       "delays": [
         [
           0.1,
@@ -37,7 +34,6 @@
     },
     {
       "name": "pod_g",
-      "directions": 1,
       "delays": [
         [
           0.1,

@@ -3,7 +3,6 @@ using System;
 using Content.Shared.Alert;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Client.Utility;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -34,11 +33,12 @@ namespace Content.Client.UserInterface.Controls
                 }
             }
         }
+
         private (TimeSpan Start, TimeSpan End)? _cooldown;
 
         private short? _severity;
         private readonly IGameTiming _gameTiming;
-        private readonly TextureRect _icon;
+        private readonly AnimatedTextureRect _icon;
         private readonly CooldownGraphic _cooldownGraphic;
 
         /// <summary>
@@ -53,17 +53,17 @@ namespace Content.Client.UserInterface.Controls
             TooltipSupplier = SupplyTooltip;
             Alert = alert;
             _severity = severity;
-            var texture = alert.GetIcon(_severity).Frame0();
-            _icon = new TextureRect
+            var specifier = alert.GetIcon(_severity);
+            _icon = new AnimatedTextureRect
             {
-                TextureScale = (2, 2),
-                Texture = texture
+                DisplayRect = {TextureScale = (2, 2)}
             };
+
+            _icon.SetFromSpriteSpecifier(specifier);
 
             Children.Add(_icon);
             _cooldownGraphic = new CooldownGraphic();
             Children.Add(_cooldownGraphic);
-
         }
 
         private Control SupplyTooltip(Control? sender)
@@ -79,7 +79,7 @@ namespace Content.Client.UserInterface.Controls
             if (_severity != severity)
             {
                 _severity = severity;
-                _icon.Texture = Alert.GetIcon(_severity).Frame0();
+                _icon.SetFromSpriteSpecifier(Alert.GetIcon(_severity));
             }
         }
 
@@ -99,7 +99,7 @@ namespace Content.Client.UserInterface.Controls
             var progress = (curTime - Cooldown.Value.Start).TotalSeconds / length;
             var ratio = (progress <= 1 ? (1 - progress) : (curTime - Cooldown.Value.End).TotalSeconds * -5);
 
-            _cooldownGraphic.Progress = MathHelper.Clamp((float)ratio, -1, 1);
+            _cooldownGraphic.Progress = MathHelper.Clamp((float) ratio, -1, 1);
             _cooldownGraphic.Visible = ratio > -1f;
         }
     }

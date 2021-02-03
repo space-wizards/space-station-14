@@ -179,6 +179,10 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
                 return ApcExternalPowerState.None;
             }
             var consumer = batteryStorage.Consumer;
+
+            if (consumer == null)
+                return ApcExternalPowerState.None;
+
             if (consumer.ReceivedPower == 0 && consumer.DrawRate != 0)
             {
                 return ApcExternalPowerState.None;

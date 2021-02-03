@@ -228,6 +228,7 @@ namespace Content.Client
             "MachineFrame",
             "MachineBoard",
             "ChemicalAmmo",
+            "Tag",
             "BiologicalSurgeryData",
             "CargoTelepad",
             "TraitorDeathMatchRedemption",
@@ -235,7 +236,14 @@ namespace Content.Client
             "SliceableFood",
             "DamageOtherOnHit",
             "DamageOnLand",
-            "Recyclable"
+            "SmokeSolutionAreaEffect",
+            "FoamSolutionAreaEffect",
+            "GasFilter",
+            "Recyclable",
+            "SecretStash",
+            "Toilet",
+            "ClusterFlash",
+            "GasGenerator"
         };
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+#nullable enable
+using System.Collections.Generic;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.GameObjects.EntitySystems;
@@ -27,9 +28,9 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         [ViewVariables]
         private readonly List<PipeNode> _pipes = new();
 
-        [ViewVariables] private AtmosphereSystem _atmosphereSystem;
+        [ViewVariables] private AtmosphereSystem? _atmosphereSystem;
 
-        [ViewVariables] private IGridAtmosphereComponent GridAtmos => _atmosphereSystem.GetGridAtmosphere(GridId);
+        [ViewVariables] private IGridAtmosphereComponent? GridAtmos => _atmosphereSystem?.GetGridAtmosphere(GridId);
 
         public override void Initialize(Node sourceNode)
         {

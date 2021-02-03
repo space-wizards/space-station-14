@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+#nullable enable
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.GameObjects.Components.Interactable;
@@ -18,7 +19,7 @@ namespace Content.Server.GameObjects.Components.Power
         public override string Name => "Wire";
 
         [ViewVariables]
-        private string _wireDroppedOnCutPrototype;
+        private string? _wireDroppedOnCutPrototype;
 
         /// <summary>
         ///     Checked by <see cref="WirePlacerComponent"/> to determine if there is
@@ -37,7 +38,10 @@ namespace Content.Server.GameObjects.Components.Power
 
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.Using.TryGetComponent(out ToolComponent tool)) return false;
+            if (_wireDroppedOnCutPrototype == null)
+                return false;
+
+            if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool)) return false;
             if (!await tool.UseTool(eventArgs.User, Owner, 0.25f, ToolQuality.Cutting)) return false;
 
             Owner.Delete();

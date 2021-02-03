@@ -6,7 +6,8 @@
   - type: Drink
     openSounds: bottleOpenSounds
   - type: SolutionContainer
-  - type: Pourable
+    maxVol: 100
+  - type: SolutionTransfer
     transferAmount: 5
   - type: Sprite
     state: icon
@@ -34,13 +35,17 @@
 - type: entity
   parent: DrinkBottleBaseFull
   id: DrinkAbsintheBottleFull
-  name: jailbreaker verte
+  name: Jailbreaker Verte
   description: One sip of this and you just know you're gonna have a good time.
   components:
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/absinthebottle.rsi
-
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: chem.Absinthe
+        Quantity: 100
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -56,15 +61,15 @@
 - type: entity
   parent: DrinkBottleBaseFull
   id: DrinkAleBottleFull
-  name: magm-ale
+  name: Magm-Ale
   description: A true dorf's drink of choice.
   components:
   - type: SolutionContainer
-    maxVol: 80
+    maxVol: 100
     contents:
       reagents:
       - ReagentId: chem.Ale
-        Quantity: 80
+        Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/alebottle.rsi
 
@@ -87,11 +92,10 @@
   description: A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. You might as well not scream 'SHITCURITY' this time.
   components:
   - type: SolutionContainer
-    maxVol: 80
     contents:
       reagents:
       - ReagentId: chem.Cognac
-        Quantity: 80
+        Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cognacbottle.rsi
 
@@ -99,13 +103,17 @@
 - type: entity
   parent: DrinkBottleBaseFull
   id: DrinkGinBottleFull
-  name: griffeater gin bottle
+  name: Griffeater Gin
   description: A bottle of high quality gin, produced in the New London Space Station.
   components:
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ginbottle.rsi
-
+  - type: SolutionContainer
+    contents:
+      reagents:
+        - ReagentId: chem.Gin
+          Quantity: 100
 
 - type: entity
   parent: DrinkBottleBaseFull

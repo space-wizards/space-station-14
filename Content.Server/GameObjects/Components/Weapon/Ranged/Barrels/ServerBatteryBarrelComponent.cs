@@ -169,7 +169,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             // Multiply the entity's damage / whatever by the percentage of charge the shot has.
             IEntity entity;
             var chargeChange = Math.Min(capacitor.CurrentCharge, _baseFireCost);
-            capacitor.UseCharge(chargeChange);
+            if (capacitor.UseCharge(chargeChange) < _lowerChargeLimit)
+            {
+                // Handling of funny exploding cells.
+                return null;
+            }
             var energyRatio = chargeChange / _baseFireCost;
 
             if (_ammoContainer.ContainedEntity != null)

@@ -26,7 +26,7 @@ namespace Content.Client.State
     public class LobbyState : Robust.Client.State.State
     {
         [Dependency] private readonly IBaseClient _baseClient = default!;
-        [Dependency] private readonly IClientConsole _console = default!;
+        [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -87,7 +87,7 @@ namespace Content.Client.State
                 _userInterfaceManager.StateRoot.AddChild(_characterSetup);
             };
 
-            _lobby.ObserveButton.OnPressed += args => _console.ProcessCommand("observe");
+            _lobby.ObserveButton.OnPressed += args => _consoleHost.ExecuteCommand("observe");
             _lobby.ReadyButton.OnPressed += args =>
             {
                 if (!_clientGameTicker.IsGameStarted)
@@ -104,7 +104,7 @@ namespace Content.Client.State
                 SetReady(args.Pressed);
             };
 
-            _lobby.LeaveButton.OnPressed += args => _console.ProcessCommand("disconnect");
+            _lobby.LeaveButton.OnPressed += args => _consoleHost.ExecuteCommand("disconnect");
             _lobby.OptionsButton.OnPressed += args => new OptionsMenu().Open();
 
             UpdatePlayerList();
@@ -259,7 +259,7 @@ namespace Content.Client.State
                 return;
             }
 
-            _console.ProcessCommand($"toggleready {newReady}");
+            _consoleHost.ExecuteCommand($"toggleready {newReady}");
             UpdatePlayerList();
         }
     }
