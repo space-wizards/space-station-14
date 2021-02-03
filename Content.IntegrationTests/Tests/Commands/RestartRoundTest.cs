@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+using System;
+using System.Threading.Tasks;
 using Content.Server.Commands.GameTicking;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
@@ -40,7 +41,7 @@ namespace Content.IntegrationTests.Tests.Commands
                 tickBeforeRestart = entityManager.CurrentTick;
 
                 var command = new NewRoundCommand();
-                command.Execute(null, null, new string[] { });
+                command.Execute(null, string.Empty, Array.Empty<string>());
 
                 if (lobbyEnabled)
                 {

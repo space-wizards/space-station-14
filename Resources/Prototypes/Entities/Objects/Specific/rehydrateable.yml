@@ -10,7 +10,7 @@
       - ReagentId: chem.Nutriment
         Quantity: 10
     maxVol: 11 # needs room for water
-    caps: AddTo
+    caps: Refillable
   - type: Sprite
     sprite: Objects/Consumable/Food/monkeycube.rsi
   - type: Rehydratable
@@ -28,6 +28,6 @@
       - ReagentId: chem.Nutriment
         Quantity: 10
     maxVol: 11 # needs room for water
-    caps: AddTo
+    caps: Refillable
   - type: Rehydratable
     target: CarpMob_Content

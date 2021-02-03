@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers;
+#nullable enable
+using Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 

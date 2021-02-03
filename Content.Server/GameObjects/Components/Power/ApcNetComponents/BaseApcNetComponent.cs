@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+#nullable enable
+using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 
 namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 {

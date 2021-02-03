@@ -92,7 +92,7 @@ namespace Content.Shared.Chemistry
                 return "";
             }
 
-            var majorReagent = Contents.OrderByDescending(reagent => reagent.Quantity).First(); ;
+            var majorReagent = Contents.OrderByDescending(reagent => reagent.Quantity).First();
             return majorReagent.ReagentId;
         }
 

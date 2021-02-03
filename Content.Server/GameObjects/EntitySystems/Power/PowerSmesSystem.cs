@@ -1,17 +1,18 @@
-﻿using Content.Server.GameObjects.Components.Power;
+#nullable enable
+using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    public class BatterySystem : EntitySystem
+    internal class PowerSmesSystem : EntitySystem
     {
         public override void Update(float frameTime)
         {
-            foreach (var comp in ComponentManager.EntityQuery<BatteryComponent>(true))
+            foreach (var comp in ComponentManager.EntityQuery<SmesComponent>(true))
             {
-                comp.OnUpdate(frameTime);
+                comp.OnUpdate();
             }
         }
     }

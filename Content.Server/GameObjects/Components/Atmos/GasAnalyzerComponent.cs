@@ -253,18 +253,20 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
         }
 
-        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (!eventArgs.CanReach)
             {
                 eventArgs.User.PopupMessage(Loc.GetString("You can't reach there!"));
-                return;
+                return true;
             }
 
             if (eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 OpenInterface(actor.playerSession, eventArgs.ClickLocation);
             }
+
+            return true;
         }
 
 

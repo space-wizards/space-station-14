@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.GameObjects.Components.Weapons.Melee;
 using Content.Shared.GameObjects.Components.Weapons.Melee;
@@ -14,7 +14,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timers;
 using static Content.Shared.GameObjects.EntitySystemMessages.MeleeWeaponSystemMessages;
 
 namespace Content.Client.GameObjects.EntitySystems
@@ -49,7 +48,12 @@ namespace Content.Client.GameObjects.EntitySystems
                 return;
             }
 
-            var attacker = EntityManager.GetEntity(msg.Attacker);
+            if (!EntityManager.TryGetEntity(msg.Attacker, out var attacker))
+            {
+                //FIXME: This should never happen.
+                Logger.Error($"Tried to play a weapon arc {msg.ArcPrototype}, but the attacker does not exist. attacker={msg.Attacker}, source={msg.Source}");
+                return;
+            }
 
             if (!attacker.Deleted)
             {

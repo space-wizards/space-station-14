@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.EntitySystems;
@@ -41,8 +42,8 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         /// <summary>
         ///     Invoked whenever the state of the light bulb changes.
         /// </summary>
-        public event EventHandler<EventArgs> OnLightBulbStateChange;
-        public event EventHandler<EventArgs> OnLightColorChange;
+        public event EventHandler<EventArgs>? OnLightBulbStateChange;
+        public event EventHandler<EventArgs?>? OnLightColorChange;
 
         private Color _color = Color.White;
 
@@ -106,7 +107,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         public void UpdateColor()
         {
-            if (!Owner.TryGetComponent(out SpriteComponent sprite))
+            if (!Owner.TryGetComponent(out SpriteComponent? sprite))
             {
                 return;
             }

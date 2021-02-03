@@ -228,6 +228,7 @@ namespace Content.Client
             "MachineFrame",
             "MachineBoard",
             "ChemicalAmmo",
+            "Tag",
             "BiologicalSurgeryData",
             "CargoTelepad",
             "TraitorDeathMatchRedemption",
