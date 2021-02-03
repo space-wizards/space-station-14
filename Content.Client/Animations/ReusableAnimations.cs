@@ -4,6 +4,7 @@ using Robust.Client.GameObjects.Components.Animations;
 using Robust.Shared.Animations;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using System;
@@ -20,7 +21,8 @@ namespace Content.Client.Animations
 
             if(!entity.TryGetComponent(out SpriteComponent sprite0))
             {
-                throw new Exception($"Entity doesn't have a {nameof(SpriteComponent)}!");
+                Logger.Warning($"Entity doesn't have a {0}!", nameof(SpriteComponent));
+                return;
             }
             var sprite = animatableClone.GetComponent<SpriteComponent>();
             sprite.CopyFrom(sprite0);
