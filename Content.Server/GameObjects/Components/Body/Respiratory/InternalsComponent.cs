@@ -59,5 +59,15 @@ namespace Content.Server.GameObjects.Components.Body.Respiratory
             return true;
         }
 
+        public bool AreInternalsWorking()
+        {
+            return BreathToolEntity != null &&
+                   GasTankEntity != null &&
+                   BreathToolEntity.TryGetComponent(out BreathToolComponent? breathTool) &&
+                   breathTool.IsFunctional &&
+                   GasTankEntity.TryGetComponent(out GasTankComponent? gasTank) &&
+                   gasTank.Air != null;
+        }
+
     }
 }
