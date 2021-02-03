@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -216,7 +216,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             if (heldItem != null)
             {
-                storageComponent.PlayerInsertEntity(plyEnt);
+                storageComponent.PlayerInsertHeldEntity(plyEnt);
             }
             else
             {
