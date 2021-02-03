@@ -12,6 +12,7 @@ using Content.Server.Utility;
 using Content.Shared.Audio;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Botany;
+using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
@@ -718,23 +719,28 @@ namespace Content.Server.GameObjects.Components.Botany
                 return true;
             }
 
-            if (usingItem.TryGetComponent(out SolutionContainerComponent? solution) && solution.CanRemoveSolutions)
+            if (usingItem.TryGetComponent(out ISolutionInteractionsComponent? solution) && solution.CanDrain)
             {
-                var amount = 5f;
+                var amount = ReagentUnit.New(5);
                 var sprayed = false;
 
                 if (usingItem.TryGetComponent(out SprayComponent? spray))
                 {
                     sprayed = true;
-                    amount = 1f;
+                    amount = ReagentUnit.New(1);
                     EntitySystem.Get<AudioSystem>().PlayFromEntity(spray.SpraySound, usingItem, AudioHelpers.WithVariation(0.125f));
                 }
 
-                var chemAmount = ReagentUnit.New(amount);
+                var split = solution.Drain(amount);
+                if (split.TotalVolume == 0)
+                {
+                    user.PopupMessageCursor(Loc.GetString("{0:TheName} is empty!", usingItem));
+                    return true;
+                }
 
-                var split = solution.Solution.SplitSolution(chemAmount <= solution.Solution.TotalVolume ? chemAmount : solution.Solution.TotalVolume);
-
-                user.PopupMessageCursor(Loc.GetString(sprayed ? $"You spray {Owner.Name} with {usingItem.Name}." : $"You transfer {split.TotalVolume.ToString()}u to {Owner.Name}"));
+                user.PopupMessageCursor(Loc.GetString(
+                    sprayed ? "You spray {0:TheName}" : "You transfer {1}u to {0:TheName}",
+                    Owner, split.TotalVolume));
 
                 _solutionContainer?.TryAddSolution(split);
 

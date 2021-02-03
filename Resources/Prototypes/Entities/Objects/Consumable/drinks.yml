@@ -1,4 +1,4 @@
-# TODO: Find remaining cans and move to drinks_cans
+﻿# TODO: Find remaining cans and move to drinks_cans
 # TODO: Find empty containers (e.g. mug, pitcher) and move to their own yml
 # TODO: Move bottles to their own yml
 - type: entity
@@ -8,7 +8,7 @@
   components:
   - type: SolutionContainer
     maxVol: 50
-  - type: Pourable
+  - type: SolutionTransfer
     transferAmount: 5
   - type: Drink
   - type: Sprite
@@ -55,7 +55,7 @@
   - type: SolutionContainer
     fillingState: glass
     maxVol: 50
-  - type: Pourable
+  - type: SolutionTransfer
     transferAmount: 5
   - type: TransformableContainer
 

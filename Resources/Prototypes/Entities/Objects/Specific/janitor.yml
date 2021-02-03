@@ -198,8 +198,8 @@
     state: cleaner
   - type: SolutionContainer
     maxVol: 100
-    caps: AddTo, RemoveFrom
-  - type: Pourable
+    caps: Refillable, Drainable
+  - type: SolutionTransfer
     transferAmount: 5.0
   - type: Spillable
   - type: ItemCooldown

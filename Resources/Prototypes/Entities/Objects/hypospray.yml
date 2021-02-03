@@ -11,5 +11,5 @@
       sprite: Objects/Specific/Medical/hypospray.rsi
     - type: SolutionContainer
       maxVol: 30
-      caps: AddTo, CanExamine
+      caps: Refillable, CanExamine
     - type: Hypospray
