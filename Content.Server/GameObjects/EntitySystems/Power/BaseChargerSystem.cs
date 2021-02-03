@@ -10,7 +10,7 @@ namespace Content.Server.GameObjects.EntitySystems
     {
         public override void Update(float frameTime)
         {
-            foreach (var comp in ComponentManager.EntityQuery<BaseCharger>())
+            foreach (var comp in ComponentManager.EntityQuery<BaseCharger>(true))
             {
                 comp.OnUpdate(frameTime);
             }

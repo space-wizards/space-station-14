@@ -17,10 +17,8 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
         {
             base.Update(frameTime);
 
-            foreach (var comp in ComponentManager.EntityQuery<DoAfterComponent>())
+            foreach (var comp in ComponentManager.EntityQuery<DoAfterComponent>(true))
             {
-                if (comp.Owner.Paused) continue;
-
                 var cancelled = new List<DoAfter>(0);
                 var finished = new List<DoAfter>(0);
 

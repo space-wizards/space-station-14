@@ -15,7 +15,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             if (_accumulatedFrameTime > 1)
             {
-                foreach (var comp in ComponentManager.EntityQuery<HungerComponent>())
+                foreach (var comp in ComponentManager.EntityQuery<HungerComponent>(true))
                 {
                     comp.OnUpdate(_accumulatedFrameTime);
                 }

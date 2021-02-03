@@ -86,7 +86,7 @@ namespace Content.Server.GameObjects.EntitySystems
             else
             {
                 return pointer.InRangeUnOccluded(coordinates, 15, e => e == pointer);
-            }         
+            }
         }
 
         public bool TryPoint(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
@@ -199,7 +199,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var component in ComponentManager.EntityQuery<PointingArrowComponent>())
+            foreach (var component in ComponentManager.EntityQuery<PointingArrowComponent>(true))
             {
                 component.Update(frameTime);
             }

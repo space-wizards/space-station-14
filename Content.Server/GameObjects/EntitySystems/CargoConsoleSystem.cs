@@ -180,7 +180,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private void SyncComponentsWithId(int id)
         {
-            foreach (var comp in ComponentManager.EntityQuery<CargoOrderDatabaseComponent>())
+            foreach (var comp in ComponentManager.EntityQuery<CargoOrderDatabaseComponent>(true))
             {
                 if (!comp.ConnectedToDatabase || comp.Database.Id != id)
                     continue;

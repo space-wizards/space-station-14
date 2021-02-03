@@ -22,7 +22,7 @@ namespace Content.Server.GameObjects.EntitySystems
             if (_updateTimer >= 1)
             {
                 _updateTimer -= 1;
-                foreach (var component in ComponentManager.EntityQuery<SolarControlConsoleComponent>())
+                foreach (var component in ComponentManager.EntityQuery<SolarControlConsoleComponent>(true))
                 {
                     component.UpdateUIState();
                 }

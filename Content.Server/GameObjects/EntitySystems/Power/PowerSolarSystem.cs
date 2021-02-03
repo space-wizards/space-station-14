@@ -87,7 +87,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             TotalPanelPower = 0;
 
-            foreach (var panel in ComponentManager.EntityQuery<SolarPanelComponent>())
+            foreach (var panel in ComponentManager.EntityQuery<SolarPanelComponent>(true))
             {
                 // There's supposed to be rotational logic here, but that implies putting it somewhere.
                 panel.Owner.Transform.WorldRotation = TargetPanelRotation;

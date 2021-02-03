@@ -43,7 +43,7 @@ namespace Content.Server.Administration.Commands
             if (location == "?")
             {
                 var locations = string.Join(", ",
-                    comp.EntityQuery<WarpPointComponent>()
+                    comp.EntityQuery<WarpPointComponent>(true)
                         .Select(p => p.Location)
                         .Where(p => p != null)
                         .OrderBy(p => p)
@@ -64,7 +64,7 @@ namespace Content.Server.Administration.Commands
                 var currentGrid = player.AttachedEntity.Transform.GridID;
                 var entityManager = IoCManager.Resolve<IEntityManager>();
 
-                var found = comp.EntityQuery<WarpPointComponent>()
+                var found = comp.EntityQuery<WarpPointComponent>(true)
                     .Where(p => p.Location == location)
                     .Select(p => p.Owner.Transform.Coordinates)
                     .OrderBy(p => p, Comparer<EntityCoordinates>.Create((a, b) =>

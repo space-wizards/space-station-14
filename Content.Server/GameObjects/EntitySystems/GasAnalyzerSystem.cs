@@ -9,7 +9,7 @@ namespace Content.Server.GameObjects.EntitySystems
     {
         public override void Update(float frameTime)
         {
-            foreach (var analyzer in ComponentManager.EntityQuery<GasAnalyzerComponent>())
+            foreach (var analyzer in ComponentManager.EntityQuery<GasAnalyzerComponent>(true))
             {
                 analyzer.Update(frameTime);
             }
