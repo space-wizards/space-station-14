@@ -4,7 +4,7 @@
     <uic:MarginContainer Name="Margin" SizeFlagsVertical="FillExpand" SizeFlagsHorizontal="FillExpand">
         <uic:VBoxContainer SizeFlagsVertical="FillExpand" SizeFlagsHorizontal="FillExpand" SeparationOverride="5">
             <uic:HBoxContainer SizeFlagsVertical="FillExpand" SizeFlagsHorizontal="FillExpand">
-                <uic:Button Name="InputButton" Text="MIDI Input" TextAlign="Center" SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="1"/>
+                <uic:Button Name="InputButton" ToggleMode="True" Text="MIDI Input" TextAlign="Center" SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="1"/>
                 <ui:Control SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="2" />
                 <uic:Button Name="FileButton" Text="Play MIDI File" TextAlign="Center" SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="1"/>
             </uic:HBoxContainer>
