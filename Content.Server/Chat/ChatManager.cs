@@ -4,6 +4,7 @@ using Content.Server.Administration;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Headset;
 using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.Components.Mobs.Speech;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
@@ -91,7 +92,7 @@ namespace Content.Server.Chat
 
         public void EntitySay(IEntity source, string message)
         {
-            if (!ActionBlockerSystem.CanSpeak(source))
+            if (!source.HasComponent<SpeechComponent>() || !ActionBlockerSystem.CanSpeak(source))
             {
                 return;
             }
@@ -158,7 +159,7 @@ namespace Content.Server.Chat
 
         public void EntityMe(IEntity source, string action)
         {
-            if (!ActionBlockerSystem.CanEmote(source))
+            if (!source.HasComponent<EmotingComponent>() || !ActionBlockerSystem.CanEmote(source))
             {
                 return;
             }
