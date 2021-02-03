@@ -8,7 +8,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Tag
+namespace Content.Shared.GameObjects.Components.Tag
 {
     [RegisterComponent]
     public class TagComponent : Component
@@ -16,9 +16,9 @@ namespace Content.Server.GameObjects.Components.Tag
         public override string Name => "Tag";
 
         [ViewVariables]
-        private readonly HashSet<TagPrototype> _tags = new();
+        private readonly HashSet<string> _tags = new();
 
-        public IReadOnlySet<TagPrototype> Tags => _tags;
+        public IReadOnlySet<string> Tags => _tags;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -38,17 +38,44 @@ namespace Content.Server.GameObjects.Components.Tag
 
                     AddTags(ids);
                 },
-                () =>
-                {
-                    var ids = new HashSet<string>();
+                () => _tags);
+        }
 
-                    foreach (var tag in _tags)
-                    {
-                        ids.Add(tag.ID);
-                    }
+        public override ComponentState GetComponentState()
+        {
+            var tags = new string[_tags.Count];
+            var i = 0;
 
-                    return ids;
-                });
+            foreach (var tag in _tags)
+            {
+                tags[i] = tag;
+            }
+
+            return new TagComponentState(tags);
+        }
+
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+        {
+            if (curState is not TagComponentState state)
+            {
+                return;
+            }
+
+            _tags.Clear();
+
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+
+            foreach (var tag in state.Tags)
+            {
+                GetTagOrThrow(tag, prototypeManager);
+                _tags.Add(tag);
+            }
+        }
+
+        private TagPrototype GetTagOrThrow(string id, IPrototypeManager? manager = null)
+        {
+            manager ??= IoCManager.Resolve<IPrototypeManager>();
+            return manager.Index<TagPrototype>(id);
         }
 
         /// <summary>
@@ -61,9 +88,16 @@ namespace Content.Server.GameObjects.Components.Tag
         /// </exception>
         public bool AddTag(string id)
         {
-            var tag = IoCManager.Resolve<IPrototypeManager>().Index<TagPrototype>(id);
+            GetTagOrThrow(id);
+            var added = _tags.Add(id);
 
-            return _tags.Add(tag);
+            if (added)
+            {
+                Dirty();
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -94,12 +128,17 @@ namespace Content.Server.GameObjects.Components.Tag
 
             foreach (var id in ids)
             {
-                var tag = prototypeManager.Index<TagPrototype>(id);
-
-                _tags.Add(tag);
+                GetTagOrThrow(id, prototypeManager);
+                _tags.Add(id);
             }
 
-            return _tags.Count > count;
+            if (_tags.Count > count)
+            {
+                Dirty();
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -112,9 +151,8 @@ namespace Content.Server.GameObjects.Components.Tag
         /// </exception>
         public bool HasTag(string id)
         {
-            var tag = IoCManager.Resolve<IPrototypeManager>().Index<TagPrototype>(id);
-
-            return _tags.Contains(tag);
+            GetTagOrThrow(id);
+            return _tags.Contains(id);
         }
 
         /// <summary>
@@ -144,9 +182,9 @@ namespace Content.Server.GameObjects.Components.Tag
 
             foreach (var id in ids)
             {
-                var tag = prototypeManager.Index<TagPrototype>(id);
+                GetTagOrThrow(id, prototypeManager);
 
-                if (!_tags.Contains(tag))
+                if (!_tags.Contains(id))
                 {
                     return false;
                 }
@@ -182,9 +220,9 @@ namespace Content.Server.GameObjects.Components.Tag
 
             foreach (var id in ids)
             {
-                var tag = prototypeManager.Index<TagPrototype>(id);
+                GetTagOrThrow(id, prototypeManager);
 
-                if (_tags.Contains(tag))
+                if (_tags.Contains(id))
                 {
                     return true;
                 }
@@ -205,9 +243,15 @@ namespace Content.Server.GameObjects.Components.Tag
         /// </exception>
         public bool RemoveTag(string id)
         {
-            var tag = IoCManager.Resolve<IPrototypeManager>().Index<TagPrototype>(id);
+            GetTagOrThrow(id);
 
-            return _tags.Remove(tag);
+            if (_tags.Remove(id))
+            {
+                Dirty();
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -240,12 +284,17 @@ namespace Content.Server.GameObjects.Components.Tag
 
             foreach (var id in ids)
             {
-                var tag = prototypeManager.Index<TagPrototype>(id);
-
-                _tags.Remove(tag);
+                GetTagOrThrow(id, prototypeManager);
+                _tags.Remove(id);
             }
 
-            return _tags.Count < count;
+            if (_tags.Count < count)
+            {
+                Dirty();
+                return true;
+            }
+
+            return false;
         }
     }
 }
