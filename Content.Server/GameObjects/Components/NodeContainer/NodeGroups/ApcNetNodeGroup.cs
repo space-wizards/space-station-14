@@ -71,7 +71,25 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         {
             base.AfterRemake(newGroups);
 
+            foreach (var group in newGroups)
+            {
+                if (group is not ApcNetNodeGroup apcNet)
+                    continue;
+
+                apcNet.Powered = Powered;
+            }
+
             RemoveFromGridPower();
+        }
+
+        protected override void OnGivingNodesForCombine(INodeGroup newGroup)
+        {
+            base.OnGivingNodesForCombine(newGroup);
+
+            if (newGroup is ApcNetNodeGroup apcNet)
+            {
+                apcNet.Powered = Powered;
+            }
         }
 
         private void RemoveFromGridPower()
