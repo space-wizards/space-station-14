@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.Chemistry;
+#nullable enable
+using Content.Server.GameObjects.Components.Chemistry;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 
