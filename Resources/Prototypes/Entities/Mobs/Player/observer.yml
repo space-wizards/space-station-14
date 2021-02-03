@@ -42,4 +42,3 @@
   - type: MovementIgnoreGravity
   - type: Grammar
     proper: true
-  - type: Speech
