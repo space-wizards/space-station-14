@@ -18,7 +18,10 @@ namespace Content.Client.Animations
             var animatableClone = entity.EntityManager.SpawnEntity("clientsideclone", initialPosition);
             animatableClone.Name = entity.Name;
 
-            var sprite0 = entity.GetComponent<SpriteComponent>();
+            if(!entity.TryGetComponent(out SpriteComponent sprite0))
+            {
+                throw new Exception($"Entity doesn't have a {nameof(SpriteComponent)}!");
+            }
             var sprite = animatableClone.GetComponent<SpriteComponent>();
             sprite.CopyFrom(sprite0);
 

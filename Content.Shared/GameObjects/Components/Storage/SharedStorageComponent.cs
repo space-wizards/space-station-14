@@ -108,9 +108,9 @@ namespace Content.Shared.GameObjects.Components.Storage
     [Serializable, NetSerializable]
     public class AnimateInsertingEntitiesMessage : ComponentMessage
     {
-        public readonly EntityUid[] StoredEntities;
-        public readonly EntityCoordinates[] EntityPositions;
-        public AnimateInsertingEntitiesMessage(EntityUid[] storedEntities, EntityCoordinates[] entityPositions)
+        public readonly List<EntityUid> StoredEntities;
+        public readonly List<EntityCoordinates> EntityPositions;
+        public AnimateInsertingEntitiesMessage(List<EntityUid> storedEntities, List<EntityCoordinates> entityPositions)
         {
             Directed = true;
             StoredEntities = storedEntities;

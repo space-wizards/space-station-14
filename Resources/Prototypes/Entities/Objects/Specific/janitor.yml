@@ -247,3 +247,5 @@
   - type: Storage
     capacity: 125
     quickInsert: true
+    areaInsert: true
+    storageSoundCollection: trashBagRustle

@@ -107,7 +107,7 @@ namespace Content.Client.GameObjects.Components.Storage
         /// <param name="msg"></param>
         private void HandleAnimatingInsertingEntities(AnimateInsertingEntitiesMessage msg)
         {
-            for(var i = 0; msg.StoredEntities.Length > i; i++)
+            for (var i = 0; msg.StoredEntities.Count > i; i++)
             {
                 var entityId = msg.StoredEntities[i];
                 var initialPosition = msg.EntityPositions[i];

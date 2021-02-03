@@ -47,7 +47,8 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         private readonly Dictionary<IEntity, int> _sizeCache = new();
 
         private bool _occludesLight;
-        private bool _quickInsert;
+        private bool _quickInsert; //Can insert storables by "attacking" them with the storage entity
+        private bool _areaInsert;  //"Attacking" with the storage entity causes it to insert all nearby storables after a delay
         private bool _storageInitialCalculated;
         private int _storageUsed;
         private int _storageCapacityMax;
@@ -366,6 +367,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             serializer.DataField(ref _storageCapacityMax, "capacity", 10000);
             serializer.DataField(ref _occludesLight, "occludesLight", true);
             serializer.DataField(ref _quickInsert, "quickInsert", false);
+            serializer.DataField(ref _areaInsert, "areaInsert", false);
             serializer.DataField(this, x => x.StorageSoundCollection, "storageSoundCollection", string.Empty);
             //serializer.DataField(ref StorageUsed, "used", 0);
         }
@@ -500,12 +502,11 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         /// <returns></returns>
         async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!_quickInsert) return;
             if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return;
 
             // Pick up all entities in a radius around the clicked location.
             // The last half of the if is because carpets exist and this is terrible
-            if(eventArgs.Target == null || !eventArgs.Target.HasComponent<StorableComponent>())
+            if(_areaInsert && (eventArgs.Target == null || !eventArgs.Target.HasComponent<StorableComponent>()))
             {
                 var validStorables = new List<IEntity>();
                 foreach (var entity in Owner.EntityManager.GetEntitiesInRange(eventArgs.ClickLocation, 1))
@@ -532,7 +533,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                     if (result != DoAfterStatus.Finished) return;
                 }
 
-                var successfullyInserted = new List<IEntity>();
+                var successfullyInserted = new List<EntityUid>();
                 var successfullyInsertedPositions = new List<EntityCoordinates>();
                 foreach (var entity in validStorables)
                 {
@@ -544,29 +545,29 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                     var coords = entity.Transform.Coordinates;
                     if (PlayerInsertEntityInWorld(eventArgs.User, entity))
                     {
-                        successfullyInserted.Add(entity);
+                        successfullyInserted.Add(entity.Uid);
                         successfullyInsertedPositions.Add(coords);
                     }
                 }
 
-                // If we picked up atleast one thing, do a cool animation!
+                // If we picked up atleast one thing, play a sound and do a cool animation!
                 if (successfullyInserted.Count>0)
                 {
-                    var entityIds = new EntityUid[successfullyInserted.Count];
-                    var positions = new EntityCoordinates[successfullyInserted.Count];
-                    for(var i = 0; successfullyInserted.Count > i; i++)
-                    {
-                        entityIds[i] = successfullyInserted[i].Uid;
-                        positions[i] = successfullyInsertedPositions[i];
-                    }
-                    SendNetworkMessage(new AnimateInsertingEntitiesMessage(entityIds, positions));
+                    PlaySoundCollection(StorageSoundCollection);
+                    SendNetworkMessage(
+                        new AnimateInsertingEntitiesMessage(
+                            successfullyInserted,
+                            successfullyInsertedPositions
+                        )
+                    );
                 }
                 
             }
             // Pick up the clicked entity
-            else
+            else if(_quickInsert)
             {
-                if (!eventArgs.Target.Transform.IsMapTransform
+                if (eventArgs.Target == null
+                    || !eventArgs.Target.Transform.IsMapTransform
                     || eventArgs.Target == eventArgs.User
                     || !eventArgs.Target.HasComponent<StorableComponent>())
                     return;
@@ -574,8 +575,8 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 if(PlayerInsertEntityInWorld(eventArgs.User, eventArgs.Target))
                 {
                     SendNetworkMessage(new AnimateInsertingEntitiesMessage(
-                        new EntityUid[1] { eventArgs.Target.Uid },
-                        new EntityCoordinates[1] { position }
+                        new List<EntityUid>() { eventArgs.Target.Uid },
+                        new List<EntityCoordinates>() { position }
                     ));
                 }
             }
