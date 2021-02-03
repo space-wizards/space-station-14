@@ -1,6 +1,7 @@
 #nullable enable
 using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.Components.Mobs.Speech;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.Administration;
 using Robust.Server.Interfaces.Player;
@@ -47,6 +48,8 @@ namespace Content.Server.Commands
 
             entity.EnsureComponent<MindComponent>();
             entity.EnsureComponent<PlayerInputMoverComponent>();
+            entity.EnsureComponent<SpeechComponent>();
+            entity.EnsureComponent<EmotingComponent>();
         }
     }
 }
