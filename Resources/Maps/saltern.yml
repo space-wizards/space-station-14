@@ -19769,6 +19769,7 @@ entities:
         Y: -34
       : 0
     type: GridAtmosphere
+  - type: GridPower
 - uid: 854
   type: Catwalk
   components:
