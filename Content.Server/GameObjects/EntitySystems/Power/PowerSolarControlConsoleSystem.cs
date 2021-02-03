@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.Power.PowerNetComponents;
+#nullable enable
+using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 
@@ -21,7 +22,7 @@ namespace Content.Server.GameObjects.EntitySystems
             if (_updateTimer >= 1)
             {
                 _updateTimer -= 1;
-                foreach (var component in ComponentManager.EntityQuery<SolarControlConsoleComponent>())
+                foreach (var component in ComponentManager.EntityQuery<SolarControlConsoleComponent>(true))
                 {
                     component.UpdateUIState();
                 }

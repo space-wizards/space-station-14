@@ -7,7 +7,7 @@
     openSounds: bottleOpenSounds
   - type: SolutionContainer
     maxVol: 100
-  - type: Pourable
+  - type: SolutionTransfer
     transferAmount: 5
   - type: Sprite
     state: icon

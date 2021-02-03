@@ -3,15 +3,15 @@ using Content.Server.Mobs.Roles;
 using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.Roles;
-using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Commands.Mobs
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class RemoveRoleCommand : IClientCommand
+    public class RemoveRoleCommand : IConsoleCommand
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -21,11 +21,11 @@ namespace Content.Server.Commands.Mobs
 
         public string Help => "rmrole <session ID> <Role Type>\nThat role type is the actual C# type name.";
 
-        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 2)
             {
-                shell.SendText(player, "Expected exactly 2 arguments.");
+                shell.WriteLine("Expected exactly 2 arguments.");
                 return;
             }
 
@@ -38,7 +38,7 @@ namespace Content.Server.Commands.Mobs
             }
             else
             {
-                shell.SendText(player, "Can't find that mind");
+                shell.WriteLine("Can't find that mind");
             }
         }
     }

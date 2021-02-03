@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+#nullable enable
+using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;

@@ -13,7 +13,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Update(frameTime);
 
-            foreach (var stressTest in ComponentManager.EntityQuery<StressTestMovementComponent>())
+            foreach (var stressTest in ComponentManager.EntityQuery<StressTestMovementComponent>(true))
             {
                 var transform = stressTest.Owner.Transform;
 

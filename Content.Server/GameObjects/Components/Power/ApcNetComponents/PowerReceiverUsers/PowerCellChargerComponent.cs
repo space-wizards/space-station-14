@@ -1,4 +1,5 @@
-﻿using Content.Shared.Interfaces.GameObjects.Components;
+#nullable enable
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 

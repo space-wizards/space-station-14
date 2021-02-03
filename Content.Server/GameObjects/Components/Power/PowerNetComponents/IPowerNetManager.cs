@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+#nullable enable
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 
 namespace Content.Server.GameObjects.Components.Power.PowerNetComponents

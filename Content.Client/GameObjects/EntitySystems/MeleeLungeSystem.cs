@@ -11,7 +11,7 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             base.FrameUpdate(frameTime);
 
-            foreach (var meleeLungeComponent in EntityManager.ComponentManager.EntityQuery<MeleeLungeComponent>())
+            foreach (var meleeLungeComponent in EntityManager.ComponentManager.EntityQuery<MeleeLungeComponent>(true))
             {
                 meleeLungeComponent.Update(frameTime);
             }
