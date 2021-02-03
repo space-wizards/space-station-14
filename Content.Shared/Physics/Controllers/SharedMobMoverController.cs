@@ -4,12 +4,15 @@ using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Physics.Pull;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Physics.Controllers;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Physics.Controllers
 {
@@ -19,9 +22,15 @@ namespace Content.Shared.Physics.Controllers
     /// </summary>
     public abstract class SharedMobMoverController : AetherController
     {
-        [Dependency] private readonly IPhysicsManager _physicsManager = default!;
+        private SharedBroadPhaseSystem _broadPhaseSystem = default!;
 
         private float _acceleration = 150.0f;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            _broadPhaseSystem = EntitySystem.Get<SharedBroadPhaseSystem>();
+        }
 
         protected void UpdateKinematics(float frameTime, ITransformComponent transform, IMoverComponent mover, PhysicsComponent physicsComponent)
         {
@@ -59,6 +68,8 @@ namespace Content.Shared.Physics.Controllers
                 transform.LocalRotation = total.GetDir().ToAngle();
             }
 
+            DebugTools.Assert(!float.IsNaN(physicsComponent.LinearVelocity.Length));
+
             // TODO: Like I said on PhysicsIsland damping is megasketch. Just to make players feel better to play
             // we'll use our own friction here coz fuck it why not
             Friction(frameTime, physicsComponent, total);
@@ -69,17 +80,14 @@ namespace Content.Shared.Physics.Controllers
         private bool IsAroundCollider(ITransformComponent transform, IMoverComponent mover,
             IPhysicsComponent collider)
         {
-            // TODO: Should use physics lookups instead via broadPhase.
-            foreach (var entity in EntityManager.GetEntitiesInRange(transform.Owner, mover.GrabRange, true))
+            var enlargedAABB = collider.GetWorldAABB().Enlarged(mover.GrabRange);
+
+            foreach (var otherCollider in _broadPhaseSystem.GetCollidingEntities(transform.MapID, enlargedAABB))
             {
-                if (entity == transform.Owner)
-                {
-                    continue; // Don't try to push off of yourself!
-                }
+                if (otherCollider == collider) continue; // Don't try to push off of yourself!
 
                 // Only allow pushing off of anchored things that have collision.
-                if (!entity.TryGetComponent<IPhysicsComponent>(out var otherCollider) ||
-                    otherCollider.BodyType == BodyType.Static ||
+                if (otherCollider.BodyType == BodyType.Static ||
                     !otherCollider.CanCollide ||
                     (collider.CollisionMask & otherCollider.CollisionLayer) == 0 ||
                     (otherCollider.CollisionMask & collider.CollisionLayer) == 0 ||
