@@ -500,9 +500,9 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         /// </summary>
         /// <param name="eventArgs"></param>
         /// <returns></returns>
-        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return;
+            if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return false;
 
             // Pick up all entities in a radius around the clicked location.
             // The last half of the if is because carpets exist and this is terrible
@@ -530,7 +530,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                         NeedHand = true,
                     };
                     var result = await doAfterSystem.DoAfter(doAfterArgs);
-                    if (result != DoAfterStatus.Finished) return;
+                    if (result != DoAfterStatus.Finished) return true;
                 }
 
                 var successfullyInserted = new List<EntityUid>();
@@ -561,7 +561,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                         )
                     );
                 }
-                
+                return true;
             }
             // Pick up the clicked entity
             else if(_quickInsert)
@@ -570,7 +570,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                     || !eventArgs.Target.Transform.IsMapTransform
                     || eventArgs.Target == eventArgs.User
                     || !eventArgs.Target.HasComponent<StorableComponent>())
-                    return;
+                    return false;
                 var position = eventArgs.Target.Transform.Coordinates;
                 if(PlayerInsertEntityInWorld(eventArgs.User, eventArgs.Target))
                 {
@@ -578,8 +578,11 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                         new List<EntityUid>() { eventArgs.Target.Uid },
                         new List<EntityCoordinates>() { position }
                     ));
+                    return true;
                 }
+                return true;
             }
+            return false;
         }
 
         void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
