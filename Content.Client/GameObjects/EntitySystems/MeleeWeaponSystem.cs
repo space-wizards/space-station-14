@@ -34,7 +34,7 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             base.FrameUpdate(frameTime);
 
-            foreach (var arcAnimationComponent in EntityManager.ComponentManager.EntityQuery<MeleeWeaponArcAnimationComponent>())
+            foreach (var arcAnimationComponent in EntityManager.ComponentManager.EntityQuery<MeleeWeaponArcAnimationComponent>(true))
             {
                 arcAnimationComponent.Update(frameTime);
             }

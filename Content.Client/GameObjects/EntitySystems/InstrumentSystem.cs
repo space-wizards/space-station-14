@@ -44,7 +44,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 return;
             }
 
-            foreach (var instrumentComponent in EntityManager.ComponentManager.EntityQuery<InstrumentComponent>())
+            foreach (var instrumentComponent in EntityManager.ComponentManager.EntityQuery<InstrumentComponent>(true))
             {
                 instrumentComponent.Update(frameTime);
             }

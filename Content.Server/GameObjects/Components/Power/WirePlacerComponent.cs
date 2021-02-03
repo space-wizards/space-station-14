@@ -34,28 +34,29 @@ namespace Content.Server.GameObjects.Components.Power
         }
 
         /// <inheritdoc />
-        public async Task AfterInteract(AfterInteractEventArgs eventArgs)
+        public async Task<bool> AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (_wirePrototypeID == null)
-                return;
-
-            if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return;
+                return true;
+            if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
+                return true;
             if(!_mapManager.TryGetGrid(eventArgs.ClickLocation.GetGridId(Owner.EntityManager), out var grid))
-                return;
+                return true;
             var snapPos = grid.SnapGridCellFor(eventArgs.ClickLocation, SnapGridOffset.Center);
             var snapCell = grid.GetSnapGridCell(snapPos, SnapGridOffset.Center);
             if(grid.GetTileRef(snapPos).Tile.IsEmpty)
-                return;
+                return true;
             foreach (var snapComp in snapCell)
             {
                 if (snapComp.Owner.TryGetComponent<WireComponent>(out var wire) && wire.WireType == _blockingWireType)
                 {
-                    return;
+                    return true;
                 }
             }
             if (Owner.TryGetComponent<StackComponent>(out var stack) && !stack.Use(1))
-                return;
+                return true;
             Owner.EntityManager.SpawnEntity(_wirePrototypeID, grid.GridTileToLocal(snapPos));
+            return true;
         }
     }
 }

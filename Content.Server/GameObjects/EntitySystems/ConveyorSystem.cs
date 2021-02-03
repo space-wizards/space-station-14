@@ -11,7 +11,7 @@ namespace Content.Server.GameObjects.EntitySystems
     {
         public override void Update(float frameTime)
         {
-            foreach (var comp in ComponentManager.EntityQuery<ConveyorComponent>())
+            foreach (var comp in ComponentManager.EntityQuery<ConveyorComponent>(true))
             {
                 comp.Update(frameTime);
             }

@@ -52,10 +52,12 @@ namespace Content.Server.GameObjects.Components.Chemistry
             return TryDoInject(target, user);
         }
 
-        Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            TryDoInject(eventArgs.Target, eventArgs.User);
-            return Task.CompletedTask;
+            if (!eventArgs.CanReach)
+                return false;
+
+            return TryDoInject(eventArgs.Target, eventArgs.User);
         }
 
         private bool TryDoInject(IEntity? target, IEntity user)

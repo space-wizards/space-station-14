@@ -1,0 +1,149 @@
+﻿- type: entity
+  id: Smoke
+  name: smoke
+  abstract: true
+  components:
+    - type: Sprite
+      drawdepth: Effects
+      sprite: Effects/chemsmoke.rsi
+      state: chemsmoke
+    - type: Appearance
+      visuals:
+        - type: SmokeVisualizer
+    - type: Occluder
+      sizeX: 32
+      sizeY: 32
+    - type: SnapGrid
+      offset: Center
+    - type: SmokeSolutionAreaEffect
+    - type: SolutionContainer
+      maxVol: 600
+
+- type: entity
+  id: Foam
+  name: foam
+  abstract: true
+  components:
+    - type: Sprite
+      netsync: false
+      drawdepth: Effects
+      color: "#ffffffcc" #Add some transparency
+      sprite: Effects/foam.rsi
+      state: foam
+      layers:
+        - state: foam
+          map: ["enum.FoamVisualLayers.Base"]
+    - type: AnimationPlayer
+    - type: Appearance
+      visuals:
+        - type: FoamVisualizer
+          animationTime: 0.6
+          animationState: foam-dissolve
+    - type: SnapGrid
+      offset: Center
+    - type: Physics
+      shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.4,-0.4,0.4,0.4"
+        layer:
+        - MobImpassable
+    - type: FoamSolutionAreaEffect
+    - type: SolutionContainer
+      maxVol: 600
+    - type: Slippery
+
+- type: entity
+  id: IronMetalFoam
+  name: iron metal foam
+  abstract: true
+  parent: Foam
+  components:
+    - type: Sprite
+      state: mfoam
+      layers:
+        - state: mfoam
+          map: ["enum.FoamVisualLayers.Base"]
+    - type: Appearance
+      visuals:
+        - type: FoamVisualizer
+          animationTime: 0.6
+          animationState: mfoam-dissolve
+    - type: FoamSolutionAreaEffect
+      foamedMetalPrototype: FoamedIronMetal
+
+- type: entity
+  id: AluminiumMetalFoam
+  name: aluminium metal foam
+  abstract: true
+  parent: Foam
+  components:
+    - type: Sprite
+      state: mfoam
+      layers:
+        - state: mfoam
+          map: ["enum.FoamVisualLayers.Base"]
+    - type: Appearance
+      visuals:
+        - type: FoamVisualizer
+          animationTime: 0.6
+          animationState: mfoam-dissolve
+    - type: FoamSolutionAreaEffect
+      foamedMetalPrototype: FoamedAluminiumMetal
+
+- type: entity
+  id: BaseFoamedMetal
+  name: base foamed metal
+  description: Keeps the air in and the greytide out.
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+    snap:
+      - Wall
+  components:
+    - type: RCDDeconstructWhitelist
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Sprite
+      netsync: false
+      drawdepth: Walls
+    - type: Physics
+      shapes:
+        - !type:PhysShapeAabb
+          layer:
+            - Opaque
+            - Impassable
+            - MobImpassable
+            - VaultImpassable
+            - SmallImpassable
+    - type: Occluder
+      sizeX: 32
+      sizeY: 32
+    - type: SnapGrid
+      offset: Center
+    - type: Airtight
+    - type: Damageable
+      resistances: metallicResistances
+    - type: Destructible
+      thresholds:
+        50:
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+
+- type: entity
+  id: FoamedIronMetal
+  name: foamed iron metal
+  parent: BaseFoamedMetal
+  components:
+    - type: Sprite
+      sprite: Effects/foam.rsi
+      state: ironfoam
+
+- type: entity
+  id: FoamedAluminiumMetal
+  name: foamed aluminium metal
+  parent: BaseFoamedMetal
+  components:
+    - type: Sprite
+      sprite: Effects/foam.rsi
+      state: metalfoam

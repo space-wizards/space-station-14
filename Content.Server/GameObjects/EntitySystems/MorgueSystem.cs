@@ -16,7 +16,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             if (_accumulatedFrameTime >= 10)
             {
-                foreach (var morgue in ComponentManager.EntityQuery<MorgueEntityStorageComponent>())
+                foreach (var morgue in ComponentManager.EntityQuery<MorgueEntityStorageComponent>(true))
                 {
                     morgue.Update();
                 }

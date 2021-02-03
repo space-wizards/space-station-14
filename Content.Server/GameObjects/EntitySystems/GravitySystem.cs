@@ -36,7 +36,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             _internalTimer += frameTime;
             var gridsWithGravity = new List<GridId>();
-            foreach (var generator in ComponentManager.EntityQuery<GravityGeneratorComponent>())
+            foreach (var generator in ComponentManager.EntityQuery<GravityGeneratorComponent>(true))
             {
                 if (generator.NeedsUpdate)
                 {

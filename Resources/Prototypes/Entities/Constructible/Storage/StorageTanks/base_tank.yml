@@ -33,9 +33,9 @@
           acts: ["Destruction"]
   - type: SolutionContainer
     maxVol: 1500
-    caps: RemoveFrom
-  - type: Pourable
-    transferAmount: 100.0
+    caps: Drainable
+  - type: ReagentTank
+
   placement:
     snap:
     - Wall

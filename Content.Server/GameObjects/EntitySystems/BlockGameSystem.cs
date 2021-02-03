@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var comp in ComponentManager.EntityQuery<BlockGameArcadeComponent>())
+            foreach (var comp in ComponentManager.EntityQuery<BlockGameArcadeComponent>(true))
             {
                 comp.DoGameTick(frameTime);
             }

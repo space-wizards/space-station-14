@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   name: mini hoe
   parent: BaseItem
   id: MiniHoe
@@ -24,7 +24,7 @@
       state: plantbgone
     - type: SolutionContainer
       maxVol: 100
-      caps: RemoveFrom
+      caps: Drainable
       contents:
         reagents:
           - ReagentId: chem.PlantBGone
@@ -42,12 +42,12 @@
       state: weedspray
     - type: SolutionContainer
       maxVol: 50
-      caps: RemoveFrom
+      caps: Drainable
       contents:
         reagents:
           - ReagentId: chem.WeedKiller
             Quantity: 50
-    - type: Pourable
+    - type: SolutionTransfer
       transferAmount: 1.0
     - type: Spillable
     - type: ItemCooldown
@@ -65,7 +65,7 @@
       state: pestspray
     - type: SolutionContainer
       maxVol: 50
-      caps: RemoveFrom
+      caps: Drainable
       contents:
         reagents:
           - ReagentId: chem.PestKiller
