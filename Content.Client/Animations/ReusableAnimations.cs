@@ -21,7 +21,7 @@ namespace Content.Client.Animations
 
             if(!entity.TryGetComponent(out SpriteComponent sprite0))
             {
-                Logger.Warning($"Entity doesn't have a {0}!", nameof(SpriteComponent));
+                Logger.Error($"Entity ({0}) couldn't be animated for pickup since it doesn't have a {1}!", entity.Name, nameof(SpriteComponent));
                 return;
             }
             var sprite = animatableClone.GetComponent<SpriteComponent>();
