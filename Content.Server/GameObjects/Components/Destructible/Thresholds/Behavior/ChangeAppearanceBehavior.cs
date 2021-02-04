@@ -30,9 +30,7 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behavior
                 return;
             }
 
-            // TODO Remove layers == null see https://github.com/space-wizards/RobustToolbox/pull/1461
-            if (!appearanceComponent.TryGetData(DamageVisualizerData.Layers, out Dictionary<int, ThresholdAppearance>? layers) ||
-                layers == null)
+            if (!appearanceComponent.TryGetData(DamageVisualizerData.Layers, out Dictionary<int, ThresholdAppearance>? layers))
             {
                 layers = new Dictionary<int, ThresholdAppearance>();
             }
