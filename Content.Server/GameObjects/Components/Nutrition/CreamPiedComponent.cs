@@ -1,4 +1,4 @@
-﻿using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Nutrition;
@@ -42,7 +42,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             switch (reagent.ID)
             {
                 case "chem.SpaceCleaner":
-                case "chem.H2O":
+                case "chem.Water":
                     Wash();
                     break;
             }

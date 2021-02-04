@@ -1,13 +1,15 @@
 using System;
 using System.Collections.Generic;
 using Content.Shared.Damage;
+using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Medical
 {
-    public class SharedMedicalScannerComponent : Component
+    public abstract class SharedMedicalScannerComponent : Component, IDragDropOn
     {
         public override string Name => "MedicalScanner";
 
@@ -78,5 +80,11 @@ namespace Content.Shared.GameObjects.Components.Medical
         }
 
 
+        public bool CanDragDropOn(DragDropEventArgs eventArgs)
+        {
+            return eventArgs.Dragged.HasComponent<IBody>();
+        }
+
+        public abstract bool DragDropOn(DragDropEventArgs eventArgs);
     }
 }

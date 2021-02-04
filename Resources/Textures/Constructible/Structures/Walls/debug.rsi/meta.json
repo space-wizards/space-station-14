@@ -8,57 +8,38 @@
     },
     "states": [
         {
-            "name": "full",
-            "select": [],
-            "flags": {},
-            "directions": 1
+            "name": "full"
         },
         {
             "name": "debug0",
-            "select": [],
-            "flags": {},
             "directions": 4
         },
         {
             "name": "debug1",
-            "select": [],
-            "flags": {},
             "directions": 4
         },
         {
             "name": "debug2",
-            "select": [],
-            "flags": {},
             "directions": 4
         },
         {
             "name": "debug3",
-            "select": [],
-            "flags": {},
             "directions": 4
         },
         {
             "name": "debug4",
-            "select": [],
-            "flags": {},
             "directions": 4
         },
         {
             "name": "debug5",
-            "select": [],
-            "flags": {},
             "directions": 4
         },
         {
             "name": "debug6",
-            "select": [],
-            "flags": {},
             "directions": 4
         },
         {
             "name": "debug7",
-            "select": [],
-            "flags": {},
             "directions": 4
         }
     ]

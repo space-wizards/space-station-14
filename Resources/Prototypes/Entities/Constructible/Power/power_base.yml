@@ -30,6 +30,7 @@
     sprite: Constructible/Power/power.rsi
     state: generator
   - type: NodeContainer
+    examinable: true
     nodes:
     - !type:AdjacentNode
       nodeGroupID: HVPower
@@ -37,6 +38,9 @@
     supplyRate: 3000
   - type: Anchorable
   - type: Pullable
+  - type: ClientEntitySpawner
+    prototypes:
+    - HVDummyWire
 
 - type: entity
   id: BaseSmes
@@ -80,6 +84,7 @@
     maxCharge: 1000
     startingCharge: 1000
   - type: NodeContainer
+    examinable: true
     nodes:
     - !type:AdjacentNode
       nodeGroupID: HVPower
@@ -91,7 +96,10 @@
     activeSupplyRate: 1000
   - type: Anchorable
   - type: Pullable
-
+  - type: ClientEntitySpawner
+    prototypes:
+    - HVDummyWire
+    
 - type: entity
   id: BaseSubstation
   description: Reduces the voltage of electricity put into it.
@@ -131,6 +139,7 @@
     maxCharge: 1000
     startingCharge: 1000
   - type: NodeContainer
+    examinable: true
     nodes:
     - !type:AdjacentNode
       nodeGroupID: HVPower
@@ -145,7 +154,11 @@
     activeSupplyRate: 1000
   - type: Anchorable
   - type: Pullable
-
+  - type: ClientEntitySpawner
+    prototypes:
+    - HVDummyWire
+    - MVDummyWire
+  
 - type: entity
   id: BaseApc
   description: A control terminal for the area's electrical systems.
@@ -155,6 +168,8 @@
     mode: SnapgridCenter
   components:
   - type: Clickable
+  - type: AccessReader
+    access: [["Engineering"]]
   - type: InteractionOutline
   - type: Physics
     shapes:
@@ -175,6 +190,7 @@
     maxCharge: 10000
     startingCharge: 10000
   - type: NodeContainer
+    examinable: true
     nodes:
     - !type:AdjacentNode
       nodeGroupID: MVPower
@@ -195,7 +211,11 @@
   - type: Construction
     graph: apc
     node: apc
-
+  - type: ClientEntitySpawner
+    prototypes:
+    - MVDummyWire
+    - LVDummyWire
+    
 - type: entity
   id: SolarPanel
   name: solar panel
@@ -224,6 +244,7 @@
     sprite: Constructible/Power/solar_panel.rsi
     state: normal
   - type: NodeContainer
+    examinable: true
     nodes:
     - !type:AdjacentNode
       nodeGroupID: HVPower
@@ -237,6 +258,11 @@
   - type: Destructible
     thresholds:
       100:
-        acts: ["Breakage"]
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Breakage"]
   - type: Anchorable
   - type: Pullable
+  - type: ClientEntitySpawner
+    prototypes:
+    - HVDummyWire

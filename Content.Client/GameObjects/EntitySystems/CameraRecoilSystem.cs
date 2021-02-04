@@ -11,7 +11,7 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             base.FrameUpdate(frameTime);
 
-            foreach (var recoil in EntityManager.ComponentManager.EntityQuery<CameraRecoilComponent>())
+            foreach (var recoil in EntityManager.ComponentManager.EntityQuery<CameraRecoilComponent>(true))
             {
                 recoil.FrameUpdate(frameTime);
             }

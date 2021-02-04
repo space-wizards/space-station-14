@@ -8,12 +8,10 @@
     "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/commit/a7290010020e541ed6b57817a07023ca6bef26fe",
     "states": [
         {
-            "name": "broken",
-            "directions": 1
+            "name": "broken"
         },
         {
             "name": "broken-unshaded",
-            "directions": 1,
             "delays": [
                 [
                     1.0,
@@ -25,7 +23,6 @@
         },
         {
             "name": "normal-unshaded",
-            "directions": 1,
             "delays": [
                 [
                     0.2,
@@ -44,8 +41,7 @@
             ]
         },
         {
-            "name": "off",
-            "directions": 1
+            "name": "off"
         }
     ]
 }

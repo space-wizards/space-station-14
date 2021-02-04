@@ -8,12 +8,10 @@
   },
   "states": [
     {
-      "name": "icon",
-      "directions": 1
+      "name": "icon"
     },
     {
-      "name": "icon-up",
-      "directions": 1
+      "name": "icon-up"
     },
     {
       "name": "equipped-HELMET",

@@ -9,12 +9,7 @@
     "states": [
         {
             "name": "jar",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         }
     ]
 }

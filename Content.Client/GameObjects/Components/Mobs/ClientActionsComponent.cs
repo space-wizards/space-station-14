@@ -27,7 +27,7 @@ namespace Content.Client.GameObjects.Components.Mobs
     [ComponentReference(typeof(SharedActionsComponent))]
     public sealed class ClientActionsComponent : SharedActionsComponent
     {
-        public const byte Hotbars = 10;
+        public const byte Hotbars = 9;
         public const byte Slots = 10;
 
         [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -106,6 +106,11 @@ namespace Content.Client.GameObjects.Components.Mobs
             _ui?.HandleHotbarKeybind(slot, args);
         }
 
+        public void HandleChangeHotbarKeybind(byte hotbar, in PointerInputCmdHandler.PointerInputCmdArgs args)
+        {
+            _ui?.HandleChangeHotbarKeybind(hotbar, args);
+        }
+
         /// <summary>
         /// Updates the displayed hotbar (and menu) based on current state of actions.
         /// </summary>
@@ -179,8 +184,10 @@ namespace Content.Client.GameObjects.Components.Mobs
 
             // only do something for actual target-based actions
             if (_ui?.SelectingTargetFor?.Action == null ||
-                (_ui.SelectingTargetFor.Action.BehaviorType != BehaviorType.TargetEntity &&
-                 _ui.SelectingTargetFor.Action.BehaviorType != BehaviorType.TargetPoint)) return false;
+                (!_ui.SelectingTargetFor.Action.IsTargetAction)) return false;
+
+            // do nothing if we know it's on cooldown
+            if (_ui.SelectingTargetFor.IsOnCooldown) return false;
 
             var attempt = _ui.SelectingTargetFor.ActionAttempt();
             if (attempt == null)
@@ -211,6 +218,13 @@ namespace Content.Client.GameObjects.Components.Mobs
                         _ui.StopTargeting();
                     }
                     return true;
+                }
+                // we are supposed to target an entity but we didn't click it
+                case BehaviorType.TargetEntity when args.EntityUid == EntityUid.Invalid:
+                {
+                    if (attempt.Action.DeselectWhenEntityNotClicked)
+                        _ui.StopTargeting();
+                    return false;
                 }
                 default:
                     _ui.StopTargeting();

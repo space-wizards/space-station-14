@@ -1,10 +1,11 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.StationEvents;
 using Content.Shared.Atmos;
+using Content.Shared.Roles;
 using Robust.Client.Console;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.Placement;
@@ -30,6 +31,7 @@ namespace Content.Client.UserInterface.AdminMenu
         public readonly TabContainer MasterTabContainer;
         public readonly VBoxContainer PlayerList;
         public readonly Label PlayerCount;
+        private readonly IGameHud _gameHud;
 
         protected override Vector2? CustomSize => (500, 250);
 
@@ -38,12 +40,13 @@ namespace Content.Client.UserInterface.AdminMenu
             new KickCommandButton(),
             new DirectCommandButton("Admin Ghost", "aghost"),
             new TeleportCommandButton(),
+            new DirectCommandButton("Permissions Panel", "permissions"),
         };
         private readonly List<CommandButton> _adminbusButtons = new()
         {
             new SpawnEntitiesCommandButton(),
             new SpawnTilesCommandButton(),
-            new StationEventsCommandButton(),
+            new StationEventsCommandButton()
         };
         private readonly List<CommandButton> _debugButtons = new()
         {
@@ -205,6 +208,7 @@ namespace Content.Client.UserInterface.AdminMenu
 
         public AdminMenuWindow() //TODO: search for buttons?
         {
+            _gameHud = IoCManager.Resolve<IGameHud>();
             Title = Loc.GetString("Admin Menu");
 
             #region PlayerList
@@ -375,6 +379,19 @@ namespace Content.Client.UserInterface.AdminMenu
             IoCManager.Resolve<IStationEventManager>().RequestEvents();
         }
 
+        protected override void ExitedTree()
+        {
+            base.ExitedTree();
+            _gameHud.AdminButtonDown = false;
+
+        }
+
+        protected override void EnteredTree()
+        {
+            base.EnteredTree();
+            _gameHud.AdminButtonDown = true;
+        }
+
         #region CommandButtonBaseClass
         private abstract class CommandButton
         {
@@ -423,7 +440,7 @@ namespace Content.Client.UserInterface.AdminMenu
 
             public override void ButtonPressed(ButtonEventArgs args)
             {
-                IoCManager.Resolve<IClientConsole>().ProcessCommand(RequiredCommand);
+                IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand(RequiredCommand);
             }
         }
         #endregion
@@ -468,10 +485,11 @@ namespace Content.Client.UserInterface.AdminMenu
                 Name = "Event",
                 GetData = () =>
                 {
-                    var events = IoCManager.Resolve<IStationEventManager>().StationEvents;
-                    if (events == null)
-                        return new List<object> { "Not loaded" };
-                    events.Add("Random");
+                    var events = IoCManager.Resolve<IStationEventManager>().StationEvents.ToList();
+                    if (events.Count == 0)
+                        events.Add(Loc.GetString("Not loaded"));
+                    else
+                        events.Add(Loc.GetString("Random"));
                     return events.ToList<object>();
                 },
                 GetDisplayName = (obj) => (string) obj,
@@ -486,7 +504,7 @@ namespace Content.Client.UserInterface.AdminMenu
                     Name = "Pause",
                     Handler = () =>
                     {
-                        IoCManager.Resolve<IClientConsole>().ProcessCommand("events pause");
+                        IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand("events pause");
                     },
                 },
                 new CommandUIButton
@@ -494,14 +512,14 @@ namespace Content.Client.UserInterface.AdminMenu
                     Name = "Resume",
                     Handler = () =>
                     {
-                        IoCManager.Resolve<IClientConsole>().ProcessCommand("events resume");
+                        IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand("events resume");
                     },
                 },
             };
 
             public override void Submit()
             {
-                IoCManager.Resolve<IClientConsole>().ProcessCommand($"events run \"{_eventsDropDown.GetValue()}\"");
+                IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand($"events run \"{_eventsDropDown.GetValue()}\"");
             }
         }
 
@@ -530,7 +548,7 @@ namespace Content.Client.UserInterface.AdminMenu
 
             public override void Submit()
             {
-                IoCManager.Resolve<IClientConsole>().ProcessCommand($"kick \"{_playerDropDown.GetValue()}\" \"{CommandParsing.Escape(_reason.GetValue())}\"");
+                IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand($"kick \"{_playerDropDown.GetValue()}\" \"{CommandParsing.Escape(_reason.GetValue())}\"");
             }
         }
 
@@ -554,7 +572,7 @@ namespace Content.Client.UserInterface.AdminMenu
 
             public override void Submit()
             {
-                IoCManager.Resolve<IClientConsole>().ProcessCommand($"tpto \"{_playerDropDown.GetValue()}\"");
+                IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand($"tpto \"{_playerDropDown.GetValue()}\"");
             }
         }
 
@@ -578,7 +596,7 @@ namespace Content.Client.UserInterface.AdminMenu
 
             public override void Submit()
             {
-                IoCManager.Resolve<IClientConsole>().ProcessCommand($"addatmos {_grid.GetValue()}");
+                IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand($"addatmos {_grid.GetValue()}");
             }
         }
 
@@ -621,7 +639,7 @@ namespace Content.Client.UserInterface.AdminMenu
 
             public override void Submit()
             {
-                IoCManager.Resolve<IClientConsole>().ProcessCommand($"fillgas {_grid.GetValue()} {_gas.GetValue()} {_amount.GetValue()}");
+                IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand($"fillgas {_grid.GetValue()} {_gas.GetValue()} {_amount.GetValue()}");
             }
         }
         #endregion

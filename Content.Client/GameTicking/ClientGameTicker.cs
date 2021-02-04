@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Content.Client.Interfaces;
 using Content.Client.State;
 using Content.Client.UserInterface;
-using Content.Shared;
 using Content.Shared.GameTicking;
 using Content.Shared.Network.NetMessages;
 using Robust.Client.Interfaces.Graphics;
@@ -11,6 +10,7 @@ using Robust.Client.Interfaces.State;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -28,7 +28,7 @@ namespace Content.Client.GameTicking
         [ViewVariables] public bool IsGameStarted { get; private set; }
         [ViewVariables] public bool DisallowedLateJoin { get; private set; }
         [ViewVariables] public string ServerInfoBlob { get; private set; }
-        [ViewVariables] public DateTime StartTime { get; private set; }
+        [ViewVariables] public TimeSpan StartTime { get; private set; }
         [ViewVariables] public bool Paused { get; private set; }
         [ViewVariables] public Dictionary<NetUserId, PlayerStatus> Status { get; private set; }
         [ViewVariables] public IReadOnlyList<string> JobsAvailable => _jobsAvailable;

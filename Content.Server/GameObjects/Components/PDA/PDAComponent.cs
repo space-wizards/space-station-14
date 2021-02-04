@@ -36,7 +36,7 @@ namespace Content.Server.GameObjects.Components.PDA
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IAccess))]
-    public class PDAComponent : SharedPDAComponent, IInteractUsing, IActivate, IUse, IAccess
+    public class PDAComponent : SharedPDAComponent, IInteractUsing, IActivate, IUse, IAccess, IMapInit
     {
         [Dependency] private readonly IPDAUplinkManager _uplinkManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -86,6 +86,11 @@ namespace Content.Server.GameObjects.Components.PDA
                 UserInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
             }
 
+            UpdatePDAAppearance();
+        }
+
+        public void MapInit()
+        {
             if (!string.IsNullOrEmpty(_startingIdCard))
             {
                 var idCard = _entityManager.SpawnEntity(_startingIdCard, Owner.Transform.Coordinates);
@@ -99,8 +104,6 @@ namespace Content.Server.GameObjects.Components.PDA
                 var pen = _entityManager.SpawnEntity(_startingPen, Owner.Transform.Coordinates);
                 _penSlot.Insert(pen);
             }
-
-            UpdatePDAAppearance();
         }
 
         private void UserInterfaceOnReceiveMessage(ServerBoundUserInterfaceMessage message)
@@ -132,11 +135,19 @@ namespace Content.Server.GameObjects.Components.PDA
 
                 case PDAUplinkBuyListingMessage buyMsg:
                 {
-                    if (!_uplinkManager.TryPurchaseItem(_syndicateUplinkAccount, buyMsg.ItemId))
+                    if (message.Session.AttachedEntity == null)
+                        break;
+
+                    if (!_uplinkManager.TryPurchaseItem(_syndicateUplinkAccount, buyMsg.ItemId,
+                        message.Session.AttachedEntity.Transform.Coordinates, out var entity))
                     {
                         SendNetworkMessage(new PDAUplinkInsufficientFundsMessage(), message.Session.ConnectedClient);
                         break;
                     }
+
+                    HandsComponent.PutInHandOrDropStatic(
+                        message.Session.AttachedEntity,
+                        entity.GetComponent<ItemComponent>());
 
                     SendNetworkMessage(new PDAUplinkBuySuccessMessage(), message.Session.ConnectedClient);
                     break;
@@ -434,6 +445,7 @@ namespace Content.Server.GameObjects.Components.PDA
         }
 
         ISet<string> IAccess.Tags => _accessSet;
+
         bool IAccess.IsReadOnly => true;
 
         void IAccess.SetTags(IEnumerable<string> newTags)

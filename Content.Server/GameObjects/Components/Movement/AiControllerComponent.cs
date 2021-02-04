@@ -4,6 +4,8 @@ using Content.Server.GameObjects.EntitySystems.AI;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Roles;
+using Content.Shared.Preferences;
+using Robust.Server.AI;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
@@ -68,7 +70,7 @@ namespace Content.Server.GameObjects.Components.Movement
             if (StartingGearPrototype != null)
             {
                 var startingGear = _prototypeManager.Index<StartingGearPrototype>(StartingGearPrototype);
-                _gameTicker.EquipStartingGear(Owner, startingGear);
+                _gameTicker.EquipStartingGear(Owner, startingGear, null);
             }
 
         }

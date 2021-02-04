@@ -1,4 +1,5 @@
-﻿using Robust.Shared.GameObjects;
+﻿using Content.Server.GameObjects.Components.Destructible.Thresholds;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Destructible
 {

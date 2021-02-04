@@ -25,3 +25,6 @@
     idcard: CEPDA
     ears: ClothingHeadsetEngineering
     belt: ClothingBeltChiefEngineerFilled
+  innerclothingskirt: ClothingUniformJumpskirtChiefEngineer
+  satchel: ClothingBackpackSatchelEngineeringFilled
+  duffelbag: ClothingBackpackDuffelEngineeringFilled

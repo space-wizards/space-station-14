@@ -91,6 +91,6 @@
       Blunt: 1
   - type: SolutionContainer
     maxVol: 15
-    caps: AddTo, RemoveFrom
+    caps: Refillable, Drainable
   - type: ChemicalInjectionProjectile
     transferAmount: 15

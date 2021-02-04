@@ -8,37 +8,16 @@
     "copyright": "Taken from https://github.com/discordia-space/CEV-Eris at commit ad7c8621e5567b1b3b2b609f699b3b80cca785f2",
     "states": [
         {
-            "name": "normal",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "normal"
+
         },
         {
-            "name": "burned",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "burned"
+
         },
         {
-            "name": "broken",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "broken"
+
         }
     ]
 }

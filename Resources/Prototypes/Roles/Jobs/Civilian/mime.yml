@@ -14,7 +14,7 @@
   id: MimeGear
   equipment:
     innerclothing: ClothingUniformJumpsuitMime
-    backpack: ClothingBackpackFilled
+    backpack: ClothingBackpackMimeFilled
     head: ClothingHeadHatBeret
     belt: ClothingBeltSuspenders
     gloves: ClothingHandsGlovesLatex
@@ -24,3 +24,6 @@
     mask: ClothingMaskMime
     idcard: MimePDA
     ears: ClothingHeadsetService
+  innerclothingskirt: ClothingUniformJumpskirtMime
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelMimeFilled

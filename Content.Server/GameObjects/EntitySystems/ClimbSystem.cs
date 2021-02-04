@@ -9,7 +9,7 @@ namespace Content.Server.GameObjects.EntitySystems
     {
         public override void Update(float frameTime)
         {
-            foreach (var comp in ComponentManager.EntityQuery<ClimbingComponent>())
+            foreach (var comp in ComponentManager.EntityQuery<ClimbingComponent>(true))
             {
                 comp.Update();
             }

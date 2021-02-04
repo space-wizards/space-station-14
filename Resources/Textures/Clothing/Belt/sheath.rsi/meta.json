@@ -9,57 +9,17 @@
   "states": [
     {
         "name": "sheath-equipped-BELT",
-        "directions": 4,
-        "delays": [
-          [
-            1
-          ],
-          [
-            1
-          ],
-          [
-            1
-          ],
-          [
-            1
-          ]
-        ]
+        "directions": 4
     },
     {
         "name": "sheath-sabre-equipped-BELT",
-        "directions": 4,
-        "delays": [
-          [
-            1
-          ],
-          [
-            1
-          ],
-          [
-            1
-          ],
-          [
-            1
-          ]
-        ]
+        "directions": 4
     },
     {
-        "name": "sheath-sabre",
-        "directions": 1,
-        "delays": [
-          [
-            1
-          ]
-        ]
+        "name": "sheath-sabre"
     },
     {
-        "name": "sheath",
-        "directions": 1,
-        "delays": [
-          [
-            1
-          ]
-        ]
+        "name": "sheath"
     }
   ]
 }

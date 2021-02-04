@@ -109,19 +109,22 @@ namespace Content.Server.GameObjects.Components
             return false;
         }
 
-        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: false, popup: true,
-                collisionMask: Shared.Physics.CollisionGroup.MobImpassable)) return;
+                collisionMask: Shared.Physics.CollisionGroup.MobImpassable))
+            {
+                return true;
+            }
 
             if (Charges <= 0)
             {
                 eventArgs.User.PopupMessage(Loc.GetString("Not enough left."));
-                return;
+                return true;
             }
 
             var entityManager = IoCManager.Resolve<IServerEntityManager>();
-            
+
             var entity = entityManager.SpawnEntity("CrayonDecal", eventArgs.ClickLocation);
             if (entity.TryGetComponent(out AppearanceComponent? appearance))
             {
@@ -138,6 +141,7 @@ namespace Content.Server.GameObjects.Components
             // Decrease "Ammo"
             Charges--;
             Dirty();
+            return true;
         }
 
         void IDropped.Dropped(DroppedEventArgs eventArgs)

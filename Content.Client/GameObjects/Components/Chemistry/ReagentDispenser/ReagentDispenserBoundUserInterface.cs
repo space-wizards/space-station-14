@@ -48,7 +48,10 @@ namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
             _window.DispenseButton1.OnPressed += _ => ButtonPressed(UiButton.SetDispenseAmount1);
             _window.DispenseButton5.OnPressed += _ => ButtonPressed(UiButton.SetDispenseAmount5);
             _window.DispenseButton10.OnPressed += _ => ButtonPressed(UiButton.SetDispenseAmount10);
+            _window.DispenseButton15.OnPressed += _ => ButtonPressed(UiButton.SetDispenseAmount15);
+            _window.DispenseButton20.OnPressed += _ => ButtonPressed(UiButton.SetDispenseAmount20);
             _window.DispenseButton25.OnPressed += _ => ButtonPressed(UiButton.SetDispenseAmount25);
+            _window.DispenseButton30.OnPressed += _ => ButtonPressed(UiButton.SetDispenseAmount30);
             _window.DispenseButton50.OnPressed += _ => ButtonPressed(UiButton.SetDispenseAmount50);
             _window.DispenseButton100.OnPressed += _ => ButtonPressed(UiButton.SetDispenseAmount100);
         }

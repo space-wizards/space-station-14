@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             _messages.Add(message);
 
-            foreach (var radio in ComponentManager.EntityQuery<IRadio>())
+            foreach (var radio in ComponentManager.EntityQuery<IRadio>(true))
             {
                 if (radio.Channels.Contains(channel))
                 {

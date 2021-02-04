@@ -61,7 +61,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
             if (_attachedEntity == null || _attachedEntity.Deleted)
                 return;
 
-            foreach (var comp in ComponentManager.EntityQuery<DoAfterComponent>())
+            foreach (var comp in ComponentManager.EntityQuery<DoAfterComponent>(true))
             {
                 if (!_knownComponents.Contains(comp))
                 {

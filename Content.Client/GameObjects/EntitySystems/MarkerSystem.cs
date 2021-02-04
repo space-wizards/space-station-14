@@ -19,7 +19,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void UpdateMarkers()
         {
-            foreach (var markerComponent in EntityManager.ComponentManager.EntityQuery<MarkerComponent>())
+            foreach (var markerComponent in EntityManager.ComponentManager.EntityQuery<MarkerComponent>(true))
             {
                 markerComponent.UpdateVisibility();
             }

@@ -3,11 +3,9 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Body.Behavior;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Fluids;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Audio;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Nutrition;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
@@ -30,7 +28,6 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Nutrition
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IAfterInteract))]
     public class DrinkComponent : Component, IUse, IAfterInteract, ISolutionChange, IExamine, ILand
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -76,7 +73,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 _contents = Owner.AddComponent<SolutionContainerComponent>();
             }
 
-            _contents.Capabilities = SolutionContainerCaps.AddTo | SolutionContainerCaps.RemoveFrom;
+            _contents.Capabilities = SolutionContainerCaps.Refillable | SolutionContainerCaps.Drainable;
             Opened = _defaultToOpened;
             UpdateAppearance();
         }
@@ -114,9 +111,10 @@ namespace Content.Server.GameObjects.Components.Nutrition
         }
 
         //Force feeding a drink to someone.
-        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             TryUseDrink(eventArgs.Target, forced: true);
+            return true;
         }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
@@ -132,7 +130,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         private bool TryUseDrink(IEntity target, bool forced = false)
         {
-            if (target == null || !_contents.CanRemoveSolutions)
+            if (target == null || !_contents.CanDrain)
             {
                 return false;
             }
@@ -182,11 +180,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             // TODO: Account for partial transfer.
 
-            foreach (var (reagentId, quantity) in split.Contents)
-            {
-                if (!_prototypeManager.TryIndex(reagentId, out ReagentPrototype reagent)) continue;
-                split.RemoveReagent(reagentId, reagent.ReactionEntity(target, ReactionMethod.Ingestion, quantity));
-            }
+            split.DoEntityReaction(target, ReactionMethod.Ingestion);
 
             firstStomach.TryTransferSolution(split);
 

@@ -16,16 +16,13 @@
       "directions": 4
     },
     {
-      "name": "dead",
-      "directions": 1
+      "name": "dead"
     },
     {
-      "name": "sleeping",
-      "directions": 1
+      "name": "sleeping"
     },
     {
-      "name": "crit",
-      "directions": 1
+      "name": "crit"
     }
   ]
 }

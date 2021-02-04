@@ -17,9 +17,7 @@
       reagents:
       - ReagentId: chem.WeldingFuel
         Quantity: 1500
-  - type: DamageOnToolInteract
-    damage: 200
-    tools:
-    - Welding
   - type: Anchorable
   - type: Pullable
+  - type: ReagentTank
+    tankType: Fuel

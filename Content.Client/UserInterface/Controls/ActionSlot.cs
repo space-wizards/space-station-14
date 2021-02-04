@@ -53,8 +53,10 @@ namespace Content.Client.UserInterface.Controls
 
         /// <summary>
         /// Is there an action in the slot that can currently be used?
+        /// Target-basedActions on cooldown can still be selected / deselected if they've been configured as such
         /// </summary>
-        public bool CanUseAction => HasAssignment && ActionEnabled && !IsOnCooldown;
+        public bool CanUseAction => Action != null && ActionEnabled &&
+                                    (!IsOnCooldown || (Action.IsTargetAction && !Action.DeselectOnCooldown));
 
         /// <summary>
         /// Item the action is provided by, only valid if Action is an ItemActionPrototype. May be null
@@ -110,6 +112,7 @@ namespace Content.Client.UserInterface.Controls
         private readonly SpriteView _bigItemSpriteView;
         private readonly CooldownGraphic _cooldownGraphic;
         private readonly ActionsUI _actionsUI;
+        private readonly ActionMenu _actionMenu;
         private readonly ClientActionsComponent _actionsComponent;
         private bool _toggledOn;
         // whether button is currently pressed down by mouse or keybind down.
@@ -120,10 +123,11 @@ namespace Content.Client.UserInterface.Controls
         /// Creates an action slot for the specified number
         /// </summary>
         /// <param name="slotIndex">slot index this corresponds to, 0-9 (0 labeled as 1, 8, labeled "9", 9 labeled as "0".</param>
-        public ActionSlot(ActionsUI actionsUI, ClientActionsComponent actionsComponent, byte slotIndex)
+        public ActionSlot(ActionsUI actionsUI, ActionMenu actionMenu, ClientActionsComponent actionsComponent, byte slotIndex)
         {
             _actionsComponent = actionsComponent;
             _actionsUI = actionsUI;
+            _actionMenu = actionMenu;
             _gameTiming = IoCManager.Resolve<IGameTiming>();
             SlotIndex = slotIndex;
             MouseFilter = MouseFilterMode.Stop;
@@ -259,7 +263,7 @@ namespace Content.Client.UserInterface.Controls
 
             if (args.Function == EngineKeyFunctions.UIRightClick)
             {
-                if (!_actionsUI.Locked && !_actionsUI.DragDropHelper.IsDragging)
+                if (!_actionsUI.Locked && !_actionsUI.DragDropHelper.IsDragging && !_actionMenu.IsDragging)
                 {
                     _actionsComponent.Assignments.ClearSlot(_actionsUI.SelectedHotbar, SlotIndex, true);
                     _actionsUI.StopTargeting();
@@ -323,6 +327,14 @@ namespace Content.Client.UserInterface.Controls
             DrawModeChanged();
         }
 
+        protected override void ControlFocusExited()
+        {
+            // lost focus for some reason, cancel the drag if there is one.
+            base.ControlFocusExited();
+            _actionsUI.DragDropHelper.EndDrag();
+            DrawModeChanged();
+        }
+
         /// <summary>
         /// Cancel current press without triggering the action
         /// </summary>
@@ -338,7 +350,9 @@ namespace Content.Client.UserInterface.Controls
         /// </summary>
         public void Depress(bool depress)
         {
+            // action can still be toggled if it's allowed to stay selected
             if (!CanUseAction) return;
+
 
             if (_depressed && !depress)
             {
@@ -582,6 +596,18 @@ namespace Content.Client.UserInterface.Controls
 
         private void DrawModeChanged()
         {
+
+            // show a hover only if the action is usable or another action is being dragged on top of this
+            if (_beingHovered)
+            {
+                if (_actionsUI.DragDropHelper.IsDragging || _actionMenu.IsDragging ||
+                    (HasAssignment && ActionEnabled && !IsOnCooldown))
+                {
+                    SetOnlyStylePseudoClass(ContainerButton.StylePseudoClassHover);
+                    return;
+                }
+            }
+
             // always show the normal empty button style if no action in this slot
             if (!HasAssignment)
             {
@@ -597,15 +623,6 @@ namespace Content.Client.UserInterface.Controls
                 return;
             }
 
-            // show a hover only if the action is usable
-            if (_beingHovered)
-            {
-                if (ActionEnabled && !IsOnCooldown)
-                {
-                    SetOnlyStylePseudoClass(ContainerButton.StylePseudoClassHover);
-                    return;
-                }
-            }
 
             // if it's toggled on, always show the toggled on style (currently same as depressed style)
             if (ToggledOn)

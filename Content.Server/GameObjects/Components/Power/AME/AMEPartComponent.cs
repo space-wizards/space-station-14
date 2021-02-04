@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+#nullable enable
+using System.Threading.Tasks;
 using System.Linq;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.Interfaces.GameObjects.Components.Items;
@@ -11,6 +12,8 @@ using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.Components.Power.AME
 {
@@ -22,17 +25,17 @@ namespace Content.Server.GameObjects.Components.Power.AME
         [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
 
         public override string Name => "AMEPart";
+        private string _unwrap = "/Audio/Effects/unwrap.ogg";
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
         {
-            if (!args.User.TryGetComponent(out IHandsComponent hands))
+            if (!args.User.TryGetComponent<IHandsComponent>(out var hands))
             {
                 Owner.PopupMessage(args.User, Loc.GetString("You have no hands."));
                 return true;
             }
 
-            var activeHandEntity = hands.GetActiveHand.Owner;
-            if (activeHandEntity.TryGetComponent<ToolComponent>(out var multitool) && multitool.Qualities == ToolQuality.Multitool)
+            if (args.Using.TryGetComponent<ToolComponent>(out var multitool) && multitool.Qualities == ToolQuality.Multitool)
             {
 
                 var mapGrid = _mapManager.GetGrid(args.ClickLocation.GetGridId(_serverEntityManager));
@@ -45,6 +48,8 @@ namespace Content.Server.GameObjects.Components.Power.AME
 
                 var ent = _serverEntityManager.SpawnEntity("AMEShielding", mapGrid.GridTileToLocal(snapPos));
                 ent.Transform.LocalRotation = Owner.Transform.LocalRotation;
+
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(_unwrap, Owner);
 
                 Owner.Delete();
             }

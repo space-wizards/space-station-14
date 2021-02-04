@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
@@ -6,6 +6,7 @@ using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Physics;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
@@ -65,7 +66,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             serializer.DataField(this, x => x.Arc, "arc", "default");
             serializer.DataField(this, x => x.ClickArc, "clickArc", "punch");
             serializer.DataField(this, x => x._hitSound, "hitSound", "/Audio/Weapons/genhit1.ogg");
-            serializer.DataField(this, x => x._missSound, "hitSound", "/Audio/Weapons/punchmiss.ogg");
+            serializer.DataField(this, x => x._missSound, "missSound", "/Audio/Weapons/punchmiss.ogg");
             serializer.DataField(this, x => x.ArcCooldownTime, "arcCooldownTime", 1f);
             serializer.DataField(this, x => x.CooldownTime, "cooldownTime", 1f);
             serializer.DataField(this, x => x.DamageType, "damageType", DamageType.Blunt);
@@ -203,7 +204,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             for (var i = 0; i < increments; i++)
             {
                 var castAngle = new Angle(baseAngle + increment * i);
-                var res = _physicsManager.IntersectRay(mapId, new CollisionRay(position, castAngle.ToVec(), 23), Range, ignore).FirstOrDefault();
+                var res = _physicsManager.IntersectRay(mapId, new CollisionRay(position, castAngle.ToVec(), (int) (CollisionGroup.Impassable|CollisionGroup.MobImpassable)), Range, ignore).FirstOrDefault();
                 if (res.HitEntity != null)
                 {
                     resSet.Add(res.HitEntity);
