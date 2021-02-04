@@ -1,3 +1,4 @@
+#nullable enable
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Power;
@@ -227,7 +228,7 @@ namespace Content.IntegrationTests.Tests
                 var entityMan = IoCManager.Resolve<IEntityManager>();
                 var mapId = new MapId(1);
                 mapMan.CreateMap(mapId);
-                var grid = mapMan.CreateGrid(new MapId(1));
+                var grid = mapMan.CreateGrid(mapId);
                 entityMan.GetEntity(grid.GridEntityId).AddComponent<GridPowerComponent>();
 
                 var apcEnt = entityMan.SpawnEntity("ApcDummy", grid.ToCoordinates(0, 0));
