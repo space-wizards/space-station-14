@@ -3,7 +3,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Destructible;
 using Content.Server.GameObjects.Components.Destructible.Thresholds;
-using Content.Server.GameObjects.Components.Destructible.Thresholds.Behavior;
+using Content.Server.GameObjects.Components.Destructible.Thresholds.Behaviors;
+using Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using NUnit.Framework;
@@ -30,20 +31,25 @@ namespace Content.IntegrationTests.Tests.Destructible
   - type: Damageable
   - type: Destructible
     thresholds:
-      20:
-        triggersOnce: false
-      50:
-        triggersOnce: false
-        behaviors:
-        - !type:DoActsBehavior
-          acts: [""Breakage""]
-        - !type:PlaySoundBehavior
-          sound: /Audio/Effects/woodhit.ogg
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            WoodPlank:
-              min: 1
-              max: 1
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 20
+      triggersOnce: false
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [""Breakage""]
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/woodhit.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          WoodPlank:
+            min: 1
+            max: 1
+      triggersOnce: false
+        
   - type: TestThresholdListener
 ";
 
@@ -119,29 +125,24 @@ namespace Content.IntegrationTests.Tests.Destructible
                 // Only one threshold reached, 20
                 Assert.That(sThresholdListenerComponent.ThresholdsReached.Count, Is.EqualTo(1));
 
+                // Threshold 20
                 var msg = sThresholdListenerComponent.ThresholdsReached[0];
-
-                // Check that it matches the total damage dealt
-                Assert.That(msg.TotalDamage, Is.EqualTo(20));
-
                 var threshold = msg.Threshold;
 
                 // Check that it matches the YAML prototype
                 Assert.That(threshold.Behaviors, Is.Empty);
+                Assert.NotNull(threshold.Trigger);
                 Assert.That(threshold.Triggered, Is.True);
 
                 sThresholdListenerComponent.ThresholdsReached.Clear();
 
                 Assert.True(sDamageableComponent.ChangeDamage(DamageType.Blunt, 30, true));
 
-                // Only one threshold reached, 50, since 20 was already reached before
-                Assert.That(sThresholdListenerComponent.ThresholdsReached.Count, Is.EqualTo(1));
+                // Two thresholds reached, 20 and 50, since TriggersOnce is set to false for both of them
+                Assert.That(sThresholdListenerComponent.ThresholdsReached.Count, Is.EqualTo(2));
 
-                msg = sThresholdListenerComponent.ThresholdsReached[0];
-
-                // Check that it matches the total damage dealt
-                Assert.That(msg.TotalDamage, Is.EqualTo(50));
-
+                // Threshold 50
+                msg = sThresholdListenerComponent.ThresholdsReached[1];
                 threshold = msg.Threshold;
 
                 // Check that it matches the YAML prototype
@@ -158,6 +159,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 Assert.That(spawnThreshold.Spawn.Single().Key, Is.EqualTo("WoodPlank"));
                 Assert.That(spawnThreshold.Spawn.Single().Value.Min, Is.EqualTo(1));
                 Assert.That(spawnThreshold.Spawn.Single().Value.Max, Is.EqualTo(1));
+                Assert.NotNull(threshold.Trigger);
                 Assert.That(threshold.Triggered, Is.True);
 
                 sThresholdListenerComponent.ThresholdsReached.Clear();
@@ -165,8 +167,10 @@ namespace Content.IntegrationTests.Tests.Destructible
                 // Damage for 50 again, up to 100 now
                 Assert.True(sDamageableComponent.ChangeDamage(DamageType.Blunt, 50, true));
 
-                // No new thresholds reached as even though they don't only trigger once, the entity was not healed below the threshold
-                Assert.That(sThresholdListenerComponent.ThresholdsReached, Is.Empty);
+                // Two thresholds reached as damage increased past the previous, 20 and 50
+                Assert.That(sThresholdListenerComponent.ThresholdsReached.Count, Is.EqualTo(2));
+
+                sThresholdListenerComponent.ThresholdsReached.Clear();
 
                 // Heal the entity for 40 damage, down to 60
                 sDamageableComponent.ChangeDamage(DamageType.Blunt, -40, true);
@@ -193,10 +197,6 @@ namespace Content.IntegrationTests.Tests.Destructible
                 Assert.That(sThresholdListenerComponent.ThresholdsReached.Count, Is.EqualTo(1));
 
                 msg = sThresholdListenerComponent.ThresholdsReached[0];
-
-                // Check that it matches the total damage dealt
-                Assert.That(msg.TotalDamage, Is.EqualTo(50));
-
                 threshold = msg.Threshold;
 
                 // Check that it matches the YAML prototype
@@ -214,6 +214,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 Assert.That(spawnThreshold.Spawn.Single().Key, Is.EqualTo("WoodPlank"));
                 Assert.That(spawnThreshold.Spawn.Single().Value.Min, Is.EqualTo(1));
                 Assert.That(spawnThreshold.Spawn.Single().Value.Max, Is.EqualTo(1));
+                Assert.NotNull(threshold.Trigger);
                 Assert.That(threshold.Triggered, Is.True);
 
                 // Reset thresholds reached
@@ -233,10 +234,9 @@ namespace Content.IntegrationTests.Tests.Destructible
 
                 // Verify the first one, should be the lowest one (20)
                 msg = sThresholdListenerComponent.ThresholdsReached[0];
-                Assert.That(msg.ThresholdAmount, Is.EqualTo(20));
-
-                // The total damage should be 50
-                Assert.That(msg.TotalDamage, Is.EqualTo(50));
+                var trigger = (TotalDamageTrigger) msg.Threshold.Trigger;
+                Assert.NotNull(trigger);
+                Assert.That(trigger.Damage, Is.EqualTo(20));
 
                 threshold = msg.Threshold;
 
@@ -245,10 +245,9 @@ namespace Content.IntegrationTests.Tests.Destructible
 
                 // Verify the second one, should be the highest one (50)
                 msg = sThresholdListenerComponent.ThresholdsReached[1];
-                Assert.That(msg.ThresholdAmount, Is.EqualTo(50));
-
-                // Check that it matches the total damage dealt
-                Assert.That(msg.TotalDamage, Is.EqualTo(50));
+                trigger = (TotalDamageTrigger) msg.Threshold.Trigger;
+                Assert.NotNull(trigger);
+                Assert.That(trigger.Damage, Is.EqualTo(50));
 
                 threshold = msg.Threshold;
 
@@ -266,6 +265,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 Assert.That(spawnThreshold.Spawn.Single().Key, Is.EqualTo("WoodPlank"));
                 Assert.That(spawnThreshold.Spawn.Single().Value.Min, Is.EqualTo(1));
                 Assert.That(spawnThreshold.Spawn.Single().Value.Max, Is.EqualTo(1));
+                Assert.NotNull(threshold.Trigger);
                 Assert.That(threshold.Triggered, Is.True);
 
                 // Reset thresholds reached
@@ -278,8 +278,9 @@ namespace Content.IntegrationTests.Tests.Destructible
                 Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(0));
 
                 // Set both thresholds to only trigger once
-                foreach (var destructibleThreshold in sDestructibleComponent.LowestToHighestThresholds.Values)
+                foreach (var destructibleThreshold in sDestructibleComponent.Thresholds)
                 {
+                    Assert.NotNull(destructibleThreshold.Trigger);
                     destructibleThreshold.TriggersOnce = true;
                 }
 
@@ -293,8 +294,9 @@ namespace Content.IntegrationTests.Tests.Destructible
                 Assert.That(sThresholdListenerComponent.ThresholdsReached, Is.Empty);
 
                 // Set both thresholds to trigger multiple times
-                foreach (var destructibleThreshold in sDestructibleComponent.LowestToHighestThresholds.Values)
+                foreach (var destructibleThreshold in sDestructibleComponent.Thresholds)
                 {
+                    Assert.NotNull(destructibleThreshold.Trigger);
                     destructibleThreshold.TriggersOnce = false;
                 }
 

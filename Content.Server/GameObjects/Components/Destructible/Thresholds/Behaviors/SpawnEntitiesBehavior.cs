@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
@@ -6,9 +7,10 @@ using Content.Shared.Utility;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behavior
+namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behaviors
 {
-    public class SpawnEntitiesBehavior : IThresholdBehavior
+    [Serializable]
+    public class SpawnEntitiesBehavior : IBehavior
     {
         /// <summary>
         ///     Entities spawned on reaching this threshold, from a min to a max.
@@ -20,7 +22,7 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behavior
             serializer.DataField(this, x => x.Spawn, "spawn", new Dictionary<string, MinMax>());
         }
 
-        public void Trigger(IEntity owner, DestructibleSystem system)
+        public void Execute(IEntity owner, DestructibleSystem system)
         {
             foreach (var (entityId, minMax) in Spawn)
             {
