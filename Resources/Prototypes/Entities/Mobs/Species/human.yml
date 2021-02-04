@@ -164,9 +164,11 @@
       200: !type:DeadMobState {}
   - type: Destructible
     thresholds:
-      400:
-        behaviors:
-          - !type:GibBehavior { }
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 400
+      behaviors:
+      - !type:GibBehavior { }
   - type: HeatResistance
   - type: Appearance
     visuals:

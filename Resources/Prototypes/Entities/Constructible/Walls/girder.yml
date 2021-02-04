@@ -30,15 +30,17 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      50:
-        behaviors:
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            SteelSheet1:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 50
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SteelSheet1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: SnapGrid
     offset: Edge
   placement:
