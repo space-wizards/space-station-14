@@ -1,4 +1,3 @@
-#nullable enable
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Power;
