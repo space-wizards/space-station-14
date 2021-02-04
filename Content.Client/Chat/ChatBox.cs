@@ -507,7 +507,7 @@ namespace Content.Client.Chat
             }
         }
 
-        // TODO: this drag and drop stuff is somewhat duplicated from Robust but also modified
+        // TODO: this drag and drop stuff is somewhat duplicated from Robust BaseWindow but also modified
         [Flags]
         private enum DragMode : byte
         {

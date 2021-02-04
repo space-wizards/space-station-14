@@ -5,7 +5,6 @@ using Content.Client.GameObjects.Components.Observer;
 using Content.Client.Interfaces.Chat;
 using Content.Shared.Administration;
 using Content.Shared.Chat;
-using JetBrains.Annotations;
 using Robust.Client.Console;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.UserInterface;
@@ -212,7 +211,7 @@ namespace Content.Client.Chat
             }
 
             // Only ghosts and admins can send / see deadchat.
-            // TODO: Should spectators be able to see deadchat?
+            // TODO: Should spectators also be able to see deadchat?
             if (_adminMgr.HasFlag(AdminFlags.Admin) ||
                 (_playerManager?.LocalPlayer?.ControlledEntity?.HasComponent<GhostComponent>() ?? false))
             {
