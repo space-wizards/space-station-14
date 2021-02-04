@@ -60,13 +60,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             GridPower?.AddApcNet(this);
         }
 
-        protected override void OnRemoveNode(Node node)
-        {
-            base.OnRemoveNode(node);
-
-            RemoveFromGridPower();
-        }
-
         protected override void AfterRemake(IEnumerable<INodeGroup> newGroups)
         {
             base.AfterRemake(newGroups);
@@ -90,6 +83,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             {
                 apcNet.Powered = Powered;
             }
+
+            RemoveFromGridPower();
         }
 
         private void RemoveFromGridPower()
