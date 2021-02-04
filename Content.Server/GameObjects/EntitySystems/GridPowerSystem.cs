@@ -20,14 +20,14 @@ namespace Content.Server.GameObjects.EntitySystems
                 gridPower.Update(frameTime);
             }
         }
-
-        //TODO: what to do about null cases
+        
         public IGridPowerComponent? GetGridPower(GridId gridId)
         {
             if (!gridId.IsValid())
                 return null;
 
-            var grid = _mapManager.GetGrid(gridId);
+            if (!_mapManager.TryGetGrid(gridId, out var grid))
+                return null;
 
             if (!EntityManager.TryGetEntity(grid.GridEntityId, out var gridEnt))
                 return null;
