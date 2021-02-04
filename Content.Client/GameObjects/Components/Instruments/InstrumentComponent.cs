@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.EntitySystems;
-using Content.Shared;
 using Content.Shared.GameObjects.Components.Instruments;
 using Content.Shared.Physics;
 using Robust.Client.Audio.Midi;
@@ -11,14 +10,11 @@ using Robust.Shared.Audio.Midi;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Instruments
@@ -176,12 +172,15 @@ namespace Content.Client.GameObjects.Components.Instruments
 
                 _midiEventBuffer.Clear();
 
+                _renderer.PlayerTick = value;
+                var tick = _renderer.SequencerTick;
+
                 // We add a "all notes off" message.
                 for (byte i = 0; i < 16; i++)
                 {
                     _midiEventBuffer.Add(new MidiEvent()
                     {
-                        Tick = _renderer.SequencerTick, Type = 176,
+                        Tick = tick, Type = 176,
                         Control = 123, Velocity = 0, Channel = i,
                     });
                 }
@@ -189,11 +188,9 @@ namespace Content.Client.GameObjects.Components.Instruments
                 // Now we add a Reset All Controllers message.
                 _midiEventBuffer.Add(new MidiEvent()
                 {
-                    Tick = _renderer.SequencerTick, Type = 176,
+                    Tick = tick, Type = 176,
                     Control = 121, Value = 0,
                 });
-
-                _renderer.PlayerTick = value;
             }
         }
 
