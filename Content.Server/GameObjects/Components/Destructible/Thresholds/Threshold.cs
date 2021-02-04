@@ -1,5 +1,4 @@
 ﻿#nullable enable
-using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Destructible.Thresholds.Behaviors;
 using Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers;
@@ -15,6 +14,12 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds
     public class Threshold : IExposeData
     {
         private List<IBehavior> _behaviors = new();
+
+        /// <summary>
+        ///     Whether or not this threshold was triggered in the previous call to
+        ///     <see cref="Reached"/>.
+        /// </summary>
+        [ViewVariables] public bool OldTriggered { get; private set; }
 
         /// <summary>
         ///     Whether or not this threshold has already been triggered.
@@ -49,12 +54,29 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds
 
         public bool Reached(IDamageableComponent damageable, DestructibleSystem system)
         {
+            if (Trigger == null)
+            {
+                return false;
+            }
+
             if (Triggered && TriggersOnce)
             {
                 return false;
             }
 
-            return Trigger != null && Trigger.Reached(damageable, system);
+            if (OldTriggered)
+            {
+                OldTriggered = Trigger.Reached(damageable, system);
+                return false;
+            }
+
+            if (!Trigger.Reached(damageable, system))
+            {
+                return false;
+            }
+
+            OldTriggered = true;
+            return true;
         }
 
         /// <summary>

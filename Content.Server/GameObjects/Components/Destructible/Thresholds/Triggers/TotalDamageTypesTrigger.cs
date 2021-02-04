@@ -18,11 +18,6 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers
     public class TotalDamageTypesTrigger : ITrigger
     {
         /// <summary>
-        ///     The amount of damage at which this trigger was last reached.
-        /// </summary>
-        private Dictionary<DamageType, int> PreviousDamage { get; set; } = new();
-
-        /// <summary>
         ///     The amount of damage at which this threshold will trigger.
         ///     The damage requirements of all <see cref="DamageType"/> must be met.
         /// </summary>
@@ -33,11 +28,8 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers
             serializer.DataField(this, x => x.Damage, "damage", new Dictionary<DamageType, int>());
         }
 
-        private bool ReachedInternal(IDamageableComponent damageable)
+        public bool Reached(IDamageableComponent damageable, DestructibleSystem system)
         {
-            var anyIncreased = false;
-            var anyOldUnderThreshold = false;
-
             foreach (var (type, damageRequired) in Damage)
             {
                 if (!damageable.TryGetDamage(type, out var damageReceived))
@@ -49,38 +41,9 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers
                 {
                     return false;
                 }
-
-                if (!PreviousDamage.TryGetValue(type, out var previousDamage))
-                {
-                    previousDamage = 0;
-                }
-
-                if (damageReceived > previousDamage)
-                {
-                    anyIncreased = true;
-                }
-
-                if (previousDamage < damageRequired)
-                {
-                    anyOldUnderThreshold = true;
-                }
             }
 
-            return anyIncreased && anyOldUnderThreshold;
-        }
-
-        public bool Reached(IDamageableComponent damageable, DestructibleSystem system)
-        {
-            var reached = ReachedInternal(damageable);
-
-            PreviousDamage.Clear();
-
-            foreach (var (@class, damageReceived) in damageable.DamageTypes)
-            {
-                PreviousDamage[@class] = damageReceived;
-            }
-
-            return reached;
+            return true;
         }
     }
 }

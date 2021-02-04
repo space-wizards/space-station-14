@@ -34,14 +34,11 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers
             serializer.DataField(this, x => x.Damage, "damage", new Dictionary<DamageClass, int>());
         }
 
-        private bool ReachedInternal(IDamageableComponent damageable)
+        public bool Reached(IDamageableComponent damageable, DestructibleSystem system)
         {
-            var anyIncreased = false;
-            var anyOldUnderThreshold = false;
-
-            foreach (var (@class, damageRequired) in Damage)
+            foreach (var (type, damageRequired) in Damage)
             {
-                if (!damageable.TryGetDamage(@class, out var damageReceived))
+                if (!damageable.TryGetDamage(type, out var damageReceived))
                 {
                     return false;
                 }
@@ -50,38 +47,9 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers
                 {
                     return false;
                 }
-
-                if (!PreviousDamage.TryGetValue(@class, out var previousDamage))
-                {
-                    previousDamage = 0;
-                }
-
-                if (damageReceived > previousDamage)
-                {
-                    anyIncreased = true;
-                }
-
-                if (previousDamage < damageRequired)
-                {
-                    anyOldUnderThreshold = true;
-                }
             }
 
-            return anyIncreased && anyOldUnderThreshold;
-        }
-
-        public bool Reached(IDamageableComponent damageable, DestructibleSystem system)
-        {
-            var reached = ReachedInternal(damageable);
-
-            PreviousDamage.Clear();
-
-            foreach (var (@class, damageReceived) in damageable.DamageClasses)
-            {
-                PreviousDamage[@class] = damageReceived;
-            }
-
-            return reached;
+            return true;
         }
     }
 }

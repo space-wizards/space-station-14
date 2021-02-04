@@ -14,7 +14,7 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers
         ///     An instance of <see cref="DestructibleSystem"/> to pull
         ///     dependencies from, if any.
         /// </param>
-        /// <returns></returns>
+        /// <returns>true if this trigger has been reached, false otherwise.</returns>
         bool Reached(IDamageableComponent damageable, DestructibleSystem system);
     }
 }
