@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using Content.Client.GameObjects.Components.Suspicion;
@@ -92,7 +93,11 @@ namespace Content.Client.UserInterface.Suspicion
             }
             else
             {
-                var diff = _timing.CurTime - endTime.Value;
+                var diff = endTime.Value - _timing.CurTime;
+                if (diff < TimeSpan.Zero)
+                {
+                    diff = TimeSpan.Zero;
+                }
                 TimerLabel.Visible = true;
                 TimerLabel.Text = $"{diff:mm\\:ss}";
             }
