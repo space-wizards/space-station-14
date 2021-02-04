@@ -135,12 +135,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (!Owner.TryGetComponent(out SolutionContainerComponent contents))
                 return;
 
-            foreach (var reagentQuantity in contents.ReagentList.ToArray())
-            {
-                if (reagentQuantity.Quantity == ReagentUnit.Zero) continue;
-                var reagent = _prototypeManager.Index<ReagentPrototype>(reagentQuantity.ReagentId);
-                contents.TryRemoveReagent(reagentQuantity.ReagentId, reagent.ReactionEntity(collidedWith, ReactionMethod.Touch, reagentQuantity.Quantity * 0.125f));
-            }
+            contents.Solution.DoEntityReaction(collidedWith, ReactionMethod.Touch);
 
             // Check for collision with a impassable object (e.g. wall) and stop
             if (collidedWith.TryGetComponent(out IPhysicsComponent physics))

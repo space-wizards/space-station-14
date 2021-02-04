@@ -9,7 +9,7 @@ namespace Content.Server.GameObjects.EntitySystems
     {
         public override void Update(float frameTime)
         {
-            foreach (var component in ComponentManager.EntityQuery<RoguePointingArrowComponent>())
+            foreach (var component in ComponentManager.EntityQuery<RoguePointingArrowComponent>(true))
             {
                 component.Update(frameTime);
             }

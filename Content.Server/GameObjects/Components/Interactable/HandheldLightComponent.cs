@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.GUI;
@@ -38,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Interactable
     [RegisterComponent]
     internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IInteractUsing
     {
-        [ViewVariables(VVAccess.ReadWrite)] public float Wattage { get; set; } = 10f;
+        [ViewVariables(VVAccess.ReadWrite)] public float Wattage { get; set; }
         [ViewVariables] private PowerCellSlotComponent _cellSlot = default!;
         private PowerCellComponent? Cell => _cellSlot.Cell;
 
@@ -64,7 +64,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(this, x => x.Wattage, "wattage", 10f);
+            serializer.DataField(this, x => x.Wattage, "wattage", 3f);
             serializer.DataField(ref TurnOnSound, "turnOnSound", "/Audio/Items/flashlight_toggle.ogg");
             serializer.DataField(ref TurnOnFailSound, "turnOnFailSound", "/Audio/Machines/button.ogg");
             serializer.DataField(ref TurnOffSound, "turnOffSound", "/Audio/Items/flashlight_toggle.ogg");
@@ -78,6 +78,12 @@ namespace Content.Server.GameObjects.Components.Interactable
             _cellSlot = Owner.EnsureComponent<PowerCellSlotComponent>();
 
             Dirty();
+        }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+            Owner.EntityManager.EventBus.QueueEvent(EventSource.Local, new DeactivateHandheldLightMessage(this));
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
@@ -125,6 +131,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             SetState(false);
             Activated = false;
             UpdateLightAction();
+            Owner.EntityManager.EventBus.QueueEvent(EventSource.Local, new DeactivateHandheldLightMessage(this));
 
             if (makeNoise)
             {
@@ -163,6 +170,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             Activated = true;
             UpdateLightAction();
             SetState(true);
+            Owner.EntityManager.EventBus.QueueEvent(EventSource.Local, new ActivateHandheldLightMessage(this));
 
             if (TurnOnSound != null) EntitySystem.Get<AudioSystem>().PlayFromEntity(TurnOnSound, Owner);
             return true;
@@ -281,6 +289,26 @@ namespace Content.Server.GameObjects.Components.Interactable
             if (!args.Item.TryGetComponent<HandheldLightComponent>(out var lightComponent)) return false;
             if (lightComponent.Activated == args.ToggledOn) return false;
             return lightComponent.ToggleStatus(args.Performer);
+        }
+    }
+
+    internal sealed class ActivateHandheldLightMessage : EntitySystemMessage
+    {
+        public HandheldLightComponent Component { get; }
+
+        public ActivateHandheldLightMessage(HandheldLightComponent component)
+        {
+            Component = component;
+        }
+    }
+
+    internal sealed class DeactivateHandheldLightMessage : EntitySystemMessage
+    {
+        public HandheldLightComponent Component { get; }
+
+        public DeactivateHandheldLightMessage(HandheldLightComponent component)
+        {
+            Component = component;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Server.Explosions;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.Interfaces.Chemistry;

@@ -13,5 +13,7 @@ namespace Content.Client.Interfaces.Chat
         void SetChatBox(ChatBox chatBox);
 
         void RemoveSpeechBubble(EntityUid entityUid, SpeechBubble bubble);
+
+        void ToggleDeadChatButtonVisibility(bool visibility);
     }
 }

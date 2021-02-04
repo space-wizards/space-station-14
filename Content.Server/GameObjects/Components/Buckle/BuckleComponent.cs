@@ -33,6 +33,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Buckle
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedBuckleComponent))]
     public class BuckleComponent : SharedBuckleComponent, IInteractHand
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -44,11 +45,6 @@ namespace Content.Server.GameObjects.Components.Buckle
 
         private int _size;
 
-        /// <summary>
-        ///     The range from which this entity can buckle to a <see cref="StrapComponent"/>.
-        /// </summary>
-        [ViewVariables]
-        private float _range;
         /// <summary>
         ///     The amount of time that must pass for this entity to
         ///     be able to unbuckle after recently buckling.
@@ -184,7 +180,7 @@ namespace Content.Server.GameObjects.Components.Buckle
             var component = strap;
             bool Ignored(IEntity entity) => entity == Owner || entity == user || entity == component.Owner;
 
-            if (!Owner.InRangeUnobstructed(strap, _range, predicate: Ignored, popup: true))
+            if (!Owner.InRangeUnobstructed(strap, Range, predicate: Ignored, popup: true))
             {
                 return false;
             }
@@ -319,7 +315,7 @@ namespace Content.Server.GameObjects.Components.Buckle
                     return false;
                 }
 
-                if (!user.InRangeUnobstructed(oldBuckledTo, _range, popup: true))
+                if (!user.InRangeUnobstructed(oldBuckledTo, Range, popup: true))
                 {
                     return false;
                 }
@@ -385,7 +381,6 @@ namespace Content.Server.GameObjects.Components.Buckle
             base.ExposeData(serializer);
 
             serializer.DataField(ref _size, "size", 100);
-            serializer.DataField(ref _range, "range", SharedInteractionSystem.InteractionRange / 1.4f);
 
             var seconds = 0.25f;
             serializer.DataField(ref seconds, "cooldown", 0.25f);

@@ -7,6 +7,7 @@
     {
         Error,
         HumanScream,
+        Disarm,
         DebugInstant,
         DebugToggle,
         DebugTargetPoint,
@@ -23,6 +24,7 @@
         Error,
         ToggleInternals,
         ToggleLight,
+        ToggleMagboots,
         DebugInstant,
         DebugToggle,
         DebugTargetPoint,

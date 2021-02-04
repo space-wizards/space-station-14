@@ -148,41 +148,41 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             return new HandcuffedComponentState(Broken ? BrokenState : string.Empty);
         }
 
-        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (eventArgs.Target == null || !ActionBlockerSystem.CanUse(eventArgs.User) || !eventArgs.Target.TryGetComponent<CuffableComponent>(out var cuffed))
             {
-                return;
+                return false;
             }
 
             if (eventArgs.Target == eventArgs.User)
             {
                 eventArgs.User.PopupMessage(Loc.GetString("You can't cuff yourself!"));
-                return;
+                return true;
             }
 
             if (Broken)
             {
                 eventArgs.User.PopupMessage(Loc.GetString("The cuffs are broken!"));
-                return;
+                return true;
             }
 
             if (!eventArgs.Target.TryGetComponent<HandsComponent>(out var hands))
             {
                 eventArgs.User.PopupMessage(Loc.GetString("{0:theName} has no hands!", eventArgs.Target));
-                return;
+                return true;
             }
 
             if (cuffed.CuffedHandCount == hands.Count)
             {
                 eventArgs.User.PopupMessage(Loc.GetString("{0:theName} has no free hands to handcuff!", eventArgs.Target));
-                return;
+                return true;
             }
 
             if (!eventArgs.InRangeUnobstructed(_interactRange, ignoreInsideBlocker: true))
             {
                 eventArgs.User.PopupMessage(Loc.GetString("You are too far away to use the cuffs!"));
-                return;
+                return true;
             }
 
             eventArgs.User.PopupMessage(Loc.GetString("You start cuffing {0:theName}.", eventArgs.Target));
@@ -190,6 +190,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             _audioSystem.PlayFromEntity(StartCuffSound, Owner);
 
             TryUpdateCuff(eventArgs.User, eventArgs.Target, cuffed);
+            return true;
         }
 
         /// <summary>

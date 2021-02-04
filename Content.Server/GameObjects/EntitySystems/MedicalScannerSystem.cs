@@ -10,7 +10,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var comp in ComponentManager.EntityQuery<MedicalScannerComponent>())
+            foreach (var comp in ComponentManager.EntityQuery<MedicalScannerComponent>(true))
             {
                 comp.Update(frameTime);
             }

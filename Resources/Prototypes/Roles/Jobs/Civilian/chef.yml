@@ -22,4 +22,5 @@
     ears: ClothingHeadsetService
     outerclothing: ClothingOuterApronChef
   innerclothingskirt: ClothingUniformJumpskirtChef
-
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled

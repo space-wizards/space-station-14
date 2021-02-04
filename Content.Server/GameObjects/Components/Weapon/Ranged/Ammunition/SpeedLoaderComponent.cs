@@ -146,11 +146,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             return entity;
         }
 
-        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (eventArgs.Target == null)
             {
-                return;
+                return false;
             }
 
             // This area is dirty but not sure of an easier way to do it besides add an interface or somethin
@@ -203,6 +203,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             {
                 UpdateAppearance();
             }
+
+            return true;
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)

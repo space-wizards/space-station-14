@@ -9,7 +9,6 @@
   "states": [
     {
       "name": "holding",
-      "directions": 1,
       "delays": [
         [
           0.1,
@@ -65,7 +64,6 @@
     },
     {
       "name": "holding-unlit",
-      "directions": 1,
       "delays": [
         [
           0.1,
@@ -82,16 +80,91 @@
       "directions": 4
     },
     {
-      "name": "holding-broken",
-      "directions": 1
+      "name": "holding-broken"
     },
     {
-      "name": "holding-inhand-left",
-      "directions": 4
+      "name": "inhand-left",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
     },
     {
-      "name": "holding-inhand-right",
-      "directions": 4
+      "name": "inhand-right",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
     }
   ]
 }

@@ -10,7 +10,7 @@ namespace Content.Server.GameObjects.EntitySystems
     {
         public void PingListeners(IEntity source, string message)
         {
-            foreach (var listener in ComponentManager.EntityQuery<IListen>())
+            foreach (var listener in ComponentManager.EntityQuery<IListen>(true))
             {
                 // TODO: Map Position distance
                 if (listener.CanListen(message, source))

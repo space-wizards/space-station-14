@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,6 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Utility;
 using Content.Shared.Arcade;
 using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -16,6 +15,7 @@ using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -41,6 +41,17 @@ namespace Content.Server.GameObjects.Components.Arcade
 
         private IPlayerSession? _player;
         private readonly List<IPlayerSession> _spectators = new();
+
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+            switch (message)
+            {
+                case PowerChangedMessage powerChanged:
+                    OnPowerStateChanged(powerChanged);
+                    break;
+            }
+        }
 
         public void Activate(ActivateEventArgs eventArgs)
         {
@@ -108,16 +119,12 @@ namespace Content.Server.GameObjects.Components.Arcade
             if (UserInterface != null)
             {
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
-            }
-
-            if (_powerReceiverComponent != null)
-            {
-                _powerReceiverComponent.OnPowerStateChanged += OnPowerStateChanged;
+                UserInterface.OnClosed += UnRegisterPlayerSession;
             }
             _game = new BlockGame(this);
         }
 
-        private void OnPowerStateChanged(object? sender, PowerStateEventArgs e)
+        private void OnPowerStateChanged(PowerChangedMessage e)
         {
             if (e.Powered) return;
 
@@ -130,9 +137,6 @@ namespace Content.Server.GameObjects.Components.Arcade
         {
             switch (obj.Message)
             {
-                case BlockGameMessages.BlockGameUserUnregisterMessage unregisterMessage:
-                    UnRegisterPlayerSession(obj.Session);
-                    break;
                 case BlockGameMessages.BlockGamePlayerActionMessage playerActionMessage:
                     if (obj.Session != _player) break;
 

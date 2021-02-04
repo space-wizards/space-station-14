@@ -16,6 +16,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -43,7 +44,6 @@ namespace Content.Server.GameObjects.Components.Singularity
 
         private CancellationTokenSource? _timerCancel;
 
-        private PhysicsComponent _collidableComponent = default!;
         private PowerConsumerComponent _powerConsumer = default!;
 
         // whether the power switch is in "on"
@@ -79,19 +79,11 @@ namespace Content.Server.GameObjects.Components.Singularity
         {
             base.Initialize();
 
-            if (!Owner.TryGetComponent(out _collidableComponent!))
-            {
-                Logger.Error($"EmitterComponent {Owner} created with no CollidableComponent");
-                return;
-            }
-
             if (!Owner.TryGetComponent(out _powerConsumer!))
             {
                 Logger.Error($"EmitterComponent {Owner} created with no PowerConsumerComponent");
                 return;
             }
-
-            _collidableComponent.AnchoredChanged += OnAnchoredChanged;
             _powerConsumer.OnReceivedPowerChanged += OnReceivedPowerChanged;
         }
 
@@ -112,9 +104,20 @@ namespace Content.Server.GameObjects.Components.Singularity
             }
         }
 
-        private void OnAnchoredChanged()
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
-            if (_collidableComponent.Anchored)
+            base.HandleMessage(message, component);
+            switch (message)
+            {
+                case AnchoredChangedMessage anchoredChanged:
+                    OnAnchoredChanged(anchoredChanged);
+                    break;
+            }
+        }
+
+        private void OnAnchoredChanged(AnchoredChangedMessage anchoredChanged)
+        {
+            if (anchoredChanged.Anchored)
                 Owner.SnapToGrid();
         }
 

@@ -1,7 +1,8 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Threading.Tasks;
 using Content.Server.Atmos;
+using Content.Server.Explosions;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems;
@@ -10,12 +11,15 @@ using Content.Server.Interfaces.GameObjects;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -28,7 +32,8 @@ namespace Content.Server.GameObjects.Components.Interactable
     [RegisterComponent]
     [ComponentReference(typeof(ToolComponent))]
     [ComponentReference(typeof(IToolComponent))]
-    public class WelderComponent : ToolComponent, IExamine, IUse, ISuicideAct, ISolutionChange
+    [ComponentReference(typeof(IHotItem))]
+    public class WelderComponent : ToolComponent, IExamine, IUse, ISuicideAct, ISolutionChange, IHotItem, IAfterInteract
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
@@ -71,6 +76,11 @@ namespace Content.Server.GameObjects.Components.Interactable
                 _welderLit = value;
                 Dirty();
             }
+        }
+
+        bool IHotItem.IsCurrentlyHot()
+        {
+            return WelderLit;
         }
 
         public override void Initialize()
@@ -284,6 +294,41 @@ namespace Content.Server.GameObjects.Components.Interactable
         public void SolutionChanged(SolutionChangeEventArgs eventArgs)
         {
             Dirty();
+        }
+
+
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        {
+            if (eventArgs.Target == null || !eventArgs.CanReach)
+            {
+                return false;
+            }
+
+            if (eventArgs.Target.TryGetComponent(out ReagentTankComponent? tank)
+                && tank.TankType == ReagentTankType.Fuel
+                && eventArgs.Target.TryGetComponent(out ISolutionInteractionsComponent? targetSolution)
+                && targetSolution.CanDrain
+                && _solutionComponent != null)
+            {
+                if (WelderLit)
+                {
+                    // Oh no no
+                    eventArgs.Target.SpawnExplosion();
+                    return true;
+                }
+
+                var trans = ReagentUnit.Min(_solutionComponent.EmptyVolume, targetSolution.DrainAvailable);
+                if (trans > 0)
+                {
+                    var drained = targetSolution.Drain(trans);
+                    _solutionComponent.TryAddSolution(drained);
+
+                    EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/refill.ogg", Owner);
+                    eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("Welder refueled"));
+                }
+            }
+
+            return true;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+#nullable enable
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
@@ -29,7 +30,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         private INodeGroup _nodeGroup = BaseNodeGroup.NullGroup;
 
         [ViewVariables]
-        public IEntity Owner { get; private set; }
+        public IEntity Owner { get; private set; } = default!;
 
         [ViewVariables]
         private bool _needsGroup = true;
@@ -46,8 +47,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         /// </summary>
         private bool _deleting = false;
 
-        private INodeGroupFactory _nodeGroupFactory;
-
         public virtual void ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.NodeGroupID, "nodeGroupID", NodeGroupID.Default);
@@ -56,7 +55,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         public virtual void Initialize(IEntity owner)
         {
             Owner = owner;
-            _nodeGroupFactory = IoCManager.Resolve<INodeGroupFactory>();
         }
 
         public void OnContainerStartup()
@@ -66,17 +64,29 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             if (Owner.TryGetComponent<IPhysicsComponent>(out var physics))
             {
                 AnchorUpdate();
-                physics.AnchoredChanged += AnchorUpdate;
+            }
+        }
+
+        public void AnchorUpdate()
+        {
+            if (Anchored)
+            {
+                if (_needsGroup)
+                {
+                    TryAssignGroupIfNeeded();
+                    CombineGroupWithReachable();
+                }
+            }
+            else
+            {
+                NodeGroup.RemoveNode(this);
+                ClearNodeGroup();
             }
         }
 
         public void OnContainerRemove()
         {
             _deleting = true;
-            if (Owner.TryGetComponent<IPhysicsComponent>(out var physics))
-            {
-                physics.AnchoredChanged -= AnchorUpdate;
-            }
             NodeGroup.RemoveNode(this);
         }
 
@@ -151,24 +161,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         private INodeGroup MakeNewGroup()
         {
-            return _nodeGroupFactory.MakeNodeGroup(this);
-        }
-
-        private void AnchorUpdate()
-        {
-            if (Anchored)
-            {
-                if (_needsGroup)
-                {
-                    TryAssignGroupIfNeeded();
-                    CombineGroupWithReachable();
-                }
-            }
-            else
-            {
-                NodeGroup.RemoveNode(this);
-                ClearNodeGroup();
-            }
+            return IoCManager.Resolve<INodeGroupFactory>().MakeNodeGroup(this);
         }
     }
 }

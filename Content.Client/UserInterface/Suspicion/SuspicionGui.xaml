@@ -1,0 +1,8 @@
+﻿<ui:Control xmlns:uic="clr-namespace:Robust.Client.UserInterface.Controls;assembly=Robust.Client"
+            xmlns:ui="clr-namespace:Robust.Client.UserInterface;assembly=Robust.Client">
+    <uic:VBoxContainer SeparationOverride="0">
+        <uic:Button Name="RoleButton">
+            <uic:Label Name="TimerLabel" SizeFlagsHorizontal="ShrinkEnd" SizeFlagsVertical="ShrinkEnd" />
+        </uic:Button>
+    </uic:VBoxContainer>
+</ui:Control>

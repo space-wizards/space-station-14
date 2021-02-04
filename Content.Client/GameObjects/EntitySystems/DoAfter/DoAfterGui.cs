@@ -149,6 +149,16 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
             if (doAfters.Count == 0)
                 return;
 
+            if (_eyeManager.CurrentMap != AttachedEntity.Transform.MapID)
+            {
+                Visible = false;
+                return;
+            }
+            else
+            {
+                Visible = true;
+            }
+
             // Set position ready for 2nd+ frames.
             var screenCoordinates = _eyeManager.CoordinatesToScreen(AttachedEntity.Transform.Coordinates);
             _playerPosition = new ScreenCoordinates(screenCoordinates.X / UIScale, screenCoordinates.Y / UIScale);

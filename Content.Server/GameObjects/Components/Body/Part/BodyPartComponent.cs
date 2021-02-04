@@ -11,6 +11,7 @@ using Content.Shared.GameObjects.Components.Body.Surgery;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -57,6 +58,7 @@ namespace Content.Server.GameObjects.Components.Body.Part
             base.OnRemoveMechanism(mechanism);
 
             _mechanismContainer.Remove(mechanism.Owner);
+            mechanism.Owner.RandomOffset(0.25f);
         }
 
         public override void Initialize()
@@ -97,12 +99,12 @@ namespace Content.Server.GameObjects.Components.Body.Part
             }
         }
 
-        public async Task AfterInteract(AfterInteractEventArgs eventArgs)
+        public async Task<bool> AfterInteract(AfterInteractEventArgs eventArgs)
         {
             // TODO BODY
             if (eventArgs.Target == null)
             {
-                return;
+                return false;
             }
 
             CloseAllSurgeryUIs();
@@ -114,6 +116,8 @@ namespace Content.Server.GameObjects.Components.Body.Part
             {
                 SendSlots(eventArgs, body);
             }
+
+            return true;
         }
 
         private void SendSlots(AfterInteractEventArgs eventArgs, IBody body)

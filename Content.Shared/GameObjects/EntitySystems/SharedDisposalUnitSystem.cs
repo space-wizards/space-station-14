@@ -9,12 +9,12 @@ namespace Content.Shared.GameObjects.EntitySystems
     {
         public override void Update(float frameTime)
         {
-            foreach (var comp in ComponentManager.EntityQuery<SharedDisposalUnitComponent>())
+            foreach (var comp in ComponentManager.EntityQuery<SharedDisposalUnitComponent>(true))
             {
                 comp.Update(frameTime);
             }
 
-            foreach (var comp in ComponentManager.EntityQuery<SharedDisposalMailingUnitComponent>())
+            foreach (var comp in ComponentManager.EntityQuery<SharedDisposalMailingUnitComponent>(true))
             {
                 comp.Update(frameTime);
             }

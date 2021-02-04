@@ -18,7 +18,7 @@ using Robust.Shared.Localization.Macros;
 namespace Content.Tests.Server.Preferences
 {
     [TestFixture]
-    public class ServerDbSqliteTests : RobustUnitTest
+    public class ServerDbSqliteTests : ContentUnitTest
     {
         private static HumanoidCharacterProfile CharlieCharlieson()
         {
@@ -36,6 +36,7 @@ namespace Content.Tests.Server.Preferences
                     Color.Beige
                 ),
                 ClothingPreference.Jumpskirt,
+                BackpackPreference.Backpack,
                 new Dictionary<string, JobPriority>
                 {
                     {SharedGameTicker.OverflowJob, JobPriority.High}

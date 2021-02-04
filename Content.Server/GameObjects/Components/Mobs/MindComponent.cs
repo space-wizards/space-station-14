@@ -1,6 +1,8 @@
 ﻿#nullable enable
+using Content.Server.Commands.Observer;
 using Content.Server.GameObjects.Components.Medical;
 using Content.Server.GameObjects.Components.Observer;
+using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs;
 using Content.Server.Utility;
@@ -17,6 +19,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timers;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -28,7 +31,6 @@ namespace Content.Server.GameObjects.Components.Mobs
     [RegisterComponent]
     public class MindComponent : Component, IExamine
     {
-        private bool _showExamineInfo;
 
         /// <inheritdoc />
         public override string Name => "Mind";
@@ -49,53 +51,13 @@ namespace Content.Server.GameObjects.Components.Mobs
         ///     Whether examining should show information about the mind or not.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool ShowExamineInfo
-        {
-            get => _showExamineInfo;
-            set => _showExamineInfo = value;
-        }
+        public bool ShowExamineInfo { get; set; }
 
-        [ViewVariables]
-        private BoundUserInterface? UserInterface =>
-            Owner.GetUIOrNull(SharedAcceptCloningComponent.AcceptCloningUiKey.Key);
-
-
-        public override void Initialize()
-        {
-            base.Initialize();
-            Owner.EntityManager.EventBus.SubscribeEvent<CloningPodComponent.CloningStartedMessage>(
-                EventSource.Local, this,
-                HandleCloningStartedMessage);
-
-            if (UserInterface != null)
-            {
-                UserInterface.OnReceiveMessage += OnUiAcceptCloningMessage;
-            }
-        }
-
-        private void HandleCloningStartedMessage(CloningPodComponent.CloningStartedMessage ev)
-        {
-            if (ev.CapturedMind == Mind)
-            {
-                UserInterface?.Open(Mind.Session);
-            }
-        }
-
-        private void OnUiAcceptCloningMessage(ServerBoundUserInterfaceMessage obj)
-        {
-            if (obj.Message is not SharedAcceptCloningComponent.UiButtonPressedMessage) return;
-            if (Mind != null)
-            {
-                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new GhostComponent.GhostReturnMessage(Mind));
-            }
-        }
-
-        public override void OnRemove()
-        {
-            base.OnRemove();
-            Owner.EntityManager.EventBus.UnsubscribeEvent<CloningPodComponent.CloningStartedMessage>(EventSource.Local, this);
-            if (UserInterface != null) UserInterface.OnReceiveMessage -= OnUiAcceptCloningMessage;
-        }
+        /// <summary>
+        ///     Whether the mind will be put on a ghost after this component is shutdown.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool GhostOnShutdown { get; set; }
 
         /// <summary>
         ///     Don't call this unless you know what the hell you're doing.
@@ -121,6 +83,10 @@ namespace Content.Server.GameObjects.Components.Mobs
         {
             base.Shutdown();
 
+            // Let's not create ghosts if not in the middle of the round.
+            if (IoCManager.Resolve<IGameTicker>().RunLevel != GameRunLevel.InRound)
+                return;
+
             if (HasMind)
             {
                 var visiting = Mind?.VisitingEntity;
@@ -133,10 +99,11 @@ namespace Content.Server.GameObjects.Components.Mobs
 
                     Mind!.TransferTo(visiting);
                 }
-                else
+                else if(GhostOnShutdown)
                 {
                     var spawnPosition = Owner.Transform.Coordinates;
-                    Owner.SpawnTimer(0, () =>
+                    // Use a regular timer here because the entity has probably been deleted.
+                    Timer.Spawn(0, () =>
                     {
                         // Async this so that we don't throw if the grid we're on is being deleted.
                         var mapMan = IoCManager.Resolve<IMapManager>();
@@ -164,7 +131,8 @@ namespace Content.Server.GameObjects.Components.Mobs
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _showExamineInfo, "show_examine_info", false);
+            serializer.DataField(this, x => x.ShowExamineInfo, "showExamineInfo", false);
+            serializer.DataField(this, x => x.GhostOnShutdown, "ghostOnShutdown", true);
         }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)

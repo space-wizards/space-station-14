@@ -6,208 +6,157 @@
   },
   "states": [
     {
-      "name": "abductor",
-      "directions": 1
+      "name": "abductor"
     },
     {
-      "name": "abductor_door",
-      "directions": 1
+      "name": "abductor_door"
     },
     {
-      "name": "abductor_open",
-      "directions": 1
+      "name": "abductor_open"
     },
     {
-      "name": "agentbox",
-      "directions": 1
+      "name": "agentbox"
     },
     {
-      "name": "alien",
-      "directions": 1
+      "name": "alien"
     },
     {
-      "name": "alien_door",
-      "directions": 1
+      "name": "alien_door"
     },
     {
-      "name": "alien_open",
-      "directions": 1
+      "name": "alien_open"
     },
     {
-      "name": "armory",
-      "directions": 1
+      "name": "armory"
     },
     {
-      "name": "armory_door",
-      "directions": 1
+      "name": "armory_door"
     },
     {
-      "name": "armory_open",
-      "directions": 1
+      "name": "armory_open"
     },
     {
-      "name": "atmos",
-      "directions": 1
+      "name": "atmos"
     },
     {
-      "name": "atmos_door",
-      "directions": 1
+      "name": "atmos_door"
     },
     {
-      "name": "atmos_open",
-      "directions": 1
+      "name": "atmos_open"
     },
     {
-      "name": "atmos_wardrobe_door",
-      "directions": 1
+      "name": "atmos_wardrobe_door"
     },
     {
-      "name": "bio",
-      "directions": 1
+      "name": "bio"
     },
     {
-      "name": "bio_door",
-      "directions": 1
+      "name": "bio_door"
     },
     {
-      "name": "bio_jan",
-      "directions": 1
+      "name": "bio_jan"
     },
     {
-      "name": "bio_jan_door",
-      "directions": 1
+      "name": "bio_jan_door"
     },
     {
-      "name": "bio_jan_open",
-      "directions": 1
+      "name": "bio_jan_open"
     },
     {
-      "name": "bio_open",
-      "directions": 1
+      "name": "bio_open"
     },
     {
-      "name": "bio_sec",
-      "directions": 1
+      "name": "bio_sec"
     },
     {
-      "name": "bio_sec_door",
-      "directions": 1
+      "name": "bio_sec_door"
     },
     {
-      "name": "bio_sec_open",
-      "directions": 1
+      "name": "bio_sec_open"
     },
     {
-      "name": "bio_viro",
-      "directions": 1
+      "name": "bio_viro"
     },
     {
-      "name": "bio_viro_door",
-      "directions": 1
+      "name": "bio_viro_door"
     },
     {
-      "name": "bio_viro_open",
-      "directions": 1
+      "name": "bio_viro_open"
     },
     {
-      "name": "black_door",
-      "directions": 1
+      "name": "black_door"
     },
     {
-      "name": "blue_door",
-      "directions": 1
+      "name": "blue_door"
     },
     {
-      "name": "bomb",
-      "directions": 1
+      "name": "bomb"
     },
     {
-      "name": "bomb_door",
-      "directions": 1
+      "name": "bomb_door"
     },
     {
-      "name": "bomb_open",
-      "directions": 1
+      "name": "bomb_open"
     },
     {
-      "name": "cabinet",
-      "directions": 1
+      "name": "cabinet"
     },
     {
-      "name": "cabinet_door",
-      "directions": 1
+      "name": "cabinet_door"
     },
     {
-      "name": "cabinet_open",
-      "directions": 1
+      "name": "cabinet_open"
     },
     {
-      "name": "cap",
-      "directions": 1
+      "name": "cap"
     },
     {
-      "name": "cap_door",
-      "directions": 1
+      "name": "cap_door"
     },
     {
-      "name": "cap_open",
-      "directions": 1
+      "name": "cap_open"
     },
     {
-      "name": "cardboard",
-      "directions": 1
+      "name": "cardboard"
     },
     {
-      "name": "cardboard_open",
-      "directions": 1
+      "name": "cardboard_open"
     },
     {
-      "name": "cardboard_special",
-      "directions": 1
+      "name": "cardboard_special"
     },
     {
-      "name": "cargo",
-      "directions": 1
+      "name": "cargo"
     },
     {
-      "name": "cargo_door",
-      "directions": 1
+      "name": "cargo_door"
     },
     {
-      "name": "cargo_open",
-      "directions": 1
+      "name": "cargo_open"
     },
     {
-      "name": "ce",
-      "directions": 1
+      "name": "ce"
     },
     {
-      "name": "ce_door",
-      "directions": 1
+      "name": "ce_door"
     },
     {
-      "name": "ce_open",
-      "directions": 1
+      "name": "ce_open"
     },
     {
-      "name": "chemical_door",
-      "directions": 1
+      "name": "chemical_door"
     },
     {
-      "name": "cmo",
-      "directions": 1
+      "name": "cmo"
     },
     {
-      "name": "cmo_door",
-      "directions": 1
+      "name": "cmo_door"
     },
     {
-      "name": "cmo_open",
-      "directions": 1
+      "name": "cmo_open"
     },
     {
       "name": "cursed",
-      "directions": 1,
       "delays": [
         [
           0.1,
@@ -222,7 +171,6 @@
     },
     {
       "name": "cursed_door",
-      "directions": 1,
       "delays": [
         [
           0.1,
@@ -236,12 +184,10 @@
       ]
     },
     {
-      "name": "cursed_open",
-      "directions": 1
+      "name": "cursed_open"
     },
     {
       "name": "cursed_whole",
-      "directions": 1,
       "delays": [
         [
           0.1,
@@ -256,7 +202,6 @@
     },
     {
       "name": "decursed",
-      "directions": 1,
       "delays": [
         [
           0.1,
@@ -271,7 +216,6 @@
     },
     {
       "name": "decursed_door",
-      "directions": 1,
       "delays": [
         [
           0.1,
@@ -285,300 +229,226 @@
       ]
     },
     {
-      "name": "decursed_open",
-      "directions": 1
+      "name": "decursed_open"
     },
     {
-      "name": "ecase",
-      "directions": 1
+      "name": "ecase"
     },
     {
-      "name": "ecase_door",
-      "directions": 1
+      "name": "ecase_door"
     },
     {
-      "name": "ecase_open",
-      "directions": 1
+      "name": "ecase_open"
     },
     {
-      "name": "egun",
-      "directions": 1
+      "name": "egun"
     },
     {
-      "name": "emergency",
-      "directions": 1
+      "name": "emergency"
     },
     {
-      "name": "emergency_door",
-      "directions": 1
+      "name": "emergency_door"
     },
     {
-      "name": "emergency_open",
-      "directions": 1
+      "name": "emergency_open"
     },
     {
-      "name": "eng",
-      "directions": 1
+      "name": "eng"
     },
     {
-      "name": "eng_elec_door",
-      "directions": 1
+      "name": "eng_elec_door"
     },
     {
-      "name": "eng_open",
-      "directions": 1
+      "name": "eng_open"
     },
     {
-      "name": "eng_rad_door",
-      "directions": 1
+      "name": "eng_rad_door"
     },
     {
-      "name": "eng_secure",
-      "directions": 1
+      "name": "eng_secure"
     },
     {
-      "name": "eng_secure_door",
-      "directions": 1
+      "name": "eng_secure_door"
     },
     {
-      "name": "eng_secure_open",
-      "directions": 1
+      "name": "eng_secure_open"
     },
     {
-      "name": "eng_tool_door",
-      "directions": 1
+      "name": "eng_tool_door"
     },
     {
-      "name": "eng_weld_door",
-      "directions": 1
+      "name": "eng_weld_door"
     },
     {
-      "name": "fire",
-      "directions": 1
+      "name": "fire"
     },
     {
-      "name": "fire_door",
-      "directions": 1
+      "name": "fire_door"
     },
     {
-      "name": "fire_open",
-      "directions": 1
+      "name": "fire_open"
     },
     {
-      "name": "freezer",
-      "directions": 1
+      "name": "freezer"
     },
     {
-      "name": "freezer_door",
-      "directions": 1
+      "name": "freezer_door"
     },
     {
-      "name": "freezer_open",
-      "directions": 1
+      "name": "freezer_open"
     },
     {
-      "name": "generic",
-      "directions": 1
+      "name": "generic"
     },
     {
-      "name": "generic_door",
-      "directions": 1
+      "name": "generic_door"
     },
     {
-      "name": "generic_open",
-      "directions": 1
+      "name": "generic_open"
     },
     {
-      "name": "green_door",
-      "directions": 1
+      "name": "green_door"
     },
     {
-      "name": "grey_door",
-      "directions": 1
+      "name": "grey_door"
     },
     {
-      "name": "hop",
-      "directions": 1
+      "name": "hop"
     },
     {
-      "name": "hop_door",
-      "directions": 1
+      "name": "hop_door"
     },
     {
-      "name": "hop_open",
-      "directions": 1
+      "name": "hop_open"
     },
     {
-      "name": "hos",
-      "directions": 1
+      "name": "hos"
     },
     {
-      "name": "hos_door",
-      "directions": 1
+      "name": "hos_door"
     },
     {
-      "name": "hos_open",
-      "directions": 1
+      "name": "hos_open"
     },
     {
-      "name": "hydro",
-      "directions": 1
+      "name": "hydro"
     },
     {
-      "name": "hydro_door",
-      "directions": 1
+      "name": "hydro_door"
     },
     {
-      "name": "hydro_open",
-      "directions": 1
+      "name": "hydro_open"
     },
     {
-      "name": "locked",
-      "directions": 1
+      "name": "locked"
     },
     {
-      "name": "med",
-      "directions": 1
+      "name": "med"
     },
     {
-      "name": "med_door",
-      "directions": 1
+      "name": "med_door"
     },
     {
-      "name": "med_open",
-      "directions": 1
+      "name": "med_open"
     },
     {
-      "name": "med_secure",
-      "directions": 1
+      "name": "med_secure"
     },
     {
-      "name": "med_secure_door",
-      "directions": 1
+      "name": "med_secure_door"
     },
     {
-      "name": "med_secure_open",
-      "directions": 1
+      "name": "med_secure_open"
     },
     {
-      "name": "metalbox",
-      "directions": 1
+      "name": "metalbox"
     },
     {
-      "name": "metalbox_open",
-      "directions": 1
+      "name": "metalbox_open"
     },
     {
-      "name": "mining",
-      "directions": 1
+      "name": "mining"
     },
     {
-      "name": "mining_door",
-      "directions": 1
+      "name": "mining_door"
     },
     {
-      "name": "mining_open",
-      "directions": 1
+      "name": "mining_open"
     },
     {
-      "name": "mixed_door",
-      "directions": 1
+      "name": "mixed_door"
     },
     {
-      "name": "oldcloset",
-      "directions": 1
+      "name": "oldcloset"
     },
     {
-      "name": "orange_door",
-      "directions": 1
+      "name": "orange_door"
     },
     {
-      "name": "pink_door",
-      "directions": 1
+      "name": "pink_door"
     },
     {
-      "name": "qm",
-      "directions": 1
+      "name": "qm"
     },
     {
-      "name": "qm_door",
-      "directions": 1
+      "name": "qm_door"
     },
     {
-      "name": "qm_open",
-      "directions": 1
+      "name": "qm_open"
     },
     {
-      "name": "rd",
-      "directions": 1
+      "name": "rd"
     },
     {
-      "name": "rd_door",
-      "directions": 1
+      "name": "rd_door"
     },
     {
-      "name": "rd_open",
-      "directions": 1
+      "name": "rd_open"
     },
     {
-      "name": "red_door",
-      "directions": 1
+      "name": "red_door"
     },
     {
-      "name": "science",
-      "directions": 1
+      "name": "science"
     },
     {
-      "name": "science_door",
-      "directions": 1
+      "name": "science_door"
     },
     {
-      "name": "science_open",
-      "directions": 1
+      "name": "science_open"
     },
     {
-      "name": "sec",
-      "directions": 1
+      "name": "sec"
     },
     {
-      "name": "sec_door",
-      "directions": 1
+      "name": "sec_door"
     },
     {
-      "name": "sec_open",
-      "directions": 1
+      "name": "sec_open"
     },
     {
-      "name": "secure",
-      "directions": 1
+      "name": "secure"
     },
     {
-      "name": "secure_door",
-      "directions": 1
+      "name": "secure_door"
     },
     {
-      "name": "secure_open",
-      "directions": 1
+      "name": "secure_open"
     },
     {
-      "name": "shotgun",
-      "directions": 1
+      "name": "shotgun"
     },
     {
-      "name": "shotguncase",
-      "directions": 1
+      "name": "shotguncase"
     },
     {
-      "name": "shotguncase_door",
-      "directions": 1
+      "name": "shotguncase_door"
     },
     {
-      "name": "shotguncase_open",
-      "directions": 1
+      "name": "shotguncase_open"
     },
     {
       "name": "sparking",
-      "directions": 1,
       "delays": [
         [
           0.1,
@@ -589,56 +459,43 @@
       ]
     },
     {
-      "name": "syndicate",
-      "directions": 1
+      "name": "syndicate"
     },
     {
-      "name": "syndicate_door",
-      "directions": 1
+      "name": "syndicate_door"
     },
     {
-      "name": "syndicate_open",
-      "directions": 1
+      "name": "syndicate_open"
     },
     {
-      "name": "tac",
-      "directions": 1
+      "name": "tac"
     },
     {
-      "name": "tac_door",
-      "directions": 1
+      "name": "tac_door"
     },
     {
-      "name": "tac_open",
-      "directions": 1
+      "name": "tac_open"
     },
     {
-      "name": "unlocked",
-      "directions": 1
+      "name": "unlocked"
     },
     {
-      "name": "warden",
-      "directions": 1
+      "name": "warden"
     },
     {
-      "name": "warden_door",
-      "directions": 1
+      "name": "warden_door"
     },
     {
-      "name": "warden_open",
-      "directions": 1
+      "name": "warden_open"
     },
     {
-      "name": "welded",
-      "directions": 1
+      "name": "welded"
     },
     {
-      "name": "white_door",
-      "directions": 1
+      "name": "white_door"
     },
     {
-      "name": "yellow_door",
-      "directions": 1
+      "name": "yellow_door"
     }
   ]
 }

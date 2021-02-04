@@ -1,6 +1,6 @@
 using Content.Client.GameObjects.EntitySystems.AI;
 using JetBrains.Annotations;
-using Robust.Client.Interfaces.Console;
+using Robust.Shared.Console;
 using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Client.Commands
@@ -16,12 +16,13 @@ namespace Content.Client.Commands
         public string Description => "Handles all tooltip debugging above AI mobs";
         public string Help => "debugai [hide/paths/thonk]";
 
-        public bool Execute(IDebugConsole console, params string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
 #if DEBUG
             if (args.Length < 1)
             {
-                return true;
+                shell.RemoteExecuteCommand(argStr);
+                return;
             }
 
             var anyAction = false;
@@ -50,9 +51,10 @@ namespace Content.Client.Commands
                 }
             }
 
-            return !anyAction;
+            if(!anyAction)
+                shell.RemoteExecuteCommand(argStr);
 #else
-            return true;
+            shell.RemoteExecuteCommand(argStr);
 #endif
         }
     }
