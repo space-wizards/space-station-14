@@ -71,6 +71,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             var interactionArgs = new DragDropEventArgs(performer, msg.DropLocation, dropped, target);
 
             // must be in range of both the target and the object they are drag / dropping
+            // Client also does this check but ya know we gotta validate it.
             if (!interactionArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return;
 
             // trigger dragdrops on the dropped entity
@@ -314,14 +315,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
             var item = hands.GetActiveHand?.Owner;
 
-            if (ActionBlockerSystem.CanChangeDirection(player))
-            {
-                var diff = coordinates.ToMapPos(EntityManager) - playerTransform.MapPosition.Position;
-                if (diff.LengthSquared > 0.01f)
-                {
-                    playerTransform.LocalRotation = new Angle(diff);
-                }
-            }
+            ClickFace(player, coordinates);
 
             if (!ActionBlockerSystem.CanInteract(player))
             {
@@ -398,10 +392,22 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
         }
 
+        private void ClickFace(IEntity player, EntityCoordinates coordinates)
+        {
+            if (ActionBlockerSystem.CanChangeDirection(player))
+            {
+                var diff = coordinates.ToMapPos(EntityManager) - player.Transform.MapPosition.Position;
+                if (diff.LengthSquared > 0.01f)
+                {
+                    player.Transform.LocalRotation = new Angle(diff);
+                }
+            }
+        }
+
         /// <summary>
         ///     We didn't click on any entity, try doing an AfterInteract on the click location
         /// </summary>
-        private void InteractAfter(IEntity user, IEntity weapon, EntityCoordinates clickLocation, bool canReach)
+        private async void InteractAfter(IEntity user, IEntity weapon, EntityCoordinates clickLocation, bool canReach)
         {
             var message = new AfterInteractMessage(user, weapon, null, clickLocation, canReach);
             RaiseLocalEvent(message);
@@ -410,13 +416,8 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return;
             }
 
-            var afterInteracts = weapon.GetAllComponents<IAfterInteract>().ToList();
-            var afterInteractEventArgs = new AfterInteractEventArgs { User = user, ClickLocation = clickLocation, CanReach = canReach };
-
-            foreach (var afterInteract in afterInteracts)
-            {
-                afterInteract.AfterInteract(afterInteractEventArgs);
-            }
+            var afterInteractEventArgs = new AfterInteractEventArgs(user, clickLocation, null, canReach);
+            await DoAfterInteract(weapon, afterInteractEventArgs);
         }
 
         /// <summary>
@@ -459,16 +460,9 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             // If we aren't directly attacking the nearby object, lets see if our item has an after attack we can do
-            var afterAttacks = weapon.GetAllComponents<IAfterInteract>().ToList();
-            var afterAttackEventArgs = new AfterInteractEventArgs
-            {
-                User = user, ClickLocation = clickLocation, Target = attacked, CanReach = true
-            };
+            var afterAttackEventArgs = new AfterInteractEventArgs(user, clickLocation, attacked, canReach: true);
 
-            foreach (var afterAttack in afterAttacks)
-            {
-                await afterAttack.AfterInteract(afterAttackEventArgs);
-            }
+            await DoAfterInteract(weapon, afterAttackEventArgs);
         }
 
         /// <summary>
@@ -804,7 +798,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// Will have two behaviors, either "uses" the weapon at range on the entity if it is capable of accepting that action
         /// Or it will use the weapon itself on the position clicked, regardless of what was there
         /// </summary>
-        public void RangedInteraction(IEntity user, IEntity weapon, IEntity attacked, EntityCoordinates clickLocation)
+        public async void RangedInteraction(IEntity user, IEntity weapon, IEntity attacked, EntityCoordinates clickLocation)
         {
             var rangedMsg = new RangedInteractMessage(user, weapon, attacked, clickLocation);
             RaiseLocalEvent(rangedMsg);
@@ -832,16 +826,21 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             if (afterAtkMsg.Handled)
                 return;
 
-            var afterAttacks = weapon.GetAllComponents<IAfterInteract>().ToList();
-            var afterAttackEventArgs = new AfterInteractEventArgs
-            {
-                User = user, ClickLocation = clickLocation, Target = attacked, CanReach = false
-            };
+            // See if we have a ranged attack interaction
+            var afterAttackEventArgs = new AfterInteractEventArgs(user, clickLocation, attacked, canReach: false);
+            await DoAfterInteract(weapon, afterAttackEventArgs);
+        }
 
-            //See if we have a ranged attack interaction
+        private static async Task DoAfterInteract(IEntity weapon, AfterInteractEventArgs afterAttackEventArgs)
+        {
+            var afterAttacks = weapon.GetAllComponents<IAfterInteract>().OrderByDescending(x => x.Priority).ToList();
+
             foreach (var afterAttack in afterAttacks)
             {
-                afterAttack.AfterInteract(afterAttackEventArgs);
+                if (await afterAttack.AfterInteract(afterAttackEventArgs))
+                {
+                    return;
+                }
             }
         }
 
@@ -854,6 +853,8 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                     $"Player named {player.Name} clicked on a map he isn't located on");
                 return;
             }
+
+            ClickFace(player, coordinates);
 
             if (!ActionBlockerSystem.CanAttack(player) ||
                 (!wideAttack && !player.InRangeUnobstructed(coordinates, ignoreInsideBlocker: true)))

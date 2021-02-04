@@ -25,7 +25,6 @@ namespace Content.Client.GameObjects.Components.Mobs
     public sealed class ClientAlertsComponent : SharedAlertsComponent
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IResourceCache _resourceCache = default!;
 
         private AlertsUI _ui;
         private AlertOrderPrototype _alertOrder;
@@ -202,7 +201,7 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         private AlertControl CreateAlertControl(AlertPrototype alert, AlertState alertState)
         {
-            var alertControl = new AlertControl(alert, alertState.Severity, _resourceCache)
+            var alertControl = new AlertControl(alert, alertState.Severity)
             {
                 Cooldown = alertState.Cooldown
             };

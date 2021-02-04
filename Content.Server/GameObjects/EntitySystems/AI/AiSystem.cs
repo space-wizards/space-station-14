@@ -10,7 +10,6 @@ using Content.Shared.Administration;
 using Content.Shared.GameObjects.Components.Movement;
 using JetBrains.Annotations;
 using Robust.Server.AI;
-using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
@@ -110,15 +109,16 @@ namespace Content.Server.GameObjects.EntitySystems.AI
 
             foreach (var processor in _awakeAi)
             {
-                if (count >= maxUpdates)
-                {
-                    break;
-                }
-
-                if (processor.SelfEntity.Deleted)
+                if (processor.SelfEntity.Deleted ||
+                    !processor.SelfEntity.HasComponent<AiControllerComponent>())
                 {
                     toRemove.Add(processor);
                     continue;
+                }
+
+                if (count >= maxUpdates)
+                {
+                    break;
                 }
 
                 processor.Update(frameTime);

@@ -9,16 +9,10 @@
     "states": [
         {
             "name": "control",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "control_critical",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -45,7 +39,6 @@
         },
         {
             "name": "control_fuck",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -91,7 +84,6 @@
         },
         {
             "name": "control_on",
-            "directions": 1,
             "delays": [
                 [
                     0.1,

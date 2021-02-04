@@ -8,8 +8,7 @@
   components:
   - type: SolutionContainer
     maxVol: 50
-    caps: AddTo, RemoveFrom
-  - type: Pourable
+  - type: SolutionTransfer
     transferAmount: 5
   - type: Drink
   - type: Sprite
@@ -29,15 +28,16 @@
     thresholds:
       5:
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:PlaySoundCollectionBehavior
-          soundCollection: WindowBreak
+          soundCollection: GlassBreak
+        - !type:SpillBehavior { }
         - !type:SpawnEntitiesBehavior
           spawn:
             ShardGlass:
               min: 1
               max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: DamageOnLand
     amount: 5
   - type: DamageOtherOnHit
@@ -55,8 +55,7 @@
   - type: SolutionContainer
     fillingState: glass
     maxVol: 50
-    caps: AddTo, RemoveFrom
-  - type: Pourable
+  - type: SolutionTransfer
     transferAmount: 5
   - type: TransformableContainer
 

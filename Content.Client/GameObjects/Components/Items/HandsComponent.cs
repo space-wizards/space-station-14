@@ -1,14 +1,23 @@
-﻿#nullable enable
+#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Client.Animations;
 using Content.Client.UserInterface;
 using Content.Shared.GameObjects.Components.Items;
+using Robust.Client.Animations;
 using Robust.Client.GameObjects;
+using Robust.Client.GameObjects.Components.Animations;
 using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Shared.Animations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
+using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Items
@@ -239,6 +248,23 @@ namespace Content.Client.GameObjects.Components.Items
 
                     hand.Button.Blocked.Visible = true;
 
+                    break;
+                }
+            }
+        }
+
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
+        {
+            base.HandleNetworkMessage(message, netChannel, session);
+
+            switch (message)
+            {
+                case AnimatePickupEntityMessage msg:
+                {
+                    if (Owner.EntityManager.TryGetEntity(msg.EntityId, out var entity))
+                    {
+                        ReusableAnimations.AnimateEntityPickup(entity, msg.EntityPosition, Owner.Transform.WorldPosition);
+                    }
                     break;
                 }
             }

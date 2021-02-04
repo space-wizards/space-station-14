@@ -1,4 +1,4 @@
-﻿namespace Content.Server
+namespace Content.Server
 {
 
     public static class IgnoredComponents
@@ -18,6 +18,7 @@
             "Clickable",
             "RadiatingLight",
             "Icon",
+            "ClientEntitySpawner"
         };
 
     }

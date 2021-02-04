@@ -8,28 +8,22 @@
     "copyright": "https://github.com/discordia-space/CEV-Eris/raw/9c980cb9bc84d07b1c210c5447798af525185f80/icons/obj/food.dmi",
     "states": [
         {
-            "name": "icon",
-            "directions": 1
+            "name": "icon"
         },
         {
-            "name": "pizzaboxstack-0",
-            "directions": 1
+            "name": "pizzaboxstack-0"
         },
         {
-            "name": "pizzaboxstack-1",
-            "directions": 1
+            "name": "pizzaboxstack-1"
         },
         {
-            "name": "pizzaboxstack-2",
-            "directions": 1
+            "name": "pizzaboxstack-2"
         },
         {
-            "name": "pizzaboxstack-3",
-            "directions": 1
+            "name": "pizzaboxstack-3"
         },
         {
-            "name": "pizzaboxstack-4",
-            "directions": 1
+            "name": "pizzaboxstack-4"
         }
     ]
 }

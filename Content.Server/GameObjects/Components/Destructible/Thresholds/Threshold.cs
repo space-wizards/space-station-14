@@ -12,19 +12,29 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Destructible.Thresholds
 {
-    [Serializable]
     public class Threshold : IExposeData
     {
-        public bool Triggered { get; set; }
+        private List<IBehavior> _behaviors = new();
 
-        public bool TriggersOnce { get; set; }
+        /// <summary>
+        ///     Whether or not this threshold has already been triggered.
+        /// </summary>
+        [ViewVariables] public bool Triggered { get; private set; }
+
+        /// <summary>
+        ///     Whether or not this threshold only triggers once.
+        ///     If false, it will trigger again once the entity is healed
+        ///     and then damaged to reach this threshold once again.
+        ///     It will not repeatedly trigger as damage rises beyond that.
+        /// </summary>
+        [ViewVariables] public bool TriggersOnce { get; set; }
 
         [ViewVariables] public ITrigger? Trigger { get; set; }
 
         /// <summary>
         ///     Behaviors to activate once this threshold is triggered.
         /// </summary>
-        [ViewVariables] public List<IBehavior> Behaviors { get; set; } = new();
+        [ViewVariables] public IReadOnlyList<IBehavior> Behaviors => _behaviors;
 
         public void ExposeData(ObjectSerializer serializer)
         {
@@ -59,6 +69,10 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds
 
             foreach (var behavior in Behaviors)
             {
+                // The owner has been deleted. We stop execution of behaviors here.
+                if (owner.Deleted)
+                    return;
+
                 behavior.Execute(owner, system);
             }
         }

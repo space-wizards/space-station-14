@@ -11,6 +11,7 @@ using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Buckle
 {
@@ -19,6 +20,18 @@ namespace Content.Shared.GameObjects.Components.Buckle
         public sealed override string Name => "Buckle";
 
         public sealed override uint? NetID => ContentNetIDs.BUCKLE;
+        /// <summary>
+        ///     The range from which this entity can buckle to a <see cref="StrapComponent"/>.
+        /// </summary>
+        [ViewVariables]
+        public float Range { get; protected set; }
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+            serializer.DataReadWriteFunction("range", SharedInteractionSystem.InteractionRange / 1.4f, value => Range = value, () => Range);
+        }
+
         /// <summary>
         ///     True if the entity is buckled, false otherwise.
         /// </summary>

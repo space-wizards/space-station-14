@@ -3,8 +3,8 @@ using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
-using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
@@ -14,13 +14,13 @@ using Robust.Shared.Maths;
 namespace Content.Server.Commands.Atmos
 {
     [AdminCommand(AdminFlags.Debug)]
-    public class SetTemperatureCommand : IClientCommand
+    public class SetTemperatureCommand : IConsoleCommand
     {
         public string Command => "settemp";
         public string Description => "Sets a tile's temperature (in kelvin).";
         public string Help => "Usage: settemp <X> <Y> <GridId> <Temperature>";
 
-        public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 4) return;
             if(!int.TryParse(args[0], out var x)
@@ -34,13 +34,13 @@ namespace Content.Server.Commands.Atmos
 
             if (temperature < Atmospherics.TCMB)
             {
-                shell.SendText(player, "Invalid temperature.");
+                shell.WriteLine("Invalid temperature.");
                 return;
             }
 
             if (!gridId.IsValid() || !mapMan.TryGetGrid(gridId, out var gridComp))
             {
-                shell.SendText(player, "Invalid grid ID.");
+                shell.WriteLine("Invalid grid ID.");
                 return;
             }
 
@@ -48,13 +48,13 @@ namespace Content.Server.Commands.Atmos
 
             if (!entMan.TryGetEntity(gridComp.GridEntityId, out var grid))
             {
-                shell.SendText(player, "Failed to get grid entity.");
+                shell.WriteLine("Failed to get grid entity.");
                 return;
             }
 
             if (!grid.HasComponent<GridAtmosphereComponent>())
             {
-                shell.SendText(player, "Grid doesn't have an atmosphere.");
+                shell.WriteLine("Grid doesn't have an atmosphere.");
                 return;
             }
 
@@ -64,13 +64,13 @@ namespace Content.Server.Commands.Atmos
 
             if (tile == null)
             {
-                shell.SendText(player, "Invalid coordinates.");
+                shell.WriteLine("Invalid coordinates.");
                 return;
             }
 
             if (tile.Air == null)
             {
-                shell.SendText(player, "Can't change that tile's temperature.");
+                shell.WriteLine("Can't change that tile's temperature.");
                 return;
             }
 

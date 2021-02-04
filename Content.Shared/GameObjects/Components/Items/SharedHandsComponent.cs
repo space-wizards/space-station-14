@@ -1,7 +1,8 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Items
@@ -126,5 +127,21 @@ namespace Content.Shared.GameObjects.Components.Items
         Left,
         Middle,
         Right
+    }
+
+    /// <summary>
+    /// Component message for displaying an animation of an entity flying towards the owner of a HandsComponent
+    /// </summary>
+    [Serializable, NetSerializable]
+    public class AnimatePickupEntityMessage : ComponentMessage
+    {
+        public readonly EntityUid EntityId;
+        public readonly EntityCoordinates EntityPosition;
+        public AnimatePickupEntityMessage(EntityUid entity, EntityCoordinates entityPosition)
+        {
+            Directed = true;
+            EntityId = entity;
+            EntityPosition = entityPosition;
+        }
     }
 }

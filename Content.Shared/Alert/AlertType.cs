@@ -7,6 +7,7 @@
     {
         Pressure,
         Temperature,
+        Breathing,
         Buckled,
         Health,
         Piloting,
@@ -22,6 +23,7 @@
     public enum AlertType : byte
     {
         Error,
+        LowOxygen,
         LowPressure,
         HighPressure,
         Fire,
@@ -43,6 +45,7 @@
         Parched,
         Pulled,
         Pulling,
+        Magboots,
         Debug1,
         Debug2,
         Debug3,

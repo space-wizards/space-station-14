@@ -9,7 +9,7 @@ namespace Content.Server.GameObjects.EntitySystems
     {
         public override void Update(float frameTime)
         {
-            foreach (var component in ComponentManager.EntityQuery<RecyclerComponent>())
+            foreach (var component in ComponentManager.EntityQuery<RecyclerComponent>(true))
             {
                 component.Update(frameTime);
             }

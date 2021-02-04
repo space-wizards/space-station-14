@@ -33,14 +33,14 @@ namespace Content.Tests.Shared.Alert
             alertManager.Initialize();
 
             Assert.That(alertManager.TryGet(AlertType.LowPressure, out var lowPressure));
-            Assert.That(lowPressure.IconPath, Is.EqualTo("/Textures/Interface/Alerts/Pressure/lowpressure.png"));
+            Assert.That(lowPressure.Icon, Is.EqualTo(new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/Alerts/Pressure/lowpressure.png"))));
             Assert.That(alertManager.TryGet(AlertType.HighPressure, out var highPressure));
-            Assert.That(highPressure.IconPath, Is.EqualTo("/Textures/Interface/Alerts/Pressure/highpressure.png"));
+            Assert.That(highPressure.Icon, Is.EqualTo(new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/Alerts/Pressure/highpressure.png"))));
 
             Assert.That(alertManager.TryGet(AlertType.LowPressure, out lowPressure));
-            Assert.That(lowPressure.IconPath, Is.EqualTo("/Textures/Interface/Alerts/Pressure/lowpressure.png"));
+            Assert.That(lowPressure.Icon, Is.EqualTo(new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/Alerts/Pressure/lowpressure.png"))));
             Assert.That(alertManager.TryGet(AlertType.HighPressure, out highPressure));
-            Assert.That(highPressure.IconPath, Is.EqualTo("/Textures/Interface/Alerts/Pressure/highpressure.png"));
+            Assert.That(highPressure.Icon, Is.EqualTo(new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/Alerts/Pressure/highpressure.png"))));
         }
     }
 }

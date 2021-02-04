@@ -1,17 +1,25 @@
 ﻿using System;
+using System.Transactions;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Input;
 using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
+using Robust.Client.Input;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Utility;
+using YamlDotNet.Core.Tokens;
+using static Robust.Client.Input.Keyboard.Key;
+using Control = Robust.Client.UserInterface.Control;
 
 namespace Content.Client.UserInterface
 {
@@ -41,6 +49,16 @@ namespace Content.Client.UserInterface
         bool CraftingButtonVisible { get; set; }
         Action<bool> CraftingButtonToggled { get; set; }
 
+        // Actions top button.
+        bool ActionsButtonDown { get; set; }
+        bool ActionsButtonVisible { get; set; }
+        Action<bool> ActionsButtonToggled { get; set; }
+
+        // Admin top button.
+        bool AdminButtonDown { get; set; }
+        bool AdminButtonVisible { get; set; }
+        Action<bool> AdminButtonToggled { get; set; }
+
         // Sandbox top button.
         bool SandboxButtonDown { get; set; }
         bool SandboxButtonVisible { get; set; }
@@ -48,7 +66,8 @@ namespace Content.Client.UserInterface
 
         Control HandsContainer { get; }
         Control SuspicionContainer { get; }
-        Control InventoryQuickButtonContainer { get; }
+        Control RightInventoryQuickButtonContainer { get; }
+        Control LeftInventoryQuickButtonContainer { get; }
 
         bool CombatPanelVisible { get; set; }
         bool CombatModeActive { get; set; }
@@ -69,6 +88,8 @@ namespace Content.Client.UserInterface
         private TopButton _buttonCharacterMenu;
         private TopButton _buttonInventoryMenu;
         private TopButton _buttonCraftingMenu;
+        private TopButton _buttonActionsMenu;
+        private TopButton _buttonAdminMenu;
         private TopButton _buttonSandboxMenu;
         private TutorialWindow _tutorialWindow;
         private TargetingDoll _targetingDoll;
@@ -80,7 +101,8 @@ namespace Content.Client.UserInterface
 
         public Control HandsContainer { get; private set; }
         public Control SuspicionContainer { get; private set; }
-        public Control InventoryQuickButtonContainer { get; private set; }
+        public Control RightInventoryQuickButtonContainer { get; private set; }
+        public Control LeftInventoryQuickButtonContainer { get; private set; }
 
         public bool CombatPanelVisible
         {
@@ -108,16 +130,18 @@ namespace Content.Client.UserInterface
             RootControl = new LayoutContainer();
             LayoutContainer.SetAnchorPreset(RootControl, LayoutContainer.LayoutPreset.Wide);
 
-            var escapeTexture = _resourceCache.GetTexture("/Textures/Interface/hamburger.svg.96dpi.png");
-            var characterTexture = _resourceCache.GetTexture("/Textures/Interface/character.svg.96dpi.png");
-            var inventoryTexture = _resourceCache.GetTexture("/Textures/Interface/inventory.svg.96dpi.png");
-            var craftingTexture = _resourceCache.GetTexture("/Textures/Interface/hammer.svg.96dpi.png");
-            var tutorialTexture = _resourceCache.GetTexture("/Textures/Interface/students-cap.svg.96dpi.png");
-            var sandboxTexture = _resourceCache.GetTexture("/Textures/Interface/sandbox.svg.96dpi.png");
+            var escapeTexture = _resourceCache.GetTexture("/Textures/Interface/hamburger.svg.192dpi.png");
+            var characterTexture = _resourceCache.GetTexture("/Textures/Interface/character.svg.192dpi.png");
+            var inventoryTexture = _resourceCache.GetTexture("/Textures/Interface/inventory.svg.192dpi.png");
+            var craftingTexture = _resourceCache.GetTexture("/Textures/Interface/hammer.svg.192dpi.png");
+            var actionsTexture = _resourceCache.GetTexture("/Textures/Interface/fist.svg.192dpi.png");
+            var adminTexture = _resourceCache.GetTexture("/Textures/Interface/gavel.svg.192dpi.png");
+            var tutorialTexture = _resourceCache.GetTexture("/Textures/Interface/tutorial.svg.192dpi.png");
+            var sandboxTexture = _resourceCache.GetTexture("/Textures/Interface/sandbox.svg.192dpi.png");
 
             _topButtonsContainer = new HBoxContainer
             {
-                SeparationOverride = 4
+                SeparationOverride = 8
             };
 
             RootControl.AddChild(_topButtonsContainer);
@@ -125,32 +149,29 @@ namespace Content.Client.UserInterface
             LayoutContainer.SetAnchorAndMarginPreset(_topButtonsContainer, LayoutContainer.LayoutPreset.TopLeft,
                 margin: 10);
 
-            // TODO: Pull key names here from the actual key binding config.
+            // the icon textures here should all have the same image height (32) but different widths, so in order to ensure
+            // the buttons themselves are consistent widths we set a common custom min size
+            Vector2 topMinSize = (42, 64);
+
             // Escape
-            _buttonEscapeMenu = new TopButton(escapeTexture, "Esc")
+            _buttonEscapeMenu = new TopButton(escapeTexture, EngineKeyFunctions.EscapeMenu, _inputManager)
             {
-                ToolTip = Loc.GetString("Open escape menu.")
+                ToolTip = Loc.GetString("Open escape menu."),
+                CustomMinimumSize = (70, 64),
+                StyleClasses = {StyleBase.ButtonOpenRight}
             };
 
             _topButtonsContainer.AddChild(_buttonEscapeMenu);
 
             _buttonEscapeMenu.OnToggled += args => EscapeButtonToggled?.Invoke(args.Pressed);
 
-            // Tutorial
-            _buttonTutorial = new TopButton(tutorialTexture, "F1")
-            {
-                ToolTip = Loc.GetString("Open tutorial.")
-            };
-
-            _topButtonsContainer.AddChild(_buttonTutorial);
-
-            _buttonTutorial.OnToggled += a => ButtonTutorialOnOnToggled();
-
             // Character
-            _buttonCharacterMenu = new TopButton(characterTexture, "C")
+            _buttonCharacterMenu = new TopButton(characterTexture, ContentKeyFunctions.OpenCharacterMenu, _inputManager)
             {
                 ToolTip = Loc.GetString("Open character menu."),
-                Visible = false
+                CustomMinimumSize = topMinSize,
+                Visible = false,
+                StyleClasses = {StyleBase.ButtonSquare}
             };
 
             _topButtonsContainer.AddChild(_buttonCharacterMenu);
@@ -158,10 +179,12 @@ namespace Content.Client.UserInterface
             _buttonCharacterMenu.OnToggled += args => CharacterButtonToggled?.Invoke(args.Pressed);
 
             // Inventory
-            _buttonInventoryMenu = new TopButton(inventoryTexture, "I")
+            _buttonInventoryMenu = new TopButton(inventoryTexture, ContentKeyFunctions.OpenInventoryMenu, _inputManager)
             {
                 ToolTip = Loc.GetString("Open inventory menu."),
-                Visible = false
+                CustomMinimumSize = topMinSize,
+                Visible = false,
+                StyleClasses = {StyleBase.ButtonSquare}
             };
 
             _topButtonsContainer.AddChild(_buttonInventoryMenu);
@@ -169,26 +192,68 @@ namespace Content.Client.UserInterface
             _buttonInventoryMenu.OnToggled += args => InventoryButtonToggled?.Invoke(args.Pressed);
 
             // Crafting
-            _buttonCraftingMenu = new TopButton(craftingTexture, "G")
+            _buttonCraftingMenu = new TopButton(craftingTexture, ContentKeyFunctions.OpenCraftingMenu, _inputManager)
             {
                 ToolTip = Loc.GetString("Open crafting menu."),
-                Visible = false
+                CustomMinimumSize = topMinSize,
+                Visible = false,
+                StyleClasses = {StyleBase.ButtonSquare}
             };
 
             _topButtonsContainer.AddChild(_buttonCraftingMenu);
 
             _buttonCraftingMenu.OnToggled += args => CraftingButtonToggled?.Invoke(args.Pressed);
 
+            // Actions
+            _buttonActionsMenu = new TopButton(actionsTexture, ContentKeyFunctions.OpenActionsMenu, _inputManager)
+            {
+                ToolTip = Loc.GetString("Open actions menu."),
+                CustomMinimumSize = topMinSize,
+                Visible = false,
+                StyleClasses = {StyleBase.ButtonSquare}
+            };
+
+            _topButtonsContainer.AddChild(_buttonActionsMenu);
+
+            _buttonActionsMenu.OnToggled += args => ActionsButtonToggled?.Invoke(args.Pressed);
+
+            // Admin
+            _buttonAdminMenu = new TopButton(adminTexture, ContentKeyFunctions.OpenAdminMenu, _inputManager)
+            {
+                ToolTip = Loc.GetString("Open admin menu."),
+                CustomMinimumSize = topMinSize,
+                Visible = false,
+                StyleClasses = {StyleBase.ButtonSquare}
+            };
+
+            _topButtonsContainer.AddChild(_buttonAdminMenu);
+
+            _buttonAdminMenu.OnToggled += args => AdminButtonToggled?.Invoke(args.Pressed);
+
             // Sandbox
-            _buttonSandboxMenu = new TopButton(sandboxTexture, "B")
+            _buttonSandboxMenu = new TopButton(sandboxTexture, ContentKeyFunctions.OpenSandboxWindow, _inputManager)
             {
                 ToolTip = Loc.GetString("Open sandbox menu."),
-                Visible = false
+                CustomMinimumSize = topMinSize,
+                Visible = false,
+                StyleClasses = {StyleBase.ButtonSquare}
             };
 
             _topButtonsContainer.AddChild(_buttonSandboxMenu);
 
             _buttonSandboxMenu.OnToggled += args => SandboxButtonToggled?.Invoke(args.Pressed);
+
+            // Tutorial
+            _buttonTutorial = new TopButton(tutorialTexture, ContentKeyFunctions.OpenTutorial, _inputManager)
+            {
+                ToolTip = Loc.GetString("Open tutorial."),
+                CustomMinimumSize = topMinSize,
+                StyleClasses = {StyleBase.ButtonOpenLeft, TopButton.StyleClassRedTopButton},
+            };
+
+            _topButtonsContainer.AddChild(_buttonTutorial);
+
+            _buttonTutorial.OnToggled += a => ButtonTutorialOnOnToggled();
 
             _tutorialWindow = new TutorialWindow();
 
@@ -197,21 +262,6 @@ namespace Content.Client.UserInterface
             _inputManager.SetInputCommand(ContentKeyFunctions.OpenTutorial,
                 InputCmdHandler.FromDelegate(s => ButtonTutorialOnOnToggled()));
 
-            var inventoryContainer = new HBoxContainer
-            {
-                SeparationOverride = 10
-            };
-
-            RootControl.AddChild(inventoryContainer);
-
-            LayoutContainer.SetGrowHorizontal(inventoryContainer, LayoutContainer.GrowDirection.Begin);
-            LayoutContainer.SetGrowVertical(inventoryContainer, LayoutContainer.GrowDirection.Begin);
-            LayoutContainer.SetAnchorAndMarginPreset(inventoryContainer, LayoutContainer.LayoutPreset.BottomRight);
-
-            InventoryQuickButtonContainer = new MarginContainer
-            {
-                SizeFlagsVertical = Control.SizeFlags.ShrinkEnd
-            };
 
             _combatPanelContainer = new VBoxContainer
             {
@@ -226,23 +276,40 @@ namespace Content.Client.UserInterface
                 }
             };
 
+            LayoutContainer.SetGrowHorizontal(_combatPanelContainer, LayoutContainer.GrowDirection.Begin);
+            LayoutContainer.SetGrowVertical(_combatPanelContainer, LayoutContainer.GrowDirection.Begin);
+            LayoutContainer.SetAnchorAndMarginPreset(_combatPanelContainer, LayoutContainer.LayoutPreset.BottomRight);
+            LayoutContainer.SetMarginBottom(_combatPanelContainer, -10f);
+            RootControl.AddChild(_combatPanelContainer);
+
             _combatModeButton.OnToggled += args => OnCombatModeChanged?.Invoke(args.Pressed);
             _targetingDoll.OnZoneChanged += args => OnTargetingZoneChanged?.Invoke(args);
 
-            inventoryContainer.Children.Add(InventoryQuickButtonContainer);
-            inventoryContainer.Children.Add(_combatPanelContainer);
-
+            var centerBottomContainer = new HBoxContainer
+            {
+                SeparationOverride = 5
+            };
+            LayoutContainer.SetAnchorAndMarginPreset(centerBottomContainer, LayoutContainer.LayoutPreset.CenterBottom);
+            LayoutContainer.SetGrowHorizontal(centerBottomContainer, LayoutContainer.GrowDirection.Both);
+            LayoutContainer.SetGrowVertical(centerBottomContainer, LayoutContainer.GrowDirection.Begin);
+            LayoutContainer.SetMarginBottom(centerBottomContainer, -10f);
+            RootControl.AddChild(centerBottomContainer);
 
             HandsContainer = new MarginContainer
             {
                 SizeFlagsVertical = Control.SizeFlags.ShrinkEnd
             };
-
-            RootControl.AddChild(HandsContainer);
-
-            LayoutContainer.SetAnchorAndMarginPreset(HandsContainer, LayoutContainer.LayoutPreset.CenterBottom);
-            LayoutContainer.SetGrowHorizontal(HandsContainer, LayoutContainer.GrowDirection.Both);
-            LayoutContainer.SetGrowVertical(HandsContainer, LayoutContainer.GrowDirection.Begin);
+            RightInventoryQuickButtonContainer = new MarginContainer
+            {
+                SizeFlagsVertical = Control.SizeFlags.ShrinkEnd
+            };
+            LeftInventoryQuickButtonContainer = new MarginContainer
+            {
+                SizeFlagsVertical = Control.SizeFlags.ShrinkEnd
+            };
+            centerBottomContainer.AddChild(LeftInventoryQuickButtonContainer);
+            centerBottomContainer.AddChild(HandsContainer);
+            centerBottomContainer.AddChild(RightInventoryQuickButtonContainer);
 
             SuspicionContainer = new MarginContainer
             {
@@ -251,13 +318,15 @@ namespace Content.Client.UserInterface
 
             RootControl.AddChild(SuspicionContainer);
 
-            LayoutContainer.SetAnchorAndMarginPreset(SuspicionContainer, LayoutContainer.LayoutPreset.BottomLeft, margin: 10);
+            LayoutContainer.SetAnchorAndMarginPreset(SuspicionContainer, LayoutContainer.LayoutPreset.BottomLeft,
+                margin: 10);
             LayoutContainer.SetGrowHorizontal(SuspicionContainer, LayoutContainer.GrowDirection.End);
             LayoutContainer.SetGrowVertical(SuspicionContainer, LayoutContainer.GrowDirection.Begin);
         }
 
         private void ButtonTutorialOnOnToggled()
         {
+            _buttonTutorial.StyleClasses.Remove(TopButton.StyleClassRedTopButton);
             if (_tutorialWindow.IsOpen)
             {
                 if (!_tutorialWindow.IsAtFront())
@@ -330,6 +399,34 @@ namespace Content.Client.UserInterface
 
         public Action<bool> CraftingButtonToggled { get; set; }
 
+        public bool ActionsButtonDown
+        {
+            get => _buttonActionsMenu.Pressed;
+            set => _buttonActionsMenu.Pressed = value;
+        }
+
+        public bool ActionsButtonVisible
+        {
+            get => _buttonActionsMenu.Visible;
+            set => _buttonActionsMenu.Visible = value;
+        }
+
+        public Action<bool> ActionsButtonToggled { get; set; }
+
+        public bool AdminButtonDown
+        {
+            get => _buttonAdminMenu.Pressed;
+            set => _buttonAdminMenu.Pressed = value;
+        }
+
+        public bool AdminButtonVisible
+        {
+            get => _buttonAdminMenu.Visible;
+            set => _buttonAdminMenu.Visible = value;
+        }
+
+        public Action<bool> AdminButtonToggled { get; set; }
+
         public bool SandboxButtonDown
         {
             get => _buttonSandboxMenu.Pressed;
@@ -344,94 +441,204 @@ namespace Content.Client.UserInterface
 
         public Action<bool> SandboxButtonToggled { get; set; }
 
-        public sealed class TopButton : BaseButton
+        public sealed class TopButton : ContainerButton
         {
             public const string StyleClassLabelTopButton = "topButtonLabel";
+            public const string StyleClassRedTopButton = "topButtonLabel";
+            private const float CustomTooltipDelay = 0.4f;
 
             private static readonly Color ColorNormal = Color.FromHex("#7b7e9e");
+            private static readonly Color ColorRedNormal = Color.FromHex("#FEFEFE");
             private static readonly Color ColorHovered = Color.FromHex("#9699bb");
+            private static readonly Color ColorRedHovered = Color.FromHex("#FFFFFF");
             private static readonly Color ColorPressed = Color.FromHex("#789B8C");
+
+            private const float VertPad = 8f;
+
+            private Color NormalColor => HasStyleClass(StyleClassRedTopButton) ? ColorRedNormal : ColorNormal;
+            private Color HoveredColor => HasStyleClass(StyleClassRedTopButton) ? ColorRedHovered : ColorHovered;
 
             private readonly TextureRect _textureRect;
             private readonly Label _label;
+            private readonly BoundKeyFunction _function;
+            private readonly IInputManager _inputManager;
 
-            public TopButton(Texture texture, string keyName)
+            public TopButton(Texture texture, BoundKeyFunction function, IInputManager inputManager)
             {
-                ToggleMode = true;
+                _function = function;
+                _inputManager = inputManager;
+                TooltipDelay = CustomTooltipDelay;
 
-                AddChild(new MarginContainer
-                {
-                    MarginTopOverride = 4,
-                    Children =
+                AddChild(
+                    new VBoxContainer
                     {
-                        new VBoxContainer
+                        Children =
                         {
-                            Children =
+                            new Control {CustomMinimumSize = (0, VertPad)},
+                            (_textureRect = new TextureRect
                             {
-                                (_textureRect = new TextureRect
-                                {
-                                    Texture = texture,
-                                    SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                                    SizeFlagsVertical = SizeFlags.Expand | SizeFlags.ShrinkCenter,
-                                    ModulateSelfOverride = ColorNormal,
-                                    CustomMinimumSize = (0, 32),
-                                    Stretch = TextureRect.StretchMode.KeepCentered
-                                }),
-                                (_label = new Label
-                                {
-                                    Text = keyName,
-                                    SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                                    ModulateSelfOverride = ColorNormal,
-                                    StyleClasses = {StyleClassLabelTopButton}
-                                })
-                            }
+                                TextureScale = (0.5f, 0.5f),
+                                Texture = texture,
+                                SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
+                                SizeFlagsVertical = SizeFlags.Expand | SizeFlags.ShrinkCenter,
+                                ModulateSelfOverride = NormalColor,
+                                Stretch = TextureRect.StretchMode.KeepCentered
+                            }),
+                            new Control {CustomMinimumSize = (0, VertPad)},
+                            (_label = new Label
+                            {
+                                Text = ShortKeyName(_function),
+                                SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
+                                ModulateSelfOverride = NormalColor,
+                                StyleClasses = {StyleClassLabelTopButton}
+                            })
                         }
                     }
-                });
+                );
 
-                DrawModeChanged();
+                ToggleMode = true;
             }
 
-            protected override Vector2 CalculateMinimumSize()
+            protected override void EnteredTree()
             {
-                var styleSize = ActualStyleBox?.MinimumSize ?? Vector2.Zero;
-                return (0, 4) + styleSize + base.CalculateMinimumSize();
+                _inputManager.OnKeyBindingAdded += OnKeyBindingChanged;
+                _inputManager.OnKeyBindingRemoved += OnKeyBindingChanged;
             }
 
-            protected override void Draw(DrawingHandleScreen handle)
+            protected override void ExitedTree()
             {
-                ActualStyleBox?.Draw(handle, PixelSizeBox);
+                _inputManager.OnKeyBindingAdded -= OnKeyBindingChanged;
+                _inputManager.OnKeyBindingRemoved -= OnKeyBindingChanged;
             }
 
-            private StyleBox ActualStyleBox
+
+            private void OnKeyBindingChanged(IKeyBinding obj)
             {
-                get
+                _label.Text = ShortKeyName(_function);
+            }
+
+            private string ShortKeyName(BoundKeyFunction keyFunction)
+            {
+                // need to use shortened key names so they fit in the buttons.
+                return TryGetShortKeyName(keyFunction, out var name) ? Loc.GetString(name) : " ";
+            }
+
+            private bool TryGetShortKeyName(BoundKeyFunction keyFunction, out string name)
+            {
+                if (_inputManager.TryGetKeyBinding(keyFunction, out var binding))
                 {
-                    TryGetStyleProperty(Button.StylePropertyStyleBox, out StyleBox ret);
-                    return ret;
+                    // can't possibly fit a modifier key in the top button, so omit it
+                    var key = binding.BaseKey;
+                    if (binding.Mod1 != Unknown || binding.Mod2 != Unknown ||
+                        binding.Mod3 != Unknown)
+                    {
+                        name = null;
+                        return false;
+                    }
+
+                    name = null;
+                    name = key switch
+                    {
+                        Apostrophe => "'",
+                        Comma => ",",
+                        Delete => "Del",
+                        Down => "Dwn",
+                        Escape => "Esc",
+                        Equal => "=",
+                        Home => "Hom",
+                        Insert => "Ins",
+                        Left => "Lft",
+                        Menu => "Men",
+                        Minus => "-",
+                        Num0 => "0",
+                        Num1 => "1",
+                        Num2 => "2",
+                        Num3 => "3",
+                        Num4 => "4",
+                        Num5 => "5",
+                        Num6 => "6",
+                        Num7 => "7",
+                        Num8 => "8",
+                        Num9 => "9",
+                        Pause => "||",
+                        Period => ".",
+                        Return => "Ret",
+                        Right => "Rgt",
+                        Slash => "/",
+                        Space => "Spc",
+                        Tab => "Tab",
+                        Tilde => "~",
+                        BackSlash => "\\",
+                        BackSpace => "Bks",
+                        LBracket => "[",
+                        MouseButton4 => "M4",
+                        MouseButton5 => "M5",
+                        MouseButton6 => "M6",
+                        MouseButton7 => "M7",
+                        MouseButton8 => "M8",
+                        MouseButton9 => "M9",
+                        MouseLeft => "ML",
+                        MouseMiddle => "MM",
+                        MouseRight => "MR",
+                        NumpadDecimal => "N.",
+                        NumpadDivide => "N/",
+                        NumpadEnter => "Ent",
+                        NumpadMultiply => "*",
+                        NumpadNum0 => "0",
+                        NumpadNum1 => "1",
+                        NumpadNum2 => "2",
+                        NumpadNum3 => "3",
+                        NumpadNum4 => "4",
+                        NumpadNum5 => "5",
+                        NumpadNum6 => "6",
+                        NumpadNum7 => "7",
+                        NumpadNum8 => "8",
+                        NumpadNum9 => "9",
+                        NumpadSubtract => "N-",
+                        PageDown => "PgD",
+                        PageUp => "PgU",
+                        RBracket => "]",
+                        SemiColon => ";",
+                        _ => DefaultShortKeyName(keyFunction)
+                    };
+                    return name != null;
                 }
+
+                name = null;
+                return false;
             }
 
-            protected override void DrawModeChanged()
+            private string DefaultShortKeyName(BoundKeyFunction keyFunction)
             {
+                var name = FormattedMessage.EscapeText(_inputManager.GetKeyFunctionButtonString(keyFunction));
+                return name.Length > 3 ? null : name;
+            }
+
+            protected override void StylePropertiesChanged()
+            {
+                // colors of children depend on style, so ensure we update when style is changed
+                base.StylePropertiesChanged();
+                UpdateChildColors();
+            }
+
+            private void UpdateChildColors()
+            {
+                if (_label == null || _textureRect == null) return;
                 switch (DrawMode)
                 {
                     case DrawModeEnum.Normal:
-                        SetOnlyStylePseudoClass(Button.StylePseudoClassNormal);
-                        _textureRect.ModulateSelfOverride = ColorNormal;
-                        _label.ModulateSelfOverride = ColorNormal;
+                        _textureRect.ModulateSelfOverride = NormalColor;
+                        _label.ModulateSelfOverride = NormalColor;
                         break;
 
                     case DrawModeEnum.Pressed:
-                        SetOnlyStylePseudoClass(Button.StylePseudoClassPressed);
                         _textureRect.ModulateSelfOverride = ColorPressed;
                         _label.ModulateSelfOverride = ColorPressed;
                         break;
 
                     case DrawModeEnum.Hover:
-                        SetOnlyStylePseudoClass(Button.StylePseudoClassHover);
-                        _textureRect.ModulateSelfOverride = ColorHovered;
-                        _label.ModulateSelfOverride = ColorHovered;
+                        _textureRect.ModulateSelfOverride = HoveredColor;
+                        _label.ModulateSelfOverride = HoveredColor;
                         break;
 
                     case DrawModeEnum.Disabled:
@@ -439,15 +646,11 @@ namespace Content.Client.UserInterface
                 }
             }
 
-            protected override void LayoutUpdateOverride()
-            {
-                var box = ActualStyleBox ?? new StyleBoxEmpty();
-                var contentBox = box.GetContentBox(PixelSizeBox);
 
-                foreach (var child in Children)
-                {
-                    FitChildInPixelBox(child, (UIBox2i) contentBox);
-                }
+            protected override void DrawModeChanged()
+            {
+                base.DrawModeChanged();
+                UpdateChildColors();
             }
         }
     }
