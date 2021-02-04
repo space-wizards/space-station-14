@@ -73,20 +73,10 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private Stack<ContextMenuPopup> StackContextMenus = new();
 
-        // private ContextMenuPopup _contextPopup;
-        // private ContextMenuPopup _contextPopupExt;
-
         private VerbPopup _currentVerbListRoot;
         private VerbPopup _currentGroupList;
 
         private EntityUid _currentEntity;
-
-        // private bool IsAnyContextMenuOpen => _contextPopup != null || _currentVerbListRoot != null || _contextPopupExt != null;
-
-        private bool ISAnyContextMenuOpen()
-        {
-            return _currentVerbListRoot != null || StackContextMenus.Count > 0;
-        }
 
         private bool _playerCanSeeThroughContainers;
 
@@ -96,6 +86,8 @@ namespace Content.Client.GameObjects.EntitySystems
 
             SubscribeNetworkEvent<VerbSystemMessages.VerbsResponseMessage>(FillEntityPopup);
             SubscribeNetworkEvent<PlayerContainerVisibilityMessage>(HandleContainerVisibilityMessage);
+
+            SubscribeLocalEvent<MoveEvent>(HandleMove);
 
             IoCManager.InjectDependencies(this);
 
@@ -107,6 +99,8 @@ namespace Content.Client.GameObjects.EntitySystems
 
         public override void Shutdown()
         {
+            UnsubscribeLocalEvent<MoveEvent>();
+
             CommandBinds.Unregister<VerbSystem>();
             base.Shutdown();
         }
@@ -114,6 +108,11 @@ namespace Content.Client.GameObjects.EntitySystems
         public void Reset()
         {
             _playerCanSeeThroughContainers = false;
+        }
+
+        private bool IsAnyContextMenuOpen()
+        {
+            return _currentVerbListRoot != null || StackContextMenus.Count > 0;
         }
 
         private void HandleContainerVisibilityMessage(PlayerContainerVisibilityMessage ev)
@@ -165,24 +164,36 @@ namespace Content.Client.GameObjects.EntitySystems
             return true;
         }
 
-        // private void HandleMove(MoveEvent message)
-        // {
-        //     if (_contextPopup != null && !message.Sender.Transform.MapPosition.InRange(clickedhere, 1.0f))
-        //     {
-        //         if ( _contextPopup.hm.ContainsKey(message.Sender.Uid))
-        //         {
-        //             _contextPopup.List.RemoveChild(_contextPopup.hm[message.Sender.Uid]);
-        //             _contextPopup.hm.Remove(message.Sender.Uid);
-        //         }
-        //     }
-        // }
+        private void HandleMove(MoveEvent message)
+        {
+            if (menus == null || menus.Count == 0)
+            {
+                return;
+            }
+
+            var entity = message.Sender;
+            if (menus.ContainsKey(entity))
+            {
+                if (!message.Sender.Transform.MapPosition.InRange(clickedhere, 1.0f))
+                {
+                    var control = menus[entity];
+                    if (control.Item1.Disposed || control.Item2.Disposed)
+                    {
+                        menus.Remove(entity);
+                        return;
+                    }
+                    control.Item1.Remove(control.Item2);
+                    menus.Remove(entity);
+                }
+            }
+        }
 
         private MapCoordinates clickedhere;
-
+        private Dictionary<IEntity, (ContextMenuPopup, SingleContextElement)> menus;
         private bool OnOpenContextMenu(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
             // if (IsAnyContextMenuOpen)
-            if (ISAnyContextMenuOpen())
+            if (IsAnyContextMenuOpen())
             {
                 CloseAllMenus();
                 return true;
@@ -234,6 +245,8 @@ namespace Content.Client.GameObjects.EntitySystems
                 return false;
             }
 
+            menus = new();
+
             var orderedStates = entitySpriteStates.ToList();
             orderedStates.Sort((x, y) => string.CompareOrdinal(x.Value.First().Prototype.Name, y.Value.First().Prototype.Name));
 
@@ -245,7 +258,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
             foreach (var (_, vEntity) in orderedStates)
             {
-                _contextPopup.AddContextElement(vEntity, this, debugEnabled);
+                _contextPopup.AddContextElement(vEntity, null, this, debugEnabled);
             }
 
             StackContextMenus.Push(_contextPopup);
@@ -452,6 +465,14 @@ namespace Content.Client.GameObjects.EntitySystems
         private void CloseContextPopups()
         {
             while (StackContextMenus.Count > 0)
+            {
+                StackContextMenus.Pop()?.Dispose();
+            }
+        }
+
+        private void CloseContextPopups(int depth)
+        {
+            while (StackContextMenus.Count > 0 && StackContextMenus.Peek().Depth > depth)
             {
                 StackContextMenus.Pop()?.Dispose();
             }

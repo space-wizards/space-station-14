@@ -236,6 +236,12 @@ namespace Content.Client.GameObjects.EntitySystems
                 );
             }
 
+            public void UpdateLabelAndSprite()
+            {
+                _label.Text = Loc.GetString(ContextEntities.Count.ToString());
+                _spriteView.Sprite = ContextEntities.FirstOrDefault(e => !e.Deleted)?.GetComponent<ISpriteComponent>();
+            }
+
             protected override void MouseEntered()
             {
                 base.MouseEntered();
