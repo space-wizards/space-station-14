@@ -77,7 +77,7 @@ namespace Content.IntegrationTests.Tests
         ///     Loads the default map, runs it for 5 ticks, then assert that it did not change.
         /// </summary>
         [Test]
-        public async Task LoadSaveTicksSaveStationStation()
+        public async Task LoadSaveTicksSaveSaltern()
         {
             var server = StartServerDummyTicker();
             await server.WaitIdleAsync();
@@ -92,7 +92,8 @@ namespace Content.IntegrationTests.Tests
             {
                 var mapId = mapManager.CreateMap();
                 pauseMgr.AddUninitializedMap(mapId);
-                grid = mapLoader.LoadBlueprint(mapId, "Maps/stationstation.yml");
+                pauseMgr.SetMapPaused(mapId, true);
+                grid = mapLoader.LoadBlueprint(mapId, "Maps/saltern.yml");
                 mapLoader.SaveBlueprint(grid.Index, "load save ticks save 1.yml");
             });
 
