@@ -21,9 +21,9 @@ namespace Content.IntegrationTests.Tests.Destructible
     [TestOf(typeof(Threshold))]
     public class DestructibleTests : ContentIntegrationTest
     {
-        private static readonly string SpawnedEntityId = "DestructibleTestsSpawnedEntity";
-        private static readonly string DestructibleEntityId = "DestructibleTestsDestructibleEntity";
-        private static readonly string DestructibleDestructionEntityId = "DestructibleTestsDestructibleDestructionEntity";
+        private const string SpawnedEntityId = "DestructibleTestsSpawnedEntity";
+        private const string DestructibleEntityId = "DestructibleTestsDestructibleEntity";
+        private const string DestructibleDestructionEntityId = "DestructibleTestsDestructibleDestructionEntity";
 
         private static readonly string Prototypes = $@"
 - type: entity
