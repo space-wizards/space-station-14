@@ -38,11 +38,11 @@ namespace Content.IntegrationTests.Tests.Destructible
   - type: Destructible
     thresholds:
     - trigger:
-      - !type:TotalDamageTrigger
+        !type:TotalDamageTrigger
         damage: 20
         triggersOnce: false
     - trigger:
-      - !type:TotalDamageTrigger
+        !type:TotalDamageTrigger
         damage: 50
         triggersOnce: false
       behaviors:
@@ -65,7 +65,7 @@ namespace Content.IntegrationTests.Tests.Destructible
   - type: Destructible
     thresholds:
     - trigger:
-      - !type:TotalDamageTrigger
+        !type:TotalDamageTrigger
         damage: 50
       behaviors:
       - !type:PlaySoundBehavior
@@ -165,11 +165,11 @@ namespace Content.IntegrationTests.Tests.Destructible
 
                 Assert.True(sDamageableComponent.ChangeDamage(DamageType.Blunt, 30, true));
 
-                // Two thresholds reached, 20 and 50, since TriggersOnce is set to false for both of them
-                Assert.That(sThresholdListenerComponent.ThresholdsReached.Count, Is.EqualTo(2));
+                // One thresholds reached, 50, since 20 already triggered before and it has not been healed below that amount
+                Assert.That(sThresholdListenerComponent.ThresholdsReached.Count, Is.EqualTo(1));
 
                 // Threshold 50
-                msg = sThresholdListenerComponent.ThresholdsReached[1];
+                msg = sThresholdListenerComponent.ThresholdsReached[0];
                 threshold = msg.Threshold;
 
                 // Check that it matches the YAML prototype
@@ -193,6 +193,15 @@ namespace Content.IntegrationTests.Tests.Destructible
 
                 // Damage for 50 again, up to 100 now
                 Assert.True(sDamageableComponent.ChangeDamage(DamageType.Blunt, 50, true));
+
+                // No thresholds reached as they weren't healed below the trigger amount
+                Assert.IsEmpty(sThresholdListenerComponent.ThresholdsReached);
+
+                // Heal down to 0
+                sDamageableComponent.Heal();
+
+                // Damage for 100, up to 100
+                Assert.True(sDamageableComponent.ChangeDamage(DamageType.Blunt, 100, true));
 
                 // Two thresholds reached as damage increased past the previous, 20 and 50
                 Assert.That(sThresholdListenerComponent.ThresholdsReached.Count, Is.EqualTo(2));

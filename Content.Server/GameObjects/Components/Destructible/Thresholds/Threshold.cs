@@ -29,6 +29,9 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds
         /// </summary>
         [ViewVariables] public bool TriggersOnce { get; set; }
 
+        /// <summary>
+        ///     The trigger that decides if this threshold has been reached.
+        /// </summary>
         [ViewVariables] public ITrigger? Trigger { get; set; }
 
         /// <summary>
@@ -41,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds
             serializer.DataField(this, x => x.Triggered, "triggered", false);
             serializer.DataField(this, x => x.TriggersOnce, "triggersOnce", false);
             serializer.DataField(this, x => x.Trigger, "trigger", null);
-            serializer.DataField(this, x => x.Behaviors, "behaviors", new List<IBehavior>());
+            serializer.DataField(ref _behaviors, "behaviors", new List<IBehavior>());
         }
 
         public bool Reached(IDamageableComponent damageable, DestructibleSystem system)
@@ -51,8 +54,7 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds
                 return false;
             }
 
-            return Trigger != null &&
-                   Trigger.Reached(damageable, system);
+            return Trigger != null && Trigger.Reached(damageable, system);
         }
 
         /// <summary>

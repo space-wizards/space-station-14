@@ -22,10 +22,7 @@ namespace Content.Server.GameObjects.Components.Destructible
 
         public override string Name => "Destructible";
 
-        [ViewVariables]
-        private List<Threshold> _thresholds = new();
-
-        [ViewVariables] private int PreviousTotalDamage { get; set; }
+        [ViewVariables] private List<Threshold> _thresholds = new();
 
         public IReadOnlyList<Threshold> Thresholds => _thresholds;
 
@@ -66,8 +63,6 @@ namespace Content.Server.GameObjects.Components.Destructible
                             threshold.Execute(Owner, _destructibleSystem);
                         }
                     }
-
-                    PreviousTotalDamage = msg.Damageable.TotalDamage;
 
                     break;
                 }

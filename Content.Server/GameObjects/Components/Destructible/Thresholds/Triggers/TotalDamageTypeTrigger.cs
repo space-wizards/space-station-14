@@ -37,16 +37,11 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers
                     return false;
                 }
 
-                if (!anyIncreased &&
-                    PreviousDamage.TryGetValue(type, out var previousDamage) &&
-                    damageReceived > previousDamage)
+                if (!PreviousDamage.TryGetValue(type, out var previousDamage) ||
+                    damageReceived > previousDamage && previousDamage < damageRequired)
                 {
                     anyIncreased = true;
-                }
-
-                if (damageReceived < damageRequired)
-                {
-                    return false;
+                    break;
                 }
             }
 

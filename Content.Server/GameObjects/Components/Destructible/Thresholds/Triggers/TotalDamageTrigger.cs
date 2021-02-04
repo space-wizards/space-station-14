@@ -27,7 +27,7 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers
             var oldPreviousDamage = PreviousDamage;
             PreviousDamage = totalDamage;
 
-            if (oldPreviousDamage >= totalDamage)
+            if (oldPreviousDamage >= Damage)
             {
                 return false;
             }
