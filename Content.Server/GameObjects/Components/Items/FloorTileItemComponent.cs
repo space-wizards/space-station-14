@@ -56,10 +56,14 @@ namespace Content.Server.GameObjects.Components.Items
             EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Items/genhit.ogg", location, AudioHelpers.WithVariation(0.125f));
         }
 
-        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return;
-            if (!Owner.TryGetComponent(out StackComponent stack)) return;
+            if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
+                return true;
+
+            if (!Owner.TryGetComponent(out StackComponent stack))
+                return true;
+
             var mapManager = IoCManager.Resolve<IMapManager>();
 
             var location = eventArgs.ClickLocation.AlignWithClosestGridTile();
@@ -88,10 +92,9 @@ namespace Content.Server.GameObjects.Components.Items
                     PlaceAt(mapGrid, location, _tileDefinitionManager[_outputTiles[0]].TileId, mapGrid.TileSize / 2f);
                     break;
                 }
-
-
             }
 
+            return true;
         }
     }
 }

@@ -235,11 +235,14 @@ namespace Content.Client
             "SliceableFood",
             "DamageOtherOnHit",
             "DamageOnLand",
+            "SmokeSolutionAreaEffect",
+            "FoamSolutionAreaEffect",
             "GasFilter",
             "Recyclable",
             "SecretStash",
             "Toilet",
-            "ClusterFlash"
+            "ClusterFlash",
+            "GasGenerator"
         };
     }
 }

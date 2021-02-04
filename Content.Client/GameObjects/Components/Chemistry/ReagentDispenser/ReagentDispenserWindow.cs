@@ -34,8 +34,17 @@ namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
         /// <summary>Sets the dispense amount to 10 when pressed.</summary>
         public Button DispenseButton10 { get; }
 
+        /// <summary>Sets the dispense amount to 15 when pressed.</summary>
+        public Button DispenseButton15 { get; }
+
+        /// <summary>Sets the dispense amount to 20 when pressed.</summary>
+        public Button DispenseButton20 { get; }
+
         /// <summary>Sets the dispense amount to 25 when pressed.</summary>
         public Button DispenseButton25 { get; }
+
+        /// <summary>Sets the dispense amount to 30 when pressed.</summary>
+        public Button DispenseButton30 { get; }
 
         /// <summary>Sets the dispense amount to 50 when pressed.</summary>
         public Button DispenseButton50 { get; }
@@ -79,7 +88,10 @@ namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
                             (DispenseButton1 = new Button {Text = "1", Group = dispenseAmountGroup, StyleClasses = { StyleBase.ButtonOpenRight }}),
                             (DispenseButton5 = new Button {Text = "5", Group = dispenseAmountGroup, StyleClasses = { StyleBase.ButtonOpenBoth }}),
                             (DispenseButton10 = new Button {Text = "10", Group = dispenseAmountGroup, StyleClasses = { StyleBase.ButtonOpenBoth }}),
+                            (DispenseButton15 = new Button {Text = "15", Group = dispenseAmountGroup, StyleClasses = { StyleBase.ButtonOpenBoth }}),
+                            (DispenseButton20 = new Button {Text = "20", Group = dispenseAmountGroup, StyleClasses = { StyleBase.ButtonOpenBoth }}),
                             (DispenseButton25 = new Button {Text = "25", Group = dispenseAmountGroup, StyleClasses = { StyleBase.ButtonOpenBoth }}),
+                            (DispenseButton30 = new Button {Text = "30", Group = dispenseAmountGroup, StyleClasses = { StyleBase.ButtonOpenBoth }}),
                             (DispenseButton50 = new Button {Text = "50", Group = dispenseAmountGroup, StyleClasses = { StyleBase.ButtonOpenBoth }}),
                             (DispenseButton100 = new Button {Text = "100", Group = dispenseAmountGroup, StyleClasses = { StyleBase.ButtonOpenLeft }}),
                         }
@@ -215,8 +227,17 @@ namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
                 case 10:
                     DispenseButton10.Pressed = true;
                     break;
+                case 15:
+                    DispenseButton15.Pressed = true;
+                    break;
+                case 20:
+                    DispenseButton20.Pressed = true;
+                    break;
                 case 25:
                     DispenseButton25.Pressed = true;
+                    break;
+                case 30:
+                    DispenseButton30.Pressed = true;
                     break;
                 case 50:
                     DispenseButton50.Pressed = true;

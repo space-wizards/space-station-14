@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Linq;
 using Content.Server.Administration;
@@ -12,8 +12,8 @@ using Content.Server.Utility;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.Interfaces;
-using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -22,7 +22,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.Commands.Chat
 {
     [AnyCommand]
-    internal class SuicideCommand : IClientCommand
+    internal class SuicideCommand : IConsoleCommand
     {
         public string Command => "suicide";
 
@@ -56,11 +56,12 @@ namespace Content.Server.Commands.Chat
             }
         }
 
-        public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             if (player == null)
             {
-                shell.SendText(player, "You cannot run this command from the server.");
+                shell.WriteLine("You cannot run this command from the server.");
                 return;
             }
 
@@ -72,7 +73,7 @@ namespace Content.Server.Commands.Chat
 
             if (owner == null)
             {
-                shell.SendText(player, "You don't have a mind!");
+                shell.WriteLine("You don't have a mind!");
                 return;
             }
 
@@ -122,7 +123,7 @@ namespace Content.Server.Commands.Chat
 
             // Prevent the player from returning to the body. Yes, this is an ugly hack.
             var ghost = new Ghost(){CanReturn = false};
-            ghost.Execute(shell, player, Array.Empty<string>());
+            ghost.Execute(shell, argStr, Array.Empty<string>());
         }
     }
 }

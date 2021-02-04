@@ -88,7 +88,10 @@ namespace Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser
             SetDispenseAmount1,
             SetDispenseAmount5,
             SetDispenseAmount10,
+            SetDispenseAmount15,
+            SetDispenseAmount20,
             SetDispenseAmount25,
+            SetDispenseAmount30,
             SetDispenseAmount50,
             SetDispenseAmount100,
             /// <summary>

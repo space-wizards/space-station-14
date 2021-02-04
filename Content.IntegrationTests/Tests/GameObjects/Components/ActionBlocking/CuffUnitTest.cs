@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Client.GameObjects.Components.Items;
@@ -7,7 +7,7 @@ using Content.Server.GameObjects.Components.Body;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Body;
 using NUnit.Framework;
-using Robust.Server.Interfaces.Console;
+using Robust.Server.Console;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
@@ -96,8 +96,8 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
 
         private void AddHand(IEntity to)
         {
-            var shell = IoCManager.Resolve<IConsoleShell>();
-            shell.ExecuteCommand($"addhand {to.Uid}");
+            var host = IoCManager.Resolve<IServerConsoleHost>();
+            host.ExecuteCommand(null, $"addhand {to.Uid}");
         }
     }
 }

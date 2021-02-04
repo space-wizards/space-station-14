@@ -1,3 +1,4 @@
+#nullable enable
 using System.Threading.Tasks;
 using System.Linq;
 using Content.Server.GameObjects.Components.Interactable;
@@ -28,14 +29,13 @@ namespace Content.Server.GameObjects.Components.Power.AME
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
         {
-            if (!args.User.TryGetComponent(out IHandsComponent hands))
+            if (!args.User.TryGetComponent<IHandsComponent>(out var hands))
             {
                 Owner.PopupMessage(args.User, Loc.GetString("You have no hands."));
                 return true;
             }
 
-            var activeHandEntity = hands.GetActiveHand.Owner;
-            if (activeHandEntity.TryGetComponent<ToolComponent>(out var multitool) && multitool.Qualities == ToolQuality.Multitool)
+            if (args.Using.TryGetComponent<ToolComponent>(out var multitool) && multitool.Qualities == ToolQuality.Multitool)
             {
 
                 var mapGrid = _mapManager.GetGrid(args.ClickLocation.GetGridId(_serverEntityManager));

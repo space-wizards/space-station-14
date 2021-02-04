@@ -78,7 +78,7 @@ namespace Content.Client.Chat
         private ChatChannel _filteredChannels;
 
         [Dependency] private readonly IClientNetManager _netManager = default!;
-        [Dependency] private readonly IClientConsole _console = default!;
+        [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
@@ -255,7 +255,7 @@ namespace Content.Client.Chat
                 {
                     // run locally
                     var conInput = text.Substring(1);
-                    _console.ProcessCommand(conInput);
+                    _consoleHost.ExecuteCommand(conInput);
                     break;
                 }
                 case OOCAlias:
@@ -263,7 +263,7 @@ namespace Content.Client.Chat
                     var conInput = text.Substring(1);
                     if (string.IsNullOrWhiteSpace(conInput))
                         return;
-                    _console.ProcessCommand($"ooc \"{CommandParsing.Escape(conInput)}\"");
+                    _consoleHost.ExecuteCommand($"ooc \"{CommandParsing.Escape(conInput)}\"");
                     break;
                 }
                 case AdminChatAlias:
@@ -273,11 +273,11 @@ namespace Content.Client.Chat
                         return;
                     if (_groupController.CanCommand("asay"))
                     {
-                        _console.ProcessCommand($"asay \"{CommandParsing.Escape(conInput)}\"");
+                        _consoleHost.ExecuteCommand($"asay \"{CommandParsing.Escape(conInput)}\"");
                     }
                     else
                     {
-                        _console.ProcessCommand($"ooc \"{CommandParsing.Escape(conInput)}\"");
+                        _consoleHost.ExecuteCommand($"ooc \"{CommandParsing.Escape(conInput)}\"");
                     }
 
                     break;
@@ -287,7 +287,7 @@ namespace Content.Client.Chat
                     var conInput = text.Substring(1);
                     if (string.IsNullOrWhiteSpace(conInput))
                         return;
-                    _console.ProcessCommand($"me \"{CommandParsing.Escape(conInput)}\"");
+                    _consoleHost.ExecuteCommand($"me \"{CommandParsing.Escape(conInput)}\"");
                     break;
                 }
                 default:
@@ -295,7 +295,7 @@ namespace Content.Client.Chat
                     var conInput = _currentChatBox?.DefaultChatFormat != null
                         ? string.Format(_currentChatBox.DefaultChatFormat, CommandParsing.Escape(text))
                         : text;
-                    _console.ProcessCommand(conInput);
+                    _consoleHost.ExecuteCommand(conInput);
                     break;
                 }
             }

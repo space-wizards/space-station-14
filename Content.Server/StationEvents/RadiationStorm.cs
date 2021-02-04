@@ -51,25 +51,11 @@ namespace Content.Server.StationEvents
         public override void Startup()
         {
             ResetTimeUntilPulse();
-
-            var componentManager = IoCManager.Resolve<IComponentManager>();
-
-            foreach (var overlay in componentManager.EntityQuery<ServerOverlayEffectsComponent>())
-            {
-                overlay.AddOverlay(SharedOverlayID.RadiationPulseOverlay);
-            }
-
             base.Startup();
         }
 
         public override void Shutdown()
         {
-            var componentManager = IoCManager.Resolve<IComponentManager>();
-
-            foreach (var overlay in componentManager.EntityQuery<ServerOverlayEffectsComponent>())
-            {
-                overlay.RemoveOverlay(SharedOverlayID.RadiationPulseOverlay);
-            }
             base.Shutdown();
         }
 

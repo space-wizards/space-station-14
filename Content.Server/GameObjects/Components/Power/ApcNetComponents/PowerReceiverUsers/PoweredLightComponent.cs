@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
@@ -41,16 +42,16 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         [ViewVariables] private bool _on;
 
         private LightBulbType BulbType = LightBulbType.Tube;
-        [ViewVariables] private ContainerSlot _lightBulbContainer;
+        [ViewVariables] private ContainerSlot _lightBulbContainer = default!;
 
         [ViewVariables]
-        private LightBulbComponent LightBulb
+        private LightBulbComponent? LightBulb
         {
             get
             {
                 if (_lightBulbContainer.ContainedEntity == null) return null;
 
-                _lightBulbContainer.ContainedEntity.TryGetComponent(out LightBulbComponent bulb);
+                _lightBulbContainer.ContainedEntity.TryGetComponent(out LightBulbComponent? bulb);
 
                 return bulb;
             }
@@ -65,12 +66,12 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IDamageableComponent damageableComponent))
+            if (!eventArgs.User.TryGetComponent(out IDamageableComponent? damageableComponent))
             {
                 Eject();
                 return false;
             }
-            if(eventArgs.User.TryGetComponent(out HeatResistanceComponent heatResistanceComponent))
+            if(eventArgs.User.TryGetComponent(out HeatResistanceComponent? heatResistanceComponent))
             {
                 if(CanBurn(heatResistanceComponent.GetHeatResistance()))
                 {
@@ -83,6 +84,9 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
             bool CanBurn(int heatResistance)
             {
+                if (LightBulb == null)
+                    return false;
+
                 return _lightState && heatResistance < LightBulb.BurningTemperature;
             }
 
@@ -108,7 +112,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         private bool InsertBulb(IEntity bulb)
         {
             if (LightBulb != null) return false;
-            if (!bulb.TryGetComponent(out LightBulbComponent lightBulb)) return false;
+            if (!bulb.TryGetComponent(out LightBulbComponent? lightBulb)) return false;
             if (lightBulb.Type != BulbType) return false;
 
             var inserted = _lightBulbContainer.Insert(bulb);
@@ -135,7 +139,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
             if (!_lightBulbContainer.Remove(bulb.Owner)) return;
 
-            if (!user.TryGetComponent(out HandsComponent hands)
+            if (!user.TryGetComponent(out HandsComponent? hands)
                 || !hands.PutInHand(bulb.Owner.GetComponent<ItemComponent>()))
                 bulb.Owner.Transform.Coordinates = user.Transform.Coordinates;
         }
@@ -149,7 +153,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         /// <summary>
         ///     For attaching UpdateLight() to events.
         /// </summary>
-        public void UpdateLight(object sender, EventArgs e)
+        public void UpdateLight(object? sender, EventArgs? e)
         {
             UpdateLight();
         }
@@ -212,7 +216,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             _lightBulbContainer = ContainerManagerComponent.Ensure<ContainerSlot>("light_bulb", Owner);
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent component)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
             switch (message)

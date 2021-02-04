@@ -4,9 +4,7 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Utility;
-using Content.Shared;
 using Content.Shared.GameObjects.Components.Instruments;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -18,10 +16,7 @@ using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.Network;
-using Robust.Shared.Interfaces.Timing;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
@@ -41,9 +36,6 @@ namespace Content.Server.GameObjects.Components.Instruments
             IUse,
             IThrown
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-
-        private static readonly TimeSpan OneSecAgo = TimeSpan.FromSeconds(-1);
         private InstrumentSystem _instrumentSystem = default!;
 
         /// <summary>
@@ -59,9 +51,6 @@ namespace Content.Server.GameObjects.Components.Instruments
 
         [ViewVariables]
         private float _timer = 0f;
-
-        [ViewVariables(VVAccess.ReadOnly)]
-        private TimeSpan _lastMeasured = TimeSpan.MinValue;
 
         [ViewVariables]
         private int _batchesDropped = 0;
@@ -213,15 +202,6 @@ namespace Content.Server.GameObjects.Components.Instruments
                     var minTick = midiEventMsg.MidiEvent.Min(x => x.Tick);
                     if (_lastSequencerTick > minTick)
                     {
-                        var now = _gameTiming.RealTime;
-                        var oneSecAGo = now.Add(OneSecAgo);
-                        if (_lastMeasured < oneSecAGo)
-                        {
-                            _lastMeasured = now;
-                            _laggedBatches = 0;
-                            _batchesDropped = 0;
-                        }
-
                         _laggedBatches++;
 
                         if (_respectMidiLimits)
@@ -246,15 +226,6 @@ namespace Content.Server.GameObjects.Components.Instruments
                     if (++_midiEventCount > maxMidiEventsPerSecond
                         || midiEventMsg.MidiEvent.Length > maxMidiEventsPerBatch)
                     {
-                        var now = _gameTiming.RealTime;
-                        var oneSecAGo = now.Add(OneSecAgo);
-                        if (_lastMeasured < oneSecAGo)
-                        {
-                            _lastMeasured = now;
-                            _laggedBatches = 0;
-                            _batchesDropped = 0;
-                        }
-
                         _batchesDropped++;
 
                         send = false;
@@ -266,7 +237,7 @@ namespace Content.Server.GameObjects.Components.Instruments
                     }
 
                     var maxTick = midiEventMsg.MidiEvent.Max(x => x.Tick);
-                    _lastSequencerTick = Math.Max(maxTick, minTick + 1);
+                    _lastSequencerTick = Math.Max(maxTick, minTick);
                     break;
                 case InstrumentStartMidiMessage startMidi:
                     if (session != _instrumentPlayer)
@@ -386,14 +357,13 @@ namespace Content.Server.GameObjects.Components.Instruments
 
                 UserInterface?.CloseAll();
 
+                if(Handheld)
+                    EntitySystem.Get<StandingStateSystem>().DropAllItemsInHands(mob, false);
+
                 if (mob != null && mob.TryGetComponent(out StunnableComponent? stun))
                 {
                     stun.Stun(1);
                     Clean();
-                }
-                else
-                {
-                    EntitySystem.Get<StandingStateSystem>().DropAllItemsInHands(mob, false);
                 }
 
                 InstrumentPlayer = null;
@@ -406,6 +376,8 @@ namespace Content.Server.GameObjects.Components.Instruments
 
             _timer = 0f;
             _midiEventCount = 0;
+            _laggedBatches = 0;
+            _batchesDropped = 0;
         }
 
     }

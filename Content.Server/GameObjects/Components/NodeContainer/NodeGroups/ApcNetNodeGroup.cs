@@ -1,6 +1,5 @@
-using System;
+#nullable enable
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
@@ -58,7 +57,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         public void AddApc(ApcComponent apc)
         {
-            if (!apc.Owner.TryGetComponent(out BatteryComponent battery))
+            if (!apc.Owner.TryGetComponent<BatteryComponent>(out var battery))
             {
                 return;
             }

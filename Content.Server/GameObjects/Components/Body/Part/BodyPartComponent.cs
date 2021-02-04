@@ -99,12 +99,12 @@ namespace Content.Server.GameObjects.Components.Body.Part
             }
         }
 
-        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             // TODO BODY
             if (eventArgs.Target == null)
             {
-                return;
+                return false;
             }
 
             CloseAllSurgeryUIs();
@@ -116,6 +116,8 @@ namespace Content.Server.GameObjects.Components.Body.Part
             {
                 SendSlots(eventArgs, body);
             }
+
+            return true;
         }
 
         private void SendSlots(AfterInteractEventArgs eventArgs, IBody body)

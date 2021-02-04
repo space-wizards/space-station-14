@@ -100,34 +100,34 @@ namespace Content.Server.GameObjects.Components.Fluids
             serializer.DataField(ref _safety, "safety", true);
         }
 
-        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (!ActionBlockerSystem.CanInteract(eventArgs.User))
-                return;
+                return false;
 
             if (_hasSafety && _safety)
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("Its safety is on!"));
-                return;
+                return true;
             }
 
             if (CurrentVolume <= 0)
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("It's empty!"));
-                return;
+                return true;
             }
 
             var curTime = _gameTiming.CurTime;
 
             if(curTime < _cooldownEnd)
-                return;
+                return true;
 
             var playerPos = eventArgs.User.Transform.Coordinates;
             if (eventArgs.ClickLocation.GetGridId(_serverEntityManager) != playerPos.GetGridId(_serverEntityManager))
-                return;
+                return true;
 
             if (!Owner.TryGetComponent(out SolutionContainerComponent contents))
-                return;
+                return true;
 
             var direction = (eventArgs.ClickLocation.Position - playerPos.Position).Normalized;
             var threeQuarters = direction * 0.75f;
@@ -183,6 +183,8 @@ namespace Content.Server.GameObjects.Components.Fluids
                 cooldown.CooldownStart = _lastUseTime;
                 cooldown.CooldownEnd = _cooldownEnd;
             }
+
+            return true;
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)

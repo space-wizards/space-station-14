@@ -22,7 +22,8 @@ namespace Content.Shared.GameObjects
         Objects = DrawDepthTag.Default,
         Items = DrawDepthTag.Default + 1,
         Mobs = DrawDepthTag.Default + 2,
-        Ghosts = DrawDepthTag.Default + 3,
-        Overlays = DrawDepthTag.Default + 4,
+        Effects = DrawDepthTag.Default + 3,
+        Ghosts = DrawDepthTag.Default + 4,
+        Overlays = DrawDepthTag.Default + 5,
     }
 }

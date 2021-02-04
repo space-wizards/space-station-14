@@ -7,6 +7,7 @@ using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
+using Robust.Shared.Maths;
 
 namespace Content.Server.Construction.Completions
 {
@@ -14,10 +15,12 @@ namespace Content.Server.Construction.Completions
     public class SnapToGrid : IGraphAction
     {
         public SnapGridOffset Offset { get; private set; } = SnapGridOffset.Center;
+        public bool SouthRotation { get; private set; } = false;
 
         void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.Offset, "offset", SnapGridOffset.Center);
+            serializer.DataField(this, x => x.SouthRotation, "southRotation", false);
         }
 
         public async Task PerformAction(IEntity entity, IEntity? user)
@@ -25,6 +28,10 @@ namespace Content.Server.Construction.Completions
             if (entity.Deleted) return;
 
             entity.SnapToGrid(Offset);
+            if (SouthRotation)
+            {
+                entity.Transform.LocalRotation = Angle.South;
+            }
         }
     }
 }

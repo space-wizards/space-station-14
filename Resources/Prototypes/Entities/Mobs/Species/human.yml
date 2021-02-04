@@ -20,7 +20,7 @@
   # Organs
   - type: SolutionContainer
     maxVol: 250
-    caps: AddTo, RemoveFrom
+    caps: Injectable, Drawable
   - type: Bloodstream
     max_volume: 100
   # StatusEffects
@@ -196,6 +196,7 @@
   - type: Pullable
   - type: DoAfter
   - type: CreamPied
+  - type: Stripping
   - type: Strippable
   - type: UserInterface
     interfaces:

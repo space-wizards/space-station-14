@@ -1,26 +1,27 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.Administration;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Players;
-using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Commands.Chat
 {
     [AnyCommand]
-    internal class MeCommand : IClientCommand
+    internal class MeCommand : IConsoleCommand
     {
         public string Command => "me";
         public string Description => "Perform an action.";
         public string Help => "me <text>";
 
-        public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             if (player == null)
             {
-                shell.SendText(player, "This command cannot be run from the server.");
+                shell.WriteLine("This command cannot be run from the server.");
                 return;
             }
 
@@ -39,7 +40,7 @@ namespace Content.Server.Commands.Chat
 
             if (mindComponent == null)
             {
-                shell.SendText(player, "You don't have a mind!");
+                shell.WriteLine("You don't have a mind!");
                 return;
             }
 

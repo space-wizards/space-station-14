@@ -54,7 +54,7 @@ namespace Content.Client.Parallax
             {
                 using (var reader = new StreamReader(configStream, EncodingHelpers.UTF8))
                 {
-                    contents = reader.ReadToEnd();
+                    contents = reader.ReadToEnd().Replace(Environment.NewLine, "\n");
                 }
 
                 if (!debugParallax && _resourceCache.UserData.Exists(ParallaxConfigOld))

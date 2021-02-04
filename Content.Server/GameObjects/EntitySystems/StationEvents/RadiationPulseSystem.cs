@@ -35,7 +35,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
         {
             base.Update(frameTime);
 
-            foreach (var comp in ComponentManager.EntityQuery<RadiationPulseComponent>())
+            foreach (var comp in ComponentManager.EntityQuery<RadiationPulseComponent>(true))
             {
                 comp.Update(frameTime);
                 var ent = comp.Owner;
