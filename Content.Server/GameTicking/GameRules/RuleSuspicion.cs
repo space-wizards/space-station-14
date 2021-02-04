@@ -2,6 +2,7 @@
 using System.Threading;
 using Content.Server.GameObjects.Components.Suspicion;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.GameMode;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs.Roles.Suspicion;
@@ -14,6 +15,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Configuration;
+using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Timer = Robust.Shared.Timers.Timer;
@@ -31,9 +33,10 @@ namespace Content.Server.GameTicking.GameRules
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IGameTicker _gameTicker = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
 
         private readonly CancellationTokenSource _checkTimerCancel = new();
-        private CancellationTokenSource _maxTimerCancel = new();
+        private TimeSpan _endTime;
 
         public TimeSpan RoundMaxTime { get; set; } = TimeSpan.FromSeconds(CCVars.SuspicionMaxTimeSeconds.DefaultValue);
         public TimeSpan RoundEndDelay { get; set; } = TimeSpan.FromSeconds(10);
@@ -42,61 +45,35 @@ namespace Content.Server.GameTicking.GameRules
         {
             RoundMaxTime = TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.SuspicionMaxTimeSeconds));
 
+            _endTime = _timing.CurTime + RoundMaxTime;
+
             _chatManager.DispatchServerAnnouncement(Loc.GetString("There are traitors on the station! Find them, and kill them!"));
 
             bool Predicate(IPlayerSession session) => session.ContentData()?.Mind?.HasRole<SuspicionTraitorRole>() ?? false;
 
             EntitySystem.Get<AudioSystem>().PlayGlobal("/Audio/Misc/tatoralert.ogg", AudioParams.Default, Predicate);
+            EntitySystem.Get<SuspicionEndTimerSystem>().EndTime = _endTime;
 
             EntitySystem.Get<DoorSystem>().AccessType = DoorSystem.AccessTypes.AllowAllNoExternal;
 
             Timer.SpawnRepeating(DeadCheckDelay, CheckWinConditions, _checkTimerCancel.Token);
-
-            _gameTicker.OnRunLevelChanged += RunLevelChanged;
         }
 
         public override void Removed()
         {
             base.Removed();
 
-            _gameTicker.OnRunLevelChanged -= RunLevelChanged;
-
             EntitySystem.Get<DoorSystem>().AccessType = DoorSystem.AccessTypes.Id;
+            EntitySystem.Get<SuspicionEndTimerSystem>().EndTime = null;
 
             _checkTimerCancel.Cancel();
         }
 
-        public void RestartTimer()
-        {
-            _maxTimerCancel.Cancel();
-            _maxTimerCancel = new CancellationTokenSource();
-            Timer.Spawn(RoundMaxTime, TimerFired, _maxTimerCancel.Token);
-        }
-
-        public void StopTimer()
-        {
-            _maxTimerCancel.Cancel();
-        }
-
-        private void TimerFired()
+        private void Timeout()
         {
             _chatManager.DispatchServerAnnouncement(Loc.GetString("Time has run out for the traitors!"));
 
             EndRound(Victory.Innocents);
-        }
-
-        private void RunLevelChanged(GameRunLevelChangedEventArgs args)
-        {
-            switch (args.NewRunLevel)
-            {
-                case GameRunLevel.InRound:
-                    RestartTimer();
-                    break;
-                case GameRunLevel.PreRoundLobby:
-                case GameRunLevel.PostRound:
-                    StopTimer();
-                    break;
-            }
         }
 
         private void CheckWinConditions()
@@ -144,6 +121,11 @@ namespace Content.Server.GameTicking.GameRules
             {
                 _chatManager.DispatchServerAnnouncement(Loc.GetString("The innocents are dead! The traitors win."));
                 EndRound(Victory.Traitors);
+            }
+            else if (_timing.CurTime > _endTime)
+            {
+                _chatManager.DispatchServerAnnouncement(Loc.GetString("Time has run out for the traitors!"));
+                EndRound(Victory.Innocents);
             }
         }
 
