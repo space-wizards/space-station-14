@@ -4,10 +4,10 @@ using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behaviors
 {
-    public interface IBehavior : IExposeData
+    public interface IThresholdBehavior : IExposeData
     {
         /// <summary>
-        ///     Triggers this behavior.
+        ///     Executes this behavior.
         /// </summary>
         /// <param name="owner">The entity that owns this behavior.</param>
         /// <param name="system">

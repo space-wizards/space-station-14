@@ -13,7 +13,7 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers
     ///     are above the specified threshold.
     /// </summary>
     [Serializable]
-    public class TotalDamageTypesTrigger : ITrigger
+    public class TotalDamageTypesTrigger : IThresholdTrigger
     {
         /// <summary>
         ///     The amount of damage at which this threshold will trigger.

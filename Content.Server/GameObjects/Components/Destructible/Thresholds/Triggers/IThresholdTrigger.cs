@@ -4,7 +4,7 @@ using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers
 {
-    public interface ITrigger : IExposeData
+    public interface IThresholdTrigger : IExposeData
     {
         /// <summary>
         ///     Checks if this trigger has been reached.

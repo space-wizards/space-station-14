@@ -7,7 +7,7 @@ using Robust.Shared.Serialization;
 namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behaviors
 {
     [UsedImplicitly]
-    public class GibBehavior : IBehavior
+    public class GibBehavior : IThresholdBehavior
     {
         private bool _recursive = true;
 

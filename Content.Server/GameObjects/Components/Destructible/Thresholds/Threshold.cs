@@ -13,7 +13,7 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds
 {
     public class Threshold : IExposeData
     {
-        private List<IBehavior> _behaviors = new();
+        private List<IThresholdBehavior> _behaviors = new();
 
         /// <summary>
         ///     Whether or not this threshold was triggered in the previous call to
@@ -37,19 +37,19 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds
         /// <summary>
         ///     The trigger that decides if this threshold has been reached.
         /// </summary>
-        [ViewVariables] public ITrigger? Trigger { get; set; }
+        [ViewVariables] public IThresholdTrigger? Trigger { get; set; }
 
         /// <summary>
         ///     Behaviors to activate once this threshold is triggered.
         /// </summary>
-        [ViewVariables] public IReadOnlyList<IBehavior> Behaviors => _behaviors;
+        [ViewVariables] public IReadOnlyList<IThresholdBehavior> Behaviors => _behaviors;
 
         public void ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.Triggered, "triggered", false);
             serializer.DataField(this, x => x.TriggersOnce, "triggersOnce", false);
             serializer.DataField(this, x => x.Trigger, "trigger", null);
-            serializer.DataField(ref _behaviors, "behaviors", new List<IBehavior>());
+            serializer.DataField(ref _behaviors, "behaviors", new List<IThresholdBehavior>());
         }
 
         public bool Reached(IDamageableComponent damageable, DestructibleSystem system)

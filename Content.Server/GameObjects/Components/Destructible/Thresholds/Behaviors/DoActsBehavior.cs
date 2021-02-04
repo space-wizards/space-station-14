@@ -7,7 +7,7 @@ using Robust.Shared.Serialization;
 namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behaviors
 {
     [Serializable]
-    public class DoActsBehavior : IBehavior
+    public class DoActsBehavior : IThresholdBehavior
     {
         private int _acts;
 

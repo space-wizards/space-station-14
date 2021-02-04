@@ -7,7 +7,7 @@ using Robust.Shared.Serialization;
 namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behaviors
 {
     [Serializable]
-    public class PlaySoundCollectionBehavior : IBehavior
+    public class PlaySoundCollectionBehavior : IThresholdBehavior
     {
         /// <summary>
         ///     Sound collection from which to pick a random sound to play.

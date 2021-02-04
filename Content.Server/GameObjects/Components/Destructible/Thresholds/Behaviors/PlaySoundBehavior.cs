@@ -7,7 +7,7 @@ using Robust.Shared.Serialization;
 namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behaviors
 {
     [Serializable]
-    public class PlaySoundBehavior : IBehavior
+    public class PlaySoundBehavior : IThresholdBehavior
     {
         /// <summary>
         ///     Sound played upon destruction.

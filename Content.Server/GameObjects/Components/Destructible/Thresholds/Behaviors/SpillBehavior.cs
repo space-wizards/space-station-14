@@ -9,7 +9,7 @@ using Robust.Shared.Serialization;
 namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behaviors
 {
     [UsedImplicitly]
-    public class SpillBehavior : IBehavior
+    public class SpillBehavior : IThresholdBehavior
     {
         public void ExposeData(ObjectSerializer serializer) { }
 

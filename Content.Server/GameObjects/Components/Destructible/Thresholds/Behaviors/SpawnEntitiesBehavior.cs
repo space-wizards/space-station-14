@@ -10,7 +10,7 @@ using Robust.Shared.Serialization;
 namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behaviors
 {
     [Serializable]
-    public class SpawnEntitiesBehavior : IBehavior
+    public class SpawnEntitiesBehavior : IThresholdBehavior
     {
         /// <summary>
         ///     Entities spawned on reaching this threshold, from a min to a max.
