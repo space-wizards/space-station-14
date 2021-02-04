@@ -8,15 +8,21 @@ using Content.Client.Utility;
 using Content.Shared.Input;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Graphics.Drawing;
+using Robust.Client.Graphics.Shaders;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Containers;
+using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Client.GameObjects.EntitySystems
@@ -25,14 +31,22 @@ namespace Content.Client.GameObjects.EntitySystems
     {
         private abstract class ContextMenuElement : Control
         {
+            private static readonly Color HoverColor = Color.DarkSlateGray;
+
+            public readonly ContextMenuElement Pre;
+
             protected readonly VerbSystem VSystem;
             protected readonly bool IsDebug;
             protected readonly int Depth;
-            public ContextMenuElement(int depth, VerbSystem verbSystem, bool isDebug)
+
+            protected ContextMenuElement(int depth, VerbSystem verbSystem, bool isDebug, ContextMenuElement pre = null)
             {
                 Depth = depth;
                 VSystem = verbSystem;
                 IsDebug = isDebug;
+
+                Pre = pre;
+
                 MouseFilter = MouseFilterMode.Stop;
             }
 
@@ -42,7 +56,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
                 if (UserInterfaceManager.CurrentlyHovered == this)
                 {
-                    handle.DrawRect(PixelSizeBox, Color.DarkSlateGray);
+                    handle.DrawRect(PixelSizeBox, HoverColor);
                 }
             }
 
@@ -51,23 +65,29 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private sealed class SingleContextElement : ContextMenuElement
         {
-            private IEntity _entity;
-            private ISpriteComponent _sprite;
+            private ShaderInstance _dropTargetInRangeShader;
+            private ShaderInstance _dropTargetOutOfRangeShader;
+            public IEntity ContextEntity{ get; }
 
+            private ISpriteComponent _sprite;
             private InteractionOutlineComponent _outline;
             private bool _drawOutline;
             private int _oldDrawDepth;
 
-            public SingleContextElement(IEntity entity, int depth, VerbSystem verbSystem, bool isDebug) : base(depth, verbSystem, isDebug)
+            public SingleContextElement(IEntity entity, ContextMenuElement pre, int depth, VerbSystem verbSystem, bool isDebug) : base(depth, verbSystem, isDebug, pre)
             {
-                _entity = entity;
-
-                if (_entity.TryGetComponent(out _sprite))
+                ContextEntity = entity;
+                if (ContextEntity.TryGetComponent(out _sprite))
                 {
                     _oldDrawDepth = _sprite.DrawDepth;
                 }
 
-                _outline = _entity.GetComponentOrNull<InteractionOutlineComponent>();
+                _outline = ContextEntity.GetComponentOrNull<InteractionOutlineComponent>();
+                if (_outline != null)
+                {
+                    _dropTargetInRangeShader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>("SelectionOutlineInrange").Instance();
+                    _dropTargetOutOfRangeShader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>("SelectionOutline").Instance();
+                }
 
                 InitializeContextMenuElement();
             }
@@ -76,13 +96,13 @@ namespace Content.Client.GameObjects.EntitySystems
             {
                 if (args.Function == ContentKeyFunctions.OpenContextMenu)
                 {
-                    VSystem.OnContextButtonPressed(_entity);
+                    VSystem.OnContextButtonPressed(ContextEntity);
                     return;
                 }
 
                 if (args.Function == ContentKeyFunctions.ExamineEntity)
                 {
-                    Get<ExamineSystem>().DoExamine(_entity);
+                    Get<ExamineSystem>().DoExamine(ContextEntity);
                     return;
                 }
 
@@ -95,7 +115,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     var funcId = VSystem._inputManager.NetworkBindMap.KeyFunctionID(func);
 
                     var message = new FullInputCmdMessage(VSystem._gameTiming.CurTick, VSystem._gameTiming.TickFraction, funcId,
-                        BoundKeyState.Down, _entity.Transform.Coordinates, args.PointerLocation, _entity.Uid);
+                        BoundKeyState.Down, ContextEntity.Transform.Coordinates, args.PointerLocation, ContextEntity.Uid);
 
                     var session = VSystem._playerManager.LocalPlayer.Session;
                     inputSys.HandleInputCommand(session, func, message);
@@ -104,7 +124,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     return;
                 }
 
-                if (VSystem._itemSlotManager.OnButtonPressed(args, _entity))
+                if (VSystem._itemSlotManager.OnButtonPressed(args, ContextEntity))
                 {
                     VSystem.CloseAllMenus();
                 }
@@ -119,47 +139,42 @@ namespace Content.Client.GameObjects.EntitySystems
                     VSystem.CloseGroupMenu();
                 }
 
-                // if (VSystem._contextPopupExt != null)
-                // {
-                    // VSystem.CloseContextPopupExt();
-                // }
-                while (VSystem.StackContextMenus.Peek().Depth > Depth)
-                {
-                    VSystem.StackContextMenus.Pop()?.Dispose();;
-                }
+                VSystem.CloseContextPopups(Depth);
 
-                if (_entity != null && !_entity.Deleted)
+                if (!ContextEntity.Deleted)
                 {
                     var localPlayer = VSystem._playerManager.LocalPlayer;
-                    if (localPlayer != null && localPlayer.ControlledEntity != null)
+                    if (localPlayer?.ControlledEntity != null)
                     {
+                        _outline?.OnMouseEnter(localPlayer.InRangeUnobstructed(ContextEntity, ignoreInsideBlocker: true));
                         _sprite.DrawDepth = (int) Shared.GameObjects.DrawDepth.HighlightedItems;
-                        _outline?.OnMouseEnter(localPlayer.InRangeUnobstructed(_entity, ignoreInsideBlocker: true));
+                        _drawOutline = true;
                     }
                 }
-                _drawOutline = true;
             }
 
-            private void RestoreSprite()
+            protected override void Draw(DrawingHandleScreen handle)
             {
-                if (_entity != null && !_entity.Deleted)
+                base.Draw(handle);
+                if (_drawOutline)
                 {
-                    _sprite.DrawDepth = _oldDrawDepth;
-                    _outline?.OnMouseLeave();
+                    var localPlayer = VSystem._playerManager.LocalPlayer;
+                    if (localPlayer?.ControlledEntity != null)
+                    {
+                        _outline?.UpdateInRange(localPlayer.InRangeUnobstructed(ContextEntity, ignoreInsideBlocker: true));
+                    }
                 }
-                _drawOutline = false;
             }
 
             protected override void MouseExited()
             {
                 base.MouseExited();
-                RestoreSprite();
-            }
-
-            protected override void Dispose(bool disposing)
-            {
-                RestoreSprite();
-                base.Dispose(disposing);
+                if (!ContextEntity.Deleted)
+                {
+                    _sprite.DrawDepth = _oldDrawDepth;
+                    _outline?.OnMouseLeave();
+                }
+                _drawOutline = false;
             }
 
             protected override void InitializeContextMenuElement()
@@ -172,12 +187,15 @@ namespace Content.Client.GameObjects.EntitySystems
                         {
                             new LayoutContainer
                             {
-                                Children = { new SpriteView { Sprite = _entity.GetComponent<ISpriteComponent>() } }
+                                Children = { new SpriteView { Sprite = ContextEntity.GetComponent<ISpriteComponent>() } }
                             },
                             new MarginContainer
                             {
                                 MarginLeftOverride = 4, MarginRightOverride = 4,
-                                Children = { new Label {Text = Loc.GetString(IsDebug ? $"{_entity.Name} ({_entity.Uid})" : _entity.Name) } }
+                                Children = { new Label
+                                {
+                                    Text = Loc.GetString(IsDebug ? $"{ContextEntity.Name} ({ContextEntity.Uid})" : ContextEntity.Name)
+                                } }
                             },
                         }
                     }
@@ -189,17 +207,20 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             private static readonly TimeSpan HoverDelay = TimeSpan.FromSeconds(0.2);
 
-            private HashSet<IEntity> _entities;
-
-            private ISpriteComponent _sprite;
+            public HashSet<IEntity> ContextEntities { get; }
+            private SpriteView _spriteView;
             private Label _label;
-            public StackContextElement(IEnumerable<IEntity> entities, int depth, VerbSystem verbSystem, bool isDebug) : base(depth, verbSystem, isDebug)
+
+            public StackContextElement(IEnumerable<IEntity> entities, ContextMenuElement pre, int depth, VerbSystem verbSystem, bool isDebug) : base(depth, verbSystem, isDebug, pre)
             {
-                _entities = new(entities);
-                _sprite = _entities.First().GetComponent<ISpriteComponent>();
+                ContextEntities = new(entities);
+                _spriteView = new SpriteView()
+                {
+                    Sprite = ContextEntities.First().GetComponent<ISpriteComponent>()
+                };
                 _label = new Label
                 {
-                    Text = Loc.GetString(_entities.Count.ToString()),
+                    Text = Loc.GetString(ContextEntities.Count.ToString()),
                     StyleClasses = { StyleNano.StyleClassContextMenuCount },
                 };
                 InitializeContextMenuElement();
@@ -217,14 +238,11 @@ namespace Content.Client.GameObjects.EntitySystems
                         SeparationOverride = 6,
                         Children =
                         {
-                            new LayoutContainer
-                            {
-                                Children = { new SpriteView { Sprite = _sprite }, _label }
-                            },
+                            new LayoutContainer { Children = { _spriteView, _label } },
                             new MarginContainer
                             {
                                 MarginLeftOverride = 4, MarginRightOverride = 4,
-                                Children = { new Label { Text = Loc.GetString(_entities.First().Name) } }
+                                Children = { new Label { Text = Loc.GetString(ContextEntities.First().Name) } }
                             },
                             new TextureRect
                             {
@@ -253,34 +271,28 @@ namespace Content.Client.GameObjects.EntitySystems
                         VSystem.CloseGroupMenu();
                     }
 
-                    // if (VSystem._contextPopupExt != null)
-                    // {
-                    // VSystem.CloseContextPopupExt();
-                    // }
-                    while (VSystem.StackContextMenus.Peek().Depth > Depth)
+                    VSystem.CloseContextPopups(Depth);
+
+                    if (VSystem.StackContextMenus.Count == 0)
                     {
-                        VSystem.StackContextMenus.Pop()?.Dispose();;
+                        return;
                     }
 
-                    var filteredEntities = _entities.Where(entity => !entity.Deleted);
+                    var filteredEntities = ContextEntities.Where(entity => !entity.Deleted);
                     if (filteredEntities.Any())
                     {
-                        // VSystem._contextPopupExt = new ContextMenuPopup();
-                        var lastDepth = VSystem.StackContextMenus.Peek().Depth;
-                        var _contextPopupExt = new ContextMenuPopup(lastDepth + 1);
+                        var newContextMenu = new ContextMenuPopup(VSystem.StackContextMenus.Peek().Depth + 1);
                         foreach (var entity in filteredEntities)
                         {
-                            _contextPopupExt.AddContextElement(entity, VSystem, IsDebug);
+                            VSystem.menus.Remove(entity);
+                            newContextMenu.AddContextElement(entity, this, VSystem, IsDebug);
                         }
-                        ///Remove after :
-                        _contextPopupExt.AddContextElement(filteredEntities, VSystem, IsDebug);
-                        ///
 
-                        VSystem.StackContextMenus.Push(_contextPopupExt);
-                        UserInterfaceManager.ModalRoot.AddChild(_contextPopupExt);
+                        VSystem.StackContextMenus.Push(newContextMenu);
+                        UserInterfaceManager.ModalRoot.AddChild(newContextMenu);
 
-                        var size = _contextPopupExt.List.CombinedMinimumSize;
-                        _contextPopupExt.Open(UIBox2.FromDimensions(GlobalPosition + (Width, 0), size));
+                        var size = newContextMenu.List.CombinedMinimumSize;
+                        newContextMenu.Open(UIBox2.FromDimensions(GlobalPosition + (Width, 0), size));
                     }
                 }, new CancellationTokenSource().Token);
             }
@@ -290,18 +302,17 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             private const int MaxItemsBeforeScroll = 10;
             private static readonly Color DefaultColor = Color.FromHex("#111E");
-            private static readonly Color HighlightedColor = Color.FromHex("#111E");
             private static readonly Color SeparationColor = Color.FromHex("#333");
 
             public int Depth { get; }
-
             public  VBoxContainer List { get; }
+            public  ScrollContainer ScrollList { get; }
             public readonly Dictionary<ContextMenuElement, Control> Elements = new();
 
             public ContextMenuPopup(int depth = 0)
             {
                 Depth = depth;
-                AddChild(new ScrollContainer
+                AddChild(ScrollList = new ScrollContainer
                 {
                     HScrollEnabled = false,
                     Children = { new PanelContainer
@@ -312,35 +323,69 @@ namespace Content.Client.GameObjects.EntitySystems
                 });
             }
 
+            protected override void FrameUpdate(FrameEventArgs args)
+            {
+                base.FrameUpdate(args);
+
+                foreach (var (k, _) in Elements)
+                {
+                    if (k is SingleContextElement single && (single.ContextEntity.Deleted || single.ContextEntity.IsInContainer()))
+                    {
+                        Remove(single);
+                    }
+                    if (k is StackContextElement stack && stack.ContextEntities.Count == 0)
+                    {
+                        List.RemoveChild(Elements[stack]);
+                        Elements.Remove(stack);
+                    }
+                }
+                if (Elements.Count == 0)
+                {
+                    RemoveAllChildren();
+                }
+            }
+
+            private float maxX = 0.0f;
             private void Add(ContextMenuElement element, Control control)
             {
                 List.AddChild(control);
                 Elements.Add(element, control);
+
+                maxX = Math.Max(ScrollList.CombinedMinimumSize.X, maxX);
             }
 
-            private void Remove(ContextMenuElement element)
+            public void Remove(SingleContextElement element)
             {
-                var control = Elements[element];
-                List.RemoveChild(control);
+                List.RemoveChild(Elements[element]);
                 Elements.Remove(element);
+
+                if (element.Pre is StackContextElement parent)
+                {
+                    parent.ContextEntities.Remove(element.ContextEntity);
+                    if (parent.ContextEntities.Count > 0)
+                    {
+                        parent.UpdateLabelAndSprite();
+                    }
+                }
             }
 
-            public void AddContextElement(IEntity entity, VerbSystem verbSystem, bool isDebug)
+            public void AddContextElement(IEntity entity, ContextMenuElement pre, VerbSystem verbSystem, bool isDebug)
             {
-                var element = new SingleContextElement(entity, Depth, verbSystem, isDebug);
+                var element = new SingleContextElement(entity, pre, Depth, verbSystem, isDebug);
                 Add(element, new VBoxContainer { Children = { element, Separation() } });
+                verbSystem.menus.Add(entity, (this, element));
             }
 
-            public void AddContextElement(IEnumerable<IEntity> entities, VerbSystem verbSystem, bool isDebug)
+            public void AddContextElement(IEnumerable<IEntity> entities, ContextMenuElement pre, VerbSystem verbSystem, bool isDebug)
             {
                 if (entities.Count() > 1)
                 {
-                    var element = new StackContextElement(entities, Depth, verbSystem, isDebug);
+                    var element = new StackContextElement(entities, pre, Depth, verbSystem, isDebug);
                     Add(element, new VBoxContainer { Children = { element, Separation() } });
                 }
                 else
                 {
-                    AddContextElement(entities.First(), verbSystem, isDebug);
+                    AddContextElement(entities.First(), pre, verbSystem, isDebug);
                 }
             }
 
@@ -348,7 +393,9 @@ namespace Content.Client.GameObjects.EntitySystems
             {
                 var size = base.CalculateMinimumSize();
                 size.Y = Elements.Count > MaxItemsBeforeScroll ? MaxItemsBeforeScroll * 32 + MaxItemsBeforeScroll * 2 : size.Y;
-                return Vector2.ComponentMin(size, List.CombinedMinimumSize);
+                var f = Vector2.ComponentMin(size, List.CombinedMinimumSize);
+                f.X = maxX;
+                return f;
             }
 
             private static Control Separation()
