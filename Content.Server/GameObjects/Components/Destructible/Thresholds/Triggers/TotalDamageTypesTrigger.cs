@@ -9,10 +9,8 @@ using Robust.Shared.Serialization;
 namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers
 {
     /// <summary>
-    ///     If all damage types received are above the threshold, at least
-    ///     one of their old values in <see cref="PreviousDamage"/> was below the
-    ///     threshold and at least one damage type has increased in value this
-    ///     trigger will activate.
+    ///     A trigger that will activate when all of the damage types received
+    ///     are above the specified threshold.
     /// </summary>
     [Serializable]
     public class TotalDamageTypesTrigger : ITrigger

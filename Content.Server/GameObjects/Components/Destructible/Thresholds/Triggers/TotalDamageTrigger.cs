@@ -5,6 +5,10 @@ using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers
 {
+    /// <summary>
+    ///     A trigger that will activate when the amount of total damage received
+    ///     is above the specified threshold.
+    /// </summary>
     [Serializable]
     public class TotalDamageTrigger : ITrigger
     {
