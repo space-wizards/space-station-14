@@ -198,12 +198,31 @@ namespace Content.Server.GameObjects.Components.GUI
             return success;
         }
 
+        /// <summary>
+        ///     Drops the item if <paramref name="mob"/> doesn't have hands.
+        /// </summary>
+        public static void PutInHandOrDropStatic(IEntity mob, ItemComponent item, bool mobCheck = true)
+        {
+            if (!mob.TryGetComponent(out HandsComponent? hands))
+            {
+                DropAtFeet(mob, item);
+                return;
+            }
+
+            hands.PutInHandOrDrop(item, mobCheck);
+        }
+
         public void PutInHandOrDrop(ItemComponent item, bool mobCheck = true)
         {
             if (!PutInHand(item, mobCheck))
             {
-                item.Owner.Transform.Coordinates = Owner.Transform.Coordinates;
+                DropAtFeet(Owner, item);
             }
+        }
+
+        private static void DropAtFeet(IEntity mob, ItemComponent item)
+        {
+            item.Owner.Transform.Coordinates = mob.Transform.Coordinates;
         }
 
         public bool CanPutInHand(ItemComponent item, bool mobCheck = true)
