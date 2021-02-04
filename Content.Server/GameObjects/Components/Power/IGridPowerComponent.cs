@@ -15,9 +15,13 @@ namespace Content.Server.GameObjects.Components.Power
     }
 
     [ComponentReference(typeof(IGridPowerComponent))]
-    [RegisterComponent] //[Serializable] - TODO: is this needed?
+    [RegisterComponent]
     public class GridPowerComponent : Component, IGridPowerComponent
     {
+        public override string Name => "GridPower";
+
+        private HashSet<IApcNet> ApcNets { get; set; } = new();
+
         public void AddApcNet(IApcNet apcNet)
         {
             ApcNets.Add(apcNet);
@@ -27,10 +31,6 @@ namespace Content.Server.GameObjects.Components.Power
         {
             ApcNets.Remove(apcNet);
         }
-
-        public override string Name => "GridPower";
-
-        private HashSet<IApcNet> ApcNets { get; set; } = new();
 
         public void Update(float frameTime)
         {
