@@ -90,7 +90,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
             SetAppearance(RadiationCollectorVisualState.Deactivating);
         }
 
-        public void RadiationAct(float frameTime, SharedRadiationPulseComponent radiation)
+        void IRadiationAct.RadiationAct(float frameTime, SharedRadiationPulseComponent radiation)
         {
             if (!_enabled) return;
 

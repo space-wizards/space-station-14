@@ -5,6 +5,7 @@ using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Construction.Completions
@@ -14,7 +15,7 @@ namespace Content.Server.Construction.Completions
     {
         public SnapGridOffset Offset { get; private set; } = SnapGridOffset.Center;
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.Offset, "offset", SnapGridOffset.Center);
         }

@@ -58,12 +58,12 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         // TODO CONSTRUCTION make this use a construction graph
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             return InsertBulb(eventArgs.Using);
         }
 
-        public bool InteractHand(InteractHandEventArgs eventArgs)
+        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
             if (!eventArgs.User.TryGetComponent(out IDamageableComponent damageableComponent))
             {

@@ -252,7 +252,7 @@ namespace Content.Server.GameObjects.Components.PDA
             return true;
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             var item = eventArgs.Using;
 
@@ -280,7 +280,7 @@ namespace Content.Server.GameObjects.Components.PDA
             UpdatePDAAppearance();
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {

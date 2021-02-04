@@ -81,7 +81,7 @@ namespace Content.Shared.Chemistry
         /// </summary>
         public bool Catalyst => _catalyst;
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(ref _amount, "amount", ReagentUnit.New(1));
             serializer.DataField(ref _catalyst, "catalyst", false);

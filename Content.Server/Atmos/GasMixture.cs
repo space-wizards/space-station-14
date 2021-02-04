@@ -534,7 +534,7 @@ namespace Content.Server.Atmos
             NumericsHelpers.Multiply(_moles, multiplier);
         }
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.Immutable, "immutable", false);
             serializer.DataField(this, x => x.Volume, "volume", 0f);

@@ -197,7 +197,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             UserInterface?.Toggle(actor.playerSession);
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!Powered)
             {
@@ -473,7 +473,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             _audioSystem.PlayFromEntity("/Audio/Machines/machine_switch.ogg",Owner,AudioParams.Default.WithVolume(-2f));
         }
 
-        public SuicideKind Suicide(IEntity victim, IChatManager chat)
+        SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
         {
             var headCount = 0;
 

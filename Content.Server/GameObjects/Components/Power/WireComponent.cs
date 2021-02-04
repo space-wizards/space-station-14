@@ -35,7 +35,7 @@ namespace Content.Server.GameObjects.Components.Power
             serializer.DataField(ref _wireType, "wireType", WireType.HighVoltage);
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!eventArgs.Using.TryGetComponent(out ToolComponent tool)) return false;
             if (!await tool.UseTool(eventArgs.User, Owner, 0.25f, ToolQuality.Cutting)) return false;

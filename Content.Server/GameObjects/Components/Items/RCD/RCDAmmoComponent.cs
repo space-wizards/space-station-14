@@ -32,7 +32,7 @@ namespace Content.Server.GameObjects.Components.Items.RCD
             message.AddMarkup(Loc.GetString("It holds {0} charges.", refillAmmo));
         }
 
-        public async Task AfterInteract(AfterInteractEventArgs   eventArgs)
+        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (eventArgs.Target == null || !eventArgs.Target.TryGetComponent(out RCDComponent rcdComponent) || !eventArgs.User.TryGetComponent(out IHandsComponent hands))
             {

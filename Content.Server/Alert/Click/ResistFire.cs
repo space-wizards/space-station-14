@@ -1,6 +1,7 @@
 ﻿﻿using Content.Server.GameObjects.Components.Atmos;
  using Content.Shared.Alert;
  using JetBrains.Annotations;
+ using Robust.Shared.Interfaces.Serialization;
  using Robust.Shared.Serialization;
 
 namespace Content.Server.Alert.Click
@@ -11,7 +12,7 @@ namespace Content.Server.Alert.Click
     [UsedImplicitly]
     public class ResistFire : IAlertClick
     {
-        public void ExposeData(ObjectSerializer serializer) { }
+        void IExposeData.ExposeData(ObjectSerializer serializer) { }
 
         public void AlertClicked(ClickAlertEventArgs args)
         {

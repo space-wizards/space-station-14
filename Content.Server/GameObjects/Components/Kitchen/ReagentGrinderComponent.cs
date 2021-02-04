@@ -269,7 +269,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             UserInterface?.Toggle(actor.playerSession);
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!eventArgs.User.TryGetComponent(out IHandsComponent? hands))
             {

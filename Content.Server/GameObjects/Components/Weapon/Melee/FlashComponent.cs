@@ -75,7 +75,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             return true;
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             if (!Use(eventArgs.User))
             {

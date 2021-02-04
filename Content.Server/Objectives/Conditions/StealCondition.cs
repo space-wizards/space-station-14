@@ -6,6 +6,7 @@ using Content.Server.Objectives.Interfaces;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
@@ -32,7 +33,7 @@ namespace Content.Server.Objectives.Conditions
             };
         }
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(ref _prototypeId, "prototype", "");
             serializer.DataField(ref _amount, "amount", 1);

@@ -45,17 +45,18 @@ namespace Content.Server.GameObjects.Components.Items
             }
         }
 
-        public void Activate(ActivateEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             Squeak();
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             Squeak();
             return false;
         }
-        public void Land(LandEventArgs eventArgs)
+
+        void ILand.Land(LandEventArgs eventArgs)
         {
             Squeak();
         }

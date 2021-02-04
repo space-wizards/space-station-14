@@ -639,7 +639,7 @@ namespace Content.Server.GameObjects.Components.Botany
                 Seed = Seed.Diverge(modified);
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             var user = eventArgs.User;
             var usingItem = eventArgs.Using;
@@ -767,7 +767,7 @@ namespace Content.Server.GameObjects.Components.Botany
             return false;
         }
 
-        public ReagentUnit ReagentReactTouch(ReagentPrototype reagent, ReagentUnit volume)
+        ReagentUnit IReagentReaction.ReagentReactTouch(ReagentPrototype reagent, ReagentUnit volume)
         {
             if(_solutionContainer == null)
                 return ReagentUnit.Zero;
@@ -776,7 +776,7 @@ namespace Content.Server.GameObjects.Components.Botany
             return accepted;
         }
 
-        public ReagentUnit ReagentReactInjection(ReagentPrototype reagent, ReagentUnit volume)
+        ReagentUnit IReagentReaction.ReagentReactInjection(ReagentPrototype reagent, ReagentUnit volume)
         {
             if(_solutionContainer == null)
                 return ReagentUnit.Zero;
@@ -785,13 +785,13 @@ namespace Content.Server.GameObjects.Components.Botany
             return accepted;
         }
 
-        public bool InteractHand(InteractHandEventArgs eventArgs)
+        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
             // DoHarvest does the sanity checks.
             return DoHarvest(eventArgs.User);
         }
 
-        public void Activate(ActivateEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             // DoHarvest does the sanity checks.
             DoHarvest(eventArgs.User);

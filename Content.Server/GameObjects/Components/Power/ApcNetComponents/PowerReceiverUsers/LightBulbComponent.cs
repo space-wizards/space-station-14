@@ -120,7 +120,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             UpdateColor();
         }
 
-        public void Land(LandEventArgs eventArgs)
+        void ILand.Land(LandEventArgs eventArgs)
         {
 
             var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>("GlassBreak");

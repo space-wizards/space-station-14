@@ -121,7 +121,7 @@ namespace Content.Server.GameObjects.Components.Morgue
             }, _cremateCancelToken.Token);
         }
 
-        public SuicideKind Suicide(IEntity victim, IChatManager chat)
+        SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
         {
             var mind = victim.PlayerSession()?.ContentData()?.Mind;
 

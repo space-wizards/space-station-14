@@ -24,6 +24,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
@@ -282,7 +283,7 @@ namespace Content.Server.GameObjects.Components.Interactable
     [UsedImplicitly]
     public class ToggleLightAction : IToggleItemAction
     {
-        public void ExposeData(ObjectSerializer serializer) {}
+        void IExposeData.ExposeData(ObjectSerializer serializer) {}
 
         public bool DoToggleAction(ToggleItemActionEventArgs args)
         {

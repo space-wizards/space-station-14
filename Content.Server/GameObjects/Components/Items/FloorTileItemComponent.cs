@@ -56,7 +56,7 @@ namespace Content.Server.GameObjects.Components.Items
             EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Items/genhit.ogg", location, AudioHelpers.WithVariation(0.125f));
         }
 
-        public async Task AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return;
             if (!Owner.TryGetComponent(out StackComponent stack)) return;

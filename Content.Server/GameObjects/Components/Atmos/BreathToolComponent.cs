@@ -36,7 +36,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             DisconnectInternals();
         }
 
-        public void Equipped(EquippedEventArgs eventArgs)
+        void IEquipped.Equipped(EquippedEventArgs eventArgs)
         {
             if ((EquipmentSlotDefines.SlotMasks[eventArgs.Slot] & _allowedSlots) != _allowedSlots) return;
             IsFunctional = true;
@@ -48,10 +48,9 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
         }
 
-        public void Unequipped(UnequippedEventArgs eventArgs)
+        void IUnequipped.Unequipped(UnequippedEventArgs eventArgs)
         {
             DisconnectInternals();
-
         }
 
         public void DisconnectInternals()

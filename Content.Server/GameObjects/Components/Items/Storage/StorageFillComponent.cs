@@ -68,7 +68,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             public string GroupId;
             public int Amount;
 
-            public void ExposeData(ObjectSerializer serializer)
+            void IExposeData.ExposeData(ObjectSerializer serializer)
             {
                 serializer.DataField(ref PrototypeName, "name", null);
                 serializer.DataField(ref Amount, "amount", 1);

@@ -71,7 +71,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             _game = new SpaceVillainGame(this);
         }
 
-        public void Activate(ActivateEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             if(!eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {

@@ -185,7 +185,7 @@ namespace Content.Server.GameObjects.Components.Recycling
             Recycle(collidedWith);
         }
 
-        public SuicideKind Suicide(IEntity victim, IChatManager chat)
+        SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
         {
             var mind = victim.PlayerSession()?.ContentData()?.Mind;
 

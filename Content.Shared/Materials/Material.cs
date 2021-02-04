@@ -93,7 +93,7 @@ namespace Content.Shared.Materials
             }
         }
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(ref _name, "name", "unobtanium", alwaysWrite: true);
             serializer.DataField(ref _color, "color", Color.Gray, alwaysWrite: true);
@@ -125,7 +125,7 @@ namespace Content.Shared.Materials
 
             var ser = YamlObjectSerializer.NewReader(mapping);
             Material = new Material();
-            Material.ExposeData(ser);
+            ((IExposeData) Material).ExposeData(ser);
         }
     }
 }

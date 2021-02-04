@@ -1,6 +1,7 @@
 ﻿using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behavior
@@ -19,7 +20,7 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behavior
             set => _acts = (int) value;
         }
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(ref _acts, "acts", 0, WithFormat.Flags<ActsFlags>());
         }

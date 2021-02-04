@@ -190,7 +190,7 @@ namespace Content.Server.GameObjects.Components.Medical
             }
         }
 
-        public void Activate(ActivateEventArgs args)
+        void IActivate.Activate(ActivateEventArgs args)
         {
             if (!args.User.TryGetComponent(out IActorComponent? actor))
             {

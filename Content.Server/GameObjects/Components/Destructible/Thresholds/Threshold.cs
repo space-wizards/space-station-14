@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds
         /// </summary>
         [ViewVariables] public IReadOnlyList<IThresholdBehavior> Behaviors => _behaviors;
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.Triggered, "triggered", false);
             serializer.DataField(this, x => x.TriggersOnce, "triggersOnce", false);

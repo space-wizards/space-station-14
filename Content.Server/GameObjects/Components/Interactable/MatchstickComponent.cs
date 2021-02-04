@@ -89,7 +89,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             Owner.SpawnTimer(_duration * 1000, () => CurrentState = SharedBurningStates.Burnt);
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (eventArgs.Target.TryGetComponent<IHotItem>(out var hotItem)
                 && hotItem.IsCurrentlyHot()

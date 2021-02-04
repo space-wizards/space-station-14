@@ -39,7 +39,8 @@ namespace Content.Server.GameObjects.Components.Sound
                 EntitySystem.Get<AudioSystem>().PlayFromEntity(_soundName, Owner, AudioParams.Default.WithVolume(-2f));
             }
         }
-        public void Land(LandEventArgs eventArgs)
+
+        void ILand.Land(LandEventArgs eventArgs)
         {
             PlaySoundEffect();
         }
