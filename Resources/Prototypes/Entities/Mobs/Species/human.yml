@@ -165,8 +165,9 @@
   - type: Destructible
     thresholds:
     - trigger:
-        !type:TotalDamageTrigger
-        damage: 400
+        !type:TotalDamageClassesTrigger
+        damage:
+          Brute: 400
       behaviors:
       - !type:GibBehavior { }
   - type: HeatResistance
