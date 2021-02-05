@@ -210,6 +210,8 @@
     meat: FoodMeat
   - type: Recyclable
     safe: false
+  - type: Speech
+  - type: Emoting
 
 - type: entity
   save: false
