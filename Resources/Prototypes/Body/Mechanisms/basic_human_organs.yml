@@ -32,6 +32,8 @@
     compatibility: Biological
     behaviors:
     - !type:BrainBehavior {}
+  - type: DummyInputMover
+  - type: GhostOnMove
   - type: Input
 
 - type: entity
