@@ -19,6 +19,7 @@
   - type: WirePlacer
   - type: Clickable
 
+
 - type: entity
   id: HVWireStack
   parent: CableStack
@@ -29,12 +30,20 @@
     stacktype: enum.StackType.HVCable
   - type: Sprite
     state: coilhv-30
+    netsync: false
   - type: Item
     size: 10
     HeldPrefix: coilhv
   - type: WirePlacer
     wirePrototypeID: HVWire
     blockingWireType: HighVoltage
+  - type: Appearance
+    visuals:
+      - type: StackVisualizer
+        opaqueLayers:
+          - coilhv-10
+          - coilhv-20
+          - coilhv-30
 
 - type: entity
   parent: HVWireStack
