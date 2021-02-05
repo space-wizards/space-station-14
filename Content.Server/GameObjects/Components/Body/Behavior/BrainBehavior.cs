@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.Components.Observer;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Robust.Shared.GameObjects;
@@ -55,6 +56,9 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
         {
             newEntity.EnsureComponent<MindComponent>();
             var oldMind = oldEntity.EnsureComponent<MindComponent>();
+
+            if (!newEntity.HasComponent<IGhostOnMove>())
+                newEntity.AddComponent<GhostOnMoveComponent>();
 
             oldMind.Mind?.TransferTo(newEntity);
         }

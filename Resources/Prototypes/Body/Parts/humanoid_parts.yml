@@ -61,8 +61,6 @@
     resistances: defaultResistances
 #    criticalThreshold: 50
 #    deadThreshold: 120
-  - type: DummyInputMover
-  - type: GhostOnMove
   - type: Input
 
 - type: entity
