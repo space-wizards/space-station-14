@@ -41,7 +41,7 @@ namespace Content.Server.Explosions
         private static readonly float LightBreakChance = 0.3f;
         private static readonly float HeavyBreakChance = 0.8f;
 
-        private static bool IgnoreExplosivePassable(IEntity e) => e.TryGetComponent(out TagComponent? tagComponent) && tagComponent.HasTag("ExplosivePassable");
+        private static bool IgnoreExplosivePassable(IEntity e) => e.HasTag("ExplosivePassable");
 
         private static ExplosionSeverity CalculateSeverity(float distance, float devastationRange, float heaveyRange)
         {
