@@ -6,6 +6,7 @@
         public const string DestructibleEntityId = "DestructibleTestsDestructibleEntity";
         public const string DestructibleDestructionEntityId = "DestructibleTestsDestructibleDestructionEntity";
         public const string DestructibleDamageTypeEntityId = "DestructibleTestsDestructibleDamageTypeEntity";
+        public const string DestructibleDamageClassEntityId = "DestructibleTestsDestructibleDamageClassEntity";
 
         public static readonly string Prototypes = $@"
 - type: entity
@@ -73,6 +74,21 @@
         damage:
           Blunt: 10
           Slash: 10
+  - type: TestThresholdListener
+
+
+- type: entity
+  id: {DestructibleDamageClassEntityId}
+  name: {DestructibleDamageClassEntityId}
+  components:
+  - type: Damageable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:TotalDamageClassesTrigger
+        damage:
+          Brute: 10
+          Burn: 10
   - type: TestThresholdListener";
     }
 }
