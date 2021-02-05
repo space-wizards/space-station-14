@@ -86,7 +86,7 @@ namespace Content.IntegrationTests.Tests.Destructible
 
                 Assert.True(sDamageableComponent.ChangeDamage(DamageType.Blunt, 30, true));
 
-                // One thresholds reached, 50, since 20 already triggered before and it has not been healed below that amount
+                // One threshold reached, 50, since 20 already triggered before and it has not been healed below that amount
                 Assert.That(sThresholdListenerComponent.ThresholdsReached.Count, Is.EqualTo(1));
 
                 // Threshold 50
