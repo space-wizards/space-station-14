@@ -31,10 +31,12 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      100:
-        behaviors:
-        - !type:DoActsBehavior
-          acts: ["Breakage"]
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
   - type: Anchorable
 
 - type: entity

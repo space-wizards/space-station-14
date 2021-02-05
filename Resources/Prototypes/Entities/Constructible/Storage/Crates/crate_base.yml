@@ -39,10 +39,12 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      100:
-        behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: Appearance
     visuals:
     - type: StorageVisualizer

@@ -48,15 +48,17 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      300:
-        behaviors:
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            Girder:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: brick
@@ -74,15 +76,17 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      300:
-        behaviors:
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            Girder:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: clock
@@ -100,15 +104,17 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      300:
-        behaviors:
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            Girder:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: clown
@@ -127,15 +133,17 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      300:
-        behaviors:
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            Girder:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: cult
@@ -153,15 +161,17 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      300:
-        behaviors:
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            Girder:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: debug
@@ -179,15 +189,17 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      300:
-        behaviors:
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            Girder:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: diamond
@@ -206,15 +218,17 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      300:
-        behaviors:
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            Girder:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: gold
@@ -232,15 +246,17 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      300:
-        behaviors:
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            Girder:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: ice
@@ -258,15 +274,17 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      300:
-        behaviors:
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            Girder:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: metal
@@ -284,15 +302,17 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      300:
-        behaviors:
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            Girder:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: plasma
@@ -310,15 +330,17 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      300:
-        behaviors:
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            Girder:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: plastic
@@ -341,10 +363,12 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      600:
-        behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 600
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: BreakableConstruction
     node: girder
   - type: ReinforcedWall
@@ -369,15 +393,17 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      1000:
-        behaviors:
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            Girder:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 1000
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: riveted
@@ -395,15 +421,17 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      300:
-        behaviors:
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            Girder:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: sandstone
@@ -421,15 +449,17 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      300:
-        behaviors:
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            Girder:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: silver
@@ -451,10 +481,12 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      300:
-        behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: BreakableConstruction
     node: girder
     destroySound: /Audio/Effects/metalbreak.ogg
@@ -475,15 +507,17 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      300:
-        behaviors:
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            Girder:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: uranium
@@ -501,15 +535,17 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      300:
-        behaviors:
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            Girder:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: wood

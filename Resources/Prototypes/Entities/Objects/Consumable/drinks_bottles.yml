@@ -19,18 +19,20 @@
   - type: Damageable
   - type: Destructible
     thresholds:
-      5:
-        behaviors:
-          - !type:PlaySoundCollectionBehavior
-            soundCollection: GlassBreak
-          - !type:SpillBehavior { }
-          - !type:SpawnEntitiesBehavior
-            spawn:
-              ShardGlass:
-                min: 1
-                max: 2
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundCollectionBehavior
+        soundCollection: GlassBreak
+      - !type:SpillBehavior { }
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   parent: DrinkBottleBaseFull

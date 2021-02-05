@@ -27,10 +27,12 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      50:
-        behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: Sprite
     sprite: Constructible/Hydroponics/hydro_tools.rsi
     state: soil
