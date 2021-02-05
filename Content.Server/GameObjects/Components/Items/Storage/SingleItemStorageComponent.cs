@@ -75,6 +75,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                     count++;
                 }
             }
+
             return count;
         }
     }

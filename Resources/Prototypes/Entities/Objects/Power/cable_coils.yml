@@ -1,4 +1,3 @@
-
 # If you're looking at the rsi for this file, you'll probably be confused why
 # I didn't just use an alpha for most of this stuff. Well icons don't have the
 # ability to have applied colors yet in GUIs. -Swept
@@ -10,14 +9,14 @@
   name: cable stack
   suffix: Full
   components:
-  - type: Stack
-    stacktype: enum.StackType.Cable
-  - type: Sprite
-    sprite: Objects/Tools/cables.rsi
-  - type: Item
-    sprite: Objects/Tools/cables.rsi
-  - type: WirePlacer
-  - type: Clickable
+    - type: Stack
+      stacktype: enum.StackType.Cable
+    - type: Sprite
+      sprite: Objects/Tools/cables.rsi
+    - type: Item
+      sprite: Objects/Tools/cables.rsi
+    - type: WirePlacer
+    - type: Clickable
 
 
 - type: entity
@@ -26,24 +25,24 @@
   name: HV cable coil
   suffix: Full
   components:
-  - type: Stack
-    stacktype: enum.StackType.HVCable
-  - type: Sprite
-    state: coilhv-30
-    netsync: false
-  - type: Item
-    size: 10
-    HeldPrefix: coilhv
-  - type: WirePlacer
-    wirePrototypeID: HVWire
-    blockingWireType: HighVoltage
-  - type: Appearance
-    visuals:
-      - type: StackVisualizer
-        stackLayers:
-          - coilhv-10
-          - coilhv-20
-          - coilhv-30
+    - type: Stack
+      stacktype: enum.StackType.HVCable
+    - type: Sprite
+      state: coilhv-30
+      netsync: false
+    - type: Item
+      size: 10
+      HeldPrefix: coilhv
+    - type: WirePlacer
+      wirePrototypeID: HVWire
+      blockingWireType: HighVoltage
+    - type: Appearance
+      visuals:
+        - type: StackVisualizer
+          stackLayers:
+            - coilhv-10
+            - coilhv-20
+            - coilhv-30
 
 - type: entity
   parent: HVWireStack
@@ -64,14 +63,21 @@
   description: Low-Voltage stack of wires for connecting APCs to machines and other purposes.
   suffix: Full
   components:
-  - type: Sprite
-    state: coillv-30
-  - type: Item
-    size: 10
-    HeldPrefix: coillv
-  - type: WirePlacer
-    wirePrototypeID: ApcExtensionCable
-    blockingWireType: Apc
+    - type: Sprite
+      state: coillv-30
+    - type: Item
+      size: 10
+      HeldPrefix: coillv
+    - type: WirePlacer
+      wirePrototypeID: ApcExtensionCable
+      blockingWireType: Apc
+    - type: Appearance
+      visuals:
+        - type: StackVisualizer
+          stackLayers:
+            - coillv-10
+            - coillv-20
+            - coillv-30
 
 - type: entity
   parent: ApcExtensionCableStack
@@ -101,6 +107,13 @@
     - type: WirePlacer
       wirePrototypeID: MVWire
       blockingWireType: MediumVoltage
+    - type: Appearance
+      visuals:
+        - type: StackVisualizer
+          stackLayers:
+            - coilmv-10
+            - coilmv-20
+            - coilmv-30
 
 - type: entity
   parent: MVWireStack

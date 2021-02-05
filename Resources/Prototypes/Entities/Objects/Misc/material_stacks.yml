@@ -155,6 +155,12 @@
     state: goldbar_10
   - type: Stack
     count: 1
+  - visuals:
+    - type: StackVisualizer
+      stackLayers:
+        - goldbar_10
+        - goldbar_20
+        - goldbar_30
 
 - type: entity
   name: plasma ore
