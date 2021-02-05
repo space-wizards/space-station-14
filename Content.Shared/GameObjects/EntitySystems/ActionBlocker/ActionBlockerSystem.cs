@@ -1,4 +1,5 @@
-﻿using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
+﻿using Content.Shared.GameObjects.Components.Mobs.Speech;
+using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -62,6 +63,9 @@ namespace Content.Shared.GameObjects.EntitySystems.ActionBlocker
 
         public static bool CanSpeak(IEntity entity)
         {
+            if (!entity.HasComponent<SharedSpeechComponent>())
+                return false;
+
             var canSpeak = true;
 
             foreach (var blocker in entity.GetAllComponents<IActionBlocker>())
@@ -98,6 +102,9 @@ namespace Content.Shared.GameObjects.EntitySystems.ActionBlocker
 
         public static bool CanEmote(IEntity entity)
         {
+            if (!entity.HasComponent<SharedEmotingComponent>())
+                return false;
+
             var canEmote = true;
 
             foreach (var blocker in entity.GetAllComponents<IActionBlocker>())
