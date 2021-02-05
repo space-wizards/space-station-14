@@ -130,7 +130,6 @@ namespace Content.Client.UserInterface
             nameHBox.AddChild(_nameEdit);
             nameHBox.AddChild(nameRandomButton);
             randomizePanel.AddChild(nameHBox);
-            leftColumn.AddChild(randomizePanel);
 
             #endregion Name
 
