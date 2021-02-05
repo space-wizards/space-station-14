@@ -121,7 +121,8 @@ namespace Content.Shared.Utility
         /// You want 0-33 wires to correspond to icon-0. And 34-67 wires to correspond to icon-1, etc.
         /// In this case you would use <code>RoundToNearestIndex(actual, 100, 3)</code>
         /// </example>
-        /// <param name="actual">The point to be translated into index.</param>
+        /// <param name="actual">The point to be translated into index. If greater than max, it defaults to size-1.
+        /// If lower or equal to 0, it defaults to 0.</param>
         /// <param name="max">The maximum value of the scale</param>
         /// <param name="size">The size of array you want to map to.</param>
         /// <returns>An integer from 0 to <paramref name="size" />-1.</returns>

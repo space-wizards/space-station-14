@@ -12,11 +12,46 @@ using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components
 {
+    /// <summary>
+    /// Visualizer for items that come in stacks and have different appearance
+    /// depending on the size of the stack.
+    /// </summary>
+    /// <example>
+    /// <code>
+    /// - type: Appearance
+    ///   visuals:
+    ///     - type: StackVisualizer
+    ///       stackLayers:
+    ///         - goldbar_10
+    ///         - goldbar_20
+    ///         - goldbar_30
+    /// </code>
+    /// </example>
     [UsedImplicitly]
     public class StackVisualizer : AppearanceVisualizer
     {
+        /// <summary>
+        /// Default IconLayer stack.
+        /// </summary>
         private const int IconLayer = 0;
+        /// <summary>
+        /// Sprite layers used in stack visualizer. Sprites first in layer correspond to lower stack states
+        /// e.g. <code>_spriteLayers[0]</code> is lower stack level than <code>_spriteLayers[1]</code>.
+        /// </summary>
         private readonly List<string> _spriteLayers = new();
+        /// <summary>
+        /// Determines if the visualizer uses opaque or transparent sprite layers.
+        ///
+        /// <list type="bullet">
+        /// <item>
+        /// <description>true: they are transparent and thus layered one over another in ascending order first</description>
+        /// </item>
+        /// <item>
+        /// <description>false: they are opaque and mutually exclusive (e.g. sprites in a wire coil)</description>
+        /// </item>
+        /// </list>
+        /// 
+        /// </summary>
         private bool _isTransparent;
 
         public override void LoadData(YamlMappingNode mapping)

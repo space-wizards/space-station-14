@@ -13,13 +13,24 @@ using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
 {
+    /// <summary>
+    /// Storage that spawns and counts a single item.
+    /// Usually used for things like matchboxes, cigarette packs,
+    /// cigar cases etc.
+    /// </summary>
     [RegisterComponent]
     public class SingleItemStorageComponent : Component, IMapInit
     {
         private string? _prototypeName;
         private int _amount;
 
+        /// <summary>
+        /// Storage component that we can use for inserting and counting elements.
+        /// </summary>
         [ComponentDependency] private readonly ServerStorageComponent? _storage = default;
+        /// <summary>
+        /// Single item storage component usually have an attached StackedVisualizer.
+        /// </summary>
         [ComponentDependency] private readonly AppearanceComponent? _appearanceComponent = default;
 
         public override string Name => "SingleItemStorage";
