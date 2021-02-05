@@ -40,7 +40,7 @@
   - type: Appearance
     visuals:
       - type: StackVisualizer
-        opaqueLayers:
+        stackLayers:
           - coilhv-10
           - coilhv-20
           - coilhv-30

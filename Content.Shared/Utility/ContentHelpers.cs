@@ -138,7 +138,7 @@ namespace Content.Shared.Utility
 
             if (max <= 0)
             {
-                throw new ArgumentException("Max must be greater than 0.", nameof(size));
+                throw new ArgumentException("Max must be greater than 0.", nameof(max));
             }
 
             if (actual >= max)
@@ -146,9 +146,12 @@ namespace Content.Shared.Utility
                 return size - 1;
             }
 
-            var percentile = actual / max;
+            if (actual < 0)
+            {
+                return 0;
+            }
 
-            return (int) Math.Round(percentile * (size - 1), MidpointRounding.AwayFromZero);
+            return (int) Math.Round(actual / max * (size - 1), MidpointRounding.AwayFromZero);
         }
     }
 }

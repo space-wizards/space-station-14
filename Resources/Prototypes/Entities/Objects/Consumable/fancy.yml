@@ -44,7 +44,8 @@
         - type: BagOpenCloseVisualizer
           openIcon: cig_open
         - type: StackVisualizer
-          transparentLayers:
+          transparent: true
+          stackLayers:
             - cigarette_1
             - cigarette_2
             - cigarette_3

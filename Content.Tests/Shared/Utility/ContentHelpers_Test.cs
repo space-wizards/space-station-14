@@ -65,7 +65,7 @@ namespace Content.Tests.Shared.Utility
                 (5, 6, 6, 4),
                 (6, 6, 6, 5),
                 
-                // Testing transparency disable
+                // Testing transparency disable use case
                 (0, 6, 7, 0),
                 (1, 6, 7, 1),
                 (2, 6, 7, 2),
@@ -73,6 +73,12 @@ namespace Content.Tests.Shared.Utility
                 (4, 6, 7, 4),
                 (5, 6, 7, 5),
                 (6, 6, 7, 6),
+                
+                // Testing edge cases
+                (-32, 6, 6, 0),
+                (2.4, 6, 6, 2),
+                (2.5, 6, 6, 2),
+                (320, 6, 6, 5),
             };
 
         [Parallelizable]
@@ -85,10 +91,10 @@ namespace Content.Tests.Shared.Utility
 
         [Parallelizable]
         [Test]
-        public void TestIndex([ValueSource(nameof(TestIndexData))] (double val, double max, int index, int expected) data)
+        public void TestIndex([ValueSource(nameof(TestIndexData))] (double val, double max, int size, int expected) data)
         {
-            (double val, double max, int levels, int expected) = data;
-            Assert.That(ContentHelpers.RoundToNearestIndex(val, max, levels), Is.EqualTo(expected));
+            (double val, double max, int size, int expected) = data;
+            Assert.That(ContentHelpers.RoundToNearestIndex(val, max, size), Is.EqualTo(expected));
         }
     }
 }

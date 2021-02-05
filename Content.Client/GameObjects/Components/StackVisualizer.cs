@@ -16,27 +16,24 @@ namespace Content.Client.GameObjects.Components
     public class StackVisualizer : AppearanceVisualizer
     {
         private const int IconLayer = 0;
-        private readonly List<string> _opaqueSprites = new();
-        private readonly List<string> _transparentSprites = new();
+        private readonly List<string> _spriteLayers = new();
+        private bool _isTransparent;
 
         public override void LoadData(YamlMappingNode mapping)
         {
             base.LoadData(mapping);
 
-            if (mapping.TryGetNode<YamlSequenceNode>("transparentLayers", out var transparentLayers))
+            if (mapping.TryGetNode<YamlSequenceNode>("stackLayers", out var spriteSequenceNode))
             {
-                foreach (var yamlNode in transparentLayers)
+                foreach (var yamlNode in spriteSequenceNode)
                 {
-                    _transparentSprites.Add(((YamlScalarNode) yamlNode).Value!);
+                    _spriteLayers.Add(((YamlScalarNode) yamlNode).Value!);
                 }
             }
 
-            if (mapping.TryGetNode<YamlSequenceNode>("opaqueLayers", out var opaqueLayers))
+            if (mapping.TryGetNode<YamlScalarNode>("transparent", out var transparent))
             {
-                foreach (var yamlNode in opaqueLayers)
-                {
-                    _opaqueSprites.Add(((YamlScalarNode) yamlNode).Value!);
-                }
+                _isTransparent = transparent.AsBool();
             }
         }
 
@@ -44,10 +41,11 @@ namespace Content.Client.GameObjects.Components
         {
             base.InitializeEntity(entity);
 
-            if (_transparentSprites.Count > 0
+            if (_isTransparent
+                && _spriteLayers.Count > 0
                 && entity.TryGetComponent<ISpriteComponent>(out var spriteComponent))
             {
-                foreach (var sprite in _transparentSprites)
+                foreach (var sprite in _spriteLayers)
                 {
                     var rsiPath = spriteComponent.BaseRSI!.Path!;
                     spriteComponent.LayerMapReserveBlank(sprite);
@@ -61,44 +59,51 @@ namespace Content.Client.GameObjects.Components
         {
             base.OnChangeData(component);
 
-            if (component.Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))
+            if (component.Owner.TryGetComponent<ISpriteComponent>(out var spriteComponent))
             {
-                if (!component.TryGetData<bool>(StackVisuals.Hide, out var hide)
-                    || hide)
+                if (_isTransparent)
                 {
-                    foreach (var transparentSprite in _transparentSprites)
-                    {
-                        spriteComponent.LayerSetVisible(transparentSprite, false);
-                    }
+                    ProcessTransparentSprites(component, spriteComponent);
+                }
+                else
+                {
+                    ProcessOpaqueSprites(component, spriteComponent);
+                }
+            }
+        }
 
-                    return;
+        private void ProcessOpaqueSprites(AppearanceComponent component, ISpriteComponent spriteComponent)
+        {
+            // Skip processing if no actual/maxCount
+            if (!component.TryGetData<int>(StackVisuals.Actual, out var actual)) return;
+            if (!component.TryGetData<int>(StackVisuals.MaxCount, out var maxCount)) return;
+
+            var activeLayer = ContentHelpers.RoundToNearestIndex(actual, maxCount, _spriteLayers.Count);
+            spriteComponent.LayerSetState(IconLayer, _spriteLayers[activeLayer]);
+        }
+
+        private void ProcessTransparentSprites(AppearanceComponent component, ISpriteComponent spriteComponent)
+        {
+            // If hidden, don't render any sprites
+            if (!component.TryGetData<bool>(StackVisuals.Hide, out var hide)
+                || hide)
+            {
+                foreach (var transparentSprite in _spriteLayers)
+                {
+                    spriteComponent.LayerSetVisible(transparentSprite, false);
                 }
 
-                if (!component.TryGetData<int>(StackVisuals.Actual, out var actual))
-                {
-                    return;
-                }
+                return;
+            }
 
-                if (!component.TryGetData<int>(StackVisuals.MaxCount, out var maxCount))
-                {
-                    return;
-                }
+            // Skip processing if no actual/maxCount
+            if (!component.TryGetData<int>(StackVisuals.Actual, out var actual)) return;
+            if (!component.TryGetData<int>(StackVisuals.MaxCount, out var maxCount)) return;
 
-                if (_opaqueSprites.Count > 0)
-                {
-                    var activeLayer = ContentHelpers.RoundToNearestIndex(actual, maxCount, _opaqueSprites.Count);
-                    spriteComponent.LayerSetState(IconLayer, _opaqueSprites[activeLayer]);
-                }
-
-                var layersSize = _transparentSprites.Count;
-                if (layersSize > 0)
-                {
-                    var activeTill = ContentHelpers.RoundToNearestIndex(actual, maxCount, layersSize + 1);
-                    for (var i = 0; i < layersSize; i++)
-                    {
-                        spriteComponent.LayerSetVisible(_transparentSprites[i], i < activeTill);
-                    }
-                }
+            var activeTill = ContentHelpers.RoundToNearestIndex(actual, maxCount, _spriteLayers.Count + 1);
+            for (var i = 0; i < _spriteLayers.Count; i++)
+            {
+                spriteComponent.LayerSetVisible(_spriteLayers[i], i < activeTill);
             }
         }
     }

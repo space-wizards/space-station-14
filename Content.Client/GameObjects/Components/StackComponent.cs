@@ -36,7 +36,7 @@ namespace Content.Client.GameObjects.Components
                     _appearanceComponent?.SetData(StackVisuals.MaxCount, MaxCount);
                     _appearanceComponent?.SetData(StackVisuals.Hide, false);
                 }
-                
+
                 _uiUpdateNeeded = true;
             }
         }
