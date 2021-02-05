@@ -2,7 +2,7 @@
 using System;
 using Content.Server.Commands.Observer;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.Interfaces.GameTicking;
+using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Movement;
 using Robust.Server.Console;
 using Robust.Shared.Console;
@@ -20,16 +20,6 @@ namespace Content.Server.GameObjects.Components.Observer
         public override string Name => "GhostOnMove";
 
         public bool CanReturn { get; set; }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            // We need a IMoverComponent for MoveInputPressed to be called.
-            // Yes. It's very dumb. TODO: Make this not require a dummy input mover.
-            if (!Owner.HasComponent<IMoverComponent>())
-                Owner.AddComponent<SharedDummyInputMoverComponent>();
-        }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
