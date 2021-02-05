@@ -92,7 +92,7 @@ namespace Content.Server.Chat
 
         public void EntitySay(IEntity source, string message)
         {
-            if (!source.HasComponent<SpeechComponent>() || !ActionBlockerSystem.CanSpeak(source))
+            if (!ActionBlockerSystem.CanSpeak(source))
             {
                 return;
             }
@@ -159,7 +159,7 @@ namespace Content.Server.Chat
 
         public void EntityMe(IEntity source, string action)
         {
-            if (!source.HasComponent<EmotingComponent>() || !ActionBlockerSystem.CanEmote(source))
+            if (!ActionBlockerSystem.CanEmote(source))
             {
                 return;
             }

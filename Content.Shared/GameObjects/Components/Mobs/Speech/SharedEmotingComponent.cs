@@ -1,16 +1,25 @@
-using System;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Server.GameObjects.Components.Mobs.Speech
+namespace Content.Shared.GameObjects.Components.Mobs.Speech
 {
     [RegisterComponent]
-    public class EmotingComponent : Component, IActionBlocker
+    public class SharedEmotingComponent : Component, IActionBlocker
     {
+        private bool _enabled = true;
         public override string Name => "Emoting";
 
-        public bool Enabled { get; set; } = true;
+        public bool Enabled
+        {
+            get => _enabled;
+            set
+            {
+                if (_enabled == value) return;
+                _enabled = value;
+                Dirty();
+            }
+        }
 
         bool IActionBlocker.CanEmote() => Enabled;
 

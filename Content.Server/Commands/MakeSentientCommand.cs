@@ -4,6 +4,7 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Mobs.Speech;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.Administration;
+using Content.Shared.GameObjects.Components.Mobs.Speech;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
@@ -48,8 +49,8 @@ namespace Content.Server.Commands
 
             entity.EnsureComponent<MindComponent>();
             entity.EnsureComponent<PlayerInputMoverComponent>();
-            entity.EnsureComponent<SpeechComponent>();
-            entity.EnsureComponent<EmotingComponent>();
+            entity.EnsureComponent<SharedSpeechComponent>();
+            entity.EnsureComponent<SharedEmotingComponent>();
         }
     }
 }
