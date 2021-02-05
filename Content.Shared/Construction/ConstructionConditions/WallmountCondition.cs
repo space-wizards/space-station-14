@@ -1,4 +1,5 @@
 #nullable enable
+using Content.Shared.GameObjects.Components.Tag;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
@@ -34,19 +35,20 @@ namespace Content.Shared.Construction.ConstructionConditions
 
             // now we need to check that user actually tries to build wallmount on a wall 
             var physics = IoCManager.Resolve<IPhysicsManager>();
-            var rUserToObj = new CollisionRay(userWorldPosition, userToObject.Normalized, (int) CollisionGroup.Walls);
+            var rUserToObj = new CollisionRay(userWorldPosition, userToObject.Normalized, (int) CollisionGroup.Impassable);
             var length = userToObject.Length;
-            var userToObjRaycastResults = physics.IntersectRay(user.Transform.MapID, rUserToObj, maxLength: length);
+            var userToObjRaycastResults = physics.IntersectRayWithPredicate(user.Transform.MapID, rUserToObj, maxLength: length,
+                predicate: (e) => !e.HasTag("Wall"));
             if (!userToObjRaycastResults.Any())
                 return false;
 
             // get this wall entity
-            var targetWall = userToObjRaycastResults.First();
+            var targetWall = userToObjRaycastResults.First().HitEntity;
 
             // check that we didn't try to build wallmount that facing another adjacent wall
-            var rAdjWall = new CollisionRay(objWorldPosition, direction.ToVec(), (int) CollisionGroup.Walls);
-            var adjWallRaycastResults = physics.IntersectRay(user.Transform.MapID, rAdjWall, maxLength: 0.5f,
-                ignoredEnt: targetWall.HitEntity);
+            var rAdjWall = new CollisionRay(objWorldPosition, direction.ToVec(), (int) CollisionGroup.Impassable);
+            var adjWallRaycastResults = physics.IntersectRayWithPredicate(user.Transform.MapID, rAdjWall, maxLength: 0.5f,
+               predicate: (e) => e == targetWall || !e.HasTag("Wall"));
             return !adjWallRaycastResults.Any();
         }
     }
