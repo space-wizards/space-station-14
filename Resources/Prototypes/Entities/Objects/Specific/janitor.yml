@@ -234,3 +234,18 @@
         reagents:
           - ReagentId: chem.SpaceCleaner
             Quantity: 100
+
+
+- type: entity
+  name: trash bag
+  id: TrashBag
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/trashbag.rsi
+    state: icon
+  - type: Storage
+    capacity: 125
+    quickInsert: true
+    areaInsert: true
+    storageSoundCollection: trashBagRustle

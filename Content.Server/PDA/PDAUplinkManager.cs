@@ -1,4 +1,6 @@
+#nullable enable
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -8,6 +10,7 @@ using Content.Shared.GameObjects.Components.PDA;
 using Content.Shared.Prototypes.PDA;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.PDA
@@ -17,14 +20,13 @@ namespace Content.Server.PDA
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
-        private List<UplinkAccount> _accounts;
-        private Dictionary<string, UplinkListingData> _listings;
+        private readonly List<UplinkAccount> _accounts = new();
+        private readonly Dictionary<string, UplinkListingData> _listings = new();
 
         public IReadOnlyDictionary<string, UplinkListingData> FetchListings => _listings;
 
         public void Initialize()
         {
-            _listings = new Dictionary<string, UplinkListingData>();
             foreach (var item in _prototypeManager.EnumeratePrototypes<UplinkStoreListingPrototype>())
             {
                 var newListing = new UplinkListingData(item.ListingName, item.ItemId, item.Price, item.Category,
@@ -32,8 +34,6 @@ namespace Content.Server.PDA
 
                 RegisterUplinkListing(newListing);
             }
-
-            _accounts = new List<UplinkAccount>();
         }
 
         private void RegisterUplinkListing(UplinkListingData listing)
@@ -53,7 +53,7 @@ namespace Content.Server.PDA
         {
             var entity = _entityManager.GetEntity(acc.AccountHolder);
 
-            if (entity.TryGetComponent(out MindComponent mindComponent) && !mindComponent.HasMind)
+            if (entity.TryGetComponent(out MindComponent? mindComponent) && !mindComponent.HasMind)
             {
                 return false;
             }
@@ -86,8 +86,9 @@ namespace Content.Server.PDA
             return true;
         }
 
-        public bool TryPurchaseItem(UplinkAccount acc, string itemId)
+        public bool TryPurchaseItem(UplinkAccount? acc, string itemId, EntityCoordinates spawnCoords, [NotNullWhen(true)] out IEntity? purchasedItem)
         {
+            purchasedItem = null;
             if (acc == null)
             {
                 return false;
@@ -108,10 +109,7 @@ namespace Content.Server.PDA
                 return false;
             }
 
-            var player = _entityManager.GetEntity(acc.AccountHolder);
-            var hands = player.GetComponent<HandsComponent>();
-            hands.PutInHandOrDrop(_entityManager.SpawnEntity(listing.ItemId,
-                player.Transform.Coordinates).GetComponent<ItemComponent>());
+            purchasedItem = _entityManager.SpawnEntity(listing.ItemId, spawnCoords);
             return true;
         }
     }

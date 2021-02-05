@@ -1,10 +1,10 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Suspicion;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.GameObjects.EntitySystems.GameMode
 {
     [UsedImplicitly]
     public class SuspicionRoleSystem : EntitySystem, IResettingEntitySystem

@@ -5,7 +5,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.GameObjects.Components.Tag
+namespace Content.Shared.GameObjects.Components.Tag
 {
     public static class TagComponentExtensions
     {

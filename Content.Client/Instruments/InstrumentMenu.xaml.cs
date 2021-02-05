@@ -14,11 +14,14 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Containers;
+using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Timers;
+using Robust.Shared.Timing;
+using Range = Robust.Client.UserInterface.Controls.Range;
 
 namespace Content.Client.Instruments
 {
@@ -46,6 +49,7 @@ namespace Content.Client.Instruments
             LoopButton.Disabled = !_owner.Instrument.IsMidiOpen;
             LoopButton.Pressed = _owner.Instrument.LoopMidi;
             StopButton.Disabled = !_owner.Instrument.IsMidiOpen;
+            PlaybackSlider.MouseFilter = _owner.Instrument.IsMidiOpen ? MouseFilterMode.Pass : MouseFilterMode.Ignore;
 
             if (!_midiManager.IsAvailable)
             {
@@ -74,6 +78,8 @@ namespace Content.Client.Instruments
             FileButton.OnPressed += MidiFileButtonOnOnPressed;
             LoopButton.OnToggled += MidiLoopButtonOnOnToggled;
             StopButton.OnPressed += MidiStopButtonOnPressed;
+            PlaybackSlider.OnValueChanged += PlaybackSliderSeek;
+            PlaybackSlider.OnKeyBindUp += PlaybackSliderKeyUp;
         }
 
         private void InstrumentOnMidiPlaybackEnded()
@@ -85,12 +91,15 @@ namespace Content.Client.Instruments
         {
             LoopButton.Disabled = disabled;
             StopButton.Disabled = disabled;
+
+            // Whether to allow the slider to receive events..
+            PlaybackSlider.MouseFilter = !disabled ? MouseFilterMode.Pass : MouseFilterMode.Ignore;
         }
 
         private async void MidiFileButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
         {
             var filters = new FileDialogFilters(new FileDialogFilters.Group("mid", "midi"));
-            var file = await _fileDialogManager.OpenFile(filters);
+            await using var file = await _fileDialogManager.OpenFile(filters);
 
             // The following checks are only in place to prevent players from playing MIDI songs locally.
             // There are equivalents for these checks on the server.
@@ -107,7 +116,7 @@ namespace Content.Client.Instruments
                 return;
 
             MidiStopButtonOnPressed(null);
-            var memStream = new MemoryStream((int) file.Length);
+            await using var memStream = new MemoryStream((int) file.Length);
             // 100ms delay is due to a race condition or something idk.
             // While we're waiting, load it into memory.
             await Task.WhenAll(Timer.Delay(100), file.CopyToAsync(memStream));
@@ -164,6 +173,37 @@ namespace Content.Client.Instruments
         private void MidiLoopButtonOnOnToggled(BaseButton.ButtonToggledEventArgs obj)
         {
             _owner.Instrument.LoopMidi = obj.Pressed;
+        }
+
+        private void PlaybackSliderSeek(Range _)
+        {
+            // Do not seek while still grabbing.
+            if (PlaybackSlider.Grabbed) return;
+
+            _owner.Instrument.PlayerTick = (int)Math.Ceiling(PlaybackSlider.Value);
+        }
+
+        private void PlaybackSliderKeyUp(GUIBoundKeyEventArgs args)
+        {
+            if (args.Function != EngineKeyFunctions.UIClick) return;
+            _owner.Instrument.PlayerTick = (int)Math.Ceiling(PlaybackSlider.Value);
+        }
+
+        protected override void Update(FrameEventArgs args)
+        {
+            base.Update(args);
+
+            if (!_owner.Instrument.IsMidiOpen)
+            {
+                PlaybackSlider.MaxValue = 1;
+                PlaybackSlider.SetValueWithoutEvent(0);
+                return;
+            }
+
+            if (PlaybackSlider.Grabbed) return;
+
+            PlaybackSlider.MaxValue = _owner.Instrument.PlayerTotalTick;
+            PlaybackSlider.SetValueWithoutEvent(_owner.Instrument.PlayerTick);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Tag;
+using Content.Shared.GameObjects.Components.Tag;
 using Content.Shared.Prototypes.Tag;
 using NUnit.Framework;
 using Robust.Shared.Interfaces.GameObjects;
@@ -69,9 +69,8 @@ namespace Content.IntegrationTests.Tests.Tag
             {
                 // Has one tag, the starting tag
                 Assert.That(sTagComponent.Tags.Count, Is.EqualTo(1));
-
-                var startingTagPrototype = sPrototypeManager.Index<TagPrototype>(StartingTag);
-                Assert.That(sTagComponent.Tags, Contains.Item(startingTagPrototype));
+                sPrototypeManager.Index<TagPrototype>(StartingTag);
+                Assert.That(sTagComponent.Tags, Contains.Item(StartingTag));
 
                 // Single
                 Assert.True(sTagDummy.HasTag(StartingTag));
