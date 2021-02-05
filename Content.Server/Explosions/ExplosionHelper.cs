@@ -119,7 +119,7 @@ namespace Content.Server.Explosions
 
             // Impassable entities are handled first. If they are damaged enough, they are destroyed and they may
             // be able to spawn a new entity. I.e Wall -> Girder.
-            // Girder has a tag ExplosivePassable, and the predicate make it so the entities with this layer are ignored
+            // Girder has a tag ExplosivePassable, and the predicate make it so the entities with this tag are ignored
             var epicenterMapPos = epicenter.ToMap(entityManager);
             foreach (var (entity, distance) in impassableEntities)
             {
