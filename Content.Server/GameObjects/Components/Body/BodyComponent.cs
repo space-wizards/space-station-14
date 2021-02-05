@@ -1,6 +1,7 @@
 #nullable enable
 using System;
 using Content.Server.Commands.Observer;
+using Content.Server.GameObjects.Components.Observer;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
@@ -25,7 +26,8 @@ namespace Content.Server.GameObjects.Components.Body
     [RegisterComponent]
     [ComponentReference(typeof(SharedBodyComponent))]
     [ComponentReference(typeof(IBody))]
-    public class BodyComponent : SharedBodyComponent, IRelayMoveInput
+    [ComponentReference(typeof(IGhostOnMove))]
+    public class BodyComponent : SharedBodyComponent, IRelayMoveInput, IGhostOnMove
     {
         private Container _partContainer = default!;
 
