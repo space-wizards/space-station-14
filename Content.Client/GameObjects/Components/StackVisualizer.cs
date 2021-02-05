@@ -63,6 +63,17 @@ namespace Content.Client.GameObjects.Components
 
             if (component.Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))
             {
+                if (!component.TryGetData<bool>(StackVisuals.Hide, out var hide)
+                    || hide)
+                {
+                    foreach (var transparentSprite in _transparentSprites)
+                    {
+                        spriteComponent.LayerSetVisible(transparentSprite, false);
+                    }
+
+                    return;
+                }
+
                 if (!component.TryGetData<int>(StackVisuals.Actual, out var actual))
                 {
                     return;
@@ -71,19 +82,6 @@ namespace Content.Client.GameObjects.Components
                 if (!component.TryGetData<int>(StackVisuals.MaxCount, out var maxCount))
                 {
                     return;
-                }
-
-                if (component.TryGetData<bool>(StackVisuals.Hide, out var hide))
-                {
-                    if (hide)
-                    {
-                        foreach (var transparentSprite in _transparentSprites)
-                        {
-                            spriteComponent.LayerSetVisible(transparentSprite, false);
-                        }
-
-                        return;
-                    }
                 }
 
                 if (_opaqueSprites.Count > 0)
