@@ -10,7 +10,7 @@ using Robust.Shared.IoC;
 namespace Content.Client.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    public class MoverSystem : SharedMoverSystem
+    public class MobMoverSystem : SharedMobMoverSystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
@@ -25,7 +25,10 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             var playerEnt = _playerManager.LocalPlayer?.ControlledEntity;
 
-            if (playerEnt == null || !playerEnt.TryGetComponent(out IMoverComponent? mover) || !playerEnt.TryGetComponent(out IPhysicsComponent? physics))
+            if (playerEnt == null ||
+                !playerEnt.TryGetComponent(out SharedPlayerInputMoverComponent? mover) ||
+                (playerEnt.Paused && !mover.IgnorePaused) ||
+                !playerEnt.TryGetComponent(out IPhysicsComponent? physics))
             {
                 return;
             }

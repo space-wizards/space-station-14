@@ -25,7 +25,6 @@
     context: "ghost"
   - type: Examiner
     DoRangeCheck: false
-  - type: IgnorePause
   - type: Ghost
   - type: Sprite
     netsync: false

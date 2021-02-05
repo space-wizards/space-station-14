@@ -43,6 +43,12 @@ namespace Content.Shared.GameObjects.Components.Movement
         public sealed override string Name => "PlayerInputMover";
         public sealed override uint? NetID => ContentNetIDs.PLAYER_INPUT_MOVER;
 
+        // Look it saves an extra component alright.
+        /// <summary>
+        ///     Can this mob mover still work even when paused.
+        /// </summary>
+        public bool IgnorePaused { get; set; }
+
         private GameTick _lastInputTick;
         private ushort _lastInputSubTick;
         private Vector2 _curTickWalkMovement;
@@ -141,16 +147,22 @@ namespace Content.Shared.GameObjects.Components.Movement
         [ViewVariables]
         public bool DiagonalMovementEnabled => _configurationManager.GetCVar<bool>(CCVars.GameDiagonalMovement);
 
-        /// <inheritdoc />
-        public override void OnAdd()
+        public override void ExposeData(ObjectSerializer serializer)
         {
+            serializer.DataField(this, x => x.IgnorePaused, "ignorePaused", false);
+        }
+
+        /// <inheritdoc />
+        public override void Initialize()
+        {
+            base.Initialize();
+            // can't use OnAdd because not all of the components are attached yet so you can get race conditions.
+
             // This component requires that the entity has a IPhysicsComponent.
             if (!Owner.HasComponent<IPhysicsComponent>())
                 Logger.Error(
                     $"[ECS] {Owner.Prototype?.Name} - {nameof(SharedPlayerInputMoverComponent)} requires" +
                     $" {nameof(IPhysicsComponent)}. ");
-
-            base.OnAdd();
         }
 
 

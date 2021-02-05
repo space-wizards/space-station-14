@@ -5,12 +5,10 @@ using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
-using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Physics;
@@ -20,7 +18,10 @@ using Robust.Shared.Players;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {
-    public abstract class SharedMoverSystem : EntitySystem
+    /// <summary>
+    ///     Handles the movement of bog-standard mobs like humans, NPC mobs, etc.
+    /// </summary>
+    public abstract class SharedMobMoverSystem : EntitySystem
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] protected readonly IPhysicsManager PhysicsManager = default!;
@@ -40,21 +41,21 @@ namespace Content.Shared.GameObjects.EntitySystems
                 .Bind(EngineKeyFunctions.MoveRight, moveRightCmdHandler)
                 .Bind(EngineKeyFunctions.MoveDown, moveDownCmdHandler)
                 .Bind(EngineKeyFunctions.Walk, new WalkInputCmdHandler())
-                .Register<SharedMoverSystem>();
+                .Register<SharedMobMoverSystem>();
         }
 
         /// <inheritdoc />
         public override void Shutdown()
         {
-            CommandBinds.Unregister<SharedMoverSystem>();
+            CommandBinds.Unregister<SharedMobMoverSystem>();
             base.Shutdown();
         }
 
         //TODO: reorganize this to make more logical sense
         protected void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, IPhysicsComponent physics)
         {
+            // TODO: Just make Controllers Comps, smug believes in me lol
             physics.EnsureController<MoverController>();
-
             var weightless = transform.Owner.IsWeightless();
 
             if (weightless)
@@ -115,6 +116,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         private bool IsAroundCollider(ITransformComponent transform, IMoverComponent mover,
             IPhysicsComponent collider)
         {
+            // TODO: Change to use GetCollidingEntities and pass in the AABB extended out by grabrange, next PR.
             foreach (var entity in _entityManager.GetEntitiesInRange(transform.Owner, mover.GrabRange, true))
             {
                 if (entity == transform.Owner)
@@ -136,6 +138,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                 }
 
                 // TODO: Item check.
+                // TODO: Should check for anchored IMO.
                 var touching = ((collider.CollisionMask & otherCollider.CollisionLayer) != 0x0
                                 || (otherCollider.CollisionMask & collider.CollisionLayer) != 0x0) // Ensure collision
                                && !entity.HasComponent<IItemComponent>(); // This can't be an item

@@ -6,7 +6,7 @@ using Robust.Shared.Map;
 namespace Content.Client.GameObjects.Components.Movement
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IMoverComponent))]
+    [ComponentReference(typeof(IMoverComponent)), ComponentReference(typeof(SharedPlayerInputMoverComponent))]
     public class PlayerInputMoverComponent : SharedPlayerInputMoverComponent
     {
         public override EntityCoordinates LastPosition { get; set; }

@@ -9,7 +9,7 @@ namespace Content.Server.GameObjects.Components.Movement
     ///     Moves the entity based on input from a KeyBindingInputComponent.
     /// </summary>
     [RegisterComponent]
-    [ComponentReference(typeof(IMoverComponent))]
+    [ComponentReference(typeof(IMoverComponent)), ComponentReference(typeof(SharedPlayerInputMoverComponent))]
     public class PlayerInputMoverComponent : SharedPlayerInputMoverComponent
     {
         public override EntityCoordinates LastPosition { get; set; }

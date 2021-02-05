@@ -1,5 +1,4 @@
 ﻿#nullable enable
-using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
@@ -14,11 +13,9 @@ using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -30,7 +27,7 @@ using Robust.Shared.Random;
 namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    internal class MoverSystem : SharedMoverSystem
+    internal class MobMoverSystem : SharedMobMoverSystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
@@ -52,14 +49,21 @@ namespace Content.Server.GameObjects.EntitySystems
 
             UpdatesBefore.Add(typeof(PhysicsSystem));
         }
-
         public override void Update(float frameTime)
         {
-            foreach (var (moverComponent, collidableComponent) in EntityManager.ComponentManager
-                .EntityQuery<IMoverComponent, IPhysicsComponent>(false))
+            base.Update(frameTime);
+            // Ordering is specific based on current EntityQuery implementation.
+            foreach (var (mover, transform, physics) in ComponentManager
+                .EntityQuery<SharedPlayerInputMoverComponent, ITransformComponent, IPhysicsComponent>(true))
             {
-                var entity = moverComponent.Owner;
-                UpdateKinematics(entity.Transform, moverComponent, collidableComponent);
+                if (mover.Paused && !mover.IgnorePaused) continue;
+                UpdateKinematics(transform, mover, physics);
+            }
+
+            foreach (var (mover, transform, physics) in ComponentManager
+                .EntityQuery<AiControllerComponent, ITransformComponent, IPhysicsComponent>())
+            {
+                UpdateKinematics(transform, mover, physics);
             }
         }
 
