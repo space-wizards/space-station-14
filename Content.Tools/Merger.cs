@@ -101,7 +101,7 @@ namespace Content.Tools
                 using var cR = new BinaryReader(c);
 
                 var outB = new byte[ExpectedChunkSize];
-                
+
                 {
                     using (var outS = new MemoryStream(outB))
                     using (var outW = new BinaryWriter(outS))
@@ -173,7 +173,7 @@ namespace Content.Tools
             {
                 var deletedByOurs = !MapOurs.Entities.ContainsKey(kvp.Key);
                 var deletedByOther = !MapOther.Entities.ContainsKey(kvp.Key);
-                if (deletedByOther && (!deletedByOurs))
+                if (deletedByOther && !deletedByOurs)
                 {
                     // Delete
                     MapOurs.Entities.Remove(kvp.Key);
@@ -207,16 +207,12 @@ namespace Content.Tools
                 YamlMappingNode oursEnt;
                 if (MapOurs.Entities.ContainsKey(kvp.Value))
                 {
-                    YamlMappingNode basedEnt;
                     oursEnt = MapOurs.Entities[kvp.Value];
-                    if (MapBased.Entities.ContainsKey(kvp.Value))
-                    {
-                        basedEnt = MapBased.Entities[kvp.Value];
-                    }
-                    else
+                    if (!MapBased.Entities.TryGetValue(kvp.Value, out var basedEnt))
                     {
                         basedEnt = oursEnt;
                     }
+
                     if (!MergeEntityNodes(oursEnt, basedEnt, MapOther.Entities[kvp.Key]))
                     {
                         Console.WriteLine("Unable to successfully merge entity C/" + kvp.Key);
@@ -269,11 +265,9 @@ namespace Content.Tools
                 if (ourComponents.ContainsKey(name))
                 {
                     var ourComponent = ourComponents[name];
-                    YamlMappingNode basedComponent;
-                    if (basedComponents.ContainsKey(name))
-                        basedComponent = basedComponents[name];
-                    else
+                    if (!basedComponents.TryGetValue(name, out var basedComponent))
                         basedComponent = new YamlMappingNode();
+
                     YamlTools.MergeYamlNodes(ourComponent, basedComponent, otherComponent, path + "/components/" + name);
                 }
                 else
