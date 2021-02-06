@@ -46,7 +46,7 @@ namespace Content.Server.GameObjects.Components
             {
                 foreach (var threshold in destructible.Thresholds)
                 {
-                    if (threshold.Trigger is not TotalDamageTrigger trigger)
+                    if (threshold.Trigger is not DamageTrigger trigger)
                     {
                         continue;
                     }
@@ -65,12 +65,12 @@ namespace Content.Server.GameObjects.Components
             }
 
             var damage = damageable.TotalDamage;
-            TotalDamageTrigger? trigger = null;
+            DamageTrigger? trigger = null;
 
             // TODO: Pretend this does not exist until https://github.com/space-wizards/space-station-14/pull/2783 is merged
             foreach (var threshold in destructible.Thresholds)
             {
-                if ((trigger = threshold.Trigger as TotalDamageTrigger) != null)
+                if ((trigger = threshold.Trigger as DamageTrigger) != null)
                 {
                     break;
                 }

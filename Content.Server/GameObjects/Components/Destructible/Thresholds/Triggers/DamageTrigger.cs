@@ -7,16 +7,16 @@ using Robust.Shared.Serialization;
 namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers
 {
     /// <summary>
-    ///     A trigger that will activate when the amount of total damage received
+    ///     A trigger that will activate when the amount of damage received
     ///     is above the specified threshold.
     /// </summary>
     [Serializable]
-    public class TotalDamageTrigger : IThresholdTrigger
+    public class DamageTrigger : IThresholdTrigger
     {
         /// <summary>
-        ///     The amount of total damage at which this threshold will trigger.
+        ///     The amount of damage at which this threshold will trigger.
         /// </summary>
-        public int Damage { get; private set; }
+        public int Damage { get; set; }
 
         public void ExposeData(ObjectSerializer serializer)
         {

@@ -21,11 +21,11 @@
   - type: Destructible
     thresholds:
     - trigger:
-        !type:TotalDamageTrigger
+        !type:DamageTrigger
         damage: 20
         triggersOnce: false
     - trigger:
-        !type:TotalDamageTrigger
+        !type:DamageTrigger
         damage: 50
         triggersOnce: false
       behaviors:
@@ -48,7 +48,7 @@
   - type: Destructible
     thresholds:
     - trigger:
-        !type:TotalDamageTrigger
+        !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:PlaySoundBehavior
@@ -70,12 +70,15 @@
   - type: Destructible
     thresholds:
     - trigger:
-        !type:TotalDamageTypesTrigger
-        damage:
-          Blunt: 10
-          Slash: 10
+        !type:AndTrigger
+        triggers:
+        - !type:DamageTypeTrigger
+          damage: 10
+          type: Blunt
+        - !type:DamageTypeTrigger
+          damage: 10
+          type: Slash
   - type: TestThresholdListener
-
 
 - type: entity
   id: {DestructibleDamageClassEntityId}
@@ -85,10 +88,14 @@
   - type: Destructible
     thresholds:
     - trigger:
-        !type:TotalDamageClassesTrigger
-        damage:
-          Brute: 10
-          Burn: 10
+        !type:AndTrigger
+        triggers:
+        - !type:DamageClassTrigger
+          damage: 10
+          class: Burn
+        - !type:DamageClassTrigger
+          damage: 10
+          class: Brute
   - type: TestThresholdListener";
     }
 }
