@@ -10,7 +10,7 @@ namespace Content.Server.GameObjects.EntitySystems
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-            foreach (var comp in ComponentManager.EntityQuery<MicrowaveComponent>())
+            foreach (var comp in ComponentManager.EntityQuery<MicrowaveComponent>(true))
             {
                 comp.OnUpdate();
             }

@@ -19,6 +19,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: carp
       sprite: Mobs/Aliens/Carps/carp_space.rsi
+  - type: Clickable
   - type: Physics
     anchored: false
     mass: 50

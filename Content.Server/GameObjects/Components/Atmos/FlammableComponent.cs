@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Mobs;
@@ -218,7 +218,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             switch (reagent.ID)
             {
-                case "chem.H2O":
+                case "chem.Water":
                     Extinguish();
                     AdjustFireStacks(-1.5f);
                     return ReagentUnit.Zero;

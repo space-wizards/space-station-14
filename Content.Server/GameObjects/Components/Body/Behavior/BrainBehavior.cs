@@ -1,7 +1,9 @@
 ﻿#nullable enable
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.Components.Observer;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
+using Content.Shared.GameObjects.Components.Movement;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 
@@ -55,6 +57,13 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
         {
             newEntity.EnsureComponent<MindComponent>();
             var oldMind = oldEntity.EnsureComponent<MindComponent>();
+
+            if (!newEntity.HasComponent<IGhostOnMove>())
+                newEntity.AddComponent<GhostOnMoveComponent>();
+
+            // TODO: This is an awful solution.
+            if (!newEntity.HasComponent<IMoverComponent>())
+                newEntity.AddComponent<SharedDummyInputMoverComponent>();
 
             oldMind.Mind?.TransferTo(newEntity);
         }

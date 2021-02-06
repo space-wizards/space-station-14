@@ -1,15 +1,22 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Content.Server.Commands.Observer;
+using Content.Server.GameObjects.Components.Observer;
+using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.Utility;
+using Robust.Server.Console;
 using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.Interfaces.Console;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Audio;
+using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Players;
@@ -19,7 +26,8 @@ namespace Content.Server.GameObjects.Components.Body
     [RegisterComponent]
     [ComponentReference(typeof(SharedBodyComponent))]
     [ComponentReference(typeof(IBody))]
-    public class BodyComponent : SharedBodyComponent, IRelayMoveInput
+    [ComponentReference(typeof(IGhostOnMove))]
+    public class BodyComponent : SharedBodyComponent, IRelayMoveInput, IGhostOnMove
     {
         private Container _partContainer = default!;
 
@@ -41,6 +49,7 @@ namespace Content.Server.GameObjects.Components.Body
             base.OnRemovePart(slot, part);
 
             _partContainer.ForceRemove(part.Owner);
+            part.Owner.RandomOffset(0.25f);
         }
 
         public override void Initialize()
@@ -83,10 +92,34 @@ namespace Content.Server.GameObjects.Components.Body
             if (Owner.TryGetComponent(out IMobStateComponent? mobState) &&
                 mobState.IsDead())
             {
-                var shell = IoCManager.Resolve<IConsoleShell>();
+                var host = IoCManager.Resolve<IServerConsoleHost>();
 
-                new Ghost().Execute(shell, (IPlayerSession) session, Array.Empty<string>());
+                new Ghost().Execute(new ConsoleShell(host, session), string.Empty, Array.Empty<string>());
             }
+        }
+
+        public override void Gib(bool gibParts = false)
+        {
+            base.Gib(gibParts);
+
+            EntitySystem.Get<AudioSystem>()
+                .PlayAtCoords(AudioHelpers.GetRandomFileFromSoundCollection("gib"), Owner.Transform.Coordinates,
+                    AudioHelpers.WithVariation(0.025f));
+
+            if (Owner.TryGetComponent(out ContainerManagerComponent? container))
+            {
+                foreach (var cont in container.GetAllContainers())
+                {
+                    foreach (var ent in cont.ContainedEntities)
+                    {
+                        cont.ForceRemove(ent);
+                        ent.Transform.Coordinates = Owner.Transform.Coordinates;
+                        ent.RandomOffset(0.25f);
+                    }
+                }
+            }
+
+            Owner.Delete();
         }
     }
 }

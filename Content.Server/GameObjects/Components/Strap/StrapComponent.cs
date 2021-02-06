@@ -207,14 +207,13 @@ namespace Content.Server.GameObjects.Components.Strap
                     parent = parent.Parent;
                 }
 
-                var range = SharedInteractionSystem.InteractionRange / 2;
-
-                if (!user.InRangeUnobstructed(component, range))
+                if (!user.InRangeUnobstructed(component, buckle.Range))
                 {
                     return;
                 }
 
                 data.Visibility = VerbVisibility.Visible;
+                data.IconTexture = buckle.BuckledTo == null ? "/Textures/Interface/VerbIcons/buckle.svg.96dpi.png" : "/Textures/Interface/VerbIcons/unbuckle.svg.96dpi.png";
                 data.Text = Loc.GetString(buckle.BuckledTo == null ? "Buckle" : "Unbuckle");
             }
 
@@ -227,6 +226,12 @@ namespace Content.Server.GameObjects.Components.Strap
 
                 buckle.ToggleBuckle(user, component.Owner);
             }
+        }
+
+        public override bool DragDropOn(DragDropEventArgs eventArgs)
+        {
+            if (!eventArgs.Dragged.TryGetComponent(out BuckleComponent? buckleComponent)) return false;
+            return buckleComponent.TryBuckle(eventArgs.User, Owner);
         }
     }
 }

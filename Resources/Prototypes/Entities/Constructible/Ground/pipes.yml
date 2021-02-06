@@ -14,13 +14,17 @@
   - type: Damageable
   - type: Destructible
     thresholds:
-      100:
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Sprite
+    netsync: false
   - type: Appearance
     visuals:
     - type: PipeVisualizer
-      pipeRSI: Constructible/Atmos/pipe.rsi
   - type: Icon
     sprite: Constructible/Atmos/pipe.rsi
 
@@ -37,7 +41,7 @@
       nodeGroupID: Pipe
       pipeDirection: East
   - type: Icon
-    state: pipeHalf2
+    state: pipeHalf
 
 - type: entity
   parent: PipeBase
@@ -50,7 +54,7 @@
       nodeGroupID: Pipe
       pipeDirection: Lateral
   - type: Icon
-    state: pipeStraight2
+    state: pipeStraight
 
 - type: entity
   parent: PipeBase
@@ -63,7 +67,7 @@
       nodeGroupID: Pipe
       pipeDirection: SEBend
   - type: Icon
-    state: pipeBend2
+    state: pipeBend
 
 - type: entity
   parent: PipeBase
@@ -76,7 +80,7 @@
       nodeGroupID: Pipe
       pipeDirection: TEast
   - type: Icon
-    state: pipeTJunction2
+    state: pipeTJunction
 
 - type: entity
   parent: PipeBase
@@ -89,4 +93,4 @@
       nodeGroupID: Pipe
       pipeDirection: Fourway
   - type: Icon
-    state: pipeFourway2
+    state: pipeFourway

@@ -67,7 +67,7 @@ namespace Content.Server.GameObjects.Components.Access
         public override void Initialize()
         {
             base.Initialize();
-            _ownerOriginalName = Owner.Name;
+            _ownerOriginalName ??= Owner.Name;
             UpdateEntityName();
         }
 
@@ -77,6 +77,7 @@ namespace Content.Server.GameObjects.Components.Access
 
             serializer.DataField(ref _fullName, "fullName", string.Empty);
             serializer.DataField(ref _jobTitle, "jobTitle", string.Empty);
+            serializer.DataField(ref _ownerOriginalName, "originalOwnerName", null);
         }
     }
 }

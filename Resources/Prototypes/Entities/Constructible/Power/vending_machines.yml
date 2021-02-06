@@ -32,7 +32,11 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      50:
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
         acts: ["Breakage"]
   - type: UserInterface
     interfaces:

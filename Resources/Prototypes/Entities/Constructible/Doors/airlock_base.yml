@@ -60,8 +60,15 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      500:
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 500
+      behaviors:
+      - !type:DoActsBehavior
         acts: ["Destruction"]
+  - type: IconSmooth
+    key: walls
+    mode: NoSprite
   placement:
     mode: SnapgridCenter
 

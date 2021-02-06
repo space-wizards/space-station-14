@@ -21,3 +21,6 @@
     shoes: ClothingShoesColorBlack
     idcard: BartenderPDA
     ears: ClothingHeadsetService
+  innerclothingskirt: ClothingUniformJumpskirtBartender
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled

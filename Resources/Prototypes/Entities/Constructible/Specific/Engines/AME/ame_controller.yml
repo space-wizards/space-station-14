@@ -25,7 +25,11 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      500:
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 500
+      behaviors:
+      - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: SnapGrid
     offset: Center
@@ -41,6 +45,7 @@
     visuals:
     - type: AMEControllerVisualizer
   - type: NodeContainer
+    examinable: true
     nodes:
     - !type:AdjacentNode
       nodeGroupID: AMEngine

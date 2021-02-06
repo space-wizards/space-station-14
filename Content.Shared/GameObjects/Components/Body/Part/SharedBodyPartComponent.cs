@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body.Surgery;
+using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -313,6 +314,14 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         protected virtual void OnAddedToBody(IBody body) { }
 
         protected virtual void OnRemovedFromBody(IBody old) { }
+
+        public virtual void Gib()
+        {
+            foreach (var mechanism in _mechanisms)
+            {
+                RemoveMechanism(mechanism);
+            }
+        }
     }
 
     [Serializable, NetSerializable]

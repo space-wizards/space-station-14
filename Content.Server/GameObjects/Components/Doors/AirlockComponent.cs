@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,6 +15,7 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
@@ -191,8 +192,6 @@ namespace Content.Server.GameObjects.Components.Doors
 
             if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
             {
-                receiver.OnPowerStateChanged += PowerDeviceOnOnPowerStateChanged;
-
                 if (Owner.TryGetComponent(out AppearanceComponent? appearance))
                 {
 
@@ -201,17 +200,18 @@ namespace Content.Server.GameObjects.Components.Doors
             }
         }
 
-        public override void OnRemove()
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
+            base.HandleMessage(message, component);
+            switch (message)
             {
-                receiver.OnPowerStateChanged -= PowerDeviceOnOnPowerStateChanged;
+                case PowerChangedMessage powerChanged:
+                    PowerDeviceOnOnPowerStateChanged(powerChanged);
+                    break;
             }
-
-            base.OnRemove();
         }
 
-        private void PowerDeviceOnOnPowerStateChanged(object? sender, PowerStateEventArgs e)
+        private void PowerDeviceOnOnPowerStateChanged(PowerChangedMessage e)
         {
             if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {

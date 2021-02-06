@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net;
@@ -7,7 +6,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Preferences;
 using Content.Server.Utility;
+using Content.Shared;
 using Microsoft.EntityFrameworkCore;
+using Robust.Shared.Interfaces.Configuration;
+using Robust.Shared.IoC;
 using Robust.Shared.Network;
 
 #nullable enable
@@ -32,7 +34,15 @@ namespace Content.Server.Database
         {
             _prefsCtx = new SqliteServerDbContext(options);
 
-            _dbReadyTask = Task.Run(() => _prefsCtx.Database.Migrate());
+            if (IoCManager.Resolve<IConfigurationManager>().GetCVar(CCVars.DatabaseSynchronous))
+            {
+                _prefsCtx.Database.Migrate();
+                _dbReadyTask = Task.CompletedTask;
+            }
+            else
+            {
+                _dbReadyTask = Task.Run(() => _prefsCtx.Database.Migrate());
+            }
         }
 
         public override async Task<ServerBanDef?> GetServerBanAsync(IPAddress? address, NetUserId? userId)

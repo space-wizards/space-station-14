@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +9,7 @@ using Content.Shared.Preferences;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
+using Robust.Shared.Localization.Macros;
 
 namespace Content.Server.Database
 {
@@ -130,10 +131,28 @@ namespace Content.Server.Database
         {
             var jobs = profile.Jobs.ToDictionary(j => j.JobName, j => (JobPriority) j.Priority);
             var antags = profile.Antags.Select(a => a.AntagName);
+
+            var sex = Sex.Male;
+            if (Enum.TryParse<Sex>(profile.Sex, true, out var sexVal))
+                sex = sexVal;
+
+            var clothing = ClothingPreference.Jumpsuit;
+            if (Enum.TryParse<ClothingPreference>(profile.Clothing, true, out var clothingVal))
+                clothing = clothingVal;
+
+            var backpack = BackpackPreference.Backpack;
+            if (Enum.TryParse<BackpackPreference>(profile.Backpack, true, out var backpackVal))
+                backpack = backpackVal;
+
+            var gender = sex == Sex.Male ? Gender.Male : Gender.Female;
+            if (Enum.TryParse<Gender>(profile.Gender, true, out var genderVal))
+                gender = genderVal;
+
             return new HumanoidCharacterProfile(
                 profile.CharacterName,
                 profile.Age,
-                profile.Sex == "Male" ? Sex.Male : Sex.Female,
+                sex,
+                gender,
                 new HumanoidCharacterAppearance
                 (
                     profile.HairName,
@@ -143,6 +162,8 @@ namespace Content.Server.Database
                     Color.FromHex(profile.EyeColor),
                     Color.FromHex(profile.SkinColor)
                 ),
+                clothing,
+                backpack,
                 jobs,
                 (PreferenceUnavailableMode) profile.PreferenceUnavailable,
                 antags.ToList()
@@ -158,12 +179,15 @@ namespace Content.Server.Database
                 CharacterName = humanoid.Name,
                 Age = humanoid.Age,
                 Sex = humanoid.Sex.ToString(),
+                Gender = humanoid.Gender.ToString(),
                 HairName = appearance.HairStyleName,
                 HairColor = appearance.HairColor.ToHex(),
                 FacialHairName = appearance.FacialHairStyleName,
                 FacialHairColor = appearance.FacialHairColor.ToHex(),
                 EyeColor = appearance.EyeColor.ToHex(),
                 SkinColor = appearance.SkinColor.ToHex(),
+                Clothing = humanoid.Clothing.ToString(),
+                Backpack = humanoid.Backpack.ToString(),
                 Slot = slot,
                 PreferenceUnavailable = (DbPreferenceUnavailableMode) humanoid.PreferenceUnavailable
             };

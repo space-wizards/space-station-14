@@ -40,8 +40,12 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      50:
-        acts: [ "Destruction" ]
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
 
 - type: entity
   name: small light
@@ -67,8 +71,12 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      25:
-        acts: [ "Destruction" ]
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 25
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
 
 - type: entity
   name: unpowered small light
@@ -86,5 +94,9 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      25:
-        acts: [ "Destruction" ]
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 25
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]

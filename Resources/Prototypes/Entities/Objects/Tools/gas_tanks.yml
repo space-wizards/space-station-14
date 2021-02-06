@@ -15,9 +15,6 @@
     - type: Clothing
       sprite: Objects/Tanks/generic.rsi
       QuickEquip: false
-      Slots:
-        - Back
-        - Belt
     - type: GasTank
     - type: ItemActions
       actions:
@@ -41,22 +38,6 @@
       sprite: Objects/Tanks/oxygen.rsi
       Slots:
         - Back
-        - Belt
-
-- type: entity
-  id: OxygenTankFilled
-  parent: OxygenTank
-  name: oxygen tank
-  description: A tank of oxygen.
-  suffix: Filled
-  components:
-    - type: GasTank
-      outputPressure: 21.27825
-      air:
-        volume: 70
-        moles:
-          - 22.6293856 # oxygen
-        temperature: 293.15
 
 - type: entity
   id: YellowOxygenTank
@@ -71,22 +52,6 @@
       sprite: Objects/Tanks/yellow.rsi
       Slots:
         - Back
-        - Belt
-
-- type: entity
-  id: YellowOxygenTankFilled
-  parent: OxygenTankFilled
-  name: oxygen tank
-  description: A tank of oxygen. This one is in yellow.
-  suffix: Filled
-  components:
-    - type: Sprite
-      sprite: Objects/Tanks/yellow.rsi
-    - type: Clothing
-      sprite: Objects/Tanks/yellow.rsi
-      Slots:
-        - Back
-        - Belt
 
 - type: entity
   id: RedOxygenTank
@@ -101,22 +66,6 @@
       sprite: Objects/Tanks/red.rsi
       Slots:
         - Back
-        - Belt
-
-- type: entity
-  id: RedOxygenTankFilled
-  parent: OxygenTankFilled
-  name: oxygen tank
-  description: A tank of oxygen. This one is in yellow.
-  suffix: Filled
-  components:
-    - type: Sprite
-      sprite: Objects/Tanks/red.rsi
-    - type: Clothing
-      sprite: Objects/Tanks/red.rsi
-      Slots:
-        - Back
-        - Belt
 
 - type: entity
   id: EmergencyOxygenTank
@@ -139,21 +88,6 @@
         - Belt
 
 - type: entity
-  id: EmergencyOxygenTankFilled
-  parent: EmergencyOxygenTank
-  name: emergency oxygen tank
-  description: Used for emergencies. Contains very little oxygen, so try to conserve it until you actually need it.
-  suffix: Filled
-  components:
-    - type: GasTank
-      outputPressure: 21.27825
-      air:
-        volume: 2
-        moles:
-          - 0.323460326 # oxygen
-        temperature: 293.15
-
-- type: entity
   id: ExtendedEmergencyOxygenTank
   parent: EmergencyOxygenTank
   name: extended-capacity emergency oxygen tank
@@ -172,21 +106,6 @@
       Slots:
         - Pocket
         - Belt
-
-- type: entity
-  id: ExtendedEmergencyOxygenTankFilled
-  parent: ExtendedEmergencyOxygenTank
-  name: extended-capacity emergency oxygen tank
-  description: Used for emergencies. Contains very little oxygen, so try to conserve it until you actually need it.
-  suffix: Filled
-  components:
-    - type: GasTank
-      outputPressure: 21.27825
-      air:
-        volume: 6
-        moles:
-          - 0.969830813 # oxygen
-        temperature: 293.15
 
 - type: entity
   id: DoubleEmergencyOxygenTank
@@ -209,21 +128,6 @@
         - Belt
 
 - type: entity
-  id: DoubleEmergencyOxygenTankFilled
-  parent: DoubleEmergencyOxygenTank
-  name: double emergency oxygen tank
-  description: Used for emergencies. Contains very little oxygen, so try to conserve it until you actually need it.
-  suffix: Filled
-  components:
-    - type: GasTank
-      outputPressure: 21.27825
-      air:
-        volume: 10
-        moles:
-          - 1.61721219 # oxygen
-        temperature: 293.15
-
-- type: entity
   id: AirTank
   parent: GasTankBase
   name: air tank
@@ -241,30 +145,6 @@
       sprite: Objects/Tanks/generic.rsi
       Slots:
         - Back
-        - Belt
-
-- type: entity
-  id: AirTankFilled
-  parent: GasTankBase
-  name: air tank
-  description: Mixed anyone?
-  suffix: Filled
-  components:
-    - type: Sprite
-      sprite: Objects/Tanks/generic.rsi
-    - type: GasTank
-      outputPressure: 101.325
-      air:
-        volume: 70
-        moles:
-          - 4.75217098 # oxygen
-          - 17.8772147 # nitrogen
-        temperature: 293.15
-    - type: Clothing
-      sprite: Objects/Tanks/generic.rsi
-      Slots:
-        - Back
-        - Belt
 
 - type: entity
   id: PhoronTank
@@ -284,21 +164,3 @@
       sprite: Objects/Tanks/phoron.rsi
       Slots:
         - Belt
-
-- type: entity
-  id: PhoronTankFilled
-  parent: PhoronTank
-  name: phoron tank
-  suffix: Filled
-  description: "Contains dangerous phoron. Do not inhale. Warning: extremely flammable."
-  components:
-    - type: GasTank
-      outputPressure: 101.325
-      air:
-        volume: 70
-        moles:
-          - 0
-          - 0
-          - 0
-          - 11.3146928 # phoron
-        temperature: 293.15

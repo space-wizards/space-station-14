@@ -33,10 +33,12 @@ namespace Content.Client.Sandbox
         public readonly Button ShowMarkersButton; //Shows spawn points
         public readonly Button ShowBbButton; //Shows bounding boxes
         public readonly Button MachineLinkingButton; // Enables/disables machine linking mode.
+        private readonly IGameHud _gameHud;
 
         public SandboxWindow()
         {
             Resizable = false;
+            _gameHud = IoCManager.Resolve<IGameHud>();
 
             Title = "Sandbox Panel";
 
@@ -82,11 +84,25 @@ namespace Content.Client.Sandbox
             MachineLinkingButton = new Button { Text = Loc.GetString("Link machines"), ToggleMode = true };
             vBox.AddChild(MachineLinkingButton);
         }
+
+
+        protected override void EnteredTree()
+        {
+            base.EnteredTree();
+            _gameHud.SandboxButtonDown = true;
+        }
+
+        protected override void ExitedTree()
+        {
+            base.ExitedTree();
+            _gameHud.SandboxButtonDown = false;
+        }
+
     }
 
     internal class SandboxManager : SharedSandboxManager, ISandboxManager
     {
-        [Dependency] private readonly IClientConsole _console = default!;
+        [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
         [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IClientNetManager _netManager = default!;
         [Dependency] private readonly IPlacementManager _placementManager = default!;
@@ -197,7 +213,6 @@ namespace Content.Client.Sandbox
         private void WindowOnOnClose()
         {
             _window = null;
-            _gameHud.SandboxButtonDown = false;
             _sandboxWindowToggled = false;
         }
 
@@ -299,37 +314,37 @@ namespace Content.Client.Sandbox
 
         private void ToggleLight()
         {
-            _console.ProcessCommand("togglelight");
+            _consoleHost.ExecuteCommand("togglelight");
         }
 
         private void ToggleFov()
         {
-            _console.ProcessCommand("togglefov");
+            _consoleHost.ExecuteCommand("togglefov");
         }
 
         private void ToggleShadows()
         {
-            _console.ProcessCommand("toggleshadows");
+            _consoleHost.ExecuteCommand("toggleshadows");
         }
 
         private void ToggleSubFloor()
         {
-            _console.ProcessCommand("showsubfloor");
+            _consoleHost.ExecuteCommand("showsubfloor");
         }
 
         private void ShowMarkers()
         {
-            _console.ProcessCommand("showmarkers");
+            _consoleHost.ExecuteCommand("showmarkers");
         }
 
         private void ShowBb()
         {
-            _console.ProcessCommand("showbb");
+            _consoleHost.ExecuteCommand("showbb");
         }
 
         private void LinkMachines()
         {
-            _console.ProcessCommand("signallink");
+            _consoleHost.ExecuteCommand("signallink");
         }
     }
 }

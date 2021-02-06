@@ -7,6 +7,7 @@ using Content.Server.Utility;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
@@ -14,6 +15,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.ViewVariables;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Singularity
 {
@@ -63,7 +65,8 @@ namespace Content.Server.GameObjects.Components.Singularity
             }
         }
 
-        private PhysicsComponent? _collidableComponent;
+        [ComponentDependency] private readonly PhysicsComponent? _collidableComponent = default;
+        [ComponentDependency] private readonly PointLightComponent? _pointLightComponent = default;
 
         private Tuple<Direction, ContainmentFieldConnection>? _connection1;
         private Tuple<Direction, ContainmentFieldConnection>? _connection2;
@@ -71,17 +74,16 @@ namespace Content.Server.GameObjects.Components.Singularity
         public bool CanRepell(IEntity toRepell) => _connection1?.Item2?.CanRepell(toRepell) == true ||
                                                    _connection2?.Item2?.CanRepell(toRepell) == true;
 
-        public override void Initialize()
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
-            base.Initialize();
-            if (!Owner.TryGetComponent(out _collidableComponent))
+            base.HandleMessage(message, component);
+            switch (message)
             {
-                Logger.Error("ContainmentFieldGeneratorComponent created with no CollidableComponent");
-                return;
+                case AnchoredChangedMessage:
+                    OnAnchoredChanged();
+                    break;
             }
-            _collidableComponent.AnchoredChanged += OnAnchoredChanged;
         }
-
 
         private void OnAnchoredChanged()
         {
@@ -159,7 +161,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                 {
                     Logger.Error("When trying to connect two Containmentfieldgenerators, the second one already had two connection but the check didn't catch it");
                 }
-
+                UpdateConnectionLights();
                 return true;
             }
 
@@ -171,9 +173,12 @@ namespace Content.Server.GameObjects.Components.Singularity
             if (_connection1?.Item2 == connection)
             {
                 _connection1 = null;
-            }else if (_connection2?.Item2 == connection)
+                UpdateConnectionLights();
+            }
+            else if (_connection2?.Item2 == connection)
             {
                 _connection2 = null;
+                UpdateConnectionLights();
             }
             else if(connection != null)
             {
@@ -186,6 +191,15 @@ namespace Content.Server.GameObjects.Components.Singularity
             if(collidedWith.HasComponent<EmitterBoltComponent>())
             {
                 ReceivePower(4);
+            }
+        }
+
+        public void UpdateConnectionLights()
+        {
+            if (_pointLightComponent != null)
+            {
+                bool hasAnyConnection = (_connection1 != null) || (_connection2 != null);
+                _pointLightComponent.Enabled = hasAnyConnection;
             }
         }
 

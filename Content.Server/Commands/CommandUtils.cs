@@ -1,8 +1,9 @@
 ﻿#nullable enable
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Robust.Server.Interfaces.Console;
+using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
@@ -26,11 +27,11 @@ namespace Content.Server.Commands
             if (Guid.TryParse(usernameOrId, out var targetGuid))
             {
                 if (plyMgr.TryGetSessionById(new NetUserId(targetGuid), out session)) return true;
-                shell.SendText(performer, "Unable to find user with that name/id.");
+                shell.WriteLine("Unable to find user with that name/id.");
                 return false;
             }
 
-            shell.SendText(performer, "Unable to find user with that name/id.");
+            shell.WriteLine("Unable to find user with that name/id.");
             return false;
         }
 
@@ -45,7 +46,7 @@ namespace Content.Server.Commands
             if (!TryGetSessionByUsernameOrId(shell, usernameOrId, performer, out var session)) return false;
             if (session.AttachedEntity == null)
             {
-                shell.SendText(performer, "User has no attached entity.");
+                shell.WriteLine("User has no attached entity.");
                 return false;
             }
 

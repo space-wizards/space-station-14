@@ -32,7 +32,7 @@ namespace Content.Client.UserInterface
         [ViewVariables]
         private IEntity? _entity;
 
-        public ItemStatusPanel(Texture texture, StyleBox.Margin margin)
+        public ItemStatusPanel(Texture texture, StyleBox.Margin cutout, StyleBox.Margin flat, Label.AlignMode textAlign)
         {
             var panel = new StyleBoxTexture
             {
@@ -40,7 +40,8 @@ namespace Content.Client.UserInterface
             };
             panel.SetContentMarginOverride(StyleBox.Margin.Vertical, 4);
             panel.SetContentMarginOverride(StyleBox.Margin.Horizontal, 6);
-            panel.SetPatchMargin(margin, 13);
+            panel.SetPatchMargin(flat, 2);
+            panel.SetPatchMargin(cutout, 13);
 
             AddChild(_panel = new PanelContainer
             {
@@ -57,7 +58,8 @@ namespace Content.Client.UserInterface
                             (_itemNameLabel = new Label
                             {
                                 ClipText = true,
-                                StyleClasses = {StyleNano.StyleClassItemStatus}
+                                StyleClasses = {StyleNano.StyleClassItemStatus},
+                                Align = textAlign
                             })
                         }
                     }
@@ -78,27 +80,35 @@ namespace Content.Client.UserInterface
         public static ItemStatusPanel FromSide(HandLocation location)
         {
             string texture;
-            StyleBox.Margin margin;
+            StyleBox.Margin cutOut;
+            StyleBox.Margin flat;
+            Label.AlignMode textAlign;
 
             switch (location)
             {
                 case HandLocation.Left:
                     texture = "/Textures/Interface/Nano/item_status_right.svg.96dpi.png";
-                    margin = StyleBox.Margin.Left | StyleBox.Margin.Top;
+                    cutOut = StyleBox.Margin.Left | StyleBox.Margin.Top;
+                    flat = StyleBox.Margin.Right | StyleBox.Margin.Bottom;
+                    textAlign = Label.AlignMode.Right;
                     break;
                 case HandLocation.Middle:
-                    texture = "/Textures/Interface/Nano/item_status_left.svg.96dpi.png";
-                    margin = StyleBox.Margin.Right | StyleBox.Margin.Top;
+                    texture = "/Textures/Interface/Nano/item_status_middle.svg.96dpi.png";
+                    cutOut = StyleBox.Margin.Right | StyleBox.Margin.Top;
+                    flat = StyleBox.Margin.Left | StyleBox.Margin.Bottom;
+                    textAlign = Label.AlignMode.Left;
                     break;
                 case HandLocation.Right:
                     texture = "/Textures/Interface/Nano/item_status_left.svg.96dpi.png";
-                    margin = StyleBox.Margin.Right | StyleBox.Margin.Top;
+                    cutOut = StyleBox.Margin.Right | StyleBox.Margin.Top;
+                    flat = StyleBox.Margin.Left | StyleBox.Margin.Bottom;
+                    textAlign = Label.AlignMode.Left;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(location), location, null);
             }
 
-            return new ItemStatusPanel(ResC.GetTexture(texture), margin);
+            return new ItemStatusPanel(ResC.GetTexture(texture), cutOut, flat, textAlign);
         }
 
         public void Update(IEntity? entity)

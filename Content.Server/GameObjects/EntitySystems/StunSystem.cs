@@ -11,7 +11,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Update(frameTime);
 
-            foreach (var component in ComponentManager.EntityQuery<StunnableComponent>())
+            foreach (var component in ComponentManager.EntityQuery<StunnableComponent>(true))
             {
                 component.Update(frameTime);
             }

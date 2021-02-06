@@ -61,6 +61,10 @@ namespace Content.Client.UserInterface.Stylesheets
                     .Class(ButtonOpenBoth)
                     .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonOpenBoth),
 
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                    .Class(ButtonSquare)
+                    .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonSquare),
+
                 // Colors for the buttons.
                 Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
                     .Pseudo(ContainerButton.StylePseudoClassNormal)

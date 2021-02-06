@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,15 +12,16 @@ using Content.Shared;
 using Content.Shared.Administration;
 using Content.Shared.Network.NetMessages;
 using Robust.Server.Console;
-using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
+using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Resources;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Network;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -36,10 +37,11 @@ namespace Content.Server.Administration
         [Dependency] private readonly IServerNetManager _netMgr = default!;
         [Dependency] private readonly IConGroupController _conGroup = default!;
         [Dependency] private readonly IResourceManager _res = default!;
-        [Dependency] private readonly IConsoleShell _consoleShell = default!;
+        [Dependency] private readonly IServerConsoleHost _consoleHost = default!;
         [Dependency] private readonly IChatManager _chat = default!;
 
         private readonly Dictionary<IPlayerSession, AdminReg> _admins = new();
+        private readonly HashSet<NetUserId> _promotedPlayers = new();
 
         public event Action<AdminPermsChangedEventArgs>? OnPermsChanged;
 
@@ -169,7 +171,7 @@ namespace Content.Server.Administration
             _netMgr.RegisterNetMessage<MsgUpdateAdminStatus>(MsgUpdateAdminStatus.NAME);
 
             // Cache permissions for loaded console commands with the requisite attributes.
-            foreach (var (cmdName, cmd) in _consoleShell.AvailableCommands)
+            foreach (var (cmdName, cmd) in _consoleHost.RegisteredCommands)
             {
                 var (isAvail, flagsReq) = GetRequiredFlag(cmd);
 
@@ -225,6 +227,13 @@ namespace Content.Server.Administration
                     }
                 }
             }
+        }
+
+        public void PromoteHost(IPlayerSession player)
+        {
+            _promotedPlayers.Add(player.UserId);
+
+            ReloadAdmin(player);
         }
 
         void IPostInjectInit.PostInject()
@@ -309,7 +318,7 @@ namespace Content.Server.Administration
 
         private async Task<(AdminData dat, int? rankId, bool specialLogin)?> LoadAdminData(IPlayerSession session)
         {
-            if (IsLocal(session) && _cfg.GetCVar(CCVars.ConsoleLoginLocal))
+            if (IsLocal(session) && _cfg.GetCVar(CCVars.ConsoleLoginLocal) || _promotedPlayers.Contains(session.UserId))
             {
                 var data = new AdminData
                 {
@@ -411,7 +420,7 @@ namespace Content.Server.Administration
             return false;
         }
 
-        private static (bool isAvail, AdminFlags[] flagsReq) GetRequiredFlag(IClientCommand cmd)
+        private static (bool isAvail, AdminFlags[] flagsReq) GetRequiredFlag(IConsoleCommand cmd)
         {
             var type = cmd.GetType();
             if (Attribute.IsDefined(type, typeof(AnyCommandAttribute)))
@@ -463,7 +472,7 @@ namespace Content.Server.Administration
             public AdminData Data;
             public int? RankId;
 
-            // Such as console.loginlocal
+            // Such as console.loginlocal or promotehost
             public bool IsSpecialLogin;
 
             public AdminReg(IPlayerSession session, AdminData data)

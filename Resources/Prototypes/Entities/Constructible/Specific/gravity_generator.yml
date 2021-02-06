@@ -33,7 +33,11 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      150:
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
         acts: ["Breakage"]
   - type: GravityGenerator
   - type: UserInterface

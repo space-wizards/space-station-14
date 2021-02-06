@@ -1,8 +1,6 @@
 ﻿#nullable enable
 using System;
-using Content.Client.Utility;
 using Content.Shared.Alert;
-using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Interfaces.Timing;
@@ -35,39 +33,37 @@ namespace Content.Client.UserInterface.Controls
                 }
             }
         }
+
         private (TimeSpan Start, TimeSpan End)? _cooldown;
 
         private short? _severity;
         private readonly IGameTiming _gameTiming;
-        private readonly TextureRect _icon;
+        private readonly AnimatedTextureRect _icon;
         private readonly CooldownGraphic _cooldownGraphic;
-        private readonly IResourceCache _resourceCache;
 
         /// <summary>
         /// Creates an alert control reflecting the indicated alert + state
         /// </summary>
         /// <param name="alert">alert to display</param>
         /// <param name="severity">severity of alert, null if alert doesn't have severity levels</param>
-        /// <param name="resourceCache">resourceCache to use to load alert icon textures</param>
-        public AlertControl(AlertPrototype alert, short? severity, IResourceCache resourceCache)
+        public AlertControl(AlertPrototype alert, short? severity)
         {
             _gameTiming = IoCManager.Resolve<IGameTiming>();
             TooltipDelay = CustomTooltipDelay;
             TooltipSupplier = SupplyTooltip;
-            _resourceCache = resourceCache;
             Alert = alert;
             _severity = severity;
-            var texture = _resourceCache.GetTexture(alert.GetIconPath(_severity));
-            _icon = new TextureRect
+            var specifier = alert.GetIcon(_severity);
+            _icon = new AnimatedTextureRect
             {
-                TextureScale = (2, 2),
-                Texture = texture
+                DisplayRect = {TextureScale = (2, 2)}
             };
+
+            _icon.SetFromSpriteSpecifier(specifier);
 
             Children.Add(_icon);
             _cooldownGraphic = new CooldownGraphic();
             Children.Add(_cooldownGraphic);
-
         }
 
         private Control SupplyTooltip(Control? sender)
@@ -83,7 +79,7 @@ namespace Content.Client.UserInterface.Controls
             if (_severity != severity)
             {
                 _severity = severity;
-                _icon.Texture = _resourceCache.GetTexture(Alert.GetIconPath(_severity));
+                _icon.SetFromSpriteSpecifier(Alert.GetIcon(_severity));
             }
         }
 
@@ -103,7 +99,7 @@ namespace Content.Client.UserInterface.Controls
             var progress = (curTime - Cooldown.Value.Start).TotalSeconds / length;
             var ratio = (progress <= 1 ? (1 - progress) : (curTime - Cooldown.Value.End).TotalSeconds * -5);
 
-            _cooldownGraphic.Progress = MathHelper.Clamp((float)ratio, -1, 1);
+            _cooldownGraphic.Progress = MathHelper.Clamp((float) ratio, -1, 1);
             _cooldownGraphic.Visible = ratio > -1f;
         }
     }

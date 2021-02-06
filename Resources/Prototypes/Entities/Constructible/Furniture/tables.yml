@@ -39,13 +39,19 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      15:
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 15
+      behaviors:
+      - !type:PlaySoundBehavior
         sound: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
         spawn:
           SteelSheet1:
             min: 1
             max: 1
-        acts: ["Destruction"]
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   id: TableFrame
@@ -61,13 +67,19 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      1:
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 1
+      behaviors:
+      - !type:PlaySoundBehavior
         sound: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
         spawn:
           SteelSheet1:
             min: 1
             max: 1
-        acts: ["Destruction"]
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Construction
     graph: Tables
     node: TableFrame
@@ -86,13 +98,19 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      1:
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 1
+      behaviors:
+      - !type:PlaySoundBehavior
         sound: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
         spawn:
           SteelSheet1:
             min: 1
             max: 1
-        acts: ["Destruction"]
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   id: TableMetal
@@ -108,13 +126,19 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      15:
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 15
+      behaviors:
+      - !type:PlaySoundBehavior
         sound: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
         spawn:
           SteelSheet1:
             min: 1
             max: 1
-        acts: ["Destruction"]
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Construction
     graph: Tables
     node: MetalTable
@@ -133,13 +157,19 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      75:
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 75
+      behaviors:
+      - !type:PlaySoundBehavior
         sound: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
         spawn:
           SteelSheet1:
             min: 1
             max: 1
-        acts: ["Destruction"]
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Construction
     graph: Tables
     node: ReinforcedTable
@@ -158,13 +188,19 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      5:
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
         sound: /Audio/Effects/glass_break2.ogg
+      - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlass:
             min: 1
             max: 1
-        acts: ["Destruction"]
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Construction
     graph: Tables
     node: GlassTable
@@ -183,13 +219,19 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      20:
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 20
+      behaviors:
+      - !type:PlaySoundBehavior
         sound: /Audio/Effects/glass_break2.ogg
+      - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlass:
             min: 1
             max: 1
-        acts: ["Destruction"]
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Construction
     graph: Tables
     node: RGlassTable
@@ -208,13 +250,19 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      15:
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 15
+      behaviors:
+      - !type:PlaySoundBehavior
         sound: /Audio/Effects/woodhit.ogg
+      - !type:SpawnEntitiesBehavior
         spawn:
           WoodPlank:
             min: 1
             max: 1
-        acts: ["Destruction"]
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Construction
     graph: Tables
     node: WoodTable
@@ -233,13 +281,19 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      15:
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 15
+      behaviors:
+      - !type:PlaySoundBehavior
         sound: /Audio/Effects/woodhit.ogg
+      - !type:SpawnEntitiesBehavior
         spawn:
           WoodPlank:
             min: 1
             max: 1
-        acts: ["Destruction"]
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Construction
     graph: Tables
     node: PokerTable
@@ -258,9 +312,14 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      50:
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
         sound: /Audio/Effects/picaxe2.ogg
-        acts: ["Destruction"]
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   id: TableDebug
@@ -276,5 +335,9 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      1:
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 1
+      behaviors:
+      - !type:DoActsBehavior
         acts: ["Destruction"]

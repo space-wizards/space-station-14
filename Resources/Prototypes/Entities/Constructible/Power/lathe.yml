@@ -77,6 +77,11 @@
       - CableStack
       - Crowbar
       - Multitool
+      - MiniHoe
+      - Scythe
+      - Hatchet
+      - Shovel
+      - Spade
   - type: Appearance
     visuals:
     - type: AutolatheVisualizer

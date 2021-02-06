@@ -9,8 +9,12 @@
     layers:
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
-  - type: Item
+  - type: Clothing
+    sprite: Objects/Weapons/Grenades/grenade.rsi
     size: 5
+    QuickEquip: false
+    Slots:
+    - Belt
   - type: OnUseTimerTrigger
     delay: 3.5
   - type: Explosive
@@ -21,7 +25,11 @@
   - type: Damageable
   - type: Destructible
     thresholds:
-      10:
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 10
+      behaviors:
+      - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Appearance
     visuals:
@@ -39,15 +47,23 @@
     layers:
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
-  - type: Item
+  - type: Clothing
+    sprite: Objects/Weapons/Grenades/flashbang.rsi
     size: 5
+    QuickEquip: false
+    Slots:
+    - Belt
   - type: OnUseTimerTrigger
     delay: 3.5
   - type: FlashExplosive
   - type: Damageable
   - type: Destructible
     thresholds:
-      10:
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 10
+      behaviors:
+      - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Appearance
     visuals:
@@ -77,7 +93,11 @@
   - type: Damageable
   - type: Destructible
     thresholds:
-      10:
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 10
+      behaviors:
+      - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Appearance
     visuals:
@@ -106,7 +126,11 @@
   - type: Damageable
   - type: Destructible
     thresholds:
-      50:
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Appearance
     visuals:

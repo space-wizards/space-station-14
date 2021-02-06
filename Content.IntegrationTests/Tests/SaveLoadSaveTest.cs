@@ -54,17 +54,21 @@ namespace Content.IntegrationTests.Tests
             }
 
             Assert.Multiple(() => {
-                Assert.That(one, Is.EqualTo(two));
+                Assert.That(two, Is.EqualTo(one));
                 var failed = TestContext.CurrentContext.Result.Assertions.FirstOrDefault();
                 if (failed != null)
                 {
-                    var path1 = Path.Combine(userData.RootDir!,rp1.ToRelativeSystemPath());
-                    var path2 = Path.Combine(userData.RootDir!,rp2.ToRelativeSystemPath());
-                    TestContext.AddTestAttachment(path1);
-                    TestContext.AddTestAttachment(path2);
+                    var oneTmp = Path.GetTempFileName();
+                    var twoTmp = Path.GetTempFileName();
+
+                    File.WriteAllText(oneTmp, one);
+                    File.WriteAllText(twoTmp, two);
+
+                    TestContext.AddTestAttachment(oneTmp, "First save file");
+                    TestContext.AddTestAttachment(twoTmp, "Second save file");
                     TestContext.Error.WriteLine("Complete output:");
-                    TestContext.Error.WriteLine(path1);
-                    TestContext.Error.WriteLine(path2);
+                    TestContext.Error.WriteLine(oneTmp);
+                    TestContext.Error.WriteLine(twoTmp);
                 }
             });
         }
@@ -73,7 +77,7 @@ namespace Content.IntegrationTests.Tests
         ///     Loads the default map, runs it for 5 ticks, then assert that it did not change.
         /// </summary>
         [Test]
-        public async Task LoadSaveTicksSaveStationStation()
+        public async Task LoadSaveTicksSaveSaltern()
         {
             var server = StartServerDummyTicker();
             await server.WaitIdleAsync();
@@ -88,7 +92,8 @@ namespace Content.IntegrationTests.Tests
             {
                 var mapId = mapManager.CreateMap();
                 pauseMgr.AddUninitializedMap(mapId);
-                grid = mapLoader.LoadBlueprint(mapId, "Maps/stationstation.yml");
+                pauseMgr.SetMapPaused(mapId, true);
+                grid = mapLoader.LoadBlueprint(mapId, "Maps/saltern.yml");
                 mapLoader.SaveBlueprint(grid.Index, "load save ticks save 1.yml");
             });
 

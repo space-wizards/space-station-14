@@ -35,12 +35,17 @@
   - type: Damageable
   - type: Destructible
     thresholds:
-      50:
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 50
+      behaviors:
+      - !type:SpawnEntitiesBehavior
         spawn:
           chem_master_broken:
             min: 1
             max: 1
-        acts: ["Destruction"]
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: UserInterface
     interfaces:
     - key: enum.ChemMasterUiKey.Key
@@ -81,12 +86,17 @@
   - type: Damageable
   - type: Destructible
     thresholds:
-      25:
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 25
+      behaviors:
+      - !type:SpawnEntitiesBehavior
         spawn:
           SteelSheet1:
             min: 1
             max: 1
-        acts: ["Destruction"]
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: UserInterface
     interfaces:
     - key: enum.ChemMasterUiKey.Key

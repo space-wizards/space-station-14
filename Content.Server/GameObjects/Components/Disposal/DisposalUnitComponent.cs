@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,20 +6,17 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
+using Content.Shared.GameObjects.Components.Disposal;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.Components.Disposal;
-using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Mobs.State;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
@@ -51,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Disposal
     [ComponentReference(typeof(SharedDisposalUnitComponent))]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IInteractUsing))]
-    public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IActivate, IInteractUsing, IDragDropOn, IThrowCollide, IGasMixtureHolder
+    public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IActivate, IInteractUsing, IThrowCollide, IGasMixtureHolder
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -83,8 +80,17 @@ namespace Content.Server.GameObjects.Components.Disposal
         [ViewVariables(VVAccess.ReadWrite)]
         private TimeSpan _flushDelay;
 
+        /// <summary>
+        ///     Delay from trying to enter disposals ourselves.
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         private float _entryDelay;
+
+        /// <summary>
+        ///     Delay from trying to shove someone else into disposals.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        private float _draggedEntryDelay;
 
         /// <summary>
         ///     Token used to cancel the automatic engage of a disposal unit
@@ -137,17 +143,16 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public GasMixture Air { get; set; } = default!;
 
-        public bool CanInsert(IEntity entity)
+        public override bool CanInsert(IEntity entity)
         {
-            if (!Anchored)
-            {
+            if (!base.CanInsert(entity))
                 return false;
-            }
 
             if (!entity.TryGetComponent(out IPhysicsComponent? physics) ||
                 !physics.CanCollide)
             {
-                if (!(entity.TryGetComponent(out IMobStateComponent? state) && state.IsDead())) {
+                if (entity.TryGetComponent(out IMobStateComponent? state) && state.IsDead())
+                {
                     return false;
                 }
             }
@@ -196,11 +201,15 @@ namespace Content.Server.GameObjects.Components.Disposal
             if (!CanInsert(entity))
                 return false;
 
-            if (user != null && _entryDelay > 0f)
+            var delay = user == entity ? _entryDelay : _draggedEntryDelay;
+
+            if (user != null && delay > 0.0f)
             {
                 var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
 
-                var doAfterArgs = new DoAfterEventArgs(user, _entryDelay, default, Owner)
+                // Can't check if our target AND disposals moves currently so we'll just check target.
+                // if you really want to check if disposals moves then add a predicate.
+                var doAfterArgs = new DoAfterEventArgs(user, delay, default, entity)
                 {
                     BreakOnDamage = true,
                     BreakOnStun = true,
@@ -213,7 +222,6 @@ namespace Content.Server.GameObjects.Components.Disposal
 
                 if (result == DoAfterStatus.Cancelled)
                     return false;
-
             }
 
             if (!_container.Insert(entity))
@@ -287,10 +295,6 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
 
             var entryComponent = entry.GetComponent<DisposalEntryComponent>();
-            foreach (var entity in _container.ContainedEntities.ToList())
-            {
-                _container.Remove(entity);
-            }
 
             if (Owner.Transform.Coordinates.TryGetTileAtmosphere(out var tileAtmos) &&
                 tileAtmos.Air != null &&
@@ -504,7 +508,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             UpdateInterface();
         }
 
-        private void PowerStateChanged(object? sender, PowerStateEventArgs args)
+        private void PowerStateChanged(PowerChangedMessage args)
         {
             if (!args.Powered)
             {
@@ -543,7 +547,8 @@ namespace Content.Server.GameObjects.Components.Disposal
                 () => (int) _flushDelay.TotalSeconds);
 
             serializer.DataField(this, x => x.Air, "air", new GasMixture(Atmospherics.CellVolume));
-            serializer.DataField(ref _entryDelay, "entryDelay", 0.5f);
+            serializer.DataField(ref _entryDelay, "entryDelay", 1.0f);
+            serializer.DataField(ref _draggedEntryDelay, "draggedEntryDelay", 3.0f);
         }
 
         public override void Initialize()
@@ -569,31 +574,11 @@ namespace Content.Server.GameObjects.Components.Disposal
                 Logger.WarningS("VitalComponentMissing", $"Disposal unit {Owner.Uid} is missing an anchorable component");
             }
 
-            if (Owner.TryGetComponent(out IPhysicsComponent? physics))
-            {
-                physics.AnchoredChanged += UpdateVisualState;
-            }
-
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
-            {
-                receiver.OnPowerStateChanged += PowerStateChanged;
-            }
-
             UpdateVisualState();
         }
 
         public override void OnRemove()
         {
-            if (Owner.TryGetComponent(out IPhysicsComponent? physics))
-            {
-                physics.AnchoredChanged -= UpdateVisualState;
-            }
-
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
-            {
-                receiver.OnPowerStateChanged -= PowerStateChanged;
-            }
-
             foreach (var entity in _container.ContainedEntities.ToArray())
             {
                 _container.ForceRemove(entity);
@@ -625,6 +610,14 @@ namespace Content.Server.GameObjects.Components.Disposal
 
                     _lastExitAttempt = _gameTiming.CurTime;
                     Remove(msg.Entity);
+                    break;
+
+                case AnchoredChangedMessage:
+                    UpdateVisualState();
+                    break;
+
+                case PowerChangedMessage powerChanged:
+                    PowerStateChanged(powerChanged);
                     break;
             }
         }
@@ -692,12 +685,14 @@ namespace Content.Server.GameObjects.Components.Disposal
             return TryDrop(eventArgs.User, eventArgs.Using);
         }
 
-        bool IDragDropOn.CanDragDropOn(DragDropEventArgs eventArgs)
+        public override bool CanDragDropOn(DragDropEventArgs eventArgs)
         {
+            // Base is redundant given this already calls the base CanInsert
+            // If that changes then update this
             return CanInsert(eventArgs.Dragged);
         }
 
-        bool IDragDropOn.DragDropOn(DragDropEventArgs eventArgs)
+        public override bool DragDropOn(DragDropEventArgs eventArgs)
         {
             _ = TryInsert(eventArgs.Dragged, eventArgs.User);
             return true;

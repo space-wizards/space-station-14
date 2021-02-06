@@ -15,6 +15,7 @@
     - back
   - type: Storage
     capacity: 100
+    storageSoundCollection : storageRustle
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -73,6 +74,39 @@
 
 - type: entity
   parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelChemistry
+  name: chemistry duffel bag
+  description: "A large duffel bag for holding extra beakers and test tubes."
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/chemistry.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Duffels/chemistry.rsi
+
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelMime
+  name: mime duffel bag
+  description: "A large duffel bag for holding... mime... stuff."
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/mime.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Duffels/mime.rsi
+
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelScience
+  name: science duffel bag
+  description: "A large duffel bag for holding extra science related goods."
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/science.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Duffels/science.rsi
+
+- type: entity
+  parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelSyndicate
   name: syndicate duffel bag
   description: "A large duffel bag for holding various traitor goods."
@@ -81,3 +115,45 @@
     sprite: Clothing/Back/Duffels/syndicate.rsi
   - type: Clothing
     sprite: Clothing/Back/Duffels/syndicate.rsi
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicate
+  id: ClothingBackpackDuffelSyndicateAmmo
+  name: syndicate duffel bag
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/syndicate.rsi
+    state: icon-ammo
+  - type: Clothing
+    sprite: Clothing/Back/Duffels/syndicate.rsi
+    ClothingPrefix: ammo
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicate
+  id: ClothingBackpackDuffelSyndicateMedical
+  name: syndicate duffel bag
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/syndicate.rsi
+    state: icon-med
+  - type: Clothing
+    sprite: Clothing/Back/Duffels/syndicate.rsi
+    ClothingPrefix: med
+
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelHolding
+  name: duffelbag of holding
+  description: A duffelbag that opens into a localized pocket of bluespace.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/holding.rsi
+    state: icon
+    layers:
+    - state: icon
+    - state: icon-unlit
+      shader: unshaded
+  - type: Clothing
+    sprite: Clothing/Back/Duffels/holding.rsi
+  - type: Storage
+    capacity: 10000
