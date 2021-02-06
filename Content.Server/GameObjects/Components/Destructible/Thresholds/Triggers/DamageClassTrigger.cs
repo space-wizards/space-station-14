@@ -14,19 +14,19 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers
     public class DamageClassTrigger : IThresholdTrigger
     {
         /// <summary>
-        ///     The amount of damage at which this threshold will trigger.
-        /// </summary>
-        public int Damage { get; set; }
-
-        /// <summary>
         ///     The class to check the damage of.
         /// </summary>
         public DamageClass? Class { get; set; }
 
+        /// <summary>
+        ///     The amount of damage at which this threshold will trigger.
+        /// </summary>
+        public int Damage { get; set; }
+
         public void ExposeData(ObjectSerializer serializer)
         {
-            serializer.DataField(this, x => x.Damage, "damage", 0);
             serializer.DataField(this, x => x.Class, "class", null);
+            serializer.DataField(this, x => x.Damage, "damage", 0);
         }
 
         public bool Reached(IDamageableComponent damageable, DestructibleSystem system)

@@ -73,11 +73,11 @@
         !type:AndTrigger
         triggers:
         - !type:DamageTypeTrigger
-          damage: 10
           type: Blunt
-        - !type:DamageTypeTrigger
           damage: 10
+        - !type:DamageTypeTrigger
           type: Slash
+          damage: 10
   - type: TestThresholdListener
 
 - type: entity
@@ -91,11 +91,11 @@
         !type:AndTrigger
         triggers:
         - !type:DamageClassTrigger
-          damage: 10
-          class: Burn
-        - !type:DamageClassTrigger
-          damage: 10
           class: Brute
+          damage: 10
+        - !type:DamageClassTrigger
+          class: Burn
+          damage: 10
   - type: TestThresholdListener";
     }
 }
