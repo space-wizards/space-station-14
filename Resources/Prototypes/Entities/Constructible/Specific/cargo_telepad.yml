@@ -22,7 +22,7 @@
   - type: Destructible
     thresholds:
     - trigger:
-        !type:TotalDamageTrigger
+        !type:DamageTrigger
         damage: 75
       behaviors:
       - !type:DoActsBehavior
