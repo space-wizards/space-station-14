@@ -1,12 +1,16 @@
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.Atmos;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Map;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
 
@@ -60,6 +64,8 @@ namespace Content.Server.StationEvents
 
         private Vector2i _targetTile;
 
+        private EntityCoordinates _targetCoords;
+
         private bool _foundTile;
 
         private Gas _leakGas;
@@ -76,6 +82,8 @@ namespace Content.Server.StationEvents
         private const int MinimumGas = 250;
 
         private const int MaximumGas = 1000;
+
+        private const float SparkChance = 0.05f;
 
         public override void Startup()
         {
@@ -128,11 +136,36 @@ namespace Content.Server.StationEvents
         public override void Shutdown()
         {
             base.Shutdown();
+
+            Spark();
+
             _foundTile = false;
             _targetGrid = null;
             _targetTile = default;
+            _targetCoords = default;
             _leakGas = Gas.Oxygen;
             EndAfter = float.MaxValue;
+        }
+
+        private void Spark()
+        {
+            var robustRandom = IoCManager.Resolve<IRobustRandom>();
+            if (robustRandom.NextFloat() <= SparkChance)
+            {
+                if (!_foundTile ||
+                    _targetGrid == null ||
+                    _targetGrid.Deleted ||
+                    !_targetGrid.TryGetComponent(out GridAtmosphereComponent? gridAtmos))
+                {
+                    return;
+                }
+
+                var atmos = gridAtmos.GetTile(_targetTile);
+                if (atmos?.Air == null) return;
+                atmos.Air.Temperature = 1000f;
+                EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Effects/sparks4.ogg", _targetCoords);
+                atmos.Invalidate();
+            }
         }
 
         private bool TryFindRandomTile(out Vector2i tile, IRobustRandom? robustRandom = null)
@@ -157,6 +190,7 @@ namespace Content.Server.StationEvents
                 tile = new Vector2i(randomX - (int) gridPos.X, randomY - (int) gridPos.Y);
                 if (gridAtmos.IsSpace(tile) || gridAtmos.IsAirBlocked(tile)) continue;
                 found = true;
+                _targetCoords = grid.GridTileToLocal(tile);
                 break;
             }
 
