@@ -52,6 +52,7 @@
 
 - type: entity
   id: PoweredlightEmpty
+  suffix: Empty
   parent: Poweredlight
   components:
   - type: Sprite
@@ -111,6 +112,7 @@
 
 - type: entity
   id: PoweredSmallLightEmpty
+  suffix: Empty
   parent: PoweredSmallLight
   components:
   - type: Sprite

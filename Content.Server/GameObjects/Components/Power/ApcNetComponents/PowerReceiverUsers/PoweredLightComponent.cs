@@ -242,6 +242,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
                 var entity = Owner.EntityManager.SpawnEntity(prototype, Owner.Transform.Coordinates);
                 _lightBulbContainer.Insert(entity);
+                UpdateLight();
             }
         }
 
