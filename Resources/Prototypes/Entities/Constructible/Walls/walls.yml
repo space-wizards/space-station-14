@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: base_wall
   name: basewall
   description: Keeps the air in and the greytide out.
@@ -9,6 +9,9 @@
     - Wall
   components:
   - type: RCDDeconstructWhitelist
+  - type: Tag
+    tags:
+    - Wall
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
