@@ -16,7 +16,6 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
     [TestOf(typeof(ServerAlertsComponent))]
     public class AlertsComponentTests : ContentIntegrationTest
     {
-
         [Test]
         public async Task AlertsTest()
         {
@@ -61,11 +60,11 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 Assert.NotNull(alertsUI);
 
                 // we should be seeing 3 alerts - our health, and the 2 debug alerts, in a specific order.
-                Assert.That(alertsUI.Grid.ChildCount, Is.EqualTo(3));
-                var alertControls = alertsUI.Grid.Children.Select(c => c as AlertControl);
+                Assert.That(alertsUI.Grid.ChildCount, Is.GreaterThanOrEqualTo(3));
+                var alertControls = alertsUI.Grid.Children.Select(c => (AlertControl) c);
                 var alertIDs = alertControls.Select(ac => ac.Alert.AlertType).ToArray();
                 var expectedIDs = new [] {AlertType.HumanHealth, AlertType.Debug1, AlertType.Debug2};
-                Assert.That(alertIDs, Is.EqualTo(expectedIDs));
+                Assert.That(alertIDs, Is.SupersetOf(expectedIDs));
             });
 
             await server.WaitAssertion(() =>
@@ -96,12 +95,12 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                     clientUIMgr.StateRoot.Children.FirstOrDefault(c => c is AlertsUI) as AlertsUI;
                 Assert.NotNull(alertsUI);
 
-                // we should be seeing only 2 alerts now because one was cleared
-                Assert.That(alertsUI.Grid.ChildCount, Is.EqualTo(2));
-                var alertControls = alertsUI.Grid.Children.Select(c => c as AlertControl);
+                // we should be seeing 2 alerts now because one was cleared
+                Assert.That(alertsUI.Grid.ChildCount, Is.GreaterThanOrEqualTo(2));
+                var alertControls = alertsUI.Grid.Children.Select(c => (AlertControl) c);
                 var alertIDs = alertControls.Select(ac => ac.Alert.AlertType).ToArray();
                 var expectedIDs = new [] {AlertType.HumanHealth, AlertType.Debug2};
-                Assert.That(alertIDs, Is.EqualTo(expectedIDs));
+                Assert.That(alertIDs, Is.SupersetOf(expectedIDs));
             });
         }
     }
