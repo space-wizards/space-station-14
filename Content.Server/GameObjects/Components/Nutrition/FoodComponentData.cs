@@ -8,7 +8,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 {
     public partial class FoodComponentData
     {
-        [CustomYamlField("utensilsNeeded")] public UtensilType? UtensilsNeeded;
+        [DataClassTarget("utensilsNeeded")] public UtensilType? UtensilsNeeded;
 
         public override void ExposeData(ObjectSerializer serializer)
         {

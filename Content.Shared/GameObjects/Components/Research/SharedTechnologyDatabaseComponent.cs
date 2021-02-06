@@ -15,7 +15,7 @@ namespace Content.Shared.GameObjects.Components.Research
         public override string Name => "TechnologyDatabase";
         public override uint? NetID => ContentNetIDs.TECHNOLOGY_DATABASE;
 
-        [CustomYamlField("technologies")]
+        [DataClassTarget("technologies")]
         protected List<TechnologyPrototype> _technologies = new();
 
         /// <summary>

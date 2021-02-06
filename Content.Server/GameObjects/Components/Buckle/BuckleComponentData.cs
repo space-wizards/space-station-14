@@ -6,7 +6,7 @@ namespace Content.Server.GameObjects.Components.Buckle
 {
     public partial class BuckleComponentData
     {
-        [CustomYamlField("delay")]
+        [DataClassTarget("delay")]
         public TimeSpan? UnbuckleDelay;
 
         public override void ExposeData(ObjectSerializer serializer)

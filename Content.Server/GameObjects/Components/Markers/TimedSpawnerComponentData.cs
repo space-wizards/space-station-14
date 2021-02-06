@@ -6,10 +6,10 @@ namespace Content.Server.GameObjects.Components.Markers
 {
     public partial class TimedSpawnerComponentData
     {
-        [CustomYamlField("MinimumEntitiesSpawned")]
+        [DataClassTarget("MinimumEntitiesSpawned")]
         public int MinimumEntitiesSpawned;
 
-        [CustomYamlField("MaximumEntitiesSpawned")]
+        [DataClassTarget("MaximumEntitiesSpawned")]
         public int MaximumEntitiesSpawned;
 
         public override void ExposeData(ObjectSerializer serializer)

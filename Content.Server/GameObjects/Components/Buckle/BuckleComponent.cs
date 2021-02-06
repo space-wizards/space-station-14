@@ -58,7 +58,7 @@ namespace Content.Server.GameObjects.Components.Buckle
         ///     be able to unbuckle after recently buckling.
         /// </summary>
         [ViewVariables]
-        [CustomYamlField("delay")]
+        [DataClassTarget("delay")]
         private TimeSpan _unbuckleDelay  = TimeSpan.FromSeconds(0.25f);
 
         /// <summary>

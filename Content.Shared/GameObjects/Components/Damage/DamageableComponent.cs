@@ -33,18 +33,18 @@ namespace Content.Shared.GameObjects.Components.Damage
         public override uint? NetID => ContentNetIDs.DAMAGEABLE;
 
         private readonly Dictionary<DamageType, int> _damageList = DamageTypeExtensions.ToNewDictionary();
-        [CustomYamlField("supportedTypes")]
+        [DataClassTarget("supportedTypes")]
         private readonly HashSet<DamageType> _supportedTypes = new();
-        [CustomYamlField("supportedClasses")]
+        [DataClassTarget("supportedClasses")]
         private readonly HashSet<DamageClass> _supportedClasses = new();
         private DamageFlag _flags;
 
         public event Action<DamageChangedEventArgs>? HealthChangedEvent;
 
         // TODO DAMAGE Use as default values, specify overrides in a separate property through yaml for better (de)serialization
-        [ViewVariables] [CustomYamlField("damageContainer")] public string DamageContainerId { get; set; } = default!;
+        [ViewVariables] [DataClassTarget("damageContainer")] public string DamageContainerId { get; set; } = default!;
 
-        [ViewVariables] [CustomYamlField("resistances")] private ResistanceSet Resistances { get; set; } = new ResistanceSet();
+        [ViewVariables] [DataClassTarget("resistances")] private ResistanceSet Resistances { get; set; } = new ResistanceSet();
 
         // TODO DAMAGE Cache this
         [ViewVariables] public int TotalDamage => _damageList.Values.Sum();
@@ -55,7 +55,7 @@ namespace Content.Shared.GameObjects.Components.Damage
 
         [ViewVariables] public IReadOnlyDictionary<DamageType, int> DamageTypes => _damageList;
 
-        [CustomYamlField("flags")]
+        [DataClassTarget("flags")]
         public DamageFlag Flags
         {
             get => _flags;

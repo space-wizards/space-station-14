@@ -8,10 +8,10 @@ namespace Content.Server.GameObjects.Components.Disposal
 {
     public partial class DisposalUnitComponentData
     {
-        [CustomYamlField("autoEngageTime")]
+        [DataClassTarget("autoEngageTime")]
         public TimeSpan? AutomaticEngageTime;
 
-        [CustomYamlField("flushDelay")]
+        [DataClassTarget("flushDelay")]
         public TimeSpan? FlushDelay;
 
         public override void ExposeData(ObjectSerializer serializer)

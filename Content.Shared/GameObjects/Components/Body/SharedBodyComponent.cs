@@ -32,28 +32,28 @@ namespace Content.Shared.GameObjects.Components.Body
 
         public override uint? NetID => ContentNetIDs.BODY;
 
-        [CustomYamlField("centerSlot")]
+        [DataClassTarget("centerSlot")]
         private string? _centerSlot;
 
-        [CustomYamlField("partIds")]
+        [DataClassTarget("partIds")]
         private Dictionary<string, string> _partIds = new();
 
         private readonly Dictionary<string, IBodyPart> _parts = new();
 
         [ViewVariables]
-        [CustomYamlField("templateName")]
+        [DataClassTarget("templateName")]
         public string? TemplateName { get; private set; }
 
         [ViewVariables]
-        [CustomYamlField("presetName")]
+        [DataClassTarget("presetName")]
         public string? PresetName { get; private set; }
 
         [ViewVariables]
-        [CustomYamlField("slots")]
+        [DataClassTarget("slots")]
         public Dictionary<string, BodyPartType> Slots { get; private set; } = new();
 
         [ViewVariables]
-        [CustomYamlField("connections")]
+        [DataClassTarget("connections")]
         public Dictionary<string, List<string>> Connections { get; private set; } = new();
 
         /// <summary>

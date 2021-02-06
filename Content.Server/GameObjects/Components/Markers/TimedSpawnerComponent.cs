@@ -35,11 +35,11 @@ namespace Content.Server.GameObjects.Components.Markers
         public int IntervalSeconds { get; set; } = 60;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [CustomYamlField("MinimumEntitiesSpawned")]
+        [DataClassTarget("MinimumEntitiesSpawned")]
         public int MinimumEntitiesSpawned { get; set; } = 1;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [CustomYamlField("MaximumEntitiesSpawned")]
+        [DataClassTarget("MaximumEntitiesSpawned")]
         public int MaximumEntitiesSpawned { get; set; } = 1;
 
         private CancellationTokenSource TokenSource;

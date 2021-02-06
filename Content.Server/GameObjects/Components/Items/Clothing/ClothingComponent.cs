@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Items.Clothing
         public override uint? NetID => ContentNetIDs.CLOTHING;
 
         [ViewVariables]
-        [CustomYamlField("slotFlags")]
+        [DataClassTarget("slotFlags")]
         public SlotFlags SlotFlags = SlotFlags.PREVENTEQUIP; //Different from None, NONE allows equips if no slot flags are required
 
         [YamlField("QuickEquip")]

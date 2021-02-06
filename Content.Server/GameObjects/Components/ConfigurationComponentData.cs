@@ -9,9 +9,9 @@ namespace Content.Server.GameObjects.Components
 {
     public partial class ConfigurationComponentData
     {
-        [CustomYamlField("config")] public Dictionary<string, string>? Config;
+        [DataClassTarget("config")] public Dictionary<string, string>? Config;
 
-        [CustomYamlField("validation")]
+        [DataClassTarget("validation")]
         public Regex? Validation;
         public override void ExposeData(ObjectSerializer serializer)
         {

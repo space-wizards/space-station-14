@@ -17,12 +17,12 @@ namespace Content.Shared.GameObjects.Components.Damage
         public const string DefaultResistanceSet = "defaultResistances";
         public const string DefaultDamageContainer = "metallicDamageContainer";
 
-        [CustomYamlField("flags")] public DamageFlag? Flags;
-        [CustomYamlField("resistances")] public ResistanceSet? Resistances { get; set; }
-        [CustomYamlField("damageContainer")] public string? DamageContainerId { get; set; }
-        [CustomYamlField("supportedTypes")]
+        [DataClassTarget("flags")] public DamageFlag? Flags;
+        [DataClassTarget("resistances")] public ResistanceSet? Resistances { get; set; }
+        [DataClassTarget("damageContainer")] public string? DamageContainerId { get; set; }
+        [DataClassTarget("supportedTypes")]
         public HashSet<DamageType>? SupportedTypes;
-        [CustomYamlField("supportedClasses")]
+        [DataClassTarget("supportedClasses")]
         public HashSet<DamageClass>? SupportedClasses;
 
         public override void ExposeData(ObjectSerializer serializer)

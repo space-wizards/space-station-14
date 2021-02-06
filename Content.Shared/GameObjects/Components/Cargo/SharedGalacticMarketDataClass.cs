@@ -8,7 +8,7 @@ namespace Content.Shared.GameObjects.Components.Cargo
 {
     public partial class SharedGalacticMarketDataClass
     {
-        [CustomYamlField("products")]
+        [DataClassTarget("products")]
         protected List<CargoProductPrototype> _products = new();
 
         public override void ExposeData(ObjectSerializer serializer)

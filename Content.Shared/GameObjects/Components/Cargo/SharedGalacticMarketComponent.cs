@@ -15,7 +15,7 @@ namespace Content.Shared.GameObjects.Components.Cargo
         public sealed override string Name => "GalacticMarket";
         public sealed override uint? NetID => ContentNetIDs.GALACTIC_MARKET;
 
-        [CustomYamlField("products")]
+        [DataClassTarget("products")]
         protected List<CargoProductPrototype> _products = new();
 
         /// <summary>

@@ -12,21 +12,21 @@ namespace Content.Shared.GameObjects.Components.Body
 {
     public partial class SharedBodyComponentData
     {
-        [CustomYamlField("templateName")] public string? TemplateName;
+        [DataClassTarget("templateName")] public string? TemplateName;
 
-        [CustomYamlField("connections")]
+        [DataClassTarget("connections")]
         public Dictionary<string, List<string>>? Connections;
 
-        [CustomYamlField("slots")]
+        [DataClassTarget("slots")]
         public Dictionary<string, BodyPartType>? Slots;
 
-        [CustomYamlField("centerSlot")]
+        [DataClassTarget("centerSlot")]
         public string? _centerSlot;
 
-        [CustomYamlField("partIds")]
+        [DataClassTarget("partIds")]
         public Dictionary<string, string>? _partIds;
 
-        [CustomYamlField("presetName")]
+        [DataClassTarget("presetName")]
         public string? PresetName { get; private set; }
 
         public override void ExposeData(ObjectSerializer serializer)

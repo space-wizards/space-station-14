@@ -8,7 +8,7 @@ namespace Content.Shared.GameObjects.Components.Research
 {
     public partial class SharedTechnologyDatabaseComponentDataClass
     {
-        [CustomYamlField("technologies")]
+        [DataClassTarget("technologies")]
         protected List<TechnologyPrototype> _technologies = new();
 
         public override void ExposeData(ObjectSerializer serializer)

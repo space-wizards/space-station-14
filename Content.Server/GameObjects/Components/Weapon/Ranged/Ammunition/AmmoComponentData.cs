@@ -8,16 +8,16 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 {
     public partial class AmmoComponentData
     {
-        [CustomYamlField("projectilesFired")]
+        [DataClassTarget("projectilesFired")]
         public int? ProjectilesFired;
 
-        [CustomYamlField("ammoSpread")]
+        [DataClassTarget("ammoSpread")]
         public float? EvenSpreadAngle;
 
-        [CustomYamlField("isProjectile")]
+        [DataClassTarget("isProjectile")]
         public bool? AmmoIsProjectile;
 
-        [CustomYamlField("caseless")]
+        [DataClassTarget("caseless")]
         private bool? Caseless;
 
         public override void ExposeData(ObjectSerializer serializer)

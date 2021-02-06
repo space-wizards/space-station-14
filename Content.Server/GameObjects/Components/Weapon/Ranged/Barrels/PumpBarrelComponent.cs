@@ -43,12 +43,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         }
 
         public override int Capacity => _capacity;
-        [CustomYamlField("capacity")]
+        [DataClassTarget("capacity")]
         private int _capacity = 6;
 
         // Even a point having a chamber? I guess it makes some of the below code cleaner
         private ContainerSlot _chamberContainer;
-        [CustomYamlField("spawnedAmmo")]
+        [DataClassTarget("spawnedAmmo")]
         private Stack<IEntity> _spawnedAmmo = default;
         private Container _ammoContainer;
 

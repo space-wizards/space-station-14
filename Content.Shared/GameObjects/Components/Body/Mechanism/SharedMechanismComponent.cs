@@ -25,7 +25,7 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
         protected int IdHash;
         protected IEntity? PerformerCache;
         private IBodyPart? _part;
-        [CustomYamlField("behaviours")]
+        [DataClassTarget("behaviours")]
         private readonly Dictionary<Type, IMechanismBehavior> _behaviors = new();
 
         public IBody? Body => Part?.Body;

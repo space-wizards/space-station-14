@@ -417,7 +417,7 @@ namespace Content.Client.GameObjects.Components
         }
 
         [ViewVariables(VVAccess.ReadOnly)]
-        [CustomYamlField("animations")]
+        [DataClassTarget("animations")]
         private readonly List<AnimationContainer> _animations = new();
 
         private float _originalRadius = default;

@@ -42,7 +42,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         private ContainerSlot _magazineContainer;
 
         [ViewVariables] public MagazineType MagazineTypes => _magazineTypes;
-        [CustomYamlField("types")]
+        [DataClassTarget("types")]
         private MagazineType _magazineTypes = default;
         [ViewVariables] public BallisticCaliber Caliber => _caliber;
         [YamlField("caliber")]

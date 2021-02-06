@@ -13,7 +13,7 @@ namespace Content.Server.GameObjects.Components.Power
     {
         [ViewVariables(VVAccess.ReadWrite)]
         public Voltage Voltage { get => _voltage; set => SetVoltage(value); }
-        [CustomYamlField("voltage")]
+        [DataClassTarget("voltage")]
         private Voltage _voltage = Voltage.High;
 
         [ViewVariables]

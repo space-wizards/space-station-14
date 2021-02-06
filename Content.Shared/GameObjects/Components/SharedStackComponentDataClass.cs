@@ -7,7 +7,7 @@ namespace Content.Shared.GameObjects.Components
 {
     public partial class SharedStackComponentDataClass
     {
-        [CustomYamlField("stacktype")]
+        [DataClassTarget("stacktype")]
         public object StackType;
 
         public override void ExposeData(ObjectSerializer serializer)

@@ -8,7 +8,7 @@ namespace Content.Shared.GameObjects.Components.Research
 {
     public partial class SharedLatheDatabaseComponentData
     {
-        [CustomYamlField("recipes")]
+        [DataClassTarget("recipes")]
         private readonly List<LatheRecipePrototype> _recipes = new();
 
         public override void ExposeData(ObjectSerializer serializer)

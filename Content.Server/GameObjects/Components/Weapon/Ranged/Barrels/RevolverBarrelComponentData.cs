@@ -7,7 +7,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 {
     public partial class RevolverBarrelComponentData
     {
-        [CustomYamlField("ammoSlots")]
+        [DataClassTarget("ammoSlots")]
         public IEntity[]? AmmoSlots;
 
         public override void ExposeData(ObjectSerializer serializer)

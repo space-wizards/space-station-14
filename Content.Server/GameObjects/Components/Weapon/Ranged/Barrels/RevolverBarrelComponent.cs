@@ -41,7 +41,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         [ViewVariables]
         private int _currentSlot = 0;
         public override int Capacity => _ammoSlots.Length;
-        [CustomYamlField("ammoSlots")]
+        [DataClassTarget("ammoSlots")]
         private IEntity[] _ammoSlots = Array.Empty<IEntity>();
 
         public override int ShotsLeft => _ammoContainer.ContainedEntities.Count;

@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.Components.Destructible
         public override string Name => "Destructible";
 
         [ViewVariables]
-        [CustomYamlField("thresholds")]
+        [DataClassTarget("thresholds")]
         private SortedDictionary<int, Threshold> _lowestToHighestThresholds = new();
 
         [ViewVariables] private int PreviousTotalDamage { get; set; }

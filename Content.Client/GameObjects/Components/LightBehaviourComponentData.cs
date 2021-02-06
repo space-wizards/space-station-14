@@ -8,7 +8,7 @@ namespace Content.Client.GameObjects.Components
 {
     public partial class LightBehaviourComponentData
     {
-        [CustomYamlField("animations")]
+        [DataClassTarget("animations")]
         public List<LightBehaviourComponent.AnimationContainer>? Animations;
 
         public override void ExposeData(ObjectSerializer serializer)

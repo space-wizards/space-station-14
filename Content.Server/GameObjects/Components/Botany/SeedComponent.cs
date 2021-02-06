@@ -18,7 +18,7 @@ namespace Content.Server.GameObjects.Components.Botany
 
         public override string Name => "Seed";
         [ViewVariables]
-        [CustomYamlField("Seed")]
+        [DataClassTarget("Seed")]
         public Seed Seed { get; set; } = null;
 
         public void Examine(FormattedMessage message, bool inDetailsRange)

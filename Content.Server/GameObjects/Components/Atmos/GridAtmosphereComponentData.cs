@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
         }
 
-        [CustomYamlField("Tiles")] private List<GridAtmosphereComponentData.IntermediateTileAtmosphere>? TilesReceiver;
+        [DataClassTarget("Tiles")] private List<GridAtmosphereComponentData.IntermediateTileAtmosphere>? TilesReceiver;
 
         public override void ExposeData(ObjectSerializer serializer)
         {

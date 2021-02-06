@@ -76,7 +76,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         [ViewVariables]
         protected readonly Dictionary<Vector2i, TileAtmosphere> Tiles = new(1000);
 
-        [CustomYamlField("Tiles")]
+        [DataClassTarget("Tiles")]
         private List<GridAtmosphereComponentData.IntermediateTileAtmosphere> TilesReceiver
         {
             get

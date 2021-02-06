@@ -48,10 +48,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         [YamlField("currentSelector")]
         private FireRateSelector _fireRateSelector = FireRateSelector.Safety;
         public override FireRateSelector AllRateSelectors => _fireRateSelector;
-        [CustomYamlField("allRateSelectors")]
+        [DataClassTarget("allRateSelectors")]
         private FireRateSelector _allRateSelectors;
         public override float FireRate => _fireRate;
-        [CustomYamlField("fireRate")]
+        [DataClassTarget("fireRate")]
         private float _fireRate = 2f;
 
         // _lastFire is when we actually fired (so if we hold the button then recoil doesn't build up if we're not firing)
@@ -61,23 +61,23 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public abstract IEntity TakeProjectile(EntityCoordinates spawnAt);
 
         // Recoil / spray control
-        [CustomYamlField("minAngle")]
+        [DataClassTarget("minAngle")]
         private Angle _minAngle = default;
-        [CustomYamlField("maxAngle")]
+        [DataClassTarget("maxAngle")]
         private Angle _maxAngle = default;
         private Angle _currentAngle = Angle.Zero;
         /// <summary>
         /// How slowly the angle's theta decays per second in radians
         /// </summary>
-        [CustomYamlField("angleDecay")]
+        [DataClassTarget("angleDecay")]
         private float _angleDecay = default;
         /// <summary>
         /// How quickly the angle's theta builds for every shot fired in radians
         /// </summary>
-        [CustomYamlField("angleIncrease")]
+        [DataClassTarget("angleIncrease")]
         private float _angleIncrease = default;
         // Multiplies the ammo spread to get the final spread of each pellet
-        [CustomYamlField("spreadRatio")]
+        [DataClassTarget("spreadRatio")]
         private float _spreadRatio = 1f;
 
         public bool CanMuzzleFlash => _canMuzzleFlash;

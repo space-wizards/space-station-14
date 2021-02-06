@@ -19,7 +19,7 @@ namespace Content.Server.GameObjects.Components.Access
         public override string Name => "Access";
 
         [ViewVariables]
-        [CustomYamlField("tags")]
+        [DataClassTarget("tags")]
         private readonly HashSet<string> _tags = new();
 
         public ISet<string> Tags => _tags;

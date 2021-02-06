@@ -19,7 +19,7 @@ namespace Content.Server.GameObjects.Components.Botany
         public override string Name => "Produce";
 
         [ViewVariables]
-        [CustomYamlField("Seed")]
+        [DataClassTarget("Seed")]
         public Seed Seed { get; set; } = null;
 
         public float Potency => Seed.Potency;

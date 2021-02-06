@@ -8,7 +8,7 @@ namespace Content.Server.GameObjects.Components.Destructible
 {
     public partial class DestructibleComponentData
     {
-        [CustomYamlField("thresholds")]
+        [DataClassTarget("thresholds")]
         public SortedDictionary<int, Threshold>? LowestToHighestThresholds;
 
         public override void ExposeData(ObjectSerializer serializer)

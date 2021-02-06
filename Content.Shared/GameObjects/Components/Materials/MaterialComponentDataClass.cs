@@ -8,7 +8,7 @@ namespace Content.Shared.GameObjects.Components.Materials
 {
     public partial class MaterialComponentDataClass
     {
-        [CustomYamlField("materials")]
+        [DataClassTarget("materials")]
         public Dictionary<object, Material> MaterialTypes;
 
         public override void ExposeData(ObjectSerializer serializer)

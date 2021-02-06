@@ -33,10 +33,10 @@ namespace Content.Server.GameObjects.Components
         [ViewVariables] private BoundUserInterface UserInterface => Owner.GetUIOrNull(ConfigurationUiKey.Key);
 
         [ViewVariables]
-        [CustomYamlField("config")]
+        [DataClassTarget("config")]
         private readonly Dictionary<string, string> _config = new();
 
-        [CustomYamlField("validation")]
+        [DataClassTarget("validation")]
         private Regex _validation = new ("^[a-zA-Z0-9 ]*$", RegexOptions.Compiled);
 
         public override void OnAdd()

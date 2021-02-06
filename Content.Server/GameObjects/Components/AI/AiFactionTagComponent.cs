@@ -12,7 +12,7 @@ namespace Content.Server.GameObjects.Components.AI
     {
         public override string Name => "AiFactionTag";
 
-        [CustomYamlField("factions")]
+        [DataClassTarget("factions")]
         public Faction Factions { get; private set; } = Faction.None;
     }
 

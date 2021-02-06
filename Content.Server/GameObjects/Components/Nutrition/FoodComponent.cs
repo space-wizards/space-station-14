@@ -41,7 +41,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         [ViewVariables] [YamlField("useSound")] private string _useSound = "/Audio/Items/eatfood.ogg";
         [ViewVariables] [YamlField("trash")] private string? _trashPrototype;
         [ViewVariables] [YamlField("transferAmount")] private ReagentUnit _transferAmount = ReagentUnit.New(5);
-        [CustomYamlField("utensilsNeeded")] private UtensilType _utensilsNeeded;
+        [DataClassTarget("utensilsNeeded")] private UtensilType _utensilsNeeded;
 
         [ViewVariables]
         public int UsesRemaining

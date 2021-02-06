@@ -56,7 +56,7 @@ namespace Content.Shared.GameObjects.Components
         [ViewVariables] public int AvailableSpace => MaxCount - Count;
 
         [ViewVariables]
-        [CustomYamlField("stacktype")]
+        [DataClassTarget("stacktype")]
         public object StackType { get => _stackType == null ? Owner.Prototype.ID : _stackType; private set => _stackType = value; }
 
         private object _stackType;

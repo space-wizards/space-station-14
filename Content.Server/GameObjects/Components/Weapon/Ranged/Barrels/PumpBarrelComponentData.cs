@@ -7,11 +7,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 {
     public partial class PumpBarrelComponentData
     {
-        [CustomYamlField("capacity")]
+        [DataClassTarget("capacity")]
         public int Capacity = 6;
 
 
-        [CustomYamlField("spawnedAmmo")]
+        [DataClassTarget("spawnedAmmo")]
         public Stack<IEntity> SpawnedAmmo;
 
         public override void ExposeData(ObjectSerializer serializer)

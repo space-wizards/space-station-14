@@ -7,7 +7,7 @@ namespace Content.Server.GameObjects.Components.Access
 {
     public partial class AccessComponentData
     {
-        [CustomYamlField("tags")]
+        [DataClassTarget("tags")]
         private HashSet<string>? _tags;
 
         public override void ExposeData(ObjectSerializer serializer)

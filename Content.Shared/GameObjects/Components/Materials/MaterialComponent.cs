@@ -22,7 +22,7 @@ namespace Content.Shared.GameObjects.Components.Materials
         public override string Name => "Material";
 
         public Dictionary<object, Material> MaterialTypes => _materialTypes;
-        [CustomYamlField("materials")]
+        [DataClassTarget("materials")]
         private Dictionary<object, Material> _materialTypes;
 
         public class MaterialDataEntry : IExposeData

@@ -27,7 +27,7 @@ namespace Content.Server.GameObjects.Components.Strap
     {
         [ComponentDependency] public readonly SpriteComponent? SpriteComponent = null;
 
-        [CustomYamlField("list")]
+        [DataClassTarget("list")]
         private HashSet<IEntity> _buckledEntities = null!;
         [YamlField("position")]
         private StrapPosition _position = StrapPosition.None;
@@ -49,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Strap
         /// The size of the strap which is compared against when buckling entities
         /// </summary>
         [ViewVariables]
-        [CustomYamlField("size")]
+        [DataClassTarget("size")]
         private int _size;
         private int _occupiedSize = 0;
 

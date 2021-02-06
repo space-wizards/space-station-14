@@ -7,7 +7,7 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
 {
     public partial class SharedMobStateComponentDataClass
     {
-        [CustomYamlField("states")]
+        [DataClassTarget("states")]
         private SortedDictionary<int, IMobState>? _lowestToHighestStates;
 
         public override void ExposeData(ObjectSerializer serializer)

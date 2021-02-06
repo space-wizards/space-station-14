@@ -8,7 +8,7 @@ namespace Content.Server.GameObjects.Components.Items.Clothing
 {
     public partial class ClothingComponentData
     {
-        [CustomYamlField("slotFlags")] public EquipmentSlotDefines.SlotFlags? SlotFlags;
+        [DataClassTarget("slotFlags")] public EquipmentSlotDefines.SlotFlags? SlotFlags;
 
         public override void ExposeData(ObjectSerializer serializer)
         {

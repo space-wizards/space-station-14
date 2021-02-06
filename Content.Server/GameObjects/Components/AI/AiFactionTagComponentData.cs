@@ -7,7 +7,7 @@ namespace Content.Server.GameObjects.Components.AI
 {
     public partial class AiFactionTagComponentData
     {
-        [CustomYamlField("factions")]
+        [DataClassTarget("factions")]
         public Faction? Factions { get; private set; }
 
         public override void ExposeData(ObjectSerializer serializer)

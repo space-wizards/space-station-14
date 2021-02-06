@@ -7,10 +7,10 @@ namespace Content.Server.GameObjects.Components.Strap
 {
     public partial class StrapComponentData
     {
-        [CustomYamlField("size")]
+        [DataClassTarget("size")]
         public int Size;
 
-        [CustomYamlField("list")]
+        [DataClassTarget("list")]
         public HashSet<IEntity> BuckledEntities;
 
         public override void ExposeData(ObjectSerializer serializer)

@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Utensil
         protected UtensilType _types = UtensilType.None;
 
         [ViewVariables]
-        [CustomYamlField("types")]
+        [DataClassTarget("types")]
         public override UtensilType Types
         {
             get => _types;

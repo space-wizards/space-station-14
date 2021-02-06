@@ -7,7 +7,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 {
     public partial class ServerMagazineBarrelComponentData
     {
-        [CustomYamlField("types")]
+        [DataClassTarget("types")]
         private MagazineType _magazineTypes;
 
         public override void ExposeData(ObjectSerializer serializer)

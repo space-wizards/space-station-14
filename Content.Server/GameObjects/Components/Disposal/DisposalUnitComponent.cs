@@ -81,11 +81,11 @@ namespace Content.Server.GameObjects.Components.Disposal
         private bool _engaged;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [CustomYamlField("autoEngageTime")]
+        [DataClassTarget("autoEngageTime")]
         private TimeSpan _automaticEngageTime;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [CustomYamlField("flushDelay")]
+        [DataClassTarget("flushDelay")]
         private TimeSpan _flushDelay;
 
         [ViewVariables(VVAccess.ReadWrite)]

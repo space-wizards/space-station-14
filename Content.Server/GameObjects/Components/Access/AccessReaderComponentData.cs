@@ -7,7 +7,7 @@ namespace Content.Server.GameObjects.Components.Access
 {
     public partial class AccessReaderComponentData
     {
-        [CustomYamlField("accessList")]
+        [DataClassTarget("accessList")]
         public List<ISet<string>> AccessLists = new();
 
         public override void ExposeData(ObjectSerializer serializer)

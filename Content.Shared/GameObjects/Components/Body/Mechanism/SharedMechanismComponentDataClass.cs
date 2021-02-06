@@ -13,7 +13,7 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
 {
     public partial class SharedMechanismComponentDataClass
     {
-        [CustomYamlField("behaviours")]
+        [DataClassTarget("behaviours")]
         public Dictionary<Type, IMechanismBehavior>? _behaviors;
 
         public override void ExposeData(ObjectSerializer serializer)

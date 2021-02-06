@@ -8,7 +8,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 {
     public partial class ToolComponentData
     {
-        [CustomYamlField("qualities")]
+        [DataClassTarget("qualities")]
         public ToolQuality Qualities = ToolQuality.None;
 
         public override void ExposeData(ObjectSerializer serializer)

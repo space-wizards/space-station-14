@@ -10,25 +10,25 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 {
     public partial class ServerRangedBarrelComponentData
     {
-        [CustomYamlField("spreadRatio")]
+        [DataClassTarget("spreadRatio")]
         public float SpreadRatio = 1f;
 
-        [CustomYamlField("minAngle")]
+        [DataClassTarget("minAngle")]
         public Angle MinAngle;
 
-        [CustomYamlField("maxAngle")]
+        [DataClassTarget("maxAngle")]
         public Angle MaxAngle;
 
-        [CustomYamlField("fireRate")]
+        [DataClassTarget("fireRate")]
         public float FireRate = 2f;
 
-        [CustomYamlField("angleIncrease")]
+        [DataClassTarget("angleIncrease")]
         public float AngleIncrease;
 
-        [CustomYamlField("angleDecay")]
+        [DataClassTarget("angleDecay")]
         public float AngleDecay;
 
-        [CustomYamlField("allRateSelectors")]
+        [DataClassTarget("allRateSelectors")]
         public FireRateSelector AllRateSelectors;
 
         public override void ExposeData(ObjectSerializer serializer)

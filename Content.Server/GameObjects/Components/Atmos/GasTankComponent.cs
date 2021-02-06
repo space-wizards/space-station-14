@@ -50,7 +50,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         [ViewVariables] private BoundUserInterface? _userInterface;
 
-        [ViewVariables] [CustomYamlField("air")] public GasMixture? Air { get; set; } = null!;
+        [ViewVariables] [DataClassTarget("air")] public GasMixture? Air { get; set; } = null!;
 
         /// <summary>
         ///     Distributed pressure.

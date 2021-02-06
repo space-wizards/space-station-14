@@ -27,7 +27,7 @@ namespace Content.Server.GameObjects.Components.Access
     {
         public override string Name => "AccessReader";
 
-        [CustomYamlField("accessList")]
+        [DataClassTarget("accessList")]
         private readonly List<ISet<string>> _accessLists = new();
         private readonly HashSet<string> _denyTags = new();
 

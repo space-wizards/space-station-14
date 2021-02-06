@@ -8,7 +8,7 @@ namespace Content.Server.GameObjects.Components.Botany
 {
     public partial class ProduceComponentData
     {
-        [CustomYamlField("Seed")] public Seed? Seed;
+        [DataClassTarget("Seed")] public Seed? Seed;
 
         public override void ExposeData(ObjectSerializer serializer)
         {

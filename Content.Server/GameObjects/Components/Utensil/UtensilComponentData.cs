@@ -8,7 +8,7 @@ namespace Content.Server.GameObjects.Components.Utensil
 {
     public partial class UtensilComponentData
     {
-        [CustomYamlField("types")] public UtensilType Types;
+        [DataClassTarget("types")] public UtensilType Types;
 
         public override void ExposeData(ObjectSerializer serializer)
         {

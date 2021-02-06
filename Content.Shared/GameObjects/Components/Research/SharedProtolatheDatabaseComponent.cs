@@ -16,7 +16,7 @@ namespace Content.Shared.GameObjects.Components.Research
         public override string Name => "ProtolatheDatabase";
         public sealed override uint? NetID => ContentNetIDs.PROTOLATHE_DATABASE;
 
-        [CustomYamlField("protolatherecipes")]
+        [DataClassTarget("protolatherecipes")]
         private readonly List<LatheRecipePrototype> _protolatheRecipes = new();
 
         /// <summary>

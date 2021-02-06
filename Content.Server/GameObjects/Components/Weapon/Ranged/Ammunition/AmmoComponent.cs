@@ -50,14 +50,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
         /// <summary>
         /// Used for anything without a case that fires itself
         /// </summary>
-        [CustomYamlField("isProjectile")]
+        [DataClassTarget("isProjectile")]
         private bool _ammoIsProjectile;
 
         /// <summary>
         /// Used for something that is deleted when the projectile is retrieved
         /// </summary>
         public bool Caseless => _caseless;
-        [CustomYamlField("caseless")]
+        [DataClassTarget("caseless")]
         private bool _caseless;
         // Rather than managing bullet / case state seemed easier to just have 2 toggles
         // ammoIsProjectile being for a beanbag for example and caseless being for ClRifle rounds
@@ -66,13 +66,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
         /// For shotguns where they might shoot multiple entities
         /// </summary>
         public int ProjectilesFired => _projectilesFired;
-        [CustomYamlField("projectilesFired")]
+        [DataClassTarget("projectilesFired")]
         private int _projectilesFired = 1;
         [YamlField("projectile")]
         private string _projectileId;
         // How far apart each entity is if multiple are shot
         public float EvenSpreadAngle => _evenSpreadAngle;
-        [CustomYamlField("ammoSpread")]
+        [DataClassTarget("ammoSpread")]
         private float _evenSpreadAngle = default;
         /// <summary>
         /// How fast the shot entities travel

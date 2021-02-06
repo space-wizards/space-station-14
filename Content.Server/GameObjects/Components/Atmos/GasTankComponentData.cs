@@ -6,7 +6,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 {
     public partial class GasTankComponentData
     {
-        [CustomYamlField("air")] public GasMixture Air;
+        [DataClassTarget("air")] public GasMixture Air;
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
