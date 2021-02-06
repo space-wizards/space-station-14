@@ -45,3 +45,17 @@
    speed: 0
    cooldown: 1
    ignorecaster: true
+
+- type: action
+  actionType: DebugTarget
+  icon: Mobs/Aliens/Carps/carp_magic.rsi/icon.png
+  name: "TargetIt"
+  filters:
+    - human
+  description: "This is a debug entity spell"
+  behaviorType: TargetEntity
+  behavior: !type:TargetSpell
+   castmessage: IT WOKS!
+   cooldown: 1
+   NeedComponent: Actions
+   AddedComponent: PressureProtection
