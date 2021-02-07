@@ -4,6 +4,7 @@ using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Shared.GameObjects.Components.Atmos;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -16,7 +17,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
     /// <summary>
     ///     Transfer gas from one <see cref="PipeNode"/> to another.
     /// </summary>
-    public abstract class BasePumpComponent : Component
+    public abstract class BasePumpComponent : Component, IActivate
     {
         /// <summary>
         ///     If the pump is currently pumping.
@@ -98,6 +99,11 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
         {
             if (_inletPipe == null || _outletPipe == null) return;
             _appearance?.SetData(PumpVisuals.VisualState, new PumpVisualState(_initialInletDirection, _initialOutletDirection, PumpEnabled));
+        }
+
+        public void Activate(ActivateEventArgs eventArgs)
+        {
+            PumpEnabled = !PumpEnabled;
         }
 
         private void SetPipes()

@@ -38,18 +38,3 @@
   components:
   - type: BarSign
     current: EngineChange
-
-- type: entity
-  id: BarSignCyberSylph
-  name: Cyber Sylph
-  parent: LargeBarSign
-  components:
-  - type: BarSign
-    current: CyberSylph
-  - type: Physics
-    shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.45, -0.95, 0.95, 1.5"
-        layer: [ Passable ]
-  - type: Sprite
-    drawdepth: Ghosts

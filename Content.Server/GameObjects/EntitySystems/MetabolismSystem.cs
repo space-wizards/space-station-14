@@ -11,7 +11,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Update(frameTime);
 
-            foreach (var metabolism in ComponentManager.EntityQuery<MetabolismComponent>())
+            foreach (var metabolism in ComponentManager.EntityQuery<MetabolismComponent>(true))
             {
                 metabolism.Update(frameTime);
             }

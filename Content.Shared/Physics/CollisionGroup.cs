@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
@@ -23,7 +24,6 @@ namespace Content.Shared.Physics
         GhostImpassable = 1 <<  6, // 64 Things impassible by ghosts/observers, ie blessed tiles or forcefields
         Underplating    = 1 <<  7, // 128 Things that are under plating
         Passable        = 1 <<  8, // 256 Things that are passable
-        ExplosivePassable = 1 << 9, // 512 Things that let the pressure of a explosion through
         MapGrid         = MapGridHelpers.CollisionGroup, // Map grids, like shuttles. This is the actual grid itself, not the walls or other entities connected to the grid.
 
         MobMask = Impassable | MobImpassable | VaultImpassable | SmallImpassable,

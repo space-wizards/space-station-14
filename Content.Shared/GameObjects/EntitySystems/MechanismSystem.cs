@@ -12,7 +12,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         {
             base.Update(frameTime);
 
-            foreach (var mechanism in ComponentManager.EntityQuery<IMechanism>())
+            foreach (var mechanism in ComponentManager.EntityQuery<IMechanism>(true))
             {
                 mechanism.Update(frameTime);
             }

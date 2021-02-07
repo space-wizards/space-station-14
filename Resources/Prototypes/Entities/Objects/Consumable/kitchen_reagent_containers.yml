@@ -10,7 +10,7 @@
       reagents:
       - ReagentId: chem.Flour
         Quantity: 50
-  - type: Pourable
+  - type: SolutionTransfer
     transferAmount: 5
   - type: Drink
   - type: Sprite

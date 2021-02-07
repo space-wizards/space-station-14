@@ -21,9 +21,10 @@ namespace Content.Server.GameObjects.Components.Interactable
         public override string Name => "TilePrying";
         private bool _toolComponentNeeded = true;
 
-        public async Task AfterInteract(AfterInteractEventArgs eventArgs)
+        public async Task<bool> AfterInteract(AfterInteractEventArgs eventArgs)
         {
             TryPryTile(eventArgs.User, eventArgs.ClickLocation);
+            return true;
         }
 
         public override void ExposeData(ObjectSerializer serializer)

@@ -1,3 +1,4 @@
+// ReSharper disable ArrangeTrailingCommaInMultilineLists
 namespace Content.Client
 {
     public static class IgnoredComponents
@@ -235,12 +236,17 @@ namespace Content.Client
             "SliceableFood",
             "DamageOtherOnHit",
             "DamageOnLand",
+            "SmokeSolutionAreaEffect",
+            "FoamSolutionAreaEffect",
             "GasFilter",
             "Recyclable",
             "SecretStash",
             "Toilet",
             "ClusterFlash",
-            "GasGenerator"
+            "GasGenerator",
+            "SolutionTransfer",
+            "Shovel",
+            "ReagentTank",
         };
     }
 }

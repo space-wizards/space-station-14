@@ -13,21 +13,23 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      100:
-        behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: Sprite
     netsync: false
     sprite: Constructible/Atmos/vent.rsi
     layers:
     - sprite: Constructible/Atmos/pipe.rsi
       state: pipeHalf
-    - state: ventOff      
+    - state: ventOff
   - type: Appearance
     visuals:
     - type: VentVisualizer
-    
+
 - type: entity
   parent: VentBase
   id: Vent

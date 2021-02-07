@@ -1,0 +1,46 @@
+﻿- type: constructionGraph
+  id: lightFixture
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: bulbLight
+          steps:
+            - material: Metal
+              amount: 1
+              doAfter: 2.0      
+        - to: tubeLight
+          steps:
+            - material: Metal
+              amount: 2
+              doAfter: 2.0
+    - node: tubeLight
+      entity: PoweredlightEmpty
+      edges:
+        - to: start
+          conditions:
+            - !type:ContainerEmpty
+              container: "light_bulb"
+          steps:
+            - tool: Screwing
+              doAfter: 2.0
+          completed:
+            - !type:SpawnPrototype
+              prototype: SteelSheet1
+              amount: 2
+            - !type:DeleteEntity {}         
+    - node: bulbLight
+      entity: PoweredSmallLightEmpty
+      edges:
+        - to: start
+          conditions:
+            - !type:ContainerEmpty
+              container: "light_bulb"
+          steps:
+            - tool: Screwing
+              doAfter: 2.0
+          completed:
+            - !type:SpawnPrototype
+              prototype: SteelSheet1
+              amount: 1
+            - !type:DeleteEntity {}

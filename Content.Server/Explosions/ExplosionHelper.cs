@@ -1,8 +1,10 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Explosion;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Tag;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
@@ -39,7 +41,7 @@ namespace Content.Server.Explosions
         private static readonly float LightBreakChance = 0.3f;
         private static readonly float HeavyBreakChance = 0.8f;
 
-        private static bool IgnoreExplosivePassable(IEntity e) => (e.GetComponent<IPhysicsComponent>().CollisionLayer & (int) CollisionGroup.ExplosivePassable) != 0;
+        private static bool IgnoreExplosivePassable(IEntity e) => e.HasTag("ExplosivePassable");
 
         private static ExplosionSeverity CalculateSeverity(float distance, float devastationRange, float heaveyRange)
         {
@@ -96,7 +98,7 @@ namespace Content.Server.Explosions
                     continue;
                 }
 
-                if (!entity.TryGetComponent(out IPhysicsComponent body) || body.PhysicsShapes.Count < 1)
+                if (!entity.TryGetComponent(out IPhysicsComponent? body) || body.PhysicsShapes.Count < 1)
                 {
                     continue;
                 }
@@ -117,7 +119,7 @@ namespace Content.Server.Explosions
 
             // Impassable entities are handled first. If they are damaged enough, they are destroyed and they may
             // be able to spawn a new entity. I.e Wall -> Girder.
-            // Girder has a layer ExplosivePassable, and the predicate make it so the entities with this layer are ignored
+            // Girder has a tag ExplosivePassable, and the predicate make it so the entities with this tag are ignored
             var epicenterMapPos = epicenter.ToMap(entityManager);
             foreach (var (entity, distance) in impassableEntities)
             {
@@ -228,7 +230,7 @@ namespace Content.Server.Explosions
             var players = playerManager.GetPlayersInRange(epicenter, (int) Math.Ceiling(maxRange));
             foreach (var player in players)
             {
-                if (player.AttachedEntity == null || !player.AttachedEntity.TryGetComponent(out CameraRecoilComponent recoil))
+                if (player.AttachedEntity == null || !player.AttachedEntity.TryGetComponent(out CameraRecoilComponent? recoil))
                 {
                     continue;
                 }
@@ -279,7 +281,7 @@ namespace Content.Server.Explosions
             int lightImpactRange = 0, int flashRange = 0)
         {
             // If you want to directly set off the explosive
-            if (!entity.Deleted && entity.TryGetComponent(out ExplosiveComponent explosive) && !explosive.Exploding)
+            if (!entity.Deleted && entity.TryGetComponent(out ExplosiveComponent? explosive) && !explosive.Exploding)
             {
                 explosive.Explosion();
             }

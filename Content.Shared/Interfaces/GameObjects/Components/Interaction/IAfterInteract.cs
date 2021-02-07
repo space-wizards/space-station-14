@@ -17,9 +17,15 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     public interface IAfterInteract
     {
         /// <summary>
+        /// The interaction priority. Higher numbers get called first.
+        /// </summary>
+        /// <value>Priority defaults to 0</value>
+        int Priority => 0;
+
+        /// <summary>
         /// Called when we interact with nothing, or when we interact with an entity out of range that has no behavior
         /// </summary>
-        Task AfterInteract(AfterInteractEventArgs eventArgs);
+        Task<bool> AfterInteract(AfterInteractEventArgs eventArgs);
     }
 
     public class AfterInteractEventArgs : EventArgs

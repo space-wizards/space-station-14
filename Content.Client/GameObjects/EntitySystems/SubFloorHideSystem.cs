@@ -35,7 +35,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void UpdateAll()
         {
-            foreach (var comp in EntityManager.ComponentManager.EntityQuery<SubFloorHideComponent>())
+            foreach (var comp in EntityManager.ComponentManager.EntityQuery<SubFloorHideComponent>(true))
             {
                 if (!_mapManager.TryGetGrid(comp.Owner.Transform.GridID, out var grid)) return;
 

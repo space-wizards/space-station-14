@@ -17,7 +17,7 @@
     netsync: false
   - type: SolutionContainer
     maxVol: 5
-    caps: AddTo, RemoveFrom
+    caps: Injectable, Drawable
 
 
 - type: entity

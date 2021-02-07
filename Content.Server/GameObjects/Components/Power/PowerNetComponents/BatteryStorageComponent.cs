@@ -1,4 +1,6 @@
-﻿using Robust.Shared.GameObjects;
+#nullable enable
+using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -17,10 +19,12 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         private int _activeDrawRate;
 
         [ViewVariables]
-        private BatteryComponent _battery;
+        [ComponentDependency] private BatteryComponent? _battery = default!;
 
         [ViewVariables]
-        public PowerConsumerComponent Consumer { get; private set; }
+        public PowerConsumerComponent? Consumer => _consumer;
+
+        [ComponentDependency] private PowerConsumerComponent? _consumer = default!;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -31,21 +35,26 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         public override void Initialize()
         {
             base.Initialize();
-
-            _battery = Owner.EnsureComponent<BatteryComponent>();
-            Consumer = Owner.EnsureComponent<PowerConsumerComponent>();
+            Owner.EnsureComponentWarn<BatteryComponent>();
+            Owner.EnsureComponentWarn<PowerConsumerComponent>();
             UpdateDrawRate();
         }
 
         public void Update(float frameTime)
         {
+            if (_consumer == null || _battery == null)
+                return;
+
             //Simplified implementation - If a frame adds more power to a partially full battery than it can hold, the power is lost.
-            _battery.CurrentCharge += Consumer.ReceivedPower * frameTime;
+            _battery.CurrentCharge += _consumer.ReceivedPower * frameTime;
             UpdateDrawRate();
         }
 
         private void UpdateDrawRate()
         {
+            if (_battery == null)
+                return;
+
             if (_battery.BatteryState == BatteryState.Full)
             {
                 SetConsumerDraw(0);
@@ -58,9 +67,12 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 
         private void SetConsumerDraw(int newConsumerDrawRate)
         {
-            if (Consumer.DrawRate != newConsumerDrawRate)
+            if (_consumer == null)
+                return;
+
+            if (_consumer.DrawRate != newConsumerDrawRate)
             {
-                Consumer.DrawRate = newConsumerDrawRate;
+                _consumer.DrawRate = newConsumerDrawRate;
             }
         }
 

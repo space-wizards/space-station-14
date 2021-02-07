@@ -80,8 +80,17 @@ namespace Content.Server.GameObjects.Components.Disposal
         [ViewVariables(VVAccess.ReadWrite)]
         private TimeSpan _flushDelay;
 
+        /// <summary>
+        ///     Delay from trying to enter disposals ourselves.
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         private float _entryDelay;
+
+        /// <summary>
+        ///     Delay from trying to shove someone else into disposals.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        private float _draggedEntryDelay;
 
         /// <summary>
         ///     Token used to cancel the automatic engage of a disposal unit
@@ -192,11 +201,15 @@ namespace Content.Server.GameObjects.Components.Disposal
             if (!CanInsert(entity))
                 return false;
 
-            if (user != null && _entryDelay > 0f)
+            var delay = user == entity ? _entryDelay : _draggedEntryDelay;
+
+            if (user != null && delay > 0.0f)
             {
                 var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
 
-                var doAfterArgs = new DoAfterEventArgs(user, _entryDelay, default, Owner)
+                // Can't check if our target AND disposals moves currently so we'll just check target.
+                // if you really want to check if disposals moves then add a predicate.
+                var doAfterArgs = new DoAfterEventArgs(user, delay, default, entity)
                 {
                     BreakOnDamage = true,
                     BreakOnStun = true,
@@ -209,7 +222,6 @@ namespace Content.Server.GameObjects.Components.Disposal
 
                 if (result == DoAfterStatus.Cancelled)
                     return false;
-
             }
 
             if (!_container.Insert(entity))
@@ -535,7 +547,8 @@ namespace Content.Server.GameObjects.Components.Disposal
                 () => (int) _flushDelay.TotalSeconds);
 
             serializer.DataField(this, x => x.Air, "air", new GasMixture(Atmospherics.CellVolume));
-            serializer.DataField(ref _entryDelay, "entryDelay", 0.5f);
+            serializer.DataField(ref _entryDelay, "entryDelay", 1.0f);
+            serializer.DataField(ref _draggedEntryDelay, "draggedEntryDelay", 3.0f);
         }
 
         public override void Initialize()

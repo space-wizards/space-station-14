@@ -80,6 +80,9 @@ namespace Content.IntegrationTests
             // Avoid funny race conditions with the database.
             options.CVarOverrides[CCVars.DatabaseSynchronous.Name] = "true";
 
+            // Avoid loading a large map by default for integration tests.
+            options.CVarOverrides[CCVars.GameMap.Name] = "Maps/Test/empty.yml";
+
             return base.StartServer(options);
         }
 

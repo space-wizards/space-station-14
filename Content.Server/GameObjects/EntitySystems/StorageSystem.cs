@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <inheritdoc />
         public override void Update(float frameTime)
         {
-            foreach (var component in ComponentManager.EntityQuery<ServerStorageComponent>())
+            foreach (var component in ComponentManager.EntityQuery<ServerStorageComponent>(true))
             {
                 CheckSubscribedEntities(component);
             }

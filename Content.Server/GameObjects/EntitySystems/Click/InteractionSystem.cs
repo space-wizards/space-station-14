@@ -416,13 +416,8 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return;
             }
 
-            var afterInteracts = weapon.GetAllComponents<IAfterInteract>().ToList();
             var afterInteractEventArgs = new AfterInteractEventArgs(user, clickLocation, null, canReach);
-
-            foreach (var afterInteract in afterInteracts)
-            {
-                await afterInteract.AfterInteract(afterInteractEventArgs);
-            }
+            await DoAfterInteract(weapon, afterInteractEventArgs);
         }
 
         /// <summary>
@@ -465,13 +460,9 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             // If we aren't directly attacking the nearby object, lets see if our item has an after attack we can do
-            var afterAttacks = weapon.GetAllComponents<IAfterInteract>().ToList();
             var afterAttackEventArgs = new AfterInteractEventArgs(user, clickLocation, attacked, canReach: true);
 
-            foreach (var afterAttack in afterAttacks)
-            {
-                await afterAttack.AfterInteract(afterAttackEventArgs);
-            }
+            await DoAfterInteract(weapon, afterAttackEventArgs);
         }
 
         /// <summary>
@@ -835,13 +826,21 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             if (afterAtkMsg.Handled)
                 return;
 
-            var afterAttacks = weapon.GetAllComponents<IAfterInteract>().ToList();
+            // See if we have a ranged attack interaction
             var afterAttackEventArgs = new AfterInteractEventArgs(user, clickLocation, attacked, canReach: false);
+            await DoAfterInteract(weapon, afterAttackEventArgs);
+        }
 
-            //See if we have a ranged attack interaction
+        private static async Task DoAfterInteract(IEntity weapon, AfterInteractEventArgs afterAttackEventArgs)
+        {
+            var afterAttacks = weapon.GetAllComponents<IAfterInteract>().OrderByDescending(x => x.Priority).ToList();
+
             foreach (var afterAttack in afterAttacks)
             {
-                await afterAttack.AfterInteract(afterAttackEventArgs);
+                if (await afterAttack.AfterInteract(afterAttackEventArgs))
+                {
+                    return;
+                }
             }
         }
 
