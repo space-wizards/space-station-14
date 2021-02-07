@@ -56,7 +56,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
         private string _impactFlash;
         [YamlField("soundHitWall")]
         private string _soundHitWall = "/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg";
-        
+
         public void FireEffects(IEntity user, float distance, Angle angle, IEntity hitEntity = null)
         {
             var effectSystem = EntitySystem.Get<EffectSystem>();

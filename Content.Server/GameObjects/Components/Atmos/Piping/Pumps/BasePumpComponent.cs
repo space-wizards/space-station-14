@@ -55,7 +55,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
         private PipeNode _outletPipe;
 
         private AppearanceComponent _appearance;
-        
+
         public override void Initialize()
         {
             base.Initialize();

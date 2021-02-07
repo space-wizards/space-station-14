@@ -48,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
         // By default the magazine won't spawn the entity until needed so we need to keep track of how many left we can spawn
         // Generally you probablt don't want to use this
         private int _unspawnedCount;
-        
+
         void IMapInit.MapInit()
         {
             if (_fillPrototype != null)

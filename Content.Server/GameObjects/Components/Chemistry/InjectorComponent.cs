@@ -57,7 +57,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         private InjectorToggleMode _toggleState;
-        
+
         protected override void Startup()
         {
             base.Startup();
