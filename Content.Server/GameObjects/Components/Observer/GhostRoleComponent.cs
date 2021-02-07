@@ -18,6 +18,9 @@ namespace Content.Server.GameObjects.Components.Observer
         [ViewVariables(VVAccess.ReadOnly)]
         public bool Taken { get; protected set; }
 
+        [ViewVariables]
+        public uint Identifier { get; set; }
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);

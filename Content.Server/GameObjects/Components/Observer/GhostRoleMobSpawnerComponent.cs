@@ -50,7 +50,7 @@ namespace Content.Server.GameObjects.Components.Observer
             if(string.IsNullOrEmpty(Prototype))
                 throw new NullReferenceException("Prototype string cannot be null or empty!");
 
-            var mob = _entityMan.SpawnEntity(Prototype, Owner.Transform.GridPosition);
+            var mob = _entityMan.SpawnEntity(Prototype, Owner.Transform.Coordinates);
 
             mob.EnsureComponent<MindComponent>();
             session.ContentData().Mind.TransferTo(mob);

@@ -1,30 +1,36 @@
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.PortableExecutable;
+using Content.Server.Administration;
+using Content.Server.Eui;
 using Content.Server.GameObjects.Components.Observer;
+using Content.Shared.GameObjects.Components.Observer;
 using Content.Shared.GameObjects.EntitySystemMessages;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameTicking;
+using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.Player;
-using Robust.Shared.GameObjects;
+using Robust.Shared.Console;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
+using Robust.Shared.IoC;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
-    public class GhostRoleSystem : EntitySystem
+    [UsedImplicitly]
+    public class GhostRoleSystem : EntitySystem, IResettingEntitySystem
     {
+        [Dependency] private readonly EuiManager _euiManager = default!;
+
         private uint _nextRoleIdentifier = 0;
-        private Dictionary<uint, GhostRoleComponent> _ghostRoles = new Dictionary<uint, GhostRoleComponent>();
+        private readonly Dictionary<uint, GhostRoleComponent> _ghostRoles = new();
+        private readonly Dictionary<IPlayerSession, GhostRolesEui> _openUis = new();
 
         [ViewVariables]
         public IReadOnlyCollection<GhostRoleComponent> GhostRoles => _ghostRoles.Values;
 
         public override void Initialize()
         {
-            SubscribeNetworkEvent<GhostRoleUpdateRequestMessage>(GhostRolesUpdateRequest);
-            SubscribeNetworkEvent<GhostRoleTakeoverRequestMessage>(GhostRoleTakeoverRequest);
+            SubscribeLocalEvent<PlayerAttachSystemMessage>(OnPlayerAttached);
         }
 
         private uint GetNextRoleIdentifier()
@@ -32,52 +38,59 @@ namespace Content.Server.GameObjects.EntitySystems
             return unchecked(_nextRoleIdentifier++);
         }
 
+        public void OpenEui(IPlayerSession session)
+        {
+            if (session.AttachedEntity == null || !session.AttachedEntity.HasComponent<GhostComponent>())
+                return;
+
+            if(_openUis.ContainsKey(session))
+                CloseEui(session);
+
+            var eui = _openUis[session] = new GhostRolesEui();
+            _euiManager.OpenEui(eui, session);
+            eui.StateDirty();
+        }
+
+        public void CloseEui(IPlayerSession session)
+        {
+            if (!_openUis.ContainsKey(session)) return;
+
+            _openUis.Remove(session, out var eui);
+
+            eui?.Close();
+        }
+
+        private void UpdateEui()
+        {
+            foreach (var eui in _openUis.Values)
+            {
+                eui.StateDirty();
+            }
+        }
+
         public void RegisterGhostRole(GhostRoleComponent role)
         {
-            if(!_ghostRoles.ContainsValue(role))
-                _ghostRoles[GetNextRoleIdentifier()] = role;
+            if (_ghostRoles.ContainsValue(role)) return;
+            _ghostRoles[role.Identifier = GetNextRoleIdentifier()] = role;
+            UpdateEui();
 
-            RaiseNetworkEvent(new GhostRoleOutdatedMessage());
         }
 
         public void UnregisterGhostRole(GhostRoleComponent role)
         {
-            foreach (var (key, roleComponent) in _ghostRoles)
-            {
-                if (roleComponent != role) continue;
-                _ghostRoles.Remove(key);
-                break;
-            }
-
-            RaiseNetworkEvent(new GhostRoleOutdatedMessage());
+            if (!_ghostRoles.ContainsKey(role.Identifier) || _ghostRoles[role.Identifier] != role) return;
+            _ghostRoles.Remove(role.Identifier);
+            UpdateEui();
         }
 
-        private void GhostRolesUpdateRequest(GhostRoleUpdateRequestMessage msg, EntitySessionEventArgs args)
+        public void Takeover(IPlayerSession player, uint identifier)
         {
-            var session = (IPlayerSession)args.SenderSession;
-
-            // TODO: Maybe in the future we shouldn't depend on the player's entity having a GhostComponent.
-            if (!(session.AttachedEntity?.HasComponent<GhostComponent>() ?? false))
-                return;
-
-            RaiseNetworkEvent(new GhostRoleUpdateMessage(GetGhostRoleInfo()), ((IPlayerSession)args.SenderSession).ConnectedClient);
+            if (!_ghostRoles.TryGetValue(identifier, out var role)) return;
+            if (!role.Take(player)) return;
+            CloseEui(player);
         }
 
-        private void GhostRoleTakeoverRequest(GhostRoleTakeoverRequestMessage msg, EntitySessionEventArgs args)
-        {
-            var session = (IPlayerSession)args.SenderSession;
-
-            // TODO: Maybe in the future we shouldn't depend on the player's entity having a GhostComponent.
-            if (!(session.AttachedEntity?.HasComponent<GhostComponent>() ?? false))
-                return;
-
-            if (!_ghostRoles.TryGetValue(msg.Identifier, out var role) || role.Owner.Deleted)
-                return;
-
-            role.Take(session);
-        }
-
-        private GhostRoleInfo[] GetGhostRoleInfo()
+        public GhostRoleInfo[] GetGhostRolesInfo()
         {
             var roles = new GhostRoleInfo[_ghostRoles.Count];
 
@@ -90,6 +103,38 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             return roles;
+        }
+
+        private void OnPlayerAttached(PlayerAttachSystemMessage message)
+        {
+            // Close the session of any player that has a ghost roles window open and isn't a ghost anymore.
+            if (!_openUis.ContainsKey(message.NewPlayer)) return;
+            if (message.Entity.HasComponent<GhostComponent>()) return;
+            CloseEui(message.NewPlayer);
+        }
+
+        public void Reset()
+        {
+            foreach (var session in _openUis.Keys)
+            {
+                CloseEui(session);
+            }
+
+            _openUis.Clear();
+            _ghostRoles.Clear();
+            _nextRoleIdentifier = 0;
+        }
+    }
+
+    [AnyCommand]
+    public class GhostRoles : IConsoleCommand
+    {
+        public string Command => "ghostroles";
+        public string Description => "Opens the ghost role request window.";
+        public string Help => $"{Command}";
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        {
+            EntitySystem.Get<GhostRoleSystem>().OpenEui((IPlayerSession)shell.Player);
         }
     }
 }

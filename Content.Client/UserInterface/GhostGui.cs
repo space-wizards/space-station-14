@@ -1,4 +1,5 @@
 using Content.Client.GameObjects.Components.Observer;
+using Robust.Client.Console;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -12,6 +13,7 @@ namespace Content.Client.UserInterface
     {
         private readonly Button _returnToBody = new() {Text = Loc.GetString("Return to body")};
         private readonly Button _ghostWarp = new() {Text = Loc.GetString("Ghost Warp")};
+        private readonly Button _ghostRoles = new() {Text = Loc.GetString("Ghost Roles")};
         private readonly GhostComponent _owner;
 
         public GhostGui(GhostComponent owner)
@@ -26,13 +28,15 @@ namespace Content.Client.UserInterface
 
             _ghostWarp.OnPressed += args => targetMenu.Populate();
             _returnToBody.OnPressed += args => owner.SendReturnToBodyMessage();
+            _ghostRoles.OnPressed += _ => IoCManager.Resolve<IClientConsoleHost>().RemoteExecuteCommand(null, "ghostroles");
 
             AddChild(new HBoxContainer
             {
                 Children =
                 {
                     _returnToBody,
-                    _ghostWarp
+                    _ghostWarp,
+                    _ghostRoles,
                 }
             });
 
