@@ -3,21 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using Content.Client.GameObjects.Components;
 using Content.Client.State;
 using Content.Client.UserInterface;
-using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
+using Content.Shared;
 using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.GameTicking;
 using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
-using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Interfaces.State;
@@ -29,8 +26,8 @@ using Robust.Client.Utility;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -46,32 +43,17 @@ namespace Content.Client.GameObjects.EntitySystems
     [UsedImplicitly]
     public sealed partial class VerbSystem : SharedVerbSystem, IResettingEntitySystem
     {
-        private class ContextMenuComparer<T> : IEqualityComparer<(T, IEnumerable<T>)>
-        {
-            bool IEqualityComparer<(T, IEnumerable<T>)>.Equals((T, IEnumerable<T>) x, (T, IEnumerable<T>) y)
-            {
-                return x.Item1.Equals(y.Item1) && Enumerable.SequenceEqual(x.Item2.OrderBy(t => t), y.Item2.OrderBy(t => t));
-            }
-
-            int IEqualityComparer<(T, IEnumerable<T>)>.GetHashCode((T, IEnumerable<T>) obj)
-            {
-                var hash = EqualityComparer<T>.Default.GetHashCode(obj.Item1);
-                foreach (var element in obj.Item2)
-                {
-                    hash ^= EqualityComparer<T>.Default.GetHashCode(element);
-                }
-                return hash;
-            }
-        }
-
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
-        private Stack<ContextMenuPopup> StackContextMenus = new();
+        private MapCoordinates _clickedHere;
+        private Dictionary<IEntity, ContextMenuElement> _entityMenuElements;
+        private Stack<ContextMenuPopup> _stackContextMenus = new();
 
         private VerbPopup _currentVerbListRoot;
         private VerbPopup _currentGroupList;
@@ -87,7 +69,9 @@ namespace Content.Client.GameObjects.EntitySystems
             SubscribeNetworkEvent<VerbSystemMessages.VerbsResponseMessage>(FillEntityPopup);
             SubscribeNetworkEvent<PlayerContainerVisibilityMessage>(HandleContainerVisibilityMessage);
 
-            SubscribeLocalEvent<MoveEvent>(HandleMove);
+            SubscribeLocalEvent<MoveEvent>(HandleMoveEvent);
+
+            _cfg.OnValueChanged(CCVars.ContextMenuGroupingType, OnGroupingContextMenuChanged, true);
 
             IoCManager.InjectDependencies(this);
 
@@ -112,7 +96,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private bool IsAnyContextMenuOpen()
         {
-            return _currentVerbListRoot != null || StackContextMenus.Count > 0;
+            return _currentVerbListRoot != null || _stackContextMenus.Count > 0;
         }
 
         private void HandleContainerVisibilityMessage(PlayerContainerVisibilityMessage ev)
@@ -164,35 +148,61 @@ namespace Content.Client.GameObjects.EntitySystems
             return true;
         }
 
-        private void HandleMove(MoveEvent message)
+        private void RemoveFromUI(IEntity entity)
         {
-            if (menus == null || menus.Count == 0)
-            {
-                return;
-            }
+            var contextMenuElement = _entityMenuElements[entity];
+            _entityMenuElements.Remove(entity);
 
-            var entity = message.Sender;
-            if (menus.ContainsKey(entity))
+            var parent = contextMenuElement.ParentMenu;
+            parent.RemoveEntityFrom(contextMenuElement, entity);
+            if (_entityMenuElements.Count == 0)
             {
-                if (!message.Sender.Transform.MapPosition.InRange(clickedhere, 1.0f))
+                CloseContextPopups();
+            }
+        }
+
+        private void AddToUI(IEntity e, ContextMenuElement control)
+        {
+            if (_entityMenuElements.ContainsKey(e))
+            {
+                _entityMenuElements[e] = control;
+            }
+            else
+            {
+                _entityMenuElements.Add(e, control);
+            }
+        }
+
+        private void HandleMoveEvent(MoveEvent ev)
+        {
+            if (_entityMenuElements == null || _entityMenuElements.Count == 0) return;
+
+            var entity = ev.Sender;
+            if (_entityMenuElements.ContainsKey(entity))
+            {
+                if (!entity.Transform.MapPosition.InRange(_clickedHere, 0.5f))
                 {
-                    var control = menus[entity];
-                    if (control.Item1.Disposed || control.Item2.Disposed)
-                    {
-                        menus.Remove(entity);
-                        return;
-                    }
-                    control.Item1.Remove(control.Item2);
-                    menus.Remove(entity);
+                    RemoveFromUI(entity);
                 }
             }
         }
 
-        private MapCoordinates clickedhere;
-        private Dictionary<IEntity, (ContextMenuPopup, SingleContextElement)> menus;
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+            if (_entityMenuElements == null || _entityMenuElements.Count == 0) return;
+
+            foreach (var (k, v) in _entityMenuElements)
+            {
+                if (k.Deleted || k.IsInContainer())
+                {
+                    RemoveFromUI(k);
+                }
+            }
+        }
+
         private bool OnOpenContextMenu(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
-            // if (IsAnyContextMenuOpen)
             if (IsAnyContextMenuOpen())
             {
                 CloseAllMenus();
@@ -212,61 +222,33 @@ namespace Content.Client.GameObjects.EntitySystems
                 return false;
             }
 
-            clickedhere = mapCoordinates;
-            // Objects are grouped based on their current appearance. For example a weapon without a
-            // magazine with a sprite layer showing that is different from the same weapon
-            // with a magazine in it.
-            var entitySpriteStates = new Dictionary<(string, IEnumerable<string>), List<IEntity>>(new ContextMenuComparer<string>());
-            foreach (var entity in entities)
-            {
-                if (!CanSeeOnContextMenu(entity))
-                {
-                    continue;
-                }
-
-                // SubscribeLocalEvent<MoveEvent>(HandleMove);
-
-                if (entity.Prototype != null && entity.TryGetComponent(out ISpriteComponent sprite))
-                {
-                    var currentState = (entity.Prototype.ID, sprite.AllLayers.Where(e => e.Visible).Select(s => s.RsiState.Name));
-                    if (!entitySpriteStates.ContainsKey(currentState))
-                    {
-                        entitySpriteStates.Add(currentState, new List<IEntity>() { entity });
-                    }
-                    else
-                    {
-                        entitySpriteStates[currentState].Add(entity);
-                    }
-                }
-            }
+            _clickedHere = mapCoordinates;
+            var entitySpriteStates = GroupEntities(entities.Where(CanSeeOnContextMenu).ToList());
 
             if (entitySpriteStates.Count == 0)
             {
                 return false;
             }
 
-            menus = new();
-
             var orderedStates = entitySpriteStates.ToList();
-            orderedStates.Sort((x, y) => string.CompareOrdinal(x.Value.First().Prototype.Name, y.Value.First().Prototype.Name));
+            orderedStates.Sort((x, y) =>
+                string.CompareOrdinal(x.First().Prototype.Name, y.First().Prototype.Name));
+
+            _entityMenuElements = new();
+            _stackContextMenus = new();
+
+            var rootContextMenu = new ContextMenuPopup();
+            rootContextMenu.OnPopupHide += CloseAllMenus;
 
             var debugEnabled = _userInterfaceManager.DebugMonitors.Visible;
+            rootContextMenu.FillContextMenuPopup(orderedStates, null, this, debugEnabled);
 
-            StackContextMenus = new();
-            var _contextPopup = new ContextMenuPopup();
-            _contextPopup.OnPopupHide += CloseAllMenus;
+            _stackContextMenus.Push(rootContextMenu);
+            _userInterfaceManager.ModalRoot.AddChild(rootContextMenu);
 
-            foreach (var (_, vEntity) in orderedStates)
-            {
-                _contextPopup.AddContextElement(vEntity, null, this, debugEnabled);
-            }
-
-            StackContextMenus.Push(_contextPopup);
-            _userInterfaceManager.ModalRoot.AddChild(_contextPopup);
-
-            var size = _contextPopup.List.CombinedMinimumSize;
+            var size = rootContextMenu.List.CombinedMinimumSize;
             var box = UIBox2.FromDimensions(_userInterfaceManager.MousePositionScaled, size);
-            _contextPopup.Open(box);
+            rootContextMenu.Open(box);
 
             return true;
         }
@@ -464,17 +446,19 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void CloseContextPopups()
         {
-            while (StackContextMenus.Count > 0)
+            while (_stackContextMenus.Count > 0)
             {
-                StackContextMenus.Pop()?.Dispose();
+                _stackContextMenus.Pop()?.Dispose();
             }
+            _entityMenuElements?.Clear();
+            _entityMenuElements = null;
         }
 
         private void CloseContextPopups(int depth)
         {
-            while (StackContextMenus.Count > 0 && StackContextMenus.Peek().Depth > depth)
+            while (_stackContextMenus.Count > 0 && _stackContextMenus.Peek().Depth > depth)
             {
-                StackContextMenus.Pop()?.Dispose();
+                _stackContextMenus.Pop()?.Dispose();
             }
         }
 

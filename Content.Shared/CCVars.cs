@@ -246,5 +246,10 @@ namespace Content.Shared
          */
 
         public static readonly CVarDef<bool> BrandingSteam = CVarDef.Create("branding.steam", false, CVar.CLIENTONLY);
+
+        /*
+         * Context Menu Grouping Types
+         */
+        public static readonly CVarDef<int> ContextMenuGroupingType = CVarDef.Create("context_menu", 0, CVar.CLIENTONLY);
     }
 }
