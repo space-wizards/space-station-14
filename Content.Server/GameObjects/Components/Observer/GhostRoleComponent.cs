@@ -9,11 +9,38 @@ namespace Content.Server.GameObjects.Components.Observer
 {
     public abstract class GhostRoleComponent : Component
     {
-        [ViewVariables(VVAccess.ReadWrite)]
-        public string RoleName { get; private set; }
+        private string _roleName;
+        private string _roleDescription;
+
+        // We do this so updating RoleName and RoleDescription in VV updates the open EUIs.
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public string RoleDescription { get; private set; }
+        public string RoleName
+        {
+            get
+            {
+                return _roleName;
+            }
+            private set
+            {
+                _roleName = value;
+                EntitySystem.Get<GhostRoleSystem>().UpdateAllEui();
+            }
+        }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public string RoleDescription
+        {
+            get
+            {
+                return _roleDescription;
+            }
+            private set
+            {
+                _roleDescription = value;
+                EntitySystem.Get<GhostRoleSystem>().UpdateAllEui();
+            }
+        }
 
         [ViewVariables(VVAccess.ReadOnly)]
         public bool Taken { get; protected set; }
@@ -25,8 +52,8 @@ namespace Content.Server.GameObjects.Components.Observer
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(this, x => RoleName, "name", "Unknown");
-            serializer.DataField(this, x => RoleDescription, "description", "Unknown");
+            serializer.DataField(ref _roleName, "name", "Unknown");
+            serializer.DataField(ref _roleDescription, "description", "Unknown");
         }
 
         public override void Initialize()

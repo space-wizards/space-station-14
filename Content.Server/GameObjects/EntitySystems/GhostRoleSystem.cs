@@ -60,7 +60,7 @@ namespace Content.Server.GameObjects.EntitySystems
             eui?.Close();
         }
 
-        private void UpdateEui()
+        public void UpdateAllEui()
         {
             foreach (var eui in _openUis.Values)
             {
@@ -72,7 +72,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             if (_ghostRoles.ContainsValue(role)) return;
             _ghostRoles[role.Identifier = GetNextRoleIdentifier()] = role;
-            UpdateEui();
+            UpdateAllEui();
 
         }
 
@@ -80,7 +80,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             if (!_ghostRoles.ContainsKey(role.Identifier) || _ghostRoles[role.Identifier] != role) return;
             _ghostRoles.Remove(role.Identifier);
-            UpdateEui();
+            UpdateAllEui();
         }
 
         public void Takeover(IPlayerSession player, uint identifier)
