@@ -13,10 +13,13 @@ namespace Content.Client.Input
         {
             var common = contexts.GetContext("common");
             common.AddFunction(ContentKeyFunctions.FocusChat);
+            common.AddFunction(ContentKeyFunctions.FocusOOC);
+            common.AddFunction(ContentKeyFunctions.FocusAdminChat);
             common.AddFunction(ContentKeyFunctions.ExamineEntity);
             common.AddFunction(ContentKeyFunctions.OpenTutorial);
             common.AddFunction(ContentKeyFunctions.TakeScreenshot);
             common.AddFunction(ContentKeyFunctions.TakeScreenshotNoUI);
+            common.AddFunction(ContentKeyFunctions.Point);
 
             var human = contexts.GetContext("human");
             human.AddFunction(ContentKeyFunctions.SwapHands);
@@ -25,6 +28,9 @@ namespace Content.Client.Input
             human.AddFunction(ContentKeyFunctions.OpenCharacterMenu);
             human.AddFunction(ContentKeyFunctions.ActivateItemInWorld);
             human.AddFunction(ContentKeyFunctions.ThrowItemInHand);
+            human.AddFunction(ContentKeyFunctions.TryPullObject);
+            human.AddFunction(ContentKeyFunctions.MovePulledObject);
+            human.AddFunction(ContentKeyFunctions.ReleasePulledObject);
             human.AddFunction(ContentKeyFunctions.OpenContextMenu);
             human.AddFunction(ContentKeyFunctions.OpenCraftingMenu);
             human.AddFunction(ContentKeyFunctions.OpenInventoryMenu);
@@ -33,18 +39,46 @@ namespace Content.Client.Input
             human.AddFunction(ContentKeyFunctions.MouseMiddle);
             human.AddFunction(ContentKeyFunctions.ToggleCombatMode);
             human.AddFunction(ContentKeyFunctions.WideAttack);
+            human.AddFunction(ContentKeyFunctions.ArcadeUp);
+            human.AddFunction(ContentKeyFunctions.ArcadeDown);
+            human.AddFunction(ContentKeyFunctions.ArcadeLeft);
+            human.AddFunction(ContentKeyFunctions.ArcadeRight);
+            human.AddFunction(ContentKeyFunctions.Arcade1);
+            human.AddFunction(ContentKeyFunctions.Arcade2);
+            human.AddFunction(ContentKeyFunctions.Arcade3);
+            human.AddFunction(ContentKeyFunctions.OpenActionsMenu);
+            human.AddFunction(ContentKeyFunctions.Hotbar0);
+            human.AddFunction(ContentKeyFunctions.Hotbar1);
+            human.AddFunction(ContentKeyFunctions.Hotbar2);
+            human.AddFunction(ContentKeyFunctions.Hotbar3);
+            human.AddFunction(ContentKeyFunctions.Hotbar4);
+            human.AddFunction(ContentKeyFunctions.Hotbar5);
+            human.AddFunction(ContentKeyFunctions.Hotbar6);
+            human.AddFunction(ContentKeyFunctions.Hotbar7);
+            human.AddFunction(ContentKeyFunctions.Hotbar8);
+            human.AddFunction(ContentKeyFunctions.Hotbar9);
+            human.AddFunction(ContentKeyFunctions.Loadout1);
+            human.AddFunction(ContentKeyFunctions.Loadout2);
+            human.AddFunction(ContentKeyFunctions.Loadout3);
+            human.AddFunction(ContentKeyFunctions.Loadout4);
+            human.AddFunction(ContentKeyFunctions.Loadout5);
+            human.AddFunction(ContentKeyFunctions.Loadout6);
+            human.AddFunction(ContentKeyFunctions.Loadout7);
+            human.AddFunction(ContentKeyFunctions.Loadout8);
+            human.AddFunction(ContentKeyFunctions.Loadout9);
 
             var ghost = contexts.New("ghost", "common");
             ghost.AddFunction(EngineKeyFunctions.MoveUp);
             ghost.AddFunction(EngineKeyFunctions.MoveDown);
             ghost.AddFunction(EngineKeyFunctions.MoveLeft);
             ghost.AddFunction(EngineKeyFunctions.MoveRight);
-            ghost.AddFunction(EngineKeyFunctions.Run);
+            ghost.AddFunction(EngineKeyFunctions.Walk);
             ghost.AddFunction(ContentKeyFunctions.OpenContextMenu);
 
             common.AddFunction(ContentKeyFunctions.OpenEntitySpawnWindow);
             common.AddFunction(ContentKeyFunctions.OpenSandboxWindow);
             common.AddFunction(ContentKeyFunctions.OpenTileSpawnWindow);
+            common.AddFunction(ContentKeyFunctions.OpenAdminMenu);
         }
     }
 }

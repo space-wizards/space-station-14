@@ -1,0 +1,121 @@
+﻿- type: entity
+  id: WallLight
+  name: "unpowered light"
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Construction
+    graph: lightFixture
+    node: tubeLight
+  - type: Physics
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.45, -0.15, 0.45, 0.35"
+      layer: [ Passable ]
+  - type: LoopingSound
+  - type: Sprite
+    sprite: Constructible/Lighting/light_tube.rsi
+    state: on
+  - type: PointLight
+    radius: 8
+    energy: 1.2
+    offset: "0.5, 0"
+    color: "#DCDCC6"
+  - type: SignalReceiver
+  placement:
+    snap:
+    - Wallmount
+
+- type: entity
+  name: light
+  id: Poweredlight
+  parent: WallLight
+  components:
+  - type: Sprite
+    sprite: Constructible/Lighting/light_tube.rsi
+    state: off
+  - type: PointLight
+    enabled: false
+  - type: PoweredLight
+    bulb: Tube
+  - type: PowerReceiver
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+
+- type: entity
+  id: PoweredlightEmpty
+  suffix: Empty
+  parent: Poweredlight
+  components:
+  - type: Sprite
+    state: empty
+  - type: PoweredLight
+    hasLampOnSpawn: False
+
+- type: entity
+  name: unpowered small light
+  id: SmallLight
+  parent: WallLight
+  components:
+    - type: Sprite
+      sprite: Constructible/Lighting/light_small.rsi
+      state: on
+    - type: PointLight
+      energy: 1.0
+      enabled: true
+      offset: "-0.5, 0"
+    - type: Destructible
+      deadThreshold: 25
+      resistances: metallicResistances
+    - type: Construction
+      graph: lightFixture
+      node: bulbLight
+
+- type: entity
+  name: small light
+  id: PoweredSmallLight
+  parent: SmallLight
+  components:
+  - type: Sprite
+    sprite: Constructible/Lighting/light_small.rsi
+    state: off
+  - type: PointLight
+    energy: 1.0
+    enabled: false
+    offset: "-0.5, 0"
+  - type: Physics
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "0, 0.1, 0.25, 0.1"
+        layer: [ Passable ]
+  - type: PoweredLight
+    bulb: Bulb
+  - type: PowerReceiver
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 25
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+
+- type: entity
+  id: PoweredSmallLightEmpty
+  suffix: Empty
+  parent: PoweredSmallLight
+  components:
+  - type: Sprite
+    state: empty
+  - type: PoweredLight
+    hasLampOnSpawn: False

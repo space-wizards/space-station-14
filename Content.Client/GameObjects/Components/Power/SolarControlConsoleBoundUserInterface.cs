@@ -1,7 +1,6 @@
 using System;
-using Content.Client.UserInterface;
-using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.GameObjects.Components.Power;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
@@ -14,13 +13,13 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.GameObjects.Components.Power
 {
+    [UsedImplicitly]
     public class SolarControlConsoleBoundUserInterface : BoundUserInterface
     {
-        [Dependency]
-        private IGameTiming _gameTiming = default;
+        [Dependency] private readonly IGameTiming _gameTiming = default;
 
         private SolarControlWindow _window;
-        private SolarControlConsoleBoundInterfaceState _lastState = new SolarControlConsoleBoundInterfaceState(0, 0, 0, 0);
+        private SolarControlConsoleBoundInterfaceState _lastState = new(0, 0, 0, 0);
 
         protected override void Open()
         {
@@ -48,7 +47,7 @@ namespace Content.Client.GameObjects.Components.Power
                     SendMessage(msg);
                 }
             };
-            _window.OpenCenteredMinSize();
+            _window.OpenCentered();
         }
 
         public SolarControlConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
@@ -77,7 +76,7 @@ namespace Content.Client.GameObjects.Components.Power
             SolarControlConsoleBoundInterfaceState scc = (SolarControlConsoleBoundInterfaceState) state;
             _lastState = scc;
             _window.NotARadar.UpdateState(scc);
-            _window.OutputPower.Text = ((int) Math.Floor(scc.OutputPower)).ToString();
+            _window.OutputPower.Text = ((int) MathF.Floor(scc.OutputPower)).ToString();
             _window.SunAngle.Text = FormatAngle(scc.TowardsSun);
             UpdateField(_window.PanelRotation, FormatAngle(scc.Rotation));
             UpdateField(_window.PanelVelocity, FormatAngle(scc.AngularVelocity * 60));
@@ -95,13 +94,13 @@ namespace Content.Client.GameObjects.Components.Power
 
         private sealed class SolarControlWindow : SS14Window
         {
-            public Label OutputPower;
-            public Label SunAngle;
+            public readonly Label OutputPower;
+            public readonly Label SunAngle;
 
-            public SolarControlNotARadar NotARadar;
+            public readonly SolarControlNotARadar NotARadar;
 
-            public LineEdit PanelRotation;
-            public LineEdit PanelVelocity;
+            public readonly LineEdit PanelRotation;
+            public readonly LineEdit PanelVelocity;
 
             public SolarControlWindow(IGameTiming igt)
             {
@@ -164,7 +163,7 @@ namespace Content.Client.GameObjects.Components.Power
             // This makes the display feel a lot smoother.
             private IGameTiming _gameTiming;
 
-            private SolarControlConsoleBoundInterfaceState _lastState = new SolarControlConsoleBoundInterfaceState(0, 0, 0, 0);
+            private SolarControlConsoleBoundInterfaceState _lastState = new(0, 0, 0, 0);
 
             private TimeSpan _lastStateTime = TimeSpan.Zero;
 

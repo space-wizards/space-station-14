@@ -25,12 +25,13 @@ namespace Content.Client.GameObjects.Components.Weapons.Melee
             _sprite = Owner.GetComponent<SpriteComponent>();
         }
 
-        public void SetData(MeleeWeaponAnimationPrototype prototype, Angle baseAngle, IEntity attacker)
+        public void SetData(MeleeWeaponAnimationPrototype prototype, Angle baseAngle, IEntity attacker, bool followAttacker = true)
         {
             _meleeWeaponAnimation = prototype;
             _sprite.AddLayer(new RSI.StateId(prototype.State));
             _baseAngle = baseAngle;
-            Owner.Transform.AttachParent(attacker);
+            if(followAttacker)
+                Owner.Transform.AttachParent(attacker);
         }
 
         internal void Update(float frameTime)

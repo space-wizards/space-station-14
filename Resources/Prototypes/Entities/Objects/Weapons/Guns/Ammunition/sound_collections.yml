@@ -1,0 +1,11 @@
+- type: soundCollection
+  id: CasingEject
+  files:
+  - "/Audio/Weapons/Guns/Casings/casing_fall_1.ogg"
+  - "/Audio/Weapons/Guns/Casings/casing_fall_2.ogg"
+  - "/Audio/Weapons/Guns/Casings/casing_fall_3.ogg"
+
+- type: soundCollection
+  id: ShellEject
+  files:
+  - "/Audio/Weapons/Guns/Casings/shotgun_fall.ogg"

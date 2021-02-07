@@ -1,12 +1,10 @@
-﻿using System;
-using Content.Client.UserInterface.Stylesheets;
+﻿using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Interactable;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
@@ -34,7 +32,9 @@ namespace Content.Client.GameObjects.Components.Interactable
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            if (!(curState is MultiToolComponentState tool)) return;
+            base.HandleComponentState(curState, nextState);
+
+            if (curState is not MultiToolComponentState tool) return;
 
             _behavior = tool.Quality;
             _uiUpdateNeeded = true;

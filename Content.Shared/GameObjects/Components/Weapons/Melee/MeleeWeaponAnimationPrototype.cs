@@ -10,6 +10,7 @@ namespace Content.Shared.GameObjects.Components.Weapons.Melee
     [Prototype("MeleeWeaponAnimation")]
     public sealed class MeleeWeaponAnimationPrototype : IPrototype, IIndexedPrototype
     {
+        private string _prototype;
         private string _state;
         private string _id;
         private Vector4 _colorDelta;
@@ -18,9 +19,10 @@ namespace Content.Shared.GameObjects.Components.Weapons.Melee
         private float _speed;
         private float _width;
         private WeaponArcType _arcType;
-
+        
         [ViewVariables] public string ID => _id;
         [ViewVariables] public string State => _state;
+        [ViewVariables] public string Prototype => _prototype;
         [ViewVariables] public TimeSpan Length => _length;
         [ViewVariables] public float Speed => _speed;
         [ViewVariables] public Vector4 Color => _color;
@@ -32,6 +34,7 @@ namespace Content.Shared.GameObjects.Components.Weapons.Melee
         {
             var serializer = YamlObjectSerializer.NewReader(mapping);
 
+            serializer.DataField(ref _prototype, "prototype", "WeaponArc");
             serializer.DataField(ref _state, "state", null);
             serializer.DataField(ref _id, "id", null);
             serializer.DataField(ref _colorDelta, "colorDelta", Vector4.Zero);

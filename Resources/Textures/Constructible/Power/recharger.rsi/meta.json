@@ -1,0 +1,60 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "https://github.com/discordia-space/CEV-Eris/raw/9ea3eccbe22e18d24653949067f3d7dd12194ea9/icons/obj/stationobjs.dmi",
+    "states": [
+        {
+            "name": "empty",
+
+        },
+        {
+            "name": "full",
+
+        },
+        {
+            "name": "light-off",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "light-empty",
+            "delays": [
+                [
+                    1,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "light-charging",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "light-charged",
+            "delays": [
+                [
+                    0.2,
+                    0.1
+                ]
+            ]
+        }
+    ]
+}

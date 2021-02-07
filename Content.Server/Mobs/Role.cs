@@ -1,9 +1,6 @@
 ﻿// Hey look,
 // Antag Datums.
 
-using Content.Server.GameObjects.EntitySystems;
-using Robust.Shared.Utility;
-
 namespace Content.Server.Mobs
 {
     /// <summary>
@@ -26,7 +23,7 @@ namespace Content.Server.Mobs
         /// <summary>
         ///     Whether this role should be considered antagonistic or not.
         /// </summary>
-        public abstract bool Antag { get; }
+        public abstract bool Antagonist { get; }
 
         protected Role(Mind mind)
         {

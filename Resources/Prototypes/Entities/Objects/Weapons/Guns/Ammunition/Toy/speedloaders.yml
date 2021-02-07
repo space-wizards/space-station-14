@@ -1,0 +1,32 @@
+- type: entity
+  id: CapAmmoBase
+  name: "cap loader"
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: SpeedLoader
+    caliber: Cap
+    capacity: 6
+  - type: Sprite
+    netsync: false
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-6
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 7
+      zeroVisible: false
+
+- type: entity
+  id: CapLoader
+  name: "capgun loader"
+  parent: CapAmmoBase
+  components:
+  - type: SpeedLoader
+    fillPrototype: CartridgeCap
+  - type: Sprite
+    sprite: Objects/Fun/caps.rsi

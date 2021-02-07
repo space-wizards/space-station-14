@@ -3,7 +3,6 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
@@ -18,13 +17,10 @@ namespace Content.Server.GameObjects.Components.Sound
     [RegisterComponent]
     public class FootstepModifierComponent : Component
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly IRobustRandom _footstepRandom;
-#pragma warning restore 649
-        /// <inheritdoc />
-        ///
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IRobustRandom _footstepRandom = default!;
 
+        /// <inheritdoc />
         public override string Name => "FootstepModifier";
 
         public string _soundCollectionName;

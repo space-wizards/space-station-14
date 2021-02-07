@@ -1,0 +1,25 @@
+﻿- type: construction
+  name: computer
+  id: Computer
+  graph: computer
+  startNode: start
+  targetNode: computer
+  category: Machines
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Constructible/Misc/stock_parts.rsi
+    state: 4
+
+- type: construction
+  name: machine frame
+  id: MachineFrame
+  graph: machine
+  startNode: start
+  targetNode: machine
+  category: Machines
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Constructible/Misc/stock_parts.rsi
+    state: "box_0"

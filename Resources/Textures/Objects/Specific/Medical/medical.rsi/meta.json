@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"size": {
+		"x": 32,
+		"y": 32
+	},
+	"states": [
+		{
+			"name": "brutepack"
+		},
+		{
+			"name": "cast"
+		},
+		{
+			"name": "gauze"
+		},
+		{
+			"name": "medkit_r"
+		},
+		{
+			"name": "morphine"
+		},
+		{
+			"name": "ointment"
+		}
+	]
+}

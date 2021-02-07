@@ -1,0 +1,30 @@
+- type: job
+  id: ChiefEngineer
+  name: "chief engineer"
+  head: true
+  positions: 1
+  startingGear: ChiefEngineerGear
+  departments:
+  - Command
+  - Engineering
+  icon: "ChiefEngineer"
+  access:
+  - Maintenance
+  - Engineering
+  - ChiefEngineer
+  - Command
+  - External
+
+- type: startingGear
+  id: ChiefEngineerGear
+  equipment:
+    head: ClothingHeadHatHardhatWhite
+    innerclothing: ClothingUniformJumpsuitChiefEngineer
+    backpack: ClothingBackpackEngineeringFilled
+    shoes: ClothingShoesColorBrown
+    idcard: CEPDA
+    ears: ClothingHeadsetEngineering
+    belt: ClothingBeltChiefEngineerFilled
+  innerclothingskirt: ClothingUniformJumpskirtChiefEngineer
+  satchel: ClothingBackpackSatchelEngineeringFilled
+  duffelbag: ClothingBackpackDuffelEngineeringFilled

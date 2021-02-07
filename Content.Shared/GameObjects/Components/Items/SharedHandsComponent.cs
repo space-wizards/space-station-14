@@ -1,24 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
+#nullable enable
+using System;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects
+namespace Content.Shared.GameObjects.Components.Items
 {
-    public abstract class SharedHandsComponent : Component
+    public abstract class SharedHandsComponent : Component, ISharedHandsComponent
     {
         public sealed override string Name => "Hands";
         public sealed override uint? NetID => ContentNetIDs.HANDS;
+
+        /// <returns>true if the item is in one of the hands</returns>
+        public abstract bool IsHolding(IEntity item);
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class SharedHand
+    {
+        public readonly int Index;
+        public readonly string Name;
+        public readonly EntityUid? EntityUid;
+        public readonly HandLocation Location;
+        public readonly bool Enabled;
+
+        public SharedHand(int index, string name, EntityUid? entityUid, HandLocation location, bool enabled)
+        {
+            Index = index;
+            Name = name;
+            EntityUid = entityUid;
+            Location = location;
+            Enabled = enabled;
+        }
     }
 
     // The IDs of the items get synced over the network.
     [Serializable, NetSerializable]
     public class HandsComponentState : ComponentState
     {
-        public readonly Dictionary<string, EntityUid> Hands;
-        public readonly string ActiveIndex;
+        public readonly SharedHand[] Hands;
+        public readonly string? ActiveIndex;
 
-        public HandsComponentState(Dictionary<string, EntityUid> hands, string activeIndex) : base(ContentNetIDs.HANDS)
+        public HandsComponentState(SharedHand[] hands, string? activeIndex) : base(ContentNetIDs.HANDS)
         {
             Hands = hands;
             ActiveIndex = activeIndex;
@@ -73,6 +97,51 @@ namespace Content.Shared.GameObjects
         {
             Directed = true;
             Index = index;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class HandEnabledMsg : ComponentMessage
+    {
+        public string Name { get; }
+
+        public HandEnabledMsg(string name)
+        {
+            Name = name;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class HandDisabledMsg : ComponentMessage
+    {
+        public string Name { get; }
+
+        public HandDisabledMsg(string name)
+        {
+            Name = name;
+        }
+    }
+
+    public enum HandLocation : byte
+    {
+        Left,
+        Middle,
+        Right
+    }
+
+    /// <summary>
+    /// Component message for displaying an animation of an entity flying towards the owner of a HandsComponent
+    /// </summary>
+    [Serializable, NetSerializable]
+    public class AnimatePickupEntityMessage : ComponentMessage
+    {
+        public readonly EntityUid EntityId;
+        public readonly EntityCoordinates EntityPosition;
+        public AnimatePickupEntityMessage(EntityUid entity, EntityCoordinates entityPosition)
+        {
+            Directed = true;
+            EntityId = entity;
+            EntityPosition = entityPosition;
         }
     }
 }

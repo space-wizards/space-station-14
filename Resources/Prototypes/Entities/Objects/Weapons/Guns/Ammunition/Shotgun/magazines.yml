@@ -1,0 +1,53 @@
+- type: entity
+  id: MagazineShotgunBase
+  name: ammo drum (.50 shells)
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: RangedMagazine
+    caliber: Shotgun
+    magazineType: Rifle
+    capacity: 8
+  - type: Sprite
+    netsync: false
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 2
+      zeroVisible: false
+
+- type: entity
+  id: MagazineShotgun
+  name: ammo drum (.50 pellet)
+  parent: MagazineShotgunBase
+  components:
+  - type: RangedMagazine
+    fillPrototype: ShellShotgun
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12_pellets.rsi
+
+- type: entity
+  id: MagazineShotgunBeanbag
+  name: ammo drum (.50 beanbags)
+  parent: MagazineShotgunBase
+  components:
+  - type: RangedMagazine
+    fillPrototype: ShellShotgunBeanbag
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12_beanbag.rsi
+
+- type: entity
+  id: MagazineShotgunSlug
+  name: ammo drum (.50 slug)
+  parent: MagazineShotgunBase
+  components:
+  - type: RangedMagazine
+    fillPrototype: ShellShotgunSlug
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12_slug.rsi

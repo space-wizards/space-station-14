@@ -1,0 +1,37 @@
+- type: entity
+  name: Trash Spawner
+  id: TrashSpawner
+  components:
+    - type: Sprite
+      netsync: false
+      visible: false
+      sprite: Interface/Misc/markers.rsi
+      state: spawner_trash
+
+    - type: Marker
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Physics
+    - type: TrashSpawner
+      rarePrototypes:
+        - PuddleVomit
+        - TrashPlate
+        - TrashSnackBowl
+      rareChance: 0.03
+      prototypes:
+        - TrashRaisins
+        - TrashCandy
+        - TrashCheesieHonkers
+        - TrashChips
+        - TrashLiquidFood
+        - TrashPistachiosPack
+        - TrashPlasticBag
+        - TrashPopcorn
+        - TrashSemkiPack
+        - TrashSOSJerky
+        - TrashSyndiCakes
+        - TrashTastyBread
+      chance: 0.5
+      offset: 0.2
+  placement:
+    mode: AlignTileAny

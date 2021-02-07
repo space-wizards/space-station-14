@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Robust.Server.Interfaces.Maps;
@@ -25,7 +26,8 @@ namespace Content.IntegrationTests.Tests
             var mapManager = server.ResolveDependency<IMapManager>();
             server.Post(() =>
             {
-                mapLoader.SaveBlueprint(new GridId(2), "save load save 1.yml");
+                // TODO: Un-hardcode the grid Id for this test.
+                mapLoader.SaveBlueprint(new GridId(1), "save load save 1.yml");
                 var mapId = mapManager.CreateMap();
                 var grid = mapLoader.LoadBlueprint(mapId, "save load save 1.yml");
                 mapLoader.SaveBlueprint(grid.Index, "save load save 2.yml");
@@ -37,26 +39,45 @@ namespace Content.IntegrationTests.Tests
             string one;
             string two;
 
-            using (var stream = userData.Open(new ResourcePath("save load save 1.yml"), FileMode.Open))
+            var rp1 = new ResourcePath("/save load save 1.yml");
+            using (var stream = userData.Open(rp1, FileMode.Open))
             using (var reader = new StreamReader(stream))
             {
                 one = reader.ReadToEnd();
             }
 
-            using (var stream = userData.Open(new ResourcePath("save load save 2.yml"), FileMode.Open))
+            var rp2 = new ResourcePath("/save load save 2.yml");
+            using (var stream = userData.Open(rp2, FileMode.Open))
             using (var reader = new StreamReader(stream))
             {
                 two = reader.ReadToEnd();
             }
 
-            Assert.That(one, Is.EqualTo(two));
+            Assert.Multiple(() => {
+                Assert.That(two, Is.EqualTo(one));
+                var failed = TestContext.CurrentContext.Result.Assertions.FirstOrDefault();
+                if (failed != null)
+                {
+                    var oneTmp = Path.GetTempFileName();
+                    var twoTmp = Path.GetTempFileName();
+
+                    File.WriteAllText(oneTmp, one);
+                    File.WriteAllText(twoTmp, two);
+
+                    TestContext.AddTestAttachment(oneTmp, "First save file");
+                    TestContext.AddTestAttachment(twoTmp, "Second save file");
+                    TestContext.Error.WriteLine("Complete output:");
+                    TestContext.Error.WriteLine(oneTmp);
+                    TestContext.Error.WriteLine(twoTmp);
+                }
+            });
         }
 
         /// <summary>
         ///     Loads the default map, runs it for 5 ticks, then assert that it did not change.
         /// </summary>
         [Test]
-        public async Task LoadSaveTicksSaveStationStation()
+        public async Task LoadSaveTicksSaveSaltern()
         {
             var server = StartServerDummyTicker();
             await server.WaitIdleAsync();
@@ -71,7 +92,8 @@ namespace Content.IntegrationTests.Tests
             {
                 var mapId = mapManager.CreateMap();
                 pauseMgr.AddUninitializedMap(mapId);
-                grid = mapLoader.LoadBlueprint(mapId, "Maps/stationstation.yml");
+                pauseMgr.SetMapPaused(mapId, true);
+                grid = mapLoader.LoadBlueprint(mapId, "Maps/saltern.yml");
                 mapLoader.SaveBlueprint(grid.Index, "load save ticks save 1.yml");
             });
 
@@ -80,7 +102,7 @@ namespace Content.IntegrationTests.Tests
 
             server.Post(() =>
             {
-                mapLoader.SaveBlueprint(grid.Index, "load save ticks save 2.yml");
+                mapLoader.SaveBlueprint(grid.Index, "/load save ticks save 2.yml");
             });
 
             await server.WaitIdleAsync();
@@ -89,13 +111,13 @@ namespace Content.IntegrationTests.Tests
             string one;
             string two;
 
-            using (var stream = userData.Open(new ResourcePath("load save ticks save 1.yml"), FileMode.Open))
+            using (var stream = userData.Open(new ResourcePath("/load save ticks save 1.yml"), FileMode.Open))
             using (var reader = new StreamReader(stream))
             {
                 one = reader.ReadToEnd();
             }
 
-            using (var stream = userData.Open(new ResourcePath("load save ticks save 2.yml"), FileMode.Open))
+            using (var stream = userData.Open(new ResourcePath("/load save ticks save 2.yml"), FileMode.Open))
             using (var reader = new StreamReader(stream))
             {
                 two = reader.ReadToEnd();

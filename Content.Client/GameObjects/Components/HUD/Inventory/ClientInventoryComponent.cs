@@ -1,35 +1,36 @@
-﻿// Only unused on .NET Core due to KeyValuePair.Deconstruct
-// ReSharper disable once RedundantUsingDirective
-using Robust.Shared.Utility;
+﻿#nullable enable
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.GameObjects.Components.Clothing;
-using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Inventory;
+using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Preferences.Appearance;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
-using static Content.Shared.GameObjects.SharedInventoryComponent.ClientInventoryMessage;
+using static Content.Shared.GameObjects.Components.Inventory.SharedInventoryComponent.ClientInventoryMessage;
 
-namespace Content.Client.GameObjects
+namespace Content.Client.GameObjects.Components.HUD.Inventory
 {
     /// <summary>
     /// A character UI which shows items the user has equipped within his inventory
     /// </summary>
     [RegisterComponent]
+    [ComponentReference(typeof(SharedInventoryComponent))]
     public class ClientInventoryComponent : SharedInventoryComponent
     {
-        private readonly Dictionary<Slots, IEntity> _slots = new Dictionary<Slots, IEntity>();
+        private readonly Dictionary<Slots, IEntity> _slots = new();
 
-        [ViewVariables]
-        public InventoryInterfaceController InterfaceController { get; private set; }
+        public IReadOnlyDictionary<Slots, IEntity> AllSlots => _slots;
 
-        private ISpriteComponent _sprite;
+        [ViewVariables] public InventoryInterfaceController InterfaceController { get; private set; } = default!;
+
+        private ISpriteComponent? _sprite;
 
         private bool _playerAttached = false;
 
@@ -73,26 +74,80 @@ namespace Content.Client.GameObjects
             }
         }
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override bool IsEquipped(IEntity item)
+        {
+            return item != null && _slots.Values.Any(e => e == item);
+        }
+
+        public override float WalkSpeedModifier
+        {
+            get
+            {
+                var mod = 1f;
+                foreach (var slot in _slots.Values)
+                {
+                    if (slot != null)
+                    {
+                        foreach (var modifier in slot.GetAllComponents<IMoveSpeedModifier>())
+                        {
+                            mod *= modifier.WalkSpeedModifier;
+                        }
+                    }
+                }
+
+                return mod;
+            }
+        }
+
+        public override float SprintSpeedModifier
+        {
+            get
+            {
+                var mod = 1f;
+                foreach (var slot in _slots.Values)
+                {
+                    if (slot != null)
+                    {
+                        foreach (var modifier in slot.GetAllComponents<IMoveSpeedModifier>())
+                        {
+                            mod *= modifier.SprintSpeedModifier;
+                        }
+                    }
+                }
+
+                return mod;
+            }
+        }
+
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
 
-            if (curState == null)
+            if (curState is not InventoryComponentState state)
                 return;
-
-            var cast = (InventoryComponentState) curState;
 
             var doneSlots = new HashSet<Slots>();
 
-            foreach (var (slot, entityUid) in cast.Entities)
+            foreach (var (slot, entityUid) in state.Entities)
             {
-                var entity = Owner.EntityManager.GetEntity(entityUid);
+                if (!Owner.EntityManager.TryGetEntity(entityUid, out var entity))
+                {
+                    continue;
+                }
                 if (!_slots.ContainsKey(slot) || _slots[slot] != entity)
                 {
                     _slots[slot] = entity;
                     _setSlot(slot, entity);
                 }
                 doneSlots.Add(slot);
+            }
+
+            if (state.HoverEntity != null)
+            {
+                var (slot, (entityUid, fits)) = state.HoverEntity.Value;
+                var entity = Owner.EntityManager.GetEntity(entityUid);
+
+                InterfaceController?.HoverInSlot(slot, entity, fits);
             }
 
             foreach (var slot in _slots.Keys.ToList())
@@ -102,6 +157,11 @@ namespace Content.Client.GameObjects
                     _clearSlot(slot);
                     _slots.Remove(slot);
                 }
+            }
+
+            if (Owner.TryGetComponent(out MovementSpeedModifierComponent? mod))
+            {
+                mod.RefreshMovementSpeedModifiers();
             }
         }
 
@@ -119,7 +179,7 @@ namespace Content.Client.GameObjects
                 return;
             }
 
-            if (entity != null && entity.TryGetComponent(out ClothingComponent clothing))
+            if (entity.TryGetComponent(out ClothingComponent? clothing))
             {
                 var flag = SlotMasks[slot];
                 var data = clothing.GetEquippedStateInfo(flag);
@@ -148,6 +208,9 @@ namespace Content.Client.GameObjects
 
         internal void ClearAllSlotVisuals()
         {
+            if (_sprite == null)
+                return;
+
             foreach (var slot in InventoryInstance.SlotMasks)
             {
                 if (slot != Slots.NONE)
@@ -165,8 +228,8 @@ namespace Content.Client.GameObjects
 
         public void SendEquipMessage(Slots slot)
         {
-            var equipmessage = new ClientInventoryMessage(slot, ClientInventoryUpdate.Equip);
-            SendNetworkMessage(equipmessage);
+            var equipMessage = new ClientInventoryMessage(slot, ClientInventoryUpdate.Equip);
+            SendNetworkMessage(equipMessage);
         }
 
         public void SendUseMessage(Slots slot)
@@ -175,12 +238,17 @@ namespace Content.Client.GameObjects
             SendNetworkMessage(equipmessage);
         }
 
+        public void SendHoverMessage(Slots slot)
+        {
+            SendNetworkMessage(new ClientInventoryMessage(slot, ClientInventoryUpdate.Hover));
+        }
+
         public void SendOpenStorageUIMessage(Slots slot)
         {
             SendNetworkMessage(new OpenSlotStorageUIMessage(slot));
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent component)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
 
@@ -198,9 +266,25 @@ namespace Content.Client.GameObjects
             }
         }
 
-        public bool TryGetSlot(Slots slot, out IEntity item)
+        public bool TryGetSlot(Slots slot, out IEntity? item)
         {
             return _slots.TryGetValue(slot, out item);
+        }
+
+        public bool TryFindItemSlots(IEntity item, [NotNullWhen(true)] out Slots? slots)
+        {
+            slots = null;
+
+            foreach (var (slot, entity) in _slots)
+            {
+                if (entity == item)
+                {
+                    slots = slot;
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

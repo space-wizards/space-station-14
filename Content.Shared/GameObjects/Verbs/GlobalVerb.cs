@@ -2,7 +2,7 @@
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
 
-namespace Content.Shared.GameObjects
+namespace Content.Shared.GameObjects.Verbs
 {
     /// <summary>
     ///     A verb is an action in the right click menu of an entity.
@@ -12,14 +12,8 @@ namespace Content.Shared.GameObjects
     ///     To add a global verb to all entities,
     ///     define it and mark it with <see cref="GlobalVerbAttribute"/>
     /// </remarks>
-    public abstract class GlobalVerb
+    public abstract class GlobalVerb : VerbBase
     {
-        /// <summary>
-        ///     If true, this verb requires the user to be within
-        ///     <see cref="VerbUtility.InteractionRange"/> meters from the entity on which this verb resides.
-        /// </summary>
-        public virtual bool RequireInteractionRange => true;
-
         /// <summary>
         ///     Gets the visible verb data for the user.
         /// </summary>

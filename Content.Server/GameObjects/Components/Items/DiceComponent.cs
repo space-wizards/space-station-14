@@ -1,13 +1,11 @@
-﻿using Content.Server.GameObjects.Components.Sound;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Utility;
-using Content.Shared.Audio;
+﻿using Content.Shared.Audio;
+using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -22,10 +20,8 @@ namespace Content.Server.GameObjects.Components.Items
     [RegisterComponent]
     public class DiceComponent : Component, IActivate, IUse, ILand, IExamine
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly IRobustRandom _random;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         public override string Name => "Dice";
 
@@ -87,9 +83,9 @@ namespace Content.Server.GameObjects.Components.Items
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
             //No details check, since the sprite updates to show the side.
-            var loc = IoCManager.Resolve<ILocalizationManager>();
-            message.AddMarkup(loc.GetString("A dice with [color=lightgray]{0}[/color] sides.\n" +
-                                            "It has landed on a [color=white]{1}[/color].", _sides, _currentSide));
+            message.AddMarkup(Loc.GetString(
+                "A dice with [color=lightgray]{0}[/color] sides.\n" + "It has landed on a [color=white]{1}[/color].",
+                _sides, _currentSide));
         }
     }
 }

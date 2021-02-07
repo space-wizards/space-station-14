@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "bucket",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "bucket_water",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "cleaner",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "mopbucket",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "mopbucket_water",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    }
+  ]
+}

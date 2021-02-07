@@ -1,11 +1,13 @@
 ﻿using System;
-using CancellationTokenSource = System.Threading.CancellationTokenSource;
+using System.Threading;
 using Content.Shared.GameObjects.Components.Items;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
-using Robust.Shared.Timers;
-using Robust.Shared.IoC;
+using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.Interfaces.Timing;
+using Robust.Shared.IoC;
+using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
+using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameObjects.Components.Timing
 {
@@ -23,6 +25,7 @@ namespace Content.Server.GameObjects.Components.Timing
         /// <summary>
         /// The time, in seconds, between an object's use and when it can be used again
         /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
         public float Delay { get => _delay; set => _delay = value; }
 
         public bool ActiveDelay{ get; private set; }
@@ -46,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Timing
 
             cancellationTokenSource = new CancellationTokenSource();
 
-            Timer.Spawn(TimeSpan.FromSeconds(Delay), () => ActiveDelay = false, cancellationTokenSource.Token);
+            Owner.SpawnTimer(TimeSpan.FromSeconds(Delay), () => ActiveDelay = false, cancellationTokenSource.Token);
 
             _lastUseTime = IoCManager.Resolve<IGameTiming>().CurTime;
 

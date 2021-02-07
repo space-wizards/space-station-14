@@ -50,7 +50,7 @@ namespace Content.IntegrationTests.Tests.Networking
             var lastSvEntity = svEntityManager.GetEntities().Last();
             var lastClEntity = clEntityManager.GetEntity(lastSvEntity.Uid);
 
-            Assert.That(lastClEntity.Transform.GridPosition, Is.EqualTo(lastSvEntity.Transform.GridPosition));
+            Assert.That(lastClEntity.Transform.Coordinates, Is.EqualTo(lastSvEntity.Transform.Coordinates));
         }
     }
 }

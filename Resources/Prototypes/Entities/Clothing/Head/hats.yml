@@ -1,0 +1,362 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeaverHat
+  name: beaver hat
+  description: 'Gentlemen?'
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/beaver_hat.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/beaver_hat.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeret
+  name: beret
+  description: A beret, an artists favorite headwear.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/beret.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/beret.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeretEngineering
+  name: engineering beret 
+  description: A beret with the engineering insignia emblazoned on it. For engineers that are more inclined towards style than safety.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/beret_engineering.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/beret_engineering.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeretHoS
+  name: HoS beret
+  description: A black beret with a commander's rank emblem. For officers that are more inclined towards style than safety.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/beret_hos.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/beret_hos.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeretWarden
+  name: warden's hat
+  description: A corporate blue beret with a warden's rank emblem. For officers that are more inclined towards style than safety.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/beret_warden.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/beret_warden.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBowlerHat
+  name: bowler hat
+  description: Stylish bowler hat.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/bowler_hat.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/bowler_hat.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCaptain
+  name: captain's hardhat
+  description: It's good being the king.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/captain.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/captain.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCardborg
+  name: cardborg helmet
+  description: A hat made out of a box.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/cardborg_h.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/cardborg_h.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCentcom
+  name: centcom brand hat
+  description: "It's good to be the emperor."
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/centcom.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/centcom.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatChef
+  name: chef hat
+  description: "It's a hat used by chefs to keep hair out of your food. Judging by the food in the mess, they don't work."
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/chefhat.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/chefhat.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatFedoraBrown
+  name:  brown fedora
+  description: It's a brown fedora.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/brownfedora.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/brownfedora.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatFedoraGrey
+  name: grey fedora
+  description: It's a grey fedora.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/greyfedora.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/greyfedora.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatFez
+  name: fez
+  description: A red fez.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/fez.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/fez.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHopcap
+  name: hop cap
+  description: A grand, stylish captain cap.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/hopcap.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/hopcap.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHoshat
+  name: HoS hat
+  description: "There's a new sheriff in station."
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/hoshat.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/hoshat.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatWitch1
+  name: witch hat
+  description: A witch hat.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/witchhat.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/witchhat.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatPaper
+  name: paper
+  description: A hat made of paper.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/paper.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/paper.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatPirate
+  name: pirate
+  description: 'Yo ho ho and a bottle of rum!'
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/pirate.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/pirate.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatPlaguedoctor
+  name: plague doctor
+  description: These were once used by plague doctors.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/plaguedoctor.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/plaguedoctor.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatRedwizard
+  name: red wizard
+  description: Strange-looking red hat-wear that most certainly belongs to a real magic user.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/redwizard.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/redwizard.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatSantahat
+  name: santa hat
+  description: "A festive hat worn by Santa Claus"
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/santahat.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/santahat.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatSombrero
+  name: sombrero
+  description: "Perfectly for Space Mexico, si?"
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/sombrero.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/sombrero.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatSurgcapBlue
+  name: surgcap blue
+  description: A blue cap surgeons wear during operations. Keeps their hair from tickling your internal organs.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/surgcap_blue.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/surgcap_blue.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatSurgcapGreen
+  name: surgcap green
+  description: A green cap surgeons wear during operations. Keeps their hair from tickling your internal organs.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/surgcap_green.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/surgcap_green.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatSurgcapPurple
+  name: surgcap purple
+  description: A purple cap surgeons wear during operations. Keeps their hair from tickling your internal organs.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/surgcap_purple.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/surgcap_purple.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatTophat
+  name: tophat
+  description: A stylish black tophat.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/tophat.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/tophat.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatUshanka
+  name: ushanka
+  description: "Perfect for winter in Siberia, da?"
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/ushanka.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/ushanka.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatVioletwizard
+  name: violetwizard
+  description: "Strange-looking violet hat-wear that most certainly belongs to a real magic user."
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/violetwizard.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/violetwizard.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatWarden
+  name: warden's cap
+  description: A police officer's Hat. This hat emphasizes that you are THE LAW
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/warden.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/warden.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatWitch
+  name: witch
+  description: A witch hat.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/witch.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/witch.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatWizardFake
+  name: wizardFake
+  description: It has WIZZARD written across it in sequins. Comes with a cool beard.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/wizard_fake.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/wizard_fake.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatWizard
+  name: wizard hat
+  description: Strange-looking blue hat-wear that most certainly belongs to a powerful magic user.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/wizardhat.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/wizardhat.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatXmasCrown
+  name: xmas crown
+  description: 'Happy Christmas!'
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/xmascrown.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/xmascrown.rsi

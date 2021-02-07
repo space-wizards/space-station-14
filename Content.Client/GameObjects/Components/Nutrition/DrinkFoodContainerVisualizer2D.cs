@@ -11,7 +11,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Client.GameObjects.Components.Nutrition
 {
     [UsedImplicitly]
-    public sealed class FoodContainerVisualizer2D : AppearanceVisualizer
+    public sealed class FoodContainerVisualizer : AppearanceVisualizer
     {
         private string _baseState;
         private int _steps;

@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "states": [
+    {
+      "name": "eightdirwire",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "generator",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "provider",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "storage",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "wiredmachine",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "wirelessmachine",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    }
+  ]
+}

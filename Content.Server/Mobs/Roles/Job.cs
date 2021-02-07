@@ -1,7 +1,5 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.Interfaces.Chat;
-using Content.Shared.Jobs;
+using Content.Shared.Roles;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Mobs.Roles
@@ -11,7 +9,7 @@ namespace Content.Server.Mobs.Roles
         public JobPrototype Prototype { get; }
 
         public override string Name { get; }
-        public override bool Antag => false;
+        public override bool Antagonist => false;
 
         public string StartingGear => Prototype.StartingGear;
 

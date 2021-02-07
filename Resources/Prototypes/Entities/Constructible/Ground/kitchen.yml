@@ -1,0 +1,32 @@
+﻿- type: entity
+  id: KitchenSpike
+  name: meat spike
+  description: A spike for collecting meat from animals.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    shapes:
+    - !type:PhysShapeAabb
+      mask:
+      - Impassable
+      layer:
+      - Impassable
+  - type: Sprite
+    # temp to make clickmask work
+    sprite: Constructible/Misc/kitchen.rsi
+    state: spike
+  - type: Anchorable
+  - type: Pullable
+  - type: Damageable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: KitchenSpike

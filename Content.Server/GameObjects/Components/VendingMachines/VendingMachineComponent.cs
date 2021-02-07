@@ -1,23 +1,31 @@
-﻿using System;
+#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.Power;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.Components.Access;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.VendingMachines;
+using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.VendingMachines;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Timers;
+using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
-using Robust.Shared.Map;
+using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timers;
 using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.SharedWiresComponent;
 
 namespace Content.Server.GameObjects.Components.VendingMachines
@@ -26,25 +34,26 @@ namespace Content.Server.GameObjects.Components.VendingMachines
     [ComponentReference(typeof(IActivate))]
     public class VendingMachineComponent : SharedVendingMachineComponent, IActivate, IExamine, IBreakAct, IWires
     {
-#pragma warning disable 649
-        [Dependency] private readonly IRobustRandom _random;
-#pragma warning restore 649
-        private AppearanceComponent _appearance;
-        private BoundUserInterface _userInterface;
-        private PowerDeviceComponent _powerDevice;
+        [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        private bool _ejecting = false;
+        private bool _ejecting;
         private TimeSpan _animationDuration = TimeSpan.Zero;
-        private string _packPrototypeId;
-        private string _description;
-        private string _spriteName;
+        private string _packPrototypeId = "";
+        private string? _description;
+        private string _spriteName = "";
 
-        private bool Powered => _powerDevice.Powered;
-        private bool _broken = false;
+        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        private bool _broken;
+
+        private string _soundVend = "";
+        private string _soundDeny = "";
+
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(VendingMachineUiKey.Key);
 
         public void Activate(ActivateEventArgs eventArgs)
         {
-            if(!eventArgs.User.TryGetComponent(out IActorComponent actor))
+            if(!eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }
@@ -57,7 +66,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
                 wires.OpenInterface(actor.playerSession);
             } else
             {
-                _userInterface.Open(actor.playerSession);
+                UserInterface?.Toggle(actor.playerSession);
             }
         }
 
@@ -66,13 +75,16 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             base.ExposeData(serializer);
 
             serializer.DataField(ref _packPrototypeId, "pack", string.Empty);
+            // Grabbed from: https://github.com/discordia-space/CEV-Eris/blob/f702afa271136d093ddeb415423240a2ceb212f0/sound/machines/vending_drop.ogg
+            serializer.DataField(ref _soundVend, "soundVend", "/Audio/Machines/machine_vend.ogg");
+            // Yoinked from: https://github.com/discordia-space/CEV-Eris/blob/35bbad6764b14e15c03a816e3e89aa1751660ba9/sound/machines/Custom_deny.ogg
+            serializer.DataField(ref _soundDeny, "soundDeny", "/Audio/Machines/custom_deny.ogg");
         }
 
         private void InitializeFromPrototype()
         {
             if (string.IsNullOrEmpty(_packPrototypeId)) { return; }
-            var prototypeManger = IoCManager.Resolve<IPrototypeManager>();
-            if (!prototypeManger.TryIndex(_packPrototypeId, out VendingMachineInventoryPrototype packPrototype))
+            if (!_prototypeManager.TryIndex(_packPrototypeId, out VendingMachineInventoryPrototype packPrototype))
             {
                 return;
             }
@@ -84,7 +96,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             if (!string.IsNullOrEmpty(_spriteName))
             {
                 var spriteComponent = Owner.GetComponent<SpriteComponent>();
-                const string vendingMachineRSIPath = "Buildings/VendingMachines/{0}.rsi";
+                const string vendingMachineRSIPath = "Constructible/Power/VendingMachines/{0}.rsi";
                 spriteComponent.BaseRSIPath = string.Format(vendingMachineRSIPath, _spriteName);
             }
 
@@ -99,24 +111,32 @@ namespace Content.Server.GameObjects.Components.VendingMachines
         public override void Initialize()
         {
             base.Initialize();
-            _appearance = Owner.GetComponent<AppearanceComponent>();
-            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
-                .GetBoundUserInterface(VendingMachineUiKey.Key);
-            _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
-            _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
-            _powerDevice.OnPowerStateChanged += UpdatePower;
+
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
+            }
+
+            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
+            {
+                TrySetVisualState(receiver.Powered ? VendingMachineVisualState.Normal : VendingMachineVisualState.Off);
+            }
+
             InitializeFromPrototype();
         }
 
-        public override void OnRemove()
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
-            _appearance = null;
-            _powerDevice.OnPowerStateChanged -= UpdatePower;
-            _powerDevice = null;
-            base.OnRemove();
+            base.HandleMessage(message, component);
+            switch (message)
+            {
+                case PowerChangedMessage powerChanged:
+                    UpdatePower(powerChanged);
+                    break;
+            }
         }
 
-        private void UpdatePower(object sender, PowerStateEventArgs args)
+        private void UpdatePower(PowerChangedMessage args)
         {
             var state = args.Powered ? VendingMachineVisualState.Normal : VendingMachineVisualState.Off;
             TrySetVisualState(state);
@@ -131,10 +151,10 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             switch (message)
             {
                 case VendingMachineEjectMessage msg:
-                    TryEject(msg.ID);
+                    TryEject(msg.ID, serverMsg.Session.AttachedEntity);
                     break;
-                case InventorySyncRequestMessage msg:
-                    _userInterface.SendMessage(new VendingMachineInventoryMessage(Inventory));
+                case InventorySyncRequestMessage _:
+                    UserInterface?.SendMessage(new VendingMachineInventoryMessage(Inventory));
                     break;
             }
         }
@@ -152,37 +172,58 @@ namespace Content.Server.GameObjects.Components.VendingMachines
                 return;
             }
 
-            VendingMachineInventoryEntry entry = Inventory.Find(x => x.ID == id);
+            var entry = Inventory.Find(x => x.ID == id);
             if (entry == null)
             {
-                FlickDenyAnimation();
+                Owner.PopupMessageEveryone(Loc.GetString("Invalid item"));
+                Deny();
                 return;
             }
 
             if (entry.Amount <= 0)
             {
-                FlickDenyAnimation();
+                Owner.PopupMessageEveryone(Loc.GetString("Out of stock"));
+                Deny();
                 return;
             }
 
             _ejecting = true;
             entry.Amount--;
-            _userInterface.SendMessage(new VendingMachineInventoryMessage(Inventory));
+            UserInterface?.SendMessage(new VendingMachineInventoryMessage(Inventory));
             TrySetVisualState(VendingMachineVisualState.Eject);
 
-            Timer.Spawn(_animationDuration, () =>
+            Owner.SpawnTimer(_animationDuration, () =>
             {
                 _ejecting = false;
                 TrySetVisualState(VendingMachineVisualState.Normal);
-                Owner.EntityManager.SpawnEntity(id, Owner.Transform.GridPosition);
+                Owner.EntityManager.SpawnEntity(id, Owner.Transform.Coordinates);
             });
+
+            EntitySystem.Get<AudioSystem>().PlayFromEntity(_soundVend, Owner, AudioParams.Default.WithVolume(-2f));
         }
 
-        private void FlickDenyAnimation()
+        private void TryEject(string id, IEntity? sender)
         {
+            if (Owner.TryGetComponent<AccessReader>(out var accessReader))
+            {
+                if (sender == null || !accessReader.IsAllowed(sender))
+                {
+                    Owner.PopupMessageEveryone(Loc.GetString("Access denied"));
+                    Deny();
+                    return;
+                }
+            }
+            TryEject(id);
+        }
+
+        private void Deny()
+        {
+            EntitySystem.Get<AudioSystem>().PlayFromEntity(_soundDeny, Owner, AudioParams.Default.WithVolume(-2f));
+
+            // Play the Deny animation
             TrySetVisualState(VendingMachineVisualState.Deny);
             //TODO: This duration should be a distinct value specific to the deny animation
-            Timer.Spawn(_animationDuration, () =>
+            Owner.SpawnTimer(_animationDuration, () =>
             {
                 TrySetVisualState(VendingMachineVisualState.Normal);
             });
@@ -194,14 +235,20 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             if (_broken)
             {
                 finalState = VendingMachineVisualState.Broken;
-            } else if (_ejecting)
+            }
+            else if (_ejecting)
             {
                 finalState = VendingMachineVisualState.Eject;
-            } else if (!Powered)
+            }
+            else if (!Powered)
             {
                 finalState = VendingMachineVisualState.Off;
             }
-            _appearance.SetData(VendingMachineVisuals.VisualState, finalState);
+
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(VendingMachineVisuals.VisualState, finalState);
+            }
         }
 
         public void OnBreak(BreakageEventArgs eventArgs)

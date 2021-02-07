@@ -1,0 +1,27 @@
+- type: job
+  id: ResearchDirector
+  name: "research director"
+  head: true
+  positions: 1
+  startingGear: ResearchDirectorGear
+  departments:
+  - Command
+  - Science
+  icon: "ResearchDirector"
+  access:
+  - Research
+  - ResearchDirector
+  - Command
+  - Maintenance
+
+- type: startingGear
+  id: ResearchDirectorGear
+  equipment:
+    innerclothing: ClothingUniformJumpsuitResearchDirector
+    backpack: ClothingBackpackScienceFilled
+    shoes: ClothingShoesColorBrown
+    idcard: RnDPDA
+    ears: ClothingHeadsetScience
+  innerclothingskirt: ClothingUniformJumpskirtResearchDirector
+  satchel: ClothingBackpackSatchelScienceFilled
+  duffelbag: ClothingBackpackDuffelScienceFilled

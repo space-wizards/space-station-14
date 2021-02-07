@@ -1,0 +1,247 @@
+- type: entity
+  parent: BaseItem
+  id: DrinkBottleBaseFull
+  abstract: true
+  components:
+  - type: Drink
+    openSounds: bottleOpenSounds
+  - type: SolutionContainer
+    maxVol: 100
+  - type: SolutionTransfer
+    transferAmount: 5
+  - type: Sprite
+    state: icon
+  - type: DamageOnLand
+    amount: 5
+  - type: DamageOtherOnHit
+    amount: 10
+  - type: Spillable
+  - type: Damageable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundCollectionBehavior
+        soundCollection: GlassBreak
+      - !type:SpillBehavior { }
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: DrinkBottleBaseFull
+  id: DrinkAbsintheBottleFull
+  name: Jailbreaker Verte
+  description: One sip of this and you just know you're gonna have a good time.
+  components:
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/absinthebottle.rsi
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: chem.Absinthe
+        Quantity: 100
+
+- type: entity
+  parent: DrinkBottleBaseFull
+  id: DrinkAlcoGreenFull
+  name: emeraldine melon liquor
+  description: A bottle of 46 proof Emeraldine Melon Liquor. Sweet and light.
+  components:
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/alco-green.rsi
+
+
+- type: entity
+  parent: DrinkBottleBaseFull
+  id: DrinkAleBottleFull
+  name: Magm-Ale
+  description: A true dorf's drink of choice.
+  components:
+  - type: SolutionContainer
+    maxVol: 100
+    contents:
+      reagents:
+      - ReagentId: chem.Ale
+        Quantity: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/alebottle.rsi
+
+
+- type: entity
+  parent: DrinkBottleBaseFull
+  id: DrinkBottleOfNothingFull
+  name: bottle of nothing
+  description: A bottle filled with nothing.
+  components:
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/bottleofnothing.rsi
+
+
+- type: entity
+  parent: DrinkBottleBaseFull
+  id: DrinkCognacBottleFull
+  name: cognac bottle
+  description: A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. You might as well not scream 'SHITCURITY' this time.
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: chem.Cognac
+        Quantity: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/cognacbottle.rsi
+
+
+- type: entity
+  parent: DrinkBottleBaseFull
+  id: DrinkGinBottleFull
+  name: Griffeater Gin
+  description: A bottle of high quality gin, produced in the New London Space Station.
+  components:
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/ginbottle.rsi
+  - type: SolutionContainer
+    contents:
+      reagents:
+        - ReagentId: chem.Gin
+          Quantity: 100
+
+- type: entity
+  parent: DrinkBottleBaseFull
+  id: DrinkGoldschlagerBottleFull
+  name: goldschlager bottle
+  description: 100 proof cinnamon schnapps, made for alcoholic teen girls on spring break.
+  components:
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/goldschlagerbottle.rsi
+
+
+- type: entity
+  parent: DrinkBottleBaseFull
+  id: DrinkKahluaBottleFull
+  name: kahlua bottle
+  description: A widely known, Mexican coffee-flavoured liqueur. In production since 1936, HONK.
+  components:
+  - type: SolutionContainer
+    maxVol: 80
+    contents:
+      reagents:
+      - ReagentId: chem.Water
+        Quantity: 80
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/kahluabottle.rsi
+
+
+- type: entity
+  parent: DrinkBottleBaseFull
+  id: DrinkPatronBottleFull
+  name: wrapp artiste patron bottle
+  description: Silver laced tequilla, served in space night clubs across the galaxy.
+  components:
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/patronbottle.rsi
+
+
+- type: entity
+  parent: DrinkBottleBaseFull
+  id: DrinkPoisonWinebottleFull
+  name: warlock's velvet bottle
+  description: What a delightful packaging for a surely high quality wine! The vintage must be amazing!
+  components:
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/pwinebottle.rsi
+
+
+- type: entity
+  parent: DrinkBottleBaseFull
+  id: DrinkRumbottleFull
+  name: captain pete's cuban spiced rum
+  description: This isn't just rum, oh no. It's practically GRIFF in a bottle.
+  components:
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/rumbottle.rsi
+
+
+- type: entity
+  parent: DrinkBottleBaseFull
+  id: DrinkTequilabottleFull
+  name: caccavo guaranteed quality tequila bottle
+  description: Made from premium petroleum distillates, pure thalidomide and other fine quality ingredients!
+  components:
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/tequillabottle.rsi
+
+
+- type: entity
+  parent: DrinkBottleBaseFull
+  id: DrinkVermouthBottleFull
+  name: goldeneye vermouth bottle
+  description: Sweet, sweet dryness!
+  components:
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/vermouthbottle.rsi
+
+
+- type: entity
+  parent: DrinkBottleBaseFull
+  id: DrinkVodkaBottleFull
+  name: vodka bottle
+  description: Aah, vodka. Prime choice of drink AND fuel by Russians worldwide.
+  components:
+  - type: SolutionContainer
+    maxVol: 80
+    contents:
+      reagents:
+      - ReagentId: chem.Vodka
+        Quantity: 80
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/vodkabottle.rsi
+
+
+- type: entity
+  parent: DrinkBottleBaseFull
+  id: DrinkWhiskeyBottleFull
+  name: uncle git's special reserve
+  description: A premium single-malt whiskey, gently matured inside the tunnels of a nuclear shelter. TUNNEL WHISKEY RULES.
+  components:
+  - type: SolutionContainer
+    maxVol: 80
+    contents:
+      reagents:
+      - ReagentId: chem.Whiskey
+        Quantity: 80
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/whiskeybottle.rsi
+
+
+- type: entity
+  parent: DrinkBottleBaseFull
+  id: DrinkWineBottleFull
+  name: doublebearded bearded special wine bottle
+  description: A faint aura of unease and asspainery surrounds the bottle.
+  components:
+  - type: SolutionContainer
+    maxVol: 80
+    contents:
+      reagents:
+      - ReagentId: chem.Wine
+        Quantity: 80
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/winebottle.rsi

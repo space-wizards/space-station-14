@@ -3,7 +3,6 @@ using Content.Shared.Chemistry;
 using Content.Shared.Interfaces.Chemistry;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
-using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Chemistry.Metabolism
@@ -12,7 +11,7 @@ namespace Content.Server.Chemistry.Metabolism
     /// Default metabolism for food reagents. Attempts to find a HungerComponent on the target,
     /// and to update it's hunger values.
     /// </summary>
-    class DefaultFood : IMetabolizable
+    public class DefaultFood : IMetabolizable
     {
         //Rate of metabolism in units / second
         private ReagentUnit _metabolismRate;
@@ -24,7 +23,7 @@ namespace Content.Server.Chemistry.Metabolism
 
         void IExposeData.ExposeData(ObjectSerializer serializer)
         {
-            serializer.DataField(ref _metabolismRate, "rate", ReagentUnit.New(1M));
+            serializer.DataField(ref _metabolismRate, "rate", ReagentUnit.New(1.0));
             serializer.DataField(ref _nutritionFactor, "nutrimentFactor", 30.0f);
         }
 
@@ -36,7 +35,7 @@ namespace Content.Server.Chemistry.Metabolism
                 hunger.UpdateFood(metabolismAmount.Float() * NutritionFactor);
 
             //Return amount of reagent to be removed, remove reagent regardless of HungerComponent presence
-            return metabolismAmount; 
+            return metabolismAmount;
         }
     }
 }

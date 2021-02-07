@@ -1,0 +1,209 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "markerbronze",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "markerbronze-on",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "markerburgundy",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "markerburgundy-on",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "markercerulean",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "markercerulean-on",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "markerfuchsia",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "markerfuchsia-on",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "markerindigo",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "markerindigo-on",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "markerjade",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "markerjade-on",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "markerlime",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "markerlime-on",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "markerolive",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "markerolive-on",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "markerpurple",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "markerpurple-on",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "markerrandom",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "markerteal",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "markerteal-on",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "markerviolet",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "markerviolet-on",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "markeryellow",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "markeryellow-on",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    }
+  ]
+}

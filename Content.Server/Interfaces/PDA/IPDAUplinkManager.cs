@@ -1,19 +1,27 @@
-using System;
+#nullable enable
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.GameObjects.Components.PDA;
-using Content.Shared.Prototypes.PDA;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Map;
 
 namespace Content.Server.Interfaces.PDA
 {
     public interface IPDAUplinkManager
     {
-        public IReadOnlyList<UplinkListingData> FetchListings => null;
+        public IReadOnlyDictionary<string, UplinkListingData> FetchListings { get; }
+
         void Initialize();
+
         public bool AddNewAccount(UplinkAccount acc);
 
         public bool ChangeBalance(UplinkAccount acc, int amt);
 
-        public bool TryPurchaseItem(UplinkAccount acc, UplinkListingData listing);
+        public bool TryPurchaseItem(
+            UplinkAccount? acc,
+            string itemId,
+            EntityCoordinates spawnCoords,
+            [NotNullWhen(true)] out IEntity? purchasedItem);
 
     }
 }

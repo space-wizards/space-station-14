@@ -1,0 +1,25 @@
+- type: job
+  id: Janitor
+  name: "janitor"
+  positions: 1
+  startingGear: JanitorGear
+  departments:
+  - Civilian
+  icon: "Janitor"
+  access:
+  - Janitor
+  - Maintenance
+
+- type: startingGear
+  id: JanitorGear
+  equipment:
+    innerclothing: ClothingUniformJumpsuitJanitor
+    backpack: ClothingBackpackFilled
+    shoes: ClothingShoesGaloshes
+    head: ClothingHeadHatPurplesoft
+    idcard: JanitorPDA
+    ears: ClothingHeadsetService
+    belt: ClothingBeltJanitorFilled
+  innerclothingskirt: ClothingUniformJumpskirtJanitor
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled

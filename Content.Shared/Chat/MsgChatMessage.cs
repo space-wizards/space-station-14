@@ -41,7 +41,7 @@ namespace Content.Shared.Chat
 
         public override void ReadFromBuffer(NetIncomingMessage buffer)
         {
-            Channel = (ChatChannel) buffer.ReadByte();
+            Channel = (ChatChannel) buffer.ReadInt16();
             Message = buffer.ReadString();
             MessageWrap = buffer.ReadString();
 
@@ -49,6 +49,7 @@ namespace Content.Shared.Chat
             {
                 case ChatChannel.Local:
                 case ChatChannel.Dead:
+                case ChatChannel.AdminChat:
                 case ChatChannel.Emotes:
                     SenderEntity = buffer.ReadEntityUid();
                     break;
@@ -57,7 +58,7 @@ namespace Content.Shared.Chat
 
         public override void WriteToBuffer(NetOutgoingMessage buffer)
         {
-            buffer.Write((byte)Channel);
+            buffer.Write((short)Channel);
             buffer.Write(Message);
             buffer.Write(MessageWrap);
 
@@ -65,6 +66,7 @@ namespace Content.Shared.Chat
             {
                 case ChatChannel.Local:
                 case ChatChannel.Dead:
+                case ChatChannel.AdminChat:
                 case ChatChannel.Emotes:
                     buffer.Write(SenderEntity);
                     break;

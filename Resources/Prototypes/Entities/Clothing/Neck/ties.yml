@@ -1,0 +1,21 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckTieRed
+  name: red-tie
+  description: A neosilk clip-on red tie.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Ties/redtie.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Ties/redtie.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckTieDet
+  name: detective's tie
+  description: A loosely tied necktie, a perfect accessory for the over-worked detective.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Ties/dettie.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Ties/dettie.rsi

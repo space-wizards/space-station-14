@@ -1,20 +1,25 @@
-﻿using Content.Shared.Prototypes.Cargo;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Content.Shared.Prototypes.Cargo;
+using Robust.Shared.Localization;
 
 namespace Content.Server.Cargo
 {
     public class CargoOrderDatabase
     {
-        private Dictionary<int, CargoOrderData> _orders = new Dictionary<int, CargoOrderData>();
+        private readonly Dictionary<int, CargoOrderData> _orders = new();
         private int _orderNumber = 0;
 
         public CargoOrderDatabase(int id)
         {
             Id = id;
+            CurrentOrderSize = 0;
+            MaxOrderSize = 20;
         }
 
         public int Id { get; private set; }
+        public int CurrentOrderSize { get; private set; }
+        public int MaxOrderSize { get; private set; }
 
         /// <summary>
         ///     Removes all orders from the database.
@@ -79,16 +84,25 @@ namespace Content.Server.Cargo
         {
             return _orders.Remove(orderNumber);
         }
-        
+
         /// <summary>
         ///     Approves an order in the database.
         /// </summary>
         /// <param name="order">The order to be approved.</param>
         public void ApproveOrder(int orderNumber)
         {
+            if (CurrentOrderSize == MaxOrderSize)
+                return;
             if (!_orders.TryGetValue(orderNumber, out var order))
                 return;
+            else if (CurrentOrderSize + order.Amount > MaxOrderSize)
+            {
+                AddOrder(order.Requester, Loc.GetString("{0} (Overflow)", order.Reason.Replace(" (Overflow)","")), order.ProductId,
+                    order.Amount - MaxOrderSize - CurrentOrderSize, order.PayingAccountId);
+                order.Amount = MaxOrderSize - CurrentOrderSize;
+            }
             order.Approved = true;
+            CurrentOrderSize += order.Amount;
         }
 
         /// <summary>
@@ -99,6 +113,14 @@ namespace Content.Server.Cargo
         public bool Contains(CargoOrderData order)
         {
             return _orders.ContainsValue(order);
+        }
+
+        /// <summary>
+        ///     Clears the current order capacity. This allows more orders to be processed and is invoked after an order is dispatched.
+        /// </summary>
+        public void ClearOrderCapacity()
+        {
+            CurrentOrderSize = 0;
         }
     }
 }

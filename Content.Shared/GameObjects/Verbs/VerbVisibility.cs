@@ -1,4 +1,4 @@
-namespace Content.Shared.GameObjects
+namespace Content.Shared.GameObjects.Verbs
 {
     /// <summary>
     /// Possible states of visibility for the verb in the right click menu.

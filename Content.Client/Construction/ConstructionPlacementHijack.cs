@@ -1,49 +1,65 @@
+﻿#nullable enable
+using System.Collections.Generic;
 using Content.Client.GameObjects.Components.Construction;
+using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.Construction;
-using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.Graphics;
 using Robust.Client.Placement;
 using Robust.Client.Utility;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.Client.Construction
 {
-    public class ConstructionPlacementHijack : PlacementHijack
+    public sealed class ConstructionPlacementHijack : PlacementHijack
     {
-        private readonly ConstructionPrototype Prototype;
-        private readonly ConstructorComponent Owner;
+        private readonly ConstructionSystem _constructionSystem;
+        private readonly ConstructionPrototype? _prototype;
 
-        public ConstructionPlacementHijack(ConstructionPrototype prototype, ConstructorComponent owner)
+        public override bool CanRotate { get; }
+
+        public ConstructionPlacementHijack(ConstructionSystem constructionSystem, ConstructionPrototype? prototype)
         {
-            Prototype = prototype;
-            Owner = owner;
+            _constructionSystem = constructionSystem;
+            _prototype = prototype;
+            CanRotate = prototype?.CanRotate ?? true;
         }
 
-        public override bool HijackPlacementRequest(GridCoordinates coords)
+        /// <inheritdoc />
+        public override bool HijackPlacementRequest(EntityCoordinates coordinates)
         {
-            if (Prototype != null)
+            if (_prototype != null)
             {
                 var dir = Manager.Direction;
-                Owner.SpawnGhost(Prototype, coords, dir);
+                _constructionSystem.SpawnGhost(_prototype, coordinates, dir);
             }
             return true;
         }
 
+        /// <inheritdoc />
         public override bool HijackDeletion(IEntity entity)
         {
-            if (entity.TryGetComponent(out ConstructionGhostComponent ghost))
+            if (entity.TryGetComponent(out ConstructionGhostComponent? ghost))
             {
-                Owner.ClearGhost(ghost.GhostID);
+                _constructionSystem.ClearGhost(ghost.GhostID);
             }
             return true;
         }
 
+        /// <inheritdoc />
         public override void StartHijack(PlacementManager manager)
         {
             base.StartHijack(manager);
 
-            manager.CurrentBaseSprite = Prototype.Icon.DirFrame0();
+            var frame = _prototype?.Icon.DirFrame0();
+            if (frame == null)
+            {
+                manager.CurrentTextures = null;
+            }
+            else
+            {
+                manager.CurrentTextures = new List<IDirectionalTextureProvider> {frame};
+            }
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
-using Content.Client.UserInterface;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.GameObjects.Components.Power;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface.Controls;
@@ -11,6 +11,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.GameObjects.Components.Power
 {
+    [UsedImplicitly]
     public class ApcBoundUserInterface : BoundUserInterface
     {
         private ApcWindow _window;
@@ -24,7 +25,7 @@ namespace Content.Client.GameObjects.Components.Power
 
             _window = new ApcWindow();
             _window.OnClose += Close;
-            _window.OpenCenteredMinSize();
+            _window.OpenCentered();
 
             _breakerButton = _window.BreakerButton;
             _breakerButton.OnPressed += _ => SendMessage(new ApcToggleMainBreakerMessage());
@@ -87,12 +88,12 @@ namespace Content.Client.GameObjects.Components.Power
             if (normalizedCharge <= leftSideSize)
             {
                 normalizedCharge /= leftSideSize; // Adjust range to 0.0 to 1.0
-                finalHue = FloatMath.Lerp(leftHue, middleHue, normalizedCharge);
+                finalHue = MathHelper.Lerp(leftHue, middleHue, normalizedCharge);
             }
             else
             {
                 normalizedCharge = (normalizedCharge - leftSideSize) / rightSideSize; // Adjust range to 0.0 to 1.0.
-                finalHue = FloatMath.Lerp(middleHue, rightHue, normalizedCharge);
+                finalHue = MathHelper.Lerp(middleHue, rightHue, normalizedCharge);
             }
 
             // Check if null first to avoid repeatedly creating this.

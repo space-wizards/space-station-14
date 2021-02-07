@@ -1,5 +1,5 @@
 using Content.Shared.GameObjects.Components.Markers;
-using Content.Shared.Jobs;
+using Content.Shared.Roles;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
@@ -12,9 +12,7 @@ namespace Content.Server.GameObjects.Components.Markers
     [ComponentReference(typeof(SharedSpawnPointComponent))]
     public sealed class SpawnPointComponent : SharedSpawnPointComponent
     {
-#pragma warning disable 649
-        [Dependency] private IPrototypeManager _prototypeManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         [ViewVariables(VVAccess.ReadWrite)]
         private SpawnPointType _spawnType;

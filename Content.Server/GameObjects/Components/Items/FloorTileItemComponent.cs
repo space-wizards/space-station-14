@@ -1,66 +1,100 @@
 ﻿using Content.Server.GameObjects.Components.Stack;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Utility;
+using Content.Shared.Audio;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Maps;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects.EntitySystems;
-using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Content.Server.GameObjects.Components.Items
 {
     [RegisterComponent]
     public class FloorTileItemComponent : Component, IAfterInteract
     {
-#pragma warning disable 649
-        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
-        [Dependency] private readonly IMapManager _mapManager;
-#pragma warning restore 649
+        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
 
         public override string Name => "FloorTile";
-        private StackComponent _stack;
-        private string _outputTile;
+        private List<string> _outputTiles;
 
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _outputTile, "output", "floor_steel");
+            serializer.DataField(ref _outputTiles, "outputs", null);
         }
 
         public override void Initialize()
         {
             base.Initialize();
-            _stack = Owner.GetComponent<StackComponent>();
+            Owner.EnsureComponent<StackComponent>();
         }
-        public void AfterInteract(AfterInteractEventArgs eventArgs)
+
+        private bool HasBaseTurf(ContentTileDefinition tileDef, string baseTurf)
         {
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
-
-            var attacked = eventArgs.Target;
-            var mapGrid = _mapManager.GetGrid(eventArgs.ClickLocation.GridID);
-            var tile = mapGrid.GetTileRef(eventArgs.ClickLocation);
-            var tileDef = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TypeId];
-
-            if (tileDef.IsSubFloor && attacked == null && _stack.Use(1))
+            foreach (var tileBaseTurf in tileDef.BaseTurfs)
             {
-                var desiredTile = _tileDefinitionManager[_outputTile];
-                mapGrid.SetTile(eventArgs.ClickLocation, new Tile(desiredTile.TileId));
-                EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/items/genhit.ogg", eventArgs.ClickLocation);
-                if(_stack.Count < 1){
-                    Owner.Delete();
+                if (baseTurf == tileBaseTurf)
+                {
+                    return true;
                 }
             }
 
-
+            return false;
         }
 
+        private void PlaceAt(IMapGrid mapGrid, EntityCoordinates location, ushort tileId, float offset = 0)
+        {
+            mapGrid.SetTile(location.Offset(new Vector2(offset, offset)), new Tile(tileId));
+            EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Items/genhit.ogg", location, AudioHelpers.WithVariation(0.125f));
+        }
+
+        public async Task<bool> AfterInteract(AfterInteractEventArgs eventArgs)
+        {
+            if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
+                return true;
+
+            if (!Owner.TryGetComponent(out StackComponent stack))
+                return true;
+
+            var mapManager = IoCManager.Resolve<IMapManager>();
+
+            var location = eventArgs.ClickLocation.AlignWithClosestGridTile();
+            var locationMap = location.ToMap(Owner.EntityManager);
+            mapManager.TryGetGrid(location.GetGridId(Owner.EntityManager), out var mapGrid);
+            foreach (var currentTile in _outputTiles)
+            {
+                var currentTileDefinition = (ContentTileDefinition) _tileDefinitionManager[currentTile];
+
+                if (mapGrid != null)
+                {
+                    var tile = mapGrid.GetTileRef(location);
+                    var baseTurf = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
+
+                    if (HasBaseTurf(currentTileDefinition, baseTurf.Name) && stack.Use(1))
+                    {
+                        PlaceAt(mapGrid, location, currentTileDefinition.TileId);
+                        break;
+                    }
+                }
+                else if (HasBaseTurf(currentTileDefinition, "space"))
+                {
+                    mapGrid = mapManager.CreateGrid(locationMap.MapId);
+                    mapGrid.WorldPosition = locationMap.Position;
+                    location = new EntityCoordinates(mapGrid.GridEntityId, Vector2.Zero);
+                    PlaceAt(mapGrid, location, _tileDefinitionManager[_outputTiles[0]].TileId, mapGrid.TileSize / 2f);
+                    break;
+                }
+            }
+
+            return true;
+        }
     }
 }

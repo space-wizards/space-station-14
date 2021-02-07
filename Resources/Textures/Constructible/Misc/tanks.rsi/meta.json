@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "watertank",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "fueltank",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    }
+  ]
+}

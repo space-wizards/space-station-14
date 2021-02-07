@@ -1,0 +1,46 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/discordia-space/CEV-Eris/commit/e107a20eb3e8def075a7d967dbf91426accabcbe",
+    "states": [
+        {
+            "name": "normal-unshaded"
+        },
+        {
+            "name": "broken"
+        },
+        {
+            "name": "deny-unshaded",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "off"
+        },
+        {
+            "name": "panel"
+        },
+        {
+            "name": "eject-unshaded",
+            "delays": [
+                [
+                    0.1,
+                    0.4,
+                    0.1
+                ]
+            ]
+        }
+    ]
+}

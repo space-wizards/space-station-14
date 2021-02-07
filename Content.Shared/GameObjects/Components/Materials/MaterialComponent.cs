@@ -28,7 +28,7 @@ namespace Content.Shared.GameObjects.Components.Materials
             base.ExposeData(serializer);
 
             // TODO: Writing.
-            if (!serializer.Reading)
+            if (serializer.Writing)
             {
                 return;
             }
@@ -61,7 +61,7 @@ namespace Content.Shared.GameObjects.Components.Materials
 
             public void ExposeData(ObjectSerializer serializer)
             {
-                if (!serializer.Reading)
+                if (serializer.Writing)
                 {
                     return;
                 }

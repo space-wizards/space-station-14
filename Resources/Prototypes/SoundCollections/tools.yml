@@ -1,22 +1,22 @@
 - type: soundCollection
   id: WelderOn
   files:
-    - /Audio/items/lighter1.ogg
-    - /Audio/items/lighter2.ogg
+    - /Audio/Items/lighter1.ogg
+    - /Audio/Items/lighter2.ogg
 
 - type: soundCollection
   id: WelderOff
   files:
-    - /Audio/effects/zzzt.ogg
+    - /Audio/Effects/zzzt.ogg
 
 - type: soundCollection
   id: Welder
   files:
-    - /Audio/items/welder.ogg
-    - /Audio/items/welder2.ogg
+    - /Audio/Items/welder.ogg
+    - /Audio/Items/welder2.ogg
 
 - type: soundCollection
   id: Screwdriver
   files:
-    - /Audio/items/screwdriver.ogg
-    - /Audio/items/screwdriver2.ogg
+    - /Audio/Items/screwdriver.ogg
+    - /Audio/Items/screwdriver2.ogg

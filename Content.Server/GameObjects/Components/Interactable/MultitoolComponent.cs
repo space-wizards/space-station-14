@@ -1,14 +1,12 @@
-using System.Collections.Generic;
-using Content.Server.GameObjects.EntitySystems;
+﻿using System.Collections.Generic;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Interactable;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
-using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Interactable
@@ -38,7 +36,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             public void ExposeData(ObjectSerializer serializer)
             {
-                serializer.DataField(this, x => Behavior, "behavior", ToolQuality.None);
+                serializer.DataField(this, x => x.Behavior, "behavior", ToolQuality.None);
                 serializer.DataField(ref _state, "state", string.Empty);
                 serializer.DataField(ref _sprite, "sprite", string.Empty);
                 serializer.DataField(ref _texture, "texture", string.Empty);

@@ -1,0 +1,145 @@
+{
+    "version": 1,
+    "size": {
+        "x": 8,
+        "y": 8
+    },
+    "states": [
+        {
+            "name": "Detective",
+
+        },
+        {
+            "name": "QuarterMaster",
+
+        },
+        {
+            "name": "Botanist",
+
+        },
+        {
+            "name": "AtmosphericTechnician",
+
+        },
+        {
+            "name": "Nanotrasen",
+
+        },
+        {
+            "name": "Prisoner",
+
+        },
+        {
+            "name": "Janitor",
+
+        },
+        {
+            "name": "Chemist",
+
+        },
+        {
+            "name": "StationEngineer",
+
+        },
+        {
+            "name": "SecurityOfficer",
+
+        },
+        {
+            "name": "NoId",
+
+        },
+        {
+            "name": "ChiefMedicalOfficer",
+
+        },
+        {
+            "name": "Roboticist",
+
+        },
+        {
+            "name": "Chaplain",
+
+        },
+        {
+            "name": "Lawyer",
+
+        },
+        {
+            "name": "Unknown",
+
+        },
+        {
+            "name": "Librarian",
+
+        },
+        {
+            "name": "CargoTechnician",
+
+        },
+        {
+            "name": "Scientist",
+
+        },
+        {
+            "name": "Geneticist",
+
+        },
+        {
+            "name": "Clown",
+
+        },
+        {
+            "name": "Captain",
+
+        },
+        {
+            "name": "HeadOfPersonnel",
+
+        },
+        {
+            "name": "Virologist",
+
+        },
+        {
+            "name": "ShaftMiner",
+
+        },
+        {
+            "name": "Assistant",
+
+        },
+        {
+            "name": "ChiefEngineer",
+
+        },
+        {
+            "name": "Bartender",
+
+        },
+        {
+            "name": "HeadOfSecurity",
+
+        },
+        {
+            "name": "MedicalDoctor",
+
+        },
+        {
+            "name": "Chef",
+
+        },
+        {
+            "name": "Warden",
+
+        },
+        {
+            "name": "ResearchDirector",
+
+        },
+        {
+            "name": "Mime",
+
+        }
+    ]
+}

@@ -5,7 +5,7 @@ using Content.Shared.Input;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
@@ -14,12 +14,10 @@ namespace Content.Client.State
 {
     public class GameScreen : GameScreenBase
     {
-#pragma warning disable 649
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
-        [Dependency] private readonly IGameHud _gameHud;
-        [Dependency] private readonly IInputManager _inputManager;
-        [Dependency] private readonly IChatManager _chatManager;
-#pragma warning restore 649
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+        [Dependency] private readonly IGameHud _gameHud = default!;
+        [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IChatManager _chatManager = default!;
 
         [ViewVariables] private ChatBox _gameChat;
 
@@ -28,6 +26,7 @@ namespace Content.Client.State
             base.Startup();
 
             _gameChat = new ChatBox();
+
             _userInterfaceManager.StateRoot.AddChild(_gameChat);
             LayoutContainer.SetAnchorAndMarginPreset(_gameChat, LayoutContainer.LayoutPreset.TopRight, margin: 10);
             LayoutContainer.SetAnchorAndMarginPreset(_gameChat, LayoutContainer.LayoutPreset.TopRight, margin: 10);
@@ -41,6 +40,12 @@ namespace Content.Client.State
 
             _inputManager.SetInputCommand(ContentKeyFunctions.FocusChat,
                 InputCmdHandler.FromDelegate(s => FocusChat(_gameChat)));
+
+            _inputManager.SetInputCommand(ContentKeyFunctions.FocusOOC,
+                InputCmdHandler.FromDelegate(s => FocusOOC(_gameChat)));
+
+            _inputManager.SetInputCommand(ContentKeyFunctions.FocusAdminChat,
+                InputCmdHandler.FromDelegate(s => FocusAdminChat(_gameChat)));
         }
 
         public override void Shutdown()
@@ -60,6 +65,29 @@ namespace Content.Client.State
 
             chat.Input.IgnoreNext = true;
             chat.Input.GrabKeyboardFocus();
+        }
+        internal static void FocusOOC(ChatBox chat)
+        {
+            if (chat == null || chat.UserInterfaceManager.KeyboardFocused != null)
+            {
+                return;
+            }
+
+            chat.Input.IgnoreNext = true;
+            chat.Input.GrabKeyboardFocus();
+            chat.Input.InsertAtCursor("[");
+        }
+
+        internal static void FocusAdminChat(ChatBox chat)
+        {
+            if (chat == null || chat.UserInterfaceManager.KeyboardFocused != null)
+            {
+                return;
+            }
+
+            chat.Input.IgnoreNext = true;
+            chat.Input.GrabKeyboardFocus();
+            chat.Input.InsertAtCursor("]");
         }
     }
 }

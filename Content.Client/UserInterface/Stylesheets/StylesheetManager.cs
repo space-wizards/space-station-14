@@ -7,10 +7,8 @@ namespace Content.Client.UserInterface.Stylesheets
 {
     public sealed class StylesheetManager : IStylesheetManager
     {
-#pragma warning disable 649
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
-        [Dependency] private readonly IResourceCache _resourceCache;
-#pragma warning restore 649
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
 
         public Stylesheet SheetNano { get; private set; }
         public Stylesheet SheetSpace { get; private set; }

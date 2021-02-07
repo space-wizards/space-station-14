@@ -11,10 +11,7 @@ namespace Content.Client.GameObjects.Components.Research
     [ComponentReference(typeof(SharedLatheDatabaseComponent))]
     public class ProtolatheDatabaseComponent : SharedProtolatheDatabaseComponent
     {
-#pragma warning disable CS0649
-        [Dependency]
-        private IPrototypeManager _prototypeManager;
-#pragma warning restore
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         /// <summary>
         ///     Invoked when the database gets updated.
@@ -24,7 +21,7 @@ namespace Content.Client.GameObjects.Components.Research
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
             base.HandleComponentState(curState, nextState);
-            if (!(curState is ProtolatheDatabaseState state)) return;
+            if (curState is not ProtolatheDatabaseState state) return;
             Clear();
             foreach (var ID in state.Recipes)
             {

@@ -1,7 +1,8 @@
-using Content.Shared.GameObjects.Components.Research;
+﻿using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Research;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Research
 {
@@ -12,6 +13,7 @@ namespace Content.Server.GameObjects.Components.Research
         /// <summary>
         ///     Whether new recipes can be added to this database or not.
         /// </summary>
+        [ViewVariables]
         public bool Static => _static;
         private bool _static = false;
 

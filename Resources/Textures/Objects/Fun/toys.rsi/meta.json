@@ -1,0 +1,696 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CCBYSA3",
+  "copyright": "https://github.com/tgstation/tgstation",
+  "states": [
+    {
+      "name": "carpplush",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "narplush",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "plushie_h",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "plushie_lizard",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "plushie_nuke",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "plushie_slime",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "plushie_snake",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "doll",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "carpplush-inhand-left",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "carpplush-inhand-right",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "doll-inhand-left",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "doll-inhand-right",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "AI",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "base",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "bolt-closed",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "bolt-open",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "deathripleytoy",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "durandprize",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "fireripleytoy",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "foamblade",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "foamcrossbow",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "foamdart",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "griffinprize",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "foambox",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "gygaxtoy",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "honkprize",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "ian",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "marauderprize",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "maulerprize",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "nuketoy",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "odysseusprize",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "owlprize",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "phazonprize",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "reticenceprize",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "ripleytoy",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "seraphprize",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "skeletonprize",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "snappop",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "spbox",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "toy_mouse",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "capbullet",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "foamcrossbow-inhand-right",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "foamcrossbow-inhand-left",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "capgun-inhand-right",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "capgun-inhand-right",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "foamblade-inhand-right",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "foamblade-inhand-left",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "corgib-inhand-right",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "corgib-inhand-left",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "synb-inhand-left",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "synb-inhand-right",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "synb",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "corgib",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "football",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "footb-inhand-right",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "footb-inhand-left",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "basketball",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "bask-inhand-right",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "bask-inhand-left",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    }
+  ]
+}

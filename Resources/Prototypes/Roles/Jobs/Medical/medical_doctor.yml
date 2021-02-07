@@ -1,0 +1,26 @@
+- type: job
+  id: MedicalDoctor
+  name: "medical doctor"
+  positions: 3
+  spawnPositions: 2
+  startingGear: DoctorGear
+  departments:
+  - Medical
+  icon: "MedicalDoctor"
+  access:
+  - Medical
+  - Maintenance
+
+- type: startingGear
+  id: DoctorGear
+  equipment:
+    innerclothing: ClothingUniformJumpsuitMedicalDoctor
+    backpack: ClothingBackpackMedicalFilled
+    shoes: ClothingShoesColorWhite
+    outerclothing: ClothingOuterCoatLab
+    idcard: MedicalPDA
+    ears: ClothingHeadsetMedical
+    belt: ClothingBeltMedical
+  innerclothingskirt: ClothingUniformJumpskirtMedicalDoctor
+  satchel: ClothingBackpackSatchelMedicalFilled
+  duffelbag: ClothingBackpackDuffelMedicalFilled

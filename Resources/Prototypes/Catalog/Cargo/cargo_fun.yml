@@ -1,0 +1,35 @@
+- type: cargoProduct
+  name: "big band instrument collection"
+  id: cargo.funinstruments
+  description: "Get your sad station movin' and groovin' with this fine collection! Contains thirteen different instruments"
+  icon:
+    sprite: Objects/Fun/Instruments/accordion.rsi
+    state: icon
+  product: CrateFunInstruments
+  cost: 5000
+  category: Fun
+  group: market
+
+- type: cargoProduct
+  name: "art supplies"
+  id: cargo.funartsupplies
+  description: "Make some happy little accidents with lots of crayons!"
+  icon:
+    sprite: Objects/Misc/crayons.rsi
+    state: crayonbox
+  product: CrateFunArtSupplies
+  cost: 1000
+  category: Fun
+  group: market
+
+- type: cargoProduct
+  name: "plushie crate"
+  id: cargo.funplushies
+  description: "A buncha soft plushies. Throw them around and then wonder how you're gonna explain this purchase to NT"
+  icon:
+    sprite: Objects/Fun/toys.rsi
+    state: plushie_h
+  product: CrateFunPlushie
+  cost: 5000
+  category: Fun
+  group: market

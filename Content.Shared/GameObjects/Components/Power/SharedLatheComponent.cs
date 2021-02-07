@@ -10,6 +10,7 @@ namespace Content.Shared.GameObjects.Components.Power
         Producing,
         InsertingMetal,
         InsertingGlass,
-        InsertingGold
+        InsertingGold,
+        InsertingPhoron
     }
 }

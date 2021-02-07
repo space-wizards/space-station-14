@@ -9,7 +9,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 
 namespace Content.Client.GameObjects.Components.Actor
@@ -21,12 +20,9 @@ namespace Content.Client.GameObjects.Components.Actor
     [RegisterComponent]
     public class CharacterInterface : Component
     {
-        public override string Name => "Character Interface Component";
+        [Dependency] private readonly IGameHud _gameHud = default!;
 
-        [Dependency]
-#pragma warning disable 649
-        private readonly IGameHud _gameHud;
-#pragma warning restore 649
+        public override string Name => "Character Interface Component";
 
         /// <summary>
         ///     Window to hold each of the character interfaces
@@ -120,6 +116,7 @@ namespace Content.Client.GameObjects.Components.Actor
         public class CharacterWindow : SS14Window
         {
             private readonly VBoxContainer _contentsVBox;
+            private readonly List<ICharacterUI> _windowComponents;
 
             public CharacterWindow(List<ICharacterUI> windowComponents)
             {
@@ -132,6 +129,17 @@ namespace Content.Client.GameObjects.Components.Actor
                 foreach (var element in windowComponents)
                 {
                     _contentsVBox.AddChild(element.Scene);
+                }
+
+                _windowComponents = windowComponents;
+            }
+
+            protected override void Opened()
+            {
+                base.Opened();
+                foreach (var windowComponent in _windowComponents)
+                {
+                    windowComponent.Opened();
                 }
             }
         }

@@ -1,9 +1,14 @@
 - type: shader
   id: CircleMask
   kind: source
-  path: "/Shaders/circle_mask.swsl"
+  path: "/Textures/Shaders/circle_mask.swsl"
 
 - type: shader
   id: GradientCircleMask
   kind: source
-  path: "/Shaders/gradient_circle_mask.swsl"
+  path: "/Textures/Shaders/gradient_circle_mask.swsl"
+
+- type: shader
+  id: FlashedEffect
+  kind: source
+  path: "/Textures/Shaders/flashed_effect.swsl"

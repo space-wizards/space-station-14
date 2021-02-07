@@ -46,7 +46,7 @@ namespace Content.Client.UserInterface
             //Get section header font
             var cache = IoCManager.Resolve<IResourceCache>();
             var inputManager = IoCManager.Resolve<IInputManager>();
-            Font headerFont = new VectorFont(cache.GetResource<FontResource>("/Nano/NotoSans/NotoSans-Regular.ttf"), _headerFontSize);
+            Font headerFont = new VectorFont(cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), _headerFontSize);
 
             var scrollContainer = new ScrollContainer();
             scrollContainer.AddChild(VBox = new VBoxContainer());
@@ -74,12 +74,19 @@ Smart equip from belt: [color=#a4885c]{25}[/color]
 Open inventory: [color=#a4885c]{7}[/color]
 Open character window: [color=#a4885c]{8}[/color]
 Open crafting window: [color=#a4885c]{9}[/color]
+Open action menu: [color=#a4885c]{33}[/color]
 Focus chat: [color=#a4885c]{10}[/color]
+Focus OOC: [color=#a4885c]{26}[/color]
+Focus Admin Chat: [color=#a4885c]{27}[/color]
 Use hand/object in hand: [color=#a4885c]{22}[/color]
 Do wide attack: [color=#a4885c]{23}[/color]
 Use targeted entity: [color=#a4885c]{11}[/color]
 Throw held item: [color=#a4885c]{12}[/color]
+Pull entity: [color=#a4885c]{30}[/color]
+Move pulled entity: [color=#a4885c]{29}[/color]
+Stop pulling: [color=#a4885c]{32}[/color]
 Examine entity: [color=#a4885c]{13}[/color]
+Point somewhere: [color=#a4885c]{28}[/color]
 Open entity context menu: [color=#a4885c]{14}[/color]
 Toggle combat mode: [color=#a4885c]{15}[/color]
 Toggle console: [color=#a4885c]{16}[/color]
@@ -87,7 +94,28 @@ Toggle UI: [color=#a4885c]{17}[/color]
 Toggle debug overlay: [color=#a4885c]{18}[/color]
 Toggle entity spawner: [color=#a4885c]{19}[/color]
 Toggle tile spawner: [color=#a4885c]{20}[/color]
-Toggle sandbox window: [color=#a4885c]{21}[/color]",
+Toggle sandbox window: [color=#a4885c]{21}[/color]
+Toggle admin menu [color=#a4885c]{31}[/color]
+Hotbar slot 1: [color=#a4885c]{34}[/color]
+Hotbar slot 2: [color=#a4885c]{35}[/color]
+Hotbar slot 3: [color=#a4885c]{36}[/color]
+Hotbar slot 4: [color=#a4885c]{37}[/color]
+Hotbar slot 5: [color=#a4885c]{38}[/color]
+Hotbar slot 6: [color=#a4885c]{39}[/color]
+Hotbar slot 7: [color=#a4885c]{40}[/color]
+Hotbar slot 8: [color=#a4885c]{41}[/color]
+Hotbar slot 9: [color=#a4885c]{42}[/color]
+Hotbar slot 0: [color=#a4885c]{43}[/color]
+Hotbar Loadout 1: [color=#a4885c]{44}[/color]
+Hotbar Loadout 2: [color=#a4885c]{45}[/color]
+Hotbar Loadout 3: [color=#a4885c]{46}[/color]
+Hotbar Loadout 4: [color=#a4885c]{47}[/color]
+Hotbar Loadout 5: [color=#a4885c]{48}[/color]
+Hotbar Loadout 6: [color=#a4885c]{49}[/color]
+Hotbar Loadout 7: [color=#a4885c]{50}[/color]
+Hotbar Loadout 8: [color=#a4885c]{51}[/color]
+Hotbar Loadout 9: [color=#a4885c]{52}[/color]
+                ",
                 Key(MoveUp), Key(MoveLeft), Key(MoveDown), Key(MoveRight),
                 Key(SwapHands),
                 Key(ActivateItemInHand),
@@ -110,7 +138,34 @@ Toggle sandbox window: [color=#a4885c]{21}[/color]",
                 Key(Use),
                 Key(WideAttack),
                 Key(SmartEquipBackpack),
-                Key(SmartEquipBelt)));
+                Key(SmartEquipBelt),
+                Key(FocusOOC),
+                Key(FocusAdminChat),
+                Key(Point),
+                Key(TryPullObject),
+                Key(MovePulledObject),
+                Key(OpenAdminMenu),
+                Key(ReleasePulledObject),
+                Key(OpenActionsMenu),
+                Key(Hotbar1),
+                Key(Hotbar2),
+                Key(Hotbar3),
+                Key(Hotbar4),
+                Key(Hotbar5),
+                Key(Hotbar6),
+                Key(Hotbar7),
+                Key(Hotbar8),
+                Key(Hotbar9),
+                Key(Hotbar0),
+                Key(Loadout1),
+                Key(Loadout2),
+                Key(Loadout3),
+                Key(Loadout4),
+                Key(Loadout5),
+                Key(Loadout6),
+                Key(Loadout7),
+                Key(Loadout8),
+                Key(Loadout9)));
 
             //Gameplay
             VBox.AddChild(new Label { FontOverride = headerFont, Text = "\nGameplay" });

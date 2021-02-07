@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Movement;
-using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.Components.Mobs;
-using JetBrains.Annotations;
+using Content.Shared.Alert;
+using Content.Shared.Damage;
+using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Mobs.State;
+using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.GameObjects.Components.Nutrition;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -15,29 +17,45 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Nutrition
 {
     [RegisterComponent]
-    public sealed class HungerComponent : Component, IMoveSpeedModifier
+    public sealed class HungerComponent : SharedHungerComponent
     {
-#pragma warning disable 649
-        [Dependency] private readonly IRobustRandom _random;
-#pragma warning restore 649
-
-        public override string Name => "Hunger";
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         // Base stuff
-        public float BaseDecayRate => _baseDecayRate;
-        [ViewVariables] private float _baseDecayRate;
-        public float ActualDecayRate => _actualDecayRate;
-        [ViewVariables] private float _actualDecayRate;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float BaseDecayRate
+        {
+            get => _baseDecayRate;
+            set => _baseDecayRate = value;
+        }
+        private float _baseDecayRate;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float ActualDecayRate
+        {
+            get => _actualDecayRate;
+            set => _actualDecayRate = value;
+        }
+        private float _actualDecayRate;
 
         // Hunger
-        public HungerThreshold CurrentHungerThreshold => _currentHungerThreshold;
+        [ViewVariables(VVAccess.ReadOnly)]
+        public override HungerThreshold CurrentHungerThreshold => _currentHungerThreshold;
         private HungerThreshold _currentHungerThreshold;
-        private HungerThreshold _lastHungerThreshold;
-        public float CurrentHunger => _currentHunger;
-        [ViewVariables(VVAccess.ReadWrite)] private float _currentHunger;
 
+        private HungerThreshold _lastHungerThreshold;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float CurrentHunger
+        {
+            get => _currentHunger;
+            set => _currentHunger = value;
+        }
+        private float _currentHunger;
+
+        [ViewVariables(VVAccess.ReadOnly)]
         public Dictionary<HungerThreshold, float> HungerThresholds => _hungerThresholds;
-        private Dictionary<HungerThreshold, float> _hungerThresholds = new Dictionary<HungerThreshold, float>
+        private readonly Dictionary<HungerThreshold, float> _hungerThresholds = new()
         {
             {HungerThreshold.Overfed, 600.0f},
             {HungerThreshold.Okay, 450.0f},
@@ -52,23 +70,18 @@ namespace Content.Server.GameObjects.Components.Nutrition
             serializer.DataField(ref _baseDecayRate, "base_decay_rate", 0.1f);
         }
 
-        // for shared string dict, since we don't define these anywhere in content
-        [UsedImplicitly]
-        public static readonly string[] _hungerThresholdImages =
+
+        public static readonly Dictionary<HungerThreshold, AlertType> HungerThresholdAlertTypes = new()
         {
-            "/Textures/Mob/UI/Hunger/Overfed.png",
-            "/Textures/Mob/UI/Hunger/Okay.png",
-            "/Textures/Mob/UI/Hunger/Peckish.png",
-            "/Textures/Mob/UI/Hunger/Starving.png",
-            "/Textures/Mob/UI/Hunger/Dead.png",
+            { HungerThreshold.Overfed, AlertType.Overfed },
+            { HungerThreshold.Peckish, AlertType.Peckish },
+            { HungerThreshold.Starving, AlertType.Starving },
         };
 
         public void HungerThresholdEffect(bool force = false)
         {
             if (_currentHungerThreshold != _lastHungerThreshold || force)
             {
-                Logger.InfoS("hunger", $"Updating hunger state for {Owner.Name}");
-
                 // Revert slow speed if required
                 if (_lastHungerThreshold == HungerThreshold.Starving && _currentHungerThreshold != HungerThreshold.Dead &&
                     Owner.TryGetComponent(out MovementSpeedModifierComponent movementSlowdownComponent))
@@ -77,8 +90,17 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 }
 
                 // Update UI
-                Owner.TryGetComponent(out ServerStatusEffectsComponent statusEffectsComponent);
-                statusEffectsComponent?.ChangeStatusEffectIcon(StatusEffect.Hunger, _hungerThresholdImages[ (int)_currentHungerThreshold ]);
+                Owner.TryGetComponent(out ServerAlertsComponent alertsComponent);
+
+                if (HungerThresholdAlertTypes.TryGetValue(_currentHungerThreshold, out var alertId))
+                {
+                    alertsComponent?.ShowAlert(alertId);
+                }
+                else
+                {
+                    alertsComponent?.ClearAlertCategory(AlertCategory.Hunger);
+                }
+
                 switch (_currentHungerThreshold)
                 {
                     case HungerThreshold.Overfed:
@@ -127,6 +149,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             _currentHungerThreshold = GetHungerThreshold(_currentHunger);
             _lastHungerThreshold = HungerThreshold.Okay; // TODO: Potentially change this -> Used Okay because no effects.
             HungerThresholdEffect(true);
+            Dirty();
         }
 
         public HungerThreshold GetHungerThreshold(float food)
@@ -155,60 +178,44 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public void OnUpdate(float frametime)
         {
             _currentHunger -= frametime * ActualDecayRate;
+            UpdateCurrentThreshold();
+
+            if (_currentHungerThreshold != HungerThreshold.Dead)
+                return;
+
+            if (!Owner.TryGetComponent(out IDamageableComponent damageable))
+                return;
+
+            if (!Owner.TryGetComponent(out IMobStateComponent mobState))
+                return;
+
+            if (!mobState.IsDead())
+            {
+                damageable.ChangeDamage(DamageType.Blunt, 2, true);
+            }
+        }
+
+        private void UpdateCurrentThreshold()
+        {
             var calculatedHungerThreshold = GetHungerThreshold(_currentHunger);
             // _trySound(calculatedThreshold);
             if (calculatedHungerThreshold != _currentHungerThreshold)
             {
                 _currentHungerThreshold = calculatedHungerThreshold;
                 HungerThresholdEffect();
-            }
-            if (_currentHungerThreshold == HungerThreshold.Dead)
-            {
-                // TODO: Remove from dead people
-                if (Owner.TryGetComponent(out DamageableComponent damage))
-                {
-                    damage.TakeDamage(DamageType.Brute, 2);
-                    return;
-                }
-                return;
+                Dirty();
             }
         }
 
         public void ResetFood()
         {
             _currentHunger = HungerThresholds[HungerThreshold.Okay];
+            UpdateCurrentThreshold();
         }
 
-        float IMoveSpeedModifier.WalkSpeedModifier
+        public override ComponentState GetComponentState()
         {
-            get
-            {
-                if (_currentHungerThreshold == HungerThreshold.Starving)
-                {
-                    return 0.5f;
-                }
-                return 1.0f;
-            }
+            return new HungerComponentState(_currentHungerThreshold);
         }
-        float IMoveSpeedModifier.SprintSpeedModifier
-        {
-            get
-            {
-                if (_currentHungerThreshold == HungerThreshold.Starving)
-                {
-                    return 0.5f;
-                }
-                return 1.0f;
-            }
-        }
-    }
-
-    public enum HungerThreshold
-    {
-        Overfed,
-        Okay,
-        Peckish,
-        Starving,
-        Dead,
     }
 }

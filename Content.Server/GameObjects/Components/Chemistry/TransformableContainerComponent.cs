@@ -1,5 +1,6 @@
-﻿using Content.Server.GameObjects.EntitySystems;
+#nullable enable
 using Content.Shared.Chemistry;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -11,28 +12,27 @@ namespace Content.Server.GameObjects.Components.Chemistry
     [RegisterComponent]
     public class TransformableContainerComponent : Component, ISolutionChange
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override string Name => "TransformableContainer";
 
-        private bool _transformed = false;
-        public bool Transformed { get => _transformed; }
+        private SpriteSpecifier? _initialSprite;
+        private string _initialName = default!;
+        private string _initialDescription = default!;
+        private ReagentPrototype? _currentReagent;
 
-        private SpriteSpecifier _initialSprite;
-        private string _initialName;
-        private string _initialDescription;
-        private SpriteComponent _sprite;
-
-        private ReagentPrototype _currentReagent;
+        public bool Transformed { get; private set; }
 
         public override void Initialize()
         {
             base.Initialize();
 
-            _sprite = Owner.GetComponent<SpriteComponent>();
-            _initialSprite = new SpriteSpecifier.Rsi(new ResourcePath(_sprite.BaseRSIPath), "icon");
+            if (Owner.TryGetComponent(out SpriteComponent? sprite) &&
+                sprite.BaseRSIPath != null)
+            {
+                _initialSprite = new SpriteSpecifier.Rsi(new ResourcePath(sprite.BaseRSIPath), "icon");
+            }
+
             _initialName = Owner.Name;
             _initialDescription = Owner.Description;
         }
@@ -40,21 +40,30 @@ namespace Content.Server.GameObjects.Components.Chemistry
         protected override void Startup()
         {
             base.Startup();
-            Owner.GetComponent<SolutionComponent>().Capabilities |= SolutionCaps.FitsInDispenser;;
+
+            Owner.EnsureComponentWarn(out SolutionContainerComponent solution);
+
+            solution.Capabilities |= SolutionContainerCaps.FitsInDispenser;
         }
 
         public void CancelTransformation()
         {
             _currentReagent = null;
-            _transformed = false;
-            _sprite.LayerSetSprite(0, _initialSprite);
+            Transformed = false;
+
+            if (Owner.TryGetComponent(out SpriteComponent? sprite) &&
+                _initialSprite != null)
+            {
+                sprite.LayerSetSprite(0, _initialSprite);
+            }
+
             Owner.Name = _initialName;
             Owner.Description = _initialDescription;
         }
 
         void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs)
         {
-            var solution = eventArgs.Owner.GetComponent<SolutionComponent>();
+            var solution = eventArgs.Owner.GetComponent<SolutionContainerComponent>();
             //Transform container into initial state when emptied
             if (_currentReagent != null && solution.ReagentList.Count == 0)
             {
@@ -62,7 +71,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             //the biggest reagent in the solution decides the appearance
-            var reagentId = solution.GetMajorReagentId();
+            var reagentId = solution.Solution.GetPrimaryReagentId();
 
             //If biggest reagent didn't changed - don't change anything at all
             if (_currentReagent != null && _currentReagent.ID == reagentId)
@@ -75,12 +84,17 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 _prototypeManager.TryIndex(reagentId, out ReagentPrototype proto) &&
                 !string.IsNullOrWhiteSpace(proto.SpriteReplacementPath))
             {
-                var spriteSpec = new SpriteSpecifier.Rsi(new ResourcePath("Objects/Drinks/" + proto.SpriteReplacementPath),"icon");
-                _sprite.LayerSetSprite(0, spriteSpec);
+                var spriteSpec = new SpriteSpecifier.Rsi(new ResourcePath("Objects/Consumable/Drinks/" + proto.SpriteReplacementPath),"icon");
+
+                if (Owner.TryGetComponent(out SpriteComponent? sprite))
+                {
+                    sprite?.LayerSetSprite(0, spriteSpec);
+                }
+
                 Owner.Name = proto.Name + " glass";
                 Owner.Description = proto.Description;
                 _currentReagent = proto;
-                _transformed = true;
+                Transformed = true;
             }
         }
     }

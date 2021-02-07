@@ -1,0 +1,27 @@
+- type: entity
+  id: BulletDonkSoftBase
+  name: foam dart
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Projectile
+    damages:
+      Blunt: 1
+
+- type: entity
+  id: BulletDonkSoft
+  name: foam dart
+  parent: BulletDonkSoftBase
+  description:
+  components:
+  - type: Ammo
+    caliber: Rocket
+    projectile: BulletFoam
+    caseless: true
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Fun/toys.rsi
+    state: foamdart
+  - type: Projectile
+    damages:
+      Blunt: 1

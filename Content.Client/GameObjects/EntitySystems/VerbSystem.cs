@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using Content.Client.State;
 using Content.Client.UserInterface;
 using Content.Client.Utility;
-using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.EntitySystemMessages;
+using Content.Shared.GameObjects.Verbs;
+using Content.Shared.GameTicking;
 using Content.Shared.Input;
 using JetBrains.Annotations;
+using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
@@ -21,8 +24,8 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
@@ -37,17 +40,14 @@ using Timer = Robust.Shared.Timers.Timer;
 namespace Content.Client.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    public sealed class VerbSystem : EntitySystem
+    public sealed class VerbSystem : SharedVerbSystem, IResettingEntitySystem
     {
-#pragma warning disable 649
-        [Dependency] private readonly IStateManager _stateManager;
-        [Dependency] private readonly IEntityManager _entityManager;
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly IInputManager _inputManager;
-        [Dependency] private readonly IItemSlotManager _itemSlotManager;
-        [Dependency] private readonly IGameTiming _gameTiming;
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
-#pragma warning restore 649
+        [Dependency] private readonly IStateManager _stateManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
 
         private EntityList _currentEntityList;
         private VerbPopup _currentVerbListRoot;
@@ -57,12 +57,14 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private bool IsAnyContextMenuOpen => _currentEntityList != null || _currentVerbListRoot != null;
 
+        private bool _playerCanSeeThroughContainers;
 
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeNetworkEvent<VerbSystemMessages.VerbsResponseMessage>(FillEntityPopup);
+            SubscribeNetworkEvent<PlayerContainerVisibilityMessage>(HandleContainerVisibilityMessage);
 
             IoCManager.InjectDependencies(this);
 
@@ -78,6 +80,16 @@ namespace Content.Client.GameObjects.EntitySystems
             base.Shutdown();
         }
 
+        public void Reset()
+        {
+            _playerCanSeeThroughContainers = false;
+        }
+
+        private void HandleContainerVisibilityMessage(PlayerContainerVisibilityMessage ev)
+        {
+            _playerCanSeeThroughContainers = ev.CanSeeThrough;
+        }
+
         public void OpenContextMenu(IEntity entity, ScreenCoordinates screenCoordinates)
         {
             if (_currentVerbListRoot != null)
@@ -90,11 +102,36 @@ namespace Content.Client.GameObjects.EntitySystems
             _userInterfaceManager.ModalRoot.AddChild(_currentVerbListRoot);
             _currentVerbListRoot.OnPopupHide += CloseVerbMenu;
 
-            _currentVerbListRoot.List.AddChild(new Label {Text = "Waiting on Server..."});
-            RaiseNetworkEvent(new VerbSystemMessages.RequestVerbsMessage(_currentEntity));
+            if (!entity.Uid.IsClientSide())
+            {
+                _currentVerbListRoot.List.AddChild(new Label {Text = "Waiting on Server..."});
+                RaiseNetworkEvent(new VerbSystemMessages.RequestVerbsMessage(_currentEntity));
+            }
 
             var box = UIBox2.FromDimensions(screenCoordinates.Position, (1, 1));
             _currentVerbListRoot.Open(box);
+        }
+
+        public bool CanSeeOnContextMenu(IEntity entity)
+        {
+            if (!entity.TryGetComponent(out SpriteComponent sprite) || !sprite.Visible)
+            {
+                return false;
+            }
+
+            if (entity.GetAllComponents<IShowContextMenu>().Any(s => !s.ShowContextMenu(entity)))
+            {
+                return false;
+            }
+
+            if (!_playerCanSeeThroughContainers &&
+                entity.TryGetContainer(out var container) &&
+                !container.ShowContents)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private bool OnOpenContextMenu(in PointerInputCmdHandler.PointerInputCmdArgs args)
@@ -105,23 +142,30 @@ namespace Content.Client.GameObjects.EntitySystems
                 return true;
             }
 
-            if (!(_stateManager.CurrentState is GameScreenBase gameScreen))
+            if (_stateManager.CurrentState is not GameScreenBase)
             {
                 return false;
             }
 
-            var entities = gameScreen.GetEntitiesUnderPosition(args.Coordinates);
+            var mapCoordinates = args.Coordinates.ToMap(EntityManager);
+            var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
 
-            if (entities.Count == 0)
+            if (playerEntity == null || !TryGetContextEntities(playerEntity, mapCoordinates, out var entities))
             {
                 return false;
             }
 
             _currentEntityList = new EntityList();
             _currentEntityList.OnPopupHide += CloseAllMenus;
-            for (var i = 0; i < entities.Count; i++)
+            var first = true;
+            foreach (var entity in entities)
             {
-                if (i != 0)
+                if (!CanSeeOnContextMenu(entity))
+                {
+                    continue;
+                }
+
+                if (!first)
                 {
                     _currentEntityList.List.AddChild(new PanelContainer
                     {
@@ -130,15 +174,15 @@ namespace Content.Client.GameObjects.EntitySystems
                     });
                 }
 
-                var entity = entities[i];
-
-                _currentEntityList.List.AddChild(new EntityButton(this, entity));
+                var debugEnabled = _userInterfaceManager.DebugMonitors.Visible;
+                _currentEntityList.List.AddChild(new EntityButton(this, entity, debugEnabled));
+                first = false;
             }
 
             _userInterfaceManager.ModalRoot.AddChild(_currentEntityList);
 
             var size = _currentEntityList.List.CombinedMinimumSize;
-            var box = UIBox2.FromDimensions(args.ScreenCoordinates.Position, size);
+            var box = UIBox2.FromDimensions(_userInterfaceManager.MousePositionScaled, size);
             _currentEntityList.Open(box);
 
             return true;
@@ -146,12 +190,12 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void OnContextButtonPressed(IEntity entity)
         {
-            OpenContextMenu(entity, new ScreenCoordinates(_inputManager.MouseScreenPosition));
+            OpenContextMenu(entity, new ScreenCoordinates(_userInterfaceManager.MousePositionScaled));
         }
 
         private void FillEntityPopup(VerbSystemMessages.VerbsResponseMessage msg)
         {
-            if (_currentEntity != msg.Entity || !_entityManager.TryGetEntity(_currentEntity, out var entity))
+            if (_currentEntity != msg.Entity || !EntityManager.TryGetEntity(_currentEntity, out var entity))
             {
                 return;
             }
@@ -187,8 +231,10 @@ namespace Content.Client.GameObjects.EntitySystems
             //Get verbs, component dependent.
             foreach (var (component, verb) in VerbUtility.GetVerbs(entity))
             {
-                if (verb.RequireInteractionRange && !VerbUtility.InVerbUseRange(user, entity))
+                if (!VerbUtility.VerbAccessChecks(user, entity, verb))
+                {
                     continue;
+                }
 
                 var verbData = verb.GetData(user, component);
 
@@ -209,8 +255,10 @@ namespace Content.Client.GameObjects.EntitySystems
             //Get global verbs. Visible for all entities regardless of their components.
             foreach (var globalVerb in VerbUtility.GetGlobalVerbs(Assembly.GetExecutingAssembly()))
             {
-                if (globalVerb.RequireInteractionRange && !VerbUtility.InVerbUseRange(user, entity))
+                if (!VerbUtility.VerbAccessChecks(user, entity, globalVerb))
+                {
                     continue;
+                }
 
                 var verbData = globalVerb.GetData(user, entity);
 
@@ -388,7 +436,7 @@ namespace Content.Client.GameObjects.EntitySystems
             private readonly VerbSystem _master;
             private readonly IEntity _entity;
 
-            public EntityButton(VerbSystem master, IEntity entity)
+            public EntityButton(VerbSystem master, IEntity entity, bool showUid)
             {
                 _master = master;
                 _entity = entity;
@@ -401,11 +449,16 @@ namespace Content.Client.GameObjects.EntitySystems
                     control.AddChild(new SpriteView {Sprite = sprite});
                 }
 
+                var text = entity.Name;
+                if (showUid)
+                {
+                    text = $"{text} ({entity.Uid})";
+                }
                 control.AddChild(new MarginContainer
                 {
                     MarginLeftOverride = 4,
                     MarginRightOverride = 4,
-                    Children = {new Label {Text = entity.Name}}
+                    Children = {new Label {Text = text}}
                 });
 
                 AddChild(control);
@@ -421,15 +474,25 @@ namespace Content.Client.GameObjects.EntitySystems
                     return;
                 }
 
-                if (args.Function == EngineKeyFunctions.Use)
+                if (args.Function == EngineKeyFunctions.Use ||
+                    args.Function == ContentKeyFunctions.Point ||
+                    args.Function == ContentKeyFunctions.TryPullObject ||
+                    args.Function == ContentKeyFunctions.MovePulledObject)
                 {
+                    // TODO: Remove an entity from the menu when it is deleted
+                    if (_entity.Deleted)
+                    {
+                        _master.CloseAllMenus();
+                        return;
+                    }
+
                     var inputSys = _master.EntitySystemManager.GetEntitySystem<InputSystem>();
 
                     var func = args.Function;
                     var funcId = _master._inputManager.NetworkBindMap.KeyFunctionID(args.Function);
 
-                    var message = new FullInputCmdMessage(_master._gameTiming.CurTick, funcId, BoundKeyState.Down,
-                        _entity.Transform.GridPosition,
+                    var message = new FullInputCmdMessage(_master._gameTiming.CurTick, _master._gameTiming.TickFraction, funcId, BoundKeyState.Down,
+                        _entity.Transform.Coordinates,
                         args.PointerLocation, _entity.Uid);
 
                     // client side command handlers will always be sent the local player session.
@@ -560,7 +623,7 @@ namespace Content.Client.GameObjects.EntitySystems
                         new TextureRect
                         {
                             Texture = IoCManager.Resolve<IResourceCache>()
-                                .GetTexture("/Textures/UserInterface/VerbIcons/group.svg.96dpi.png"),
+                                .GetTexture("/Textures/Interface/VerbIcons/group.svg.96dpi.png"),
                             Stretch = TextureRect.StretchMode.KeepCentered,
                         }
                     }

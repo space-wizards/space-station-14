@@ -8,11 +8,9 @@ namespace Content.Server.GameTicking.GamePresets
 {
     public sealed class PresetDeathMatch : GamePreset
     {
-#pragma warning disable 649
-        [Dependency] private readonly IGameTicker _gameTicker;
-#pragma warning restore 649
+        [Dependency] private readonly IGameTicker _gameTicker = default!;
 
-        public override bool Start(IReadOnlyList<IPlayerSession> readyPlayers)
+        public override bool Start(IReadOnlyList<IPlayerSession> readyPlayers, bool force = false)
         {
             _gameTicker.AddGameRule<RuleDeathMatch>();
             return true;

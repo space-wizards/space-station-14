@@ -1,0 +1,34 @@
+- type: job
+  id: HeadOfSecurity
+  name: "head of security"
+  head: true
+  positions: 1
+  startingGear: HoSGear
+  departments:
+  - Command
+  - Security
+  icon: "HeadOfSecurity"
+  access:
+  - Command
+  - HeadOfSecurity
+  - Brig
+  - Detective
+  - Security
+  - Maintenance
+  - Service
+
+- type: startingGear
+  id: HoSGear
+  equipment:
+    innerclothing: ClothingUniformJumpsuitHoS
+    backpack: ClothingBackpackSecurityFilled
+    shoes: ClothingShoesBootsJack
+    outerclothing: ClothingOuterCoatHoSTrench
+    eyes: ClothingEyesGlassesSecurity
+    head: ClothingHeadHatBeretHoS
+    idcard: HoSPDA
+    ears: ClothingHeadsetAltSecurity
+    belt: ClothingBeltSecurityFilled
+  innerclothingskirt: ClothingUniformJumpskirtHoS
+  satchel: ClothingBackpackSatchelSecurityFilled
+  duffelbag: ClothingBackpackDuffelSecurityFilled

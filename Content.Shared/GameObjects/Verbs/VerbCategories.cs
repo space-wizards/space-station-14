@@ -1,4 +1,4 @@
-namespace Content.Shared.GameObjects
+namespace Content.Shared.GameObjects.Verbs
 {
     /// <summary>
     ///     Standard verb categories.
@@ -6,8 +6,9 @@ namespace Content.Shared.GameObjects
     public static class VerbCategories
     {
         public static readonly VerbCategoryData Debug =
-            ("Debug", "/Textures/UserInterface/VerbIcons/debug.svg.96dpi.png");
+            ("Debug", "/Textures/Interface/VerbIcons/debug.svg.96dpi.png");
 
         public static readonly VerbCategoryData Rotate = ("Rotate", null);
+        public static readonly VerbCategoryData Construction = ("Construction", null);
     }
 }

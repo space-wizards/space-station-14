@@ -17,11 +17,11 @@ namespace Content.Client.GameObjects.Components.PDA
             switch(message)
             {
                 case PDAUplinkBuySuccessMessage _ :
-                    EntitySystem.Get<AudioSystem>().Play("/Audio/effects/kaching.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+                    EntitySystem.Get<AudioSystem>().Play("/Audio/Effects/kaching.ogg", Owner, AudioParams.Default.WithVolume(-2f));
                     break;
 
                 case PDAUplinkInsufficientFundsMessage _ :
-                    EntitySystem.Get<AudioSystem>().Play("/Audio/effects/error.ogg", Owner, AudioParams.Default);
+                    EntitySystem.Get<AudioSystem>().Play("/Audio/Effects/error.ogg", Owner, AudioParams.Default);
                     break;
 
             }

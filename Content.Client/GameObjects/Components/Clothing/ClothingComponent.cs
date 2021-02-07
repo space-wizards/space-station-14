@@ -1,8 +1,13 @@
-﻿using Content.Shared.GameObjects;
+﻿#nullable enable
+using Content.Client.GameObjects.Components.HUD.Inventory;
+using Content.Client.GameObjects.Components.Items;
+using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.Items;
 using Robust.Client.Graphics;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -10,14 +15,36 @@ namespace Content.Client.GameObjects.Components.Clothing
 {
     [RegisterComponent]
     [ComponentReference(typeof(ItemComponent))]
+    [ComponentReference(typeof(IItemComponent))]
     public class ClothingComponent : ItemComponent
     {
         private FemaleClothingMask _femaleMask;
         public override string Name => "Clothing";
         public override uint? NetID => ContentNetIDs.CLOTHING;
 
+        private string? _clothingEquippedPrefix;
+
         [ViewVariables(VVAccess.ReadWrite)]
-        public string ClothingEquippedPrefix { get; set; }
+        public string? ClothingEquippedPrefix
+        {
+            get => _clothingEquippedPrefix;
+            set
+            {
+                if (_clothingEquippedPrefix == value)
+                    return;
+
+                _clothingEquippedPrefix = value;
+
+                if (!Owner.TryGetContainer(out IContainer? container))
+                    return;
+                if (!container.Owner.TryGetComponent(out ClientInventoryComponent? inventory))
+                    return;
+                if (!inventory.TryFindItemSlots(Owner, out EquipmentSlotDefines.Slots? slots))
+                    return;
+
+                inventory.SetSlotVisuals(slots.Value, Owner);
+            }
+        }
 
         [ViewVariables(VVAccess.ReadWrite)]
         public FemaleClothingMask FemaleMask
@@ -31,6 +58,7 @@ namespace Content.Client.GameObjects.Components.Clothing
             base.ExposeData(serializer);
 
             serializer.DataField(ref _femaleMask, "femaleMask", FemaleClothingMask.UniformFull);
+            serializer.DataField(this, p => p.ClothingEquippedPrefix, "ClothingPrefix", null);
         }
 
         public (RSI rsi, RSI.StateId stateId)? GetEquippedStateInfo(EquipmentSlotDefines.SlotFlags slot)
@@ -51,18 +79,19 @@ namespace Content.Client.GameObjects.Components.Clothing
             return null;
         }
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
-            if (curState == null)
+            if (curState is not ClothingComponentState state)
+            {
                 return;
+            }
 
-            var clothingComponentState = (ClothingComponentState)curState;
-            ClothingEquippedPrefix = clothingComponentState.ClothingEquippedPrefix;
-            EquippedPrefix = clothingComponentState.EquippedPrefix;
+            ClothingEquippedPrefix = state.ClothingEquippedPrefix;
+            EquippedPrefix = state.EquippedPrefix;
         }
     }
 
-    public enum FemaleClothingMask
+    public enum FemaleClothingMask : byte
     {
         NoMask = 0,
         UniformFull,

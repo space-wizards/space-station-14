@@ -13,12 +13,10 @@ namespace Content.Client.Parallax
 {
     public class ParallaxOverlay : Overlay
     {
-#pragma warning disable 649
-        [Dependency] private readonly IParallaxManager _parallaxManager;
-        [Dependency] private readonly IEyeManager _eyeManager;
-        [Dependency] private readonly IClyde _displayManager;
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-#pragma warning restore 649
+        [Dependency] private readonly IParallaxManager _parallaxManager = default!;
+        [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly IClyde _displayManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override bool AlwaysDirty => true;
         private const float Slowness = 0.5f;
@@ -26,11 +24,12 @@ namespace Content.Client.Parallax
         private Texture _parallaxTexture;
 
         public override OverlaySpace Space => OverlaySpace.ScreenSpaceBelowWorld;
+        private readonly ShaderInstance _shader;
 
         public ParallaxOverlay() : base(nameof(ParallaxOverlay))
         {
             IoCManager.InjectDependencies(this);
-            Shader = _prototypeManager.Index<ShaderPrototype>("unshaded").Instance();
+            _shader = _prototypeManager.Index<ShaderPrototype>("unshaded").Instance();
 
             if (_parallaxManager.ParallaxTexture == null)
             {
@@ -42,13 +41,14 @@ namespace Content.Client.Parallax
             }
         }
 
-        protected override void Draw(DrawingHandleBase handle)
+        protected override void Draw(DrawingHandleBase handle, OverlaySpace currentSpace)
         {
             if (_parallaxTexture == null)
             {
                 return;
             }
 
+            handle.UseShader(_shader);
             var screenHandle = (DrawingHandleScreen) handle;
 
             var (sizeX, sizeY) = _parallaxTexture.Size;

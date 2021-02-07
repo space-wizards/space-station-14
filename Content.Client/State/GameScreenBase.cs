@@ -1,22 +1,25 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Content.Client.GameObjects.Components;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Shared.GameObjects;
+using Content.Client.Utility;
+using Content.Shared;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Interfaces.GameObjects;
-using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.Input;
+using Robust.Client.Interfaces.State;
 using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
+using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 
 namespace Content.Client.State
@@ -24,54 +27,79 @@ namespace Content.Client.State
     // OH GOD.
     // Ok actually it's fine.
     // Instantiated dynamically through the StateManager, Dependencies will be resolved.
-    public partial class GameScreenBase : StateBase
+    public partial class GameScreenBase : Robust.Client.State.State, IEntityEventSubscriber
     {
-#pragma warning disable 649
-        [Dependency] private readonly IClientEntityManager _entityManager;
-        [Dependency] private readonly IInputManager _inputManager;
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly IEyeManager _eyeManager;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-        [Dependency] private readonly IGameTiming _timing;
-        [Dependency] private readonly IMapManager _mapManager;
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
-#pragma warning restore 649
+        [Dependency] protected readonly IClientEntityManager EntityManager = default!;
+        [Dependency] protected readonly IInputManager InputManager = default!;
+        [Dependency] protected readonly IPlayerManager PlayerManager = default!;
+        [Dependency] protected readonly IEyeManager EyeManager = default!;
+        [Dependency] protected readonly IEntitySystemManager EntitySystemManager = default!;
+        [Dependency] protected readonly IGameTiming Timing = default!;
+        [Dependency] protected readonly IMapManager MapManager = default!;
+        [Dependency] protected readonly IUserInterfaceManager UserInterfaceManager = default!;
+        [Dependency] protected readonly IConfigurationManager ConfigurationManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+
+        private IEventBus _eventBus => _entityManager.EventBus;
 
         private IEntity _lastHoveredEntity;
 
+        private bool _outlineEnabled = true;
+
         public override void Startup()
         {
-            _inputManager.KeyBindStateChanged += OnKeyBindStateChanged;
+            InputManager.KeyBindStateChanged += OnKeyBindStateChanged;
+            _eventBus.SubscribeEvent<OutlineToggleMessage>(EventSource.Local, this, HandleOutlineToggle);
         }
 
         public override void Shutdown()
         {
-            _inputManager.KeyBindStateChanged -= OnKeyBindStateChanged;
+            InputManager.KeyBindStateChanged -= OnKeyBindStateChanged;
+            _eventBus.UnsubscribeEvent<OutlineToggleMessage>(EventSource.Local, this);
+        }
+
+        private void HandleOutlineToggle(OutlineToggleMessage message)
+        {
+            _outlineEnabled = message.Enabled;
         }
 
         public override void FrameUpdate(FrameEventArgs e)
         {
             base.FrameUpdate(e);
 
-            var mousePosWorld = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
-            var entityToClick = _userInterfaceManager.CurrentlyHovered != null ? null : GetEntityUnderPosition(mousePosWorld);
+            // If there is no local player, there is no session, and therefore nothing to do here.
+            var localPlayer = PlayerManager.LocalPlayer;
+            if (localPlayer == null)
+                return;
+
+            var mousePosWorld = EyeManager.ScreenToMap(InputManager.MouseScreenPosition);
+            var entityToClick = UserInterfaceManager.CurrentlyHovered != null
+                ? null
+                : GetEntityUnderPosition(mousePosWorld);
 
             var inRange = false;
-            if (_playerManager.LocalPlayer.ControlledEntity != null && entityToClick != null)
+            if (localPlayer.ControlledEntity != null && entityToClick != null)
             {
-                var playerPos = _playerManager.LocalPlayer.ControlledEntity.Transform.MapPosition;
-                var entityPos = entityToClick.Transform.MapPosition;
-                inRange = _entitySystemManager.GetEntitySystem<SharedInteractionSystem>()
-                    .InRangeUnobstructed(playerPos, entityPos, predicate:entity => entity != _playerManager.LocalPlayer.ControlledEntity || entity != entityToClick);
+                inRange = localPlayer.InRangeUnobstructed(entityToClick, ignoreInsideBlocker: true);
             }
 
             InteractionOutlineComponent outline;
+            if(!_outlineEnabled || !ConfigurationManager.GetCVar(CCVars.OutlineEnabled))
+            {
+                if(entityToClick != null && entityToClick.TryGetComponent(out outline))
+                {
+                    outline.OnMouseLeave(); //Prevent outline remains from persisting post command.
+                }
+                return;
+            }
+
             if (entityToClick == _lastHoveredEntity)
             {
                 if (entityToClick != null && entityToClick.TryGetComponent(out outline))
                 {
                     outline.UpdateInRange(inRange);
                 }
+
                 return;
             }
 
@@ -95,25 +123,26 @@ namespace Content.Client.State
             return entitiesUnderPosition.Count > 0 ? entitiesUnderPosition[0] : null;
         }
 
-        public IList<IEntity> GetEntitiesUnderPosition(GridCoordinates coordinates)
+        public IList<IEntity> GetEntitiesUnderPosition(EntityCoordinates coordinates)
         {
-            return GetEntitiesUnderPosition(coordinates.ToMap(_mapManager));
+            return GetEntitiesUnderPosition(coordinates.ToMap(EntityManager));
         }
 
         public IList<IEntity> GetEntitiesUnderPosition(MapCoordinates coordinates)
         {
             // Find all the entities intersecting our click
-            var entities = _entityManager.GetEntitiesIntersecting(coordinates.MapId, coordinates.Position);
+            var entities = EntityManager.GetEntitiesIntersecting(coordinates.MapId,
+                Box2.CenteredAround(coordinates.Position, (1, 1)));
 
             // Check the entities against whether or not we can click them
-            var foundEntities = new List<(IEntity clicked, int drawDepth)>();
+            var foundEntities = new List<(IEntity clicked, int drawDepth, uint renderOrder)>();
             foreach (var entity in entities)
             {
-                if (entity.TryGetComponent<IClientClickableComponent>(out var component)
+                if (entity.TryGetComponent<ClickableComponent>(out var component)
                     && entity.Transform.IsMapTransform
-                    && component.CheckClick(coordinates.Position, out var drawDepthClicked))
+                    && component.CheckClick(coordinates.Position, out var drawDepthClicked, out var renderOrder))
                 {
-                    foundEntities.Add((entity, drawDepthClicked));
+                    foundEntities.Add((entity, drawDepthClicked, renderOrder));
                 }
             }
 
@@ -126,9 +155,29 @@ namespace Content.Client.State
             return foundEntities.Select(a => a.clicked).ToList();
         }
 
-        internal class ClickableEntityComparer : IComparer<(IEntity clicked, int depth)>
+        /// <summary>
+        /// Gets all entities intersecting the given position.
+        ///
+        /// Static alternative to GetEntitiesUnderPosition to cut out
+        /// some of the boilerplate needed to get state manager and check the current state.
+        /// </summary>
+        /// <param name="stateManager">state manager to use to get the current game screen</param>
+        /// <param name="coordinates">coordinates to check</param>
+        /// <returns>the entities under the position, empty list if none found</returns>
+        public static IList<IEntity> GetEntitiesUnderPosition(IStateManager stateManager, EntityCoordinates coordinates)
         {
-            public int Compare((IEntity clicked, int depth) x, (IEntity clicked, int depth) y)
+            if (stateManager.CurrentState is GameScreenBase gameScreenBase)
+            {
+                return gameScreenBase.GetEntitiesUnderPosition(coordinates);
+            }
+
+            return ImmutableList<IEntity>.Empty;
+        }
+
+        internal class ClickableEntityComparer : IComparer<(IEntity clicked, int depth, uint renderOrder)>
+        {
+            public int Compare((IEntity clicked, int depth, uint renderOrder) x,
+                (IEntity clicked, int depth, uint renderOrder) y)
             {
                 var val = x.depth.CompareTo(y.depth);
                 if (val != 0)
@@ -136,9 +185,24 @@ namespace Content.Client.State
                     return val;
                 }
 
-                var transx = x.clicked.Transform;
-                var transy = y.clicked.Transform;
-                return transx.GridPosition.Y.CompareTo(transy.GridPosition.Y);
+                // Turning this off it can make picking stuff out of lockers and such up a bit annoying.
+                /*
+                val = x.renderOrder.CompareTo(y.renderOrder);
+                if (val != 0)
+                {
+                    return val;
+                }
+                */
+
+                var transX = x.clicked.Transform;
+                var transY = y.clicked.Transform;
+                val = transX.Coordinates.Y.CompareTo(transY.Coordinates.Y);
+                if (val != 0)
+                {
+                    return val;
+                }
+
+                return x.clicked.Uid.CompareTo(y.clicked.Uid);
             }
         }
 
@@ -148,24 +212,29 @@ namespace Content.Client.State
         /// <param name="args">Event data values for a bound key state change.</param>
         private void OnKeyBindStateChanged(BoundKeyEventArgs args)
         {
-            var inputSys = _entitySystemManager.GetEntitySystem<InputSystem>();
+            // If there is no InputSystem, then there is nothing to forward to, and nothing to do here.
+            if(!EntitySystemManager.TryGetEntitySystem(out InputSystem inputSys))
+                return;
 
             var func = args.Function;
-            var funcId = _inputManager.NetworkBindMap.KeyFunctionID(func);
+            var funcId = InputManager.NetworkBindMap.KeyFunctionID(func);
 
-            var mousePosWorld = _eyeManager.ScreenToMap(args.PointerLocation);
+            var mousePosWorld = EyeManager.ScreenToMap(args.PointerLocation);
             var entityToClick = GetEntityUnderPosition(mousePosWorld);
 
-            if (!_mapManager.TryFindGridAt(mousePosWorld, out var grid))
-                grid = _mapManager.GetDefaultGrid(mousePosWorld.MapId);
+            var coordinates = MapManager.TryFindGridAt(mousePosWorld, out var grid) ? grid.MapToGrid(mousePosWorld) :
+                EntityCoordinates.FromMap(EntityManager, MapManager, mousePosWorld);
 
-            var message = new FullInputCmdMessage(_timing.CurTick, funcId, args.State,
-                grid.MapToGrid(mousePosWorld), args.PointerLocation,
+            var message = new FullInputCmdMessage(Timing.CurTick, Timing.TickFraction, funcId, args.State,
+                coordinates , args.PointerLocation,
                 entityToClick?.Uid ?? EntityUid.Invalid);
 
             // client side command handlers will always be sent the local player session.
-            var session = _playerManager.LocalPlayer.Session;
-            inputSys.HandleInputCommand(session, func, message);
+            var session = PlayerManager.LocalPlayer.Session;
+            if (inputSys.HandleInputCommand(session, func, message))
+            {
+                args.Handle();
+            }
         }
     }
 }

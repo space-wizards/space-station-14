@@ -1,28 +1,20 @@
-﻿using Content.Shared.Prototypes.Cargo;
+﻿using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Content.Shared.GameObjects.Components.Cargo
 {
     public class SharedCargoConsoleComponent : Component
     {
-#pragma warning disable CS0649
-        [Dependency]
-        protected IPrototypeManager _prototypeManager;
-#pragma warning restore
+        [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
 
         public sealed override string Name => "CargoConsole";
 
         /// <summary>
-        ///    Sends away or requests shuttle 
+        ///    Sends away or requests shuttle
         /// </summary>
         [Serializable, NetSerializable]
         public class CargoConsoleShuttleMessage : BoundUserInterfaceMessage
@@ -94,13 +86,15 @@ namespace Content.Shared.GameObjects.Components.Cargo
         public readonly int BankId;
         public readonly string BankName;
         public readonly int BankBalance;
+        public readonly (int CurrentCapacity, int MaxCapacity) ShuttleCapacity;
 
-        public CargoConsoleInterfaceState(bool requestOnly, int bankId, string bankName, int bankBalance)
+        public CargoConsoleInterfaceState(bool requestOnly, int bankId, string bankName, int bankBalance, (int CurrentCapacity, int MaxCapacity) shuttleCapacity)
         {
             RequestOnly = requestOnly;
             BankId = bankId;
             BankName = bankName;
             BankBalance = bankBalance;
+            ShuttleCapacity = shuttleCapacity;
         }
     }
 }

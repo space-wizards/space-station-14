@@ -1,0 +1,46 @@
+{
+	"version": 1,
+	"license": "CC-BY-SA-3.0",
+	"copyright": "Taken from https://github.com/discordia-space/CEV-Eris.",
+	"size": {
+		"x": 32,
+		"y": 32
+	},
+	"states": [
+		{
+			"name": "catwalk_0",
+			"directions": 4
+		},
+		{
+			"name": "catwalk_1",
+			"directions": 4
+		},
+		{
+			"name": "catwalk_2",
+			"directions": 4
+		},
+		{
+			"name": "catwalk_3",
+			"directions": 4
+		},
+		{
+			"name": "catwalk_4",
+			"directions": 4
+		},
+		{
+			"name": "catwalk_5",
+			"directions": 4
+		},
+		{
+			"name": "catwalk_6",
+			"directions": 4
+		},
+		{
+			"name": "catwalk_7",
+			"directions": 4
+		},
+		{
+			"name": "catwalk_preview"
+		}
+	]
+}

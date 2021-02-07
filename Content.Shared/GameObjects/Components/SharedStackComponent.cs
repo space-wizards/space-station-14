@@ -1,4 +1,5 @@
 ﻿using System;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
@@ -53,7 +54,7 @@ namespace Content.Shared.GameObjects.Components
             serializer.DataFieldCached(ref _maxCount, "max", 50);
             serializer.DataFieldCached(ref _count, "count", MaxCount);
 
-            if (!serializer.Reading)
+            if (serializer.Writing)
             {
                 return;
             }
@@ -92,7 +93,7 @@ namespace Content.Shared.GameObjects.Components
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            if (!(curState is StackComponentState cast))
+            if (curState is not StackComponentState cast)
             {
                 return;
             }
@@ -120,14 +121,22 @@ namespace Content.Shared.GameObjects.Components
     {
         Metal,
         Glass,
+        ReinforcedGlass,
+        Plasteel,
         Cable,
+        Wood,
+        MVCable,
+        HVCable,
         Gold,
+        Phoron,
         Ointment,
+        Gauze,
         Brutepack,
         FloorTileSteel,
         FloorTileCarpet,
         FloorTileWhite,
         FloorTileDark,
-        FloorTileWood
+        FloorTileWood,
+        MetalRod
     }
 }

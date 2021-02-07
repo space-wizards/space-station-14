@@ -1,0 +1,257 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+  	    {
+      "name": "random",
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "applebush",
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-01",
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-02",
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-03",
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-04",
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-05",
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-06",
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-07",
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-08",
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-09",
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-10",
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-11",
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-12",
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-13",
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-14",
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-15",
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-16",
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-17",
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-18",
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-19",
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-20",
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-21",
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-22",
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-23",
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-24",
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-25",
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-26",
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-27",
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-28",
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-29",
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    }
+  ]
+}

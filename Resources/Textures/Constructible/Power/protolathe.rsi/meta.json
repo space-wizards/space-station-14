@@ -1,0 +1,203 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/discordia-space/CEV-Eris/blob/master/icons/obj/machines/excelsior/autolathe.dmi at 40b254106b46981b8ad95ccd5589deb8fa56e765",
+    "states": [
+        {
+            "name": "protolathe",
+
+        },
+        {
+            "name": "protolathe_unlit",
+
+        },
+        {
+            "name": "protolathe_adamantine",
+            "delays": [
+                [
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088
+                ]
+            ]
+        },
+        {
+            "name": "protolathe_bananium",
+            "delays": [
+                [
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088
+                ]
+            ]
+        },
+        {
+            "name": "protolathe_diamond",
+            "delays": [
+                [
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088
+                ]
+            ]
+        },
+        {
+            "name": "protolathe_glass",
+            "delays": [
+                [
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088
+                ]
+            ]
+        },
+        {
+            "name": "protolathe_gold",
+            "delays": [
+                [
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088
+                ]
+            ]
+        },
+        {
+            "name": "protolathe_metal",
+            "delays": [
+                [
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088
+                ]
+            ]
+        },
+        {
+            "name": "protolathe_phoron",
+            "delays": [
+                [
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088
+                ]
+            ]
+        },
+        {
+            "name": "protolathe_building",
+            "delays": [
+                [
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05
+                ]
+            ]
+        },
+        {
+            "name": "protolathe_silver",
+            "delays": [
+                [
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088
+                ]
+            ]
+        },
+        {
+            "name": "protolathe_solid plasma",
+            "delays": [
+                [
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088
+                ]
+            ]
+        },
+        {
+            "name": "protolathe_panel",
+
+        },
+        {
+            "name": "protolathe_uranium",
+            "delays": [
+                [
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088
+                ]
+            ]
+        }
+    ]
+}

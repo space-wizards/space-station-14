@@ -1,122 +1,164 @@
-using System;
+﻿using System;
 using System.Threading;
-using Content.Server.GameObjects;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Observer;
+using Content.Server.GameObjects.Components.Suspicion;
+using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.GameMode;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
-using Content.Server.Mobs.Roles;
+using Content.Server.Mobs.Roles.Suspicion;
 using Content.Server.Players;
-using NFluidsynth;
+using Content.Shared;
+using Content.Shared.GameObjects.Components.Mobs.State;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
-using Robust.Server.Player;
-using Robust.Shared.Enums;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.Configuration;
+using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
-using Logger = Robust.Shared.Log.Logger;
+using Robust.Shared.Localization;
 using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameTicking.GameRules
 {
     /// <summary>
-    ///     Simple GameRule that will do a free-for-all death match.
-    ///     Kill everybody else to win.
+    ///     Simple GameRule that will do a TTT-like gamemode with traitors.
     /// </summary>
     public sealed class RuleSuspicion : GameRule, IEntityEventSubscriber
     {
         private static readonly TimeSpan DeadCheckDelay = TimeSpan.FromSeconds(1);
 
-#pragma warning disable 649
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly IChatManager _chatManager;
-        [Dependency] private readonly IEntityManager _entityManager;
-        [Dependency] private readonly IGameTicker _gameTicker;
-#pragma warning restore 649
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly IGameTicker _gameTicker = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
 
-        private readonly CancellationTokenSource _checkTimerCancel = new CancellationTokenSource();
+        private readonly CancellationTokenSource _checkTimerCancel = new();
+        private TimeSpan _endTime;
+
+        public TimeSpan RoundMaxTime { get; set; } = TimeSpan.FromSeconds(CCVars.SuspicionMaxTimeSeconds.DefaultValue);
+        public TimeSpan RoundEndDelay { get; set; } = TimeSpan.FromSeconds(10);
 
         public override void Added()
         {
-            _chatManager.DispatchServerAnnouncement("There are traitors on the station! Find them, and kill them!");
+            RoundMaxTime = TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.SuspicionMaxTimeSeconds));
 
-            _entityManager.EventBus.SubscribeEvent<MobDamageStateChangedMessage>(EventSource.Local, this, _onMobDamageStateChanged);
+            _endTime = _timing.CurTime + RoundMaxTime;
 
-            Timer.SpawnRepeating(DeadCheckDelay, _checkWinConditions, _checkTimerCancel.Token);
-        }
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("There are traitors on the station! Find them, and kill them!"));
 
-        private void _onMobDamageStateChanged(MobDamageStateChangedMessage message)
-        {
-            var owner = message.Species.Owner;
+            bool Predicate(IPlayerSession session) => session.ContentData()?.Mind?.HasRole<SuspicionTraitorRole>() ?? false;
 
-            if (!(message.Species.CurrentDamageState is DeadState))
-                return;
+            EntitySystem.Get<AudioSystem>().PlayGlobal("/Audio/Misc/tatoralert.ogg", AudioParams.Default, Predicate);
+            EntitySystem.Get<SuspicionEndTimerSystem>().EndTime = _endTime;
 
-            if (!owner.TryGetComponent<MindComponent>(out var mind))
-                return;
+            EntitySystem.Get<DoorSystem>().AccessType = DoorSystem.AccessTypes.AllowAllNoExternal;
 
-            if (!mind.HasMind)
-                return;
-
-            message.Species.Owner.Description +=
-                mind.Mind.HasRole<SuspicionTraitorRole>() ? "\nThey were a traitor!" : "\nThey were an innocent!";
+            Timer.SpawnRepeating(DeadCheckDelay, CheckWinConditions, _checkTimerCancel.Token);
         }
 
         public override void Removed()
         {
             base.Removed();
 
+            EntitySystem.Get<DoorSystem>().AccessType = DoorSystem.AccessTypes.Id;
+            EntitySystem.Get<SuspicionEndTimerSystem>().EndTime = null;
+
             _checkTimerCancel.Cancel();
         }
 
-        private void _checkWinConditions()
+        private void Timeout()
         {
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("Time has run out for the traitors!"));
+
+            EndRound(Victory.Innocents);
+        }
+
+        private void CheckWinConditions()
+        {
+            if (!_cfg.GetCVar(CCVars.GameLobbyEnableWin))
+                return;
+
             var traitorsAlive = 0;
             var innocentsAlive = 0;
 
             foreach (var playerSession in _playerManager.GetAllPlayers())
             {
                 if (playerSession.AttachedEntity == null
-                    || !playerSession.AttachedEntity.TryGetComponent(out SpeciesComponent species))
+                    || !playerSession.AttachedEntity.TryGetComponent(out IMobStateComponent mobState)
+                    || !playerSession.AttachedEntity.HasComponent<SuspicionRoleComponent>())
                 {
                     continue;
                 }
 
-                if (!species.CurrentDamageState.IsConscious)
+                if (!mobState.IsAlive())
                 {
                     continue;
                 }
 
-                if (playerSession.ContentData().Mind.HasRole<SuspicionTraitorRole>())
+                var mind = playerSession.ContentData()?.Mind;
+
+                if (mind != null && mind.HasRole<SuspicionTraitorRole>())
                     traitorsAlive++;
                 else
                     innocentsAlive++;
             }
 
-            if ((innocentsAlive + traitorsAlive) == 0)
+            if (innocentsAlive + traitorsAlive == 0)
             {
-                _chatManager.DispatchServerAnnouncement("Everybody is dead, it's a stalemate!");
-                EndRound();
+                _chatManager.DispatchServerAnnouncement(Loc.GetString("Everybody is dead, it's a stalemate!"));
+                EndRound(Victory.Stalemate);
             }
 
             else if (traitorsAlive == 0)
             {
-                _chatManager.DispatchServerAnnouncement("The traitors are dead! The innocents win.");
-                EndRound();
+                _chatManager.DispatchServerAnnouncement(Loc.GetString("The traitors are dead! The innocents win."));
+                EndRound(Victory.Innocents);
             }
             else if (innocentsAlive == 0)
             {
-                _chatManager.DispatchServerAnnouncement("The innocents are dead! The traitors win.");
-                EndRound();
+                _chatManager.DispatchServerAnnouncement(Loc.GetString("The innocents are dead! The traitors win."));
+                EndRound(Victory.Traitors);
+            }
+            else if (_timing.CurTime > _endTime)
+            {
+                _chatManager.DispatchServerAnnouncement(Loc.GetString("Time has run out for the traitors!"));
+                EndRound(Victory.Innocents);
             }
         }
 
-        private void EndRound()
+        private enum Victory
         {
-            _gameTicker.EndRound();
-            _chatManager.DispatchServerAnnouncement($"Restarting in 10 seconds.");
+            Stalemate,
+            Innocents,
+            Traitors
+        }
+
+        private void EndRound(Victory victory)
+        {
+            string text;
+
+            switch (victory)
+            {
+                case Victory.Innocents:
+                    text = Loc.GetString("The innocents have won!");
+                    break;
+                case Victory.Traitors:
+                    text = Loc.GetString("The traitors have won!");
+                    break;
+                default:
+                    text = Loc.GetString("Nobody wins!");
+                    break;
+            }
+
+            _gameTicker.EndRound(text);
+
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("Restarting in {0} seconds.", (int) RoundEndDelay.TotalSeconds));
             _checkTimerCancel.Cancel();
-            Timer.Spawn(TimeSpan.FromSeconds(10), () => _gameTicker.RestartRound());
+
+            Timer.Spawn(RoundEndDelay, () => _gameTicker.RestartRound());
         }
     }
 }

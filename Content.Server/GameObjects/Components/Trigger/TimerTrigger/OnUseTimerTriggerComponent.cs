@@ -1,24 +1,22 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.Components.Triggers;
+using Content.Shared.GameObjects.Components.Trigger;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 
-namespace Content.Server.GameObjects.Components.Triggers
+namespace Content.Server.GameObjects.Components.Trigger.TimerTrigger
 {
     [RegisterComponent]
     public class OnUseTimerTriggerComponent : Component, IUse
     {
-        #pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-#pragma warning restore 649
-
         public override string Name => "OnUseTimerTrigger";
 
-        private float _delay = 0f;
+        private float _delay;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -27,18 +25,17 @@ namespace Content.Server.GameObjects.Components.Triggers
             serializer.DataField(ref _delay, "delay", 0f);
         }
 
-        public override void Initialize()
+        public void Trigger(IEntity user)
         {
-            base.Initialize();
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+                appearance.SetData(TriggerVisuals.VisualState, TriggerVisualState.Primed);
+
+            EntitySystem.Get<TriggerSystem>().HandleTimerTrigger(TimeSpan.FromSeconds(_delay), user, Owner);
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            var triggerSystem = _entitySystemManager.GetEntitySystem<TriggerSystem>();
-            if (Owner.TryGetComponent<AppearanceComponent>(out var appearance)) {
-                appearance.SetData(TriggerVisuals.VisualState, TriggerVisualState.Primed);
-            }
-            triggerSystem.HandleTimerTrigger(TimeSpan.FromSeconds(_delay), eventArgs.User, Owner);
+            Trigger(eventArgs.User);
             return true;
         }
     }

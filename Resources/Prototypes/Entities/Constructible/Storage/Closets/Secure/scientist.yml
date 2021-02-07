@@ -1,0 +1,23 @@
+- type: entity
+  id: LockerResearchDirector
+  parent: LockerSecureBase
+  name: "research director's locker"
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: rd
+  - type: AccessReader
+    access: [ [ "ResearchDirector" ] ]
+
+- type: entity
+  id: LockerScientist
+  parent: LockerSecureBase
+  name: "scientist's locker"
+  components:
+    - type: Appearance
+      visuals:
+        - type: StorageVisualizer
+          state: science
+    - type: AccessReader
+      access: [ [ "Research" ] ]

@@ -1,8 +1,10 @@
+#nullable enable
 using System.Linq;
-using Content.Server.GameObjects.Components.Power;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -19,18 +21,13 @@ namespace Content.Server.GameObjects.Components.BarSign
     {
         public override string Name => "BarSign";
 
-#pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly IRobustRandom _robustRandom;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
-        private string _currentSign;
-
-        private PowerDeviceComponent _power;
-        private SpriteComponent _sprite;
+        private string? _currentSign;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public string CurrentSign
+        public string? CurrentSign
         {
             get => _currentSign;
             set
@@ -39,6 +36,8 @@ namespace Content.Server.GameObjects.Components.BarSign
                 UpdateSignInfo();
             }
         }
+
+        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 
         private void UpdateSignInfo()
         {
@@ -53,15 +52,18 @@ namespace Content.Server.GameObjects.Components.BarSign
                 return;
             }
 
-            if (!_power.Powered)
+            if (Owner.TryGetComponent(out SpriteComponent? sprite))
             {
-                _sprite.LayerSetState(0, "empty");
-                _sprite.LayerSetShader(0, "shaded");
-            }
-            else
-            {
-                _sprite.LayerSetState(0, prototype.Icon);
-                _sprite.LayerSetShader(0, "unshaded");
+                if (!Powered)
+                {
+                    sprite.LayerSetState(0, "empty");
+                    sprite.LayerSetShader(0, "shaded");
+                }
+                else
+                {
+                    sprite.LayerSetState(0, prototype.Icon);
+                    sprite.LayerSetShader(0, "unshaded");
+                }
             }
 
             if (!string.IsNullOrEmpty(prototype.Name))
@@ -80,15 +82,21 @@ namespace Content.Server.GameObjects.Components.BarSign
         {
             base.Initialize();
 
-            _power = Owner.GetComponent<PowerDeviceComponent>();
-            _sprite = Owner.GetComponent<SpriteComponent>();
-
-            _power.OnPowerStateChanged += PowerOnOnPowerStateChanged;
-
             UpdateSignInfo();
         }
 
-        private void PowerOnOnPowerStateChanged(object sender, PowerStateEventArgs e)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+            switch (message)
+            {
+                case PowerChangedMessage powerChanged:
+                    PowerOnOnPowerStateChanged(powerChanged);
+                    break;
+            }
+        }
+
+        private void PowerOnOnPowerStateChanged(PowerChangedMessage e)
         {
             UpdateSignInfo();
         }

@@ -10,6 +10,8 @@ namespace Content.Server.GameObjects.Components.Research
     [ComponentReference(typeof(SharedLatheDatabaseComponent))]
     public class ProtolatheDatabaseComponent : SharedProtolatheDatabaseComponent
     {
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         public override string Name => "ProtolatheDatabase";
 
         public override ComponentState GetComponentState()
@@ -24,13 +26,11 @@ namespace Content.Server.GameObjects.Components.Research
         {
             if (!Owner.TryGetComponent(out TechnologyDatabaseComponent database)) return;
 
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-
             foreach (var technology in database.Technologies)
             {
                 foreach (var id in technology.UnlockedRecipes)
                 {
-                    var recipe = (LatheRecipePrototype)prototypeManager.Index(typeof(LatheRecipePrototype), id);
+                    var recipe = (LatheRecipePrototype) _prototypeManager.Index(typeof(LatheRecipePrototype), id);
                     UnlockRecipe(recipe);
                 }
             }

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="27.760838"
+   height="25.371094"
+   viewBox="0 0 27.760838 25.371094"
+   fill="none"
+   version="1.1"
+   id="svg8"
+   sodipodi:docname="tutorial.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   inkscape:export-filename="C:\ss14\space-station-14\Resources\Textures\Interface\tutorial.svg.96dpi.png"
+   inkscape:export-xdpi="121.08268"
+   inkscape:export-ydpi="121.08268">
+  <metadata
+     id="metadata14">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs12" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="2560"
+     inkscape:window-height="1377"
+     id="namedview10"
+     showgrid="false"
+     inkscape:pagecheckerboard="true"
+     inkscape:zoom="32.5625"
+     inkscape:cx="9.9955816"
+     inkscape:cy="12.685547"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg8"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <path
+     id="path2"
+     style="fill:#ffffff;fill-opacity:1"
+     d="m 13.880421,0 c -1.0214,1.4000018e-6 -2.042034,0.510315 -2.615234,1.53125 L 0.38823357,20.902344 c -1.12269,1.9998 0.3238175,4.46875 2.61718753,4.46875 h 10.8749999 10.875 c 2.2933,0 3.739886,-2.46895 2.617188,-4.46875 L 16.495655,1.53125 C 15.922455,0.5103201 14.901821,-1.0999982e-6 13.880421,0 Z m 0,4.3710938 c 1.1046,0 2,0.89543 2,2 v 1 8.0000002 c 0,1.1046 -0.8954,2 -2,2 -1.1046,0 -2,-0.8954 -2,-2 v -8.0000002 -1 c 0,-1.10457 0.8954,-2 2,-2 z m -0.04883,15.0000002 a 2,2 0 0 1 0.04883,0 2,2 0 0 1 2,2 2,2 0 0 1 -2,2 2,2 0 0 1 -2,-2 2,2 0 0 1 1.951172,-2 z"
+     inkscape:export-xdpi="121.08268"
+     inkscape:export-ydpi="121.08268" />
+</svg>

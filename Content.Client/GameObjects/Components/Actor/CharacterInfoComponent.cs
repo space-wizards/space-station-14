@@ -1,50 +1,60 @@
+#nullable enable
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.Stylesheets;
+using Content.Shared.GameObjects.Components.Actor;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Client.Utility;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Maths;
+using Robust.Shared.Players;
 
 namespace Content.Client.GameObjects.Components.Actor
 {
     [RegisterComponent]
-    public sealed class CharacterInfoComponent : Component, ICharacterUI
+    public sealed class CharacterInfoComponent : SharedCharacterInfoComponent, ICharacterUI
     {
-        private CharacterInfoControl _control;
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
 
-#pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _loc;
-        [Dependency] private readonly IResourceCache _resourceCache;
-#pragma warning restore 649
+        private CharacterInfoControl _control = default!;
 
-        public override string Name => "CharacterInfo";
-
-        public Control Scene { get; private set; }
+        public Control Scene { get; private set; } = default!;
         public UIPriority Priority => UIPriority.Info;
 
         public override void OnAdd()
         {
             base.OnAdd();
 
-            Scene = _control = new CharacterInfoControl(_resourceCache, _loc);
+            Scene = _control = new CharacterInfoControl(_resourceCache);
         }
 
-        public override void Initialize()
+        public void Opened()
         {
-            base.Initialize();
+            SendNetworkMessage(new RequestCharacterInfoMessage());
+        }
 
-            if (Owner.TryGetComponent(out ISpriteComponent spriteComponent))
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
+        {
+            base.HandleNetworkMessage(message, netChannel, session);
+
+            switch (message)
             {
-                _control.SpriteView.Sprite = spriteComponent;
-            }
+                case CharacterInfoMessage characterInfoMessage:
+                    _control.UpdateUI(characterInfoMessage);
+                    if (Owner.TryGetComponent(out ISpriteComponent? spriteComponent))
+                    {
+                        _control.SpriteView.Sprite = spriteComponent;
+                    }
 
-            _control.NameLabel.Text = Owner.Name;
-            // ReSharper disable once StringLiteralTypo
-            _control.SubText.Text = _loc.GetString("Professional Greyshirt");
+                    _control.NameLabel.Text = Owner.Name;
+                    break;
+            }
         }
 
         private sealed class CharacterInfoControl : VBoxContainer
@@ -53,8 +63,12 @@ namespace Content.Client.GameObjects.Components.Actor
             public Label NameLabel { get; }
             public Label SubText { get; }
 
-            public CharacterInfoControl(IResourceCache resourceCache, ILocalizationManager loc)
+            public VBoxContainer ObjectivesContainer { get; }
+
+            public CharacterInfoControl(IResourceCache resourceCache)
             {
+                IoCManager.InjectDependencies(this);
+
                 AddChild(new HBoxContainer
                 {
                     Children =
@@ -69,7 +83,8 @@ namespace Content.Client.GameObjects.Components.Actor
                                 (SubText = new Label
                                 {
                                     SizeFlagsVertical = SizeFlags.None,
-                                    StyleClasses = {StyleNano.StyleClassLabelSubText}
+                                    StyleClasses = {StyleNano.StyleClassLabelSubText},
+
                                 })
                             }
                         }
@@ -78,18 +93,67 @@ namespace Content.Client.GameObjects.Components.Actor
 
                 AddChild(new Placeholder(resourceCache)
                 {
-                    PlaceholderText = loc.GetString("Health & status effects")
+                    PlaceholderText = Loc.GetString("Health & status effects")
                 });
+
+                AddChild(new Label
+                {
+                    Text = Loc.GetString("Objectives"),
+                    SizeFlagsHorizontal = SizeFlags.ShrinkCenter
+                });
+                ObjectivesContainer = new VBoxContainer();
+                AddChild(ObjectivesContainer);
 
                 AddChild(new Placeholder(resourceCache)
                 {
-                    PlaceholderText = loc.GetString("Objectives")
+                    PlaceholderText = Loc.GetString("Antagonist Roles")
                 });
+            }
 
-                AddChild(new Placeholder(resourceCache)
+            public void UpdateUI(CharacterInfoMessage characterInfoMessage)
+            {
+                SubText.Text = characterInfoMessage.JobTitle;
+
+                ObjectivesContainer.RemoveAllChildren();
+                foreach (var (groupId, objectiveConditions) in characterInfoMessage.Objectives)
                 {
-                    PlaceholderText = loc.GetString("Antagonist Roles")
-                });
+                    var vbox = new VBoxContainer
+                    {
+                        Modulate = Color.Gray
+                    };
+
+                    vbox.AddChild(new Label
+                    {
+                        Text = groupId,
+                        Modulate = Color.LightSkyBlue
+                    });
+
+                    foreach (var objectiveCondition in objectiveConditions)
+                    {
+                        var hbox = new HBoxContainer();
+                        hbox.AddChild(new ProgressTextureRect
+                        {
+                            Texture = objectiveCondition.SpriteSpecifier.Frame0(),
+                            Progress = objectiveCondition.Progress,
+                            SizeFlagsVertical = SizeFlags.ShrinkCenter
+                        });
+                        hbox.AddChild(new Control
+                        {
+                            CustomMinimumSize = (10,0)
+                        });
+                        hbox.AddChild(new VBoxContainer
+                            {
+                                Children =
+                                {
+                                    new Label{Text = objectiveCondition.Title},
+                                    new Label{Text = objectiveCondition.Description}
+                                }
+                            }
+                        );
+                        vbox.AddChild(hbox);
+                    }
+                    ObjectivesContainer.AddChild(vbox);
+                }
             }
         }
     }

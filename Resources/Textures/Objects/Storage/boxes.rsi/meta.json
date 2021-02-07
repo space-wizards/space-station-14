@@ -1,0 +1,120 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA 3",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/17dc39d12005f3279a90212b5c61a781c08693a5",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "beaker"
+    },
+    {
+      "name": "bodybags"
+    },
+    {
+      "name": "clown"
+    },
+    {
+      "name": "heart"
+    },
+    {
+      "name": "meson"
+    },
+    {
+      "name": "sechud"
+    },
+    {
+      "name": "box"
+    },
+    {
+      "name": "box_hug"
+    },
+    {
+      "name": "box_donk_pocket"
+    },
+    {
+      "name": "box_id"
+    },
+    {
+      "name": "box_of_doom"
+    },
+    {
+      "name": "box_of_doom_big"
+    },
+    {
+      "name": "box_security"
+    },
+    {
+      "name": "circuit"
+    },
+    {
+      "name": "disk"
+    },
+    {
+      "name": "flashbang"
+    },
+    {
+      "name": "glasses"
+    },
+    {
+      "name": "handcuff"
+    },
+    {
+      "name": "implant"
+    },
+    {
+      "name": "latex"
+    },
+    {
+      "name": "light"
+    },
+    {
+      "name": "lightmixed"
+    },
+    {
+      "name": "lighttube"
+    },
+    {
+      "name": "mousetraps"
+    },
+    {
+      "name": "pda"
+    },
+    {
+      "name": "pillbox"
+    },
+    {
+      "name": "solution_trays"
+    },
+    {
+      "name": "sterile"
+    },
+    {
+      "name": "syringe"
+    },
+    {
+      "name": "writing"
+    },
+    {
+      "name": "writing_of_doom"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "hug-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "hug-inhand-right",
+      "directions": 4
+    }
+  ]
+}

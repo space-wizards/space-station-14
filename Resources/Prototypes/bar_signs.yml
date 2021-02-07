@@ -1,0 +1,154 @@
+- type: barSign
+  id: Harmbaton
+  name: "The Harmbaton"
+  icon: "theharmbaton"
+  description: "A great dining experience for both security members and assistants."
+
+- type: barSign
+  id: TheSingulo
+  name: "The Singulo"
+  icon: "thesingulo"
+  description: "Where people go that'd rather not be called by their name."
+
+- type: barSign
+  id: TheDrunkCarp
+  name: "The Drunk Carp"
+  icon: "thedrunkcarp"
+  description: "Don't drink and swim."
+
+- type: barSign
+  id: OfficerBeersky
+  name: "Officer Beersky's"
+  icon: "officerbeersky"
+  description: "Man eat a dong, these drinks are great."
+
+- type: barSign
+  id: TheOuterSpess
+  name: "The Outer Spess"
+  icon: "theouterspess"
+  description: "This bar isn't actually located in outer space."
+
+- type: barSign
+  id: TheCoderbus
+  name: "The Coderbus"
+  icon: "thecoderbus"
+  description: "A very controversial bar known for its wide variety of constantly-changing drinks."
+
+- type: barSign
+  id: TheWretchedHive
+  name: "The Wretched Hive"
+  icon: "thewretchedhive"
+  description: "Legally obligated to instruct you to check your drinks for acid before consumption."
+
+- type: barSign
+  id: RobustaCafe
+  name: "The Robusta Cafe"
+  icon: "robustacafe"
+  description: "Holder of the 'Most Lethal Barfights' record 5 years uncontested."
+
+- type: barSign
+  id: EmergencyRumParty
+  name: "The Emergency Rum Party"
+  icon: "emergencyrumparty"
+  description: "Recently relicensed after a long closure."
+
+- type: barSign
+  id: ComboCafe
+  name: "The Combo Cafe"
+  icon: "combocafe"
+  description: "Renowned system-wide for their utterly uncreative drink combinations."
+
+- type: barSign
+  id: TheAleNath
+  name: "The Ale' Nath"
+  icon: "thealenath"
+  description: "All right, buddy. I think you've had EI NATH. Time to get a cab."
+
+- type: barSign
+  id: TheNet
+  name: "The Net"
+  icon: "thenet"
+  description: "You just seem to get caught up in it for hours."
+
+- type: barSign
+  id: MaidCafe
+  name: "Maid Cafe"
+  icon: "maidcafe"
+  description: "Welcome back, master!"
+
+- type: barSign
+  id: MalteseFalcon
+  name: "Maltese Falcon"
+  icon: "maltesefalcon"
+  description: "Play it again, sam."
+
+- type: barSign
+  id: TheSun
+  name: "The Sun"
+  icon: "thesun"
+  description: "Ironically bright for such a shady bar."
+
+- type: barSign
+  id: TheBirdCage
+  name: "The Birdcage"
+  icon: "birdcage"
+  description: "Caw caw!"
+
+- type: barSign
+  id: Zocalo
+  name: "Zocalo"
+  icon: "zocalo"
+  description: "Anteriormente ubicado en Spessmerica."
+
+- type: barSign
+  id: LV426
+  name: "LV-426"
+  icon: "lv426"
+  description: "Drinking with fancy facemasks is clearly more important than going to medbay."
+
+- type: barSign
+  id: WiggleRoom
+  name: "The Wiggle Roomm"
+  icon: "thewiggleroom"
+  description: "MoMMIs got moves."
+
+- type: barSign
+  id: TheLightbulb
+  name: "The Lightbulb"
+  icon: "the_lightbulb"
+  description: "A cafe popular among moths and moffs. Once shut down for a week after the bartender used mothballs to protect her spare uniforms."
+
+- type: barSign
+  id: Goose
+  name: "The Loose Goose"
+  icon: "goose"
+  description: "Drink till you puke and/or break the laws of reality!"
+
+- type: barSign
+  id: EngineChange
+  name: "The Engine Change"
+  icon: "enginechange"
+  description: "Still waiting."
+
+- type: barSign
+  id: Emprah
+  name: "4 The Emprah"
+  icon: "emprah"
+  description: "Enjoyed by fanatics, heretics, and brain-damaged patrons alike."
+
+# Hidden signs list below this point
+- type: barSign
+  id: EmpBarSign
+  name: ""
+  icon: "empbarsign"
+  description: "Something has gone very wrong."
+  rename_area: false
+  hidden: true
+
+- type: barSign
+  id: SignOff
+  name: ""
+  icon: "empty"
+  description: "This sign doesn't seem to be on."
+  rename_area: false
+  hidden: true

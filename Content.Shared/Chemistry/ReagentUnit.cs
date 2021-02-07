@@ -1,21 +1,25 @@
-﻿using Robust.Shared.Interfaces.Serialization;
 using System;
 using System.Globalization;
 using System.Linq;
+using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Shared.Chemistry
 {
+    /// <summary>
+    ///     Represents a quantity of reagent, to a precision of 0.01.
+    ///     To enforce this level of precision, floats are shifted by 2 decimal points, rounded, and converted to an int.
+    /// </summary>
     [Serializable]
     public struct ReagentUnit : ISelfSerialize, IComparable<ReagentUnit>, IEquatable<ReagentUnit>
     {
         private int _value;
         private static readonly int Shift = 2;
 
-        public static ReagentUnit MaxValue { get; } = new ReagentUnit(int.MaxValue);
-        public static ReagentUnit Epsilon { get; } = new ReagentUnit(1);
-        public static ReagentUnit Zero { get; } = new ReagentUnit(0);
+        public static ReagentUnit MaxValue { get; } = new(int.MaxValue);
+        public static ReagentUnit Epsilon { get; } = new(1);
+        public static ReagentUnit Zero { get; } = new(0);
 
-        private double ShiftDown()
+        private readonly double ShiftDown()
         {
             return _value / Math.Pow(10, Shift);
         }
@@ -27,27 +31,22 @@ namespace Content.Shared.Chemistry
 
         public static ReagentUnit New(int value)
         {
-            return new ReagentUnit(value * (int) Math.Pow(10, Shift));
-        }
-
-        public static ReagentUnit New(decimal value)
-        {
-            return new ReagentUnit((int) Math.Round(value * (decimal) Math.Pow(10, Shift), MidpointRounding.AwayFromZero));
+            return new(value * (int) Math.Pow(10, Shift));
         }
 
         public static ReagentUnit New(float value)
         {
-            return new ReagentUnit(FromFloat(value));
+            return new(FromFloat(value));
         }
 
         private static int FromFloat(float value)
         {
-            return (int) Math.Round(value * (float) Math.Pow(10, Shift), MidpointRounding.AwayFromZero);
+            return (int) MathF.Round(value * MathF.Pow(10, Shift), MidpointRounding.AwayFromZero);
         }
 
         public static ReagentUnit New(double value)
         {
-            return new ReagentUnit((int) Math.Round(value * Math.Pow(10, Shift), MidpointRounding.AwayFromZero));
+            return new((int) Math.Round(value * Math.Pow(10, Shift), MidpointRounding.AwayFromZero));
         }
 
         public static ReagentUnit New(string value)
@@ -62,10 +61,10 @@ namespace Content.Shared.Chemistry
 
         public static ReagentUnit operator +(ReagentUnit a) => a;
 
-        public static ReagentUnit operator -(ReagentUnit a) => new ReagentUnit(-a._value);
+        public static ReagentUnit operator -(ReagentUnit a) => new(-a._value);
 
         public static ReagentUnit operator +(ReagentUnit a, ReagentUnit b)
-            => new ReagentUnit(a._value + b._value);
+            => new(a._value + b._value);
 
         public static ReagentUnit operator -(ReagentUnit a, ReagentUnit b)
             => a + -b;
@@ -83,12 +82,6 @@ namespace Content.Shared.Chemistry
             return New(aD * b);
         }
 
-        public static ReagentUnit operator *(ReagentUnit a, decimal b)
-        {
-            var aD = (decimal) a.ShiftDown();
-            return New(aD * b);
-        }
-
         public static ReagentUnit operator *(ReagentUnit a, double b)
         {
             var aD = a.ShiftDown();
@@ -97,7 +90,7 @@ namespace Content.Shared.Chemistry
 
         public static ReagentUnit operator *(ReagentUnit a, int b)
         {
-            return new ReagentUnit(a._value * b);
+            return new(a._value * b);
         }
 
         public static ReagentUnit operator /(ReagentUnit a, ReagentUnit b)
@@ -121,14 +114,24 @@ namespace Content.Shared.Chemistry
             return a.ShiftDown() >= b;
         }
 
+        public static bool operator <(ReagentUnit a, int b)
+        {
+            return a.ShiftDown() < b;
+        }
+
+        public static bool operator >(ReagentUnit a, int b)
+        {
+            return a.ShiftDown() > b;
+        }
+
         public static bool operator ==(ReagentUnit a, int b)
         {
-            return a.ShiftDown() == b;
+            return a.Int() == b;
         }
 
         public static bool operator !=(ReagentUnit a, int b)
         {
-            return a.ShiftDown() != b;
+            return a.Int() != b;
         }
 
         public static bool operator ==(ReagentUnit a, ReagentUnit b)
@@ -161,22 +164,17 @@ namespace Content.Shared.Chemistry
             return a._value > b._value;
         }
 
-        public float Float()
+        public readonly float Float()
         {
             return (float) ShiftDown();
         }
 
-        public decimal Decimal()
-        {
-            return (decimal) ShiftDown();
-        }
-
-        public double Double()
+        public readonly double Double()
         {
             return ShiftDown();
         }
 
-        public int Int()
+        public readonly int Int()
         {
             return (int) ShiftDown();
         }
@@ -191,14 +189,30 @@ namespace Content.Shared.Chemistry
             return a < b ? a : b;
         }
 
-        public override bool Equals(object obj)
+        public static ReagentUnit Max(ReagentUnit a, ReagentUnit b)
+        {
+            return a > b ? a : b;
+        }
+
+        public static ReagentUnit Clamp(ReagentUnit reagent, ReagentUnit min, ReagentUnit max)
+        {
+            if (min > max)
+            {
+                throw new ArgumentException($"{nameof(min)} {min} cannot be larger than {nameof(max)} {max}");
+            }
+
+            return reagent < min ? min : reagent > max ? max : reagent;
+        }
+
+        public override readonly bool Equals(object obj)
         {
             return obj is ReagentUnit unit &&
                    _value == unit._value;
         }
 
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
+            // ReSharper disable once NonReadonlyMemberInGetHashCode
             return HashCode.Combine(_value);
         }
 
@@ -207,19 +221,19 @@ namespace Content.Shared.Chemistry
             _value = FromFloat(FloatFromString(value));
         }
 
-        public override string ToString() => $"{ShiftDown().ToString(CultureInfo.InvariantCulture)}";
+        public override readonly string ToString() => $"{ShiftDown().ToString(CultureInfo.InvariantCulture)}";
 
-        public string Serialize()
+        public readonly string Serialize()
         {
             return ToString();
         }
 
-        public bool Equals(ReagentUnit other)
+        public readonly bool Equals(ReagentUnit other)
         {
             return _value == other._value;
         }
 
-        public int CompareTo(ReagentUnit other)
+        public readonly int CompareTo(ReagentUnit other)
         {
             if(other._value > _value)
             {

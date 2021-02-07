@@ -1,4 +1,7 @@
-﻿using Content.Client.Utility;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Content.Client.UserInterface;
+using Content.Client.Utility;
 using JetBrains.Annotations;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -9,30 +12,26 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
-using Content.Client.UserInterface;
-using System.Collections.Generic;
 
-namespace Content.Client.GameObjects
+namespace Content.Client.GameObjects.Components.HUD.Inventory
 {
     // Dynamically instantiated by ClientInventoryComponent.
     [UsedImplicitly]
     public class HumanInventoryInterfaceController : InventoryInterfaceController
     {
-#pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _loc;
-        [Dependency] private readonly IResourceCache _resourceCache;
-        [Dependency] private readonly IItemSlotManager _itemSlotManager;
-#pragma warning restore 649
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
 
         private readonly Dictionary<Slots, List<ItemSlotButton>> _inventoryButtons
-            = new Dictionary<Slots, List<ItemSlotButton>>();
+            = new();
 
         private ItemSlotButton _hudButtonPocket1;
         private ItemSlotButton _hudButtonPocket2;
         private ItemSlotButton _hudButtonBelt;
         private ItemSlotButton _hudButtonBack;
         private ItemSlotButton _hudButtonId;
-        private Control _quickButtonsContainer;
+        private Control _rightQuickButtonsContainer;
+        private Control _leftQuickButtonsContainer;
 
         public HumanInventoryInterfaceController(ClientInventoryComponent owner) : base(owner)
         {
@@ -42,23 +41,25 @@ namespace Content.Client.GameObjects
         {
             base.Initialize();
 
-            _window = new HumanInventoryWindow(_loc, _resourceCache);
-            _window.OnClose += () => _gameHud.InventoryButtonDown = false;
+            _window = new HumanInventoryWindow(_resourceCache);
+            _window.OnClose += () => GameHud.InventoryButtonDown = false;
             foreach (var (slot, button) in _window.Buttons)
             {
                 button.OnPressed = (e) => AddToInventory(e, slot);
                 button.OnStoragePressed = (e) => OpenStorage(e, slot);
+                button.OnHover = (e) => RequestItemHover(slot);
                 _inventoryButtons.Add(slot, new List<ItemSlotButton> {button});
             }
 
             void AddButton(out ItemSlotButton variable, Slots slot, string textureName)
             {
-                var texture = _resourceCache.GetTexture($"/Textures/UserInterface/Inventory/{textureName}.png");
-                var storageTexture = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/back.png");
+                var texture = _resourceCache.GetTexture($"/Textures/Interface/Inventory/{textureName}.png");
+                var storageTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/back.png");
                 variable = new ItemSlotButton(texture, storageTexture)
                 {
                     OnPressed = (e) => AddToInventory(e, slot),
-                    OnStoragePressed = (e) => OpenStorage(e, slot)
+                    OnStoragePressed = (e) => OpenStorage(e, slot),
+                    OnHover = (e) => RequestItemHover(slot)
                 };
                 _inventoryButtons[slot].Add(variable);
             }
@@ -69,21 +70,41 @@ namespace Content.Client.GameObjects
             AddButton(out _hudButtonBelt, Slots.BELT, "belt");
             AddButton(out _hudButtonId, Slots.IDCARD, "id");
 
-            _quickButtonsContainer = new HBoxContainer
+            _leftQuickButtonsContainer = new HBoxContainer
             {
                 Children =
                 {
                     _hudButtonId,
-                    _hudButtonBelt,
                     _hudButtonBack,
+                    _hudButtonBelt,
+                },
+                SeparationOverride = 5
+            };
+            _rightQuickButtonsContainer = new HBoxContainer
+            {
+                Children =
+                {
                     _hudButtonPocket1,
                     _hudButtonPocket2,
-                }
+                    // keeps this "balanced" with the left, so the hands will appear perfectly in the center
+                    new Control{CustomMinimumSize = (64, 64)}
+                },
+                SeparationOverride = 5
             };
         }
 
         public override SS14Window Window => _window;
         private HumanInventoryWindow _window;
+
+        public override IEnumerable<ItemSlotButton> GetItemSlotButtons(Slots slot)
+        {
+            if (!_inventoryButtons.TryGetValue(slot, out var buttons))
+            {
+                return Enumerable.Empty<ItemSlotButton>();
+            }
+
+            return buttons;
+        }
 
         public override void AddToSlot(Slots slot, IEntity entity)
         {
@@ -114,6 +135,21 @@ namespace Content.Client.GameObjects
             }
         }
 
+        public override void HoverInSlot(Slots slot, IEntity entity, bool fits)
+        {
+            base.HoverInSlot(slot, entity, fits);
+
+            if (!_inventoryButtons.TryGetValue(slot, out var buttons))
+            {
+                return;
+            }
+
+            foreach (var button in buttons)
+            {
+                _itemSlotManager.HoverInSlot(button, entity, fits);
+            }
+        }
+
         protected override void HandleInventoryKeybind(GUIBoundKeyEventArgs args, Slots slot)
         {
             if (!_inventoryButtons.TryGetValue(slot, out var buttons))
@@ -136,7 +172,8 @@ namespace Content.Client.GameObjects
         {
             base.PlayerAttached();
 
-            _gameHud.InventoryQuickButtonContainer.AddChild(_quickButtonsContainer);
+            GameHud.RightInventoryQuickButtonContainer.AddChild(_rightQuickButtonsContainer);
+            GameHud.LeftInventoryQuickButtonContainer.AddChild(_leftQuickButtonsContainer);
 
             // Update all the buttons to make sure they check out.
 
@@ -158,7 +195,8 @@ namespace Content.Client.GameObjects
         {
             base.PlayerDetached();
 
-            _gameHud.InventoryQuickButtonContainer.RemoveChild(_quickButtonsContainer);
+            GameHud.RightInventoryQuickButtonContainer.RemoveChild(_rightQuickButtonsContainer);
+            GameHud.LeftInventoryQuickButtonContainer.RemoveChild(_leftQuickButtonsContainer);
 
             foreach (var (slot, list) in _inventoryButtons)
             {
@@ -172,14 +210,14 @@ namespace Content.Client.GameObjects
         private class HumanInventoryWindow : SS14Window
         {
             private const int ButtonSize = 64;
-            private const int ButtonSeparation = 2;
+            private const int ButtonSeparation = 4;
             private const int RightSeparation = 2;
 
             public IReadOnlyDictionary<Slots, ItemSlotButton> Buttons { get; }
 
-            public HumanInventoryWindow(ILocalizationManager loc, IResourceCache resourceCache)
+            public HumanInventoryWindow(IResourceCache resourceCache)
             {
-                Title = loc.GetString("Your Inventory");
+                Title = Loc.GetString("Your Inventory");
                 Resizable = false;
 
                 var buttonDict = new Dictionary<Slots, ItemSlotButton>();
@@ -193,8 +231,8 @@ namespace Content.Client.GameObjects
 
                 void AddButton(Slots slot, string textureName, Vector2 position)
                 {
-                    var texture = resourceCache.GetTexture($"/Textures/UserInterface/Inventory/{textureName}.png");
-                    var storageTexture = resourceCache.GetTexture("/Textures/UserInterface/Inventory/back.png");
+                    var texture = resourceCache.GetTexture($"/Textures/Interface/Inventory/{textureName}.png");
+                    var storageTexture = resourceCache.GetTexture("/Textures/Interface/Inventory/back.png");
                     var button = new ItemSlotButton(texture, storageTexture);
 
                     LayoutContainer.SetPosition(button, position);
@@ -203,31 +241,29 @@ namespace Content.Client.GameObjects
                     buttonDict.Add(slot, button);
                 }
 
-                const int size = ButtonSize;
-                const int sep = ButtonSeparation;
-                const int rSep = RightSeparation;
+                const int sizep = (ButtonSize + ButtonSeparation);
 
                 // Left column.
-                AddButton(Slots.EYES, "glasses", (0, size + sep));
-                AddButton(Slots.INNERCLOTHING, "uniform", (0, 2 * (size + sep)));
-                AddButton(Slots.EXOSUITSLOT1, "suit_storage", (0, 3 * (size + sep)));
+                AddButton(Slots.EYES, "glasses", (0, 0));
+                AddButton(Slots.NECK, "neck", (0, sizep));
+                AddButton(Slots.INNERCLOTHING, "uniform", (0, 2 * sizep));
+                AddButton(Slots.POCKET1, "pocket", (0, 3 * sizep));
 
                 // Middle column.
-                AddButton(Slots.HEAD, "head", (size + sep, 0));
-                AddButton(Slots.MASK, "mask", (size + sep, size + sep));
-                AddButton(Slots.OUTERCLOTHING, "suit", (size + sep, 2 * (size + sep)));
-                AddButton(Slots.SHOES, "shoes", (size + sep, 3 * (size + sep)));
+                AddButton(Slots.HEAD, "head", (sizep, 0));
+                AddButton(Slots.MASK, "mask", (sizep, sizep));
+                AddButton(Slots.OUTERCLOTHING, "suit", (sizep, 2 * sizep));
+                AddButton(Slots.SHOES, "shoes", (sizep, 3 * sizep));
 
                 // Right column
-                AddButton(Slots.EARS, "ears", (2 * (size + sep), 0));
-                AddButton(Slots.IDCARD, "id", (2 * (size + sep), size + sep));
-                AddButton(Slots.GLOVES, "gloves", (2 * (size + sep), 2 * (size + sep)));
+                AddButton(Slots.EARS, "ears", (2 * sizep, 0));
+                AddButton(Slots.IDCARD, "id", (2 * sizep, sizep));
+                AddButton(Slots.GLOVES, "gloves", (2 * sizep, 2 * sizep));
+                AddButton(Slots.POCKET2, "pocket", (2 * sizep, 3 * sizep));
 
                 // Far right column.
-                AddButton(Slots.BACKPACK, "back", (rSep + 3 * (size + sep), 0));
-                AddButton(Slots.BELT, "belt", (rSep + 3 * (size + sep), size + sep));
-                AddButton(Slots.POCKET1, "pocket", (rSep + 3 * (size + sep), 2 * (size + sep)));
-                AddButton(Slots.POCKET2, "pocket", (rSep + 3 * (size + sep), 3 * (size + sep)));
+                AddButton(Slots.BACKPACK, "back", (3 * sizep, 0));
+                AddButton(Slots.BELT, "belt", (3 * sizep, sizep));
             }
         }
     }

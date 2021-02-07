@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Content.Shared.Jobs;
 using Content.Shared.Preferences;
+using Content.Shared.Roles;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Localization;
+using Robust.Shared.Network;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -16,10 +17,10 @@ namespace Content.Server.GameTicking
     public partial class GameTicker
     {
         [ViewVariables]
-        private readonly Dictionary<string, int> _spawnedPositions = new Dictionary<string, int>();
+        private readonly Dictionary<string, int> _spawnedPositions = new();
 
         private Dictionary<IPlayerSession, string> AssignJobs(List<IPlayerSession> available,
-            Dictionary<IPlayerSession, HumanoidCharacterProfile> profiles)
+            Dictionary<NetUserId, HumanoidCharacterProfile> profiles)
         {
             // Calculate positions available round-start for each job.
             var availablePositions = GetBasePositions(true);
@@ -38,13 +39,17 @@ namespace Content.Server.GameTicking
                     var candidates = available
                         .Select(player =>
                         {
-                            var profile = profiles[player];
+                            var profile = profiles[player.UserId];
 
                             var availableJobs = profile.JobPriorities
                                 .Where(j =>
                                 {
                                     var (jobId, priority) = j;
-                                    var job = _prototypeManager.Index<JobPrototype>(jobId);
+                                    if (!_prototypeManager.TryIndex(jobId, out JobPrototype job))
+                                    {
+                                        // Job doesn't exist, probably old data?
+                                        return false;
+                                    }
                                     if (job.IsHead != heads)
                                     {
                                         return false;
@@ -124,7 +129,7 @@ namespace Content.Server.GameTicking
         /// <summary>
         ///     Gets the remaining available job positions in the current round.
         /// </summary>
-        private Dictionary<string, int> GetAvailablePositions()
+        public Dictionary<string, int> GetAvailablePositions()
         {
             var basePositions = GetBasePositions(false);
 
@@ -194,6 +199,12 @@ namespace Content.Server.GameTicking
         private void AddSpawnedPosition(string jobId)
         {
             _spawnedPositions[jobId] = _spawnedPositions.GetValueOrDefault(jobId, 0) + 1;
+        }
+
+        private void UpdateJobsAvailable()
+        {
+            var lobbyPlayers = _playersInLobby.Keys.Select(p => p.ConnectedClient).ToList();
+            _netManager.ServerSendToMany(GetJobsAvailable(), lobbyPlayers);
         }
     }
 }

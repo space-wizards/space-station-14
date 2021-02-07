@@ -1,6 +1,6 @@
 using Robust.Shared.Utility;
 
-namespace Content.Shared.GameObjects
+namespace Content.Shared.GameObjects.Verbs
 {
     /// <summary>
     /// Contains combined name and icon information for a verb category.
@@ -18,7 +18,7 @@ namespace Content.Shared.GameObjects
 
         public static implicit operator VerbCategoryData((string name, string icon) tuple)
         {
-            return new VerbCategoryData(tuple.name, tuple.icon == null ? null : new SpriteSpecifier.Texture(new ResourcePath(tuple.icon)));
+            return new(tuple.name, tuple.icon == null ? null : new SpriteSpecifier.Texture(new ResourcePath(tuple.icon)));
         }
     }
 }

@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,9 +14,8 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Reflection;
 using Robust.Shared.Timing;
-
-#nullable enable
 
 namespace Content.IntegrationTests.Tests.Networking
 {
@@ -38,9 +38,13 @@ namespace Content.IntegrationTests.Tests.Networking
         {
             // Initialize client & server with text component and system registered.
             // They can't be registered/detected automatically.
-            var (client, server) = await StartConnectedServerClientPair(
+            var (client, server) = await StartConnectedServerDummyTickerClientPair(
                 new ClientContentIntegrationOption
                 {
+                    // This test is designed around specific timing values and when I wrote it interpolation was off.
+                    // As such, I would have to update half this test to make sure it works with interpolation.
+                    // I'm kinda lazy.
+                    CVarOverrides = {{"net.interp", "false"}},
                     ContentBeforeIoC = () =>
                     {
                         IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<PredictionTestEntitySystem>();
@@ -398,7 +402,7 @@ namespace Content.IntegrationTests.Tests.Networking
 
             public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
             {
-                if (!(curState is PredictionComponentState pred))
+                if (curState is not PredictionComponentState pred)
                 {
                     return;
                 }
@@ -422,13 +426,14 @@ namespace Content.IntegrationTests.Tests.Networking
             }
         }
 
+        [Reflect(false)]
         private sealed class PredictionTestEntitySystem : EntitySystem
         {
             public bool Allow { get; set; } = true;
 
             // Queue of all the events that come in so we can test that they come in perfectly as expected.
             public List<(GameTick tick, bool firstPredict, bool old, bool @new, bool value)> EventTriggerList { get; } =
-                new List<(GameTick, bool, bool, bool, bool)>();
+                new();
 
             [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -450,7 +455,8 @@ namespace Content.IntegrationTests.Tests.Networking
                     component.Foo = message.NewFoo;
                 }
 
-                EventTriggerList.Add((_gameTiming.CurTick, _gameTiming.IsFirstTimePredicted, old, component.Foo, message.NewFoo));
+                EventTriggerList.Add((_gameTiming.CurTick, _gameTiming.IsFirstTimePredicted, old, component.Foo,
+                    message.NewFoo));
             }
         }
 

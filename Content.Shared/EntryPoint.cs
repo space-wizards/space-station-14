@@ -1,26 +1,25 @@
-﻿﻿using System;
- using System.Collections.Generic;
- using System.Globalization;
- using Content.Shared.Maps;
- using Robust.Shared.ContentPack;
- using Robust.Shared.Interfaces.Map;
- using Robust.Shared.IoC;
- using Robust.Shared.Localization;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using Content.Shared.Chemistry;
+using Content.Shared.Maps;
+using Robust.Shared.ContentPack;
+using Robust.Shared.Interfaces.Map;
+using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Localization.Macros;
+using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 
- namespace Content.Shared
+namespace Content.Shared
 {
     public class EntryPoint : GameShared
     {
         // If you want to change your codebase's language, do it here.
         private const string Culture = "en-US";
 
-#pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
 
         public override void PreInit()
         {
@@ -30,7 +29,7 @@ using Robust.Shared.Prototypes;
             textMacroFactory.DoAutoRegistrations();
 
             // Default to en-US.
-            _localizationManager.LoadCulture(new CultureInfo(Culture));
+            Loc.LoadCulture(new CultureInfo(Culture));
         }
 
         public override void Init()
@@ -42,6 +41,33 @@ using Robust.Shared.Prototypes;
             base.PostInit();
 
             _initTileDefinitions();
+            CheckReactions();
+        }
+
+        private void CheckReactions()
+        {
+            foreach (var reaction in _prototypeManager.EnumeratePrototypes<ReactionPrototype>())
+            {
+                foreach (var reactant in reaction.Reactants.Keys)
+                {
+                    if (!_prototypeManager.HasIndex<ReagentPrototype>(reactant))
+                    {
+                        Logger.ErrorS(
+                            "chem", "Reaction {reaction} has unknown reactant {reagent}.",
+                            reaction.ID, reactant);
+                    }
+                }
+
+                foreach (var product in reaction.Products.Keys)
+                {
+                    if (!_prototypeManager.HasIndex<ReagentPrototype>(product))
+                    {
+                        Logger.ErrorS(
+                            "chem", "Reaction {reaction} has unknown product {product}.",
+                            reaction.ID, product);
+                    }
+                }
+            }
         }
 
         private void _initTileDefinitions()
@@ -58,6 +84,7 @@ using Robust.Shared.Prototypes;
                 {
                     continue;
                 }
+
                 prototypeList.Add(tileDef);
             }
 

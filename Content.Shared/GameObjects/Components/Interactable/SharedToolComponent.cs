@@ -16,6 +16,23 @@ namespace Content.Shared.GameObjects.Components.Interactable
         Multitool =   1 << 5,
     }
 
+    public static class ToolQualityHelpers
+    {
+        public static string GetToolName(this ToolQuality quality)
+        {
+            return quality switch
+            {
+                ToolQuality.Anchoring => "Wrench",
+                ToolQuality.Prying => "Crowbar",
+                ToolQuality.Screwing => "Screwdriver",
+                ToolQuality.Cutting => "Wirecutters",
+                ToolQuality.Welding => "Welding tool",
+                ToolQuality.Multitool => "Multitool",
+                _ => throw new ArgumentOutOfRangeException()
+            };
+        }
+    }
+
     public class SharedToolComponent : Component
     {
         public override string Name => "Tool";

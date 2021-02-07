@@ -1,12 +1,17 @@
 ﻿using System;
-using Content.Server.Interfaces.GameObjects;
-using Content.Shared.GameObjects;
-using Content.Shared.Maths;
+using System.Diagnostics;
+using Content.Server.GameObjects.Components.Mobs;
+using Content.Shared.Alert;
+using Content.Shared.Atmos;
+using Content.Shared.Damage;
+using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects
+namespace Content.Server.GameObjects.Components.Temperature
 {
     /// <summary>
     /// Handles changing temperature,
@@ -14,42 +19,126 @@ namespace Content.Server.GameObjects
     /// and taking fire damage from high temperature.
     /// </summary>
     [RegisterComponent]
-    public class TemperatureComponent : Component, ITemperatureComponent
+    public class TemperatureComponent : Component
     {
         /// <inheritdoc />
         public override string Name => "Temperature";
 
-        //TODO: should be programmatic instead of how it currently is
-        [ViewVariables]
-        public float CurrentTemperature { get; private set; } = PhysicalConstants.ZERO_CELCIUS;
+        [ViewVariables] public float CurrentTemperature { get => _currentTemperature; set => _currentTemperature = value; }
 
-        float _fireDamageThreshold = 0;
-        float _fireDamageCoefficient = 1;
+        [ViewVariables] public float HeatDamageThreshold => _heatDamageThreshold;
+        [ViewVariables] public float ColdDamageThreshold => _coldDamageThreshold;
+        [ViewVariables] public float TempDamageCoefficient => _tempDamageCoefficient;
+        [ViewVariables] public float HeatCapacity {
+            get
+            {
+                if (Owner.TryGetComponent<IPhysicsComponent>(out var physics))
+                {
+                    return SpecificHeat * physics.Mass;
+                }
 
-        float _secondsSinceLastDamageUpdate = 0;
+                return Atmospherics.MinimumHeatCapacity;
+            }
+        }
+
+        [ViewVariables] public float SpecificHeat => _specificHeat;
+
+        private float _heatDamageThreshold;
+        private float _coldDamageThreshold;
+        private float _tempDamageCoefficient;
+        private float _currentTemperature;
+        private float _specificHeat;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref _fireDamageThreshold, "firedamagethreshold", 0);
-            serializer.DataField(ref _fireDamageCoefficient, "firedamagecoefficient", 1);
+            serializer.DataField(ref _heatDamageThreshold, "heatDamageThreshold", 0);
+            serializer.DataField(ref _coldDamageThreshold, "coldDamageThreshold", 0);
+            serializer.DataField(ref _tempDamageCoefficient, "tempDamageCoefficient", 1);
+            serializer.DataField(ref _currentTemperature, "currentTemperature", Atmospherics.T20C);
+            serializer.DataField(ref _specificHeat, "specificHeat", Atmospherics.MinimumHeatCapacity);
         }
 
-        /// <inheritdoc />
-        public void OnUpdate(float frameTime)
+        public void Update()
         {
-            int fireDamage = (int)Math.Floor(Math.Max(0, CurrentTemperature - _fireDamageThreshold) / _fireDamageCoefficient);
-
-            _secondsSinceLastDamageUpdate += frameTime;
-
-            Owner.TryGetComponent(out DamageableComponent component);
-
-            while (_secondsSinceLastDamageUpdate >= 1)
+            var tempDamage = 0;
+            DamageType? damageType = null;
+            if (CurrentTemperature >= _heatDamageThreshold)
             {
-                component?.TakeDamage(DamageType.Heat, fireDamage);
-                _secondsSinceLastDamageUpdate -= 1;
+                tempDamage = (int) Math.Floor((CurrentTemperature - _heatDamageThreshold) * _tempDamageCoefficient);
+                damageType = DamageType.Heat;
             }
+            else if (CurrentTemperature <= _coldDamageThreshold)
+            {
+                tempDamage = (int) Math.Floor((_coldDamageThreshold - CurrentTemperature) * _tempDamageCoefficient);
+                damageType = DamageType.Cold;
+            }
+
+            if (Owner.TryGetComponent(out ServerAlertsComponent status))
+            {
+                switch(CurrentTemperature)
+                {
+                    // Cold strong.
+                    case var t when t <= 260:
+                        status.ShowAlert(AlertType.Cold, 3);
+                        break;
+
+                    // Cold mild.
+                    case var t when t <= 280 && t > 260:
+                        status.ShowAlert(AlertType.Cold, 2);
+                        break;
+
+                    // Cold weak.
+                    case var t when t <= 292 && t > 280:
+                        status.ShowAlert(AlertType.Cold, 1);
+                        break;
+
+                    // Safe.
+                    case var t when t <= 327 && t > 292:
+                        status.ClearAlertCategory(AlertCategory.Temperature);
+                        break;
+
+                    // Heat weak.
+                    case var t when t <= 335 && t > 327:
+                        status.ShowAlert(AlertType.Hot, 1);
+                        break;
+
+                    // Heat mild.
+                    case var t when t <= 345 && t > 335:
+                        status.ShowAlert(AlertType.Hot, 2);
+                        break;
+
+                    // Heat strong.
+                    case var t when t > 345:
+                        status.ShowAlert(AlertType.Hot, 3);
+                        break;
+                }
+            }
+
+            if (!damageType.HasValue) return;
+
+            if (!Owner.TryGetComponent(out IDamageableComponent component)) return;
+            component.ChangeDamage(damageType.Value, tempDamage, false);
         }
+
+        /// <summary>
+        /// Forcefully give heat to this component
+        /// </summary>
+        /// <param name="heatAmount"></param>
+        public void ReceiveHeat(float heatAmount)
+        {
+            CurrentTemperature += heatAmount / HeatCapacity;
+        }
+
+        /// <summary>
+        /// Forcefully remove heat from this component
+        /// </summary>
+        /// <param name="heatAmount"></param>
+        public void RemoveHeat(float heatAmount)
+        {
+            CurrentTemperature -= heatAmount / HeatCapacity;
+        }
+
     }
 }

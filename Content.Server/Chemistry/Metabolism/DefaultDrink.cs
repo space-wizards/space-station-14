@@ -1,5 +1,4 @@
-﻿using System;
-using Content.Server.GameObjects.Components.Nutrition;
+﻿using Content.Server.GameObjects.Components.Nutrition;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces.Chemistry;
 using Robust.Shared.Interfaces.GameObjects;
@@ -12,7 +11,7 @@ namespace Content.Server.Chemistry.Metabolism
     /// Default metabolism for drink reagents. Attempts to find a ThirstComponent on the target,
     /// and to update it's thirst values.
     /// </summary>
-    class DefaultDrink : IMetabolizable
+    public class DefaultDrink : IMetabolizable
     {
         //Rate of metabolism in units / second
         private ReagentUnit _metabolismRate;

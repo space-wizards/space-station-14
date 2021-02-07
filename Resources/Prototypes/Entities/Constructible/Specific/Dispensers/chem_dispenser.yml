@@ -1,0 +1,43 @@
+﻿- type: entity
+  id: chem_dispenser
+  name: chemical dispenser
+  parent: ReagentDispenserBase
+  description: An industrial grade chemical dispenser with a sizeable chemical supply.
+  components:
+  - type: Sprite
+    sprite: Constructible/Power/industrial_dispenser.rsi
+    state: industrial_dispenser
+  - type: Icon
+    sprite: Constructible/Power/industrial_dispenser.rsi
+    state: industrial_dispenser
+  - type: ReagentDispenser
+    pack: ChemDispenserStandardInventory
+  - type: PowerReceiver
+
+- type: reagentDispenserInventory
+  id: ChemDispenserStandardInventory
+  inventory:
+  - chem.SulfuricAcid
+  - chem.Water
+  - chem.Ethanol
+  - chem.Glucose
+  - chem.Sugar
+  - chem.Hydrogen
+  - chem.Oxygen
+  - chem.Sulfur
+  - chem.Carbon
+  - chem.Copper
+  - chem.Nitrogen
+  - chem.Nutriment
+  - chem.Iron
+  - chem.Fluorine
+  - chem.Aluminium
+  - chem.Silicon
+  - chem.Chlorine
+  - chem.Lithium
+  - chem.Mercury
+  - chem.Phosphorus
+  - chem.Potassium
+  - chem.Radium
+  - chem.Sodium
+  - chem.Uranium

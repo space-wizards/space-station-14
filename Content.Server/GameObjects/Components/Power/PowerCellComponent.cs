@@ -1,53 +1,118 @@
+#nullable enable
+using System;
+using Content.Server.Explosions;
+using Content.Server.GameObjects.Components.Chemistry;
 using Content.Shared.GameObjects.Components.Power;
+using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Localization;
+using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power
 {
+    /// <summary>
+    /// Batteries that can update an <see cref="AppearanceComponent"/> based on their charge percent
+    /// and fit into a <see cref="PowerCellSlotComponent"/> of the appropriate size.
+    /// </summary>
     [RegisterComponent]
-    [ComponentReference(typeof(PowerStorageComponent))]
-    public class PowerCellComponent : PowerStorageComponent
+    [ComponentReference(typeof(BatteryComponent))]
+    public class PowerCellComponent : BatteryComponent, IExamine, ISolutionChange
     {
         public override string Name => "PowerCell";
 
-        private AppearanceComponent _appearance;
+        [ViewVariables] public PowerCellSize CellSize => _cellSize;
+        private PowerCellSize _cellSize = PowerCellSize.Small;
 
-        public override float Charge
+        [ViewVariables] public bool IsRigged { get; private set; }
+
+        public override void ExposeData(ObjectSerializer serializer)
         {
-            get => base.Charge;
-            set
-            {
-                base.Charge = value;
-                _updateAppearance();
-            }
+            base.ExposeData(serializer);
+            serializer.DataField(ref _cellSize, "cellSize", PowerCellSize.Small);
         }
 
         public override void Initialize()
         {
             base.Initialize();
-
-            Owner.TryGetComponent(out _appearance);
+            CurrentCharge = MaxCharge;
+            UpdateVisuals();
         }
 
-        public override void DeductCharge(float toDeduct)
+        protected override void OnChargeChanged()
         {
-            base.DeductCharge(toDeduct);
-
-            _updateAppearance();
-            ChargeChanged();
+            base.OnChargeChanged();
+            UpdateVisuals();
         }
 
-        public override void AddCharge(float charge)
+        public override bool TryUseCharge(float chargeToUse)
         {
-            base.AddCharge(charge);
+            if (IsRigged)
+            {
+                Explode();
+                return false;
+            }
 
-            _updateAppearance();
-            ChargeChanged();
+            return base.TryUseCharge(chargeToUse);
         }
 
-        private void _updateAppearance()
+        public override float UseCharge(float toDeduct)
         {
-            _appearance?.SetData(PowerCellVisuals.ChargeLevel, Charge / Capacity);
+            if (IsRigged)
+            {
+                Explode();
+                return 0;
+            }
+
+            return base.UseCharge(toDeduct);
         }
+
+        private void Explode()
+        {
+            var heavy = (int) Math.Ceiling(Math.Sqrt(CurrentCharge) / 60);
+            var light = (int) Math.Ceiling(Math.Sqrt(CurrentCharge) / 30);
+
+            CurrentCharge = 0;
+            Owner.SpawnExplosion(0, heavy, light, light*2);
+            Owner.Delete();
+        }
+
+        private void UpdateVisuals()
+        {
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(PowerCellVisuals.ChargeLevel, GetLevel(CurrentCharge / MaxCharge));
+            }
+        }
+
+        private byte GetLevel(float fraction)
+        {
+            return (byte) ContentHelpers.RoundToNearestLevels(fraction, 1, SharedPowerCell.PowerCellVisualsLevels);
+        }
+
+        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
+        {
+            if (inDetailsRange)
+            {
+                message.AddMarkup(Loc.GetString($"The charge indicator reads {CurrentCharge / MaxCharge * 100:F0} %."));
+            }
+        }
+
+        void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs)
+        {
+            IsRigged = Owner.TryGetComponent(out SolutionContainerComponent? solution)
+                       && solution.Solution.ContainsReagent("chem.Phoron", out var phoron)
+                       && phoron >= 5;
+        }
+    }
+
+    public enum PowerCellSize
+    {
+        Small,
+        Medium,
+        Large
     }
 }

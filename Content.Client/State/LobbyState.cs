@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using Content.Client.Interfaces;
 using Content.Client.Interfaces.Chat;
@@ -11,31 +11,32 @@ using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
+using static Content.Shared.GameTicking.SharedGameTicker;
 
 namespace Content.Client.State
 {
-    public class LobbyState : StateBase
+    public class LobbyState : Robust.Client.State.State
     {
-#pragma warning disable 649
-        [Dependency] private readonly IBaseClient _baseClient;
-        [Dependency] private readonly IClientConsole _console;
-        [Dependency] private readonly IChatManager _chatManager;
-        [Dependency] private readonly IInputManager _inputManager;
-        [Dependency] private readonly IEntityManager _entityManager;
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly IResourceCache _resourceCache;
-        [Dependency] private readonly IClientGameTicker _clientGameTicker;
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
-        [Dependency] private readonly IClientPreferencesManager _preferencesManager;
-#pragma warning restore 649
+        [Dependency] private readonly IBaseClient _baseClient = default!;
+        [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
+        [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly IClientGameTicker _clientGameTicker = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+        [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         [ViewVariables] private CharacterSetupGui _characterSetup;
         [ViewVariables] private LobbyGui _lobby;
@@ -45,12 +46,17 @@ namespace Content.Client.State
             _characterSetup = new CharacterSetupGui(_entityManager, _resourceCache, _preferencesManager,
                 _prototypeManager);
             LayoutContainer.SetAnchorPreset(_characterSetup, LayoutContainer.LayoutPreset.Wide);
+
             _characterSetup.CloseButton.OnPressed += args =>
+            {
+                _userInterfaceManager.StateRoot.AddChild(_lobby);
+                _userInterfaceManager.StateRoot.RemoveChild(_characterSetup);
+            };
+
+            _characterSetup.SaveButton.OnPressed += args =>
             {
                 _characterSetup.Save();
                 _lobby.CharacterPreview.UpdateUI();
-                _userInterfaceManager.StateRoot.AddChild(_lobby);
-                _userInterfaceManager.StateRoot.RemoveChild(_characterSetup);
             };
 
             _lobby = new LobbyGui(_entityManager, _resourceCache, _preferencesManager);
@@ -66,6 +72,12 @@ namespace Content.Client.State
             _inputManager.SetInputCommand(ContentKeyFunctions.FocusChat,
                 InputCmdHandler.FromDelegate(s => GameScreen.FocusChat(_lobby.Chat)));
 
+            _inputManager.SetInputCommand(ContentKeyFunctions.FocusOOC,
+                InputCmdHandler.FromDelegate(s => GameScreen.FocusOOC(_lobby.Chat)));
+
+            _inputManager.SetInputCommand(ContentKeyFunctions.FocusAdminChat,
+                InputCmdHandler.FromDelegate(s => GameScreen.FocusAdminChat(_lobby.Chat)));
+
             UpdateLobbyUi();
 
             _lobby.CharacterPreview.CharacterSetupButton.OnPressed += args =>
@@ -75,7 +87,7 @@ namespace Content.Client.State
                 _userInterfaceManager.StateRoot.AddChild(_characterSetup);
             };
 
-            _lobby.ObserveButton.OnPressed += args => _console.ProcessCommand("observe");
+            _lobby.ObserveButton.OnPressed += args => _consoleHost.ExecuteCommand("observe");
             _lobby.ReadyButton.OnPressed += args =>
             {
                 if (!_clientGameTicker.IsGameStarted)
@@ -83,7 +95,8 @@ namespace Content.Client.State
                     return;
                 }
 
-                _console.ProcessCommand("joingame");
+                new LateJoinGui().OpenCentered();
+                return;
             };
 
             _lobby.ReadyButton.OnToggled += args =>
@@ -91,20 +104,27 @@ namespace Content.Client.State
                 SetReady(args.Pressed);
             };
 
-            _lobby.LeaveButton.OnPressed += args => _console.ProcessCommand("disconnect");
+            _lobby.LeaveButton.OnPressed += args => _consoleHost.ExecuteCommand("disconnect");
+            _lobby.OptionsButton.OnPressed += args => new OptionsMenu().Open();
 
             UpdatePlayerList();
 
             _playerManager.PlayerListUpdated += PlayerManagerOnPlayerListUpdated;
             _clientGameTicker.InfoBlobUpdated += UpdateLobbyUi;
-            _clientGameTicker.LobbyStatusUpdated += UpdateLobbyUi;
+            _clientGameTicker.LobbyStatusUpdated += LobbyStatusUpdated;
+            _clientGameTicker.LobbyReadyUpdated += LobbyReadyUpdated;
+            _clientGameTicker.LobbyLateJoinStatusUpdated += LobbyLateJoinStatusUpdated;
         }
 
         public override void Shutdown()
         {
             _playerManager.PlayerListUpdated -= PlayerManagerOnPlayerListUpdated;
             _clientGameTicker.InfoBlobUpdated -= UpdateLobbyUi;
-            _clientGameTicker.LobbyStatusUpdated -= UpdateLobbyUi;
+            _clientGameTicker.LobbyStatusUpdated -= LobbyStatusUpdated;
+            _clientGameTicker.LobbyReadyUpdated -= LobbyReadyUpdated;
+            _clientGameTicker.LobbyLateJoinStatusUpdated -= LobbyLateJoinStatusUpdated;
+
+            _clientGameTicker.Status.Clear();
 
             _lobby.Dispose();
             _characterSetup.Dispose();
@@ -119,27 +139,64 @@ namespace Content.Client.State
             }
 
             string text;
-            var difference = _clientGameTicker.StartTime - DateTime.UtcNow;
-            if (difference.Ticks < 0)
+
+            if (_clientGameTicker.Paused)
             {
-                if (difference.TotalSeconds < -5)
-                {
-                    text = Loc.GetString("Right Now?");
-                }
-                else
-                {
-                    text = Loc.GetString("Right Now");
-                }
+                text = Loc.GetString("Paused");
             }
             else
             {
-                text = $"{(int) Math.Floor(difference.TotalMinutes)}:{difference.Seconds:D2}";
+                var difference = _clientGameTicker.StartTime - _gameTiming.CurTime;
+                var seconds = difference.TotalSeconds;
+                if (seconds < 0)
+                {
+                    if (seconds < -5)
+                    {
+                        text = Loc.GetString("Right Now?");
+                    }
+                    else
+                    {
+                        text = Loc.GetString("Right Now");
+                    }
+                }
+                else
+                {
+                    text = $"{(int) Math.Floor(difference.TotalMinutes / 60)}:{difference.Seconds:D2}";
+                }
             }
 
             _lobby.StartTime.Text = Loc.GetString("Round Starts In: {0}", text);
         }
 
-        private void PlayerManagerOnPlayerListUpdated(object sender, EventArgs e) => UpdatePlayerList();
+        private void PlayerManagerOnPlayerListUpdated(object sender, EventArgs e)
+        {
+            // Remove disconnected sessions from the Ready Dict
+            foreach (var p in _clientGameTicker.Status)
+            {
+                if (!_playerManager.SessionsDict.TryGetValue(p.Key, out _))
+                {
+                    // This is a shitty fix. Observers can rejoin because they are already in the game.
+                    // So we don't delete them, but keep them if they decide to rejoin
+                    if (p.Value != PlayerStatus.Observer)
+                        _clientGameTicker.Status.Remove(p.Key);
+                }
+            }
+
+            UpdatePlayerList();
+        }
+
+        private void LobbyReadyUpdated() => UpdatePlayerList();
+
+        private void LobbyStatusUpdated()
+        {
+            UpdatePlayerList();
+            UpdateLobbyUi();
+        }
+
+        private void LobbyLateJoinStatusUpdated()
+        {
+            _lobby.ReadyButton.Disabled = _clientGameTicker.DisallowedLateJoin;
+        }
 
         private void UpdateLobbyUi()
         {
@@ -159,6 +216,7 @@ namespace Content.Client.State
                 _lobby.StartTime.Text = "";
                 _lobby.ReadyButton.Text = Loc.GetString("Ready Up");
                 _lobby.ReadyButton.ToggleMode = true;
+                _lobby.ReadyButton.Disabled = false;
                 _lobby.ReadyButton.Pressed = _clientGameTicker.AreWeReady;
             }
 
@@ -167,11 +225,30 @@ namespace Content.Client.State
 
         private void UpdatePlayerList()
         {
-            _lobby.OnlinePlayerItemList.Clear();
+            _lobby.OnlinePlayerList.Clear();
 
             foreach (var session in _playerManager.Sessions.OrderBy(s => s.Name))
             {
-                _lobby.OnlinePlayerItemList.AddItem(session.Name);
+                var readyState = "";
+                // Don't show ready state if we're ingame
+                if (!_clientGameTicker.IsGameStarted)
+                {
+                    var status = PlayerStatus.NotReady;
+                    if (session.UserId == _playerManager.LocalPlayer.UserId)
+                        status = _clientGameTicker.AreWeReady ? PlayerStatus.Ready : PlayerStatus.NotReady;
+                    else
+                        _clientGameTicker.Status.TryGetValue(session.UserId, out status);
+
+                    readyState = status switch
+                    {
+                        PlayerStatus.NotReady => Loc.GetString("Not Ready"),
+                        PlayerStatus.Ready => Loc.GetString("Ready"),
+                        PlayerStatus.Observer => Loc.GetString("Observer"),
+                        _ => "",
+                    };
+                }
+
+                _lobby.OnlinePlayerList.AddItem(session.Name, readyState);
             }
         }
 
@@ -182,7 +259,8 @@ namespace Content.Client.State
                 return;
             }
 
-            _console.ProcessCommand($"toggleready {newReady}");
+            _consoleHost.ExecuteCommand($"toggleready {newReady}");
+            UpdatePlayerList();
         }
     }
 }

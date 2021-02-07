@@ -14,7 +14,7 @@ namespace Content.Shared.GameObjects.Components.Research
         public override string Name => "TechnologyDatabase";
         public override uint? NetID => ContentNetIDs.TECHNOLOGY_DATABASE;
 
-        protected List<TechnologyPrototype> _technologies = new List<TechnologyPrototype>();
+        protected List<TechnologyPrototype> _technologies = new();
 
         /// <summary>
         ///     A read-only list of unlocked technologies.
@@ -83,20 +83,21 @@ namespace Content.Shared.GameObjects.Components.Research
         {
             base.ExposeData(serializer);
 
-            if (serializer.Reading)
-            {
-                var techs = serializer.ReadDataField("technologies", new List<string>());
-                var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-                foreach (var id in techs)
+            serializer.DataReadWriteFunction(
+                "technologies",
+                new List<string>(),
+                techs =>
                 {
-                    if (!prototypeManager.TryIndex(id, out TechnologyPrototype tech)) continue;
-                    _technologies.Add(tech);
-                }
-            } else if (serializer.Writing)
-            {
-                var techs = GetTechnologyIdList();
-                serializer.DataField(ref techs, "technologies", new List<string>());
-            }
+                    var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+
+                    foreach (var id in techs)
+                    {
+                        if (prototypeManager.TryIndex(id, out TechnologyPrototype tech))
+                        {
+                            _technologies.Add(tech);
+                        }
+                    }
+                }, GetTechnologyIdList);
         }
     }
 

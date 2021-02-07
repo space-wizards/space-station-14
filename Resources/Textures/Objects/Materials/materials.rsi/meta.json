@@ -1,0 +1,77 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/37f849fb17014f689346f7a9a49fab5f5562cf18",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "alienhide"
+        },
+        {
+            "name": "cathide"
+        },
+        {
+            "name": "corgihide"
+        },
+        {
+            "name": "liggerhide"
+        },
+        {
+            "name": "monkeyhide"
+        },
+        {
+            "name": "banananium"
+        },
+        {
+            "name": "diamond"
+        },
+        {
+            "name": "uranium"
+        },
+        {
+            "name": "wood_plank"
+        },
+        {
+            "name": "wool"
+        },
+        {
+            "name": "copperbar_single"
+        },
+        {
+            "name": "goldbar_10"
+        },
+        {
+            "name": "goldbar_20"
+        },
+        {
+            "name": "goldbar_30"
+        },
+        {
+            "name": "leadbar_single"
+        },
+        {
+            "name": "steelbar_single"
+        },
+        {
+            "name": "tinbar_single"
+        },
+        {
+            "name": "phoron_ore"
+        },
+        {
+            "name": "phoron_sheet"
+        },
+        {
+            "name": "phoron_gem"
+        },
+        {
+            "name": "spent_phoron_gem"
+        },
+        {
+            "name": "rods"
+        }
+    ]
+}

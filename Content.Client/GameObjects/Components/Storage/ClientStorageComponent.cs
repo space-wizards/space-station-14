@@ -1,15 +1,23 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using Content.Client.Animations;
+using Content.Client.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Storage;
-using Content.Client.Interfaces.GameObjects;
+using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Client.Animations;
+using Robust.Client.GameObjects;
+using Robust.Client.GameObjects.Components.Animations;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Client.Player;
+using Robust.Shared.Animations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -21,25 +29,41 @@ namespace Content.Client.GameObjects.Components.Storage
     /// Client version of item storage containers, contains a UI which displays stored entities and their size
     /// </summary>
     [RegisterComponent]
-    public class ClientStorageComponent : SharedStorageComponent
+    public class ClientStorageComponent : SharedStorageComponent, IDraggable
     {
-        private Dictionary<EntityUid, int> StoredEntities { get; set; } = new Dictionary<EntityUid, int>();
+        private List<IEntity> _storedEntities = new();
         private int StorageSizeUsed;
         private int StorageCapacityMax;
         private StorageWindow Window;
+
+        public override IReadOnlyList<IEntity> StoredEntities => _storedEntities;
 
         public override void OnAdd()
         {
             base.OnAdd();
 
             Window = new StorageWindow()
-                {StorageEntity = this};
+            { StorageEntity = this, Title = Owner.Name };
         }
 
         public override void OnRemove()
         {
             Window.Dispose();
             base.OnRemove();
+        }
+
+        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        {
+            base.HandleComponentState(curState, nextState);
+
+            if (curState is not StorageComponentState state)
+            {
+                return;
+            }
+
+            _storedEntities = state.StoredEntities
+                .Select(id => Owner.EntityManager.GetEntity(id))
+                .ToList();
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
@@ -54,10 +78,13 @@ namespace Content.Client.GameObjects.Components.Storage
                     break;
                 //Opens the UI
                 case OpenStorageUIMessage _:
-                    OpenUI();
+                    ToggleUI();
                     break;
                 case CloseStorageUIMessage _:
                     CloseUI();
+                    break;
+                case AnimateInsertingEntitiesMessage msg:
+                    HandleAnimatingInsertingEntities(msg);
                     break;
             }
         }
@@ -65,21 +92,42 @@ namespace Content.Client.GameObjects.Components.Storage
         /// <summary>
         /// Copies received values from server about contents of storage container
         /// </summary>
-        /// <param name="storagestate"></param>
-        private void HandleStorageMessage(StorageHeldItemsMessage storagestate)
+        /// <param name="storageState"></param>
+        private void HandleStorageMessage(StorageHeldItemsMessage storageState)
         {
-            StoredEntities = new Dictionary<EntityUid, int>(storagestate.StoredEntities);
-            StorageSizeUsed = storagestate.StorageSizeUsed;
-            StorageCapacityMax = storagestate.StorageSizeMax;
+            _storedEntities = storageState.StoredEntities.Select(id => Owner.EntityManager.GetEntity(id)).ToList();
+            StorageSizeUsed = storageState.StorageSizeUsed;
+            StorageCapacityMax = storageState.StorageSizeMax;
             Window.BuildEntityList();
         }
 
         /// <summary>
-        /// Opens the storage UI
+        /// Animate the newly stored entities in <paramref name="msg"/> flying towards this storage's position
         /// </summary>
-        private void OpenUI()
+        /// <param name="msg"></param>
+        private void HandleAnimatingInsertingEntities(AnimateInsertingEntitiesMessage msg)
         {
-            Window.Open();
+            for (var i = 0; msg.StoredEntities.Count > i; i++)
+            {
+                var entityId = msg.StoredEntities[i];
+                var initialPosition = msg.EntityPositions[i];
+
+                if (Owner.EntityManager.TryGetEntity(entityId, out var entity))
+                {
+                    ReusableAnimations.AnimateEntityPickup(entity, initialPosition, Owner.Transform.WorldPosition);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Opens the storage UI if closed. Closes it if opened.
+        /// </summary>
+        private void ToggleUI()
+        {
+            if (Window.IsOpen)
+                Window.Close();
+            else
+                Window.Open();
         }
 
         private void CloseUI()
@@ -90,10 +138,21 @@ namespace Content.Client.GameObjects.Components.Storage
         /// <summary>
         /// Function for clicking one of the stored entity buttons in the UI, tells server to remove that entity
         /// </summary>
-        /// <param name="entityuid"></param>
-        private void Interact(EntityUid entityuid)
+        /// <param name="entityUid"></param>
+        private void Interact(EntityUid entityUid)
         {
-            SendNetworkMessage(new RemoveEntityMessage(entityuid));
+            SendNetworkMessage(new RemoveEntityMessage(entityUid));
+        }
+
+        public override bool Remove(IEntity entity)
+        {
+            if (_storedEntities.Remove(entity))
+            {
+                Dirty();
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -102,12 +161,12 @@ namespace Content.Client.GameObjects.Components.Storage
         private class StorageWindow : SS14Window
         {
             private Control VSplitContainer;
-            private VBoxContainer EntityList;
-            private Label Information;
+            private readonly VBoxContainer _entityList;
+            private readonly Label _information;
             public ClientStorageComponent StorageEntity;
 
-            private StyleBoxFlat _HoveredBox = new StyleBoxFlat {BackgroundColor = Color.Black.WithAlpha(0.35f)};
-            private StyleBoxFlat  _unHoveredBox = new StyleBoxFlat {BackgroundColor = Color.Black.WithAlpha(0.0f)};
+            private readonly StyleBoxFlat _hoveredBox = new() { BackgroundColor = Color.Black.WithAlpha(0.35f) };
+            private readonly StyleBoxFlat _unHoveredBox = new() { BackgroundColor = Color.Black.WithAlpha(0.0f) };
 
             protected override Vector2? CustomSize => (180, 320);
 
@@ -136,7 +195,7 @@ namespace Content.Client.GameObjects.Components.Storage
                 {
                     var controlledEntity = IoCManager.Resolve<IPlayerManager>().LocalPlayer.ControlledEntity;
 
-                    if (controlledEntity.TryGetComponent(out IHandsComponent hands))
+                    if (controlledEntity.TryGetComponent(out HandsComponent hands))
                     {
                         StorageEntity.SendNetworkMessage(new InsertEntityMessage());
                     }
@@ -147,12 +206,12 @@ namespace Content.Client.GameObjects.Components.Storage
                     MouseFilter = MouseFilterMode.Ignore,
                 };
                 containerButton.AddChild(VSplitContainer);
-                Information = new Label
+                _information = new Label
                 {
                     Text = "Items: 0 Volume: 0/0 Stuff",
                     SizeFlagsVertical = SizeFlags.ShrinkCenter
                 };
-                VSplitContainer.AddChild(Information);
+                VSplitContainer.AddChild(_information);
 
                 var listScrollContainer = new ScrollContainer
                 {
@@ -161,18 +220,18 @@ namespace Content.Client.GameObjects.Components.Storage
                     HScrollEnabled = true,
                     VScrollEnabled = true,
                 };
-                EntityList = new VBoxContainer
+                _entityList = new VBoxContainer
                 {
                     SizeFlagsHorizontal = SizeFlags.FillExpand
                 };
-                listScrollContainer.AddChild(EntityList);
+                listScrollContainer.AddChild(_entityList);
                 VSplitContainer.AddChild(listScrollContainer);
 
                 Contents.AddChild(containerButton);
 
                 listScrollContainer.OnMouseEntered += args =>
                 {
-                    innerContainerButton.PanelOverride = _HoveredBox;
+                    innerContainerButton.PanelOverride = _hoveredBox;
                 };
 
                 listScrollContainer.OnMouseExited += args =>
@@ -192,23 +251,29 @@ namespace Content.Client.GameObjects.Components.Storage
             /// </summary>
             public void BuildEntityList()
             {
-                EntityList.DisposeAllChildren();
+                _entityList.DisposeAllChildren();
 
-                var storagelist = StorageEntity.StoredEntities;
+                var storageList = StorageEntity.StoredEntities;
 
-                foreach (var entityuid in storagelist)
+                var storedGrouped = storageList.GroupBy(e => e).Select(e => new
                 {
-                    var entity = IoCManager.Resolve<IEntityManager>().GetEntity(entityuid.Key);
+                    Entity = e.Key,
+                    Amount = e.Count()
+                });
 
+                foreach (var group in storedGrouped)
+                {
+                    var entity = group.Entity;
                     var button = new EntityButton()
                     {
-                        EntityuID = entityuid.Key,
+                        EntityUid = entity.Uid,
                         MouseFilter = MouseFilterMode.Stop,
                     };
                     button.ActualButton.OnToggled += OnItemButtonToggled;
                     //Name and Size labels set
                     button.EntityName.Text = entity.Name;
-                    button.EntitySize.Text = string.Format("{0}", entityuid.Value);
+
+                    button.EntitySize.Text = group.Amount.ToString();
 
                     //Gets entity sprite and assigns it to button texture
                     if (entity.TryGetComponent(out ISpriteComponent sprite))
@@ -216,18 +281,18 @@ namespace Content.Client.GameObjects.Components.Storage
                         button.EntitySpriteView.Sprite = sprite;
                     }
 
-                    EntityList.AddChild(button);
+                    _entityList.AddChild(button);
                 }
 
                 //Sets information about entire storage container current capacity
                 if (StorageEntity.StorageCapacityMax != 0)
                 {
-                    Information.Text = String.Format("Items: {0}, Stored: {1}/{2}", storagelist.Count,
+                    _information.Text = String.Format("Items: {0}, Stored: {1}/{2}", storageList.Count,
                         StorageEntity.StorageSizeUsed, StorageEntity.StorageCapacityMax);
                 }
                 else
                 {
-                    Information.Text = String.Format("Items: {0}", storagelist.Count);
+                    _information.Text = String.Format("Items: {0}", storageList.Count);
                 }
             }
 
@@ -239,29 +304,16 @@ namespace Content.Client.GameObjects.Components.Storage
             {
                 var control = (EntityButton) args.Button.Parent;
                 args.Button.Pressed = false;
-                StorageEntity.Interact(control.EntityuID);
-            }
-
-            /// <summary>
-            /// Function assigned to button that adds items to the storage entity.
-            /// </summary>
-            private void OnAddItemButtonPressed(BaseButton.ButtonEventArgs args)
-            {
-                var controlledEntity = IoCManager.Resolve<IPlayerManager>().LocalPlayer.ControlledEntity;
-
-                if (controlledEntity.TryGetComponent(out IHandsComponent hands))
-                {
-                    StorageEntity.SendNetworkMessage(new InsertEntityMessage());
-                }
+                StorageEntity.Interact(control.EntityUid);
             }
         }
 
         /// <summary>
         /// Button created for each entity that represents that item in the storage UI, with a texture, and name and size label
         /// </summary>
-        private class EntityButton : PanelContainer
+        private class EntityButton : Control
         {
-            public EntityUid EntityuID { get; set; }
+            public EntityUid EntityUid { get; set; }
             public Button ActualButton { get; }
             public SpriteView EntitySpriteView { get; }
             public Control EntityControl { get; }

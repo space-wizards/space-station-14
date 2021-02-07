@@ -1,0 +1,62 @@
+# Hacky for the stress test so don't even consider adding to this
+- type: entity
+  save: false
+  name: Xeno
+  id: XenoMob_Content
+  description: They mostly come at night. Mostly.
+  drawdepth: Mobs
+  suffix: AI
+  components:
+  - type: AiController
+    logic: Xeno
+  - type: AiFactionTag
+    factions:
+    - Xeno
+  - type: Hands
+  - type: MovementSpeedModifier
+  - type: InteractionOutline
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: running
+      sprite: Mobs/Aliens/Xenos/xeno.rsi
+  - type: Clickable
+  - type: Physics
+    anchored: false
+    mass: 85
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-1,-0.4,-0.2,0.4"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+  - type: Damageable
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      150: !type:CriticalMobState {}
+      200: !type:DeadMobState {}
+  - type: Metabolism
+  - type: HeatResistance
+  - type: CombatMode
+  - type: Teleportable
+  - type: FootstepSound
+  - type: Stunnable
+  - type: UnarmedCombat
+    range: 1.5
+    arcwidth: 0
+    arc: claw
+    damage: 10
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: running
+      crit: crit
+      dead: dead
+  - type: Puller

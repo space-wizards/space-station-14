@@ -1,10 +1,11 @@
-using System.Linq;
+﻿using System.Linq;
 using Content.Client.Utility;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Maths;
+using static Robust.Client.UserInterface.StylesheetHelpers;
 
 namespace Content.Client.UserInterface.Stylesheets
 {
@@ -17,90 +18,96 @@ namespace Content.Client.UserInterface.Stylesheets
         public static readonly Color ButtonColorPressed = Color.FromHex("#3e6c45");
         public static readonly Color ButtonColorDisabled = Color.FromHex("#30313c");
 
+        public static readonly Color ButtonColorCautionDefault = Color.FromHex("#ab3232");
+        public static readonly Color ButtonColorCautionHovered = Color.FromHex("#cf2f2f");
+        public static readonly Color ButtonColorCautionPressed = Color.FromHex("#3e6c45");
+        public static readonly Color ButtonColorCautionDisabled = Color.FromHex("#602a2a");
+
         public override Stylesheet Stylesheet { get; }
 
         public StyleSpace(IResourceCache resCache) : base(resCache)
         {
-            var notoSans10 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 10);
-            var notoSansBold16 = resCache.GetFont("/Nano/NotoSans/NotoSans-Bold.ttf", 16);
-
-            // Button styles.
-            var buttonNormal = new StyleBoxTexture(BaseButton)
-            {
-                Modulate = ButtonColorDefault
-            };
-
-            var buttonHover = new StyleBoxTexture(buttonNormal)
-            {
-                Modulate = ButtonColorHovered
-            };
-
-            var buttonPressed = new StyleBoxTexture(buttonNormal)
-            {
-                Modulate = ButtonColorPressed
-            };
-
-            var buttonDisabled = new StyleBoxTexture(buttonNormal)
-            {
-                Modulate = ButtonColorDisabled
-            };
-
+            var notoSans10 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 10);
+            var notoSansBold16 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Bold.ttf", 16);
 
             Stylesheet = new Stylesheet(BaseRules.Concat(new StyleRule[]
             {
-                // Big Label
-                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassLabelHeading}, null, null), new[]
-                {
-                    new StyleProperty(Label.StylePropertyFont, notoSansBold16),
-                    new StyleProperty(Label.StylePropertyFontColor, SpaceRed),
-                }),
+                Element<Label>().Class(StyleClassLabelHeading)
+                    .Prop(Label.StylePropertyFont, notoSansBold16)
+                    .Prop(Label.StylePropertyFontColor, SpaceRed),
 
-                // Small Label
-                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassLabelSubText}, null, null), new[]
-                {
-                    new StyleProperty(Label.StylePropertyFont, notoSans10),
-                    new StyleProperty(Label.StylePropertyFontColor, Color.DarkGray),
-                }),
+                Element<Label>().Class(StyleClassLabelSubText)
+                    .Prop(Label.StylePropertyFont, notoSans10)
+                    .Prop(Label.StylePropertyFontColor, Color.DarkGray),
 
-                new StyleRule(new SelectorElement(typeof(PanelContainer), new[] {ClassHighDivider}, null, null), new[]
-                {
-                    new StyleProperty(PanelContainer.StylePropertyPanel,
-                        new StyleBoxFlat
-                        {
-                            BackgroundColor = SpaceRed, ContentMarginBottomOverride = 2, ContentMarginLeftOverride = 2
-                        }),
-                }),
-
-                // Regular buttons!
-                new StyleRule(new SelectorElement(typeof(ContainerButton), new[] { ContainerButton.StyleClassButton }, null, new[] {ContainerButton.StylePseudoClassNormal}), new[]
-                {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonNormal),
-                }),
-                new StyleRule(new SelectorElement(typeof(ContainerButton), new[] { ContainerButton.StyleClassButton }, null, new[] {ContainerButton.StylePseudoClassHover}), new[]
-                {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonHover),
-                }),
-                new StyleRule(new SelectorElement(typeof(ContainerButton), new[] { ContainerButton.StyleClassButton }, null, new[] {ContainerButton.StylePseudoClassPressed}), new[]
-                {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonPressed),
-                }),
-                new StyleRule(new SelectorElement(typeof(ContainerButton), new[] { ContainerButton.StyleClassButton }, null, new[] {ContainerButton.StylePseudoClassDisabled}), new[]
-                {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonDisabled),
-                }),
-
-                new StyleRule(new SelectorElement(typeof(Label), new[] { Button.StyleClassButton }, null, null), new[]
-                {
-                    new StyleProperty(Label.StylePropertyAlignMode, Label.AlignMode.Center),
-                }),
-
-                new StyleRule(new SelectorChild(
-                        new SelectorElement(typeof(Button), null, null, new[] {ContainerButton.StylePseudoClassDisabled}),
-                        new SelectorElement(typeof(Label), null, null, null)),
-                    new[]
+                Element<PanelContainer>().Class(ClassHighDivider)
+                    .Prop(PanelContainer.StylePropertyPanel, new StyleBoxFlat
                     {
-                        new StyleProperty("font-color", Color.FromHex("#E5E5E581")),
+                        BackgroundColor = SpaceRed, ContentMarginBottomOverride = 2, ContentMarginLeftOverride = 2
                     }),
+                // Shapes for the buttons.
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                    .Prop(ContainerButton.StylePropertyStyleBox, BaseButton),
+
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                    .Class(ButtonOpenRight)
+                    .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonOpenRight),
+
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                    .Class(ButtonOpenLeft)
+                    .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonOpenLeft),
+
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                    .Class(ButtonOpenBoth)
+                    .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonOpenBoth),
+
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                    .Class(ButtonSquare)
+                    .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonSquare),
+
+                // Colors for the buttons.
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                    .Pseudo(ContainerButton.StylePseudoClassNormal)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorDefault),
+
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                    .Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorHovered),
+
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                    .Pseudo(ContainerButton.StylePseudoClassPressed)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorPressed),
+
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                    .Pseudo(ContainerButton.StylePseudoClassDisabled)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorDisabled),
+
+                // Colors for the caution buttons.
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonCaution)
+                    .Pseudo(ContainerButton.StylePseudoClassNormal)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDefault),
+
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonCaution)
+                    .Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionHovered),
+
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonCaution)
+                    .Pseudo(ContainerButton.StylePseudoClassPressed)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionPressed),
+
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonCaution)
+                    .Pseudo(ContainerButton.StylePseudoClassDisabled)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDisabled),
+
+
+                Element<Label>().Class(ContainerButton.StyleClassButton)
+                    .Prop(Label.StylePropertyAlignMode, Label.AlignMode.Center),
+
+                Child()
+                    .Parent(Element<Button>().Class(ContainerButton.StylePseudoClassDisabled))
+                    .Child(Element<Label>())
+                    .Prop("font-color", Color.FromHex("#E5E5E581")),
+
             }).ToList());
         }
     }

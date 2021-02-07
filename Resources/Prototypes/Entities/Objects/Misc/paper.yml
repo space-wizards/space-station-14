@@ -1,0 +1,29 @@
+- type: entity
+  name: paper
+  parent: BaseItem
+  id: Paper
+  description: 'A piece of white paper.'
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper_words
+    - state: paper
+
+  - type: Paper
+  - type: UserInterface
+    interfaces:
+    - key: enum.PaperUiKey.Key
+      type: PaperBoundUserInterface
+
+- type: entity
+  name: pen
+  parent: BaseItem
+  id: Pen
+  description: 'A dark ink pen.'
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: pen
+
+  - type: Write

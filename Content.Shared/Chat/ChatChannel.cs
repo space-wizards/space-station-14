@@ -52,8 +52,13 @@ namespace Content.Shared.Chat
         Dead = 128,
 
         /// <summary>
+        ///     Admin chat
+        /// </summary>
+        AdminChat = 256,
+
+        /// <summary>
         ///     Unspecified.
         /// </summary>
-        Unspecified = 256,
+        Unspecified = 512,
     }
 }

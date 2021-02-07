@@ -1,0 +1,195 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-NA 3",
+  "copyright": "https://github.com/Baystation12/Baystation12/commit/bc9fbb1722530596e3aa7522ee407280b323ad43",
+  "states": [
+    {
+      "name": "beaker",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "bodybags",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "meson",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "sechud",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "box",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "box_of_doom",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "circuit",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "disk_kit",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "donk_kit",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "flashbang",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "glasses",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "handcuff",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "implant",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "latex",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "light",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "lightmixed",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "lighttube",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "mousetraps",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "pda",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "pillbox",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "solution_trays",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "sterile",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "syringe",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    }
+  ]
+}

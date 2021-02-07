@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Content.Shared.Input;
 using Robust.Client.Interfaces.Graphics;
 using Robust.Client.Interfaces.Input;
-using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.Resources;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -15,7 +15,7 @@ namespace Content.Client
 {
     internal class ScreenshotHook : IScreenshotHook
     {
-        private static readonly ResourcePath BaseScreenshotPath = new ResourcePath("/Screenshots");
+        private static readonly ResourcePath BaseScreenshotPath = new("/Screenshots");
 
         [Dependency] private readonly IInputManager _inputManager = default;
         [Dependency] private readonly IClyde _clyde = default;
@@ -57,7 +57,7 @@ namespace Content.Client
                     }
 
                     await using var file =
-                        _resourceManager.UserData.Open(BaseScreenshotPath / $"{filename}.png", FileMode.CreateNew);
+                        _resourceManager.UserData.Open(BaseScreenshotPath / $"{filename}.png", FileMode.CreateNew, FileAccess.Write, FileShare.None);
 
                     await Task.Run(() =>
                     {

@@ -1,0 +1,25 @@
+- type: job
+  id: Scientist
+  name: "scientist"
+  positions: 3
+  spawnPositions: 2
+  startingGear: ScientistGear
+  departments:
+  - Science
+  icon: "Scientist"
+  access:
+  - Research
+  - Maintenance
+
+- type: startingGear
+  id: ScientistGear
+  equipment:
+    innerclothing: ClothingUniformJumpsuitScientist
+    backpack: ClothingBackpackScienceFilled
+    shoes: ClothingShoesColorWhite
+    outerclothing: ClothingOuterCoatLab
+    idcard: SciencePDA
+    ears: ClothingHeadsetScience
+  innerclothingskirt: ClothingUniformJumpskirtScientist
+  satchel: ClothingBackpackSatchelScienceFilled
+  duffelbag: ClothingBackpackDuffelScienceFilled

@@ -9,15 +9,35 @@ namespace Content.Shared.GameObjects.Components
         public sealed override string Name => "HandheldLight";
         public sealed override uint? NetID => ContentNetIDs.HANDHELD_LIGHT;
 
+        protected abstract bool HasCell { get; }
+
+        protected const int StatusLevels = 6;
+
         [Serializable, NetSerializable]
         protected sealed class HandheldLightComponentState : ComponentState
         {
-            public HandheldLightComponentState(float? charge) : base(ContentNetIDs.HANDHELD_LIGHT)
+            public byte? Charge { get; }
+
+            public HandheldLightComponentState(byte? charge) : base(ContentNetIDs.HANDHELD_LIGHT)
             {
                 Charge = charge;
             }
-
-            public float? Charge { get; }
         }
     }
+
+    [Serializable, NetSerializable]
+    public enum HandheldLightVisuals
+    {
+        Power
+    }
+
+    [Serializable, NetSerializable]
+    public enum HandheldLightPowerStates
+    {
+        FullPower,
+        LowPower,
+        Dying,
+    }
+
+
 }
