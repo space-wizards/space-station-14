@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Drawing;
 using Content.Server.Administration;
 using Content.Server.Eui;
 using Content.Server.GameObjects.Components.Observer;
@@ -134,7 +135,10 @@ namespace Content.Server.GameObjects.EntitySystems
         public string Help => $"{Command}";
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            EntitySystem.Get<GhostRoleSystem>().OpenEui((IPlayerSession)shell.Player);
+            if(shell.IsClient)
+                EntitySystem.Get<GhostRoleSystem>().OpenEui((IPlayerSession)shell.Player);
+            else
+                shell.WriteLine("You can only open the ghost roles UI on a client.", Color.Red);
         }
     }
 }
