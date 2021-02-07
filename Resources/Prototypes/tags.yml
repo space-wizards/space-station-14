@@ -1,2 +1,5 @@
 - type: Tag
   id: ExplosivePassable
+
+- type: Tag
+  id: Wall

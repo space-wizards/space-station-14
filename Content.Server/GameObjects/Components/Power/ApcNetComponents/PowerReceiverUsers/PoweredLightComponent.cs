@@ -38,6 +38,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         private static readonly TimeSpan _thunkDelay = TimeSpan.FromSeconds(2);
         private TimeSpan _lastThunk;
+        private bool _hasLampOnSpawn;
 
         [ViewVariables] private bool _on;
 
@@ -148,6 +149,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         {
             serializer.DataField(ref BulbType, "bulb", LightBulbType.Tube);
             serializer.DataField(ref _on, "on", true);
+            serializer.DataField(ref _hasLampOnSpawn, "hasLampOnSpawn", true);
         }
 
         /// <summary>
@@ -229,15 +231,19 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         void IMapInit.MapInit()
         {
-            var prototype = BulbType switch
+            if (_hasLampOnSpawn)
             {
-                LightBulbType.Bulb => "LightBulb",
-                LightBulbType.Tube => "LightTube",
-                _ => throw new ArgumentOutOfRangeException()
-            };
+                var prototype = BulbType switch
+                {
+                    LightBulbType.Bulb => "LightBulb",
+                    LightBulbType.Tube => "LightTube",
+                    _ => throw new ArgumentOutOfRangeException()
+                };
 
-            var entity = Owner.EntityManager.SpawnEntity(prototype, Owner.Transform.Coordinates);
-            _lightBulbContainer.Insert(entity);
+                var entity = Owner.EntityManager.SpawnEntity(prototype, Owner.Transform.Coordinates);
+                _lightBulbContainer.Insert(entity);
+                UpdateLight();
+            }
         }
 
         public void TriggerSignal(bool signal)
