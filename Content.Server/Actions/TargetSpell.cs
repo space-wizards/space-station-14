@@ -62,10 +62,14 @@ namespace Content.Server.Actions
             //caster.PopupMessageEveryone(CastMessage); //Speak the cast message out loud
             //Now the fun part, actually applying the spell component to the caster
             if (!target.TryGetComponent(RegisteredTargetType, out var component)) return;
+            if (target.HasComponent(RegisteredInduceType)) return;
             actions.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(CoolDown)); //Set the spell on cooldown
             caster.PopupMessageEveryone(CastMessage);
-            var IComponent InduceComp = RegisteredInduceType.
-            target.EnsureComponent<RegisteredInduceType>;
+            var componentInduced = compFactory.GetComponent(RegisteredInduceType);
+            Component compInducedFinal = (Component)componentInduced;
+            compInducedFinal.Owner = target;
+            target.EntityManager.ComponentManager.AddComponent(target, compInducedFinal);
+
         }
 
     }

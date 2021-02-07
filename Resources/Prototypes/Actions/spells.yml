@@ -48,14 +48,14 @@
 
 - type: action
   actionType: DebugTarget
-  icon: Mobs/Aliens/Carps/carp_magic.rsi/icon.png
-  name: "TargetIt"
+  icon: Mobs/Species/Human/organs.rsi/brain.png
+  name: "Mind and ass"
   filters:
     - human
-  description: "This is a debug entity spell"
+  description: "Burden a sentient creature with a hunched seat back"
   behaviorType: TargetEntity
   behavior: !type:TargetSpell
-   castmessage: IT WOKS!
+   castmessage: ASE'N'MRE!
    cooldown: 1
-   NeedComponent: Actions
-   AddedComponent: PressureProtection
+   NeedComponent: Item
+   AddedComponent: Strap
