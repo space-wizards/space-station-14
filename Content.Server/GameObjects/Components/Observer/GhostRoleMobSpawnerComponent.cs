@@ -55,7 +55,7 @@ namespace Content.Server.GameObjects.Components.Observer
             mob.EnsureComponent<MindComponent>();
             session.ContentData().Mind.TransferTo(mob);
 
-            if (++_currentTakeovers <= _availableTakeovers) return true;
+            if (++_currentTakeovers < _availableTakeovers) return true;
 
             Taken = true;
 
