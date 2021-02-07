@@ -30,7 +30,7 @@ namespace Content.Server.Commands.GameTicking
             }
 
 #if DEBUG
-            shell.WriteLine("WARNING: The server is using a debug build. You are risking losing your changes.", Color.Red);
+            shell.WriteError("WARNING: The server is using a debug build. You are risking losing your changes.");
 #endif
 
             var mapManager = IoCManager.Resolve<IMapManager>();

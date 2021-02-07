@@ -97,7 +97,7 @@ namespace Content.Client.Commands
             }
 
 #if DEBUG
-            shell.WriteLine("WARNING: The client is using a debug build. You are risking losing your changes.", Color.Red);
+            shell.WriteError("WARNING: The client is using a debug build. You are risking losing your changes.");
 #endif
 
             shell.ConsoleHost.RegisteredCommands["togglelight"].Execute(shell, string.Empty, Array.Empty<string>());
