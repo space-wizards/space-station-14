@@ -135,7 +135,7 @@ namespace Content.Server.GameObjects.EntitySystems
         public string Help => $"{Command}";
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if(shell.IsClient)
+            if(shell.Player != null)
                 EntitySystem.Get<GhostRoleSystem>().OpenEui((IPlayerSession)shell.Player);
             else
                 shell.WriteLine("You can only open the ghost roles UI on a client.", Color.Red);
