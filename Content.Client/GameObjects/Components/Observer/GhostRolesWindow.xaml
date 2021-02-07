@@ -5,6 +5,8 @@
     <uic:CenterContainer Name="NoRolesMessage" SizeFlagsVertical="FillExpand" SizeFlagsHorizontal="FillExpand">
         <uic:Label Text="There are currently no available ghost roles."/>
     </uic:CenterContainer>
-    <uic:VBoxContainer Name="EntryContainer" />
+    <uic:ScrollContainer SizeFlagsHorizontal="FillExpand" SizeFlagsVertical="FillExpand">
+        <uic:VBoxContainer Name="EntryContainer" SizeFlagsHorizontal="FillExpand" SizeFlagsVertical="FillExpand" />
+    </uic:ScrollContainer>
 
 </cc:SS14Window>
