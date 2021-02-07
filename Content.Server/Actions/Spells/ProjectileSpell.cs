@@ -9,6 +9,7 @@ using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
+using System;
 
 namespace Content.Server.Actions
 {
@@ -23,6 +24,14 @@ namespace Content.Server.Actions
         public float CoolDown { get; private set; }
         public bool IgnoreCaster { get; private set; }
 
+        public string TargetType { get; private set; }
+        public string InduceComponent { get; private set; }
+
+        public Type RegisteredTargetType;
+
+        public Type RegisteredInduceType;
+
+        public IComponent CheckedComponent;
         public ProjectileSpell()
         {
             IoCManager.InjectDependencies(this);
@@ -31,10 +40,12 @@ namespace Content.Server.Actions
         public void ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.CastMessage, "castmessage", "Instant action used."); //What player says upon casting the spell
-            serializer.DataField(this, x => x.Projectile, "spellprojectile", null); //What projectile/Entity does the spell create
+            serializer.DataField(this, x => x.Projectile, "spellprojectile", "FireBallbullet"); //What projectile/Entity does the spell create
             serializer.DataField(this, x => x.VelocityMult, "speed", 0f); //Speed that is applied to the projectile
             serializer.DataField(this, x => x.CoolDown, "cooldown", 0f);
             serializer.DataField(this, x => x.IgnoreCaster, "ignorecaster", false); //ignore caster or not
+            serializer.DataField(this, x => x.TargetType, "NeedComponent", "SharedActionsComponent"); //Needed component the target must posess
+            serializer.DataField(this, x => x.InduceComponent, "AddedComponent", "SharedActionsComponent"); //The component the spell adds onto the target
         }
 
         public void DoTargetPointAction(TargetPointActionEventArgs args)
