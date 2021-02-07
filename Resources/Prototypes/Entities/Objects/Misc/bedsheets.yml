@@ -15,7 +15,7 @@
     size: 10
     QuickEquip: true
     Slots:
-    - back
+    - neck
   - type: SnapGrid
     offset: Center
 
@@ -28,9 +28,6 @@
     state: sheetblack
   - type: Clothing
     size: 10
-    QuickEquip: true
-    Slots:
-    - neck
     sprite: Clothing/Neck/Bedsheets/black.rsi
 
 - type: entity
@@ -42,9 +39,6 @@
     state: sheetblue
   - type: Clothing
     size: 10
-    QuickEquip: true
-    Slots:
-    - neck
     sprite: Clothing/Neck/Bedsheets/blue.rsi
 
 - type: entity
@@ -56,9 +50,6 @@
     state: sheetbrown
   - type: Clothing
     size: 10
-    QuickEquip: true
-    Slots:
-    - neck
     sprite: Clothing/Neck/Bedsheets/brown.rsi
 
 - type: entity
@@ -71,93 +62,78 @@
     state: sheetcaptain
   - type: Clothing
     size: 10
-    QuickEquip: true
-    Slots:
-    - neck
     sprite: Clothing/Neck/Bedsheets/captain.rsi
 
 - type: entity
   id: BedsheetCE
   parent: BedsheetBase
-  name: ce's bedsheet
+  name: CE's bedsheet
+  description: It is decorated with a wrench emblem. It's highly reflective and stain resistant, so you don't need to worry about ruining it with oil.
   components:
   - type: Sprite
     state: sheetce
   - type: Clothing
     size: 10
-    QuickEquip: true
-    Slots:
-    - neck
     sprite: Clothing/Neck/Bedsheets/ce.rsi
 
 - type: entity
   id: BedsheetCentcom
   parent: BedsheetBase
-  name: centcom bedsheet
+  name: Centcom bedsheet
+  description: Woven with advanced nanothread for warmth as well as being very decorated, essential for all officials.
   components:
   - type: Sprite
     state: sheetcentcom
   - type: Clothing
     size: 10
-    QuickEquip: true
-    Slots:
-    - neck
     sprite: Clothing/Neck/Bedsheets/centcom.rsi
 
 - type: entity
   id: BedsheetClown
   parent: BedsheetBase
   name: clown's bedsheet
+  description: A rainbow blanket with a clown mask woven in. It smells faintly of bananas.
   components:
   - type: Sprite
     state: sheetclown
   - type: Clothing
     size: 10
-    QuickEquip: true
-    Slots:
-    - neck
     sprite: Clothing/Neck/Bedsheets/rainbow.rsi
 
 - type: entity
   id: BedsheetCMO
   parent: BedsheetBase
-  name: cmo's bedsheet
+  name: CMO's bedsheet
+  description: It's a sterilized blanket that has a cross emblem. There's some cat fur on it, likely from Runtime.
   components:
   - type: Sprite
     state: sheetcmo
   - type: Clothing
     size: 10
-    QuickEquip: true
-    Slots:
-    - neck
     sprite: Clothing/Neck/Bedsheets/cmo.rsi
 
 - type: entity
   id: BedsheetCosmos
   parent: BedsheetBase
   name: cosmos bedsheet
+  description: Made from the dreams of those who wonder at the stars.
   components:
   - type: Sprite
     state: sheetcosmos
   - type: Clothing
     size: 10
-    QuickEquip: true
-    Slots:
-    - neck
     sprite: Clothing/Neck/Bedsheets/cosmos.rsi
 
 - type: entity
   id: BedsheetCult
   parent: BedsheetBase
   name: cult bedsheet
+  description: You might dream of Nar'Sie if you sleep with this. It seems rather tattered and glows of an eldritch presence.
   components:
   - type: Sprite
     state: sheetcult
   - type: Clothing
     size: 10
-    QuickEquip: true
-    Slots:
-    - neck
     sprite: Clothing/Neck/Bedsheets/cult.rsi
 
 - type: entity
@@ -169,9 +145,6 @@
     state: sheetgreen
   - type: Clothing
     size: 10
-    QuickEquip: true
-    Slots:
-    - neck
     sprite: Clothing/Neck/Bedsheets/green.rsi
 
 - type: entity
@@ -183,93 +156,77 @@
     state: sheetgrey
   - type: Clothing
     size: 10
-    QuickEquip: true
-    Slots:
-    - neck
     sprite: Clothing/Neck/Bedsheets/grey.rsi
 
 - type: entity
   id: BedsheetHOP
   parent: BedsheetBase
-  name: hop's bedsheet
+  name: HOP's bedsheet
+  description: It is decorated with a key emblem. For those rare moments when you can rest and cuddle with Ian without someone screaming for you over the radio.
   components:
   - type: Sprite
     state: sheethop
   - type: Clothing
     size: 10
-    QuickEquip: true
-    Slots:
-    - neck
     sprite: Clothing/Neck/Bedsheets/hop.rsi
 
 - type: entity
   id: BedsheetHOS
   parent: BedsheetBase
-  name: hos's bedsheet
+  name: HOS's bedsheet
+  description: It is decorated with a shield emblem. While crime doesn't sleep, you do, but you are still THE LAW!
   components:
   - type: Sprite
     state: sheethos
   - type: Clothing
     size: 10
-    QuickEquip: true
-    Slots:
-    - neck
     sprite: Clothing/Neck/Bedsheets/hos.rsi
 
 - type: entity
   id: BedsheetIan
   parent: BedsheetBase
-  name: ian bedsheet
+  name: Ian bedsheet
   components:
   - type: Sprite
     state: sheetian
   - type: Clothing
     size: 10
-    QuickEquip: true
-    Slots:
-    - neck
     sprite: Clothing/Neck/Bedsheets/ian.rsi
 
 - type: entity
   id: BedsheetMedical
   parent: BedsheetBase
   name: medical bedsheet
+  description: It's a sterilized* blanket commonly used in the Medbay.  *Sterilization is voided if a virologist is present onboard the station.
   components:
   - type: Sprite
     state: sheetmedical
   - type: Clothing
     size: 10
-    QuickEquip: true
-    Slots:
-    - neck
     sprite: Clothing/Neck/Bedsheets/medical.rsi
 
 - type: entity
   id: BedsheetMime
   parent: BedsheetBase
   name: mime's bedsheet
+  description: A very soothing striped blanket.  All the noise just seems to fade out when you're under the covers in this.
   components:
   - type: Sprite
     state: sheetmime
   - type: Clothing
     size: 10
-    QuickEquip: true
-    Slots:
-    - neck
     sprite: Clothing/Neck/Bedsheets/mime.rsi
 
 - type: entity
   id: BedsheetNT
   parent: BedsheetBase
-  name: nt bedsheet
+  name: NT bedsheet
+  description: It has the Nanotrasen logo on it and an aura of duty.
   components:
   - type: Sprite
     state: sheetNT
   - type: Clothing
     size: 10
-    QuickEquip: true
-    Slots:
-    - neck
     sprite: Clothing/Neck/Bedsheets/NT.rsi
 
 - type: entity
@@ -281,9 +238,6 @@
     state: sheetorange
   - type: Clothing
     size: 10
-    QuickEquip: true
-    Slots:
-    - neck
     sprite: Clothing/Neck/Bedsheets/orange.rsi
 
 - type: entity
@@ -295,23 +249,17 @@
     state: sheetpurple
   - type: Clothing
     size: 10
-    QuickEquip: true
-    Slots:
-    - neck
     sprite: Clothing/Neck/Bedsheets/purple.rsi
 
 - type: entity
   id: BedsheetQM
   parent: BedsheetBase
-  name: qm's bedsheet
+  name: QM's bedsheet
   components:
   - type: Sprite
     state: sheetqm
   - type: Clothing
     size: 10
-    QuickEquip: true
-    Slots:
-    - neck
     sprite: Clothing/Neck/Bedsheets/qm.rsi
 
 - type: entity
@@ -323,23 +271,18 @@
     state: sheetrainbow
   - type: Clothing
     size: 10
-    QuickEquip: true
-    Slots:
-    - neck
     sprite: Clothing/Neck/Bedsheets/rainbow.rsi
 
 - type: entity
   id: BedsheetRD
   parent: BedsheetBase
-  name: rd's bedsheet
+  name: RD's bedsheet
+  description: It appears to have a beaker emblem, and is made out of fire-resistant material, although it probably won't protect you in the event of fires you're familiar with every day.
   components:
   - type: Sprite
     state: sheetrd
   - type: Clothing
     size: 10
-    QuickEquip: true
-    Slots:
-    - neck
     sprite: Clothing/Neck/Bedsheets/rd.rsi
 
 - type: entity
@@ -351,37 +294,29 @@
     state: sheetred
   - type: Clothing
     size: 10
-    QuickEquip: true
-    Slots:
-    - neck
     sprite: Clothing/Neck/Bedsheets/red.rsi
 
 - type: entity
   id: BedsheetSyndie
   parent: BedsheetBase
-  name: syndie bedsheet
+  name: Syndie bedsheet
+  description: It has a syndicate emblem and it has an aura of evil.
   components:
   - type: Sprite
     state: sheetsyndie
   - type: Clothing
     size: 10
-    QuickEquip: true
-    Slots:
-    - neck
     sprite: Clothing/Neck/Bedsheets/syndie.rsi
 
 - type: entity
   id: BedsheetUSA
   parent: BedsheetBase
-  name: usa bedsheet
+  name: USA bedsheet
   components:
   - type: Sprite
     state: sheetUSA
   - type: Clothing
     size: 10
-    QuickEquip: true
-    Slots:
-    - neck
     sprite: Clothing/Neck/Bedsheets/USA.rsi
 
 - type: entity
@@ -393,23 +328,18 @@
     state: sheetwhite
   - type: Clothing
     size: 10
-    QuickEquip: true
-    Slots:
-    - neck
     sprite: Clothing/Neck/Bedsheets/white.rsi
 
 - type: entity
   id: BedsheetWiz
   parent: BedsheetBase
   name: wizard's bedsheet
+  description: A special fabric enchanted with magic so you can have an enchanted night. It even glows!
   components:
   - type: Sprite
     state: sheetwiz
   - type: Clothing
     size: 10
-    QuickEquip: true
-    Slots:
-    - neck
     sprite: Clothing/Neck/Bedsheets/wiz.rsi
 
 - type: entity
@@ -421,7 +351,4 @@
     state: sheetyellow
   - type: Clothing
     size: 10
-    QuickEquip: true
-    Slots:
-    - neck
     sprite: Clothing/Neck/Bedsheets/yellow.rsi

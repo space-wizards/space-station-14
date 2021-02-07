@@ -21,6 +21,7 @@ using Robust.Shared.Localization.Macros;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Client.UserInterface.Stylesheets;
 
 namespace Content.Client.UserInterface
 {
@@ -820,12 +821,12 @@ namespace Content.Client.UserInterface
         private class JobPrioritySelector : Control
         {
             public JobPrototype Job { get; }
-            private readonly OptionButton _optionButton;
+            private readonly RadioOptions<int> _optionButton;
 
             public JobPriority Priority
             {
-                get => (JobPriority) _optionButton.SelectedId;
-                set => _optionButton.SelectId((int) value);
+                get => (JobPriority) _optionButton.SelectedValue;
+                set => _optionButton.SelectByValue((int) value);
             }
 
             public event Action<JobPriority> PriorityChanged;
@@ -833,7 +834,14 @@ namespace Content.Client.UserInterface
             public JobPrioritySelector(JobPrototype job)
             {
                 Job = job;
-                _optionButton = new OptionButton();
+                _optionButton = new RadioOptions<int>(RadioOptionsLayout.Horizontal);
+
+                _optionButton.FirstButtonStyle = StyleBase.ButtonOpenRight;
+                _optionButton.ButtonStyle = StyleBase.ButtonOpenBoth;
+                _optionButton.LastButtonStyle = StyleBase.ButtonOpenLeft;
+
+
+                // Text, Value
                 _optionButton.AddItem(Loc.GetString("High"), (int) JobPriority.High);
                 _optionButton.AddItem(Loc.GetString("Medium"), (int) JobPriority.Medium);
                 _optionButton.AddItem(Loc.GetString("Low"), (int) JobPriority.Low);
@@ -841,7 +849,7 @@ namespace Content.Client.UserInterface
 
                 _optionButton.OnItemSelected += args =>
                 {
-                    _optionButton.SelectId(args.Id);
+                    _optionButton.Select(args.Id);
                     PriorityChanged?.Invoke(Priority);
                 };
 

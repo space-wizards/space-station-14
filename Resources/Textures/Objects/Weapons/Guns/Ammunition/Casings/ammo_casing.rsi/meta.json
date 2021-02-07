@@ -8,12 +8,10 @@
     "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/blob/0b3ab17dbad632ddf738b63900ef8df1926bba47/icons/obj/ammo.dmi, modified by Topy",
     "states": [
         {
-            "name": "base",
-            "directions": 1
+            "name": "base"
         },
         {
-            "name": "spent",
-            "directions": 1
+            "name": "spent"
         }
     ]
 }

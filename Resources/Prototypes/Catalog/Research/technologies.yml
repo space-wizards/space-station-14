@@ -7,7 +7,9 @@
   name: "basic research technology"
   id: BasicResearch
   description: Nanotrasen basic research technologies.
-  icon: Constructible/Power/server.rsi/server-on.png
+  icon:
+    sprite: Constructible/Power/server.rsi
+    state: server-on
   requiredPoints: 250
 
 # Biological Technology Tree
@@ -16,7 +18,9 @@
   name: "biological technology"
   id: BiologicalTechnology
   description: Investigations into the natural world.
-  icon: Constructible/Misc/potted_plants.rsi/applebush.png
+  icon:
+    sprite: Constructible/Misc/potted_plants.rsi
+    state: applebush
   requiredPoints: 1000
   requiredTechnologies:
     - BasicResearch
@@ -25,7 +29,9 @@
   name: "advanced botany"
   id: AdvancedBotany
   description: A better understanding of botany.
-  icon: Objects/Specific/Hydroponics/potato.rsi
+  icon:
+    sprite: Objects/Specific/Hydroponics/potato.rsi
+    state: seed
   requiredPoints: 1500
   requiredTechnologies:
     - BiologicalTechnology
@@ -34,7 +40,9 @@
   name: "advanced surgery"
   id: AdvancedSugery
   description: Research new surgical procedures.
-  icon: Objects/Specific/Medical/surgery_tools.rsi
+  icon:
+    sprite: Objects/Specific/Medical/surgery_tools.rsi
+    state: bone_saw
   requiredPoints: 1500
   requiredTechnologies:
     - BiologicalTechnology
@@ -45,7 +53,9 @@
   name: "chemistry technology"
   id: ChemistryTechnology
   description: A crash course in chemistry.
-  icon: Objects/Specific/Chemistry/beakers.rsi
+  icon:
+    sprite: Objects/Specific/Chemistry/beakers.rsi
+    state: beakerlarge
   requiredPoints: 1000
   requiredTechnologies:
     - BasicResearch
@@ -56,7 +66,9 @@
   name: "security technology"
   id: SecurityTechnology
   description: Beginning of the long hard road to exosuits.
-  icon: Objects/Weapons/Melee/stunbaton.rsi
+  icon:
+    sprite: Objects/Weapons/Melee/stunbaton.rsi
+    state: stunbaton_off
   requiredPoints: 1000
   requiredTechnologies:
     - BasicResearch
@@ -65,7 +77,9 @@
   name: "ballistic technology"
   id: BallisticTechnology
   description: Just a fancy term for guns.
-  icon: Objects/Weapons/Guns/Pistols/clarissa.rsi
+  icon:
+    sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
+    state: icon
   requiredPoints: 1500
   requiredTechnologies:
     - SecurityTechnology
@@ -74,7 +88,9 @@
   name: "direct energy technology"
   id: DirectEnergyTechnology
   description: Basically laser guns.
-  icon: Objects/Weapons/Guns/Battery/taser.rsi
+  icon:
+    sprite: Objects/Weapons/Guns/Battery/taser.rsi
+    state: icon
   requiredPoints: 1500
   requiredTechnologies:
     - SecurityTechnology
@@ -83,7 +99,9 @@
   name: "explosives technology"
   id: ExplosivesTechnology
   description: Let's just start with grenades for now.
-  icon: Objects/Weapons/Grenades/flashbang.rsi
+  icon:
+    sprite: Objects/Weapons/Grenades/flashbang.rsi
+    state: icon
   requiredPoints: 1500
   requiredTechnologies:
     - SecurityTechnology
@@ -92,7 +110,9 @@
   name: "armor technology"
   id: ArmorTechnology
   description: Basic protective gear for security personnel.
-  icon: Clothing/OuterClothing/Vests/kevlar.rsi
+  icon:
+    sprite: Clothing/OuterClothing/Vests/kevlar.rsi
+    state: icon
   requiredPoints: 1500
   requiredTechnologies:
     - SecurityTechnology
@@ -103,7 +123,9 @@
   name: "data theory"
   id: DataTheory
   description: Just like regular data, but in space!
-  icon: Constructible/Power/computers.rsi/computer-datatheory.png
+  icon:
+    sprite: Constructible/Power/computers.rsi
+    state: computer-datatheory
   requiredPoints: 1000
   requiredTechnologies:
     - BasicResearch
@@ -114,7 +136,9 @@
   name: "industrial engineering"
   id: IndustrialEngineering
   description: A refresher course on modern engineering technology.
-  icon: Constructible/Power/protolathe.rsi/protolathe.png
+  icon:
+    sprite: Constructible/Power/protolathe.rsi
+    state: protolathe
   requiredPoints: 1000
   requiredTechnologies:
     - BasicResearch
@@ -141,7 +165,9 @@
   name: "electromagnetic theory"
   id: ElectromagneticTheory
   description: Try not to fry yourself.
-  icon: Constructible/Power/apc.rsi/apcewires.png
+  icon:
+    sprite: Constructible/Power/apc.rsi
+    state: apcewires
   requiredPoints: 1000
   requiredTechnologies:
     - BasicResearch
@@ -152,7 +178,9 @@
   name: "basic bluespace theory"
   id: BluespaceTheory
   description: An experimental course on the mysterious technology known as bluespace.
-  icon: Objects/Misc/skub.rsi/icon.png
+  icon:
+    sprite: Objects/Misc/skub.rsi
+    state: icon
   requiredPoints: 1000
   requiredTechnologies:
     - BasicResearch

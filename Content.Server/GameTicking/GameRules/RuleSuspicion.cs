@@ -7,7 +7,6 @@ using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs.Roles.Suspicion;
 using Content.Server.Players;
 using Content.Shared;
-using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
@@ -22,8 +21,7 @@ using Timer = Robust.Shared.Timers.Timer;
 namespace Content.Server.GameTicking.GameRules
 {
     /// <summary>
-    ///     Simple GameRule that will do a free-for-all death match.
-    ///     Kill everybody else to win.
+    ///     Simple GameRule that will do a TTT-like gamemode with traitors.
     /// </summary>
     public sealed class RuleSuspicion : GameRule, IEntityEventSubscriber
     {

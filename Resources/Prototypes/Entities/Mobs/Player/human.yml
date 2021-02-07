@@ -14,7 +14,7 @@
   - type: Actions
     innateActions:
       - HumanScream
-  - type: OverlayEffectsUI
+      - Disarm
   - type: Eye
     zoom: 0.5, 0.5
   - type: CameraRecoil

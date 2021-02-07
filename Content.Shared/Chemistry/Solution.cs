@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -61,6 +63,11 @@ namespace Content.Shared.Chemistry
                     quantities.ForEach(reagent => TotalVolume += reagent.Quantity);
                 },
                 () => _contents);
+        }
+
+        public bool ContainsReagent(string reagentId)
+        {
+            return ContainsReagent(reagentId, out _);
         }
 
         public bool ContainsReagent(string reagentId, out ReagentUnit quantity)
@@ -308,6 +315,20 @@ namespace Content.Shared.Chemistry
 
             newSolution.TotalVolume = volume;
             return newSolution;
+        }
+
+        public void DoEntityReaction(IEntity entity, ReactionMethod method)
+        {
+            var proto = IoCManager.Resolve<IPrototypeManager>();
+
+            foreach (var (reagentId, quantity) in _contents)
+            {
+                if (!proto.TryIndex(reagentId, out ReagentPrototype reagent))
+                    continue;
+
+                var removedAmount = reagent.ReactionEntity(entity, method, quantity);
+                RemoveReagent(reagentId, removedAmount);
+            }
         }
 
         [Serializable, NetSerializable]

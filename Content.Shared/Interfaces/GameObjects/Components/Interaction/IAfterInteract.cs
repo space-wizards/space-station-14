@@ -5,6 +5,8 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 
+#nullable enable
+
 namespace Content.Shared.Interfaces.GameObjects.Components
 {
     /// <summary>
@@ -22,10 +24,18 @@ namespace Content.Shared.Interfaces.GameObjects.Components
 
     public class AfterInteractEventArgs : EventArgs
     {
-        public IEntity User { get; set; }
-        public EntityCoordinates ClickLocation { get; set; }
-        public IEntity Target { get; set; }
-        public bool CanReach { get; set; }
+        public IEntity User { get; }
+        public EntityCoordinates ClickLocation { get; }
+        public IEntity? Target { get; }
+        public bool CanReach { get; }
+
+        public AfterInteractEventArgs(IEntity user, EntityCoordinates clickLocation, IEntity? target, bool canReach)
+        {
+            User = user;
+            ClickLocation = clickLocation;
+            Target = target;
+            CanReach = canReach;
+        }
     }
 
     /// <summary>
@@ -52,7 +62,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// <summary>
         ///     Entity that was attacked. This can be null if the attack did not click on an entity.
         /// </summary>
-        public IEntity Attacked { get; }
+        public IEntity? Attacked { get; }
 
         /// <summary>
         ///     Location that the user clicked outside of their interaction range.
@@ -65,7 +75,8 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// </summary>
         public bool CanReach { get; }
 
-        public AfterInteractMessage(IEntity user, IEntity itemInHand, IEntity attacked, EntityCoordinates clickLocation, bool canReach)
+        public AfterInteractMessage(IEntity user, IEntity itemInHand, IEntity? attacked,
+            EntityCoordinates clickLocation, bool canReach)
         {
             User = user;
             Attacked = attacked;
@@ -74,5 +85,4 @@ namespace Content.Shared.Interfaces.GameObjects.Components
             CanReach = canReach;
         }
     }
-
 }

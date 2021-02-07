@@ -9,7 +9,6 @@
     "states": [
         {
             "name": "grenade",
-            "directions": 1,
             "delays": [
                 [
                     0.05,

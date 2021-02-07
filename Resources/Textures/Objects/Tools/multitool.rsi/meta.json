@@ -8,20 +8,16 @@
   },
   "states": [
     {
-      "name": "icon",
-      "directions": 1
+      "name": "icon"
     },
     {
-      "name": "green-unlit",
-      "directions": 1
+      "name": "green-unlit"
     },
     {
-      "name": "yellow-unlit",
-      "directions": 1
+      "name": "yellow-unlit"
     },
     {
-      "name": "red-unlit",
-      "directions": 1
+      "name": "red-unlit"
     },
     {
       "name": "inhand-left",

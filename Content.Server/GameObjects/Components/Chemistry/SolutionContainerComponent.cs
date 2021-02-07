@@ -1,144 +1,26 @@
-using System.Collections.Generic;
-using System.Linq;
-using Content.Server.Chemistry;
+#nullable enable
+using Content.Server.Administration;
+using Content.Server.Eui;
 using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Administration;
 using Content.Shared.Chemistry;
+using Content.Shared.Eui;
 using Content.Shared.GameObjects.Components.Chemistry;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Utility;
-using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.Interfaces.GameObjects;
+using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Chemistry
 {
-    /// <summary>
-    ///    ECS component that manages a liquid solution of reagents.
-    /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(SharedSolutionContainerComponent))]
-    public class SolutionContainerComponent : SharedSolutionContainerComponent, IExamine
+    public class SolutionContainerComponent : SharedSolutionContainerComponent
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
-
-        private IEnumerable<ReactionPrototype> _reactions;
-        private ChemicalReactionSystem _reactionSystem;
-        private string _fillInitState;
-        private int _fillInitSteps;
-        private string _fillPathString = "Objects/Specific/Chemistry/fillings.rsi";
-        private ResourcePath _fillPath;
-        private SpriteSpecifier _fillSprite;
-        private AudioSystem _audioSystem;
-        private ChemistrySystem _chemistrySystem;
-        private SpriteComponent _spriteComponent;
-
-        /// <summary>
-        ///     The volume without reagents remaining in the container.
-        /// </summary>
-        [ViewVariables]
-        public ReagentUnit EmptyVolume => MaxVolume - CurrentVolume;
-        public IReadOnlyList<Solution.ReagentQuantity> ReagentList => Solution.Contents;
-        public bool CanExamineContents => Capabilities.HasCap(SolutionContainerCaps.CanExamine);
-        public bool CanUseWithChemDispenser => Capabilities.HasCap(SolutionContainerCaps.FitsInDispenser);
-        public bool CanAddSolutions => Capabilities.HasCap(SolutionContainerCaps.AddTo);
-        public bool CanRemoveSolutions => Capabilities.HasCap(SolutionContainerCaps.RemoveFrom);
-
-        /// <inheritdoc />
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(this, x => x.MaxVolume, "maxVol", ReagentUnit.New(0));
-            serializer.DataField(this, x => x.Solution, "contents", new Solution());
-            serializer.DataField(this, x => x.Capabilities, "caps", SolutionContainerCaps.AddTo | SolutionContainerCaps.RemoveFrom | SolutionContainerCaps.CanExamine);
-            serializer.DataField(ref _fillInitState, "fillingState", string.Empty);
-            serializer.DataField(ref _fillInitSteps, "fillingSteps", 7);
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-            _audioSystem = EntitySystem.Get<AudioSystem>();
-            _chemistrySystem = _entitySystemManager.GetEntitySystem<ChemistrySystem>();
-            _reactions = _prototypeManager.EnumeratePrototypes<ReactionPrototype>();
-            _reactionSystem = _entitySystemManager.GetEntitySystem<ChemicalReactionSystem>();
-        }
-
-        protected override void Startup()
-        {
-            base.Startup();
-            RecalculateColor();
-            if (!string.IsNullOrEmpty(_fillInitState))
-            {
-                _spriteComponent = Owner.GetComponent<SpriteComponent>();
-                _fillPath = new ResourcePath(_fillPathString);
-                _fillSprite = new SpriteSpecifier.Rsi(_fillPath, _fillInitState + (_fillInitSteps - 1));
-                _spriteComponent.AddLayerWithSprite(_fillSprite);
-                UpdateFillIcon();
-            }
-        }
-
-        public void RemoveAllSolution()
-        {
-            Solution.RemoveAllSolution();
-            OnSolutionChanged(false);
-        }
-
-        public override bool TryRemoveReagent(string reagentId, ReagentUnit quantity)
-        {
-            if (!Solution.ContainsReagent(reagentId, out var currentQuantity))
-            {
-                return false;
-            }
-
-            Solution.RemoveReagent(reagentId, quantity);
-            OnSolutionChanged(false);
-            return true;
-        }
-
-        /// <summary>
-        /// Attempt to remove the specified quantity from this solution
-        /// </summary>
-        /// <param name="quantity">Quantity of this solution to remove</param>
-        /// <returns>Whether or not the solution was successfully removed</returns>
-        public bool TryRemoveSolution(ReagentUnit quantity)
-        {
-            if (CurrentVolume == 0)
-            {
-                return false;
-            }
-
-            Solution.RemoveSolution(quantity);
-            OnSolutionChanged(false);
-            return true;
-        }
-
-        public Solution SplitSolution(ReagentUnit quantity)
-        {
-            var solutionSplit = Solution.SplitSolution(quantity);
-            OnSolutionChanged(false);
-            return solutionSplit;
-        }
-
-        protected void RecalculateColor()
-        {
-            SubstanceColor = Solution.Color;
-        }
-
         /// <summary>
         ///     Transfers solution from the held container to the target container.
         /// </summary>
@@ -183,7 +65,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     return;
                 }
 
-                var transferQuantity = ReagentUnit.Min(component.MaxVolume - component.CurrentVolume, handSolutionComp.CurrentVolume, ReagentUnit.New(10));
+                var transferQuantity = ReagentUnit.Min(component.MaxVolume - component.CurrentVolume,
+                    handSolutionComp.CurrentVolume, ReagentUnit.New(10));
 
                 if (transferQuantity <= 0)
                 {
@@ -192,43 +75,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
                 var transferSolution = handSolutionComp.SplitSolution(transferQuantity);
                 component.TryAddSolution(transferSolution);
-            }
-        }
-
-        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
-        {
-            if (!CanExamineContents)
-            {
-                return;
-            }
-
-            if (ReagentList.Count == 0)
-            {
-                message.AddText(Loc.GetString("It's empty."));
-            }
-            else if (ReagentList.Count == 1)
-            {
-                var reagent = ReagentList[0];
-
-                if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
-                {
-                    message.AddMarkup(
-                        Loc.GetString("It contains a [color={0}]{1}[/color] substance.",
-                            proto.GetSubstanceTextColor().ToHexNoAlpha(),
-                            Loc.GetString(proto.PhysicalDescription)));
-                }
-            }
-            else
-            {
-                var reagent = ReagentList.Max();
-
-                if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
-                {
-                    message.AddMarkup(
-                        Loc.GetString("It contains a [color={0}]{1}[/color] mixture of substances.",
-                            SubstanceColor.ToHexNoAlpha(),
-                            Loc.GetString(proto.PhysicalDescription)));
-                }
             }
         }
 
@@ -270,14 +116,15 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     return;
                 }
 
-                if(!hands.GetActiveHand.Owner.TryGetComponent<SolutionContainerComponent>(out var handSolutionComp) ||
+                if (!hands.GetActiveHand.Owner.TryGetComponent<SolutionContainerComponent>(out var handSolutionComp) ||
                     !handSolutionComp.CanAddSolutions ||
                     !component.CanRemoveSolutions)
                 {
                     return;
                 }
 
-                var transferQuantity = ReagentUnit.Min(handSolutionComp.MaxVolume - handSolutionComp.CurrentVolume, component.CurrentVolume, ReagentUnit.New(10));
+                var transferQuantity = ReagentUnit.Min(handSolutionComp.MaxVolume - handSolutionComp.CurrentVolume,
+                    component.CurrentVolume, ReagentUnit.New(10));
 
                 if (transferQuantity <= 0)
                 {
@@ -289,85 +136,96 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
         }
 
-        private void CheckForReaction()
+        [Verb]
+        private sealed class AdminAddReagentVerb : Verb<SolutionContainerComponent>
         {
-            _reactionSystem.FullyReactSolution(Solution, Owner, MaxVolume);
-        }
+            private const AdminFlags ReqFlags = AdminFlags.Fun;
 
-        public bool TryAddReagent(string reagentId, ReagentUnit quantity, out ReagentUnit acceptedQuantity, bool skipReactionCheck = false, bool skipColor = false)
-        {
-            var toAcceptQuantity = MaxVolume - Solution.TotalVolume;
-            if (quantity > toAcceptQuantity)
+            protected override void GetData(IEntity user, SolutionContainerComponent component, VerbData data)
             {
-                acceptedQuantity = toAcceptQuantity;
-                if (acceptedQuantity == 0) return false;
+                data.Text = Loc.GetString("Add Reagent...");
+                data.CategoryData = VerbCategories.Debug;
+                data.Visibility = VerbVisibility.Invisible;
+
+                var adminManager = IoCManager.Resolve<IAdminManager>();
+
+                if (user.TryGetComponent<IActorComponent>(out var player))
+                {
+                    if (adminManager.HasAdminFlag(player.playerSession, ReqFlags))
+                    {
+                        data.Visibility = VerbVisibility.Visible;
+                    }
+                }
             }
-            else
+
+            protected override void Activate(IEntity user, SolutionContainerComponent component)
             {
-                acceptedQuantity = quantity;
+                var groupController = IoCManager.Resolve<IAdminManager>();
+                if (user.TryGetComponent<IActorComponent>(out var player))
+                {
+                    if (groupController.HasAdminFlag(player.playerSession, ReqFlags))
+                        OpenAddReagentMenu(player.playerSession, component);
+                }
             }
 
-            Solution.AddReagent(reagentId, acceptedQuantity);
-            if (!skipColor) {
-                RecalculateColor();
-            }
-            if(!skipReactionCheck)
-                CheckForReaction();
-            OnSolutionChanged(skipColor);
-            return true;
-        }
-
-        public override bool CanAddSolution(Solution solution)
-        {
-            return solution.TotalVolume <= (MaxVolume - Solution.TotalVolume);
-        }
-
-        public override bool TryAddSolution(Solution solution, bool skipReactionCheck = false, bool skipColor = false)
-        {
-            if (!CanAddSolution(solution))
-                return false;
-
-            Solution.AddSolution(solution);
-            if (!skipColor) {
-                RecalculateColor();
-            }
-            if(!skipReactionCheck)
-                CheckForReaction();
-            OnSolutionChanged(skipColor);
-            return true;
-        }
-
-        protected void UpdateFillIcon()
-        {
-            if (string.IsNullOrEmpty(_fillInitState))
+            private static void OpenAddReagentMenu(IPlayerSession player, SolutionContainerComponent comp)
             {
-                return;
+                var euiMgr = IoCManager.Resolve<EuiManager>();
+                euiMgr.OpenEui(new AdminAddReagentEui(comp), player);
             }
 
-            var percentage =  (CurrentVolume / MaxVolume).Double();
-            var level = ContentHelpers.RoundToLevels(percentage * 100, 100, _fillInitSteps);
-
-            //Transformed glass uses special fancy sprites so we don't bother
-            if (level == 0 || (Owner.TryGetComponent<TransformableContainerComponent>(out var transformComp) && transformComp.Transformed))
+            private sealed class AdminAddReagentEui : BaseEui
             {
-                _spriteComponent.LayerSetColor(1, Color.Transparent);
-                return;
+                private readonly SolutionContainerComponent _target;
+                [Dependency] private readonly IAdminManager _adminManager = default!;
+
+                public AdminAddReagentEui(SolutionContainerComponent target)
+                {
+                    _target = target;
+
+                    IoCManager.InjectDependencies(this);
+                }
+
+                public override void Opened()
+                {
+                    StateDirty();
+                }
+
+                public override EuiStateBase GetNewState()
+                {
+                    return new AdminAddReagentEuiState
+                    {
+                        CurVolume = _target.CurrentVolume,
+                        MaxVolume = _target.MaxVolume
+                    };
+                }
+
+                public override void HandleMessage(EuiMessageBase msg)
+                {
+                    switch (msg)
+                    {
+                        case AdminAddReagentEuiMsg.Close:
+                            Close();
+                            break;
+                        case AdminAddReagentEuiMsg.DoAdd doAdd:
+                            // Double check that user wasn't de-adminned in the mean time...
+                            // Or the target was deleted.
+                            if (!_adminManager.HasAdminFlag(Player, ReqFlags) || _target.Deleted)
+                            {
+                                Close();
+                                return;
+                            }
+
+                            _target.TryAddReagent(doAdd.ReagentId, doAdd.Amount, out _);
+                            StateDirty();
+
+                            if (doAdd.CloseAfter)
+                                Close();
+
+                            break;
+                    }
+                }
             }
-
-            _fillSprite = new SpriteSpecifier.Rsi(_fillPath, _fillInitState + level);
-            _spriteComponent.LayerSetSprite(1, _fillSprite);
-            _spriteComponent.LayerSetColor(1, SubstanceColor);
-        }
-
-        protected virtual void OnSolutionChanged(bool skipColor)
-        {
-            if (!skipColor)
-            {
-                RecalculateColor();
-            }
-
-            UpdateFillIcon();
-            _chemistrySystem.HandleSolutionChange(Owner);
         }
     }
 }

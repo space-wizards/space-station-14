@@ -76,7 +76,7 @@ namespace Content.Server.Administration.Commands
                 if (gearStr != "")
                 {
                     var equipmentEntity = entityManager.SpawnEntity(gearStr, target.Transform.Coordinates);
-                    inventoryComponent.Equip(slot, equipmentEntity.GetComponent<ItemComponent>());
+                    inventoryComponent.Equip(slot, equipmentEntity.GetComponent<ItemComponent>(), false);
                 }
             }
 

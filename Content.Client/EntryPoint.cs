@@ -13,6 +13,7 @@ using Content.Client.StationEvents;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.AdminMenu;
 using Content.Client.UserInterface.Stylesheets;
+using Content.Client.Graphics.Overlays;
 using Content.Shared.Actions;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Cargo;
@@ -81,7 +82,6 @@ namespace Content.Client
             prototypes.RegisterIgnore("seed"); // Seeds prototypes are server-only.
             prototypes.RegisterIgnore("barSign");
             prototypes.RegisterIgnore("objective");
-            prototypes.RegisterIgnore("dataset");
 
             ClientContentIoC.Register();
 
@@ -150,7 +150,12 @@ namespace Content.Client
             IoCManager.Resolve<IGameHud>().Initialize();
             IoCManager.Resolve<IClientNotifyManager>().Initialize();
             IoCManager.Resolve<IClientGameTicker>().Initialize();
-            IoCManager.Resolve<IOverlayManager>().AddOverlay(new ParallaxOverlay());
+            var overlayMgr = IoCManager.Resolve<IOverlayManager>();
+            overlayMgr.AddOverlay(new ParallaxOverlay());
+            overlayMgr.AddOverlay(new GradientCircleMaskOverlay());
+            overlayMgr.AddOverlay(new CircleMaskOverlay());
+            overlayMgr.AddOverlay(new FlashOverlay());
+            overlayMgr.AddOverlay(new RadiationPulseOverlay());
             IoCManager.Resolve<IChatManager>().Initialize();
             IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();

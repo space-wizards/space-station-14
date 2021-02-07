@@ -1,33 +1,27 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.Explosion;
-using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Utility;
-using Microsoft.Extensions.Logging;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.EntitySystemMessages;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Explosions
 {
@@ -151,7 +145,7 @@ namespace Content.Server.Explosions
         /// damage bracket [light, heavy, devastation], the distance from the epicenter and
         /// a probabilty bracket [<see cref="LightBreakChance"/>, <see cref="HeavyBreakChance"/>, 1.0].
         /// </summary>
-        ///    
+        ///
         private static void DamageTilesInRange(EntityCoordinates epicenter,
                                                GridId gridId,
                                                Box2 boundingBox,
@@ -281,9 +275,31 @@ namespace Content.Server.Explosions
             }
         }
 
-        private static void Detonate(IEntity source, int devastationRange, int heavyImpactRange, int lightImpactRange, int flashRange)
+        public static void SpawnExplosion(this IEntity entity, int devastationRange = 0, int heavyImpactRange = 0,
+            int lightImpactRange = 0, int flashRange = 0)
         {
-            var mapId = source.Transform.MapID;
+            // If you want to directly set off the explosive
+            if (!entity.Deleted && entity.TryGetComponent(out ExplosiveComponent explosive) && !explosive.Exploding)
+            {
+                explosive.Explosion();
+            }
+            else
+            {
+                while (entity.TryGetContainer(out var cont))
+                {
+                    entity = cont.Owner;
+                }
+
+                var epicenter = entity.Transform.Coordinates;
+
+                SpawnExplosion(epicenter, devastationRange, heavyImpactRange, lightImpactRange, flashRange);
+            }
+        }
+
+        public static void SpawnExplosion(EntityCoordinates epicenter, int devastationRange = 0,
+            int heavyImpactRange = 0, int lightImpactRange = 0, int flashRange = 0)
+        {
+            var mapId = epicenter.GetMapId(IoCManager.Resolve<IEntityManager>());
             if (mapId == MapId.Nullspace)
             {
                 return;
@@ -291,18 +307,14 @@ namespace Content.Server.Explosions
 
             var maxRange = MathHelper.Max(devastationRange, heavyImpactRange, lightImpactRange, 0);
 
-            while(source.TryGetContainer(out var cont))
-            {
-                source = cont.Owner;
-            }
-            var epicenter = source.Transform.Coordinates;
-
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var mapManager = IoCManager.Resolve<IMapManager>();
 
             var epicenterMapPos = epicenter.ToMapPos(entityManager);
-            var boundingBox = new Box2(epicenterMapPos - new Vector2(maxRange, maxRange), epicenterMapPos + new Vector2(maxRange, maxRange));
+            var boundingBox = new Box2(epicenterMapPos - new Vector2(maxRange, maxRange),
+                epicenterMapPos + new Vector2(maxRange, maxRange));
 
+            EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Effects/explosion.ogg", epicenter);
             DamageEntitiesInRange(epicenter, boundingBox, devastationRange, heavyImpactRange, maxRange, mapId);
 
             var mapGridsNear = mapManager.FindGridsIntersecting(mapId, boundingBox);
@@ -314,19 +326,6 @@ namespace Content.Server.Explosions
 
             CameraShakeInRange(epicenter, maxRange);
             FlashInRange(epicenter, flashRange);
-        }
-
-        public static void SpawnExplosion(this IEntity entity, int devastationRange = 0, int heavyImpactRange = 0, int lightImpactRange = 0, int flashRange = 0)
-        {
-            // If you want to directly set off the explosive
-            if (!entity.Deleted && entity.TryGetComponent(out ExplosiveComponent explosive) && !explosive.Exploding)
-            {
-                explosive.Explosion();
-            }
-            else
-            {
-                Detonate(entity, devastationRange, heavyImpactRange, lightImpactRange, flashRange);
-            }
         }
     }
 }
