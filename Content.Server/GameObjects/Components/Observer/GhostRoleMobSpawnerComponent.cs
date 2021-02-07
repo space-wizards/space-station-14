@@ -25,13 +25,13 @@ namespace Content.Server.GameObjects.Components.Observer
         [ViewVariables]
         private bool _deleteOnSpawn = true;
 
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         private int _availableTakeovers = 1;
 
         [ViewVariables]
         private int _currentTakeovers = 0;
 
-        [CanBeNull, ViewVariables] public string Prototype { get; private set; }
+        [CanBeNull, ViewVariables(VVAccess.ReadWrite)] public string Prototype { get; private set; }
 
         public override void ExposeData(ObjectSerializer serializer)
         {

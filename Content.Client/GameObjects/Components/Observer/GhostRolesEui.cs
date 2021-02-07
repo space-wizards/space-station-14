@@ -28,7 +28,7 @@ namespace Content.Client.GameObjects.Components.Observer
         public override void Opened()
         {
             base.Opened();
-            _window.Open();
+            _window.OpenCentered();
         }
 
         public override void Closed()
