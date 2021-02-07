@@ -9,12 +9,17 @@ using Content.Shared.Input;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Client.GameObjects.EntitySystems;
+using Robust.Client.Interfaces.Placement;
+using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Player;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 
 #nullable enable
 
@@ -28,6 +33,9 @@ namespace Content.Client.GameObjects.EntitySystems
     {
         [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly IPlacementManager _placementManager = default!;
 
         private int _nextId;
         private readonly Dictionary<int, ConstructionGhostComponent> _ghosts = new();
@@ -44,7 +52,7 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             base.Initialize();
 
-            _constructionMenu = new ConstructionMenuPresenter(_gameHud, EntitySystemManager);
+            _constructionMenu = new ConstructionMenuPresenter(_gameHud, EntitySystemManager, _prototypeManager, _resourceCache, _placementManager);
 
             SubscribeLocalEvent<PlayerAttachSysMessage>(HandlePlayerAttached);
             SubscribeNetworkEvent<AckStructureConstructionMessage>(HandleAckStructure);
