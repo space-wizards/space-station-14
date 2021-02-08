@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Content.Client.Construction;
 using Content.Client.GameObjects.Components.Construction;
-using Content.Client.UserInterface;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
@@ -10,8 +8,6 @@ using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.EntitySystems;
-using Robust.Client.Interfaces.Placement;
-using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Player;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
@@ -19,7 +15,6 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Prototypes;
 
 #nullable enable
 
@@ -31,19 +26,10 @@ namespace Content.Client.GameObjects.EntitySystems
     [UsedImplicitly]
     public class ConstructionSystem : SharedConstructionSystem
     {
-        [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IResourceCache _resourceCache = default!;
-        [Dependency] private readonly IPlacementManager _placementManager = default!;
-
-        private int _nextId;
         private readonly Dictionary<int, ConstructionGhostComponent> _ghosts = new();
 
-        private ConstructionMenuPresenter? _constructionMenu;
-
-        public event EventHandler<CraftingAvailabilityChangedArgs>? CraftingAvailabilityChanged;
-        public event EventHandler? ToggleCraftingWindow;
+        private int _nextId;
 
         private bool CraftingEnabled { get; set; }
 
@@ -51,8 +37,6 @@ namespace Content.Client.GameObjects.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-
-            _constructionMenu = new ConstructionMenuPresenter(_gameHud, EntitySystemManager, _prototypeManager, _resourceCache, _placementManager);
 
             SubscribeLocalEvent<PlayerAttachSysMessage>(HandlePlayerAttached);
             SubscribeNetworkEvent<AckStructureConstructionMessage>(HandleAckStructure);
@@ -64,6 +48,16 @@ namespace Content.Client.GameObjects.EntitySystems
                     new PointerInputCmdHandler(HandleUse))
                 .Register<ConstructionSystem>();
         }
+
+        /// <inheritdoc />
+        public override void Shutdown()
+        {
+            CommandBinds.Unregister<ConstructionSystem>();
+            base.Shutdown();
+        }
+
+        public event EventHandler<CraftingAvailabilityChangedArgs>? CraftingAvailabilityChanged;
+        public event EventHandler? ToggleCraftingWindow;
 
         private void HandleAckStructure(AckStructureConstructionMessage msg)
         {
@@ -83,17 +77,9 @@ namespace Content.Client.GameObjects.EntitySystems
             return true;
         }
 
-        /// <inheritdoc />
-        public override void Shutdown()
-        {
-            CommandBinds.Unregister<ConstructionSystem>();
-            _constructionMenu?.Dispose();
-            base.Shutdown();
-        }
-
         private void UpdateCraftingAvailability(bool available)
         {
-            if(CraftingEnabled == available)
+            if (CraftingEnabled == available)
                 return;
 
             CraftingAvailabilityChanged?.Invoke(this, new CraftingAvailabilityChangedArgs(available));
@@ -131,10 +117,7 @@ namespace Content.Client.GameObjects.EntitySystems
             var user = _playerManager.LocalPlayer?.ControlledEntity;
 
             // This InRangeUnobstructed should probably be replaced with "is there something blocking us in that tile?"
-            if (user == null || GhostPresent(loc) || !user.InRangeUnobstructed(loc, 20f, ignoreInsideBlocker:prototype.CanBuildInImpassable))
-            {
-                return;
-            }
+            if (user == null || GhostPresent(loc) || !user.InRangeUnobstructed(loc, 20f, ignoreInsideBlocker: prototype.CanBuildInImpassable)) return;
 
             foreach (var condition in prototype.Conditions)
             {
@@ -163,10 +146,7 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             foreach (var ghost in _ghosts)
             {
-                if (ghost.Value.Owner.Transform.Coordinates.Equals(loc))
-                {
-                    return true;
-                }
+                if (ghost.Value.Owner.Transform.Coordinates.Equals(loc)) return true;
             }
 
             return false;
@@ -189,7 +169,7 @@ namespace Content.Client.GameObjects.EntitySystems
         }
 
         /// <summary>
-        ///     Removes a construction ghost entity with the given ID.
+        /// Removes a construction ghost entity with the given ID.
         /// </summary>
         public void ClearGhost(int ghostId)
         {
@@ -201,7 +181,7 @@ namespace Content.Client.GameObjects.EntitySystems
         }
 
         /// <summary>
-        ///     Removes all construction ghosts.
+        /// Removes all construction ghosts.
         /// </summary>
         public void ClearAllGhosts()
         {

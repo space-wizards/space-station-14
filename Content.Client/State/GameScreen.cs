@@ -1,5 +1,6 @@
 using Content.Client.Administration;
 using Content.Client.Chat;
+using Content.Client.Construction;
 using Content.Client.Interfaces.Chat;
 using Content.Client.UserInterface;
 using Content.Client.Voting;
@@ -14,6 +15,8 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
 
+#nullable enable
+
 namespace Content.Client.State
 {
     public class GameScreen : GameScreenBase
@@ -26,7 +29,8 @@ namespace Content.Client.State
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IClientAdminManager _adminManager = default!;
 
-        [ViewVariables] private ChatBox _gameChat;
+        [ViewVariables] private ChatBox? _gameChat;
+        private ConstructionMenuPresenter? _constructionMenu;
 
         private bool _oocEnabled;
         private bool _adminOocEnabled;
@@ -61,15 +65,37 @@ namespace Content.Client.State
             _configurationManager.OnValueChanged(CCVars.OocEnabled, OnOocEnabledChanged, true);
             _configurationManager.OnValueChanged(CCVars.AdminOocEnabled, OnAdminOocEnabledChanged, true);
             _adminManager.AdminStatusUpdated += OnAdminStatusUpdated;
+
+            SetupPresenters();
         }
 
         public override void Shutdown()
         {
+            DisposePresenters();
+
             base.Shutdown();
 
-            _gameChat.Dispose();
+            _gameChat?.Dispose();
             _gameHud.RootControl.Orphan();
+
         }
+
+        /// <summary>
+        /// All UI Presenters should be constructed in here.
+        /// </summary>
+        private void SetupPresenters()
+        {
+            _constructionMenu = new ConstructionMenuPresenter(_gameHud);
+        }
+
+        /// <summary>
+        /// All UI Presenters should be disposed in here.
+        /// </summary>
+        private void DisposePresenters()
+        {
+            _constructionMenu?.Dispose();
+        }
+
 
         private void OnOocEnabledChanged(bool val)
         {
