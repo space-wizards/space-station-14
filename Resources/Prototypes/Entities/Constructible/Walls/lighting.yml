@@ -71,7 +71,7 @@
     - type: PointLight
       energy: 1.0
       enabled: true
-      offset: "-0.5, 0"
+      offset: "0.5, 0"
     - type: Destructible
       deadThreshold: 25
       resistances: metallicResistances
@@ -90,7 +90,7 @@
   - type: PointLight
     energy: 1.0
     enabled: false
-    offset: "-0.5, 0"
+    offset: "0.5, 0"
   - type: Physics
     shapes:
       - !type:PhysShapeAabb
