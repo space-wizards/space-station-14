@@ -73,11 +73,11 @@
         !type:AndTrigger
         triggers:
         - !type:DamageTypeTrigger
-            type: Blunt
-            damage: 10
+          type: Blunt
+          damage: 10
         - !type:DamageTypeTrigger
-            type: Slash
-            damage: 10
+          type: Slash
+          damage: 10
   - type: TestThresholdListener
 
 - type: entity

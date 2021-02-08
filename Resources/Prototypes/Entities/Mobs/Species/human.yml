@@ -166,8 +166,8 @@
     thresholds:
     - trigger:
         !type:DamageTypeTrigger
-          type: Blunt
-          damage: 400
+        type: Blunt
+        damage: 400
       behaviors:
       - !type:GibBehavior { }
   - type: HeatResistance
