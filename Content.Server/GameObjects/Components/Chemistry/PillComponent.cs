@@ -59,14 +59,15 @@ namespace Content.Server.GameObjects.Components.Chemistry
         }
 
         // Feeding someone else
-        public async Task AfterInteract(AfterInteractEventArgs eventArgs)
+        public async Task<bool> AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (eventArgs.Target == null)
             {
-                return;
+                return false;
             }
 
             TryUseFood(eventArgs.User, eventArgs.Target);
+            return true;
         }
 
         public override bool TryUseFood(IEntity user, IEntity target, UtensilComponent utensilUsed = null)

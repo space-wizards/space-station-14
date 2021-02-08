@@ -206,10 +206,13 @@ namespace Content.Server.GameObjects.Components.Metabolism
 
                 if (bloodstreamAmount < amountNeeded)
                 {
-                    // Panic inhale
-                    foreach (var lung in lungs)
+                    if (!Owner.GetComponent<IMobStateComponent>().IsCritical())
                     {
-                        lung.Gasp();
+                        // Panic inhale
+                        foreach (var lung in lungs)
+                        {
+                            lung.Gasp();
+                        }
                     }
 
                     bloodstreamAmount = bloodstream.Air.GetMoles(gas);

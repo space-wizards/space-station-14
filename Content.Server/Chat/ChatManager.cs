@@ -4,6 +4,7 @@ using Content.Server.Administration;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Headset;
 using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.Components.Mobs.Speech;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;

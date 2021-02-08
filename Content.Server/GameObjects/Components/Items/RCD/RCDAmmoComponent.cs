@@ -32,17 +32,17 @@ namespace Content.Server.GameObjects.Components.Items.RCD
             message.AddMarkup(Loc.GetString("It holds {0} charges.", refillAmmo));
         }
 
-        public async Task AfterInteract(AfterInteractEventArgs   eventArgs)
+        public async Task<bool> AfterInteract(AfterInteractEventArgs   eventArgs)
         {
             if (eventArgs.Target == null || !eventArgs.Target.TryGetComponent(out RCDComponent rcdComponent) || !eventArgs.User.TryGetComponent(out IHandsComponent hands))
             {
-                return;
+                return false;
             }
 
             if (rcdComponent.maxAmmo - rcdComponent._ammo < refillAmmo)
             {
                 rcdComponent.Owner.PopupMessage(eventArgs.User, Loc.GetString("The RCD is full!"));
-                return;
+                return true;
             }
 
             rcdComponent._ammo = Math.Min(rcdComponent.maxAmmo, rcdComponent._ammo + refillAmmo);
@@ -51,6 +51,7 @@ namespace Content.Server.GameObjects.Components.Items.RCD
             //Deleting a held item causes a lot of errors
             hands.Drop(Owner, false);
             Owner.Delete();
+            return true;
         }
     }
 }

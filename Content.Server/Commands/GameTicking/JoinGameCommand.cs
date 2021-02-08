@@ -1,17 +1,17 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.Administration;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.Roles;
-using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Commands.GameTicking
 {
     [AnyCommand]
-    class JoinGameCommand : IClientCommand
+    class JoinGameCommand : IConsoleCommand
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -23,8 +23,9 @@ namespace Content.Server.Commands.GameTicking
         {
             IoCManager.InjectDependencies(this);
         }
-        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             var output = string.Join(".", args);
             if (player == null)
             {
@@ -34,7 +35,7 @@ namespace Content.Server.Commands.GameTicking
             var ticker = IoCManager.Resolve<IGameTicker>();
             if (ticker.RunLevel == GameRunLevel.PreRoundLobby)
             {
-                shell.SendText(player, "Round has not started.");
+                shell.WriteLine("Round has not started.");
                 return;
             }
             else if(ticker.RunLevel == GameRunLevel.InRound)
@@ -45,7 +46,7 @@ namespace Content.Server.Commands.GameTicking
                 if(positions.GetValueOrDefault(ID, 0) == 0) //n < 0 is treated as infinite
                 {
                     var jobPrototype = _prototypeManager.Index<JobPrototype>(ID);
-                    shell.SendText(player, $"{jobPrototype.Name} has no available slots.");
+                    shell.WriteLine($"{jobPrototype.Name} has no available slots.");
                     return;
                 }
                 ticker.MakeJoinGame(player, args[0].ToString());

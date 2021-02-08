@@ -51,7 +51,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Update(frameTime);
 
-            foreach (var component in ComponentManager.EntityQuery<InstrumentComponent>())
+            foreach (var component in ComponentManager.EntityQuery<InstrumentComponent>(true))
             {
                 component.Update(frameTime);
             }

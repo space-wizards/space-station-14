@@ -94,7 +94,7 @@ namespace Content.Server.GameObjects.Components.Items.RCD
             message.AddMarkup(Loc.GetString("It's currently on {0} mode, and holds {1} charges.",_mode.ToString(), _ammo));
         }
 
-        public async Task AfterInteract(AfterInteractEventArgs   eventArgs)
+        public async Task<bool> AfterInteract(AfterInteractEventArgs   eventArgs)
         {
             //No changing mode mid-RCD
             var startingMode = _mode;
@@ -116,7 +116,7 @@ namespace Content.Server.GameObjects.Components.Items.RCD
             var result = await doAfterSystem.DoAfter(doAfterEventArgs);
             if (result == DoAfterStatus.Cancelled)
             {
-                return;
+                return true;
             }
 
             switch (_mode)
@@ -146,12 +146,12 @@ namespace Content.Server.GameObjects.Components.Items.RCD
                     airlock.Transform.LocalRotation = Owner.Transform.LocalRotation; //Now apply icon smoothing.
                     break;
                 default:
-                    return; //I don't know why this would happen, but sure I guess. Get out of here invalid state!
+                    return true; //I don't know why this would happen, but sure I guess. Get out of here invalid state!
             }
 
             _entitySystemManager.GetEntitySystem<AudioSystem>().PlayFromEntity("/Audio/Items/deconstruct.ogg", Owner);
             _ammo--;
-
+            return true;
         }
 
         private bool IsRCDStillValid(AfterInteractEventArgs eventArgs, IMapGrid mapGrid, TileRef tile, Vector2i snapPos, RcdMode startingMode)

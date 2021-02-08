@@ -144,7 +144,7 @@ namespace Content.Server.GameObjects.Components.Observer
         private List<WarpPointComponent> FindWaypoints()
         {
             var comp = IoCManager.Resolve<IComponentManager>();
-            return comp.EntityQuery<WarpPointComponent>().ToList();
+            return comp.EntityQuery<WarpPointComponent>(true).ToList();
         }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)

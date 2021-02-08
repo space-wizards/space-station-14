@@ -26,39 +26,41 @@ namespace Content.Server.GameObjects.Components.Medical
             serializer.DataField(this, h => h.Heal, "heal", new Dictionary<DamageType, int>());
         }
 
-        public async Task AfterInteract(AfterInteractEventArgs eventArgs)
+        public async Task<bool> AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (eventArgs.Target == null)
             {
-                return;
+                return false;
             }
 
             if (!eventArgs.Target.TryGetComponent(out IDamageableComponent damageable))
             {
-                return;
+                return true;
             }
 
             if (!ActionBlockerSystem.CanInteract(eventArgs.User))
             {
-                return;
+                return true;
             }
 
             if (eventArgs.User != eventArgs.Target &&
                 !eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
             {
-                return;
+                return true;
             }
 
             if (Owner.TryGetComponent(out StackComponent stack) &&
                 !stack.Use(1))
             {
-                return;
+                return true;
             }
 
             foreach (var (type, amount) in Heal)
             {
                 damageable.ChangeDamage(type, -amount, true);
             }
+
+            return true;
         }
     }
 }

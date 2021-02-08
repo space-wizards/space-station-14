@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.EntitySystems;
-using Content.Shared;
 using Content.Shared.GameObjects.Components.Instruments;
 using Content.Shared.Physics;
 using Robust.Client.Audio.Midi;
@@ -11,13 +10,11 @@ using Robust.Shared.Audio.Midi;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Instruments
@@ -161,6 +158,41 @@ namespace Content.Client.GameObjects.Components.Instruments
         /// </summary>
         [ViewVariables]
         public bool IsRendererAlive => _renderer != null;
+
+        [ViewVariables]
+        public int PlayerTotalTick => _renderer?.PlayerTotalTick ?? 0;
+
+        [ViewVariables]
+        public int PlayerTick
+        {
+            get => _renderer?.PlayerTick ?? 0;
+            set
+            {
+                if (!IsRendererAlive || _renderer!.Status != MidiRendererStatus.File) return;
+
+                _midiEventBuffer.Clear();
+
+                _renderer.PlayerTick = value;
+                var tick = _renderer.SequencerTick;
+
+                // We add a "all notes off" message.
+                for (byte i = 0; i < 16; i++)
+                {
+                    _midiEventBuffer.Add(new MidiEvent()
+                    {
+                        Tick = tick, Type = 176,
+                        Control = 123, Velocity = 0, Channel = i,
+                    });
+                }
+
+                // Now we add a Reset All Controllers message.
+                _midiEventBuffer.Add(new MidiEvent()
+                {
+                    Tick = tick, Type = 176,
+                    Control = 121, Value = 0,
+                });
+            }
+        }
 
         public override void Initialize()
         {
@@ -390,20 +422,6 @@ namespace Content.Client.GameObjects.Components.Instruments
         /// <param name="midiEvent">The received midi event</param>
         private void RendererOnMidiEvent(MidiEvent midiEvent)
         {
-            // avoid of out-of-band, unimportant or unsupported events
-            switch (midiEvent.Type)
-            {
-                case 0x80: // NOTE_OFF
-                case 0x90: // NOTE_ON
-                case 0xa0: // KEY_PRESSURE
-                case 0xb0: // CONTROL_CHANGE
-                case 0xd0: // CHANNEL_PRESSURE
-                case 0xe0: // PITCH_BEND
-                    break;
-                default:
-                    return;
-            }
-
             _midiEventBuffer.Add(midiEvent);
         }
 

@@ -10,7 +10,6 @@ using Content.Shared.Administration;
 using Content.Shared.GameObjects.Components.Movement;
 using JetBrains.Annotations;
 using Robust.Server.AI;
-using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;

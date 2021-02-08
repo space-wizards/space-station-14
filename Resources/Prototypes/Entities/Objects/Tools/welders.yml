@@ -20,7 +20,7 @@
   - type: ItemStatus
   - type: SolutionContainer
     maxVol: 100
-    caps: AddTo
+    caps: Refillable
     contents:
       reagents:
         - ReagentId: chem.WeldingFuel
@@ -44,7 +44,7 @@
     sprite: Objects/Tools/welder_experimental.rsi
   - type: SolutionContainer
     maxVol: 1000
-    caps: AddTo
+    caps: Refillable
     contents:
       reagents:
         - ReagentId: chem.WeldingFuel
@@ -66,7 +66,7 @@
     sprite: Objects/Tools/welder_mini.rsi
   - type: SolutionContainer
     maxVol: 25
-    caps: AddTo
+    caps: Refillable
     contents:
       reagents:
         - ReagentId: chem.WeldingFuel

@@ -1,5 +1,7 @@
-﻿using System;
+#nullable enable
+using System;
 using Content.Server.Atmos;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -8,6 +10,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
 {
     [RegisterComponent]
     [ComponentReference(typeof(BasePumpComponent))]
+    [ComponentReference(typeof(IActivate))]
     public class PressurePumpComponent : BasePumpComponent
     {
         public override string Name => "PressurePump";

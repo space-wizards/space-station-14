@@ -79,7 +79,7 @@ namespace Content.Benchmarks
         {
             var count = 0;
 
-            foreach (var _ in _componentManager.EntityQuery<DummyComponent>())
+            foreach (var _ in _componentManager.EntityQuery<DummyComponent>(true))
             {
                 count += 1;
             }
