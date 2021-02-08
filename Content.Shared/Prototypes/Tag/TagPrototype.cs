@@ -13,11 +13,11 @@ namespace Content.Shared.Prototypes.Tag
     ///     gets saved in TagComponent.
     /// </summary>
     [Prototype("Tag")]
-    public class TagPrototype : IPrototype, IIndexedPrototype, IExposeData
+    public class TagPrototype : IPrototype, IIndexedPrototype
     {
         public string ID { get; [UsedImplicitly] private set; } = default!;
 
-        void IExposeData.ExposeData(ObjectSerializer serializer)
+        private void ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.ID, "id", "");
         }
