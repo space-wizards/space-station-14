@@ -1,7 +1,9 @@
 ﻿#nullable enable
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Destructible.Thresholds.Behavior;
+using Content.Server.GameObjects.Components.Destructible.Thresholds.Behaviors;
+using Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Components.Damage;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
@@ -12,6 +14,12 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds
     public class Threshold : IExposeData
     {
         private List<IThresholdBehavior> _behaviors = new();
+
+        /// <summary>
+        ///     Whether or not this threshold was triggered in the previous call to
+        ///     <see cref="Reached"/>.
+        /// </summary>
+        [ViewVariables] public bool OldTriggered { get; private set; }
 
         /// <summary>
         ///     Whether or not this threshold has already been triggered.
@@ -27,6 +35,11 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds
         [ViewVariables] public bool TriggersOnce { get; set; }
 
         /// <summary>
+        ///     The trigger that decides if this threshold has been reached.
+        /// </summary>
+        [ViewVariables] public IThresholdTrigger? Trigger { get; set; }
+
+        /// <summary>
         ///     Behaviors to activate once this threshold is triggered.
         /// </summary>
         [ViewVariables] public IReadOnlyList<IThresholdBehavior> Behaviors => _behaviors;
@@ -35,7 +48,35 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds
         {
             serializer.DataField(this, x => x.Triggered, "triggered", false);
             serializer.DataField(this, x => x.TriggersOnce, "triggersOnce", false);
+            serializer.DataField(this, x => x.Trigger, "trigger", null);
             serializer.DataField(ref _behaviors, "behaviors", new List<IThresholdBehavior>());
+        }
+
+        public bool Reached(IDamageableComponent damageable, DestructibleSystem system)
+        {
+            if (Trigger == null)
+            {
+                return false;
+            }
+
+            if (Triggered && TriggersOnce)
+            {
+                return false;
+            }
+
+            if (OldTriggered)
+            {
+                OldTriggered = Trigger.Reached(damageable, system);
+                return false;
+            }
+
+            if (!Trigger.Reached(damageable, system))
+            {
+                return false;
+            }
+
+            OldTriggered = true;
+            return true;
         }
 
         /// <summary>
@@ -46,7 +87,7 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds
         ///     An instance of <see cref="DestructibleSystem"/> to get dependency and
         ///     system references from, if relevant.
         /// </param>
-        public void Trigger(IEntity owner, DestructibleSystem system)
+        public void Execute(IEntity owner, DestructibleSystem system)
         {
             Triggered = true;
 
@@ -56,7 +97,7 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds
                 if (owner.Deleted)
                     return;
 
-                behavior.Trigger(owner, system);
+                behavior.Execute(owner, system);
             }
         }
     }

@@ -1,11 +1,13 @@
-﻿using Content.Server.GameObjects.EntitySystems;
+﻿using System;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 
-namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behavior
+namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behaviors
 {
+    [Serializable]
     public class DoActsBehavior : IThresholdBehavior
     {
         private int _acts;
@@ -30,7 +32,7 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behavior
             return (_acts & (int) act) != 0;
         }
 
-        public void Trigger(IEntity owner, DestructibleSystem system)
+        public void Execute(IEntity owner, DestructibleSystem system)
         {
             if (HasAct(ThresholdActs.Breakage))
             {

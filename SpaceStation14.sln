@@ -50,7 +50,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MSBuild", "MSBuild", "{5040
 		RobustToolbox\MSBuild\Robust.Engine.targets = RobustToolbox\MSBuild\Robust.Engine.targets
 		RobustToolbox\MSBuild\Robust.Properties.targets = RobustToolbox\MSBuild\Robust.Properties.targets
 		RobustToolbox\MSBuild\XamlIL.targets = RobustToolbox\MSBuild\XamlIL.targets
-		RobustToolbox\MSBuild\Robust.Analyzers.targets = RobustToolbox\MSBuild\Robust.Analyzers.targets
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{806ED41A-411B-4B3B-BEB6-DEC6DCA4C205}"
@@ -90,7 +89,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamlX", "RobustToolbox\Xaml
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamlX.Runtime", "RobustToolbox\XamlX\src\XamlX.Runtime\XamlX.Runtime.csproj", "{440426C1-8DCA-43F6-967F-94439B8DAF47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Analyzers", "RobustToolbox\Robust.Analyzers\Robust.Analyzers.csproj", "{1BEB8C8B-9ACD-4DB4-B97D-56331EE0AA89}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Tools", "Content.Tools\Content.Tools.csproj", "{75AB8F8D-9E56-4B12-85E3-E03A852B31CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Analyzers", "RobustToolbox\Robust.Analyzers\Robust.Analyzers.csproj", "{88B0FC0F-7209-40E2-AF16-EB90AF727C5B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -196,10 +197,14 @@ Global
 		{440426C1-8DCA-43F6-967F-94439B8DAF47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{440426C1-8DCA-43F6-967F-94439B8DAF47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{440426C1-8DCA-43F6-967F-94439B8DAF47}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1BEB8C8B-9ACD-4DB4-B97D-56331EE0AA89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1BEB8C8B-9ACD-4DB4-B97D-56331EE0AA89}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1BEB8C8B-9ACD-4DB4-B97D-56331EE0AA89}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1BEB8C8B-9ACD-4DB4-B97D-56331EE0AA89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75AB8F8D-9E56-4B12-85E3-E03A852B31CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75AB8F8D-9E56-4B12-85E3-E03A852B31CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75AB8F8D-9E56-4B12-85E3-E03A852B31CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75AB8F8D-9E56-4B12-85E3-E03A852B31CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88B0FC0F-7209-40E2-AF16-EB90AF727C5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88B0FC0F-7209-40E2-AF16-EB90AF727C5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88B0FC0F-7209-40E2-AF16-EB90AF727C5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88B0FC0F-7209-40E2-AF16-EB90AF727C5B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -226,7 +231,7 @@ Global
 		{16F7DE32-0186-44B9-9345-0C20D1BF2422} = {AFF53804-115F-4E67-B81F-26265EA27880}
 		{23F09C45-950E-4DB7-A465-E937450FF008} = {AFF53804-115F-4E67-B81F-26265EA27880}
 		{440426C1-8DCA-43F6-967F-94439B8DAF47} = {AFF53804-115F-4E67-B81F-26265EA27880}
-		{1BEB8C8B-9ACD-4DB4-B97D-56331EE0AA89} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
+		{88B0FC0F-7209-40E2-AF16-EB90AF727C5B} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AA37ED9F-F8D6-468E-A101-658AD605B09A}

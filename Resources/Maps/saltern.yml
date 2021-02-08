@@ -20002,7 +20002,7 @@ entities:
   components:
   - parent: 853
     pos: -12.5,-5
-    rot: -1.5707963267948966 rad
+    rot: 1.5707963267948966 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -21324,7 +21324,7 @@ entities:
   components:
   - parent: 853
     pos: -6.5,-26
-    rot: 1.5707963267948966 rad
+    rot: -1.5707963267948966 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -21430,6 +21430,7 @@ entities:
   type: PoweredSmallLight
   components:
   - parent: 853
+    rot: 3.141592653589793 rad
     pos: -7,-23.5
     type: Transform
   - color: '#FFFFFFFF'
@@ -22573,7 +22574,7 @@ entities:
   components:
   - parent: 853
     pos: -29.5,15
-    rot: 1.5707963267948966 rad
+    rot: -1.5707963267948966 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -22602,7 +22603,7 @@ entities:
   components:
   - parent: 853
     pos: -34,-0.5
-    rot: 3.141592653589793 rad
+    rot: 0 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -22616,6 +22617,7 @@ entities:
   type: PoweredSmallLight
   components:
   - parent: 853
+    rot: 3.141592653589793 rad
     pos: -18,-4.5
     type: Transform
   - color: '#FFFFFFFF'
@@ -22700,7 +22702,7 @@ entities:
   components:
   - parent: 853
     pos: -29.5,-9
-    rot: -1.5707963267948966 rad
+    rot: 1.5707963267948966 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -22883,6 +22885,7 @@ entities:
   type: PoweredSmallLight
   components:
   - parent: 853
+    rot: 3.141592653589793 rad
     pos: -19,9.5
     type: Transform
   - color: '#FFFFFFFF'
@@ -22912,7 +22915,7 @@ entities:
   components:
   - parent: 853
     pos: -14.5,-16
-    rot: -1.5707963267948966 rad
+    rot: 1.5707963267948966 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -22926,6 +22929,7 @@ entities:
   type: PoweredSmallLight
   components:
   - parent: 853
+    rot: 3.141592653589793 rad
     pos: -7,-12.5
     type: Transform
   - color: '#FFFFFFFF'
@@ -22940,6 +22944,7 @@ entities:
   type: PoweredSmallLight
   components:
   - parent: 853
+    rot: 3.141592653589793 rad
     pos: -11,-10.5
     type: Transform
   - color: '#FFFFFFFF'
@@ -23112,7 +23117,7 @@ entities:
   components:
   - parent: 853
     pos: -19,16.5
-    rot: 3.141592653589793 rad
+    rot: 0 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -23127,7 +23132,7 @@ entities:
   components:
   - parent: 853
     pos: -14.5,26
-    rot: 1.5707963267948966 rad
+    rot: -1.5707963267948966 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -23142,7 +23147,7 @@ entities:
   components:
   - parent: 853
     pos: -19,22.5
-    rot: 3.141592653589793 rad
+    rot: 0 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -23157,7 +23162,7 @@ entities:
   components:
   - parent: 853
     pos: -18,9.5
-    rot: 3.141592653589793 rad
+    rot: 0 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -23172,7 +23177,7 @@ entities:
   components:
   - parent: 853
     pos: -0.5,-12
-    rot: -1.5707963267948966 rad
+    rot: 1.5707963267948966 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -23386,7 +23391,7 @@ entities:
   components:
   - parent: 853
     pos: -1,8.5
-    rot: 3.141592653589793 rad
+    rot: 0 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -23401,7 +23406,7 @@ entities:
   components:
   - parent: 853
     pos: -4,8.5
-    rot: 3.141592653589793 rad
+    rot: 0 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -23528,7 +23533,7 @@ entities:
   components:
   - parent: 853
     pos: -7.5,26
-    rot: 1.5707963267948966 rad
+    rot: -1.5707963267948966 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -23550,7 +23555,7 @@ entities:
   components:
   - parent: 853
     pos: -4,17.5
-    rot: 3.141592653589793 rad
+    rot: 0 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -23783,6 +23788,7 @@ entities:
   type: PoweredSmallLight
   components:
   - parent: 853
+    rot: 3.141592653589793 rad
     pos: 17,15.5
     type: Transform
   - color: '#FFFFFFFF'
@@ -23797,6 +23803,7 @@ entities:
   type: PoweredSmallLight
   components:
   - parent: 853
+    rot: 3.141592653589793 rad
     pos: 14,16.5
     type: Transform
   - color: '#FFFFFFFF'
@@ -23812,7 +23819,7 @@ entities:
   components:
   - parent: 853
     pos: 8.5,15
-    rot: 1.5707963267948966 rad
+    rot: -1.5707963267948966 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -24274,7 +24281,7 @@ entities:
   components:
   - parent: 853
     pos: 30.5,-6
-    rot: 1.5707963267948966 rad
+    rot: -1.5707963267948966 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -24289,7 +24296,7 @@ entities:
   components:
   - parent: 853
     pos: 25.5,-1
-    rot: 1.5707963267948966 rad
+    rot: -1.5707963267948966 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -24304,7 +24311,7 @@ entities:
   components:
   - parent: 853
     pos: 9.5,-18
-    rot: 1.5707963267948966 rad
+    rot: -1.5707963267948966 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -24347,7 +24354,7 @@ entities:
   components:
   - parent: 853
     pos: 12.5,-19
-    rot: 1.5707963267948966 rad
+    rot: -1.5707963267948966 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -24369,7 +24376,7 @@ entities:
   components:
   - parent: 853
     pos: 25.5,-19
-    rot: -1.5707963267948966 rad
+    rot: 1.5707963267948966 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -24383,6 +24390,7 @@ entities:
   type: PoweredSmallLight
   components:
   - parent: 853
+    rot: 3.141592653589793 rad
     pos: 28,-15.5
     type: Transform
   - color: '#FFFFFFFF'
@@ -24432,6 +24440,7 @@ entities:
   type: PoweredSmallLight
   components:
   - parent: 853
+    rot: 3.141592653589793 rad
     pos: 28,-10.5
     type: Transform
   - color: '#FFFFFFFF'
@@ -24453,6 +24462,7 @@ entities:
   type: PoweredSmallLight
   components:
   - parent: 853
+    rot: 3.141592653589793 rad
     pos: 24,0.5
     type: Transform
   - color: '#FFFFFFFF'
@@ -24468,7 +24478,7 @@ entities:
   components:
   - parent: 853
     pos: 26,-4.5
-    rot: 3.141592653589793 rad
+    rot: 0 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -24483,7 +24493,7 @@ entities:
   components:
   - parent: 853
     pos: 35.5,-6
-    rot: 1.5707963267948966 rad
+    rot: -1.5707963267948966 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -24498,7 +24508,7 @@ entities:
   components:
   - parent: 853
     pos: 38.5,-3
-    rot: 1.5707963267948966 rad
+    rot: -1.5707963267948966 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -24513,7 +24523,7 @@ entities:
   components:
   - parent: 853
     pos: 26,11.5
-    rot: 3.141592653589793 rad
+    rot: 0 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -24709,6 +24719,7 @@ entities:
   type: PoweredSmallLight
   components:
   - parent: 853
+    rot: 3.141592653589793 rad
     pos: 44,-1.5
     type: Transform
   - color: '#FFFFFFFF'
@@ -26432,7 +26443,7 @@ entities:
   components:
   - parent: 853
     pos: -12.5,-6
-    rot: 1.5707963267948966 rad
+    rot: -1.5707963267948966 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -26447,7 +26458,7 @@ entities:
   components:
   - parent: 853
     pos: -25.5,-10
-    rot: 1.5707963267948966 rad
+    rot: -1.5707963267948966 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -42390,7 +42401,7 @@ entities:
   components:
   - parent: 853
     pos: 22.528679,-9.003884
-    rot: 1.5707963267948966 rad
+    rot: -1.5707963267948966 rad
     type: Transform
   - powerLoad: 0
     type: PowerReceiver
@@ -42772,7 +42783,7 @@ entities:
   components:
   - parent: 853
     pos: -1.4929452,19.970068
-    rot: -1.5707963267948966 rad
+    rot: 1.5707963267948966 rad
     type: Transform
   - powerLoad: 0
     type: PowerReceiver
@@ -42799,7 +42810,7 @@ entities:
   components:
   - parent: 853
     pos: -15.494916,15.968084
-    rot: -1.5707963267948966 rad
+    rot: 1.5707963267948966 rad
     type: Transform
   - powerLoad: 0
     type: PowerReceiver
@@ -44360,7 +44371,7 @@ entities:
   components:
   - parent: 853
     pos: -22.5,-16
-    rot: -1.5707963267948966 rad
+    rot: 1.5707963267948966 rad
     type: Transform
   - powerLoad: 0
     type: PowerReceiver

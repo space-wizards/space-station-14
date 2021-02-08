@@ -25,9 +25,11 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      75:
-        behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 75
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   placement:
     mode: SnapgridCenter

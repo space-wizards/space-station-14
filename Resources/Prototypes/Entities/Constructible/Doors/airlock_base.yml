@@ -60,10 +60,12 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      500:
-        behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     mode: NoSprite

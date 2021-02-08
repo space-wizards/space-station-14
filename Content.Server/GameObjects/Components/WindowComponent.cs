@@ -1,5 +1,6 @@
-#nullable enable
+﻿#nullable enable
 using System;
+using System.Linq;
 using Content.Server.Utility;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components;
@@ -7,6 +8,7 @@ using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Server.GameObjects.Components.Destructible;
+using Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
@@ -22,7 +24,6 @@ namespace Content.Server.GameObjects.Components
     [ComponentReference(typeof(SharedWindowComponent))]
     public class WindowComponent : SharedWindowComponent, IExamine, IInteractHand
     {
-
         public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
@@ -40,26 +41,52 @@ namespace Content.Server.GameObjects.Components
 
         private void UpdateVisuals(int currentDamage)
         {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance) &&
+                Owner.TryGetComponent(out DestructibleComponent? destructible))
             {
-                if (Owner.TryGetComponent(out DestructibleComponent? destructible))
+                foreach (var threshold in destructible.Thresholds)
                 {
-                    var damageThreshold = destructible.LowestToHighestThresholds.FirstOrNull()?.Key;
-                    if (damageThreshold == null) return;
-                    appearance.SetData(WindowVisuals.Damage, (float) currentDamage / damageThreshold);
+                    if (threshold.Trigger is not TotalDamageTrigger trigger)
+                    {
+                        continue;
+                    }
+
+                    appearance.SetData(WindowVisuals.Damage, (float) currentDamage / trigger.Damage);
                 }
             }
         }
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            var damage = Owner.GetComponentOrNull<IDamageableComponent>()?.TotalDamage;
-            var damageThreshold = Owner.GetComponentOrNull<DestructibleComponent>()?.LowestToHighestThresholds.FirstOrNull()?.Key;
-            if (damage == null || damageThreshold == null) return;
-            var fraction = ((damage == 0 || damageThreshold == 0)
+            if (!Owner.TryGetComponent(out IDamageableComponent? damageable) ||
+                !Owner.TryGetComponent(out DestructibleComponent? destructible))
+            {
+                return;
+            }
+
+            var damage = damageable.TotalDamage;
+            TotalDamageTrigger? trigger = null;
+
+            // TODO: Pretend this does not exist until https://github.com/space-wizards/space-station-14/pull/2783 is merged
+            foreach (var threshold in destructible.Thresholds)
+            {
+                if ((trigger = threshold.Trigger as TotalDamageTrigger) != null)
+                {
+                    break;
+                }
+            }
+
+            if (trigger == null)
+            {
+                return;
+            }
+
+            var damageThreshold = trigger.Damage;
+            var fraction = damage == 0 || damageThreshold == 0
                 ? 0f
-                : (float) damage / damageThreshold);
+                : (float) damage / damageThreshold;
             var level = Math.Min(ContentHelpers.RoundToLevels((double) fraction, 1, 7), 5);
+
             switch (level)
             {
                 case 0:

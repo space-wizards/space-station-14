@@ -89,9 +89,10 @@
 
 - type: alert
   alertType: Handcuffed
+  onClick: !type:RemoveCuffs  { }
   icon: /Textures/Interface/Alerts/Handcuffed/Handcuffed.png
   name: "[color=yellow]Handcuffed[/color]"
-  description: "You're [color=yellow]handcuffed[/color] and can't use your hands. If anyone drags you, you won't be able to resist.."
+  description: "You're [color=yellow]handcuffed[/color] and can't use your hands. If anyone drags you, you won't be able to resist."
 
 - type: alert
   alertType: Buckled

@@ -1,11 +1,13 @@
-﻿using Content.Server.GameObjects.EntitySystems;
+﻿using System;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Audio;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 
-namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behavior
+namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behaviors
 {
+    [Serializable]
     public class PlaySoundBehavior : IThresholdBehavior
     {
         /// <summary>
@@ -18,7 +20,7 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behavior
             serializer.DataField(this, x => x.Sound, "sound", string.Empty);
         }
 
-        public void Trigger(IEntity owner, DestructibleSystem system)
+        public void Execute(IEntity owner, DestructibleSystem system)
         {
             if (string.IsNullOrEmpty(Sound))
             {

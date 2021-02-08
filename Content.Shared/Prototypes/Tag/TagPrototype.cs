@@ -17,7 +17,7 @@ namespace Content.Shared.Prototypes.Tag
     {
         public string ID { get; [UsedImplicitly] private set; } = default!;
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.ID, "id", "");
         }

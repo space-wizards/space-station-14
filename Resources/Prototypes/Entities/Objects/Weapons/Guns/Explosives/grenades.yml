@@ -25,10 +25,12 @@
   - type: Damageable
   - type: Destructible
     thresholds:
-      10:
-        behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 10
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer
@@ -57,10 +59,12 @@
   - type: Damageable
   - type: Destructible
     thresholds:
-      10:
-        behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 10
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer
@@ -89,10 +93,12 @@
   - type: Damageable
   - type: Destructible
     thresholds:
-      10:
-        behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 10
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer
@@ -120,10 +126,12 @@
   - type: Damageable
   - type: Destructible
     thresholds:
-      50:
-        behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer

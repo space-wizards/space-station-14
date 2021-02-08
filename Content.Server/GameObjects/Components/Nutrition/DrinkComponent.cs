@@ -1,15 +1,17 @@
-﻿using System.Linq;
+﻿#nullable enable
+using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Body.Behavior;
-using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Fluids;
 using Content.Shared.Audio;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.GameObjects.Components.Nutrition;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
@@ -36,22 +38,39 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public override string Name => "Drink";
 
         [ViewVariables]
-        private SolutionContainerComponent _contents;
+        private bool _opened;
+
         [ViewVariables]
-        private string _useSound;
+        private string _useSound = string.Empty;
+
         [ViewVariables]
         private bool _defaultToOpened;
-        [ViewVariables(VVAccess.ReadWrite)]
-        public ReagentUnit TransferAmount { get; private set; } = ReagentUnit.New(2);
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool Opened { get; protected set; }
-        [ViewVariables]
-        public bool Empty => _contents.CurrentVolume.Float() <= 0;
 
-        private AppearanceComponent _appearanceComponent;
-        private string _soundCollection;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public ReagentUnit TransferAmount { get; [UsedImplicitly] private set; } = ReagentUnit.New(2);
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool Opened
+        {
+            get => _opened;
+            set
+            {
+                if (_opened == value)
+                {
+                    return;
+                }
+
+                _opened = value;
+                OpenedChanged();
+            }
+        }
+
+        [ViewVariables]
+        public bool Empty => Owner.GetComponentOrNull<ISolutionInteractionsComponent>()?.DrainAvailable <= 0;
+
+        private string _soundCollection = string.Empty;
         private bool _pressurized;
-        private string _burstSound;
+        private string _burstSound = string.Empty;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -66,16 +85,26 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public override void Initialize()
         {
             base.Initialize();
-            Owner.TryGetComponent(out _appearanceComponent);
 
-            if (!Owner.TryGetComponent(out _contents))
-            {
-                _contents = Owner.AddComponent<SolutionContainerComponent>();
-            }
-
-            _contents.Capabilities = SolutionContainerCaps.Refillable | SolutionContainerCaps.Drainable;
             Opened = _defaultToOpened;
             UpdateAppearance();
+        }
+
+        private void OpenedChanged()
+        {
+            if (!Owner.TryGetComponent(out SharedSolutionContainerComponent? contents))
+            {
+                return;
+            }
+
+            if (Opened)
+            {
+                contents.Capabilities |= SolutionContainerCaps.Refillable | SolutionContainerCaps.Drainable;
+            }
+            else
+            {
+                contents.Capabilities &= ~(SolutionContainerCaps.Refillable | SolutionContainerCaps.Drainable);
+            }
         }
 
         void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs)
@@ -85,7 +114,13 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         private void UpdateAppearance()
         {
-            _appearanceComponent?.SetData(SharedFoodComponent.FoodVisuals.Visual, _contents.CurrentVolume.Float());
+            if (!Owner.TryGetComponent(out AppearanceComponent? appearance) ||
+                !Owner.TryGetComponent(out ISolutionInteractionsComponent? contents))
+            {
+                return;
+            }
+
+            appearance.SetData(SharedFoodComponent.FoodVisuals.Visual, contents.DrainAvailable.Float());
         }
 
         bool IUse.UseEntity(UseEntityEventArgs args)
@@ -101,7 +136,8 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 return false;
             }
 
-            if (_contents.CurrentVolume.Float() <= 0)
+            if (!Owner.TryGetComponent(out ISolutionInteractionsComponent? contents) ||
+                contents.DrainAvailable <= 0)
             {
                 args.User.PopupMessage(Loc.GetString("{0:theName} is empty!", Owner));
                 return true;
@@ -113,7 +149,13 @@ namespace Content.Server.GameObjects.Components.Nutrition
         //Force feeding a drink to someone.
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            TryUseDrink(eventArgs.Target, forced: true);
+            if (eventArgs.Target == null)
+            {
+                return false;
+            }
+
+            TryUseDrink(eventArgs.Target, true);
+
             return true;
         }
 
@@ -130,18 +172,15 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         private bool TryUseDrink(IEntity target, bool forced = false)
         {
-            if (target == null || !_contents.CanDrain)
-            {
-                return false;
-            }
-
             if (!Opened)
             {
                 target.PopupMessage(Loc.GetString("Open {0:theName} first!", Owner));
                 return false;
             }
 
-            if (_contents.CurrentVolume.Float() <= 0)
+            if (!Owner.TryGetComponent(out ISolutionInteractionsComponent? interactions) ||
+                !interactions.CanDrain ||
+                interactions.DrainAvailable <= 0)
             {
                 if (!forced)
                 {
@@ -151,26 +190,33 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 return false;
             }
 
-            if (!target.TryGetComponent(out IBody body) ||
+            if (!target.TryGetComponent(out IBody? body) ||
                 !body.TryGetMechanismBehaviors<StomachBehavior>(out var stomachs))
             {
+                target.PopupMessage(Loc.GetString("You can't drink {0:theName}!", Owner));
                 return false;
             }
 
-            var transferAmount = ReagentUnit.Min(TransferAmount, _contents.CurrentVolume);
-            var split = _contents.SplitSolution(transferAmount);
-            var firstStomach = stomachs.FirstOrDefault(stomach => stomach.CanTransferSolution(split));
-
+            var transferAmount = ReagentUnit.Min(TransferAmount, interactions.DrainAvailable);
+            var drain = interactions.Drain(transferAmount);
+            var firstStomach = stomachs.FirstOrDefault(stomach => stomach.CanTransferSolution(drain));
 
             // All stomach are full or can't handle whatever solution we have.
             if (firstStomach == null)
             {
-                _contents.TryAddSolution(split);
                 target.PopupMessage(Loc.GetString("You've had enough {0:theName}!", Owner));
+
+                if (!interactions.CanRefill)
+                {
+                    drain.SpillAt(target, "PuddleSmear");
+                    return false;
+                }
+
+                interactions.Refill(drain);
                 return false;
             }
 
-            if (_useSound != null)
+            if (!string.IsNullOrEmpty(_useSound))
             {
                 EntitySystem.Get<AudioSystem>().PlayFromEntity(_useSound, target, AudioParams.Default.WithVolume(-2f));
             }
@@ -180,9 +226,9 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             // TODO: Account for partial transfer.
 
-            split.DoEntityReaction(target, ReactionMethod.Ingestion);
+            drain.DoEntityReaction(target, ReactionMethod.Ingestion);
 
-            firstStomach.TryTransferSolution(split);
+            firstStomach.TryTransferSolution(drain);
 
             return true;
         }
@@ -192,11 +238,16 @@ namespace Content.Server.GameObjects.Components.Nutrition
             if (_pressurized &&
                 !Opened &&
                 _random.Prob(0.25f) &&
-                Owner.TryGetComponent(out SolutionContainerComponent component))
+                Owner.TryGetComponent(out ISolutionInteractionsComponent? interactions))
             {
                 Opened = true;
 
-                var solution = component.SplitSolution(component.CurrentVolume);
+                if (!interactions.CanDrain)
+                {
+                    return;
+                }
+
+                var solution = interactions.Drain(interactions.DrainAvailable);
                 solution.SpillAt(Owner, "PuddleSmear");
 
                 EntitySystem.Get<AudioSystem>().PlayFromEntity(_burstSound, Owner,

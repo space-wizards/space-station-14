@@ -12,10 +12,12 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      5:
-        behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
+    - trigger:
+        !type:TotalDamageTrigger
+        damage: 5
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: Sprite
     drawdepth: WallTops
     sprite: Constructible/Misc/decals.rsi
