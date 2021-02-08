@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: Firelock
   name: firelock
   description: Apply crowbar.
@@ -37,13 +37,11 @@
             - VaultImpassable
             - SmallImpassable
     - type: Door
-      CloseTimeOne: 0.1
-      CloseTimeTwo: 0.6
-      OpenTimeOne: 0.1
-      OpenTimeTwo: 0.6
+      closeTimeOne: 0.1
+      closeTimeTwo: 0.6
+      openTimeOne: 0.1
+      openTimeTwo: 0.6
       startOpen: true
-      safety: false
-      AutoClose: false
       bumpOpen: false
     - type: Firelock
     - type: Appearance

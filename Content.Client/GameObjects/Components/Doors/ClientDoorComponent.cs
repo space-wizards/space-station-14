@@ -12,10 +12,26 @@ namespace Content.Client.GameObjects.Components.Doors
     /// </summary>
     [UsedImplicitly]
     [RegisterComponent]
+    [ComponentReference(typeof(SharedDoorComponent))]
     public class ClientDoorComponent : SharedDoorComponent
     {
         private bool _stateChangeHasProgressed = false;
         private TimeSpan _timeOffset;
+
+        public override DoorState State
+        {
+            protected set
+            {
+                if (State == value)
+                {
+                    return;
+                }
+
+                base.State = value;
+
+                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new DoorStateMessage(this, State));
+            }
+        }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
@@ -51,7 +67,7 @@ namespace Content.Client.GameObjects.Components.Doors
             _stateChangeHasProgressed = false;
         }
 
-        public override void OnUpdate(float frameTime)
+        public void OnUpdate()
         {
             if (!_stateChangeHasProgressed)
             {
@@ -69,6 +85,18 @@ namespace Content.Client.GameObjects.Components.Doors
                 _stateChangeHasProgressed = true;
                 Dirty();
             }
+        }
+    }
+
+    public sealed class DoorStateMessage : EntitySystemMessage
+    {
+        public ClientDoorComponent Component { get; }
+        public SharedDoorComponent.DoorState State { get; }
+
+        public DoorStateMessage(ClientDoorComponent component, SharedDoorComponent.DoorState state)
+        {
+            Component = component;
+            State = state;
         }
     }
 }

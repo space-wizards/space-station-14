@@ -1,3 +1,4 @@
+#nullable enable
 using Content.Server.GameObjects.Components.Doors;
 using Content.Server.Interfaces.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Doors;
@@ -7,11 +8,13 @@ using Robust.Shared.GameObjects;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects.ComponentDependencies;
+using Robust.Shared.Localization;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
     /// <summary>
-    /// Companion component to ServerDoorComponent that handles firelock-specific behavior.
+    /// Companion component to ServerDoorComponent that handles firelock-specific behavior -- primarily prying, and not being openable on open-hand click.
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IDoorCheck))]
@@ -19,42 +22,55 @@ namespace Content.Server.GameObjects.Components.Atmos
     {
         public override string Name => "Firelock";
 
+        [ComponentDependency]
+        private readonly ServerDoorComponent? _doorComponent = null;
+
         public bool EmergencyPressureStop()
         {
-            Owner.TryGetComponent<ServerDoorComponent>(out var doorcomponent);
-
-            if (doorcomponent.State == SharedDoorComponent.DoorState.Open && doorcomponent.CanCloseGeneric())
+            if (_doorComponent != null && _doorComponent.State == SharedDoorComponent.DoorState.Open && _doorComponent.CanCloseGeneric())
             {
-                doorcomponent.Close();
-                Owner.GetComponent<AirtightComponent>().AirBlocked = true;
+                _doorComponent.Close();
+                if (Owner.TryGetComponent(out AirtightComponent? airtight))
+                {
+                    airtight.AirBlocked = true;
+                }
                 return true;
             }
             return false;
         }
 
-        public bool OpenCheck()
+        bool IDoorCheck.OpenCheck()
         {
             return !IsHoldingFire() && !IsHoldingPressure();
         }
 
-        public bool DenyCheck() => false;
+        bool IDoorCheck.DenyCheck() => false;
 
-        public float? GetPryTime()
+        float? IDoorCheck.GetPryTime()
         {
             if (IsHoldingFire() || IsHoldingPressure())
             {
                 return 1.5f;
             }
-            return 0.25f;
+            return null;
         }
 
-        public bool BlockActivate(ActivateEventArgs eventArgs) => true;
+        bool IDoorCheck.BlockActivate(ActivateEventArgs eventArgs) => true;
 
-        public void OnStartPry(InteractUsingEventArgs eventArgs)
+        void IDoorCheck.OnStartPry(InteractUsingEventArgs eventArgs)
         {
-            if (Owner.GetComponent<ServerDoorComponent>().State == SharedDoorComponent.DoorState.Closed && IsHoldingPressure())
+            if (_doorComponent == null || _doorComponent.State != SharedDoorComponent.DoorState.Closed)
             {
-                Owner.PopupMessage(eventArgs.User, "A gush of air blows in your face... Maybe you should reconsider.");
+                return;
+            }
+            
+            if (IsHoldingPressure())
+            {
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("A gush of air blows in your face... Maybe you should reconsider."));
+            }
+            else if (IsHoldingFire())
+            {
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("A gush of warm air blows in your face... Maybe you should reconsider."));
             }
         }
 

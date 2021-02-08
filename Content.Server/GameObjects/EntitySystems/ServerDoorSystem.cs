@@ -1,14 +1,12 @@
-using System;
-using Content.Shared.GameObjects.Components.Doors;
 using JetBrains.Annotations;
-using Content.Shared.GameObjects.EntitySystems;
+using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
     /// <summary>
-    /// Used on the server side to automatically close open-doors that auto-close by calling OnUpdate on them.
+    /// Used on the server side to manage global access level overrides.
     /// </summary>
-    class ServerDoorSystem : SharedDoorSystem
+    class ServerDoorSystem : EntitySystem
     {
         /// <summary>
         ///     Determines the base access behavior of all doors on the station.
@@ -40,24 +38,6 @@ namespace Content.Server.GameObjects.EntitySystems
             base.Initialize();
 
             AccessType = AccessTypes.Id;
-        }
-
-        protected override void HandleDoorState(DoorStateMessage message)
-        {
-            switch (message.State)
-            {
-                case SharedDoorComponent.DoorState.Closed:
-                    ActiveDoors.Remove(message.Component);
-                    break;
-                case SharedDoorComponent.DoorState.Open:
-                    ActiveDoors.Add(message.Component);
-                    break;
-                case SharedDoorComponent.DoorState.Closing:
-                case SharedDoorComponent.DoorState.Opening:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
         }
     }
 }

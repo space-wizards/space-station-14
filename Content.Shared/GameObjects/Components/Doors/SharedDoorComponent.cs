@@ -8,6 +8,8 @@ using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Robust.Shared.Physics;
 using Robust.Shared.GameObjects.Components.Appearance;
+using Robust.Shared.GameObjects.ComponentDependencies;
+using System.Collections.Generic;
 
 namespace Content.Shared.GameObjects.Components.Doors
 {
@@ -15,6 +17,12 @@ namespace Content.Shared.GameObjects.Components.Doors
     {
         public override string Name => "Door";
         public override uint? NetID => ContentNetIDs.DOOR;
+
+        [ComponentDependency]
+        protected readonly SharedAppearanceComponent? AppearanceComponent = null;
+
+        [ComponentDependency]
+        protected readonly IPhysicsComponent? PhysicsComponent = null;
 
         [ViewVariables]
         private DoorState _state = DoorState.Closed;
@@ -33,7 +41,6 @@ namespace Content.Shared.GameObjects.Components.Doors
 
                 _state = value;
 
-                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new DoorStateMessage(this, State));
                 SetAppearance(State switch
                 {
                     DoorState.Open => DoorVisualState.Open,
@@ -48,19 +55,19 @@ namespace Content.Shared.GameObjects.Components.Doors
         /// <summary>
         /// Closing time until impassable.
         /// </summary>
-        protected TimeSpan CloseTimeOne = TimeSpan.FromSeconds(0.4f);
+        protected TimeSpan CloseTimeOne;
         /// <summary>
         /// Closing time until fully closed.
         /// </summary>
-        protected TimeSpan CloseTimeTwo = TimeSpan.FromSeconds(0.2f);
+        protected TimeSpan CloseTimeTwo;
         /// <summary>
         /// Opening time until passable.
         /// </summary>
-        protected TimeSpan OpenTimeOne = TimeSpan.FromSeconds(0.4f);
+        protected TimeSpan OpenTimeOne;
         /// <summary>
         /// Opening time until fully open.
         /// </summary>
-        protected TimeSpan OpenTimeTwo = TimeSpan.FromSeconds(0.2f);
+        protected TimeSpan OpenTimeTwo;
         /// <summary>
         /// Time to finish denying.
         /// </summary>
@@ -76,24 +83,10 @@ namespace Content.Shared.GameObjects.Components.Doors
         /// </summary>
         protected TimeSpan? StateChangeStartTime = null;
 
-        // secret real value of CurrentlyCrushing
-        private EntityUid? _currentlyCrushing = null;
         /// <summary>
-        /// The EntityUid of the entity we're currently crushing, or null if we aren't crushing anyone. Reset to null in OnPartialOpen().
+        /// List of EntityUids of entities we're currently crushing. Cleared in OnPartialOpen().
         /// </summary>
-        protected EntityUid? CurrentlyCrushing
-        {
-            get => _currentlyCrushing;
-            set
-            {
-                if (_currentlyCrushing == value)
-                {
-                    return;
-                }
-                _currentlyCrushing = value;
-                Dirty();
-            }
-        } 
+        protected List<EntityUid> CurrentlyCrushing = new();
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -101,25 +94,25 @@ namespace Content.Shared.GameObjects.Components.Doors
 
 
             serializer.DataReadWriteFunction(
-                "CloseTimeOne",
+                "closeTimeOne",
                 0.4f,
                 seconds => CloseTimeOne = TimeSpan.FromSeconds(seconds),
                 () => CloseTimeOne.TotalSeconds);
 
             serializer.DataReadWriteFunction(
-                "CloseTimeTwo",
+                "closeTimeTwo",
                 0.2f,
                 seconds => CloseTimeTwo = TimeSpan.FromSeconds(seconds),
                 () => CloseTimeOne.TotalSeconds);
 
             serializer.DataReadWriteFunction(
-                "OpenTimeOne",
+                "openTimeOne",
                 0.4f,
                 seconds => OpenTimeOne = TimeSpan.FromSeconds(seconds),
                 () => CloseTimeOne.TotalSeconds);
 
             serializer.DataReadWriteFunction(
-                "OpenTimeTwo",
+                "openTimeTwo",
                 0.2f,
                 seconds => OpenTimeTwo = TimeSpan.FromSeconds(seconds),
                 () => CloseTimeOne.TotalSeconds);
@@ -127,16 +120,16 @@ namespace Content.Shared.GameObjects.Components.Doors
 
         protected void SetAppearance(DoorVisualState state)
         {
-            if (Owner.TryGetComponent(out SharedAppearanceComponent? appearance))
+            if (AppearanceComponent != null)
             {
-                appearance.SetData(DoorVisuals.VisualState, state);
+                AppearanceComponent.SetData(DoorVisuals.VisualState, state);
             }
         }
 
         // stops us colliding with people we're crushing, to prevent hitbox clipping and jank
         public bool PreventCollide(IPhysBody collidedwith)
         {
-            return CurrentlyCrushing == collidedwith.Entity.Uid;
+            return CurrentlyCrushing.Contains(collidedwith.Entity.Uid);
         }
 
         /// <summary>
@@ -144,12 +137,12 @@ namespace Content.Shared.GameObjects.Components.Doors
         /// </summary>
         protected virtual void OnPartialOpen()
         {
-            if (Owner.TryGetComponent(out IPhysicsComponent? physics))
+            if (PhysicsComponent != null)
             {
-                physics.CanCollide = false;
+                PhysicsComponent.CanCollide = false;
             }
             // we can't be crushing anyone anymore, since we're opening
-            CurrentlyCrushing = null;
+            CurrentlyCrushing.Clear();
         }
 
         /// <summary>
@@ -157,17 +150,11 @@ namespace Content.Shared.GameObjects.Components.Doors
         /// </summary>
         protected virtual void OnPartialClose()
         {
-            if (Owner.TryGetComponent(out IPhysicsComponent? physics))
+            if (PhysicsComponent != null)
             {
-                physics.CanCollide = true;
+                PhysicsComponent.CanCollide = true;
             }
         }
-
-        /// <summary>
-        /// Used to update the door at periodic intervals. Serves a different purpose on client side vs. server side.
-        /// </summary>
-        /// <param name="frameTime"></param>
-        public virtual void OnUpdate(float frameTime) { }
 
         [Serializable, NetSerializable]
         public enum DoorState
@@ -204,27 +191,15 @@ namespace Content.Shared.GameObjects.Components.Doors
     {
         public readonly SharedDoorComponent.DoorState DoorState;
         public readonly TimeSpan? StartTime;
+        public readonly List<EntityUid> CurrentlyCrushing;
         public readonly TimeSpan CurTime;
-        public readonly EntityUid? CurrentlyCrushing;
 
-        public DoorComponentState(SharedDoorComponent.DoorState doorState, TimeSpan? startTime, TimeSpan curTime, EntityUid? currentlyCrushing) : base(ContentNetIDs.DOOR)
+        public DoorComponentState(SharedDoorComponent.DoorState doorState, TimeSpan? startTime, List<EntityUid> currentlyCrushing, TimeSpan curTime) : base(ContentNetIDs.DOOR)
         {
             DoorState = doorState;
             StartTime = startTime;
-            CurTime = curTime;
             CurrentlyCrushing = currentlyCrushing;
-        }
-    }
-
-    public sealed class DoorStateMessage : EntitySystemMessage
-    {
-        public SharedDoorComponent Component { get; }
-        public SharedDoorComponent.DoorState State { get; }
-
-        public DoorStateMessage(SharedDoorComponent component, SharedDoorComponent.DoorState state)
-        {
-            Component = component;
-            State = state;
+            CurTime = curTime;
         }
     }
 }

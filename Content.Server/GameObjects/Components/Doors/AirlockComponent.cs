@@ -11,6 +11,8 @@ using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.ComponentDependencies;
+using Robust.Shared.GameObjects.Components.Appearance;
 using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -23,13 +25,25 @@ using static Content.Shared.GameObjects.Components.SharedWiresComponent.WiresAct
 namespace Content.Server.GameObjects.Components.Doors
 {
     /// <summary>
-    /// Companion component to AirlockComponent that handles firelock-specific behavior.
+    /// Companion component to ServerDoorComponent that handles airlock-specific behavior -- wires, requiring power to operate, bolts, and allowing automatic closing.
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IDoorCheck))]
     public class AirlockComponent : Component, IWires, IDoorCheck
     {
         public override string Name => "Airlock";
+
+        [ComponentDependency]
+        private readonly ServerDoorComponent? _doorComponent = null;
+
+        [ComponentDependency]
+        private readonly SharedAppearanceComponent? _appearanceComponent = null;
+
+        [ComponentDependency]
+        private readonly PowerReceiverComponent? _receiverComponent = null;
+
+        [ComponentDependency]
+        private readonly WiresComponent? _wiresComponent = null;
 
         /// <summary>
         /// Duration for which power will be disabled after pulsing either power wire.
@@ -74,7 +88,7 @@ namespace Content.Server.GameObjects.Components.Doors
         private bool BoltLightsVisible
         {
             get => _boltLightsWirePulsed && BoltsDown && IsPowered()
-                && Owner.GetComponent<ServerDoorComponent>().State == SharedDoorComponent.DoorState.Closed;
+                && _doorComponent != null && _doorComponent.State == SharedDoorComponent.DoorState.Closed;
             set
             {
                 _boltLightsWirePulsed = value;
@@ -82,20 +96,24 @@ namespace Content.Server.GameObjects.Components.Doors
             }
         }
 
-        private const float AutoCloseDelayFast = 1;
+        private static readonly TimeSpan AutoCloseDelayFast = TimeSpan.FromSeconds(1);
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        private bool _autoClose = true;
+
         [ViewVariables(VVAccess.ReadWrite)]
         private bool _normalCloseSpeed = true;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        private bool _safety = true;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
+            if (_receiverComponent != null && _appearanceComponent != null)
             {
-                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
-                {
-                    appearance.SetData(DoorVisuals.Powered, receiver.Powered);
-                }
+                _appearanceComponent.SetData(DoorVisuals.Powered, _receiverComponent.Powered);
             }
         }
 
@@ -110,24 +128,28 @@ namespace Content.Server.GameObjects.Components.Doors
             }
         }
 
-        public void OnStateChange(SharedDoorComponent.DoorState doorState)
+        void IDoorCheck.OnStateChange(SharedDoorComponent.DoorState doorState)
         {
             // Only show the maintenance panel if the airlock is closed
-            if (Owner.TryGetComponent(out WiresComponent? wires))
+            if (_wiresComponent != null)
             {
-                wires.IsPanelVisible = doorState != SharedDoorComponent.DoorState.Open;
+                _wiresComponent.IsPanelVisible = doorState != SharedDoorComponent.DoorState.Open;
             }
             // If the door is closed, we should look if the bolt was locked while closing
             UpdateBoltLightStatus();
         }
 
-        public bool OpenCheck() => CanChangeState();
+        bool IDoorCheck.OpenCheck() => CanChangeState();
 
-        public bool CloseCheck() => CanChangeState();
+        bool IDoorCheck.CloseCheck() => CanChangeState();
 
-        public bool DenyCheck() => CanChangeState();
+        bool IDoorCheck.DenyCheck() => CanChangeState();
 
-        public float? GetCloseSpeed()
+        bool IDoorCheck.SafetyCheck() => _safety;
+
+        bool IDoorCheck.AutoCloseCheck() => _autoClose;
+
+        TimeSpan? IDoorCheck.GetCloseSpeed()
         {
             if (_normalCloseSpeed)
             {
@@ -136,18 +158,18 @@ namespace Content.Server.GameObjects.Components.Doors
             return AutoCloseDelayFast;
         }
 
-        public bool BlockActivate(ActivateEventArgs eventArgs)
+        bool IDoorCheck.BlockActivate(ActivateEventArgs eventArgs)
         {
-            if (Owner.TryGetComponent(out WiresComponent? wires) &&
-                wires.IsPanelOpen && eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (_wiresComponent != null && _wiresComponent.IsPanelOpen &&
+                eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
-                wires.OpenInterface(actor.playerSession);
+                _wiresComponent.OpenInterface(actor.playerSession);
                 return true;
             }
             return false;
         }
 
-        public bool CanPryCheck(InteractUsingEventArgs eventArgs)
+        bool IDoorCheck.CanPryCheck(InteractUsingEventArgs eventArgs)
         {
             if (IsBolted())
             {
@@ -174,59 +196,61 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private bool IsPowered()
         {
-            return !Owner.TryGetComponent(out PowerReceiverComponent? receiver)
-                   || receiver.Powered;
+            return _receiverComponent == null || _receiverComponent.Powered;
         }
 
         private void UpdateBoltLightStatus()
         {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (_appearanceComponent != null)
             {
-                appearance.SetData(DoorVisuals.BoltLights, BoltLightsVisible);
+                _appearanceComponent.SetData(DoorVisuals.BoltLights, BoltLightsVisible);
             }
         }
 
         private void UpdateWiresStatus()
         {
-            WiresComponent? wires;
+            if (_doorComponent == null)
+            {
+                return;
+            }
+
             var powerLight = new StatusLightData(Color.Yellow, StatusLightState.On, "POWR");
             if (PowerWiresPulsed)
             {
                 powerLight = new StatusLightData(Color.Yellow, StatusLightState.BlinkingFast, "POWR");
             }
-            else if (Owner.TryGetComponent(out wires) &&
-                     wires.IsWireCut(Wires.MainPower) &&
-                     wires.IsWireCut(Wires.BackupPower))
+            else if (_wiresComponent != null &&
+                     _wiresComponent.IsWireCut(Wires.MainPower) &&
+                     _wiresComponent.IsWireCut(Wires.BackupPower))
             {
                 powerLight = new StatusLightData(Color.Red, StatusLightState.On, "POWR");
             }
 
-            var door = Owner.GetComponent<ServerDoorComponent>();
             var boltStatus =
                 new StatusLightData(Color.Red, BoltsDown ? StatusLightState.On : StatusLightState.Off, "BOLT");
             var boltLightsStatus = new StatusLightData(Color.Lime,
                 _boltLightsWirePulsed ? StatusLightState.On : StatusLightState.Off, "BLTL");
 
             var timingStatus =
-                new StatusLightData(Color.Orange, !door.AutoClose ? StatusLightState.Off :
+                new StatusLightData(Color.Orange, !_autoClose ? StatusLightState.Off :
                                                     !_normalCloseSpeed ? StatusLightState.BlinkingSlow :
                                                     StatusLightState.On,
                                                     "TIME");
 
             var safetyStatus =
-                new StatusLightData(Color.Red, door.Safety ? StatusLightState.On : StatusLightState.Off, "SAFE");
+                new StatusLightData(Color.Red, _safety ? StatusLightState.On : StatusLightState.Off, "SAFE");
 
-            if (!Owner.TryGetComponent(out wires))
+            if (_wiresComponent == null)
             {
                 return;
             }
 
-            wires.SetStatus(AirlockWireStatus.PowerIndicator, powerLight);
-            wires.SetStatus(AirlockWireStatus.BoltIndicator, boltStatus);
-            wires.SetStatus(AirlockWireStatus.BoltLightIndicator, boltLightsStatus);
-            wires.SetStatus(AirlockWireStatus.AIControlIndicator, new StatusLightData(Color.Purple, StatusLightState.BlinkingSlow, "AICT"));
-            wires.SetStatus(AirlockWireStatus.TimingIndicator, timingStatus);
-            wires.SetStatus(AirlockWireStatus.SafetyIndicator, safetyStatus);
+            _wiresComponent.SetStatus(AirlockWireStatus.PowerIndicator, powerLight);
+            _wiresComponent.SetStatus(AirlockWireStatus.BoltIndicator, boltStatus);
+            _wiresComponent.SetStatus(AirlockWireStatus.BoltLightIndicator, boltLightsStatus);
+            _wiresComponent.SetStatus(AirlockWireStatus.AIControlIndicator, new StatusLightData(Color.Purple, StatusLightState.BlinkingSlow, "AICT"));
+            _wiresComponent.SetStatus(AirlockWireStatus.TimingIndicator, timingStatus);
+            _wiresComponent.SetStatus(AirlockWireStatus.SafetyIndicator, safetyStatus);
             /*
             _wires.SetStatus(6, powerLight);
             _wires.SetStatus(7, powerLight);
@@ -238,32 +262,32 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private void UpdatePowerCutStatus()
         {
-            if (!Owner.TryGetComponent(out PowerReceiverComponent? receiver))
+            if (_receiverComponent == null)
             {
                 return;
             }
 
             if (PowerWiresPulsed)
             {
-                receiver.PowerDisabled = true;
+                _receiverComponent.PowerDisabled = true;
                 return;
             }
 
-            if (!Owner.TryGetComponent(out WiresComponent? wires))
+            if (_wiresComponent == null)
             {
                 return;
             }
 
-            receiver.PowerDisabled =
-                wires.IsWireCut(Wires.MainPower) ||
-                wires.IsWireCut(Wires.BackupPower);
+            _receiverComponent.PowerDisabled =
+                _wiresComponent.IsWireCut(Wires.MainPower) ||
+                _wiresComponent.IsWireCut(Wires.BackupPower);
         }
 
         private void PowerDeviceOnOnPowerStateChanged(PowerChangedMessage e)
         {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (_appearanceComponent != null)
             {
-                appearance.SetData(DoorVisuals.Powered, e.Powered);
+                _appearanceComponent.SetData(DoorVisuals.Powered, e.Powered);
             }
 
             // BoltLights also got out
@@ -334,7 +358,11 @@ namespace Content.Server.GameObjects.Components.Doors
 
         public void WiresUpdate(WiresUpdateEventArgs args)
         {
-            var door = Owner.GetComponent<ServerDoorComponent>();
+            if(_doorComponent == null)
+            {
+                return;
+            }
+
             if (args.Action == Pulse)
             {
                 switch (args.Identifier)
@@ -368,9 +396,10 @@ namespace Content.Server.GameObjects.Components.Doors
                         break;
                     case Wires.Timing:
                         _normalCloseSpeed = !_normalCloseSpeed;
+                        _doorComponent.RefreshAutoClose();
                         break;
                     case Wires.Safety:
-                        door.Safety = !door.Safety;
+                        _safety = !_safety;
                         break;
                 }
             }
@@ -389,10 +418,11 @@ namespace Content.Server.GameObjects.Components.Doors
                         BoltLightsVisible = true;
                         break;
                     case Wires.Timing:
-                        door.AutoClose = true;
+                        _autoClose = true;
+                        _doorComponent.RefreshAutoClose();
                         break;
                     case Wires.Safety:
-                        door.Safety = true;
+                        _safety = true;
                         break;
                 }
             }
@@ -408,10 +438,11 @@ namespace Content.Server.GameObjects.Components.Doors
                         BoltLightsVisible = false;
                         break;
                     case Wires.Timing:
-                        door.AutoClose = false;
+                        _autoClose = false;
+                        _doorComponent.RefreshAutoClose();
                         break;
                     case Wires.Safety:
-                        door.Safety = false;
+                        _safety = false;
                         break;
                 }
             }
