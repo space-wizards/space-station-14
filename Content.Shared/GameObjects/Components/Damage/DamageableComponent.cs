@@ -20,6 +20,8 @@ namespace Content.Shared.GameObjects.Components.Damage
     ///     Component that allows attached entities to take damage.
     ///     This basic version never dies (thus can take an indefinite amount of damage).
     /// </summary>
+    [RegisterComponent]
+    [ComponentReference(typeof(IDamageableComponent))]
     public abstract class DamageableComponent : Component, IDamageableComponent, IRadiationAct
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
