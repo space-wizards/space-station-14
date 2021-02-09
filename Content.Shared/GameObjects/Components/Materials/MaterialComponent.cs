@@ -59,7 +59,7 @@ namespace Content.Shared.GameObjects.Components.Materials
             public object Key;
             public string Value;
 
-            public void ExposeData(ObjectSerializer serializer)
+            void IExposeData.ExposeData(ObjectSerializer serializer)
             {
                 if (serializer.Writing)
                 {

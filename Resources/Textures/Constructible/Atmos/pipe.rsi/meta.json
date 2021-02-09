@@ -9,84 +9,23 @@
    "states":[
       {
          "name":"pipeTJunction",
-         "directions":4,
-         "delays":[
-            [
-               1.0
-            ],
-            [
-               1.0
-            ],
-            [
-               1.0
-            ],
-            [
-               1.0
-            ]
-         ]
+         "directions":4
       },
       {
          "name":"pipeHalf",
-         "directions":4,
-         "delays":[
-            [
-               1.0
-            ],
-            [
-               1.0
-            ],
-            [
-               1.0
-            ],
-            [
-               1.0
-            ]
-         ]
+         "directions":4
       },
       {
          "name":"pipeBend",
-         "directions":4,
-         "delays":[
-            [
-               1.0
-            ],
-            [
-               1.0
-            ],
-            [
-               1.0
-            ],
-            [
-               1.0
-            ]
-         ]
+         "directions":4
       },
       {
          "name":"pipeFourway",
-         "directions":1,
-         "delays":[
-            [
-               1.0
-            ]
-         ]
+         "directions":1
       },
       {
          "name":"pipeStraight",
-         "directions":4,
-         "delays":[
-            [
-               1.0
-            ],
-            [
-               1.0
-            ],
-            [
-               1.0
-            ],
-            [
-               1.0
-            ]
-         ]
+         "directions":4
       }
    ]
 }

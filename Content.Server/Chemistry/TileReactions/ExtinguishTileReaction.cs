@@ -4,6 +4,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces.Chemistry;
 using JetBrains.Annotations;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
@@ -14,7 +15,7 @@ namespace Content.Server.Chemistry.TileReactions
     {
         private float _coolingTemperature = 2f;
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(ref _coolingTemperature, "coolingTemperature", 2f);
         }

@@ -87,7 +87,7 @@ namespace Content.Server.GameObjects.Components
             return new PlaceableSurfaceComponentState(_isPlaceable,_placeCentered,_positionOffset);
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!IsPlaceable)
                 return false;

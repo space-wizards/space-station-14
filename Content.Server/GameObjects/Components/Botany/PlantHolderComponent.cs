@@ -12,6 +12,7 @@ using Content.Server.Utility;
 using Content.Shared.Audio;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Botany;
+using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
@@ -639,7 +640,14 @@ namespace Content.Server.GameObjects.Components.Botany
                 Seed = Seed.Diverge(modified);
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        private void ForceUpdateByExternalCause()
+        {
+            SkipAging++; // We're forcing an update cycle, so one age hasn't passed.
+            ForceUpdate = true;
+            Update();
+        }
+
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             var user = eventArgs.User;
             var usingItem = eventArgs.Using;
@@ -695,29 +703,48 @@ namespace Content.Server.GameObjects.Components.Botany
                 return true;
             }
 
-            if (usingItem.TryGetComponent(out SolutionContainerComponent? solution) && solution.CanRemoveSolutions)
+            if (usingItem.HasComponent<ShovelComponent>())
             {
-                var amount = 5f;
+                if (Seed != null)
+                {
+                    user.PopupMessageCursor(Loc.GetString("You remove the plant from the {0}.", Owner.Name));
+                    user.PopupMessageOtherClients(Loc.GetString("{0} removes the plant.", user.Name));
+                    RemovePlant();
+                }
+                else
+                {
+                    user.PopupMessageCursor(Loc.GetString("There is no plant to remove."));
+                }
+
+                return true;
+            }
+
+            if (usingItem.TryGetComponent(out ISolutionInteractionsComponent? solution) && solution.CanDrain)
+            {
+                var amount = ReagentUnit.New(5);
                 var sprayed = false;
 
                 if (usingItem.TryGetComponent(out SprayComponent? spray))
                 {
                     sprayed = true;
-                    amount = 1f;
+                    amount = ReagentUnit.New(1);
                     EntitySystem.Get<AudioSystem>().PlayFromEntity(spray.SpraySound, usingItem, AudioHelpers.WithVariation(0.125f));
                 }
 
-                var chemAmount = ReagentUnit.New(amount);
+                var split = solution.Drain(amount);
+                if (split.TotalVolume == 0)
+                {
+                    user.PopupMessageCursor(Loc.GetString("{0:TheName} is empty!", usingItem));
+                    return true;
+                }
 
-                var split = solution.Solution.SplitSolution(chemAmount <= solution.Solution.TotalVolume ? chemAmount : solution.Solution.TotalVolume);
-
-                user.PopupMessageCursor(Loc.GetString(sprayed ? $"You spray {Owner.Name} with {usingItem.Name}." : $"You transfer {split.TotalVolume.ToString()}u to {Owner.Name}"));
+                user.PopupMessageCursor(Loc.GetString(
+                    sprayed ? "You spray {0:TheName}" : "You transfer {1}u to {0:TheName}",
+                    Owner, split.TotalVolume));
 
                 _solutionContainer?.TryAddSolution(split);
 
-                SkipAging++; // We're forcing an update cycle, so one age hasn't passed.
-                ForceUpdate = true;
-                Update();
+                ForceUpdateByExternalCause();
 
                 return true;
             }
@@ -752,9 +779,7 @@ namespace Content.Server.GameObjects.Components.Botany
 
                 // Just in case.
                 CheckLevelSanity();
-                SkipAging++; // We're forcing an update cycle, so one age hasn't passed.
-                ForceUpdate = true;
-                Update();
+                ForceUpdateByExternalCause();
 
                 return true;
             }
@@ -764,10 +789,28 @@ namespace Content.Server.GameObjects.Components.Botany
                 return DoHarvest(user);
             }
 
+            if (usingItem.HasComponent<ProduceComponent>())
+            {
+                user.PopupMessageCursor(Loc.GetString("You compost {1:theName} into {0:theName}.", Owner, usingItem));
+                user.PopupMessageOtherClients(Loc.GetString("{0:TheName} composts {1:theName} into {2:theName}.", user, usingItem, Owner));
+
+                if (usingItem.TryGetComponent(out SolutionContainerComponent? solution2))
+                {
+                    // This deliberately discards overfill.
+                    _solutionContainer?.TryAddSolution(solution2.SplitSolution(solution2.Solution.TotalVolume));
+
+                    ForceUpdateByExternalCause();
+                }
+
+                usingItem.Delete();
+
+                return true;
+            }
+
             return false;
         }
 
-        public ReagentUnit ReagentReactTouch(ReagentPrototype reagent, ReagentUnit volume)
+        ReagentUnit IReagentReaction.ReagentReactTouch(ReagentPrototype reagent, ReagentUnit volume)
         {
             if(_solutionContainer == null)
                 return ReagentUnit.Zero;
@@ -776,7 +819,7 @@ namespace Content.Server.GameObjects.Components.Botany
             return accepted;
         }
 
-        public ReagentUnit ReagentReactInjection(ReagentPrototype reagent, ReagentUnit volume)
+        ReagentUnit IReagentReaction.ReagentReactInjection(ReagentPrototype reagent, ReagentUnit volume)
         {
             if(_solutionContainer == null)
                 return ReagentUnit.Zero;
@@ -785,13 +828,13 @@ namespace Content.Server.GameObjects.Components.Botany
             return accepted;
         }
 
-        public bool InteractHand(InteractHandEventArgs eventArgs)
+        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
             // DoHarvest does the sanity checks.
             return DoHarvest(eventArgs.User);
         }
 
-        public void Activate(ActivateEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             // DoHarvest does the sanity checks.
             DoHarvest(eventArgs.User);

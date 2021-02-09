@@ -92,7 +92,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             victim.Delete();
         }
 
-        public SuicideKind Suicide(IEntity victim, IChatManager chat)
+        SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
         {
             var othersMessage = Loc.GetString("{0:theName} has thrown themselves on a meat spike!", victim);
             victim.PopupMessageOtherClients(othersMessage);

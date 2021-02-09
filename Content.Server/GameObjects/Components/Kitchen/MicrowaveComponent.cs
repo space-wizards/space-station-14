@@ -13,6 +13,7 @@ using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
+using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
@@ -197,7 +198,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             UserInterface?.Toggle(actor.playerSession);
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!Powered)
             {
@@ -213,10 +214,10 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 return false;
             }
 
-            if (itemEntity.TryGetComponent<PourableComponent>(out var attackPourable))
+            if (itemEntity.TryGetComponent<SolutionTransferComponent>(out var attackPourable))
             {
-                if (!itemEntity.TryGetComponent<SolutionContainerComponent>(out var attackSolution)
-                    || !attackSolution.CanRemoveSolutions)
+                if (!itemEntity.TryGetComponent<ISolutionInteractionsComponent>(out var attackSolution)
+                    || !attackSolution.CanDrain)
                 {
                     return false;
                 }
@@ -235,7 +236,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 }
 
                 //Move units from attackSolution to targetSolution
-                var removedSolution = attackSolution.SplitSolution(realTransferAmount);
+                var removedSolution = attackSolution.Drain(realTransferAmount);
                 if (!solution.TryAddSolution(removedSolution))
                 {
                     return false;
@@ -473,7 +474,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             _audioSystem.PlayFromEntity("/Audio/Machines/machine_switch.ogg",Owner,AudioParams.Default.WithVolume(-2f));
         }
 
-        public SuicideKind Suicide(IEntity victim, IChatManager chat)
+        SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
         {
             var headCount = 0;
 

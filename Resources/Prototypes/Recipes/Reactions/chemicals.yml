@@ -41,6 +41,20 @@
     chem.PolytrinicAcid: 3
 
 - type: reaction
+  id: react.FluorosulfuricAcid
+  reactants:
+    chem.Fluorine:
+      amount: 1
+    chem.Hydrogen:
+      amount: 1
+    chem.Potassium:
+      amount: 1
+    chem.SulfuricAcid:
+      amount: 1
+  products:
+    chem.FluorosulfuricAcid: 4
+
+- type: reaction
   id: react.PotassiumExplosion
   reactants:
     chem.Water:
@@ -56,6 +70,94 @@
       flashRange: 0.2
       scaled: true #Scaled proportionally to amount of potassium and water
       maxScale: 30 #Explosion strength stops scaling at 30 potassium + 30 water
+
+- type: reaction
+  id: react.Smoke
+  reactants:
+    chem.Phosphorus:
+      amount: 1
+    chem.Potassium:
+      amount: 1
+    chem.Sugar:
+      amount: 1
+  effects:
+    - !type:SmokeAreaReactionEffect
+      rangeConstant: 0
+      rangeMultiplier: 1.1 #Range formula: rangeConstant + rangeMultiplier*sqrt(ReactionUnits)
+      maxRange: 10
+      duration: 10
+      spreadDelay: 0.5
+      removeDelay: 0.5
+      diluteReagents: false
+      prototypeId: Smoke
+      sound: /Audio/Effects/smoke.ogg
+
+- type: reaction
+  id: react.Foam
+  reactants:
+    chem.Fluorosurfactant:
+      amount: 1
+    chem.Water:
+      amount: 1
+  effects:
+    - !type:FoamAreaReactionEffect
+      rangeConstant: 0
+      rangeMultiplier: 1.1 #Range formula: rangeConstant + rangeMultiplier*sqrt(ReactionUnits)
+      maxRange: 10
+      duration: 10
+      spreadDelay: 1
+      removeDelay: 0
+      diluteReagents: true
+      reagentDilutionStart: 4 #At what range should the reagents start diluting
+      reagentDilutionFactor: 1
+      reagentMaxConcentrationFactor: 2 #The reagents will get multiplied by this number if the range turns out to be 0
+      prototypeId: Foam
+
+- type: reaction
+  id: react.IronMetalFoam
+  reactants:
+    chem.Iron:
+      amount: 3
+    chem.FoamingAgent:
+      amount: 1
+    chem.FluorosulfuricAcid:
+      amount: 1
+  effects:
+    - !type:FoamAreaReactionEffect
+      rangeConstant: 0
+      rangeMultiplier: 1.1
+      maxRange: 10
+      duration: 10
+      spreadDelay: 1
+      removeDelay: 0
+      diluteReagents: true
+      reagentDilutionStart: 4
+      reagentDilutionFactor: 1
+      reagentMaxConcentrationFactor: 2
+      prototypeId: IronMetalFoam
+
+- type: reaction
+  id: react.AluminiumMetalFoam
+  reactants:
+    chem.Aluminium:
+      amount: 3
+    chem.FoamingAgent:
+      amount: 1
+    chem.FluorosulfuricAcid:
+      amount: 1
+  effects:
+    - !type:FoamAreaReactionEffect
+      rangeConstant: 0
+      rangeMultiplier: 1.1
+      maxRange: 10
+      duration: 10
+      spreadDelay: 1
+      removeDelay: 0
+      diluteReagents: true
+      reagentDilutionStart: 4
+      reagentDilutionFactor: 1
+      reagentMaxConcentrationFactor: 2
+      prototypeId: AluminiumMetalFoam
 
 - type: reaction
   id: react.TableSalt
@@ -100,3 +202,15 @@
       amount: 1
   products:
     chem.Water: 2
+
+- type: reaction
+  id: react.Fluorosurfactant
+  reactants:
+    chem.Carbon:
+      amount: 2
+    chem.Fluorine:
+      amount: 2
+    chem.SulfuricAcid:
+      amount: 1
+  products:
+    chem.Fluorosurfactant: 5

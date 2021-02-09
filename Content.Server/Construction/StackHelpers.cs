@@ -33,8 +33,8 @@ namespace Content.Server.Construction
                     prototype = "MetalRodStack1";
                     break;
 
-                case StackType.Phoron:
-                    prototype = "PhoronStack1";
+                case StackType.Plasma:
+                    prototype = "PlasmaStack1";
                     break;
 
                 case StackType.Plasteel:

@@ -32,12 +32,12 @@ namespace Content.Server.GameObjects.Components.MachineLinking
             serializer.DataField(ref _on, "on", true);
         }
 
-        public void Activate(ActivateEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             TransmitSignal(eventArgs.User);
         }
 
-        public bool InteractHand(InteractHandEventArgs eventArgs)
+        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
             TransmitSignal(eventArgs.User);
             return true;

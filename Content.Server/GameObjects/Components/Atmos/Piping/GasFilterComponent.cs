@@ -96,7 +96,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Filters
             base.ExposeData(serializer);
             serializer.DataField(ref _volumeFilterRate, "startingVolumePumpRate", 0);
             serializer.DataField(ref _maxVolumeFilterRate, "maxVolumePumpRate", 100);
-            serializer.DataField(ref _gasToFilter, "gasToFilter", Gas.Phoron);
+            serializer.DataField(ref _gasToFilter, "gasToFilter", Gas.Plasma);
             serializer.DataField(ref _initialInletDirection, "inletDirection", PipeDirection.None);
             serializer.DataField(ref _initialFilterOutletDirection, "filterOutletDirection", PipeDirection.None);
             serializer.DataField(ref _initialOutletDirection, "outletDirection", PipeDirection.None);
@@ -171,7 +171,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Filters
 
             if (_inletPipe == null || _filterOutletPipe == null || _outletPipe == null)
             {
-                Logger.Error($"{typeof(GasFilterComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
+                Logger.Error($"{nameof(GasFilterComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
                 return;
             }
         }

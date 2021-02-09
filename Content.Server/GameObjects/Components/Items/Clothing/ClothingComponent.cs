@@ -72,7 +72,7 @@ namespace Content.Server.GameObjects.Components.Items.Clothing
             return new ClothingComponentState(ClothingEquippedPrefix, EquippedPrefix);
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             if (!_quickEquipEnabled) return false;
             if (!eventArgs.User.TryGetComponent(out InventoryComponent inv)

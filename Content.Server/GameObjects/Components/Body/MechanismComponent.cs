@@ -36,11 +36,11 @@ namespace Content.Server.GameObjects.Components.Body
             }
         }
 
-        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (eventArgs.Target == null)
             {
-                return;
+                return false;
             }
 
             CloseAllSurgeryUIs();
@@ -61,6 +61,8 @@ namespace Content.Server.GameObjects.Components.Body
                     eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("You can't fit it in!"));
                 }
             }
+
+            return true;
         }
 
         private void SendBodyPartListToUser(AfterInteractEventArgs eventArgs, IBody body)

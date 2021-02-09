@@ -24,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Damage
             serializer.DataField(ref _ignoreResistances, "ignoreResistances", false);
         }
 
-        public void Land(LandEventArgs eventArgs)
+        void ILand.Land(LandEventArgs eventArgs)
         {
             if (!Owner.TryGetComponent(out IDamageableComponent damageable)) return;
 

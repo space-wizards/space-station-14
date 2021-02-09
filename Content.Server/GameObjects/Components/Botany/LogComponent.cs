@@ -12,7 +12,7 @@ namespace Content.Server.GameObjects.Components.Botany
     {
         public override string Name => "Log";
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!ActionBlockerSystem.CanInteract(eventArgs.User))
                 return false;

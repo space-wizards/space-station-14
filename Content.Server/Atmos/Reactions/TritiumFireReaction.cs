@@ -5,6 +5,7 @@ using Content.Shared.Atmos;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems.TileLookup;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Atmos.Reactions
@@ -12,7 +13,7 @@ namespace Content.Server.Atmos.Reactions
     [UsedImplicitly]
     public class TritiumFireReaction : IGasReactionEffect
     {
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
         }
 

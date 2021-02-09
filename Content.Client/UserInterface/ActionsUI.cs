@@ -122,23 +122,25 @@ namespace Content.Client.UserInterface
             hotbarContainer.AddChild(settingsContainer);
 
             settingsContainer.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 1 });
-            _lockTexture = resourceCache.GetTexture("/Textures/Interface/Nano/lock.svg.png");
-            _unlockTexture = resourceCache.GetTexture("/Textures/Interface/Nano/lock_open.svg.png");
+            _lockTexture = resourceCache.GetTexture("/Textures/Interface/Nano/lock.svg.192dpi.png");
+            _unlockTexture = resourceCache.GetTexture("/Textures/Interface/Nano/lock_open.svg.192dpi.png");
             _lockButton = new TextureButton
             {
                 TextureNormal = _unlockTexture,
                 SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
                 SizeFlagsVertical = SizeFlags.ShrinkCenter,
-                SizeFlagsStretchRatio = 1
+                SizeFlagsStretchRatio = 1,
+                Scale = (0.5f, 0.5f)
             };
             settingsContainer.AddChild(_lockButton);
             settingsContainer.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 2 });
             _settingsButton = new TextureButton
             {
-                TextureNormal = resourceCache.GetTexture("/Textures/Interface/Nano/gear.svg.png"),
+                TextureNormal = resourceCache.GetTexture("/Textures/Interface/Nano/gear.svg.192dpi.png"),
                 SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
                 SizeFlagsVertical = SizeFlags.ShrinkCenter,
-                SizeFlagsStretchRatio = 1
+                SizeFlagsStretchRatio = 1,
+                Scale = (0.5f, 0.5f)
             };
             settingsContainer.AddChild(_settingsButton);
             settingsContainer.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 1 });
@@ -160,10 +162,11 @@ namespace Content.Client.UserInterface
             _loadoutContainer.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 1 });
             var previousHotbarIcon = new TextureRect()
             {
-                Texture = resourceCache.GetTexture("/Textures/Interface/Nano/left_arrow.svg.png"),
+                Texture = resourceCache.GetTexture("/Textures/Interface/Nano/left_arrow.svg.192dpi.png"),
                 SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
                 SizeFlagsVertical = SizeFlags.ShrinkCenter,
-                SizeFlagsStretchRatio = 1
+                SizeFlagsStretchRatio = 1,
+                TextureScale = (0.5f, 0.5f)
             };
             _loadoutContainer.AddChild(previousHotbarIcon);
             _loadoutContainer.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 2 });
@@ -176,10 +179,11 @@ namespace Content.Client.UserInterface
             _loadoutContainer.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 2 });
             var nextHotbarIcon = new TextureRect
             {
-                Texture = resourceCache.GetTexture("/Textures/Interface/Nano/right_arrow.svg.png"),
+                Texture = resourceCache.GetTexture("/Textures/Interface/Nano/right_arrow.svg.192dpi.png"),
                 SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
                 SizeFlagsVertical = SizeFlags.ShrinkCenter,
-                SizeFlagsStretchRatio = 1
+                SizeFlagsStretchRatio = 1,
+                TextureScale = (0.5f, 0.5f)
             };
             _loadoutContainer.AddChild(nextHotbarIcon);
             _loadoutContainer.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 1 });

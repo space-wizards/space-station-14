@@ -2,7 +2,6 @@
 using Content.Server.GameObjects.Components.Gravity;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Alert;
-using Content.Shared.GameObjects.Components.Gravity;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Utility;
@@ -45,10 +44,7 @@ namespace Content.IntegrationTests.Tests.Gravity
 
             await server.WaitAssertion(() =>
             {
-                var mapId = mapManager.CreateMap();
-
-                pauseManager.AddUninitializedMap(mapId);
-
+                var mapId = new MapId(1);
                 var gridId = new GridId(1);
 
                 if (!mapManager.TryGetGrid(gridId, out var grid))
@@ -56,14 +52,7 @@ namespace Content.IntegrationTests.Tests.Gravity
                     grid = mapManager.CreateGrid(mapId, gridId);
                 }
 
-                var tileDefinition = tileDefinitionManager["underplating"];
-                var tile = new Tile(tileDefinition.TileId);
                 var coordinates = grid.ToCoordinates();
-
-                grid.SetTile(coordinates, tile);
-
-                pauseManager.DoMapInitialize(mapId);
-
                 human = entityManager.SpawnEntity("HumanDummy", coordinates);
 
                 Assert.True(human.TryGetComponent(out alerts));
@@ -98,7 +87,7 @@ namespace Content.IntegrationTests.Tests.Gravity
 
             await server.WaitAssertion(() =>
             {
-                Assert.False(alerts.IsShowingAlert(AlertType.Weightless));
+                Assert.True(alerts.IsShowingAlert(AlertType.Weightless));
             });
         }
     }

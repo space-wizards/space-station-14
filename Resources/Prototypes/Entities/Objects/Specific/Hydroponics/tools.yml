@@ -42,3 +42,18 @@
   - type: BotanySharp
   - type: Item
     sprite: Objects/Tools/Hydroponics/hatchet.rsi
+
+- type: entity
+  name: spade
+  parent: BaseItem
+  id: Spade
+  description: A small tool for digging and moving dirt.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Hydroponics/spade.rsi
+    state: spade
+  - type: ItemCooldown
+  - type: MeleeWeapon
+  - type: Shovel
+  - type: Item
+    sprite: Objects/Tools/Hydroponics/spade.rsi

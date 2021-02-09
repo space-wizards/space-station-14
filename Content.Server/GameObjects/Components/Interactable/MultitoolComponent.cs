@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             public string SoundCollection => _soundCollection;
             public string ChangeSound => _changeSound;
 
-            public void ExposeData(ObjectSerializer serializer)
+            void IExposeData.ExposeData(ObjectSerializer serializer)
             {
                 serializer.DataField(this, x => x.Behavior, "behavior", ToolQuality.None);
                 serializer.DataField(ref _state, "state", string.Empty);
@@ -104,7 +104,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             serializer.DataField(ref _tools, "tools", new List<ToolEntry>());
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             Cycle();
             return true;

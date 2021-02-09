@@ -80,7 +80,7 @@ namespace Content.Shared.GameObjects.Components.Buckle
             return args.Target.HasComponent<SharedStrapComponent>();
         }
 
-        public bool Drop(DragDropEventArgs args)
+        bool IDraggable.Drop(DragDropEventArgs args)
         {
             return TryBuckle(args.User, args.Target);
         }

@@ -1,25 +1,26 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.Actions;
 using Content.Shared.Administration;
-using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Commands.Actions
 {
     [AdminCommand(AdminFlags.Debug)]
-    public sealed class CooldownAction : IClientCommand
+    public sealed class CooldownAction : IConsoleCommand
     {
         public string Command => "coolaction";
         public string Description => "Sets a cooldown on an action for a player, defaulting to current player";
         public string Help => "coolaction <actionType> <seconds> <name or userID, omit for current player>";
 
-        public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             if (player == null) return;
             var attachedEntity = player.AttachedEntity;
             if (args.Length > 2)
@@ -31,29 +32,29 @@ namespace Content.Server.Commands.Actions
             if (attachedEntity == null) return;
             if (!attachedEntity.TryGetComponent(out ServerActionsComponent? actionsComponent))
             {
-                shell.SendText(player, "user has no actions component");
+                shell.WriteLine("user has no actions component");
                 return;
             }
 
             var actionTypeRaw = args[0];
             if (!Enum.TryParse<ActionType>(actionTypeRaw, out var actionType))
             {
-                shell.SendText(player, "unrecognized ActionType enum value, please" +
-                                       " ensure you used correct casing: " + actionTypeRaw);
+                shell.WriteLine("unrecognized ActionType enum value, please" +
+                                " ensure you used correct casing: " + actionTypeRaw);
                 return;
             }
             var actionMgr = IoCManager.Resolve<ActionManager>();
 
             if (!actionMgr.TryGet(actionType, out var action))
             {
-                shell.SendText(player, "unrecognized actionType " + actionType);
+                shell.WriteLine("unrecognized actionType " + actionType);
                 return;
             }
 
             var cooldownStart = IoCManager.Resolve<IGameTiming>().CurTime;
             if (!uint.TryParse(args[1], out var seconds))
             {
-                shell.SendText(player, "cannot parse seconds: " + args[1]);
+                shell.WriteLine("cannot parse seconds: " + args[1]);
                 return;
             }
 

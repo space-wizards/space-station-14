@@ -128,7 +128,7 @@ namespace Content.Shared.GameObjects.Components
         MVCable,
         HVCable,
         Gold,
-        Phoron,
+        Plasma,
         Ointment,
         Gauze,
         Brutepack,

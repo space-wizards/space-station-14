@@ -91,7 +91,7 @@ namespace Content.Client.GameObjects.Components.Items
             return args.Target.HasComponent<DisposalUnitComponent>();
         }
 
-        public bool Drop(DragDropEventArgs args)
+        bool IDraggable.Drop(DragDropEventArgs args)
         {
             // TODO: Shared item class
             return false;

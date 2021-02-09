@@ -33,7 +33,7 @@ namespace Content.Shared.GameObjects.Components.Strap
 
         public sealed override uint? NetID => ContentNetIDs.STRAP;
 
-        public virtual bool CanDragDropOn(DragDropEventArgs eventArgs)
+        bool IDragDropOn.CanDragDropOn(DragDropEventArgs eventArgs)
         {
             if (!eventArgs.Dragged.TryGetComponent(out SharedBuckleComponent buckleComponent)) return false;
             bool Ignored(IEntity entity) => entity == eventArgs.User || entity == eventArgs.Dragged || entity == eventArgs.Target;
