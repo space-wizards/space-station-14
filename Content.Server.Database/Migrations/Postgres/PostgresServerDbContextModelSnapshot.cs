@@ -366,6 +366,10 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("uuid")
                         .HasColumnName("user_id");
 
+                    b.Property<string>("AdminOocColor")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("admin_ooc_color");
+
                     b.HasKey("Id");
 
                     b.HasIndex("UserId")
