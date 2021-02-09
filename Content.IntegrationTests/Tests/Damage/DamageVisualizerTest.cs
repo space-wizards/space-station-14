@@ -4,11 +4,11 @@ using Content.Client.GameObjects.Components.Damage;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using NUnit.Framework;
+using Robust.Client.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Map;
-using SpriteComponent = Robust.Client.GameObjects.SpriteComponent;
 
 namespace Content.IntegrationTests.Tests.Damage
 {
@@ -31,10 +31,17 @@ namespace Content.IntegrationTests.Tests.Damage
     resistances: noResistances
   - type: Destructible
     thresholds:
-      0:
+    - trigger:
+        !type:DamageTrigger
+        damage: 0
+      behaviors:
+      - !type:ChangeAppearanceBehavior
         appearance:
           sprite: Test/Damage/metal.rsi
           state: metal0
+  - type: Appearance
+    visuals:
+    - type: DamageVisualizer
 
 - type: entity
   id: {TestDualLayerDummyId}
@@ -44,18 +51,25 @@ namespace Content.IntegrationTests.Tests.Damage
   - type: Damageable
   - type: Destructible
     thresholds:
-    0:
-      appearance:
-        sprite: Test/Damage/metal.rsi
-        state: metal0
-    visuals:
-    - type: DamageVisualizer
-      states:
-      - damage: 0
-      - damage: 10
+    - trigger:
+        !type:DamageTrigger
+        damage: 0
+      behaviors:
+      - !type:ChangeAppearanceBehavior
+        appearance:
+          sprite: Test/Damage/metal.rsi
+          state: metal0
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:ChangeAppearanceBehavior
         appearance:
           sprite: Test/Damage/wood.rsi
           state: wood0
+  - type: Appearance
+    visuals:
+    - type: DamageVisualizer
 ";
 
         [Test]

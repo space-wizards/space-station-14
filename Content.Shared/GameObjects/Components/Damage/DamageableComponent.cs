@@ -22,7 +22,7 @@ namespace Content.Shared.GameObjects.Components.Damage
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IDamageableComponent))]
-    public abstract class DamageableComponent : Component, IDamageableComponent, IRadiationAct
+    public class DamageableComponent : Component, IDamageableComponent, IRadiationAct
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 

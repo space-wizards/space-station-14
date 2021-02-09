@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using Content.Shared.GameObjects.Components.Destructible;
+﻿#nullable enable
+using System.Collections.Generic;
+using Content.Shared.GameObjects.Components.Destructible.Thresholds.Behaviors;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
@@ -17,7 +18,7 @@ namespace Content.Client.GameObjects.Components.Damage
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent(out ISpriteComponent sprite))
+            if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite))
             {
                 return;
             }

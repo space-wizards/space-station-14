@@ -4,7 +4,7 @@ using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.GameObjects.Components.Destructible
+namespace Content.Shared.GameObjects.Components.Destructible.Thresholds.Behaviors
 {
     [Serializable, NetSerializable]
     public struct ThresholdAppearance : IExposeData
@@ -28,7 +28,7 @@ namespace Content.Shared.GameObjects.Components.Destructible
         /// </summary>
         [ViewVariables] public int? Layer;
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(ref Sprite, "sprite", null);
             serializer.DataField(ref State, "state", null);
