@@ -12,10 +12,8 @@ namespace Content.Server.GameObjects.Components.Markers
         [DataClassTarget("MaximumEntitiesSpawned")]
         public int MaximumEntitiesSpawned;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public void ExposeData(ObjectSerializer serializer)
         {
-            base.ExposeData(serializer);
-
             serializer.DataField(this, x => x.MinimumEntitiesSpawned, "minimumEntitiesSpawned", 1);
             serializer.DataField(this, x => x.MaximumEntitiesSpawned, "maximumEntitiesSpawned", 1);
 

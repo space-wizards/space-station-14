@@ -10,10 +10,8 @@ namespace Content.Server.GameObjects.Components.AI
         [DataClassTarget("factions")]
         public Faction? Factions { get; private set; }
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public void ExposeData(ObjectSerializer serializer)
         {
-            base.ExposeData(serializer);
-
             Factions ??= Faction.None;
             serializer.DataReadWriteFunction(
                 "factions",

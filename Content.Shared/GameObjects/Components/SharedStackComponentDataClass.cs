@@ -10,7 +10,7 @@ namespace Content.Shared.GameObjects.Components
         [DataClassTarget("stacktype")]
         public object StackType;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public void ExposeData(ObjectSerializer serializer)
         {
             if (serializer.Writing)
             {

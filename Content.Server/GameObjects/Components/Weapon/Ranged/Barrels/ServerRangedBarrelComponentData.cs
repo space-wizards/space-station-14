@@ -31,10 +31,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         [DataClassTarget("allRateSelectors")]
         public FireRateSelector AllRateSelectors;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public virtual void ExposeData(ObjectSerializer serializer)
         {
-            base.ExposeData(serializer);
-
             serializer.DataField(ref FireRate, "fireRate", 2f);
 
             // This hard-to-read area's dealing with recoil

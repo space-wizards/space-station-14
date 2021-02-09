@@ -11,10 +11,8 @@ namespace Content.Shared.GameObjects.Components.Research
         [DataClassTarget("protolatherecipes")]
         public List<LatheRecipePrototype> ProtolatheRecipes = new();
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public void ExposeData(ObjectSerializer serializer)
         {
-            base.ExposeData(serializer);
-
             serializer.DataReadWriteFunction(
                 "protolatherecipes",
                 new List<string>(),

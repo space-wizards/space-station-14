@@ -11,10 +11,8 @@ namespace Content.Shared.GameObjects.Components.Materials
         [DataClassTarget("materials")]
         public Dictionary<object, Material> MaterialTypes;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public void ExposeData(ObjectSerializer serializer)
         {
-            base.ExposeData(serializer);
-
             // TODO: Writing.
             if (serializer.Writing)
             {

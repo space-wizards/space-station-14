@@ -16,10 +16,8 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
         [DataClassTarget("behaviours")]
         public Dictionary<Type, IMechanismBehavior>? _behaviors;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public void ExposeData(ObjectSerializer serializer)
         {
-            base.ExposeData(serializer);
-
             var moduleManager = IoCManager.Resolve<IModuleManager>();
 
             if (moduleManager.IsServerModule)

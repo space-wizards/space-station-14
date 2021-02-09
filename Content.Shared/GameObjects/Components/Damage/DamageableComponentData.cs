@@ -25,10 +25,8 @@ namespace Content.Shared.GameObjects.Components.Damage
         [DataClassTarget("supportedClasses")]
         public HashSet<DamageClass>? SupportedClasses;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public void ExposeData(ObjectSerializer serializer)
         {
-            base.ExposeData(serializer);
-
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
             Flags ??= DamageFlag.None;

@@ -27,9 +27,8 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         [DataClassTarget("Tiles")] private List<GridAtmosphereComponentData.IntermediateTileAtmosphere>? TilesReceiver;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public void ExposeData(ObjectSerializer serializer)
         {
-            base.ExposeData(serializer);
             if (serializer.Reading)
             {
                 if (!serializer.TryReadDataField("uniqueMixes", out List<GasMixture>? uniqueMixes) ||

@@ -11,10 +11,8 @@ namespace Content.Client.GameObjects.Components
         [DataClassTarget("animations")]
         public List<LightBehaviourComponent.AnimationContainer>? Animations;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public void ExposeData(ObjectSerializer serializer)
         {
-            base.ExposeData(serializer);
-
             var behaviours = serializer.ReadDataField("behaviours", new List<LightBehaviourAnimationTrack>());
             var key = 0;
 

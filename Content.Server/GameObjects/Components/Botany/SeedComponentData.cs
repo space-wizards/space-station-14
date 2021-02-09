@@ -9,10 +9,8 @@ namespace Content.Server.GameObjects.Components.Botany
     {
         [DataClassTarget("Seed")] public Seed Seed;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public void ExposeData(ObjectSerializer serializer)
         {
-            base.ExposeData(serializer);
-
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
             serializer.DataReadFunction<string>("seed", null,

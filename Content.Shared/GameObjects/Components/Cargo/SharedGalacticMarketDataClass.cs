@@ -11,10 +11,8 @@ namespace Content.Shared.GameObjects.Components.Cargo
         [DataClassTarget("products")]
         protected List<CargoProductPrototype> _products = new();
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public void ExposeData(ObjectSerializer serializer)
         {
-            base.ExposeData(serializer);
-
             serializer.DataReadWriteFunction(
                 "products",
                 new List<string>(),

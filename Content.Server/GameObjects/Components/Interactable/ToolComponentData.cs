@@ -11,10 +11,8 @@ namespace Content.Server.GameObjects.Components.Interactable
         [DataClassTarget("qualities")]
         public ToolQuality Qualities = ToolQuality.None;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public void ExposeData(ObjectSerializer serializer)
         {
-            base.ExposeData(serializer);
-
             serializer.DataReadWriteFunction(
                 "qualities",
                 new List<ToolQuality>(),

@@ -10,10 +10,8 @@ namespace Content.Server.GameObjects.Components.Access
         [DataClassTarget("accessList")]
         public List<ISet<string>> AccessLists = new();
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public void ExposeData(ObjectSerializer serializer)
         {
-            base.ExposeData(serializer);
-
             serializer.DataReadWriteFunction("access", new List<List<string>>(),
                 v =>
                 {

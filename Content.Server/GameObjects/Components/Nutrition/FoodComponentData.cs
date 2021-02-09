@@ -10,10 +10,8 @@ namespace Content.Server.GameObjects.Components.Nutrition
     {
         [DataClassTarget("utensilsNeeded")] public UtensilType? UtensilsNeeded;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public void ExposeData(ObjectSerializer serializer)
         {
-            base.ExposeData(serializer);
-
             UtensilsNeeded ??= UtensilType.None;
             serializer.DataReadWriteFunction(
                 "utensils",

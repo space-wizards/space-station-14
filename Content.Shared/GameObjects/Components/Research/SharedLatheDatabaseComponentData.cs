@@ -11,10 +11,8 @@ namespace Content.Shared.GameObjects.Components.Research
         [DataClassTarget("recipes")]
         private readonly List<LatheRecipePrototype> _recipes = new();
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public void ExposeData(ObjectSerializer serializer)
         {
-            base.ExposeData(serializer);
-
             serializer.DataReadWriteFunction(
                 "recipes",
                 new List<string>(),

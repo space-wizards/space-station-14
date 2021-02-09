@@ -9,9 +9,8 @@ namespace Content.Server.GameObjects.Components.Buckle
         [DataClassTarget("delay")]
         public TimeSpan? UnbuckleDelay;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public void ExposeData(ObjectSerializer serializer)
         {
-            base.ExposeData(serializer);
             float? seconds = 0.25f;
             serializer.DataField(ref seconds, "cooldown", null);
 

@@ -10,10 +10,8 @@ namespace Content.Server.GameObjects.Components.Access
         [DataClassTarget("tags")]
         private HashSet<string>? _tags;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public void ExposeData(ObjectSerializer serializer)
         {
-            base.ExposeData(serializer);
-
             _tags ??= new HashSet<string>();
             serializer.DataReadWriteFunction("tags", new List<string>(),
                 value =>

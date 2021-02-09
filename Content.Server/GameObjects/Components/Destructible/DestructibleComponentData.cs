@@ -11,10 +11,8 @@ namespace Content.Server.GameObjects.Components.Destructible
         [DataClassTarget("thresholds")]
         public SortedDictionary<int, Threshold>? LowestToHighestThresholds;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public void ExposeData(ObjectSerializer serializer)
         {
-            base.ExposeData(serializer);
-
             serializer.DataReadWriteFunction(
                 "thresholds",
                 new Dictionary<int, Threshold>(),

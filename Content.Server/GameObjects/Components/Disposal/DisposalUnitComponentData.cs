@@ -14,10 +14,8 @@ namespace Content.Server.GameObjects.Components.Disposal
         [DataClassTarget("flushDelay")]
         public TimeSpan? FlushDelay;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public void ExposeData(ObjectSerializer serializer)
         {
-            base.ExposeData(serializer);
-
             serializer.DataReadWriteFunction(
                 "automaticEngageTime",
                 30,

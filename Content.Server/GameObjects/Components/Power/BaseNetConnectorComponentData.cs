@@ -8,9 +8,8 @@ namespace Content.Server.GameObjects.Components.Power
         [DataClassTarget("voltage")]
         private Voltage? _voltage;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public void ExposeData(ObjectSerializer serializer)
         {
-            base.ExposeData(serializer);
             serializer.DataField(ref _voltage, "voltage", null);
         }
     }

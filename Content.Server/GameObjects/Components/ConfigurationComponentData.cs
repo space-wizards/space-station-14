@@ -13,10 +13,8 @@ namespace Content.Server.GameObjects.Components
 
         [DataClassTarget("validation")]
         public Regex? Validation;
-        public override void ExposeData(ObjectSerializer serializer)
+        public void ExposeData(ObjectSerializer serializer)
         {
-            base.ExposeData(serializer);
-
             Config ??= new();
             serializer.DataReadWriteFunction("keys", new List<string>(),
                 (list) =>

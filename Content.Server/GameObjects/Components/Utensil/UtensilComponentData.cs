@@ -10,10 +10,8 @@ namespace Content.Server.GameObjects.Components.Utensil
     {
         [DataClassTarget("types")] public UtensilType Types;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public void ExposeData(ObjectSerializer serializer)
         {
-            base.ExposeData(serializer);
-
             serializer.DataReadWriteFunction("types",
                 new List<UtensilType>(),
                 types => types.ForEach((type) => Types |= type),

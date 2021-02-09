@@ -13,10 +13,8 @@ namespace Content.Server.GameObjects.Components.Strap
         [DataClassTarget("list")]
         public HashSet<IEntity> BuckledEntities;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public void ExposeData(ObjectSerializer serializer)
         {
-            base.ExposeData(serializer);
-
             var defaultSize = 100;
 
             serializer.DataField(ref Size, "size", defaultSize);

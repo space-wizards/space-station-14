@@ -20,9 +20,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
         [DataClassTarget("caseless")]
         private bool? Caseless;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public void ExposeData(ObjectSerializer serializer)
         {
-            base.ExposeData(serializer);
             // For shotty of whatever as well
             serializer.DataField(ref ProjectilesFired, "projectilesFired", null);
             // Used for shotty to determine overall pellet spread

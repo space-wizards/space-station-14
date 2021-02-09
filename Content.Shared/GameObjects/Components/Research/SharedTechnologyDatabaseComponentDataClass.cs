@@ -11,10 +11,8 @@ namespace Content.Shared.GameObjects.Components.Research
         [DataClassTarget("technologies")]
         protected List<TechnologyPrototype> _technologies = new();
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public void ExposeData(ObjectSerializer serializer)
         {
-            base.ExposeData(serializer);
-
             serializer.DataReadWriteFunction(
                 "technologies",
                 new List<string>(),

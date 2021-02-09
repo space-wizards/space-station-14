@@ -10,10 +10,8 @@ namespace Content.Server.GameObjects.Components.Items.Clothing
     {
         [DataClassTarget("slotFlags")] public EquipmentSlotDefines.SlotFlags? SlotFlags;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public void ExposeData(ObjectSerializer serializer)
         {
-            base.ExposeData(serializer);
-
             // TODO: Writing.
             SlotFlags ??= EquipmentSlotDefines.SlotFlags.PREVENTEQUIP; //Different from None, NONE allows equips if no slot flags are required
             serializer.DataReadFunction("Slots", new List<string>(0), list =>

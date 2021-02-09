@@ -29,10 +29,8 @@ namespace Content.Shared.GameObjects.Components.Body
         [DataClassTarget("presetName")]
         public string? PresetName { get; private set; }
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public void ExposeData(ObjectSerializer serializer)
         {
-            base.ExposeData(serializer);
-
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
             serializer.DataReadWriteFunction(

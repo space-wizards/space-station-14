@@ -10,10 +10,8 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
         [DataClassTarget("states")]
         private SortedDictionary<int, IMobState>? _lowestToHighestStates;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public void ExposeData(ObjectSerializer serializer)
         {
-            base.ExposeData(serializer);
-
             _lowestToHighestStates ??= new();
             serializer.DataReadWriteFunction(
                 "thresholds",
