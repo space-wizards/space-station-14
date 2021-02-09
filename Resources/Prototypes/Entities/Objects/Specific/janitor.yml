@@ -109,7 +109,7 @@
   name: soap
   id: SoapNT
   parent: Soap
-  description: A Nanotrasen brand bar of soap. Smells of phoron.
+  description: A Nanotrasen brand bar of soap. Smells of plasma.
   components:
     - type: Sprite
       state: soapnt

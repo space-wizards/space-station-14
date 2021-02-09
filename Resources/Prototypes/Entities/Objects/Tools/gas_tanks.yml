@@ -147,20 +147,20 @@
         - Back
 
 - type: entity
-  id: PhoronTank
+  id: PlasmaTank
   parent: GasTankBase
-  name: phoron tank
+  name: plasma tank
   suffix: Empty
-  description: "Contains dangerous phoron. Do not inhale. Warning: extremely flammable."
+  description: "Contains dangerous plasma. Do not inhale. Warning: extremely flammable."
   components:
     - type: Sprite
-      sprite: Objects/Tanks/phoron.rsi
+      sprite: Objects/Tanks/plasma.rsi
     - type: GasTank
       outputPressure: 101.325
       air:
         volume: 70
         temperature: 293.15
     - type: Clothing
-      sprite: Objects/Tanks/phoron.rsi
+      sprite: Objects/Tanks/plasma.rsi
       Slots:
         - Belt

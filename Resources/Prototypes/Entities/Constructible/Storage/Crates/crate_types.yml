@@ -395,17 +395,17 @@
       state_closed: scicratesecure_door
 
 - type: entity
-  id: CratePhoron
-  name: phoron crate
+  id: CratePlasma
+  name: plasma crate
   parent: CrateGeneric
   components:
   - type: AccessReader
   - type: SecureEntityStorage
   - type: Sprite
-    sprite: Constructible/Storage/Crates/phoron.rsi
+    sprite: Constructible/Storage/Crates/plasma.rsi
     layers:
-    - state: phoroncrate
-    - state: phoroncrate_door
+    - state: plasmacrate
+    - state: plasmacrate_door
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
@@ -414,13 +414,13 @@
       map: ["enum.StorageVisualLayers.Lock"]
       shader: unshaded
   - type: Icon
-    sprite: Constructible/Storage/Crates/phoron.rsi
-    state: phoroncrate_icon
+    sprite: Constructible/Storage/Crates/plasma.rsi
+    state: plasmacrate_icon
   - type: Appearance
     visuals:
     - type: StorageVisualizer
-      state_open: phoroncrate_open
-      state_closed: phoroncrate_door
+      state_open: plasmacrate_open
+      state_closed: plasmacrate_door
 
 - type: entity
   id: CrateSecure

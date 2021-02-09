@@ -38,9 +38,9 @@
   specificHeat: 1000
 
 - type: material
-  id: phoron
-  name: phoron
-  icon: Objects/Materials/phoron_sheet.png
+  id: plasma
+  name: plasma
+  icon: Objects/Materials/sheets.rsi/plasma.png
   density: 200
   electricResistivity: 2.1e-1
   thermalConductivity: 80
