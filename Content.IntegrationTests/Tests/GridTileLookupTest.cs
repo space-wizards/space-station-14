@@ -13,7 +13,7 @@ namespace Content.IntegrationTests.Tests
     [TestFixture]
     public class GridTileLookupTest : ContentIntegrationTest
     {
-        private const string PROTOTYPES = @"
+        private const string Prototypes = @"
 - type: entity
   name: Dummy
   id: Dummy
@@ -22,7 +22,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task Test()
         {
-            var options = new ServerIntegrationOptions{ExtraPrototypes = PROTOTYPES};
+            var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
             await server.WaitIdleAsync();
 

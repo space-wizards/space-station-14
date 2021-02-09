@@ -6,7 +6,6 @@ using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Utility;
 using NUnit.Framework;
-using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
@@ -19,7 +18,7 @@ namespace Content.IntegrationTests.Tests.Gravity
     [TestOf(typeof(GravityGeneratorComponent))]
     public class WeightlessStatusTests : ContentIntegrationTest
     {
-        private const string PROTOTYPES = @"
+        private const string Prototypes = @"
 - type: entity
   name: HumanDummy
   id: HumanDummy
@@ -29,15 +28,13 @@ namespace Content.IntegrationTests.Tests.Gravity
         [Test]
         public async Task WeightlessStatusTest()
         {
-            var options = new ServerIntegrationOptions{ExtraPrototypes = PROTOTYPES};
+            var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServer(options);
 
             await server.WaitIdleAsync();
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
-            var pauseManager = server.ResolveDependency<IPauseManager>();
-            var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
 
             IEntity human = null;
             SharedAlertsComponent alerts = null;

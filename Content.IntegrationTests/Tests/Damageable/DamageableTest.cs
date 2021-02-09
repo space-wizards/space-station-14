@@ -11,9 +11,9 @@ namespace Content.IntegrationTests.Tests.Damageable
 {
     [TestFixture]
     [TestOf(typeof(DamageableComponent))]
-    public class DamageTest : ContentIntegrationTest
+    public class DamageableTest : ContentIntegrationTest
     {
-        private static readonly string DamageableEntityId = "DamageableEntityId";
+        private const string DamageableEntityId = "DamageableEntityId";
 
         private static readonly string Prototypes = $@"
 - type: entity
@@ -36,7 +36,7 @@ namespace Content.IntegrationTests.Tests.Damageable
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var sMapManager = server.ResolveDependency<IMapManager>();
 
-            IEntity sDamageableEntity = null;
+            IEntity sDamageableEntity;
             IDamageableComponent sDamageableComponent = null;
 
             await server.WaitPost(() =>
@@ -89,7 +89,7 @@ namespace Content.IntegrationTests.Tests.Damageable
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var sMapManager = server.ResolveDependency<IMapManager>();
 
-            IEntity sDamageableEntity = null;
+            IEntity sDamageableEntity;
             IDamageableComponent sDamageableComponent = null;
 
             await server.WaitPost(() =>
