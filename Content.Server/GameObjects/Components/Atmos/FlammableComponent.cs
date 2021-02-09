@@ -214,7 +214,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             });
         }
 
-        public ReagentUnit ReagentReactTouch(ReagentPrototype reagent, ReagentUnit volume)
+        ReagentUnit IReagentReaction.ReagentReactTouch(ReagentPrototype reagent, ReagentUnit volume)
         {
             switch (reagent.ID)
             {

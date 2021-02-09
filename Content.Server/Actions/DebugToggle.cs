@@ -1,6 +1,7 @@
 ﻿using Content.Server.Utility;
 using Content.Shared.Actions;
 using JetBrains.Annotations;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Actions
@@ -11,7 +12,7 @@ namespace Content.Server.Actions
         public string MessageOn { get; private set; }
         public string MessageOff { get; private set; }
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.MessageOn, "messageOn", "on!");
             serializer.DataField(this, x => x.MessageOff, "messageOff", "off!");

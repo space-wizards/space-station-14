@@ -214,7 +214,7 @@ namespace Content.Server.GameObjects.Components.Access
             UserInterface?.SetState(newState);
         }
 
-        public void Activate(ActivateEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             if(!eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
@@ -224,7 +224,7 @@ namespace Content.Server.GameObjects.Components.Access
             UserInterface?.Open(actor.playerSession);
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             var item = eventArgs.Using;
             var user = eventArgs.User;

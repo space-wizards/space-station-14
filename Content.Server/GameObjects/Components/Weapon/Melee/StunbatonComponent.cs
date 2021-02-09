@@ -189,14 +189,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             _activated = true;
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             ToggleStatus(eventArgs.User);
 
             return true;
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!ActionBlockerSystem.CanInteract(eventArgs.User)) return false;
             if (!_cellSlot.InsertCell(eventArgs.Using)) return false;
@@ -212,7 +212,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             }
         }
 
-        public void DoHit(ThrowCollideEventArgs eventArgs)
+        void IThrowCollide.DoHit(ThrowCollideEventArgs eventArgs)
         {
             if (!Activated || Cell == null || !Cell.TryUseCharge(EnergyPerUse) || !eventArgs.Target.TryGetComponent(out StunnableComponent? stunnable))
                 return;

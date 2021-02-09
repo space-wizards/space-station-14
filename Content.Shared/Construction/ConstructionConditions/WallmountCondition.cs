@@ -9,13 +9,14 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using System.Linq;
+using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Shared.Construction.ConstructionConditions
-{ 
+{
     [UsedImplicitly]
     public class WallmountCondition : IConstructionCondition
     {
-        public void ExposeData(ObjectSerializer serializer) { }
+        void IExposeData.ExposeData(ObjectSerializer serializer) { }
 
         public bool Condition(IEntity user, EntityCoordinates location, Direction direction)
         {
@@ -33,7 +34,7 @@ namespace Content.Shared.Construction.ConstructionConditions
             if (dotProd > 0)
                 return false;
 
-            // now we need to check that user actually tries to build wallmount on a wall 
+            // now we need to check that user actually tries to build wallmount on a wall
             var physics = IoCManager.Resolve<IPhysicsManager>();
             var rUserToObj = new CollisionRay(userWorldPosition, userToObject.Normalized, (int) CollisionGroup.Impassable);
             var length = userToObject.Length;

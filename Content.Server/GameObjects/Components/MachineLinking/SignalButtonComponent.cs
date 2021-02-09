@@ -12,12 +12,12 @@ namespace Content.Server.GameObjects.Components.MachineLinking
     {
         public override string Name => "SignalButton";
 
-        public void Activate(ActivateEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             TransmitSignal(eventArgs.User);
         }
 
-        public bool InteractHand(InteractHandEventArgs eventArgs)
+        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
             TransmitSignal(eventArgs.User);
             return true;

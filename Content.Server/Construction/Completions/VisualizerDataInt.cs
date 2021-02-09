@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Reflection;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 
@@ -20,7 +21,7 @@ namespace Content.Server.Construction.Completions
             IoCManager.InjectDependencies(this);
         }
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.Key, "key", string.Empty);
             serializer.DataField(this, x => x.Data, "data", 0);

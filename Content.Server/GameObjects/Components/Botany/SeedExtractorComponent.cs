@@ -29,7 +29,7 @@ namespace Content.Server.GameObjects.Components.Botany
         private int _minSeeds = 1;
         private int _maxSeeds = 4;
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!_powerReceiver?.Powered ?? false)
                 return false;

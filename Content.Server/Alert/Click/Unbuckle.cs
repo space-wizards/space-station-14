@@ -2,6 +2,7 @@
 using Content.Shared.Alert;
 using Robust.Shared.Serialization;
 using JetBrains.Annotations;
+using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Server.Alert.Click
 {
@@ -11,7 +12,7 @@ namespace Content.Server.Alert.Click
 	[UsedImplicitly]
     public class Unbuckle : IAlertClick
     {
-        public void ExposeData(ObjectSerializer serializer) { }
+        void IExposeData.ExposeData(ObjectSerializer serializer) { }
 
         public void AlertClicked(ClickAlertEventArgs args)
         {

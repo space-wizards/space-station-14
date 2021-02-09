@@ -2,6 +2,7 @@
 using System;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Damage;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers
@@ -18,7 +19,7 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers
         /// </summary>
         public int Damage { get; set; }
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.Damage, "damage", 0);
         }

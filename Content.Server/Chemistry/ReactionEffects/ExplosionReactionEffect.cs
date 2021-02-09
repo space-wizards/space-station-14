@@ -3,6 +3,7 @@ using Content.Server.Explosions;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.Interfaces.Chemistry;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Chemistry.ReactionEffects
@@ -24,7 +25,7 @@ namespace Content.Server.Chemistry.ReactionEffects
         /// </summary>
         private float _maxScale;
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(ref _devastationRange, "devastationRange", 1);
             serializer.DataField(ref _heavyImpactRange, "heavyImpactRange", 2);

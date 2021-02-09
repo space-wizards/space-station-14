@@ -154,7 +154,7 @@ namespace Content.Server.GameObjects.Components.Construction
                 TargetNextEdge = Node.GetEdge(TargetPathfinding.Peek().Name);
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (_handling)
                 return true;
