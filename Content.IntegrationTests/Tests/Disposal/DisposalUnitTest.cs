@@ -66,8 +66,6 @@ namespace Content.IntegrationTests.Tests.Disposal
   components:
   - type: Damageable
     damagePrototype: biologicalDamageContainer
-    criticalThreshold: 100
-    deadThreshold: 200
 
 - type: entity
   name: WrenchDummy
