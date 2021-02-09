@@ -28,16 +28,27 @@ namespace Content.Client.GameObjects.Components
             get => base.Count;
             set
             {
+                var valueChanged = value != Count;
                 base.Count = value;
 
-                if (!Owner.Deleted)
+                if (!Owner.Deleted && valueChanged)
                 {
                     _appearanceComponent?.SetData(StackVisuals.Actual, Count);
-                    _appearanceComponent?.SetData(StackVisuals.MaxCount, MaxCount);
-                    _appearanceComponent?.SetData(StackVisuals.Hide, false);
+                 
                 }
 
                 _uiUpdateNeeded = true;
+            }
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            if (!Owner.Deleted)
+            {
+                _appearanceComponent?.SetData(StackVisuals.MaxCount, MaxCount);
+                _appearanceComponent?.SetData(StackVisuals.Hide, false);
             }
         }
 

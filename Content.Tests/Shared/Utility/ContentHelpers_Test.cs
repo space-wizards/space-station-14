@@ -45,40 +45,41 @@ namespace Content.Tests.Shared.Utility
                 (10, 10, 6, 5),
             };
 
-        public static readonly IEnumerable<(double val, double max, int levels, int expected)> TestIndexData =
+        public static readonly IEnumerable<(double val, double max, int levels, int expected)> TestNear =
             new (double, double, int, int)[]
             {
                 // Testing odd counts
-                (0, 5, 3, 0),
-                (1, 5, 3, 0),
-                (2, 5, 3, 1),
-                (3, 5, 3, 1),
-                (4, 5, 3, 2),
-                (5, 5, 3, 2),
+                (0, 5, 2, 0),
+                (1, 5, 2, 0),
+                (2, 5, 2, 1),
+                (3, 5, 2, 1),
+                (4, 5, 2, 2),
+                (5, 5, 2, 2),
  
                 // Testing even counts
+                (0, 6, 5, 0),
+                (1, 6, 5, 1),
+                (2, 6, 5, 2),
+                (3, 6, 5, 3),
+                (4, 6, 5, 3),
+                (5, 6, 5, 4),
+                (6, 6, 5, 5),
+                
+                // Testing transparency disable use case
                 (0, 6, 6, 0),
                 (1, 6, 6, 1),
                 (2, 6, 6, 2),
                 (3, 6, 6, 3),
-                (4, 6, 6, 3),
-                (5, 6, 6, 4),
-                (6, 6, 6, 5),
-                
-                // Testing transparency disable use case
-                (0, 6, 7, 0),
-                (1, 6, 7, 1),
-                (2, 6, 7, 2),
-                (3, 6, 7, 3),
-                (4, 6, 7, 4),
-                (5, 6, 7, 5),
-                (6, 6, 7, 6),
-                
+                (4, 6, 6, 4),
+                (5, 6, 6, 5),
+                (6, 6, 6, 6),
+
                 // Testing edge cases
-                (-32, 6, 6, 0),
-                (2.4, 6, 6, 2),
-                (2.5, 6, 6, 2),
-                (320, 6, 6, 5),
+                (0.1, 6, 5, 0),
+                (-32, 6, 5, 0),
+                (2.4, 6, 5, 2),
+                (2.5, 6, 5, 2),
+                (320, 6, 5, 5),
             };
 
         [Parallelizable]
@@ -91,10 +92,10 @@ namespace Content.Tests.Shared.Utility
 
         [Parallelizable]
         [Test]
-        public void TestIndex([ValueSource(nameof(TestIndexData))] (double val, double max, int size, int expected) data)
+        public void TestNearest([ValueSource(nameof(TestNear))] (double val, double max, int size, int expected) data)
         {
             (double val, double max, int size, int expected) = data;
-            Assert.That(ContentHelpers.RoundToNearestIndex(val, max, size), Is.EqualTo(expected));
+            Assert.That(ContentHelpers.RoundToNearestLevels(val, max, size), Is.EqualTo(expected));
         }
     }
 }

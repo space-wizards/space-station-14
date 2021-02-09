@@ -13,6 +13,7 @@
       stacktype: enum.StackType.Cable
     - type: Sprite
       sprite: Objects/Tools/cables.rsi
+      netsync: false
     - type: Item
       sprite: Objects/Tools/cables.rsi
     - type: WirePlacer
@@ -29,7 +30,6 @@
       stacktype: enum.StackType.HVCable
     - type: Sprite
       state: coilhv-30
-      netsync: false
     - type: Item
       size: 10
       HeldPrefix: coilhv
@@ -50,7 +50,7 @@
   suffix: 1
   components:
     - type: Sprite
-      state: coilhv-10
+      state: coilhv-10      
     - type: Item
       size: 3
     - type: Stack

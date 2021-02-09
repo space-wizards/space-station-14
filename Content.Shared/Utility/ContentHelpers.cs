@@ -95,64 +95,7 @@ namespace Content.Shared.Utility
                 return 0;
             }
 
-            double step = max / levels;
-
-            int nearest = 0;
-            double nearestDiff = actual;
-            for (var i = 1; i <= levels; i++)
-            {
-                var diff = Math.Abs(actual - i * step);
-                if (diff < nearestDiff)
-                {
-                    nearestDiff = diff;
-                    nearest = i;
-                }
-            }
-
-            return nearest;
-        }
-
-        /// <summary>
-        /// Returns the index of an array of <paramref name="size"/> which roughly corresponds to where <paramref name="actual"/> lies
-        /// on on a decimal scale from 0 to <paramref name="max"/>.
-        /// </summary>
-        /// <example>
-        /// Imagine you have an array of 3 images [icon-0, icon-1, icon-2] and stack of 100 wires.
-        /// You want 0-33 wires to correspond to icon-0. And 34-67 wires to correspond to icon-1, etc.
-        /// In this case you would use <code>RoundToNearestIndex(actual, 100, 3)</code>
-        /// </example>
-        /// <param name="actual">The point to be translated into index. If greater than max, it defaults to size-1.
-        /// If lower or equal to 0, it defaults to 0.</param>
-        /// <param name="max">The maximum value of the scale</param>
-        /// <param name="size">The size of array you want to map to.</param>
-        /// <returns>An integer from 0 to <paramref name="size" />-1.</returns>
-        /// <exception cref="ArgumentException">
-        ///     Thrown if size is less than 1.
-        ///     Thrown if max is 0 or less.
-        /// </exception>
-        public static int RoundToNearestIndex(double actual, double max, int size)
-        {
-            if (size <= 1)
-            {
-                throw new ArgumentException("Size must be greater than 1.", nameof(size));
-            }
-
-            if (max <= 0)
-            {
-                throw new ArgumentException("Max must be greater than 0.", nameof(max));
-            }
-
-            if (actual >= max)
-            {
-                return size - 1;
-            }
-
-            if (actual < 0)
-            {
-                return 0;
-            }
-
-            return (int) Math.Round(actual / max * (size - 1), MidpointRounding.AwayFromZero);
+            return (int) Math.Round(actual / max * levels, MidpointRounding.AwayFromZero);
         }
     }
 }

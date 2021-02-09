@@ -115,7 +115,7 @@ namespace Content.Client.GameObjects.Components
             if (!component.TryGetData<int>(StackVisuals.Actual, out var actual)) return;
             if (!component.TryGetData<int>(StackVisuals.MaxCount, out var maxCount)) return;
 
-            var activeLayer = ContentHelpers.RoundToNearestIndex(actual, maxCount, _spriteLayers.Count);
+            var activeLayer = ContentHelpers.RoundToNearestLevels(actual, maxCount, _spriteLayers.Count-1);
             spriteComponent.LayerSetState(IconLayer, _spriteLayers[activeLayer]);
         }
 
@@ -137,7 +137,7 @@ namespace Content.Client.GameObjects.Components
             if (!component.TryGetData<int>(StackVisuals.Actual, out var actual)) return;
             if (!component.TryGetData<int>(StackVisuals.MaxCount, out var maxCount)) return;
 
-            var activeTill = ContentHelpers.RoundToNearestIndex(actual, maxCount, _spriteLayers.Count + 1);
+            var activeTill = ContentHelpers.RoundToNearestLevels(actual, maxCount, _spriteLayers.Count);
             for (var i = 0; i < _spriteLayers.Count; i++)
             {
                 spriteComponent.LayerSetVisible(_spriteLayers[i], i < activeTill);
