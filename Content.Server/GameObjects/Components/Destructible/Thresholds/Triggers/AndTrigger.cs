@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Damage;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers
@@ -15,7 +16,7 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers
     {
         public List<IThresholdTrigger> Triggers { get; set; } = new();
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.Triggers, "triggers", new List<IThresholdTrigger>());
         }

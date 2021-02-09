@@ -1,53 +1,41 @@
-﻿#nullable enable
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Serialization;
 using static Content.Client.GameObjects.Components.IconSmoothing.IconSmoothComponent;
 
 namespace Content.Client.GameObjects.Components
-{
-    [RegisterComponent]
+{    [RegisterComponent]
     [ComponentReference(typeof(SharedWindowComponent))]
     public sealed class WindowComponent : SharedWindowComponent
     {
-        private string? _stateBase;
+        private string _stateBase;
+        private ISpriteComponent _sprite;
+        private SnapGridComponent _snapGrid;
 
-        [ComponentDependency(nameof(SpriteAdded))]
-        private readonly ISpriteComponent? _sprite = default!;
+        public override void Initialize()
+        {
+            base.Initialize();
 
-        [ComponentDependency(nameof(SnapGridAdded))]
-        private readonly SnapGridComponent? _snapGrid = default!;
+            _sprite = Owner.GetComponent<ISpriteComponent>();
+            _snapGrid = Owner.GetComponent<SnapGridComponent>();
+        }
 
         /// <inheritdoc />
         protected override void Startup()
         {
             base.Startup();
+
+            _snapGrid.OnPositionChanged += SnapGridOnPositionChanged;
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new WindowSmoothDirtyEvent(Owner));
-        }
 
-        protected override void Shutdown()
-        {
-            _snapGrid!.OnPositionChanged -= SnapGridOnPositionChanged;
-            base.Shutdown();
-        }
-
-        private void SnapGridAdded()
-        {
-            _snapGrid!.OnPositionChanged += SnapGridOnPositionChanged;
-        }
-
-        private void SpriteAdded()
-        {
             var state0 = $"{_stateBase}0";
             const string cracksRSIPath = "/Textures/Constructible/Structures/Windows/cracks.rsi";
-
-            _sprite!.LayerMapSet(CornerLayers.SE, _sprite.AddLayerState(state0));
+            _sprite.LayerMapSet(CornerLayers.SE, _sprite.AddLayerState(state0));
             _sprite.LayerSetDirOffset(CornerLayers.SE, SpriteComponent.DirectionOffset.None);
             _sprite.LayerMapSet(WindowDamageLayers.DamageSE, _sprite.AddLayerState("0_1", cracksRSIPath));
             _sprite.LayerSetShader(WindowDamageLayers.DamageSE, "unshaded");
@@ -75,6 +63,14 @@ namespace Content.Client.GameObjects.Components
             _sprite.LayerSetVisible(WindowDamageLayers.DamageSW, false);
         }
 
+        /// <inheritdoc />
+        protected override void Shutdown()
+        {
+            _snapGrid.OnPositionChanged -= SnapGridOnPositionChanged;
+
+            base.Shutdown();
+        }
+
         private void SnapGridOnPositionChanged()
         {
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new WindowSmoothDirtyEvent(Owner));
@@ -82,13 +78,7 @@ namespace Content.Client.GameObjects.Components
 
         public void UpdateSprite()
         {
-            if (_sprite == null)
-            {
-                return;
-            }
-
             var lowWall = FindLowWall();
-
             if (lowWall == null)
             {
                 return;
@@ -100,16 +90,11 @@ namespace Content.Client.GameObjects.Components
             _sprite.LayerSetState(CornerLayers.NW, $"{_stateBase}{(int) lowWall.LastCornerNW}");
         }
 
-        private LowWallComponent? FindLowWall()
+        private LowWallComponent FindLowWall()
         {
-            if (_snapGrid == null)
-            {
-                return null;
-            }
-
             foreach (var entity in _snapGrid.GetLocal())
             {
-                if (entity.TryGetComponent(out LowWallComponent? lowWall))
+                if (entity.TryGetComponent(out LowWallComponent lowWall))
                 {
                     return lowWall;
                 }
