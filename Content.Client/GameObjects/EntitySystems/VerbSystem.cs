@@ -54,6 +54,7 @@ namespace Content.Client.GameObjects.EntitySystems
         private MapCoordinates _clickedHere;
         private Dictionary<IEntity, ContextMenuElement> _entityMenuElements;
         private Stack<ContextMenuPopup> _stackContextMenus = new();
+        private CancellationTokenSource _cancellationTokenSource;
 
         private VerbPopup _currentVerbListRoot;
         private VerbPopup _currentGroupList;
@@ -180,7 +181,7 @@ namespace Content.Client.GameObjects.EntitySystems
             var entity = ev.Sender;
             if (_entityMenuElements.ContainsKey(entity))
             {
-                if (!entity.Transform.MapPosition.InRange(_clickedHere, 0.5f))
+                if (!entity.Transform.MapPosition.InRange(_clickedHere, 1.0f))
                 {
                     RemoveFromUI(entity);
                 }

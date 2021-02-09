@@ -27,7 +27,7 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             while (stack != null)
             {
-                stack.RemoveOneEntity(entity);
+                stack.RemoveEntity(entity);
                 if (stack.EntitiesCount == 0)
                 {
                     var menu = stack.ParentMenu;
@@ -62,6 +62,7 @@ namespace Content.Client.GameObjects.EntitySystems
             }
         }
 
+
         private abstract class ContextMenuElement : Control
         {
             private static readonly Color HoverColor = Color.DarkSlateGray;
@@ -91,6 +92,13 @@ namespace Content.Client.GameObjects.EntitySystems
                 {
                     handle.DrawRect(PixelSizeBox, HoverColor);
                 }
+            }
+
+            protected override void MouseEntered()
+            {
+                base.MouseEntered();
+                VSystem._cancellationTokenSource?.Cancel();
+                VSystem._cancellationTokenSource = new();
             }
         }
 
@@ -295,7 +303,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 }
             }
 
-            public void RemoveOneEntity(IEntity entity)
+            public void RemoveEntity(IEntity entity)
             {
                 ContextEntities.Remove(entity);
 
@@ -306,6 +314,7 @@ namespace Content.Client.GameObjects.EntitySystems
             protected override void MouseEntered()
             {
                 base.MouseEntered();
+                var realGlobalPosition = GlobalPosition;
 
                 Timer.Spawn(HoverDelay, () =>
                 {
@@ -331,8 +340,8 @@ namespace Content.Client.GameObjects.EntitySystems
                     UserInterfaceManager.ModalRoot.AddChild(newContextMenu);
 
                     var size = newContextMenu.List.CombinedMinimumSize;
-                    newContextMenu.Open(UIBox2.FromDimensions(GlobalPosition + (Width, 0), size));
-                }, new CancellationTokenSource().Token);
+                    newContextMenu.Open(UIBox2.FromDimensions(realGlobalPosition + (Width, 0), size));
+                }, VSystem._cancellationTokenSource.Token);
             }
 
             protected override void Dispose(bool disposing)
@@ -409,7 +418,7 @@ namespace Content.Client.GameObjects.EntitySystems
                         Propagate(entity, singleContextElement.Pre);
                         break;
                     case StackContextElement stackContextElement:
-                        stackContextElement.RemoveOneEntity(entity);
+                        stackContextElement.RemoveEntity(entity);
                         if (stackContextElement.EntitiesCount == 0)
                         {
                             Remove(stackContextElement);
