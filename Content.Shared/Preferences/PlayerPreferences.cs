@@ -16,11 +16,11 @@ namespace Content.Shared.Preferences
     {
         private Dictionary<int, ICharacterProfile> _characters;
 
-        public PlayerPreferences(IEnumerable<KeyValuePair<int, ICharacterProfile>> characters, int selectedCharacterIndex, Color adminOocColor)
+        public PlayerPreferences(IEnumerable<KeyValuePair<int, ICharacterProfile>> characters, int selectedCharacterIndex, Color adminOOCColor)
         {
             _characters = new Dictionary<int, ICharacterProfile>(characters);
             SelectedCharacterIndex = selectedCharacterIndex;
-            AdminOocColor = adminOocColor;
+            AdminOOCColor = adminOOCColor;
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Content.Shared.Preferences
         /// </summary>
         public ICharacterProfile SelectedCharacter => Characters[SelectedCharacterIndex];
 
-        public Color AdminOocColor { get; set; }
+        public Color AdminOOCColor { get; set; }
 
         public int FirstEmptySlot()
         {

@@ -201,7 +201,7 @@ namespace Content.Server.Chat
             if (_adminManager.HasAdminFlag(player, AdminFlags.Admin))
             {
                 var prefs = _preferencesManager.GetPreferences((player.UserId));
-                msg.MessageColorOverride = prefs.AdminOocColor;
+                msg.MessageColorOverride = prefs.AdminOOCColor;
             }
             //TODO: player.Name color, this will need to change the structure of the MsgChatMessage
             _netManager.ServerSendToAll(msg);
