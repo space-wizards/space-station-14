@@ -43,7 +43,7 @@ namespace Content.Shared.Preferences
         /// </summary>
         public ICharacterProfile SelectedCharacter => Characters[SelectedCharacterIndex];
 
-        public Color AdminOocColor { get; }
+        public Color AdminOocColor { get; set; }
 
         public int FirstEmptySlot()
         {

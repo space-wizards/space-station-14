@@ -15,6 +15,8 @@ namespace Content.Server.Database
 {
     public abstract class ServerDbBase
     {
+
+        #region Preferences
         public async Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId)
         {
             await using var db = await GetDb();
@@ -122,6 +124,19 @@ namespace Content.Server.Database
             await db.DbContext.SaveChangesAsync();
         }
 
+        public async Task SaveAdminOOCColorAsync(NetUserId userId, Color color)
+        {
+            await using var db = await GetDb();
+            var prefs = await db.DbContext
+                .Preference
+                .Include(p => p.Profiles)
+                .SingleAsync(p => p.UserId == userId.UserId);
+            prefs.AdminOocColor = color.ToHex();
+
+            await db.DbContext.SaveChangesAsync();
+
+        }
+
         private static async Task SetSelectedCharacterSlotAsync(NetUserId userId, int newSlot, ServerDbContext db)
         {
             var prefs = await db.Preference.SingleAsync(p => p.UserId == userId.UserId);
@@ -204,6 +219,7 @@ namespace Content.Server.Database
 
             return entity;
         }
+        #endregion
 
         public async Task<NetUserId?> GetAssignedUserIdAsync(string name)
         {
