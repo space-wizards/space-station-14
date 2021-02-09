@@ -1,3 +1,4 @@
+#nullable enable
 using System.Linq;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.UserInterface.Controls;

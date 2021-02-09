@@ -1,7 +1,7 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using Content.Client.GameObjects.Components;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
@@ -23,7 +23,7 @@ namespace Content.Client.GameObjects.EntitySystems
 {
     public sealed partial class VerbSystem
     {
-        private static void Propagate(IEntity entity, StackContextElement stack)
+        private static void Propagate(IEntity entity, StackContextElement? stack)
         {
             while (stack != null)
             {
@@ -48,6 +48,11 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             if (GroupingContextMenuType == 0)
             {
+                var newEntities = entities.GroupBy(e => e, new PrototypeContextMenuComparer()).ToList();
+                return newEntities.Select(grp => grp.ToList()).ToList();
+            }
+            else
+            {
                 var newEntities = entities.GroupBy(e => e, new PrototypeAndStatesContextMenuComparer(depth)).ToList();
                 while (newEntities.Count == 1 && depth++ < PrototypeAndStatesContextMenuComparer.Count)
                 {
@@ -55,13 +60,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 }
                 return newEntities.Select(grp => grp.ToList()).ToList();
             }
-            else
-            {
-                var newEntities = entities.GroupBy(e => e, new PrototypeContextMenuComparer()).ToList();
-                return newEntities.Select(grp => grp.ToList()).ToList();
-            }
         }
-
 
         private abstract class ContextMenuElement : Control
         {
@@ -105,14 +104,14 @@ namespace Content.Client.GameObjects.EntitySystems
         private sealed class SingleContextElement : ContextMenuElement
         {
             private IEntity ContextEntity{ get; }
-            public readonly StackContextElement Pre;
+            public readonly StackContextElement? Pre;
 
-            private readonly ISpriteComponent _sprite;
-            private readonly InteractionOutlineComponent _outline;
+            private readonly ISpriteComponent? _sprite;
+            private readonly InteractionOutlineComponent? _outline;
             private readonly int _oldDrawDepth;
             private bool _drawOutline;
 
-            public SingleContextElement(IEntity entity, StackContextElement pre, int depth, VerbSystem verbSystem, bool isDebug, ContextMenuPopup parentMenu)
+            public SingleContextElement(IEntity entity, StackContextElement? pre, int depth, VerbSystem verbSystem, bool isDebug, ContextMenuPopup parentMenu)
                 : base(depth, verbSystem, isDebug, parentMenu)
             {
                 Pre = pre;
@@ -151,8 +150,11 @@ namespace Content.Client.GameObjects.EntitySystems
                     var message = new FullInputCmdMessage(VSystem._gameTiming.CurTick, VSystem._gameTiming.TickFraction, funcId,
                         BoundKeyState.Down, ContextEntity.Transform.Coordinates, args.PointerLocation, ContextEntity.Uid);
 
-                    var session = VSystem._playerManager.LocalPlayer.Session;
-                    inputSys.HandleInputCommand(session, func, message);
+                    var session = VSystem._playerManager.LocalPlayer?.Session;
+                    if (session != null)
+                    {
+                        inputSys.HandleInputCommand(session, func, message);
+                    }
 
                     VSystem.CloseAllMenus();
                     return;
@@ -181,7 +183,10 @@ namespace Content.Client.GameObjects.EntitySystems
                 if (localPlayer?.ControlledEntity != null)
                 {
                     _outline?.OnMouseEnter(localPlayer.InRangeUnobstructed(ContextEntity, ignoreInsideBlocker: true));
-                    _sprite.DrawDepth = (int) Shared.GameObjects.DrawDepth.HighlightedItems;
+                    if (_sprite != null)
+                    {
+                        _sprite.DrawDepth = (int) Shared.GameObjects.DrawDepth.HighlightedItems;
+                    }
                     _drawOutline = true;
                 }
             }
@@ -191,7 +196,10 @@ namespace Content.Client.GameObjects.EntitySystems
                 base.MouseExited();
                 if (!ContextEntity.Deleted)
                 {
-                    _sprite.DrawDepth = _oldDrawDepth;
+                    if (_sprite != null)
+                    {
+                        _sprite.DrawDepth = _oldDrawDepth;
+                    }
                     _outline?.OnMouseLeave();
                 }
                 _drawOutline = false;
@@ -250,14 +258,14 @@ namespace Content.Client.GameObjects.EntitySystems
             private static readonly TimeSpan HoverDelay = TimeSpan.FromSeconds(0.2);
 
             private HashSet<IEntity> ContextEntities { get; }
-            public readonly StackContextElement Pre;
+            public readonly StackContextElement? Pre;
 
             private readonly SpriteView _spriteView;
             private readonly Label _label;
 
             public int EntitiesCount => ContextEntities.Count;
 
-            public StackContextElement(IEnumerable<IEntity> entities, StackContextElement pre, int depth, VerbSystem verbSystem, bool isDebug, ContextMenuPopup parentMenu)
+            public StackContextElement(IEnumerable<IEntity> entities, StackContextElement? pre, int depth, VerbSystem verbSystem, bool isDebug, ContextMenuPopup parentMenu)
                 : base(depth, verbSystem, isDebug, parentMenu)
             {
                 Pre = pre;
@@ -290,8 +298,11 @@ namespace Content.Client.GameObjects.EntitySystems
                     var message = new FullInputCmdMessage(VSystem._gameTiming.CurTick, VSystem._gameTiming.TickFraction, funcId,
                         BoundKeyState.Down, firstEntity.Transform.Coordinates, args.PointerLocation, firstEntity.Uid);
 
-                    var session = VSystem._playerManager.LocalPlayer.Session;
-                    inputSys.HandleInputCommand(session, func, message);
+                    var session = VSystem._playerManager.LocalPlayer?.Session;
+                    if (session != null)
+                    {
+                        inputSys.HandleInputCommand(session, func, message);
+                    }
 
                     VSystem.CloseAllMenus();
                     return;
@@ -447,7 +458,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 _controls.Add(element, control);
             }
 
-            private void AddSingleContextElement(IEntity entity, StackContextElement pre, VerbSystem verbSystem, bool isDebug)
+            private void AddSingleContextElement(IEntity entity, StackContextElement? pre, VerbSystem verbSystem, bool isDebug)
             {
                 var element = new SingleContextElement(entity, pre, Depth, verbSystem, isDebug, this);
                 Add(element, new VBoxContainer { Children = { element, Separation() } });
@@ -455,7 +466,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 verbSystem.AddToUI(entity, element);
             }
 
-            private void AddStackContextElement(IEnumerable<IEntity> entities, StackContextElement pre,
+            private void AddStackContextElement(IEnumerable<IEntity> entities, StackContextElement? pre,
                 VerbSystem verbSystem, bool isDebug)
             {
                 var element = new StackContextElement(entities, pre, Depth, verbSystem, isDebug, this);
@@ -467,7 +478,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 }
             }
 
-            public void FillContextMenuPopup(List<List<IEntity>> entities, StackContextElement pre, VerbSystem verbSystem, bool isDebug)
+            public void FillContextMenuPopup(List<List<IEntity>> entities, StackContextElement? pre, VerbSystem verbSystem, bool isDebug)
             {
                 if (entities.Count == 1)
                 {

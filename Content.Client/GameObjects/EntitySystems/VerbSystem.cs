@@ -224,7 +224,9 @@ namespace Content.Client.GameObjects.EntitySystems
             }
 
             _clickedHere = mapCoordinates;
-            var entitySpriteStates = GroupEntities(entities.Where(CanSeeOnContextMenu).ToList());
+
+            entities = entities.Where(e => CanSeeOnContextMenu(e) && e.Prototype != null).ToList();
+            var entitySpriteStates = GroupEntities(entities);
 
             if (entitySpriteStates.Count == 0)
             {
@@ -233,7 +235,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
             var orderedStates = entitySpriteStates.ToList();
             orderedStates.Sort((x, y) =>
-                string.CompareOrdinal(x.First().Prototype.Name, y.First().Prototype.Name));
+                string.CompareOrdinal(x.First().Prototype!.Name, y.First().Prototype!.Name));
 
             _entityMenuElements = new();
             _stackContextMenus = new();

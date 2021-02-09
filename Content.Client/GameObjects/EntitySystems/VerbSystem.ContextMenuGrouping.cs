@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Robust.Client.Interfaces.GameObjects.Components;
@@ -21,7 +22,7 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             private static readonly List<Func<IEntity, IEntity, bool>> EqualsList = new()
             {
-                (a, b) => (a.Prototype.ID == b.Prototype.ID),
+                (a, b) => a.Prototype!.ID == b.Prototype!.ID,
                 (a, b) =>
                 {
                     var xStates = a.GetComponent<ISpriteComponent>().AllLayers.Where(e => e.Visible).Select(s => s.RsiState.Name);
@@ -32,13 +33,13 @@ namespace Content.Client.GameObjects.EntitySystems
             };
             private static readonly List<Func<IEntity, int>> GetHashCodeList = new()
             {
-                e => EqualityComparer<string>.Default.GetHashCode(e.Prototype.ID),
+                e => EqualityComparer<string>.Default.GetHashCode(e.Prototype!.ID),
                 e =>
                 {
                     var hash = 0;
                     foreach (var element in e.GetComponent<ISpriteComponent>().AllLayers.Where(obj => obj.Visible).Select(s => s.RsiState.Name))
                     {
-                        hash ^= EqualityComparer<string>.Default.GetHashCode(element);
+                        hash ^= EqualityComparer<string>.Default.GetHashCode(element!);
                     }
                     return hash;
                 },
@@ -53,41 +54,54 @@ namespace Content.Client.GameObjects.EntitySystems
                 _depth = step > Count ? Count : step;
             }
 
-            public bool Equals(IEntity x, IEntity y)
+            public bool Equals(IEntity? x, IEntity? y)
             {
-                return EqualsList[_depth](x, y);
+                if (x == null)
+                {
+                    return y == null;
+                }
+
+                return y != null && EqualsList[_depth](x, y);
             }
 
-            public int GetHashCode(IEntity x)
+            public int GetHashCode(IEntity e)
             {
-                return GetHashCodeList[_depth](x);
+                return GetHashCodeList[_depth](e);
             }
         }
 
         private sealed class PrototypeContextMenuComparer : IEqualityComparer<IEntity>
         {
-            public bool Equals(IEntity a, IEntity b)
+            public bool Equals(IEntity? x, IEntity? y)
             {
-                if (a.Prototype.ID == b.Prototype.ID)
+                if (x == null)
                 {
-                    var xStates = a.GetComponent<ISpriteComponent>().AllLayers.Where(e => e.Visible).Select(s => s.RsiState.Name);
-                    var yStates = b.GetComponent<ISpriteComponent>().AllLayers.Where(e => e.Visible).Select(s => s.RsiState.Name);
+                    return y == null;
+                }
+                if (y != null)
+                {
+                    if (x.Prototype?.ID == y.Prototype?.ID)
+                    {
+                        var xStates = x.GetComponent<ISpriteComponent>().AllLayers.Where(e => e.Visible).Select(s => s.RsiState.Name);
+                        var yStates = y.GetComponent<ISpriteComponent>().AllLayers.Where(e => e.Visible).Select(s => s.RsiState.Name);
 
-                    return xStates.OrderBy(t => t).SequenceEqual(yStates.OrderBy(t => t));
+                        return xStates.OrderBy(t => t).SequenceEqual(yStates.OrderBy(t => t));
+                    }
                 }
                 return false;
             }
 
             public int GetHashCode(IEntity e)
             {
-                var hash = EqualityComparer<string>.Default.GetHashCode(e.Prototype.ID);
+                var hash = EqualityComparer<string>.Default.GetHashCode(e.Prototype?.ID!);
                 foreach (var element in e.GetComponent<ISpriteComponent>().AllLayers.Where(obj => obj.Visible).Select(s => s.RsiState.Name))
                 {
-                    hash ^= EqualityComparer<string>.Default.GetHashCode(element);
+                    hash ^= EqualityComparer<string>.Default.GetHashCode(element!);
                 }
 
                 return hash;
             }
+
         }
 
     }
