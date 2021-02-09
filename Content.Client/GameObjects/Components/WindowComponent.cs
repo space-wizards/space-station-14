@@ -9,7 +9,8 @@ using Robust.Shared.Serialization;
 using static Content.Client.GameObjects.Components.IconSmoothing.IconSmoothComponent;
 
 namespace Content.Client.GameObjects.Components
-{    [RegisterComponent]
+{
+    [RegisterComponent]
     [ComponentReference(typeof(SharedWindowComponent))]
     public sealed class WindowComponent : SharedWindowComponent
     {
