@@ -34,11 +34,13 @@ namespace Content.Client.GameObjects.Components
         /// Default IconLayer stack.
         /// </summary>
         private const int IconLayer = 0;
+        
         /// <summary>
         /// Sprite layers used in stack visualizer. Sprites first in layer correspond to lower stack states
         /// e.g. <code>_spriteLayers[0]</code> is lower stack level than <code>_spriteLayers[1]</code>.
         /// </summary>
         private readonly List<string> _spriteLayers = new();
+        
         /// <summary>
         /// Determines if the visualizer uses opaque or transparent sprite layers.
         ///
