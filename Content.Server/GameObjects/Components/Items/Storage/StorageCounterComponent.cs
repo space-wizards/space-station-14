@@ -2,13 +2,12 @@
 
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.Components.Tag;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
@@ -18,45 +17,30 @@ namespace Content.Server.GameObjects.Components.Items.Storage
     /// Usually used for things like matchboxes, cigarette packs,
     /// cigar cases etc.
     /// </summary>
+    /// <code>
+    ///  - type: StorageCounter
+    ///    amount: 6 # Note: this field can be omitted
+    ///    countTag: Cigarette # Note: field doesn't point to entity Id, but its tag
+    /// </code>
     [RegisterComponent]
-    public class SingleItemStorageComponent : Component, IMapInit
+    public class StorageCounterComponent : Component
     {
-        private string? _prototypeName;
-        private int _amount;
+        private string? _countTag;
+        private int? _maxAmount;
 
-        /// <summary>
-        /// Storage component that we can use for inserting and counting elements.
-        /// </summary>
-        [ComponentDependency] private readonly ServerStorageComponent? _storage = default;
         /// <summary>
         /// Single item storage component usually have an attached StackedVisualizer.
         /// </summary>
         [ComponentDependency] private readonly AppearanceComponent? _appearanceComponent = default;
 
-        public override string Name => "SingleItemStorage";
+        public override string Name => "StorageCounter";
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref _prototypeName, "name", null);
-            serializer.DataField(ref _amount, "amount", 1);
-        }
-
-        void IMapInit.MapInit()
-        {
-            if (_storage == null)
-            {
-                Logger.Error($"SingleItemStorageComponent couldn't find any StorageComponent ({Owner})");
-                return;
-            }
-
-            if (string.IsNullOrEmpty(_prototypeName)) return;
-
-            for (var i = 0; i < _amount; i++)
-            {
-                _storage.Insert(Owner.EntityManager.SpawnEntity(_prototypeName, Owner.Transform.Coordinates));
-            }
+            serializer.DataField(ref _countTag, "countTag", null);
+            serializer.DataField(ref _maxAmount, "amount", null);
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
@@ -70,7 +54,11 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                     case ContainerContentsModifiedMessage msg:
                         var actual = Count(msg.Container.ContainedEntities);
                         _appearanceComponent.SetData(StackVisuals.Actual, actual);
-                        _appearanceComponent.SetData(StackVisuals.MaxCount, _amount);
+                        if (_maxAmount != null)
+                        {
+                            _appearanceComponent.SetData(StackVisuals.MaxCount, _maxAmount);
+                        }
+
                         break;
                 }
             }
@@ -79,11 +67,14 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         private int Count(IReadOnlyList<IEntity> containerContainedEntities)
         {
             var count = 0;
-            foreach (var entity in containerContainedEntities)
+            if (_countTag != null)
             {
-                if (entity.Prototype != null && entity.Prototype.ID.Equals(_prototypeName))
+                foreach (var entity in containerContainedEntities)
                 {
-                    count++;
+                    if (entity.HasTag(_countTag))
+                    {
+                        count++;
+                    }
                 }
             }
 

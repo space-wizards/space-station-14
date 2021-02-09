@@ -1,4 +1,7 @@
-﻿- type: entity
+﻿- type: Tag
+  id: Cigarette
+
+- type: entity
   name: "Base Cigarette"
   id: BaseCigarette
   parent: BaseItem
@@ -13,6 +16,9 @@
       Slots: [ mask ]
       HeldPrefix: unlit
       size: 1
+    - type: Tag
+      tags:
+        - Cigarette
     - type: Smoking
       duration: 30
     - type: Appearance
@@ -36,9 +42,12 @@
       netsync: false
       layers:
         - state: cig
-    - type: SingleItemStorage
-      name: Cigarette
-      amount: 6
+    - type: StorageFill
+      contents:
+        - name: Cigarette
+          amount: 6
+    - type: StorageCounter
+      countTag: Cigarette
     - type: Appearance
       visuals:
         - type: BagOpenCloseVisualizer
