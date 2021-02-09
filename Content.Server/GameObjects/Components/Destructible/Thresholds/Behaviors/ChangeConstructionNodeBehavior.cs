@@ -18,7 +18,7 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behavior
             serializer.DataField(this, x => x.Node, "node", string.Empty);
         }
 
-        public void Execute(IEntity owner, DestructibleSystem system)
+        public async void Execute(IEntity owner, DestructibleSystem system)
         {
             if (string.IsNullOrEmpty(Node) ||
                 !owner.TryGetComponent(out ConstructionComponent? construction))
@@ -26,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behavior
                 return;
             }
 
-            construction.ChangeNode(Node);
+            await construction.ChangeNode(Node);
         }
     }
 }
