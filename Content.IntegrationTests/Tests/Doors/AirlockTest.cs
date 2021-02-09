@@ -16,6 +16,12 @@ namespace Content.IntegrationTests.Tests.Doors
     {
         private const string Prototypes = @"
 - type: entity
+  name: PhysicsDummy
+  id: PhysicsDummy
+  components:
+  - type: Physics
+
+- type: entity
   name: AirlockDummy
   id: AirlockDummy
   components:
@@ -39,7 +45,7 @@ namespace Content.IntegrationTests.Tests.Doors
             {
                 mapManager.CreateNewMapEntity(MapId.Nullspace);
 
-                airlock = entityManager.SpawnEntity("Airlock", MapCoordinates.Nullspace);
+                airlock = entityManager.SpawnEntity("AirlockDummy", MapCoordinates.Nullspace);
 
                 Assert.True(airlock.TryGetComponent(out airlockComponent));
                 Assert.That(airlockComponent.State, Is.EqualTo(DoorState.Closed));
@@ -93,7 +99,7 @@ namespace Content.IntegrationTests.Tests.Doors
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
 
-            IEntity human = null;
+            IEntity physicsDummy = null;
             IEntity airlock = null;
             TestController controller = null;
             AirlockComponent airlockComponent = null;
@@ -106,11 +112,11 @@ namespace Content.IntegrationTests.Tests.Doors
                 mapManager.CreateNewMapEntity(mapId);
 
                 var humanCoordinates = new MapCoordinates((humanStartingX, 0), mapId);
-                human = entityManager.SpawnEntity("HumanMob_Content", humanCoordinates);
+                physicsDummy = entityManager.SpawnEntity("PhysicsDummy", humanCoordinates);
 
-                airlock = entityManager.SpawnEntity("Airlock", new MapCoordinates((0, 0), mapId));
+                airlock = entityManager.SpawnEntity("AirlockDummy", new MapCoordinates((0, 0), mapId));
 
-                Assert.True(human.TryGetComponent(out IPhysicsComponent physics));
+                Assert.True(physicsDummy.TryGetComponent(out IPhysicsComponent physics));
 
                 controller = physics.EnsureController<TestController>();
 
@@ -136,10 +142,10 @@ namespace Content.IntegrationTests.Tests.Doors
             }
 
             // Sanity check
-            Assert.That(human.Transform.MapPosition.X, Is.GreaterThan(humanStartingX));
+            Assert.That(physicsDummy.Transform.MapPosition.X, Is.GreaterThan(humanStartingX));
 
             // Blocked by the airlock
-            Assert.That(human.Transform.MapPosition.X, Is.Negative.Or.Zero);
+            Assert.That(physicsDummy.Transform.MapPosition.X, Is.Negative.Or.Zero);
         }
 
         private class TestController : VirtualController { }

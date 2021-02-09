@@ -164,7 +164,7 @@ namespace Content.IntegrationTests.Tests.Body
             {
                 var center = new Vector2(0.5f, -1.5f);
                 var coordinates = new EntityCoordinates(grid.GridEntityId, center);
-                human = entityManager.SpawnEntity("HumanMob_Content", coordinates);
+                human = entityManager.SpawnEntity("HumanBodyAndBloodstreamDummy", coordinates);
 
                 Assert.True(human.TryGetComponent(out IBody body));
                 Assert.True(body.HasMechanismBehavior<LungBehavior>());
