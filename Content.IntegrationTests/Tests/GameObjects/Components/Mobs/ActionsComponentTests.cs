@@ -175,7 +175,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                     Assert.That(actionsComponent.TryGetActionState(innateAction, out var innateState));
                     Assert.That(innateState.Enabled);
                 }
-                Assert.That(actionsComponent.TryGetActionState(ActionType.DebugInstant, out var state), Is.False);
+                Assert.That(actionsComponent.TryGetActionState(ActionType.DebugInstant, out _), Is.False);
 
                 // all actions should be in the same order as before, but the slot with DebugInstant should appear
                 // disabled.
@@ -195,6 +195,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                         Assert.That(slot.Action, Is.Not.Null);
                         var asAction = slot.Action as ActionPrototype;
                         Assert.That(asAction, Is.Not.Null);
+                        Assert.That(expected, Is.EqualTo(asAction.ActionType));
 
                         if (asAction.ActionType == ActionType.DebugInstant)
                         {
@@ -276,7 +277,6 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             // check that client has the actions, and toggle the light on via the action slot it was auto-assigned to
             var clientPlayerMgr = client.ResolveDependency<IPlayerManager>();
             var clientUIMgr = client.ResolveDependency<IUserInterfaceManager>();
-            var clientEntMgr = client.ResolveDependency<IEntityManager>();
             EntityUid clientFlashlight = default;
             await client.WaitAssertion(() =>
             {
