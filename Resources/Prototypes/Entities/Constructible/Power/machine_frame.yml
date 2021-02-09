@@ -82,10 +82,10 @@
           !type:DamageTrigger
           damage: 100
         behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:ChangeConstructionNodeBehavior
           node: missingWires
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
     - type: MachineFrame
     - type: Sprite
       netsync: false
