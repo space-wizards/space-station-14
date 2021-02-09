@@ -89,15 +89,15 @@
     node: reinforcedWindow
 
 - type: entity
-  id: PhoronWindow
-  name: phoronwindow
+  id: PlasmaWindow
+  name: plasma window
   parent: Window
   components:
   - type: Sprite
     drawdepth: WallTops
-    sprite: Constructible/Structures/Windows/phoron_window.rsi
+    sprite: Constructible/Structures/Windows/plasma_window.rsi
   - type: Icon
-    sprite: Constructible/Structures/Windows/phoron_window.rsi
+    sprite: Constructible/Structures/Windows/plasma_window.rsi
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
@@ -110,7 +110,7 @@
         soundCollection: GlassBreak
       - !type:SpawnEntitiesBehavior
         spawn:
-          ShardGlassPhoron:
+          ShardGlassPlasma:
             min: 1
             max: 2
       - !type:DoActsBehavior
@@ -120,4 +120,4 @@
     base: pwindow
   - type: Construction
     graph: window
-    node: phoronWindow
+    node: plasmaWindow

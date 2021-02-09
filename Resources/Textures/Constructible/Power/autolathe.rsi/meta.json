@@ -94,6 +94,22 @@
             ]
         },
         {
+            "name": "autolathe_inserting_plasma_sheet",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
             "name": "autolathe_inserting_gold_plate",
             "delays": [
                 [
