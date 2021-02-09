@@ -5,8 +5,8 @@ using System.Linq;
 using Content.Shared.Damage;
 using Content.Shared.Damage.DamageContainer;
 using Content.Shared.Damage.ResistanceSet;
-using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -20,7 +20,7 @@ namespace Content.Shared.GameObjects.Components.Damage
     ///     Component that allows attached entities to take damage.
     ///     This basic version never dies (thus can take an indefinite amount of damage).
     /// </summary>
-    public abstract class SharedDamageableComponent : Component, IDamageableComponent, IRadiationAct
+    public abstract class DamageableComponent : Component, IDamageableComponent, IRadiationAct
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 

@@ -10,7 +10,7 @@ using Robust.Shared.Map;
 namespace Content.IntegrationTests.Tests.Damage
 {
     [TestFixture]
-    [TestOf(typeof(SharedDamageableComponent))]
+    [TestOf(typeof(DamageableComponent))]
     public class DamageTest : ContentIntegrationTest
     {
         private static readonly string DamageableEntityId = "DamageableEntityId";
