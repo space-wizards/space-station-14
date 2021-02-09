@@ -138,7 +138,7 @@ namespace Content.Server.GameObjects.EntitySystems
             if(shell.Player != null)
                 EntitySystem.Get<GhostRoleSystem>().OpenEui((IPlayerSession)shell.Player);
             else
-                shell.WriteLine("You can only open the ghost roles UI on a client.", Color.Red);
+                shell.WriteLine("You can only open the ghost roles UI on a client.");
         }
     }
 }

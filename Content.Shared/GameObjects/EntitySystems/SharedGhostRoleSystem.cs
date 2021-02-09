@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {
-    public class SharedGhostRoleSystem : EntitySystem
+    public abstract class SharedGhostRoleSystem : EntitySystem
     {
 
     }

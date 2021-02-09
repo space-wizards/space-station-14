@@ -20,7 +20,6 @@ namespace Content.Server.GameObjects.Components.Observer
     {
         public override string Name => "GhostRoleMobSpawner";
 
-        [Dependency] private readonly IServerEntityManager _entityMan = default!;
 
         [ViewVariables]
         private bool _deleteOnSpawn = true;
@@ -37,7 +36,7 @@ namespace Content.Server.GameObjects.Components.Observer
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(this, x => Prototype, "prototype", null);
+            serializer.DataField(this, x => x.Prototype, "prototype", null);
             serializer.DataField(ref _deleteOnSpawn, "deleteOnSpawn", true);
             serializer.DataField(ref _availableTakeovers, "availableTakeovers", 1);
         }
@@ -50,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Observer
             if(string.IsNullOrEmpty(Prototype))
                 throw new NullReferenceException("Prototype string cannot be null or empty!");
 
-            var mob = _entityMan.SpawnEntity(Prototype, Owner.Transform.Coordinates);
+            var mob = Owner.EntityManager.SpawnEntity(Prototype, Owner.Transform.Coordinates);
 
             mob.EnsureComponent<MindComponent>();
             session.ContentData().Mind.TransferTo(mob);
