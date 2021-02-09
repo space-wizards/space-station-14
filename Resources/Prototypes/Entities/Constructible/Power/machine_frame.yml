@@ -28,8 +28,18 @@
     - type: Construction
       graph: machine
       node: missingWires
-    - type: BreakableConstruction
-      node: start
+    - type: Damageable
+      resistances: metallicResistances
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+        - !type:ChangeConstructionNodeBehavior
+          node: start
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
     - type: Sprite
       sprite: "Constructible/Misc/stock_parts.rsi"
       state: "box_0"
@@ -64,8 +74,18 @@
     - type: Construction
       graph: machine
       node: machineFrame
-    - type: BreakableConstruction
-      node: missingWires
+    - type: Damageable
+      resistances: metallicResistances
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+        - !type:ChangeConstructionNodeBehavior
+          node: missingWires
     - type: MachineFrame
     - type: Sprite
       netsync: false
