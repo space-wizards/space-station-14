@@ -120,7 +120,6 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 }
 
                 data.Text = Loc.GetString("Pick up");
-                data.IconTexture = "/Textures/Interface/VerbIcons/pickup.svg.96dpi.png";
             }
 
             protected override void Activate(IEntity user, ItemComponent component)
