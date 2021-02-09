@@ -44,7 +44,7 @@
   - type: Destructible
     thresholds:
     - trigger:
-        !type:TotalDamageTrigger
+        !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:DoActsBehavior
@@ -73,8 +73,13 @@
       enabled: true
       offset: "0.5, 0"
     - type: Destructible
-      deadThreshold: 25
-      resistances: metallicResistances
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 25
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     - type: Construction
       graph: lightFixture
       node: bulbLight
@@ -104,7 +109,7 @@
   - type: Destructible
     thresholds:
     - trigger:
-        !type:TotalDamageTrigger
+        !type:DamageTrigger
         damage: 25
       behaviors:
       - !type:DoActsBehavior

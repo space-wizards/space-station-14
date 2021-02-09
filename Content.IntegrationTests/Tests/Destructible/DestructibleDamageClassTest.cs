@@ -12,11 +12,12 @@ using static Content.IntegrationTests.Tests.Destructible.DestructibleTestPrototy
 namespace Content.IntegrationTests.Tests.Destructible
 {
     [TestFixture]
-    [TestOf(typeof(TotalDamageClassesTrigger))]
+    [TestOf(typeof(DamageClassTrigger))]
+    [TestOf(typeof(AndTrigger))]
     public class DestructibleDamageClassTest : ContentIntegrationTest
     {
         [Test]
-        public async Task Test()
+        public async Task AndTest()
         {
             var server = StartServerDummyTicker(new ServerContentIntegrationOption
             {
@@ -82,7 +83,12 @@ namespace Content.IntegrationTests.Tests.Destructible
                 Assert.That(threshold.Behaviors, Is.Empty);
                 Assert.NotNull(threshold.Trigger);
                 Assert.That(threshold.Triggered, Is.True);
-                Assert.IsInstanceOf<TotalDamageClassesTrigger>(threshold.Trigger);
+                Assert.IsInstanceOf<AndTrigger>(threshold.Trigger);
+
+                var trigger = (AndTrigger) threshold.Trigger;
+
+                Assert.IsInstanceOf<DamageClassTrigger>(trigger.Triggers[0]);
+                Assert.IsInstanceOf<DamageClassTrigger>(trigger.Triggers[1]);
 
                 sThresholdListenerComponent.ThresholdsReached.Clear();
 
@@ -139,7 +145,12 @@ namespace Content.IntegrationTests.Tests.Destructible
                 Assert.That(threshold.Behaviors, Is.Empty);
                 Assert.NotNull(threshold.Trigger);
                 Assert.That(threshold.Triggered, Is.True);
-                Assert.IsInstanceOf<TotalDamageClassesTrigger>(threshold.Trigger);
+                Assert.IsInstanceOf<AndTrigger>(threshold.Trigger);
+
+                trigger = (AndTrigger) threshold.Trigger;
+
+                Assert.IsInstanceOf<DamageClassTrigger>(trigger.Triggers[0]);
+                Assert.IsInstanceOf<DamageClassTrigger>(trigger.Triggers[1]);
 
                 sThresholdListenerComponent.ThresholdsReached.Clear();
 
