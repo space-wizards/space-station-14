@@ -72,7 +72,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             {
                 var player = serverPlayerManager.GetAllPlayers().Single();
                 var playerEnt = player.AttachedEntity;
-                var actionsComponent = playerEnt.GetComponent<ServerActionsComponent>();
+                var actionsComponent = playerEnt!.GetComponent<ServerActionsComponent>();
 
                 // player should begin with their innate actions granted
                 innateActions.AddRange(actionsComponent.InnateActions);
@@ -94,12 +94,12 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             var clientPlayerMgr = client.ResolveDependency<IPlayerManager>();
             var clientUIMgr = client.ResolveDependency<IUserInterfaceManager>();
             var expectedOrder = new List<ActionType>();
+
             await client.WaitAssertion(() =>
             {
-
                 var local = clientPlayerMgr.LocalPlayer;
-                var controlled = local.ControlledEntity;
-                var actionsComponent = controlled.GetComponent<ClientActionsComponent>();
+                var controlled = local!.ControlledEntity;
+                var actionsComponent = controlled!.GetComponent<ClientActionsComponent>();
 
                 // we should have our innate actions and debug1.
                 foreach (var innateAction in innateActions)
@@ -155,7 +155,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             {
                 var player = serverPlayerManager.GetAllPlayers().Single();
                 var playerEnt = player.AttachedEntity;
-                var actionsComponent = playerEnt.GetComponent<ServerActionsComponent>();
+                var actionsComponent = playerEnt!.GetComponent<ServerActionsComponent>();
                 actionsComponent.Revoke(ActionType.DebugInstant);
             });
 
@@ -164,10 +164,9 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
 
             await client.WaitAssertion(() =>
             {
-
                 var local = clientPlayerMgr.LocalPlayer;
-                var controlled = local.ControlledEntity;
-                var actionsComponent = controlled.GetComponent<ClientActionsComponent>();
+                var controlled = local!.ControlledEntity;
+                var actionsComponent = controlled!.GetComponent<ClientActionsComponent>();
 
                 // we should have our innate actions, but debug1 should be revoked
                 foreach (var innateAction in innateActions)
@@ -212,7 +211,6 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                         Assert.That(slot.Item, Is.Null);
                         Assert.That(slot.Action, Is.Null);
                         Assert.That(slot.ActionEnabled, Is.False);
-                        continue;
                     }
                 }
             });
@@ -242,7 +240,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             await server.WaitAssertion(() =>
             {
                 serverPlayerEnt = serverPlayerManager.GetAllPlayers().Single().AttachedEntity;
-                serverActionsComponent = serverPlayerEnt.GetComponent<ServerActionsComponent>();
+                serverActionsComponent = serverPlayerEnt!.GetComponent<ServerActionsComponent>();
 
                 // spawn and give them an item that has actions
                 serverFlashlight = serverEntManager.SpawnEntity("TestFlashlight",
@@ -281,13 +279,13 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             await client.WaitAssertion(() =>
             {
                 var local = clientPlayerMgr.LocalPlayer;
-                var controlled = local.ControlledEntity;
-                clientActionsComponent = controlled.GetComponent<ClientActionsComponent>();
+                var controlled = local!.ControlledEntity;
+                clientActionsComponent = controlled!.GetComponent<ClientActionsComponent>();
 
                 var lightEntry = clientActionsComponent.ItemActionStates()
                     .Where(entry => entry.Value.ContainsKey(ItemActionType.ToggleLight))
                     .FirstOrNull();
-                clientFlashlight = lightEntry.Value.Key;
+                clientFlashlight = lightEntry!.Value.Key;
                 Assert.That(lightEntry, Is.Not.Null);
                 Assert.That(lightEntry.Value.Value.TryGetValue(ItemActionType.ToggleLight, out var lightState));
                 Assert.That(lightState.Equals(new ActionState(true)));

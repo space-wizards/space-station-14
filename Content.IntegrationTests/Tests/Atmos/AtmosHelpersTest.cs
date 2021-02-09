@@ -91,6 +91,7 @@ namespace Content.IntegrationTests.Tests.Atmos
             await server.WaitIdleAsync();
         }
 
+        // ReSharper disable once InconsistentNaming
         [Test]
         public async Task GetTileAtmosphereVector2iNotNullTest()
         {
@@ -109,6 +110,7 @@ namespace Content.IntegrationTests.Tests.Atmos
             await server.WaitIdleAsync();
         }
 
+        // ReSharper disable once InconsistentNaming
         [Test]
         public async Task GetTileAirVector2iNotNullTest()
         {
@@ -127,6 +129,7 @@ namespace Content.IntegrationTests.Tests.Atmos
             await server.WaitIdleAsync();
         }
 
+        // ReSharper disable once InconsistentNaming
         [Test]
         public async Task TryGetTileAtmosphereVector2iNotNullTest()
         {
@@ -146,6 +149,7 @@ namespace Content.IntegrationTests.Tests.Atmos
             await server.WaitIdleAsync();
         }
 
+        // ReSharper disable once InconsistentNaming
         [Test]
         public async Task TryGetTileAirVector2iNotNullTest()
         {

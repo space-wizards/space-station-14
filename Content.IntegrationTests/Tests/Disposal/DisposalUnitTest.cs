@@ -50,7 +50,7 @@ namespace Content.IntegrationTests.Tests.Disposal
             UnitContains(unit, result, entities);
         }
 
-        private void Flush(DisposalUnitComponent unit, bool result, DisposalEntryComponent? entry = null, params IEntity[] entities)
+        private void Flush(DisposalUnitComponent unit, bool result, params IEntity[] entities)
         {
             Assert.That(unit.ContainedEntities, Is.SupersetOf(entities));
             Assert.That(entities.Length, Is.EqualTo(unit.ContainedEntities.Count));
@@ -101,7 +101,6 @@ namespace Content.IntegrationTests.Tests.Disposal
             IEntity human;
             IEntity wrench;
             DisposalUnitComponent unit;
-            DisposalEntryComponent entry;
 
             server.Assert(async () =>
             {
@@ -119,7 +118,7 @@ namespace Content.IntegrationTests.Tests.Disposal
 
                 // Test for components existing
                 Assert.True(disposalUnit.TryGetComponent(out unit!));
-                Assert.True(disposalTrunk.TryGetComponent(out entry!));
+                Assert.True(disposalTrunk.HasComponent<DisposalEntryComponent>());
 
                 // Can't insert, unanchored and unpowered
                 var disposalUnitAnchorable = disposalUnit.GetComponent<AnchorableComponent>();
@@ -146,13 +145,13 @@ namespace Content.IntegrationTests.Tests.Disposal
                 disposalTrunk.Transform.WorldPosition += (1, 0);
 
                 // Fail to flush with a mob and an item
-                Flush(unit, false, null, human, wrench);
+                Flush(unit, false, human, wrench);
 
                 // Move the disposal trunk back
                 disposalTrunk.Transform.WorldPosition -= (1, 0);
 
                 // Fail to flush with a mob and an item, no power
-                Flush(unit, false, entry, human, wrench);
+                Flush(unit, false, human, wrench);
 
                 // Remove power need
                 Assert.True(disposalUnit.TryGetComponent(out PowerReceiverComponent? power));
@@ -160,10 +159,10 @@ namespace Content.IntegrationTests.Tests.Disposal
                 Assert.True(unit.Powered);
 
                 // Flush with a mob and an item
-                Flush(unit, true, entry, human, wrench);
+                Flush(unit, true, human, wrench);
 
                 // Re-pressurizing
-                Flush(unit, false, entry);
+                Flush(unit, false);
             });
 
             await server.WaitIdleAsync();

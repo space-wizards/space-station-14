@@ -118,11 +118,10 @@ namespace Content.IntegrationTests.Tests.Fluids
             var sEntityManager = server.ResolveDependency<IEntityManager>();
 
             MapId sMapId = default;
-            IMapGrid sGrid = null;
+            IMapGrid sGrid;
             GridId sGridId = default;
             IEntity sGridEntity = null;
             EntityCoordinates sCoordinates = default;
-            TimerComponent sTimerComponent = null;
 
             // Spawn a paused map with one tile to spawn puddles on
             await server.WaitPost(() =>
@@ -170,7 +169,7 @@ namespace Content.IntegrationTests.Tests.Fluids
                 Assert.Positive(sPuddle.EvaporateTime);
 
                 // Should have a timer component added to it for evaporation
-                Assert.True(sPuddle.Owner.TryGetComponent(out sTimerComponent));
+                Assert.True(sPuddle.Owner.TryGetComponent(out TimerComponent _));
 
                 sEvaporateTime = sPuddle.EvaporateTime;
                 sPuddleStartingVolume = sPuddle.CurrentVolume;
@@ -184,7 +183,7 @@ namespace Content.IntegrationTests.Tests.Fluids
             await server.WaitAssertion(() =>
             {
                 Assert.True(sPuddle.Owner.Paused);
-                Assert.True(sPuddle.Owner.TryGetComponent(out sTimerComponent));
+                Assert.True(sPuddle.Owner.TryGetComponent(out TimerComponent _));
 
                 // Check that the puddle still exists
                 Assert.False(sPuddle.Owner.Deleted);

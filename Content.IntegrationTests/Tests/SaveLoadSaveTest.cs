@@ -30,7 +30,7 @@ namespace Content.IntegrationTests.Tests
                 mapLoader.SaveBlueprint(new GridId(1), "save load save 1.yml");
                 var mapId = mapManager.CreateMap();
                 var grid = mapLoader.LoadBlueprint(mapId, "save load save 1.yml");
-                mapLoader.SaveBlueprint(grid.Index, "save load save 2.yml");
+                mapLoader.SaveBlueprint(grid!.Index, "save load save 2.yml");
             });
 
             await server.WaitIdleAsync();

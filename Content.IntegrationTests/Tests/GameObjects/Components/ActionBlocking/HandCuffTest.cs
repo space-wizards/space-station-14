@@ -47,11 +47,8 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
             IEntity otherHuman;
             IEntity cuffs;
             IEntity secondCuffs;
-            HandcuffComponent handcuff;
-            HandcuffComponent secondHandcuff;
             CuffableComponent cuffed;
             IHandsComponent hands;
-            IBody body;
 
             server.Assert(() =>
             {
@@ -71,9 +68,9 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
                 // Test for components existing
                 Assert.True(human.TryGetComponent(out cuffed!), $"Human has no {nameof(CuffableComponent)}");
                 Assert.True(human.TryGetComponent(out hands!), $"Human has no {nameof(HandsComponent)}");
-                Assert.True(human.TryGetComponent(out body!), $"Human has no {nameof(IBody)}");
-                Assert.True(cuffs.TryGetComponent(out handcuff!), $"Handcuff has no {nameof(HandcuffComponent)}");
-                Assert.True(secondCuffs.TryGetComponent(out secondHandcuff!), $"Second handcuffs has no {nameof(HandcuffComponent)}");
+                Assert.True(human.TryGetComponent(out IBody _), $"Human has no {nameof(IBody)}");
+                Assert.True(cuffs.TryGetComponent(out HandcuffComponent _), $"Handcuff has no {nameof(HandcuffComponent)}");
+                Assert.True(secondCuffs.TryGetComponent(out HandcuffComponent _), $"Second handcuffs has no {nameof(HandcuffComponent)}");
 
                 // Test to ensure cuffed players register the handcuffs
                 cuffed.TryAddNewCuffs(human, cuffs);
