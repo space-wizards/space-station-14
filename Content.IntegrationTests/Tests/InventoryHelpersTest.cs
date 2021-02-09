@@ -16,7 +16,7 @@ namespace Content.IntegrationTests.Tests
     [TestOf(typeof(InventoryHelpers))]
     public class InventoryHelpersTest : ContentIntegrationTest
     {
-        private const string PROTOTYPES = @"
+        private const string Prototypes = @"
 - type: entity
   name: InventoryStunnableDummy
   id: InventoryStunnableDummy
@@ -45,7 +45,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task SpawnItemInSlotTest()
         {
-            var options = new ServerIntegrationOptions {ExtraPrototypes = PROTOTYPES};
+            var options = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
             IEntity human = null;

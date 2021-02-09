@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Client.GameObjects.Components.Items;
 using Content.Server.GameObjects.Components.ActionBlocking;
-using Content.Server.GameObjects.Components.Body;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Body;
 using NUnit.Framework;
@@ -20,7 +19,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
     [TestOf(typeof(HandcuffComponent))]
     public class HandCuffTest : ContentIntegrationTest
     {
-        private const string PROTOTYPES = @"
+        private const string Prototypes = @"
 - type: entity
   name: HumanDummy
   id: HumanDummy
@@ -41,7 +40,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
         [Test]
         public async Task Test()
         {
-            var options = new ServerIntegrationOptions{ExtraPrototypes = PROTOTYPES};
+            var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
             IEntity human;

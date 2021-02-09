@@ -22,7 +22,7 @@ namespace Content.IntegrationTests.Tests.Buckle
     [TestOf(typeof(StrapComponent))]
     public class BuckleTest : ContentIntegrationTest
     {
-        private const string PROTOTYPES = @"
+        private const string Prototypes = @"
 - type: entity
   name: BuckleDummy
   id: BuckleDummy
@@ -43,7 +43,7 @@ namespace Content.IntegrationTests.Tests.Buckle
         [Test]
         public async Task BuckleUnbuckleCooldownRangeTest()
         {
-            var options = new ServerIntegrationOptions {ExtraPrototypes = PROTOTYPES};
+            var options = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
             var server = StartServer(options);
 
             IEntity human = null;
@@ -194,7 +194,7 @@ namespace Content.IntegrationTests.Tests.Buckle
         [Test]
         public async Task BuckledDyingDropItemsTest()
         {
-            var options = new ServerIntegrationOptions {ExtraPrototypes = PROTOTYPES};
+            var options = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
             var server = StartServer(options);
 
             IEntity human = null;
@@ -280,7 +280,7 @@ namespace Content.IntegrationTests.Tests.Buckle
         [Test]
         public async Task ForceUnbuckleBuckleTest()
         {
-            var options = new ServerIntegrationOptions {ExtraPrototypes = PROTOTYPES};
+            var options = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
             var server = StartServer(options);
 
             IEntity human = null;

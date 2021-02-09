@@ -16,7 +16,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
     [TestOf(typeof(DoAfterComponent))]
     public class DoAfterServerTest : ContentIntegrationTest
     {
-        private const string PROTOTYPES = @"
+        private const string Prototypes = @"
 - type: entity
   name: Dummy
   id: Dummy
@@ -28,7 +28,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
         public async Task TestFinished()
         {
             Task<DoAfterStatus> task = null;
-            var options = new ServerIntegrationOptions{ExtraPrototypes = PROTOTYPES};
+            var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
             // That it finishes successfully
@@ -52,7 +52,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
         public async Task TestCancelled()
         {
             Task<DoAfterStatus> task = null;
-            var options = new ServerIntegrationOptions{ExtraPrototypes = PROTOTYPES};
+            var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
             server.Post(() =>

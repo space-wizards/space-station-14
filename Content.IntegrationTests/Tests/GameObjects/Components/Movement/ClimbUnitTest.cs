@@ -17,7 +17,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
     [TestOf(typeof(ClimbingComponent))]
     public class ClimbUnitTest : ContentIntegrationTest
     {
-        private const string PROTOTYPES = @"
+        private const string Prototypes = @"
 - type: entity
   name: HumanDummy
   id: HumanDummy
@@ -35,7 +35,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
         [Test]
         public async Task Test()
         {
-            var options = new ServerIntegrationOptions{ExtraPrototypes = PROTOTYPES};
+            var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
             IEntity human;

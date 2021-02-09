@@ -8,14 +8,14 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.Actions;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.Utility;
 using NUnit.Framework;
 using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Map;
-using Content.Shared.Utility;
 using Robust.Shared.Interfaces.Timing;
+using Robust.Shared.Map;
 using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
@@ -27,7 +27,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
     [TestOf(typeof(ItemActionsComponent))]
     public class ActionsComponentTests : ContentIntegrationTest
     {
-        const string PROTOTYPES = @"
+        const string Prototypes = @"
 - type: entity
   name: flashlight
   parent: BaseItem
@@ -220,8 +220,8 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
         [Test]
         public async Task GrantsAndRevokesItemActions()
         {
-            var serverOptions = new ServerIntegrationOptions { ExtraPrototypes = PROTOTYPES };
-            var clientOptions = new ClientIntegrationOptions { ExtraPrototypes = PROTOTYPES };
+            var serverOptions = new ServerIntegrationOptions { ExtraPrototypes = Prototypes };
+            var clientOptions = new ClientIntegrationOptions { ExtraPrototypes = Prototypes };
             var (client, server) = await StartConnectedServerClientPair(serverOptions: serverOptions, clientOptions: clientOptions);
 
             await server.WaitIdleAsync();

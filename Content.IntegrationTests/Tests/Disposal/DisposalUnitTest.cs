@@ -59,7 +59,7 @@ namespace Content.IntegrationTests.Tests.Disposal
             Assert.That(result || entities.Length == 0, Is.EqualTo(unit.ContainedEntities.Count == 0));
         }
 
-        private const string PROTOTYPES = @"
+        private const string Prototypes = @"
 - type: entity
   name: HumanDummy
   id: HumanDummy
@@ -95,7 +95,7 @@ namespace Content.IntegrationTests.Tests.Disposal
         [Test]
         public async Task Test()
         {
-            var options = new ServerIntegrationOptions{ExtraPrototypes = PROTOTYPES};
+            var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
             IEntity human;
