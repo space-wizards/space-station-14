@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.Components.Damage;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -15,7 +14,7 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
     {
         public Task<DoAfterStatus> AsTask { get; }
 
-        private TaskCompletionSource<DoAfterStatus> Tcs { get;}
+        private TaskCompletionSource<DoAfterStatus> Tcs { get; }
 
         public DoAfterEventArgs EventArgs;
 
@@ -27,7 +26,7 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
 
         public EntityCoordinates TargetGrid { get; }
 
-        private bool _tookDamage;
+        public bool TookDamage { get; set; }
 
         public DoAfterStatus Status => AsTask.IsCompletedSuccessfully ? AsTask.Result : DoAfterStatus.Running;
 
@@ -61,11 +60,6 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
 
             Tcs = new TaskCompletionSource<DoAfterStatus>();
             AsTask = Tcs.Task;
-        }
-
-        public void HandleDamage(DamageChangedEventArgs args)
-        {
-            _tookDamage = true;
         }
 
         public void Run(float frameTime)
@@ -130,7 +124,7 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
                 return true;
             }
 
-            if (EventArgs.BreakOnDamage && _tookDamage)
+            if (EventArgs.BreakOnDamage && TookDamage)
             {
                 return true;
             }

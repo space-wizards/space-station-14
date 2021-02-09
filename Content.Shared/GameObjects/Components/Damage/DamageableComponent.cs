@@ -39,8 +39,6 @@ namespace Content.Shared.GameObjects.Components.Damage
         private readonly HashSet<DamageClass> _supportedClasses = new();
         private DamageFlag _flags;
 
-        public event Action<DamageChangedEventArgs>? HealthChangedEvent;
-
         // TODO DAMAGE Use as default values, specify overrides in a separate property through yaml for better (de)serialization
         [ViewVariables] public string DamageContainerId { get; set; } = default!;
 
@@ -460,7 +458,6 @@ namespace Content.Shared.GameObjects.Components.Damage
         protected virtual void OnHealthChanged(DamageChangedEventArgs e)
         {
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, e);
-            HealthChangedEvent?.Invoke(e);
 
             var message = new DamageChangedMessage(this, e.Data);
             SendMessage(message);

@@ -10,14 +10,6 @@ namespace Content.Shared.GameObjects.Components.Damage
     public interface IDamageableComponent : IComponent, IExAct
     {
         /// <summary>
-        ///     Called when the entity's <see cref="IDamageableComponent"/> values change.
-        ///     Of note is that a "deal 0 damage" call will still trigger this event
-        ///     (including both damage negated by resistance or simply inputting 0 as
-        ///     the amount of damage to deal).
-        /// </summary>
-        event Action<DamageChangedEventArgs> HealthChangedEvent;
-
-        /// <summary>
         ///     Sum of all damages taken.
         /// </summary>
         int TotalDamage { get; }
