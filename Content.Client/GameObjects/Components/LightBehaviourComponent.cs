@@ -14,6 +14,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes.DataClasses.Attributes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -347,7 +348,7 @@ namespace Content.Client.GameObjects.Components
     /// A component which applies a specific behaviour to a PointLightComponent on its owner.
     /// </summary>
     [RegisterComponent]
-    [CustomDataClass(typeof(LightBehaviourComponentData))]
+    [DataClass(typeof(LightBehaviourComponentData))]
     public class LightBehaviourComponent : SharedLightBehaviourComponent
     {
         private const string KeyPrefix = nameof(LightBehaviourComponent);

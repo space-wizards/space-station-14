@@ -14,6 +14,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes.DataClasses.Attributes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -24,7 +25,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
     /// Generally used for bullets but can be used for other things like bananas
     /// </summary>
     [RegisterComponent]
-    [CustomDataClass(typeof(AmmoComponentData))]
+    [DataClass(typeof(AmmoComponentData))]
     public class AmmoComponent : Component, IExamine
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;

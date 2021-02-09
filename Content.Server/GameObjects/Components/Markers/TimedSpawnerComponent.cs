@@ -7,6 +7,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes.DataClasses.Attributes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -15,7 +16,7 @@ using Timer = Robust.Shared.Timers.Timer;
 namespace Content.Server.GameObjects.Components.Markers
 {
     [RegisterComponent]
-    [CustomDataClass(typeof(TimedSpawnerComponentData))]
+    [DataClass(typeof(TimedSpawnerComponentData))]
     public class TimedSpawnerComponent : Component
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;

@@ -4,12 +4,13 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes.DataClasses.Attributes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components
 {
-    [CustomDataClass(typeof(SharedStackComponentDataClass))]
+    [DataClass(typeof(SharedStackComponentDataClass))]
     public abstract class SharedStackComponent : Component
     {
         private const string SerializationCache = "stack";

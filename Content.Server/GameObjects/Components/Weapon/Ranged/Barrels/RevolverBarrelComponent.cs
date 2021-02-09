@@ -20,13 +20,14 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes.DataClasses.Attributes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 {
     [RegisterComponent]
-    [CustomDataClass(typeof(RevolverBarrelComponentData))]
+    [DataClass(typeof(RevolverBarrelComponentData))]
     public sealed class RevolverBarrelComponent : ServerRangedBarrelComponent
     {
         [Dependency] private readonly IRobustRandom _random = default!;

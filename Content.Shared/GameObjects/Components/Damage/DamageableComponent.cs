@@ -11,6 +11,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes.DataClasses.Attributes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -22,7 +23,7 @@ namespace Content.Shared.GameObjects.Components.Damage
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IDamageableComponent))]
-    [CustomDataClass(typeof(DamageableComponentData))]
+    [DataClass(typeof(DamageableComponentData))]
     public class DamageableComponent : Component, IDamageableComponent, IRadiationAct
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;

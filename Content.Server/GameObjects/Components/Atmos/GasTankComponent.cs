@@ -26,6 +26,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes.DataClasses.Attributes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -34,7 +35,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    [CustomDataClass(typeof(GasTankComponentData))]
+    [DataClass(typeof(GasTankComponentData))]
     public class GasTankComponent : SharedGasTankComponent, IExamine, IGasMixtureHolder, IUse, IDropped, IActivate
     {
         private const float MaxExplosionRange = 14f;

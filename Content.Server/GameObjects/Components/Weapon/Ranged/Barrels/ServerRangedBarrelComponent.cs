@@ -26,6 +26,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes.DataClasses.Attributes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -36,7 +37,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
     /// All of the ranged weapon components inherit from this to share mechanics like shooting etc.
     /// Only difference between them is how they retrieve a projectile to shoot (battery, magazine, etc.)
     /// </summary>
-    [CustomDataClass(typeof(ServerRangedBarrelComponentData))]
+    [DataClass(typeof(ServerRangedBarrelComponentData))]
     public abstract class ServerRangedBarrelComponent : SharedRangedBarrelComponent, IUse, IInteractUsing, IExamine
     {
         // There's still some of py01 and PJB's work left over, especially in underlying shooting logic,

@@ -10,6 +10,7 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes.DataClasses.Attributes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
@@ -21,7 +22,7 @@ namespace Content.Server.GameObjects.Components.Items.Clothing
     [ComponentReference(typeof(StorableComponent))]
     [ComponentReference(typeof(SharedStorableComponent))]
     [ComponentReference(typeof(IItemComponent))]
-    [CustomDataClass(typeof(ClothingComponentData))]
+    [DataClass(typeof(ClothingComponentData))]
     public class ClothingComponent : ItemComponent, IUse
     {
         public override string Name => "Clothing";

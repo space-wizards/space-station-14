@@ -15,6 +15,7 @@ using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes.DataClasses.Attributes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -22,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Strap
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedStrapComponent))]
-    [CustomDataClass(typeof(StrapComponentData))]
+    [DataClass(typeof(StrapComponentData))]
     public class StrapComponent : SharedStrapComponent, IInteractHand
     {
         [ComponentDependency] public readonly SpriteComponent? SpriteComponent = null;

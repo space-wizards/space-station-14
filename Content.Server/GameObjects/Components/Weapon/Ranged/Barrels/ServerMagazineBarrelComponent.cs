@@ -23,6 +23,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes.DataClasses.Attributes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -30,7 +31,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 {
     [RegisterComponent]
-    [CustomDataClass(typeof(ServerMagazineBarrelComponentData))]
+    [DataClass(typeof(ServerMagazineBarrelComponentData))]
     public sealed class ServerMagazineBarrelComponent : ServerRangedBarrelComponent, IExamine
     {
         public override string Name => "MagazineBarrel";

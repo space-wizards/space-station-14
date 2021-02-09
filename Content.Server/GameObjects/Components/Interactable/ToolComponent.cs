@@ -11,6 +11,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes.DataClasses.Attributes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -23,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
     [RegisterComponent]
     [ComponentReference(typeof(IToolComponent))]
-    [CustomDataClass(typeof(ToolComponentData))]
+    [DataClass(typeof(ToolComponentData))]
     public class ToolComponent : SharedToolComponent, IToolComponent
     {
         protected ToolQuality _qualities = ToolQuality.None;

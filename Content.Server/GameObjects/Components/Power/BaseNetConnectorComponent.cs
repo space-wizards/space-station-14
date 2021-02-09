@@ -3,12 +3,13 @@ using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes.DataClasses.Attributes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power
 {
-    [CustomDataClass(typeof(BaseNetConnectorComponentData))]
+    [DataClass(typeof(BaseNetConnectorComponentData))]
     public abstract class BaseNetConnectorComponent<TNetType> : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]

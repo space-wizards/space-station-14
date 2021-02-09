@@ -43,6 +43,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes.DataClasses.Attributes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -52,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Disposal
     [ComponentReference(typeof(SharedDisposalUnitComponent))]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IInteractUsing))]
-    [CustomDataClass(typeof(DisposalUnitComponentData))]
+    [DataClass(typeof(DisposalUnitComponentData))]
     public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IActivate, IInteractUsing, IDragDropOn, IThrowCollide, IGasMixtureHolder
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;

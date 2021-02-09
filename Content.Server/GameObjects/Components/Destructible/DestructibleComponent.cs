@@ -7,6 +7,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes.DataClasses.Attributes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -17,7 +18,7 @@ namespace Content.Server.GameObjects.Components.Destructible
     ///     and triggers thresholds when reached.
     /// </summary>
     [RegisterComponent]
-    [CustomDataClass(typeof(DestructibleComponentData))]
+    [DataClass(typeof(DestructibleComponentData))]
     public class DestructibleComponent : Component
     {
         private DestructibleSystem _destructibleSystem = default!;

@@ -5,6 +5,7 @@ using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes.DataClasses.Attributes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -15,7 +16,7 @@ namespace Content.Shared.GameObjects.Components.Materials
     ///     This is not a storage system for say smelteries.
     /// </summary>
     [RegisterComponent]
-    [CustomDataClass(typeof(MaterialComponentDataClass))]
+    [DataClass(typeof(MaterialComponentDataClass))]
     public class MaterialComponent : Component
     {
         public const string SerializationCache = "mat";

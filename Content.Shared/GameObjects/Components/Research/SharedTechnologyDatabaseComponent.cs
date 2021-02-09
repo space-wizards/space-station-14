@@ -5,11 +5,12 @@ using Content.Shared.Research;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes.DataClasses.Attributes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Research
 {
-    [CustomDataClass(typeof(SharedTechnologyDatabaseComponentDataClass))]
+    [DataClass(typeof(SharedTechnologyDatabaseComponentDataClass))]
     public class SharedTechnologyDatabaseComponent : Component, IEnumerable<TechnologyPrototype>
     {
         public override string Name => "TechnologyDatabase";

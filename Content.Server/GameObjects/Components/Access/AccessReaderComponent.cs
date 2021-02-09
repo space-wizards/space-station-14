@@ -11,6 +11,7 @@ using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes.DataClasses.Attributes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -22,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Access
     /// </summary>
     [PublicAPI]
     [RegisterComponent]
-    [CustomDataClass(typeof(AccessReaderComponentData))]
+    [DataClass(typeof(AccessReaderComponentData))]
     public class AccessReader : Component
     {
         public override string Name => "AccessReader";

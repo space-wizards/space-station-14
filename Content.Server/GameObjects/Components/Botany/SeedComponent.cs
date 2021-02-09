@@ -4,6 +4,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes.DataClasses.Attributes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -11,7 +12,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Botany
 {
     [RegisterComponent]
-    [CustomDataClass(typeof(SeedComponentData))]
+    [DataClass(typeof(SeedComponentData))]
     public class SeedComponent : Component, IExamine
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;

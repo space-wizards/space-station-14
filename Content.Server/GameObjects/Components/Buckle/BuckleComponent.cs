@@ -28,13 +28,14 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes.DataClasses.Attributes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Buckle
 {
     [RegisterComponent]
-    [CustomDataClass(typeof(BuckleComponentData))]
+    [DataClass(typeof(BuckleComponentData))]
     public class BuckleComponent : SharedBuckleComponent, IInteractHand
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;

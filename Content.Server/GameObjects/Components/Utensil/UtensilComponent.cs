@@ -12,6 +12,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes.DataClasses.Attributes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -19,7 +20,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Utensil
 {
     [RegisterComponent]
-    [CustomDataClass(typeof(UtensilComponentData))]
+    [DataClass(typeof(UtensilComponentData))]
     public class UtensilComponent : SharedUtensilComponent, IAfterInteract
     {
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;

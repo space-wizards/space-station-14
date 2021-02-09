@@ -16,6 +16,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes.DataClasses.Attributes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -23,7 +24,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.GameObjects.Components.Body
 {
     // TODO BODY Damage methods for collections of IDamageableComponents
-    [CustomDataClass(typeof(SharedBodyComponentData))]
+    [DataClass(typeof(SharedBodyComponentData))]
     public abstract class SharedBodyComponent : Component, IBody
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;

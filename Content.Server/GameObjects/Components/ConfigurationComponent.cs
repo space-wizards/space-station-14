@@ -22,12 +22,13 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes.DataClasses.Attributes;
 
 namespace Content.Server.GameObjects.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedConfigurationComponent))]
-    [CustomDataClass(typeof(ConfigurationComponentData))]
+    [DataClass(typeof(ConfigurationComponentData))]
     public class ConfigurationComponent : SharedConfigurationComponent, IInteractUsing
     {
         [ViewVariables] private BoundUserInterface UserInterface => Owner.GetUIOrNull(ConfigurationUiKey.Key);
