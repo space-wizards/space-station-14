@@ -20,17 +20,29 @@ namespace Content.IntegrationTests.Tests.Doors
   id: PhysicsDummy
   components:
   - type: Physics
+    anchored: false
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: ""-0.49,-0.49,0.49,0.49""
+      layer:
+      - Impassable
 
 - type: entity
   name: AirlockDummy
   id: AirlockDummy
   components:
   - type: Airlock
+  - type: Physics
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: ""-0.49,-0.49,0.49,0.49""
+      mask:
+      - Impassable
 ";
         [Test]
         public async Task OpenCloseDestroyTest()
         {
-            var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
+            var options = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
             await server.WaitIdleAsync();
@@ -104,14 +116,14 @@ namespace Content.IntegrationTests.Tests.Doors
             TestController controller = null;
             AirlockComponent airlockComponent = null;
 
-            var humanStartingX = -1;
+            var physicsDummyStartingX = -1;
 
             server.Assert(() =>
             {
                 var mapId = new MapId(1);
                 mapManager.CreateNewMapEntity(mapId);
 
-                var humanCoordinates = new MapCoordinates((humanStartingX, 0), mapId);
+                var humanCoordinates = new MapCoordinates((physicsDummyStartingX, 0), mapId);
                 physicsDummy = entityManager.SpawnEntity("PhysicsDummy", humanCoordinates);
 
                 airlock = entityManager.SpawnEntity("AirlockDummy", new MapCoordinates((0, 0), mapId));
@@ -142,7 +154,7 @@ namespace Content.IntegrationTests.Tests.Doors
             }
 
             // Sanity check
-            Assert.That(physicsDummy.Transform.MapPosition.X, Is.GreaterThan(humanStartingX));
+            Assert.That(physicsDummy.Transform.MapPosition.X, Is.GreaterThan(physicsDummyStartingX));
 
             // Blocked by the airlock
             Assert.That(physicsDummy.Transform.MapPosition.X, Is.Negative.Or.Zero);

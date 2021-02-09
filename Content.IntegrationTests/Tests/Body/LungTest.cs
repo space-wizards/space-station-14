@@ -138,7 +138,9 @@ namespace Content.IntegrationTests.Tests.Body
         [Test]
         public async Task NoSuffocationTest()
         {
-            var server = StartServerDummyTicker();
+            var options = new ServerContentIntegrationOption{ExtraPrototypes = Prototypes};
+            var server = StartServerDummyTicker(options);
+
             await server.WaitIdleAsync();
 
             var mapLoader = server.ResolveDependency<IMapLoader>();
