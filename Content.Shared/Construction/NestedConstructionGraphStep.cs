@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -11,27 +12,14 @@ namespace Content.Shared.Construction
     {
         public List<List<ConstructionGraphStep>> Steps { get; private set; } = new();
 
-        public void LoadFrom(YamlMappingNode mapping)
+        public override void ExposeData(ObjectSerializer serializer)
         {
-            if (!mapping.TryGetNode("steps", out YamlSequenceNode steps)) return;
+            base.ExposeData(serializer);
+            serializer.DataField(this, x => x.Steps, "steps", new());
 
-            foreach (var node in steps)
+            if (Steps.Any(inner => inner.Any(step => step is NestedConstructionGraphStep)))
             {
-                var sequence = (YamlSequenceNode) node;
-                var list = new List<ConstructionGraphStep>();
-
-                foreach (var innerNode in sequence)
-                {
-                    var stepNode = (YamlMappingNode) innerNode;
-                    var step = ConstructionGraphEdge.LoadStep(stepNode);
-
-                    if(step is NestedConstructionGraphStep)
-                        throw new InvalidDataException("Can't have nested construction steps inside nested construction steps!");
-
-                    list.Add(step);
-                }
-
-                Steps.Add(list);
+                throw new InvalidDataException("Can't have nested construction steps inside nested construction steps!");
             }
         }
 

@@ -4,6 +4,7 @@ using Content.Shared.Chemistry;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Server.Chemistry
@@ -14,11 +15,16 @@ namespace Content.Server.Chemistry
     [Prototype("reaction")]
     public class ReactionPrototype : IPrototype, IIndexedPrototype
     {
+        [YamlField("id")]
         private string _id;
+        [YamlField("name")]
         private string _name;
-        private Dictionary<string, ReactantPrototype> _reactants;
-        private Dictionary<string, ReagentUnit> _products;
-        private List<IReactionEffect> _effects;
+        [YamlField("reactants")]
+        private Dictionary<string, ReactantPrototype> _reactants = new();
+        [YamlField("products")]
+        private Dictionary<string, ReagentUnit> _products = new();
+        [YamlField("effects")]
+        private List<IReactionEffect> _effects = new();
 
         public string ID => _id;
         public string Name => _name;
@@ -34,25 +40,17 @@ namespace Content.Server.Chemistry
         /// Effects to be triggered when the reaction occurs.
         /// </summary>
         public IReadOnlyList<IReactionEffect> Effects => _effects;
-
-        public void LoadFrom(YamlMappingNode mapping)
-        {
-            var serializer = YamlObjectSerializer.NewReader(mapping);
-
-            serializer.DataField(ref _id, "id", string.Empty);
-            serializer.DataField(ref _name, "name", string.Empty);
-            serializer.DataField(ref _reactants, "reactants", new Dictionary<string, ReactantPrototype>());
-            serializer.DataField(ref _products, "products", new Dictionary<string, ReagentUnit>());
-            serializer.DataField(ref _effects, "effects", new List<IReactionEffect>());
-        }
     }
 
     /// <summary>
     /// Prototype for chemical reaction reactants.
     /// </summary>
-    public class ReactantPrototype : IExposeData
+    [YamlDefinition]
+    public class ReactantPrototype
     {
-        private ReagentUnit _amount;
+        [YamlField("amount")]
+        private ReagentUnit _amount = ReagentUnit.New(1);
+        [YamlField("catalyst")]
         private bool _catalyst;
 
         /// <summary>
@@ -63,20 +61,5 @@ namespace Content.Server.Chemistry
         /// Whether or not the reactant is a catalyst. Catalysts aren't removed when a reaction occurs.
         /// </summary>
         public bool Catalyst => _catalyst;
-
-        public void ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(ref _amount, "amount", ReagentUnit.New(1));
-            serializer.DataField(ref _catalyst, "catalyst", false);
-        }
-
-        public IDeepClone DeepClone()
-        {
-            return new ReactantPrototype
-            {
-                _amount = IDeepClone.CloneValue(_amount),
-                _catalyst = _catalyst
-            };
-        }
     }
 }

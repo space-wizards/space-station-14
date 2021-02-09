@@ -14,8 +14,11 @@ namespace Content.Shared.Damage.ResistanceSet
     [Serializable, NetSerializable]
     public class ResistanceSetPrototype : IPrototype, IIndexedPrototype
     {
+        [YamlField("coefficients")]
         private Dictionary<DamageType, float> _coefficients;
+        [YamlField("flatReductions")]
         private Dictionary<DamageType, int> _flatReductions;
+        [YamlField("id")]
         private string _id;
 
         [ViewVariables] public Dictionary<DamageType, float> Coefficients => _coefficients;
@@ -29,10 +32,6 @@ namespace Content.Shared.Damage.ResistanceSet
         public virtual void LoadFrom(YamlMappingNode mapping)
         {
             var serializer = YamlObjectSerializer.NewReader(mapping);
-
-            serializer.DataField(ref _id, "id", string.Empty);
-            serializer.DataField(ref _coefficients, "coefficients", null);
-            serializer.DataField(ref _flatReductions, "flatReductions", null);
 
             Resistances = new Dictionary<DamageType, ResistanceSetSettings>();
             foreach (var damageType in (DamageType[]) Enum.GetValues(typeof(DamageType)))

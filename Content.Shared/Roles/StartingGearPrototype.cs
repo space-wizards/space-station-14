@@ -14,44 +14,25 @@ namespace Content.Shared.Roles
     [Prototype("startingGear")]
     public class StartingGearPrototype : IPrototype, IIndexedPrototype
     {
-        private string _id = default!;
-        private Dictionary<Slots, string> _equipment = default!;
+        [YamlField("id")]
+        private string _id = string.Empty;
+
+        [YamlField("equipment")] private Dictionary<Slots, string> _equipment = new();
 
         /// <summary>
         /// if empty, there is no skirt override - instead the uniform provided in equipment is added.
         /// </summary>
+        [YamlField("innerclothingskirt")]
         private string _innerClothingSkirt = default!;
 
         public IReadOnlyDictionary<string, string> Inhand => _inHand;
         /// <summary>
         /// hand index, item prototype
         /// </summary>
-        private Dictionary<string, string> _inHand = default!;
+        [YamlField("inhand")]
+        private Dictionary<string, string> _inHand = new(0);
 
         [ViewVariables] public string ID => _id;
-
-        public void LoadFrom(YamlMappingNode mapping)
-        {
-            var serializer = YamlObjectSerializer.NewReader(mapping);
-
-            serializer.DataField(ref _id, "id", string.Empty);
-            serializer.DataField(ref _inHand, "inhand", new Dictionary<string, string>(0));
-
-            var equipment = serializer.ReadDataField<Dictionary<string, string>>("equipment");
-
-            _equipment = equipment.ToDictionary(slotStr =>
-            {
-                var (key, _) = slotStr;
-                if (!Enum.TryParse(key, true, out Slots slot))
-                {
-                    throw new Exception($"{key} is an invalid equipment slot.");
-                }
-
-                return slot;
-            }, type => type.Value);
-
-            serializer.DataField(ref _innerClothingSkirt, "innerclothingskirt", string.Empty);
-        }
 
         public string GetGear(Slots slot, HumanoidCharacterProfile? profile)
         {

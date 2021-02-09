@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -13,11 +14,12 @@ namespace Content.Shared.Damage.DamageContainer
     /// </summary>
     [Prototype("damageContainer")]
     [Serializable, NetSerializable]
-    public class DamageContainerPrototype : IPrototype, IIndexedPrototype
+    public class DamageContainerPrototype : IPrototype, IIndexedPrototype, IExposeData
     {
         private bool _supportAll;
         private HashSet<DamageClass> _supportedClasses;
         private HashSet<DamageType> _supportedTypes;
+        [YamlField("id")]
         private string _id;
 
         // TODO NET 5 IReadOnlySet
@@ -27,11 +29,8 @@ namespace Content.Shared.Damage.DamageContainer
 
         [ViewVariables] public string ID => _id;
 
-        public virtual void LoadFrom(YamlMappingNode mapping)
+        public void ExposeData(ObjectSerializer serializer)
         {
-            var serializer = YamlObjectSerializer.NewReader(mapping);
-
-            serializer.DataField(ref _id, "id", string.Empty);
             serializer.DataField(ref _supportAll, "supportAll", false);
             serializer.DataField(ref _supportedClasses, "supportedClasses", new HashSet<DamageClass>());
             serializer.DataField(ref _supportedTypes, "supportedTypes", new HashSet<DamageType>());

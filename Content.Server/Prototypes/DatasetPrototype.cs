@@ -8,18 +8,12 @@ namespace Content.Server.Prototypes
     [Prototype("dataset")]
     public class DatasetPrototype : IPrototype, IIndexedPrototype
     {
+        [YamlField("id")]
         private string _id;
         public string ID => _id;
 
+        [YamlField("values")]
         private List<string> _values;
         public IReadOnlyList<string> Values => _values;
-
-        public void LoadFrom(YamlMappingNode mapping)
-        {
-            var ser = YamlObjectSerializer.NewReader(mapping);
-
-            ser.DataField(ref _id, "id", "");
-            ser.DataField(ref _values, "values", new List<string>());
-        }
     }
 }

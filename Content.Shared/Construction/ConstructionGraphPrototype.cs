@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -15,36 +16,35 @@ namespace Content.Shared.Construction
         private readonly Dictionary<string, ConstructionGraphNode> _nodes = new();
         private readonly Dictionary<ValueTuple<string, string>, ConstructionGraphNode[]> _paths = new();
         private readonly Dictionary<string, Dictionary<ConstructionGraphNode, ConstructionGraphNode>> _pathfinding = new();
+        private readonly string _start;
 
         [ViewVariables]
+        [YamlField("id")]
         public string ID { get; private set; }
 
         [ViewVariables]
-        public string Start { get; private set; }
+        [YamlField("start")]
+        public string Start => _start;
+
+        [YamlField("graph", priority: 2)]
+        private List<ConstructionGraphNode> _nodeYamlInterface
+        {
+            get => _nodes.Values.ToList();
+            set
+            {
+                _nodes.Clear();
+                foreach (var graphNode in value)
+                {
+                    _nodes[graphNode.Name] = graphNode;
+                }
+
+                if(string.IsNullOrEmpty(Start) || !_nodes.ContainsKey(Start))
+                    throw new InvalidDataException($"Starting node for construction graph {ID} is null, empty or invalid!");
+            }
+        }
 
         [ViewVariables]
         public IReadOnlyDictionary<string, ConstructionGraphNode> Nodes => _nodes;
-
-        public void LoadFrom(YamlMappingNode mapping)
-        {
-            var serializer = YamlObjectSerializer.NewReader(mapping);
-
-            serializer.DataField(this, x => x.ID, "id", string.Empty);
-            serializer.DataField(this, x => x.Start, "start", string.Empty);
-
-            if (!mapping.TryGetNode("graph", out YamlSequenceNode graphMapping)) return;
-
-            foreach (var yamlNode in graphMapping)
-            {
-                var childMapping = (YamlMappingNode) yamlNode;
-                var node = new ConstructionGraphNode();
-                node.LoadFrom(childMapping);
-                _nodes[node.Name] = node;
-            }
-
-            if(string.IsNullOrEmpty(Start) || !_nodes.ContainsKey(Start))
-                throw new InvalidDataException($"Starting node for construction graph {ID} is null, empty or invalid!");
-        }
 
         public ConstructionGraphEdge Edge(string startNode, string nextNode)
         {

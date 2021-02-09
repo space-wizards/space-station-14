@@ -11,13 +11,20 @@ namespace Content.Shared.Research
     [NetSerializable, Serializable, Prototype("technology")]
     public class TechnologyPrototype : IPrototype, IIndexedPrototype
     {
+        [YamlField("name")]
         private string _name;
+        [YamlField("id")]
         private string _id;
+        [YamlField("icon")]
         private SpriteSpecifier _icon;
+        [YamlField("description")]
         private string _description;
+        [YamlField("requiredPoints")]
         private int _requiredPoints;
-        private List<string> _requiredTechnologies;
-        private List<string> _unlockedRecipes;
+        [YamlField("requiredTechnologies")]
+        private List<string> _requiredTechnologies = new();
+        [YamlField("unlockedRecipes")]
+        private List<string> _unlockedRecipes = new();
 
         /// <summary>
         ///     The ID of this technology prototype.
@@ -59,18 +66,5 @@ namespace Content.Shared.Research
         /// </summary>
         [ViewVariables]
         public List<string> UnlockedRecipes => _unlockedRecipes;
-
-        public void LoadFrom(YamlMappingNode mapping)
-        {
-            var serializer = YamlObjectSerializer.NewReader(mapping);
-
-            serializer.DataField(ref _name, "name", string.Empty);
-            serializer.DataField(ref _id, "id", string.Empty);
-            serializer.DataField(ref _description, "description", string.Empty);
-            serializer.DataField(ref _icon, "icon", SpriteSpecifier.Invalid);
-            serializer.DataField(ref _requiredPoints, "requiredPoints", 0);
-            serializer.DataField(ref _requiredTechnologies, "requiredTechnologies", new List<string>());
-            serializer.DataField(ref _unlockedRecipes, "unlockedRecipes", new List<string>());
-        }
     }
 }

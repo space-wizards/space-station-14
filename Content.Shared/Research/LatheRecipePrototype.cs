@@ -14,13 +14,20 @@ namespace Content.Shared.Research
     [NetSerializable, Serializable, Prototype("latheRecipe")]
     public class LatheRecipePrototype : IPrototype, IIndexedPrototype, IDeepClone
     {
+        [YamlField("name")]
         private string _name;
+        [YamlField("id")]
         private string _id;
-        private SpriteSpecifier _icon;
+        [YamlField("icon")]
+        private SpriteSpecifier _icon = SpriteSpecifier.Invalid;
+        [YamlField("description")]
         private string _description;
+        [YamlField("result")]
         private string _result;
-        private int _completeTime;
-        private Dictionary<string, int> _requiredMaterials;
+        [YamlField("completetime")]
+        private int _completeTime = 2500;
+        [YamlField("materials")]
+        private Dictionary<string, int> _requiredMaterials = new();
 
         [ViewVariables]
         public string ID => _id;
@@ -91,19 +98,6 @@ namespace Content.Shared.Research
         /// </summary>
         [ViewVariables]
         public int CompleteTime => _completeTime;
-
-        public void LoadFrom(YamlMappingNode mapping)
-        {
-            var serializer = YamlObjectSerializer.NewReader(mapping);
-
-            serializer.DataField(ref _name, "name", string.Empty);
-            serializer.DataField(ref _id, "id", string.Empty);
-            serializer.DataField(ref _description, "description", string.Empty);
-            serializer.DataField(ref _icon, "icon", SpriteSpecifier.Invalid);
-            serializer.DataField(ref _result, "result", null);
-            serializer.DataField(ref _completeTime, "completetime", 2500);
-            serializer.DataField(ref _requiredMaterials, "materials", new Dictionary<string, int>());
-        }
 
         public IDeepClone DeepClone()
         {

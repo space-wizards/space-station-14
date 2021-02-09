@@ -1,6 +1,7 @@
 ﻿﻿using System;
  using System.Collections.Generic;
  using System.Globalization;
+ using Content.Shared.Construction;
  using Content.Shared.Maps;
  using Robust.Shared.ContentPack;
  using Robust.Shared.Interfaces.Map;
@@ -8,6 +9,7 @@
  using Robust.Shared.Localization;
  using Robust.Shared.Localization.Macros;
  using Robust.Shared.Prototypes;
+ using Robust.Shared.Serialization;
 
  namespace Content.Shared
 {
@@ -25,6 +27,9 @@
 
             var textMacroFactory = IoCManager.Resolve<ITextMacroFactory>();
             textMacroFactory.DoAutoRegistrations();
+
+            YamlObjectSerializer.RegisterTypeSerializer(typeof(ConstructionGraphStep),
+                new ConstructionGraphStepTypeSerializer());
 
             // Default to en-US.
             Loc.LoadCulture(new CultureInfo(Culture));

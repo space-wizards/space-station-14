@@ -9,12 +9,12 @@ namespace Content.Shared.VendingMachines
     [Serializable, NetSerializable, Prototype("vendingMachineInventory")]
     public class VendingMachineInventoryPrototype : IPrototype, IIndexedPrototype
     {
-        private string _id;
-        private string _name;
-        private string _description;
-        private double _animationDuration;
-        private string _spriteName;
-        private Dictionary<string, uint> _startingInventory;
+        [YamlField("id")] private string _id;
+        [YamlField("name")] private string _name;
+        [YamlField("description")] private string _description;
+        [YamlField("animationDuration")] private double _animationDuration;
+        [YamlField("spriteName")] private string _spriteName;
+        [YamlField("startingInventory")] private Dictionary<string, uint> _startingInventory = new();
 
         public string ID => _id;
         public string Name => _name;
@@ -22,17 +22,5 @@ namespace Content.Shared.VendingMachines
         public double AnimationDuration => _animationDuration;
         public string SpriteName => _spriteName;
         public Dictionary<string, uint> StartingInventory => _startingInventory;
-
-        public void LoadFrom(YamlMappingNode mapping)
-        {
-            var serializer = YamlObjectSerializer.NewReader(mapping);
-
-            serializer.DataField(ref _id, "id", string.Empty);
-            serializer.DataField(ref _name, "name", string.Empty);
-            serializer.DataField(ref _description, "description", string.Empty);
-            serializer.DataField<double>(ref _animationDuration, "animationDuration", 0);
-            serializer.DataField(ref _spriteName, "spriteName", string.Empty);
-            serializer.DataField(ref _startingInventory, "startingInventory", new Dictionary<string, uint>());
-        }
     }
 }

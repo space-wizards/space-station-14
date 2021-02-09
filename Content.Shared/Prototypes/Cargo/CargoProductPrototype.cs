@@ -11,15 +11,23 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Shared.Prototypes.Cargo
 {
     [NetSerializable, Serializable, Prototype("cargoProduct")]
-    public class CargoProductPrototype : IPrototype, IIndexedPrototype, IDeepClone
+    public class CargoProductPrototype : IPrototype, IIndexedPrototype
     {
+        [YamlField("id")]
         private string _id;
+        [YamlField("name")]
         private string _name;
+        [YamlField("description")]
         private string _description;
+        [YamlField("icon")]
         private SpriteSpecifier _icon;
+        [YamlField("product")]
         private string _product;
+        [YamlField("cost")]
         private int _pointCost;
+        [YamlField("category")]
         private string _category;
+        [YamlField("group")]
         private string _group;
 
         [ViewVariables]
@@ -94,35 +102,6 @@ namespace Content.Shared.Prototypes.Cargo
         public CargoProductPrototype()
         {
             IoCManager.InjectDependencies(this);
-        }
-
-        public void LoadFrom(YamlMappingNode mapping)
-        {
-            var serializer = YamlObjectSerializer.NewReader(mapping);
-
-            serializer.DataField(ref _name, "name", string.Empty);
-            serializer.DataField(ref _id, "id", string.Empty);
-            serializer.DataField(ref _description, "description", string.Empty);
-            serializer.DataField(ref _icon, "icon", SpriteSpecifier.Invalid);
-            serializer.DataField(ref _product, "product", null);
-            serializer.DataField(ref _pointCost, "cost", 0);
-            serializer.DataField(ref _category, "category", string.Empty);
-            serializer.DataField(ref _group, "group", string.Empty);
-        }
-
-        public IDeepClone DeepClone()
-        {
-            return new CargoProductPrototype()
-            {
-                _name = _name,
-                _category = _category,
-                _description = _description,
-                _icon = IDeepClone.CloneValue(_icon),
-                _product = _product,
-                _pointCost = _pointCost,
-                _id = _id,
-                _group = _group
-            };
         }
     }
 }

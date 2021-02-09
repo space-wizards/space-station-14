@@ -7,33 +7,39 @@ namespace Content.Shared.Atmos
     [Prototype("gas")]
     public class GasPrototype : IPrototype, IIndexedPrototype
     {
+        [YamlField("name")]
         public string Name { get; private set; }
 
         // TODO: Control gas amount necessary for overlay to appear
         // TODO: Add interfaces for gas behaviours e.g. breathing, burning
 
+        [YamlField("id")]
         public string ID { get; private set; }
 
         /// <summary>
         ///     Specific heat for gas.
         /// </summary>
+        [YamlField("specificHeat")]
         public float SpecificHeat { get; private set; }
 
         /// <summary>
         /// Heat capacity ratio for gas
         /// </summary>
-        public float HeatCapacityRatio { get; private set; }
+        [YamlField("heatCapacityRatio")]
+        public float HeatCapacityRatio { get; private set; } = 1.4f;
 
         /// <summary>
         /// Molar mass of gas
         /// </summary>
-        public float MolarMass { get; set; }
+        [YamlField("molarMass")]
+        public float MolarMass { get; set; } = 1f;
 
 
         /// <summary>
         ///     Minimum amount of moles for this gas to be visible.
         /// </summary>
-        public float GasMolesVisible { get; private set; }
+        [YamlField("gasMolesVisible")]
+        public float GasMolesVisible { get; private set; } = 0.25f;
 
         /// <summary>
         ///     Visibility for this gas will be max after this value.
@@ -43,41 +49,28 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     If this reagent is in gas form, this is the path to the overlay that will be used to make the gas visible.
         /// </summary>
+        [YamlField("gasOverlayTexture")]
         public string GasOverlayTexture { get; private set; }
 
         /// <summary>
         ///     If this reagent is in gas form, this will be the path to the RSI sprite that will be used to make the gas visible.
         /// </summary>
+        [YamlField("gasOverlayState")]
         public string GasOverlayState { get; set; }
 
         /// <summary>
         ///     State for the gas RSI overlay.
         /// </summary>
+        [YamlField("gasOverlaySprite")]
         public string GasOverlaySprite { get; set; }
 
         /// <summary>
         /// Path to the tile overlay used when this gas appears visible.
         /// </summary>
+        [YamlField("overlayPath")]
         public string OverlayPath { get; private set; }
 
-
+        [YamlField("color")]
         public string Color { get; private set; }
-
-        public void LoadFrom(YamlMappingNode mapping)
-        {
-            var serializer = YamlObjectSerializer.NewReader(mapping);
-
-            serializer.DataField(this, x => x.ID, "id", string.Empty);
-            serializer.DataField(this, x => x.Name, "name", string.Empty);
-            serializer.DataField(this, x => x.OverlayPath, "overlayPath", string.Empty);
-            serializer.DataField(this, x => x.SpecificHeat, "specificHeat", 0f);
-            serializer.DataField(this, x => x.HeatCapacityRatio, "heatCapacityRatio", 1.4f);
-            serializer.DataField(this, x => x.MolarMass, "molarMass", 1f);
-            serializer.DataField(this, x => x.GasMolesVisible, "gasMolesVisible", 0.25f);
-            serializer.DataField(this, x => x.GasOverlayTexture, "gasOverlayTexture", string.Empty);
-            serializer.DataField(this, x => x.GasOverlaySprite, "gasOverlaySprite", string.Empty);
-            serializer.DataField(this, x => x.GasOverlayState, "gasOverlayState", string.Empty);
-            serializer.DataField(this, x => x.Color, "color", string.Empty);
-        }
     }
 }

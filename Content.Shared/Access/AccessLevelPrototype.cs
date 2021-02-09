@@ -1,3 +1,4 @@
+#nullable enable
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -11,26 +12,18 @@ namespace Content.Shared.Access
     [Prototype("accessLevel")]
     public class AccessLevelPrototype : IPrototype, IIndexedPrototype
     {
-        public void LoadFrom(YamlMappingNode mapping)
-        {
-            ID = mapping.GetNode("id").AsString();
-            if (mapping.TryGetNode("name", out var nameNode))
-            {
-                Name = nameNode.AsString();
-            }
-            else
-            {
-                Name = ID;
-            }
-
-            Name = Loc.GetString(Name);
-        }
-
-        public string ID { get; private set; }
+        [YamlField("id")] public string ID { get; private set; } = "";
 
         /// <summary>
         ///     The player-visible name of the access level, in the ID card console and such.
         /// </summary>
-        public string Name { get; private set; }
+        [YamlField("name")]
+        public string Name
+        {
+            get => _name ?? ID;
+            private set => _name = Loc.GetString(value);
+        }
+
+        private string? _name;
     }
 }

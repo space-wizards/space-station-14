@@ -8,33 +8,31 @@ namespace Content.Server.GameObjects.Components.BarSign
     [Prototype("barSign")]
     public class BarSignPrototype : IPrototype, IIndexedPrototype
     {
+        private string _description;
+        private string _name;
+
+        [YamlField("id")]
         public string ID { get; private set; }
+        [YamlField("icon")]
         public string Icon { get; private set; }
-        public string Name { get; private set; }
-        public string Description { get; private set; }
-        public bool RenameArea { get; private set; } = true;
-        public bool Hidden { get; private set; }
 
-        public void LoadFrom(YamlMappingNode mapping)
+        [YamlField("name")]
+        public string Name
         {
-            ID = mapping.GetNode("id").AsString();
-            Name = Loc.GetString(mapping.GetNode("name").AsString());
-            Icon = mapping.GetNode("icon").AsString();
-
-            if (mapping.TryGetNode("hidden", out var node))
-            {
-                Hidden = node.AsBool();
-            }
-
-            if (mapping.TryGetNode("renameArea", out node))
-            {
-                RenameArea = node.AsBool();
-            }
-
-            if (mapping.TryGetNode("description", out node))
-            {
-                Description = Loc.GetString(node.AsString());
-            }
+            get => _name;
+            private set => _name = Loc.GetString(value);
         }
+
+        [YamlField("description")]
+        public string Description
+        {
+            get => _description;
+            private set => _description = Loc.GetString(value);
+        }
+
+        [YamlField("renameArea")]
+        public bool RenameArea { get; private set; } = true;
+        [YamlField("hidden")]
+        public bool Hidden { get; private set; }
     }
 }

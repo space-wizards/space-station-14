@@ -9,11 +9,17 @@ namespace Content.Shared.Prototypes.PDA
     public class UplinkStoreListingPrototype : IPrototype, IIndexedPrototype
     {
 
+        [YamlField("id")]
         private string _id;
+        [YamlField("itemId")]
         private string _itemId;
-        private int _price;
-        private UplinkCategory _category;
+        [YamlField("price")]
+        private int _price = 5;
+        [YamlField("category")]
+        private UplinkCategory _category = UplinkCategory.Utility;
+        [YamlField("description")]
         private string _desc;
+        [YamlField("listingName")]
         private string _name;
 
         public string ID => _id;
@@ -23,16 +29,5 @@ namespace Content.Shared.Prototypes.PDA
         public UplinkCategory Category => _category;
         public string Description => _desc;
         public string ListingName => _name;
-        public void LoadFrom(YamlMappingNode mapping)
-        {
-            var serializer = YamlObjectSerializer.NewReader(mapping);
-            serializer.DataField(ref _id, "id", string.Empty);
-            serializer.DataField(ref _itemId, "itemId", string.Empty);
-            serializer.DataField(ref _price, "price", 5);
-            serializer.DataField(ref _category, "category", UplinkCategory.Utility);
-            serializer.DataField(ref _desc, "description", string.Empty);
-            serializer.DataField(ref _name, "listingName", string.Empty);
-
-        }
     }
 }

@@ -26,45 +26,39 @@ namespace Content.Server.Atmos.Reactions
     [Prototype("gasReaction")]
     public class GasReactionPrototype : IPrototype, IIndexedPrototype
     {
+        [YamlField("id")]
         public string ID { get; private set; }
 
         /// <summary>
         ///     Minimum gas amount requirements.
         /// </summary>
-        public float[] MinimumRequirements { get; private set; }
+        [YamlField("minimumRequirements")]
+        public float[] MinimumRequirements { get; private set; } = new float[Atmospherics.TotalNumberOfGases];
 
         /// <summary>
         ///     Minimum temperature requirement.
         /// </summary>
-        public float MinimumTemperatureRequirement { get; private set; }
+        [YamlField("minimumTemperature")]
+        public float MinimumTemperatureRequirement { get; private set; } = Atmospherics.TCMB;
 
         /// <summary>
         ///     Minimum energy requirement.
         /// </summary>
+        [YamlField("minimumEnergy")]
         public float MinimumEnergyRequirement { get; private set; }
 
         /// <summary>
         ///     Lower numbers are checked/react later than higher numbers.
         ///     If two reactions have the same priority, they may happen in either order.
         /// </summary>
+        [YamlField("priority")]
         public int Priority { get; private set; }
 
         /// <summary>
         ///     A list of effects this will produce.
         /// </summary>
+        [YamlField("effects")]
         private List<IGasReactionEffect> _effects;
-
-        public void LoadFrom(YamlMappingNode mapping)
-        {
-            var serializer = YamlObjectSerializer.NewReader(mapping);
-
-            serializer.DataField(this, x => x.ID, "id", string.Empty);
-            serializer.DataField(this, x => x.Priority, "priority", 100);
-            serializer.DataField(this, x => x.MinimumRequirements, "minimumRequirements", new float[Atmospherics.TotalNumberOfGases]);
-            serializer.DataField(this, x => x.MinimumTemperatureRequirement, "minimumTemperature", Atmospherics.TCMB);
-            serializer.DataField(this, x => x.MinimumEnergyRequirement, "minimumEnergy", 0f);
-            serializer.DataField(ref _effects, "effects", new List<IGasReactionEffect>());
-        }
 
         public ReactionResult React(GasMixture mixture, IGasMixtureHolder holder, GridTileLookupSystem gridLookup)
         {

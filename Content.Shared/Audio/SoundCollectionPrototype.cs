@@ -8,21 +8,15 @@ namespace Content.Shared.Audio
     [Prototype("soundCollection")]
     public sealed class SoundCollectionPrototype : IPrototype, IIndexedPrototype
     {
+        [YamlField("id")]
         public string ID { get; private set; }
-        public IReadOnlyList<string> PickFiles { get; private set; }
 
-        public void LoadFrom(YamlMappingNode mapping)
+        [YamlField("files")] private List<string> _pickFiles;
+
+        public List<string> PickFiles
         {
-            ID = mapping.GetNode("id").AsString();
-
-            var pickFiles = new List<string>();
-
-            foreach (var file in mapping.GetNode<YamlSequenceNode>("files"))
-            {
-                pickFiles.Add(file.AsString());
-            }
-
-            PickFiles = pickFiles;
+            get => _pickFiles;
+            private set => _pickFiles = value;
         }
     }
 }

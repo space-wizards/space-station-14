@@ -18,15 +18,25 @@ namespace Content.Shared.Chemistry
     {
         [Dependency] private readonly IModuleManager _moduleManager = default!;
 
+        [YamlField("id")]
         private string _id;
+        [YamlField("name")]
         private string _name;
+        [YamlField("desc")]
         private string _description;
+        [YamlField("physicalDesc")]
         private string _physicalDescription;
+        [YamlField("color")]
         private Color _substanceColor;
+        [YamlField("spritePath")]
         private string _spritePath;
-        private List<IMetabolizable> _metabolism;
-        private List<ITileReaction> _tileReactions;
-        private List<IPlantMetabolizable> _plantMetabolism;
+        [YamlField("metabolism", serverOnly: true)]
+        private List<IMetabolizable> _metabolism = new(){new DefaultMetabolizable()};
+        [YamlField("tileReactions", serverOnly: true)]
+        private List<ITileReaction> _tileReactions = new(0);
+        [YamlField("plantMetabolism", serverOnly: true)]
+        private List<IPlantMetabolizable> _plantMetabolism = new(0);
+        [YamlField("customPlantMetabolism")]
         private float _customPlantMetabolism = 1f;
 
         public string ID => _id;
@@ -44,32 +54,6 @@ namespace Content.Shared.Chemistry
         public ReagentPrototype()
         {
             IoCManager.InjectDependencies(this);
-        }
-
-        public void LoadFrom(YamlMappingNode mapping)
-        {
-            var serializer = YamlObjectSerializer.NewReader(mapping);
-
-            serializer.DataField(ref _id, "id", string.Empty);
-            serializer.DataField(ref _name, "name", string.Empty);
-            serializer.DataField(ref _description, "desc", string.Empty);
-            serializer.DataField(ref _physicalDescription, "physicalDesc", string.Empty);
-            serializer.DataField(ref _substanceColor, "color", Color.White);
-            serializer.DataField(ref _spritePath, "spritePath", string.Empty);
-            serializer.DataField(ref _customPlantMetabolism, "customPlantMetabolism", 1f);
-
-            if (_moduleManager.IsServerModule)
-            {
-                serializer.DataField(ref _metabolism, "metabolism", new List<IMetabolizable> { new DefaultMetabolizable() });
-                serializer.DataField(ref _tileReactions, "tileReactions", new List<ITileReaction> { });
-                serializer.DataField(ref _plantMetabolism, "plantMetabolism", new List<IPlantMetabolizable> { });
-            }
-            else
-            {
-                _metabolism = new List<IMetabolizable> { new DefaultMetabolizable() };
-                _tileReactions = new List<ITileReaction>(0);
-                _plantMetabolism = new List<IPlantMetabolizable>(0);
-            }
         }
 
         /// <summary>

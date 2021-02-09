@@ -110,40 +110,20 @@ namespace Content.Shared.Materials
             serializer.DataField(ref _bluntDamage, "bluntDamage", 1, alwaysWrite: true);
             serializer.DataField(ref _icon, "icon", SpriteSpecifier.Invalid, alwaysWrite: true);
         }
-
-        public IDeepClone DeepClone()
-        {
-            return new Material
-            {
-                _name = _name,
-                _color = IDeepClone.CloneValue(_color),
-                _density = _density,
-                _electricResistivity = _electricResistivity,
-                _thermalConductivity = _thermalConductivity,
-                _specificHeat = _specificHeat,
-                _durability = _durability,
-                _hardness = _hardness,
-                _sharpDamage = _sharpDamage,
-                _bluntDamage = _bluntDamage,
-                _icon = IDeepClone.CloneValue(_icon)
-            };
-        }
     }
 
     [Prototype("material")]
-    public class MaterialPrototype : IPrototype, IIndexedPrototype
+    public class MaterialPrototype : IPrototype, IIndexedPrototype, IExposeData
     {
+        [YamlField("id")]
         public string ID { get; private set; }
 
         public Material Material { get; private set; }
 
-        public void LoadFrom(YamlMappingNode mapping)
+        public void ExposeData(ObjectSerializer serializer)
         {
-            ID = mapping["id"].AsString();
-
-            var ser = YamlObjectSerializer.NewReader(mapping);
             Material = new Material();
-            Material.ExposeData(ser);
+            Material.ExposeData(serializer);
         }
     }
 }
