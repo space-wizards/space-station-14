@@ -7,7 +7,6 @@ namespace Content.Client
         {
             "Anchorable",
             "AmmoBox",
-            "Breakable",
             "Pickaxe",
             "Interactable",
             "CloningPod",
