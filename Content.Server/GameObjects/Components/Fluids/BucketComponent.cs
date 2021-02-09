@@ -85,7 +85,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             return true;
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!Owner.TryGetComponent(out SolutionContainerComponent? contents))
             {

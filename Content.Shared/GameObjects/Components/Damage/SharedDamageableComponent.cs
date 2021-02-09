@@ -466,7 +466,7 @@ namespace Content.Shared.GameObjects.Components.Damage
             Dirty();
         }
 
-        public void RadiationAct(float frameTime, SharedRadiationPulseComponent radiation)
+        void IRadiationAct.RadiationAct(float frameTime, SharedRadiationPulseComponent radiation)
         {
             var totalDamage = Math.Max((int)(frameTime * radiation.RadsPerSecond), 1);
 

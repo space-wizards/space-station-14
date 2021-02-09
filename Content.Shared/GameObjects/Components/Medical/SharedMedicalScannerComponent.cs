@@ -80,7 +80,7 @@ namespace Content.Shared.GameObjects.Components.Medical
         }
 
 
-        public bool CanDragDropOn(DragDropEventArgs eventArgs)
+        bool IDragDropOn.CanDragDropOn(DragDropEventArgs eventArgs)
         {
             return eventArgs.Dragged.HasComponent<IBody>();
         }

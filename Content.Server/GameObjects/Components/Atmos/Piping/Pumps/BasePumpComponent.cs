@@ -101,7 +101,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
             _appearance?.SetData(PumpVisuals.VisualState, new PumpVisualState(_initialInletDirection, _initialOutletDirection, PumpEnabled));
         }
 
-        public void Activate(ActivateEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             PumpEnabled = !PumpEnabled;
         }

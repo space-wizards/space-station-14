@@ -21,6 +21,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
@@ -36,7 +37,7 @@ namespace Content.Server.Actions
         private float _pushProb;
         private float _cooldown;
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(ref _failProb, "failProb", 0.4f);
             serializer.DataField(ref _pushProb, "pushProb", 0.4f);

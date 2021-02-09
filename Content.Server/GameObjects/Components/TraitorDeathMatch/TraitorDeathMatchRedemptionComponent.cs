@@ -32,7 +32,7 @@ namespace Content.Server.GameObjects.Components.TraitorDeathMatch
         /// <inheritdoc />
         public override string Name => "TraitorDeathMatchRedemption";
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!eventArgs.User.TryGetComponent<InventoryComponent>(out var userInv))
             {

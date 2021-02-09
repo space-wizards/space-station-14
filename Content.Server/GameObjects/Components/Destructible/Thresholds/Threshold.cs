@@ -1,9 +1,9 @@
 ﻿#nullable enable
 using System.Collections.Generic;
-using System.Linq;
-using Content.Server.GameObjects.Components.Destructible.Thresholds.Behavior;
+using Content.Server.GameObjects.Components.Destructible.Thresholds.Behaviors;
+using Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Shared.Damage;
+using Content.Shared.GameObjects.Components.Damage;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
@@ -13,25 +13,13 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds
 {
     public class Threshold : IExposeData
     {
-        [ViewVariables] private List<IThresholdBehavior> _behaviors = new();
-
-        [ViewVariables] public int? Damage;
-
-        [ViewVariables] public Dictionary<DamageClass, int>? DamageClasses;
-
-        [ViewVariables] public Dictionary<DamageType, int>? DamageTypes;
-
-        [ViewVariables] public int DamageTotal =>
-            Damage +
-            DamageClasses?.Values.Sum() ?? 0 +
-            DamageTypes?.Values.Sum() ?? 0;
+        private List<IThresholdBehavior> _behaviors = new();
 
         /// <summary>
-        ///     Whether or not <see cref="Damage"/>, <see cref="DamageClasses"/> and
-        ///     <see cref="DamageTypes"/> all have to be met in order to reach this state,
-        ///     or just one of them.
+        ///     Whether or not this threshold was triggered in the previous call to
+        ///     <see cref="Reached"/>.
         /// </summary>
-        [ViewVariables] public bool Inclusive = true;
+        [ViewVariables] public bool OldTriggered { get; private set; }
 
         /// <summary>
         ///     Whether or not this threshold has already been triggered.
@@ -47,86 +35,48 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds
         [ViewVariables] public bool TriggersOnce { get; set; }
 
         /// <summary>
+        ///     The trigger that decides if this threshold has been reached.
+        /// </summary>
+        [ViewVariables] public IThresholdTrigger? Trigger { get; set; }
+
+        /// <summary>
         ///     Behaviors to activate once this threshold is triggered.
         /// </summary>
         [ViewVariables] public IReadOnlyList<IThresholdBehavior> Behaviors => _behaviors;
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
-            serializer.DataField(ref Damage, "damage", null);
-            serializer.DataField(ref DamageClasses, "damageClasses", null);
-            serializer.DataField(ref DamageTypes, "damageTypes", null);
-            serializer.DataField(ref Inclusive, "inclusive", true);
             serializer.DataField(this, x => x.Triggered, "triggered", false);
             serializer.DataField(this, x => x.TriggersOnce, "triggersOnce", false);
+            serializer.DataField(this, x => x.Trigger, "trigger", null);
             serializer.DataField(ref _behaviors, "behaviors", new List<IThresholdBehavior>());
         }
 
-        private bool DamageClassesReached(IReadOnlyDictionary<DamageClass, int>? classesReached)
+        public bool Reached(IDamageableComponent damageable, DestructibleSystem system)
         {
-            if (DamageClasses == null)
-            {
-                return true;
-            }
-
-            if (classesReached == null)
+            if (Trigger == null)
             {
                 return false;
             }
 
-            foreach (var (@class, damageRequired) in DamageClasses)
-            {
-                if (!classesReached.TryGetValue(@class, out var damageReached) ||
-                    damageReached < damageRequired)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        private bool DamageTypesReached(IReadOnlyDictionary<DamageType, int>? typesReached)
-        {
-            if (DamageTypes == null)
-            {
-                return true;
-            }
-
-            if (typesReached == null)
+            if (Triggered && TriggersOnce)
             {
                 return false;
             }
 
-            foreach (var (type, damageRequired) in DamageTypes)
+            if (OldTriggered)
             {
-                if (!typesReached.TryGetValue(type, out var damageReached) ||
-                    damageReached < damageRequired)
-                {
-                    return false;
-                }
+                OldTriggered = Trigger.Reached(damageable, system);
+                return false;
             }
 
+            if (!Trigger.Reached(damageable, system))
+            {
+                return false;
+            }
+
+            OldTriggered = true;
             return true;
-        }
-
-        public bool Reached(
-            int? damage = null,
-            IReadOnlyDictionary<DamageClass, int>? damageClasses = null,
-            IReadOnlyDictionary<DamageType, int>? damageTypes = null)
-        {
-            if (Inclusive)
-            {
-                return damage >= Damage &&
-                       DamageClassesReached(damageClasses) &&
-                       DamageTypesReached(damageTypes);
-            }
-            else
-            {
-                return damage >= Damage ||
-                       DamageClassesReached(damageClasses) ||
-                       DamageTypesReached(damageTypes);
-            }
         }
 
         /// <summary>
@@ -137,7 +87,7 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds
         ///     An instance of <see cref="DestructibleSystem"/> to get dependency and
         ///     system references from, if relevant.
         /// </param>
-        public void Trigger(IEntity owner, DestructibleSystem system)
+        public void Execute(IEntity owner, DestructibleSystem system)
         {
             Triggered = true;
 
@@ -147,7 +97,7 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds
                 if (owner.Deleted)
                     return;
 
-                behavior.Trigger(owner, system);
+                behavior.Execute(owner, system);
             }
         }
     }

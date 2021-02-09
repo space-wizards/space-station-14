@@ -187,13 +187,13 @@ namespace Content.Server.GameObjects.Components.Fluids
             return true;
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             ToggleSafety(eventArgs.User);
             return true;
         }
 
-        public void Activate(ActivateEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             ToggleSafety(eventArgs.User);
         }
@@ -214,7 +214,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 appearance.SetData(SprayVisuals.Safety, _safety);
         }
 
-        public void Dropped(DroppedEventArgs eventArgs)
+        void IDropped.Dropped(DroppedEventArgs eventArgs)
         {
             if(_hasSafety && Owner.TryGetComponent(out AppearanceComponent appearance))
                 appearance.SetData(SprayVisuals.Safety, _safety);

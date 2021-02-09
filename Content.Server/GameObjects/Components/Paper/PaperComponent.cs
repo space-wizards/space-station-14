@@ -46,7 +46,7 @@ namespace Content.Server.GameObjects.Components.Paper
             message.AddMarkup(Content);
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
                 return false;
@@ -74,7 +74,7 @@ namespace Content.Server.GameObjects.Components.Paper
             UpdateUserInterface();
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!eventArgs.Using.HasComponent<WriteComponent>())
                 return false;

@@ -1,3 +1,5 @@
+// ReSharper disable once RedundantUsingDirective
+// Used to warn the player in big red letters in debug mode
 using System;
 using Content.Client.GameObjects.Components;
 using Content.Client.GameObjects.EntitySystems;
@@ -8,6 +10,7 @@ using Robust.Shared.Console;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Maths;
 
 namespace Content.Client.Commands
 {
@@ -92,6 +95,10 @@ namespace Content.Client.Commands
                 shell.WriteLine(Help);
                 return;
             }
+
+#if DEBUG
+            shell.WriteError("WARNING: The client is using a debug build. You are risking losing your changes.");
+#endif
 
             shell.ConsoleHost.RegisteredCommands["togglelight"].Execute(shell, string.Empty, Array.Empty<string>());
             shell.ConsoleHost.RegisteredCommands["showsubfloorforever"].Execute(shell, string.Empty, Array.Empty<string>());

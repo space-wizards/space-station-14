@@ -3,6 +3,7 @@ using Content.Server.GameObjects.Components;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -14,7 +15,7 @@ namespace Content.Server.Construction.Conditions
     {
         public bool Open { get; private set; }
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.Open, "open", true);
         }

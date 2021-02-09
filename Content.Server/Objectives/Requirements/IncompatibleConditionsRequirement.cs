@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Objectives.Requirements
@@ -8,7 +9,8 @@ namespace Content.Server.Objectives.Requirements
     public class IncompatibleConditionsRequirement : IObjectiveRequirement
     {
         private List<string> _incompatibleConditions = new();
-        public void ExposeData(ObjectSerializer serializer)
+
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x=>x._incompatibleConditions, "conditions", new List<string>());
         }

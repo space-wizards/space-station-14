@@ -4,6 +4,7 @@ using Content.Server.GameObjects.Components.Power;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Construction.Conditions
@@ -15,7 +16,7 @@ namespace Content.Server.Construction.Conditions
     [UsedImplicitly]
     public class AllWiresCut : IEdgeCondition
     {
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.Value, "value", true);
         }

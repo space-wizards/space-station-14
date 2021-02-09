@@ -9,6 +9,7 @@ using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.Containers;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 
@@ -108,7 +109,7 @@ namespace Content.Server.Construction.Completions
             entity.Delete();
         }
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
         }
     }

@@ -24,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Damage
             serializer.DataField(ref _ignoreResistances, "ignoreResistances", false);
         }
 
-        public void DoHit(ThrowCollideEventArgs eventArgs)
+        void IThrowCollide.DoHit(ThrowCollideEventArgs eventArgs)
         {
             if (!eventArgs.Target.TryGetComponent(out IDamageableComponent damageable)) return;
 

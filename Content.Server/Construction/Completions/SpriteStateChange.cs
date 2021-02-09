@@ -4,6 +4,7 @@ using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -12,8 +13,7 @@ namespace Content.Server.Construction.Completions
     [UsedImplicitly]
     public class SpriteStateChange : IGraphAction
     {
-
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.State, "state", string.Empty);
             serializer.DataField(this, x => x.Layer, "layer", 0);

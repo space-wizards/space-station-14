@@ -18,7 +18,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
     [TestFixture]
     [TestOf(typeof(CuffableComponent))]
     [TestOf(typeof(HandcuffComponent))]
-    public class CuffUnitTest : ContentIntegrationTest
+    public class HandCuffTest : ContentIntegrationTest
     {
         private const string PROTOTYPES = @"
 - type: entity
@@ -77,7 +77,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
                 Assert.True(secondCuffs.TryGetComponent(out secondHandcuff!), $"Second handcuffs has no {nameof(HandcuffComponent)}");
 
                 // Test to ensure cuffed players register the handcuffs
-                cuffed.AddNewCuffs(cuffs);
+                cuffed.TryAddNewCuffs(human, cuffs);
                 Assert.True(cuffed.CuffedHandCount > 0, "Handcuffing a player did not result in their hands being cuffed");
 
                 // Test to ensure a player with 4 hands will still only have 2 hands cuffed
@@ -86,7 +86,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
                 Assert.True(cuffed.CuffedHandCount == 2 && hands.Hands.Count() == 4, "Player doesn't have correct amount of hands cuffed");
 
                 // Test to give a player with 4 hands 2 sets of cuffs
-                cuffed.AddNewCuffs(secondCuffs);
+                cuffed.TryAddNewCuffs(human, secondCuffs);
                 Assert.True(cuffed.CuffedHandCount == 4, "Player doesn't have correct amount of hands cuffed");
 
             });

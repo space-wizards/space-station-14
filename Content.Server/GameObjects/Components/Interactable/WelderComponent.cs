@@ -217,7 +217,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             return true;
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             return ToggleWelderStatus(eventArgs.User);
         }
@@ -261,7 +261,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         }
 
-        public SuicideKind Suicide(IEntity victim, IChatManager chat)
+        SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
         {
             string othersMessage;
             string selfMessage;

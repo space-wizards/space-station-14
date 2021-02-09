@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Power
         }
 
         /// <inheritdoc />
-        public async Task<bool> AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (_wirePrototypeID == null)
                 return true;

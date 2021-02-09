@@ -134,7 +134,7 @@ namespace Content.Client.GameObjects.Components
 
             public static DirBoundData Default { get; } = new();
 
-            public void ExposeData(ObjectSerializer serializer)
+            void IExposeData.ExposeData(ObjectSerializer serializer)
             {
                 serializer.DataField(ref All, "all", default);
                 serializer.DataField(ref North, "north", default);
