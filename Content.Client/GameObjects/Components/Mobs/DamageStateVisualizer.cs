@@ -5,7 +5,6 @@ using Content.Shared.GameObjects.Components.Mobs;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -69,16 +68,6 @@ namespace Content.Client.GameObjects.Components.Mobs
                 sprite.DrawDepth = _originalDrawDepth.Value;
                 _originalDrawDepth = null;
             }
-        }
-
-        public override IDeepClone DeepClone()
-        {
-            return new DamageStateVisualizer
-            {
-                _data = IDeepClone.CloneValue(_data),
-                _stateMap = IDeepClone.CloneValue(_stateMap),
-                _originalDrawDepth = IDeepClone.CloneValue(_originalDrawDepth)
-            };
         }
     }
 

@@ -12,7 +12,6 @@ using System;
 using Content.Shared.GameObjects.Components.Atmos;
 using YamlDotNet.RepresentationModel;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Client.GameObjects.Components.Atmos
 {
@@ -63,14 +62,6 @@ namespace Content.Client.GameObjects.Components.Atmos
             sprite.LayerSetRSI(baseSiphonLayer, _siphonRSI);
             sprite.LayerSetState(baseSiphonLayer, siphonBaseState);
             sprite.LayerSetVisible(baseSiphonLayer, true);
-        }
-
-        public override IDeepClone DeepClone()
-        {
-            return new SiphonVisualizer
-            {
-                _siphonRSI = IDeepClone.CloneValue(_siphonRSI)
-            };
         }
 
         private enum Layer : byte

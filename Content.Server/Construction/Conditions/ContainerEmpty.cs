@@ -4,7 +4,6 @@ using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -41,15 +40,6 @@ namespace Content.Server.Construction.Conditions
             message.AddMarkup(Text);
             return true;
 
-        }
-
-        public IDeepClone DeepClone()
-        {
-            return new ContainerEmpty
-            {
-                Container = Container,
-                Text = Text
-            };
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -33,13 +32,6 @@ namespace Content.Shared.Construction
             message.AddMarkup(string.IsNullOrEmpty(Name)
                 ? Loc.GetString("Next, insert an entity with a {0} component.", Component) // Terrible.
                 : Loc.GetString("Next, insert {0}", Name));
-        }
-
-        public override IDeepClone DeepClone()
-        {
-            var obj = LazyDeepClone<ComponentConstructionGraphStep>();
-            obj.Component = Component;
-            return obj;
         }
     }
 }

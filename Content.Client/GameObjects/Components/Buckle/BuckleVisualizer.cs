@@ -7,7 +7,6 @@ using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.Components.Animations;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Animations;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Maths;
 
 namespace Content.Client.GameObjects.Components.Buckle
@@ -29,11 +28,6 @@ namespace Content.Client.GameObjects.Components.Buckle
             }
 
             SetRotation(component, Angle.FromDegrees(angle));
-        }
-
-        public override IDeepClone DeepClone()
-        {
-            return new BuckleVisualizer();
         }
 
         private void SetRotation(AppearanceComponent component, Angle rotation)

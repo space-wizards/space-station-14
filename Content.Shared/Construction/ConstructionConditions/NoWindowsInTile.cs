@@ -3,7 +3,6 @@ using Content.Shared.GameObjects.Components;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
@@ -24,11 +23,6 @@ namespace Content.Shared.Construction.ConstructionConditions
             }
 
             return true;
-        }
-
-        public IDeepClone DeepClone()
-        {
-            return new NoWindowsInTile();
         }
     }
 }

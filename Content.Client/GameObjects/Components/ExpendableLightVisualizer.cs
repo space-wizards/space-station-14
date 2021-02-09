@@ -2,7 +2,6 @@
 using Content.Shared.GameObjects.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Client.GameObjects.Components
 {
@@ -34,11 +33,6 @@ namespace Content.Client.GameObjects.Components
                     }
                 }
             }
-        }
-
-        public override IDeepClone DeepClone()
-        {
-            return new ExpendableLightVisualizer();
         }
     }
 }

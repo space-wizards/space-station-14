@@ -12,7 +12,6 @@ using System;
 using Content.Shared.GameObjects.Components.Atmos;
 using YamlDotNet.RepresentationModel;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Client.GameObjects.Components.Atmos
 {
@@ -63,14 +62,6 @@ namespace Content.Client.GameObjects.Components.Atmos
             sprite.LayerSetRSI(baseVentLayer, _ventRSI);
             sprite.LayerSetState(baseVentLayer, ventBaseState);
             sprite.LayerSetVisible(baseVentLayer, true);
-        }
-
-        public override IDeepClone DeepClone()
-        {
-            return new VentVisualizer
-            {
-                _ventRSI = IDeepClone.CloneValue(_ventRSI)
-            };
         }
 
         private enum Layer : byte

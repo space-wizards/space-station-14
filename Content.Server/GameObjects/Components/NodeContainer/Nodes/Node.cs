@@ -170,15 +170,5 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
                 ClearNodeGroup();
             }
         }
-
-        public abstract IDeepClone DeepClone();
-
-        protected T LazyDeepClone<T>() where T : Node, new()
-        {
-            return new T
-            {
-                NodeGroupID = NodeGroupID
-            };
-        }
     }
 }

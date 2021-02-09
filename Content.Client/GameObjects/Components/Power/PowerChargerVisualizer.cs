@@ -3,7 +3,6 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Client.GameObjects.Components.Power
 {
@@ -67,11 +66,6 @@ namespace Content.Client.GameObjects.Components.Power
             {
                 sprite.LayerSetState(Layers.Light, "light-off");
             }
-        }
-
-        public override IDeepClone DeepClone()
-        {
-            return new PowerChargerVisualizer();
         }
 
         enum Layers : byte

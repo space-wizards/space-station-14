@@ -22,7 +22,5 @@ namespace Content.Shared.Roles
         {
 
         }
-
-        public abstract IDeepClone DeepClone();
     }
 }

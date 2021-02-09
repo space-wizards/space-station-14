@@ -2,7 +2,6 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.Roles;
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Server.Jobs
 {
@@ -15,11 +14,6 @@ namespace Content.Server.Jobs
             base.AfterEquip(mob);
 
             mob.AddComponent<ClumsyComponent>();
-        }
-
-        public override IDeepClone DeepClone()
-        {
-            return new ClownSpecial();
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 {
@@ -19,11 +18,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
                 .Where(container => container != null)
                 .SelectMany(container => container.Nodes)
                 .Where(node => node != null && node != this);
-        }
-
-        public override IDeepClone DeepClone()
-        {
-            return LazyDeepClone<AdjacentNode>();
         }
     }
 }

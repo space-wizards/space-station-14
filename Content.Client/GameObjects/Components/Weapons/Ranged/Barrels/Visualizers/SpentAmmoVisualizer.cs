@@ -2,7 +2,6 @@ using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels.Visualizers
 {
@@ -20,11 +19,6 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels.Visualize
             }
 
             sprite.LayerSetState(AmmoVisualLayers.Base, spent ? "spent" : "base");
-        }
-
-        public override IDeepClone DeepClone()
-        {
-            return new SpentAmmoVisualizer();
         }
     }
 

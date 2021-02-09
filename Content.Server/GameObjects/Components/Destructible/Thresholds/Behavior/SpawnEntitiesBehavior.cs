@@ -4,7 +4,6 @@ using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Utility;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -48,14 +47,6 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behavior
                     }
                 }
             }
-        }
-
-        public IDeepClone DeepClone()
-        {
-            return new SpawnEntitiesBehavior
-            {
-                Spawn = IDeepClone.CloneValue(Spawn)!
-            };
         }
     }
 }

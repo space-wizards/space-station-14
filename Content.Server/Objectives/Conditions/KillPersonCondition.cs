@@ -2,7 +2,6 @@
 using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
 using Content.Shared.GameObjects.Components.Mobs.State;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 
@@ -45,7 +44,5 @@ namespace Content.Server.Objectives.Conditions
         {
             return Target?.GetHashCode() ?? 0;
         }
-
-        public abstract IDeepClone DeepClone();
     }
 }

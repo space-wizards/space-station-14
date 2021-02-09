@@ -2,7 +2,6 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -37,15 +36,6 @@ namespace Content.Client.GameObjects.Components.Fluids
             {
                 SetSafety(component, safety);
             }
-        }
-
-        public override IDeepClone DeepClone()
-        {
-            return new SprayVisualizer
-            {
-                _safetyOffState = _safetyOffState,
-                _safetyOnState = _safetyOnState
-            };
         }
 
         private void SetSafety(AppearanceComponent component, bool safety)

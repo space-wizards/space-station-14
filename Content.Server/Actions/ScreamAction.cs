@@ -13,7 +13,6 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Random;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -79,17 +78,6 @@ namespace Content.Server.Actions
 
 
             actions.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(_cooldown));
-        }
-
-        public IDeepClone DeepClone()
-        {
-            return new ScreamAction
-            {
-                _male = IDeepClone.CloneValue(_male),
-                _cooldown = _cooldown,
-                _female = IDeepClone.CloneValue(_female),
-                _wilhelm = _wilhelm
-            };
         }
     }
 }

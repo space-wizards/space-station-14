@@ -2,7 +2,6 @@
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 using static Content.Shared.GameObjects.Components.Power.AME.SharedAMEShieldComponent;
 
 namespace Content.Client.GameObjects.Components.Power.AME
@@ -52,11 +51,6 @@ namespace Content.Client.GameObjects.Components.Power.AME
                         sprite.LayerSetVisible(Layers.CoreState, false);
                         break;
                 }
-        }
-
-        public override IDeepClone DeepClone()
-        {
-            return new AMEVisualizer();
         }
     }
 

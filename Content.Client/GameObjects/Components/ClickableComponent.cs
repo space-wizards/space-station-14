@@ -134,18 +134,6 @@ namespace Content.Client.GameObjects.Components
                 serializer.DataField(ref East, "east", default);
                 serializer.DataField(ref West, "west", default);
             }
-
-            public IDeepClone DeepClone()
-            {
-                return new DirBoundData
-                {
-                    All = IDeepClone.CloneValue(All),
-                    North = IDeepClone.CloneValue(North),
-                    South = IDeepClone.CloneValue(South),
-                    East = IDeepClone.CloneValue(East),
-                    West = IDeepClone.CloneValue(West)
-                };
-            }
         }
     }
 }

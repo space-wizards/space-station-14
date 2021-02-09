@@ -37,14 +37,5 @@ namespace Content.Server.Chemistry.Metabolism
             //Return amount of reagent to be removed, remove reagent regardless of HungerComponent presence
             return metabolismAmount;
         }
-
-        public IDeepClone DeepClone()
-        {
-            return new DefaultFood
-            {
-                _metabolismRate = IDeepClone.CloneValue(_metabolismRate),
-                _nutritionFactor = _nutritionFactor
-            };
-        }
     }
 }

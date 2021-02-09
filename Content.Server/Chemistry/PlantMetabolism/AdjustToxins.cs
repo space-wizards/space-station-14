@@ -3,7 +3,6 @@ using Content.Server.GameObjects.Components.Botany;
 using Content.Shared.Interfaces.Chemistry;
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Server.Chemistry.PlantMetabolism
 {
@@ -16,11 +15,6 @@ namespace Content.Server.Chemistry.PlantMetabolism
                 return;
 
             plantHolderComp.Toxins += Amount;
-        }
-
-        public override IDeepClone DeepClone()
-        {
-            return LazyDeepClone<AdjustToxins>();
         }
     }
 }

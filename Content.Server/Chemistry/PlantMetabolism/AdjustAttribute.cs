@@ -24,15 +24,6 @@ namespace Content.Server.Chemistry.PlantMetabolism
             serializer.DataField(this, x => x.Prob, "prob", 1f);
         }
 
-        protected IDeepClone LazyDeepClone<T>() where T : AdjustAttribute, new()
-        {
-            return new T
-            {
-                Amount = Amount,
-                Prob = Prob
-            };
-        }
-
         /// <summary>
         ///     Checks if the plant holder can metabolize the reagent or not. Checks if it has an alive plant by default.
         /// </summary>
@@ -55,7 +46,5 @@ namespace Content.Server.Chemistry.PlantMetabolism
         }
 
         public abstract void Metabolize(IEntity plantHolder, float customPlantMetabolism = 1f);
-
-        public abstract IDeepClone DeepClone();
     }
 }

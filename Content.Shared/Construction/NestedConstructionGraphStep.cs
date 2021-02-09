@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
@@ -25,13 +24,6 @@ namespace Content.Shared.Construction
 
         public override void DoExamine(FormattedMessage message, bool inDetailsRange)
         {
-        }
-
-        public override IDeepClone DeepClone()
-        {
-            var obj = LazyDeepClone<NestedConstructionGraphStep>();
-            obj.Steps = IDeepClone.CloneValue(Steps);
-            return obj;
         }
     }
 }

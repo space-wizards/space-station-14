@@ -248,14 +248,5 @@ namespace Content.Shared.GameObjects.Components.Mobs
             }
             serializer.DataField(this, x => x.Enabled, "enabled", true);
         }
-
-        public IDeepClone DeepClone()
-        {
-            return new ItemActionConfig
-            {
-                ActionType = IDeepClone.CloneValue(ActionType),
-                Enabled = Enabled
-            };
-        }
     }
 }

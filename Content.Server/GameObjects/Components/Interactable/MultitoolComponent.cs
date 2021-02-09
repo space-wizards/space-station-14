@@ -45,20 +45,6 @@ namespace Content.Server.GameObjects.Components.Interactable
                 serializer.DataField(ref _soundCollection, "useSoundCollection", string.Empty);
                 serializer.DataField(ref _changeSound, "changeSound", string.Empty);
             }
-
-            public IDeepClone DeepClone()
-            {
-                return new ToolEntry
-                {
-                    Behavior = IDeepClone.CloneValue(Behavior),
-                    _sound = _sound,
-                    _sprite = _sprite,
-                    _state = _state,
-                    _texture = _texture,
-                    _changeSound = _changeSound,
-                    _soundCollection = _soundCollection
-                };
-            }
         }
 
         public override string Name => "MultiTool";

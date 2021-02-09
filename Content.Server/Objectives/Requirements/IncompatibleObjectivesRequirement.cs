@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -26,14 +25,6 @@ namespace Content.Server.Objectives.Requirements
             }
 
             return true;
-        }
-
-        public IDeepClone DeepClone()
-        {
-            return new IncompatibleObjectivesRequirement
-            {
-                _incompatibleObjectives = IDeepClone.CloneValue(_incompatibleObjectives)
-            };
         }
     }
 }

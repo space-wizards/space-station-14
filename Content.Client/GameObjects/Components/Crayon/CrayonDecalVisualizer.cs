@@ -2,7 +2,6 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Maths;
 
 namespace Content.Client.GameObjects.Components.Crayon
@@ -30,11 +29,6 @@ namespace Content.Client.GameObjects.Components.Crayon
             {
                 sprite.Rotation = rotation;
             }
-        }
-
-        public override IDeepClone DeepClone()
-        {
-            return new CrayonDecalVisualizer();
         }
     }
 }

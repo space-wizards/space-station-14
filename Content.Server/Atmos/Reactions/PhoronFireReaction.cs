@@ -6,7 +6,6 @@ using Content.Shared.Atmos;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems.TileLookup;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Atmos.Reactions
@@ -92,11 +91,6 @@ namespace Content.Server.Atmos.Reactions
 
         public void ExposeData(ObjectSerializer serializer)
         {
-        }
-
-        public IDeepClone DeepClone()
-        {
-            return new PhoronFireReaction();
         }
     }
 }

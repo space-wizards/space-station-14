@@ -8,7 +8,6 @@ using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.Components.Animations;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -165,16 +164,6 @@ namespace Content.Client.GameObjects.Components.Doors
             sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, unlitVisible);
             sprite.LayerSetVisible(DoorVisualLayers.BaseWelded, weldedVisible);
             sprite.LayerSetVisible(DoorVisualLayers.BaseBolted, unlitVisible && boltedVisible);
-        }
-
-        public override IDeepClone DeepClone()
-        {
-            return new AirlockVisualizer
-            {
-                CloseAnimation = IDeepClone.CloneValue(CloseAnimation),
-                DenyAnimation = IDeepClone.CloneValue(DenyAnimation),
-                OpenAnimation = IDeepClone.CloneValue(OpenAnimation)
-            };
         }
     }
 

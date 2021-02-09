@@ -6,7 +6,6 @@ using Robust.Client.GameObjects.Components.Animations;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 using static Content.Shared.GameObjects.Components.Disposal.SharedDisposalUnitComponent;
@@ -152,22 +151,6 @@ namespace Content.Client.GameObjects.Components.Disposal
         {
             base.OnChangeData(component);
             ChangeState(component);
-        }
-
-        public override IDeepClone DeepClone()
-        {
-            return new DisposalUnitVisualizer
-            {
-                _flushAnimation = IDeepClone.CloneValue(_flushAnimation),
-                _overlayCharging = _overlayCharging,
-                _overlayEngaged = _overlayEngaged,
-                _overlayFull = _overlayFull,
-                _overlayReady = _overlayReady,
-                _stateAnchored = _stateAnchored,
-                _stateCharging = _stateCharging,
-                _stateFlush = _stateFlush,
-                _stateUnAnchored = _stateUnAnchored
-            };
         }
     }
 

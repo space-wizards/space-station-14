@@ -21,10 +21,5 @@ namespace Content.Shared.Chemistry
         {
             return ReagentUnit.New(MetabolismRate * tickTime);
         }
-
-        public IDeepClone DeepClone()
-        {
-            return new DefaultMetabolizable {_metabolismRate = _metabolismRate};
-        }
     }
 }

@@ -3,7 +3,6 @@ using System.Runtime.CompilerServices;
 using Content.Shared.GameObjects.Components.Morgue;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -74,18 +73,6 @@ namespace Content.Client.GameObjects.Components.Storage
             {
                 sprite.LayerSetVisible(MorgueVisualLayers.Light, false);
             }
-        }
-
-        public override IDeepClone DeepClone()
-        {
-            return new MorgueVisualizer
-            {
-                _lightContents = _lightContents,
-                _lightMob = _lightMob,
-                _lightSoul = _lightSoul,
-                _stateClosed = _stateClosed,
-                _stateOpen = _stateOpen
-            };
         }
     }
 

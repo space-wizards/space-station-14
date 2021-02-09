@@ -1,6 +1,5 @@
 ﻿using System;
 using Content.Shared.GameObjects.Components.Interactable;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -31,15 +30,6 @@ namespace Content.Shared.Construction
             }
 
             message.AddMarkup(Loc.GetString($"Next, use a [color=cyan]{Tool.GetToolName()}[/color]."));
-        }
-
-        public override IDeepClone DeepClone()
-        {
-            var obj = LazyDeepClone<ToolConstructionGraphStep>();
-            obj.Tool = IDeepClone.CloneValue(Tool);
-            obj.Fuel = Fuel;
-            obj.ExamineOverride = ExamineOverride;
-            return obj;
         }
     }
 }

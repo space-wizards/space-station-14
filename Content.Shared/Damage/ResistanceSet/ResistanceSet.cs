@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -13,7 +12,7 @@ namespace Content.Shared.Damage.ResistanceSet
     /// </summary>
     [NetSerializable]
     [Serializable]
-    public class ResistanceSet : IDeepClone
+    public class ResistanceSet
     {
         [ViewVariables]
         private Dictionary<DamageType, ResistanceSetSettings> _resistances =
@@ -58,22 +57,13 @@ namespace Content.Shared.Damage.ResistanceSet
 
             return amount;
         }
-
-        public IDeepClone DeepClone()
-        {
-            return new ResistanceSet
-            {
-                _resistances = IDeepClone.CloneValue(_resistances),
-                ID = ID
-            };
-        }
     }
 
     /// <summary>
     ///     Settings for a specific damage type in a resistance set. Flat reduction is applied before the coefficient.
     /// </summary>
     [Serializable, NetSerializable]
-    public struct ResistanceSetSettings : IDeepClone
+    public struct ResistanceSetSettings
     {
         [ViewVariables] public float Coefficient { get; private set; }
 
@@ -83,11 +73,6 @@ namespace Content.Shared.Damage.ResistanceSet
         {
             Coefficient = coefficient;
             FlatReduction = flatReduction;
-        }
-
-        public IDeepClone DeepClone()
-        {
-            return new ResistanceSetSettings(Coefficient, FlatReduction);
         }
     }
 }

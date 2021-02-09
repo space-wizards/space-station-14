@@ -6,7 +6,6 @@ using Content.Shared.Construction;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 
@@ -46,15 +45,6 @@ namespace Content.Server.Construction.Completions
                 }
             }
 
-        }
-
-        public IDeepClone DeepClone()
-        {
-            return new SpawnPrototype
-            {
-                Prototype = Prototype,
-                Amount = Amount
-            };
         }
     }
 }

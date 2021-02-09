@@ -6,7 +6,6 @@ using Content.Server.Objectives.Interfaces;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
@@ -89,15 +88,6 @@ namespace Content.Server.Objectives.Conditions
         public override int GetHashCode()
         {
             return HashCode.Combine(_mind, _prototypeId, _amount);
-        }
-
-        public IDeepClone DeepClone()
-        {
-            return new StealCondition
-            {
-                _amount = _amount,
-                _prototypeId = _prototypeId
-            };
         }
     }
 }

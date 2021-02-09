@@ -5,7 +5,6 @@ using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
 using System;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 
@@ -32,14 +31,6 @@ namespace Content.Server.Construction.Completions
             {
                 Logger.Warning("StackCount is bigger than maximum stack capacity, for entity " + entity.Name);
             }
-        }
-
-        public IDeepClone DeepClone()
-        {
-            return new SetStackCount
-            {
-                Amount = Amount
-            };
         }
     }
 }

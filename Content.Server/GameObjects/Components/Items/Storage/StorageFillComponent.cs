@@ -70,17 +70,6 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 serializer.DataField(ref SpawnProbability, "prob", 1f);
                 serializer.DataField(ref GroupId, "orGroup", null);
             }
-
-            public IDeepClone DeepClone()
-            {
-                return new StorageFillEntry()
-                {
-                    PrototypeName = PrototypeName,
-                    Amount = Amount,
-                    GroupId = GroupId,
-                    SpawnProbability = SpawnProbability
-                };
-            }
         }
     }
 }

@@ -5,7 +5,6 @@ using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.Components.Animations;
 using Robust.Shared.Animations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Client.GameObjects.Components
 {
@@ -41,11 +40,6 @@ namespace Content.Client.GameObjects.Components
             }
 
             PlayAnimation(component);
-        }
-
-        public override IDeepClone DeepClone()
-        {
-            return new LanternVisualizer();
         }
 
         private void PlayAnimation(AppearanceComponent component)

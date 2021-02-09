@@ -6,7 +6,6 @@ using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.Components.Animations;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Animations;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Maths;
 
 namespace Content.Client.GameObjects.Components.Rotation
@@ -30,11 +29,6 @@ namespace Content.Client.GameObjects.Components.Rotation
                         break;
                 }
             }
-        }
-
-        public override IDeepClone DeepClone()
-        {
-            return new RotationVisualizer();
         }
 
         private void SetRotation(AppearanceComponent component, Angle rotation)

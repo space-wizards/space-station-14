@@ -3,7 +3,6 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Client.GameObjects.Components.Power
 {
@@ -56,11 +55,6 @@ namespace Content.Client.GameObjects.Components.Power
             {
                 sprite.LayerSetState(Layers.ChargeState, "apco3-0");
             }
-        }
-
-        public override IDeepClone DeepClone()
-        {
-            return new ApcVisualizer();
         }
 
         enum Layers : byte

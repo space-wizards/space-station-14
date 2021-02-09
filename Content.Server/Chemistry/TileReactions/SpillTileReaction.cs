@@ -3,7 +3,6 @@ using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces.Chemistry;
 using JetBrains.Annotations;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
@@ -45,17 +44,6 @@ namespace Content.Server.Chemistry.TileReactions
             }
 
             return ReagentUnit.Zero;
-        }
-
-        public IDeepClone DeepClone()
-        {
-            return new SpillTileReaction
-            {
-                _overflow = _overflow,
-                _paralyzeTime = _paralyzeTime,
-                _launchForwardsMultiplier = _launchForwardsMultiplier,
-                _requiredSlipSpeed = _requiredSlipSpeed
-            };
         }
     }
 }

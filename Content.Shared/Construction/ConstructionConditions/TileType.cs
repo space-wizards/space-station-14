@@ -5,7 +5,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using System.Collections.Generic;
-using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Shared.Construction.ConstructionConditions
 {
@@ -35,11 +34,6 @@ namespace Content.Shared.Construction.ConstructionConditions
                 }
             }
             return false;
-        }
-
-        public IDeepClone DeepClone()
-        {
-            return new TileType {TargetTiles = IDeepClone.CloneValue(TargetTiles)};
         }
     }
 }

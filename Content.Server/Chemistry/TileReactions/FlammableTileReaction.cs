@@ -4,7 +4,6 @@ using Content.Shared.Atmos;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces.Chemistry;
 using JetBrains.Annotations;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
@@ -28,14 +27,6 @@ namespace Content.Server.Chemistry.TileReactions
             tileAtmos.Air.Temperature *= MathF.Max(_temperatureMultiplier * reactVolume.Float(), 1f);
             tileAtmos.Air.React(tileAtmos);
             return reactVolume;
-        }
-
-        public IDeepClone DeepClone()
-        {
-            return new FlammableTileReaction
-            {
-                _temperatureMultiplier = _temperatureMultiplier
-            };
         }
     }
 }

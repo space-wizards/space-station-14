@@ -4,7 +4,6 @@ using Content.Shared.Atmos;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces.Chemistry;
 using JetBrains.Annotations;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
@@ -33,14 +32,6 @@ namespace Content.Server.Chemistry.TileReactions
             tileAtmos.Hotspot = new Hotspot();
             tileAtmos.UpdateVisuals();
             return ReagentUnit.Zero;
-        }
-
-        public IDeepClone DeepClone()
-        {
-            return new ExtinguishTileReaction
-            {
-                _coolingTemperature = _coolingTemperature
-            };
         }
     }
 }

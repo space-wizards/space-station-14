@@ -8,7 +8,6 @@ using Content.Server.GameObjects.Components.Body.Respiratory;
 using Content.Server.Utility;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Body.Behavior;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -140,16 +139,6 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
             }
 
             _accumulatedFrameTime = absoluteTime - delay;
-        }
-
-        public override IDeepClone DeepClone()
-        {
-            return new LungBehavior
-            {
-                CycleDelay = CycleDelay,
-                Air = IDeepClone.CloneValue(Air)!,
-                GaspPopupCooldown = IDeepClone.CloneValue(GaspPopupCooldown)
-            };
         }
 
         public void Inhale(float frameTime)

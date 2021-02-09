@@ -5,7 +5,6 @@ using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -33,15 +32,6 @@ namespace Content.Server.Construction.Completions
             if (sprite.LayerCount <= Layer) return;
 
             sprite.LayerSetSprite(Layer, SpriteSpecifier);
-        }
-
-        public IDeepClone DeepClone()
-        {
-            return new SpriteChange
-            {
-                Layer = Layer,
-                SpriteSpecifier = IDeepClone.CloneValue(SpriteSpecifier)
-            };
         }
     }
 }

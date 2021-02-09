@@ -6,7 +6,6 @@ using Robust.Shared.Utility;
 using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using Robust.Shared.Interfaces.Serialization;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Gravity
@@ -61,14 +60,6 @@ namespace Content.Client.GameObjects.Components.Gravity
                 var layer = sprite.LayerMapGet(GravityGeneratorVisualLayers.Core);
                 sprite.LayerSetVisible(layer, visible);
             }
-        }
-
-        public override IDeepClone DeepClone()
-        {
-            return new GravityGeneratorVisualizer
-            {
-                _spriteMap = IDeepClone.CloneValue(_spriteMap)!
-            };
         }
 
         public enum GravityGeneratorVisualLayers : byte

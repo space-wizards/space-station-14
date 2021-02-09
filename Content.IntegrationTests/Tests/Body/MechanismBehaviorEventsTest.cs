@@ -9,7 +9,6 @@ using Content.Shared.GameObjects.Components.Body.Part;
 using NUnit.Framework;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
@@ -102,8 +101,6 @@ namespace Content.IntegrationTests.Tests.Body
 
                 WasRemovedFromPartInBody = true;
             }
-
-            public override IDeepClone DeepClone() { return new TestMechanismBehavior(); }
         }
 
         private const string PROTOTYPES = @"

@@ -5,7 +5,6 @@ using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
@@ -43,11 +42,6 @@ namespace Content.Server.Construction.Conditions
             message.AddMarkup(Loc.GetString("First, unweld the door.\n"));
             return true;
 
-        }
-
-        public IDeepClone DeepClone()
-        {
-            return new DoorWelded {Welded = Welded};
         }
     }
 }

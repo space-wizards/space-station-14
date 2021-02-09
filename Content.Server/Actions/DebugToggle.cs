@@ -1,7 +1,6 @@
 ﻿using Content.Server.Utility;
 using Content.Shared.Actions;
 using JetBrains.Annotations;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Actions
@@ -44,15 +43,6 @@ namespace Content.Server.Actions
             }
 
             return true;
-        }
-
-        public IDeepClone DeepClone()
-        {
-            return new DebugToggle
-            {
-                MessageOff = MessageOff,
-                MessageOn = MessageOn
-            };
         }
     }
 }

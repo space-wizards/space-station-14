@@ -3,7 +3,6 @@
  using Content.Shared.GameObjects.EntitySystems;
  using JetBrains.Annotations;
  using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Alert.Click
@@ -23,11 +22,6 @@ namespace Content.Server.Alert.Click
                 .GetPulled(args.Player)?
                 .GetComponentOrNull<SharedPullableComponent>()?
                 .TryStopPull();
-        }
-
-        public IDeepClone DeepClone()
-        {
-            return new StopPulling();
         }
     }
 }

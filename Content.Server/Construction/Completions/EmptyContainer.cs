@@ -6,7 +6,6 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.Containers;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Construction.Completions
@@ -29,11 +28,6 @@ namespace Content.Server.Construction.Completions
                 !containerManager.TryGetContainer(Container, out var container)) return;
 
             container.EmptyContainer(true, entity.Transform.Coordinates);
-        }
-
-        public IDeepClone DeepClone()
-        {
-            return new EmptyContainer {Container = Container};
         }
     }
 }

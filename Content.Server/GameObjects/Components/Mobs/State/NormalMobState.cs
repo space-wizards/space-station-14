@@ -7,7 +7,6 @@ using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Server.GameObjects.Components.Mobs.State
 {
@@ -52,11 +51,6 @@ namespace Content.Server.GameObjects.Components.Mobs.State
             }
 
             alerts.ShowAlert(AlertType.HumanHealth, modifier);
-        }
-
-        public override IDeepClone DeepClone()
-        {
-            return new NormalMobState();
         }
     }
 }

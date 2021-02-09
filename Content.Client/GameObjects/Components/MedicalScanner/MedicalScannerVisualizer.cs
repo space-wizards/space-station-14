@@ -2,7 +2,6 @@ using System;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.Serialization;
 using static Content.Shared.GameObjects.Components.Medical.SharedMedicalScannerComponent;
 using static Content.Shared.GameObjects.Components.Medical.SharedMedicalScannerComponent.MedicalScannerStatus;
 
@@ -19,11 +18,6 @@ namespace Content.Client.GameObjects.Components.MedicalScanner
             if (!component.TryGetData(MedicalScannerVisuals.Status, out MedicalScannerStatus status)) return;
             sprite.LayerSetState(MedicalScannerVisualLayers.Machine, StatusToMachineStateId(status));
             sprite.LayerSetState(MedicalScannerVisualLayers.Terminal, StatusToTerminalStateId(status));
-        }
-
-        public override IDeepClone DeepClone()
-        {
-            return new MedicalScannerVisualizer();
         }
 
         private string StatusToMachineStateId(MedicalScannerStatus status)

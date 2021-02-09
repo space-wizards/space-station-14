@@ -3,7 +3,6 @@ using Content.Server.Explosions;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.Interfaces.Chemistry;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Chemistry.ReactionEffects
@@ -61,19 +60,6 @@ namespace Content.Server.Chemistry.ReactionEffects
             int finalFlashRange = (int)MathF.Round(_flashRange * floatIntensity);
             solutionEntity.SpawnExplosion(finalDevastationRange,
                 finalHeavyImpactRange, finalLightImpactRange, finalFlashRange);
-        }
-
-        public IDeepClone DeepClone()
-        {
-            return new ExplosionReactionEffect
-            {
-                _devastationRange = _devastationRange,
-                _scaled = _scaled,
-                _flashRange = _flashRange,
-                _maxScale = _maxScale,
-                _heavyImpactRange = _heavyImpactRange,
-                _lightImpactRange = _lightImpactRange
-            };
         }
     }
 }

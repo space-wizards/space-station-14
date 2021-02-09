@@ -24,7 +24,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -274,11 +273,6 @@ namespace Content.Server.GameObjects.Components.Interactable
             if (!args.Item.TryGetComponent<HandheldLightComponent>(out var lightComponent)) return false;
             if (lightComponent.Activated == args.ToggledOn) return false;
             return lightComponent.ToggleStatus(args.Performer);
-        }
-
-        public IDeepClone DeepClone()
-        {
-            return new ToggleLightAction();
         }
     }
 }

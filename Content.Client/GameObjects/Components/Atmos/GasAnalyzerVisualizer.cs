@@ -2,7 +2,6 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -50,15 +49,6 @@ namespace Content.Client.GameObjects.Components.Atmos
                         break;
                 }
             }
-        }
-
-        public override IDeepClone DeepClone()
-        {
-            return new GasAnalyzerVisualizer
-            {
-                _stateOff = _stateOff,
-                _stateWorking = _stateWorking
-            };
         }
     }
 }

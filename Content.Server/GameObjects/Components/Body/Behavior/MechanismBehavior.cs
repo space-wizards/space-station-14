@@ -4,7 +4,6 @@ using Content.Shared.GameObjects.Components.Body.Behavior;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -109,6 +108,5 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
         protected virtual void OnRemovedFromPartInBody(IBody oldBody, IBodyPart oldPart) { }
 
         public virtual void Update(float frameTime) { }
-        public abstract IDeepClone DeepClone();
     }
 }

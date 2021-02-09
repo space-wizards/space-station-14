@@ -5,7 +5,6 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Reflection;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 
@@ -45,11 +44,6 @@ namespace Content.Server.Construction.Completions
                     appearance.SetData(Key, Data);
                 }
             }
-        }
-
-        public IDeepClone DeepClone()
-        {
-            return new VisualizerDataInt {Key = Key, Data = Data};
         }
     }
 }

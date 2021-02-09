@@ -3,7 +3,6 @@ using Content.Shared.GameObjects.Components.Singularity;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Client.GameObjects.Components.Singularity
 {
@@ -47,11 +46,6 @@ namespace Content.Client.GameObjects.Components.Singularity
             }
 
             sprite.LayerSetVisible(2, locked);
-        }
-
-        public override IDeepClone DeepClone()
-        {
-            return new EmitterVisualizer();
         }
     }
 }

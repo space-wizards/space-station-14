@@ -609,10 +609,5 @@ namespace Content.Server.Atmos
             };
             return newMixture;
         }
-
-        public IDeepClone DeepClone()
-        {
-            return (GasMixture)Clone();
-        }
     }
 }

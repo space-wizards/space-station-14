@@ -17,14 +17,5 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds
             serializer.DataField(ref Min, "min", 0);
             serializer.DataField(ref Max, "max", 0);
         }
-
-        public IDeepClone DeepClone()
-        {
-            return new MinMax()
-            {
-                Max = Max,
-                Min = Min
-            };
-        }
     }
 }

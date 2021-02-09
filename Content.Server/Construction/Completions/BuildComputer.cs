@@ -6,7 +6,6 @@ using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 
@@ -76,14 +75,6 @@ namespace Content.Server.Construction.Completions
             }
 
             entity.Delete();
-        }
-
-        public IDeepClone DeepClone()
-        {
-            return new BuildComputer
-            {
-                Container = Container
-            };
         }
     }
 }

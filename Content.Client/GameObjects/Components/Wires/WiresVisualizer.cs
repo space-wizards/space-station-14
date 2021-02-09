@@ -1,6 +1,5 @@
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.Serialization;
 using static Content.Shared.GameObjects.Components.SharedWiresComponent;
 
 namespace Content.Client.GameObjects.Components.Wires
@@ -20,11 +19,6 @@ namespace Content.Client.GameObjects.Components.Wires
             {
                 sprite.LayerSetVisible(WiresVisualLayers.MaintenancePanel, false);
             }
-        }
-
-        public override IDeepClone DeepClone()
-        {
-            return new WiresVisualizer();
         }
 
         public enum WiresVisualLayers : byte

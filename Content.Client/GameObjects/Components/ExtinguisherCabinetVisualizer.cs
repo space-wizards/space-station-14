@@ -2,7 +2,6 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Client.GameObjects.Components
 {
@@ -37,11 +36,6 @@ namespace Content.Client.GameObjects.Components
                     sprite.LayerSetState(0, "extinguisher_closed");
                 }
             }
-        }
-
-        public override IDeepClone DeepClone()
-        {
-            return new ExtinguisherCabinetVisualizer();
         }
     }
 }

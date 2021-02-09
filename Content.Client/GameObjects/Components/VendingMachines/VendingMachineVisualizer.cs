@@ -6,7 +6,6 @@ using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.Components.Animations;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 using static Content.Shared.GameObjects.Components.VendingMachines.SharedVendingMachineComponent;
@@ -173,15 +172,6 @@ namespace Content.Client.GameObjects.Components.VendingMachines
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-        }
-
-        public override IDeepClone DeepClone()
-        {
-            return new VendingMachineVisualizer
-            {
-                _animations = IDeepClone.CloneValue(_animations),
-                _baseStates = IDeepClone.CloneValue(_baseStates)
-            };
         }
 
         // Helper methods just to avoid all of that hard-to-read-indented code

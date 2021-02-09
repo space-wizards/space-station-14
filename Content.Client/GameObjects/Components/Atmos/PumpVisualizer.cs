@@ -3,7 +3,6 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -40,14 +39,6 @@ namespace Content.Client.GameObjects.Components.Atmos
 
             var pumpEnabledLayer = sprite.LayerMapGet(Layer.PumpEnabled);
             sprite.LayerSetVisible(pumpEnabledLayer, pumpVisualState.PumpEnabled);
-        }
-
-        public override IDeepClone DeepClone()
-        {
-            return new PumpVisualizer
-            {
-                _pumpEnabledState = _pumpEnabledState
-            };
         }
 
         public enum Layer : byte

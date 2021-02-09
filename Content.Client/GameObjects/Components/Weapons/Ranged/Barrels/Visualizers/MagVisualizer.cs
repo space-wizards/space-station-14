@@ -4,7 +4,6 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -108,17 +107,6 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels.Visualize
                     sprite.LayerSetVisible(RangedBarrelVisualLayers.MagUnshaded, false);
                 }
             }
-        }
-
-        public override IDeepClone DeepClone()
-        {
-            return new MagVisualizer
-            {
-                _magLoaded = _magLoaded,
-                _magState = _magState,
-                _magSteps = _magSteps,
-                _zeroVisible = _zeroVisible
-            };
         }
     }
 }

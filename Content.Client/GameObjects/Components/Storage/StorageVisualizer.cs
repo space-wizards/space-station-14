@@ -3,7 +3,6 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Log;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
@@ -85,16 +84,6 @@ namespace Content.Client.GameObjects.Components.Storage
                     sprite.LayerSetVisible(StorageVisualLayers.Welded, weldedVal);
                 }
             }
-        }
-
-        public override IDeepClone DeepClone()
-        {
-            return new StorageVisualizer
-            {
-                _stateBase = _stateBase,
-                _stateClosed = _stateClosed,
-                _stateOpen = _stateOpen
-            };
         }
     }
 

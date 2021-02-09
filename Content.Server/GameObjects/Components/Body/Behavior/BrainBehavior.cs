@@ -4,7 +4,6 @@ using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Server.GameObjects.Components.Body.Behavior
 {
@@ -50,11 +49,6 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
             base.OnRemovedFromPartInBody(oldBody, oldPart);
 
             HandleMind(oldBody.Owner, Owner);
-        }
-
-        public override IDeepClone DeepClone()
-        {
-            return new BrainBehavior();
         }
 
         private void HandleMind(IEntity newEntity, IEntity oldEntity)

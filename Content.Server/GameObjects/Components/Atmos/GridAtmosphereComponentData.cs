@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using Content.Server.Atmos;
 using Robust.Shared.GameObjects.Components.Map;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -14,7 +13,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 {
     public partial class GridAtmosphereComponentData
     {
-        public struct IntermediateTileAtmosphere : IDeepClone
+        public struct IntermediateTileAtmosphere
         {
             public readonly Vector2i Indicies;
             public readonly GasMixture GasMixture;
@@ -23,11 +22,6 @@ namespace Content.Server.GameObjects.Components.Atmos
             {
                 Indicies = indicies;
                 GasMixture = gasMixture;
-            }
-
-            public IDeepClone DeepClone()
-            {
-                return new IntermediateTileAtmosphere(IDeepClone.CloneValue(Indicies), IDeepClone.CloneValue(GasMixture)!);
             }
         }
 
