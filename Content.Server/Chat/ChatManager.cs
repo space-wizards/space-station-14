@@ -21,6 +21,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using static Content.Server.Interfaces.Chat.IChatManager;
 
 namespace Content.Server.Chat
@@ -70,6 +71,7 @@ namespace Content.Server.Chat
             msg.Message = message;
             msg.MessageWrap = "SERVER: {0}";
             _netManager.ServerSendToAll(msg);
+            Logger.InfoS("SERVER", message);
         }
 
         public void DispatchStationAnnouncement(string message, string sender = "CentComm")

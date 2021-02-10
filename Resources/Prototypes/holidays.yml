@@ -1,0 +1,376 @@
+- type: holiday
+  id: NewYear
+  name: New Year
+  beginDay: 30
+  beginMonth: December
+  endDay: 2
+  endMonth: January
+
+- type: holiday
+  id: MisterLizard
+  name: Mister Lizard's Birthday
+  beginDay: 15
+  beginMonth: January
+
+- type: holiday
+  id: GroundhogDay
+  name: Groundhog Day
+  beginDay: 2
+  beginMonth: February
+
+- type: holiday
+  id: ValentinesDay
+  name: Valentine's Day
+  beginDay: 13
+  endDay: 15
+  beginMonth: February
+
+- type: holiday
+  id: Birthday13
+  name: Birthday of Space Station 13
+  beginDay: 16
+  beginMonth: February
+
+- type: holiday
+  id: RandomKindness
+  name: Random Acts of Kindness Day
+  beginDay: 17
+  beginMonth: February
+
+- type: holiday
+  id: LeapDay
+  name: Leap Day
+  beginDay: 29
+  beginMonth: February
+
+- type: holiday
+  id: PiDay
+  name: Pi Day
+  beginDay: 14
+  beginMonth: March
+
+- type: holiday
+  id: StPatricksDay
+  name: St. Patrick's Day
+  beginDay: 17
+  beginMonth: March
+
+- type: holiday
+  id: Easter
+  name: Easter
+  shouldCelebrate:
+    !type:Computus { }
+
+- type: holiday
+  id: AprilFoolDay
+  name: April Fools Day
+  beginDay: 1
+  beginMonth: April
+
+- type: holiday
+  id: AutismAwarenessDay
+  name: Autism Awareness Day
+  beginDay: 2
+  beginMonth: April
+
+- type: holiday
+  id: CosmonauticsDay
+  name: Cosmonautics Day
+  beginDay: 12
+  beginMonth: April
+
+- type: holiday
+  id: SalyutAnniversary
+  name: Salyut 1's Launch Anniversary
+  beginDay: 19
+  beginMonth: April
+
+- type: holiday
+  id: FourTwenty
+  name: Four-Twenty
+  beginDay: 20
+  beginMonth: April
+
+- type: holiday
+  id: TeaDay
+  name: National Tea Day
+  beginDay: 21
+  beginMonth: April
+
+- type: holiday
+  id: EarthDay
+  name: Earth Day
+  beginDay: 22
+  beginMonth: April
+
+- type: holiday
+  id: AnzacDay
+  name: Anzac Day
+  beginDay: 25
+  beginMonth: April
+
+- type: holiday
+  id: LaborDay
+  name: Labor Day
+  beginDay: 1
+  beginMonth: May
+
+- type: holiday
+  id: FirefighterDay
+  name: Firefighter's Day
+  beginDay: 4
+  beginMonth: May
+
+- type: holiday
+  id: MothersDay
+  name: Mother's Day
+  beginMonth: May
+  shouldCelebrate:
+    !type:WeekdayInMonth
+    weekday: Sunday
+    occurrence: 2
+
+- type: holiday
+  id: OwlAndPussycatDay
+  name: Owl and Pussycat Day
+  beginDay: 12
+  beginMonth: May
+
+- type: holiday
+  id: InternationalPicnicDay
+  name: International Picnic Day
+  beginDay: 18
+  beginMonth: June
+
+- type: holiday
+  id: FathersDay
+  name: Father's Day
+  beginMonth: August
+  shouldCelebrate:
+    !type:WeekdayInMonth
+    weekday: Sunday
+    occurrence: 3
+
+- type: holiday
+  id: SummerSolstice
+  name: Summer Solstice
+  beginDay: 21
+  beginMonth: June
+
+- type: holiday
+  id: StonewallRiotsAnniversary
+  name: Stonewall Riots Anniversary
+  beginDay: 28
+  beginMonth: June
+
+- type: holiday
+  id: DoctorDay
+  name: Doctor's Day
+  beginDay: 1
+  beginMonth: July
+
+- type: holiday
+  id: UFODay
+  name: UFO Day
+  beginDay: 2
+  beginMonth: July
+
+- type: holiday
+  id: IndependenceDay
+  name: Independence Day
+  beginDay: 4
+  beginMonth: July
+
+- type: holiday
+  id: WritersDay
+  name: Writer's Day
+  beginDay: 8
+  beginMonth: July
+
+- type: holiday
+  id: BastilleDay
+  name: Bastille Day
+  beginDay: 14
+  beginMonth: July
+
+- type: holiday
+  id: FriendshipDay
+  name: Friendship Day
+  beginDay: 30
+  beginMonth: July
+
+- type: holiday
+  id: BeerDay
+  name: Beer Day
+  shouldCelebrate:
+    !type:WeekdayInMonth
+    weekday: Friday
+  beginMonth: August
+
+- type: holiday
+  id: TalkLikeAPirateDay
+  name: Talk-Like-a-Pirate Day
+  beginDay: 19
+  beginMonth: September
+
+- type: holiday
+  id: ProgrammersDay
+  name: Programmers' Day
+  shouldCelebrate:
+    !type:DayOfYear
+    dayOfYear: 256
+
+- type: holiday
+  id: BisexualPrideDay
+  name: Bisexual Pride Day
+  beginDay: 23
+  beginMonth: September
+
+- type: holiday
+  id: StupidQuestionsDay
+  name: Stupid-Questions Day
+  beginDay: 28
+  beginMonth: September
+
+- type: holiday
+  id: AnimalsDay
+  name: Animal's Day
+  beginDay: 4
+  beginMonth: October
+
+- type: holiday
+  id: SmilingDay
+  name: Smiling Day
+  beginDay: 7
+  beginMonth: October
+
+- type: holiday
+  id: LesbianDay
+  name: Lesbian Day
+  beginDay: 8
+  beginMonth: October
+
+- type: holiday
+  id: CanadianThanksgiving
+  name: Thanksgiving in Canada
+  beginWeek: 2
+  beginWeekday: Monday
+  beginMonth: October
+
+- type: holiday
+  id: BossDay
+  name: Boss' Day
+  beginDay: 16
+  beginMonth: October
+
+- type: holiday
+  id: Halloween
+  name: Halloween
+  beginDay: 31
+  beginMonth: October
+
+- type: holiday
+  id: VeganDay
+  name: Vegan Day
+  beginDay: 1
+  beginMonth: November
+
+- type: holiday
+  id: ArmisticeDay
+  name: Armistice Day
+  beginDay: 11
+  beginMonth: November
+
+- type: holiday
+  id: KindnessDay
+  name: Kindness Day
+  beginDay: 13
+  beginMonth: November
+
+- type: holiday
+  id: LifeDay
+  name: Life Day
+  beginDay: 17
+  beginMonth: November
+
+- type: holiday
+  id: FlowersDay
+  name: Flower's Day
+  beginDay: 19
+  beginMonth: November
+
+- type: holiday
+  id: TransgenderRemembranceDay
+  name: Transgender Day of Remembrance
+  beginDay: 20
+  beginMonth: November
+
+- type: holiday
+  id: SayingHelloDay
+  name: Saying Hello Day
+  beginDay: 21
+  beginMonth: November
+
+- type: holiday
+  id: Thanksgiving
+  name: Thanksgiving in the United States
+  beginWeek: 4
+  beginWeekday: Thursday
+  beginMonth: November
+
+- type: holiday
+  id: Sinterklaas
+  name: Sinterklaas
+  beginDay: 5
+  beginMonth: December
+
+- type: holiday
+  id: HumanRightsDay
+  name: Human-Rights Day
+  beginDay: 10
+  beginMonth: December
+
+- type: holiday
+  id: MonkeyDay
+  name: Monkey Day
+  beginDay: 14
+  beginMonth: December
+
+- type: holiday
+  id: MayanDoomsday
+  name: Mayan Doomsday Anniversary
+  beginDay: 21
+  beginMonth: December
+
+- type: holiday
+  id: Christmas
+  name: Christmas
+  beginDay: 24
+  endDay: 26
+  beginMonth: December
+
+- type: holiday
+  id: FestiveSeason
+  name: Festive Season
+  beginDay: 1
+  endDay: 31
+  beginMonth: December
+
+- type: holiday
+  id: BoxingDay
+  name: Boxing Day
+  beginDay: 26
+  beginMonth: December
+
+- type: holiday
+  id: FridayThirteenth
+  name: Friday the 13th
+  shouldCelebrate:
+    !type:FridayThirteenth { }
+
+  # Do not merge, this is a test lmao
+- type: holiday
+  id: CuckDay
+  name: Cuck day
+  beginDay: 10
+  beginMonth: February

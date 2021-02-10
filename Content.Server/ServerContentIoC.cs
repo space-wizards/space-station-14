@@ -10,6 +10,8 @@ using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Server.GameObjects.EntitySystems.DeviceNetwork;
 using Content.Server.GameTicking;
+using Content.Server.Holiday;
+using Content.Server.Holiday.Interfaces;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
@@ -56,6 +58,7 @@ namespace Content.Server
             IoCManager.Register<IAdminManager, AdminManager>();
             IoCManager.Register<IDeviceNetwork, DeviceNetwork>();
             IoCManager.Register<EuiManager, EuiManager>();
+            IoCManager.Register<IHolidayManager, HolidayManager>();
         }
     }
 }
