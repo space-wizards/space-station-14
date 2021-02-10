@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Server.Preferences;
 using Content.Shared;
-using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;

@@ -2,7 +2,6 @@
 using Content.Server.GameObjects.Components.Atmos;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.GameObjects.EntitySystems
 {

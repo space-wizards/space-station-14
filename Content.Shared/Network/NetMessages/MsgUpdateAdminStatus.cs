@@ -1,6 +1,5 @@
 ﻿using Content.Shared.Administration;
 using Lidgren.Network;
-using Robust.Shared;
 using Robust.Shared.Network;
 
 namespace Content.Shared.Network.NetMessages

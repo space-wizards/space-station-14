@@ -4,7 +4,6 @@ using Content.Client.UserInterface;
 using Content.Shared.GameObjects.Components.Observer;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
-using Robust.Shared;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;

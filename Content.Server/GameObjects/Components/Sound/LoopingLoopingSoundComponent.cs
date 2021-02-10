@@ -1,5 +1,4 @@
 using Content.Shared.GameObjects.Components.Sound;
-using Robust.Shared;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Network;

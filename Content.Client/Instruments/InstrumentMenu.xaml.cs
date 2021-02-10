@@ -16,7 +16,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Timers;
 using Robust.Shared.Timing;

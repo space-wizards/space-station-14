@@ -24,7 +24,7 @@ namespace Content.Server.Commands.Actions
             if (args.Length > 1)
             {
                 var target = args[1];
-                if (!Commands.CommandUtils.TryGetAttachedEntityByUsernameOrId(shell, target, player, out attachedEntity)) return;
+                if (!CommandUtils.TryGetAttachedEntityByUsernameOrId(shell, target, player, out attachedEntity)) return;
             }
 
             if (attachedEntity == null) return;

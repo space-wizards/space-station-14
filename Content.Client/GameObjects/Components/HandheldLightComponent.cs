@@ -1,6 +1,4 @@
-﻿using System;
-using Content.Shared.GameObjects.Components;
-using Content.Shared.Utility;
+﻿using Content.Shared.GameObjects.Components;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;

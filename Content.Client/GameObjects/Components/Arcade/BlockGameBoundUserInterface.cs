@@ -1,7 +1,5 @@
-﻿using System;
-using Content.Client.Arcade;
+﻿using Content.Client.Arcade;
 using Content.Shared.Arcade;
-using Content.Shared.GameObjects.Components.Arcade;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;

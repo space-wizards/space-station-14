@@ -1,6 +1,5 @@
 ﻿#nullable enable
 using System;
-using System.Linq;
 using Content.Server.Utility;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components;

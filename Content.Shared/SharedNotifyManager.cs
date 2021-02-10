@@ -1,6 +1,5 @@
 using Content.Shared.Interfaces;
 using Lidgren.Network;
-using Robust.Shared;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Network;

@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.Interfaces.GameObjects.Components;

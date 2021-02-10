@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Content.Shared.Network.NetMessages;
 using Robust.Server.Player;
-using Robust.Shared;
 using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;

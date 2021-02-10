@@ -1,7 +1,4 @@
-﻿using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.Interfaces;
-using Content.Shared.Network.NetMessages;
-using Robust.Client.Graphics;
+﻿using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Graphics.Interfaces.Graphics;
 using Robust.Client.Graphics.Overlays;

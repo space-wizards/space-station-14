@@ -1,9 +1,5 @@
-﻿using System;
-using System.Linq;
-using Content.Shared.Preferences;
-using Content.Shared.Preferences.Appearance;
+﻿using Content.Shared.Preferences;
 using Content.Shared.Text;
-using Robust.Shared.Maths;
 using Robust.Shared.Random;
 
 namespace Content.Client.UserInterface

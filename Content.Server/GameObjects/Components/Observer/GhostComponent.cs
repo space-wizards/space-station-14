@@ -15,7 +15,6 @@ using Robust.Shared.Utility;
 using Robust.Shared.Localization;
 using System;
 using Robust.Server.Player;
-using Robust.Shared;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 

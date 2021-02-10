@@ -15,7 +15,6 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
-using Robust.Shared;
 using Robust.Shared.Audio;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;

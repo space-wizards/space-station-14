@@ -1,6 +1,5 @@
 ﻿using System;
 using Content.Shared.GameObjects.Components.Buckle;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using Robust.Shared.GameObjects;

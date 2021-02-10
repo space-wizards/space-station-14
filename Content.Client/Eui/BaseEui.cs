@@ -1,6 +1,5 @@
 ﻿using Content.Shared.Eui;
 using Content.Shared.Network.NetMessages;
-using Robust.Shared;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 

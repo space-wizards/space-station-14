@@ -13,7 +13,6 @@ using Content.Shared.Administration;
 using Content.Shared.Network.NetMessages;
 using Robust.Server.Console;
 using Robust.Server.Player;
-using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.ContentPack;

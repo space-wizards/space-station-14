@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using Content.Server.GameObjects.Components;
-using Content.Server.GameObjects.Components.Power;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;

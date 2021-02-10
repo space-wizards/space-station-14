@@ -4,7 +4,6 @@ using Content.Server.Interfaces;
 using Content.Shared.Chat;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
-using Robust.Shared;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;

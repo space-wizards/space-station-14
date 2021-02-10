@@ -1,5 +1,4 @@
-﻿using System;
-using Content.Shared.GameObjects.Components;
+﻿using Content.Shared.GameObjects.Components;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;

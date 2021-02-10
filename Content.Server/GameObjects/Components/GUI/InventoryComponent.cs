@@ -16,7 +16,6 @@ using Content.Shared.Interfaces;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
-using Robust.Shared;
 using Robust.Shared.Console;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;

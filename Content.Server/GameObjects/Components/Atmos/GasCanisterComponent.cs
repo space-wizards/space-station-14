@@ -7,18 +7,12 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System.Linq;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Atmos;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Robust.Server.GameObjects;
-using Robust.Shared.Containers;
-using Robust.Shared.Localization;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {

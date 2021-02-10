@@ -1,6 +1,5 @@
 ﻿using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
-using Content.Shared.Chemistry;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using System.Collections.Generic;

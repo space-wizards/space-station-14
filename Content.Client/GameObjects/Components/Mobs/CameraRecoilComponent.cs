@@ -2,7 +2,6 @@
 using System;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Client.GameObjects;
-using Robust.Shared;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;

@@ -1,7 +1,4 @@
 ﻿#nullable enable
-using System;
-using Content.Server.GameObjects.Components.MachineLinking.Signals;
-using Content.Shared.GameObjects.Components.Conveyor;
 using Content.Shared.GameObjects.Components.MachineLinking;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;

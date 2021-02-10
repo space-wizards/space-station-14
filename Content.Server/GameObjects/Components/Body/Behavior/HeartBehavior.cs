@@ -1,5 +1,4 @@
-﻿using Content.Shared.GameObjects.Components.Body.Behavior;
-using Content.Shared.GameObjects.Components.Body.Networks;
+﻿using Content.Shared.GameObjects.Components.Body.Networks;
 
 namespace Content.Server.GameObjects.Components.Body.Behavior
 {

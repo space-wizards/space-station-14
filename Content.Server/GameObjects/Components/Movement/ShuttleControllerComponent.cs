@@ -2,7 +2,6 @@
 using Content.Server.GameObjects.Components.Buckle;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.Alert;
-using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Strap;
 using Content.Shared.Physics;

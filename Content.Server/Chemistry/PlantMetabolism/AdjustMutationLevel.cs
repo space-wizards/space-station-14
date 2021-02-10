@@ -1,5 +1,4 @@
 ﻿#nullable enable
-using Content.Server.GameObjects.Components.Botany;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 

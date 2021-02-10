@@ -1,5 +1,4 @@
-﻿using System;
-using Content.Server.GameObjects.Components.Projectiles;
+﻿using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.GameObjects.Components.Singularity;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.Physics;

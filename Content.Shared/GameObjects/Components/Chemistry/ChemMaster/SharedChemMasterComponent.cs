@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.Components.Medical;
 using Content.Shared.GameObjects.Components.Observer;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;

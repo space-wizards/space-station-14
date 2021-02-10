@@ -1,5 +1,4 @@
 using Content.Shared.GameObjects.Components.Power;
-using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;

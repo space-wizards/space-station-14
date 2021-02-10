@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Robust.Client.Console;
-using Robust.Shared;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 

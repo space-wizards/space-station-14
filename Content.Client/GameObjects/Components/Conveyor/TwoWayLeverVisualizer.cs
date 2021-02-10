@@ -1,6 +1,4 @@
-﻿using System;
-using Content.Shared.GameObjects.Components.Conveyor;
-using Content.Shared.GameObjects.Components.MachineLinking;
+﻿using Content.Shared.GameObjects.Components.MachineLinking;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;

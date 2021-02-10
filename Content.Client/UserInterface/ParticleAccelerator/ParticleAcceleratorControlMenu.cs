@@ -1,5 +1,4 @@
 ﻿using System;
-using Content.Client.Animations;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;

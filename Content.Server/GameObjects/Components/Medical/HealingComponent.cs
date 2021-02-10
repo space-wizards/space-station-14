@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;

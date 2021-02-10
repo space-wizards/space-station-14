@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Content.Client;
 using Content.Client.Interfaces;
 using Content.Client.State;
@@ -10,7 +10,6 @@ using Content.Shared;
 using Content.Shared.Preferences;
 using NUnit.Framework;
 using Robust.Client.State;
-using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 

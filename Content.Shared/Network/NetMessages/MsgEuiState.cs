@@ -2,7 +2,6 @@
 using System.IO;
 using Content.Shared.Eui;
 using Lidgren.Network;
-using Robust.Shared;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;

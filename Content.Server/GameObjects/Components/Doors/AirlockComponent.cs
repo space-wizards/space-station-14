@@ -16,7 +16,6 @@ using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.SharedWiresComponent;
 using static Content.Shared.GameObjects.Components.SharedWiresComponent.WiresAction;
-using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameObjects.Components.Doors
 {

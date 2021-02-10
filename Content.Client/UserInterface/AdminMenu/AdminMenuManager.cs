@@ -4,7 +4,6 @@ using Content.Shared.Input;
 using Robust.Client.Console;
 using Robust.Client.Input;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;

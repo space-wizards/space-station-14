@@ -5,7 +5,6 @@ using System.Linq;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
-using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.ActionBlocking;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;

@@ -1,6 +1,4 @@
-﻿using System;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
+﻿using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Actions
 {

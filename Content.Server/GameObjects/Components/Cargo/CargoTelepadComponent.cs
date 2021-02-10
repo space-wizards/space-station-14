@@ -1,6 +1,5 @@
 #nullable enable
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Prototypes.Cargo;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;

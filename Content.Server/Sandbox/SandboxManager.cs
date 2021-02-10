@@ -11,7 +11,6 @@ using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Server.Placement;
 using Robust.Server.Player;
-using Robust.Shared;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;

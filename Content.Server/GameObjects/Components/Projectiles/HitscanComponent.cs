@@ -8,7 +8,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timers;
 using Robust.Shared.Timing;
 
 namespace Content.Server.GameObjects.Components.Projectiles

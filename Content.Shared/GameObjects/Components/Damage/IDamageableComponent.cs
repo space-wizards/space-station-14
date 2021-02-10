@@ -1,5 +1,4 @@
 #nullable enable
-using System;
 using System.Collections.Generic;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.EntitySystems;

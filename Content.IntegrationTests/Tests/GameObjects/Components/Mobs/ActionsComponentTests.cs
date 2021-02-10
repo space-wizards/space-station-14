@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Client.GameObjects.Components.Mobs;
@@ -10,7 +10,6 @@ using Content.Shared.Actions;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Utility;
 using NUnit.Framework;
-using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;

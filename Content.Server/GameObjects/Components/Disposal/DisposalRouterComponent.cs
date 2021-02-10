@@ -2,10 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;

@@ -3,7 +3,6 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Utility;
-using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Morgue;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;

@@ -7,7 +7,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Utility;
 using Content.Shared.GameObjects.Components.Pulling;
 using static Content.Shared.GameObjects.EntitySystems.SharedInteractionSystem;
 

@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading.Tasks;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.UserInterface;
@@ -6,7 +6,6 @@ using Content.Client.UserInterface.Controls;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.Alert;
 using NUnit.Framework;
-using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using IPlayerManager = Robust.Server.Player.IPlayerManager;
 

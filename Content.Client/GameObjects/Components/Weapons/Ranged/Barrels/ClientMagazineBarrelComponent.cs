@@ -1,5 +1,4 @@
 ﻿using System;
-using Content.Client.Animations;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects;
@@ -9,7 +8,6 @@ using Robust.Client.Animations;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared;
 using Robust.Shared.Animations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;

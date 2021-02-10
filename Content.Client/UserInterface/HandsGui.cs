@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Content.Client.GameObjects.Components.Items;
-using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Input;

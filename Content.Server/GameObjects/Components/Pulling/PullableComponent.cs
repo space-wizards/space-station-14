@@ -3,7 +3,6 @@ using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Pulling;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Physics.Pull;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 

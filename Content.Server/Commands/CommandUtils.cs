@@ -1,7 +1,6 @@
 ﻿#nullable enable
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Robust.Server.Console;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;

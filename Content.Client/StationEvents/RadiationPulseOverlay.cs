@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.Components.StationEvents;
-using Content.Shared.GameObjects.Components.Mobs;
 using JetBrains.Annotations;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Graphics.Interfaces.Graphics.ClientEye;

@@ -1,5 +1,4 @@
 #nullable enable
-using Content.Server.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.ViewVariables;

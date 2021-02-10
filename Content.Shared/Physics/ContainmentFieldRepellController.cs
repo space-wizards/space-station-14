@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-using Robust.Shared.Maths;
-using Robust.Shared.Physics;
+﻿using Robust.Shared.Maths;
 
 namespace Content.Shared.Physics
 {

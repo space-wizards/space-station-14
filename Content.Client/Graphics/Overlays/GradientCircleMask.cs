@@ -1,5 +1,4 @@
-﻿using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.Components.Mobs.State;
+﻿using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Graphics.Interfaces.Graphics.ClientEye;
 using Robust.Client.Graphics.Overlays;

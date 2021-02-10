@@ -1,5 +1,4 @@
 ﻿using Content.Server.GameObjects.Components.Atmos;
-using Content.Server.GameObjects.Components.Recycling;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 

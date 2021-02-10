@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Conveyor;
-using Content.Shared.GameObjects.Components.Conveyor;
+﻿using Content.Server.GameObjects.Components.Conveyor;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 

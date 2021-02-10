@@ -1,6 +1,5 @@
 using Content.Shared.GameObjects.Components.PDA;
 using Robust.Client.GameObjects;
-using Robust.Shared;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Network;

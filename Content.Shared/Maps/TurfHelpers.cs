@@ -7,7 +7,6 @@ using Content.Shared.Physics;
 using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;

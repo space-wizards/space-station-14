@@ -1,5 +1,4 @@
 using Content.Server.GameObjects.Components.StationEvents;
-using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.Interfaces.GameObjects.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;

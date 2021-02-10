@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Shared.GameObjects.Components.Items;
 using JetBrains.Annotations;
 using Robust.Shared.Serialization;
 

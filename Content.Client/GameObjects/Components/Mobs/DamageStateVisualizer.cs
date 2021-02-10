@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;

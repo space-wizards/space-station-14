@@ -2,7 +2,6 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Log;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 

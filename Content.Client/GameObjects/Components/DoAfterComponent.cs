@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using Content.Client.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.GameObjects.Components;
-using Robust.Shared;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;

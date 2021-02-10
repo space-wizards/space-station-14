@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Threading;
 using Content.Client.Graphics.Overlays;
 using Content.Shared.GameObjects.Components.Weapons;
-using Robust.Client.Graphics.Drawing;
 using Robust.Client.Graphics.Interfaces.Graphics.Overlays;
-using Robust.Client.Graphics.Overlays;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
-using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Client.GameObjects.Components.Weapons
 {

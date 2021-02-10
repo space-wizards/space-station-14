@@ -1,13 +1,11 @@
 ﻿#nullable enable
 using System;
-using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.Body.Circulatory;
 using Content.Server.GameObjects.Components.Body.Respiratory;
 using Content.Server.Utility;
 using Content.Shared.Atmos;
-using Content.Shared.GameObjects.Components.Body.Behavior;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body.Surgery;
-using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;

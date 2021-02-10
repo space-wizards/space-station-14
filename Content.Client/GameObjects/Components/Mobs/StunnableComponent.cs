@@ -1,5 +1,4 @@
 #nullable enable
-using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Movement;
 using Robust.Shared.GameObjects;

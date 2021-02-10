@@ -9,7 +9,6 @@ using Content.Server.AI.WorldState.States.Utility;
 using Content.Server.GameObjects.EntitySystems.AI;
 using Content.Server.GameObjects.EntitySystems.AI.LoadBalancer;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
-using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Server.AI;
 using Robust.Shared.GameObjects;

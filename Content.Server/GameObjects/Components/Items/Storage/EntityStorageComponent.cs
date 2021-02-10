@@ -1,7 +1,6 @@
 #nullable enable
 using System;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Interactable;

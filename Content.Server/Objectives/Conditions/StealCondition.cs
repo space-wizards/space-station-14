@@ -5,7 +5,6 @@ using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;

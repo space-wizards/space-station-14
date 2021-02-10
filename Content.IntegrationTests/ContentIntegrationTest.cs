@@ -8,7 +8,6 @@ using Content.Shared;
 using NUnit.Framework;
 using Robust.Server.Maps;
 using Robust.Server.Timing;
-using Robust.Shared;
 using Robust.Shared.ContentPack;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;

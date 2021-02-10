@@ -1,4 +1,3 @@
-using Content.Server.GameObjects.Components.Singularity;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Projectiles

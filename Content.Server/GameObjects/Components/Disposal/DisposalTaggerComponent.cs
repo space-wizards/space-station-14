@@ -1,8 +1,6 @@
 ﻿#nullable enable
-using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -13,7 +11,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
-using System;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;

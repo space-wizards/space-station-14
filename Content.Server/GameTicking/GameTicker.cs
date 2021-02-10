@@ -29,7 +29,6 @@ using Robust.Server;
 using Robust.Server.Maps;
 using Robust.Server.Player;
 using Robust.Server.ServerStatus;
-using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;

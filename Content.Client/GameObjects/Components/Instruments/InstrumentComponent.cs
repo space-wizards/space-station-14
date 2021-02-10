@@ -6,7 +6,6 @@ using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Instruments;
 using Content.Shared.Physics;
 using Robust.Client.Audio.Midi;
-using Robust.Shared;
 using Robust.Shared.Audio.Midi;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;

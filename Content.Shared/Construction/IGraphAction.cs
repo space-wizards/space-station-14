@@ -1,5 +1,4 @@
 ﻿#nullable enable
-using System;
 using System.Threading.Tasks;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;

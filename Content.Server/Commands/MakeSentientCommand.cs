@@ -1,7 +1,6 @@
 #nullable enable
 using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Mobs.Speech;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.Administration;
 using Content.Shared.GameObjects.Components.Mobs.Speech;

@@ -6,7 +6,6 @@ using Content.Server.Objectives.Interfaces;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives
 {

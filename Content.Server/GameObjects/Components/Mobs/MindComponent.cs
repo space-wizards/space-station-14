@@ -1,13 +1,8 @@
 ﻿#nullable enable
-using Content.Server.Commands.Observer;
-using Content.Server.GameObjects.Components.Medical;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs;
-using Content.Server.Utility;
-using Content.Shared.GameObjects.Components;
-using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;

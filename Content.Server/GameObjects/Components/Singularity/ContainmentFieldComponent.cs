@@ -1,9 +1,5 @@
 #nullable enable
-using System;
-using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
-using Robust.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components.Singularity
 {

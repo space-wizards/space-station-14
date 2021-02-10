@@ -1,6 +1,4 @@
 #nullable enable
-using Content.Server.GameObjects.Components.Nutrition;
-using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;

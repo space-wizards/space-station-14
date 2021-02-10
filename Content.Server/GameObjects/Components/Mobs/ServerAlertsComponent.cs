@@ -2,7 +2,6 @@
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Mobs;
-using Robust.Shared;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Network;

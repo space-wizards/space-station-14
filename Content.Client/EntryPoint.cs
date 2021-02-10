@@ -17,7 +17,6 @@ using Content.Client.Graphics.Overlays;
 using Content.Shared.Actions;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Cargo;
-using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry.ChemMaster;
 using Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser;
 using Content.Shared.GameObjects.Components.Gravity;

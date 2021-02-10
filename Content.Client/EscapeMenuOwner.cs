@@ -6,7 +6,6 @@ using Robust.Client.State;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Client
 {

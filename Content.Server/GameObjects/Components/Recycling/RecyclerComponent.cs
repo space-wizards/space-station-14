@@ -9,7 +9,6 @@ using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Recycling;
 using Content.Shared.Interfaces;
 using Content.Shared.Physics;

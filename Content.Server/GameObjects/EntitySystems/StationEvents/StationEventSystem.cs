@@ -12,7 +12,6 @@ using Content.Shared.Network.NetMessages;
 using JetBrains.Annotations;
 using Robust.Server.Console;
 using Robust.Server.Player;
-using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
