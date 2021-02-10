@@ -6,7 +6,6 @@ using Content.Client.Utility;
 using Content.Shared.Arcade;
 using Content.Shared.Input;
 using Robust.Client.Graphics;
-using Robust.Client.Graphics.Drawing;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;

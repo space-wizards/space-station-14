@@ -1,8 +1,4 @@
 ﻿using Robust.Client.Graphics;
-using Robust.Client.Graphics.Drawing;
-using Robust.Client.Graphics.Interfaces.Graphics;
-using Robust.Client.Graphics.Overlays;
-using Robust.Client.Graphics.Shaders;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;

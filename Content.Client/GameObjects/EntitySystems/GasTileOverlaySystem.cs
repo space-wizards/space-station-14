@@ -6,7 +6,6 @@ using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
-using Robust.Client.Graphics.Interfaces.Graphics.Overlays;
 using Robust.Client.ResourceManagement;
 using Robust.Client.Utility;
 using Robust.Shared.IoC;

@@ -3,7 +3,7 @@ using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics.Interfaces.Graphics.ClientEye;
+using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;

@@ -5,7 +5,6 @@ using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
@@ -20,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.UserInterface.Stylesheets;
+using Robust.Client.Graphics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Random;
 

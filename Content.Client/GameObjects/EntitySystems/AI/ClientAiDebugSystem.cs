@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.AI;
-using Robust.Client.Graphics.Interfaces.Graphics.ClientEye;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;

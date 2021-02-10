@@ -6,7 +6,7 @@ using Content.Client.GameObjects.EntitySystems;
 using Content.Client.StationEvents;
 using Content.Shared.Atmos;
 using Robust.Client.Console;
-using Robust.Client.Graphics.Drawing;
+using Robust.Client.Graphics;
 using Robust.Client.Placement;
 using Robust.Client.Player;
 using Robust.Client.ResourceManagement;

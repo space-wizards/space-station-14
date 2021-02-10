@@ -3,7 +3,7 @@ using System.Linq;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry.ChemMaster;
-using Robust.Client.Graphics.Drawing;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;

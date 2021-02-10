@@ -1,6 +1,6 @@
 ﻿using System;
 using Content.Client.Interfaces.Chat;
-using Robust.Client.Graphics.Interfaces.Graphics.ClientEye;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;

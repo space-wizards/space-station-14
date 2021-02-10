@@ -2,7 +2,7 @@ using System;
 using Content.Shared.GameObjects.Components.Power;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics.Drawing;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;

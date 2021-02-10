@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using Content.Shared.Input;
-using Robust.Client.Graphics.Interfaces.Graphics;
+using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Input.Binding;

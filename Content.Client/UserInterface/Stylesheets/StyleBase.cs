@@ -1,6 +1,5 @@
 using Content.Client.Utility;
 using Robust.Client.Graphics;
-using Robust.Client.Graphics.Drawing;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Shared.Maths;

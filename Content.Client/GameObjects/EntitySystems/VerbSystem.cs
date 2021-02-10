@@ -13,7 +13,6 @@ using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Client.Graphics.Drawing;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.ResourceManagement;

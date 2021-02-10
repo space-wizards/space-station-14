@@ -4,7 +4,7 @@ using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.PDA;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics.Drawing;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;

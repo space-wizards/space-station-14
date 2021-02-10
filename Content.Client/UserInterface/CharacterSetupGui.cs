@@ -6,7 +6,7 @@ using Content.Client.Utility;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics.Drawing;
+using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;

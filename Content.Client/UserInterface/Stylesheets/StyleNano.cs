@@ -3,7 +3,6 @@ using Content.Client.GameObjects.EntitySystems;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Utility;
 using Robust.Client.Graphics;
-using Robust.Client.Graphics.Drawing;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;

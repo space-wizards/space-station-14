@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Content.Client.GameObjects.Components;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components;
-using Robust.Client.Graphics.Interfaces.Graphics.ClientEye;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;

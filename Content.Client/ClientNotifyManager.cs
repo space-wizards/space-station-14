@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Content.Client.Interfaces;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared;
-using Robust.Client.Graphics.Interfaces.Graphics.ClientEye;
+using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;

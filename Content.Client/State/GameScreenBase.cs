@@ -5,7 +5,7 @@ using Content.Client.GameObjects.Components;
 using Content.Client.Utility;
 using Content.Shared;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics.Interfaces.Graphics.ClientEye;
+using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.State;

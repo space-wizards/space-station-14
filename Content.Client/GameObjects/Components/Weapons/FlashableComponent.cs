@@ -1,7 +1,7 @@
 ﻿using System;
 using Content.Client.Graphics.Overlays;
 using Content.Shared.GameObjects.Components.Weapons;
-using Robust.Client.Graphics.Interfaces.Graphics.Overlays;
+using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;

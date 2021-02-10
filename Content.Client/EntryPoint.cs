@@ -27,7 +27,7 @@ using Content.Shared.GameObjects.Components.VendingMachines;
 using Content.Shared.Kitchen;
 using Content.Shared.Alert;
 using Robust.Client;
-using Robust.Client.Graphics.Interfaces.Graphics.Overlays;
+using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.State;

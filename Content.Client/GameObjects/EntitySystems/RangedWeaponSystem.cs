@@ -4,7 +4,7 @@ using Content.Client.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics.Interfaces.Graphics.ClientEye;
+using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;

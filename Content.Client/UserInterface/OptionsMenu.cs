@@ -1,4 +1,4 @@
-﻿using Robust.Client.Graphics.Interfaces.Graphics;
+﻿using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Configuration;

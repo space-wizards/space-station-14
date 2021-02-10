@@ -5,7 +5,7 @@ using Content.Client.Interfaces.Chat;
 using Content.Shared.Administration;
 using Content.Shared.Chat;
 using Robust.Client.Console;
-using Robust.Client.Graphics.Interfaces.Graphics.ClientEye;
+using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;

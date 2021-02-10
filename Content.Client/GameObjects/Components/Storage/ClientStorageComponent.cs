@@ -6,7 +6,7 @@ using Content.Client.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics.Drawing;
+using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;

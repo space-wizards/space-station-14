@@ -2,7 +2,7 @@
 using Content.Client.Interfaces;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
-using Robust.Client.Graphics.Drawing;
+using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
