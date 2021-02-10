@@ -48,10 +48,12 @@ namespace Content.Client.UserInterface.AdminMenu
             new SpawnTilesCommandButton(),
             new StationEventsCommandButton()
         };
-        private readonly List<CommandButton> _debugButtons = new()
+        private readonly List<CommandButton> _atmosButtons = new()
         {
             new AddAtmosCommandButton(),
+            new AddGasCommandButton(),
             new FillGasCommandButton(),
+            new SetTempCommandButton(),
         };
         private readonly List<CommandButton> _roundButtons = new()
         {
@@ -303,9 +305,9 @@ namespace Content.Client.UserInterface.AdminMenu
             adminbusTabContainer.AddChild(adminbusButtonGrid);
             #endregion
 
-            #region Debug
-            // Debug // Mostly dev tools, like addatmos
-            var debugTabContainer = new MarginContainer
+            #region Atmos
+            // Atmos // Commands to add, modify, or remove gases.
+            var atmosTabContainer = new MarginContainer
             {
                 MarginLeftOverride = 4,
                 MarginTopOverride = 4,
@@ -313,12 +315,12 @@ namespace Content.Client.UserInterface.AdminMenu
                 MarginBottomOverride = 4,
                 CustomMinimumSize = (50, 50),
             };
-            var debugButtonGrid = new GridContainer
+            var atmosButtonGrid = new GridContainer
             {
                 Columns = 4,
             };
-            AddCommandButton(_debugButtons, debugButtonGrid);
-            debugTabContainer.AddChild(debugButtonGrid);
+            AddCommandButton(_atmosButtons, atmosButtonGrid);
+            atmosTabContainer.AddChild(atmosButtonGrid);
             #endregion
 
             #region Round
@@ -366,8 +368,8 @@ namespace Content.Client.UserInterface.AdminMenu
             MasterTabContainer.SetTabTitle(0, Loc.GetString("Admin"));
             MasterTabContainer.AddChild(adminbusTabContainer);
             MasterTabContainer.SetTabTitle(1, Loc.GetString("Adminbus"));
-            MasterTabContainer.AddChild(debugTabContainer);
-            MasterTabContainer.SetTabTitle(2, Loc.GetString("Debug"));
+            MasterTabContainer.AddChild(atmosTabContainer);
+            MasterTabContainer.SetTabTitle(2, Loc.GetString("Atmos"));
             MasterTabContainer.AddChild(roundTabContainer);
             MasterTabContainer.SetTabTitle(3, Loc.GetString("Round"));
             MasterTabContainer.AddChild(serverTabContainer);
@@ -600,6 +602,61 @@ namespace Content.Client.UserInterface.AdminMenu
             }
         }
 
+        private class AddGasCommandButton : UICommandButton
+        {
+            public override string Name => "Add Gas";
+            public override string RequiredCommand => "addgas";
+
+            private readonly CommandUIDropDown _grid = new()
+            {
+                Name = "Grid",
+                GetData = () => IoCManager.Resolve<IMapManager>().GetAllGrids().Where(g => (int) g.Index != 0).ToList<object>(),
+                GetDisplayName = (obj) => $"{((IMapGrid) obj).Index}{(IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity?.Transform.GridID == ((IMapGrid) obj).Index ? " (Current)" : "")}",
+                GetValueFromData = (obj) => ((IMapGrid) obj).Index.ToString(),
+            };
+
+            private readonly CommandUISpinBox _tileX = new()
+            {
+                Name = "TileX",
+            };
+
+            private readonly CommandUISpinBox _tileY = new()
+            {
+                Name = "TileY",
+            };
+
+            private readonly CommandUIDropDown _gas = new()
+            {
+                Name = "Gas",
+                GetData = () =>
+                {
+                    var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
+                    return atmosSystem.Gases.ToList<object>();
+                },
+                GetDisplayName = (obj) => $"{((GasPrototype) obj).Name} ({((GasPrototype) obj).ID})",
+                GetValueFromData = (obj) => ((GasPrototype) obj).ID.ToString(),
+            };
+
+            private readonly CommandUISpinBox _amount = new()
+            {
+                Name = "Amount"
+            };
+
+            public override List<CommandUIControl> UI => new()
+            {
+                _grid,
+                _gas,
+                _tileX,
+                _tileY,
+                _amount,
+            };
+
+            public override void Submit()
+            {
+                IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand($"addgas {_tileX.GetValue()} {_tileY.GetValue()} {_grid.GetValue()} {_gas.GetValue()} {_amount.GetValue()}");
+            }
+        }
+
         private class FillGasCommandButton : UICommandButton
         {
             public override string Name => "Fill Gas";
@@ -640,6 +697,48 @@ namespace Content.Client.UserInterface.AdminMenu
             public override void Submit()
             {
                 IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand($"fillgas {_grid.GetValue()} {_gas.GetValue()} {_amount.GetValue()}");
+            }
+        }
+
+        private class SetTempCommandButton : UICommandButton
+        {
+            public override string Name => "Set temperature";
+            public override string RequiredCommand => "settemp";
+
+            private readonly CommandUIDropDown _grid = new()
+            {
+                Name = "Grid",
+                GetData = () => IoCManager.Resolve<IMapManager>().GetAllGrids().Where(g => (int) g.Index != 0).ToList<object>(),
+                GetDisplayName = (obj) => $"{((IMapGrid) obj).Index}{(IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity?.Transform.GridID == ((IMapGrid) obj).Index ? " (Current)" : "")}",
+                GetValueFromData = (obj) => ((IMapGrid) obj).Index.ToString(),
+            };
+
+            private readonly CommandUISpinBox _tileX = new()
+            {
+                Name = "TileX",
+            };
+
+            private readonly CommandUISpinBox _tileY = new()
+            {
+                Name = "TileY",
+            };
+
+            private readonly CommandUISpinBox _temperature = new()
+            {
+                Name = "Temperature"
+            };
+
+            public override List<CommandUIControl> UI => new()
+            {
+                _grid,
+                _tileX,
+                _tileY,
+                _temperature,
+            };
+
+            public override void Submit()
+            {
+                IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand($"settemp {_tileX.GetValue()} {_tileY.GetValue()} {_grid.GetValue()} {_temperature.GetValue()}");
             }
         }
         #endregion
