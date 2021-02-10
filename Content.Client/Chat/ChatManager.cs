@@ -355,6 +355,7 @@ namespace Content.Client.Chat
                     chatBox.OOCButton.Pressed ^= true;
                     if (chatBox.AdminButton != null)
                         chatBox.AdminButton.Pressed ^= true;
+                    chatBox.DeadButton.Pressed ^= true;
                     _allState = !_allState;
                     break;
             }
