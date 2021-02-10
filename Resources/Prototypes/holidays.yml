@@ -137,6 +137,12 @@
   beginMonth: May
 
 - type: holiday
+  id: GarbageDay
+  name: Garbage Day
+  beginDay: 17
+  beginMonth: June
+
+- type: holiday
   id: InternationalPicnicDay
   name: International Picnic Day
   beginDay: 18
