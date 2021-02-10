@@ -176,8 +176,8 @@
   beginMonth: July
 
 - type: holiday
-  id: IndependenceDay
-  name: Independence Day
+  id: USIndependenceDay
+  name: US Independence Day
   beginDay: 4
   beginMonth: July
 
