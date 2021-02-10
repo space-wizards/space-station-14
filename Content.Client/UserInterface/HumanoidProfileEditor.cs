@@ -9,8 +9,6 @@ using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
@@ -22,6 +20,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.UserInterface.Stylesheets;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Random;
 
 namespace Content.Client.UserInterface
 {

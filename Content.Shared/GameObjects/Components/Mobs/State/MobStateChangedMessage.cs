@@ -1,6 +1,5 @@
 ﻿#nullable enable
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Shared.GameObjects.Components.Mobs.State
 {

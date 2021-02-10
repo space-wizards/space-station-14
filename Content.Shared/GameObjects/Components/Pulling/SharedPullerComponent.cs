@@ -5,8 +5,6 @@ using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Physics.Pull;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Component = Robust.Shared.GameObjects.Component;
 using Robust.Shared.Log;
 

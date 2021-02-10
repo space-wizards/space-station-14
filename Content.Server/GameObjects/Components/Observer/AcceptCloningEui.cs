@@ -4,8 +4,7 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Players;
 using Content.Shared.Eui;
 using Content.Shared.GameObjects.Components.Observer;
-using Robust.Server.Interfaces.Player;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 
 namespace Content.Server.GameObjects.Components.Observer

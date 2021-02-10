@@ -2,7 +2,6 @@
 using Content.Server.GameObjects.Components.MachineLinking;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;

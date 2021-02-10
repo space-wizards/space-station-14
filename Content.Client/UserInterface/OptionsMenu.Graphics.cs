@@ -1,10 +1,10 @@
 ﻿using Content.Shared;
 using Robust.Client.Graphics;
-using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared;
-using Robust.Shared.Interfaces.Configuration;
+using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;

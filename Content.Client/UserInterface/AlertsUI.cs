@@ -1,6 +1,5 @@
 ﻿using System;
 using Content.Client.UserInterface.Stylesheets;
-using Robust.Client.Interfaces.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Maths;

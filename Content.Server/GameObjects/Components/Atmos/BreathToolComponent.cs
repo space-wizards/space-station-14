@@ -4,7 +4,6 @@ using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Npgsql.TypeHandlers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Atmos

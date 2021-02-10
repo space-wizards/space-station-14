@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Content.Server.AI.Utility.Actions;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.AI.Utility.BehaviorSets
 {

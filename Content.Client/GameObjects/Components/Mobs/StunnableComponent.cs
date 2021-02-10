@@ -2,9 +2,7 @@
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Movement;
-using Robust.Client.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Client.GameObjects.Components.Mobs
 {

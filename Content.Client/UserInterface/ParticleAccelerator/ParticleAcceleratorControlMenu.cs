@@ -8,7 +8,6 @@ using Robust.Client.Animations;
 using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Graphics.Shaders;
-using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;

@@ -9,10 +9,10 @@ using Content.Server.Utility;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Body.Behavior;
 using Content.Shared.GameObjects.Components.Mobs.State;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Body.Behavior

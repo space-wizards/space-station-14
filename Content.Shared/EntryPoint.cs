@@ -4,11 +4,11 @@ using System.Globalization;
 using Content.Shared.Chemistry;
 using Content.Shared.Maps;
 using Robust.Shared.ContentPack;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Localization.Macros;
 using Robust.Shared.Log;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared

@@ -2,8 +2,6 @@
 using Content.Client.GameObjects.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Client.GameObjects.EntitySystems
 {

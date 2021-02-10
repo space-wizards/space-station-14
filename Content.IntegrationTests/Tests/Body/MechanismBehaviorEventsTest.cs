@@ -6,8 +6,7 @@ using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body.Part;
 using NUnit.Framework;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 

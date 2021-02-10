@@ -1,8 +1,8 @@
 using Content.Client.State;
 using Content.Client.UserInterface;
 using Robust.Client.Console;
-using Robust.Client.Interfaces.Input;
-using Robust.Client.Interfaces.State;
+using Robust.Client.Input;
+using Robust.Client.State;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;

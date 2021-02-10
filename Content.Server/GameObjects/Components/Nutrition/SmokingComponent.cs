@@ -5,8 +5,6 @@ using Content.Shared.GameObjects.Components;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
-using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 

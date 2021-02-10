@@ -1,12 +1,12 @@
 ﻿using Content.Client.GameObjects.EntitySystems;
 using Robust.Client.Graphics.ClientEye;
 using Robust.Client.Graphics.Drawing;
+using Robust.Client.Graphics.Interfaces.Graphics;
+using Robust.Client.Graphics.Interfaces.Graphics.ClientEye;
 using Robust.Client.Graphics.Overlays;
-using Robust.Client.Interfaces.Graphics;
-using Robust.Client.Interfaces.Graphics.ClientEye;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Map;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
 namespace Content.Client.Atmos

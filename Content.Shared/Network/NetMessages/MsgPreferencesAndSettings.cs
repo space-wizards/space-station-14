@@ -1,10 +1,10 @@
 ﻿using System.IO;
 using Content.Shared.Preferences;
 using Lidgren.Network;
-using Robust.Shared.Interfaces.Network;
-using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Network.NetMessages
 {

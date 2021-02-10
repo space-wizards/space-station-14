@@ -1,7 +1,6 @@
 ﻿﻿using Content.Server.GameObjects.Components.Atmos;
  using Content.Shared.Alert;
  using JetBrains.Annotations;
- using Robust.Shared.Interfaces.Serialization;
  using Robust.Shared.Serialization;
 
 namespace Content.Server.Alert.Click

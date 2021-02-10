@@ -3,8 +3,8 @@ using Content.Client.Arcade;
 using Content.Shared.Arcade;
 using Content.Shared.GameObjects.Components.Arcade;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects.Components.UserInterface;
-using Robust.Shared.GameObjects.Components.UserInterface;
+using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Client.GameObjects.Components.Arcade
 {

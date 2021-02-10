@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using JetBrains.Annotations;
 using Content.Server.GameObjects.EntitySystems.StationEvents;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.StationEvents
 {

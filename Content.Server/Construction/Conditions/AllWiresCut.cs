@@ -3,8 +3,7 @@ using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Power;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Construction.Conditions

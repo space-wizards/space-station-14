@@ -1,7 +1,7 @@
 ﻿using Content.Shared.GameObjects.Components.Body.Behavior;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {

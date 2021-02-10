@@ -1,7 +1,6 @@
 ﻿using Content.Shared.GameObjects.Components.Buckle;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Client.GameObjects.Components.Buckle
 {

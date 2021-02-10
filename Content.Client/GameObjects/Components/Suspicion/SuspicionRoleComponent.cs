@@ -4,11 +4,10 @@ using Content.Client.UserInterface;
 using Content.Client.UserInterface.Suspicion;
 using Content.Shared.GameObjects.Components.Suspicion;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.Graphics.ClientEye;
-using Robust.Client.Interfaces.Graphics.Overlays;
-using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.Graphics.Interfaces.Graphics.ClientEye;
+using Robust.Client.Graphics.Interfaces.Graphics.Overlays;
+using Robust.Client.ResourceManagement;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 

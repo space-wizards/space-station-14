@@ -8,7 +8,7 @@ using Content.Server.AI.Utility.Considerations.Inventory;
 using Content.Server.AI.Utility.Considerations.Nutrition.Food;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.Actions.Nutrition.Food

@@ -14,7 +14,7 @@ using Content.Server.AI.WorldState.States.Combat;
 using Content.Server.AI.WorldState.States.Inventory;
 using Content.Server.AI.WorldState.States.Movement;
 using Content.Server.GameObjects.Components.Weapon.Melee;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.Actions.Combat.Melee

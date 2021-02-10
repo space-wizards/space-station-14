@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Materials;
 using Content.Shared.Materials;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;

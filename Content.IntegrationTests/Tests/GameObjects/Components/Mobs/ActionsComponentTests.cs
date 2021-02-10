@@ -10,13 +10,13 @@ using Content.Shared.Actions;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Utility;
 using NUnit.Framework;
-using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
+using Robust.Client.UserInterface;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.Map;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using IPlayerManager = Robust.Server.Player.IPlayerManager;
 
 namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
 {
@@ -65,7 +65,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             await server.WaitIdleAsync();
             await client.WaitIdleAsync();
 
-            var serverPlayerManager = server.ResolveDependency<Robust.Server.Interfaces.Player.IPlayerManager>();
+            var serverPlayerManager = server.ResolveDependency<IPlayerManager>();
             var innateActions = new List<ActionType>();
 
             await server.WaitAssertion(() =>
@@ -91,7 +91,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             await server.WaitRunTicks(5);
             await client.WaitRunTicks(5);
 
-            var clientPlayerMgr = client.ResolveDependency<IPlayerManager>();
+            var clientPlayerMgr = client.ResolveDependency<Robust.Client.Player.IPlayerManager>();
             var clientUIMgr = client.ResolveDependency<IUserInterfaceManager>();
             var expectedOrder = new List<ActionType>();
 
@@ -226,7 +226,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             await server.WaitIdleAsync();
             await client.WaitIdleAsync();
 
-            var serverPlayerManager = server.ResolveDependency<Robust.Server.Interfaces.Player.IPlayerManager>();
+            var serverPlayerManager = server.ResolveDependency<IPlayerManager>();
             var serverEntManager = server.ResolveDependency<IEntityManager>();
             var serverGameTiming = server.ResolveDependency<IGameTiming>();
 
@@ -273,7 +273,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             await client.WaitRunTicks(5);
 
             // check that client has the actions, and toggle the light on via the action slot it was auto-assigned to
-            var clientPlayerMgr = client.ResolveDependency<IPlayerManager>();
+            var clientPlayerMgr = client.ResolveDependency<Robust.Client.Player.IPlayerManager>();
             var clientUIMgr = client.ResolveDependency<IUserInterfaceManager>();
             EntityUid clientFlashlight = default;
             await client.WaitAssertion(() =>

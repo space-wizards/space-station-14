@@ -3,13 +3,13 @@ using Content.Shared.Interfaces;
 using Content.Shared.Network.NetMessages;
 using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
+using Robust.Client.Graphics.Interfaces.Graphics;
 using Robust.Client.Graphics.Overlays;
 using Robust.Client.Graphics.Shaders;
-using Robust.Client.Interfaces.Graphics;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 

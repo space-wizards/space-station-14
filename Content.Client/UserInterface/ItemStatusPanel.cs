@@ -9,7 +9,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;

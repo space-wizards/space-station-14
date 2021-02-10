@@ -8,7 +8,7 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Interfaces.PDA;
 using Content.Shared.GameObjects.Components.PDA;
 using Content.Shared.Prototypes.PDA;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;

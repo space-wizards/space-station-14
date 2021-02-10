@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.Chemistry;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;

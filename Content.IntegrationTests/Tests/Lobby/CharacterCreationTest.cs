@@ -9,9 +9,10 @@ using Content.Server.Preferences;
 using Content.Shared;
 using Content.Shared.Preferences;
 using NUnit.Framework;
-using Robust.Client.Interfaces.State;
-using Robust.Shared.Interfaces.Configuration;
-using Robust.Shared.Interfaces.Network;
+using Robust.Client.State;
+using Robust.Shared;
+using Robust.Shared.Configuration;
+using Robust.Shared.Network;
 
 namespace Content.IntegrationTests.Tests.Lobby
 {

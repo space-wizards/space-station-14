@@ -4,7 +4,6 @@ using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 

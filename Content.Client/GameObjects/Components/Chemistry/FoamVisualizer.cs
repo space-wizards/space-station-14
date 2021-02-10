@@ -4,8 +4,6 @@ using Content.Shared.GameObjects.Components.Chemistry;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Client.GameObjects.Components.Animations;
-using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;

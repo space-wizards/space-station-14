@@ -2,10 +2,9 @@
 using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Robust.Server.Interfaces.Maps;
-using Robust.Server.Interfaces.Timing;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Resources;
+using Robust.Server.Maps;
+using Robust.Server.Timing;
+using Robust.Shared.ContentPack;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
 

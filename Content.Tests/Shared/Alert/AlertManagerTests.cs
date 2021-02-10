@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using Content.Shared.Alert;
 using NUnit.Framework;
-using Robust.Shared.Interfaces.Log;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;

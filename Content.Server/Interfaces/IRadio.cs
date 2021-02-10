@@ -1,7 +1,7 @@
-﻿using Robust.Shared.Interfaces.GameObjects;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.Interfaces
 {

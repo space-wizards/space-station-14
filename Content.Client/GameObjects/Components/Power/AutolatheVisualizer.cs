@@ -3,9 +3,7 @@ using Content.Shared.GameObjects.Components.Power;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Client.GameObjects.Components.Animations;
-using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Power

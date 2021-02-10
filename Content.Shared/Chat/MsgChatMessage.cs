@@ -1,6 +1,6 @@
 using Lidgren.Network;
+using Robust.Shared;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Network;
 
 namespace Content.Shared.Chat

@@ -11,9 +11,9 @@ using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs.State;
+using Robust.Server.Player;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Server.Interfaces.Player;
 using Robust.Shared.IoC;
 
 namespace Content.Server.GameTicking

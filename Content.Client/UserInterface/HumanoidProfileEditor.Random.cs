@@ -3,7 +3,6 @@ using System.Linq;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Appearance;
 using Content.Shared.Text;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
 

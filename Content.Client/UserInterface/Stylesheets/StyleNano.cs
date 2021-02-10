@@ -4,7 +4,7 @@ using Content.Client.UserInterface.Controls;
 using Content.Client.Utility;
 using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
-using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;

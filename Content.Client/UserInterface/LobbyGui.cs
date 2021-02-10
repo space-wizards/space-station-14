@@ -3,10 +3,10 @@ using Content.Client.Interfaces;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Robust.Client.Graphics.Drawing;
-using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 

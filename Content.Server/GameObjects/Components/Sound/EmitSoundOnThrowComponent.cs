@@ -1,9 +1,8 @@
 ﻿using Content.Shared.Audio;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Sound

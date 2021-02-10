@@ -7,8 +7,6 @@ using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
 using Content.Shared.Physics;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;

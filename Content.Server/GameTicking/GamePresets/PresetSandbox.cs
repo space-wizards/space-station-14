@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Content.Server.Sandbox;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.IoC;
 
 namespace Content.Server.GameTicking.GamePresets

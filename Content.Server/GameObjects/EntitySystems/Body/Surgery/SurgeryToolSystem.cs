@@ -6,7 +6,7 @@ using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameTicking;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems.Body.Surgery
 {

@@ -1,6 +1,6 @@
 ﻿using System;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Utility
 {

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.ResourceManagement;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 

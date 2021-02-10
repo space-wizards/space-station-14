@@ -1,8 +1,8 @@
 ﻿using System;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
+using Robust.Shared.Reflection;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 

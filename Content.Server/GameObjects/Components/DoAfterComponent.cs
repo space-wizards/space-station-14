@@ -4,7 +4,6 @@ using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Damage;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects.Components
 {

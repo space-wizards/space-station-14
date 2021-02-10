@@ -3,7 +3,6 @@ using System;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers

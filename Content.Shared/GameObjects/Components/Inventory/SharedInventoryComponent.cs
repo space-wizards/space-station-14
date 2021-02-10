@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Movement;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
+using Robust.Shared.Reflection;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
