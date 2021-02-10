@@ -18,6 +18,7 @@ using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -41,16 +42,21 @@ namespace Content.Server.Physics.Controllers
             _audioSystem = EntitySystem.Get<AudioSystem>();
         }
 
-        public override void UpdateBeforeSolve(float frameTime)
+        public override void UpdateBeforeSolve(PhysicsMap map, float frameTime)
         {
-            base.UpdateBeforeSolve(frameTime);
+            base.UpdateBeforeSolve(map, frameTime);
+
             foreach (var (mover, physics) in ComponentManager.EntityQuery<SharedPlayerInputMoverComponent, PhysicsComponent>(false))
             {
+                if (mover.Owner.Transform.MapID != map.MapId) continue;
+
                 UpdateKinematics(frameTime, mover.Owner.Transform, mover, physics);
             }
 
             foreach (var (mover, physics) in ComponentManager.EntityQuery<AiControllerComponent, PhysicsComponent>(false))
             {
+                if (mover.Owner.Transform.MapID != map.MapId) continue;
+
                 UpdateKinematics(frameTime, mover.Owner.Transform, mover, physics);
             }
         }

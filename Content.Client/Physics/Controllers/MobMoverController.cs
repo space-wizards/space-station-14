@@ -4,14 +4,15 @@ using Content.Shared.Physics.Controllers;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.IoC;
+using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Client.Physics.Controllers
 {
     public sealed class MobMoverController : SharedMobMoverController
     {
-        public override void UpdateBeforeSolve(float frameTime)
+        public override void UpdateBeforeSolve(PhysicsMap map, float frameTime)
         {
-            base.UpdateBeforeSolve(frameTime);
+            base.UpdateBeforeSolve(map, frameTime);
 
             var player = IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity;
             if (player != null && player.TryGetComponent(out IPhysicsComponent? physicsComponent))

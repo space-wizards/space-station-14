@@ -3,10 +3,11 @@ using System;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Physics.Pull;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.Physics;
+using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
@@ -22,9 +23,14 @@ namespace Content.Shared.Physics.Controllers
     /// </summary>
     public abstract class SharedMobMoverController : AetherController
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
+
         private SharedBroadPhaseSystem _broadPhaseSystem = default!;
 
-        private float _acceleration = 150.0f;
+        private const float MobAcceleration = 10.0f;
+
+        private const float MobFriction = 6.0f;
 
         public override void Initialize()
         {
@@ -37,7 +43,6 @@ namespace Content.Shared.Physics.Controllers
             if (!ActionBlockerSystem.CanMove(mover.Owner)) return;
 
             var (walkDir, sprintDir) = mover.VelocityDir;
-            var combined = walkDir + sprintDir;
 
             var weightless = transform.Owner.IsWeightless();
 
@@ -61,20 +66,39 @@ namespace Content.Shared.Physics.Controllers
 
             // Regular movement.
             var total = (walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed);
+            var wishSpeed = total.Length;
+            var wishDir = wishSpeed > 0 ? total.Normalized : Vector2.Zero;
 
-            if (total != Vector2.Zero)
+            // Clamp to server-max speed?
+            var accelerate = 80.0f;
+
+            Accelerate(frameTime, physicsComponent, wishDir, wishSpeed, accelerate);
+
+            if (wishSpeed != 0f)
             {
-                Accelerate(frameTime, physicsComponent, total);
                 transform.LocalRotation = total.GetDir().ToAngle();
             }
 
+            // TODO: Conveyors should probably be a separate controller that adds to the basevelocity of the body (which gets reset every tick I think?)
+
             DebugTools.Assert(!float.IsNaN(physicsComponent.LinearVelocity.Length));
-
-            // TODO: Like I said on PhysicsIsland damping is megasketch. Just to make players feel better to play
-            // we'll use our own friction here coz fuck it why not
-            Friction(frameTime, physicsComponent, total);
-
             HandleFootsteps(mover);
+        }
+
+        // Okay Touma
+        private void Accelerate(float frameTime, PhysicsComponent body, Vector2 wishDir, float wishSpeed, float accel)
+        {
+            if (!ActionBlockerSystem.CanMove(body.Owner)) return;
+
+            var currentSpeed = Vector2.Dot(body.LinearVelocity, wishDir);
+            var addSpeed = wishSpeed - currentSpeed;
+
+            if (addSpeed <= 0f) return;
+
+            var accelSpeed = accel * frameTime * wishSpeed * GetTileFriction(body);
+            accelSpeed = MathF.Min(accelSpeed, addSpeed);
+
+            body.LinearVelocity += wishDir * accelSpeed;
         }
 
         private bool IsAroundCollider(ITransformComponent transform, IMoverComponent mover,
@@ -102,43 +126,22 @@ namespace Content.Shared.Physics.Controllers
             return false;
         }
 
-        // Okay Touma
-        private void Accelerate(float frameTime, PhysicsComponent physicsComponent, Vector2 wishDir)
-        {
-            var acceleration = 10.0f;
-
-            var wishSpeed = wishDir.Length;
-            var currentSpeed = Vector2.Dot(physicsComponent.LinearVelocity, wishDir.Normalized);
-            var addSpeed = wishSpeed - currentSpeed;
-
-            if (addSpeed <= 0f) return;
-
-            var accelSpeed = acceleration * frameTime * wishSpeed;
-            accelSpeed = MathF.Min(accelSpeed, addSpeed);
-
-            physicsComponent.LinearVelocity += wishDir.Normalized * accelSpeed;
-        }
-
-        /// <summary>
-        ///     Artificial player friction to make movement feel snappier.
-        /// </summary>
-        /// <param name="frameTime"></param>
-        /// <param name="physicsComponent"></param>
-        /// <param name="wishDir"></param>
-        private void Friction(float frameTime, PhysicsComponent physicsComponent, Vector2 wishDir)
-        {
-            // If we have no control can't slow our movement down then.
-            if (!ActionBlockerSystem.CanMove(physicsComponent.Owner) || physicsComponent.LinearVelocity == Vector2.Zero) return;
-
-            var friction = physicsComponent.LinearVelocity.Normalized * frameTime * 40;
-            if (friction.Length > physicsComponent.LinearVelocity.Length)
-            {
-                friction = friction.Normalized * physicsComponent.LinearVelocity.Length;
-            }
-
-            physicsComponent.LinearVelocity -= friction;
-        }
-
         protected virtual void HandleFootsteps(IMoverComponent mover) {}
+
+        // TODO: Copy-pasted shitcode.
+        [Pure]
+        private float GetTileFriction(IPhysicsComponent body)
+        {
+            if (!body.OnGround)
+                return 0.0f;
+
+            var transform = body.Owner.Transform;
+            var coords = transform.Coordinates;
+
+            var grid = _mapManager.GetGrid(coords.GetGridId(body.Owner.EntityManager));
+            var tile = grid.GetTileRef(coords);
+            var tileDef = _tileDefinitionManager[tile.Tile.TypeId];
+            return tileDef.Friction;
+        }
     }
 }
