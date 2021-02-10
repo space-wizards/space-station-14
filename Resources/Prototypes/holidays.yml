@@ -112,7 +112,7 @@
 - type: holiday
   id: Birthday14
   name: Birthday of Space Station 14
-  beginDay: 29
+  beginDay: 26
   beginMonth: April
 
 - type: holiday
