@@ -8,17 +8,17 @@
     },
     "states": [
         {
-            "name": "phoroncrate",
+            "name": "plasmacrate",
             "select": [],
             "flags": {}
         },
         {
-            "name": "phoroncrate_door",
+            "name": "plasmacrate_door",
             "select": [],
             "flags": {}
         },
         {
-            "name": "phoroncrate_icon",
+            "name": "plasmacrate_icon",
             "select": [],
             "flags": {}
         },
@@ -46,7 +46,7 @@
             "name": "sparking",            "delays": [[0.1,0.1,0.1,0.1,0.1,0.1]]
         },
         {
-            "name": "phoroncrate_open",
+            "name": "plasmacrate_open",
             "select": [],
             "flags": {}
 	}

@@ -22,10 +22,14 @@ namespace Content.IntegrationTests.Tests.Buckle
     [TestOf(typeof(StrapComponent))]
     public class BuckleTest : ContentIntegrationTest
     {
-        private const string PROTOTYPES = @"
+        private const string BuckleDummyId = "BuckleDummy";
+        private const string StrapDummyId = "StrapDummy";
+        private const string ItemDummyId = "ItemDummy";
+
+        private static readonly string Prototypes = $@"
 - type: entity
-  name: BuckleDummy
-  id: BuckleDummy
+  name: {BuckleDummyId}
+  id: {BuckleDummyId}
   components:
   - type: Buckle
   - type: Hands
@@ -35,15 +39,21 @@ namespace Content.IntegrationTests.Tests.Buckle
     centerSlot: torso
 
 - type: entity
-  name: StrapDummy
-  id: StrapDummy
+  name: {StrapDummyId}
+  id: {StrapDummyId}
   components:
   - type: Strap
+
+- type: entity
+  name: {ItemDummyId}
+  id: {ItemDummyId}
+  components:
+  - type: Item
 ";
         [Test]
         public async Task BuckleUnbuckleCooldownRangeTest()
         {
-            var options = new ServerIntegrationOptions {ExtraPrototypes = PROTOTYPES};
+            var options = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
             var server = StartServer(options);
 
             IEntity human = null;
@@ -60,8 +70,8 @@ namespace Content.IntegrationTests.Tests.Buckle
                 var grid = mapManager.GetGrid(gridId);
                 var coordinates = grid.GridEntityId.ToCoordinates();
 
-                human = entityManager.SpawnEntity("BuckleDummy", coordinates);
-                chair = entityManager.SpawnEntity("StrapDummy", coordinates);
+                human = entityManager.SpawnEntity(BuckleDummyId, coordinates);
+                chair = entityManager.SpawnEntity(StrapDummyId, coordinates);
 
                 // Default state, unbuckled
                 Assert.True(human.TryGetComponent(out buckle));
@@ -194,7 +204,7 @@ namespace Content.IntegrationTests.Tests.Buckle
         [Test]
         public async Task BuckledDyingDropItemsTest()
         {
-            var options = new ServerIntegrationOptions {ExtraPrototypes = PROTOTYPES};
+            var options = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
             var server = StartServer(options);
 
             IEntity human = null;
@@ -213,8 +223,8 @@ namespace Content.IntegrationTests.Tests.Buckle
                 var grid = mapManager.GetGrid(gridId);
                 var coordinates = grid.GridEntityId.ToCoordinates();
 
-                human = entityManager.SpawnEntity("BuckleDummy", coordinates);
-                IEntity chair = entityManager.SpawnEntity("StrapDummy", coordinates);
+                human = entityManager.SpawnEntity(BuckleDummyId, coordinates);
+                IEntity chair = entityManager.SpawnEntity(StrapDummyId, coordinates);
 
                 // Component sanity check
                 Assert.True(human.TryGetComponent(out buckle));
@@ -230,7 +240,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 // Put an item into every hand
                 for (var i = 0; i < hands.Count; i++)
                 {
-                    var akms = entityManager.SpawnEntity("RifleAk", coordinates);
+                    var akms = entityManager.SpawnEntity(ItemDummyId, coordinates);
 
                     // Equip items
                     Assert.True(akms.TryGetComponent(out ItemComponent item));
@@ -280,7 +290,7 @@ namespace Content.IntegrationTests.Tests.Buckle
         [Test]
         public async Task ForceUnbuckleBuckleTest()
         {
-            var options = new ServerIntegrationOptions {ExtraPrototypes = PROTOTYPES};
+            var options = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
             var server = StartServer(options);
 
             IEntity human = null;
@@ -296,8 +306,8 @@ namespace Content.IntegrationTests.Tests.Buckle
                 var grid = mapManager.GetGrid(gridId);
                 var coordinates = grid.GridEntityId.ToCoordinates();
 
-                human = entityManager.SpawnEntity("BuckleDummy", coordinates);
-                chair = entityManager.SpawnEntity("StrapDummy", coordinates);
+                human = entityManager.SpawnEntity(BuckleDummyId, coordinates);
+                chair = entityManager.SpawnEntity(StrapDummyId, coordinates);
 
                 // Component sanity check
                 Assert.True(human.TryGetComponent(out buckle));

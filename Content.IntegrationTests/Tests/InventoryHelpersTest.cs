@@ -16,7 +16,7 @@ namespace Content.IntegrationTests.Tests
     [TestOf(typeof(InventoryHelpers))]
     public class InventoryHelpersTest : ContentIntegrationTest
     {
-        private const string PROTOTYPES = @"
+        private const string Prototypes = @"
 - type: entity
   name: InventoryStunnableDummy
   id: InventoryStunnableDummy
@@ -45,7 +45,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task SpawnItemInSlotTest()
         {
-            var options = new ServerIntegrationOptions {ExtraPrototypes = PROTOTYPES};
+            var options = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
             IEntity human = null;
@@ -83,7 +83,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(inventory.TryGetSlotItem(Slots.IDCARD, out ItemComponent _), Is.False);
 
                 // Let's try skipping the interaction check and see if it equips it!
-                Assert.That(inventory.SpawnItemInSlot(Slots.IDCARD, "InventoryIDCardDummy", false));
+                Assert.That(inventory.SpawnItemInSlot(Slots.IDCARD, "InventoryIDCardDummy"));
                 Assert.That(inventory.TryGetSlotItem(Slots.IDCARD, out ItemComponent id));
                 Assert.That(id.Owner.Prototype != null && id.Owner.Prototype.ID == "InventoryIDCardDummy");
             });

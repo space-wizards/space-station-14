@@ -15,7 +15,7 @@ namespace Content.IntegrationTests.Tests
     [TestFixture]
     public class PowerTest : ContentIntegrationTest
     {
-        private const string PROTOTYPES = @"
+        private const string Prototypes = @"
 - type: entity
   name: GeneratorDummy
   id: GeneratorDummy
@@ -118,7 +118,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task PowerNetTest()
         {
-            var options = new ServerIntegrationOptions{ExtraPrototypes = PROTOTYPES};
+            var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
             PowerSupplierComponent supplier = null;
@@ -169,7 +169,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task ApcChargingTest()
         {
-            var options = new ServerIntegrationOptions{ExtraPrototypes = PROTOTYPES};
+            var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
             BatteryComponent apcBattery = null;
@@ -217,7 +217,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task ApcNetTest()
         {
-            var options = new ServerIntegrationOptions{ExtraPrototypes = PROTOTYPES};
+            var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
             PowerReceiverComponent receiver = null;

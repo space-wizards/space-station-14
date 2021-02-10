@@ -14,17 +14,35 @@ namespace Content.IntegrationTests.Tests.Doors
     [TestOf(typeof(AirlockComponent))]
     public class AirlockTest : ContentIntegrationTest
     {
-        private const string PROTOTYPES = @"
+        private const string Prototypes = @"
+- type: entity
+  name: PhysicsDummy
+  id: PhysicsDummy
+  components:
+  - type: Physics
+    anchored: false
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: ""-0.49,-0.49,0.49,0.49""
+      layer:
+      - Impassable
+
 - type: entity
   name: AirlockDummy
   id: AirlockDummy
   components:
   - type: Airlock
+  - type: Physics
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: ""-0.49,-0.49,0.49,0.49""
+      mask:
+      - Impassable
 ";
         [Test]
         public async Task OpenCloseDestroyTest()
         {
-            var options = new ServerIntegrationOptions{ExtraPrototypes = PROTOTYPES};
+            var options = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
             await server.WaitIdleAsync();
@@ -39,7 +57,7 @@ namespace Content.IntegrationTests.Tests.Doors
             {
                 mapManager.CreateNewMapEntity(MapId.Nullspace);
 
-                airlock = entityManager.SpawnEntity("Airlock", MapCoordinates.Nullspace);
+                airlock = entityManager.SpawnEntity("AirlockDummy", MapCoordinates.Nullspace);
 
                 Assert.True(airlock.TryGetComponent(out airlockComponent));
                 Assert.That(airlockComponent.State, Is.EqualTo(DoorState.Closed));
@@ -85,7 +103,7 @@ namespace Content.IntegrationTests.Tests.Doors
         [Test]
         public async Task AirlockBlockTest()
         {
-            var options = new ServerIntegrationOptions {ExtraPrototypes = PROTOTYPES};
+            var options = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
             var server = StartServer(options);
 
             await server.WaitIdleAsync();
@@ -93,24 +111,24 @@ namespace Content.IntegrationTests.Tests.Doors
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
 
-            IEntity human = null;
+            IEntity physicsDummy = null;
             IEntity airlock = null;
             TestController controller = null;
             AirlockComponent airlockComponent = null;
 
-            var humanStartingX = -1;
+            var physicsDummyStartingX = -1;
 
             server.Assert(() =>
             {
                 var mapId = new MapId(1);
                 mapManager.CreateNewMapEntity(mapId);
 
-                var humanCoordinates = new MapCoordinates((humanStartingX, 0), mapId);
-                human = entityManager.SpawnEntity("HumanMob_Content", humanCoordinates);
+                var humanCoordinates = new MapCoordinates((physicsDummyStartingX, 0), mapId);
+                physicsDummy = entityManager.SpawnEntity("PhysicsDummy", humanCoordinates);
 
-                airlock = entityManager.SpawnEntity("Airlock", new MapCoordinates((0, 0), mapId));
+                airlock = entityManager.SpawnEntity("AirlockDummy", new MapCoordinates((0, 0), mapId));
 
-                Assert.True(human.TryGetComponent(out IPhysicsComponent physics));
+                Assert.True(physicsDummy.TryGetComponent(out IPhysicsComponent physics));
 
                 controller = physics.EnsureController<TestController>();
 
@@ -136,10 +154,10 @@ namespace Content.IntegrationTests.Tests.Doors
             }
 
             // Sanity check
-            Assert.That(human.Transform.MapPosition.X, Is.GreaterThan(humanStartingX));
+            Assert.That(physicsDummy.Transform.MapPosition.X, Is.GreaterThan(physicsDummyStartingX));
 
             // Blocked by the airlock
-            Assert.That(human.Transform.MapPosition.X, Is.Negative.Or.Zero);
+            Assert.That(physicsDummy.Transform.MapPosition.X, Is.Negative.Or.Zero);
         }
 
         private class TestController : VirtualController { }

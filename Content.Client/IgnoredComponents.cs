@@ -178,7 +178,6 @@ namespace Content.Client
             "Rehydratable",
             "Headset",
             "ComputerBoard",
-            "BreakableConstruction",
             "GasCanister",
             "GasCanisterPort",
             "Cleanable",

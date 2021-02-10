@@ -150,14 +150,14 @@ namespace Content.Server.Atmos
             if (oxygen < 0.5f)
                 return;
 
-            var phoron = Air.GetMoles(Gas.Phoron);
+            var plasma = Air.GetMoles(Gas.Plasma);
             var tritium = Air.GetMoles(Gas.Tritium);
 
             if (Hotspot.Valid)
             {
                 if (soh)
                 {
-                    if (phoron > 0.5f || tritium > 0.5f)
+                    if (plasma > 0.5f || tritium > 0.5f)
                     {
                         if (Hotspot.Temperature < exposedTemperature)
                             Hotspot.Temperature = exposedTemperature;
@@ -169,7 +169,7 @@ namespace Content.Server.Atmos
                 return;
             }
 
-            if ((exposedTemperature > Atmospherics.PhoronMinimumBurnTemperature) && (phoron > 0.5f || tritium > 0.5f))
+            if ((exposedTemperature > Atmospherics.PlasmaMinimumBurnTemperature) && (plasma > 0.5f || tritium > 0.5f))
             {
                 Hotspot = new Hotspot
                 {
@@ -753,7 +753,7 @@ namespace Content.Server.Atmos
             ExcitedGroup?.ResetCooldowns();
 
             if ((Hotspot.Temperature < Atmospherics.FireMinimumTemperatureToExist) || (Hotspot.Volume <= 1f)
-                || Air == null || Air.Gases[(int)Gas.Oxygen] < 0.5f || (Air.Gases[(int)Gas.Phoron] < 0.5f && Air.GetMoles(Gas.Tritium) < 0.5f))
+                || Air == null || Air.Gases[(int)Gas.Oxygen] < 0.5f || (Air.Gases[(int)Gas.Plasma] < 0.5f && Air.GetMoles(Gas.Tritium) < 0.5f))
             {
                 Hotspot = new Hotspot();
                 UpdateVisuals();

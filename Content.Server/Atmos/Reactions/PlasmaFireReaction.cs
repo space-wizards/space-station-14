@@ -12,7 +12,7 @@ using Robust.Shared.Serialization;
 namespace Content.Server.Atmos.Reactions
 {
     [UsedImplicitly]
-    public class PhoronFireReaction : IGasReactionEffect
+    public class PlasmaFireReaction : IGasReactionEffect
     {
         public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, GridTileLookupSystem gridTileLookup)
         {
@@ -21,43 +21,43 @@ namespace Content.Server.Atmos.Reactions
             var temperature = mixture.Temperature;
             var location = holder as TileAtmosphere;
 
-            // More phoron released at higher temperatures
+            // More plasma released at higher temperatures
             var temperatureScale = 0f;
             var superSaturation = false;
 
-            if (temperature > Atmospherics.PhoronUpperTemperature)
+            if (temperature > Atmospherics.PlasmaUpperTemperature)
                 temperatureScale = 1f;
             else
-                temperatureScale = (temperature - Atmospherics.PhoronMinimumBurnTemperature) /
-                                   (Atmospherics.PhoronUpperTemperature - Atmospherics.PhoronMinimumBurnTemperature);
+                temperatureScale = (temperature - Atmospherics.PlasmaMinimumBurnTemperature) /
+                                   (Atmospherics.PlasmaUpperTemperature - Atmospherics.PlasmaMinimumBurnTemperature);
 
             if (temperatureScale > 0f)
             {
-                var phoronBurnRate = 0f;
+                var plasmaBurnRate = 0f;
                 var oxygenBurnRate = Atmospherics.OxygenBurnRateBase - temperatureScale;
 
-                if (mixture.GetMoles(Gas.Oxygen) / mixture.GetMoles(Gas.Phoron) >
+                if (mixture.GetMoles(Gas.Oxygen) / mixture.GetMoles(Gas.Plasma) >
                     Atmospherics.SuperSaturationThreshold)
                     superSaturation = true;
 
                 if (mixture.GetMoles(Gas.Oxygen) >
-                    mixture.GetMoles(Gas.Phoron) * Atmospherics.PhoronOxygenFullburn)
-                    phoronBurnRate = (mixture.GetMoles(Gas.Phoron) * temperatureScale) /
-                                     Atmospherics.PhoronBurnRateDelta;
+                    mixture.GetMoles(Gas.Plasma) * Atmospherics.PlasmaOxygenFullburn)
+                    plasmaBurnRate = (mixture.GetMoles(Gas.Plasma) * temperatureScale) /
+                                     Atmospherics.PlasmaBurnRateDelta;
                 else
-                    phoronBurnRate = (temperatureScale * (mixture.GetMoles(Gas.Oxygen) / Atmospherics.PhoronOxygenFullburn)) / Atmospherics.PhoronBurnRateDelta;
+                    plasmaBurnRate = (temperatureScale * (mixture.GetMoles(Gas.Oxygen) / Atmospherics.PlasmaOxygenFullburn)) / Atmospherics.PlasmaBurnRateDelta;
 
-                if (phoronBurnRate > Atmospherics.MinimumHeatCapacity)
+                if (plasmaBurnRate > Atmospherics.MinimumHeatCapacity)
                 {
-                    phoronBurnRate = MathF.Min(MathF.Min(phoronBurnRate, mixture.GetMoles(Gas.Phoron)), mixture.GetMoles(Gas.Oxygen)/oxygenBurnRate);
-                    mixture.SetMoles(Gas.Phoron, mixture.GetMoles(Gas.Phoron) - phoronBurnRate);
-                    mixture.SetMoles(Gas.Oxygen, mixture.GetMoles(Gas.Oxygen) - (phoronBurnRate * oxygenBurnRate));
+                    plasmaBurnRate = MathF.Min(MathF.Min(plasmaBurnRate, mixture.GetMoles(Gas.Plasma)), mixture.GetMoles(Gas.Oxygen)/oxygenBurnRate);
+                    mixture.SetMoles(Gas.Plasma, mixture.GetMoles(Gas.Plasma) - plasmaBurnRate);
+                    mixture.SetMoles(Gas.Oxygen, mixture.GetMoles(Gas.Oxygen) - (plasmaBurnRate * oxygenBurnRate));
 
-                    mixture.AdjustMoles(superSaturation ? Gas.Tritium : Gas.CarbonDioxide, phoronBurnRate);
+                    mixture.AdjustMoles(superSaturation ? Gas.Tritium : Gas.CarbonDioxide, plasmaBurnRate);
 
-                    energyReleased += Atmospherics.FirePhoronEnergyReleased * (phoronBurnRate);
+                    energyReleased += Atmospherics.FirePlasmaEnergyReleased * (plasmaBurnRate);
 
-                    mixture.ReactionResults[GasReaction.Fire] += (phoronBurnRate) * (1 + oxygenBurnRate);
+                    mixture.ReactionResults[GasReaction.Fire] += (plasmaBurnRate) * (1 + oxygenBurnRate);
                 }
             }
 

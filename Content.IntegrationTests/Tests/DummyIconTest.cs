@@ -27,7 +27,7 @@ namespace Content.IntegrationTests.Tests
                 {
                     if (!proto.Components.ContainsKey("Sprite")) continue;
 
-                    SpriteComponent.GetPrototypeTextures(proto, resourceCache).ToList();
+                    var _ = SpriteComponent.GetPrototypeTextures(proto, resourceCache).ToList();
                 }
             });
         }

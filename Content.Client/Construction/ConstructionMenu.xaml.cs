@@ -182,8 +182,8 @@ namespace Content.Client.Construction
                             case StackType.Plasteel:
                                 return _resourceCache.GetTexture("/Textures/Objects/Materials/sheets.rsi/plasteel.png");
 
-                            case StackType.Phoron:
-                                return _resourceCache.GetTexture("/Textures/Objects/Materials/sheets.rsi/phoron.png");
+                            case StackType.Plasma:
+                                return _resourceCache.GetTexture("/Textures/Objects/Materials/sheets.rsi/plasma.png");
 
                             case StackType.Cable:
                                 return _resourceCache.GetTexture("/Textures/Objects/Tools/cables.rsi/coil-30.png");

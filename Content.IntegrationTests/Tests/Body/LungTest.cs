@@ -8,7 +8,6 @@ using Content.Server.GameObjects.Components.Body.Circulatory;
 using Content.Server.GameObjects.Components.Metabolism;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Body.Mechanism;
 using NUnit.Framework;
 using Robust.Server.Interfaces.Maps;
 using Robust.Shared.Interfaces.GameObjects;
@@ -23,7 +22,7 @@ namespace Content.IntegrationTests.Tests.Body
     [TestOf(typeof(LungBehavior))]
     public class LungTest : ContentIntegrationTest
     {
-        private const string PROTOTYPES = @"
+        private const string Prototypes = @"
 - type: entity
   name: HumanBodyAndBloodstreamDummy
   id: HumanBodyAndBloodstreamDummy
@@ -52,7 +51,7 @@ namespace Content.IntegrationTests.Tests.Body
         [Test]
         public async Task AirConsistencyTest()
         {
-            var options = new ServerContentIntegrationOption{ExtraPrototypes = PROTOTYPES};
+            var options = new ServerContentIntegrationOption{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
             server.Assert(() =>
@@ -139,7 +138,9 @@ namespace Content.IntegrationTests.Tests.Body
         [Test]
         public async Task NoSuffocationTest()
         {
-            var server = StartServerDummyTicker();
+            var options = new ServerContentIntegrationOption{ExtraPrototypes = Prototypes};
+            var server = StartServerDummyTicker(options);
+
             await server.WaitIdleAsync();
 
             var mapLoader = server.ResolveDependency<IMapLoader>();
@@ -165,7 +166,7 @@ namespace Content.IntegrationTests.Tests.Body
             {
                 var center = new Vector2(0.5f, -1.5f);
                 var coordinates = new EntityCoordinates(grid.GridEntityId, center);
-                human = entityManager.SpawnEntity("HumanMob_Content", coordinates);
+                human = entityManager.SpawnEntity("HumanBodyAndBloodstreamDummy", coordinates);
 
                 Assert.True(human.TryGetComponent(out IBody body));
                 Assert.True(body.HasMechanismBehavior<LungBehavior>());

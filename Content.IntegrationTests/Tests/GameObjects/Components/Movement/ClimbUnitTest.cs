@@ -17,7 +17,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
     [TestOf(typeof(ClimbingComponent))]
     public class ClimbUnitTest : ContentIntegrationTest
     {
-        private const string PROTOTYPES = @"
+        private const string Prototypes = @"
 - type: entity
   name: HumanDummy
   id: HumanDummy
@@ -35,12 +35,11 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
         [Test]
         public async Task Test()
         {
-            var options = new ServerIntegrationOptions{ExtraPrototypes = PROTOTYPES};
+            var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
             IEntity human;
             IEntity table;
-            ClimbableComponent climbable;
             ClimbingComponent climbing;
 
             server.Assert(() =>
@@ -56,20 +55,20 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
 
                 // Test for climb components existing
                 // Players and tables should have these in their prototypes.
-                Assert.That(human.TryGetComponent(out climbing!), "Human has no climbing", Is.True);
-                Assert.That(table.TryGetComponent(out climbable!), "Table has no climbable", Is.True);
+                Assert.That(human.TryGetComponent(out climbing!), "Human has no climbing");
+                Assert.That(table.TryGetComponent(out ClimbableComponent _), "Table has no climbable");
 
                 // Now let's make the player enter a climbing transitioning state.
                 climbing.IsClimbing = true;
                 climbing.TryMoveTo(human.Transform.WorldPosition, table.Transform.WorldPosition);
                 var body = human.GetComponent<IPhysicsComponent>();
 
-                Assert.That(body.HasController<ClimbController>(), "Player has no ClimbController", Is.True);
+                Assert.That(body.HasController<ClimbController>(), "Player has no ClimbController");
 
                 // Force the player out of climb state. It should immediately remove the ClimbController.
                 climbing.IsClimbing = false;
 
-                Assert.That(!body.HasController<ClimbController>(), "Player wrongly has a ClimbController", Is.True);
+                Assert.That(!body.HasController<ClimbController>(), "Player wrongly has a ClimbController");
 
             });
 

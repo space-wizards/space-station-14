@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.Components.Damage;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects.Components
 {
@@ -19,7 +21,7 @@ namespace Content.Server.GameObjects.Components
         public override ComponentState GetComponentState()
         {
             var toAdd = new List<ClientDoAfter>();
-            
+
             foreach (var doAfter in DoAfters)
             {
                 // THE ALMIGHTY PYRAMID
@@ -33,11 +35,40 @@ namespace Content.Server.GameObjects.Components
                     doAfter.EventArgs.BreakOnTargetMove,
                     doAfter.EventArgs.MovementThreshold,
                     doAfter.EventArgs.Target?.Uid ?? EntityUid.Invalid);
-                
+
                 toAdd.Add(clientDoAfter);
             }
 
             return new DoAfterComponentState(toAdd);
+        }
+
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+
+            switch (message)
+            {
+                case DamageChangedMessage msg:
+                    if (DoAfters.Count == 0)
+                    {
+                        return;
+                    }
+
+                    if (!msg.TookDamage)
+                    {
+                        return;
+                    }
+
+                    foreach (var doAfter in _doAfters.Keys)
+                    {
+                        if (doAfter.EventArgs.BreakOnDamage)
+                        {
+                            doAfter.TookDamage = true;
+                        }
+                    }
+
+                    break;
+            }
         }
 
         public void Add(DoAfter doAfter)

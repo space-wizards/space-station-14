@@ -370,10 +370,10 @@
         !type:DamageTrigger
         damage: 600
       behaviors:
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: BreakableConstruction
-    node: girder
   - type: ReinforcedWall
     key: walls
     base: solid
@@ -488,6 +488,10 @@
         !type:DamageTrigger
         damage: 300
       behaviors:
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/metalbreak.ogg
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: BreakableConstruction

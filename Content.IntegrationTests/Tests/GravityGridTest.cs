@@ -17,7 +17,7 @@ namespace Content.IntegrationTests.Tests
     [TestOf(typeof(GravityGeneratorComponent))]
     public class GravityGridTest : ContentIntegrationTest
     {
-        private const string PROTOTYPES = @"
+        private const string Prototypes = @"
 - type: entity
   name: GravityGeneratorDummy
   id: GravityGeneratorDummy
@@ -28,7 +28,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task Test()
         {
-            var options = new ServerIntegrationOptions{ExtraPrototypes = PROTOTYPES};
+            var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
             IEntity generator = null;
