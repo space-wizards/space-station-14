@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components;
-using Content.Shared.GameObjects.Components.Damage;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 
@@ -68,20 +67,8 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
             // Caller's gonna be responsible for this I guess
             var doAfterComponent = eventArgs.User.GetComponent<DoAfterComponent>();
             doAfterComponent.Add(doAfter);
-            IDamageableComponent? damageableComponent = null;
-
-            // TODO: If the component's deleted this may not get unsubscribed?
-            if (eventArgs.BreakOnDamage && eventArgs.User.TryGetComponent(out damageableComponent))
-            {
-                damageableComponent.HealthChangedEvent += doAfter.HandleDamage;
-            }
 
             await doAfter.AsTask;
-
-            if (damageableComponent != null)
-            {
-                damageableComponent.HealthChangedEvent -= doAfter.HandleDamage;
-            }
 
             return doAfter.Status;
         }
