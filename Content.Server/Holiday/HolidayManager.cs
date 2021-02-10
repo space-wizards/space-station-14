@@ -54,6 +54,14 @@ namespace Content.Server.Holiday
             return _currentHolidays;
         }
 
+        public bool IsCurrentlyHoliday(string holiday)
+        {
+            if (!_prototypeManager.TryIndex(holiday, out HolidayPrototype prototype))
+                return false;
+
+            return _currentHolidays.Contains(prototype);
+        }
+
         public void Initialize()
         {
             RefreshCurrentHolidays();

@@ -9,5 +9,6 @@ namespace Content.Server.Holiday.Interfaces
         void DoGreet();
         void DoCelebrate();
         IEnumerable<HolidayPrototype> GetCurrentHolidays();
+        bool IsCurrentlyHoliday(string holiday);
     }
 }
