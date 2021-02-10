@@ -367,10 +367,3 @@
   name: Friday the 13th
   shouldCelebrate:
     !type:FridayThirteenth { }
-
-  # Do not merge, this is a test lmao
-- type: holiday
-  id: CuckDay
-  name: Cuck day
-  beginDay: 10
-  beginMonth: February
