@@ -23,15 +23,18 @@
 
 using Content.Server.Administration;
 using Content.Shared.Administration;
+using Content.Shared.Physics;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Dynamics.Shapes;
 
@@ -47,22 +50,34 @@ namespace Content.Server.Commands.Physics
     {
         public string Command => "testbed";
         public string Description => "Loads a physics testbed and teleports your player there";
-        public string Help => $"{Command} <test>";
+        public string Help => $"{Command} <mapid> <test>";
         public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
         {
-            if (args.Length != 1)
+            if (args.Length != 2)
             {
-                shell.SendText(player, "Only accept 1 arg for testbed!");
+                shell.SendText(player, "Require 2 args for testbed!");
                 return;
             }
 
             var mapManager = IoCManager.Resolve<IMapManager>();
-            MapId mapId;
 
-            switch (args[0])
+            if (!int.TryParse(args[0], out var mapInt))
+            {
+                shell.SendText(player, $"Unable to parse map {args[0]}");
+                return;
+            }
+
+            var mapId = new MapId(mapInt);
+            if (!mapManager.MapExists(mapId))
+            {
+                shell.SendText(player, "Unable to find map {mapId}");
+                return;
+            }
+
+            switch (args[1])
             {
                 case "boxstack":
-                    mapId = SetupPlayer(shell, player, mapManager);
+                    SetupPlayer(mapId, shell, player, mapManager);
                     CreateBoxStack(mapId);
                     break;
                 default:
@@ -75,13 +90,13 @@ namespace Content.Server.Commands.Physics
 
         // TODO: Try actually adding in SynchronizeFixtures and have it whenever the body is moved it's dirty???
 
-        private MapId SetupPlayer(IConsoleShell shell, IPlayerSession? player, IMapManager mapManager)
+        private void SetupPlayer(MapId mapId, IConsoleShell shell, IPlayerSession? player, IMapManager mapManager)
         {
-            var mapId = mapManager.CreateMap();
             var pauseManager = IoCManager.Resolve<IPauseManager>();
-            pauseManager.SetMapPaused(mapId, true);
+            pauseManager.SetMapPaused(mapId, false);
+            var map = EntitySystem.Get<SharedPhysicsSystem>().Maps[mapId].Gravity = new Vector2(0, -9.8f);
 
-            return mapId;
+            return;
         }
 
         private void CreateBoxStack(MapId mapId)
@@ -92,10 +107,57 @@ namespace Content.Server.Commands.Physics
             var ground = entityManager.SpawnEntity("BlankEntity", new MapCoordinates(0, 0, mapId)).AddComponent<PhysicsComponent>();
 
             var horizontal = new EdgeShape(new Vector2(-20, 0), new Vector2(20, 0));
-            ground.AddFixture(new Fixture(ground, horizontal));
+            var horizontalFixture = new Fixture(ground, horizontal)
+            {
+                CollisionLayer = (int) CollisionGroup.Impassable,
+                CollisionMask = (int) CollisionGroup.Impassable,
+                Hard = true
+            };
+            ground.AddFixture(horizontalFixture);
 
             var vertical = new EdgeShape(new Vector2(10, 0), new Vector2(10, 10));
-            ground.AddFixture(new Fixture(ground, vertical));
+            var verticalFixture = new Fixture(ground, vertical)
+            {
+                CollisionLayer = (int) CollisionGroup.Impassable,
+                CollisionMask = (int) CollisionGroup.Impassable,
+                Hard = true
+            };
+            ground.AddFixture(verticalFixture);
+
+            var xs = new[]
+            {
+                0.0f, -10.0f, -5.0f, 5.0f, 10.0f
+            };
+
+            var columnCount = 1;
+            var rowCount = 15;
+            PolygonShape shape;
+
+            for (var j = 0; j < columnCount; j++)
+            {
+                for (var i = 0; i < rowCount; i++)
+                {
+                    var x = 0.0f;
+
+                    var box = entityManager.SpawnEntity("BlankEntity",
+                        new MapCoordinates(new Vector2(xs[j] + x, 0.55f + 1.1f * i), mapId)).AddComponent<PhysicsComponent>();
+
+                    box.BodyType = BodyType.Dynamic;
+                    box.SleepingAllowed = false;
+                    shape = new PolygonShape();
+                    shape.SetAsBox(0.5f, 0.5f);
+                    box.FixedRotation = false;
+                    // TODO: Need to detect shape and work out if we need to use fixedrotation
+
+                    var fixture = new Fixture(box, shape)
+                    {
+                        CollisionMask = (int) CollisionGroup.Impassable,
+                        CollisionLayer = (int) CollisionGroup.Impassable,
+                        Hard = true,
+                    };
+                    box.AddFixture(fixture);
+                }
+            }
         }
     }
 }
