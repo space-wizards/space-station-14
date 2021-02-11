@@ -1,11 +1,10 @@
 using System;
 using Content.Shared.GameObjects.Components.Weapons;
 using Content.Shared.Utility;
-using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameObjects.Components.Weapon
 {

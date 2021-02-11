@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using Content.Server.GameObjects.Components.Chemistry;
 using JetBrains.Annotations;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.Chemistry.ReactionEffects
 {

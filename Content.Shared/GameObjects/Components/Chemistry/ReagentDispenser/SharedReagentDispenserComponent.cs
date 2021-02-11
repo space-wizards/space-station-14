@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Content.Shared.Chemistry;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser

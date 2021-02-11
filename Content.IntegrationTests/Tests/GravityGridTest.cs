@@ -4,8 +4,7 @@ using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Shared.GameObjects.Components.Gravity;
 using Content.Shared.Utility;
 using NUnit.Framework;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 

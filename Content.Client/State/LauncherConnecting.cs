@@ -1,15 +1,14 @@
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
-using Robust.Client.Graphics.Drawing;
-using Robust.Client.Interfaces;
-using Robust.Client.Interfaces.UserInterface;
+using Robust.Client;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Network;
 using static Content.Client.StaticIoC;
 
 namespace Content.Client.State

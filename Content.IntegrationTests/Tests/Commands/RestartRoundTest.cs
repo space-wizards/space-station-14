@@ -5,8 +5,8 @@ using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared;
 using NUnit.Framework;
-using Robust.Shared.Interfaces.Configuration;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Configuration;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests.Commands

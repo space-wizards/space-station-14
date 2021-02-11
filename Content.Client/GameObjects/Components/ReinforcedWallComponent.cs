@@ -1,5 +1,4 @@
 using Content.Client.GameObjects.Components.IconSmoothing;
-using Content.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;

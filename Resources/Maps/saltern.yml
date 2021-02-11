@@ -601,7 +601,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 69
   type: PowerCellRecharger
@@ -641,7 +641,7 @@ entities:
     type: Transform
   - containers:
       storagebase:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 73
   type: DrinkGoldenCup
@@ -932,7 +932,7 @@ entities:
     type: Transform
   - containers:
       storagebase:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 115
   type: FlashlightLantern
@@ -1326,7 +1326,7 @@ entities:
     type: Transform
   - containers:
       DisposalBend:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 160
   type: DisposalBend
@@ -1337,7 +1337,7 @@ entities:
     type: Transform
   - containers:
       DisposalBend:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 161
   type: DisposalPipe
@@ -1347,7 +1347,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 162
   type: TwoWayLever
@@ -1367,7 +1367,7 @@ entities:
     type: Transform
   - containers:
       DisposalJunction:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 164
   type: DisposalJunction
@@ -1378,7 +1378,7 @@ entities:
     type: Transform
   - containers:
       DisposalJunction:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 165
   type: DisposalJunction
@@ -1389,7 +1389,7 @@ entities:
     type: Transform
   - containers:
       DisposalJunction:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 166
   type: DisposalJunctionFlipped
@@ -1400,7 +1400,7 @@ entities:
     type: Transform
   - containers:
       DisposalJunction:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 167
   type: DisposalJunction
@@ -1411,7 +1411,7 @@ entities:
     type: Transform
   - containers:
       DisposalJunction:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 168
   type: DisposalJunctionFlipped
@@ -1422,7 +1422,7 @@ entities:
     type: Transform
   - containers:
       DisposalJunction:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 169
   type: DisposalJunctionFlipped
@@ -1433,7 +1433,7 @@ entities:
     type: Transform
   - containers:
       DisposalJunction:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 170
   type: DisposalJunction
@@ -1444,7 +1444,7 @@ entities:
     type: Transform
   - containers:
       DisposalJunction:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 171
   type: DisposalYJunction
@@ -1455,7 +1455,7 @@ entities:
     type: Transform
   - containers:
       DisposalJunction:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 172
   type: DisposalJunctionFlipped
@@ -1465,7 +1465,7 @@ entities:
     type: Transform
   - containers:
       DisposalJunction:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 173
   type: DisposalJunction
@@ -1476,7 +1476,7 @@ entities:
     type: Transform
   - containers:
       DisposalJunction:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 174
   type: DisposalJunction
@@ -1487,7 +1487,7 @@ entities:
     type: Transform
   - containers:
       DisposalJunction:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 175
   type: DisposalJunctionFlipped
@@ -1498,7 +1498,7 @@ entities:
     type: Transform
   - containers:
       DisposalJunction:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 176
   type: DisposalJunctionFlipped
@@ -1509,7 +1509,7 @@ entities:
     type: Transform
   - containers:
       DisposalJunction:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 177
   type: DisposalJunction
@@ -1520,7 +1520,7 @@ entities:
     type: Transform
   - containers:
       DisposalJunction:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 178
   type: DisposalJunctionFlipped
@@ -1531,7 +1531,7 @@ entities:
     type: Transform
   - containers:
       DisposalJunction:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 179
   type: DisposalPipe
@@ -1542,7 +1542,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 180
   type: DisposalPipe
@@ -1553,7 +1553,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 181
   type: DisposalPipe
@@ -1564,7 +1564,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 182
   type: DisposalPipe
@@ -1575,7 +1575,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 183
   type: DisposalTrunk
@@ -1586,7 +1586,7 @@ entities:
     type: Transform
   - containers:
       DisposalEntry:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 184
   type: DisposalUnit
@@ -1597,7 +1597,7 @@ entities:
     type: Transform
   - containers:
       DisposalUnit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 185
   type: DisposalPipe
@@ -1607,7 +1607,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 186
   type: DisposalPipe
@@ -1618,7 +1618,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 187
   type: DisposalPipe
@@ -1629,7 +1629,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 188
   type: DisposalPipe
@@ -1640,7 +1640,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 189
   type: DisposalPipe
@@ -1651,7 +1651,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 190
   type: DisposalPipe
@@ -1662,7 +1662,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 191
   type: VendingMachineYouTool
@@ -1680,7 +1680,7 @@ entities:
     type: Transform
   - containers:
       DisposalUnit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 193
   type: DisposalBend
@@ -1691,7 +1691,7 @@ entities:
     type: Transform
   - containers:
       DisposalBend:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 194
   type: DisposalPipe
@@ -1702,7 +1702,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 195
   type: DisposalPipe
@@ -1712,7 +1712,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 196
   type: DisposalPipe
@@ -1722,7 +1722,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 197
   type: DisposalPipe
@@ -1732,7 +1732,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 198
   type: DisposalPipe
@@ -1742,7 +1742,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 199
   type: DisposalPipe
@@ -1752,7 +1752,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 200
   type: DisposalPipe
@@ -1762,7 +1762,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 201
   type: DisposalTrunk
@@ -1772,7 +1772,7 @@ entities:
     type: Transform
   - containers:
       DisposalEntry:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 202
   type: DisposalUnit
@@ -1783,7 +1783,7 @@ entities:
     type: Transform
   - containers:
       DisposalUnit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 203
   type: DisposalPipe
@@ -1794,7 +1794,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 204
   type: DisposalPipe
@@ -1805,7 +1805,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 205
   type: DisposalPipe
@@ -1816,7 +1816,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 206
   type: DisposalTrunk
@@ -1827,7 +1827,7 @@ entities:
     type: Transform
   - containers:
       DisposalEntry:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 207
   type: DisposalUnit
@@ -1838,7 +1838,7 @@ entities:
     type: Transform
   - containers:
       DisposalUnit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 208
   type: DisposalPipe
@@ -1849,7 +1849,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 209
   type: DisposalPipe
@@ -1860,7 +1860,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 210
   type: DisposalPipe
@@ -1871,7 +1871,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 211
   type: DisposalPipe
@@ -1882,7 +1882,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 212
   type: DisposalTrunk
@@ -1893,7 +1893,7 @@ entities:
     type: Transform
   - containers:
       DisposalEntry:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 213
   type: DisposalUnit
@@ -1904,7 +1904,7 @@ entities:
     type: Transform
   - containers:
       DisposalUnit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 214
   type: DisposalPipe
@@ -1914,7 +1914,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 215
   type: DisposalPipe
@@ -1924,7 +1924,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 216
   type: DisposalPipe
@@ -1934,7 +1934,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 217
   type: DisposalPipe
@@ -1945,7 +1945,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 218
   type: Recycler
@@ -1962,7 +1962,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 220
   type: DisposalPipe
@@ -1973,7 +1973,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 221
   type: DisposalPipe
@@ -1984,7 +1984,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 222
   type: DisposalPipe
@@ -1995,7 +1995,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 223
   type: DisposalPipe
@@ -2006,7 +2006,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 224
   type: DisposalPipe
@@ -2017,7 +2017,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 225
   type: DisposalPipe
@@ -2028,7 +2028,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 226
   type: DisposalTrunk
@@ -2039,7 +2039,7 @@ entities:
     type: Transform
   - containers:
       DisposalEntry:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 227
   type: DisposalUnit
@@ -2050,7 +2050,7 @@ entities:
     type: Transform
   - containers:
       DisposalUnit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 228
   type: DisposalPipe
@@ -2061,7 +2061,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 229
   type: DisposalPipe
@@ -2072,7 +2072,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 230
   type: DisposalPipe
@@ -2083,7 +2083,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 231
   type: DisposalPipe
@@ -2094,7 +2094,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 232
   type: DisposalPipe
@@ -2105,7 +2105,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 233
   type: DisposalPipe
@@ -2116,7 +2116,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 234
   type: DisposalPipe
@@ -2127,7 +2127,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 235
   type: DisposalBend
@@ -2138,7 +2138,7 @@ entities:
     type: Transform
   - containers:
       DisposalBend:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 236
   type: DisposalPipe
@@ -2149,7 +2149,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 237
   type: DisposalPipe
@@ -2160,7 +2160,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 238
   type: DisposalTrunk
@@ -2171,7 +2171,7 @@ entities:
     type: Transform
   - containers:
       DisposalEntry:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 239
   type: DisposalUnit
@@ -2182,7 +2182,7 @@ entities:
     type: Transform
   - containers:
       DisposalUnit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 240
   type: DisposalBend
@@ -2193,7 +2193,7 @@ entities:
     type: Transform
   - containers:
       DisposalBend:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 241
   type: DisposalPipe
@@ -2204,7 +2204,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 242
   type: DisposalPipe
@@ -2215,7 +2215,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 243
   type: DisposalPipe
@@ -2226,7 +2226,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 244
   type: DisposalPipe
@@ -2237,7 +2237,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 245
   type: DisposalPipe
@@ -2248,7 +2248,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 246
   type: DisposalPipe
@@ -2259,7 +2259,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 247
   type: DisposalPipe
@@ -2270,7 +2270,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 248
   type: DisposalPipe
@@ -2281,7 +2281,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 249
   type: DisposalPipe
@@ -2292,7 +2292,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 250
   type: DisposalPipe
@@ -2303,7 +2303,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 251
   type: DisposalPipe
@@ -2314,7 +2314,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 252
   type: DisposalPipe
@@ -2325,7 +2325,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 253
   type: DisposalPipe
@@ -2335,7 +2335,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 254
   type: DisposalPipe
@@ -2346,7 +2346,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 255
   type: DisposalPipe
@@ -2357,7 +2357,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 256
   type: DisposalPipe
@@ -2368,7 +2368,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 257
   type: DisposalPipe
@@ -2379,7 +2379,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 258
   type: DisposalPipe
@@ -2390,7 +2390,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 259
   type: DisposalPipe
@@ -2401,7 +2401,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 260
   type: DisposalPipe
@@ -2412,7 +2412,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 261
   type: DisposalPipe
@@ -2423,7 +2423,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 262
   type: DisposalPipe
@@ -2434,7 +2434,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 263
   type: DisposalPipe
@@ -2445,7 +2445,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 264
   type: Window
@@ -2463,7 +2463,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 266
   type: DisposalPipe
@@ -2474,7 +2474,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 267
   type: DisposalPipe
@@ -2484,7 +2484,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 268
   type: DisposalPipe
@@ -2494,7 +2494,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 269
   type: DisposalPipe
@@ -2504,7 +2504,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 270
   type: DisposalPipe
@@ -2514,7 +2514,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 271
   type: DisposalTrunk
@@ -2524,7 +2524,7 @@ entities:
     type: Transform
   - containers:
       DisposalEntry:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 272
   type: DisposalUnit
@@ -2535,7 +2535,7 @@ entities:
     type: Transform
   - containers:
       DisposalUnit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 273
   type: DisposalPipe
@@ -2545,7 +2545,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 274
   type: DisposalPipe
@@ -2556,7 +2556,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 275
   type: DisposalPipe
@@ -2567,7 +2567,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 276
   type: DisposalPipe
@@ -2578,7 +2578,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 277
   type: DisposalPipe
@@ -2589,7 +2589,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 278
   type: DisposalPipe
@@ -2600,7 +2600,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 279
   type: DisposalPipe
@@ -2611,7 +2611,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 280
   type: DisposalPipe
@@ -2622,7 +2622,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 281
   type: DisposalPipe
@@ -2633,7 +2633,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 282
   type: DisposalPipe
@@ -2644,7 +2644,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 283
   type: DisposalPipe
@@ -2655,7 +2655,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 284
   type: DisposalPipe
@@ -2666,7 +2666,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 285
   type: DisposalPipe
@@ -2677,7 +2677,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 286
   type: DisposalPipe
@@ -2688,7 +2688,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 287
   type: DisposalBend
@@ -2699,7 +2699,7 @@ entities:
     type: Transform
   - containers:
       DisposalBend:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 288
   type: DisposalPipe
@@ -2710,7 +2710,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 289
   type: DisposalPipe
@@ -2721,7 +2721,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 290
   type: DisposalPipe
@@ -2732,7 +2732,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 291
   type: DisposalPipe
@@ -2743,7 +2743,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 292
   type: DisposalPipe
@@ -2754,7 +2754,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 293
   type: DisposalPipe
@@ -2765,7 +2765,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 294
   type: DisposalPipe
@@ -2776,7 +2776,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 295
   type: DisposalTrunk
@@ -2787,7 +2787,7 @@ entities:
     type: Transform
   - containers:
       DisposalEntry:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 296
   type: DisposalUnit
@@ -2798,7 +2798,7 @@ entities:
     type: Transform
   - containers:
       DisposalUnit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 297
   type: DisposalPipe
@@ -2808,7 +2808,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 298
   type: DisposalPipe
@@ -2819,7 +2819,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 299
   type: DisposalPipe
@@ -2830,7 +2830,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 300
   type: DisposalPipe
@@ -2841,7 +2841,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 301
   type: DisposalTrunk
@@ -2852,7 +2852,7 @@ entities:
     type: Transform
   - containers:
       DisposalEntry:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 302
   type: DisposalUnit
@@ -2863,7 +2863,7 @@ entities:
     type: Transform
   - containers:
       DisposalUnit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 303
   type: Window
@@ -2888,7 +2888,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 306
   type: DisposalPipe
@@ -2899,7 +2899,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 307
   type: DisposalPipe
@@ -2910,7 +2910,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 308
   type: DisposalPipe
@@ -2921,7 +2921,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 309
   type: DisposalPipe
@@ -2932,7 +2932,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 310
   type: DisposalPipe
@@ -2943,7 +2943,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 311
   type: DisposalPipe
@@ -2954,7 +2954,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 312
   type: DisposalPipe
@@ -2965,7 +2965,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 313
   type: DisposalPipe
@@ -2976,7 +2976,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 314
   type: DisposalPipe
@@ -2987,7 +2987,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 315
   type: DisposalPipe
@@ -2998,7 +2998,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 316
   type: DisposalPipe
@@ -3009,7 +3009,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 317
   type: DisposalPipe
@@ -3020,7 +3020,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 318
   type: DisposalPipe
@@ -3031,7 +3031,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 319
   type: DisposalPipe
@@ -3042,7 +3042,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 320
   type: DisposalPipe
@@ -3053,7 +3053,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 321
   type: DisposalPipe
@@ -3064,7 +3064,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 322
   type: DisposalPipe
@@ -3075,7 +3075,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 323
   type: DisposalPipe
@@ -3086,7 +3086,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 324
   type: DisposalPipe
@@ -3097,7 +3097,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 325
   type: Firelock
@@ -3117,7 +3117,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 327
   type: DisposalPipe
@@ -3128,7 +3128,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 328
   type: DisposalPipe
@@ -3139,7 +3139,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 329
   type: DisposalPipe
@@ -3150,7 +3150,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 330
   type: DisposalPipe
@@ -3161,7 +3161,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 331
   type: DisposalPipe
@@ -3172,7 +3172,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 332
   type: DisposalPipe
@@ -3183,7 +3183,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 333
   type: DisposalPipe
@@ -3193,7 +3193,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 334
   type: DisposalTrunk
@@ -3204,7 +3204,7 @@ entities:
     type: Transform
   - containers:
       DisposalEntry:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 335
   type: DisposalUnit
@@ -3215,7 +3215,7 @@ entities:
     type: Transform
   - containers:
       DisposalUnit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 336
   type: DisposalPipe
@@ -3226,7 +3226,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 337
   type: DisposalTrunk
@@ -3237,7 +3237,7 @@ entities:
     type: Transform
   - containers:
       DisposalEntry:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 338
   type: DisposalPipe
@@ -3247,7 +3247,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 339
   type: DisposalPipe
@@ -3258,7 +3258,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 340
   type: DisposalTrunk
@@ -3269,7 +3269,7 @@ entities:
     type: Transform
   - containers:
       DisposalEntry:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 341
   type: DisposalPipe
@@ -3279,7 +3279,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 342
   type: DisposalPipe
@@ -3290,7 +3290,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 343
   type: DisposalPipe
@@ -3301,7 +3301,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 344
   type: DisposalBend
@@ -3311,7 +3311,7 @@ entities:
     type: Transform
   - containers:
       DisposalBend:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 345
   type: DisposalPipe
@@ -3322,7 +3322,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 346
   type: DisposalPipe
@@ -3333,7 +3333,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 347
   type: DisposalTrunk
@@ -3344,7 +3344,7 @@ entities:
     type: Transform
   - containers:
       DisposalEntry:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 348
   type: DisposalBend
@@ -3355,7 +3355,7 @@ entities:
     type: Transform
   - containers:
       DisposalBend:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 349
   type: DisposalPipe
@@ -3366,7 +3366,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 350
   type: DisposalPipe
@@ -3377,7 +3377,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 351
   type: DisposalPipe
@@ -3388,7 +3388,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 352
   type: DisposalPipe
@@ -3399,7 +3399,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 353
   type: DisposalPipe
@@ -3410,7 +3410,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 354
   type: DisposalPipe
@@ -3421,7 +3421,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 355
   type: DisposalPipe
@@ -3432,7 +3432,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 356
   type: DisposalPipe
@@ -3443,7 +3443,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 357
   type: DisposalPipe
@@ -3454,7 +3454,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 358
   type: DisposalPipe
@@ -3465,7 +3465,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 359
   type: DisposalPipe
@@ -3476,7 +3476,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 360
   type: DisposalPipe
@@ -3487,7 +3487,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 361
   type: DisposalPipe
@@ -3498,7 +3498,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 362
   type: DisposalPipe
@@ -3509,7 +3509,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 363
   type: DisposalUnit
@@ -3520,7 +3520,7 @@ entities:
     type: Transform
   - containers:
       DisposalUnit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 364
   type: DisposalPipe
@@ -3531,7 +3531,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 365
   type: DisposalPipe
@@ -3542,7 +3542,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 366
   type: DisposalPipe
@@ -3553,7 +3553,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 367
   type: DisposalPipe
@@ -3564,7 +3564,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 368
   type: DisposalPipe
@@ -3575,7 +3575,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 369
   type: DisposalPipe
@@ -3586,7 +3586,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 370
   type: DisposalPipe
@@ -3597,7 +3597,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 371
   type: DisposalPipe
@@ -3608,7 +3608,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 372
   type: DisposalPipe
@@ -3619,7 +3619,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 373
   type: DisposalUnit
@@ -3630,7 +3630,7 @@ entities:
     type: Transform
   - containers:
       DisposalUnit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 374
   type: DisposalPipe
@@ -3641,7 +3641,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 375
   type: DisposalPipe
@@ -3652,7 +3652,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 376
   type: DisposalPipe
@@ -3663,7 +3663,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 377
   type: DisposalPipe
@@ -3674,7 +3674,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 378
   type: DisposalPipe
@@ -3685,7 +3685,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 379
   type: DisposalPipe
@@ -3696,7 +3696,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 380
   type: DisposalPipe
@@ -3707,7 +3707,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 381
   type: DisposalPipe
@@ -3718,7 +3718,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 382
   type: DisposalPipe
@@ -3729,7 +3729,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 383
   type: DisposalPipe
@@ -3740,7 +3740,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 384
   type: DisposalPipe
@@ -3751,7 +3751,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 385
   type: DisposalPipe
@@ -3762,7 +3762,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 386
   type: DisposalPipe
@@ -3773,7 +3773,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 387
   type: DisposalPipe
@@ -3784,7 +3784,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 388
   type: DisposalPipe
@@ -3795,7 +3795,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 389
   type: DisposalPipe
@@ -3806,7 +3806,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 390
   type: DisposalPipe
@@ -3817,7 +3817,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 391
   type: DisposalPipe
@@ -3828,7 +3828,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 392
   type: DisposalPipe
@@ -3839,7 +3839,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 393
   type: DisposalPipe
@@ -3850,7 +3850,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 394
   type: DisposalPipe
@@ -3861,7 +3861,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 395
   type: DisposalPipe
@@ -3872,7 +3872,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 396
   type: DisposalBend
@@ -3883,7 +3883,7 @@ entities:
     type: Transform
   - containers:
       DisposalBend:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 397
   type: DisposalPipe
@@ -3894,7 +3894,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 398
   type: DisposalPipe
@@ -3905,7 +3905,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 399
   type: DisposalPipe
@@ -3916,7 +3916,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 400
   type: DisposalPipe
@@ -3927,7 +3927,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 401
   type: DisposalUnit
@@ -3938,7 +3938,7 @@ entities:
     type: Transform
   - containers:
       DisposalUnit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 402
   type: DisposalPipe
@@ -3949,7 +3949,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 403
   type: DisposalPipe
@@ -3960,7 +3960,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 404
   type: DisposalPipe
@@ -3971,7 +3971,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 405
   type: DisposalUnit
@@ -3982,7 +3982,7 @@ entities:
     type: Transform
   - containers:
       DisposalUnit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 406
   type: Firelock
@@ -5160,7 +5160,7 @@ entities:
       board:
         entities:
         - 563
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 565
   type: cargoTelepad
@@ -6012,7 +6012,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 663
   type: Table
@@ -6734,7 +6734,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 761
   type: PottedPlantRandom
@@ -6758,7 +6758,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 763
   type: LockerEmergencyFilledRandom
@@ -6771,7 +6771,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 764
   type: PottedPlantRandom
@@ -6806,7 +6806,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 767
   type: LockerEmergencyFilledRandom
@@ -6819,7 +6819,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 768
   type: LockerEmergencyFilledRandom
@@ -6832,7 +6832,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 769
   type: PottedPlantRD
@@ -6856,7 +6856,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 771
   type: PottedPlantRandom
@@ -6891,7 +6891,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 774
   type: LockerFireFilled
@@ -6904,7 +6904,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 775
   type: LockerBombFilled
@@ -6917,7 +6917,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 776
   type: LockerBombFilled
@@ -6930,7 +6930,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 777
   type: LockerFireFilled
@@ -6943,7 +6943,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 778
   type: LockerEmergencyFilledRandom
@@ -6956,7 +6956,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 779
   type: LockerFireFilled
@@ -6969,7 +6969,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 780
   type: LockerEmergencyFilledRandom
@@ -6982,7 +6982,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 781
   type: LockerFireFilled
@@ -6995,7 +6995,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 782
   type: LockerFireFilled
@@ -7008,7 +7008,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 783
   type: LockerEmergencyFilledRandom
@@ -7021,7 +7021,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 784
   type: LockerFireFilled
@@ -7034,7 +7034,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 785
   type: LockerEmergencyFilledRandom
@@ -7047,7 +7047,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 786
   type: LockerEmergencyFilledRandom
@@ -7060,7 +7060,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 787
   type: LockerEmergencyFilledRandom
@@ -7073,7 +7073,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 788
   type: LockerEmergencyFilledRandom
@@ -7086,7 +7086,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 789
   type: LockerFireFilled
@@ -7099,7 +7099,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 790
   type: LockerEmergencyFilledRandom
@@ -7112,7 +7112,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 791
   type: LockerEmergencyFilledRandom
@@ -7125,7 +7125,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 792
   type: LockerEmergencyFilledRandom
@@ -7138,7 +7138,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 793
   type: LockerEmergencyFilledRandom
@@ -7151,7 +7151,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 794
   type: LockerCaptainFilled
@@ -7164,7 +7164,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 795
   type: WardrobeCargoFilled
@@ -7177,7 +7177,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 796
   type: PottedPlantRandom
@@ -7201,7 +7201,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 798
   type: LockerL3JanitorFilled
@@ -7214,7 +7214,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 799
   type: LockerJanitorFilled
@@ -7227,7 +7227,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 800
   type: LockerChefFilled
@@ -7240,7 +7240,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 801
   type: WardrobeWhiteFilled
@@ -7253,7 +7253,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 802
   type: LockerMedicineFilled
@@ -7266,7 +7266,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 803
   type: LockerL3VirologyFilled
@@ -7279,7 +7279,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 804
   type: LockerSecurityFilled
@@ -7292,7 +7292,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 805
   type: LockerSecurityFilled
@@ -7305,7 +7305,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 806
   type: LockerSecurityFilled
@@ -7318,7 +7318,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 807
   type: WardrobeMedicalDoctorFilled
@@ -7331,7 +7331,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 808
   type: LockerL3SecurityFilled
@@ -7344,7 +7344,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 809
   type: LockerChiefMedicalOfficerFilled
@@ -7357,7 +7357,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 810
   type: TableGlass
@@ -7377,7 +7377,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 812
   type: LowWall
@@ -7397,7 +7397,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 814
   type: WardrobeAtmosphericsFilled
@@ -7410,7 +7410,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 815
   type: LockerAtmosphericsFilled
@@ -7423,7 +7423,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 816
   type: LockerAtmosphericsFilled
@@ -7436,7 +7436,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 817
   type: LockerChiefEngineerFilled
@@ -7449,7 +7449,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 818
   type: LockerEngineerFilled
@@ -7462,7 +7462,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 819
   type: LockerEngineerFilled
@@ -7475,7 +7475,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 820
   type: LockerResearchDirectorFilled
@@ -7488,7 +7488,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 821
   type: WardrobeScienceFilled
@@ -7501,7 +7501,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 822
   type: LockerL3JanitorFilled
@@ -7514,7 +7514,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 823
   type: LockerGeneric
@@ -7527,7 +7527,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 824
   type: TableGlass
@@ -7640,7 +7640,7 @@ entities:
     type: Transform
   - containers:
       DisposalEntry:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 839
   type: DisposalBend
@@ -7651,7 +7651,7 @@ entities:
     type: Transform
   - containers:
       DisposalBend:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 840
   type: DisposalBend
@@ -7662,7 +7662,7 @@ entities:
     type: Transform
   - containers:
       DisposalBend:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 841
   type: DisposalBend
@@ -7672,7 +7672,7 @@ entities:
     type: Transform
   - containers:
       DisposalBend:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 842
   type: DisposalPipe
@@ -7683,7 +7683,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 843
   type: DisposalPipe
@@ -7694,7 +7694,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 844
   type: DisposalTrunk
@@ -7705,7 +7705,7 @@ entities:
     type: Transform
   - containers:
       DisposalEntry:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 845
   type: DisposalUnit
@@ -7716,7 +7716,7 @@ entities:
     type: Transform
   - containers:
       DisposalUnit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 846
   type: DisposalPipe
@@ -7727,7 +7727,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 847
   type: DisposalPipe
@@ -7737,7 +7737,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 848
   type: DisposalPipe
@@ -7747,7 +7747,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 849
   type: DisposalPipe
@@ -7757,7 +7757,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 850
   type: DisposalPipe
@@ -7767,7 +7767,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 851
   type: DisposalPipe
@@ -7777,7 +7777,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 852
   type: DisposalPipe
@@ -7788,7 +7788,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 853
   components:
@@ -20051,7 +20051,7 @@ entities:
     type: Transform
   - containers:
       microwave_entity_container:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 895
   type: Table
@@ -20515,7 +20515,7 @@ entities:
       board:
         entities:
         - 4024
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 960
   type: ChairOfficeDark
@@ -20631,7 +20631,7 @@ entities:
       board:
         entities:
         - 3945
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 974
   type: ComputerId
@@ -20648,7 +20648,7 @@ entities:
       board:
         entities:
         - 3946
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 975
   type: Table
@@ -20702,7 +20702,7 @@ entities:
       board:
         entities:
         - 3992
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 981
   type: ChairOfficeDark
@@ -20804,7 +20804,7 @@ entities:
       board:
         entities:
         - 4032
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 993
   type: Table
@@ -21193,7 +21193,7 @@ entities:
       machine_board:
         entities:
         - 4272
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
       machine_parts:
         entities:
         - 4273
@@ -21202,7 +21202,7 @@ entities:
         - 4276
         - 4277
         - 4278
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 1044
   type: Autolathe
@@ -21222,7 +21222,7 @@ entities:
       machine_board:
         entities:
         - 871
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
       machine_parts:
         entities:
         - 872
@@ -21230,7 +21230,7 @@ entities:
         - 874
         - 875
         - 876
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 1045
   type: ChairOfficeLight
@@ -21344,7 +21344,7 @@ entities:
       board:
         entities:
         - 4009
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 1059
   type: LowWall
@@ -21778,7 +21778,7 @@ entities:
     type: Transform
   - containers:
       DisposalEntry:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 1105
   type: DisposalUnit
@@ -21788,7 +21788,7 @@ entities:
     type: Transform
   - containers:
       DisposalUnit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 1106
   type: SpawnPointBotanist
@@ -22021,7 +22021,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 1134
   type: LowWall
@@ -22087,7 +22087,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 1142
   type: Table
@@ -22128,7 +22128,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 1147
   type: Table
@@ -22176,7 +22176,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 1153
   type: Catwalk
@@ -22196,7 +22196,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 1155
   type: WarpPoint
@@ -22261,7 +22261,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 1162
   type: LockerElectricalSupplies
@@ -22274,7 +22274,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 1163
   type: Catwalk
@@ -22319,7 +22319,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 1168
   type: Table
@@ -22819,7 +22819,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 1221
   type: Welder
@@ -22845,7 +22845,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 1224
   type: Multitool
@@ -22865,7 +22865,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 1226
   type: Poweredlight
@@ -22966,7 +22966,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 1234
   type: Poweredlight
@@ -26042,7 +26042,7 @@ entities:
     type: Transform
   - containers:
       BoltActionBarrel-ammo-container:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
       BoltActionBarrel-chamber-container:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
@@ -26101,7 +26101,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 1574
   type: CrateGeneric
@@ -26114,7 +26114,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 1575
   type: Table
@@ -31817,7 +31817,7 @@ entities:
     type: Transform
   - containers:
       storagebase:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 2385
   type: solid_wall
@@ -32019,7 +32019,7 @@ entities:
       board:
         entities:
         - 2414
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 2413
   type: solid_wall
@@ -32112,7 +32112,7 @@ entities:
     type: Transform
   - containers:
       DisposalEntry:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 2426
   type: VendingMachineSovietSoda
@@ -32181,7 +32181,7 @@ entities:
     type: Transform
   - containers:
       storagebase:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 2435
   type: VendingMachineCola
@@ -32547,7 +32547,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 2486
   type: CrateRadiation
@@ -32560,7 +32560,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 2487
   type: solid_wall
@@ -32800,7 +32800,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 2517
   type: SalternApc
@@ -42878,7 +42878,7 @@ entities:
     type: Transform
   - containers:
       storagebase:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 3927
   type: MetalStack
@@ -42975,7 +42975,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 3940
   type: Crowbar
@@ -43242,7 +43242,7 @@ entities:
     type: Transform
   - containers:
       DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 3973
   type: FirelockGlass
@@ -44554,7 +44554,7 @@ entities:
     type: Transform
   - containers:
       storagebase:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 4138
   type: TableR
@@ -44602,7 +44602,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 4144
   type: LockerGeneric
@@ -44615,7 +44615,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 4145
   type: Poweredlight
@@ -44761,7 +44761,7 @@ entities:
     type: Transform
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
       morgue_tray:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
@@ -44773,7 +44773,7 @@ entities:
     type: Transform
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
       morgue_tray:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
@@ -44785,7 +44785,7 @@ entities:
     type: Transform
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
       morgue_tray:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
@@ -44797,7 +44797,7 @@ entities:
     type: Transform
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
       morgue_tray:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
@@ -44809,7 +44809,7 @@ entities:
     type: Transform
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
       morgue_tray:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
@@ -44842,7 +44842,7 @@ entities:
     type: Transform
   - containers:
       storagebase:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 4170
   type: MagazinePistolSmgTopMounted
@@ -44853,7 +44853,7 @@ entities:
     type: Transform
   - containers:
       RangedMagazine-magazine:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 4171
   type: MagazinePistolSmgTopMounted
@@ -44864,7 +44864,7 @@ entities:
     type: Transform
   - containers:
       RangedMagazine-magazine:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 4172
   type: AirlockMedicalLocked
@@ -44886,7 +44886,7 @@ entities:
       board:
         entities:
         - 4174
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 4174
   type: BodyScannerComputerCircuitboard
@@ -44965,7 +44965,7 @@ entities:
       ReagentGrinder-reagentContainerContainer:
         type: Content.Server.GameObjects.ContainerSlot
       ReagentGrinder-entityContainerContainer:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 4183
   type: ApcExtensionCable
@@ -45104,7 +45104,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 4202
   type: LockerFreezer
@@ -45117,7 +45117,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 4203
   type: Poweredlight
@@ -45383,7 +45383,7 @@ entities:
     type: Transform
   - containers:
       storagebase:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 4239
   type: WeaponCapacitorRecharger
@@ -45407,7 +45407,7 @@ entities:
     type: Transform
   - containers:
       storagebase:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 4241
   type: RadioHandheld
@@ -45460,7 +45460,7 @@ entities:
     type: Transform
   - containers:
       microwave_entity_container:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 4248
   type: ClothingHeadHelmetScaf
@@ -45478,7 +45478,7 @@ entities:
     type: Transform
   - containers:
       storagebase:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 4250
   type: Shelf
@@ -45532,7 +45532,7 @@ entities:
     type: Transform
   - containers:
       RangedMagazine-magazine:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 4256
   type: BodyBag_Container
@@ -45543,7 +45543,7 @@ entities:
     type: Transform
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
       body_bag_label:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
@@ -45556,7 +45556,7 @@ entities:
     type: Transform
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
       body_bag_label:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
@@ -45593,7 +45593,7 @@ entities:
     type: Transform
   - containers:
       storagebase:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 4262
   type: CarpetBlue
@@ -48808,7 +48808,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 4715
   type: CrateServiceReplacementLights
@@ -48821,7 +48821,7 @@ entities:
     type: PlaceableSurface
   - containers:
       EntityStorageComponent:
-        type: Robust.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 4716
   type: SalternSubstation

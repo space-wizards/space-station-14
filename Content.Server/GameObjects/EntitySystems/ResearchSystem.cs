@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Research;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems
 {

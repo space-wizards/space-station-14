@@ -1,7 +1,7 @@
-﻿using Robust.Client.GameObjects.Components.UserInterface;
-using Robust.Shared.GameObjects.Components.UserInterface;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 using static Content.Shared.GameObjects.Components.SharedConfigurationComponent;
 
 namespace Content.Client.GameObjects.Components.Wires

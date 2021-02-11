@@ -1,28 +1,13 @@
 ﻿#nullable enable
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.PDA;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Mobs;
-using Content.Server.Mobs.Roles;
-using Content.Server.Mobs.Roles.Suspicion;
-using Content.Server.Interfaces.GameObjects;
-using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Inventory;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.TraitorDeathMatch
 {

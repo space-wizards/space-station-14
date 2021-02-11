@@ -1,9 +1,8 @@
 ﻿using System;
 using Content.Shared.GameObjects.Components.Body.Scanner;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects.Components.UserInterface;
-using Robust.Shared.GameObjects.Components.UserInterface;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Body.Scanner

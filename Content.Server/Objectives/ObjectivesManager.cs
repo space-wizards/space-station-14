@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives
 {

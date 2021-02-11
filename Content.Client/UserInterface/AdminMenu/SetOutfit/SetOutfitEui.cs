@@ -1,13 +1,6 @@
 using Content.Client.Eui;
 using Content.Shared.Eui;
 using JetBrains.Annotations;
-using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.IoC;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Content.Shared.Administration;
 
 namespace Content.Client.UserInterface.AdminMenu.SetOutfit

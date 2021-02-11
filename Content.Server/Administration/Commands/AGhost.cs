@@ -1,11 +1,10 @@
-﻿using Content.Server.Commands.Observer;
-using Content.Server.GameObjects.Components.Observer;
+﻿using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
 using Content.Shared.Administration;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Administration.Commands

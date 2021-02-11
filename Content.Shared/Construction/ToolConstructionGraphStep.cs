@@ -1,5 +1,4 @@
-﻿using System;
-using Content.Shared.GameObjects.Components.Interactable;
+﻿using Content.Shared.GameObjects.Components.Interactable;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;

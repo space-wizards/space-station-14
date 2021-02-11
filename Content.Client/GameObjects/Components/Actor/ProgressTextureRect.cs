@@ -1,6 +1,6 @@
 ﻿using System;
 using Content.Client.GameObjects.EntitySystems.DoAfter;
-using Robust.Client.Graphics.Drawing;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Maths;
 

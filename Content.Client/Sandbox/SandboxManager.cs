@@ -3,16 +3,16 @@ using Content.Client.UserInterface;
 using Content.Shared.Input;
 using Content.Shared.Sandbox;
 using Robust.Client.Console;
-using Robust.Client.Interfaces.Input;
-using Robust.Client.Interfaces.Placement;
-using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.Input;
+using Robust.Client.Placement;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Sandbox

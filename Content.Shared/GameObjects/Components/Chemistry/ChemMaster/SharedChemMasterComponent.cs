@@ -2,10 +2,8 @@
 using System;
 using System.Collections.Generic;
 using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.Components.Medical;
 using Content.Shared.GameObjects.Components.Observer;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Chemistry.ChemMaster
