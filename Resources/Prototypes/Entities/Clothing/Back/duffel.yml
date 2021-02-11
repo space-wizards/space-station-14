@@ -19,9 +19,20 @@
 
 - type: entity
   parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelHydroponics
+  name: hydroponics duffel bag
+  description: "A large duffel bag for holding extra gardening tools."
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/duffel.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Duffels/duffel.rsi
+
+- type: entity
+  parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelEngineering
   name: engineering duffel bag
-  description:
+  description: "A large duffel bag for holding extra tools and supplies."
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/engineering.rsi
@@ -39,6 +50,20 @@
   - type: Clothing
     sprite: Clothing/Back/Duffels/medical.rsi
 
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelMedicalSurgery
+  name: surgical duffel bag
+  description: "A large duffel bag for holding extra medical supplies - this one seems to be designed for holding surgical tools."
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/medical.rsi
+    state: icon-med
+  - type: Clothing
+    sprite: Clothing/Back/Duffels/medical.rsi
+    ClothingPrefix: med
+
+  
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelCaptain
@@ -108,7 +133,7 @@
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelSyndicate
-  name: syndicate duffel bag
+  name: suspicious looking duffel bag
   description: "A large duffel bag for holding various traitor goods."
   components:
   - type: Sprite
@@ -119,7 +144,8 @@
 - type: entity
   parent: ClothingBackpackDuffelSyndicate
   id: ClothingBackpackDuffelSyndicateAmmo
-  name: syndicate duffel bag
+  name: ammunition duffel bag
+  description: "A large duffel bag for holding extra weapons ammunition and supplies."
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/syndicate.rsi
@@ -131,7 +157,8 @@
 - type: entity
   parent: ClothingBackpackDuffelSyndicate
   id: ClothingBackpackDuffelSyndicateMedical
-  name: syndicate duffel bag
+  name: medical duffel bag
+  description: "A large duffel bag for holding extra tactical medical supplies."
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/syndicate.rsi
