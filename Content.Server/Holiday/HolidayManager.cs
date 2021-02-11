@@ -4,6 +4,8 @@ using Content.Server.GameTicking;
 using Content.Server.Holiday.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
+using Content.Shared;
+using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.ViewVariables;
@@ -13,6 +15,7 @@ namespace Content.Server.Holiday
     // ReSharper disable once ClassNeverInstantiated.Global
     public class HolidayManager : IHolidayManager
     {
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IGameTicker _gameTicker = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
@@ -20,11 +23,16 @@ namespace Content.Server.Holiday
         [ViewVariables]
         private readonly List<HolidayPrototype> _currentHolidays = new();
 
+        [ViewVariables]
+        private bool _enabled = true;
+
         public void RefreshCurrentHolidays()
         {
-            var now = DateTime.Now;
-
             _currentHolidays.Clear();
+
+            if (!_enabled) return;
+
+            var now = DateTime.Now;
 
             foreach (var holiday in _prototypeManager.EnumeratePrototypes<HolidayPrototype>())
             {
@@ -64,12 +72,22 @@ namespace Content.Server.Holiday
 
         public void Initialize()
         {
-            RefreshCurrentHolidays();
+            _configManager.OnValueChanged(CCVars.HolidaysEnabled, OnHolidaysEnableChange, true);
+
             _gameTicker.OnRunLevelChanged += OnRunLevelChanged;
+        }
+
+        private void OnHolidaysEnableChange(bool enabled)
+        {
+            _enabled = enabled;
+
+            RefreshCurrentHolidays();
         }
 
         private void OnRunLevelChanged(GameRunLevelChangedEventArgs eventArgs)
         {
+            if (!_enabled) return;
+
             switch (eventArgs.NewRunLevel)
             {
                 case GameRunLevel.PreRoundLobby:
