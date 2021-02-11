@@ -16,6 +16,7 @@ namespace Content.Shared.Construction
         private readonly Dictionary<string, ConstructionGraphNode> _nodes = new();
         private readonly Dictionary<ValueTuple<string, string>, ConstructionGraphNode[]> _paths = new();
         private readonly Dictionary<string, Dictionary<ConstructionGraphNode, ConstructionGraphNode>> _pathfinding = new();
+        [YamlField("start")]
         private readonly string _start;
 
         [ViewVariables]
@@ -23,7 +24,6 @@ namespace Content.Shared.Construction
         public string ID { get; private set; }
 
         [ViewVariables]
-        [YamlField("start")]
         public string Start => _start;
 
         [YamlField("graph", priority: 2)]

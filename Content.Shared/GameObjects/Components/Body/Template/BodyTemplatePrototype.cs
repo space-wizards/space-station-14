@@ -16,8 +16,11 @@ namespace Content.Shared.GameObjects.Components.Body.Template
     [Serializable, NetSerializable]
     public class BodyTemplatePrototype : IPrototype, IIndexedPrototype
     {
+        [YamlField("id")]
         private string _id;
+        [YamlField("name")]
         private string _name;
+        [YamlField("centerSlot")]
         private string _centerSlot;
         [YamlField("slots")]
         private Dictionary<string, BodyPartType> _slots;
@@ -27,11 +30,11 @@ namespace Content.Shared.GameObjects.Components.Body.Template
         [YamlField("mechanismLayers")]
         private Dictionary<string, string> _mechanismLayers;
 
-        [ViewVariables] [YamlField("id")] public string ID => _id;
+        [ViewVariables] public string ID => _id;
 
-        [ViewVariables] [YamlField("name")] public string Name => _name;
+        [ViewVariables] public string Name => _name;
 
-        [ViewVariables] [YamlField("centerSlot")] public string CenterSlot => _centerSlot;
+        [ViewVariables] public string CenterSlot => _centerSlot;
 
         [ViewVariables] public Dictionary<string, BodyPartType> Slots => new(_slots);
 
@@ -48,7 +51,7 @@ namespace Content.Shared.GameObjects.Components.Body.Template
                 foreach (var targetSlotName in _slots.Keys)
                 {
                     var tempConnections = new List<string>();
-                    foreach (var (slotName, slotConnections) in _connections)
+                    foreach (var (slotName, slotConnections) in value)
                     {
                         if (slotName == targetSlotName)
                         {
