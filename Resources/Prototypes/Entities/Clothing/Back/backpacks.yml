@@ -123,9 +123,9 @@
   description: A spacious backpack with lots of pockets, worn by the Commander of an Emergency Response Team.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Backpacks/security.rsi
+    sprite: Clothing/Back/Backpacks/ert_leader.rsi
   - type: Clothing
-    sprite: Clothing/Back/Backpacks/security.rsi
+    sprite: Clothing/Back/Backpacks/ert_leader.rsi
 
 - type: entity
   parent: ClothingBackpack
@@ -134,9 +134,9 @@
   description: A spacious backpack with lots of pockets, worn by Security Officers of an Emergency Response Team.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Backpacks/security.rsi
+    sprite: Clothing/Back/Backpacks/ert_sec.rsi
   - type: Clothing
-    sprite: Clothing/Back/Backpacks/security.rsi
+    sprite: Clothing/Back/Backpacks/ert_sec.rsi
 
 - type: entity
   parent: ClothingBackpack
@@ -145,9 +145,9 @@
   description: A spacious backpack with lots of pockets, worn by Medical Officers of an Emergency Response Team.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Backpacks/medical.rsi
+    sprite: Clothing/Back/Backpacks/ert_med.rsi
   - type: Clothing
-    sprite: Clothing/Back/Backpacks/medical.rsi
+    sprite: Clothing/Back/Backpacks/ert_med.rsi
 
 - type: entity
   parent: ClothingBackpack
@@ -156,9 +156,9 @@
   description: A spacious backpack with lots of pockets, worn by Engineers of an Emergency Response Team.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Backpacks/engineering.rsi
+    sprite: Clothing/Back/Backpacks/ert_eng.rsi
   - type: Clothing
-    sprite: Clothing/Back/Backpacks/engineering.rsi
+    sprite: Clothing/Back/Backpacks/ert_eng.rsi
 
 - type: entity
   parent: ClothingBackpack
@@ -167,9 +167,9 @@
   description: A spacious backpack with lots of pockets, worn by Janitors of an Emergency Response Team.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Backpacks/duffel.rsi
+    sprite: Clothing/Back/Backpacks/ert_janitor.rsi
   - type: Clothing
-    sprite: Clothing/Back/Backpacks/duffel.rsi
+    sprite: Clothing/Back/Backpacks/ert_janitor.rsi
 
 - type: entity
   parent: ClothingBackpack
@@ -178,9 +178,53 @@
   description: A spacious backpack with lots of pockets, worn by Clowns of an Emergency Response Team.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Backpacks/clown.rsi
+    sprite: Clothing/Back/Backpacks/ert_clown.rsi
   - type: Clothing
-    sprite: Clothing/Back/Backpacks/clown.rsi
+    sprite: Clothing/Back/Backpacks/ert_clown.rsi
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackVirology
+  name: virology backpack
+  description: A backpack made of hypo-allergenic fibers. It's designed to help prevent the spread of disease. Smells like monkey.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/virology.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Backpacks/virology.rsi
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackToxins
+  name: toxins backpack
+  description: It's a backpack especially designed for use in a sterile environment.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/toxins.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Backpacks/toxins.rsi
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackGenetics
+  name: genetics backpack
+  description: A bag designed to be super tough, just in case someone hulks out on you.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/genetics.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Backpacks/genetics.rsi
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackExplorer
+  name: explorer bag
+  description: A robust backpack for stashing your loot.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/explorer.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Backpacks/explorer.rsi
 
 - type: entity
   parent: ClothingBackpack
